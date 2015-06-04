@@ -1,0 +1,21 @@
+{
+  "name": "media-browser",
+  "main": "browser.js",
+  "version": "0.0.0",
+  "homepage": "-",
+  "authors": [
+    "Shoop Team <shoop@shoop.io>"
+  ],
+  "license": "-",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "filedrop": "*"
+  }
+}

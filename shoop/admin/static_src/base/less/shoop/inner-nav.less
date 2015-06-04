@@ -1,0 +1,33 @@
+.section-navigation {
+    margin-top: 4px;
+
+    @media (max-width: @screen-sm-max) {
+        display: none;
+    }
+
+    .sidebar-list {
+        &-item {
+            border: solid @border-color;
+            border-width: 1px 0px;
+            display: block;
+            font-size: 1.6rem;
+            padding: 12px 15px;
+            margin-bottom: -1px;
+            color: @text-color;
+            &:hover, &:focus {
+                color: @brand-primary;
+                text-decoration: none;
+                background: rgba(0,0,0,0.03);
+            }
+            &.active {
+                background: #fff;
+                color: @brand-primary;
+                font-weight: normal;
+            }
+            i {
+                width: 30px;
+                text-align: center;
+            }
+        }
+    }
+}

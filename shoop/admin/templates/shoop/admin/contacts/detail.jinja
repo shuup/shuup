@@ -1,0 +1,54 @@
+{% extends "shoop/admin/base.jinja" %}
+{% from "shoop/admin/macros/general.jinja" import content_block, info_row %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 section-navigation" data-navigatee="contact_details"></div>
+            <div class="col-md-9">
+                <div id="contact_details">
+                    {% call content_block(_("Basic Information"), "fa-info-circle") %}
+                        <table class="table table-condensed">
+                            <tbody>
+                            {{ info_row(_("Full Name"), contact.full_name) }}
+                            {{ info_row(_("Phone"), contact.phone, "tel:" ~ contact.phone) }}
+                            {{ info_row(_("Email"), contact.email, "mailto:" ~ contact.email) }}
+                            {{ info_row(_("Bound User"), contact.user, shoop_admin.model_url(contact.user) if contact.user else None) }}
+                            </tbody>
+                        </table>
+                    {% endcall %}
+
+                    {% if contact.default_shipping_address_id or contact.default_billing_address_id %}
+                        {% call content_block(_("Addresses"), "fa-map-marker") %}
+                            <div class="row contact-addresses">
+                                <div class="col-md-6 shipping-address">
+                                    <h4 class="underline"><i class="fa fa-truck"></i> {% trans %}Shipping address{% endtrans %}</h4>
+                                    {% for line in contact.default_shipping_address %}
+                                        <p>{{ line }}</p>
+                                    {% else %}
+                                        <i class="fa fa-warning text-warning"></i> {% trans %}No shipping address defined.{% endtrans %}
+                                    {% endfor %}
+                                </div>
+                                <div class="col-md-6 billing-address">
+                                    <h4 class="underline"><i class="fa fa-file-text"></i> {% trans %}Billing address{% endtrans %}</h4>
+                                    {% for line in contact.default_billing_address %}
+                                        <p>{{ line }}</p>
+                                    {% else %}
+                                        <i class="fa fa-warning text-warning"></i> {% trans %}No billing address defined.{% endtrans %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endcall %}
+                    {% endif %}
+
+                    {% call content_block(_("Orders"), "fa-inbox") %}
+                        <div class="table-responsive">
+                            {% from "shoop/admin/macros/order_table.jinja" import order_table with context %}
+                            {{ order_table(orders) }}
+                        </div>
+                    {% endcall %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

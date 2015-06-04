@@ -1,0 +1,260 @@
+Template Design
+===============
+
+This part of the documentation covers the structural elements of Shoop's default
+templates and instructs you on how to create your own customized templates.
+
+To be able to create customized templates you'll need to have understanding of the
+principles of HTML and CSS.
+
+If you would like to start creating your own customized templates with these
+instructions you should already have a working Shoop installation with the
+default template up and running. If not, you can start by reading
+:doc:`Getting Started guide <getting_started_dev>`.
+
+Shoop's default templates
+-------------------------
+
+Shoop's default templates are written with `Jinja2 <http://jinja.pocoo.org/>`_
+which is a templating engine for Python very similar to Django’s templates.
+
+The default templates use the `Bootstrap 3 <http://getbootstrap.com/>`_ framework, which
+consists of Bootstrap's HTML structure and Bootstrap specified CSS classes.
+If you want to create your own templates, it would require using Bootstrap 3
+or overwriting all the template files with your custom HTML structure and HTML
+classes.
+
+Shoop's template files are easy to modify and basic knowledge of HTML and CSS
+takes you far. Shoop's default templates already include the necessary
+template tags to print out all the features a basic shop would need.
+It is fairly simple to add your custom HTML elements around
+template tags and customize your shop to your needs.
+
+
+Template folder structure
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Shoop utilizes a similar folder structure for all the templates in different apps.
+All the template files are always included in the app folder ``shoop/APP/templates/``.
+
+Within this template folder the folder structure is: ``APP/MODULE/TEMPLATE.jinja``.
+For example, this could be converted into ``shoop/product/detail.jinja``
+
+The default templates can be found in folder under ``shoop/front/templates/``.
+
+.. topic:: Example
+
+   The Simple CMS module has a template to show pages created with it.
+   This ``page.jinja`` template can be found under the Simple CMS template
+   folder: ``shoop/simple_cms/templates/`` where the path to the template file
+   is ``shoop/simple_cms/page.jinja``.
+
+Other default template features such as user authentication, customer
+info, order history, registration and search etc. can be found in their own
+application templates under ``shoop/front/apps/``. Each app has it's own
+template folder containing application specific templates.
+
+Templates have been split into separate files and each file has its own
+purpose. Template files inherit the base layout from ``shoop/base.jinja``.
+
+
+General
+^^^^^^^
+
+General template files can be found under ``shoop/front/templates/``
+
+**Base** ``shoop/front/base.jinja``
+    Defines the structure of your templates. It includes the ``<html>``,
+    ``<head>`` and ``<body>`` tags, and the general structure of all frontend
+    pages (unless explicitly overridden).
+
+**Index** ``shoop/front/index.jinja``
+    Your shop's home page.
+
+**Macros** ``shoop/front/macros.jinja``
+    Additional template macros that can be used in other template files. For
+    example single product box is rendered with a macro, where it can be called
+    with customized parameters. Also form fields, alerts and order details can
+    be generated with macros.
+
+**Includes** ``shoop/front/includes/``
+    Additional HTML that can be included in pages. In default templates all
+    the included filenames start with ``_``. All navigation related HTML and
+    template tags are included to ``base.jinja`` and for example you could
+    create a ``_footer.jinja`` to be included if needed.
+
+
+Products and Categories
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Product and category templates can be found under ``shoop/front/templates/``
+
+**Detail** ``shoop/front/product/detail.jinja``
+    The view for a single product. Displays a product and its details.
+    The file uses template tags to include product attributes and ordering sections.
+
+**Category** ``shoop/front/product/category.jinja``
+    A view for a single category.
+    This template lists all the products of the selected category.
+
+Shopping basket
+^^^^^^^^^^^^^^^
+
+All shopping basket related templates go in the ``shoop/front/templates/shoop/front/basket``
+folder. This includes the default structure of the shopping basket and additional
+shopping basket elements.
+
+The default shopping basket template also includes the ordering form.
+This does not apply to shops using multi-phase checkout.
+
+**Default Basket** ``shoop/front/basket/default_basket.jinja``
+    The structure of shopping basket. It includes the shopping basket's
+    contents as a table from a separate file in the partials folder.
+    The ordering form is also displayed in this file.
+
+Orders
+^^^^^^
+
+Order related templates can be found in ``shoop/front/templates/shoop/front/order/``.
+
+**Complete** ``shoop/front/order/complete.jinja``
+    Displays the order success message and details of the order.
+
+**Payment Canceled** ``shoop/front/order/payment_canceled.jinja``
+    Template for displaying payment cancellation.
+
+
+Simple Search
+^^^^^^^^^^^^^
+
+Simple Search is its own application that can be found in the front apps folder:
+``shoop/apps/simple_search/templates``
+
+**Search** ``shoop/simple_search/search.jinja``
+    The search template includes the search form,
+    search result sorting options and a list of search results.
+
+
+Authentication
+^^^^^^^^^^^^^^
+
+Authentication through the Shoop Front is another sub-app.
+Its templates can be found in its own folder:
+``shoop/front/apps/auth/templates/shoop/user/``
+
+**Login and Logout**
+    Templates for login form and logout message pages.
+
+**Password Recovery**
+    Password recovery process including the templates for shop and e-mail.
+
+
+Registration
+^^^^^^^^^^^^
+
+Registration is another sub-app.
+Its templates can be found in:
+``shoop/front/apps/registration/templates``
+
+**Registration Form** ``shoop/registration/register.jinja``
+    Registration form template for new users.
+
+**Activation Failed** ``shoop/registration/activation_failed.jinja``
+    A template for displaying an error message when account activation fails.
+
+
+Customer Information
+^^^^^^^^^^^^^^^^^^^^
+
+Customer information is another sub-app.
+Its templates can be found in:
+``shoop/front/apps/customer_information/templates/``
+
+**Edit** ``shoop/customer_information/edit.jinja``
+    Template for editing customer details.
+
+
+Personal Order History
+^^^^^^^^^^^^^^^^^^^^^^
+
+Personal Order History, another sub-app, naturally has its templates in its own folder.
+``shoop/front/apps/personal_order_history/templates/``
+
+**Order Detail** ``shoop/personal_order_history/order_detail.jinja``
+    Template for displaying single order's details.
+
+**Order List** ``shoop/personal_order_history/order_list.jinja``
+    Template for listing all the previous personal orders.
+
+
+Custom Template Helper Functions
+--------------------------------
+
+This paragraph explains how to register template functions in Shoop's sub-apps.
+If you are interested in ``Jinja2``'s way to do it,
+please refer to the `Jinja2 documentation <http://jinja.pocoo.org/>`_.
+
+The AppConfig
+^^^^^^^^^^^^^
+
+The ``front_template_helper_namespace`` category in the ``provides`` dictionary
+tells the framework that there are template helper functions to be found in the
+namespace class (``TemplateHelper``) given.
+
+For more information about ``provides`` please refer to the `documentation <doc/provides.rst>`_
+
+The TemplateHelper class
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+This class contains all the functions that the are exposed for frontend templates.
+
+Using helpers in a template
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The template helpers can be used in templates with ``shoop.<module_name>.<TemplateHelper::method>()``.
+For example ``shoop.my_module.get_day_names()``.
+
+
+Static files
+------------
+
+Static files such as images, stylesheets and scripts go under the static
+folder, using the `Django staticfiles framework <https://docs.djangoproject.com/en/1.8/howto/static-files/>`.
+
+You can access static data files in templates by using the ``{{ static() }}`` function.
+For example, if you have ``img/image.jpg`` in your static files, generating
+a ``src`` for an ``<img>`` tag would be as easy as ``<img src="{{ static(img/image.jpg") }}">``.
+
+Creating custom templates
+-------------------------
+
+The basic principle of creating custom Shoop templates is not to modify the
+original files (default templates) within the app directory, but to copy them
+into to your own application's template directory.
+If your own application is set before Shoop in Django's ``INSTALLED_APPS``
+configuration, Django will prefer your templates over Shoop's default ones.
+
+This means it is possible to overwrite only some of the default template files or
+all of them. If there is no customized template with the same path and filename,
+Django will use the default template file instead.
+
+All the template files that you want to customize go under your application's
+template folder in the same folder hierarchy as under the original app's ``templates``
+folder. The folder hierarchy for Shoop's default templates was discussed earlier
+in this document.
+
+.. topic:: Example
+
+  Let's say you only would like to make a customized home page for your shop,
+  but leave all other templates as they are. Let's call your application ``myshop``.
+
+  Simply copy ``index.jinja`` from ``shoop/front/templates/shoop/index.jinja``
+  to your application's template folder ``myshop/templates/shoop/index.jinja``,
+  then modify it to your heart's content.
+
+  Now let's say you want to tweak the product category view too.
+
+  Copy ``shoop/front/templates/shoop/product/category.jinja`` to
+  ``myshop/templates/shoop/product/category.jinja``, then start modifying.
+  As you can see, the template directory structure within your ``myshop`` application
+  reflects the one in the original app.

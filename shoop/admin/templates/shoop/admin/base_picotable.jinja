@@ -1,0 +1,17 @@
+{% extends "shoop/admin/base.jinja" %}
+{% block title -%}
+    {%- if title %}{{ title }}
+    {%- elif view and view.model -%}{{ (""~view.model._meta.verbose_name_plural)|title }}
+    {%- endif -%}
+{%- endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="content-block">
+            <div id="picotable"></div>
+        </div>
+    </div>
+{% endblock %}
+{% block extra_js %}
+<script src="{{ static("shoop_admin/js/picotable.js") }}"></script>
+<script>var picotable = new Picotable(document.getElementById("picotable"), window.location.pathname);</script>
+{% endblock %}

@@ -1,0 +1,141 @@
+# -*- coding: utf-8 -*-
+# This file is part of Shoop.
+#
+# Copyright (c) 2012-2015, Shoop Ltd. All rights reserved.
+#
+# This source code is licensed under the AGPLv3 license found in the
+# LICENSE file in the root directory of this source tree.
+from django.conf import settings
+from django.contrib.auth.models import AnonymousUser
+from django.contrib.auth.signals import user_logged_in, user_logged_out
+from django.core.exceptions import ImproperlyConfigured, ValidationError
+from django.shortcuts import render
+from django.utils import timezone
+from shoop.core.models import Shop
+from shoop.core.models.contacts import get_person_contact
+from shoop.front.basket import get_basket
+from shoop.utils.excs import ExceptionalResponse, Problem
+
+
+class ProblemMiddleware(object):
+    def process_exception(self, request, exception):
+        if isinstance(exception, ExceptionalResponse):
+            return exception.response
+
+        if isinstance(exception, (ValidationError, Problem)):
+            templates = [
+                "%s/problem.jinja" % request.resolver_match.app_name,
+                "%s/problem.jinja" % request.resolver_match.namespace,
+                "shoop/front/problem.jinja",
+                "problem.jinja",
+                "problem.html",
+            ]
+
+            return render(request, templates, {
+                "message": exception.message,
+                "exception": exception,
+            })
+
+
+class ShoopFrontMiddleware(object):
+    """
+    Handle Shoop specific tasks for each request and response.
+
+    * Set request attributes that rest of the Shoop front-end rely on.
+
+    * Set Django's timezone according to personal preferences
+      (i.e. request.person.timezone).
+
+      .. TODO:: Fallback to shop timezone?
+
+    * Make sure that basket is saved before response is returned to the
+      browser.
+
+    Attributes set for requests:
+
+      ``request.shop`` : :class:`shoop.core.models.Shop`
+          Currently active Shop.
+
+          .. TODO:: Define better
+
+      ``request.person`` : :class:`shoop.core.models.Contact`
+          :class:`~shoop.core.models.PersonContact` of currently logged
+          in user or :class:`~shoop.core.models.AnonymousContact` if
+          there is no logged in user.
+
+      ``request.customer`` : :class:`shoop.core.models.Contact`
+          Customer contact used when creating Orders.  This can be same
+          as ``request.person``, but for example in B2B shops this is
+          usually a :class:`~shoop.core.models.CompanyContact` whereas
+          ``request.person`` is a
+          :class:`~shoop.core.models.PersonContact`.
+
+      ``request.basket`` : :class:`shoop.front.basket.objects.BaseBasket`
+          Shopping basket in use.
+    """
+
+    def process_request(self, request):
+        self._set_shop(request)
+        self._set_person(request)
+        self._set_customer(request)
+        self._set_basket(request)
+        self._set_timezone(request)
+
+    def _set_shop(self, request):
+        # TODO: Not the best logic :)
+        request.shop = Shop.objects.first()
+        if not request.shop:
+            raise ImproperlyConfigured("No shop!")
+
+    def _set_person(self, request):
+        request.person = get_person_contact(request.user)
+
+    def _set_customer(self, request):
+        request.customer = request.person
+
+    def _set_basket(self, request):
+        request.basket = get_basket(request)
+
+    def _set_timezone(self, request):
+        if request.person.timezone:
+            timezone.activate(request.person.timezone)
+            # TODO: Fallback to request.shop.timezone (and add such field)
+
+    def process_response(self, request, response):
+        if hasattr(request, "basket") and request.basket.dirty:
+            request.basket.save()
+        return response
+
+    @classmethod
+    def refresh_on_user_change(cls, request, user=None, **kwargs):
+        # In some cases, there is no `user` attribute in
+        # the request, which would cause the middleware to fail.
+        # If that's the case, let's assign the freshly changed user
+        # now.
+        if not hasattr(request, "user"):
+            request.user = user
+        cls().process_request(request)
+
+    @classmethod
+    def refresh_on_logout(cls, request, **kwargs):
+        # The `user_logged_out` signal is fired _before_ `request.user` is set to `AnonymousUser()`,
+        # so we'll have to do switcharoos and hijinks before invoking `refresh_on_user_change`.
+
+        # The `try: finally:` is there to ensure other signal consumers still get an unchanged (well,
+        # aside from `.person` etc. of course) `request` to toy with.
+
+        # Oh, and let's also add shenanigans to switcharoos and hijinks. Shenanigans.
+
+        current_user = getattr(request, "user", None)
+        try:
+            request.user = AnonymousUser()
+            cls.refresh_on_user_change(request)
+        finally:
+            request.user = current_user
+
+if (
+    "django.contrib.auth" in settings.INSTALLED_APPS and
+    "shoop.front.middleware.ShoopFrontMiddleware" in settings.MIDDLEWARE_CLASSES
+):
+    user_logged_in.connect(ShoopFrontMiddleware.refresh_on_user_change, dispatch_uid="shoop_front_refresh_on_login")
+    user_logged_out.connect(ShoopFrontMiddleware.refresh_on_logout, dispatch_uid="shoop_front_refresh_on_logout")

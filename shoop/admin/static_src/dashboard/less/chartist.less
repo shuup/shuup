@@ -1,0 +1,236 @@
+@ct-class-chart: ct-chart;
+@ct-class-chart-line: ct-chart-line;
+@ct-class-chart-bar: ct-chart-bar;
+@ct-class-chart-pie: ct-chart-pie;
+@ct-class-label: ct-label;
+@ct-class-series: ct-series;
+@ct-class-line: ct-line;
+@ct-class-point: ct-point;
+@ct-class-area: ct-area;
+@ct-class-bar: ct-bar;
+@ct-class-slice: ct-slice;
+@ct-class-donut: ct-donut;
+@ct-class-grid: ct-grid;
+@ct-class-vertical: ct-vertical;
+@ct-class-horizontal: ct-horizontal;
+
+// Text styles for labels
+@ct-text-color: rgba(0, 0, 0, 0.8);
+@ct-text-size: 1rem;
+@ct-text-align: left;
+@ct-horizontal-text-align: center;
+@ct-vertical-text-align: right;
+
+// Grid styles
+@ct-grid-color: rgba(0, 0, 0, 0.2);
+@ct-grid-dasharray: 2px;
+@ct-grid-width: 1px;
+
+// Line chart properties
+@ct-line-width: 4px;
+@ct-line-dasharray: false;
+@ct-point-size: 10px;
+@ct-point-shape: round;  // Line chart point, can be either round or square
+@ct-area-opacity: 0.1;  // Area fill transparency between 0 and 1
+@ct-bar-width: 14px;  // Bar chart bar width
+@ct-donut-width: 60px;  // Donut width (If donut width is to big it can cause issues where the shape gets distorted)
+
+
+.ct-responsive-svg-container(@width: 100%, @ratio) {
+    display: block;
+    position: relative;
+    width: @width;
+
+    &:before {
+        display: block;
+        float: left;
+        content: "";
+        width: 0;
+        height: 0;
+        padding-bottom: @ratio * 100%;
+    }
+
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    > svg {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+
+.ct-chart-label(@ct-text-color: @ct-text-color, @ct-text-size: @ct-text-size, @ct-text-align: @ct-text-align) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    fill: @ct-text-color;
+    color: @ct-text-color;
+    font-size: @ct-text-size;
+    text-align: @ct-text-align;
+}
+
+.ct-chart-grid(@ct-grid-color: @ct-grid-color, @ct-grid-width: @ct-grid-width, @ct-grid-dasharray: @ct-grid-dasharray) {
+    stroke: @ct-grid-color;
+    stroke-width: @ct-grid-width;
+    stroke-dasharray: @ct-grid-dasharray;
+}
+
+.ct-chart-point(@ct-point-size: @ct-point-size, @ct-point-shape: @ct-point-shape) {
+    stroke-width: @ct-point-size;
+    stroke-linecap: @ct-point-shape;
+}
+
+.ct-chart-line(@ct-line-width: @ct-line-width, @ct-line-dasharray: @ct-line-dasharray) {
+    fill: none;
+    stroke-width: @ct-line-width;
+    stroke-dasharray: @ct-line-dasharray;
+}
+
+.ct-chart-area(@ct-area-opacity: @ct-area-opacity) {
+    stroke: none;
+    fill-opacity: @ct-area-opacity;
+}
+
+.ct-chart-bar(@ct-bar-width: @ct-bar-width) {
+    fill: none;
+    stroke-width: @ct-bar-width;
+    @media (max-width: @screen-xs-max) {
+        stroke-width: 7px;
+    }
+}
+
+.ct-chart-donut(@ct-donut-width: @ct-donut-width) {
+    fill: none;
+    stroke-width: @ct-donut-width;
+}
+
+.ct-chart-series-color(@color) {
+    .@{ct-class-point}, .@{ct-class-line}, .@{ct-class-bar}, .@{ct-class-slice}.@{ct-class-donut} {
+        stroke: @color;
+    }
+
+    .@{ct-class-slice}:not(.@{ct-class-donut}), .@{ct-class-area} {
+        fill: @color;
+    }
+}
+
+.ct-chart {
+    .@{ct-class-label} {
+        .ct-chart-label(@ct-text-color, @ct-text-size);
+    }
+
+    .@{ct-class-label}.@{ct-class-horizontal} {
+        .ct-chart-label(@ct-text-color, @ct-text-size, @ct-horizontal-text-align);
+    }
+
+    .@{ct-class-label}.@{ct-class-vertical} {
+        .ct-chart-label(@ct-text-color, @ct-text-size, @ct-vertical-text-align);
+    }
+
+    .@{ct-class-grid} {
+        .ct-chart-grid(@ct-grid-color, @ct-grid-width, @ct-grid-dasharray);
+    }
+
+    .@{ct-class-point} {
+        .ct-chart-point(@ct-point-size, @ct-point-shape);
+    }
+
+    .@{ct-class-line} {
+        .ct-chart-line(@ct-line-width);
+    }
+
+    .@{ct-class-area} {
+        .ct-chart-area();
+    }
+
+    .@{ct-class-bar} {
+        .ct-chart-bar(@ct-bar-width);
+    }
+
+    .@{ct-class-slice}.@{ct-class-donut} {
+        .ct-chart-donut(@ct-donut-width);
+    }
+
+    .@{ct-class-series} {
+        &.@{ct-class-series}-a {
+            .ct-chart-series-color(@brand-primary); //orignial #d70206
+        }
+        &.@{ct-class-series}-b {
+            .ct-chart-series-color(@block-blue); //original #f05b4f
+        }
+        &.@{ct-class-series}-c {
+            .ct-chart-series-color(@block-orange); //original #f4c63d
+        }
+        &.@{ct-class-series}-d {
+            .ct-chart-series-color(@block-gray); //original #d17905
+        }
+        &.@{ct-class-series}-e {
+            .ct-chart-series-color(@block-red); //original #453d3f
+        }
+        &.@{ct-class-series}-f {
+            .ct-chart-series-color(@block-purple); //original #59922b
+        }
+        &.@{ct-class-series}-g {
+            .ct-chart-series-color(@block-green); //original #0544d3
+        }
+        &.@{ct-class-series}-h {
+            .ct-chart-series-color(@block-yellow); //original #6b0392
+        }
+        &.@{ct-class-series}-i {
+            .ct-chart-series-color(@block-navy); //original #f05b4f
+        }
+        &.@{ct-class-series}-j {
+            .ct-chart-series-color(#dda458);
+        }
+        &.@{ct-class-series}-k {
+            .ct-chart-series-color(#eacf7d);
+        }
+        &.@{ct-class-series}-l {
+            .ct-chart-series-color(#86797d);
+        }
+        &.@{ct-class-series}-m {
+            .ct-chart-series-color(#b2c326);
+        }
+        &.@{ct-class-series}-n {
+            .ct-chart-series-color(#6188e2);
+        }
+        &.@{ct-class-series}-o {
+            .ct-chart-series-color(#a748ca);
+        }
+    }
+}
+
+.ct-square {.ct-responsive-svg-container(@ratio: (1)); }
+.ct-minor-second {.ct-responsive-svg-container(@ratio: (15/16)); }
+.ct-major-second {.ct-responsive-svg-container(@ratio: (8/9)); }
+.ct-minor-third {.ct-responsive-svg-container(@ratio: (5/6)); }
+.ct-major-third {.ct-responsive-svg-container(@ratio: (4/5)); }
+.ct-perfect-fourth {.ct-responsive-svg-container(@ratio: (3/4)); }
+.ct-perfect-fifth {.ct-responsive-svg-container(@ratio: (2/3)); }
+.ct-minor-sixth {.ct-responsive-svg-container(@ratio: (5/8)); }
+.ct-golden-section {.ct-responsive-svg-container(@ratio: (1/1.618)); }
+.ct-major-sixth {.ct-responsive-svg-container(@ratio: (3/5)); }
+.ct-minor-seventh {.ct-responsive-svg-container(@ratio: (9/16)); }
+.ct-major-seventh {.ct-responsive-svg-container(@ratio: (8/15)); }
+.ct-octave {.ct-responsive-svg-container(@ratio: (1/2)); }
+.ct-major-tenth {.ct-responsive-svg-container(@ratio: (2/5)); }
+.ct-major-eleventh {.ct-responsive-svg-container(@ratio: (3/8)); }
+.ct-major-twelfth {.ct-responsive-svg-container(@ratio: (1/3)); }
+.ct-double-octave {.ct-responsive-svg-container(@ratio: (1/4)); }
+
+.ct-tooltip {
+    position: absolute;
+    display: inline-block;
+    min-width: 5em;
+    padding: .5em;
+    background: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    text-align: center;
+    pointer-events: none;
+    z-index: 1
+}

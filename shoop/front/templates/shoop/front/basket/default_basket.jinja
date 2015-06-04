@@ -1,0 +1,29 @@
+{% extends "shoop/front/base.jinja" %}
+
+{% block title %}{% trans %}Shopping cart{% endtrans %}{% endblock %}
+{% block content_title %}{% trans %}Shopping cart{% endtrans %}{% endblock %}
+
+{% block content %}
+    {% if basket.is_empty %}
+        <div class="alert alert-danger">
+            {% trans %}Your shopping cart is empty.{% endtrans %}
+        </div>
+    {% else %}
+        {% include "shoop/front/basket/partials/table.jinja" %}
+
+        {% if errors %}
+            <div class="alert alert-danger">
+                <p><strong>{% trans %}Errors{% endtrans %}</strong></p>
+                <ul>
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            <a href="{{ url("shoop:checkout") }}" class="btn btn-primary btn-lg">
+                {% trans %}Proceed to checkout{% endtrans %}
+            </a>
+        {% endif %}
+    {% endif %}
+{% endblock %}

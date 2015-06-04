@@ -1,0 +1,192 @@
+@input-border-color: #D9D9D9;
+@input-bg-color: #F3F3F3;
+
+// Form styles on content blocks
+.content-block {
+    .form-group {
+        margin-bottom: 20px;
+        .clearfix;
+        @media (min-width: @screen-sm-min) {
+            margin-bottom: 30px;
+        }
+
+        // add an asterisk on required field labels
+        &.required-field {
+            .control-label:after {
+                content: "\2731"; // asterisk
+                font-size: 0.9rem;
+                position: relative;
+                vertical-align: top;
+                margin-left: 3px;
+                display: inline-block;
+                color: @brand-danger;
+            }
+        }
+
+        label, .control-label {
+            .make-sm-column(4);
+            .make-lg-column(3);
+            padding-left: 0;
+            text-align: right;
+            padding-top: 8px;
+        }
+
+        .control-label + div {
+            .make-sm-column(8);
+            .make-lg-column(6);
+            padding: 0;
+
+            .radio:first-child, .checkbox:first-child { padding-top: 10px; }
+
+            .radio label, .checkbox label {
+                margin: 0;
+                float: none;
+                width: auto;
+                padding: 0;
+                padding-left: 20px;
+                font-size: 1.3rem;
+                font-weight: normal;
+
+                input[type="radio"],
+                input[type="checkbox"] {
+                    margin-top: 2px;
+                    position: absolute;
+                    left: 0;
+                    margin-left: 0px;
+                }
+            }
+        }
+
+        .form-control {
+            .make-sm-column(8);
+            .make-lg-column(6);
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+
+        .help-block {
+            clear: both;
+            .make-sm-column(8);
+            .make-lg-column(6);
+            .make-sm-column-push(4);
+            .make-lg-column-push(3);
+            padding-left: 0;
+            font-size: 1.2rem;
+        }
+
+        .radio, .checkbox {
+            margin: 0;
+
+            label {
+                @media (max-width: @screen-xs-max) {
+                    float: none;
+                    width: auto;
+                    padding: 0;
+                    padding-left: 20px;
+                }
+                @media (min-width: @screen-sm-min) {
+                    padding-top: 0;
+                    input[type="radio"],
+                    input[type="checkbox"] {
+                        position: absolute;
+                        left: 100%;
+                        margin-left: 0;
+                    }
+                }
+            }
+        }
+        // Bootstrap select customization
+        .bootstrap-select {
+            padding-left: 0;
+            padding-right: 0;
+
+            .form-control {
+                float: none;
+                width: 100%;
+            }
+        }
+        // For input type file
+        .bootstrap3-multi-input {
+            padding-top: 5px !important;
+        }
+    }
+    // Bootstrap select customization
+    .bootstrap-select {
+
+        .dropdown-toggle {
+            padding-right: 40px;
+        }
+
+        &.open {
+            .dropdown-toggle {
+                box-shadow: none;
+                border-color: @brand-primary;
+            }
+        }
+
+        &.btn-group .btn {
+            position: relative;
+            .caret {
+                border: 0;
+                display: block;
+                position: absolute;
+                margin: 0;
+                height: 38px;
+                width: 38px;
+                top: 0;
+                right: 0;
+                &:before {
+                    font-family: "FontAwesome";
+                    speak: none;
+                    vertical-align: middle;
+                    line-height: 1;
+                    border: 0;
+                    content: @fa-var-chevron-down; // arrow-down
+                    display: inline-block;
+                    width: auto;
+                    color: @text-color;
+                    top: 9px;
+                    left: 11px;
+                    position: absolute;
+                }
+            }
+        }
+        // show-tick
+        .check-mark {
+            margin-top: 0 !important;
+            &:before {
+                content: @fa-var-check;
+                font-family: FontAwesome;
+            }
+        }
+    }
+}
+
+label, .radio label, .checkbox label {
+    font-weight: 300;
+    font-size: 1.4rem;
+    @media (min-width: @screen-sm-min) {
+        font-size: 1.6rem;
+    }
+}
+
+.form-control {
+    height: 38px;
+    border-width: 2px;
+    border-color: @input-border-color;
+    background: @input-bg-color;
+    font-weight: normal;
+    font-size: 1.3rem;
+
+    &:focus {
+        border-color: @brand-primary;
+        box-shadow: none;
+    }
+}
+
+.form-control[disabled],
+.form-control[readonly],
+fieldset[disabled] .form-control {
+    background-color: @input-bg-color;
+    opacity: 0.6;
+}

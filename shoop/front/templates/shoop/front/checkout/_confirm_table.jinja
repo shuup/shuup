@@ -1,0 +1,59 @@
+<div class="table-responsive">
+    <table class="table basket-table">
+        <col style="width: 70px">
+        <col width="30%">
+        <col>
+        <col style="width: 150px">
+        <col>
+        <thead>
+        <tr>
+            <th></th>
+            <th class="text-left">{% trans %}Product{% endtrans %}</th>
+            <th class="text-right">{% trans %}Price{% endtrans %}</th>
+            <th class="text-right">{% trans %}Quantity{% endtrans %}</th>
+            <th class="text-right">{% trans %}Total{% endtrans %}</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <td colspan="5" class="text-right">
+                {% trans %}Total{% endtrans %}:
+                <span class="total-price"><strong>{{ basket.taxful_total_price|home_currency }}</strong></span>
+            </td>
+        </tr>
+        </tfoot>
+        <tbody>
+        {% for line in basket.get_final_lines() %}
+            {% set product = line.product %}
+            {% set shop_product = line.shop_product %}
+            <tr>
+                <td>
+                    {% if product %}
+                        {% set image = product.primary_image %}
+                        {% if image %}
+                            <img src="{{ image|thumbnail(size=(70, 70)) }}" alt="{{ line.text }}">
+                        {% else %}
+                            <img class="img-responsive" src="{{ STATIC_URL }}shoop/img/no_image_thumbnail.png">
+                        {% endif %}
+                    {% endif %}
+                </td>
+                <td>
+                    {{ line.text }}
+                </td>
+                <td class="text-right">
+                    {{ line.taxful_unit_price|home_currency }}
+                    {% if line.total_tax_amount %}
+                        <br><small class="text-muted">({{ line.taxless_unit_price|home_currency }} excl. tax)</small>
+                    {% endif %}
+                </td>
+                <td class="text-right">
+                    {{ line.quantity|number }}
+                </td>
+                <td class="text-right">
+                    <span class="line-total">{{ line.taxful_total_price|home_currency }}</span>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

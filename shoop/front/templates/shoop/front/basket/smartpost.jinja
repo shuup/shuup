@@ -1,0 +1,9 @@
+<p>{% trans %}Pakettiautomaatti{% endtrans %}</p>
+{% for pp in choices %}
+    <div class="radio">
+        <label>
+            <input type="radio" name="shipping-pickup_point" value="{{ pp.id }}" {% if current == pp.id %}checked{% endif %}>
+            {{ pp.format_name() }}
+        </label>
+    </div>
+{% endfor %}

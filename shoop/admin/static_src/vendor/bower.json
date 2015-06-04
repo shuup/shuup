@@ -1,0 +1,30 @@
+{
+  "name": "shoop_admin",
+  "version": "0.0.0",
+  "homepage": "-",
+  "authors": [
+    "Shoop Team <shoop@shoop.io>"
+  ],
+  "moduleType": [
+    "globals"
+  ],
+  "license": "n/a",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "private": true,
+  "dependencies": {
+    "bootstrap": "~3.3.2",
+    "jquery": "~2.1.4",
+    "lodash": "~3.8.0",
+    "mithriljs": "~0.2.0",
+    "moment": "~2.10.2",
+    "jquery.easing": "~1.3.1",
+    "bootstrap-select": "~1.6.4",
+    "jquery.scrollbar": "~0.2.7"
+  }
+}

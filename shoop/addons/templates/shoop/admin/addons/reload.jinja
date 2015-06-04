@@ -1,0 +1,67 @@
+{% extends "shoop/admin/base.jinja" %}
+{% from "shoop/admin/macros/general.jinja" import content_block %}
+{% block title %}{% trans %}Addons{% endtrans %}{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <form method="post" id="addon_reload_form" target="reload-target" onsubmit="beginCheckReload()">
+            {% csrf_token %}
+            {% call content_block(_("Reload Application Server"), "fa-refresh") %}
+                {{ bs3.field(form.reload_method) }}
+                <div class="row">
+                    <div class="col-sm-8 col-sm-push-4 col-lg-6 col-lg-push-3">
+                        <div class="text-warning">
+                            <p><strong>{% trans %}When you reload the application server, it may take some time for the new instance of your application to properly initialize.{% endtrans %}</strong></p>
+                            <p><strong>{% trans %}In addition, there is always a chance for the server to not properly initialize at all, in which case you may need to troubleshoot the problem yourself (or have a system administrator handy).{% endtrans %}</strong></p>
+                        </div>
+                        <hr>
+                        <button type="submit" class="btn btn-warning">
+                            <i class="fa fa-refresh"></i>
+                            {% trans %}Reload Application Server{% endtrans %}
+                        </button>
+                        <iframe name="reload-target" src="about:blank" frameborder="0" style="display: none"></iframe>
+                    </div>
+                </div>
+            {% endcall %}
+        </form>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    var reloadCheckTimer = null;
+    var reloadCheckUrl = {{ (request.path + "?ping=1")|json }};
+
+    function stopCheckReload() {
+        if(reloadCheckTimer) {
+            clearInterval(reloadCheckTimer);
+            reloadCheckTimer = null;
+        }
+    }
+    function beginCheckReload() {
+        stopCheckReload();
+        reloadCheckTimer = setInterval(checkReload, 2000);
+        Messages.enqueue({tags: "info", text: "Reload initiated."});
+    }
+
+    function checkReload() {
+        $.ajax({
+            type: "GET",
+            url: reloadCheckUrl,
+            success: function() {
+                Messages.enqueue({
+                    tags: "success",
+                    text: "Your Shoop seems to be back up!"
+                });
+                stopCheckReload();
+            },
+            error: function() {
+                Messages.enqueue({
+                    tags: "info",
+                    text: "Your Shoop is not up yet. Trying again soon."
+                });
+            }
+        })
+    }
+</script>
+{% endblock %}

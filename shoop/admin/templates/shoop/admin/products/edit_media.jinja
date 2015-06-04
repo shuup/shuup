@@ -1,0 +1,34 @@
+{% extends "shoop/admin/base.jinja" %}
+{% from "shoop/admin/macros/general.jinja" import content_block %}
+{% from "shoop/admin/macros/multilanguage.jinja" import language_dependent_content_tabs %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 section-navigation" data-navigatee="media_form"></div>
+            <div class="col-md-9 media-edit-content">
+                <form method="post" id="media_form">
+                    {% csrf_token %}
+                    {% for mf in form.management_form %}{{ mf|safe }}{% endfor %}
+                    {% for f in form %}
+                        {% set f_title = ("" ~ f.instance if f.instance.pk else _("File ") ~ loop.index) %}
+                        {% call content_block(f_title) %}
+                            {{ bs3.field(f.file) }}
+                            {{ bs3.field(f.external_url) }}
+                            {{ bs3.field(f.ordering) }}
+                            {{ bs3.field(f.shops, widget_class="multiselect") }}
+                            {{ bs3.field(f.kind) }}
+                            {{ bs3.field(f.enabled) }}
+                            {{ bs3.field(f.public) }}
+                            {{ bs3.field(f.purchased) }}
+                            {% if f.instance.pk and f.DELETE %}
+                                {{ bs3.field(f.DELETE) }}
+                            {% endif %}
+                            {% for fld in f.hidden_fields() %}{{ fld|safe }}{% endfor %}
+                            {{ language_dependent_content_tabs(f, ["title", "description"]) }}
+                        {% endcall %}
+                    {% endfor %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

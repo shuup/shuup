@@ -1,0 +1,146 @@
+{% extends "shoop/front/base.jinja" %}
+
+{% block extrameta %}
+    <meta property="og:site_name" content="{{ request.shop }}">
+    <meta property="og:type" content="product">
+    <meta property="og:url" content="{{ shoop.urls.model_url(product, absolute=True) }}">
+    <meta property="og:title" content="{{ product.name }}">
+    {% if primary_image %}
+        <meta property="og:image" content="{{ request.build_absolute_uri(primary_image.url) }}">
+    {% endif %}
+{% endblock %}
+
+{% block title %}{{ product.name }}{% endblock %}
+{% block content_title %}{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="glyphicon glyphicon-home"></i></a></li>
+        {% set category = shop_product.primary_category %}
+        {% if category %}
+            {% for c in category.get_parents() if c.is_visible(customer=request.customer) %}
+                <li><a href="{{ shoop.urls.model_url(c) }}">{{ c.name }}</a></li>
+            {% endfor %}
+        {% endif %}
+        <li class="active">{{ product.name }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+
+    <div class="row product-main">
+
+        <div class="product-image col-sm-5">
+            <div id="carousel_product_{{ product.id }}" class="product-carousel carousel slide" data-ride="carousel" data-interval="false">
+                <div class="carousel-inner">
+                    {% for product_image in images %}
+                        <div class="item{% if product_image == primary_image %} active{% endif %}">
+                            <a href="{{ product_image.url }}" class="thumbnail" rel="gallery1">
+                                <img class="img-responsive" src="{{ product_image|thumbnail(size=(600, 600), crop="smart", upscale=True) }}" alt="{{ product.name }}">
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="item active">
+                            <div class="thumbnail" rel="gallery1">
+                                <img class="img-responsive no-image" alt="{{ product.name }}" src="{{ STATIC_URL }}shoop/img/no_image.png">
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row carousel-thumbnails">
+                {% for product_image in images %}
+                    {% if loop|count > 1 %}
+                        <div class="col-xs-4 col-md-3">
+                            <a href="#carousel_product_{{ product.id }}" data-slide-to="{{ loop.index0 }}" class="thumbnail">
+                                <img src="{{ product_image|thumbnail(size=(300, 300), crop="smart", upscale=True)}}" class="img-responsive" alt="{{ product.name }}">
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-sm-7">
+            <h1>{{ product.name }}</h1>
+            <p>{% trans %}SKU{% endtrans %}: {{ product.sku }}</p>
+            {# TODO: (TAX) Check following line (gets taxful price of product)  #}
+            {% set price = product.get_price(request) %}
+            <h3>
+                {{ price|home_currency }}
+                {% if price.includes_tax %}(incl. tax){% else %}(excl. tax){% endif %}
+                <small>/ {{ product.sales_unit.short_name }}</small>
+            </h3>
+
+            <hr>
+
+            <div class="well">
+                {% include "shoop/front/product/_detail_order_section.jinja" with context %}
+            </div>
+        </div>
+
+    </div>
+
+    <hr>
+
+    {% if product.description %}
+        <div class="product-description clearfix">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">{% trans %}Product description{% endtrans %}</h2>
+                </div>
+                <div class="panel-body">
+                    {{ product.description|markdown }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="product-attributes clearfix">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">{% trans %}Product attributes{% endtrans %}</h2>
+            </div>
+            <div class="panel-body">
+                {% include "shoop/front/product/_detail_attributes_section.jinja" %}
+            </div>
+        </div>
+    </div>
+
+    {% if package_children %}
+        <hr>
+        <h3>{% trans %}Sisältää seuraavat tuotteet{% endtrans %}</h3>
+        <div class="row">
+            {% for child in package_children %}
+                <div class="col-md-3">
+                    {{ macros.product_box(child) }}
+                </div>
+            {% endfor %}
+        </div>
+
+    {% elif package_parents %}
+        <hr>
+        <h3>{% trans %}Myös saatavilla paketissa{% endtrans %}</h3>
+        <div class="row">
+            {% for parent in package_parents %}
+                <div class="col-md-3">
+                    {{ macros.product_box(parent) }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% set related_products = shoop.product.get_products_bought_with(product) %}
+    {% if related_products %}
+        <hr>
+        <h3>{% trans %}Käyttäjät, jotka ostivat tämän tuotteen ostivat myös:{% endtrans %}</h3>
+        <div class="row">
+            {% for related_product in related_products %}
+                <div class="col-md-3">
+                    {{ macros.product_box(related_product) }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+{% endblock %}

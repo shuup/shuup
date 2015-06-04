@@ -1,0 +1,25 @@
+{
+  "name": "Shoop",
+  "version": "1.0.0",
+  "description": "Open Source E-Commerce",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "build": "python build-all.py"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shoopio/shoop.git"
+  },
+  "keywords": [
+    "ecommerce"
+  ],
+  "author": "Shoop Team <shoop@shoop.io>",
+  "license": "AGPL-3.0",
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/shoopio/shoop/issues"
+  },
+  "homepage": "https://shoop.io/"
+}

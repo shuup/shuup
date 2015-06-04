@@ -1,0 +1,44 @@
+{% macro auth_block(extra_classes="") %}
+    <div class="auth-block {{ extra_classes }}">
+        <div class="auth-block-content">
+            <div class="auth-block-logo">
+                <img src="{{ static("shoop_admin/img/logo_with_text.svg") }}" alt="Shoop">
+            </div>
+            <div class="auth-block-body">{{ caller() }}</div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro content_block(heading, icon) %}
+    <div class="content-block">
+        <div class="title">
+            {% if heading %}
+                <h2 class="block-title">{% if icon %} <i class="fa {{ icon }}"></i> {% endif %}{{ heading }}</h2>
+            {% endif %}
+            <a href="#" class="toggle-contents">
+                <i class="fa fa-chevron-right"></i>
+            </a>
+        </div>
+        <div class="content-wrap collapse {{ extra_classes }}">
+            <div class="content">
+                {{ caller() }}
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro info_row(header, value, url=None, class="") %}
+    {% if value is defined and value is not none and value != "" %}
+        <tr>
+            <th>{{ header }}</th>
+            <td class="{{ class }}">
+                {%- if url %}<a href="{{ url }}">{% endif -%}
+                {{ value }}
+                {%- if url %}</a>{% endif -%}
+            </td>
+            {% if caller %}
+                <td>{{ caller() }}</td>
+            {% endif %}
+        </tr>
+    {% endif %}
+{% endmacro %}

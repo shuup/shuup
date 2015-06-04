@@ -1,0 +1,28 @@
+.subtle-slide-in {
+    transform-style: preserve-3d;
+    transform-origin: 0 100%;
+    animation-name: subtleSlideInAnim;
+    animation-duration: 1.5s; // This is a longish duration, but the timing function is very start heavy
+    animation-timing-function: cubic-bezier(0.2, 0.8, 0.5, 1);
+}
+
+
+@keyframes subtleSlideInAnim {
+    from {
+        transform: translate3d(0, 15%, 0);
+        opacity: 0;
+    }
+    to {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInAnim {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

@@ -1,0 +1,29 @@
+{% if request.GET.popup %}
+{% extends "shoop/admin/base_popup.jinja" %}
+{% else %}
+{% extends "shoop/admin/base.jinja" %}
+{% endif %}
+
+{% block action_buttons %}
+    <div class="btn-toolbar" role="toolbar">
+        <button class="btn btn-success" onclick="MediaBrowser.newFolder()"><i class="fa fa-folder"></i> {% trans %}Add folder{% endtrans %}</button>
+        <button class="btn btn-info" id="upload-button-wrapper">
+             {# wrapper will be filled with an invisible file input by Javascript #}
+             <i class="fa fa-upload"></i> {% trans %}Upload{% endtrans %}
+        </button>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div id="BrowserView"></div>
+{% endblock %}
+{% block extra_js %}
+    <script src="{{ static("shoop_admin/js/media-browser.js") }}"></script>
+    <script>
+    window.MediaBrowser.init();
+    window.MediaBrowser.setupUploadButton(document.getElementById("upload-button-wrapper"));
+    </script>
+{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ static("shoop_admin/css/media-browser.css") }}">
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "shoop/front/checkout/_base.jinja" %}
+
+{% block content %}
+<form role="form" method="post" action="">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <p>{% trans %}We use Stripe for secure payment handling.{% endtrans %}</p>
+            <p>{% trans %}Click the button below to enter your card details. You will only be charged when your order completes.{% endtrans %}</p>
+            <script
+                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="{{ stripe.publishable_key }}"
+                data-amount="{{ stripe.amount }}"
+                data-name="{{ stripe.name }}"
+                data-currency="{{ stripe.currency }}"
+                data-description="{{ stripe.description }}">
+            </script>
+        </div>
+    </div>
+</form>
+{% endblock %}
+

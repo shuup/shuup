@@ -1,0 +1,26 @@
+{% extends "shoop/admin/base.jinja" %}
+{% from "shoop/admin/macros/general.jinja" import content_block %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 section-navigation" data-navigatee="tax_rule_form"></div>
+        <div class="col-md-9">
+            <form method="post" id="tax_rule_form">
+                {% csrf_token %}
+                {% call content_block(_("General information"), "fa-info-circle") %}
+                    {{ bs3.field(form.enabled) }}
+                    {{ bs3.field(form.tax) }}
+                    {{ bs3.field(form.tax_classes, widget_class="multiselect") }}
+                    {{ bs3.field(form.customer_tax_groups, widget_class="multiselect") }}
+                    {{ bs3.field(form.country_codes_pattern) }}
+                    {{ bs3.field(form.region_codes_pattern) }}
+                    {{ bs3.field(form.postal_codes_pattern) }}
+                    {{ bs3.field(form.priority) }}
+                {% endcall %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

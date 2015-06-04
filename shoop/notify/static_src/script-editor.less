@@ -1,0 +1,173 @@
+@import "../../admin/static_src/base/less/variables.less";
+
+.step-list-wrapper {
+    position: relative;
+}
+
+.step {
+    border: 1px solid fade(@brand-primary, 75%);
+    border-radius: 4px;
+    background: #fff;
+    margin-bottom: 1em;
+
+    @media (min-width: @screen-sm-min) {
+        display: flex;
+    }
+
+    > div {
+        padding: 12px 15px;
+        @media (max-width: @screen-xs-max) {
+            border: solid @border-color;
+            border-width: 1px 0px 0px 0px;
+            &:first-child {
+                border-width: 0;
+                padding: 6px 15px;
+            }
+        }
+    }
+
+    &.disabled {
+        .step-conds, .step-actions, .step-next {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+    }
+
+    .hint {
+        display: block;
+        margin-bottom: 5px;
+        select { margin: 0px 5px; }
+    }
+}
+
+.step-buttons {
+    background: @brand-primary;
+
+    @media (min-width: @screen-sm-min) {
+        flex: 0 0 auto;
+    }
+
+    a {
+        color: rgba(255,255,255,0.7);
+        display: inline-block;
+        text-align: center;
+        padding: 6px 10px;
+        margin-right: 10px;
+        font-size: 16px;
+        line-height: 16px;
+        text-decoration: none;
+        &:hover, &:focus {
+            color: #fff;
+        }
+        @media (min-width: @screen-sm-min) {
+            display: block;
+            float: none;
+            margin: 4px 0px;
+            padding: 3px;
+            width: 20px;
+            height: 20px;
+        }
+    }
+}
+
+.step-conds, .step-actions, .step-next {
+    @media (min-width: @screen-sm-min) {
+        flex: 2;
+    }
+}
+
+ul.action-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+        padding: 2px;
+        display: block;
+        width: 100%;
+        &.current {
+            font-weight: bold;
+        }
+        .delete {
+            margin-left: 5px;
+            padding: 3px;
+            color: @gray-light;
+            &:hover, &:focus {
+                color: @brand-danger;
+            }
+        }
+    }
+}
+
+hr.script-separator {
+    border-color: @border-color;
+}
+
+.action-new {
+    margin-top: 10px;
+    @media (min-width: @screen-sm-min) {
+        padding-top: 10px;
+        border-top: 1px solid @border-color;
+    }
+}
+
+.new-step-item-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: fade(@gray-bg, 75%);
+}
+
+.new-step-item-modal {
+    max-width: 100%;
+    margin: auto;
+    margin-top: 1em;
+    background: #fff;
+    border: 1px solid @brand-primary;
+    border-radius: 4px;
+    overflow: hidden;
+    @media (min-width: @screen-sm-min) {
+        width: 50%;
+    }
+    .title {
+        padding: 10px 15px;
+        background: @brand-primary;
+        color: #fff;
+        font-size: 1.8rem;
+    }
+    .item-options {
+        max-height: 300px;
+        overflow-y: scroll;
+        margin: auto;
+        padding: 10px 0px;
+    }
+    .item-option {
+        padding: 5px 15px;
+        cursor: pointer;
+        &:hover {
+            background: #eee;
+        }
+        .item-name {
+            font-weight: normal;
+        }
+        .item-description {
+            margin: 0.5em;
+            font-size: 90%;
+        }
+    }
+}
+
+#step-table-container {
+    margin-bottom: 15px;
+}
+
+.iframe-container {
+    padding-top: 30px;
+    margin-top: 15px;
+    border-top: 1px solid @border-color;
+}
+
+#step-item-frame {
+    width: 100%;
+}

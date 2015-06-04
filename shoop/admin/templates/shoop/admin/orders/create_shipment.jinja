@@ -1,0 +1,60 @@
+{% extends "shoop/admin/base.jinja" %}
+{% from "shoop/admin/macros/general.jinja" import content_block, info_row %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="content-block">
+            <form method="post">
+                {% csrf_token %}
+                <table class="table table-condensed table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th class="text-right">To Ship</th>
+                        <th class="text-right">Ordered</th>
+                        <th class="text-right">Shipped</th>
+                        <th class="text-right">Unshipped</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th></th>
+                        <th>
+                            <button class="btn btn-sm btn-gray btn-inverse pull-right" type="button" onclick="setAllProducts()">Set All Products To Ship</button>
+                        </th>
+                        <th class="text-right">{{ form.product_summary.values()|sum("ordered") }}</th>
+                        <th class="text-right">{{ form.product_summary.values()|sum("shipped") }}</th>
+                        <th class="text-right">{{ form.product_summary.values()|sum("unshipped") }}</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    {% for product_id, info in form.product_summary.items() %}
+                        <tr>
+                            <td>{{ form.product_names.get(product_id) }}</td>
+                            <td class="text-right quantity-column">{{ form["q_" ~ product_id] }}</td>
+                            <td class="text-right">{{ info.ordered }}</td>
+                            <td class="text-right">{{ info.shipped }}</td>
+                            <td class="text-right">{{ info.unshipped }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {{ bs3.field(form.supplier) }}
+                <div class="clearfix">
+                    <button type="submit" class="btn btn-success pull-right">
+                        <i class="fa fa-check-circle"></i> {% trans %}Create Shipment{% endtrans %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block extra_js %}
+    <script>
+        function setAllProducts() {
+            $(".quantity-column input").each(function() {
+                var $input = $(this);
+                $input.val($input.data("max"));
+            })
+        }
+    </script>
+{% endblock %}

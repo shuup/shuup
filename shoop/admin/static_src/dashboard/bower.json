@@ -1,0 +1,13 @@
+{
+  "name": "dashboard",
+  "version": "0.0.0",
+  "private": true,
+  "main": [
+      "js/dashboard-charts.js",
+      "js/dashboard.js"
+  ],
+  "dependencies": {
+    "chartist": "~0.7.4",
+    "masonry": "~3.2.2"
+  }
+}

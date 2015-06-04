@@ -1,0 +1,24 @@
+# -*- coding: utf-8 -*-
+# This file is part of Shoop.
+#
+# Copyright (c) 2012-2015, Shoop Ltd. All rights reserved.
+#
+# This source code is licensed under the AGPLv3 license found in the
+# LICENSE file in the root directory of this source tree.
+from django.template.utils import InvalidTemplateEngineError
+from shoop.admin.base import AdminModule, Notification
+from django.utils.translation import ugettext_lazy as _
+from django.template import engines
+
+
+class SimpleOrderNotificationModule(AdminModule):
+    name = _("Simple order notifications")
+    category = name
+
+    def get_notifications(self, request):
+        try:
+            engines["jinja2"]
+        except InvalidTemplateEngineError:
+            text = """Simple Order Notifications can't send order notifications
+because it can't find a Jinja2 template engine. Name your Jinja2 template engine "jinja2" to resolve this."""
+            yield Notification(text=text)

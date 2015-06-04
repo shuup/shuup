@@ -1,0 +1,20 @@
+{% extends "shoop/admin/base.jinja" %}
+{% from "shoop/admin/macros/general.jinja" import content_block %}
+{% block title %}{{ attribute.name or _("New Attribute") }}{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 section-navigation" data-navigatee="attribute_form"></div>
+            <div class="col-md-9">
+                <form method="post" id="attribute_form">
+                    {% csrf_token %}
+                    {% call content_block(_("General information"), "fa-info-circle") %}
+                        {% for field in form %}
+                            {{ bs3.field(field) }}
+                        {% endfor %}
+                    {% endcall %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

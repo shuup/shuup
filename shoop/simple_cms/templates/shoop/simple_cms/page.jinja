@@ -1,0 +1,14 @@
+{% extends "shoop/front/base.jinja" %}
+
+{% block title %}{{ page.title }}{% endblock %}
+{% block content_title %}{{ page.title }}{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="glyphicon glyphicon-home"></i></a></li>
+        <li class="active">{{ page.title }}</li>
+    </ol>
+{% endblock %}
+{% block content %}
+    {{ page.get_html()|safe }}
+{% endblock %}

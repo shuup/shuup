@@ -1,0 +1,80 @@
+{% macro quantity_box() %}
+    <div class="form-group amount">
+        <label for="product-quantity">{% trans %}Quantity{% endtrans %}</label>
+        <div class="input-group">
+            <input
+            type="number"
+            class="form-control"
+            name="quantity"
+            id="product-quantity"
+            step="{{ shop_product.quantity_step }}"
+            value="{{ shop_product.rounded_minimum_purchase_quantity }}"
+            min="{{ shop_product.rounded_minimum_purchase_quantity }}">
+            <span class="input-group-addon sales-unit">{{ product.sales_unit.short_name }}</span>
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% if unorderability_reason %}
+    <p class="not-orderable">{{ unorderability_reason }}</p>
+{% elif variation_children %}
+    {% if not orderable_variation_children %}
+        <p class="not-orderable">{% trans %}Product not orderable{% endtrans %}</p>
+    {% else %}
+        <div class="product-variations">
+            <form role="form" method="post" action="{{ url("shoop:basket") }}" class="form-inline">
+                <input type="hidden" name="return" value="{{ request.path }}">
+                <input type="hidden" name="command" value="add">
+                <div class="form-group">
+                    <select name="product_id" id="product-variations" class="form-control">
+                        {% for p in orderable_variation_children %}
+                            {% set price = p.get_price(request) %}
+                            <option value="{{ p.id }}">
+                                {{ p.variation_name or p.name }}
+                                {# TODO: Tax rendering of variation children #}
+                                {# TODO: Remove hard coded euro in rendering of variation children prices #}
+                                ({{ price.taxful_price|floatformat(2) }} &euro; {% trans %}incl. VAT{% endtrans %} {{ product.get_tax_value_display() }}%,
+                                {{ price.taxless_price|floatformat(2)}} &euro; {% trans %}VAT{% endtrans %} 0%)
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {{ quantity_box() }}
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span> {% trans %}Add to cart{% endtrans %}</button>
+            </form>
+        </div>
+    {% endif %}
+{% else %}
+    {% set is_orderable=shop_product.is_orderable(supplier=None, customer=request.customer, quantity=1) %}
+    <div class="prices row">
+        {% if is_orderable %}
+            <form role="form" method="post" action="{{ url("shoop:basket") }}" class="form-inline">
+                <div class="col-sm-12">
+                    <input type="hidden" name="return" value="{{ request.path }}">
+                    <input type="hidden" name="command" value="add">
+                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                    {{ quantity_box() }}
+                    {# TODO: This should be dynamically updated from the backend with AJA
+                    <div class="price pull-right">
+                        <h4>
+                            <small>Total: </small>
+                            <span id="product-price-placeholder">
+                                {{ product.get_price(request)|home_currency }}
+                            </span>
+                            <span class="sales-unit">
+                                {{ product.sales_unit.short_name }}
+                            </span>
+                        </h4>
+                    </div>
+                    #}
+                </div>
+                <div class="col-sm-12">
+                    <hr>
+                    <button type="submit" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-shopping-cart"></span> {% trans %}Add to cart{% endtrans %}</button>
+                </div>
+            </form>
+        {% endif %}
+
+    </div>
+{% endif %}

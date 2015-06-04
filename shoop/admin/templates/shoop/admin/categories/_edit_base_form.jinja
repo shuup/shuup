@@ -1,0 +1,22 @@
+{% from "shoop/admin/macros/general.jinja" import content_block %}
+{% from "shoop/admin/macros/multilanguage.jinja" import language_dependent_content_tabs %}
+{% set category_form = form["base"] %}
+
+{% call content_block(_("General Information"), "fa-info-circle") %}
+    {% call(form, language, map) language_dependent_content_tabs(category_form) %}
+        {{ bs3.field(category_form[map.name]) }}
+        {{ bs3.field(category_form[map.slug]) }}
+        {{ bs3.field(category_form[map.description], widget_class="remarkable-field") }}
+    {% endcall %}
+    <div class="row">
+        <div class="col-sm-8 col-sm-push-4 col-lg-6 col-lg-push-3">
+            <hr>
+        </div>
+    </div>
+    {{ bs3.field(category_form.parent) }}
+    {{ bs3.field(category_form.shops, widget_class="multiselect") }}
+    {{ bs3.field(category_form.ordering) }}
+    {{ bs3.field(category_form.status) }}
+    {{ bs3.field(category_form.visibility) }}
+    {{ bs3.field(category_form.visibility_groups, widget_class="multiselect") }}
+{% endcall %}

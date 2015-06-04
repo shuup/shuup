@@ -1,0 +1,60 @@
+{%- import "shoop/front/macros.jinja" as macros with context -%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block extrameta %}{% endblock %}
+
+    <title>{{ request.shop }} &ndash; {% block title %}{% endblock %}</title>
+
+    {# Include favicon #}
+    <link rel="icon" type="image/x-icon" href="{{ STATIC_URL }}shoop/img/favicon.ico">
+
+    {# Include Bootstrap styles #}
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.2/cosmo/bootstrap.min.css">
+</head>
+<body>
+    <header role="banner">
+        {% include "shoop/front/includes/_navigation.jinja" %}
+    </header>
+
+    <div class="container">
+
+        {% block breadcrumb %}{% endblock %}
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <main class="main-content" role="main">
+
+            {% block before_content_title %}{% endblock %}
+
+            {% if self.content_title() %}
+                <div class="page-header">
+                    <h1>{% block content_title %}{% endblock %}</h1>
+                </div>
+            {% endif %}
+
+            <div class="page-content">
+                {% block content %}{% endblock %}
+            </div>
+
+        </main>
+
+    </div>
+
+    {# jQuery #}
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    {# Include all Bootstrap JavaScript libraries #}
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    {# Include all Extra JavaScript #}
+    {% block extrajs %}{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+{% extends "shoop/admin/base.jinja" %}
+{% from "shoop/admin/macros/general.jinja" import content_block %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 section-navigation" data-navigatee="tax_class_form"></div>
+            <div class="col-md-9">
+                <form method="post" id="tax_class_form">
+                    {% csrf_token %}
+                    {% call content_block(_("General information"), "fa-info-circle") %}
+                        {{ bs3.field(form.name) }}
+                        {{ bs3.field(form.tax_rate) }}
+                        {{ bs3.field(form.status) }}
+                    {% endcall %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

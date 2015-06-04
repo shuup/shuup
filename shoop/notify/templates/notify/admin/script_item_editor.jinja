@@ -1,0 +1,102 @@
+{% extends "shoop/admin/base.jinja" %}
+{% block top %}{% endblock %}
+{% macro binding_view(form) %}
+    <ul class="list-group">
+        {% for binding_identifier, info in form.binding_field_info.items() %}
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>{{ info.binding.name }}</strong>
+                        {% if info.binding.help_text %}
+                            <p class="help-block"><small>{{ info.binding.help_text }}</small></p>
+                        {% endif %}
+                    </div>
+                    {% if info.constant and not info.variable %}
+                        <div class="col-md-4">{{ bs3.field(form[info.constant], render_label=False) }}</div>
+                    {% elif info.variable and not info.constant %}
+                        <div class="col-md-4">{{ bs3.field(form[info.variable], render_label=False) }}</div>
+                    {% else %}
+                        <div class="col-md-4">{% if info.constant %}{{ bs3.field(form[info.constant]) }}{% endif %}</div>
+                        <div class="col-md-4">{% if info.variable %}{{ bs3.field(form[info.variable]) }}{% endif %}</div>
+                    {% endif %}
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+{% macro template_field_view(form, language_code) %}
+    {% for t_field_name, form_field_name in form.template_field_info[language_code].items() %}
+        {{ bs3.field(form[form_field_name]) }}
+    {% endfor %}
+{% endmacro %}
+
+{% macro template_variable_list() %}
+    <ul class="list-group">
+        {% for variable_identifier, variable_info in form.variables|dictsort %}
+        <li class="list-group-item">
+            <a href="#"
+               onclick="insertTemplateVariableExpression(this.dataset.var);return false"
+               data-var="{{ variable_identifier }}"
+            >
+                {{ variable_info.name }}
+            </a>
+            <br><code>{{ '{{ ' ~ variable_identifier ~ ' }}' }}</code>
+            <br>{{ variable_info.help_text|default("") }}
+        </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+{% block content_wrap %}
+    <div class="iframe-content-block">
+        <h2 class="iframe-title">{{ script_item.name }}</h2>
+        {% if script_item.description %}<p>{{ script_item.description }}</p>{% endif %}
+        <form enctype="multipart/form-data" action="" method="post">
+            {% if form.errors %}{{ form.errors }}{% endif %}
+            <input name="init_data" type="hidden" value="{{ init_data }}">
+            <ul class="nav nav-tabs" id="main-tabs">
+                <li role="presentation" class="active"><a href="#variables">Variables</a></li>
+                {% for language_code, language_name in form.template_languages %}
+                <li role="presentation"><a href="#template-{{ language_code }}">{{ language_name }}</a></li>
+                {% endfor %}
+            </ul>
+            <div id="variables" class="tab-pane">{{ binding_view(form) }}</div>
+            {% for language_code, language_name in form.template_languages %}
+                <div id="template-{{ language_code }}" class="tab-pane">
+                    <div class="row">
+                        <div class="col-md-8">{{ template_field_view(form, language_code) }}</div>
+                        <div class="col-md-4">
+                            {{ template_variable_list() }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <input class="btn btn-success" type="submit" value="Save changes">
+        </form>
+    </div>
+{% endblock %}
+{% block extra_css %}
+<style>
+    body {
+        background: #fff;
+        padding-top: 0;
+    }
+    .iframe-content-block {
+        background: #fff;
+        padding: 30px;
+    }
+    .iframe-title {
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+    .title { margin-bottom: 15px; }
+    .nav-tabs { margin-bottom: 30px; }
+</style>
+{% endblock %}
+{% block extra_js %}
+    {% if post_message %}
+        <script>window.parent.postMessage({{ post_message|json }}, "*");</script>
+    {% endif %}
+    <script src="{{ static("notify/admin/script-item-editor.js") }}"></script>
+{% endblock %}

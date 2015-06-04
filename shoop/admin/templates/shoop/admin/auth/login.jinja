@@ -1,0 +1,25 @@
+{% extends "shoop/admin/base_small_dialog.jinja" %}
+{% block title %}{% trans %}Login{% endtrans %}{% endblock %}
+{% from "shoop/admin/macros/general.jinja" import auth_block %}
+{% block content %}
+    {% call auth_block("subtle-slide-in") %}
+        <form action="" method="post">
+            {% csrf_token %}
+            {% if form.non_field_errors() %}
+                <div class="field-error-text text-warning">
+                    {% for error in form.non_field_errors() %}
+                        <h4><i class="fa fa-warning"></i> {{ error }}</h4>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {{ bs3.field(form.username) }}
+            {{ bs3.field(form.password) }}
+            <div class="actions">
+                <button class="btn btn-primary btn-lg btn-block" type="submit">
+                    <i class="fa fa-sign-in"></i>
+                    {% trans %}Login{% endtrans %}
+                </button>
+            </div>
+        </form>
+    {% endcall %}
+{% endblock %}

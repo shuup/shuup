@@ -1,0 +1,2 @@
+recursive-include shoop *.jinja *.html *.txt
+recursive-include shoop_tests *.jinja *.html *.txt

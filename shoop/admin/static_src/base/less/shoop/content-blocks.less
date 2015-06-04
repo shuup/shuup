@@ -1,0 +1,118 @@
+.content-block {
+    margin-bottom: 15px;
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background: #fff;
+    border-radius: 4px;
+    border: solid #ededed;
+    border-width: 3px 1px;
+
+    @media (max-width: @screen-sm-max) {
+        display: block !important;
+    }
+
+    @media (min-width: @screen-sm-min) {
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+
+    .title {
+        position: relative;
+
+        &.open {
+            .block-title {
+                @media (max-width: @screen-sm-max) {
+                    border-color: @brand-primary;
+                    padding-bottom: 15px;
+                }
+            }
+            .toggle-contents i { transform: rotate(90deg); }
+        }
+
+        .block-title {
+            border-bottom: 3px solid @brand-primary;
+            padding-bottom: 15px;
+            margin-bottom: 0px;
+            margin-top: 0;
+            padding-right: 40px;
+            transition: all 0.2s;
+            @media (max-width: @screen-sm-max) {
+                border-color: #fff;
+                padding-bottom: 0;
+            }
+            @media (min-width: @screen-md-min) {
+                padding-right: 0;
+            }
+            i {
+                color: @brand-primary;
+                margin-right: 5px;
+            }
+        }
+
+        .toggle-contents {
+            position: absolute;
+            right: 0;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            text-align: right;
+
+            @media (min-width: @screen-md-min) {
+                display: none;
+            }
+
+            i {
+                padding: 7px;
+                font-size: 1.4rem;
+                transition: all 0.2s;
+            }
+        }
+    }
+
+    .content-wrap {
+        @media (min-width: @screen-md-min) {
+            display: block;
+            visibility: visible;
+            height: auto !important;
+        }
+
+        .content {
+            margin-top: 45px;
+        }
+    }
+
+    .nav-tabs {
+        margin-top: 30px;
+    }
+    .tab-content {
+        margin-top: 30px;
+    }
+    .language-tabs {
+        margin-top: 50px;
+    }
+
+    .contact-addresses {
+        .billing-address, .shipping-address {
+            margin-bottom: 50px;
+            h4.underline {
+                margin-top: 0;
+                border-bottom: 1px solid @border-color;
+                margin-bottom: 30px;
+                padding-bottom: 10px;
+                i { margin-right: 5px; }
+            }
+        }
+    }
+
+    .sub-title {
+        margin-bottom: 20px;
+        margin-top: 30px;
+    }
+
+    hr {
+        border-color: @border-color;
+        margin: 30px 0px;
+    }
+
+}
