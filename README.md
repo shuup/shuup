@@ -2,6 +2,8 @@
 
 Shoop is an Open Source E-Commerce Platform based on Django and Python.
 
+https://shoop.io/
+
 ## Copyright
 
 Copyright (C) 2012-2015 by Shoop Ltd. <contact@shoop.io>
