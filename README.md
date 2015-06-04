@@ -12,6 +12,13 @@ Shoop is International Registered Trademark & Property of Shoop Ltd.,
 Business ID: FI24815722, Business Address: Aurakatu 12 B, 20100 Turku,
 Finland.
 
+## CLA & DCO
+
+Notice: At the release of Shoop Marketplace we will be adding
+Contributor License Agreement and Developer's Certificate of Origin to
+allow the best possible experience for users to sell add-ons thru
+Marketplace
+
 ## License
 
 Shoop is published under the GNU Affero General Public License,
