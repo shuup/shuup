@@ -1,6 +1,17 @@
 Licenses for Vendored Software
 ==============================
 
+Sphinx plugins for Django documentation
+---------------------------------------
+
+* Copyright: Copyright (c) Django Software Foundation and individual
+  contributors.
+* License: Django's BSD license
+  <https://github.com/django/django/blob/master/LICENSE>
+* Repository: https://github.com/django/django
+
+* doc/_ext/djangodocs.py
+
 Doppio One
 ----------
 
