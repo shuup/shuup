@@ -12,7 +12,7 @@
         display: block !important;
     }
 
-    @media (min-width: @screen-sm-min) {
+    @media (min-width: @screen-md-min) {
         padding: 30px;
         margin-bottom: 30px;
     }
@@ -113,6 +113,18 @@
     hr {
         border-color: @border-color;
         margin: 30px 0px;
+    }
+
+    .text-muted {
+        color: #999;
+    }
+
+    .dl-horizontal {
+        dd { margin-bottom: 5px; }
+        @media (min-width: @screen-sm-min) {
+            dd { margin-left: 220px; }
+            dt { width: 200px; }
+        }
     }
 
 }

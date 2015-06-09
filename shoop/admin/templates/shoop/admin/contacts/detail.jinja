@@ -8,14 +8,13 @@
             <div class="col-md-9">
                 <div id="contact_details">
                     {% call content_block(_("Basic Information"), "fa-info-circle") %}
-                        <table class="table table-condensed">
-                            <tbody>
+                        <dl class="dl-horizontal">
                             {{ info_row(_("Full Name"), contact.full_name) }}
                             {{ info_row(_("Phone"), contact.phone, "tel:" ~ contact.phone) }}
                             {{ info_row(_("Email"), contact.email, "mailto:" ~ contact.email) }}
                             {{ info_row(_("Bound User"), contact.user, shoop_admin.model_url(contact.user) if contact.user else None) }}
                             </tbody>
-                        </table>
+                        </dl>
                     {% endcall %}
 
                     {% if contact.default_shipping_address_id or contact.default_billing_address_id %}
@@ -42,10 +41,8 @@
                     {% endif %}
 
                     {% call content_block(_("Orders"), "fa-inbox") %}
-                        <div class="table-responsive">
-                            {% from "shoop/admin/macros/order_table.jinja" import order_table with context %}
-                            {{ order_table(orders) }}
-                        </div>
+                        {% from "shoop/admin/macros/order_view.jinja" import order_view with context %}
+                        {{ order_view(orders) }}
                     {% endcall %}
                 </div>
             </div>

@@ -11,6 +11,7 @@ from django.contrib import messages
 from django import forms
 from django.http.response import HttpResponseRedirect
 from django.views.generic import UpdateView
+from shoop.admin.toolbar import Toolbar, PostActionButton
 from shoop.admin.utils.urls import get_model_url
 from shoop.core.excs import NoProductsToShipException
 from shoop.core.models import Order, Supplier, Product
@@ -27,6 +28,14 @@ class OrderCreateShipmentView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(OrderCreateShipmentView, self).get_context_data(**kwargs)
         context["title"] = _("Create Shipment \u2014 %s") % context["order"]
+        context["toolbar"] = Toolbar([
+            PostActionButton(
+                icon="fa fa-check-circle",
+                form_id="create_shipment",
+                text=_("Create Shipment"),
+                extra_css_class="btn-success",
+            ),
+        ])
         return context
 
     def get_form_kwargs(self):
