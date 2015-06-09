@@ -18,7 +18,7 @@ LICENSE file in the root directory of this source tree.
 PY_HEADER = '\n'.join(('# ' + line).strip() for line in HEADER.splitlines())
 JS_HEADER = (
     '/**\n' +
-    '\n'.join((' * ' + line).strip() for line in HEADER.splitlines()) +
+    '\n'.join((' * ' + line).rstrip() for line in HEADER.splitlines()) +
     '\n */')
 
 PY_HEADER_LINES = PY_HEADER.encode('utf-8').splitlines()
