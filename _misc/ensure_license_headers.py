@@ -45,7 +45,15 @@ def find_files(extension):
     for (path, dirnames, filenames) in os.walk('.'):
         for filename in filenames:
             if filename.endswith(extension):
-                yield os.path.join(path, filename)
+                filepath = os.path.join(path, filename)
+                if not is_file_ignored(filepath):
+                    yield filepath
+
+
+def is_file_ignored(filepath):
+    return (
+        ('vendor' in filepath) or
+        os.path.join('doc', '_ext', 'djangodocs.py') in filepath)
 
 
 def has_header(path):
