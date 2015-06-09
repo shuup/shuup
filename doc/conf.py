@@ -101,8 +101,8 @@ intersphinx_mapping = {
         'http://docs.python.org/3',
         None),
     'django': (
-        'http://docs.djangoproject.com/en/1.7/',
-        'http://docs.djangoproject.com/en/1.7/_objects/'),
+        'http://docs.djangoproject.com/en/1.8/',
+        'http://docs.djangoproject.com/en/1.8/_objects/'),
     'djpolymorph': (
         'http://django-polymorphic.readthedocs.org/en/latest/',
         None),
@@ -112,7 +112,7 @@ intersphinx_mapping = {
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'default'
+html_theme = 'classic'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -154,7 +154,7 @@ html_static_path = ['_static']
 
 # If true, SmartyPants will be used to convert quotes and dashes to
 # typographically correct entities.
-# html_use_smartypants = True
+html_use_smartypants = True
 
 # Custom sidebar templates, maps document names to template names.
 # html_sidebars = {}
