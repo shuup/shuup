@@ -18,7 +18,7 @@ LICENSE file in the root directory of this source tree.
 PY_HEADER = '\n'.join(('# ' + line).strip() for line in HEADER.splitlines())
 JS_HEADER = (
     '/**\n' +
-    '\n'.join((' * ' + line).strip() for line in HEADER.splitlines()) +
+    '\n'.join((' * ' + line).rstrip() for line in HEADER.splitlines()) +
     '\n */')
 
 PY_HEADER_LINES = PY_HEADER.encode('utf-8').splitlines()
@@ -45,7 +45,15 @@ def find_files(extension):
     for (path, dirnames, filenames) in os.walk('.'):
         for filename in filenames:
             if filename.endswith(extension):
-                yield os.path.join(path, filename)
+                filepath = os.path.join(path, filename)
+                if not is_file_ignored(filepath):
+                    yield filepath
+
+
+def is_file_ignored(filepath):
+    return (
+        ('vendor' in filepath) or
+        os.path.join('doc', '_ext', 'djangodocs.py') in filepath)
 
 
 def has_header(path):
