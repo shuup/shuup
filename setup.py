@@ -163,6 +163,8 @@ if __name__ == '__main__':
         install_requires=REQUIRES,
         tests_require=TESTS_REQUIRE,
         extras_require=EXTRAS_REQUIRE,
-        packages=find_packages(exclude=EXCLUDE_PATTERNS),
+        packages=find_packages(
+            exclude=["workbench*", "shoop_tests*"] + EXCLUDE_PATTERNS
+        ),
         include_package_data=True,
     )
