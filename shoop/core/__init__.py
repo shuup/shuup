@@ -12,6 +12,12 @@ class ShoopCoreAppConfig(AppConfig):
     name = "shoop.core"
     verbose_name = "Shoop Core"
     label = "shoop"  # Use "shoop" as app_label instead of "core"
+    required_installed_apps = (
+        "django.contrib.auth",
+        "django.contrib.contenttypes",
+        "easy_thumbnails",
+        "filer",
+    )
 
 
 default_app_config = "shoop.core.ShoopCoreAppConfig"
