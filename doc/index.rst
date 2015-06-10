@@ -20,6 +20,7 @@ Developer documentation
    glossary
    data_model
    provides
+   addons
    templates
    taxes
    api/modules
