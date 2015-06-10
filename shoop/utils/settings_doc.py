@@ -7,12 +7,16 @@
 import os
 import re
 import sys
+import six
 import token
 import tokenize
 
 import django.conf
 import shoop.apps
 
+FILE_READ_KWARGS = {"mode": "rb"}
+if six.PY3:
+    FILE_READ_KWARGS = {"mode": "r", "encoding": "utf-8"}
 
 _TOKEN_MAP = dict(((k, v) for (v, k) in token.tok_name.items()))
 COMMENT_TOKEN = _TOKEN_MAP['COMMENT']
@@ -74,7 +78,8 @@ def _get_comments_before_assignments(module_name, names):
     module_py_file = re.sub('.py[cdo]?$', '.py', module_pyc_file)
     if not os.path.exists(module_py_file):
         return {}
-    with open(module_py_file, 'rb') as fp:
+
+    with open(module_py_file, **FILE_READ_KWARGS) as fp:
         tokens = list(tokenize.generate_tokens(fp.readline))
 
     name_assign_tokens = [
