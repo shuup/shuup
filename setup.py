@@ -69,6 +69,7 @@ if sys.version_info[0] == 2:
 
 TESTS_REQUIRE = [
     "beautifulsoup4==4.3.2",
+    "mock==1.0.1",
     "pytest-cache==1.0",
     "pytest==2.7.1",
     "pytest-cov==1.8.1",
