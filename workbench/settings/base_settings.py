@@ -47,7 +47,6 @@ INSTALLED_APPS = add_enabled_addons(SHOOP_ENABLED_ADDONS_FILE, (
     'bootstrap3',
     'shoop.notify',
     'shoop.simple_cms',
-    'shoop.stripe',
 ))
 
 MIDDLEWARE_CLASSES = (
