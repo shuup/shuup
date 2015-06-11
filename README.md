@@ -29,6 +29,13 @@ published under other AGPLv3-compatible licenses.  For these, please
 refer to VENDOR-LICENSES.md file in the source code tree or the licenses
 included within each package.
 
+## Chat
+
+We have a Gitter chat room for Shoop.  Come chat with us!
+[![Join chat][join-chat-img]](https://gitter.im/shoopio/shoop)
+
+[join-chat-img]: https://badges.gitter.im/Join%20Chat.svg
+
 ## Getting started with Shoop development
 
 See [Getting Started](doc/getting_started_dev.rst).
