@@ -126,7 +126,7 @@ class AppConfig(django.apps.AppConfig):
     def _get_app_require_reason(self, app_name):
         try:
             return self.required_installed_apps[app_name]
-        except (AttributeError, KeyError):
+        except (TypeError, KeyError):
             return "required"
 
     def _check_required_installed_apps(self):
