@@ -239,10 +239,14 @@ class Order(models.Model):
         verbose_name_plural = _('orders')
 
     def __str__(self):  # pragma: no cover
-        if settings.SHOOP_ENABLE_MULTIPLE_SHOPS:
-            return "Order %s (%s, %s)" % (self.identifier, self.shop.name, self.billing_address.name)
+        if self.billing_address_id:
+            name = self.billing_address.name
         else:
-            return "Order %s (%s)" % (self.identifier, self.billing_address.name)
+            name = "-"
+        if settings.SHOOP_ENABLE_MULTIPLE_SHOPS:
+            return "Order %s (%s, %s)" % (self.identifier, self.shop.name, name)
+        else:
+            return "Order %s (%s)" % (self.identifier, name)
 
     def cache_prices(self):
         taxful_total = Decimal(0)
