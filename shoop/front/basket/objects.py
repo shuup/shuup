@@ -15,6 +15,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shoop.core.models import ShippingMethod, PaymentMethod, OrderLineType
 from shoop.core.order_creator.source import OrderSource, SourceLine
+from shoop.front.basket.storage import get_storage
 from shoop.utils.numbers import parse_decimal_string
 from shoop.utils.objects import compare_partial_dicts
 import six
@@ -88,6 +89,7 @@ class BaseBasket(OrderSource):
         super(BaseBasket, self).__init__()
         self.basket_name = basket_name
         self.request = request
+        self.storage = get_storage()
         self._data = None
         self.dirty = False
         self.customer = getattr(request, "customer", None)
@@ -95,15 +97,57 @@ class BaseBasket(OrderSource):
         self.__computing_processed_lines = None
 
     def load(self):
+        """
+        Get the currently persisted data for this basket.
+
+        This will only access the storage once per request in usual circumstances.
+
+        :return: Data dict.
+        :rtype: dict
+        """
         if self._data is None:
-            self._data = self.request.session.setdefault(self.basket_name, {})
+            self._data = self.storage.load(basket=self)
             self.dirty = False
         return self._data
 
     def save(self):
+        """
+        Persist any changes made into the basket to storage.
+
+        One does not usually need to directly call this;
+        `shoop.front.middleware.ShoopFrontMiddleware` will usually take care of it.
+        """
         self.clean_empty_lines()
-        self.request.session[self.basket_name] = self._data
+        self.storage.save(basket=self, data=self._data)
         self.dirty = False
+
+    def delete(self):
+        """
+        Clear and delete the basket data.
+        """
+        self.storage.delete(basket=self)
+        self.uncache()
+        self._data = None
+        self.dirty = False
+
+    def finalize(self):
+        """
+        Mark the basket as "completed" (i.e. an order is created/a conversion made).
+
+        This will also clear the basket's data.
+        """
+        self.storage.finalize(basket=self)
+        self.uncache()
+        self._data = None
+        self.dirty = False
+
+    def clear_all(self):
+        """
+        Clear all data for this basket.
+        """
+        self._data = {}
+        self.uncache()
+        self.dirty = True
 
     @property
     def _data_lines(self):
@@ -249,11 +293,6 @@ class BaseBasket(OrderSource):
         for line in self._data_lines:
             if six.text_type(line.get("parent_line_id")) == six.text_type(parent_line_id):
                 yield line
-
-    def clear_all(self):
-        self.load().clear()
-        self.uncache()
-        self.dirty = True
 
     def _get_orderable(self):
         return (sum(l.quantity for l in self.get_lines()) > 0)
