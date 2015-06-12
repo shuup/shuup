@@ -6,7 +6,7 @@
 {% block breadcrumb %}
     <ol class="breadcrumb">
         <li><a href="/"><i class="glyphicon glyphicon-home"></i></a></li>
-        {% for c in category.get_ancestors(False, False) %}
+        {% for c in category.get_ancestors() if c.is_visible(customer=request.customer) %}
             <li><a href="{{ c.get_absolute_url() }}">{{ c.name }}</a></li>
         {% endfor %}
         <li class="active">{{ category.name }}</li>
