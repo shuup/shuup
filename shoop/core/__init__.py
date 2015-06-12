@@ -18,6 +18,11 @@ class ShoopCoreAppConfig(AppConfig):
         "easy_thumbnails",
         "filer",
     )
+    provides = {
+        "api_populator": [
+            "shoop.core.api:populate_core_api"
+        ]
+    }
 
 
 default_app_config = "shoop.core.ShoopCoreAppConfig"

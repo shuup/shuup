@@ -18,6 +18,9 @@ class ShoopSimplePricingAppConfig(AppConfig):
         ],
         "admin_product_form_part": [
             "shoop.simple_pricing.admin_form_part:SimplePricingFormPart"
+        ],
+        "api_populator": [
+            "shoop.simple_pricing.api:populate_simple_pricing_api"
         ]
     }
 
