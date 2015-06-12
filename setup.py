@@ -59,6 +59,7 @@ REQUIRES = [
     'django-polymorphic==0.7.1',
     'django-registration-redux==1.2',
     'django-timezone-field==1.2',
+    'djangorestframework==3.1.3',
     'factory-boy==2.5.2',
     'fake-factory==0.5.2',
     'jsonfield==1.0.3',
