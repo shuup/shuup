@@ -12,6 +12,8 @@ from django.db.models import BLANK_CHOICE_DASH
 from django.utils.translation import ugettext_lazy as _
 from django.core.validators import RegexValidator
 from django.db import models
+from jsonfield.fields import JSONField
+from shoop.core.fields.tagged_json import TaggedJSONEncoder, tag_registry
 from shoop.utils.i18n import get_current_babel_locale
 
 IdentifierValidator = RegexValidator("[a-z][a-z_]+")
@@ -99,3 +101,13 @@ class LanguageField(models.CharField):
 # https://docs.djangoproject.com/en/1.8/ref/models/fields/#django.db.models.ForeignKey.allow_unsaved_instance_assignment
 class UnsavedForeignKey(models.ForeignKey):
     allow_unsaved_instance_assignment = True
+
+
+class TaggedJSONField(JSONField):
+    def __init__(self, *args, **kwargs):
+        dump_kwargs = kwargs.setdefault("dump_kwargs", {})
+        dump_kwargs.setdefault("cls", TaggedJSONEncoder)
+        dump_kwargs.setdefault("separators", (',', ':'))
+        load_kwargs = kwargs.setdefault("load_kwargs", {})
+        load_kwargs.setdefault("object_hook", tag_registry.decode)
+        super(TaggedJSONField, self).__init__(*args, **kwargs)

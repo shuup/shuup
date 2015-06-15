@@ -44,7 +44,7 @@ SHOOP_BASKET_CLASS_SPEC = (
 #: (DirectSessionBasketStorage).  Custom storage backends could use caches, flat
 #: files, etc. if required.
 SHOOP_BASKET_STORAGE_CLASS_SPEC = (
-    "shoop.front.basket.storage:DirectSessionBasketStorage")
+    "shoop.front.basket.storage:DatabaseBasketStorage")
 
 #: Spec string for the Django CBV (or an API-compliant class) for the checkout view.
 #:

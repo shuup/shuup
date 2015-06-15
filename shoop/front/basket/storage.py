@@ -2,7 +2,10 @@
 import six
 import abc
 from django.conf import settings
+from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ImproperlyConfigured
+from shoop.core.models.contacts import AnonymousContact
+from shoop.front.models import StoredBasket
 from shoop.utils.importing import cached_load
 
 
@@ -60,6 +63,63 @@ class DirectSessionBasketStorage(BasketStorage):
 
     def delete(self, basket):
         basket.request.session.pop(basket.basket_name, None)
+
+
+class DatabaseBasketStorage(BasketStorage):
+    def _get_session_key(self, basket):
+        return "basket_%s_key" % basket.basket_name
+
+    def save(self, basket, data):
+        request = basket.request
+        stored_basket = self._get_stored_basket(basket)
+        stored_basket.data = data
+        # TODO: (TAX) the `basket.*_price` getters probably raise some sort of exception
+        #       if a given price can't be calculated?
+        stored_basket.taxless_total = basket.taxless_total_price
+        stored_basket.taxful_total = basket.taxful_total_price
+        stored_basket.product_count = basket.product_count
+        user = getattr(request, "user", AnonymousUser())
+        customer = getattr(request, "customer", AnonymousContact())
+        if not user.is_anonymous:
+            stored_basket.owner_user = user
+        if not customer.is_anonymous:
+            stored_basket.owner_contact = customer
+        stored_basket.save()
+        product_ids = set(basket.get_product_ids_and_quantities().keys())
+        stored_basket.products = product_ids
+        basket_get_kwargs = {"pk": stored_basket.pk, "key": stored_basket.key}
+        request.session[self._get_session_key(basket)] = basket_get_kwargs
+
+    def load(self, basket):
+        stored_basket = self._get_stored_basket(basket)
+        return stored_basket.data or {}
+
+    def delete(self, basket):
+        stored_basket = self._get_stored_basket(basket)
+        if stored_basket and stored_basket.pk:
+            stored_basket.deleted = True
+            stored_basket.save()
+        basket.request.session.pop(self._get_session_key(basket), None)
+
+    def finalize(self, basket):
+        stored_basket = self._get_stored_basket(basket)
+        if stored_basket and stored_basket.pk:
+            stored_basket.deleted = True
+            stored_basket.finished = True
+            stored_basket.save()
+        basket.request.session.pop(self._get_session_key(basket), None)
+
+    def _get_stored_basket(self, basket):
+        request = basket.request
+        basket_get_kwargs = request.session.get(self._get_session_key(basket))
+        stored_basket = None
+        if basket_get_kwargs:
+            stored_basket = StoredBasket.objects.filter(deleted=False, **basket_get_kwargs).first()
+        if not stored_basket:
+            if basket_get_kwargs:
+                request.session.pop(self._get_session_key(basket), None)
+            stored_basket = StoredBasket()
+        return stored_basket
 
 
 def get_storage():

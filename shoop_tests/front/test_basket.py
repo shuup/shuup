@@ -7,24 +7,35 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from shoop.front.basket import get_basket
+from shoop.front.models import StoredBasket
 from shoop.simple_pricing.models import SimpleProductPrice
 from shoop.testing.factories import get_default_shop, create_product, get_default_supplier
 from shoop_tests.utils import printable_gibberish
+from django.db.models import Sum
 from django.test.utils import override_settings
 
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("storage", [
     "shoop.front.basket.storage:DirectSessionBasketStorage",
+    "shoop.front.basket.storage:DatabaseBasketStorage",
 ])
 def test_basket(rf, storage):
+    StoredBasket.objects.all().delete()
     quantities = [3, 12, 44, 23, 65]
     shop = get_default_shop()
     supplier = get_default_supplier()
-    product = create_product(printable_gibberish(), shop=shop, supplier=supplier)
-    SimpleProductPrice.objects.get_or_create(shop=shop, product=product, defaults={"price": 50, "includes_tax": False})
+    products_and_quantities = []
+    for quantity in quantities:
+        product = create_product(printable_gibberish(), shop=shop, supplier=supplier)
+        SimpleProductPrice.objects.get_or_create(
+            shop=shop, product=product, defaults={"price": 50, "includes_tax": False}
+        )
+        products_and_quantities.append((product, quantity))
+
+    is_database = (storage == "shoop.front.basket.storage:DatabaseBasketStorage")
     with override_settings(SHOOP_BASKET_STORAGE_CLASS_SPEC=storage):
-        for q in quantities:
+        for product, q in products_and_quantities:
             request = rf.get("/")
             request.session = {}
             request.shop = shop
@@ -38,3 +49,14 @@ def test_basket(rf, storage):
             delattr(request, "basket")
             basket = get_basket(request)
             assert basket.get_product_ids_and_quantities().get(product.pk) == q
+            if is_database:
+                product_ids = set(StoredBasket.objects.last().products.values_list("id", flat=True))
+                assert product_ids == set([product.pk])
+
+        if is_database:
+            stats = StoredBasket.objects.all().aggregate(
+                n=Sum("product_count"),
+                s=Sum("taxless_total"),
+            )
+            assert stats["n"] == sum(quantities)
+            assert stats["s"] == sum(quantities) * 50
