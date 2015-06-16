@@ -6,7 +6,8 @@
     "doc": "doc"
   },
   "scripts": {
-    "build": "python setup.py build_resources"
+    "build": "python setup.py build_resources",
+    "dev:test": "py.test -vvv --cov shoop --cov-report html shoop_tests"
   },
   "repository": {
     "type": "git",
