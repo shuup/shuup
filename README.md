@@ -1,10 +1,12 @@
-# Shoop
+Shoop
+=====
 
 Shoop is an Open Source E-Commerce Platform based on Django and Python.
 
 https://shoop.io/
 
-## Copyright
+Copyright
+---------
 
 Copyright (C) 2012-2015 by Shoop Ltd. <contact@shoop.io>
 
@@ -12,14 +14,15 @@ Shoop is International Registered Trademark & Property of Shoop Ltd.,
 Business ID: FI24815722, Business Address: Aurakatu 12 B, 20100 Turku,
 Finland.
 
-## CLA & DCO
+CLA
+---
 
 Notice: At the release of Shoop Marketplace we will be adding
-Contributor License Agreement and Developer's Certificate of Origin to
-allow the best possible experience for users to sell add-ons thru
-Marketplace
+Contributor License Agreement for Shoop to allow the best possible
+experience for users to sell add-ons through Shoop Marketplace.
 
-## License
+License
+-------
 
 Shoop is published under the GNU Affero General Public License,
 version 3 (AGPLv3). See the LICENSE file distributed with Shoop.
@@ -29,18 +32,21 @@ published under other AGPLv3-compatible licenses.  For these, please
 refer to VENDOR-LICENSES.md file in the source code tree or the licenses
 included within each package.
 
-## Chat
+Chat
+----
 
 We have a Gitter chat room for Shoop.  Come chat with us!
 [![Join chat][join-chat-img]](https://gitter.im/shoopio/shoop)
 
 [join-chat-img]: https://badges.gitter.im/Join%20Chat.svg
 
-## Getting started with Shoop development
+Getting started with Shoop development
+--------------------------------------
 
 See [Getting Started](doc/getting_started_dev.rst).
 
-## Documentation
+Documentation
+-------------
 
 Documentation is built with [Sphinx](http://sphinx-doc.org/).
 
