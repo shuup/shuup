@@ -13,6 +13,7 @@
                             {{ info_row(_("Full Name"), contact.full_name) }}
                             {{ info_row(_("Phone"), contact.phone, "tel:" ~ contact.phone) }}
                             {{ info_row(_("Email"), contact.email, "mailto:" ~ contact.email) }}
+                            {{ info_row(_("Groups"), contact.groups.all()|sort|join(", ")|default(_("No groups"), True)) }}
                             {{ info_row(_("Bound User"), contact.user, shoop_admin.model_url(contact.user) if contact.user else None) }}
                             </tbody>
                         </table>
