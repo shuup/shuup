@@ -1,0 +1,32 @@
+{% extends "shoop/admin/base.jinja" %}
+{% from "shoop/admin/macros/general.jinja" import content_block %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 section-navigation" data-navigatee="contact_group_form"></div>
+            <div class="col-md-9">
+                <form method="post" id="contact_group_form">
+                    {% csrf_token %}
+                    {% call content_block(_("General information"), "fa-info-circle") %}
+                        {% for field in form %}
+                            {{ bs3.field(field) }}
+                        {% endfor %}
+                    {% endcall %}
+                    {% if contact_group.pk %}
+                        {% call content_block(_("Members"), "fa-users") %}
+                            {# TODO: This is very bare-bones; should probably have UI to add/remove members etc... #}
+                            <ul>
+                            {% for member in contact_group.members.all() %}
+                                {% set u=shoop_admin.model_url(member, default="") %}
+                                <li>{% if u %}<a href="{{ u }}">{% endif %}{{ member }}{% if u %}</a>{% endif %}</li>
+                            {% else %}
+                                <li><i>{% trans %}No members.{% endtrans %}</i></li>
+                            {% endfor %}
+                            </ul>
+                        {% endcall %}
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

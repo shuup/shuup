@@ -15,7 +15,7 @@ from django.middleware.csrf import get_token
 from jinja2.utils import contextfunction
 from shoop.admin import menu
 from shoop.admin.breadcrumbs import Breadcrumbs
-from shoop.admin.utils.urls import get_model_url, manipulate_query_string
+from shoop.admin.utils.urls import get_model_url, manipulate_query_string, NoModelUrl
 import itertools
 
 __all__ = ["get_menu_entry_categories", "get_front_url", "get_config", "model_url"]
@@ -76,5 +76,23 @@ def get_breadcrumbs(context):
     return breadcrumbs
 
 
-def model_url(model):
-    return get_model_url(model)
+def model_url(model, kind="detail", default=None):
+    """
+    Get a model URL of the given kind for a model (instance or class).
+
+    :param model: The model instance or class.
+    :type model: django.db.Model
+    :param kind: The URL kind to retrieve. See `get_model_url`.
+    :type kind: str
+    :param default: Default value to return if model URL retrieval fails. If None,
+                    the `NoModelUrl` exception is (re)raised.
+    :type default: str|None
+    :return: URL string.
+    :rtype: str
+    """
+    try:
+        return get_model_url(model, kind)
+    except NoModelUrl:
+        if default is None:
+            raise
+        return default
