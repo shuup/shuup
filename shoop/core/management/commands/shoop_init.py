@@ -10,7 +10,8 @@ from django.db.transaction import atomic
 from shoop.core.defaults.order_statuses import create_default_order_statuses
 from shoop.core.models import (
     Category, OrderStatus, PaymentMethod, ProductType,
-    SalesUnit, ShippingMethod, Shop, Supplier, TaxClass
+    SalesUnit, ShippingMethod, Shop, Supplier, TaxClass,
+    ShopStatus
 )
 from six import print_
 
@@ -21,7 +22,7 @@ def schema(model, identifier, **info):
 
 class Initializer(object):
     schemata = [
-        schema(Shop, "default", name="Default Shop"),
+        schema(Shop, "default", name="Default Shop", status=ShopStatus.ENABLED),
         schema(ProductType, "default", name="Standard Product"),
         schema(ProductType, "download", name="Download Product"),
         schema(TaxClass, "default", name="Default Tax Class"),
