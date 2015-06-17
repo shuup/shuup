@@ -27,7 +27,7 @@ class OrderDetailView(DetailView):
         order = self.object
         toolbar = Toolbar()
         toolbar.append(URLActionButton(
-            text=_("Create Shipment..."),
+            text=_("Create Shipment"),
             icon="fa fa-truck",
             disable_reason=_("There are no products to ship") if not order.get_unshipped_products() else None,
             url=reverse("shoop_admin:order.create-shipment", kwargs={"pk": order.pk}),

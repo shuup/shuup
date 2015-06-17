@@ -1,29 +1,37 @@
 {% extends "shoop/admin/base.jinja" %}
-{% from "shoop/admin/macros/general.jinja" import content_block, info_row %}
+{% from "shoop/admin/macros/general.jinja" import content_block %}
 {% block content %}
     <div class="container-fluid">
         <div class="content-block">
-            <form method="post">
+            <form method="post" id="create_shipment">
                 {% csrf_token %}
-                <table class="table table-condensed table-striped table-bordered">
-                    <thead>
+                <table class="table table-condensed table-shoop table-striped table-bordered">
+                <thead>
                     <tr>
-                        <th>Product</th>
-                        <th class="text-right">To Ship</th>
-                        <th class="text-right">Ordered</th>
-                        <th class="text-right">Shipped</th>
-                        <th class="text-right">Unshipped</th>
+                        <th>{% trans %}Product{% endtrans %}</th>
+                        <th class="text-right">{% trans %}To Ship{% endtrans %}</th>
+                        <th class="text-right hidden-xs">{% trans %}Ordered{% endtrans %}</th>
+                        <th class="text-right hidden-xs">{% trans %}Shipped{% endtrans %}</th>
+                        <th class="text-right hidden-xs">{% trans %}Unshipped{% endtrans %}</th>
+                        <th class="text-right visible-xs">{% trans %}Ordered{% endtrans %}/&#x200b;{% trans %}Shipped{% endtrans %}/&#x200b;{% trans %}Unshipped{% endtrans %}</th>
                     </tr>
                     </thead>
                     <tfoot>
                     <tr>
                         <th></th>
                         <th>
-                            <button class="btn btn-sm btn-gray btn-inverse pull-right" type="button" onclick="setAllProducts()">Set All Products To Ship</button>
+                            <button class="btn btn-sm btn-info pull-right" type="button" onclick="setAllProducts()">
+                                <span class="hidden-xs">{% trans %}Set All Products To Ship{% endtrans %}</span>
+                                <span class="visible-xs">{% trans %}Ship All{% endtrans %}</span>
+                            </button>
                         </th>
-                        <th class="text-right">{{ form.product_summary.values()|sum("ordered") }}</th>
-                        <th class="text-right">{{ form.product_summary.values()|sum("shipped") }}</th>
-                        <th class="text-right">{{ form.product_summary.values()|sum("unshipped") }}</th>
+                        {% set ordered_total=form.product_summary.values()|sum("ordered")|number %}
+                        {% set shipped_total=form.product_summary.values()|sum("shipped")|number %}
+                        {% set unshipped_total=form.product_summary.values()|sum("unshipped")|number %}
+                        <th class="text-right hidden-xs">{{ ordered_total }}</th>
+                        <th class="text-right hidden-xs">{{ shipped_total }}</th>
+                        <th class="text-right hidden-xs">{{ unshipped_total }}</th>
+                        <th class="text-right visible-xs">{{ ordered_total }}/{{ shipped_total }}/{{ unshipped_total }}</th>
                     </tr>
                     </tfoot>
                     <tbody>
@@ -31,19 +39,16 @@
                         <tr>
                             <td>{{ form.product_names.get(product_id) }}</td>
                             <td class="text-right quantity-column">{{ form["q_" ~ product_id] }}</td>
-                            <td class="text-right">{{ info.ordered }}</td>
-                            <td class="text-right">{{ info.shipped }}</td>
-                            <td class="text-right">{{ info.unshipped }}</td>
+                            <td class="text-right hidden-xs">{{ info.ordered|number }}</td>
+                            <td class="text-right hidden-xs">{{ info.shipped|number }}</td>
+                            <td class="text-right hidden-xs">{{ info.unshipped|number }}</td>
+                            <td class="text-right visible-xs">{{ info.ordered|number }}/{{ info.shipped|number }}/{{ info.unshipped|number }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
+                <hr>
                 {{ bs3.field(form.supplier) }}
-                <div class="clearfix">
-                    <button type="submit" class="btn btn-success pull-right">
-                        <i class="fa fa-check-circle"></i> {% trans %}Create Shipment{% endtrans %}
-                    </button>
-                </div>
             </form>
         </div>
     </div>
