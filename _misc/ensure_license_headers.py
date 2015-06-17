@@ -5,6 +5,7 @@ License header updater.
 from __future__ import unicode_literals
 
 import os
+import argparse
 
 HEADER = """
 This file is part of Shoop.
@@ -25,35 +26,66 @@ PY_HEADER_LINES = PY_HEADER.encode('utf-8').splitlines()
 JS_HEADER_LINES = JS_HEADER.encode('utf-8').splitlines()
 
 
+def get_adders():
+    return {
+        '.py': add_header_to_python_file,
+        '.js': add_header_to_javascript_file
+    }
+
+
 def main():
-    adders = [
-        ('.py', add_header_to_python_file),
-        ('.js', add_header_to_javascript_file),
-    ]
-    for (ext, adder) in adders:
-        for path in find_files(ext):
-            if os.stat(path).st_size == 0:
-                print('%s: OK (Empty)' % (path,))
-            elif not has_header(path):
+    ap = argparse.ArgumentParser()
+    ap.add_argument("root", nargs="+", help="Directory roots to recurse through")
+    ap.add_argument("-w", "--write", help="Actually write changes", action="store_true")
+    ap.add_argument("-v", "--verbose", help="Log OK files too", action="store_true")
+    args = ap.parse_args()
+    paths = set()
+    adders = get_adders()
+    extensions = set(adders.keys())
+    for root in args.root:
+        paths |= set(find_files(root, extensions))
+
+    width = max(len(s) for s in paths)
+
+    for path in sorted(paths):
+        if os.stat(path).st_size == 0:
+            if args.verbose:
+                print('[+]:%-*s: File is empty' % (width, path))
+        elif not has_header(path):
+            if args.write:
+                adder = adders[os.path.splitext(path)[1]]
                 adder(path)
-                print('%s: Modified' % (path,))
+                print('[!]:%-*s: Modified' % (width, path))
             else:
-                print('%s: OK' % (path,))
+                print('[!]:%-*s: Requires license header' % (width, path))
+        else:
+            if args.verbose:
+                print('[+]:%-*s: File has license header' % (width, path))
 
 
-def find_files(extension):
-    for (path, dirnames, filenames) in os.walk('.'):
+def find_files(root, extensions):
+    for (path, dirnames, filenames) in os.walk(root):
+        dirnames[:] = [
+            dirname for dirname in dirnames if not is_file_ignored(os.path.join(path, dirname))
+            ]
         for filename in filenames:
-            if filename.endswith(extension):
+            if any(filename.endswith(extension) for extension in extensions):
                 filepath = os.path.join(path, filename)
                 if not is_file_ignored(filepath):
                     yield filepath
 
 
 def is_file_ignored(filepath):
+    filepath = filepath.replace(os.sep, "/")
     return (
+        ('.git' in filepath) or
+        ('venv' in filepath) or
+        ('__pycache__' in filepath) or
         ('vendor' in filepath) or
-        os.path.join('doc', '_ext', 'djangodocs.py') in filepath)
+        ('node_modules' in filepath) or
+        ('bower_components' in filepath) or
+        ('doc/_ext/djangodocs.py' in filepath)
+    )
 
 
 def has_header(path):
