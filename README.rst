@@ -35,31 +35,31 @@ included within each package.
 Chat
 ----
 
-We have a Gitter chat room for Shoop.  Come chat with us!
-[![Join chat][join-chat-img]](https://gitter.im/shoopio/shoop)
+We have a Gitter chat room for Shoop.  Come chat with us!  |Join chat|
 
-[join-chat-img]: https://badges.gitter.im/Join%20Chat.svg
+.. |Join chat| image:: https://badges.gitter.im/Join%20Chat.svg
+   :target: https://gitter.im/shoopio/shoop
 
 Getting started with Shoop development
 --------------------------------------
 
-See [Getting Started](doc/getting_started_dev.rst).
+See `Getting Started <doc/getting_started_dev.rst>`__.
 
 Documentation
 -------------
 
-Documentation is built with [Sphinx](http://sphinx-doc.org/).
+Documentation is built with `Sphinx <http://sphinx-doc.org/>`__.
 
 Issue the following commands to build the documentation:
 
-```sh
-pip install Sphinx  # to install Sphinx
-cd doc && make html
-```
+.. code:: sh
+
+    pip install Sphinx  # to install Sphinx
+    cd doc && make html
 
 To update the API documentation rst files, e.g. after adding new
 modules, use command:
 
-```sh
-./generate_apidoc.py
-```
+.. code:: sh
+
+    ./generate_apidoc.py
