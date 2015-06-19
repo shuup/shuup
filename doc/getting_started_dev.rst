@@ -40,7 +40,7 @@ project set up to use an SQLite database. It is used by the test suite
 and is also useful for development on its own.
 
 Practically the only difference to a normal Django project is that instead
-of ``python manage.py``, one uses ``python -m workbench``.
+of ``python manage.py``, one uses ``python -m shoop_workbench``.
 
 To get started with Workbench, invoke the following in the Shoop working copy
 root.
@@ -51,13 +51,13 @@ root.
    npm run build
 
    # Migrate database.
-   python -m workbench migrate
+   python -m shoop_workbench migrate
 
    # Import some basic data.
-   python -m workbench shoop_populate_mock --with-superuser=admin
+   python -m shoop_workbench shoop_populate_mock --with-superuser=admin
 
    # Run the Django development server (on port 8000 by default).
-   python -m workbench runserver
+   python -m shoop_workbench runserver
 
 You can use the credentials ``admin``/``admin``, that is username ``admin``
 and password ``admin`` to log in as a superuser on http://127.0.0.1:8000/ .
