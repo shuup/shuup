@@ -4,7 +4,7 @@ Getting Started with Shoop Development
 .. note::
 
    If you are planning on using Shoop for developing your own shop,
-   read the :doc:`other Getting Started guide <getting_started>` instead.
+   read the `other Getting Started guide <getting_started.rst>`__ instead.
 
 Installation for Development
 ----------------------------
