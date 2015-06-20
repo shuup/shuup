@@ -4,7 +4,7 @@ Getting Started with Shoop
 .. note::
 
    If you are planning on developing Shoop,
-   read the :doc:`other Getting Started guide <getting_started_dev>` instead.
+   read the `other Getting Started guide <getting_started_dev.rst>`__ instead.
 
 Installation
 ------------
