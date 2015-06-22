@@ -10,7 +10,6 @@ import logging
 import sys
 import string
 import uuid
-import random
 import types
 
 from bs4 import BeautifulSoup
@@ -19,12 +18,13 @@ from django.conf import settings
 from django.core.exceptions import MiddlewareNotUsed
 from django.core.urlresolvers import set_urlconf, clear_url_caches, get_urlconf
 from django.test import override_settings, Client
+from django.utils.crypto import get_random_string
 from django.utils.module_loading import import_string
 from django.utils.timezone import now
 
 
 def printable_gibberish(length=10):
-    return u"".join(random.choice(string.ascii_lowercase) for x in range(length))
+    return get_random_string(length, allowed_chars=string.ascii_lowercase)
 
 
 class SmartClient(Client):
