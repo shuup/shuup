@@ -7,15 +7,14 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import with_statement, unicode_literals
 from decimal import Decimal
-import string
 import datetime
 
 from collections import defaultdict
+from django.utils.crypto import get_random_string
 from enumfields import Enum, EnumIntegerField
 from jsonfield import JSONField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
-import random
 from django.conf import settings
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.db import models
@@ -292,7 +291,7 @@ class Order(models.Model):
                 "name", default=self.payment_method.identifier, any_language=True)
 
         if not self.key:
-            self.key = "".join(random.choice(string.ascii_letters + string.digits) for x in range(32))
+            self.key = get_random_string(32)
 
     def _save_identifiers(self):
         self.identifier = "%s" % (get_order_identifier(self))
