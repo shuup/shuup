@@ -176,7 +176,9 @@ class TextFilter(Filter):
 
     def filter_queryset(self, queryset, column, value):
         if value:
-            return queryset.filter(**{"%s__%s" % ((self.filter_field or column.id), self.operator): value})
+            value = force_text(value).strip()
+            if value:
+                return queryset.filter(**{"%s__%s" % ((self.filter_field or column.id), self.operator): value})
         return queryset
 
 
