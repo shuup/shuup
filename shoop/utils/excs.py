@@ -12,6 +12,30 @@ class Problem(Exception):
 
     message = property(lambda self: self.args[0] if self.args else None)
 
+    def __init__(self, message, title=None):
+        super(Problem, self).__init__(message)
+        self.title = title
+        self.links = []
+
+    def with_link(self, url, title):
+        """
+        Append a link to this Problem and return itself.
+
+        This API is designed after `Exception.with_traceback()`,
+        so you can fluently chain this in a `raise` statement:
+
+        >>> raise Problem("Oops").with_link("...", "...")
+
+        :param url: URL string
+        :type url: str
+        :param title: Title text
+        :type title: str
+        :return: This same Problem
+        :rtype: shoop.utils.excs.Problem
+        """
+        self.links.append({"url": url, "title": title})
+        return self
+
 
 class ExceptionalResponse(Exception):
     def __init__(self, response):

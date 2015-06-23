@@ -9,6 +9,14 @@
                 <h1>{{ title|default("Error!") }}</h1>
                 <hr>
                 {{ message }}
+                {% if exception.links %}
+                    <hr>
+                    <ul>
+                        {% for link in exception.links %}
+                            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </div>
         </div>
     </div>
