@@ -8,6 +8,7 @@
 from django.views.generic.base import TemplateView
 from shoop.admin.dashboard import get_activity
 from shoop.admin.module_registry import get_modules
+from shoop.core.telemetry import try_send_telemetry
 
 
 class DashboardView(TemplateView):
@@ -22,3 +23,7 @@ class DashboardView(TemplateView):
             blocks.extend(module.get_dashboard_blocks(request=self.request))
         context["activity"] = get_activity(request=self.request)
         return context
+
+    def get(self, request, *args, **kwargs):
+        try_send_telemetry(request)
+        return super(DashboardView, self).get(request, *args, **kwargs)
