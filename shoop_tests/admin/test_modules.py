@@ -20,6 +20,7 @@ from shoop.admin.menu import get_menu_entry_categories
 from shoop.admin.module_registry import replace_modules, get_module_urls, get_modules
 from shoop.admin.views.search import get_search_results
 from shoop.testing.factories import get_default_shop
+from shoop.utils.excs import Problem
 from shoop_tests.admin.fixtures.test_module import TestModule
 from shoop_tests.utils import empty_iterable, apply_request_middleware
 from shoop_tests.utils.faux_users import AnonymousUser, StaffUser, SuperUser, AuthenticatedUser
@@ -105,26 +106,29 @@ def test_activity(rf):
 
 
 def test_url_auth(rf):
-    def did_redirect(view, request):
-        return isinstance(view(request), HttpResponseRedirect)
+    def did_disallow(view, request):
+        try:
+            return isinstance(view(request), HttpResponseRedirect)
+        except Problem as prob:
+            return True  # Problems are fine here
 
     with replace_modules([TestModule]):
         urls = dict((u.name, u) for u in get_module_urls())
         request = rf.get("/")
 
         request.user = AnonymousUser()
-        assert did_redirect(urls["test-auth"].callback, request)
-        assert did_redirect(urls["test-perm"].callback, request)
-        assert not did_redirect(urls["test-unauth"].callback, request)
+        assert did_disallow(urls["test-auth"].callback, request)
+        assert did_disallow(urls["test-perm"].callback, request)
+        assert not did_disallow(urls["test-unauth"].callback, request)
         request.user = AuthenticatedUser()
-        assert did_redirect(urls["test-auth"].callback, request)
-        assert did_redirect(urls["test-perm"].callback, request)
-        assert not did_redirect(urls["test-unauth"].callback, request)
+        assert did_disallow(urls["test-auth"].callback, request)
+        assert did_disallow(urls["test-perm"].callback, request)
+        assert not did_disallow(urls["test-unauth"].callback, request)
         request.user = StaffUser()
-        assert not did_redirect(urls["test-auth"].callback, request)
-        assert did_redirect(urls["test-perm"].callback, request)
-        assert not did_redirect(urls["test-unauth"].callback, request)
+        assert not did_disallow(urls["test-auth"].callback, request)
+        assert did_disallow(urls["test-perm"].callback, request)
+        assert not did_disallow(urls["test-unauth"].callback, request)
         request.user = SuperUser()
-        assert not did_redirect(urls["test-auth"].callback, request)
-        assert not did_redirect(urls["test-perm"].callback, request)
-        assert not did_redirect(urls["test-unauth"].callback, request)
+        assert not did_disallow(urls["test-auth"].callback, request)
+        assert not did_disallow(urls["test-perm"].callback, request)
+        assert not did_disallow(urls["test-unauth"].callback, request)
