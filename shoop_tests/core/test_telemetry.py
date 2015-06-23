@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+# This file is part of Shoop.
+#
+# Copyright (c) 2012-2015, Shoop Ltd. All rights reserved.
+#
+# This source code is licensed under the AGPLv3 license found in the
+# LICENSE file in the root directory of this source tree.
 from django.test.utils import override_settings
 from django.utils.timezone import now
 from mock import patch
@@ -83,3 +89,9 @@ def test_graceful_error():
             assert try_send_telemetry(raise_on_error=True).get("error")
 
 
+def test_disabling_telemetry_hides_menu_item(rf):
+    request = rf.get("/")
+    with override_settings(SHOOP_TELEMETRY_ENABLED=True):
+        assert any(me.original_url == "shoop_admin:telemetry" for me in SystemModule().get_menu_entries(request))
+    with override_settings(SHOOP_TELEMETRY_ENABLED=False):
+        assert not any(me.original_url == "shoop_admin:telemetry" for me in SystemModule().get_menu_entries(request))

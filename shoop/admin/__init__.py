@@ -16,6 +16,7 @@ class ShoopAdminAppConfig(AppConfig):
     required_installed_apps = ["bootstrap3"]
     provides = {
         "admin_module": [
+            "shoop.admin.modules.system:SystemModule",
             "shoop.admin.modules.products:ProductModule",
             "shoop.admin.modules.product_types:ProductTypeModule",
             "shoop.admin.modules.media:MediaModule",
@@ -26,7 +27,7 @@ class ShoopAdminAppConfig(AppConfig):
             "shoop.admin.modules.users:UserModule",
             "shoop.admin.modules.methods:MethodModule",
             "shoop.admin.modules.attributes:AttributeModule",
-            "shoop.admin.modules.demo:DemoModule"
+            "shoop.admin.modules.demo:DemoModule",
         ]
     }
 
