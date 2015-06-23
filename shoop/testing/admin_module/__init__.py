@@ -5,8 +5,10 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from __future__ import unicode_literals
 from shoop.admin.base import AdminModule, MenuEntry
 from shoop.admin.utils.urls import admin_url
+from django.utils.translation import ugettext_lazy as _
 
 
 class TestingAdminModule(AdminModule):
@@ -19,7 +21,7 @@ class TestingAdminModule(AdminModule):
         return [
             MenuEntry(
                 text="Create Mock Objects",
-                category="Testing",
+                category=_("System"),
                 url="shoop_admin:mocker",
                 icon="fa fa-star"
             )
