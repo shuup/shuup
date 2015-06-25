@@ -28,9 +28,6 @@ This will install Shoop and its dependencies into your virtualenv.
 After this, you can begin setting up a Django project using whichever
 standards you fancy.
 
-.. TODO:: Mention ``npm run build`` somehow...
-
-
 Shoop Packages
 --------------
 

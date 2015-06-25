@@ -47,9 +47,6 @@ root.
 
 .. code-block:: shell
 
-   # Compile required static assets.
-   npm run build
-
    # Migrate database.
    python -m shoop_workbench migrate
 
@@ -61,6 +58,27 @@ root.
 
 You can use the credentials ``admin``/``admin``, that is username ``admin``
 and password ``admin`` to log in as a superuser on http://127.0.0.1:8000/ .
+
+Building resources
+------------------
+
+Shoop uses JavaScript and CSS resources that are compiled using various
+Node.js packages.  These resources are compiled automatically by
+``setup.py`` when installing Shoop with pip, but if you make changes to
+the source files (e.g. under ``shoop/admin/static_src``), the resources
+have to be rebuilt.
+
+This can be done with
+
+.. code-block:: shell
+
+   python setup.py build_resources
+
+The command also accepts couple arguments, see its help for more details:
+
+.. code-block:: shell
+
+   python setup.py build_resources --help
 
 Running tests
 -------------
