@@ -6,7 +6,7 @@
     "doc": "doc"
   },
   "scripts": {
-    "build": "python build_resources.py"
+    "build": "python setup.py build_resources"
   },
   "repository": {
     "type": "git",

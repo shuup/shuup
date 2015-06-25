@@ -4,16 +4,14 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-import argparse
 import hashlib
 import os
 import shutil
 import subprocess
 import tempfile
-import sys
 
-from nodejs_verify import verify_nodejs
-from setup import walk_excl, is_excluded_filename
+from . import excludes
+from .nodejs_verify import verify_nodejs
 
 
 CACHE_ROOT = (
@@ -21,33 +19,33 @@ CACHE_ROOT = (
     else tempfile.gettempdir())
 
 
-def main(argv=sys.argv):
+class Options(object):
+    """
+    Options for resource building.
+
+    :ivar directories: directories to build in, or all, if contains '.'
+    :ivar production: build in production mode (default is development)
+    :ivar clean: clean intermediate build files before building
+    :ivar force: rebuild even if cached result exists
+    """
+    directories = '.'
+    production = False
+    clean = False
+    force = False
+
+
+def build_resources(options):
+    """
+    Build resources.
+
+    :type options: Options
+    """
     verify_nodejs()
-    opts = parse_args(argv)
-    builder = Builder('.', opts)
-    if '.' in opts.directories:
+    builder = Builder('.', options)
+    if '.' in options.directories:
         builder.build_all()
     else:
-        builder.build_dirs(opts.directories)
-
-
-def parse_args(argv):
-    ap = argparse.ArgumentParser()
-    ap.add_argument(
-        'directories', metavar='DIR', nargs='*', default='.',
-        help=(
-            "directory to build in. "
-            "If not given, build in all subdirectories having package.json"))
-    ap.add_argument(
-        '-p', '--production', action='store_true',
-        help="build in production mode (default is development)")
-    ap.add_argument(
-        '-c', '--clean', action='store_true',
-        help="clean intermediate build files before building")
-    ap.add_argument(
-        '-f', '--force', action='store_true',
-        help="force rebuild even if cached result exists")
-    return ap.parse_args(argv[1:])
+        builder.build_dirs(options.directories)
 
 
 class Builder(object):
@@ -69,7 +67,8 @@ class Builder(object):
         self.build_dirs(package_json_dirs)
 
     def _find_package_json_dirs(self):
-        for (dirpath, dirnames, filenames) in walk_excl(self.root_directory):
+        items = excludes.walk_excl(self.root_directory)
+        for (dirpath, dirnames, filenames) in items:
             if 'package.json' in filenames:
                 if dirpath != '.':  # Ignore the root package json
                     yield dirpath
@@ -143,6 +142,7 @@ class Builder(object):
 
         def ignorer(fullpath):
             basename = os.path.basename(fullpath)
+            is_excluded_filename = excludes.is_excluded_filename
             return (is_excluded_filename(basename) or fullpath in ignores)
 
         return hash_path_recursively(dir, ignorer)['checksum'].hexdigest()
@@ -197,7 +197,3 @@ def remove_all_subdirs(root, subdir_name):
             dirnames[:] = [dn for dn in dirnames if dn != subdir_name]
             print('Removing directory %s' % dir_to_remove)
             shutil.rmtree(dir_to_remove)
-
-
-if __name__ == '__main__':
-    main()
