@@ -50,6 +50,7 @@ REQUIRES = [
     'django-mptt==0.7.3',
     'django-parler==1.4',
     'django-polymorphic==0.7.1',
+    'django-registration-redux==1.2',
     'django-timezone-field==1.2',
     'factory-boy==2.5.2',
     'fake-factory==0.5.1',
@@ -81,9 +82,6 @@ EXTRAS_REQUIRE = {
         'Sphinx==1.3.1',
     ],
     'testing': TESTS_REQUIRE,
-    'shoop.front.apps.registration': [
-        'django-registration-redux==1.2',
-    ],
     'coding-style': [
         'flake8==2.4.1',
         'mccabe==0.3',
