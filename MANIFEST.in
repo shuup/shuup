@@ -3,6 +3,8 @@ include LICENSE
 include VENDOR-LICENSES.md
 include ChangeLog.md
 
+include tox.ini
+
 include build_resources.py nodejs_verify.py
 
 recursive-include shoop \

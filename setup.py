@@ -75,20 +75,10 @@ REQUIRES_FOR_PYTHON2_ONLY = [
 if sys.version_info[0] == 2:
     REQUIRES += REQUIRES_FOR_PYTHON2_ONLY
 
-TESTS_REQUIRE = [
-    "beautifulsoup4==4.3.2",
-    "mock==1.0.1",
-    "pytest-cache==1.0",
-    "pytest==2.7.1",
-    "pytest-cov==1.8.1",
-    'pytest-django==2.8.0',
-]
-
 EXTRAS_REQUIRE = {
     'docs': [
         'Sphinx==1.3.1',
     ],
-    'testing': TESTS_REQUIRE,
     'coding-style': [
         'flake8==2.4.1',
         'mccabe==0.3',
@@ -96,12 +86,30 @@ EXTRAS_REQUIRE = {
         'pep8-naming==0.2.2',
         'pyflakes==0.8.1',
     ],
+    # 'testing': will be fetched from tox.ini below
 }
 EXTRAS_REQUIRE['everything'] = list(set(sum(EXTRAS_REQUIRE.values(), [])))
 
 TOPDIR = os.path.abspath(os.path.dirname(__file__))
 LONG_DESCRIPTION_FILE = os.path.join(TOPDIR, 'README.rst')
 VERSION_FILE = os.path.join(TOPDIR, 'shoop', '_version.py')
+
+
+def get_test_requirements_from_tox_ini():
+    result = []
+    between_begin_and_end = False
+    with open(os.path.join(TOPDIR, 'tox.ini'), 'rt') as fp:
+        for line in fp:
+            if line.strip() == '# BEGIN testing deps':
+                between_begin_and_end = True
+            elif line.strip() == '# END testing deps' or not line[0].isspace():
+                between_begin_and_end = False
+            elif between_begin_and_end:
+                result.append(line.strip())
+    return result
+
+
+EXTRAS_REQUIRE['testing'] = get_test_requirements_from_tox_ini()
 
 
 def get_version():
@@ -263,7 +271,7 @@ if __name__ == '__main__':
         license=LICENSE,
         classifiers=CLASSIFIERS,
         install_requires=REQUIRES,
-        tests_require=TESTS_REQUIRE,
+        tests_require=EXTRAS_REQUIRE['testing'],
         extras_require=EXTRAS_REQUIRE,
         packages=find_packages(exclude=EXCLUDE_PATTERNS),
         include_package_data=True,
