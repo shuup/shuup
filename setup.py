@@ -6,12 +6,14 @@
 # LICENSE file in the root directory of this source tree.
 from fnmatch import fnmatch
 import os
+import subprocess
 import sys
 
 import setuptools
 
 
 NAME = 'shoop'
+VERSION = '1.0.0.post0.dev'
 DESCRIPTION = 'E-Commerce Platform'
 AUTHOR = 'Shoop Ltd.'
 AUTHOR_EMAIL = 'shoop@shoop.io'
@@ -92,21 +94,45 @@ EXTRAS_REQUIRE = {
 }
 EXTRAS_REQUIRE['everything'] = list(set(sum(EXTRAS_REQUIRE.values(), [])))
 
-VERSION_FILE = os.path.join(NAME, 'version.py')
-
 TOPDIR = os.path.abspath(os.path.dirname(__file__))
 LONG_DESCRIPTION_FILE = os.path.join(TOPDIR, 'README.rst')
+VERSION_FILE = os.path.join(TOPDIR, 'shoop', '_version.py')
 
 
-def get_version(path=TOPDIR, filename=VERSION_FILE):
+def get_version():
     """
-    Get version from file.
+    Get version from VERSION or from git or from VERSION_FILE.
+
+    If VERSION does not contain string 'dev', it is used as is.
+    Otherwise if we're inside a Git checkout, we'll try to get version
+    with "git describe" and if we're not in a git checkout (e.g. we're
+    in sdist package), then we'll return version from the VERSION_FILE,
+    which should have been written there when the package was created.
     """
-    with open(os.path.join(path, filename), 'rt') as fp:
-        for line in fp:
-            if line.startswith("__version__ = '") and line.endswith("'\n"):
-                return line.split("'", 1)[-1][:-2]
-    return 'unknown'
+    if 'dev' not in VERSION:
+        return VERSION
+    elif not os.path.exists(os.path.join(TOPDIR, '.git')):
+        verstr = ''
+        if os.path.exists(VERSION_FILE):
+            with open(VERSION_FILE, 'rt') as fp:
+                verstr = fp.read(100).strip()
+        if verstr.startswith("__version__ = '" + VERSION):
+            return verstr.split("'", 2)[1]
+        return VERSION
+    tag_name = 'v' + VERSION.split('.post')[0].split('.dev')[0]
+    describe_cmd = ['git', 'describe', '--dirty', '--match', tag_name]
+    try:
+        described = subprocess.check_output(describe_cmd, cwd=TOPDIR)
+    except Exception:
+        return VERSION
+    suffix = described.decode('utf-8')[len(tag_name):].strip()
+    cleaned_suffix = suffix[1:].replace('-g', '+g').replace('-dirty', '.dirty')
+    return VERSION + cleaned_suffix
+
+
+def write_version_to_file(version):
+    with open(VERSION_FILE, 'wt') as fp:
+        fp.write("__version__ = {!r}\n".format(str(version)))
 
 
 def get_long_description(path=LONG_DESCRIPTION_FILE):
@@ -148,9 +174,12 @@ if __name__ == '__main__':
     if 'register' in sys.argv or 'upload' in sys.argv:
         raise EnvironmentError('Registering and uploading is blacklisted')
 
+    version = get_version()
+    write_version_to_file(version)
+
     setuptools.setup(
         name=NAME,
-        version=get_version(),
+        version=version,
         description=DESCRIPTION,
         long_description=get_long_description(),
         url=URL,

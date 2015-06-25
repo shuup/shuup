@@ -5,6 +5,9 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from . import version
+try:
+    from . import _version
+except ImportError:
+    _version = None
 
-__version__ = version.__version__
+__version__ = getattr(_version, '__version__', 'dev')
