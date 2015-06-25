@@ -4,6 +4,9 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import distutils.command.build
+import distutils.core
+import distutils.errors
 from fnmatch import fnmatch
 import os
 import subprocess
@@ -36,9 +39,11 @@ Topic :: Software Development :: Libraries :: Python Modules
 """.strip().splitlines()
 
 EXCLUDE_PATTERNS = [
-    'contrib', 'docs', 'tests*', 'node_modules',
-    'bower_components', 'var', '__pycache__', 'LC_MESSAGES',
-    'venv*',
+    'build', 'contrib', 'doc', 'tests*',
+    'node_modules', 'bower_components',
+    'var', '__pycache__', 'LC_MESSAGES',
+    '.tox', 'venv*',
+    '.git', '.gitignore',
 ]
 
 REQUIRES = [
@@ -145,6 +150,67 @@ def get_long_description(path=LONG_DESCRIPTION_FILE):
     return None
 
 
+class BuildCommand(distutils.command.build.build):
+    command_name = 'build'
+
+    def get_sub_commands(self):
+        super_cmds = distutils.command.build.build.get_sub_commands(self)
+        my_cmds = [
+            BuildProductionResourcesCommand.command_name,
+        ]
+        return super_cmds + my_cmds
+
+
+class BuildResourcesCommand(distutils.core.Command):
+    command_name = 'build_resources'
+    description = "build Javascript and CSS resources"
+    mode = 'development'
+    clean = False
+    force = False
+    user_options = [
+        ('mode=', None, "build mode: 'development' (default) or 'production'"),
+        ('clean', 'c', "clean intermediate files before building"),
+        ('force', 'f', "force rebuild even if cached result exists"),
+    ]
+    boolean_options = ['clean', 'force']
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        # Allow abbreviated mode, like d, dev, p, or prod
+        for mode in ['development', 'production']:
+            if self.mode and mode.startswith(self.mode):
+                self.mode = mode
+        if self.mode not in ['development', 'production']:
+            raise distutils.errors.DistutilsArgError(
+                "Mode must be 'development' or 'production'")
+
+    def run(self):
+        params = []
+        if self.mode == 'production':
+            params.append('--production')
+        if self.clean:
+            params.append('--clean')
+        if self.force:
+            params.append('--force')
+        subprocess.check_call([sys.executable, 'build_resources.py'] + params)
+
+
+class BuildProductionResourcesCommand(BuildResourcesCommand):
+    command_name = 'build_production_resources'
+    description = "build Javascript and CSS resources for production"
+    mode = 'production'
+    clean = True
+
+
+COMMANDS = dict((x.command_name, x) for x in [
+    BuildCommand,
+    BuildResourcesCommand,
+    BuildProductionResourcesCommand,
+])
+
+
 if hasattr(setuptools, "PackageFinder"):
     # This only exists in setuptools in versions >= 2014-03-22
     # https://bitbucket.org/pypa/setuptools/commits/09e0ab6bb31c3055a19c856e328ba99e225ab8d7
@@ -158,16 +224,25 @@ if hasattr(setuptools, "PackageFinder"):
             This makes a significant difference on some file systems
             (looking at you, Windows, when `node_modules` exists).
             """
-            def is_excluded_dir(dir):
-                return any(fnmatch(dir, pat) for pat in EXCLUDE_PATTERNS)
-
-            for root, dirs, files in os.walk(base_path, followlinks=True):
-                dirs[:] = [dir for dir in dirs if not is_excluded_dir(dir)]
+            for (root, dirs, files) in walk_excl(base_path, followlinks=True):
                 for dir in dirs:
                     yield os.path.relpath(os.path.join(root, dir), base_path)
     find_packages = FastFindPackages.find
 else:
     find_packages = setuptools.find_packages
+
+
+def walk_excl(path, **kwargs):
+    """
+    Do os.walk dropping our excluded directories on the way.
+    """
+    for (dirpath, dirnames, filenames) in os.walk(path, **kwargs):
+        dirnames[:] = [dn for dn in dirnames if not is_excluded_filename(dn)]
+        yield (dirpath, dirnames, filenames)
+
+
+def is_excluded_filename(filename):
+    return any(fnmatch(filename, pat) for pat in EXCLUDE_PATTERNS)
 
 
 if __name__ == '__main__':
@@ -192,4 +267,5 @@ if __name__ == '__main__':
         extras_require=EXTRAS_REQUIRE,
         packages=find_packages(exclude=EXCLUDE_PATTERNS),
         include_package_data=True,
+        cmdclass=COMMANDS,
     )

@@ -3,10 +3,19 @@ include LICENSE
 include VENDOR-LICENSES.md
 include ChangeLog.md
 
-recursive-include shoop *.jinja *.html *.txt
+include build_resources.py nodejs_verify.py
+
+recursive-include shoop \
+    *.jinja *.txt *.js *.css *.json *.less \
+    *.ico *.png *.svg \
+    *.woff *.woff2 *.eot *.otf *.ttf
 
 recursive-include shoop_tests *.jinja
 
 # No extra extensions to include from shoop_workbench, but it will be
 # included still, since it's a Python package.
 # recursive-include shoop_workbench ...
+
+prune shoop/admin/static_src/*/bower_components
+prune shoop/admin/modules/*/bower_components
+prune shoop/*/node_modules
