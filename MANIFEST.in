@@ -1,2 +1,12 @@
+include README.rst
+include LICENSE
+include VENDOR-LICENSES.md
+include ChangeLog.md
+
 recursive-include shoop *.jinja *.html *.txt
-recursive-include shoop_tests *.jinja *.html *.txt
+
+recursive-include shoop_tests *.jinja
+
+# No extra extensions to include from shoop_workbench, but it will be
+# included still, since it's a Python package.
+# recursive-include shoop_workbench ...
