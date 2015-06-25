@@ -8,7 +8,6 @@
 from bootstrap3.renderers import FieldRenderer
 from bootstrap3.utils import add_css_class
 from django.forms.models import ModelMultipleChoiceField
-from django.utils.html import escape
 
 
 class AdminFieldRenderer(FieldRenderer):
@@ -43,11 +42,7 @@ class AdminFieldRenderer(FieldRenderer):
 
     def add_help_attrs(self):
         super(AdminFieldRenderer, self).add_help_attrs()
-        if self.widget.attrs.get("title"):
-            # The title attribute may contain quotes (notably the help for `ModelMultipleChoiceField`)
-            # so ensure they are escaped
-            self.widget.attrs["title"] = escape(self.widget.attrs["title"])
-        else:
+        if not self.widget.attrs.get("title"):
             self.widget.attrs.pop("title", None)  # Remove the empty attribute
 
         if not self.show_help_block:  # Remove field help to avoid rendering `help-block`
