@@ -40,24 +40,24 @@ EXCLUDE_PATTERNS = [
 ]
 
 REQUIRES = [
-    'django-parler==1.4',
-    'django-polymorphic==0.7.1',
-    'Django==1.8.2',
-    'jsonfield==1.0.3',
-    'six==1.9.0',
-    'django-countries==3.3',
     'Babel==1.3',
+    'Django==1.8.2',
+    'django-bootstrap3==5.4.0',
+    'django-countries==3.3',
     'django-enumfields==0.7.3',
+    'django-filer==0.9.10',
     'django-jinja==1.4.1',
     'django-mptt==0.7.3',
-    'django-filer==0.9.10',
+    'django-parler==1.4',
+    'django-polymorphic==0.7.1',
     'django-timezone-field==1.2',
-    'django-bootstrap3==5.4.0',
+    'factory-boy==2.5.2',
+    'fake-factory==0.5.1',
+    'jsonfield==1.0.3',
     'Markdown==2.6.2',
     'pytz==2015.4',
     'requests==2.6.0',
-    'factory-boy==2.5.2',
-    'fake-factory==0.5.1',
+    'six==1.9.0',
 ]
 
 REQUIRES_FOR_PYTHON2_ONLY = [
