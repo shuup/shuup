@@ -72,10 +72,8 @@ REQUIRES_FOR_PYTHON2_ONLY = [
     'enum34==1.0.4',
 ]
 
-if sys.version_info[0] == 2:
-    REQUIRES += REQUIRES_FOR_PYTHON2_ONLY
-
 EXTRAS_REQUIRE = {
+    ':python_version=="2.7"': REQUIRES_FOR_PYTHON2_ONLY,
     'docs': [
         'Sphinx==1.3.1',
     ],
