@@ -12,7 +12,7 @@ import setuptools
 
 
 NAME = 'shoop'
-DESCRIPTION = 'Web shop'
+DESCRIPTION = 'E-Commerce Platform'
 AUTHOR = 'Shoop Ltd.'
 AUTHOR_EMAIL = 'shoop@shoop.io'
 URL = 'http://shoop.io/'
@@ -95,9 +95,9 @@ EXTRAS_REQUIRE = {
 EXTRAS_REQUIRE['everything'] = list(set(sum(EXTRAS_REQUIRE.values(), [])))
 
 VERSION_FILE = os.path.join(NAME, 'version.py')
-LONG_DESCRIPTION_FILE = None
 
 TOPDIR = os.path.abspath(os.path.dirname(__file__))
+LONG_DESCRIPTION_FILE = os.path.join(TOPDIR, 'README.rst')
 
 
 def get_version(path=TOPDIR, filename=VERSION_FILE):
@@ -111,14 +111,14 @@ def get_version(path=TOPDIR, filename=VERSION_FILE):
     return 'unknown'
 
 
-def get_long_description(path=TOPDIR, filename=LONG_DESCRIPTION_FILE):
+def get_long_description(path=LONG_DESCRIPTION_FILE):
     """
     Get long description from file.
     """
-    if not filename:
-        return None
-    with open(os.path.join(path, filename), 'rt') as f:
-        return f.read()
+    if path:
+        with open(path, 'rt') as fp:
+            return fp.read()
+    return None
 
 
 if hasattr(setuptools, "PackageFinder"):
