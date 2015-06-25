@@ -58,6 +58,7 @@ REQUIRES = [
     'requests==2.6.0',
     'factory-boy==2.5.2',
     'fake-factory==0.5.1',
+    'django-registration-redux==1.2',
 ]
 
 REQUIRES_FOR_PYTHON2_ONLY = [
