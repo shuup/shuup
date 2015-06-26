@@ -31,8 +31,8 @@ if hasattr(setuptools, "PackageFinder"):
 
     def find_packages(*args, **kwargs):
         kwargs.setdefault('exclude', excludes.get_exclude_patterns())
-        FastFindPackages.find(*args, **kwargs)
+        return FastFindPackages.find(*args, **kwargs)
 else:
     def find_packages(*args, **kwargs):
         kwargs.setdefault('exclude', excludes.get_exclude_patterns())
-        setuptools.find_packages(*args, **kwargs)
+        return setuptools.find_packages(*args, **kwargs)
