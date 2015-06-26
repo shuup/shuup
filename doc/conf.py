@@ -15,13 +15,22 @@ import os
 
 import django
 
-import shoop_workbench.settings
-
-
 # -- Python path ----------------------------------------------------------
 
 DOC_PATH = os.path.abspath(os.path.dirname(__file__))
 sys.path.insert(0, os.path.join(DOC_PATH, '_ext'))
+
+try:
+    import shoop_workbench
+except ImportError:
+    # Looks like we can't directly import the
+    # workbench project from wherever we are (such as the `doc` dir;
+    # see rtfd/readthedocs.org@1511716c/readthedocs/doc_builder/backends/sphinx.py#L122),
+    # so try adding the parent directory (where we expect it to be) to `sys.path` first.
+    sys.path.insert(0, os.path.abspath(os.path.join(DOC_PATH, '..')))
+    # Right! Importing oughta work now.
+
+import shoop_workbench.settings
 
 # -- Initialize Django ----------------------------------------------------
 

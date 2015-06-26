@@ -109,7 +109,7 @@ class Context(object):
         """
         Create Context from variables.
 
-        :rtype: Context
+        :rtype: shoop.notify.script.Context
         """
         return cls(variables)
 
@@ -119,7 +119,7 @@ class Context(object):
         Create Context from event.
 
         :type event: shoop.notify.Event
-        :rtype: Context
+        :rtype: shoop.notify.script.Context
         """
         ctx = cls(event.variable_values)
         ctx._log_target = event.log_target
