@@ -7,7 +7,16 @@
       "js/dashboard.js"
   ],
   "dependencies": {
-    "chartist": "~0.7.4",
-    "masonry": "~3.2.2"
+    "chartist": "~0.9.1",
+    "masonry": "~3.3.0"
+  },
+  "overrides": {
+    "outlayer": {
+      "see-this-url": "https://github.com/metafizzy/outlayer/issues/33",
+      "main": [
+        "item.js",
+        "outlayer.js"
+      ]
+    }
   }
 }
