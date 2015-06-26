@@ -43,3 +43,47 @@ Provide management functions are found in the :mod:`shoop.apps.provides` module.
 
 In general, the :obj:`shoop.apps.provides.get_provide_objects` method is your most useful
 entry point.
+
+Provide Categories
+------------------
+
+``admin_category_form_part``
+    Additional ``FormPart`` classes for Category editing.
+``admin_contact_form_part``
+    Additional ``FormPart`` classes for Contact editing.
+``admin_product_form_part``
+    Additional ``FormPart`` classes for Product editing.
+    (This is used by pricing modules, for instance.)
+``admin_module``
+    Admin module classes. Practically all of the functionality in the admin is built
+    via admin modules.
+``front_template_helper_namespace``
+    Additional namespaces to install in the ``shoop`` "package" within template contexts.
+    .. seealso:: :doc:`Custom Template Helper Functions`_
+``front_urls``
+    Lists of frontend URLs to be appended to the usual frontend URLs.
+``front_urls_post``
+    Lists of frontend URLs to be appended to the usual frontend URLs, even after ``front_urls``.
+    Most of the time, ``front_urls`` should do.
+``front_urls_pre``
+    Lists of frontend URLs to be prepended to the usual frontend URLs.
+    Most of the time, ``front_urls`` should do.
+``notify_action``
+    Notification framework :py:class:`~shoop.notify.Action` classes.
+``notify_condition``
+    Notification framework :py:class:`~shoop.notify.Condition` classes.
+``notify_event``
+    Notification framework :py:class:`~shoop.notify.Event` classes.
+``payment_method_module``
+    Payment method module classes (deriving from :py:class:`shoop.core.methods.base.BasePaymentMethodModule`),
+    as used by :py:class:`shoop.core.models.PaymentMethod`.
+``pricing_module``
+    Pricing module classes; the pricing module in use is set with the ``SHOOP_PRICING_MODULE`` setting.
+``shipping_method_module``
+    Shipping method module classes (deriving from :py:class:`shoop.core.methods.base.BaseShippingMethodModule`),
+    as used by :py:class:`shoop.core.models.ShippingMethod`.
+``supplier_module``
+    Supplier module classes (deriving from :py:class:`shoop.core.suppliers.base.BaseSupplierModule`),
+    as used by :py:class:`shoop.core.models.Supplier`.
+``tax_module``
+    Tax module classes; the tax module in use is set with the ``SHOOP_TAX_MODULE`` setting.
