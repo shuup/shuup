@@ -63,8 +63,8 @@ MIDDLEWARE_CLASSES = (
 
 )
 
-ROOT_URLCONF = 'workbench.urls'
-WSGI_APPLICATION = 'workbench.wsgi.application'
+ROOT_URLCONF = 'shoop_workbench.urls'
+WSGI_APPLICATION = 'shoop_workbench.wsgi.application'
 
 DATABASES = {
     'default': {

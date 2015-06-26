@@ -13,9 +13,10 @@ it's not called `node`, as we expect it to be.
 """.strip()
 
 DEBIAN_ARGH = """
-However, you do have a binary called `nodejs` (version %(version)s), which strongly
-implies you may be running Debian or a derivative thereof, where it's necessary to
-install the `nodejs-legacy` package to provide a symlink for `/usr/bin/node`.
+However, you do have a binary called `nodejs` (version %(version)s),
+which strongly implies you may be running Debian or a derivative
+thereof, where it's necessary to install the `nodejs-legacy` package to
+provide a symlink for `/usr/bin/node`.
 
 So, in short, to continue:
     Run (or ask your administrator to run) `apt-get install nodejs-legacy`.

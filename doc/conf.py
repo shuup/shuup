@@ -15,7 +15,7 @@ import os
 
 import django
 
-import workbench.settings
+import shoop_workbench.settings
 
 
 # -- Python path ----------------------------------------------------------
@@ -25,10 +25,10 @@ sys.path.insert(0, os.path.join(DOC_PATH, '_ext'))
 
 # -- Initialize Django ----------------------------------------------------
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'workbench.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'shoop_workbench.settings'
 
 # Set USE_I18N=False to avoid warnings from import-time ugettext calls
-workbench.settings.USE_I18N = False
+shoop_workbench.settings.USE_I18N = False
 
 django.setup()
 
