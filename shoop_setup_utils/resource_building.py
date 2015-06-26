@@ -92,7 +92,8 @@ class Builder(object):
             for dir_to_clean in self.dirs_to_clean:
                 remove_all_subdirs(dir, dir_to_clean)
 
-        subprocess.check_call(self.command, cwd=dir, env=self.env)
+        shell = (os.name == 'nt')  # Windows needs shell, since npm is .cmd
+        subprocess.check_call(self.command, cwd=dir, env=self.env, shell=shell)
 
     def _save_to_cache(self, dir):
         cdir = self._get_cachedir_for(dir)
