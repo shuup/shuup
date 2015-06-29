@@ -6,14 +6,13 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
-from django.views.generic import ListView
-from shoop.admin.toolbar import Toolbar, NewActionButton
-from shoop.admin.utils.picotable import Column, PicotableViewMixin, ChoicesFilter, TextFilter
+from shoop.admin.utils.picotable import Column, ChoicesFilter, TextFilter
+from shoop.admin.utils.views import PicotableListView
 from shoop.core.models import Category, CategoryStatus, CategoryVisibility
 from django.utils.translation import ugettext_lazy as _
 
 
-class CategoryListView(PicotableViewMixin, ListView):
+class CategoryListView(PicotableListView):
     model = Category
     columns = [
         Column(
@@ -30,11 +29,6 @@ class CategoryListView(PicotableViewMixin, ListView):
 
     def get_queryset(self):
         return Category.objects.all_except_deleted()
-
-    def get_context_data(self, **kwargs):
-        context = super(CategoryListView, self).get_context_data(**kwargs)
-        context["toolbar"] = Toolbar([NewActionButton("shoop_admin:category.new")])
-        return context
 
     def get_object_abstract(self, instance, item):
         return [

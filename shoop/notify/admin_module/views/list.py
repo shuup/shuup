@@ -8,14 +8,14 @@
 from __future__ import unicode_literals
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import ListView
 from shoop.admin.toolbar import Toolbar, URLActionButton
-from shoop.admin.utils.picotable import PicotableViewMixin, Column, TextFilter
+from shoop.admin.utils.picotable import Column, TextFilter
+from shoop.admin.utils.views import PicotableListView
 from shoop.notify.admin_module.utils import get_name_map
 from shoop.notify.models.script import Script
 
 
-class ScriptListView(PicotableViewMixin, ListView):
+class ScriptListView(PicotableListView):
     model = Script
     columns = [
         Column("name", _(u"Name"), linked=True, filter_config=TextFilter(operator="startswith")),
@@ -31,15 +31,13 @@ class ScriptListView(PicotableViewMixin, ListView):
             self._event_identifier_names = dict(get_name_map("notify_event"))
         return self._event_identifier_names.get(instance.event_identifier, instance.event_identifier)
 
-    def get_context_data(self, **kwargs):
-        context = super(ScriptListView, self).get_context_data(**kwargs)
-        context["toolbar"] = Toolbar([
+    def get_toolbar(self):
+        return Toolbar([
             URLActionButton(
                 text="New Script", icon="fa fa-plus", extra_css_class="btn-success",
                 url=reverse("shoop_admin:notify.script.new")
             )
         ])
-        return context
 
     def get_object_abstract(self, instance, item):
         return [

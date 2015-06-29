@@ -10,16 +10,16 @@ from babel.dates import format_datetime
 from django.utils.html import escape
 from django.utils.timezone import localtime
 from django.utils.translation import ugettext as _
-from django.views.generic import ListView
 from shoop.admin.utils.picotable import (
-    PicotableViewMixin, Column, ChoicesFilter, TextFilter, RangeFilter, MultiFieldTextFilter, DateRangeFilter
+    Column, ChoicesFilter, TextFilter, RangeFilter, MultiFieldTextFilter, DateRangeFilter
 )
+from shoop.admin.utils.views import PicotableListView
 from shoop.core.models import Order, PaymentStatus, ShippingStatus
 from shoop.core.models.orders import OrderStatus
 from shoop.utils.i18n import format_home_currency, get_current_babel_locale
 
 
-class OrderListView(PicotableViewMixin, ListView):
+class OrderListView(PicotableListView):
     model = Order
     columns = [
         Column("identifier", _(u"Order"), linked=True, filter_config=TextFilter(operator="startswith")),

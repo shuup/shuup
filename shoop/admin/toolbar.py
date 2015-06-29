@@ -14,6 +14,7 @@ from django.utils.encoding import force_text
 from django.utils.html import conditional_escape, format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
+from shoop.admin.utils.urls import get_model_url, NoModelUrl
 import six
 
 
@@ -109,9 +110,27 @@ class NewActionButton(URLActionButton):
 
     def __init__(self, url, **kwargs):
         kwargs.setdefault("icon", "fa fa-plus")
-        kwargs.setdefault("text", _(u"Create new\u2026"))
+        kwargs.setdefault("text", _("Create new"))
         kwargs.setdefault("extra_css_class", "btn-success")
         super(NewActionButton, self).__init__(url, **kwargs)
+
+    @classmethod
+    def for_model(cls, model, **kwargs):
+        """
+        Generate a NewActionButton for a model, auto-wiring the URL.
+
+        :param model: Model class
+        :rtype: shoop.admin.toolbar.NewActionButton|None
+        """
+
+        if "url" not in kwargs:
+            try:
+                url = get_model_url(model, kind="new")
+            except NoModelUrl:
+                return None
+            kwargs["url"] = url
+        kwargs.setdefault("text", _("New %(model)s") % {"model": model._meta.verbose_name})
+        return cls(**kwargs)
 
 
 class JavaScriptActionButton(BaseActionButton):

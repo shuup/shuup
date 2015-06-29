@@ -10,12 +10,11 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
-from django.views.generic import ListView
-from shoop.admin.toolbar import Toolbar, NewActionButton
-from shoop.admin.utils.picotable import PicotableViewMixin, Column, true_or_false_filter, TextFilter
+from shoop.admin.utils.picotable import Column, true_or_false_filter, TextFilter
+from shoop.admin.utils.views import PicotableListView
 
 
-class UserListView(PicotableViewMixin, ListView):
+class UserListView(PicotableListView):
     model = settings.AUTH_USER_MODEL
     columns = [
         Column("username", _(u"Username"), filter_config=TextFilter()),
@@ -27,13 +26,15 @@ class UserListView(PicotableViewMixin, ListView):
         Column("is_superuser", _(u"Superuser"), filter_config=true_or_false_filter),
     ]
 
+    def get_model(self):
+        return get_user_model()
+
     def get_queryset(self):
-        return get_user_model().objects.all()
+        return self.get_model().objects.all()
 
     def get_context_data(self, **kwargs):
         context = super(UserListView, self).get_context_data(**kwargs)
-        context["toolbar"] = Toolbar([NewActionButton("shoop_admin:user.new")])
-        context["title"] = force_text(get_user_model()._meta.verbose_name_plural).title()
+        context["title"] = force_text(self.get_model()._meta.verbose_name_plural).title()
         return context
 
     def get_object_abstract(self, instance, item):

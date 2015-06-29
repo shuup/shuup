@@ -111,13 +111,14 @@ def get_create_or_change_title(request, instance, name_field=None):
 
 class PicotableListView(PicotableViewMixin, ListView):
     def get_toolbar(self):
-        try:
-            new_url = get_model_url(self.model, kind="new")
-        except NoModelUrl:
-            new_url = None
-
-        if new_url:
-            return Toolbar([NewActionButton(new_url)])
+        buttons = []
+        model = self.model
+        if hasattr(self, "get_model"):
+            model = self.get_model()
+        new_button = NewActionButton.for_model(model)
+        if new_button:
+            buttons.append(new_button)
+        return Toolbar(buttons)
 
     def get_context_data(self, **kwargs):
         context = super(PicotableListView, self).get_context_data(**kwargs)
