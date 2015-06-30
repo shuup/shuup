@@ -8,33 +8,16 @@
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.signals import user_logged_in, user_logged_out
-from django.core.exceptions import ImproperlyConfigured, ValidationError
-from django.shortcuts import render
+from django.core.exceptions import ImproperlyConfigured
 from django.utils import timezone
+from shoop.core.middleware import ExceptionMiddleware
 from shoop.core.models import Shop
 from shoop.core.models.contacts import get_person_contact
 from shoop.front.basket import get_basket
-from shoop.utils.excs import ExceptionalResponse, Problem
 
+__all__ = ["ProblemMiddleware", "ShoopFrontMiddleware"]
 
-class ProblemMiddleware(object):
-    def process_exception(self, request, exception):
-        if isinstance(exception, ExceptionalResponse):
-            return exception.response
-
-        if isinstance(exception, (ValidationError, Problem)):
-            templates = [
-                "%s/problem.jinja" % request.resolver_match.app_name,
-                "%s/problem.jinja" % request.resolver_match.namespace,
-                "shoop/front/problem.jinja",
-                "problem.jinja",
-                "problem.html",
-            ]
-
-            return render(request, templates, {
-                "message": exception.message,
-                "exception": exception,
-            })
+ProblemMiddleware = ExceptionMiddleware  # This class is only an alias for ExceptionMiddleware.
 
 
 class ShoopFrontMiddleware(object):

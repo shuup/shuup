@@ -3,8 +3,13 @@
 {% from "shoop/admin/macros/general.jinja" import auth_block %}
 {% block content %}
     {% call auth_block("subtle-slide-in") %}
-        <form action="" method="post">
+        <form action="{{ request.path }}" method="post">
             {% csrf_token %}
+            {% if error %}
+                <div class="alert alert-danger">
+                    {{ error|striptags }}
+                </div>
+            {% endif %}
             {% if form.non_field_errors() %}
                 <div class="field-error-text text-warning">
                     {% for error in form.non_field_errors() %}
@@ -14,6 +19,7 @@
             {% endif %}
             {{ bs3.field(form.username) }}
             {{ bs3.field(form.password) }}
+            <input type="hidden" name="next" value="{{ next }}">
             <div class="actions">
                 <button class="btn btn-primary btn-lg btn-block" type="submit">
                     <i class="fa fa-sign-in"></i>

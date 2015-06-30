@@ -6,25 +6,25 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
-import inspect
-from django.conf import settings
 
 try:
     from urllib.parse import parse_qsl
 except ImportError:  # pragma: no cover
     from urlparse import parse_qsl  # Python 2.7
 
+from django.conf import settings
+from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import ImproperlyConfigured
 from django.core.urlresolvers import RegexURLPattern, get_callable, reverse, NoReverseMatch
 from django.http.response import HttpResponseForbidden
-from django.contrib import messages
-from django.contrib.auth.views import redirect_to_login
 from django.utils.encoding import force_text
 from django.utils.http import urlencode
 from django.utils.translation import ugettext_lazy as _
 from shoop.admin.module_registry import get_modules
-import six
+from shoop.utils.excs import Problem
+import inspect
 import json
+import six
 
 
 class AdminRegexURLPattern(RegexURLPattern):
@@ -35,30 +35,58 @@ class AdminRegexURLPattern(RegexURLPattern):
             callback = self.wrap_with_permissions(callback)
         super(AdminRegexURLPattern, self).__init__(regex, callback, default_args, name)
 
+    def _get_unauth_response(self, request, reason):
+        """
+        Get an error response (or raise a Problem) for a given request and reason message.
+
+        :type request: Request
+        :param request: HttpRequest
+        :type reason: Reason string
+        :param reason: str
+        """
+        if request.is_ajax():
+            return HttpResponseForbidden(json.dumps({"error": force_text(reason)}))
+        resp = redirect_to_login(
+            next=request.path,
+            login_url="%s?%s" % (reverse("shoop_admin:login"), urlencode({"error": reason}))
+        )
+        if request.user.is_authenticated():
+            # Instead of redirecting to the login page, let the user know what's wrong with
+            # a helpful link.
+            raise (
+                Problem(_("Can't view this page. %(reason)s") % {"reason": reason})
+                .with_link(url=resp.url, title=_("Log in with different credentials…"))
+            )
+        return resp
+
+    def _get_unauth_reason(self, request):
+        """
+        Figure out if there's any reason not to allow the user access to this view via the given request.
+
+        :type request: Request
+        :param request: HttpRequest
+        :rtype: str|None
+        """
+
+        if self.require_authentication:
+            if not request.user.is_authenticated():
+                return _("You must be logged in.")
+            elif not request.user.is_staff:
+                return _("You must be a staff member.")
+
+        missing_permissions = set(p for p in set(self.permissions) if not request.user.has_perm(p))
+        if missing_permissions:
+            return _("You do not have the required permissions: %r") % missing_permissions
+
     def wrap_with_permissions(self, view_func):
         if callable(getattr(view_func, "as_view", None)):
             view_func = view_func.as_view()
 
-        permissions = set(self.permissions)
-
         @six.wraps(view_func)
         def _wrapped_view(request, *args, **kwargs):
-            invalid_reason = None
-            if self.require_authentication:
-                if not request.user.is_authenticated():
-                    invalid_reason = _("You must be logged in.")
-                elif not request.user.is_staff:
-                    invalid_reason = _("You must be a staff member.")
-
-            if not invalid_reason:
-                missing_permissions = set(p for p in permissions if not request.user.has_perm(p))
-                if missing_permissions:
-                    invalid_reason = _("You do not have the required permissions: %r") % missing_permissions
-            if invalid_reason:
-                if request.is_ajax():
-                    return HttpResponseForbidden(json.dumps({"error": force_text(invalid_reason)}))
-                messages.error(request, invalid_reason, fail_silently=True)
-                return redirect_to_login(next=request.path, login_url=reverse("shoop_admin:login"))
+            unauth_reason = self._get_unauth_reason(request)
+            if unauth_reason:
+                return self._get_unauth_response(request, unauth_reason)
             return view_func(request, *args, **kwargs)
 
         return _wrapped_view

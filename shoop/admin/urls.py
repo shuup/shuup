@@ -8,19 +8,20 @@
 
 from __future__ import unicode_literals
 from django.conf.urls import patterns
-from django.shortcuts import redirect
 from shoop.admin.module_registry import get_module_urls
 from shoop.admin.utils.urls import admin_url, AdminRegexURLPattern
 from shoop.admin.views.dashboard import DashboardView
 from shoop.admin.views.menu import MenuView
 from shoop.admin.views.search import SearchView
 import django.contrib.auth.views as auth_views
+from django.contrib.auth import logout as do_logout
 import warnings
 
 
 def login(request, **kwargs):
-    if not request.user.is_anonymous():  # No need to log in
-        return redirect("shoop_admin:dashboard")
+    if not request.user.is_anonymous() and request.method == "POST":  # We're logging in, so log out first
+        do_logout(request)
+    kwargs.setdefault("extra_context", {})["error"] = request.GET.get("error")
     return auth_views.login(request, **kwargs)
 
 
