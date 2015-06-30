@@ -19,7 +19,7 @@ class BuildCommand(distutils.command.build.build):
         my_cmds = [
             BuildProductionResourcesCommand.command_name,
         ]
-        return super_cmds + my_cmds
+        return my_cmds + super_cmds
 
 
 class BuildResourcesCommand(distutils.core.Command):
