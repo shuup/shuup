@@ -10,23 +10,18 @@ var _ = require("lodash");
 var gulp = require('gulp');
 var gutil = require("gulp-util");
 var settings = require("./settings");
-var metatasks = require("./metatasks");
-require("./bower-install-task");
-var watchRules = settings.getWatchRules();
-var noop = function(complete) { complete(); };
-var taskNames = _(watchRules).pluck("tasks").flatten().concat(metatasks.CSS_TASK_NAMES).concat(metatasks.JS_TASK_NAMES).value();
-var tasksByPrefix = _(taskNames).uniq().groupBy(function (p) { return p.split(":")[0]; }).value();
-_.each(tasksByPrefix, function(tasks, prefix) { gulp.task(prefix, tasks, noop); });
-gulp.task('build', _.keys(tasksByPrefix), noop);
-gulp.task('watch', ["bower"], function() {
-    _.each(watchRules, function(r) {
-        if(r.paths) {
-            gulp.watch(r.paths, r.tasks);
-            console.log("Watch:" + gutil.colors.green(r.tasks) + " <= " + gutil.colors.yellow(r.paths));
-        }
-        if(r.func) r.func();
-    });
-});
+
+require("./bower-install-task");  // Installs the `bower` task.
+
+if (process.argv.indexOf("bower") == -1) {
+    // If `bower` exists on the command line, it should be run by itself in any case (because Gulp/
+    // Orchestrator attempts to run tasks with maximum parallelisation), so when that occurs,
+    // we don't need to load the regular tasks (nor the whole metatask hierarchy).  This makes loading
+    // a little faster, too.
+    // As a side effect, this squelches errors from main-bower-files.
+    require("./metatasks").installTasks();
+}
+
 gulp.task('default', function() {
     console.log(gutil.colors.cyan.bold(
         "*** Please use `npm run build` instead of running `gulp` directly!\n" +
@@ -34,6 +29,7 @@ gulp.task('default', function() {
         "  * Gulp tasks are run.  Alternately, use `gulp bower`, then `gulp build` (or `gulp watch`)."
     ));
 });
-if(settings.PRODUCTION) {
+
+if (settings.PRODUCTION) {
     gutil.log("Production mode enabled.");
 }

@@ -105,12 +105,44 @@ function webpackJsBundle(spec, name) {
             callback();
         });
     });
-    if(spec.watch) settings.addWatchRule(taskName, spec.watch);  // TODO: Webpack's watch doesn't work reliably, use this...
+    if (spec.watch) {
+        // TODO: Webpack's watch doesn't seem to work reliably, use this...
+        settings.addWatchRule(taskName, spec.watch);
+    }
     return taskName;
 }
 
 module.exports.JS_TASK_NAMES = _.map(jsPackages, function(spec, name) {
-    if(spec.webpack) return webpackJsBundle(spec, name);
+    if (spec.webpack) {
+        return webpackJsBundle(spec, name);
+    }
     return normalJsBundle(spec, name);
 });
 
+function installTasks() {
+    var watchRules = settings.getWatchRules();
+    var taskNames = _(watchRules).
+        pluck("tasks").
+        flatten().
+        concat(module.exports.CSS_TASK_NAMES).
+        concat(module.exports.JS_TASK_NAMES).
+        value();
+    var tasksByPrefix = _(taskNames).uniq().groupBy(function(p) {
+        return p.split(":")[0];
+    }).value();
+    _.each(tasksByPrefix, function(tasks, prefix) {
+        gulp.task(prefix, tasks);
+    });
+    gulp.task("build", _.keys(tasksByPrefix));
+    gulp.task("watch", ["bower"], function() {
+        _.each(watchRules, function(r) {
+            if (r.paths) {
+                gulp.watch(r.paths, r.tasks);
+                console.log("Watch:" + gutil.colors.green(r.tasks) + " <= " + gutil.colors.yellow(r.paths));
+            }
+            if (r.func) r.func();
+        });
+    });
+}
+
+module.exports.installTasks = installTasks;
