@@ -15,14 +15,10 @@ var path = require("path");
 var fs = require("fs");
 
 
-gulp.task('bower', [], function(complete) {
-    glob("{modules,static_src}/**/bower.json", function(er, files) {
-        files = _.reject(files, function(path) {
-            return /node_modules/.test(path)
-        });
-        files = _.reject(files, function(path) {
-            return /bower_components/.test(path)
-        });
+gulp.task("bower", [], function(complete) {
+    glob("{modules,static_src}/**/bower.json", {
+        ignore: ["**/node_modules/**", "**/bower_components/**"]
+    }, function(er, files) {
         var deferredComplete = _.after(files.length, complete);
         _.each(files, function(bowerJsonPath) {
             var dir = path.dirname(bowerJsonPath);
@@ -37,10 +33,10 @@ gulp.task('bower', [], function(complete) {
                 {},
                 {cwd: dir, directory: "bower_components"}
             );
-            install.on('log', function(log) {
+            install.on("log", function(log) {
                 gutil.log("Bower/" + bowerJsonPath + ":" + log.message);
             });
-            install.on('end', function() {
+            install.on("end", function() {
                 gutil.log("Bower complete:", bowerJsonPath);
                 deferredComplete();
             });
