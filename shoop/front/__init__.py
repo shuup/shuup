@@ -15,6 +15,9 @@ class ShoopFrontAppConfig(AppConfig):
     label = "shoop_front"
 
     provides = {
+        "admin_module": [
+            "shoop.front.admin_module.BasketAdminModule",
+        ],
         "notify_event": [
             "shoop.front.notify_events:OrderReceived"
         ]

@@ -37,6 +37,15 @@ SHOOP_BASKET_UPDATE_METHODS_SPEC = (
 SHOOP_BASKET_CLASS_SPEC = (
     "shoop.front.basket.objects:BaseBasket")
 
+#: The spec string defining which basket storage class to use for the frontend.
+#:
+#: Basket storages are responsible for persisting visitor basket state, whether
+#: in the database (DatabaseBasketStorage) or directly in the session
+#: (DirectSessionBasketStorage).  Custom storage backends could use caches, flat
+#: files, etc. if required.
+SHOOP_BASKET_STORAGE_CLASS_SPEC = (
+    "shoop.front.basket.storage:DatabaseBasketStorage")
+
 #: Spec string for the Django CBV (or an API-compliant class) for the checkout view.
 #:
 #: This is used to customize the behavior of the checkout process; most likely to

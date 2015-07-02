@@ -65,5 +65,5 @@ class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
         basket.status = OrderStatus.objects.get_default_initial()
         order_creator = get_basket_order_creator(request=self.request)
         order = order_creator.create_order(basket)
-        basket.clear_all()
+        basket.finalize()
         return order

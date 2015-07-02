@@ -127,7 +127,7 @@ class SingleCheckoutPhase(CheckoutPhaseViewMixin, FormView):
 
         order_creator = get_basket_order_creator(request=self.request)
         order = order_creator.create_order(basket)
-        basket.clear_all()
+        basket.finalize()
         self.checkout_process.complete()
 
         if order.require_verification:
