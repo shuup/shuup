@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from __future__ import unicode_literals
 import logging
 from django.conf import settings
 from .models import Script

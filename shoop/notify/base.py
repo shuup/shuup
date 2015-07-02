@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from __future__ import unicode_literals
 from abc import abstractmethod
 from django.utils.text import camel_case_to_spaces
 from shoop.notify.enums import UNILINGUAL_TEMPLATE_LANGUAGE
