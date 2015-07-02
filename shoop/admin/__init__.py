@@ -24,6 +24,7 @@ class ShoopAdminAppConfig(AppConfig):
             "shoop.admin.modules.taxes:TaxModule",
             "shoop.admin.modules.categories:CategoryModule",
             "shoop.admin.modules.contacts:ContactModule",
+            "shoop.admin.modules.contact_groups:ContactGroupModule",
             "shoop.admin.modules.users:UserModule",
             "shoop.admin.modules.methods:MethodModule",
             "shoop.admin.modules.attributes:AttributeModule",

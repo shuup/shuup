@@ -17,6 +17,7 @@ from shoop.admin.toolbar import get_default_edit_toolbar
 from shoop.admin.utils.urls import get_model_url
 from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.core.models import Contact, PersonContact, CompanyContact, Address
+from shoop.core.models.contacts import ContactGroup
 from shoop.utils.excs import Problem
 from shoop.utils.form_group import FormDef
 
@@ -70,6 +71,12 @@ class ContactBaseForm(BaseModelForm):
             ("PersonContact", _("Person")),
             ("CompanyContact", _("Company"))
         ])
+        self.fields["groups"] = forms.ModelMultipleChoiceField(
+            queryset=ContactGroup.objects.all(),
+            initial=(self.instance.groups.all() if self.instance.pk else ()),
+            required=False,
+            widget=forms.CheckboxSelectMultiple()
+        )
         self.fields_by_model = {}
 
         classes = (Contact, PersonContact, CompanyContact)
@@ -107,10 +114,10 @@ class ContactBaseForm(BaseModelForm):
 
     def save(self, commit=True):
         obj = super(ContactBaseForm, self).save(commit)
-
         if self.bind_user and not getattr(obj, "user", None):  # Allow binding only once
             obj.user = self.bind_user
-            obj.save(update_fields=("user",))
+        obj.groups = self.cleaned_data["groups"]
+        obj.save()
 
         return obj
 
