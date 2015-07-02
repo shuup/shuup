@@ -24,6 +24,7 @@ Developer documentation
    templates
    taxes
    api/modules
+   web_api
 
 
 Indices and tables

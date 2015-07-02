@@ -47,6 +47,8 @@ INSTALLED_APPS = add_enabled_addons(SHOOP_ENABLED_ADDONS_FILE, (
     'bootstrap3',
     'shoop.notify',
     'shoop.simple_cms',
+    'rest_framework',
+    'shoop.api',
 ))
 
 MIDDLEWARE_CLASSES = (
@@ -153,6 +155,16 @@ SESSION_SERIALIZER = "django.contrib.sessions.serializers.PickleSerializer"
 
 SHOOP_PRICING_MODULE = "simple_pricing"
 
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAdminUser',
+    )
+}
 
 if os.environ.get("SHOOP_WORKBENCH_DISABLE_MIGRATIONS") == "1":
     from .utils import DisableMigrations
