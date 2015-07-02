@@ -129,3 +129,9 @@ SHOOP_ORDER_KNOWN_SHIPPING_DATA_KEYS = []
 #: information in ``extra_data``, this setting may be used to make this data easily visible
 #: in the administration backend.
 SHOOP_ORDER_KNOWN_EXTRA_DATA_KEYS = []
+
+#: A flag to enable/disable the telemetry system
+SHOOP_TELEMETRY_ENABLED = True
+
+#: The submission URL for Shoop's telemetry (statistics) system
+SHOOP_TELEMETRY_URL = "https://telemetry.shoop.io/collect/"
