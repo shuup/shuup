@@ -154,5 +154,10 @@ SESSION_SERIALIZER = "django.contrib.sessions.serializers.PickleSerializer"
 SHOOP_PRICING_MODULE = "simple_pricing"
 
 
+if os.environ.get("SHOOP_WORKBENCH_DISABLE_MIGRATIONS") == "1":
+    from .utils import DisableMigrations
+    MIGRATION_MODULES = DisableMigrations()
+
+
 def configure(setup):
     setup.commit(globals())
