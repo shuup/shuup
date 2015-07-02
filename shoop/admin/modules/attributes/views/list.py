@@ -8,14 +8,13 @@
 from __future__ import unicode_literals
 from django.db.models import Count
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import ListView
-from shoop.admin.toolbar import Toolbar, NewActionButton
-from shoop.admin.utils.picotable import Column, PicotableViewMixin, TextFilter, ChoicesFilter
+from shoop.admin.utils.picotable import Column, TextFilter, ChoicesFilter
+from shoop.admin.utils.views import PicotableListView
 from shoop.core.models import Attribute
 from shoop.core.models.attributes import AttributeType, AttributeVisibility
 
 
-class AttributeListView(PicotableViewMixin, ListView):
+class AttributeListView(PicotableListView):
     model = Attribute
     columns = [
         Column("identifier", _("Identifier"), filter_config=TextFilter(
@@ -34,11 +33,6 @@ class AttributeListView(PicotableViewMixin, ListView):
 
     def get_queryset(self):
         return Attribute.objects.all().annotate(n_product_types=Count("product_types"))
-
-    def get_context_data(self, **kwargs):
-        context = super(AttributeListView, self).get_context_data(**kwargs)
-        context["toolbar"] = Toolbar([NewActionButton("shoop_admin:attribute.new")])
-        return context
 
     def get_object_abstract(self, instance, item):
         return [

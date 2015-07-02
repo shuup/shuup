@@ -104,7 +104,8 @@ class UserDetailToolbar(Toolbar):
             menu_items.append(DropdownItem(
                 url=contact_url,
                 icon="fa fa-plus",
-                text=_(u"Create Contact"),
+                text=_(u"New Contact"),
+                tooltip=_("Create a new contact and associate it with this user")
             ))
         self.append(DropdownActionButton(
             menu_items,

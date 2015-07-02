@@ -8,13 +8,12 @@
 from __future__ import unicode_literals
 from django.db.models import Count
 from django.utils.translation import ugettext as _
-from django.views.generic import ListView
-from shoop.admin.toolbar import Toolbar, NewActionButton
-from shoop.admin.utils.picotable import PicotableViewMixin, Column, true_or_false_filter, RangeFilter, TextFilter
+from shoop.admin.utils.picotable import Column, true_or_false_filter, RangeFilter, TextFilter
+from shoop.admin.utils.views import PicotableListView
 from shoop.core.models import Contact, PersonContact, CompanyContact
 
 
-class ContactListView(PicotableViewMixin, ListView):
+class ContactListView(PicotableListView):
     model = Contact
     columns = [
         Column("name", _(u"Name"), linked=True, filter_config=TextFilter()),
@@ -35,11 +34,6 @@ class ContactListView(PicotableViewMixin, ListView):
             return _(u"Company")
         else:
             return _(u"Contact")
-
-    def get_context_data(self, **kwargs):
-        context = super(ContactListView, self).get_context_data(**kwargs)
-        context["toolbar"] = Toolbar([NewActionButton("shoop_admin:contact.new")])
-        return context
 
     def get_object_abstract(self, instance, item):
         """

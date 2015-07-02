@@ -87,14 +87,14 @@ class ProductModule(AdminModule):
             url = reverse("shoop_admin:product.new")
             if " " in query:
                 yield SearchResult(
-                    text="Create product called '%s'" % query,
+                    text=_("Create Product Called \"%s\"") % query,
                     url=manipulate_query_string(url, name=query),
                     is_action=True
                 )
             else:
                 if query.lower() not in skus_seen:
                     yield SearchResult(
-                        text="Create product with SKU '%s'" % query,
+                        text=_("Create Product with SKU \"%s\"") % query,
                         url=manipulate_query_string(url, sku=query),
                         is_action=True
                     )
