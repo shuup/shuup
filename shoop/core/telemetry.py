@@ -5,19 +5,20 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import json
+import platform
+import sys
+
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.serializers.json import DjangoJSONEncoder
-
 from django.utils.crypto import get_random_string
 from django.utils.encoding import force_text
 from django.utils.timezone import now
-from shoop.core.models.persistent_cache import PersistentCacheEntry
-import json
-import platform
 import requests
+
 import shoop
-import sys
+from shoop.core.models import PersistentCacheEntry
 
 OPT_OUT_KWARGS = dict(module="telemetry", key="opt_out")
 INSTALLATION_KEY_KWARGS = dict(module="telemetry", key="installation_key")
@@ -181,11 +182,15 @@ def try_send_telemetry(request=None, max_age_hours=72, raise_on_error=False):
     :param request: HTTP request. Optional.
     :type request: django.http.HttpRequest|None
     :param max_age_hours: How many hours must have passed since the
-                          last submission to be able to resend. If None, not checked.
+                          last submission to be able to resend. If None,
+                          not checked.
+
     :type max_age_hours: int|None
-    :param raise_on_error: Raise exceptions when telemetry is not sent instead of quietly returning False.
+    :param raise_on_error: Raise exceptions when telemetry is not sent
+                           instead of quietly returning False.
     :type raise_on_error: bool
-    :return: Sent data (possibly with response information) or False if not sent.
+    :return: Sent data (possibly with response information) or False if
+             not sent.
     :rtype: dict|bool
     """
     try:
@@ -193,4 +198,4 @@ def try_send_telemetry(request=None, max_age_hours=72, raise_on_error=False):
     except TelemetryNotSent:
         if raise_on_error:
             raise
-        return False  # pragma: no cover
+        return False
