@@ -27,8 +27,12 @@ def configure(setup):
 
     # Load local settings from file
     if local_settings_file:
-        local_settings_ns = {}
-        execfile(local_settings_file, local_settings_ns)
+        local_settings_ns = {
+            '__file__': local_settings_file,
+        }
+        with open(local_settings_file, 'rb') as fp:
+            compiled = compile(fp.read(), local_settings_file, 'exec')
+            exec(compiled, local_settings_ns)
         if 'configure' not in local_settings_ns:
             raise ImproperlyConfigured('No configure in local_settings')
         local_configure = local_settings_ns['configure']
