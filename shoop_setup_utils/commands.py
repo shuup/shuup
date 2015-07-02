@@ -4,22 +4,39 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-import distutils.command.build
+from distutils.command.build import build as du_build
 import distutils.core
 import distutils.errors
 
+from setuptools.command.build_py import build_py as st_build_py
+
+from . import excludes
 from . import resource_building
 
 
-class BuildCommand(distutils.command.build.build):
+class BuildCommand(du_build):
     command_name = 'build'
 
     def get_sub_commands(self):
-        super_cmds = distutils.command.build.build.get_sub_commands(self)
+        super_cmds = du_build.get_sub_commands(self)
         my_cmds = [
             BuildProductionResourcesCommand.command_name,
         ]
         return my_cmds + super_cmds
+
+
+class BuildPyCommand(st_build_py):
+    command_name = 'build_py'
+
+    def find_package_modules(self, package, package_dir):
+        modules = st_build_py.find_package_modules(
+            self, package, package_dir)
+        return list(filter(_is_included_module, modules))
+
+
+def _is_included_module(package_module_file):
+    module = package_module_file[1]
+    return not excludes.is_excluded_filename(module + '.py')
 
 
 class BuildResourcesCommand(distutils.core.Command):
@@ -67,6 +84,7 @@ class BuildProductionResourcesCommand(BuildResourcesCommand):
 
 COMMANDS = dict((x.command_name, x) for x in [
     BuildCommand,
+    BuildPyCommand,
     BuildResourcesCommand,
     BuildProductionResourcesCommand,
 ])

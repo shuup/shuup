@@ -39,11 +39,12 @@ Topic :: Software Development :: Libraries :: Python Modules
 """.strip().splitlines()
 
 utils.set_exclude_patters([
-    'build', 'contrib', 'doc', 'tests*',
+    'build', 'doc',
     'node_modules', 'bower_components',
     'var', '__pycache__', 'LC_MESSAGES',
     '.tox', 'venv*',
     '.git', '.gitignore',
+    'local_settings.py',
 ])
 
 REQUIRES = [
