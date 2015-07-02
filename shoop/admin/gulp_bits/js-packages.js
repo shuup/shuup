@@ -28,7 +28,7 @@ module.exports = {
             "js/content-blocks.js",
             "js/custom-selects.js",
             "js/remarkable-field.js",
-            "js/form-utils.js",
+            "js/form-utils.js"
         ]
     },
     "dashboard": {
@@ -49,7 +49,7 @@ module.exports = {
     "picotable": {
         "base": "./static_src/picotable",
         "files": [
-            "picotable.js",
+            "picotable.js"
         ]
     }
 };
