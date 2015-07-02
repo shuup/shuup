@@ -42,24 +42,29 @@ def process_file(path):
 def fix_file(path):
     with open(path, "rb") as fp:
         source = fp.read().decode("utf-8")
+        source_lines = source.splitlines()
 
-    encoding_comment_ctr = ["# -*- coding: utf-8 -*-"]
-
-    def snarf_comment(match):
-        encoding_comment_ctr[0] = match.group(0)
-        return ""
-    source = encoding_comment_regexp.sub(snarf_comment, source)
+    need_encoding_comment = any(ord(c) > 127 for c in source)
+    first_non_comment_line_index = 0
+    for line_index, line in enumerate(source_lines):
+        if not line.strip():
+            continue
+        if encoding_comment_regexp.match(line):
+            need_encoding_comment = False
+        if not line.startswith("#"):
+            first_non_comment_line_index = line_index
+            break
 
     if "from __future__ import unicode_literals" not in source:
-        prefix = "from __future__ import unicode_literals"
-        if not source.startswith("\n"):
-            prefix += "\n"
-        source = prefix + source
+        source_lines.insert(first_non_comment_line_index, "from __future__ import unicode_literals")
 
-    source = encoding_comment_ctr[0].strip() + "\n" + source
+    source = "\n".join(source_lines)
+    if need_encoding_comment:
+        source = "# -*- coding: utf-8 -*-\n" + source
 
     with open(path, "wb") as fp:
         fp.write(source.encode("utf-8"))
+        fp.write(b"\n")
 
 
 def gather_files(dirnames, filenames):
