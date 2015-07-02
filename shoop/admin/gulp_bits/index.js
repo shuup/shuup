@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 var _ = require("lodash");
-var gulp = require('gulp');
+var gulp = require("gulp");
 var gutil = require("gulp-util");
 var settings = require("./settings");
 
@@ -22,7 +22,7 @@ if (process.argv.indexOf("bower") == -1) {
     require("./metatasks").installTasks();
 }
 
-gulp.task('default', function() {
+gulp.task("default", function() {
     console.log(gutil.colors.cyan.bold(
         "*** Please use `npm run build` instead of running `gulp` directly!\n" +
         "  * Using `npm run build` will ensure Bower prerequisites are installed before\n" +

@@ -20,12 +20,12 @@ var plumber = require("gulp-plumber");
 var settings = require("./settings");
 var size = require("gulp-size");
 var sourcemaps = require("gulp-sourcemaps");
-var babel = require('gulp-babel');
+var babel = require("gulp-babel");
 var uglify = require("gulp-uglify");
 var webpack = require("webpack");
 
 function basifyFile(spec, file) {
-    if(!spec.base) return file;
+    if (!spec.base) return file;
     return path.join(spec.base, file);
 }
 
@@ -50,7 +50,7 @@ module.exports.CSS_TASK_NAMES = _.map(cssPackages, function(spec, name) {
             .pipe(size({title: taskName}))
             .pipe(gulp.dest(settings.DEST_DIR + "/css"));
     });
-    if(!spec.watches) spec.watches = [spec.entrypoint];
+    if (!spec.watches) spec.watches = [spec.entrypoint];
     var watches = spec.watches.map(basifyFile.bind(null, spec));
     settings.addWatchRule(taskName, watches);
 
@@ -79,23 +79,23 @@ function normalJsBundle(spec, name) {
 
 function webpackJsBundle(spec, name) {
     var taskName = "js:" + name;
-    if(_.isString(spec.webpack)) {  // Allow loading webpack configuration from file
+    if (_.isString(spec.webpack)) {  // Allow loading webpack configuration from file
         spec.webpack = require(spec.webpack);
     }
     spec.webpack.output = _.extend(spec.webpack.output || {}, {
         path: settings.DEST_DIR + "/js",
         filename: name + ".js"
     });
-    if(settings.PRODUCTION) {
+    if (settings.PRODUCTION) {
         spec.webpack.plugins = [
             new webpack.optimize.UglifyJsPlugin(),
-            new webpack.optimize.DedupePlugin(),
+            new webpack.optimize.DedupePlugin()
         ];
     }
     var packer = webpack(spec.webpack);
 
     var complete = function(err, stats) {
-        if(err) throw new gutil.PluginError(taskName, err);
+        if (err) throw new gutil.PluginError(taskName, err);
         gutil.log(taskName, stats.toString({colors: true}));
     };
 

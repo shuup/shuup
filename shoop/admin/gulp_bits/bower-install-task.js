@@ -14,7 +14,6 @@ var _ = require("lodash");
 var path = require("path");
 var fs = require("fs");
 
-
 gulp.task("bower", [], function(complete) {
     glob("{modules,static_src}/**/bower.json", {
         ignore: ["**/node_modules/**", "**/bower_components/**"]
@@ -24,7 +23,7 @@ gulp.task("bower", [], function(complete) {
             var dir = path.dirname(bowerJsonPath);
             var bowerComponentsDir = path.join(dir, "bower_components");
             gutil.log("Bower start:", bowerJsonPath);
-            if(!fs.existsSync(bowerComponentsDir)) {
+            if (!fs.existsSync(bowerComponentsDir)) {
                 fs.mkdirSync(bowerComponentsDir);
                 gutil.log("  mkdir:", bowerComponentsDir);
             }
