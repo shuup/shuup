@@ -43,10 +43,14 @@ We have a Gitter chat room for Shoop.  Come chat with us!  |Join chat|
 Getting started with Shoop development
 --------------------------------------
 
-See `Getting Started <doc/getting_started_dev.rst>`__.
+See `Getting Started with Shoop Development
+<http://shoop.readthedocs.org/en/latest/getting_started_dev.html>`__.
 
 Documentation
 -------------
+
+Shoop documentation is available online at `Read the Docs
+<http://shoop.readthedocs.org/>`__.
 
 Documentation is built with `Sphinx <http://sphinx-doc.org/>`__.
 

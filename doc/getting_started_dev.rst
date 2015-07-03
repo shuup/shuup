@@ -6,31 +6,39 @@ Getting Started with Shoop Development
    If you are planning on using Shoop for developing your own shop,
    read the :doc:`other Getting Started guide <getting_started>` instead.
 
-Installation for Development
-----------------------------
+Installation for Shoop Development
+----------------------------------
 
-To install Shoop for developing, setup a virtualenv and activate it,
-then run the following command in the root of the checkout:
+To start developing Shoop, you'll need a Git checkout of Shoop and a
+Github fork of Shoop for creating pull requests.  Github pull requests
+are used to get your changes into Shoop Base.
 
-.. code-block:: shell
+ 1. If you haven't done so already, create a fork of Shoop in Github by
+    clicking the "Fork" button at https://github.com/shoopio/shoop and
+    clone the fork to your computer as usual. See `Github Help about
+    forking repos <https://help.github.com/articles/fork-a-repo/>`__ for
+    details.
 
-   pip install -e .[testing]
+ 2. Setup a virtualenv and activate it.  You may use the traditional
+    ``virtualenv`` command, or the newer ``python -m venv`` if you're
+    using Python 3.  See `Virtualenv User Guide
+    <https://virtualenv.pypa.io/en/latest/userguide.html>`__, if you
+    don't know virtualenv already.  For example, following commands
+    create and activate a virtualenv in Linux:
 
-If you don't need the testing dependencies, drop the ``[testing]`` suffix.
-Note: Some tests might need even more dependencies, then try
-``[everything]`` suffix.
+    .. code-block:: shell
 
-.. note::
+       virtualenv shoop-venv
+       . shoop-venv/bin/activate
 
-   If you get the following error::
+ 3. Finally, you'll need to install Shoop in the activated virtualenv in
+    development mode.  To do that, run the following commands in the
+    root of the checkout (within the activated virtualenv):
 
-     --editable=.[testing] should be formatted with svn+URL, ...
+    .. code-block:: shell
 
-   you should upgrade your pip:
-
-   .. code-block:: shell
-
-      pip install -U pip
+       pip install -e .
+       python setup.py build_resources
 
 Workbench, the built-in test project
 ------------------------------------
