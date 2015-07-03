@@ -1,7 +1,7 @@
 include README.rst
 include LICENSE
 include VENDOR-LICENSES.md
-include ChangeLog.md
+include ChangeLog.rst
 
 include tox.ini
 

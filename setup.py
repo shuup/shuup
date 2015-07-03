@@ -15,6 +15,28 @@ TOPDIR = os.path.abspath(os.path.dirname(__file__))
 LONG_DESCRIPTION_FILE = os.path.join(TOPDIR, 'README.rst')
 VERSION_FILE = os.path.join(TOPDIR, 'shoop', '_version.py')
 
+# Release instructions
+#
+#  1. Update the Change Log (ChangeLog.rst)
+#      - Make sure all relevant changes since last release are listed
+#      - Remove the instruction bullet point ("List all changes after
+#        x.x.x here...")
+#      - Change the "Unreleased" header to appropriate version header.
+#        See header of the last release for example.
+#  2. Update VERSION variable here: Increase and drop .post0.dev suffix
+#  3. Update version and release variables in doc/conf.py
+#  4. Commit changes of steps 1--3
+#  5. Tag the commit (of step 4) with
+#        git tag -a -m "Shoop X.Y.Z" vX.Y.Z
+#     where X.Y.Z is the new version number (must be same as VERSION
+#     variable here)
+#  6. Check the tag is OK and push it with
+#        git push origin refs/tags/vX.Y.Z
+#  7. Do a post-release commit:
+#      - Add new "Unreleased" header and instruction bullet point to
+#        Change Log
+#      - Add ".post0.dev" suffix to VERSION variable here
+
 NAME = 'shoop'
 VERSION = '1.0.0.post0.dev'
 DESCRIPTION = 'E-Commerce Platform'
