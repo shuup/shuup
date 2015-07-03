@@ -9,6 +9,7 @@ Unreleased
   releasing next version, the "Unreleased" header will be replaced with
   appropriate version header and this help text will be removed.
 
+- Improve "Getting Started with Shoop Development" documentation
 - Add a basic REST API for reading/writing products and reading orders
 - Use the database to store shopping baskets by default
 - Implement pluggable shopping basket storage backends
