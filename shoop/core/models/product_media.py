@@ -13,6 +13,7 @@ from filer.fields.file import FilerFileField
 from enumfields import EnumIntegerField, Enum
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from parler.managers import TranslatableManager, TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
 from shoop.core.fields import InternalIdentifierField
 
@@ -28,6 +29,26 @@ class ProductMediaKind(Enum):
         IMAGE = _('image')
         DOCUMENTATION = _('documentation')
         SAMPLE = _('sample')
+
+
+class ProductMediaQuerySet(TranslatableQuerySet):
+    def active_product_images(self, product):
+        """Get product images that can be shown as visible in shop pages."""
+        return self.filter(kind=ProductMediaKind.IMAGE, product=product)
+
+    def enabled_and_public(self):
+        return self.filter(enabled=True, public=True)
+
+
+class ProductMediaManager(TranslatableManager):
+    def get_query_set(self):
+        return ProductMediaQuerySet(self.model)
+
+    def active_product_images(self, *args, **kwargs):
+        return self.get_query_set().active_product_images(*args, **kwargs).enabled_and_public()
+
+    def enabled_and_public(self):
+        return self.get_query_set().enabled_and_public()
 
 
 @python_2_unicode_compatible
@@ -53,6 +74,8 @@ class ProductMedia(TranslatableModel):
         title=models.CharField(blank=True, max_length=128, verbose_name=_('title')),
         description=models.TextField(blank=True, verbose_name=_('description')),
     )
+
+    objects = ProductMediaManager()
 
     class Meta:
         verbose_name = _('product attachment')

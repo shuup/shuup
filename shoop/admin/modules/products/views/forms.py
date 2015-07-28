@@ -8,7 +8,7 @@
 from __future__ import unicode_literals
 from django import forms
 
-from shoop.core.models import Product, ShopProduct
+from shoop.core.models import Product, ShopProduct, ProductMedia
 from shoop.core.models.attributes import AttributeType, Attribute
 from shoop.utils.i18n import get_language_name
 from shoop.utils.multilanguage_model_form import MultiLanguageModelForm, to_language_codes
@@ -38,6 +38,7 @@ class ProductBaseForm(MultiLanguageModelForm):
             "tax_class",
             "type",
             "width",
+            "primary_image",
             # I18n
             "description",
             "keywords",
@@ -48,6 +49,11 @@ class ProductBaseForm(MultiLanguageModelForm):
         widgets = {
             "keywords": forms.TextInput()
         }
+
+    def __init__(self, **kwargs):
+        super(ProductBaseForm, self).__init__(**kwargs)
+        instance = kwargs.get("instance")
+        self.fields["primary_image"].queryset = ProductMedia.objects.active_product_images(product=instance)
 
 
 class ShopProductForm(forms.ModelForm):
