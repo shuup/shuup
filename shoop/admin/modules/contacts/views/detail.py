@@ -13,7 +13,7 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 from shoop.admin.toolbar import Toolbar, URLActionButton, PostActionButton
-from shoop.core.models import Contact, Order
+from shoop.core.models import Contact, PersonContact, Order
 
 
 class ContactDetailToolbar(Toolbar):
@@ -74,7 +74,10 @@ class ContactDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ContactDetailView, self).get_context_data(**kwargs)
-        order_q = Q(orderer=self.object) | Q(customer=self.object)
+        if isinstance(self.object, PersonContact):
+            order_q = Q(orderer=self.object) | Q(customer=self.object)
+        else:
+            order_q = Q(customer=self.object)
         user = getattr(self.object, "user", None)
         if user:
             order_q |= Q(creator=user)
