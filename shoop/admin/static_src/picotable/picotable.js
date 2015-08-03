@@ -90,6 +90,14 @@ var Picotable = (function(m, storage) {
             return true;
         }
 
+        function boundPartial(thisArg, func/*, args */) {
+            var partialArgs = [].slice.call(arguments, 2);
+            return function(/* args */) {
+                var fArgs = partialArgs.concat([].slice.call(arguments));
+                return func.apply(thisArg, fArgs);
+            };
+        }
+
         return {
             property: property,
             map: map,
@@ -99,7 +107,8 @@ var Picotable = (function(m, storage) {
             omitNulls: omitNulls,
             debounce: debounce,
             stringValue: stringValue,
-            isEmpty: isEmpty
+            isEmpty: isEmpty,
+            boundPartial: boundPartial
         };
     }());
 
@@ -315,11 +324,22 @@ var Picotable = (function(m, storage) {
         var tfoot = m("tfoot", [m("tr", footCell)]);
 
         // Build body
+        var isPick = !!ctrl.vm.pickId();
         var rows = Util.map(data.items, function(item) {
-            return m("tr", {key: "item-" + item._id}, Util.map(data.columns, function(col) {
+            return m("tr", {key: "item-" + item._id}, Util.map(data.columns, function(col, index) {
                 var content = item[col.id] || "";
                 if (!!col.raw) content = m.trust(content);
-                if (col.linked && item._url) content = m("a", {href: item._url}, content);
+                if (col.linked) {
+                    if(isPick) {
+                        content = m("a", {
+                            href: "#",
+                            onclick: Util.boundPartial(ctrl, ctrl.pickObject, item)
+                        }, content);
+                    }
+                    else if(item._url) {
+                        content = m("a", {href: item._url}, content);
+                    }
+                }
                 return m("td", {key: "col-" + col.id, className: col.className || ""}, [content]);
             }));
         });
@@ -395,6 +415,7 @@ var Picotable = (function(m, storage) {
     function renderMobileTable(ctrl) {
         var data = ctrl.vm.data();
         if (data === null) return; // Not loaded, don't return anything
+        var isPick = !!ctrl.vm.pickId();
         var listItems = Util.map(data.items, function(item) {
             var content = null;
             if (item._abstract && item._abstract.length) {
@@ -428,7 +449,12 @@ var Picotable = (function(m, storage) {
                     ]);
                 });
             }
-            return m("div.list-element", m("a.inner", {href: item._url}, content));
+            var linkAttrs = {href: item._url};
+            if(isPick) {
+                linkAttrs.onclick = Util.boundPartial(ctrl, ctrl.pickObject, item);
+                linkAttrs.href = "#";
+            }
+            return m("div.list-element", m("a.inner", linkAttrs, content));
         });
         return m("div.mobile", [
             m("div.row.mobile-header", [
@@ -507,7 +533,8 @@ var Picotable = (function(m, storage) {
             showHeader: m.prop(true),
             data: m.prop(null),
             renderMode: m.prop("normal"),
-            showMobileFilterSettings: m.prop(false)
+            showMobileFilterSettings: m.prop(false),
+            pickId: m.prop(null)
         };
         ctrl.setRenderMode = function(mode) {
             var oldMode = ctrl.vm.renderMode();
@@ -592,6 +619,37 @@ var Picotable = (function(m, storage) {
             if (!storage) return;
             var perPage = 0 | storage.getItem("picotablePerPage");
             if (perPage > 1) ctrl.vm.perPage(perPage);
+
+            // See if we're in pick mode...
+            var pickMatch = /pick=([^&]+)/.exec(location.search);
+            ctrl.vm.pickId(pickMatch ? pickMatch[1] : null);
+        };
+        ctrl.pickObject = function(object) {
+            var opener = window.opener;
+            if(!opener) {
+                alert("Window has no opener. Can't pick object.");
+                return;
+            }
+            var text = null;  // Try to figure out a name for the object
+            Util.map(["_text", "_name", "title", "name", "text"], function(prop) {
+                if(!text && object[prop]) text = object[prop];
+            });
+            if(!text && object._abstract && object._abstract.length > 0) {
+                text = object._abstract[0];
+                if(text.text) text = text.text; // Unwrap possible abstract text
+            }
+            if(!text) text = "#" + object._id;
+            opener.postMessage({
+                "pick": {
+                    "id": ctrl.vm.pickId(),
+                    "object": {
+                        "id": object._id,
+                        "text": text,
+                        "url": object._url
+                    }
+                }
+            }, "*");
+            event.preventDefault();
         };
         ctrl.loadSettings();
         ctrl.adaptRenderMode();
