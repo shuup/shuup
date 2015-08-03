@@ -124,3 +124,8 @@ class PicotableListView(PicotableViewMixin, ListView):
         context = super(PicotableListView, self).get_context_data(**kwargs)
         context["toolbar"] = self.get_toolbar()
         return context
+
+    def get_object_abstract(self, instance, item):
+        return [
+            {"text": "%s" % instance, "class": "header"},
+        ]

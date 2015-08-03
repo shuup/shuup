@@ -33,8 +33,3 @@ class AttributeListView(PicotableListView):
 
     def get_queryset(self):
         return Attribute.objects.all().annotate(n_product_types=Count("product_types"))
-
-    def get_object_abstract(self, instance, item):
-        return [
-            {"text": "%s" % instance, "class": "header"},
-        ]

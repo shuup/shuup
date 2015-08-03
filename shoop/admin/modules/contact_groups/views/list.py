@@ -31,8 +31,3 @@ class ContactGroupListView(PicotableViewMixin, ListView):
         context = super(ContactGroupListView, self).get_context_data(**kwargs)
         context["toolbar"] = Toolbar([NewActionButton("shoop_admin:contact-group.new")])
         return context
-
-    def get_object_abstract(self, instance, item):
-        return [
-            {"text": "%s" % instance, "class": "header"},
-        ]
