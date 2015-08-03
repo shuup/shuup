@@ -32,6 +32,10 @@ class ProductModule(AdminModule):
                 name="product.edit_media"
             ),
             admin_url(
+                "^products/(?P<pk>\d+)/crosssell/$", "shoop.admin.modules.products.views.ProductCrossSellEditView",
+                name="product.edit_cross_sell"
+            ),
+            admin_url(
                 "^products/(?P<pk>\d+)/$", "shoop.admin.modules.products.views.ProductEditView",
                 name="product.edit"
             ),
