@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+# This file is part of Shoop.
+#
+# Copyright (c) 2012-2015, Shoop Ltd. All rights reserved.
+#
+# This source code is licensed under the AGPLv3 license found in the
+# LICENSE file in the root directory of this source tree.
 from django.forms import HiddenInput, Widget
 from django.utils.encoding import force_text
 from django.utils.html import escape
@@ -6,6 +12,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from filer.models import File
 from shoop.admin.utils.urls import get_model_url, NoModelUrl
+from shoop.core.models import Product
 
 
 class BasePopupChoiceWidget(Widget):
@@ -55,5 +62,13 @@ class BasePopupChoiceWidget(Widget):
 
 class MediaChoiceWidget(BasePopupChoiceWidget):
     browse_kind = "media"
+
     def get_object(self, value):
         return File.objects.get(pk=value)
+
+
+class ProductChoiceWidget(BasePopupChoiceWidget):
+    browse_kind = "product"
+
+    def get_object(self, value):
+        return Product.objects.get(pk=value)

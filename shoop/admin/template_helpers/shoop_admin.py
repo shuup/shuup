@@ -46,8 +46,10 @@ def get_front_url(context):
     return front_url
 
 
+# TODO: Figure out a more extensible way to deal with this
 BROWSER_URL_NAMES = {
-    "media": "shoop_admin:media.browse"
+    "media": "shoop_admin:media.browse",
+    "product": "shoop_admin:product.list",
 }
 
 
