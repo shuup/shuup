@@ -14,8 +14,8 @@ from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import UpdateView
 from shoop.admin.base import MenuEntry
+from shoop.admin.forms.widgets import MediaChoiceWidget
 from shoop.admin.toolbar import Toolbar, PostActionButton
-from shoop.admin.utils.forms import MediaChoiceWidget
 from shoop.admin.utils.urls import get_model_url
 from shoop.core.models import Product, ProductMedia
 from shoop.utils.multilanguage_model_form import MultiLanguageModelForm
