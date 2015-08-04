@@ -89,6 +89,14 @@ class ProductVariationResult(models.Model):
 
 
 def hash_combination(combination):
+    """
+    Calculate the combination hash for a given mapping of variable PKs to value PKs.
+
+    :param combination: Combination dict {pvv_pk: pvvv_pk}
+    :type combination: dict[int, int]
+    :return: Hash string
+    :rtype: str
+    """
     bits = []
 
     for variable, value in six.iteritems(combination):
@@ -101,6 +109,31 @@ def hash_combination(combination):
     raw_combination = ",".join(bits)
     hashed_combination = hashlib.sha1(force_bytes(raw_combination)).hexdigest()
     return hashed_combination
+
+
+def get_combination_hash_from_variable_mapping(parent, variables):
+    """
+    Create a combination hash from a mapping of variable identifiers to value identifiers.
+
+    If variables and values with the given identifier do not exist, they are created on the go.
+
+    :param parent: Parent product
+    :type parent: shoop.core.models.products.Product
+    :param variables: Dict of {variable identifier: value identifier} for complex variable linkage
+    :type variables: dict
+    :return: Combination hash
+    :rtype: str
+    """
+    mapping = {}
+    for variable_identifier, value_identifier in variables.items():
+        variable_identifier, _ = ProductVariationVariable.objects.get_or_create(
+            product=parent, identifier=variable_identifier
+        )
+        value_identifier, _ = ProductVariationVariableValue.objects.get_or_create(
+            variable=variable_identifier, identifier=value_identifier
+        )
+        mapping[variable_identifier] = value_identifier
+    return hash_combination(mapping)
 
 
 def get_available_variation_results(product):

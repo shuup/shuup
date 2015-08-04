@@ -25,12 +25,7 @@ import six
 
 from .attributes import AttributableMixin, AppliedAttribute
 from .product_packages import ProductPackageLink
-from .product_variation import (
-    ProductVariationResult,
-    ProductVariationVariable,
-    ProductVariationVariableValue,
-    hash_combination,
-)
+from .product_variation import ProductVariationResult, get_combination_hash_from_variable_mapping
 
 
 class ProductMode(Enum):
@@ -347,13 +342,22 @@ class Product(AttributableMixin, TranslatableModel):
             ProductVariationResult.objects.filter(result=self).delete()
             return True
 
-    def link_to_parent(self, parent, variables=None):
+    def link_to_parent(self, parent, variables=None, combination_hash=None):
         """
         :param parent: The parent to link to.
         :type parent: Product
         :param variables: Optional dict of {variable identifier: value identifier} for complex variable linkage
         :type variables: dict|None
+        :param combination_hash: Optional combination hash (for variable variations), if precomputed. Mutually
+                                 exclusive with `variables`
+        :type combination_hash: str|None
+
         """
+        if combination_hash:
+            if variables:
+                raise ValueError("`combination_hash` and `variables` are mutually exclusive")
+            variables = True  # Simplifies the below invariant checks
+
         if parent.is_variation_child():
             raise ValueError("Multilevel parentage hierarchies aren't supported (parent is a child already)")
         if parent.mode == ProductMode.VARIABLE_VARIATION_PARENT and not variables:
@@ -378,18 +382,12 @@ class Product(AttributableMixin, TranslatableModel):
             parent.save()
 
         if variables:
-            mapping = {}
-            for variable_identifier, value_identifier in variables.items():
-                variable_identifier, _ = ProductVariationVariable.objects.get_or_create(
-                    product=parent, identifier=variable_identifier
-                )
-                value_identifier, _ = ProductVariationVariableValue.objects.get_or_create(
-                    variable=variable_identifier, identifier=value_identifier
-                )
-                mapping[variable_identifier] = value_identifier
+            if not combination_hash:  # No precalculated hash, need to figure that out
+                combination_hash = get_combination_hash_from_variable_mapping(parent, variables=variables)
+
             pvr = ProductVariationResult.objects.create(
                 product=parent,
-                combination_hash=hash_combination(mapping),
+                combination_hash=combination_hash,
                 result=self
             )
             if parent.mode == ProductMode.SIMPLE_VARIATION_PARENT:
