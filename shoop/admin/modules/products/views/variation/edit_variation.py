@@ -16,6 +16,7 @@ from shoop.admin.form_part import FormPartsViewMixin, FormPart, TemplatedFormDef
 from shoop.admin.toolbar import get_default_edit_toolbar
 from shoop.core.models import Product, ProductMode
 from .simple_variation_forms import SimpleVariationChildForm, SimpleVariationChildFormSet
+from .variable_variation_forms import VariableVariationChildrenForm, VariationVariablesDataForm
 
 
 class VariationChildrenFormPart(FormPart):
@@ -26,7 +27,8 @@ class VariationChildrenFormPart(FormPart):
         if product.mode == ProductMode.VARIATION_CHILD:
             raise ValueError("Invalid mode")
         elif product.mode == ProductMode.VARIABLE_VARIATION_PARENT:
-            raise NotImplementedError("Not implemented")
+            form = VariableVariationChildrenForm
+            template_name = "shoop/admin/products/variation/_variable_variation_children.jinja"
         else:
             form = formset_factory(SimpleVariationChildForm, SimpleVariationChildFormSet, extra=5, can_delete=True)
             template_name = "shoop/admin/products/variation/_simple_variation_children.jinja"
@@ -47,6 +49,25 @@ class VariationChildrenFormPart(FormPart):
         children_formset.save()
 
 
+class VariationVariablesFormPart(FormPart):
+    priority = 1
+
+    def get_form_defs(self):
+        yield TemplatedFormDef(
+            "variables",
+            VariationVariablesDataForm,
+            template_name="shoop/admin/products/variation/_variation_variables.jinja",
+            required=False,
+            kwargs={"parent_product": self.object}
+        )
+
+    def form_valid(self, form):
+        try:
+            var_form = form["variables"]
+        except KeyError:
+            return
+        var_form.save()
+
 
 class ProductVariationView(FormPartsViewMixin, UpdateView):
     model = Product
@@ -65,6 +86,7 @@ class ProductVariationView(FormPartsViewMixin, UpdateView):
 
     def get_form_part_classes(self):
         yield VariationChildrenFormPart
+        yield VariationVariablesFormPart
 
     def get_context_data(self, **kwargs):
         context = super(ProductVariationView, self).get_context_data(**kwargs)

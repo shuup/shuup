@@ -16,5 +16,19 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="{{ static("shoop_admin/js/product-variation-variable-editor.js") }}"></script>
+    {{ super() }}
+    <script src="{{ static("shoop_admin/js/product-variation-variable-editor.js") }}"></script>
+{% endblock %}
+{% block extra_css %}
+    {{ super() }}
+    <style>
+    div.variable {
+        border: 2px solid #f0f0f0;
+        background: #f9f9f9;
+        border-radius: 1em;
+        padding: 1em;
+        margin-bottom: 1em;
+    }
+    </style>
+
 {% endblock %}
