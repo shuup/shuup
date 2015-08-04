@@ -12,6 +12,7 @@ from shoop.admin.toolbar import (
     Toolbar, get_default_edit_toolbar,
     DropdownActionButton, DropdownItem, DropdownDivider
 )
+from shoop.admin.utils.urls import get_model_url
 
 
 class EditProductToolbar(Toolbar):
@@ -46,6 +47,9 @@ class EditProductToolbar(Toolbar):
             cross_sell_button
         ]
 
+        for item in self._get_variation_and_package_menu_items(product):
+            menu_items.append(item)
+
         self.append(DropdownActionButton(
             menu_items,
             icon="fa fa-star",
@@ -53,3 +57,72 @@ class EditProductToolbar(Toolbar):
             extra_css_class="btn-info",
         ))
         # TODO: Add extensibility
+
+    def _get_variation_and_package_menu_items(self, product):
+        variation_parent = product.is_variation_parent()
+        variation_child = product.is_variation_child()
+        package_parent = product.is_package_parent()
+
+        if variation_parent:
+            yield DropdownDivider()
+            yield DropdownItem(
+                text=_("Manage Variations"),
+                icon="fa fa-arrows-alt",
+                url="#",  # TODO: URL me
+            )
+            for child in product.variation_children.all():
+                yield DropdownItem(
+                    text=_("Child: %s") % child,
+                    icon="fa fa-long-arrow-down",
+                    url=get_model_url(child),
+                )
+        elif variation_child:
+            yield DropdownDivider()
+            parent = product.variation_parent
+            yield DropdownItem(
+                text=_("Manage Variations"),
+                icon="fa fa-arrows-alt",
+                url="#",  # TODO: URL me
+            )
+            yield DropdownItem(
+                text=_("Parent: %s") % parent,
+                icon="fa fa-long-arrow-up",
+                url=get_model_url(parent),
+            )
+            for sib in product.get_variation_siblings():
+                yield DropdownItem(
+                    text=_("Sibling: %s") % sib,
+                    icon="fa fa-long-arrow-right",
+                    url=get_model_url(sib),
+                )
+        elif package_parent:
+            yield DropdownDivider()
+            yield DropdownItem(
+                text=_("Manage Package"),
+                icon="fa fa-archive",
+                url="#",  # TODO: Implement manage packages
+            )
+            for child in product.get_all_package_children():
+                yield DropdownItem(
+                    text=_("Child: %s") % child,
+                    icon="fa fa-long-arrow-down",
+                    url=get_model_url(child),
+                )
+
+        package_parents = list(product.get_all_package_parents())
+        if package_parents:
+            yield DropdownDivider()
+            for parent in package_parents:
+                yield DropdownItem(
+                    text=_("Package Parent: %s") % parent,
+                    icon="fa fa-long-arrow-up",
+                    url=get_model_url(parent),
+                )
+
+        if not (variation_parent or variation_child or package_parent):
+            yield DropdownDivider()
+            yield DropdownItem(
+                text=_("Convert to Variation Parent"),
+                icon="fa fa-arrows-alt",
+                url="#",
+            )
