@@ -348,7 +348,13 @@ class Product(AttributableMixin, TranslatableModel):
             return True
 
     def link_to_parent(self, parent, variables=None):
-        if parent.mode == ProductMode.VARIATION_CHILD:
+        """
+        :param parent: The parent to link to.
+        :type parent: Product
+        :param variables: Optional dict of {variable identifier: value identifier} for complex variable linkage
+        :type variables: dict|None
+        """
+        if parent.is_variation_child():
             raise ValueError("Multilevel parentage hierarchies aren't supported (parent is a child already)")
         if parent.mode == ProductMode.VARIABLE_VARIATION_PARENT and not variables:
             raise ValueError("Parent is a variable variation parent, yet variables were not passed to `link_to_parent`")
@@ -367,7 +373,7 @@ class Product(AttributableMixin, TranslatableModel):
         self.variation_parent = parent
         self.verify_mode()
         self.save()
-        if parent.mode not in (ProductMode.SIMPLE_VARIATION_PARENT, ProductMode.VARIABLE_VARIATION_PARENT):
+        if not parent.is_variation_parent():
             parent.verify_mode()
             parent.save()
 
@@ -398,24 +404,49 @@ class Product(AttributableMixin, TranslatableModel):
             raise ValueError("Product is currently not a normal product, can't turn into package")
 
         for child_product, quantity in six.iteritems(package_def):
-            if child_product.mode in (ProductMode.SIMPLE_VARIATION_PARENT, ProductMode.VARIABLE_VARIATION_PARENT):
+            # :type child_product: Product
+            if child_product.is_variation_parent():
                 raise ValueError("Variation parents can not belong into a package")
-            if child_product.mode == ProductMode.PACKAGE_PARENT:
+            if child_product.is_package_parent():
                 raise ValueError("Can't nest packages")
-
             if quantity <= 0:
                 raise ValueError("Quantity %s is invalid" % quantity)
             ProductPackageLink.objects.create(parent=self, child=child_product, quantity=quantity)
         self.verify_mode()
 
     def get_package_child_to_quantity_map(self):
-        if self.mode == ProductMode.PACKAGE_PARENT:
+        if self.is_package_parent():
             product_id_to_quantity = dict(
                 ProductPackageLink.objects.filter(parent=self).values_list("child_id", "quantity")
             )
             products = dict((p.pk, p) for p in Product.objects.filter(pk__in=product_id_to_quantity.keys()))
             return {products[product_id]: quantity for (product_id, quantity) in six.iteritems(product_id_to_quantity)}
         return {}
+
+    def is_variation_parent(self):
+        return self.mode in (ProductMode.SIMPLE_VARIATION_PARENT, ProductMode.VARIABLE_VARIATION_PARENT)
+
+    def is_variation_child(self):
+        return (self.mode == ProductMode.VARIATION_CHILD)
+
+    def get_variation_siblings(self):
+        return Product.objects.filter(variation_parent=self.variation_parent).exclude(pk=self.pk)
+
+    def is_package_parent(self):
+        return (self.mode == ProductMode.PACKAGE_PARENT)
+
+    def is_package_child(self):
+        return ProductPackageLink.objects.filter(child=self).exists()
+
+    def get_all_package_parents(self):
+        return Product.objects.filter(pk__in=(
+            ProductPackageLink.objects.filter(child=self).values_list("parent", flat=True)
+        ))
+
+    def get_all_package_children(self):
+        return Product.objects.filter(pk__in=(
+            ProductPackageLink.objects.filter(parent=self).values_list("child", flat=True)
+        ))
 
 
 ProductLogEntry = define_log_model(Product)
