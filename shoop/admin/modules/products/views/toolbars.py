@@ -62,13 +62,13 @@ class EditProductToolbar(Toolbar):
         variation_parent = product.is_variation_parent()
         variation_child = product.is_variation_child()
         package_parent = product.is_package_parent()
-
+        variation_url = reverse("shoop_admin:product.edit_variation", kwargs={"pk": product.pk})
         if variation_parent:
             yield DropdownDivider()
             yield DropdownItem(
                 text=_("Manage Variations"),
                 icon="fa fa-arrows-alt",
-                url="#",  # TODO: URL me
+                url=variation_url,
             )
             for child in product.variation_children.all():
                 yield DropdownItem(
@@ -82,7 +82,7 @@ class EditProductToolbar(Toolbar):
             yield DropdownItem(
                 text=_("Manage Variations"),
                 icon="fa fa-arrows-alt",
-                url="#",  # TODO: URL me
+                url=variation_url,
             )
             yield DropdownItem(
                 text=_("Parent: %s") % parent,
@@ -124,5 +124,5 @@ class EditProductToolbar(Toolbar):
             yield DropdownItem(
                 text=_("Convert to Variation Parent"),
                 icon="fa fa-arrows-alt",
-                url="#",
+                url=variation_url,
             )
