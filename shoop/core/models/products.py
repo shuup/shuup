@@ -7,9 +7,9 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 from __future__ import with_statement
+import six
 from django.utils.encoding import python_2_unicode_compatible
 from parler.managers import TranslatableQuerySet
-
 from enumfields import Enum, EnumIntegerField
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
@@ -17,15 +17,14 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from parler.models import TranslatableModel, TranslatedFields
 from shoop.core.fields import InternalIdentifierField, MoneyField, MeasurementField
-from shoop.core.models.attributes import Attribute
 from shoop.core.utils.slugs import generate_multilanguage_slugs
 from shoop.utils.analog import define_log_model, LogEntryKind
-
-import six
-
-from .attributes import AttributableMixin, AppliedAttribute
+from .attributes import Attribute, AttributableMixin, AppliedAttribute
 from .product_packages import ProductPackageLink
-from .product_variation import ProductVariationResult, get_combination_hash_from_variable_mapping
+from .product_variation import (
+    get_combination_hash_from_variable_mapping,
+    ProductVariationResult, ProductVariationVariable
+)
 
 
 class ProductMode(Enum):
@@ -312,12 +311,14 @@ class Product(AttributableMixin, TranslatableModel):
             super(Product, self).save(update_fields=("deleted",))
 
     def verify_mode(self):
-        if ProductPackageLink.objects.filter(parent=self).count():
+        if ProductPackageLink.objects.filter(parent=self).exists():
             self.mode = ProductMode.PACKAGE_PARENT
             self.external_url = None
             self.variation_children.clear()
-        elif self.variation_children.count():
-            if ProductVariationResult.objects.filter(product=self).count():
+        elif ProductVariationVariable.objects.filter(product=self).exists():
+            self.mode = ProductMode.VARIABLE_VARIATION_PARENT
+        elif self.variation_children.exists():
+            if ProductVariationResult.objects.filter(product=self).exists():
                 self.mode = ProductMode.VARIABLE_VARIATION_PARENT
             else:
                 self.mode = ProductMode.SIMPLE_VARIATION_PARENT
