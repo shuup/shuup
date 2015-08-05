@@ -1,22 +1,11 @@
 {% extends "shoop/admin/base.jinja" %}
-{% from "shoop/admin/macros/general.jinja" import content_block %}
+{% from "shoop/admin/macros/general.jinja" import single_section_form with context %}
 {% from "shoop/admin/macros/multilanguage.jinja" import language_dependent_content_tabs %}
-
 {% block content %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3 section-navigation" data-navigatee="tax_form"></div>
-            <div class="col-md-9">
-                <form method="post" id="tax_form">
-                    {% csrf_token %}
-                    {% call content_block(_("General information"), "fa-info-circle") %}
-                        {{ bs3.field(form.rate) }}
-                        {{ bs3.field(form.amount) }}
-                        {{ bs3.field(form.enabled) }}
-                        {{ language_dependent_content_tabs(form, ["name"]) }}
-                    {% endcall %}
-                </form>
-            </div>
-        </div>
-    </div>
+    {% call single_section_form("tax_form", form) %}
+        {{ bs3.field(form.rate) }}
+        {{ bs3.field(form.amount) }}
+        {{ bs3.field(form.enabled) }}
+        {{ language_dependent_content_tabs(form, ["name"]) }}
+    {% endcall %}
 {% endblock %}
