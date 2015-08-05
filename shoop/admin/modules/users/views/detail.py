@@ -21,7 +21,7 @@ from shoop.admin.toolbar import (
     DropdownActionButton, DropdownItem, DropdownDivider
 )
 from shoop.admin.utils.urls import get_model_url
-from shoop.admin.utils.views import CreateOrUpdateView, add_create_or_change_message
+from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.core.models.contacts import PersonContact, Contact
 from shoop.utils.excs import Problem
 from shoop.utils.text import flatten
@@ -172,16 +172,13 @@ class UserDetailView(CreateOrUpdateView):
         return UserDetailToolbar(view=self)
 
     @atomic
-    def form_valid(self, form):
-        is_new = (not self.object.pk)
-        add_create_or_change_message(self.request, self.object, is_new=is_new)
-        rv = super(UserDetailView, self).form_valid(form)
+    def save_form(self, form):
+        self.object = form.save()
         contact = self._get_bind_contact()
         if contact and not contact.user:
             contact.user = self.object
             contact.save()
             messages.info(self.request, _(u"User bound to contact %(contact)s.") % {"contact": contact})
-        return rv
 
     def get_success_url(self):
         return get_model_url(self.object)

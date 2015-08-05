@@ -10,12 +10,11 @@ from django import forms
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.forms.models import modelform_factory
-from django.http import HttpResponseRedirect
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from shoop.admin.base import MenuEntry
 from shoop.admin.toolbar import get_default_edit_toolbar, URLActionButton, Toolbar
-from shoop.admin.utils.views import CreateOrUpdateView, add_create_or_change_message
+from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.core.models.methods import Method, ShippingMethod, PaymentMethod
 from shoop.core.modules.interface import ModuleNotFound
 from shoop.utils.multilanguage_model_form import MultiLanguageModelForm
@@ -97,8 +96,7 @@ class _BaseMethodEditView(CreateOrUpdateView):
     def get_toolbar(self):
         return MethodEditToolbar(self)
 
-    def form_valid(self, form):
-        add_create_or_change_message(self.request, self.object, not self.object.pk)
+    def save_form(self, form):
         self.object = form.save()
         if not self.object.module_data:
             self.object.module_data = {}
@@ -106,7 +104,6 @@ class _BaseMethodEditView(CreateOrUpdateView):
             if field_name in form.cleaned_data:
                 self.object.module_data[field_name] = form.cleaned_data[field_name]
         self.object.save()
-        return HttpResponseRedirect(self.get_success_url())
 
 
 class ShippingMethodEditView(_BaseMethodEditView):
