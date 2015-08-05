@@ -1,5 +1,7 @@
 {% extends "shoop/admin/base.jinja" %}
 {% from "shoop/admin/macros/general.jinja" import content_block %}
+{% from "shoop/admin/macros/multilanguage.jinja" import language_dependent_content_tabs %}
+
 {% block content %}
     <div class="container-fluid">
         <div class="row">
@@ -8,9 +10,11 @@
                 <form method="post" id="sales_unit_form">
                     {% csrf_token %}
                     {% call content_block(_("General information"), "fa-info-circle") %}
-                        {% for field in form %}
-                            {{ bs3.field(field) }}
-                        {% endfor %}
+                        {{ bs3.field(form["decimals"]) }}
+                        {% call(form, language, map) language_dependent_content_tabs(form) %}
+                            {{ bs3.field(form[map.name]) }}
+                            {{ bs3.field(form[map.short_name]) }}
+                        {% endcall %}
                     {% endcall %}
                 </form>
             </div>
