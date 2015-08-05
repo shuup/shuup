@@ -176,7 +176,7 @@ class PostActionButton(BaseActionButton):
             "type": "submit",
             "title": self.tooltip,
             "class": self.get_computed_class(),
-            "onclick": ("return confirm(%s)" % json.dumps(self.confirm) if self.confirm else None)
+            "onclick": ("return confirm(%s)" % json.dumps(force_text(self.confirm)) if self.confirm else None)
         })
         yield self.render_label()
         yield '</button>'
