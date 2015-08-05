@@ -1,6 +1,13 @@
 {% extends "shoop/admin/base.jinja" %}
 {% block content %}
     <div class="container-fluid">
+        {% if not is_variation %}
+        <div class="alert alert-info">
+            {% trans %}This product is not yet a variation.{% endtrans %}<br>
+            {% trans %}To create a simple variation, choose products below.{% endtrans %}<br>
+            {% trans %}To create a variation with multiple variables, create the variables on the Variables tab and then link them to products here.{% endtrans %}
+        </div>
+        {% endif %}
         <div class="row">
             <div class="col-md-3 section-navigation" data-navigatee="product_form"></div>
             <div class="col-md-9">
