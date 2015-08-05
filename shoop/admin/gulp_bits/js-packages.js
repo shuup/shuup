@@ -22,7 +22,7 @@ module.exports = {
             "js/tooltip.js",
             "js/timesince.js",
             "js/messages.js",
-            "js/media-widget.js",
+            "js/browse-widget.js",
             "js/dropdown-animation.js",
             "js/side-nav.js",
             "js/content-blocks.js",

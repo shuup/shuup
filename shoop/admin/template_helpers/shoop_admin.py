@@ -46,6 +46,23 @@ def get_front_url(context):
     return front_url
 
 
+# TODO: Figure out a more extensible way to deal with this
+BROWSER_URL_NAMES = {
+    "media": "shoop_admin:media.browse",
+    "product": "shoop_admin:product.list",
+}
+
+
+def get_browser_urls():
+    browser_urls = {}
+    for name, urlname in BROWSER_URL_NAMES.items():
+        try:
+            browser_urls[name] = reverse(urlname)
+        except NoReverseMatch:  # This may occur when a module is not available.
+            browser_urls[name] = None
+    return browser_urls
+
+
 @contextfunction
 def get_config(context):
     request = context["request"]
@@ -54,16 +71,11 @@ def get_config(context):
         # This does not exist when testing views directly
         url_name = request.resolver_match.url_name
 
-    try:
-        media_browse_url = reverse("shoop_admin:media.browse")
-    except NoReverseMatch:  # This may occur when the media module is not available.
-        media_browse_url = None
-
     qs = {"context": url_name}
     return {
         "searchUrl": manipulate_query_string(reverse("shoop_admin:search"), **qs),
         "menuUrl": manipulate_query_string(reverse("shoop_admin:menu"), **qs),
-        "mediaBrowserUrl": media_browse_url,
+        "browserUrls": get_browser_urls(),
         "csrf": get_token(request)
     }
 

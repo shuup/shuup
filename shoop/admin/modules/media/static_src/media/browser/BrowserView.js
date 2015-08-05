@@ -24,7 +24,16 @@ var fileLink = function(file) {
         attrs = {
             href: "#",
             onclick: function(event) {
-                window.opener.postMessage({"pick": {"id": pickMatch[1], "file": file}}, "*");
+                window.opener.postMessage({
+                    "pick": {
+                        "id": pickMatch[1],
+                        "object": {
+                            "id": file.id,
+                            "text": file.name,
+                            "url": file.url,
+                        }
+                    }
+                }, "*");
                 event.preventDefault();
             }
         };

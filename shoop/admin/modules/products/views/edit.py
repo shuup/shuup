@@ -123,12 +123,17 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
         )
         if product.pk:
             toolbar.append(URLActionButton(
-                text=_("Manage Product Media"),
+                text=_("Manage Media"),
                 icon="fa fa-picture-o",
                 url=reverse("shoop_admin:product.edit_media", kwargs={"pk": product.pk}),
                 extra_css_class="btn-info"
             ))
-
+            toolbar.append(URLActionButton(
+                text=_("Manage Cross-Selling"),
+                icon="fa fa-line-chart",
+                url=reverse("shoop_admin:product.edit_cross_sell", kwargs={"pk": product.pk}),
+                extra_css_class="btn-info"
+            ))
         # TODO: Add extensibility
 
         return toolbar

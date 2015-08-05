@@ -1,4 +1,8 @@
+{% if request.GET.popup %}
+{% extends "shoop/admin/base_popup.jinja" %}
+{% else %}
 {% extends "shoop/admin/base.jinja" %}
+{% endif %}
 {% block title -%}
     {%- if title %}{{ title }}
     {%- elif view and view.model -%}{{ (""~view.model._meta.verbose_name_plural)|title }}

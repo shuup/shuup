@@ -11,7 +11,6 @@ from django.forms import DecimalField
 
 
 class PercentageField(DecimalField):
-
     MULTIPLIER = Decimal(100)
 
     def prepare_value(self, value):

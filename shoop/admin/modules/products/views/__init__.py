@@ -7,8 +7,15 @@
 # LICENSE file in the root directory of this source tree.
 
 from .edit import ProductEditView
+from .edit_cross_sell import ProductCrossSellEditView
 from .edit_media import ProductMediaEditView
 from .list import ProductListView
 from .delete import ProductDeleteView
 
-__all__ = ["ProductEditView", "ProductMediaEditView", "ProductListView", "ProductDeleteView"]
+__all__ = [
+    "ProductCrossSellEditView",
+    "ProductDeleteView",
+    "ProductEditView",
+    "ProductListView",
+    "ProductMediaEditView",
+]

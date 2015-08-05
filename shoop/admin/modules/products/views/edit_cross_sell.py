@@ -6,48 +6,41 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
-from django.conf import settings
 from django.contrib import messages
 from django.forms.formsets import DEFAULT_MIN_NUM, DEFAULT_MAX_NUM
-from django.forms.models import BaseModelFormSet
+from django.forms.models import BaseModelFormSet, ModelForm
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import UpdateView
 from shoop.admin.base import MenuEntry
-from shoop.admin.forms.widgets import MediaChoiceWidget
+from shoop.admin.forms.widgets import ProductChoiceWidget
 from shoop.admin.toolbar import Toolbar, PostActionButton
 from shoop.admin.utils.urls import get_model_url
 from shoop.core.models import Product, ProductMedia
-from shoop.utils.multilanguage_model_form import MultiLanguageModelForm
+from shoop.core.models.products import ProductCrossSell, ProductCrossSellType
 
 
-class ProductMediaForm(MultiLanguageModelForm):
+class ProductCrossSellForm(ModelForm):
     class Meta:
-        model = ProductMedia
+        model = ProductCrossSell
         fields = (
-            "shops",
-            "kind",
-            "file",
-            "external_url",
-            "ordering",
-            "enabled",
-            "public",
-            "purchased",
-            "title",
-            "description"
+            "product2",
+            "weight",
+            "type",
         )
 
     def __init__(self, **kwargs):
         self.product = kwargs.pop("product")
-        super(ProductMediaForm, self).__init__(**kwargs)
-        # Filer has a misimplemented field; we need to do this manually.
-        self.fields["file"].widget = MediaChoiceWidget()
+        super(ProductCrossSellForm, self).__init__(**kwargs)
+        self.fields["product2"].widget = ProductChoiceWidget()
+        self.fields["product2"].label = _("Product")
 
-    def pre_master_save(self, instance):
-        instance.product = self.product
+    def save(self, commit=True):
+        self.instance.product1 = self.product
+        return super(ProductCrossSellForm, self).save(commit=commit)
 
 
-class ProductMediaFormSet(BaseModelFormSet):
+class ProductCrossSellFormSet(BaseModelFormSet):
     validate_min = False
     min_num = DEFAULT_MIN_NUM
     validate_max = False
@@ -60,25 +53,18 @@ class ProductMediaFormSet(BaseModelFormSet):
 
     def __init__(self, *args, **kwargs):
         self.product = kwargs.pop("product")
-        super(ProductMediaFormSet, self).__init__(*args, **kwargs)
+        super(ProductCrossSellFormSet, self).__init__(*args, **kwargs)
 
     def form(self, **kwargs):
-        kwargs.setdefault("languages", settings.LANGUAGES)
         kwargs.setdefault("product", self.product)
-        return ProductMediaForm(**kwargs)
+        return ProductCrossSellForm(**kwargs)
 
 
-class ProductMediaEditView(UpdateView):
-    """
-    A view for editing all the media for a product, including attachments
-    that are not just images.
-
-    Currently sort of utilitarian and confusing.
-    """
+class ProductCrossSellEditView(UpdateView):
     model = Product
-    template_name = "shoop/admin/products/edit_media.jinja"
+    template_name = "shoop/admin/products/edit_cross_sell.jinja"
     context_object_name = "product"
-    form_class = ProductMediaFormSet
+    form_class = ProductCrossSellFormSet
 
     def get_breadcrumb_parents(self):
         return [
@@ -89,12 +75,12 @@ class ProductMediaEditView(UpdateView):
         ]
 
     def get_context_data(self, **kwargs):
-        context = super(ProductMediaEditView, self).get_context_data(**kwargs)
-        context["title"] = _("Edit Media: %s") % self.object
+        context = super(ProductCrossSellEditView, self).get_context_data(**kwargs)
+        context["title"] = _("Edit Cross-Sell: %s") % self.object
         context["toolbar"] = Toolbar([
             PostActionButton(
                 icon="fa fa-save",
-                form_id="media_form",
+                form_id="xsell_form",
                 text=_("Save"),
                 extra_css_class="btn-success",
             ),
@@ -102,9 +88,12 @@ class ProductMediaEditView(UpdateView):
         return context
 
     def get_form_kwargs(self):
-        kwargs = super(ProductMediaEditView, self).get_form_kwargs()
+        kwargs = super(ProductCrossSellEditView, self).get_form_kwargs()
         instance = kwargs.pop("instance", None)
-        kwargs["queryset"] = ProductMedia.objects.filter(product=instance).order_by("ordering")
+        kwargs["queryset"] = ProductCrossSell.objects. \
+            filter(product1=instance). \
+            exclude(type=ProductCrossSellType.COMPUTED). \
+            order_by("weight")
         kwargs["product"] = instance
         return kwargs
 

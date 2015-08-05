@@ -1,0 +1,26 @@
+{% extends "shoop/admin/base.jinja" %}
+{% from "shoop/admin/macros/general.jinja" import content_block %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 section-navigation" data-navigatee="xsell_form"></div>
+            <div class="col-md-9">
+                <form method="post" id="xsell_form">
+                    {% csrf_token %}
+                    {% for mf in form.management_form %}{{ mf|safe }}{% endfor %}
+                    {% call content_block(_("Cross-sells")) %}
+                        {% for f in form %}
+                            {{ bs3.field(f.product2) }}
+                            {{ bs3.field(f.weight) }}
+                            {{ bs3.field(f.type) }}
+                            {% if f.instance.pk and f.DELETE %}
+                                {{ bs3.field(f.DELETE) }}
+                            {% endif %}
+                            {% for fld in f.hidden_fields() %}{{ fld|safe }}{% endfor %}
+                        {% endfor %}
+                    {% endcall %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
