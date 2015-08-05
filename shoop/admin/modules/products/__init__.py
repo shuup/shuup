@@ -9,12 +9,14 @@ from __future__ import unicode_literals
 from collections import Counter
 from django.core.urlresolvers import reverse
 from django.db.models import Q
-from shoop.admin.base import AdminModule, MenuEntry, SearchResult
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
+from shoop.admin.base import AdminModule, MenuEntry, SearchResult
 from shoop.admin.utils.search import split_query
-from shoop.admin.utils.urls import admin_url, get_model_url, manipulate_query_string, derive_model_url
+from shoop.admin.utils.urls import (
+    admin_url, get_model_url, manipulate_query_string, derive_model_url, get_edit_and_list_urls
+)
 from shoop.core.models import Product
-import six
 
 
 class ProductModule(AdminModule):
@@ -34,21 +36,12 @@ class ProductModule(AdminModule):
             admin_url(
                 "^products/(?P<pk>\d+)/crosssell/$", "shoop.admin.modules.products.views.ProductCrossSellEditView",
                 name="product.edit_cross_sell"
-            ),
-            admin_url(
-                "^products/(?P<pk>\d+)/$", "shoop.admin.modules.products.views.ProductEditView",
-                name="product.edit"
-            ),
-            admin_url(
-                "^products/new/$", "shoop.admin.modules.products.views.ProductEditView",
-                kwargs={"pk": None},
-                name="product.new"
-            ),
-            admin_url(
-                "^products/$", "shoop.admin.modules.products.views.ProductListView",
-                name="product.list"
-            ),
-        ]
+            )
+        ] + get_edit_and_list_urls(
+            url_prefix="^products",
+            view_template="shoop.admin.modules.products.views.Product%sView",
+            name_template="product.%s"
+        )
 
     def get_menu_category_icons(self):
         return {self.name: "fa fa-cube"}
@@ -81,7 +74,7 @@ class ProductModule(AdminModule):
                 relevance = 100 - pk_counter.get(product.pk, 0)
                 skus_seen.add(product.sku.lower())
                 yield SearchResult(
-                    text=six.text_type(product),
+                    text=force_text(product),
                     url=get_model_url(product),
                     category=_("Products"),
                     relevance=relevance

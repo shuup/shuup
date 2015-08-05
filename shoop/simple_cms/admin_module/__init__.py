@@ -8,7 +8,7 @@
 from __future__ import unicode_literals
 from shoop.admin.base import AdminModule, MenuEntry
 from django.utils.translation import ugettext_lazy as _
-from shoop.admin.utils.urls import admin_url, derive_model_url
+from shoop.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shoop.simple_cms.models import Page
 
 
@@ -17,24 +17,11 @@ class SimpleCMSAdminModule(AdminModule):
     breadcrumbs_menu_entry = MenuEntry(name, "shoop_admin:simple_cms.page.list")
 
     def get_urls(self):
-        return [
-            admin_url(
-                "cms/page/(?P<pk>\d+)/",
-                "shoop.simple_cms.admin_module.views.PageEditView",
-                name="simple_cms.page.edit"
-            ),
-            admin_url(
-                "cms/page/new/",
-                "shoop.simple_cms.admin_module.views.PageEditView",
-                kwargs={"pk": None},
-                name="simple_cms.page.new"
-            ),
-            admin_url(
-                "cms/pages/",
-                "shoop.simple_cms.admin_module.views.PageListView",
-                name="simple_cms.page.list"
-            ),
-        ]
+        return get_edit_and_list_urls(
+            url_prefix="^cms/page",
+            view_template="shoop.simple_cms.admin_module.views.Page%sView",
+            name_template="simple_cms.page.%s"
+        )
 
     def get_menu_category_icons(self):
         return {self.name: "fa fa-pencil-square-o"}

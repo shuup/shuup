@@ -8,7 +8,7 @@
 from django.db.models import Q
 from shoop.admin.base import AdminModule, MenuEntry, SearchResult
 from django.utils.translation import ugettext_lazy as _
-from shoop.admin.utils.urls import admin_url, get_model_url, derive_model_url
+from shoop.admin.utils.urls import get_model_url, derive_model_url, get_edit_and_list_urls
 from shoop.core.models import Category
 import six
 
@@ -19,24 +19,11 @@ class CategoryModule(AdminModule):
     breadcrumbs_menu_entry = MenuEntry(text=name, url="shoop_admin:category.list")
 
     def get_urls(self):
-        return [
-            admin_url(
-                "^categories/(?P<pk>\d+)/$",
-                "shoop.admin.modules.categories.views.CategoryEditView",
-                name="category.edit"
-            ),
-            admin_url(
-                "^categories/new/$",
-                "shoop.admin.modules.categories.views.CategoryEditView",
-                kwargs={"pk": None},
-                name="category.new"
-            ),
-            admin_url(
-                "^categories/$",
-                "shoop.admin.modules.categories.views.CategoryListView",
-                name="category.list"
-            ),
-        ]
+        return get_edit_and_list_urls(
+            url_prefix="^categories",
+            view_template="shoop.admin.modules.categories.views.Category%sView",
+            name_template="category.%s"
+        )
 
     def get_menu_entries(self, request):
         return [

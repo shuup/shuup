@@ -8,7 +8,7 @@
 from __future__ import unicode_literals
 from shoop.admin.base import AdminModule, MenuEntry
 from django.utils.translation import ugettext_lazy as _
-from shoop.admin.utils.urls import admin_url, derive_model_url
+from shoop.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shoop.core.models.taxes import Tax, TaxClass, CustomerTaxGroup
 
 
@@ -18,63 +18,23 @@ class TaxModule(AdminModule):
     breadcrumbs_menu_entry = MenuEntry(name, url="shoop_admin:tax_class.list")
 
     def get_urls(self):
-        return [
-
-            # TODO: Add url for tax dashboard?
-
-            # urls for Tax
-            admin_url(
-                "^taxes/tax/(?P<pk>\d+)/$",
-                "shoop.admin.modules.taxes.views.edit.TaxEditView",
-                name="tax.edit"
-            ),
-            admin_url(
-                "^taxes/tax/new/$",
-                "shoop.admin.modules.taxes.views.edit.TaxEditView",
-                kwargs={"pk": None},
-                name="tax.new"
-            ),
-            admin_url(
-                "^taxes/tax/$",
-                "shoop.admin.modules.taxes.views.list.TaxListView",
-                name="tax.list"
-            ),
-
-            # urls for CustomerTaxGroup
-            admin_url(
-                "^taxes/customer-tax-group/(?P<pk>\d+)/$",
-                "shoop.admin.modules.taxes.views.edit.CustomerTaxGroupEditView",
-                name="customer_tax_group.edit"
-            ),
-            admin_url(
-                "^taxes/customer-tax-group/new/$",
-                "shoop.admin.modules.taxes.views.edit.CustomerTaxGroupEditView",
-                kwargs={"pk": None},
-                name="customer_tax_group.new"),
-            admin_url(
-                "^taxes/customer-tax-group/$",
-                "shoop.admin.modules.taxes.views.list.CustomerTaxGroupListView",
-                name="customer_tax_group.list"
-            ),
-
-            # urls for TaxClass
-            admin_url(
-                "^taxes/tax-class/(?P<pk>\d+)/$",
-                "shoop.admin.modules.taxes.views.edit.TaxClassEditView",
-                name="tax_class.edit"
-            ),
-            admin_url(
-                "^taxes/tax-class/new/$",
-                "shoop.admin.modules.taxes.views.edit.TaxClassEditView",
-                kwargs={"pk": None},
-                name="tax_class.new"
-            ),
-            admin_url(
-                "^taxes/tax-class/$",
-                "shoop.admin.modules.taxes.views.list.TaxClassListView",
-                name="tax_class.list"
-            ),
-        ]
+        # TODO: Add url for tax dashboard?
+        tax_urls = get_edit_and_list_urls(
+            url_prefix="^taxes/tax",
+            view_template="shoop.admin.modules.taxes.views.Tax%sView",
+            name_template="tax.%s"
+        )
+        tax_group_urls = get_edit_and_list_urls(
+            url_prefix="^taxes/customer-tax-group",
+            view_template="shoop.admin.modules.taxes.views.CustomerTaxGroup%sView",
+            name_template="customer_tax_group.%s"
+        )
+        tax_class_urls = get_edit_and_list_urls(
+            url_prefix="^taxes/tax-class",
+            view_template="shoop.admin.modules.taxes.views.TaxClass%sView",
+            name_template="tax_class.%s"
+        )
+        return tax_urls + tax_group_urls + tax_class_urls
 
     def get_menu_category_icons(self):
         return {self.category: "fa fa-pie-chart"}

@@ -114,6 +114,27 @@ def admin_url(regex, view, kwargs=None, name=None, prefix='', require_authentica
     )
 
 
+def get_edit_and_list_urls(url_prefix, view_template, name_template):
+    """
+    Get a list of edit/new/list URLs for (presumably) an object type with standardized URLs and names.
+
+    :param url_prefix: What to prefix the generated URLs with. E.g. `"^taxes/tax"`
+    :type url_prefix: str
+    :param view_template: A template string for the dotted name of the view class.
+                          E.g. "shoop.admin.modules.taxes.views.Tax%sView"
+    :type view_template: str
+    :param name_template: A template string for the URLnames. E.g. "tax.%s"
+    :type name_template: str
+    :return: List of URLs
+    :rtype: list[AdminRegexURLPattern]
+    """
+    return [
+        admin_url("%s/(?P<pk>\d+)/$" % url_prefix, view_template % "Edit", name=name_template % "edit"),
+        admin_url("%s/new/$" % url_prefix, view_template % "Edit", name=name_template % "new", kwargs={"pk": None}),
+        admin_url("%s/$" % url_prefix, view_template % "List", name=name_template % "list")
+    ]
+
+
 class NoModelUrl(ValueError):
     pass
 

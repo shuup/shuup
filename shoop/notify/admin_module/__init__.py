@@ -12,7 +12,7 @@ from django.http.response import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from shoop.admin.base import AdminModule, Notification, MenuEntry
 from django.utils.translation import ugettext_lazy as _
-from shoop.admin.utils.urls import admin_url, derive_model_url
+from shoop.admin.utils.urls import admin_url, derive_model_url, get_edit_and_list_urls
 from shoop.notify.enums import Priority
 from shoop.notify.models import Notification as NotificationModel, Script
 
@@ -34,27 +34,15 @@ class NotifyAdminModule(AdminModule):
                 name="notify.script.edit-content"
             ),
             admin_url(
-                "notify/script/(?P<pk>\d+)/",
-                "shoop.notify.admin_module.views.EditScriptView",
-                name="notify.script.edit"
-            ),
-            admin_url(
-                "notify/script/new/",
-                "shoop.notify.admin_module.views.EditScriptView",
-                kwargs={"pk": None},
-                name="notify.script.new"
-            ),
-            admin_url(
-                "notify/script/",
-                "shoop.notify.admin_module.views.ScriptListView",
-                name="notify.script.list"
-            ),
-            admin_url(
                 "notify/mark-read/(?P<pk>\d+)/$",
                 self.mark_notification_read_view,
                 name="notify.mark-read"
             ),
-        ]
+        ] + get_edit_and_list_urls(
+            url_prefix="^notify/script",
+            view_template="shoop.notify.admin_module.views.Script%sView",
+            name_template="notify.script.%s"
+        )
 
     def get_menu_category_icons(self):
         return {self.name: "fa fa-envelope-o"}
