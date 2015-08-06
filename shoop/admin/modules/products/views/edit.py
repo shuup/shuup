@@ -130,7 +130,7 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
             ))
             toolbar.append(URLActionButton(
                 text=_("Manage Cross-Selling"),
-                icon="fa fa-line-chart",
+                icon="fa fa-exchange",
                 url=reverse("shoop_admin:product.edit_cross_sell", kwargs={"pk": product.pk}),
                 extra_css_class="btn-info"
             ))
