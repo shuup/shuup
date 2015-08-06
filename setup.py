@@ -71,14 +71,14 @@ utils.set_exclude_patters([
 
 REQUIRES = [
     'Babel==1.3',
-    'Django==1.8.2',
+    'Django>=1.8,<1.9',
     'django-bootstrap3==6.1.0',
     'django-countries==3.3',
-    'django-enumfields==0.7.3',
-    'django-filer==0.9.11',
+    'django-enumfields==0.7.4',
+    'django-filer==0.9.12',
     'django-jinja==1.4.1',
     'django-mptt==0.7.4',
-    'django-parler==1.4',
+    'django-parler==1.5',
     'django-polymorphic==0.7.1',
     'django-registration-redux==1.2',
     'django-timezone-field==1.2',
@@ -90,6 +90,7 @@ REQUIRES = [
     'pytz==2015.4',
     'requests==2.7.0',
     'six==1.9.0',
+    'Jinja2==2.8'
 ]
 
 REQUIRES_FOR_PYTHON2_ONLY = [

@@ -58,6 +58,7 @@ IGNORED_PATH_REGEXPS = [
 ]
 
 IGNORED_PATTERNS = [
+    '*-bundle.js',
     '*.bat',
     '*.bz2',
     '*.dat',
@@ -81,9 +82,9 @@ IGNORED_PATTERNS = [
     '*.woff2',
     '*.zip',
     '.coverage',
+    '_version.py',
     'Makefile',
     'vendor.js',
-    '*-bundle.js',
 ]
 
 
