@@ -121,9 +121,13 @@ class ProductAttributesForm(forms.Form):
             self._field_languages[attribute.identifier][lang] = field_name
 
     def save(self):
+        if not self.has_changed():  # Nothing to do, don't bother iterating
+            return
         for attribute in self.attributes:
             for language, field_name in self._field_languages[attribute.identifier].items():
-                value = self.cleaned_data.get(field_name)
+                if field_name not in self.cleaned_data:
+                    continue
+                value = self.cleaned_data[field_name]
                 if attribute.is_translated and not value:
                     value = ""
                 try:
