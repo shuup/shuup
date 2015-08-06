@@ -6,16 +6,19 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from django.conf import settings
 from django.contrib import messages
 from django.db.transaction import atomic
+from django.utils.translation import ugettext as _
 
 from shoop.admin.form_part import FormPart, TemplatedFormDef, FormPartsViewMixin, SaveFormPartsMixin
-from .forms import ProductBaseForm, ShopProductForm, ProductAttributesForm
 from .toolbars import EditProductToolbar
+from .forms import (
+    ProductBaseForm, ShopProductForm, ProductAttributesForm, ProductImageMediaFormSet, ProductMediaFormSet
+)
 from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.core.models import Product, ShopProduct, Shop, ShopStatus, ProductType, TaxClass
-from django.utils.translation import ugettext as _
 
 
 class ProductBaseFormPart(FormPart):
@@ -102,11 +105,44 @@ class ProductAttributeFormPart(FormPart):
             form.forms["attributes"].save()
 
 
+class BaseProductMediaFormPart(FormPart):
+    def get_form_defs(self):
+        yield TemplatedFormDef(
+            self.name,
+            self.formset,
+            template_name="shoop/admin/products/_edit_media_form.jinja",
+            required=False,
+            kwargs={"product": self.object, "languages": settings.LANGUAGES}
+        )
+
+    def form_valid(self, form):
+        if self.name in form.forms:
+            frm = form.forms[self.name]
+            frm.save()
+
+
+class ProductMediaFormPart(BaseProductMediaFormPart):
+    name = "media"
+    priority = -700
+    formset = ProductMediaFormSet
+
+
+class ProductImageMediaFormPart(BaseProductMediaFormPart):
+    name = "images"
+    priority = -600
+    formset = ProductImageMediaFormSet
+
+
 class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):
     model = Product
     template_name = "shoop/admin/products/edit.jinja"
     context_object_name = "product"
-    base_form_part_classes = [ProductBaseFormPart, ShopProductFormPart, ProductAttributeFormPart]
+    base_form_part_classes = [
+        ProductBaseFormPart,
+        ShopProductFormPart,
+        ProductAttributeFormPart,
+        ProductImageMediaFormPart
+    ]
     form_part_class_provide_key = "admin_product_form_part"
 
     @atomic

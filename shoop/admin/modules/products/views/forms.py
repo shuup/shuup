@@ -6,10 +6,16 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
-from django import forms
 
-from shoop.core.models import Product, ShopProduct
-from shoop.core.models.attributes import AttributeType, Attribute
+from django import forms
+from django.core.exceptions import ValidationError
+from django.forms import BaseModelFormSet
+from django.forms.formsets import DEFAULT_MIN_NUM, DEFAULT_MAX_NUM
+from django.utils.translation import ugettext_lazy as _
+
+from filer.models import Image
+from shoop.admin.forms.widgets import MediaChoiceWidget
+from shoop.core.models import Product, ShopProduct, ProductMedia, ProductMediaKind, Shop, AttributeType, Attribute
 from shoop.utils.i18n import get_language_name
 from shoop.utils.multilanguage_model_form import MultiLanguageModelForm, to_language_codes
 
@@ -138,3 +144,116 @@ class ProductAttributesForm(forms.Form):
                     # TODO: Should we maybe _not_ drop the assignment?
                     pass
         self.product.clear_attribute_cache()
+
+
+class ProductMediaForm(MultiLanguageModelForm):
+    class Meta:
+        model = ProductMedia
+        fields = (
+            "file",
+            "ordering",
+            "external_url",
+            "public",
+            "title",
+            "description",
+            "purchased",
+            "shops",
+            "kind"
+        )
+
+    def __init__(self, **kwargs):
+        self.product = kwargs.pop("product")
+        self.allowed_media_kinds = kwargs.pop("allowed_media_kinds")
+        default_shop = kwargs.pop("default_shop")
+        super(ProductMediaForm, self).__init__(**kwargs)
+
+        self.fields["file"].widget = MediaChoiceWidget()  # Filer misimplemented the field; we need to do this manually.
+        self.fields["file"].required = True
+
+        if len(self.allowed_media_kinds) == 1:
+            # only one media kind given, no point showing the dropdown
+            self.fields["kind"].initial = self.allowed_media_kinds[0]
+            self.fields["kind"].widget = forms.HiddenInput()
+
+        if not self.instance.pk:
+            self.fields["shops"].initial = [default_shop]
+
+        self.file_url = self.instance.url
+        self.thumbnail = None
+
+    def pre_master_save(self, instance):
+        instance.product = self.product
+
+
+class BaseProductMediaFormSet(BaseModelFormSet):
+    validate_min = False
+    min_num = DEFAULT_MIN_NUM
+    validate_max = False
+    max_num = DEFAULT_MAX_NUM
+    absolute_max = DEFAULT_MAX_NUM
+    model = ProductMedia
+    can_delete = True
+    can_order = False
+    extra = 1
+
+    allowed_media_kinds = []
+
+    def __init__(self, *args, **kwargs):
+        self.product = kwargs.pop("product")
+        self.languages = to_language_codes(kwargs.pop("languages", ()))
+        kwargs.pop("empty_permitted")  # this is unknown to formset
+        super(BaseProductMediaFormSet, self).__init__(*args, **kwargs)
+
+    def get_queryset(self):
+        qs = ProductMedia.objects.filter(product=self.product)
+        if self.allowed_media_kinds:
+            qs = qs.filter(kind__in=self.allowed_media_kinds)
+        return qs
+
+    def form(self, **kwargs):
+        kwargs.setdefault("languages", self.languages)
+        kwargs.setdefault("product", self.product)
+        kwargs.setdefault("allowed_media_kinds", self.allowed_media_kinds)
+        kwargs.setdefault("default_shop", Shop.objects.first().pk)
+        return self.form_class(**kwargs)
+
+
+class ProductMediaFormSet(BaseProductMediaFormSet):
+    form_class = ProductMediaForm
+
+
+class ProductImageMediaForm(ProductMediaForm):
+    is_primary = forms.BooleanField(required=False)
+
+    def __init__(self, **kwargs):
+        super(ProductImageMediaForm, self).__init__(**kwargs)
+
+        if self.instance.pk:
+            if isinstance(self.instance, Image):
+                thumbnail = self.instance.easy_thumbnails_thumbnailer.get_thumbnail({
+                    'size': (64, 64),
+                    'crop': True,
+                    'upscale': True,
+                })
+                self.file_url = self.instance.url
+                self.thumbnail = thumbnail.url or None
+            if self.product.primary_image_id == self.instance.pk:
+                self.fields["is_primary"].initial = True
+
+    def clean_file(self):
+        file = self.cleaned_data.get("file")
+        if file and not isinstance(file, Image):
+            raise ValidationError(_("Only images allowed in this field"))
+        return file
+
+    def save(self, commit=True):
+        instance = super(ProductImageMediaForm, self).save(commit)
+        if self.cleaned_data.get("is_primary"):
+            self.product.primary_image = instance
+            self.product.save()
+        return instance
+
+
+class ProductImageMediaFormSet(ProductMediaFormSet):
+    allowed_media_kinds = [ProductMediaKind.IMAGE]
+    form_class = ProductImageMediaForm
