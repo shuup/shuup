@@ -119,9 +119,10 @@
                             </li>
                             {% endif %}
                             {% if user.is_superuser %}
-                                {# <li><a href="{{ url("shopadmin:admin_index") }}"><i class="glyphicon glyphicon-cog"></i> {% trans %}Admin panel{% endtrans %}</a></li> #}
+                                <li><a href="{{ url("shoop_admin:dashboard") }}"><i class="glyphicon glyphicon-cog"></i> {% trans %}Admin panel{% endtrans %}</a></li>
                             {% endif %}
                             {% if shoop.urls.has_url("shoop:logout") %}
+                            <li role="separator" class="divider"></li>
                             <li>
                                 <a href="{{ url("shoop:logout") }}">
                                     <i class="glyphicon glyphicon-log-out"></i> {% trans %}Log out{% endtrans %}
