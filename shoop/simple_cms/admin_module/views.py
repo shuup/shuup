@@ -6,11 +6,9 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 from django.forms import DateTimeField
-from django.http.response import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
-from shoop.admin.utils.forms import add_form_errors_as_messages
 from shoop.admin.utils.picotable import Column, TextFilter
-from shoop.admin.utils.views import CreateOrUpdateView, add_create_or_change_message, PicotableListView
+from shoop.admin.utils.views import CreateOrUpdateView, PicotableListView
 from shoop.simple_cms.models import Page
 from shoop.utils.i18n import get_language_name
 from shoop.utils.multilanguage_model_form import MultiLanguageModelForm
@@ -82,23 +80,14 @@ class PageEditView(CreateOrUpdateView):
     template_name = "shoop/simple_cms/admin/edit.jinja"
     form_class = PageForm
     context_object_name = "page"
+    add_form_errors_as_messages = True
 
-    def form_invalid(self, form):
-        add_form_errors_as_messages(self.request, form)
-        return super(PageEditView, self).form_invalid(form)
-
-    def form_valid(self, form):
-        super(PageEditView, self).form_valid(form)
-
+    def save_form(self, form):
+        self.object = form.save()
         if not self.object.created_by:
             self.object.created_by = self.request.user
-
         self.object.modified_by = self.request.user
-        is_new = (not self.object.pk)
         self.object.save()
-
-        add_create_or_change_message(self.request, self.object, is_new)
-        return HttpResponseRedirect(self.get_success_url())
 
 
 class PageListView(PicotableListView):

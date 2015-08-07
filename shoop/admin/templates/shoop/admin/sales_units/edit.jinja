@@ -1,23 +1,9 @@
 {% extends "shoop/admin/base.jinja" %}
-{% from "shoop/admin/macros/general.jinja" import content_block %}
+{% from "shoop/admin/macros/general.jinja" import single_section_form with context %}
 {% from "shoop/admin/macros/multilanguage.jinja" import language_dependent_content_tabs %}
-
 {% block content %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3 section-navigation" data-navigatee="sales_unit_form"></div>
-            <div class="col-md-9">
-                <form method="post" id="sales_unit_form">
-                    {% csrf_token %}
-                    {% call content_block(_("General information"), "fa-info-circle") %}
-                        {{ bs3.field(form["decimals"]) }}
-                        {% call(form, language, map) language_dependent_content_tabs(form) %}
-                            {{ bs3.field(form[map.name]) }}
-                            {{ bs3.field(form[map.short_name]) }}
-                        {% endcall %}
-                    {% endcall %}
-                </form>
-            </div>
-        </div>
-    </div>
+    {% call single_section_form("sales_unit_form", form) %}
+        {{ bs3.field(form.decimals) }}
+        {{ language_dependent_content_tabs(form, ["name", "short_name"]) }}
+    {% endcall %}
 {% endblock %}

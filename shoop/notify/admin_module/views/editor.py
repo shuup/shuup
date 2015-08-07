@@ -10,24 +10,20 @@ import json
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import reverse
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils.text import camel_case_to_spaces
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView
-from shoop.admin.toolbar import Toolbar, JavaScriptActionButton, URLActionButton, get_discard_button
+from shoop.admin.toolbar import Toolbar, JavaScriptActionButton, get_discard_button
 from shoop.admin.utils.urls import get_model_url
-from shoop.admin.utils.views import CreateOrUpdateView, add_create_or_change_message, get_create_or_change_title
+from shoop.admin.utils.views import get_create_or_change_title
 from shoop.notify.admin_module.forms import ScriptItemEditForm
 from shoop.notify.admin_module.utils import get_enum_choices_dict
 from shoop.notify.base import Action, Condition, Event
 from shoop.notify.enums import StepConditionOperator, StepNext
 from shoop.utils.text import snake_case
-from django.shortcuts import redirect
-from shoop.notify.admin_module.forms import ScriptForm
 from shoop.notify.models.script import Script
-from django.utils.translation import ugettext_lazy as _
 
 
 @csrf_exempt  # This is fine -- the editor itself saves naught
@@ -125,32 +121,3 @@ class EditScriptContentView(DetailView):
             get_discard_button(get_model_url(self.object, "edit"))
         ])
         return context
-
-
-class EditScriptView(CreateOrUpdateView):
-    model = Script
-    form_class = ScriptForm
-    template_name = "notify/admin/edit_script.jinja"
-    context_object_name = "script"
-
-    def get_context_data(self, **kwargs):
-        context = super(EditScriptView, self).get_context_data(**kwargs)
-        if self.object.pk:
-            context["toolbar"] = Toolbar([
-                URLActionButton(
-                    text=_(u"Edit Script Contents..."),
-                    icon="fa fa-pencil",
-                    extra_css_class="btn-info",
-                    url=reverse("shoop_admin:notify.script.edit-content", kwargs={"pk": self.object.pk})
-                )
-            ])
-        return context
-
-    def form_valid(self, form):
-        is_new = (not self.object.pk)
-        wf = form.save()
-        if is_new:
-            return redirect("shoop_admin:notify.script.edit-content", pk=wf.pk)
-        else:
-            add_create_or_change_message(self.request, self.object, is_new=is_new)
-            return redirect("shoop_admin:notify.script.edit", pk=wf.pk)

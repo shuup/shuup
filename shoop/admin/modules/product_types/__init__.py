@@ -8,7 +8,7 @@
 from __future__ import unicode_literals
 from shoop.admin.base import AdminModule, MenuEntry
 from django.utils.translation import ugettext_lazy as _
-from shoop.admin.utils.urls import admin_url, derive_model_url
+from shoop.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shoop.core.models import ProductType
 
 
@@ -17,23 +17,11 @@ class ProductTypeModule(AdminModule):
     breadcrumbs_menu_entry = MenuEntry(name, url="shoop_admin:product-type.list")
 
     def get_urls(self):
-        return [
-            admin_url(
-                "^product-types/(?P<pk>\d+)/$",
-                "shoop.admin.modules.product_types.views.ProductTypeEditView",
-                name="product-type.edit"),
-            admin_url(
-                "^product-types/new/$",
-                "shoop.admin.modules.product_types.views.ProductTypeEditView",
-                kwargs={"pk": None},
-                name="product-type.new"
-            ),
-            admin_url(
-                "^product-types/$",
-                "shoop.admin.modules.product_types.views.ProductTypeListView",
-                name="product-type.list"
-            ),
-        ]
+        return get_edit_and_list_urls(
+            url_prefix="^product-types",
+            view_template="shoop.admin.modules.product_types.views.ProductType%sView",
+            name_template="product-type.%s"
+        )
 
     def get_menu_entries(self, request):
         category = _("Products")

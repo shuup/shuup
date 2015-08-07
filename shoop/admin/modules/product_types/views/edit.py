@@ -8,7 +8,7 @@
 
 from __future__ import unicode_literals
 from django import forms
-from shoop.admin.utils.views import CreateOrUpdateView, add_create_or_change_message
+from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.core.models.products import ProductType
 from shoop.utils.multilanguage_model_form import MultiLanguageModelForm
 
@@ -27,8 +27,3 @@ class ProductTypeEditView(CreateOrUpdateView):
     form_class = ProductTypeForm
     template_name = "shoop/admin/product_types/edit.jinja"
     context_object_name = "product_type"
-
-    def form_valid(self, form):
-        is_new = (not self.object.pk)
-        add_create_or_change_message(self.request, self.object, is_new=is_new)
-        return super(ProductTypeEditView, self).form_valid(form)

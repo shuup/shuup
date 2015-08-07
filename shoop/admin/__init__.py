@@ -29,6 +29,7 @@ class ShoopAdminAppConfig(AppConfig):
             "shoop.admin.modules.methods:MethodModule",
             "shoop.admin.modules.attributes:AttributeModule",
             "shoop.admin.modules.sales_units:SalesUnitModule",
+            "shoop.admin.modules.shops:ShopModule",
             "shoop.admin.modules.demo:DemoModule",
         ]
     }

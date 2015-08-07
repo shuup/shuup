@@ -9,30 +9,30 @@ from __future__ import unicode_literals
 from shoop.admin.base import AdminModule, MenuEntry
 from django.utils.translation import ugettext_lazy as _
 from shoop.admin.utils.urls import derive_model_url, get_edit_and_list_urls
-from shoop.core.models import ContactGroup
+from shoop.core.models import Shop
 
 
-class ContactGroupModule(AdminModule):
-    name = _("Contact Groups")
-    category = _("Contacts")
-    breadcrumbs_menu_entry = MenuEntry(name, url="shoop_admin:contact-group.list")
+class ShopModule(AdminModule):
+    name = _("Shops")
+    breadcrumbs_menu_entry = MenuEntry(name, url="shoop_admin:shop.list")
 
     def get_urls(self):
         return get_edit_and_list_urls(
-            url_prefix="^contact-groups",
-            view_template="shoop.admin.modules.contact_groups.views.ContactGroup%sView",
-            name_template="contact-group.%s"
+            url_prefix="^shops",
+            view_template="shoop.admin.modules.shops.views.Shop%sView",
+            name_template="shop.%s"
         )
 
     def get_menu_entries(self, request):
+        category = _("System")  # NB: To clutter the menu a little less, shops live under System
         return [
             MenuEntry(
                 text=self.name,
-                icon="fa fa-asterisk",
-                url="shoop_admin:contact-group.list",
-                category=self.category
+                icon="fa fa-house",
+                url="shoop_admin:shop.list",
+                category=category
             ),
         ]
 
     def get_model_url(self, object, kind):
-        return derive_model_url(ContactGroup, "shoop_admin:contact-group", object, kind)
+        return derive_model_url(Shop, "shoop_admin:shop", object, kind)

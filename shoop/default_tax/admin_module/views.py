@@ -7,9 +7,8 @@
 from __future__ import unicode_literals
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from shoop.admin.utils.forms import add_form_errors_as_messages
 from shoop.admin.utils.picotable import Column
-from shoop.admin.utils.views import CreateOrUpdateView, PicotableListView, add_create_or_change_message
+from shoop.admin.utils.views import CreateOrUpdateView, PicotableListView
 from shoop.default_tax.models import TaxRule
 
 
@@ -33,14 +32,7 @@ class TaxRuleEditView(CreateOrUpdateView):
     template_name = "shoop/default_tax/admin/edit.jinja"
     form_class = TaxRuleForm
     context_object_name = "tax_rule"
-
-    def form_valid(self, form):
-        add_create_or_change_message(self.request, self.object, is_new=(not self.object.pk))
-        return super(TaxRuleEditView, self).form_valid(form)
-
-    def form_invalid(self, form):
-        add_form_errors_as_messages(self.request, form)
-        return super(TaxRuleEditView, self).form_invalid(form)
+    add_form_errors_as_messages = True
 
 
 class TaxRuleListView(PicotableListView):

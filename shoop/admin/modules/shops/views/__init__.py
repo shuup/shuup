@@ -6,13 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from .editor import script_item_editor, EditScriptContentView
-from .edit import ScriptEditView
-from .list import ScriptListView
+from .edit import ShopEditView
+from .list import ShopListView
 
-__all__ = (
-    "script_item_editor",
-    "ScriptEditView",
-    "EditScriptContentView",
-    "ScriptListView"
-)
+__all__ = ["ShopEditView", "ShopListView"]

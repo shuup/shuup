@@ -7,19 +7,14 @@
 # LICENSE file in the root directory of this source tree.
 
 from __future__ import unicode_literals
+from django.forms.models import modelform_factory
 from shoop.admin.utils.views import CreateOrUpdateView
-from shoop.core.models import SalesUnit
+from shoop.core.models import Shop
 from shoop.utils.multilanguage_model_form import MultiLanguageModelForm
 
 
-class SalesUnitForm(MultiLanguageModelForm):
-    class Meta:
-        model = SalesUnit
-        exclude = ()  # All the fields!
-
-
-class SalesUnitEditView(CreateOrUpdateView):
-    model = SalesUnit
-    form_class = SalesUnitForm
-    template_name = "shoop/admin/sales_units/edit.jinja"
-    context_object_name = "sales_unit"
+class ShopEditView(CreateOrUpdateView):
+    model = Shop
+    form_class = modelform_factory(Shop, MultiLanguageModelForm, exclude=("owner", "options"))
+    template_name = "shoop/admin/shops/edit.jinja"
+    context_object_name = "shop"

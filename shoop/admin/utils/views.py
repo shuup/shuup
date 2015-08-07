@@ -9,16 +9,20 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ImproperlyConfigured
+from django.http import HttpResponseRedirect
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView, UpdateView
 from shoop.admin.toolbar import get_default_edit_toolbar, Toolbar, NewActionButton
+from shoop.admin.utils.forms import add_form_errors_as_messages
 from shoop.admin.utils.picotable import PicotableViewMixin
 from shoop.admin.utils.urls import get_model_url, NoModelUrl, get_model_front_url
 from shoop.utils.multilanguage_model_form import MultiLanguageModelForm
 
 
 class CreateOrUpdateView(UpdateView):
+    add_form_errors_as_messages = False
+
     def get_object(self, queryset=None):
         if not self.kwargs.get(self.pk_url_kwarg):
             return self.model()
@@ -73,6 +77,24 @@ class CreateOrUpdateView(UpdateView):
         if form_class and issubclass(form_class, MultiLanguageModelForm):
             kwargs["languages"] = settings.LANGUAGES
         return kwargs
+
+    def form_valid(self, form):
+        # This implementation is an amalgamation of
+        # * django.views.generic.edit.ModelFormMixin#form_valid
+        # * django.views.generic.edit.FormMixin#form_valid
+        is_new = (not self.object.pk)
+        self.save_form(form)
+        add_create_or_change_message(self.request, self.object, is_new=is_new)
+        return HttpResponseRedirect(self.get_success_url())
+
+    def save_form(self, form):
+        # Subclass hook.
+        self.object = form.save()
+
+    def form_invalid(self, form):
+        if self.add_form_errors_as_messages:
+            add_form_errors_as_messages(self.request, form)
+        return super(CreateOrUpdateView, self).form_invalid(form)
 
 
 def add_create_or_change_message(request, instance, is_new):
