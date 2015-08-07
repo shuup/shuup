@@ -6,8 +6,10 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from jinja2.utils import contextfunction
-from shoop.core.models import ProductCrossSellType, ProductCrossSell, AttributeVisibility
-from shoop.core.models.products import ProductAttribute
+from shoop.core.models import (
+    ProductCrossSellType, ProductCrossSell,
+    AttributeVisibility, ProductAttribute, Product
+)
 
 
 def get_visible_attributes(product):
@@ -17,6 +19,7 @@ def get_visible_attributes(product):
     )
 
 
+# Deprecated, see `get_product_cross_sells()`
 @contextfunction
 def get_products_bought_with(context, product, count=5):
     related_product_cross_sells = (
@@ -40,3 +43,25 @@ def is_visible(context, product):
     for error in shop_product.get_visibility_errors(customer=request.customer):  # pragma: no branch
         return False
     return True
+
+
+@contextfunction
+def get_product_cross_sells(context, product, relation_type="related", count=4):
+    request = context["request"]
+    rtype = ProductCrossSellType.RELATED
+    if relation_type == "computed":
+        rtype = ProductCrossSellType.COMPUTED
+    elif relation_type == "recommended":
+        rtype = ProductCrossSellType.RECOMMENDED
+
+    related_product_ids = (
+        ProductCrossSell.objects
+        .filter(product1=product, type=rtype)
+        .order_by("-weight")[:(count * 4)]).values_list("product2_id", flat=True)
+
+    # TODO: Return in weight order
+    related_products = Product.objects.filter(
+        id__in=related_product_ids
+    ).list_visible(shop=request.shop, customer=request.customer)
+
+    return related_products[:count]

@@ -109,7 +109,7 @@
 
     {% if package_children %}
         <hr>
-        <h3>{% trans %}Sisältää seuraavat tuotteet{% endtrans %}</h3>
+        <h3>{% trans %}Includes these products{% endtrans %}</h3>
         <div class="row">
             {% for child in package_children %}
                 <div class="col-md-3">
@@ -120,7 +120,7 @@
 
     {% elif package_parents %}
         <hr>
-        <h3>{% trans %}Myös saatavilla paketissa{% endtrans %}</h3>
+        <h3>{% trans %}Also available in{% endtrans %}</h3>
         <div class="row">
             {% for parent in package_parents %}
                 <div class="col-md-3">
@@ -130,17 +130,16 @@
         </div>
     {% endif %}
 
-    {% set related_products = shoop.product.get_products_bought_with(product) %}
-    {% if related_products %}
-        <hr>
-        <h3>{% trans %}Käyttäjät, jotka ostivat tämän tuotteen ostivat myös:{% endtrans %}</h3>
-        <div class="row">
-            {% for related_product in related_products %}
-                <div class="col-md-3">
-                    {{ macros.product_box(related_product) }}
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
+    {{ macros.render_cross_sell_products(
+        product, relation_type="related", title=_("Related products")
+    ) }}
+
+    {{ macros.render_cross_sell_products(
+        product, relation_type="recommended", title=_("We recommend these products")
+    ) }}
+
+    {{ macros.render_cross_sell_products(
+        product, relation_type="computed", title=_("Users who bought this product also bought")
+    ) }}
 
 {% endblock %}
