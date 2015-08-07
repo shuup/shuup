@@ -1,5 +1,23 @@
 {% extends "shoop/admin/base.jinja" %}
-{% from "shoop/admin/macros/general.jinja" import single_section_form with context %}
+{% from "shoop/admin/macros/general.jinja" import content_block %}
+{% from "shoop/admin/macros/multilanguage.jinja" import language_dependent_content_tabs %}
 {% block content %}
-    {{ single_section_form("product_type_form", form) }}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 section-navigation" data-navigatee="product_type_form"></div>
+            <div class="col-md-9">
+                <form method="post" id="product_type_form">
+                    {% csrf_token %}
+                    {% call content_block(_("General information"), "fa-info-circle") %}
+                        {% call(form, language, map) language_dependent_content_tabs(form) %}
+                            {{ bs3.field(form[map.name]) }}
+                        {% endcall %}
+                    {% endcall %}
+                    {% call content_block(_("Attributes"), "fa-tags") %}
+                        {{ bs3.field(form.attributes) }}
+                    {% endcall %}
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}
