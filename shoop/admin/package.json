@@ -11,11 +11,11 @@
   "license": "AGPL-3.0",
   "private": true,
   "dependencies": {
-    "autoprefixer-loader": "^1.2.0",
+    "autoprefixer-loader": "^2.0.0",
     "babel-core": "^5.2.16",
     "babel-loader": "^5.1.4",
     "bower": "^1.4.1",
-    "css-loader": "^0.12.1",
+    "css-loader": "^0.15.6",
     "file-loader": "^0.8.1",
     "glob": "^5.0.10",
     "gulp": "^3.9.0",
@@ -40,6 +40,6 @@
     "style-loader": "^0.12.2",
     "url-loader": "^0.5.6",
     "vinyl-source-stream": "^1.1.0",
-    "webpack": "^1.9.12"
+    "webpack": "^1.11.0"
   }
 }
