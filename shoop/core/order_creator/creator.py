@@ -11,9 +11,7 @@ from decimal import Decimal
 from django.contrib.auth import get_user_model
 from django.utils.encoding import force_text
 
-from shoop.core.models import OrderLine, Order
-from shoop.core.models.order_lines import OrderLineType
-from shoop.core.models.products import ProductMode
+from shoop.core.models import OrderLine, Order, OrderLineType
 from shoop.core.shortcuts import update_order_line_from_product
 from shoop.front.signals import order_creator_finished
 from shoop.utils.numbers import bankers_round
@@ -75,21 +73,25 @@ class OrderCreator(object):
 
     def create_package_children(self, order_line):
         order = order_line.order
-        if order_line.product and order_line.product.mode == ProductMode.PACKAGE_PARENT:
-            for child_product, child_quantity in six.iteritems(order_line.product.get_package_child_to_quantity_map()):
-                child_order_line = OrderLine(order=order, parent_line=order_line)
-                update_order_line_from_product(
-                    request=self.request,
-                    order_line=child_order_line,
-                    product=child_product,
-                    quantity=(order_line.quantity * child_quantity),
-                )
-                # Package children are free
-                assert child_order_line.unit_price.amount == 0
-                child_order_line.source_line = order_line.source_line
-                child_order_line.supplier = order_line.supplier
-                self._check_orderability(child_order_line)
-                yield child_order_line
+        parent_product = order_line.product
+        # :type parent_product: shoop.core.models.Product
+        if not (parent_product and parent_product.is_package_parent()):
+            return
+
+        for child_product, child_quantity in six.iteritems(parent_product.get_package_child_to_quantity_map()):
+            child_order_line = OrderLine(order=order, parent_line=order_line)
+            update_order_line_from_product(
+                request=self.request,
+                order_line=child_order_line,
+                product=child_product,
+                quantity=(order_line.quantity * child_quantity),
+            )
+            # Package children are free
+            assert child_order_line.unit_price.amount == 0
+            child_order_line.source_line = order_line.source_line
+            child_order_line.supplier = order_line.supplier
+            self._check_orderability(child_order_line)
+            yield child_order_line
 
     def _check_orderability(self, order_line):
         if not order_line.product:

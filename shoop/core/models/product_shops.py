@@ -12,9 +12,8 @@ from shoop.core.excs import ProductNotOrderableProblem, ProductNotVisibleProblem
 from shoop.core.fields import QuantityField, UnsavedForeignKey
 from django.utils.translation import ugettext_lazy as _
 from enumfields import EnumIntegerField
-from shoop.core.models import ProductMode, StockBehavior
 from shoop.core.models.product_media import ProductMediaKind
-from shoop.core.models.products import ProductVisibility
+from shoop.core.models.products import ProductVisibility, StockBehavior
 from shoop.core.signals import get_visibility_errors, get_orderability_errors
 import six
 
@@ -70,7 +69,7 @@ class ShopProduct(models.Model):
             return False
         if not self.listed:
             return False
-        if self.product.mode == ProductMode.VARIATION_CHILD:
+        if self.product.is_variation_child():
             return False
         return True
 
@@ -142,7 +141,7 @@ class ShopProduct(models.Model):
                 code="invalid_supplier"
             )
 
-        if self.product.mode == ProductMode.PACKAGE_PARENT:
+        if self.product.is_package_parent():
             for child_product, child_quantity in six.iteritems(self.product.get_package_child_to_quantity_map()):
                 child_shop_product = child_product.get_shop_instance(shop=self.shop)
                 if not child_shop_product:

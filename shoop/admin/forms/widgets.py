@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.forms import HiddenInput, Widget
+from django.forms.utils import flatatt
 from django.utils.encoding import force_text
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
@@ -18,6 +19,11 @@ from shoop.core.models import Product
 class BasePopupChoiceWidget(Widget):
     browse_kind = None
 
+    def __init__(self, attrs=None, clearable=False, empty_text=u"\u2014"):
+        self.clearable = clearable
+        self.empty_text = empty_text
+        super(BasePopupChoiceWidget, self).__init__(attrs)
+
     def get_browse_markup(self):
         icon = "<i class='fa fa-folder'></i>"
         return "<button class='browse-btn btn btn-info btn-sm' type='button'>%(icon)s %(text)s</button>" % {
@@ -25,9 +31,16 @@ class BasePopupChoiceWidget(Widget):
             "text": _("Browse")
         }
 
+    def get_clear_markup(self):
+        icon = "<i class='fa fa-cross'></i>"
+        return "<button class='clear-btn btn btn-default btn-sm' type='button'>%(icon)s %(text)s</button>" % {
+            "icon": icon,
+            "text": _("Clear")
+        }
+
     def render_text(self, obj):
         url = getattr(obj, "url", None)
-        text = u"\u2014"
+        text = self.empty_text
         if obj:
             text = force_text(obj)
             if not url:
@@ -53,10 +66,19 @@ class BasePopupChoiceWidget(Widget):
             obj = None
         pk_input = HiddenInput().render(name, value, attrs)
         media_text = self.render_text(obj)
-        bits = "".join([pk_input, media_text, self.get_browse_markup()])
-        return mark_safe("<div class='browse-widget' data-browse-kind='%(browse_kind)s'>%(bits)s</div>" % {
-            "browse_kind": self.browse_kind,
-            "bits": bits
+        bits = [self.get_browse_markup(), pk_input, " ", media_text]
+
+        if self.clearable:
+            bits.insert(1, self.get_clear_markup())
+
+        return mark_safe("<div %(attrs)s>%(content)s</div>" % {
+            "attrs": flatatt({
+                "class": "browse-widget %s-browse-widget" % self.browse_kind,
+                "data-browse-kind": self.browse_kind,
+                "data-clearable": self.clearable,
+                "data-empty-text": self.empty_text,
+            }),
+            "content": "".join(bits)
         })
 
 

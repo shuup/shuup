@@ -25,7 +25,7 @@ def test_package():
     children = [create_product("PackageChild-%d" % x, shop=shop, supplier=supplier) for x in range(4)]
     package_def = {child: 1 + i for (i, child) in enumerate(children)}
     package_product.make_package(package_def)
-    assert package_product.mode == ProductMode.PACKAGE_PARENT
+    assert package_product.is_package_parent()
     package_product.save()
     sp = package_product.get_shop_instance(shop)
     assert not list(sp.get_orderability_errors(supplier=supplier, quantity=1, customer=AnonymousContact()))

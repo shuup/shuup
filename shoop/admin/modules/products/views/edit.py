@@ -8,13 +8,11 @@
 from __future__ import unicode_literals
 from django.conf import settings
 from django.contrib import messages
-from django.core.urlresolvers import reverse
 from django.db.transaction import atomic
 
 from shoop.admin.form_part import FormPart, TemplatedFormDef, FormPartsViewMixin, SaveFormPartsMixin
 from .forms import ProductBaseForm, ShopProductForm, ProductAttributesForm
-from shoop.admin.toolbar import URLActionButton, get_default_edit_toolbar
-
+from .toolbars import EditProductToolbar
 from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.core.models import Product, ShopProduct, Shop, ShopStatus, ProductType, TaxClass
 from django.utils.translation import ugettext as _
@@ -116,24 +114,4 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
         return self.save_form_parts(form)
 
     def get_toolbar(self):
-        product = self.object
-        toolbar = get_default_edit_toolbar(
-            self, "product_form",
-            delete_url="shoop_admin:product.delete"
-        )
-        if product.pk:
-            toolbar.append(URLActionButton(
-                text=_("Manage Media"),
-                icon="fa fa-picture-o",
-                url=reverse("shoop_admin:product.edit_media", kwargs={"pk": product.pk}),
-                extra_css_class="btn-info"
-            ))
-            toolbar.append(URLActionButton(
-                text=_("Manage Cross-Selling"),
-                icon="fa fa-exchange",
-                url=reverse("shoop_admin:product.edit_cross_sell", kwargs={"pk": product.pk}),
-                extra_css_class="btn-info"
-            ))
-        # TODO: Add extensibility
-
-        return toolbar
+        return EditProductToolbar(view=self)

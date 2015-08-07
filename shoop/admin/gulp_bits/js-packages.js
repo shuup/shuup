@@ -51,5 +51,12 @@ module.exports = {
         "files": [
             "picotable.js"
         ]
+    },
+    "product-variation-variable-editor": {
+        "base": root + "/modules/products/static_src",
+        "es6": true,
+        "files": [
+            "product-variation-variable-editor.js"
+        ]
     }
 };
