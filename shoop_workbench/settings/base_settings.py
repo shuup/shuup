@@ -22,36 +22,41 @@ MEDIA_URL = "/media/"
 SHOOP_ENABLED_ADDONS_FILE = os.getenv("SHOOP_ENABLED_ADDONS_FILE") or (
     os.path.join(BASE_DIR, "var", "enabled_addons"))
 INSTALLED_APPS = add_enabled_addons(SHOOP_ENABLED_ADDONS_FILE, (
+    # django
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sessions',
     'django.contrib.staticfiles',
-    'django_jinja',
-    'filer',
-    'easy_thumbnails',
+    # shoop themes
+    'shoop.themes.default_theme',
+    # shoop
+    'shoop.addons',
+    'shoop.admin',
+    'shoop.api',
     'shoop.core',
-    'shoop.simple_supplier',
     'shoop.default_tax',
     'shoop.front',
-    'shoop.front.apps.registration',
-    'registration',
     'shoop.front.apps.auth',
     'shoop.front.apps.customer_information',
     'shoop.front.apps.personal_order_history',
+    'shoop.front.apps.registration',
     'shoop.front.apps.simple_order_notification',
     'shoop.front.apps.simple_search',
-    'shoop.admin',
-    'shoop.addons',
-    'shoop.testing',
-    'bootstrap3',
     'shoop.notify',
     'shoop.simple_cms',
-    'rest_framework',
-    'shoop.api',
+    'shoop.simple_pricing',
+    'shoop.simple_supplier',
+    'shoop.testing',
     'shoop.xtheme',
-    'shoop.simple_pricing'
+    # external apps
+    'bootstrap3',
+    'django_jinja',
+    'easy_thumbnails',
+    'filer',
+    'registration',
+    'rest_framework',
 ))
 
 MIDDLEWARE_CLASSES = (

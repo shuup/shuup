@@ -9,23 +9,23 @@ principles of HTML and CSS.
 
 If you would like to start creating your own customized templates with these
 instructions you should already have a working Shoop installation with the
-default template up and running. If not, you can start by reading
+default frontend theme up and running. If not, you can start by reading
 :doc:`Getting Started guide <getting_started_dev>`.
 
-Shoop's default templates
--------------------------
+Shoop's default frontend theme
+------------------------------
 
-Shoop's default templates are written with `Jinja2 <http://jinja.pocoo.org/>`_
+Shoop's frontend templates are written with `Jinja2 <http://jinja.pocoo.org/>`_
 which is a templating engine for Python very similar to Django’s templates.
 
-The default templates use the `Bootstrap 3 <http://getbootstrap.com/>`_ framework, which
+The default frontend theme uses the `Bootstrap 3 <http://getbootstrap.com/>`_ framework, which
 consists of Bootstrap's HTML structure and Bootstrap specified CSS classes.
 If you want to create your own templates, it would require using Bootstrap 3
 or overwriting all the template files with your custom HTML structure and HTML
 classes.
 
 Shoop's template files are easy to modify and basic knowledge of HTML and CSS
-takes you far. Shoop's default templates already include the necessary
+takes you far. Shoop's frontend and the default theme already include the necessary
 template tags to print out all the features a basic shop would need.
 It is fairly simple to add your custom HTML elements around
 template tags and customize your shop to your needs.
@@ -40,7 +40,7 @@ All the template files are always included in the app folder ``shoop/APP/templat
 Within this template folder the folder structure is: ``APP/MODULE/TEMPLATE.jinja``.
 For example, this could be converted into ``shoop/product/detail.jinja``
 
-The default templates can be found in folder under ``shoop/front/templates/``.
+The default frontend theme can be found in ``shoop/front/apps/default_theme/``.
 
 .. topic:: Example
 
@@ -49,7 +49,7 @@ The default templates can be found in folder under ``shoop/front/templates/``.
    folder: ``shoop/simple_cms/templates/`` where the path to the template file
    is ``shoop/simple_cms/page.jinja``.
 
-Other default template features such as user authentication, customer
+Other default features such as user authentication, customer
 info, order history, registration and search etc. can be found in their own
 application templates under ``shoop/front/apps/``. Each app has it's own
 template folder containing application specific templates.
@@ -78,7 +78,7 @@ General template files can be found under ``shoop/front/templates/``
     be generated with macros.
 
 **Includes** ``shoop/front/includes/``
-    Additional HTML that can be included in pages. In default templates all
+    Additional HTML that can be included in pages. In the default frontend theme all
     the included filenames start with ``_``. All navigation related HTML and
     template tags are included to ``base.jinja`` and for example you could
     create a ``_footer.jinja`` to be included if needed.
@@ -228,20 +228,22 @@ a ``src`` for an ``<img>`` tag would be as easy as ``<img src="{{ static(img/ima
 Creating custom templates
 -------------------------
 
-The basic principle of creating custom Shoop templates is not to modify the
-original files (default templates) within the app directory, but to copy them
-into to your own application's template directory.
-If your own application is set before Shoop in Django's ``INSTALLED_APPS``
-configuration, Django will prefer your templates over Shoop's default ones.
+You may either derive your own theme from the default theme, or write your own from scratch.
 
-This means it is possible to overwrite only some of the default template files or
+The basic principle of deriving custom Shoop templates is not to modify the
+original files (default frontend themes) within the app directory, but to copy them
+into to your own application's template directory.
+If your own application is listed before ``shoop.front`` (and/or other theme apps)
+in Django's ``INSTALLED_APPS`` configuration, Django will prefer your templates
+over others with the same path.
+
+This means it is possible to overwrite only some of the default files or
 all of them. If there is no customized template with the same path and filename,
-Django will use the default template file instead.
+Django will use the default file instead.
 
 All the template files that you want to customize go under your application's
 template folder in the same folder hierarchy as under the original app's ``templates``
-folder. The folder hierarchy for Shoop's default templates was discussed earlier
-in this document.
+folder. The folder hierarchy for frontend templates was discussed earlier in this document.
 
 .. topic:: Example
 
