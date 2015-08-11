@@ -359,20 +359,7 @@ class Product(AttributableMixin, TranslatableModel):
                 raise ValueError("`combination_hash` and `variables` are mutually exclusive")
             variables = True  # Simplifies the below invariant checks
 
-        if parent.is_variation_child():
-            raise ValueError("Multilevel parentage hierarchies aren't supported (parent is a child already)")
-        if parent.mode == ProductMode.VARIABLE_VARIATION_PARENT and not variables:
-            raise ValueError("Parent is a variable variation parent, yet variables were not passed to `link_to_parent`")
-        if parent.mode == ProductMode.SIMPLE_VARIATION_PARENT and variables:
-            raise ValueError("Parent is a simple variation parent, yet variables were passed to `link_to_parent`")
-        if self.mode == ProductMode.SIMPLE_VARIATION_PARENT:
-            raise ValueError(
-                "Multilevel parentage hierarchies aren't supported (this product is a simple variation parent)"
-            )
-        if self.mode == ProductMode.VARIABLE_VARIATION_PARENT:
-            raise ValueError(
-                "Multilevel parentage hierarchies aren't supported (this product is a variable variation parent)"
-            )
+        self._raise_if_cant_link_to_parent(parent, variables)
 
         self.unlink_from_parent()
         self.variation_parent = parent
@@ -397,6 +384,30 @@ class Product(AttributableMixin, TranslatableModel):
             return pvr
         else:
             return True
+
+    def _raise_if_cant_link_to_parent(self, parent, variables):
+        """
+        Validates relation possibility for `self.link_to_parent()`
+
+        :param parent: parent product of self
+        :type parent: Product
+        :param variables:
+        :type variables: dict|None
+        """
+        if parent.is_variation_child():
+            raise ValueError("Multilevel parentage hierarchies aren't supported (parent is a child already)")
+        if parent.mode == ProductMode.VARIABLE_VARIATION_PARENT and not variables:
+            raise ValueError("Parent is a variable variation parent, yet variables were not passed to `link_to_parent`")
+        if parent.mode == ProductMode.SIMPLE_VARIATION_PARENT and variables:
+            raise ValueError("Parent is a simple variation parent, yet variables were passed to `link_to_parent`")
+        if self.mode == ProductMode.SIMPLE_VARIATION_PARENT:
+            raise ValueError(
+                "Multilevel parentage hierarchies aren't supported (this product is a simple variation parent)"
+            )
+        if self.mode == ProductMode.VARIABLE_VARIATION_PARENT:
+            raise ValueError(
+                "Multilevel parentage hierarchies aren't supported (this product is a variable variation parent)"
+            )
 
     def make_package(self, package_def):
         if self.mode != ProductMode.NORMAL:
