@@ -10,12 +10,13 @@ import logging
 from django import forms
 from django.forms.models import ModelChoiceIterator
 from django.utils.encoding import force_text
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 from django.views.generic.edit import FormView
-from shoop.core.models.methods import ShippingMethod, PaymentMethod
-from django.utils.translation import ugettext_lazy as _
+from shoop.core.models import ShippingMethod, PaymentMethod
 from shoop.core.templatetags.shoop_common import home_currency
 from shoop.front.checkout import CheckoutPhaseViewMixin
+
 
 LOG = logging.getLogger(__name__)
 

@@ -22,7 +22,7 @@ from shoop.admin.toolbar import (
 )
 from shoop.admin.utils.urls import get_model_url
 from shoop.admin.utils.views import CreateOrUpdateView
-from shoop.core.models.contacts import PersonContact, Contact
+from shoop.core.models import PersonContact, Contact
 from shoop.utils.excs import Problem
 from shoop.utils.text import flatten
 

@@ -15,7 +15,7 @@ from django.utils.translation import ugettext_lazy as _
 from shoop.admin.base import MenuEntry
 from shoop.admin.toolbar import get_default_edit_toolbar, URLActionButton, Toolbar
 from shoop.admin.utils.views import CreateOrUpdateView
-from shoop.core.models.methods import Method, ShippingMethod, PaymentMethod
+from shoop.core.models import ShippingMethod, PaymentMethod
 from shoop.core.modules.interface import ModuleNotFound
 from shoop.utils.multilanguage_model_form import MultiLanguageModelForm
 
@@ -50,7 +50,7 @@ class MethodEditToolbar(Toolbar):
 
 
 class _BaseMethodEditView(CreateOrUpdateView):
-    model = Method
+    model = None  # Overridden below
     action_url_name_prefix = None
     template_name = "shoop/admin/methods/edit.jinja"
     form_class = forms.Form

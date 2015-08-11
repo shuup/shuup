@@ -11,8 +11,7 @@ from django.conf import settings
 from shoop.admin.form_part import FormPart, TemplatedFormDef, FormPartsViewMixin, SaveFormPartsMixin
 from shoop.admin.utils.forms import filter_form_field_choices
 from shoop.admin.utils.views import CreateOrUpdateView
-from shoop.core.models import Category
-from shoop.core.models.categories import CategoryStatus
+from shoop.core.models import Category, CategoryStatus
 from shoop.utils.multilanguage_model_form import MultiLanguageModelForm
 
 

@@ -9,11 +9,11 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 from shoop.admin.utils.picotable import Column, TextFilter, ChoicesFilter
 from shoop.admin.utils.views import PicotableListView
-from shoop.core.models.methods import Method, MethodStatus, ShippingMethod, PaymentMethod
+from shoop.core.models import MethodStatus, ShippingMethod, PaymentMethod
 
 
 class _BaseMethodListView(PicotableListView):
-    model = Method
+    model = None  # Overridden below
     columns = [
         Column("name", _(u"Name"), sort_field="translations__name", filter_config=TextFilter(
             filter_field="name",

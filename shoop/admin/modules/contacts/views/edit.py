@@ -17,8 +17,7 @@ from shoop.admin.form_part import FormPart, TemplatedFormDef, FormPartsViewMixin
 from shoop.admin.toolbar import get_default_edit_toolbar
 from shoop.admin.utils.urls import get_model_url
 from shoop.admin.utils.views import CreateOrUpdateView
-from shoop.core.models import Contact, PersonContact, CompanyContact, Address
-from shoop.core.models.contacts import ContactGroup
+from shoop.core.models import Contact, PersonContact, CompanyContact, Address, ContactGroup
 from shoop.utils.excs import Problem
 from shoop.utils.form_group import FormDef
 

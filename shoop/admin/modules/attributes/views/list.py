@@ -10,8 +10,7 @@ from django.db.models import Count
 from django.utils.translation import ugettext_lazy as _
 from shoop.admin.utils.picotable import Column, TextFilter, ChoicesFilter
 from shoop.admin.utils.views import PicotableListView
-from shoop.core.models import Attribute
-from shoop.core.models.attributes import AttributeType, AttributeVisibility
+from shoop.core.models import Attribute, AttributeType, AttributeVisibility
 
 
 class AttributeListView(PicotableListView):

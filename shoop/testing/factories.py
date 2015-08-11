@@ -24,13 +24,12 @@ from shoop.core.defaults.order_statuses import create_default_order_statuses
 from shoop.core.models import (
     Address, Attribute, AttributeType,
     Category, CategoryStatus, CompanyContact, Contact, ContactGroup,
-    Order, OrderLine, OrderLineType, OrderStatus,
+    Order, OrderLine, OrderLineTax, OrderLineType, OrderStatus,
     PaymentMethod, PersonContact,
     Product, ProductMedia, ProductMediaKind, ProductType, SalesUnit,
     ShippingMethod, Shop, ShopProduct, ShopStatus, StockBehavior,
     Supplier, SupplierType, TaxClass,
     Tax)
-from shoop.core.models.order_lines import OrderLineTax
 from shoop.core.order_creator import OrderSource, SourceLine, OrderCreator
 from shoop.core.pricing import TaxlessPrice
 from shoop.core.shortcuts import update_order_line_from_product

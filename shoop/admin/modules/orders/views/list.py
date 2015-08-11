@@ -14,8 +14,7 @@ from shoop.admin.utils.picotable import (
     Column, ChoicesFilter, TextFilter, RangeFilter, MultiFieldTextFilter, DateRangeFilter
 )
 from shoop.admin.utils.views import PicotableListView
-from shoop.core.models import Order, PaymentStatus, ShippingStatus
-from shoop.core.models.orders import OrderStatus
+from shoop.core.models import Order, PaymentStatus, ShippingStatus, OrderStatus
 from shoop.utils.i18n import format_home_currency, get_current_babel_locale
 
 
