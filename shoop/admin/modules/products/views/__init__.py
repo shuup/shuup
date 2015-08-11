@@ -9,6 +9,7 @@
 from .edit import ProductEditView
 from .edit_cross_sell import ProductCrossSellEditView
 from .edit_media import ProductMediaEditView
+from .variation import ProductVariationView
 from .list import ProductListView
 from .delete import ProductDeleteView
 
@@ -17,5 +18,6 @@ __all__ = [
     "ProductDeleteView",
     "ProductEditView",
     "ProductListView",
+    "ProductVariationView",
     "ProductMediaEditView",
 ]

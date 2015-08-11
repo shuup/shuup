@@ -24,13 +24,13 @@ $(function() {
         var obj = data.pick.object;
         if (!obj) return;
         info.$container.find("input").val(obj.id);
-        var $mediaText = info.$container.find(".browse-text");
-        $mediaText.text(obj.text);
-        $mediaText.prop("href", obj.url || "#");
+        var $text = info.$container.find(".browse-text");
+        $text.text(obj.text);
+        $text.prop("href", obj.url || "#");
         delete browseData[data.pick.id];
     }, false);
 
-    $(".browse-btn").on("click", function() {
+    $(document).on("click", ".browse-widget .browse-btn", function() {
         var $container = $(this).closest(".browse-widget");
         if(!$container.length) return;
         var kind = $container.data("browse-kind");
@@ -49,5 +49,23 @@ $(function() {
             $container: $container,
             popup: popup
         };
+    });
+
+    $(document).on("click", ".browse-widget .clear-btn", function() {
+        var $container = $(this).closest(".browse-widget");
+        if(!$container.length) return;
+        var emptyText = $container.data("empty-text") || "";
+        $container.find("input").val("");
+        var $text = $container.find(".browse-text");
+        $text.text(emptyText);
+        $text.prop("href", "#");
+    });
+
+    $(document).on("click", ".browse-widget .browse-text", function(event) {
+        var href = $(this).prop("href");
+        if(/#$/.test(href)) {  // Looks empty, so prevent clicks
+            event.preventDefault();
+            return false;
+        }
     });
 });

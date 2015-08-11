@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.forms import BaseFormSet
 from collections import OrderedDict
 import six
 
@@ -17,10 +18,11 @@ class FormDef(object):
         self.kwargs = kwargs or {}
 
     def instantiate(self, prefix, group_initial=None, **extra_kwargs):
-        kwargs = {
-            "prefix": prefix,
-            "empty_permitted": not self.required
-        }
+        kwargs = {"prefix": prefix}
+        if not isinstance(self.form_class, BaseFormSet):
+            # FormSets don't support `empty_permitted` (they'll deal with it themselves)
+            kwargs["empty_permitted"] = not self.required
+
         kwargs.update(self.kwargs)
         kwargs.update(extra_kwargs)
         if group_initial:
@@ -29,8 +31,7 @@ class FormDef(object):
             new_initial = dict(
                 (k[len(prefix_with_dash):], v)
                 for (k, v)
-                in
-                group_initial.items()
+                in group_initial.items()
                 if k.startswith(prefix_with_dash)
             )
             # But any explicitly passed kwargs shall be copied as-is
@@ -87,9 +88,15 @@ class FormGroup(object):
             return
         self.cleaned_data = {}
         for name, form in six.iteritems(self.forms):
-            if form.errors:
+            if isinstance(form, BaseFormSet):
+                has_errors = bool(form.total_error_count())
+            else:
+                has_errors = bool(form.errors)
+
+            if has_errors:
                 self._errors[name] = form.errors
-            self.cleaned_data[name] = form.cleaned_data
+            else:
+                self.cleaned_data[name] = form.cleaned_data
 
     @property
     def errors(self):

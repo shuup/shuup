@@ -1,0 +1,25 @@
+{% from "shoop/admin/macros/general.jinja" import content_block %}
+{% set children_form = form["children"] %}
+
+{% call content_block(_("Children"), "fa-info-circle") %}
+    <table class="table table-condensed table-striped">
+        <thead>
+        <tr>
+            <th>Combination</th>
+            <th>Product</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for f in children_form %}
+            <tr>
+                <td>
+                    {{ f.field.combo.text_description }}
+                </td>
+                <td>
+                    {{ f|safe }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endcall %}

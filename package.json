@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/shoopio/shoop/issues"
   },
-  "homepage": "https://shoop.io/"
+  "homepage": "https://shoop.io/",
+  "devDependencies": {
+    "eslint": "^1.0.0"
+  }
 }

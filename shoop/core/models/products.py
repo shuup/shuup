@@ -7,9 +7,9 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 from __future__ import with_statement
+import six
 from django.utils.encoding import python_2_unicode_compatible
 from parler.managers import TranslatableQuerySet
-
 from enumfields import Enum, EnumIntegerField
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
@@ -17,19 +17,13 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from parler.models import TranslatableModel, TranslatedFields
 from shoop.core.fields import InternalIdentifierField, MoneyField, MeasurementField
-from shoop.core.models.attributes import Attribute
 from shoop.core.utils.slugs import generate_multilanguage_slugs
 from shoop.utils.analog import define_log_model, LogEntryKind
-
-import six
-
-from .attributes import AttributableMixin, AppliedAttribute
+from .attributes import Attribute, AttributableMixin, AppliedAttribute
 from .product_packages import ProductPackageLink
 from .product_variation import (
-    ProductVariationResult,
-    ProductVariationVariable,
-    ProductVariationVariableValue,
-    hash_combination,
+    get_combination_hash_from_variable_mapping,
+    ProductVariationResult, ProductVariationVariable
 )
 
 
@@ -317,12 +311,14 @@ class Product(AttributableMixin, TranslatableModel):
             super(Product, self).save(update_fields=("deleted",))
 
     def verify_mode(self):
-        if ProductPackageLink.objects.filter(parent=self).count():
+        if ProductPackageLink.objects.filter(parent=self).exists():
             self.mode = ProductMode.PACKAGE_PARENT
             self.external_url = None
             self.variation_children.clear()
-        elif self.variation_children.count():
-            if ProductVariationResult.objects.filter(product=self).count():
+        elif ProductVariationVariable.objects.filter(product=self).exists():
+            self.mode = ProductMode.VARIABLE_VARIATION_PARENT
+        elif self.variation_children.exists():
+            if ProductVariationResult.objects.filter(product=self).exists():
                 self.mode = ProductMode.VARIABLE_VARIATION_PARENT
             else:
                 self.mode = ProductMode.SIMPLE_VARIATION_PARENT
@@ -347,8 +343,58 @@ class Product(AttributableMixin, TranslatableModel):
             ProductVariationResult.objects.filter(result=self).delete()
             return True
 
-    def link_to_parent(self, parent, variables=None):
-        if parent.mode == ProductMode.VARIATION_CHILD:
+    def link_to_parent(self, parent, variables=None, combination_hash=None):
+        """
+        :param parent: The parent to link to.
+        :type parent: Product
+        :param variables: Optional dict of {variable identifier: value identifier} for complex variable linkage
+        :type variables: dict|None
+        :param combination_hash: Optional combination hash (for variable variations), if precomputed. Mutually
+                                 exclusive with `variables`
+        :type combination_hash: str|None
+
+        """
+        if combination_hash:
+            if variables:
+                raise ValueError("`combination_hash` and `variables` are mutually exclusive")
+            variables = True  # Simplifies the below invariant checks
+
+        self._raise_if_cant_link_to_parent(parent, variables)
+
+        self.unlink_from_parent()
+        self.variation_parent = parent
+        self.verify_mode()
+        self.save()
+        if not parent.is_variation_parent():
+            parent.verify_mode()
+            parent.save()
+
+        if variables:
+            if not combination_hash:  # No precalculated hash, need to figure that out
+                combination_hash = get_combination_hash_from_variable_mapping(parent, variables=variables)
+
+            pvr = ProductVariationResult.objects.create(
+                product=parent,
+                combination_hash=combination_hash,
+                result=self
+            )
+            if parent.mode == ProductMode.SIMPLE_VARIATION_PARENT:
+                parent.verify_mode()
+                parent.save()
+            return pvr
+        else:
+            return True
+
+    def _raise_if_cant_link_to_parent(self, parent, variables):
+        """
+        Validates relation possibility for `self.link_to_parent()`
+
+        :param parent: parent product of self
+        :type parent: Product
+        :param variables:
+        :type variables: dict|None
+        """
+        if parent.is_variation_child():
             raise ValueError("Multilevel parentage hierarchies aren't supported (parent is a child already)")
         if parent.mode == ProductMode.VARIABLE_VARIATION_PARENT and not variables:
             raise ValueError("Parent is a variable variation parent, yet variables were not passed to `link_to_parent`")
@@ -363,59 +409,54 @@ class Product(AttributableMixin, TranslatableModel):
                 "Multilevel parentage hierarchies aren't supported (this product is a variable variation parent)"
             )
 
-        self.unlink_from_parent()
-        self.variation_parent = parent
-        self.verify_mode()
-        self.save()
-        if parent.mode not in (ProductMode.SIMPLE_VARIATION_PARENT, ProductMode.VARIABLE_VARIATION_PARENT):
-            parent.verify_mode()
-            parent.save()
-
-        if variables:
-            mapping = {}
-            for variable_identifier, value_identifier in variables.items():
-                variable_identifier, _ = ProductVariationVariable.objects.get_or_create(
-                    product=parent, identifier=variable_identifier
-                )
-                value_identifier, _ = ProductVariationVariableValue.objects.get_or_create(
-                    variable=variable_identifier, identifier=value_identifier
-                )
-                mapping[variable_identifier] = value_identifier
-            pvr = ProductVariationResult.objects.create(
-                product=parent,
-                combination_hash=hash_combination(mapping),
-                result=self
-            )
-            if parent.mode == ProductMode.SIMPLE_VARIATION_PARENT:
-                parent.verify_mode()
-                parent.save()
-            return pvr
-        else:
-            return True
-
     def make_package(self, package_def):
         if self.mode != ProductMode.NORMAL:
             raise ValueError("Product is currently not a normal product, can't turn into package")
 
         for child_product, quantity in six.iteritems(package_def):
-            if child_product.mode in (ProductMode.SIMPLE_VARIATION_PARENT, ProductMode.VARIABLE_VARIATION_PARENT):
+            # :type child_product: Product
+            if child_product.is_variation_parent():
                 raise ValueError("Variation parents can not belong into a package")
-            if child_product.mode == ProductMode.PACKAGE_PARENT:
+            if child_product.is_package_parent():
                 raise ValueError("Can't nest packages")
-
             if quantity <= 0:
                 raise ValueError("Quantity %s is invalid" % quantity)
             ProductPackageLink.objects.create(parent=self, child=child_product, quantity=quantity)
         self.verify_mode()
 
     def get_package_child_to_quantity_map(self):
-        if self.mode == ProductMode.PACKAGE_PARENT:
+        if self.is_package_parent():
             product_id_to_quantity = dict(
                 ProductPackageLink.objects.filter(parent=self).values_list("child_id", "quantity")
             )
             products = dict((p.pk, p) for p in Product.objects.filter(pk__in=product_id_to_quantity.keys()))
             return {products[product_id]: quantity for (product_id, quantity) in six.iteritems(product_id_to_quantity)}
         return {}
+
+    def is_variation_parent(self):
+        return self.mode in (ProductMode.SIMPLE_VARIATION_PARENT, ProductMode.VARIABLE_VARIATION_PARENT)
+
+    def is_variation_child(self):
+        return (self.mode == ProductMode.VARIATION_CHILD)
+
+    def get_variation_siblings(self):
+        return Product.objects.filter(variation_parent=self.variation_parent).exclude(pk=self.pk)
+
+    def is_package_parent(self):
+        return (self.mode == ProductMode.PACKAGE_PARENT)
+
+    def is_package_child(self):
+        return ProductPackageLink.objects.filter(child=self).exists()
+
+    def get_all_package_parents(self):
+        return Product.objects.filter(pk__in=(
+            ProductPackageLink.objects.filter(child=self).values_list("parent", flat=True)
+        ))
+
+    def get_all_package_children(self):
+        return Product.objects.filter(pk__in=(
+            ProductPackageLink.objects.filter(parent=self).values_list("child", flat=True)
+        ))
 
 
 ProductLogEntry = define_log_model(Product)

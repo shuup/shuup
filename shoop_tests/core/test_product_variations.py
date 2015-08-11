@@ -21,7 +21,7 @@ def test_simple_variation():
     for child in children:
         child.link_to_parent(parent)
         sp = ShopProduct.objects.create(shop=shop, product=child, listed=True)
-        assert child.mode == ProductMode.VARIATION_CHILD
+        assert child.is_variation_child()
         assert not sp.is_list_visible()  # Variation children are not list visible
 
     assert parent.mode == ProductMode.SIMPLE_VARIATION_PARENT
@@ -44,9 +44,10 @@ def test_simple_variation():
 
     for child in children:
         child.unlink_from_parent()
+        assert not child.is_variation_child()
         assert child.mode == ProductMode.NORMAL
 
-    assert parent.mode == ProductMode.NORMAL
+    assert not parent.is_variation_parent()
     assert parent.variation_children.count() == 0
 
 
@@ -57,7 +58,7 @@ def test_variable_variation():
     for size, child in sizes_and_children:
         child.link_to_parent(parent, variables={"size": size})
     assert parent.mode == ProductMode.VARIABLE_VARIATION_PARENT
-    assert all(child.mode == ProductMode.VARIATION_CHILD for (size, child) in sizes_and_children)
+    assert all(child.is_variation_child() for (size, child) in sizes_and_children)
 
     # Validation tests
 
