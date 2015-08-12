@@ -34,8 +34,8 @@
     </div>
 {% endmacro %}
 
-{% macro render_cross_sell_products(product, relation_type="", title="") %}
-    {%- set cross_sell_products = shoop.product.get_product_cross_sells(product, relation_type) %}
+{% macro render_cross_sell_products(product, relation_type="related", title="") %}
+    {%- set cross_sell_products = shoop.product.get_related_products(product, relation_type) %}
     {% if cross_sell_products %}
         <hr>
         {% if title %}<h3>{{ title }}</h3>{% endif %}

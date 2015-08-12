@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.utils.deprecation import warn_about_renamed_method
 from jinja2.utils import contextfunction
 
 from shoop.core.models import AttributeVisibility, Product, ProductAttribute, ProductCrossSell, ProductCrossSellType
@@ -17,21 +18,11 @@ def get_visible_attributes(product):
     )
 
 
-# Deprecated, see `get_product_cross_sells()`
+# Deprecated, see `get_related_products()`
 @contextfunction
+@warn_about_renamed_method("", "get_products_bought_with", "get_related_products", DeprecationWarning)
 def get_products_bought_with(context, product, count=5):
-    related_product_cross_sells = (
-        ProductCrossSell.objects
-        .filter(product1=product, type=ProductCrossSellType.COMPUTED)
-        .order_by("-weight")[:(count * 4)])
-    products = []
-    for cross_sell in related_product_cross_sells:
-        product2 = cross_sell.product2
-        if product2.is_visible_to_user(context["request"].user) and product2.is_list_visible():
-            products.append(product2)
-        if len(products) >= count:
-            break
-    return products
+    return get_related_products(context, product, "computed", count)
 
 
 @contextfunction
@@ -44,7 +35,13 @@ def is_visible(context, product):
 
 
 @contextfunction
+@warn_about_renamed_method("", "get_product_cross_sells", "get_related_products", DeprecationWarning)
 def get_product_cross_sells(context, product, relation_type="related", count=4):
+    return get_related_products(context, product, relation_type, count)
+
+
+@contextfunction
+def get_related_products(context, product, relation_type="related", count=4):
     request = context["request"]
     rtype = ProductCrossSellType.RELATED
     if relation_type == "computed":
