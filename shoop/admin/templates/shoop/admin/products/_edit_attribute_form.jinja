@@ -1,6 +1,6 @@
 {% from "shoop/admin/macros/general.jinja" import content_block %}
 {% set attr_form = form[form_def.name] %}
-{% call content_block(_("Attributes"), "fa-wrench") %}
+{% call content_block(_("Attributes"), "fa-tags") %}
     {% for field in attr_form %}
         {{ bs3.field(field) }}
     {% endfor %}
