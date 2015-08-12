@@ -8,7 +8,10 @@
 from django.utils.deprecation import warn_about_renamed_method
 from jinja2.utils import contextfunction
 
+from shoop.core import cache
 from shoop.core.models import AttributeVisibility, Product, ProductAttribute, ProductCrossSell, ProductCrossSellType
+from shoop.utils.enums import map_enum
+from shoop.utils.models import get_in_id_order
 
 
 def get_visible_attributes(product):
@@ -42,27 +45,40 @@ def get_product_cross_sells(context, product, relation_type="related", count=4):
 
 @contextfunction
 def get_related_products(context, product, relation_type="related", count=4):
+    """
+    Get at most `count` visible products related (by type `relation_type`) to the given `product`.
+
+    :param context: The rendering context. This parameter is passed implicitly by Jinja2.
+    :type context: jinja2.runtime.Context
+    :param product: Source product
+    :type product: shoop.core.models.Product
+    :param relation_type: Relation type (string or ProductCrossSellType value)
+    :type relation_type: str|ProductCrossSellType
+    :param count: Number of products to return.
+    :type count: int
+    :return: List of at most `count` products.
+    :rtype: list[shoop.core.models.Product]
+    :raises ValueError: ValueError may be raised if the `relation_type` passed isn't valid.
+    """
+    relation_type = map_enum(ProductCrossSellType, relation_type)
+    id_query_count = max(count * 4, 64)  # IDs to query for caching
+    cache_key = "related_product_ids:%d_%d_%d" % (product.pk, relation_type.value, id_query_count)
+    related_product_ids = cache.get(cache_key)
+    if related_product_ids is None:
+        related_product_ids = list(
+            ProductCrossSell.objects
+            .filter(product1=product, type=relation_type)
+            .order_by("weight")[:id_query_count].values_list("product2_id", flat=True)
+        )
+        cache.set(cache_key, related_product_ids)
+
+    if not related_product_ids:
+        return []
+
     request = context["request"]
-    rtype = ProductCrossSellType.RELATED
-    if relation_type == "computed":
-        rtype = ProductCrossSellType.COMPUTED
-    elif relation_type == "recommended":
-        rtype = ProductCrossSellType.RECOMMENDED
 
-    related_product_ids = list((
-        ProductCrossSell.objects
-        .filter(product1=product, type=rtype)
-        .order_by("weight")[:(count * 4)]).values_list("product2_id", flat=True)
+    return get_in_id_order(
+        Product.objects.list_visible(shop=request.shop, customer=request.customer),
+        related_product_ids,
+        count
     )
-
-    related_products = list(
-        Product.objects
-        .filter(id__in=related_product_ids)
-        .list_visible(shop=request.shop, customer=request.customer)
-    )
-
-    # Order related products by weight. Related product ids is in weight order.
-    # If same related product is linked twice to product then lowest weight stands.
-    related_products.sort(key=lambda prod: list(related_product_ids).index(prod.id))
-
-    return related_products[:count]
