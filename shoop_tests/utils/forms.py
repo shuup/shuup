@@ -5,7 +5,9 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from itertools import chain
 from django.core.exceptions import ValidationError
+from django.forms import BaseFormSet
 
 
 def get_form_data(form, prepared=False):
@@ -14,7 +16,7 @@ def get_form_data(form, prepared=False):
     be directly passed back as `data` to a form to simulate form submissions.
 
     :param form: A form.
-    :type form: django.forms.Form
+    :type form: django.forms.BaseForm|django.forms.BaseFormSet
     :param prepared: Prepare the values?
     :type prepared: bool
     :return: Dict of data
@@ -22,6 +24,12 @@ def get_form_data(form, prepared=False):
     """
 
     # This is based on Django's `django.forms.forms.BaseForm::changed_data` method.
+
+    if isinstance(form, BaseFormSet):
+        data = {}
+        for subform in chain([form.management_form], form.forms):
+            data.update(get_form_data(subform, prepared=prepared))
+        return data
 
     data = {}
     for name, field in form.fields.items():
