@@ -58,5 +58,12 @@ module.exports = {
         "files": [
             "product-variation-variable-editor.js"
         ]
+    },
+    "product": {
+        "base": "./static_src/product",
+        "es6": true,
+        "files": [
+            "edit_media.js"
+        ]
     }
 };
