@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from __future__ import unicode_literals
 import datetime
 from .image_generator import generate_image
 from decimal import Decimal

@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
+from __future__ import unicode_literals
 SIMPLE_INPUT_TYPES = ('text', 'hidden', 'password', 'submit', 'image', 'search', 'number', 'email', 'url')
 
 

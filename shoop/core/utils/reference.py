@@ -5,12 +5,13 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-import datetime
-from django.utils.encoding import force_text
+from __future__ import unicode_literals
 
-from shoop.utils.importing import load
-from shoop.core.models.counters import Counter, CounterType
 from django.conf import settings
+from django.utils.encoding import force_text
+from shoop.core.models.counters import Counter, CounterType
+from shoop.utils.importing import load
+import datetime
 
 
 def calc_reference_number_checksum(rn):
@@ -19,7 +20,7 @@ def calc_reference_number_checksum(rn):
     for i, ch in enumerate(rn[::-1]):
         s += muls[i % 3] * int(ch)
     s = 10 - (s % 10)
-    return str(s)[-1]
+    return force_text(s)[-1]
 
 
 def get_unique_reference_number(order):
@@ -31,7 +32,7 @@ def get_unique_reference_number(order):
 def get_running_reference_number(order):
     value = Counter.get_and_increment(CounterType.ORDER_REFERENCE)
     prefix = settings.SHOOP_REFERENCE_NUMBER_PREFIX
-    padded_value = str(value).rjust(settings.SHOOP_REFERENCE_NUMBER_LENGTH - len(prefix), "0")
+    padded_value = force_text(value).rjust(settings.SHOOP_REFERENCE_NUMBER_LENGTH - len(prefix), "0")
     reference_no = "%s%s" % (prefix, padded_value)
     return reference_no + calc_reference_number_checksum(reference_no)
 
@@ -39,7 +40,7 @@ def get_running_reference_number(order):
 def get_shop_running_reference_number(order):
     value = Counter.get_and_increment(CounterType.ORDER_REFERENCE)
     prefix = "%06d" % order.shop.pk
-    padded_value = str(value).rjust(settings.SHOOP_REFERENCE_NUMBER_LENGTH - len(prefix), "0")
+    padded_value = force_text(value).rjust(settings.SHOOP_REFERENCE_NUMBER_LENGTH - len(prefix), "0")
     reference_no = "%s%s" % (prefix, padded_value)
     return reference_no + calc_reference_number_checksum(reference_no)
 

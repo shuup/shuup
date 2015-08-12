@@ -5,6 +5,8 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
+from __future__ import unicode_literals
+
 
 class LineTax(object):
     """
@@ -19,6 +21,7 @@ class LineTax(object):
     :ivar base_amount: Amount that this tax is calculated from.
     :type base_amount: decimal.Decimal
     """
+
     @property
     def rate(self):
         return (self.amount / self.base_amount)
