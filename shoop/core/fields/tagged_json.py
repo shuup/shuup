@@ -4,15 +4,16 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
+
 """
 "Tagged JSON" encoder/decoder.
 
 Objects that are normally not unambiguously representable via JSON
 are encoded into special objects of the form `{tag: val}`; the encoding
 and decoding process can be customized however necessary.
-
 """
+
+from __future__ import unicode_literals
 from enum import Enum
 import datetime
 import decimal
