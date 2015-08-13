@@ -54,10 +54,11 @@ def get_product_cross_sells(context, product, relation_type="related", count=4):
     elif relation_type == "recommended":
         rtype = ProductCrossSellType.RECOMMENDED
 
-    related_product_ids = (
+    related_product_ids = set((
         ProductCrossSell.objects
         .filter(product1=product, type=rtype)
         .order_by("-weight")[:(count * 4)]).values_list("product2_id", flat=True)
+    )
 
     # TODO: Return in weight order
     related_products = Product.objects.filter(
