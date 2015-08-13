@@ -7,11 +7,11 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 from parler.models import TranslatableModel
-# TODO: Fix these imports once parler_rest>=1.2 is released
 from shoop.api._vendor.parler_rest.fields import TranslatedFieldsField
 from shoop.api._vendor.parler_rest.serializers import TranslatableModelSerializer
 from rest_framework import serializers, viewsets, permissions
 
+# TODO: Unvendor bits once parler_rest>=1.2 is released
 
 def serializer_factory(model, serializer_class=None, attrs=None, meta=None):
     attrs = attrs or {}
