@@ -21,7 +21,8 @@ class SimpleVariationChildForm(forms.Form):
 class SimpleVariationChildFormSet(BaseFormSet):
     def __init__(self, **kwargs):
         kwargs.pop("empty_permitted", None)
-        self.parent_product = kwargs.pop("parent_product", None)
+        self.request = kwargs.pop("request", None)
+        self.parent_product = kwargs.pop("parent_product")
         kwargs["initial"] = [
             {"child": product}
             for product
@@ -63,5 +64,5 @@ class SimpleVariationChildFormSet(BaseFormSet):
             message_parts.append(_("New: %d") % len(products_to_add))
         if products_to_remove:
             message_parts.append(_("Removed: %d") % len(products_to_remove))
-        if message_parts:
+        if message_parts and self.request:
             messages.success(self.request, ", ".join(message_parts))

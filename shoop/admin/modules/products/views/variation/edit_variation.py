@@ -41,7 +41,7 @@ class VariationChildrenFormPart(FormPart):
             form,
             template_name=template_name,
             required=False,
-            kwargs={"parent_product": product}
+            kwargs={"parent_product": product, "request": self.request}
         )
 
     def form_valid(self, form):
