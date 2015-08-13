@@ -22,10 +22,11 @@ IdentifierValidator = RegexValidator("[a-z][a-z_]+")
 class InternalIdentifierField(models.CharField):
 
     def __init__(self, **kwargs):
+        if "unique" not in kwargs:
+            raise ValueError("You must explicitly set the `unique` flag for `InternalIdentifierField`s.")
         kwargs.setdefault("max_length", 64)
         kwargs.setdefault("blank", True)
         kwargs.setdefault("null", bool(kwargs.get("blank")))  # If it's allowed to be blank, it should be null
-        kwargs.setdefault("unique", True)
         kwargs.setdefault("verbose_name", _("internal identifier"))
         kwargs.setdefault("help_text", _(u"Do not change this value if you are not sure what you're doing."))
         kwargs.setdefault("editable", False)

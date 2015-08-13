@@ -33,7 +33,7 @@ class ProductMediaKind(Enum):
 
 @python_2_unicode_compatible
 class ProductMedia(TranslatableModel):
-    identifier = InternalIdentifierField()
+    identifier = InternalIdentifierField(unique=True)
     product = models.ForeignKey("Product", related_name="media")
     shops = models.ManyToManyField("Shop", related_name="product_media")
     kind = EnumIntegerField(

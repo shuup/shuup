@@ -21,7 +21,7 @@ from ._base import TranslatableShoopModel
 class Tax(TranslatableShoopModel):
     identifier_attr = 'code'
 
-    code = InternalIdentifierField()
+    code = InternalIdentifierField(unique=True)
 
     translations = TranslatedFields(
         name=models.CharField(max_length=64),
@@ -66,7 +66,7 @@ class Tax(TranslatableShoopModel):
 
 
 class TaxClass(TranslatableShoopModel):
-    identifier = InternalIdentifierField()
+    identifier = InternalIdentifierField(unique=True)
     translations = TranslatedFields(
         name=models.CharField(max_length=100, verbose_name=_('name')),
     )
@@ -78,7 +78,7 @@ class TaxClass(TranslatableShoopModel):
 
 
 class CustomerTaxGroup(TranslatableShoopModel):
-    identifier = InternalIdentifierField()
+    identifier = InternalIdentifierField(unique=True)
     translations = TranslatedFields(
         name=models.CharField(max_length=100, verbose_name=_('name')),
     )

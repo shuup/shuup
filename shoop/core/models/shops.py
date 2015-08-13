@@ -23,7 +23,7 @@ class ShopStatus(Enum):
 
 @python_2_unicode_compatible
 class Shop(TranslatableModel):
-    identifier = InternalIdentifierField()
+    identifier = InternalIdentifierField(unique=True)
     domain = models.CharField(max_length=128, blank=True, null=True, unique=True)
     status = EnumIntegerField(ShopStatus, default=ShopStatus.DISABLED)
     owner = models.ForeignKey("Contact", blank=True, null=True)
