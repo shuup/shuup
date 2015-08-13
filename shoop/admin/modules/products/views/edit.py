@@ -12,13 +12,14 @@ from django.contrib import messages
 from django.db.transaction import atomic
 from django.utils.translation import ugettext as _
 
-from shoop.admin.form_part import FormPart, TemplatedFormDef, FormPartsViewMixin, SaveFormPartsMixin
-from .toolbars import EditProductToolbar
-from .forms import (
-    ProductBaseForm, ShopProductForm, ProductAttributesForm, ProductImageMediaFormSet, ProductMediaFormSet
-)
+from shoop.admin.form_part import FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
 from shoop.admin.utils.views import CreateOrUpdateView
-from shoop.core.models import Product, ShopProduct, Shop, ShopStatus, ProductType, TaxClass
+from shoop.core.models import Product, ProductType, Shop, ShopProduct, ShopStatus, TaxClass
+
+from .forms import (
+    ProductAttributesForm, ProductBaseForm, ProductImageMediaFormSet, ProductMediaFormSet, ShopProductForm
+)
+from .toolbars import EditProductToolbar
 
 
 class ProductBaseFormPart(FormPart):

@@ -7,11 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 
 from __future__ import unicode_literals
+
 from babel.dates import format_date
 from django.conf import settings
-from django.db.models import Count, Avg, Sum
+from django.db.models import Avg, Count, Sum
 from django.utils.translation import ugettext_lazy as _
-from shoop.admin.dashboard import DashboardMoneyBlock, DashboardChartBlock, BarChart
+
+from shoop.admin.dashboard import BarChart, DashboardChartBlock, DashboardMoneyBlock
 from shoop.core.models import Order
 from shoop.core.utils.query import group_by_period
 from shoop.utils.dates import get_year_and_month_format

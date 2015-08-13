@@ -7,11 +7,14 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import datetime
+
 from django.conf import settings
 from django.utils.encoding import force_text
-from shoop.core.models.counters import Counter, CounterType  # must be direct; this module is imported by `models.orders`
+
 from shoop.utils.importing import load
-import datetime
+
+from shoop.core.models.counters import Counter, CounterType  # must be direct; this module is imported by `models.orders`
 
 
 def calc_reference_number_checksum(rn):

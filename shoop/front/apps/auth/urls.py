@@ -6,8 +6,11 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.conf.urls import patterns, url
-from .views import LoginView, LogoutView
-from .views import RecoverPasswordView, RecoverPasswordConfirmView, RecoverPasswordCompleteView, RecoverPasswordSentView
+
+from .views import (
+    LoginView, LogoutView, RecoverPasswordCompleteView, RecoverPasswordConfirmView, RecoverPasswordSentView,
+    RecoverPasswordView
+)
 
 urlpatterns = patterns(
     '',

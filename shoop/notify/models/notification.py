@@ -6,15 +6,17 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
-from enumfields import EnumIntegerField
+
 from django.conf import settings
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.core.urlresolvers import NoReverseMatch, reverse
+from django.db import models
 from django.db.models import Q
 from django.utils.timezone import now
+from enumfields import EnumIntegerField
 from jsonfield.fields import JSONField
-from django.db import models
+
 from shoop.core.fields import InternalIdentifierField
-from shoop.notify.enums import RecipientType, Priority
+from shoop.notify.enums import Priority, RecipientType
 
 
 class NotificationManager(models.Manager):

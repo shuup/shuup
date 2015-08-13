@@ -8,6 +8,7 @@
 from __future__ import with_statement
 
 from django.utils.translation import get_language
+
 from shoop.core.models import Product, ProductAttribute
 from shoop.utils.translation import cache_translations
 

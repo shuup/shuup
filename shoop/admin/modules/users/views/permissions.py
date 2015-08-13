@@ -6,16 +6,18 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
+from django import forms
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from django import forms
 from django.forms.models import modelform_factory
 from django.http.response import HttpResponseRedirect
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import UpdateView
+
 from shoop.admin.toolbar import get_default_edit_toolbar
 from shoop.admin.utils.urls import get_model_url
-from django.utils.translation import ugettext_lazy as _
 
 
 class PermissionChangeFormBase(forms.ModelForm):

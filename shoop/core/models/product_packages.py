@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 
 from django.db import models
+
 from shoop.core.fields import QuantityField
 
 

@@ -8,7 +8,8 @@
 
 from django import forms
 from django.conf import settings
-from shoop.admin.form_part import FormPart, TemplatedFormDef, FormPartsViewMixin, SaveFormPartsMixin
+
+from shoop.admin.form_part import FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
 from shoop.admin.utils.forms import filter_form_field_choices
 from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.core.models import Category, CategoryStatus

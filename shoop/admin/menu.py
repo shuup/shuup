@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.utils.datastructures import SortedDict
 from django.utils.encoding import force_text
+
 from shoop.admin.module_registry import get_modules
 
 

@@ -6,14 +6,17 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
+import abc
+
+import six
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ImproperlyConfigured
+
 from shoop.core.models import AnonymousContact
 from shoop.front.models import StoredBasket
 from shoop.utils.importing import cached_load
-import abc
-import six
 
 
 class BasketStorage(six.with_metaclass(abc.ABCMeta)):

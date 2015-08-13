@@ -6,19 +6,20 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
-from decimal import Decimal
-from collections import Counter
-import random
 
+import random
+from collections import Counter
+from decimal import Decimal
+
+import six
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
-from shoop.core.models import ShippingMethod, PaymentMethod, OrderLineType
+from shoop.core.models import OrderLineType, PaymentMethod, ShippingMethod
 from shoop.core.order_creator.source import OrderSource, SourceLine
 from shoop.front.basket.storage import get_storage
 from shoop.utils.numbers import parse_decimal_string
 from shoop.utils.objects import compare_partial_dicts
-import six
 
 
 class BasketLine(SourceLine):

@@ -6,13 +6,15 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 import logging
+
+import six
 from django.db.models.query import QuerySet
 
+from shoop.notify.base import Action, Condition
 from shoop.notify.enums import StepConditionOperator, StepNext
-from shoop.notify.base import Condition, Action
 from shoop.utils.analog import BaseLogEntry
-import six
 
 
 def none(conditions):

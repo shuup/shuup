@@ -6,10 +6,12 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from django import forms
 from django.contrib import messages
-from django.forms.formsets import BaseFormSet, DELETION_FIELD_NAME
+from django.forms.formsets import DELETION_FIELD_NAME, BaseFormSet
 from django.utils.translation import ugettext_lazy as _
+
 from shoop.admin.forms.widgets import ProductChoiceWidget
 from shoop.core.models import Product
 

@@ -6,10 +6,12 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals, with_statement
+
+import six
 from django.utils.translation import ugettext_lazy as _
+
 from shoop.apps.provides import get_provide_specs_and_objects
 from shoop.utils.importing import load
-import six
 
 
 class ModuleNotFound(ValueError):

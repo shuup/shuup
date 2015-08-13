@@ -5,8 +5,9 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.utils.encoding import force_text
 import re
+
+from django.utils.encoding import force_text
 
 
 class FuzzyMatcher(object):

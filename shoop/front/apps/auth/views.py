@@ -6,22 +6,23 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from django import forms
 from django.conf import settings
-
-from django.contrib.auth import get_user_model, logout, login
+from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.forms import AuthenticationForm, SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import REDIRECT_FIELD_NAME
+from django.core.mail import send_mail
 from django.core.urlresolvers import reverse_lazy
 from django.db.transaction import atomic
 from django.http import HttpResponseRedirect
 from django.template import loader
 from django.utils.encoding import force_bytes
-from django.utils.http import is_safe_url, urlsafe_base64_encode, urlsafe_base64_decode
-from django.views.generic import FormView, TemplateView
+from django.utils.http import is_safe_url, urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.translation import ugettext as _
-from django.core.mail import send_mail
+from django.views.generic import FormView, TemplateView
+
 from shoop.utils.excs import Problem
 
 

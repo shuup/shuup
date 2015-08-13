@@ -7,7 +7,9 @@
 # LICENSE file in the root directory of this source tree.
 
 from __future__ import unicode_literals
+
 from django import forms
+
 from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.core.models import ProductType
 from shoop.utils.multilanguage_model_form import MultiLanguageModelForm

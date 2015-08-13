@@ -6,16 +6,17 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from decimal import Decimal
 
+import six
 from django.contrib.auth import get_user_model
 from django.utils.encoding import force_text
 
-from shoop.core.models import OrderLine, Order, OrderLineType
+from shoop.core.models import Order, OrderLine, OrderLineType
 from shoop.core.shortcuts import update_order_line_from_product
 from shoop.front.signals import order_creator_finished
 from shoop.utils.numbers import bankers_round
-import six
 
 
 def real_user_or_none(user):

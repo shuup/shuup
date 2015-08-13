@@ -6,17 +6,18 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from django.conf import settings
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
-from enumfields import EnumField, Enum
+from enumfields import Enum, EnumField
 from parler.models import TranslatableModel, TranslatedFields
 from polymorphic.polymorphic_model import PolymorphicModel
+from timezone_field.fields import TimeZoneField
 
 from shoop.core.fields import InternalIdentifierField, LanguageField
 from shoop.core.utils.name_mixin import NameMixin
-from timezone_field.fields import TimeZoneField
 
 
 @python_2_unicode_compatible

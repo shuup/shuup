@@ -5,9 +5,10 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from jinja2.utils import contextfunction
 from django.utils.translation import get_language
+from jinja2.utils import contextfunction
 from mptt.templatetags.mptt_tags import cache_tree_children
+
 from shoop.core.models import Category, Manufacturer, Product
 from shoop.front.utils.product_statistics import get_best_selling_product_info
 from shoop.front.utils.views import cache_product_things

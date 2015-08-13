@@ -6,12 +6,15 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 import time
+
 from django import forms
 from django.http.response import HttpResponse, JsonResponse
-from django.views.generic import FormView
-from shoop.addons.reloader import get_reload_method_classes
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic import FormView
+
+from shoop.addons.reloader import get_reload_method_classes
 from shoop.utils.excs import Problem
 from shoop.utils.iterables import first
 

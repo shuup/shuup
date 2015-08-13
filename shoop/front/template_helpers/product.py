@@ -6,10 +6,8 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from jinja2.utils import contextfunction
-from shoop.core.models import (
-    ProductCrossSellType, ProductCrossSell,
-    AttributeVisibility, ProductAttribute, Product
-)
+
+from shoop.core.models import AttributeVisibility, Product, ProductAttribute, ProductCrossSell, ProductCrossSellType
 
 
 def get_visible_attributes(product):

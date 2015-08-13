@@ -6,18 +6,20 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 import json
 
 from django.conf import settings
-from django.core.files.uploadedfile import TemporaryUploadedFile, InMemoryUploadedFile
+from django.core.files.uploadedfile import InMemoryUploadedFile, TemporaryUploadedFile
 from django.http.response import JsonResponse
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
-from filer.models import Folder, File
+from filer.models import File, Folder
 from mptt.templatetags.mptt_tags import cache_tree_children
-from shoop.utils.filer import filer_file_from_upload, filer_image_from_upload
 from six import BytesIO
+
+from shoop.utils.filer import filer_file_from_upload, filer_image_from_upload
 
 
 def _filer_file_to_json_dict(file):

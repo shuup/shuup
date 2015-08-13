@@ -6,11 +6,13 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from django import forms
 from django.core.exceptions import ValidationError
 from django.forms.models import model_to_dict
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import FormView
+
 from shoop.core.models import Address, CompanyContact
 from shoop.core.utils.vat import verify_vat
 from shoop.front.checkout import CheckoutPhaseViewMixin

@@ -6,12 +6,13 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import datetime
-from itertools import islice
 import time
+from heapq import heappop, heappush
+from itertools import islice
 
 from django.utils.timezone import now
+
 from shoop.admin.module_registry import get_modules
-from heapq import heappush, heappop
 
 
 def get_activity(request, n_entries=30, cutoff_hours=10):

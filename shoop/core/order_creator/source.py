@@ -6,17 +6,15 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 import decimal
 
 from django.conf import settings
 from django.utils.timezone import now
-from shoop.core.models import (
-    ShippingMethod, PaymentMethod,
-    OrderStatus, Product, Shop, Supplier,
-    TaxClass,
-)
-from shoop.core.pricing import TaxfulPrice, TaxlessPrice, Price
+
 from shoop.core import taxing
+from shoop.core.models import OrderStatus, PaymentMethod, Product, ShippingMethod, Shop, Supplier, TaxClass
+from shoop.core.pricing import Price, TaxfulPrice, TaxlessPrice
 from shoop.core.utils.prices import LinePriceMixin
 from shoop.utils.decorators import non_reentrant
 

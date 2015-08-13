@@ -6,13 +6,11 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
-from shoop.admin.toolbar import (
-    Toolbar, get_default_edit_toolbar,
-    DropdownActionButton, DropdownItem, DropdownDivider
-)
+from shoop.admin.toolbar import DropdownActionButton, DropdownDivider, DropdownItem, Toolbar, get_default_edit_toolbar
 from shoop.admin.utils.urls import get_model_url
 
 

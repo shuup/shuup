@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
+
 from shoop.core.models import StockBehavior
 from shoop.core.stocks import ProductStockStatus
 

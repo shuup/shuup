@@ -6,14 +6,16 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
-from shoop.admin.toolbar import Toolbar, URLActionButton, PostActionButton
-from shoop.core.models import Contact, PersonContact, Order
+
+from shoop.admin.toolbar import PostActionButton, Toolbar, URLActionButton
+from shoop.core.models import Contact, Order, PersonContact
 
 
 class ContactDetailToolbar(Toolbar):

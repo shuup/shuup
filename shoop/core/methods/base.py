@@ -6,16 +6,18 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from decimal import Decimal
 
+import six
 from django import forms
 from django.core.exceptions import ValidationError
 from django.http.response import HttpResponseRedirect
 from django.utils.encoding import force_bytes
+from django.utils.translation import ugettext_lazy as _
+
 from shoop.core.models import PaymentStatus
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
-import six
-from django.utils.translation import ugettext_lazy as _
 
 
 class BaseMethodModule(object):

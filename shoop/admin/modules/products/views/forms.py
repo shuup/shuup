@@ -10,12 +10,12 @@ from __future__ import unicode_literals
 from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import BaseModelFormSet
-from django.forms.formsets import DEFAULT_MIN_NUM, DEFAULT_MAX_NUM
+from django.forms.formsets import DEFAULT_MAX_NUM, DEFAULT_MIN_NUM
 from django.utils.translation import ugettext_lazy as _
-
 from filer.models import Image
+
 from shoop.admin.forms.widgets import MediaChoiceWidget
-from shoop.core.models import Product, ShopProduct, ProductMedia, ProductMediaKind, Shop, AttributeType, Attribute
+from shoop.core.models import Attribute, AttributeType, Product, ProductMedia, ProductMediaKind, Shop, ShopProduct
 from shoop.utils.i18n import get_language_name
 from shoop.utils.multilanguage_model_form import MultiLanguageModelForm, to_language_codes
 

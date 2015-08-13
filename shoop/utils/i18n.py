@@ -8,10 +8,11 @@
 
 import babel
 from babel.numbers import format_currency
-from django.utils import translation
 from django.conf import settings
-from shoop.utils.numbers import parse_decimal_string
+from django.utils import translation
 from django.utils.lru_cache import lru_cache
+
+from shoop.utils.numbers import parse_decimal_string
 
 
 @lru_cache()

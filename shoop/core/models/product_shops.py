@@ -6,16 +6,18 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
+import six
 from django.core.exceptions import ValidationError
 from django.db import models
-from shoop.core.excs import ProductNotOrderableProblem, ProductNotVisibleProblem
-from shoop.core.fields import QuantityField, UnsavedForeignKey
 from django.utils.translation import ugettext_lazy as _
 from enumfields import EnumIntegerField
+
+from shoop.core.excs import ProductNotOrderableProblem, ProductNotVisibleProblem
+from shoop.core.fields import QuantityField, UnsavedForeignKey
 from shoop.core.models.product_media import ProductMediaKind
 from shoop.core.models.products import ProductVisibility, StockBehavior
-from shoop.core.signals import get_visibility_errors, get_orderability_errors
-import six
+from shoop.core.signals import get_orderability_errors, get_visibility_errors
 
 
 class ShopProduct(models.Model):

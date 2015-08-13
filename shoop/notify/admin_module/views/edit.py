@@ -8,12 +8,13 @@
 from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse
+from django.shortcuts import redirect
+from django.utils.translation import ugettext_lazy as _
+
 from shoop.admin.toolbar import Toolbar, URLActionButton
 from shoop.admin.utils.views import CreateOrUpdateView, add_create_or_change_message
-from django.shortcuts import redirect
 from shoop.notify.admin_module.forms import ScriptForm
 from shoop.notify.models.script import Script
-from django.utils.translation import ugettext_lazy as _
 
 
 class ScriptEditView(CreateOrUpdateView):

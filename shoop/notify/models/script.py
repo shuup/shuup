@@ -6,12 +6,14 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
+from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from jsonfield.fields import JSONField
-from django.db import models
+
 from shoop.core.fields import InternalIdentifierField
-from shoop.notify.enums import StepNext
 from shoop.notify.base import Event
+from shoop.notify.enums import StepNext
 
 
 @python_2_unicode_compatible

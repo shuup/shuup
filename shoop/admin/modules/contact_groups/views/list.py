@@ -6,12 +6,14 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from django.db.models import Count
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView
-from shoop.admin.toolbar import Toolbar, NewActionButton
+
+from shoop.admin.toolbar import NewActionButton, Toolbar
 from shoop.admin.utils.picotable import Column, PicotableViewMixin, TextFilter
 from shoop.core.models import ContactGroup
-from django.utils.translation import ugettext_lazy as _
 
 
 class ContactGroupListView(PicotableViewMixin, ListView):

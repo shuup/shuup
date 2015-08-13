@@ -6,12 +6,15 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 import datetime
-from django.db.models import Sum, Count
+
+from django.db.models import Count, Sum
 from django.utils.timezone import now
+from django.utils.translation import ugettext_lazy as _
+
 from shoop.admin.base import AdminModule
 from shoop.admin.dashboard import DashboardMoneyBlock
-from django.utils.translation import ugettext_lazy as _
 from shoop.front.models.stored_basket import StoredBasket
 
 

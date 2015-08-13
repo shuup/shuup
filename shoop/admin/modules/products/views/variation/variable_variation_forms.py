@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 import json
 
 from django import forms
@@ -13,8 +14,9 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Model
 from django.utils.crypto import get_random_string
+
 from shoop.admin.forms.widgets import ProductChoiceWidget
-from shoop.core.models import Product, ProductVariationVariableValue, ProductVariationVariable
+from shoop.core.models import Product, ProductVariationVariable, ProductVariationVariableValue
 from shoop.core.models.product_variation import get_all_available_combinations
 from shoop.utils.i18n import get_language_name
 from shoop.utils.multilanguage_model_form import to_language_codes

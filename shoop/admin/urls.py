@@ -7,15 +7,18 @@
 # LICENSE file in the root directory of this source tree.
 
 from __future__ import unicode_literals
+
+import warnings
+
+import django.contrib.auth.views as auth_views
 from django.conf.urls import patterns
+from django.contrib.auth import logout as do_logout
+
 from shoop.admin.module_registry import get_module_urls
-from shoop.admin.utils.urls import admin_url, AdminRegexURLPattern
+from shoop.admin.utils.urls import AdminRegexURLPattern, admin_url
 from shoop.admin.views.dashboard import DashboardView
 from shoop.admin.views.menu import MenuView
 from shoop.admin.views.search import SearchView
-import django.contrib.auth.views as auth_views
-from django.contrib.auth import logout as do_logout
-import warnings
 
 
 def login(request, **kwargs):

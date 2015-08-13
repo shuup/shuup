@@ -8,7 +8,8 @@
 from django.utils.timezone import now
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
-from shoop.core.models import Order, OrderLine, Address, OrderStatus
+
+from shoop.core.models import Address, Order, OrderLine, OrderStatus
 
 
 class OrderLineSerializer(ModelSerializer):

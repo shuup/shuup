@@ -6,11 +6,13 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from django.core.exceptions import ValidationError
 from django.http.response import JsonResponse
 from django.shortcuts import render
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
+
 from shoop.utils.excs import ExceptionalResponse, Problem
 
 

@@ -9,6 +9,7 @@ from babel.numbers import format_currency, format_number
 from django.conf import settings
 from django.template import loader
 from django.utils.encoding import force_text
+
 from shoop.utils.i18n import get_current_babel_locale
 from shoop.utils.numbers import parse_decimal_string
 

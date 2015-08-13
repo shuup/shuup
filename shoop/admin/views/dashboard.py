@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.views.generic.base import TemplateView
+
 from shoop.admin.dashboard import get_activity
 from shoop.admin.module_registry import get_modules
 from shoop.core.telemetry import try_send_telemetry

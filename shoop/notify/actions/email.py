@@ -6,13 +6,16 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 import logging
+
 from django import forms
 from django.core.mail.message import EmailMessage
-from shoop.notify.base import Action, Binding
-from shoop.notify.enums import TemplateUse, ConstantUse
 from django.utils.translation import ugettext as _
-from shoop.notify.typology import Email, Text, Language
+
+from shoop.notify.base import Action, Binding
+from shoop.notify.enums import ConstantUse, TemplateUse
+from shoop.notify.typology import Email, Language, Text
 
 
 class SendEmail(Action):

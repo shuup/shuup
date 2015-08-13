@@ -14,17 +14,19 @@ and decoding process can be customized however necessary.
 """
 
 from __future__ import unicode_literals
-from enum import Enum
+
 import datetime
 import decimal
-from django.core.exceptions import ImproperlyConfigured
+from enum import Enum
 
+import django.utils.dateparse as dateparse
+from django.core.exceptions import ImproperlyConfigured
 from django.utils import six
 from jsonfield.encoder import JSONEncoder
+from six import text_type
+
 from shoop.utils.importing import load
 from shoop.utils.iterables import first
-import django.utils.dateparse as dateparse
-from six import text_type
 
 isoformat = lambda obj: obj.isoformat()
 

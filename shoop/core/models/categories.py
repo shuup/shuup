@@ -6,16 +6,17 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import with_statement
-from django.utils.encoding import python_2_unicode_compatible
-from filer.fields.image import FilerImageField
-from mptt.managers import TreeManager
 
-from enumfields import Enum, EnumIntegerField
 from django.db import models
 from django.db.models import Q
-from parler.models import TranslatableModel, TranslatedFields, TranslatableManager
-from mptt.models import TreeForeignKey, MPTTModel
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
+from enumfields import Enum, EnumIntegerField
+from filer.fields.image import FilerImageField
+from mptt.managers import TreeManager
+from mptt.models import MPTTModel, TreeForeignKey
+from parler.models import TranslatableManager, TranslatableModel, TranslatedFields
+
 from shoop.core.fields import InternalIdentifierField
 from shoop.core.utils.slugs import generate_multilanguage_slugs
 from shoop.utils.analog import define_log_model

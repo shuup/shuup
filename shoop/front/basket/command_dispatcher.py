@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import six
 from django.core.exceptions import ValidationError
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect
@@ -16,7 +17,6 @@ from django.utils.translation import ugettext_lazy as _
 from shoop.front.basket import commands
 from shoop.front.signals import get_basket_command_handler
 from shoop.utils.excs import Problem
-import six
 
 
 class BasketCommandDispatcher(object):

@@ -6,14 +6,18 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
+import hmac
+
 from django import forms
 from django.contrib import messages
 from django.http.response import HttpResponse
 from django.utils.timezone import now
 from django.views.generic import View
+
 from shoop.core.methods.base import BasePaymentMethodModule
 from shoop.utils.excs import Problem
-import hmac
+
 
 HTML_TEMPLATE = u"""
 <!DOCTYPE html>

@@ -6,13 +6,15 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
-from collections import defaultdict
-import copy
-import six
 
-from django.forms.models import model_to_dict, ModelForm
+import copy
+from collections import defaultdict
+
+import six
+from django.forms.models import ModelForm, model_to_dict
 from django.utils.translation import get_language
 from parler.forms import TranslatableModelForm
+
 from shoop.utils.i18n import get_language_name
 
 

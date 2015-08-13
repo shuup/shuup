@@ -7,8 +7,9 @@
 # LICENSE file in the root directory of this source tree.
 from shoop.core.stocks import ProductStockStatus
 from shoop.core.suppliers import BaseSupplierModule
-from .models import StockCount, StockAdjustment
 from shoop.simple_supplier.utils import get_current_stock_value
+
+from .models import StockAdjustment, StockCount
 
 
 class SimpleSupplierModule(BaseSupplierModule):

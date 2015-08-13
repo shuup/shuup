@@ -10,13 +10,15 @@
 This module is installed as the `shoop_admin` template function namespace.
 """
 
-from django.core.urlresolvers import reverse, NoReverseMatch
+import itertools
+
+from django.core.urlresolvers import NoReverseMatch, reverse
 from django.middleware.csrf import get_token
 from jinja2.utils import contextfunction
+
 from shoop.admin import menu
 from shoop.admin.breadcrumbs import Breadcrumbs
-from shoop.admin.utils.urls import get_model_url, manipulate_query_string, NoModelUrl
-import itertools
+from shoop.admin.utils.urls import NoModelUrl, get_model_url, manipulate_query_string
 
 __all__ = ["get_menu_entry_categories", "get_front_url", "get_config", "model_url"]
 

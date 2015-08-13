@@ -7,11 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 
 from __future__ import unicode_literals
+
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 from django.views.generic import DetailView
+
 from shoop.admin.utils.urls import get_model_url
 from shoop.core.models import Product
 

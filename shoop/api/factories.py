@@ -6,10 +6,13 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from parler.models import TranslatableModel
+from rest_framework import permissions, serializers, viewsets
+
 from shoop.api._vendor.parler_rest.fields import TranslatedFieldsField
 from shoop.api._vendor.parler_rest.serializers import TranslatableModelSerializer
-from rest_framework import serializers, viewsets, permissions
+
 
 # TODO: Unvendor bits once parler_rest>=1.2 is released
 

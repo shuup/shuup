@@ -5,10 +5,14 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
-from __future__ import with_statement
+from __future__ import unicode_literals, with_statement
+
+import calendar
+import datetime
 from collections import defaultdict
 from decimal import Decimal
+
+import six
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
@@ -17,18 +21,18 @@ from django.template.defaultfilters import yesno
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.timesince import timesince
 from django.utils.timezone import now
-from django.utils.translation import ugettext_lazy as _, get_language
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import get_language
 from enumfields import Enum, EnumIntegerField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
+
 from shoop.core.fields import InternalIdentifierField
-from shoop.core.templatetags.shoop_common import number as format_number, datetime as format_datetime
+from shoop.core.templatetags.shoop_common import datetime as format_datetime
+from shoop.core.templatetags.shoop_common import number as format_number
 from shoop.utils.dates import parse_date
 from shoop.utils.numbers import parse_decimal_string
 from shoop.utils.text import flatten
-import calendar
-import datetime
-import six
 
 NoSuchAttributeHere = object()
 

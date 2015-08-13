@@ -5,15 +5,16 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import markdown
 from django.conf import settings
 from django.db import models
 from django.db.models import Q
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.timezone import now
-import markdown
+from django.utils.translation import ugettext_lazy as _
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
-from django.utils.translation import ugettext_lazy as _
+
 from shoop.core.fields import InternalIdentifierField
 
 

@@ -10,6 +10,7 @@ from django.http import Http404
 from django.http.response import HttpResponseRedirect
 from django.utils.translation import get_language
 from django.views.generic.detail import DetailView
+
 from shoop.simple_cms.models import Page
 
 

@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+
 from shoop.core.fields import MoneyField, QuantityField
 
 

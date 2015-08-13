@@ -6,11 +6,13 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import logging
+
 from django.conf import settings
+
 from shoop.notify.base import Action, Binding, ConstantUse, TemplatedBinding
-from shoop.notify.enums import RecipientType, Priority
+from shoop.notify.enums import Priority, RecipientType
 from shoop.notify.models import Notification
-from shoop.notify.typology import Model, Text, Enum, URL
+from shoop.notify.typology import URL, Enum, Model, Text
 
 
 class AddNotification(Action):

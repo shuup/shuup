@@ -6,12 +6,13 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import absolute_import
-import hashlib
-from django.core.files.base import ContentFile
 
-from django.forms.models import modelform_factory
-from filer.models import Image, Folder, File
+import hashlib
+
 import six
+from django.core.files.base import ContentFile
+from django.forms.models import modelform_factory
+from filer.models import File, Folder, Image
 
 
 def filer_folder_from_path(path):

@@ -6,10 +6,11 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 # TODO: Fix these imports once parler_rest>=1.2 is released
-from shoop.api._vendor.parler_rest.fields import TranslatedFieldsField
-from shoop.api._vendor.parler_rest.serializers import TranslatableModelSerializer
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
+
+from shoop.api._vendor.parler_rest.fields import TranslatedFieldsField
+from shoop.api._vendor.parler_rest.serializers import TranslatableModelSerializer
 from shoop.core.models import Product, ShopProduct
 
 

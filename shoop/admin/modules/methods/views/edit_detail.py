@@ -6,12 +6,14 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
+import six
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic.detail import DetailView
-from shoop.core.models import ShippingMethod, PaymentMethod
+
+from shoop.core.models import PaymentMethod, ShippingMethod
 from shoop.utils.excs import Problem
 from shoop.utils.importing import load
-from django.utils.translation import ugettext_lazy as _
-import six
 
 
 class _BaseMethodDetailView(DetailView):

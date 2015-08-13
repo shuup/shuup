@@ -8,6 +8,7 @@
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+
 from shoop.core.fields import MoneyField
 
 __all__ = ("Payment",)

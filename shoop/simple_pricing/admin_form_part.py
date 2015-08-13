@@ -6,12 +6,14 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from django import forms
 from django.db.models import Q
-from shoop.admin.form_part import TemplatedFormDef, FormPart
-from shoop.core.models import Shop, ContactGroup
-from shoop.simple_pricing.models import SimpleProductPrice
 from django.utils.translation import ugettext_lazy as _
+
+from shoop.admin.form_part import FormPart, TemplatedFormDef
+from shoop.core.models import ContactGroup, Shop
+from shoop.simple_pricing.models import SimpleProductPrice
 
 
 class SimplePricingForm(forms.Form):

@@ -6,11 +6,12 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.db import models
-from enumfields import Enum, EnumIntegerField
 from django.utils.encoding import python_2_unicode_compatible
-from jsonfield import JSONField
-from shoop.core.fields import InternalIdentifierField
 from django.utils.translation import ugettext_lazy as _
+from enumfields import Enum, EnumIntegerField
+from jsonfield import JSONField
+
+from shoop.core.fields import InternalIdentifierField
 from shoop.core.modules import ModuleInterface
 
 

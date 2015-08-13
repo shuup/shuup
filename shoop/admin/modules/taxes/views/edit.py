@@ -6,7 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 from shoop.admin.forms.fields import PercentageField
 from shoop.admin.utils.views import CreateOrUpdateView
-from shoop.core.models import Tax, CustomerTaxGroup, TaxClass
+from shoop.core.models import CustomerTaxGroup, Tax, TaxClass
 from shoop.utils.multilanguage_model_form import MultiLanguageModelForm
 
 

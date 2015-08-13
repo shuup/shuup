@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 
 from django.utils.encoding import force_text
+
 from shoop.apps.provides import get_provide_objects
 
 

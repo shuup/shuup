@@ -4,13 +4,14 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.utils.translation import ugettext_lazy as _
+
 from shoop.core import taxing
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
 from shoop.core.taxing._context import TaxingContext
 from shoop.core.taxing.utils import stacked_value_added_taxes
 from shoop.default_tax.models import TaxRule
 from shoop.utils.iterables import first
-from django.utils.translation import ugettext_lazy as _
 
 
 class DefaultTaxModule(taxing.TaxModule):

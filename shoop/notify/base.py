@@ -6,17 +6,19 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from abc import abstractmethod
-from django.utils.text import camel_case_to_spaces
-from shoop.notify.enums import UNILINGUAL_TEMPLATE_LANGUAGE
-from shoop.utils.text import snake_case
-from django.utils.encoding import force_text
-from jinja2.exceptions import TemplateError
-from shoop.apps.provides import get_identifier_to_object_map
-from shoop.notify.enums import ConstantUse, TemplateUse
-from shoop.utils.text import space_case
-from shoop.notify.template import render_in_context, Template
+
 import six
+from django.utils.encoding import force_text
+from django.utils.text import camel_case_to_spaces
+from jinja2.exceptions import TemplateError
+
+from shoop.apps.provides import get_identifier_to_object_map
+from shoop.notify.enums import UNILINGUAL_TEMPLATE_LANGUAGE, ConstantUse, TemplateUse
+from shoop.notify.template import Template, render_in_context
+from shoop.utils.text import snake_case, space_case
+
 from .typology import Type
 
 

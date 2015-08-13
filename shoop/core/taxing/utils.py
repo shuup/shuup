@@ -6,9 +6,10 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from shoop.core.pricing import TaxlessPrice, TaxfulPrice
-from ._price import TaxedPrice
+from shoop.core.pricing import TaxfulPrice, TaxlessPrice
+
 from ._line_tax import SourceLineTax
+from ._price import TaxedPrice
 
 
 def stacked_value_added_taxes(price, taxes):

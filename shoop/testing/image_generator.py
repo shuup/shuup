@@ -6,9 +6,9 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import math
+import random
 
 from PIL import Image, ImageDraw
-import random
 
 PALATABLE_PALETTES = [
     [(70, 137, 102), (255, 240, 165), (255, 176, 59), (182, 73, 38), (142, 40, 0)],

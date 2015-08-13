@@ -6,15 +6,17 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.utils.encoding import force_text
+from django.utils.translation import ugettext as _
 from django.views.generic import DetailView
-from shoop.admin.toolbar import Toolbar, URLActionButton, PostActionButton
+
+from shoop.admin.toolbar import PostActionButton, Toolbar, URLActionButton
 from shoop.admin.utils.urls import get_model_url
 from shoop.core.models import Order, OrderStatus, OrderStatusRole
-from django.utils.translation import ugettext as _
 from shoop.utils.excs import Problem
 
 

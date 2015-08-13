@@ -6,16 +6,19 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 import json
-from django.core.urlresolvers import reverse, NoReverseMatch
+
+import six
+from django.core.urlresolvers import NoReverseMatch, reverse
 from django.forms.utils import flatatt
 from django.middleware.csrf import get_token
 from django.utils.encoding import force_text
 from django.utils.html import conditional_escape, format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
-from shoop.admin.utils.urls import get_model_url, NoModelUrl
-import six
+
+from shoop.admin.utils.urls import NoModelUrl, get_model_url
 
 
 def flatatt_filter(attrs):

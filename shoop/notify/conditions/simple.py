@@ -6,12 +6,14 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
-from django.utils.functional import lazy
-from shoop.notify.base import Condition, Binding, ConstantUse
-from shoop.notify.typology import Language, Text, Integer, Boolean
-from shoop.utils.text import camel_case
+
 import six
+from django.utils.functional import lazy
 from django.utils.translation import ugettext_lazy as _
+
+from shoop.notify.base import Binding, Condition, ConstantUse
+from shoop.notify.typology import Boolean, Integer, Language, Text
+from shoop.utils.text import camel_case
 
 
 class NonEmpty(Condition):

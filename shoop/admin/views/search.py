@@ -6,8 +6,10 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from itertools import chain
+
 from django.http.response import JsonResponse
 from django.views.generic import View
+
 from shoop.admin.base import SearchResult
 from shoop.admin.module_registry import get_modules
 from shoop.admin.utils.search import FuzzyMatcher

@@ -5,21 +5,21 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import with_statement, unicode_literals
-from django.utils.encoding import python_2_unicode_compatible
-from enumfields import Enum, EnumIntegerField
-from jsonfield import JSONField
-from shoop.core.fields import InternalIdentifierField
-from shoop.core.models.order_lines import OrderLineType
+from __future__ import unicode_literals, with_statement
 
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
+from enumfields import Enum, EnumIntegerField
+from jsonfield import JSONField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
+
+from shoop.core.fields import InternalIdentifierField
+from shoop.core.models.order_lines import OrderLineType
 from shoop.core.modules import ModuleInterface
 from shoop.core.utils.text import force_ascii
 from shoop.front.signals import get_method_validation_errors
-
 
 __all__ = ("MethodType", "ShippingMethod", "PaymentMethod", "MethodStatus")
 

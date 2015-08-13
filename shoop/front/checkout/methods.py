@@ -6,17 +6,19 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 import logging
+
 from django import forms
 from django.forms.models import ModelChoiceIterator
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 from django.views.generic.edit import FormView
-from shoop.core.models import ShippingMethod, PaymentMethod
+
+from shoop.core.models import PaymentMethod, ShippingMethod
 from shoop.core.templatetags.shoop_common import home_currency
 from shoop.front.checkout import CheckoutPhaseViewMixin
-
 
 LOG = logging.getLogger(__name__)
 
