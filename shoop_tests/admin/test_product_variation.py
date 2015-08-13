@@ -2,6 +2,8 @@
 from django.forms import formset_factory
 import pytest
 from shoop.admin.modules.products.views.variation.simple_variation_forms import SimpleVariationChildForm, SimpleVariationChildFormSet
+from shoop.admin.modules.products.views.variation.variable_variation_forms import VariableVariationChildrenForm
+from shoop.core.models.product_variation import ProductVariationVariable, ProductVariationVariableValue
 from shoop.testing.factories import create_product
 from shoop_tests.utils import printable_gibberish
 from shoop_tests.utils.forms import get_form_data
@@ -30,3 +32,19 @@ def test_simple_children_formset():
     formset = FormSet(parent_product=parent, data=data)
     formset.save()
     assert not parent.variation_children.exists()  # Got unlinked
+
+
+@pytest.mark.django_db
+def test_variable_variation_form():
+    var1 = printable_gibberish()
+    var2 = printable_gibberish()
+    parent = create_product(printable_gibberish())
+    for a in range(4):
+        for b in range(3):
+            child = create_product(printable_gibberish())
+            child.link_to_parent(parent, variables={var1: a, var2: b})
+    assert parent.variation_children.count() == 4 * 3
+
+    form = VariableVariationChildrenForm(parent_product=parent)
+    assert len(form.fields) == 12
+    # TODO: Improve this test?
