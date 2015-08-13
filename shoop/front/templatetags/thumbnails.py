@@ -6,13 +6,14 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
+import six
 from django.conf import settings
 from django_jinja import library
 from easy_thumbnails.alias import aliases
-import six
-from easy_thumbnails.templatetags.thumbnail import RE_SIZE
 from easy_thumbnails.exceptions import InvalidImageFormatError
 from easy_thumbnails.files import get_thumbnailer
+from easy_thumbnails.templatetags.thumbnail import RE_SIZE
 
 
 def process_thumbnailer_options(kwargs):

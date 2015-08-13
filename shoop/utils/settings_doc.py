@@ -7,11 +7,12 @@
 import os
 import re
 import sys
-import six
 import token
 import tokenize
 
 import django.conf
+import six
+
 import shoop.apps
 
 FILE_READ_KWARGS = {"mode": "rb"}

@@ -10,6 +10,7 @@ Show known Shoop settings and their values.
 from optparse import make_option
 
 from django.core.management.base import BaseCommand
+
 import shoop.utils.settings_doc
 
 

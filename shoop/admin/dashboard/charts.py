@@ -5,10 +5,12 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-import json
 import abc
-from shoop.utils.serialization import ExtendedJSONEncoder
+import json
+
 import six
+
+from shoop.utils.serialization import ExtendedJSONEncoder
 
 
 class Chart(six.with_metaclass(abc.ABCMeta)):

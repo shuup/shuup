@@ -1,4 +1,6 @@
 from django.utils.encoding import force_text
+
+
 # This file is part of Shoop.
 #
 # Copyright (c) 2012-2015, Shoop Ltd. All rights reserved.

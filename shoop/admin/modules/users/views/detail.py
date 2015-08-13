@@ -6,7 +6,9 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 import random
+
 from django import forms
 from django.contrib import messages
 from django.contrib.auth import get_user_model
@@ -16,13 +18,13 @@ from django.forms.models import modelform_factory
 from django.http.response import HttpResponseRedirect
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
+
 from shoop.admin.toolbar import (
-    Toolbar, PostActionButton, get_default_edit_toolbar,
-    DropdownActionButton, DropdownItem, DropdownDivider
+    DropdownActionButton, DropdownDivider, DropdownItem, PostActionButton, Toolbar, get_default_edit_toolbar
 )
 from shoop.admin.utils.urls import get_model_url
 from shoop.admin.utils.views import CreateOrUpdateView
-from shoop.core.models.contacts import PersonContact, Contact
+from shoop.core.models import Contact, PersonContact
 from shoop.utils.excs import Problem
 from shoop.utils.text import flatten
 

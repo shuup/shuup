@@ -5,31 +5,34 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import with_statement, unicode_literals
-from decimal import Decimal
-import datetime
+from __future__ import unicode_literals, with_statement
 
+import datetime
 from collections import defaultdict
+from decimal import Decimal
+
+from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.db import models
 from django.utils.crypto import get_random_string
+from django.utils.encoding import force_text, python_2_unicode_compatible
+from django.utils.timezone import now
+from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from jsonfield import JSONField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
-from django.conf import settings
-from django.core.exceptions import ValidationError, ObjectDoesNotExist
-from django.db import models
-from django.utils.encoding import force_text, python_2_unicode_compatible
-from django.utils.timezone import now
-from django.utils.translation import ugettext_lazy as _
+
+from shoop.core import taxing
+from shoop.core.excs import NoPaymentToCreateException, NoProductsToShipException
+from shoop.core.fields import InternalIdentifierField, LanguageField, MoneyField, UnsavedForeignKey
 from shoop.core.models.products import Product
-from shoop.core.excs import NoProductsToShipException, NoPaymentToCreateException
-from shoop.core.fields import InternalIdentifierField, MoneyField, LanguageField, UnsavedForeignKey
 from shoop.core.models.suppliers import Supplier
 from shoop.core.pricing import TaxlessPrice
-from shoop.core import taxing
-from shoop.utils.analog import define_log_model, LogEntryKind
+from shoop.core.utils.reference import get_order_identifier, get_reference_number
+from shoop.utils.analog import LogEntryKind, define_log_model
 from shoop.utils.numbers import bankers_round
-from shoop.core.utils.reference import get_reference_number, get_order_identifier
+
 from .order_lines import OrderLineType
 
 

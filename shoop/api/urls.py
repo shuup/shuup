@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.conf.urls import include, url
 from rest_framework import routers
+
 from shoop.api.encoders import apply_monkeypatch
 from shoop.apps.provides import get_provide_objects
 

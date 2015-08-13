@@ -6,12 +6,19 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 import datetime
-from .image_generator import generate_image
+import random
+import uuid
 from decimal import Decimal
+
+import factory
+import factory.fuzzy as fuzzy
+import faker
+import six
 from django.conf import settings
 from django.core.files.base import ContentFile
-from django.core.validators import validate_email, ValidationError
+from django.core.validators import ValidationError, validate_email
 from django.db.transaction import atomic
 from django.test import RequestFactory
 from django.utils.timezone import now
@@ -19,31 +26,24 @@ from django_countries.data import COUNTRIES
 from factory.django import DjangoModelFactory
 from faker.utils.loading import find_available_locales
 from filer.models import imagemodels
+from six import BytesIO
+
 from shoop.core.contexts import PriceTaxContext
 from shoop.core.defaults.order_statuses import create_default_order_statuses
 from shoop.core.models import (
-    Address, Attribute, AttributeType,
-    Category, CategoryStatus, CompanyContact, Contact, ContactGroup,
-    Order, OrderLine, OrderLineType, OrderStatus,
-    PaymentMethod, PersonContact,
-    Product, ProductMedia, ProductMediaKind, ProductType, SalesUnit,
-    ShippingMethod, Shop, ShopProduct, ShopStatus, StockBehavior,
-    Supplier, SupplierType, TaxClass,
-    Tax)
-from shoop.core.models.order_lines import OrderLineTax
-from shoop.core.order_creator import OrderSource, SourceLine, OrderCreator
+    Address, Attribute, AttributeType, Category, CategoryStatus, CompanyContact, Contact, ContactGroup, Order,
+    OrderLine, OrderLineTax, OrderLineType, OrderStatus, PaymentMethod, PersonContact, Product, ProductMedia,
+    ProductMediaKind, ProductType, SalesUnit, ShippingMethod, Shop, ShopProduct, ShopStatus, StockBehavior, Supplier,
+    SupplierType, Tax, TaxClass
+)
+from shoop.core.order_creator import OrderCreator, OrderSource, SourceLine
 from shoop.core.pricing import TaxlessPrice
 from shoop.core.shortcuts import update_order_line_from_product
 from shoop.default_tax.models import TaxRule
 from shoop.testing.text_data import random_title
 from shoop.utils.filer import filer_image_from_data
-from six import BytesIO
-import factory
-import factory.fuzzy as fuzzy
-import faker
-import random
-import six
-import uuid
+
+from .image_generator import generate_image
 
 DEFAULT_IDENTIFIER = "default"
 DEFAULT_NAME = "Default"

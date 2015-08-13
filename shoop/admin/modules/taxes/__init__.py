@@ -6,10 +6,10 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
-from shoop.admin.base import AdminModule, MenuEntry
 from django.utils.translation import ugettext_lazy as _
+from shoop.admin.base import AdminModule, MenuEntry
 from shoop.admin.utils.urls import derive_model_url, get_edit_and_list_urls
-from shoop.core.models.taxes import Tax, TaxClass, CustomerTaxGroup
+from shoop.core.models import Tax, TaxClass, CustomerTaxGroup
 
 
 class TaxModule(AdminModule):

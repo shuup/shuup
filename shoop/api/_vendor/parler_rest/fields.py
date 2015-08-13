@@ -3,8 +3,10 @@
 """Custom serializer fields for nested translations."""
 
 from __future__ import unicode_literals
+
 from django.core.exceptions import ImproperlyConfigured
 from rest_framework import serializers
+
 from .utils import create_translated_fields_serializer
 
 

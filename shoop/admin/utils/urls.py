@@ -7,24 +7,26 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-try:
-    from urllib.parse import parse_qsl
-except ImportError:  # pragma: no cover
-    from urlparse import parse_qsl  # Python 2.7
+import inspect
+import json
 
+import six
 from django.conf import settings
 from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import ImproperlyConfigured
-from django.core.urlresolvers import RegexURLPattern, get_callable, reverse, NoReverseMatch
+from django.core.urlresolvers import NoReverseMatch, RegexURLPattern, get_callable, reverse
 from django.http.response import HttpResponseForbidden
 from django.utils.encoding import force_text
 from django.utils.http import urlencode
 from django.utils.translation import ugettext_lazy as _
+
 from shoop.admin.module_registry import get_modules
 from shoop.utils.excs import Problem
-import inspect
-import json
-import six
+
+try:
+    from urllib.parse import parse_qsl
+except ImportError:  # pragma: no cover
+    from urlparse import parse_qsl  # Python 2.7
 
 
 class AdminRegexURLPattern(RegexURLPattern):

@@ -9,13 +9,13 @@ import json
 import platform
 import sys
 
+import requests
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.crypto import get_random_string
 from django.utils.encoding import force_text
 from django.utils.timezone import now
-import requests
 
 import shoop
 from shoop.core.models import PersistentCacheEntry

@@ -10,6 +10,7 @@ from django.conf import settings
 from django.db import models
 from django.db.models.fields.related import ManyToManyField
 from django.utils.crypto import get_random_string
+
 from shoop.core.fields import MoneyField, TaggedJSONField
 
 

@@ -9,6 +9,7 @@ from django import forms
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
+
 from shoop.core.models import OrderStatus
 from shoop.front.basket import get_basket_order_creator
 from shoop.front.basket.objects import BaseBasket

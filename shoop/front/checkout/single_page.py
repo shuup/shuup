@@ -10,7 +10,8 @@ from django.core.exceptions import ValidationError
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
-from shoop.core.models import Address, CompanyContact, ShippingMethod, PaymentMethod, OrderStatus
+
+from shoop.core.models import Address, CompanyContact, OrderStatus, PaymentMethod, ShippingMethod
 from shoop.core.utils.vat import verify_vat
 from shoop.front.basket import get_basket_order_creator
 from shoop.front.basket.objects import BaseBasket

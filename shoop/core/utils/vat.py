@@ -6,10 +6,11 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
-from django.core.exceptions import ValidationError
-import re
-import six
 
+import re
+
+import six
+from django.core.exceptions import ValidationError
 
 # Patterns from
 # http://www.vero.fi/fi-FI/Syventavat_veroohjeet/Arvonlisaverotus/Kansainvalinen_kauppa/EUmaiden_arvonlisaverotunnisteet(14426)

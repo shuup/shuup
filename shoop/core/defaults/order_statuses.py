@@ -5,7 +5,7 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from shoop.core.models import (OrderStatus, OrderStatusRole)
+from shoop.core.models import OrderStatus, OrderStatusRole
 
 
 def create_default_order_statuses():

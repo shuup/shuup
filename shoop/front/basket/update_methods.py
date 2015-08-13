@@ -6,11 +6,12 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
-from django.contrib import messages
-from shoop.core.models import Product, Supplier
 
-from shoop.utils.numbers import parse_decimal_string
 import six
+from django.contrib import messages
+
+from shoop.core.models import Product, Supplier
+from shoop.utils.numbers import parse_decimal_string
 
 
 class BasketUpdateMethods(object):

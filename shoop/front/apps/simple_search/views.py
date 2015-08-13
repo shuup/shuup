@@ -6,15 +6,18 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
+import hashlib
+
 from django import forms
+from django.core.cache import cache
 from django.db.models import Q
 from django.utils.encoding import force_bytes
 from django.views.generic import ListView
-import hashlib
-from shoop.core.models.products import Product
-from django.core.cache import cache
-from shoop.front.utils.views import cache_product_things
+
+from shoop.core.models import Product
 from shoop.front.utils.product_sorting import PRODUCT_SORT_CHOICES, sort_products
+from shoop.front.utils.views import cache_product_things
 
 
 def get_search_product_ids(request, query):

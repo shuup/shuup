@@ -6,11 +6,13 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from django.db.models import Count
+from django.utils.translation import ugettext_lazy as _
+
 from shoop.admin.utils.picotable import Column, TextFilter
 from shoop.admin.utils.views import PicotableListView
 from shoop.core.models import ProductType
-from django.utils.translation import ugettext_lazy as _
 
 
 class ProductTypeListView(PicotableListView):

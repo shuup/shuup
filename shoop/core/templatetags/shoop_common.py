@@ -6,15 +6,17 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from datetime import date
 from json import dumps as json_dump
 
-from babel.dates import format_datetime, format_date, format_time
-from babel.numbers import format_percent, format_decimal
+from babel.dates import format_date, format_datetime, format_time
+from babel.numbers import format_decimal, format_percent
 from django.utils.safestring import mark_safe
 from django.utils.timezone import localtime
-from jinja2.runtime import Undefined
 from django_jinja import library
+from jinja2.runtime import Undefined
+
 from shoop.utils.i18n import format_home_currency, get_current_babel_locale
 from shoop.utils.serialization import ExtendedJSONEncoder
 

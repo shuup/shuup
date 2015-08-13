@@ -6,14 +6,15 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import with_statement
-from django.utils.encoding import python_2_unicode_compatible
-from easy_thumbnails.files import get_thumbnailer
-from filer.fields.file import FilerFileField
 
-from enumfields import EnumIntegerField, Enum
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
+from easy_thumbnails.files import get_thumbnailer
+from enumfields import Enum, EnumIntegerField
+from filer.fields.file import FilerFileField
 from parler.models import TranslatableModel, TranslatedFields
+
 from shoop.core.fields import InternalIdentifierField
 
 

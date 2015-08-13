@@ -6,12 +6,14 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from optparse import make_option
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 from django.utils import translation
+
 from shoop.testing.mock_population import Populator
 
 

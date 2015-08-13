@@ -5,13 +5,16 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import random
+
 from django.conf import settings
 from django.utils import translation
-import random
+
 from shoop.core.models import Category, Product, ShopProduct
+
 from .factories import (
-    CategoryFactory, ProductFactory, get_default_shop,
-    get_default_payment_method, get_default_shipping_method, create_default_order_statuses
+    CategoryFactory, ProductFactory, create_default_order_statuses, get_default_payment_method,
+    get_default_shipping_method, get_default_shop
 )
 
 

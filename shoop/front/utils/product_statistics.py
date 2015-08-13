@@ -5,8 +5,8 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
-from __future__ import with_statement
+from __future__ import unicode_literals, with_statement
+
 import datetime
 
 from django.core.cache import cache

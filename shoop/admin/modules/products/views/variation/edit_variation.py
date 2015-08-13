@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from django import forms
 from django.contrib import messages
 from django.core.urlresolvers import reverse
@@ -13,11 +14,13 @@ from django.forms.formsets import formset_factory
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import UpdateView
-from shoop.admin.form_part import FormPartsViewMixin, FormPart, TemplatedFormDef
-from shoop.admin.toolbar import get_default_edit_toolbar, Toolbar, PostActionButton
+
+from shoop.admin.form_part import FormPart, FormPartsViewMixin, TemplatedFormDef
+from shoop.admin.toolbar import PostActionButton, Toolbar, get_default_edit_toolbar
 from shoop.core.models import Product, ProductMode, ProductVariationVariable
 from shoop.core.models.product_variation import clear_variation, simplify_variation
 from shoop.utils.excs import Problem
+
 from .simple_variation_forms import SimpleVariationChildForm, SimpleVariationChildFormSet
 from .variable_variation_forms import VariableVariationChildrenForm, VariationVariablesDataForm
 

@@ -10,6 +10,7 @@ from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.core.exceptions import ImproperlyConfigured
 from django.utils import timezone
+
 from shoop.core.middleware import ExceptionMiddleware
 from shoop.core.models import Shop
 from shoop.core.models.contacts import get_person_contact

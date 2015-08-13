@@ -5,9 +5,11 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from shoop.core.pricing import PricingContext, PricingModule, TaxfulPrice, TaxlessPrice
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
+
+from shoop.core.pricing import PricingContext, PricingModule, TaxfulPrice, TaxlessPrice
+
 from .models import SimpleProductPrice
 
 

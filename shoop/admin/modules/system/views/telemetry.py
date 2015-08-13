@@ -6,9 +6,10 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from django.http.response import HttpResponseRedirect, HttpResponse
+from django.http.response import HttpResponse, HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.base import TemplateView
+
 from shoop.core import telemetry
 
 

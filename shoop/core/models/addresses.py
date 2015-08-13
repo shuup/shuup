@@ -6,18 +6,19 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
-from django.utils.encoding import force_text, python_2_unicode_compatible
-from enumfields import Enum, EnumIntegerField
+
+import six
 from django.conf import settings
 from django.db import models
+from django.utils.encoding import force_text, python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
+from enumfields import Enum, EnumIntegerField
+
 from shoop.core.excs import ImmutabilityError
 from shoop.core.utils.name_mixin import NameMixin
 from shoop.utils.i18n import get_current_babel_locale
 from shoop.utils.models import copy_model_instance, get_data_dict
-import six
-
 
 REGION_ISO3166 = {
     "europe": set((

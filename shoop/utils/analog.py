@@ -5,12 +5,13 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from django.conf import settings
 from django.db import models
-from enumfields import Enum, EnumIntegerField
 from django.utils.encoding import force_text
-from jsonfield import JSONField
 from django.utils.translation import ugettext_lazy as _
+from enumfields import Enum, EnumIntegerField
+from jsonfield import JSONField
 
 
 class LogEntryKind(Enum):

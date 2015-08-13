@@ -6,18 +6,23 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from itertools import chain
+
 from django.conf.urls import url
-from django.views.decorators.csrf import csrf_exempt
 from django.http.response import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+
 from shoop.apps.provides import get_provide_objects
+
+from .views.basket import BasketView
+from .views.category import CategoryView
 from .views.checkout import get_checkout_view
+from .views.index import IndexView
 from .views.order import OrderCompleteView
 from .views.payment import ProcessPaymentView
-from .views.category import CategoryView
-from .views.basket import BasketView
 from .views.product import ProductDetailView
-from .views.index import IndexView
+
 
 # TODO: Check _not_here_yet URLs in this file
 

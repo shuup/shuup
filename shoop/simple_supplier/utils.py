@@ -6,8 +6,10 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.db.models import Sum
+
+from shoop.core.models import OrderLine, OrderStatusRole, ShipmentProduct
+
 from .models import StockAdjustment
-from shoop.core.models import OrderLine, ShipmentProduct, OrderStatusRole
 
 
 def get_current_stock_value(supplier_id, product_id):

@@ -6,16 +6,18 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 import decimal
 
+import six
 from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
+
 from shoop.core.models import Product, ProductVariationResult
 from shoop.core.models.product_variation import hash_combination
 from shoop.utils.importing import cached_load
 from shoop.utils.numbers import parse_decimal_string
-import six
 
 
 def handle_add(request, basket, product_id, quantity=1, supplier_id=None, **kwargs):

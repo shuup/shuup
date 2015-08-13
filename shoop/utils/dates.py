@@ -6,9 +6,10 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
-import datetime
-import six
 
+import datetime
+
+import six
 
 __all__ = ("parse_date", "parse_time", "try_parse_date", "try_parse_time")
 

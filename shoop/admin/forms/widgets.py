@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from django.forms import HiddenInput, Widget
 from django.forms.utils import flatatt
 from django.utils.encoding import force_text
@@ -13,7 +14,8 @@ from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from filer.models import File
-from shoop.admin.utils.urls import get_model_url, NoModelUrl
+
+from shoop.admin.utils.urls import NoModelUrl, get_model_url
 from shoop.core.models import Product
 
 

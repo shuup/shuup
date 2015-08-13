@@ -11,8 +11,9 @@ from django.utils.functional import SimpleLazyObject
 from django.utils.lru_cache import lru_cache
 from django.utils.safestring import mark_safe
 from django_jinja import library
-from shoop.apps.provides import get_provide_objects
 from markdown import Markdown
+
+from shoop.apps.provides import get_provide_objects
 
 
 class HelpersNamespace(object):

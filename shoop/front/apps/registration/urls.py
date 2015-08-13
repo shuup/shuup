@@ -6,7 +6,8 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.conf.urls import patterns, url
-from .views import ActivationView, activation_complete, RegistrationView, registration_complete
+
+from .views import ActivationView, RegistrationView, activation_complete, registration_complete
 
 urlpatterns = patterns(
     '',

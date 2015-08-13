@@ -5,9 +5,10 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-import unicodedata
-from django.utils.encoding import force_text, force_str
 import re
+import unicodedata
+
+from django.utils.encoding import force_str, force_text
 
 __all__ = (
     "camel_case",

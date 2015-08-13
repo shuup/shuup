@@ -6,8 +6,9 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
-from shoop.core.fields import QuantityField
 from django.db import models
+
+from shoop.core.fields import QuantityField
 
 
 class StockAdjustment(models.Model):

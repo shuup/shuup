@@ -6,20 +6,21 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
-import itertools
-import hashlib
-import six
 
+import hashlib
+import itertools
 from collections import defaultdict
+
+import six
 from django.db import models
 from django.forms import Form, IntegerField, Select
 from django.utils.encoding import force_bytes, force_text, python_2_unicode_compatible
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
-from parler.models import TranslatableModel, TranslatedFields
-from shoop.core.fields import InternalIdentifierField
 from enumfields import Enum, EnumIntegerField
+from parler.models import TranslatableModel, TranslatedFields
 
+from shoop.core.fields import InternalIdentifierField
 
 __all__ = ("ProductVariationVariable", "ProductVariationVariableValue", "ProductVariationResult")
 

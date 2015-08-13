@@ -6,8 +6,10 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
-from django.core.urlresolvers import reverse, NoReverseMatch
+
+from django.core.urlresolvers import NoReverseMatch, reverse
 from jinja2 import contextfunction
+
 from shoop.core.models import Product
 
 

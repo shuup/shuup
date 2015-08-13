@@ -8,7 +8,6 @@
 
 from django.utils.translation import ugettext_lazy as _
 
-
 PRODUCT_SORT_CHOICES = [
     ("name_a", _(u"Name - A-Z")),
     ("name_d", _(u"Name - Z-A")),

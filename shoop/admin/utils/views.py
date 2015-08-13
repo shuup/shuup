@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ImproperlyConfigured
@@ -13,10 +14,11 @@ from django.http import HttpResponseRedirect
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView, UpdateView
-from shoop.admin.toolbar import get_default_edit_toolbar, Toolbar, NewActionButton
+
+from shoop.admin.toolbar import NewActionButton, Toolbar, get_default_edit_toolbar
 from shoop.admin.utils.forms import add_form_errors_as_messages
 from shoop.admin.utils.picotable import PicotableViewMixin
-from shoop.admin.utils.urls import get_model_url, NoModelUrl, get_model_front_url
+from shoop.admin.utils.urls import NoModelUrl, get_model_front_url, get_model_url
 from shoop.utils.multilanguage_model_form import MultiLanguageModelForm
 
 

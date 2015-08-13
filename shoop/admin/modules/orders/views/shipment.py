@@ -7,16 +7,17 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.contrib import messages
+import six
 from django import forms
+from django.contrib import messages
 from django.http.response import HttpResponseRedirect
+from django.utils.translation import ugettext as _
 from django.views.generic import UpdateView
-from shoop.admin.toolbar import Toolbar, PostActionButton
+
+from shoop.admin.toolbar import PostActionButton, Toolbar
 from shoop.admin.utils.urls import get_model_url
 from shoop.core.excs import NoProductsToShipException
-from shoop.core.models import Order, Supplier, Product
-from django.utils.translation import ugettext as _
-import six
+from shoop.core.models import Order, Product, Supplier
 
 
 class OrderCreateShipmentView(UpdateView):

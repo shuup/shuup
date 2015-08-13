@@ -6,18 +6,19 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from django.contrib import messages
-from django.forms.formsets import DEFAULT_MIN_NUM, DEFAULT_MAX_NUM
+from django.forms.formsets import DEFAULT_MAX_NUM, DEFAULT_MIN_NUM
 from django.forms.models import BaseModelFormSet, ModelForm
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import UpdateView
+
 from shoop.admin.base import MenuEntry
 from shoop.admin.forms.widgets import ProductChoiceWidget
-from shoop.admin.toolbar import Toolbar, PostActionButton
+from shoop.admin.toolbar import PostActionButton, Toolbar
 from shoop.admin.utils.urls import get_model_url
-from shoop.core.models import Product, ProductMedia
-from shoop.core.models.products import ProductCrossSell, ProductCrossSellType
+from shoop.core.models import Product, ProductCrossSell, ProductCrossSellType, ProductMedia
 
 
 class ProductCrossSellForm(ModelForm):

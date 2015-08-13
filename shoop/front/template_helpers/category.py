@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.utils.translation import get_language
 from jinja2.utils import contextfunction
+
 from shoop.core.models import Manufacturer
 
 

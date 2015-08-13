@@ -4,26 +4,29 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from __future__ import unicode_literals
+
 """
 "Tagged JSON" encoder/decoder.
 
 Objects that are normally not unambiguously representable via JSON
 are encoded into special objects of the form `{tag: val}`; the encoding
 and decoding process can be customized however necessary.
-
 """
-from enum import Enum
+
+from __future__ import unicode_literals
+
 import datetime
 import decimal
-from django.core.exceptions import ImproperlyConfigured
+from enum import Enum
 
+import django.utils.dateparse as dateparse
+from django.core.exceptions import ImproperlyConfigured
 from django.utils import six
 from jsonfield.encoder import JSONEncoder
+from six import text_type
+
 from shoop.utils.importing import load
 from shoop.utils.iterables import first
-import django.utils.dateparse as dateparse
-from six import text_type
 
 isoformat = lambda obj: obj.isoformat()
 

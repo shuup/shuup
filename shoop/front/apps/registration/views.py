@@ -8,9 +8,8 @@
 from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import redirect
-from django.views.generic import View
 from django.utils.translation import ugettext_lazy as _
-
+from django.views.generic import View
 from registration.backends.default import views as default_views
 from registration.backends.simple import views as simple_views
 

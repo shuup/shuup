@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.http import HttpResponseRedirect
+
 from shoop.admin.utils.urls import get_model_url
 from shoop.admin.utils.views import add_create_or_change_message
 from shoop.apps.provides import get_provide_objects

@@ -7,9 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 import contextlib
 
+import six
+
 from shoop.apps.provides import get_provide_objects
 from shoop.utils.importing import load
-import six
 
 _registry = []
 

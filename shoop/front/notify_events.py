@@ -6,9 +6,11 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.dispatch import receiver
-from .signals import order_creator_finished
+
 from shoop.notify import Event, Variable
-from shoop.notify.typology import Model, Email, Language, Phone
+from shoop.notify.typology import Email, Language, Model, Phone
+
+from .signals import order_creator_finished
 
 
 class OrderReceived(Event):

@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 import json
 
 from django.conf import settings
@@ -15,15 +16,16 @@ from django.shortcuts import render
 from django.utils.text import camel_case_to_spaces
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView
-from shoop.admin.toolbar import Toolbar, JavaScriptActionButton, get_discard_button
+
+from shoop.admin.toolbar import JavaScriptActionButton, Toolbar, get_discard_button
 from shoop.admin.utils.urls import get_model_url
 from shoop.admin.utils.views import get_create_or_change_title
 from shoop.notify.admin_module.forms import ScriptItemEditForm
 from shoop.notify.admin_module.utils import get_enum_choices_dict
 from shoop.notify.base import Action, Condition, Event
 from shoop.notify.enums import StepConditionOperator, StepNext
-from shoop.utils.text import snake_case
 from shoop.notify.models.script import Script
+from shoop.utils.text import snake_case
 
 
 @csrf_exempt  # This is fine -- the editor itself saves naught
