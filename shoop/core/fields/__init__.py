@@ -40,6 +40,16 @@ class InternalIdentifierField(models.CharField):
             return (prepared_value or None)
         return prepared_value
 
+    def deconstruct(self):
+        (name, path, args, kwargs) = super(InternalIdentifierField, self).deconstruct()
+        kwargs["null"] = self.null
+        kwargs["unique"] = self.unique
+        kwargs["blank"] = self.blank
+        # Irrelevant for migrations, and usually translated anyway:
+        kwargs.pop("verbose_name", None)
+        kwargs.pop("help_text", None)
+        return (name, path, args, kwargs)
+
 
 class MoneyField(models.DecimalField):
 
