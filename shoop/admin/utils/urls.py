@@ -29,7 +29,6 @@ except ImportError:  # pragma: no cover
     from urlparse import parse_qsl  # Python 2.7
 
 
-
 class AdminRegexURLPattern(RegexURLPattern):
     def __init__(self, regex, callback, default_args=None, name=None, require_authentication=True, permissions=()):
         self.permissions = tuple(permissions)
