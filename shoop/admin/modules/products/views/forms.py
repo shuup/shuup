@@ -227,9 +227,8 @@ class ProductImageMediaForm(ProductMediaForm):
 
     def __init__(self, **kwargs):
         super(ProductImageMediaForm, self).__init__(**kwargs)
-
-        if self.instance.pk:
-            if isinstance(self.instance, Image):
+        if self.instance.pk and self.instance.file:
+            if isinstance(self.instance.file, Image):
                 thumbnail = self.instance.easy_thumbnails_thumbnailer.get_thumbnail({
                     'size': (64, 64),
                     'crop': True,
