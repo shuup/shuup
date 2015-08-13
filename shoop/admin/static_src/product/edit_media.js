@@ -12,7 +12,7 @@ $(function() {
         if(confirm("Are you sure you want to delete this media?"))
         {
             $(this).parents(".panel").fadeOut();
-            $(this).next(".hide").find("input").attr("checked", true);
+            $(this).next(".hide").find("input").prop("checked", true);
         }
     });
 
@@ -32,7 +32,7 @@ $(function() {
         });
 
         $imagePanels.each(function(i){
-            $("#id_images-"+i+"-is_primary").attr("checked", false);
+            $("#id_images-"+i+"-is_primary").prop("checked", false);
         });
 
         $(this).replaceWith(function(){
@@ -40,7 +40,7 @@ $(function() {
         });
 
         $panel.addClass("panel-selected");
-        $("#id_images-"+current+"-is_primary").attr("checked", true);
+        $("#id_images-"+current+"-is_primary").prop("checked", true);
     });
 
     $(".media-add-new-panel").on("click", function(e){
