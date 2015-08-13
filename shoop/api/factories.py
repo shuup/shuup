@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from __future__ import unicode_literals
 from parler.models import TranslatableModel
 # TODO: Fix these imports once parler_rest>=1.2 is released
 from shoop.api._vendor.parler_rest.fields import TranslatedFieldsField
@@ -22,8 +23,8 @@ def serializer_factory(model, serializer_class=None, attrs=None, meta=None):
         else:
             serializer_class = serializers.ModelSerializer
     meta.setdefault("model", model)
-    attrs.setdefault("Meta", type("Meta", (object,), meta))
-    return type("%sSerializer" % model.__name__, (serializer_class,), attrs)
+    attrs.setdefault("Meta", type(str("Meta"), (object,), meta))
+    return type(str("%sSerializer" % model.__name__), (serializer_class,), attrs)
 
 
 def viewset_factory(model, viewset_class=viewsets.ModelViewSet, **attrs):
@@ -31,4 +32,4 @@ def viewset_factory(model, viewset_class=viewsets.ModelViewSet, **attrs):
     attrs.setdefault("queryset", model.objects.all())
     if not attrs.get("serializer_class"):
         attrs["serializer_class"] = serializer_factory(model)
-    return type("%sViewSet" % model.__name__, (viewset_class,), attrs)
+    return type(str("%sViewSet" % model.__name__), (viewset_class,), attrs)

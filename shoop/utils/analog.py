@@ -4,6 +4,7 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from __future__ import unicode_literals
 from django.conf import settings
 from django.db import models
 from enumfields import Enum, EnumIntegerField
@@ -23,14 +24,14 @@ class LogEntryKind(Enum):
     ERROR = 7
 
     class Labels:
-        OTHER = _('other')
-        AUDIT = _('audit')
-        EDIT = _('edit')
-        DELETION = _('deletion')
-        NOTE = _('note')
-        EMAIL = _('email')
-        WARNING = _('warning')
-        ERROR = _('error')
+        OTHER = _("other")
+        AUDIT = _("audit")
+        EDIT = _("edit")
+        DELETION = _("deletion")
+        NOTE = _("note")
+        EMAIL = _("email")
+        WARNING = _("warning")
+        ERROR = _("error")
 
 
 class BaseLogEntry(models.Model):
@@ -63,10 +64,10 @@ def define_log_model(model_class):
         "logged_model": model_class,
     }
 
-    log_entry_class = type(log_model_name, (BaseLogEntry, ), class_dict)
+    log_entry_class = type(str(log_model_name), (BaseLogEntry, ), class_dict)
 
     def _add_log_entry(self, message, identifier=None, kind=LogEntryKind.OTHER, user=None, extra=None, save=True):
-        # You can also pass something that contains 'user' as an
+        # You can also pass something that contains "user" as an
         # attribute for an user
         user = (getattr(user, "user", user) or None)
         if not getattr(user, "pk", None):
