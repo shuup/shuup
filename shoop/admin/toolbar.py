@@ -265,6 +265,16 @@ class DropdownDivider(BaseActionButton):
         yield '<li class="divider"></li>'
 
 
+class DropdownHeader(BaseActionButton):
+    """
+    Header for DropdownActionButtons.
+    """
+    base_css_classes = ()
+
+    def render(self, request):
+        yield '<li class="dropdown-header">%s</li>' % self.text
+
+
 # -----------
 
 class ButtonGroup(list):
