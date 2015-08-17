@@ -19,7 +19,7 @@ __all__ = ("Manufacturer",)
 @python_2_unicode_compatible
 class Manufacturer(models.Model):
     created_on = models.DateTimeField(auto_now_add=True, verbose_name=_('added'))
-    identifier = InternalIdentifierField()
+    identifier = InternalIdentifierField(unique=True)
 
     name = models.CharField(max_length=128, verbose_name=_('name'))
     url = models.CharField(null=True, blank=True, max_length=128, verbose_name=_('URL'))

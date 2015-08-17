@@ -22,7 +22,7 @@ from shoop.core.utils.name_mixin import NameMixin
 
 @python_2_unicode_compatible
 class ContactGroup(TranslatableModel):
-    identifier = InternalIdentifierField()
+    identifier = InternalIdentifierField(unique=True)
     members = models.ManyToManyField("Contact", related_name="groups", verbose_name=_('members'), blank=True)
     show_pricing = models.BooleanField(verbose_name=_('show as pricing option'), default=True)
 
@@ -44,7 +44,7 @@ class Contact(NameMixin, PolymorphicModel):
     is_all_seeing = False
 
     created_on = models.DateTimeField(auto_now_add=True, editable=False)
-    identifier = InternalIdentifierField(null=True, blank=True)
+    identifier = InternalIdentifierField(unique=True, null=True, blank=True)
     is_active = models.BooleanField(default=True, db_index=True)
     # TODO: parent contact?
     default_shipping_address = models.ForeignKey(

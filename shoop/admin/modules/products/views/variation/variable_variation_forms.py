@@ -24,7 +24,8 @@ from shoop.utils.multilanguage_model_form import to_language_codes
 
 class VariableVariationChildrenForm(forms.Form):
     def __init__(self, **kwargs):
-        self.parent_product = kwargs.pop("parent_product", None)
+        self.parent_product = kwargs.pop("parent_product")
+        self.request = kwargs.pop("request", None)
         super(VariableVariationChildrenForm, self).__init__(**kwargs)
         self._build_fields()
 

@@ -49,6 +49,7 @@ class Page(TranslatableModel):
     modified_on = models.DateTimeField(auto_now=True, editable=False)
 
     identifier = InternalIdentifierField(
+        unique=True,
         help_text=_('This identifier can be used in templates to create URLs'),
         editable=True
     )

@@ -128,13 +128,13 @@ def get_combination_hash_from_variable_mapping(parent, variables):
     """
     mapping = {}
     for variable_identifier, value_identifier in variables.items():
-        variable_identifier, _ = ProductVariationVariable.objects.get_or_create(
-            product=parent, identifier=variable_identifier
+        variable, _ = ProductVariationVariable.objects.get_or_create(
+            product=parent, identifier=force_text(variable_identifier)
         )
-        value_identifier, _ = ProductVariationVariableValue.objects.get_or_create(
-            variable=variable_identifier, identifier=value_identifier
+        value, _ = ProductVariationVariableValue.objects.get_or_create(
+            variable=variable, identifier=force_text(value_identifier)
         )
-        mapping[variable_identifier] = value_identifier
+        mapping[variable] = value
     return hash_combination(mapping)
 
 

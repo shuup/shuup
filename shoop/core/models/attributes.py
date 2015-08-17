@@ -100,7 +100,7 @@ class AttributeQuerySet(TranslatableQuerySet):
 
 @python_2_unicode_compatible
 class Attribute(TranslatableModel):
-    identifier = InternalIdentifierField(blank=False, null=False, editable=True)
+    identifier = InternalIdentifierField(unique=True, blank=False, null=False, editable=True)
     searchable = models.BooleanField(default=True)
     type = EnumIntegerField(AttributeType, default=AttributeType.TRANSLATED_STRING)
     visibility_mode = EnumIntegerField(AttributeVisibility, default=AttributeVisibility.SHOW_ON_PRODUCT_PAGE)

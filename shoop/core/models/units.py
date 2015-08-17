@@ -23,7 +23,7 @@ __all__ = ("SalesUnit",)
 
 @python_2_unicode_compatible
 class SalesUnit(TranslatableModel):
-    identifier = InternalIdentifierField()
+    identifier = InternalIdentifierField(unique=True)
     decimals = models.PositiveSmallIntegerField(default=0, verbose_name=_(u"allowed decimals"))
 
     translations = TranslatedFields(

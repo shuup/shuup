@@ -150,7 +150,7 @@ class Order(models.Model):
     # Identification
     shop = UnsavedForeignKey("Shop")
     created_on = models.DateTimeField(auto_now_add=True, editable=False)
-    identifier = InternalIdentifierField(db_index=True, verbose_name=_('order identifier'))
+    identifier = InternalIdentifierField(unique=True, db_index=True, verbose_name=_('order identifier'))
     # TODO: label is actually a choice field, need to check migrations/choice deconstruction
     label = models.CharField(max_length=32, db_index=True, verbose_name=_('label'))
     # The key shouldn't be possible to deduce (i.e. it should be random), but it is

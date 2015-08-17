@@ -19,7 +19,7 @@ from shoop.notify.enums import StepNext
 @python_2_unicode_compatible
 class Script(models.Model):
     event_identifier = models.CharField(max_length=64, blank=False, db_index=True)
-    identifier = InternalIdentifierField()
+    identifier = InternalIdentifierField(unique=True)
     created_on = models.DateTimeField(auto_now_add=True, editable=False)
     name = models.CharField(max_length=64)
     enabled = models.BooleanField(default=False, db_index=True)

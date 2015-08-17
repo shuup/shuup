@@ -85,7 +85,7 @@ class MethodQuerySet(TranslatableQuerySet):
 class Method(ModuleInterface, TranslatableModel):
     tax_class = models.ForeignKey("TaxClass", verbose_name=_('tax class'))
     status = EnumIntegerField(MethodStatus, db_index=True, default=MethodStatus.ENABLED, verbose_name=_('status'))
-    identifier = InternalIdentifierField()
+    identifier = InternalIdentifierField(unique=True)
     module_identifier = models.CharField(max_length=64, blank=True, verbose_name=_('module'))
     module_data = JSONField(blank=True, null=True)
 

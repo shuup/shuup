@@ -25,7 +25,7 @@ class Supplier(ModuleInterface, models.Model):
     default_module_spec = "shoop.core.suppliers:BaseSupplierModule"
     module_provides_key = "supplier_module"
 
-    identifier = InternalIdentifierField()
+    identifier = InternalIdentifierField(unique=True)
     name = models.CharField(max_length=64)
     type = EnumIntegerField(SupplierType, default=SupplierType.INTERNAL)
     stock_managed = models.BooleanField(default=False)
