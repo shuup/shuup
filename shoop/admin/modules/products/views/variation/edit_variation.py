@@ -15,8 +15,10 @@ from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import UpdateView
 
+from shoop.admin.base import MenuEntry
 from shoop.admin.form_part import FormPart, FormPartsViewMixin, TemplatedFormDef
 from shoop.admin.toolbar import PostActionButton, Toolbar, get_default_edit_toolbar
+from shoop.admin.utils.urls import get_model_url
 from shoop.core.models import Product, ProductMode, ProductVariationVariable
 from shoop.core.models.product_variation import clear_variation, simplify_variation
 from shoop.utils.excs import Problem
@@ -122,6 +124,14 @@ class ProductVariationView(FormPartsViewMixin, UpdateView):
                 reverse("shoop_admin:product.edit_variation", kwargs={"pk": self.object.variation_parent_id})
             )
         return super(ProductVariationView, self).dispatch(request, *args, **kwargs)
+
+    def get_breadcrumb_parents(self):
+        return [
+            MenuEntry(
+                text=self.object,
+                url=get_model_url(self.object)
+            )
+        ]
 
     def post(self, request, *args, **kwargs):
         command = request.POST.get("command")
