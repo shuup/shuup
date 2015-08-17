@@ -28,7 +28,8 @@ module.exports = {
             "js/content-blocks.js",
             "js/custom-selects.js",
             "js/remarkable-field.js",
-            "js/form-utils.js"
+            "js/form-utils.js",
+            "js/jquery.form-submission-attributes.polyfill.js"
         ]
     },
     "dashboard": {
