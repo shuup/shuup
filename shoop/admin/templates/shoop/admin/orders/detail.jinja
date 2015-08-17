@@ -126,6 +126,13 @@
                             </div>
                         </div>
                     {% endcall %}
+
+                    {% set payments=order.payments.all() %}
+                    {% if payments %}
+                        {% call content_block(_("Payments"), "fa-dollar") %}
+                            {% include "shoop/admin/orders/_detail_payments.jinja" with context %}
+                        {% endcall %}
+                    {% endif %}
                 </div>
             </div>
         </div>
