@@ -62,7 +62,8 @@
                         {{ bs3.field(f.purchased) }}
                         {{ bs3.field(f.shops, widget_class="multiselect") }}
                         {{ bs3.field(f.kind) }}
-                        {% call(form, language, map) language_dependent_content_tabs(f, tab_id_prefix="additional-language") %}
+                        {% set tab_id = id + "-additional-language" %}
+                        {% call(form, language, map) language_dependent_content_tabs(f, tab_id_prefix=tab_id) %}
                             {{ bs3.field(f[map.title]) }}
                             {{ bs3.field(f[map.description]) }}
                         {% endcall %}
