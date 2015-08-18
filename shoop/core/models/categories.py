@@ -74,7 +74,7 @@ class CategoryManager(TranslatableManager, TreeManager):
 class Category(MPTTModel, TranslatableModel):
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children', verbose_name=_('parent category'))
     shops = models.ManyToManyField("Shop", blank=True, related_name="categories")
-    identifier = InternalIdentifierField(unique=False)
+    identifier = InternalIdentifierField(unique=True)
     status = EnumIntegerField(CategoryStatus, db_index=True, verbose_name=_('status'), default=CategoryStatus.INVISIBLE)
     image = FilerImageField(verbose_name=_('image'), blank=True, null=True)
     ordering = models.IntegerField(default=0, verbose_name=_('ordering'))
