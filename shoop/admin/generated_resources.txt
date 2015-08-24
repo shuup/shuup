@@ -2,6 +2,8 @@ static/shoop_admin/js/picotable.js
 static/shoop_admin/js/base.js
 static/shoop_admin/js/dashboard.js
 static/shoop_admin/js/media-browser.js
+static/shoop_admin/js/product-variation-variable-editor.js
+static/shoop_admin/js/product.js
 static/shoop_admin/js/vendor.js
 static/shoop_admin/js/remarkable.js
 static/shoop_admin/css/media-browser.css
