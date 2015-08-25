@@ -1,0 +1,5 @@
+{% extends "shoop/admin/base.jinja" %}
+{% from "shoop/admin/macros/general.jinja" import single_section_form with context %}
+{% block content %}
+    {{ single_section_form("supplier_form", form) }}
+{% endblock %}

@@ -31,7 +31,8 @@ class ShoopAdminAppConfig(AppConfig):
             "shoop.admin.modules.sales_units:SalesUnitModule",
             "shoop.admin.modules.shops:ShopModule",
             "shoop.admin.modules.demo:DemoModule",
-            "shoop.admin.modules.manufacturers:ManufacturerModule"
+            "shoop.admin.modules.manufacturers:ManufacturerModule",
+            "shoop.admin.modules.suppliers:SupplierModule"
         ]
     }
 
