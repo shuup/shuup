@@ -10,6 +10,7 @@ from django import forms
 from django.conf import settings
 
 from shoop.admin.form_part import FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
+from shoop.admin.forms.widgets import MediaChoiceWidget
 from shoop.admin.utils.forms import filter_form_field_choices
 from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.core.models import Category, CategoryStatus
@@ -27,6 +28,7 @@ class CategoryBaseForm(MultiLanguageModelForm):
             "visibility",
             "visibility_groups",
             "name",
+            "image",
             "description",
             "slug",
         )
@@ -43,6 +45,7 @@ class CategoryBaseForm(MultiLanguageModelForm):
 
         # Exclude current category from parents, because it cannot be its own child anyways
         filter_form_field_choices(self.fields["parent"], (kwargs["instance"].pk,), invert=True)
+        self.fields["image"].widget = MediaChoiceWidget(clearable=True)
 
 
 class CategoryBaseFormPart(FormPart):
