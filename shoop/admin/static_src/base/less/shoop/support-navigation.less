@@ -131,25 +131,37 @@
         }
 
         .dropdown-menu {
+            @media (min-width: @screen-md-min) {
+                left: auto;
+                right: 0;
+            }
             a {
                 color: @text-color;
+                transition: all 0.1s;
+                text-overflow: ellipsis;
+                overflow: hidden;
                 &:hover, &:focus {
                     color: @text-color;
+                    i {
+                        color: @brand-primary;
+                    }
                 }
                 &:active {
                     color: @text-color;
                     background-color: #E6E6E6;
                     border-color: #ADADAD;
                 }
+                @media (max-width: @screen-xs-max) {
+                    text-overflow: clip;
+                    overflow: visible;
+                    white-space: normal;
+                    max-width: 300px;
+                }
             }
             i {
                 margin-right: 6px;
                 width: 1.5rem;
                 text-align: center;
-            }
-            @media (min-width: @screen-md-min) {
-                left: auto;
-                right: 0;
             }
         }
     }
