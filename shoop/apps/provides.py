@@ -68,6 +68,11 @@ def _get_provide_specs_from_apps(category):
                 # No need to look at non-Shoop AppConfigen.
                 continue
             spec_list = app_config.provides.get(category, ())
+
+            if isinstance(spec_list, six.string_types):  # Oh my, the user seems to have messed up here!
+                # Not to worry! We can fix it. We have the technology!
+                spec_list = (spec_list,)
+
             for spec in spec_list:  # Insert in order without duplicates...
                 if spec not in provide_list:
                     provide_list.append(spec)
