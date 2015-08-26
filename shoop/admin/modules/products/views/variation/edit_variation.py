@@ -93,7 +93,7 @@ class ProductVariationViewToolbar(Toolbar):
                 confirm=_("Are you sure? This will unlink all children and remove all variation variables."),
                 text=_("Clear variation"),
                 extra_css_class="btn-danger",
-                icon="fa fa-minus"
+                icon="fa fa-times"
             ))
         if (
             self.parent_product.mode == ProductMode.VARIABLE_VARIATION_PARENT or
@@ -106,7 +106,8 @@ class ProductVariationViewToolbar(Toolbar):
                 confirm=_("Are you sure? This will remove all variation variables, "
                           "converting children to direct links."),
                 text=_("Convert to simple variation"),
-                icon="fa fa-minus"
+                icon="fa fa-exchange",
+                extra_css_class="btn-info"
             ))
 
 

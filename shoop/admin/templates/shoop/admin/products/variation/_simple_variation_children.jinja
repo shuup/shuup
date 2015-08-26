@@ -1,9 +1,9 @@
 {% from "shoop/admin/macros/general.jinja" import content_block %}
 {% set children_formset = form["children"] %}
 
-{% call content_block(_("Children"), "fa-info-circle") %}
+{% call content_block(_("Simple Variation Children"), "fa-sitemap") %}
     {% for mf in children_formset.management_form %}{{ mf|safe }}{% endfor %}
-    <table class="table table-condensed">
+    <table class="table table-striped">
         <thead>
         <tr>
             <th>Product</th>
@@ -17,7 +17,7 @@
                     {% for fld in f.hidden_fields() %}{{ fld|safe }}{% endfor %}
                     {{ f.child|safe }}
                 </td>
-                <td>
+                <td class="text-right">
                     {% if f.DELETE and f.initial.child %}{{ bs3.field(f.DELETE) }}{% endif %}
                 </td>
             </tr>
