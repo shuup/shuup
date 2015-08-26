@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.utils import importlib
+import six
 
 _LOAD_CACHE = {}
 
@@ -20,9 +21,11 @@ def load(specification, context_explanation="Load"):
     try:
         module = importlib.import_module(module_name)
     except ImportError as ie:  # pragma: no cover
-        raise ImproperlyConfigured(
-            "%s: Could not import module %r to load %r from. (%r)" % (
-                context_explanation, module_name, object_name, ie))
+        exc = ImproperlyConfigured(
+            "%s: Could not import module %r to load %r from. (%r)" %
+            (context_explanation, module_name, object_name, ie)
+        )
+        six.raise_from(exc, ie)
 
     obj = getattr(module, object_name, None)
     if obj is None:  # pragma: no cover
