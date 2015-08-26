@@ -90,7 +90,8 @@ REQUIRES = [
     'pytz==2015.4',
     'requests==2.7.0',
     'six==1.9.0',
-    'Jinja2==2.8'
+    'Jinja2==2.8',
+    'pytoml==0.1.4'
 ]
 
 REQUIRES_FOR_PYTHON2_ONLY = [

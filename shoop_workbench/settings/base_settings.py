@@ -138,6 +138,7 @@ TEMPLATES = [
             "match_extension": ".jinja",
             "context_processors": TEMPLATE_CONTEXT_PROCESSORS,
             "newstyle_gettext": True,
+            "environment": "shoop.xtheme.engine.XthemeEnvironment"
         },
         "NAME": "jinja2",
     },
