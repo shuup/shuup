@@ -52,15 +52,20 @@ def get_product_cross_sells(context, product, relation_type="related", count=4):
     elif relation_type == "recommended":
         rtype = ProductCrossSellType.RECOMMENDED
 
-    related_product_ids = set((
+    related_product_ids = list((
         ProductCrossSell.objects
         .filter(product1=product, type=rtype)
-        .order_by("-weight")[:(count * 4)]).values_list("product2_id", flat=True)
+        .order_by("weight")[:(count * 4)]).values_list("product2_id", flat=True)
     )
 
-    # TODO: Return in weight order
-    related_products = Product.objects.filter(
-        id__in=related_product_ids
-    ).list_visible(shop=request.shop, customer=request.customer)
+    related_products = list(
+        Product.objects
+        .filter(id__in=related_product_ids)
+        .list_visible(shop=request.shop, customer=request.customer)
+    )
+
+    # Order related products by weight. Related product ids is in weight order.
+    # If same related product is linked twice to product then lowest weight stands.
+    related_products.sort(key=lambda prod: list(related_product_ids).index(prod.id))
 
     return related_products[:count]
