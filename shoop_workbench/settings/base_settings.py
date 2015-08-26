@@ -8,7 +8,8 @@ from shoop.addons import add_enabled_addons
 import os
 
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+BASE_DIR = os.getenv("SHOOP_WORKBENCH_BASE_DIR") or (
+    os.path.dirname(os.path.dirname(__file__)))
 SECRET_KEY = "Shhhhh"
 DEBUG = True
 TEMPLATE_DEBUG = True
@@ -18,7 +19,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "var", "media")
 STATIC_ROOT = os.path.join(BASE_DIR, "var", "static")
 MEDIA_URL = "/media/"
 
-SHOOP_ENABLED_ADDONS_FILE = os.path.join(BASE_DIR, "var", "enabled_addons")
+SHOOP_ENABLED_ADDONS_FILE = os.getenv("SHOOP_ENABLED_ADDONS_FILE") or (
+    os.path.join(BASE_DIR, "var", "enabled_addons"))
 INSTALLED_APPS = add_enabled_addons(SHOOP_ENABLED_ADDONS_FILE, (
     'django.contrib.admin',
     'django.contrib.auth',
