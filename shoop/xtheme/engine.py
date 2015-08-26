@@ -12,6 +12,7 @@ import six
 from jinja2.environment import Environment, Template
 from jinja2.utils import concat, internalcode
 
+from shoop.xtheme.resources import RESOURCE_CONTAINER_VAR_NAME, ResourceContainer, inject_resources
 from shoop.xtheme.theme import get_current_theme
 
 
@@ -24,6 +25,7 @@ class XthemeTemplate(Template):
         :rtype: str
         """
         vars = dict(*args, **kwargs)
+        vars[RESOURCE_CONTAINER_VAR_NAME] = ResourceContainer()
         ctx = self.new_context(vars)
         try:
             content = concat(self.root_render_func(ctx))
@@ -34,6 +36,7 @@ class XthemeTemplate(Template):
 
     def _postprocess(self, context, content):
         # TODO: Add a hook here for addons to inject resources without plugins
+        content = inject_resources(context, content)
         return content
 
 

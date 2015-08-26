@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from django_jinja.builtins import DEFAULT_EXTENSIONS
 
 import os
 import re
@@ -9,6 +8,7 @@ from django.contrib.auth.models import AnonymousUser
 from django.test.client import RequestFactory
 from django.views.generic import View
 from django_jinja.backend import Jinja2
+from django_jinja.builtins import DEFAULT_EXTENSIONS
 
 from shoop.apps.provides import override_provides
 from shoop.xtheme.editing import is_edit_mode, set_edit_mode
@@ -83,4 +83,5 @@ def get_request(edit=False):
 def plugin_override():
     return override_provides("xtheme_plugin", [
         "shoop.xtheme.plugins.text:TextPlugin",
+        "shoop_tests.xtheme.test_resources:ResourceInjectorPlugin"
     ])
