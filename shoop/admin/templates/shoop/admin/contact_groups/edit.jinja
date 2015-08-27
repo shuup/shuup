@@ -1,5 +1,6 @@
 {% extends "shoop/admin/base.jinja" %}
 {% from "shoop/admin/macros/general.jinja" import content_block %}
+{% from "shoop/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
 {% block content %}
     <div class="container-fluid">
         <div class="row">
@@ -8,9 +9,8 @@
                 <form method="post" id="contact_group_form">
                     {% csrf_token %}
                     {% call content_block(_("General information"), "fa-info-circle") %}
-                        {% for field in form %}
-                            {{ bs3.field(field) }}
-                        {% endfor %}
+                        {{ language_dependent_content_tabs(form) }}
+                        {{ render_monolingual_fields(form) }}
                     {% endcall %}
                     {% if contact_group.pk %}
                         {% call content_block(_("Members"), "fa-users") %}
