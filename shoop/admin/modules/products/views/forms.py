@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from collections import defaultdict
 from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import BaseModelFormSet
@@ -82,8 +83,11 @@ class ShopProductForm(forms.ModelForm):
 class ProductAttributesForm(forms.Form):
     def __init__(self, **kwargs):
         self.languages = to_language_codes(kwargs.pop("languages", ()))
+        self.language_names = dict((lang, get_language_name(lang)) for lang in self.languages)
         self.product = kwargs.pop("product")
         self.attributes = self.product.get_available_attribute_queryset()
+        self.trans_name_map = defaultdict(dict)
+        self.translated_field_names = []
         super(ProductAttributesForm, self).__init__(**kwargs)
         if self.product.pk:
             self.applied_attrs = dict((pa.attribute_id, pa) for pa in self.product.attributes.all())
@@ -119,6 +123,8 @@ class ProductAttributesForm(forms.Form):
             field_name = "%s__%s" % (attribute.identifier, lang)
             self.fields[field_name] = field = attribute.formfield()
             field.label = "%s [%s]" % (field.label, get_language_name(lang))
+            self.trans_name_map[lang][field_name] = field_name
+            self.translated_field_names.append(field_name)
 
             if pa and lang in extant_languages:
                 self.initial[field_name] = getattr(
