@@ -1,7 +1,7 @@
 {% from "shoop/admin/macros/general.jinja" import content_block %}
+{% from "shoop/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
 {% set attr_form = form[form_def.name] %}
 {% call content_block(_("Attributes"), "fa-tags") %}
-    {% for field in attr_form %}
-        {{ bs3.field(field) }}
-    {% endfor %}
+	{{ language_dependent_content_tabs(attr_form, tab_id_prefix="attributes") }}
+	{{ render_monolingual_fields(attr_form) }}
 {% endcall %}
