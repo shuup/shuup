@@ -1,5 +1,6 @@
 {% extends "shoop/admin/base.jinja" %}
 {% from "shoop/admin/macros/general.jinja" import content_block %}
+{% from "shoop/admin/macros/multilanguage.jinja" import language_dependent_content_tabs %}
 
 {% block content %}
     <div class="container-fluid">
@@ -10,9 +11,7 @@
                     {% csrf_token %}
                     {% call content_block(_("General information"), "fa-info-circle") %}
                         {{ bs3.field(form.module_identifier) }}
-                        {% for language in form.languages %}
-                        {{ bs3.field(form["name__" ~ language]) }}
-                        {% endfor %}
+                        {{ language_dependent_content_tabs(form) }}
                         {{ bs3.field(form.status) }}
                         {{ bs3.field(form.tax_class) }}
                         <div class="row">

@@ -51,6 +51,7 @@ class MultiLanguageModelForm(TranslatableModelForm):
         ]
         self.trans_field_map = defaultdict(dict)
         self.trans_name_map = defaultdict(dict)
+        self.translated_field_names = []
         self.non_default_languages = sorted(set(self.languages) - set([self.default_language]))
         self.language_names = dict((lang, get_language_name(lang)) for lang in self.languages)
 
@@ -66,6 +67,7 @@ class MultiLanguageModelForm(TranslatableModelForm):
                 self.base_fields[language_field_name] = language_field
                 self.trans_field_map[lang][language_field_name] = f
                 self.trans_name_map[lang][f.name] = language_field_name
+                self.translated_field_names.append(language_field_name)
 
         instance = kwargs.get("instance")
         initial = kwargs.get("initial")
