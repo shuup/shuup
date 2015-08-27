@@ -1,0 +1,23 @@
+<html>
+<head></head>
+<body>
+{% placeholder "foo" %}
+    {% row %}
+        {% column {"md": 7} %}
+            {% plugin "text" %}text = "wider column"{% endplugin %}
+        {% endcolumn %}
+        {% column {"md": 5} %}
+            {% plugin "text" %}text = "less wide column"{% endplugin %}
+        {% endcolumn %}
+    {% endrow %}
+{% endplaceholder %}
+{% placeholder "bar" %}
+    {% column {"xs": 0} %}
+        {% plugin "text" %}{% endplugin %}
+    {% endcolumn %}
+{% endplaceholder %}
+{% placeholder "quux" %}
+    {% plugin "text" %}{% endplugin %}
+{% endplaceholder %}
+</body>
+</html>
