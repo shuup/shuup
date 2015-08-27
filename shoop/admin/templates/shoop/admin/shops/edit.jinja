@@ -1,5 +1,9 @@
 {% extends "shoop/admin/base.jinja" %}
 {% from "shoop/admin/macros/general.jinja" import single_section_form with context %}
+{% from "shoop/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
 {% block content %}
-    {{ single_section_form("shop_form", form) }}
+    {% call single_section_form("shop_form", form) %}
+        {{ language_dependent_content_tabs(form) }}
+        {{ render_monolingual_fields(form) }}
+    {% endcall %}
 {% endblock %}
