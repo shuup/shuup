@@ -123,17 +123,30 @@ IGNORED_CLASSES = set([
     "Labels", "Meta",
 ])
 
-IGNORED_ARGS = set([
-    "self"
+IGNORED_FIRST_ARGS = set([
+    "self",
+    "cls"  # classmethods
+])
+
+IGNORED_ARGS = set([])
+
+NAMES_THAT_DONT_NEED_DOCS = set([
+    "__init__"
 ])
 
 ARG_RE = re.compile(r":param\s+([a-z_0-9]+)", re.I)
 
+INTERNAL_NAME_RE = re.compile("^_[^_].+$")
+
 
 class DocInfo(object):
     def __init__(self, node):
+        self.name = getattr(node, "name", None) or ""
         self.docstring = (self.parse_docstring(node) or u"").strip()
         self.named_args = ([a.arg for a in node.args.args] if hasattr(node, "args") else [])
+        if self.named_args and self.named_args[0] in IGNORED_FIRST_ARGS:
+            self.named_args.pop(0)
+
         self.required_args = set(arg for arg in self.named_args if arg not in IGNORED_ARGS)
         self.mentioned_args = set(self.parse_arg_mentions(self.docstring))
         self.missing_args = self.required_args - self.mentioned_args
@@ -142,13 +155,17 @@ class DocInfo(object):
         self.valid = not self.validation_errors
 
     def validate(self):
+        if INTERNAL_NAME_RE.match(self.name):
+            return
         if self.docstring:
             if len(self.docstring) < 15:
                 yield "Docstring too short"
-            if ".\n" not in self.docstring:
+            sep = (".\n" if "\n" in self.docstring else ".")
+            if sep not in self.docstring:
                 yield "Docstring doesn't seem to have an opening sentence"
         else:
-            yield "Docstring missing"
+            if not self.can_elide_docstring():
+                yield "Docstring missing"
         for arg in sorted(self.missing_args):
             yield u"Missing mention of arg `%s`" % arg
         for arg in sorted(self.extraneous_args):
@@ -164,6 +181,11 @@ class DocInfo(object):
     @staticmethod
     def parse_arg_mentions(docstring):
         return set(m.group(1) for m in ARG_RE.finditer(docstring))
+
+    def can_elide_docstring(self):
+        if self.name == "__init__" and not self.required_args:
+            return True
+        return False
 
 
 class DocStringVisitor(ast.NodeVisitor):
