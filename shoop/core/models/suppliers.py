@@ -11,6 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from jsonfield import JSONField
 
+from ._base import ShoopModel
 from shoop.core.fields import InternalIdentifierField
 from shoop.core.modules import ModuleInterface
 
@@ -21,7 +22,7 @@ class SupplierType(Enum):
 
 
 @python_2_unicode_compatible
-class Supplier(ModuleInterface, models.Model):
+class Supplier(ModuleInterface, ShoopModel):
     default_module_spec = "shoop.core.suppliers:BaseSupplierModule"
     module_provides_key = "supplier_module"
 

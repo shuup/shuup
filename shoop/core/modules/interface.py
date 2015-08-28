@@ -12,6 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shoop.apps.provides import get_provide_specs_and_objects
 from shoop.utils.importing import load
+from shoop.utils.text import force_ascii
 
 
 class ModuleNotFound(ValueError):
@@ -31,10 +32,12 @@ class ModuleInterface(object):
         if module_identifier:
             impls = self.get_module_implementation_map()
             if module_identifier not in impls:
-                raise ModuleNotFound("Invalid module identifier %r in %r" % (module_identifier, self))
+                raise ModuleNotFound(
+                    "Invalid module identifier %r in %s" % (module_identifier, force_ascii(repr(self)))
+                )
             spec = impls[module_identifier]
 
-        cls = load(spec, context_explanation="Loading module for %r" % self)
+        cls = load(spec, context_explanation="Loading module for %s" % force_ascii(repr(self)))
 
         options = getattr(self, self.module_options_field, None) or {}
         return cls(self, options)
