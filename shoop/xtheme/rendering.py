@@ -11,6 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from markupsafe import Markup
 
 from shoop.xtheme.editing import is_edit_mode
+from shoop.xtheme.theme import get_current_theme
 from shoop.xtheme.utils import get_html_attrs
 from shoop.xtheme.view_config import ViewConfig
 
@@ -34,7 +35,10 @@ def get_view_config(context):
             view_name = view_class.__name__
         else:
             view_name = "UnknownView"
-        config = ViewConfig(view_name)
+        config = ViewConfig(
+            theme=get_current_theme(),
+            view_name=view_name
+        )
         context.vars["_xtheme_view_config"] = config
     return config
 

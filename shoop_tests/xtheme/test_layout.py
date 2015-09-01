@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from shoop.xtheme.theme import override_current_theme_class
 import six
 
 from shoop.xtheme.layout import Layout
@@ -28,30 +29,32 @@ def test_layout_serialization():
 
 def test_layout_rendering(rf):
     request = get_request(edit=False)
-    with plugin_override():
-        (template, layout, gibberish, ctx) = get_test_template_bits(request)
+    with override_current_theme_class(None):
+        with plugin_override():
+            (template, layout, gibberish, ctx) = get_test_template_bits(request)
 
-        result = six.text_type(render_placeholder(ctx, "test", layout, "test"))
-        expect = """
-        <div class="xt-ph" id="xt-ph-test">
-        <div class="row xt-ph-row">
-        <div class="col-md-12 hidden-xs xt-ph-cell">%s</div>
-        </div>
-        </div>
-        """ % gibberish
-        assert close_enough(result, expect)
+            result = six.text_type(render_placeholder(ctx, "test", layout, "test"))
+            expect = """
+            <div class="xt-ph" id="xt-ph-test">
+            <div class="row xt-ph-row">
+            <div class="col-md-12 hidden-xs xt-ph-cell">%s</div>
+            </div>
+            </div>
+            """ % gibberish
+            assert close_enough(result, expect)
 
 
 def test_layout_edit_render():
     request = get_request(edit=True)
-    with plugin_override():
-        (template, layout, gibberish, ctx) = get_test_template_bits(request)
-        result = six.text_type(render_placeholder(ctx, "test", layout, "test"))
-        # Look for evidence of editing:
-        assert "xt-ph-edit" in result
-        assert "data-xt-placeholder-name" in result
-        assert "data-xt-row" in result
-        assert "data-xt-cell" in result
+    with override_current_theme_class(None):
+        with plugin_override():
+            (template, layout, gibberish, ctx) = get_test_template_bits(request)
+            result = six.text_type(render_placeholder(ctx, "test", layout, "test"))
+            # Look for evidence of editing:
+            assert "xt-ph-edit" in result
+            assert "data-xt-placeholder-name" in result
+            assert "data-xt-row" in result
+            assert "data-xt-cell" in result
 
 
 def test_view_config_caches_into_context(rf):

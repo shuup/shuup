@@ -146,18 +146,20 @@ class Layout(object):
             self.rows.extend(rows)
 
     @classmethod
-    def unserialize(cls, data):
+    def unserialize(cls, data, placeholder_name=None):
         """
         Unserialize a dict of layout data into a new layout, with all rows and cells.
 
         :param data: Layout data dict
         :type data: dict
+        :param placeholder_name: Placeholder name if none is specified in the data
+        :type placeholder_name: str
         :return: New layout
         :rtype: Layout
         """
         rows = [LayoutRow.unserialize(row_data) for row_data in data["rows"]]
         return cls(
-            placeholder_name=data.get("name"),
+            placeholder_name=data.get("name") or placeholder_name,
             rows=rows
         )
 

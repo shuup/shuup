@@ -17,13 +17,16 @@ class ViewConfig(object):
     Contains layout and plugin configuration for all placeholders in a given view.
     """
 
-    def __init__(self, view_name):
+    def __init__(self, theme, view_name):
         """
         Initialize a view configuration.
 
+        :param theme: Theme object (could be None to not touch the database)
+        :type theme: shoop.xtheme.theme.Theme|None
         :param view_name: View name (the class name of the view)
         :type view_name: str
         """
+        self.theme = theme
         self.view_name = force_text(view_name)
 
     def get_placeholder_layout(self, placeholder_name, default_layout=None):

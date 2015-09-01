@@ -98,6 +98,8 @@ class XthemeEnvironment(Environment):
         if name.startswith("shoop/admin"):  # Ignore the admin.
             return name
         theme = get_current_theme()
+        if not theme:
+            return name
         return [
             "%s/%s" % ((theme.template_dir or theme.identifier), name),
             name

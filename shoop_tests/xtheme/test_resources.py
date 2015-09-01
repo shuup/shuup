@@ -6,6 +6,7 @@ from shoop.xtheme.resources import (
     RESOURCE_CONTAINER_VAR_NAME, InlineMarkupResource, InlineScriptResource, ResourceContainer, add_resource,
     inject_resources
 )
+from shoop.xtheme.theme import override_current_theme_class
 from shoop_tests.xtheme.utils import get_jinja2_engine, get_request, get_test_template_bits, plugin_override
 
 
@@ -28,18 +29,19 @@ class ResourceInjectorPlugin(Plugin):
 
 def test_resources():
     request = get_request(edit=False)
-    with plugin_override():
-        jeng = get_jinja2_engine()
-        template = jeng.get_template("resinject.jinja")
-        output = template.render(request=request)
-        head, body = output.split("</head>", 1)
-        assert "alert('xss')" in body  # the inline script
-        assert '"bars": [1, 2, 3]' in head  # the script vars
-        assert '(unknown resource type:' in body  # the png
-        assert 'href="://example.com/css.css"' in head  # the css
-        assert 'src="://example.com/js.js"' in body  # the js
-        assert head.count(ResourceInjectorPlugin.meta_markup) == 1  # the duplicate meta
-        assert ResourceInjectorPlugin.message in output  # the actual message
+    with override_current_theme_class(None):
+        with plugin_override():
+            jeng = get_jinja2_engine()
+            template = jeng.get_template("resinject.jinja")
+            output = template.render(request=request)
+            head, body = output.split("</head>", 1)
+            assert "alert('xss')" in body  # the inline script
+            assert '"bars": [1, 2, 3]' in head  # the script vars
+            assert '(unknown resource type:' in body  # the png
+            assert 'href="://example.com/css.css"' in head  # the css
+            assert 'src="://example.com/js.js"' in body  # the js
+            assert head.count(ResourceInjectorPlugin.meta_markup) == 1  # the duplicate meta
+            assert ResourceInjectorPlugin.message in output  # the actual message
 
 
 def test_injecting_into_weird_places():
