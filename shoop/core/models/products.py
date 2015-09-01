@@ -197,8 +197,8 @@ class Product(AttributableMixin, TranslatableModel):
     gross_weight = MeasurementField(unit="g", verbose_name=_('gross weight (g)'))
 
     # Misc.
-    purchase_price = MoneyField(verbose_name=_('purchase price'))
-    suggested_retail_price = MoneyField(verbose_name=_('suggested retail price'))
+    purchase_price = MoneyField(verbose_name=_('purchase price'), blank=True, null=True)
+    suggested_retail_price = MoneyField(verbose_name=_('suggested retail price'), blank=True, null=True)
     manufacturer = models.ForeignKey("Manufacturer", blank=True, null=True, verbose_name=_('manufacturer'))
     primary_image = models.ForeignKey(
         "ProductMedia", null=True, blank=True,
