@@ -32,7 +32,7 @@ class SupplierEditView(CreateOrUpdateView):
     def get_form(self, form_class=None):
         form = super(SupplierEditView, self).get_form(form_class=form_class)
         choices = self.model.get_module_choices(
-            empty_label=(_("Default %s module") % self.model._meta.verbose_name).title()
+            empty_label=(_("No %s module") % self.model._meta.verbose_name)
         )
         form.fields["module_identifier"].choices = form.fields["module_identifier"].widget.choices = choices
         return form
