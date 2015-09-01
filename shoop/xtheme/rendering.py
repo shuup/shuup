@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from markupsafe import Markup
+from shoop.core.fields.tagged_json import TaggedJSONEncoder
 
 from shoop.xtheme.editing import is_edit_mode
 from shoop.xtheme.theme import get_current_theme
@@ -37,7 +38,8 @@ def get_view_config(context):
             view_name = "UnknownView"
         config = ViewConfig(
             theme=get_current_theme(),
-            view_name=view_name
+            view_name=view_name,
+            draft=is_edit_mode(context.get("request"))
         )
         context.vars["_xtheme_view_config"] = config
     return config
@@ -78,7 +80,8 @@ class PlaceholderRenderer(object):
         self.view_config = get_view_config(context)
         self.placeholder_name = placeholder_name
         self.template_name = template_name
-        self.layout = self.view_config.get_placeholder_layout(placeholder_name, default_layout)
+        self.default_layout = default_layout
+        self.layout = self.view_config.get_placeholder_layout(placeholder_name, self.default_layout)
         # Editing is only available for placeholders in the "base" template, i.e.
         # one that is not an `extend` parent.  Declaring placeholders in `include`d templates is fine,
         # but their configuration will not be shared among different uses of the same include.

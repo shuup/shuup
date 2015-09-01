@@ -8,6 +8,7 @@
 from django.utils.encoding import force_text
 
 from shoop.xtheme.layout import Layout
+from shoop.xtheme.models import SavedViewConfig
 
 
 class ViewConfig(object):
@@ -17,7 +18,7 @@ class ViewConfig(object):
     Contains layout and plugin configuration for all placeholders in a given view.
     """
 
-    def __init__(self, theme, view_name):
+    def __init__(self, theme, view_name, draft):
         """
         Initialize a view configuration.
 
@@ -25,9 +26,31 @@ class ViewConfig(object):
         :type theme: shoop.xtheme.theme.Theme|None
         :param view_name: View name (the class name of the view)
         :type view_name: str
+        :param draft: Load in draft mode?
+        :type draft: bool
         """
         self.theme = theme
         self.view_name = force_text(view_name)
+        self.draft = bool(draft)
+        self._saved_view_config = None
+
+    @property
+    def saved_view_config(self):
+        """
+        :return: A SavedViewConfig object for the current theme/view/draft mode, or None
+        :rtype: shoop.xtheme.models.SavedViewConfig|None
+        """
+        if not self.theme or not self.theme.identifier:
+            return None
+
+        if self._saved_view_config is None:
+            self._saved_view_config = SavedViewConfig.objects.appropriate(
+                theme=self.theme,
+                view_name=self.view_name,
+                draft=self.draft
+            )
+            self.draft = self._saved_view_config.draft
+        return self._saved_view_config
 
     def get_placeholder_layout(self, placeholder_name, default_layout=None):
         """
@@ -40,9 +63,56 @@ class ViewConfig(object):
         :return: Layout
         :rtype: Layout
         """
-        # TODO: Add actual loading
+        svc = self.saved_view_config
+        if svc:
+            placeholder_data = svc.get_layout_data(placeholder_name)
+            if placeholder_data:
+                return Layout.unserialize(data=placeholder_data, placeholder_name=placeholder_name)
         if default_layout:
             if isinstance(default_layout, Layout):
                 return default_layout
             return Layout.unserialize(default_layout)
         return Layout(placeholder_name=placeholder_name)
+
+    def save_default_placeholder_layout(self, placeholder_name, layout):
+        """
+        Save a default placeholder layout (only if no data for the PH already
+        exists).
+
+        :param placeholder_name: Placeholder name
+        :type placeholder_name: str
+        :param layout: Layout or layout data
+        :type layout: Layout|dict
+        :return: True if saved
+        :rtype: bool
+        """
+        if not self.draft:
+            return False
+        if self.saved_view_config and self.saved_view_config.get_layout_data(placeholder_name) is None:
+            self.save_placeholder_layout(placeholder_name, layout)
+            return True
+        return False
+
+    def publish(self):
+        svc = self.saved_view_config
+        if not svc:
+            raise ValueError("Unable to publish view config. Is a theme set?")
+        svc.publish()
+        self.draft = svc.draft
+        return True
+
+    def revert(self):
+        svc = self.saved_view_config
+        if not svc:
+            raise ValueError("Unable to revert view config. Is a theme set?")
+        svc.revert()
+        self.draft = True
+        self._saved_view_config = None
+        return True
+
+    def save_placeholder_layout(self, placeholder_name, layout):
+        svc = self.saved_view_config
+        if not svc:
+            raise ValueError("Unable to retrieve view config; unable to save data. Is a theme set?")
+        svc.set_layout_data(placeholder_name, layout)
+        svc.save()
