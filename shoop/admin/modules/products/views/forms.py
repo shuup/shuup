@@ -60,6 +60,7 @@ class ShopProductForm(forms.ModelForm):
     class Meta:
         model = ShopProduct
         fields = (
+            "default_price",
             "suppliers",
             "visible",
             "listed",

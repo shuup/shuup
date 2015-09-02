@@ -1,13 +1,13 @@
 {% from "shoop/admin/macros/general.jinja" import content_block with context %}
 {% set sp_form = form["simple_pricing"] %}
-{% call content_block(_("Pricing"), "fa-money") %}
+{% call content_block(_("Customer Group Pricing"), "fa-money") %}
     <div class="table-responsive">
         <table class="table table-bordered table-condensed table-striped">
             <tbody>
             <tr>
-                <th>Prices</th>
+                <th></th>
                 {% for group in sp_form.groups %}
-                    <th scope="col">{% if group %}{{ group }}{% else %}<i>other groups</i>{% endif %}</th>
+                    <th scope="col">{% if group %}{{ group }}{% else %}<i>Default price</i>{% endif %}</th>
                 {% endfor %}
             </tr>
             {% for shop in sp_form.shops %}

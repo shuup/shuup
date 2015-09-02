@@ -27,10 +27,7 @@ def test_basket(rf, storage):
     supplier = get_default_supplier()
     products_and_quantities = []
     for quantity in quantities:
-        product = create_product(printable_gibberish(), shop=shop, supplier=supplier)
-        SimpleProductPrice.objects.get_or_create(
-            shop=shop, product=product, defaults={"price": 50, "includes_tax": False}
-        )
+        product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=50)
         products_and_quantities.append((product, quantity))
 
     is_database = (storage == "shoop.front.basket.storage:DatabaseBasketStorage")

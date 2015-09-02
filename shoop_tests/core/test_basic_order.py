@@ -15,7 +15,8 @@ from shoop.core.models.order_lines import OrderLineTax
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
 from shoop.core.shortcuts import update_order_line_from_product
 from shoop.testing.factories import get_address, get_default_payment_method, get_default_shipping_method, \
-    get_default_supplier, get_default_product, get_default_shop, get_initial_order_status, get_default_tax
+    get_default_supplier, get_default_product, get_default_shop, get_initial_order_status, get_default_tax, \
+    get_default_customer_group
 from shoop.simple_pricing.models import SimpleProductPrice
 
 def create_order(request, creator, customer, product):
@@ -69,9 +70,13 @@ def create_order(request, creator, customer, product):
 
 @pytest.mark.django_db
 def test_basic_order(rf, admin_user):
+    shop = get_default_shop()
+    group = get_default_customer_group()
+
     request = rf.get('/')
+    request.shop = shop
     product = get_default_product()
-    SimpleProductPrice.objects.create(product=product, group=None, price=Decimal("100.00"), includes_tax=False)
+    SimpleProductPrice.objects.create(product=product, group=group, shop=shop, price=Decimal("100.00"))
     customer = get_person_contact(admin_user)
     for x in range(10):
         create_order(request, creator=admin_user, customer=customer, product=product)

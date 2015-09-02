@@ -8,7 +8,7 @@
 import pytest
 import random
 from shoop.core.models.suppliers import Supplier
-from shoop.testing.factories import create_product, create_order_with_product
+from shoop.testing.factories import create_product, create_order_with_product, get_default_shop
 
 IDENTIFIER = "test_simple_supplier"
 
@@ -25,7 +25,8 @@ def get_simple_supplier():
 @pytest.mark.django_db
 def test_simple_supplier(rf):
     supplier = get_simple_supplier()
-    product = create_product("simple-test-product")
+    shop = get_default_shop()
+    product = create_product("simple-test-product", shop)
     ss = supplier.get_stock_status(product.pk)
     assert ss.product == product
     assert ss.logical_count == 0

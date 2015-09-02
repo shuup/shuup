@@ -1,5 +1,6 @@
 {% macro product_box(product, show_image=True, show_description=False, class="product-box", thumbnail_size=(300,300), shop=None) %}
     {% set u = url("shoop:product", pk=product.pk, slug=product.slug) %}
+    {% set price_info = product.get_price_info(request) %}
     <a href="{{ u }}" rel="product-detail" class="thumbnail product {{ class }}" id="product-{{ product.id }}">
         {% if show_image %}
             <div class="product-image">
@@ -13,7 +14,12 @@
         <div class="caption">
             <h4 class="name">{{ product.name }}</h4>
             {# TODO: (TAX) Check following line (gets taxful price of product)  #}
-            <p class="price">{{ product.get_price(request)|home_currency }}</p>
+            <p class="price">
+                {{ price_info.price|home_currency }}
+                {% if price_info.is_discounted %}
+                    ({{price_info.base_price|home_currency}}) <span class="discount-percent">{{ -price_info.discount_percentage|int }}%</span>
+                {% endif %}
+            </p>
             {% if show_description %}
                 {{ product.description|striptags|truncate(140)|safe }}
             {% endif %}
@@ -33,7 +39,8 @@
                                 <span class="image">{{ product.primary_image|thumbnail(size=(220, 230))|default(STATIC_URL + "site/img/no_image.png") }}</span>
                                 <span class="name">{{ product.name }}</span>
                                 {# TODO: (TAX) Check following line (gets taxful price of product)  #}
-                                <span class="price inverse big">{{ product.get_price(request)|home_currency }}</span>
+                                {% set price_info = product.get_price_info(request) %}
+                                <span class="price inverse big">{{ price_info.price|home_currency }}</span>
                                 <span class="shop">{{ product.shop.name }}</span>
                             </a>
                         {% else %}

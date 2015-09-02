@@ -14,7 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from enumfields import EnumIntegerField
 
 from shoop.core.excs import ProductNotOrderableProblem, ProductNotVisibleProblem
-from shoop.core.fields import QuantityField, UnsavedForeignKey
+from shoop.core.fields import MoneyField, QuantityField, UnsavedForeignKey
 from shoop.core.models.product_media import ProductMediaKind
 from shoop.core.models.products import ProductVisibility, StockBehavior
 from shoop.core.signals import get_orderability_errors, get_visibility_errors
@@ -55,6 +55,10 @@ class ShopProduct(models.Model):
     shop_primary_image = models.ForeignKey(
         "ProductMedia", null=True, blank=True, related_name="primary_image_for_shop_products", on_delete=models.SET_NULL
     )
+
+    # the default price of this product in the shop, taxfulness is determined in
+    # `Shop.prices_include_tax`
+    default_price = MoneyField(verbose_name=_("Default price"), null=True, blank=True)
 
     class Meta:
         unique_together = (("shop", "product",),)
