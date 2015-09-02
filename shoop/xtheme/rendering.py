@@ -112,6 +112,8 @@ class PlaceholderRenderer(object):
         return attrs
 
     def _render_layout(self, write):
+        if self.edit and self.default_layout:
+            self._render_default_layout_script_tag(write)
         for y, row in enumerate(self.layout):
             self._render_row(write, y, row)
 
@@ -165,3 +167,17 @@ class PlaceholderRenderer(object):
         if content is not None:  # pragma: no branch
             write(force_text(content))
         write("</div>")
+
+    def _render_default_layout_script_tag(self, write):
+        # This script tag is read by editor.js
+        write("<script%s>" % get_html_attrs({
+            "class": "xt-ph-default-layout",
+            "type": "text/plain"
+        }))
+        layout = self.default_layout
+        if hasattr(layout, "serialize"):
+            layout = layout.serialize()
+        # TODO: Might have to do something about ..
+        # TODO: .. http://www.w3.org/TR/html5/scripting-1.html#restrictions-for-contents-of-script-elements
+        write(TaggedJSONEncoder(separators=",:").encode(layout))
+        write("</script>")
