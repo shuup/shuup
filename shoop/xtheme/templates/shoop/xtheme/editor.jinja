@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ static("xtheme/editor.css") }}">
+    <script>var CSRF_TOKEN = "{{ csrf_token_str }}";</script>
+    <script src="{{ static("xtheme/editor.js") }}"></script>
+</head>
+<body>
+<div id="global-toolbar">
+    <button class="publish-btn">{% trans %}Publish Changes{% endtrans %}</button>
+    <button class="revert-btn">{% trans %}Revert Changes{% endtrans %}</button>
+</div>
+{% include "shoop/xtheme/_editor_layout.jinja" %}
+{% if current_cell %}
+    {% include "shoop/xtheme/_editor_cell.jinja" %}
+{% endif %}
+</body>
+</html>

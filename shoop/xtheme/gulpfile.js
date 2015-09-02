@@ -22,7 +22,22 @@ gtools.webpackTasks("injection", gtools.buildWebpackConfig(
     "editor-injection.js"
 ));
 
-gtools.registerWatchTask([], function() {
+gtools.webpackTasks("editor-js", gtools.buildWebpackConfig(
+    "./editor/index.js",
+    "editor.js"
+));
+
+gulp.task("editor-style", function() {
+    return gulp.src(["static_src/editor/style.less"])
+        .pipe(less())
+        .pipe(apfx())
+        .pipe(PRODUCTION ? nano() : gutil.noop())
+        .pipe(ren("editor.css"))
+        .pipe(gulp.dest("static/xtheme"));
 });
 
-gulp.task("default", ["injection"]);
+gtools.registerWatchTask(["editor-style"], function() {
+    gulp.watch("static_src/editor/*.*", ["editor-style"]);
+});
+
+gulp.task("default", ["editor-style", "injection", "editor-js"]);

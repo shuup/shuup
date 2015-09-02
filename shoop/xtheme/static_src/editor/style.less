@@ -1,0 +1,30 @@
+body {
+    margin: 2px;
+    font: 10pt/1.1 sans-serif;
+}
+
+#layout {
+    .layout-row {
+        background: khaki;
+        display: flex;
+        button {
+            background: orangered;
+            min-width: 1em;
+        }
+    }
+    .layout-row-cells {
+        display: flex;
+        flex: 1;
+        .layout-cell {
+            flex: 1;
+            border: 1px solid orangered;
+            padding: 2px;
+            text-align: center;
+            cursor: pointer;
+            &.current {
+                background: purple;
+                color: #fff;
+            }
+        }
+    }
+}

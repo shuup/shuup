@@ -1,0 +1,24 @@
+<div id="layout">
+    {% for row in layout.rows %}
+        {% set y = loop.index0 %}
+        <div class="layout-row">
+            <div class="layout-row-cells">
+                {% for cell in row.cells -%}
+                    {% set x = loop.index0 %}
+                    <div class="layout-cell {% if (x, y) == current_cell_coords %}current{% endif %}" data-y="{{ y }}" data-x="{{ x }}">
+                        {{- cell.plugin_name -}}
+                    </div>
+                {%- endfor %}
+            </div>
+            <button class="layout-add-cell-btn" data-y="{{ y }}">
+                +
+            </button>
+            <button class="layout-del-row-btn" data-y="{{ y }}">
+                -
+            </button>
+        </div>
+    {% endfor %}
+    <button class="layout-add-row-btn">
+        +
+    </button>
+</div>
