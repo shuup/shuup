@@ -5,19 +5,16 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from decimal import Decimal
 from django.utils.timezone import now
 
 import pytest
-from shoop.core import taxing
-from shoop.core.models import Order, OrderLine, OrderLineType, get_person_contact, OrderStatus
+from shoop.core.models import Order, OrderLine, OrderLineType, get_person_contact
 from shoop.core.models.order_lines import OrderLineTax
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
 from shoop.core.shortcuts import update_order_line_from_product
 from shoop.testing.factories import get_address, get_default_payment_method, get_default_shipping_method, \
-    get_default_supplier, get_default_product, get_default_shop, get_initial_order_status, get_default_tax, \
-    get_default_customer_group
-from shoop.simple_pricing.models import SimpleProductPrice
+    get_default_supplier, get_default_product, get_default_shop, get_initial_order_status, get_default_tax
+
 
 def create_order(request, creator, customer, product):
     billing_address = get_address()
@@ -71,12 +68,10 @@ def create_order(request, creator, customer, product):
 @pytest.mark.django_db
 def test_basic_order(rf, admin_user):
     shop = get_default_shop()
-    group = get_default_customer_group()
 
     request = rf.get('/')
     request.shop = shop
     product = get_default_product()
-    SimpleProductPrice.objects.create(product=product, group=group, shop=shop, price=Decimal("100.00"))
     customer = get_person_contact(admin_user)
     for x in range(10):
         create_order(request, creator=admin_user, customer=customer, product=product)

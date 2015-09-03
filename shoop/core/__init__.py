@@ -21,7 +21,10 @@ class ShoopCoreAppConfig(AppConfig):
     provides = {
         "api_populator": [
             "shoop.core.api:populate_core_api"
-        ]
+        ],
+        "pricing_module": [
+            "shoop.core.pricing.default_pricing:DefaultPricingModule"
+        ],
     }
 
 
