@@ -87,3 +87,7 @@ Provide Categories
     as used by :py:class:`shoop.core.models.Supplier`.
 ``tax_module``
     Tax module classes; the tax module in use is set with the ``SHOOP_TAX_MODULE`` setting.
+``xtheme``
+    XTheme themes (full theme sets).
+``xtheme_plugin``
+    XTheme plugins (that are placed into placeholders within themes).

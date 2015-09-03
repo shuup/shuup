@@ -6,6 +6,6 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from .base import Plugin
+from .base import Plugin, TemplatedPlugin, templated_plugin_factory
 
-__all__ = ["Plugin"]
+__all__ = ["Plugin", "TemplatedPlugin", "templated_plugin_factory"]

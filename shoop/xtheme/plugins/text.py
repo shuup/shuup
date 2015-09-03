@@ -5,11 +5,16 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from django import forms
 from shoop.xtheme.plugins.base import Plugin
 
 
 class TextPlugin(Plugin):
     identifier = "text"
+    name = "Text"
+    fields = [
+        ("text", forms.CharField(required=False))
+    ]
 
     def render(self, context):
         return self.config.get("text")
