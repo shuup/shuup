@@ -197,8 +197,8 @@ class Product(AttributableMixin, TranslatableModel):
     gross_weight = MeasurementField(unit="g", verbose_name=_('gross weight (g)'))
 
     # Misc.
-    purchase_price = MoneyField(verbose_name=_('purchase price'))
-    suggested_retail_price = MoneyField(verbose_name=_('suggested retail price'))
+    purchase_price = MoneyField(verbose_name=_('purchase price'), blank=True, null=True)
+    suggested_retail_price = MoneyField(verbose_name=_('suggested retail price'), blank=True, null=True)
     manufacturer = models.ForeignKey("Manufacturer", blank=True, null=True, verbose_name=_('manufacturer'))
     primary_image = models.ForeignKey(
         "ProductMedia", null=True, blank=True,
@@ -258,20 +258,43 @@ class Product(AttributableMixin, TranslatableModel):
             for c in self.variation_children.all()
         )[0]
 
-    def get_price(self, context, quantity=1):
+    def get_price_info(self, context, quantity=1):
         """
+        returns a `PriceInfo` object for product
+
+        Returned `PriceInfo` object contains calculated `price` and `base_price`.
+        The calculation of prices is handled in the current pricing module.
+
         :type context: shoop.core.contexts.PriceTaxContext
-        :rtype: shoop.core.pricing.Price
+        :rtype: shoop.core.pricing.PriceInfo
         """
         from shoop.core.pricing import get_pricing_module
         module = get_pricing_module()
         pricing_context = module.get_context(context)
-        return module.get_price(pricing_context, product_id=self.pk, quantity=quantity)
+        return module.get_price_info(pricing_context, product=self, quantity=quantity)
 
-    def get_base_price(self):
-        from shoop.core.pricing import get_pricing_module
-        module = get_pricing_module()
-        return module.get_base_price(product_id=self.pk)
+    def get_price(self, context, quantity=1):
+        """
+        Returns `price` of the product calculated in the current pricing module.
+
+        :type context: shoop.core.contexts.PriceTaxContext
+        :rtype: shoop.core.pricing.Price
+        """
+        return self.get_price_info(context, quantity).price
+
+    def get_base_price(self, context):
+        """
+        Returns `base_price` of the product calculated in the current pricing module.
+
+        `base_price` defaults to `price` but the pricing module can decide what the value is.
+
+        For example in `SimplePricing` this value is `ShopProduct.default_price` or calculated `price`
+        based on customer groups.
+
+        :type context: shoop.core.contexts.PriceTaxContext
+        :rtype: shoop.core.pricing.Price
+        """
+        return self.get_price_info(context, quantity=1).base_price
 
     def get_taxed_price(self, context, quantity=1):
         """

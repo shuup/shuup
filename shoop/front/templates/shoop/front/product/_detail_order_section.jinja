@@ -60,7 +60,8 @@
                         <h4>
                             <small>Total: </small>
                             <span id="product-price-placeholder">
-                                {{ product.get_price(request)|home_currency }}
+                                {% set price_info = product.get_price(request) %}
+                                {{ price_info.price|home_currency }}
                             </span>
                             <span class="sales-unit">
                                 {{ product.sales_unit.short_name }}

@@ -15,10 +15,9 @@ from shoop.core.fields import MoneyField
 
 class SimpleProductPrice(models.Model):
     product = models.ForeignKey("shoop.Product", related_name="+")
-    shop = models.ForeignKey("shoop.Shop", blank=True, null=True, db_index=True)
-    group = models.ForeignKey("shoop.ContactGroup", blank=True, null=True, db_index=True)
-    price = MoneyField(default=0)
-    includes_tax = models.BooleanField(default=True)
+    shop = models.ForeignKey("shoop.Shop", db_index=True)
+    group = models.ForeignKey("shoop.ContactGroup", db_index=True)
+    price = MoneyField()
 
     # TODO: (TAX) Check includes_tax consistency (see below)
     #
@@ -34,10 +33,9 @@ class SimpleProductPrice(models.Model):
         verbose_name_plural = _(u"product prices")
 
     def __repr__(self):
-        return "<SimpleProductPrice (p%s,s%s,g%s): price %s (taxfull %s)>" % (
+        return "<SimpleProductPrice (p%s,s%s,g%s): price %s" % (
             self.product_id,
             self.shop_id,
             self.group_id,
             self.price,
-            self.includes_tax,
         )

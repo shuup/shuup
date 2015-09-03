@@ -57,7 +57,6 @@ class MoneyField(models.DecimalField):
     def __init__(self, **kwargs):
         kwargs.setdefault("decimal_places", 9)
         kwargs.setdefault("max_digits", 36)
-        kwargs.setdefault("default", 0)
         super(MoneyField, self).__init__(**kwargs)
 
 

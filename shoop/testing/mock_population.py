@@ -13,8 +13,8 @@ from django.utils import translation
 from shoop.core.models import Category, Product, ShopProduct
 
 from .factories import (
-    CategoryFactory, ProductFactory, create_default_order_statuses, get_default_payment_method,
-    get_default_shipping_method, get_default_shop
+    CategoryFactory, ProductFactory, create_default_order_statuses, get_default_customer_group,
+    get_default_payment_method, get_default_shipping_method, get_default_shop
 )
 
 
@@ -48,7 +48,8 @@ class Populator:
             SimpleProductPrice.objects.create(
                 product=product,
                 price=random.randint(15, 340),
-                includes_tax=False,
+                shop=get_default_shop(),
+                group=get_default_customer_group()
             )
 
     def populate_if_required(self):

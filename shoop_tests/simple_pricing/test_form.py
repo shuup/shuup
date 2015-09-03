@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.conf import settings
 import pytest
 from shoop.core.models import Shop
 from shoop.core.models.contacts import ContactGroup
@@ -13,12 +14,13 @@ from shoop.testing.factories import get_default_shop, create_product, get_defaul
 from shoop.simple_pricing.models import SimpleProductPrice
 from shoop_tests.utils.forms import get_form_data
 
+pytestmark = pytest.mark.skipif("shoop.simple_pricing" not in settings.INSTALLED_APPS,
+                                reason="Simple pricing not installed")
 
 def _get_test_product():
     shop = get_default_shop()
-    product = create_product("Just-A-Pricing-Product")
-    SimpleProductPrice.objects.create(product=product, shop=None, price=200, includes_tax=False)
-    SimpleProductPrice.objects.create(product=product, shop=shop, price=250, includes_tax=False)
+    product = create_product("Just-A-Pricing-Product", shop, default_price=200)
+    SimpleProductPrice.objects.create(product=product, shop=shop, group=get_default_customer_group(), price=250)
     return product
 
 
@@ -28,15 +30,10 @@ def test_basic_form_sanity():
     group = get_default_customer_group()
     product = _get_test_product()
     frm = SimplePricingForm(product=product, empty_permitted=True)
-    assert len(frm.groups) == 1 + ContactGroup.objects.count()
-    assert len(frm.shops) == 1 + Shop.objects.count()
-    for shop_id in (0, shop.id):
-        for group_id in (0, group.id):
-            assert "s_%d_g_%d" % (shop_id, group_id) in frm.fields
+    assert len(frm.groups) == ContactGroup.objects.count()
+    assert len(frm.shops) == Shop.objects.count()
 
-    form_data = get_form_data(frm)
-    assert form_data["s_%d_g_0" % shop.id] == 250
-    assert form_data["s_0_g_0"] == 200
+    assert "s_%d_g_%d" % (shop.id, group.id) in frm.fields
 
 
 @pytest.mark.django_db
@@ -49,7 +46,6 @@ def test_no_changes_into_form():
     frm = SimplePricingForm(product=product, data=form_data, empty_permitted=True)
     frm.full_clean()
     frm.save()
-    assert SimpleProductPrice.objects.get(product=product, shop=None).price == 200
     assert SimpleProductPrice.objects.get(product=product, shop=shop).price == 250
 
 
@@ -57,23 +53,26 @@ def test_no_changes_into_form():
 def test_change_shop_price():
     product = _get_test_product()
     shop = get_default_shop()
+    group = get_default_customer_group()
+
+    form_field = "s_%d_g_%d" % (shop.id, group.id)
+
     frm = SimplePricingForm(product=product, empty_permitted=True)
     form_data = get_form_data(frm, prepared=True)
     # Price hike time!
-    form_data["s_%d_g_0" % shop.id] = "4000"
+    form_data[form_field] = "4000"
     frm = SimplePricingForm(product=product, data=form_data, empty_permitted=True)
     frm.full_clean()
     frm.save()
-    assert SimpleProductPrice.objects.get(product=product, shop=None).price == 200
-    assert SimpleProductPrice.objects.get(product=product, shop=shop).price == 4000
+    assert SimpleProductPrice.objects.get(product=product, shop=shop, group=group).price == 4000
 
     # Never mind actually, same price for all shops
-    form_data["s_%d_g_0" % shop.id] = ""
+    form_data[form_field] = ""
     frm = SimplePricingForm(product=product, data=form_data, empty_permitted=True)
     frm.full_clean()
     frm.save()
-    assert SimpleProductPrice.objects.get(product=product, shop=None).price == 200
-    assert not SimpleProductPrice.objects.filter(product=product, shop=shop).exists()
+
+    assert not SimpleProductPrice.objects.filter(product=product, shop=shop, group=group).exists()
 
 
 @pytest.mark.django_db

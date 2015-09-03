@@ -5,13 +5,15 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.test import RequestFactory
 
 import pytest
-from shoop.core.models import OrderLineType, AnonymousContact, ProductMode
+from shoop.core.models import OrderLineType, AnonymousContact, ProductMode, Shop
 from shoop.core.order_creator import OrderCreator
 from shoop.core.order_creator.source import SourceLine
 from shoop.core.pricing import TaxlessPrice
 from shoop.testing.factories import create_product, get_default_shop, get_default_supplier, get_initial_order_status
+from shoop_tests.utils import apply_request_middleware
 from shoop_tests.utils.basketish_order_source import BasketishOrderSource
 import six
 
@@ -46,7 +48,10 @@ def test_package():
 
     source.shop = get_default_shop()
     source.status = get_initial_order_status()
-    creator = OrderCreator(request=None)
+
+    request = apply_request_middleware(RequestFactory().get("/"))
+
+    creator = OrderCreator(request)
     order = creator.create_order(source)
     pids_to_quantities = order.get_product_ids_and_quantities()
     for child, quantity in six.iteritems(package_def):

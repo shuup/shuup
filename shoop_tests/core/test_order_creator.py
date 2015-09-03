@@ -13,6 +13,7 @@ from shoop.core.pricing import TaxlessPrice
 from shoop.testing.factories import get_address, get_default_shop, get_default_payment_method, \
     get_default_shipping_method, get_default_product, get_default_supplier, get_initial_order_status
 from shoop.utils.models import get_data_dict
+from shoop_tests.utils import apply_request_middleware
 from shoop_tests.utils.basketish_order_source import BasketishOrderSource
 
 def test_invalid_order_source_updating():
@@ -41,7 +42,7 @@ def seed_source(user):
     return source
 
 @pytest.mark.django_db
-def test_order_creator(admin_user):
+def test_order_creator(rf, admin_user):
     source = seed_source(admin_user)
     source.lines.append(SourceLine(
         type=OrderLineType.PRODUCT,
@@ -57,7 +58,9 @@ def test_order_creator(admin_user):
         require_verification=True,
     ))
 
-    creator = OrderCreator(request=None)
+    request = apply_request_middleware(rf.get("/"))
+
+    creator = OrderCreator(request)
     order = creator.create_order(source)
     assert get_data_dict(source.billing_address) == get_data_dict(order.billing_address)
     assert get_data_dict(source.shipping_address) == get_data_dict(order.shipping_address)
@@ -67,7 +70,7 @@ def test_order_creator(admin_user):
     assert order.pk
 
 @pytest.mark.django_db
-def test_order_creator_supplierless_product_line_conversion_should_fail(admin_user):
+def test_order_creator_supplierless_product_line_conversion_should_fail(rf, admin_user):
     source = seed_source(admin_user)
     source.lines.append(SourceLine(
         type=OrderLineType.PRODUCT,
@@ -76,13 +79,16 @@ def test_order_creator_supplierless_product_line_conversion_should_fail(admin_us
         quantity=1,
         unit_price=TaxlessPrice(10),
     ))
-    creator = OrderCreator(request=None)
+
+    request = apply_request_middleware(rf.get("/"))
+
+    creator = OrderCreator(request)
     with pytest.raises(ValueError):
         order = creator.create_order(source)
 
 
 @pytest.mark.django_db
-def test_order_source_parentage(admin_user):
+def test_order_source_parentage(rf, admin_user):
     source = seed_source(admin_user)
     product = get_default_product()
     source.lines.append(SourceLine(
@@ -101,7 +107,9 @@ def test_order_source_parentage(admin_user):
         unit_price=TaxlessPrice(5),
         parent_line_id="parent"
     ))
-    creator = OrderCreator(request=None)
+    request = apply_request_middleware(rf.get("/"))
+
+    creator = OrderCreator(request)
     order = Order.objects.get(pk=creator.create_order(source).pk)
     kid_line = order.lines.filter(sku="KIDKIDKID").first()
     assert kid_line

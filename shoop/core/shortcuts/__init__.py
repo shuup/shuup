@@ -18,7 +18,6 @@ def update_order_line_from_product(request, order_line, product, quantity=1, sup
         raise Exception("set_from_product may not be used on saved lines")
 
     if not product:  # pragma: no cover
-
         raise Exception("set_from_product may not be used without product")
 
     # TODO: (TAX) Taxes in update_order_line_from_product

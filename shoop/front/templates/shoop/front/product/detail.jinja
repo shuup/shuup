@@ -65,10 +65,10 @@
             <h1>{{ product.name }}</h1>
             <p>{% trans %}SKU{% endtrans %}: {{ product.sku }}</p>
             {# TODO: (TAX) Check following line (gets taxful price of product)  #}
-            {% set price = product.get_price(request) %}
+            {% set price_info = product.get_price_info(request) %}
             <h3>
-                {{ price|home_currency }}
-                {% if price.includes_tax %}(incl. tax){% else %}(excl. tax){% endif %}
+                {{ price_info.price|home_currency }}
+                {% if price_info.includes_tax %}(incl. tax){% else %}(excl. tax){% endif %}
                 <small>/ {{ product.sales_unit.short_name }}</small>
             </h3>
 

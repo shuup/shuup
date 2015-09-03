@@ -26,8 +26,8 @@ class SimplePricingForm(forms.Form):
             self._build_fields()
 
     def _build_fields(self):
-        self.shops = [None] + list(Shop.objects.all())
-        self.groups = [None] + list(ContactGroup.objects.filter(
+        self.shops = list(Shop.objects.all())
+        self.groups = list(ContactGroup.objects.filter(
             Q(show_pricing=True) |
             Q(
                 id__in=SimpleProductPrice.objects.filter(product=self.product)
@@ -40,6 +40,7 @@ class SimplePricingForm(forms.Form):
             in SimpleProductPrice.objects.filter(product=self.product)
             .values_list("shop_id", "group_id", "price")
         )
+
         for group in self.groups:
             for shop in self.shops:
                 shop_group_id_tuple = self._get_id_tuple(shop, group)

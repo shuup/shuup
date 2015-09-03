@@ -8,6 +8,7 @@
 from shoop.apps import AppConfig
 
 
+# TODO: Document how to create custom pricing modules (Refs SHOOP-514)
 class ShoopSimplePricingAppConfig(AppConfig):
     name = "shoop.simple_pricing"
     verbose_name = "Shoop Simple Pricing"

@@ -28,6 +28,7 @@ class Shop(TranslatableModel):
     status = EnumIntegerField(ShopStatus, default=ShopStatus.DISABLED)
     owner = models.ForeignKey("Contact", blank=True, null=True)
     options = JSONField(blank=True, null=True)
+    prices_include_tax = models.BooleanField(default=True)
 
     translations = TranslatedFields(
         name=models.CharField(max_length=64)
