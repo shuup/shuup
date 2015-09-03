@@ -21,6 +21,7 @@ from shoop.xtheme.views.forms import LayoutCellFormGroup
 class EditorView(TemplateView):
     template_name = "shoop/xtheme/editor.jinja"
     xtheme_injection = False  # We don't need the editing injection here, so opt-out
+    changed = False  # Overridden in `save_layout`
 
     def _get_default_layout(self):
         try:
@@ -36,6 +37,7 @@ class EditorView(TemplateView):
         ctx["current_cell_coords"] = self.current_cell_coords
         ctx["current_cell"] = self.current_cell
         ctx["form"] = self.form
+        ctx["changed"] = self.changed
         return ctx
 
     def dispatch(self, request, *args, **kwargs):
@@ -109,6 +111,7 @@ class EditorView(TemplateView):
             placeholder_name=self.placeholder_name,
             layout=(layout or self.layout)
         )
+        self.changed = True
 
     def dispatch_add_cell(self, y, **kwargs):
         y = int(y)

@@ -82,3 +82,7 @@ domready(() => {
         post({command: "change_plugin", plugin: this.value});
     });
 });
+
+window.refreshPlaceholderInParent = (placeholderName) => {
+    window.parent.postMessage({"reloadPlaceholder": placeholderName}, "*");
+};

@@ -10,6 +10,7 @@ require("!style!css!autoprefixer!less!./style.less");
 const domready = require("../lib/domready");
 const qs = require("../lib/qs");
 const el = require("../lib/el");
+const ajax = require("../lib/ajax");
 
 var _sidebarDiv = null;
 var _sidebarIframe = null;
@@ -91,6 +92,34 @@ function addEditToggleMarkup() {
     document.body.appendChild(div);
 }
 
+function handleMessage(event) {
+    if (!window.XthemeEditorConfig.edit) {
+        return;  // Not editing, ignore messages
+    }
+    if (event.origin !== location.origin) {
+        return;  // Not our origin, can't be our message
+    }
+    const placeholder = event.data.reloadPlaceholder;
+    if (!placeholder) {
+        return; // Not our message
+    }
+    const oldPh = document.querySelector("#xt-ph-" + placeholder);
+    if (!oldPh) {
+        return;   // Not sure where to put output anyway
+    }
+    ajax({
+        url: qs.mutateURL(location.href, {"_uncache_": +new Date()}),
+        success: (text) => {
+            const newDoc = document.implementation.createHTMLDocument();
+            newDoc.body.innerHTML = text;
+            const newPh = newDoc.querySelector("#xt-ph-" + placeholder);
+            if (newPh) {
+                oldPh.innerHTML = newPh.innerHTML;
+            }
+        }
+    });
+}
+
 function addPhClickHandler() {
     document.addEventListener("click", (event) => {
         const classList = event.target.classList;
@@ -104,6 +133,7 @@ function addPhClickHandler() {
 }
 
 domready(() => {
+    window.addEventListener("message", handleMessage, false);
     addEditToggleMarkup();
     if (window.XthemeEditorConfig.edit) {
         addPhClickHandler();

@@ -15,5 +15,8 @@
 {% if current_cell %}
     {% include "shoop/xtheme/_editor_cell.jinja" %}
 {% endif %}
+{% if changed %}
+    <script>refreshPlaceholderInParent({{ layout.placeholder_name|json }});</script>
+{% endif %}
 </body>
 </html>
