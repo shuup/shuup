@@ -8,6 +8,7 @@
 from itertools import chain
 from django.core.exceptions import ValidationError
 from django.forms import BaseFormSet
+from shoop.utils.form_group import FormGroup
 
 
 def get_form_data(form, prepared=False):
@@ -24,6 +25,12 @@ def get_form_data(form, prepared=False):
     """
 
     # This is based on Django's `django.forms.forms.BaseForm::changed_data` method.
+
+    if isinstance(form, FormGroup):
+        data = {}
+        for subform in form.forms.values():
+            data.update(get_form_data(subform, prepared=prepared))
+        return data
 
     if isinstance(form, BaseFormSet):
         data = {}
@@ -56,6 +63,8 @@ def get_form_data(form, prepared=False):
             value = initial_value
         if prepared:
             value = field.prepare_value(value)
+            if value is None:
+                continue
         data[prefixed_name] = value
     return data
 
