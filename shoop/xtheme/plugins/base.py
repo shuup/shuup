@@ -12,6 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shoop.apps.provides import get_identifier_to_object_map, get_provide_objects
 from shoop.utils.text import space_case
+from shoop.xtheme.plugins.forms import GenericPluginForm
 
 SENTINEL = object()
 
@@ -27,6 +28,7 @@ class Plugin(object):
     fields = []
     required_context_variables = set()
     name = _("Plugin")  # User-visible name
+    editor_form_class = GenericPluginForm
 
     def __init__(self, config):
         """
@@ -63,6 +65,17 @@ class Plugin(object):
         :rtype: str
         """
         return ""  # pragma: no cover
+
+    def get_editor_form_class(self):
+        """
+        Return the form class for editing this plugin.
+
+        The form class should either derive from PluginForm,
+        or at least have a `get_config()` method.
+        """
+        # Could be overridden in suitably special subclasses.
+        if self.fields:
+            return self.editor_form_class
 
     @classmethod
     def load(cls, identifier, default=None):
