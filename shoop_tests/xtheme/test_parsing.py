@@ -2,13 +2,15 @@
 import pytest
 
 from shoop.xtheme.parsing import NestingError, NonConstant
+from shoop.xtheme.theme import override_current_theme_class
 from shoop_tests.xtheme.utils import get_jinja2_engine
 
 
 def test_parsing():
-    jeng = get_jinja2_engine()
-    template = jeng.get_template("complex.jinja")
-    assert template  # it'sa me! template!
+    with override_current_theme_class(None):
+        jeng = get_jinja2_engine()
+        template = jeng.get_template("complex.jinja")
+        assert template  # it'sa me! template!
 
 
 def test_nonconstant_placeholder_name_fails():
