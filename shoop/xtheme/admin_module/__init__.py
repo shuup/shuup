@@ -12,11 +12,16 @@ from shoop.admin.utils.urls import admin_url
 
 
 class XthemeAdminModule(AdminModule):
+    """
+    Admin module for Xtheme.
+
+    Allows theme activation/deactivation and further configuration.
+    """
     name = _("Shoop Extensible Theme Engine")
     category = _("System")
     breadcrumbs_menu_entry = MenuEntry(_("Theme Configuration"), "shoop_admin:xtheme.config")
 
-    def get_urls(self):
+    def get_urls(self):  # doccov: ignore
         return [
             admin_url(
                 "^xtheme/(?P<theme_identifier>.+?)/",
@@ -30,7 +35,7 @@ class XthemeAdminModule(AdminModule):
             )
         ]
 
-    def get_menu_entries(self, request):
+    def get_menu_entries(self, request):  # doccov: ignore
         return [
             MenuEntry(
                 text=_("Theme Configuration"), icon="fa fa-paint-brush",

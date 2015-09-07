@@ -30,5 +30,15 @@ class GenericThemeForm(forms.ModelForm):
         self.initial.update(self.instance.get_settings())
 
     def save(self, commit=True):
+        """
+        Save theme settings into the ThemeSettings instance
+
+        :param commit: Commit flag. Ignored, but there for compatibility with the superclass.
+        :type commit: bool
+        :return: The now saved `ThemeSettings` instance
+        :rtype: shoop.xtheme.models.ThemeSettings
+        """
+        if not commit:
+            raise ValueError("This form does not support commit=False")
         self.instance.update_settings(self.cleaned_data)
         return self.instance

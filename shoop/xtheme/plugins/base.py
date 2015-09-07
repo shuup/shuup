@@ -32,7 +32,7 @@ class Plugin(object):
 
     def __init__(self, config):
         """
-        Instantiate a Plugin with the given `config` dictionary
+        Instantiate a Plugin with the given `config` dictionary.
 
         :param config: Dictionary of freeform configuration data
         :type config: dict
@@ -70,19 +70,42 @@ class Plugin(object):
         """
         Return the form class for editing this plugin.
 
-        The form class should either derive from PluginForm,
-        or at least have a `get_config()` method.
+        The form class should either derive from PluginForm, or at least have a `get_config()` method.
+
+        Form classes without `fields` are treated the same way as if you'd return `None`,
+        i.e. no configuration form is presented to the user.
+
+        :return: Editor form class
+        :rtype: class[forms.Form]|None
         """
         # Could be overridden in suitably special subclasses.
         if self.fields:
             return self.editor_form_class
 
     @classmethod
-    def load(cls, identifier, default=None):
-        return get_identifier_to_object_map("xtheme_plugin").get(identifier, default)
+    def load(cls, identifier):
+        """
+        Get a plugin class based on the identifier from the `xtheme_plugin` provides registry.
+
+        :param identifier: Plugin class identifier
+        :type identifier: str
+        :return: A plugin class, or None
+        :rtype: class[Plugin]|None
+        """
+        return get_identifier_to_object_map("xtheme_plugin").get(identifier)
 
     @classmethod
     def get_plugin_choices(cls, empty_label=None):
+        """
+        Get a sorted list of 2-tuples (identifier and name) of available Xtheme plugins.
+
+        Handy for `<select>` boxen.
+
+        :param empty_label: Label for the "empty" choice. If falsy, no empty choice is prepended
+        :type empty_label: str|None
+        :return: List of 2-tuples
+        :rtype: Iterable[tuple[str, str]]
+        """
         choices = []
         if empty_label:
             choices.append(("", empty_label))
@@ -98,12 +121,31 @@ class Plugin(object):
 
 
 class TemplatedPlugin(Plugin):
+    # TODO: Document `TemplatedPlugin` better!
+    """
+    Convenience base class for plugins that just render a "sub-template" with a given context.
+    """
+
+    #: The template to render
     template_name = ""
+
+    #: Variables to copy from the parent context.
     inherited_variables = set()
+
+    #: Variables to copy from the plugin configuration
     config_copied_variables = set()
+
     engine = None  # template rendering engine
 
     def get_context_data(self, context):
+        """
+        Get a context dictionary from a Jinja2 context.
+
+        :param context: Jinja2 rendering context
+        :type context: jinja2.runtime.Context
+        :return: Dict of vars
+        :rtype: dict[str, object]
+        """
         vars = {"request": context.get("request")}
         for key in self.required_context_variables:
             vars[key] = context.get(key)
@@ -113,7 +155,7 @@ class TemplatedPlugin(Plugin):
             vars[key] = self.config.get(key)
         return vars
 
-    def render(self, context):
+    def render(self, context):  # doccov: ignore
         vars = self.get_context_data(context)
         if self.engine:
             template = self.engine.get_template(self.template_name)
@@ -123,6 +165,18 @@ class TemplatedPlugin(Plugin):
 
 
 def templated_plugin_factory(identifier, template_name, **kwargs):
+    """
+    A factory (akin to `modelform_factory`) to quickly create simple plugins.
+
+    :param identifier: The unique identifier for the new plugin.
+    :type identifier: str
+    :param template_name: The template file path this plugin should render
+    :type template_name: str
+    :param kwargs: Other arguments for the `TemplatedPlugin`/`Plugin` classes.
+    :type kwargs: dict
+    :return: New `TemplatedPlugin` subclass
+    :rtype: class[TemplatedPlugin]
+    """
     ns = {
         "identifier": identifier,
         "template_name": template_name,

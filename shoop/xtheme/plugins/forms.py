@@ -10,12 +10,15 @@ from django import forms
 
 
 class PluginForm(forms.Form):
+    """
+    Base class for plugin configuration forms.
+    """
     def __init__(self, **kwargs):
         self.plugin = kwargs.pop("plugin")
         super(PluginForm, self).__init__(**kwargs)
         self.populate()
 
-    def populate(self):  # pragma: no cover
+    def populate(self):  # pragma: no cover, doccov: ignore
         # Subclass hook (overriding __init__ all the time is such a bore)
         pass
 
@@ -39,11 +42,10 @@ class PluginForm(forms.Form):
 
 class GenericPluginForm(PluginForm):
     """
-    A generic form for Xtheme plugins; populates itself based on `fields`
-    in the plugin class.
+    A generic form for Xtheme plugins; populates itself based on `fields` in the plugin class.
     """
 
-    def populate(self):
+    def populate(self):  # doccov: ignore
         fields = self.plugin.fields
         if hasattr(fields, "items"):  # Quacks like a dict; that's fine too
             fields = fields.items()

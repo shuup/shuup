@@ -12,8 +12,30 @@ from shoop.core.fields import TaggedJSONField
 from django.utils.translation import ugettext_lazy as _
 
 
-class SavedViewConfigQuerySet(models.QuerySet):
+class SavedViewConfigQuerySet(models.QuerySet):  # doccov: ignore
     def appropriate(self, theme, view_name, draft):
+        """
+        Get an "appropriate" `SavedViewConfig` for the parameters given.
+
+        When draft mode is off:
+
+        * A PUBLIC SavedViewConfig is returned, or a new one in CURRENT_DRAFT status.
+
+        When draft mode is on:
+
+        * A CURRENT_DRAFT SavedViewConfig is returned, if one exists.
+        * If a PUBLIC SavedViewConfig exists, its data is copied into a new, unsaved CURRENT_DRAFT
+          SavedViewConfig.
+
+        :param theme: Theme instance
+        :type theme: shoop.xtheme.theme.Theme
+        :param view_name: View name string
+        :type view_name: str
+        :param draft: Draft mode flag
+        :type draft: bool
+        :return: SavedViewConfig (possibly not saved)
+        :rtype: SavedViewConfig
+        """
         svc_kwargs = dict(
             theme_identifier=theme.identifier,
             view_name=view_name

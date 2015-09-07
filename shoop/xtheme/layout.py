@@ -44,6 +44,12 @@ class LayoutCell(object):
 
     @property
     def plugin_name(self):
+        """
+        Get the name of the plugin in this cell for display purposes.
+
+        :return: Plugin name string
+        :rtype: str
+        """
         plugin_class = self.plugin_class
         return getattr(plugin_class, "name", "None")
 
@@ -115,6 +121,10 @@ class LayoutRow(object):
     # TODO: Add responsive hiding to full rows?
 
     def __init__(self, cells=None):
+        """
+        :param cells: Optional iterable of LayoutCells to populate this LayoutRow with.
+        :type rows: Iterable[LayoutCell]|None
+        """
         self.cells = []
         if cells:
             self.cells.extend(cells)
@@ -162,9 +172,13 @@ class LayoutRow(object):
 
     def add_cell(self, sizes=None):
         """
-        Add an empty cell to this row.
-        """
+        Add an empty cell to this row. Used by the editor API.
 
+        :param sizes: An optional size dict, see `LayoutCell`
+        :type sizes: dict|None
+        :return: The new layout cell
+        :rtype: LayoutCell
+        """
         cell = LayoutCell(plugin_identifier=None, sizes=sizes)
         self.cells.append(cell)
         return cell

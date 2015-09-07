@@ -21,6 +21,9 @@ class LayoutCellGeneralInfoForm(forms.Form):
         self.populate()
 
     def populate(self):
+        """
+        Populate the form with fields for size and plugin selection.
+        """
         sizes = ["sm", "md"]  # TODO: Parametrize? Currently Bootstrap dependent.
         sizes.extend(set(self.layout_cell.sizes) - set(sizes))
         self.sizes = sizes
@@ -38,12 +41,18 @@ class LayoutCellGeneralInfoForm(forms.Form):
         plugin_field.initial = self.layout_cell.plugin_identifier
 
     def save(self):
+        """
+        Save size configuration. Plugin configuration is done via JavaScript POST.
+        """
         data = self.cleaned_data
         for size in self.sizes:
             self.layout_cell.sizes[size] = data["size_%s" % size]
 
 
 class LayoutCellFormGroup(FormGroup):
+    """
+    Form group containing the LayoutCellGeneralInfoForm and a possible plugin-dependent configuration form.
+    """
     def __init__(self, **kwargs):
         self.layout_cell = kwargs.pop("layout_cell")
         assert isinstance(self.layout_cell, LayoutCell)

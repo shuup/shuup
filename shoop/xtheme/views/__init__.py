@@ -12,6 +12,8 @@ from shoop.xtheme.editing import set_edit_mode
 
 def xtheme_dispatch_command(request, command):
     """
+    Internal dispatch function.
+
     :param request: A request
     :type request: django.http.HttpRequest
     :param command: Command string

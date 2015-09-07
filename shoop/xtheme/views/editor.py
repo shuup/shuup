@@ -29,7 +29,7 @@ class EditorView(TemplateView):
         except (ValueError, KeyError):
             return None
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs):  # doccov: ignore
         ctx = super(EditorView, self).get_context_data(**kwargs)
         ctx["layout"] = self.layout
         ctx["csrf_token_str"] = get_token(self.request)
@@ -40,7 +40,7 @@ class EditorView(TemplateView):
         ctx["changed"] = self.changed
         return ctx
 
-    def dispatch(self, request, *args, **kwargs):
+    def dispatch(self, request, *args, **kwargs):  # doccov: ignore
         if not could_edit(request):
             raise Problem("No access to editing")
         self._populate_vars()
@@ -52,7 +52,7 @@ class EditorView(TemplateView):
             return HttpResponseRedirect("%s?%s" % (self.request.path, urlencode(get_args)))
         return super(EditorView, self).dispatch(request, *args, **kwargs)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):  # doccov: ignore
         command = request.POST.get("command")
         if command:
             dispatcher = getattr(self, "dispatch_%s" % command, None)

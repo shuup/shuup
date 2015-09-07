@@ -10,7 +10,19 @@ from shoop.apps.provides import get_provide_objects, get_identifier_to_object_ma
 from shoop.xtheme.models import ThemeSettings
 
 
+# TODO: Document how to create Xthemes
+
 class Theme(object):
+    """
+    Base class for all Xtheme themes.
+
+    This class does not directly correspond to a database object;
+    it's used in the rendering, etc. process.
+
+    It does, however, act as a container for a `ThemeSettings` object
+    that contains the actual persisted settings etc.
+    """
+
     # The identifier for this theme. Used for theme selection.
     # Must be set in actual themes!
     identifier = None
@@ -27,19 +39,35 @@ class Theme(object):
 
     # List of global placeholder names.
     # TODO: (These could be ignored in per-view editing, or something?)
+    # TODO: Document this
     global_placeholders = []
 
     # List of (name, FormField) pairs for theme configuration.
     # This might not be used if you override `get_configuration_form`.
+    # TODO: Document this
     fields = []
 
     def __init__(self, settings_obj=None):
+        """
+        Initialize this theme, with an optional `ThemeSettings` object
+
+        :param settings_obj: A theme settings object for this theme, if one exists.
+                             Passing this in will avoid extraneous database queries.
+        :type settings_obj: ThemeSettings|None
+        """
         self._settings_obj = None
         if settings_obj and settings_obj.theme_identifier == self.identifier:  # fine, let's accept that
             self._settings_obj = settings_obj
 
     @property
     def settings_obj(self):
+        """
+        Get a saved settings model for this theme. If one does not yet exist, an unsaved one is returned.
+
+        If one was passed in the ctor, naturally that one is returned.
+
+        :rtype: shoop.xtheme.models.ThemeSettings
+        """
         # Try to ensure this module can be imported from anywhere by lazily importing the model
         from shoop.xtheme.models import ThemeSettings
         if self._settings_obj is None:
@@ -49,18 +77,52 @@ class Theme(object):
         return self._settings_obj
 
     def set_current(self):
+        """
+        Set this theme as the active theme.
+        """
         self.settings_obj.activate()
 
     def get_setting(self, key, default=None):
+        """
+        Get a setting value for this theme.
+
+        :param key: Setting name
+        :type key: str
+        :param default: Default value, if the setting is not set
+        :type default: object
+        :return: Setting value
+        :rtype: object
+        """
         return self.settings_obj.get_setting(key, default)
 
     def get_settings(self):
+        """
+        Get all the currently set settings for the theme as a dict.
+
+        :return: Dict of settings
+        :rtype: dict
+        """
         return self.settings_obj.get_settings()
 
     def set_settings(self, *args, **kwargs):
+        """
+        Set a number of settings for this theme.
+
+        The arguments (*args, **kwargs) are exactly the same as those to `dict`.
+
+        Note: It's better to call this once than `set_setting` several times.
+        """
         self.settings_obj.update_settings(dict(*args, **kwargs))
 
     def set_setting(self, key, value):
+        """
+        Set a theme setting `key` to the value `value`.
+
+        :param key: Setting name
+        :type key: str
+        :param value: Setting value
+        :type value: object
+        """
         self.settings_obj.update_settings({key: value})
 
     def get_configuration_form(self, form_kwargs):
@@ -69,6 +131,7 @@ class Theme(object):
 
         By default, returns a GenericThemeForm (a ModelForm populated from `theme.fields`).
 
+        :param form_kwargs: The keyword arguments that should be used for initializing the form
         :type form_kwargs: dict
         :rtype: django.forms.ModelForm
         """
@@ -81,7 +144,18 @@ _current_theme_class = _not_set
 
 
 @contextmanager
-def override_current_theme_class(theme_class):
+def override_current_theme_class(theme_class=_not_set):
+    """
+    Context manager for overriding the currently active theme class for testing.
+
+    An instance of this class is then returned by `get_current_theme`.
+
+    A falsy value means `None` is returned from `get_current_theme`, which is also
+    useful for testing.
+
+    :param theme_class: A theme class object
+    :type theme_class: class[Theme]
+    """
     global _current_theme_class
     old_theme_class = _current_theme_class
     _current_theme_class = theme_class
@@ -145,6 +219,12 @@ def get_theme_by_identifier(identifier, settings_obj=None):
 
 
 def set_current_theme(identifier):
+    """
+    Activate a theme based on identifier.
+
+    :param identifier: Theme identifier
+    :type identifier: str
+    """
     theme = get_theme_by_identifier(identifier)
     if not theme:
         raise ValueError("Invalid theme identifier")

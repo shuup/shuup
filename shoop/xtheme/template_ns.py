@@ -13,12 +13,33 @@ from shoop.xtheme.theme import get_current_theme
 
 
 class XthemeNamespace(object):
+    """
+    A template helper namespace for Xtheme-related functionality.
+    """
+
     @contextfunction
     def get_view_name(self, context):
+        """
+        Get the current view's view name (used for identifying view configurations).
+
+        :param context: Implicit Jinja2 context
+        :type context: jinja2.runtime.Context
+        :return: View name string
+        :rtype: str
+        """
         return get_view_config(context).view_name
 
     @contextfunction
     def is_edit_mode(self, context):
+        """
+        Get the current edit mode status.
+
+        :param context: Implicit Jinja2 context
+        :type context: jinja2.runtime.Context
+        :return: Edit mode enable flag
+        :rtype: bool
+        """
+
         return is_edit_mode(context["request"])
 
     @contextfunction

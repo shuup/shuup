@@ -19,10 +19,16 @@ from shoop.xtheme.theme import get_current_theme, set_current_theme, get_theme_b
 
 
 class ActivationForm(forms.Form):
+    """
+    A very simple form for activating a theme.
+    """
     activate = forms.CharField()
 
 
 class ThemeConfigView(FormView):
+    """
+    A view for listing and activating themes.
+    """
     template_name = "shoop/xtheme/admin/config.jinja"
     form_class = ActivationForm
 
@@ -43,6 +49,9 @@ class ThemeConfigView(FormView):
 
 
 class ThemeConfigDetailView(CreateOrUpdateView):
+    """
+    A view for configuring a single theme.
+    """
     model = ThemeSettings
     template_name = "shoop/xtheme/admin/config_detail.jinja"
     form_class = forms.Form
@@ -54,6 +63,12 @@ class ThemeConfigDetailView(CreateOrUpdateView):
         return ts
 
     def get_theme(self):
+        """
+        Get the theme object to configure.
+
+        :return: Theme object
+        :rtype: shoop.xtheme.theme.Theme
+        """
         return get_theme_by_identifier(
             identifier=self.kwargs["theme_identifier"],
             settings_obj=self.object

@@ -46,7 +46,7 @@ def get_view_config(context):
     return config
 
 
-def render_placeholder(context, placeholder_name, default_layout=None, template_name=None):
+def render_placeholder(context, placeholder_name, default_layout=None, template_name=None):  # doccov: noargs
     """
     Render a placeholder in a given context.
 
@@ -65,6 +65,11 @@ def render_placeholder(context, placeholder_name, default_layout=None, template_
 
 
 class PlaceholderRenderer(object):
+    """
+    Main class for materializing a placeholder's contents during template render time.
+    """
+    # TODO: Maybe make this pluggable per-theme?
+
     def __init__(self, context, placeholder_name, default_layout=None, template_name=None):
         """
         :param context: Rendering context
@@ -90,6 +95,12 @@ class PlaceholderRenderer(object):
         self.edit = (is_base and is_edit_mode(context["request"]))
 
     def render(self):
+        """
+        Get this placeholder's rendered contents.
+
+        :return: Rendered markup.
+        :rtype: markupsafe.Markup
+        """
         wrapper_start = "<div%s>" % get_html_attrs(self._get_wrapper_attrs())
         buffer = []
         write = buffer.append

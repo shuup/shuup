@@ -16,6 +16,9 @@ class ViewConfig(object):
     A view configuration.
 
     Contains layout and plugin configuration for all placeholders in a given view.
+
+    This class does not directly correspond to a database model; it may act as a
+    container for `SavedViewConfig` objects, and wraps the `SavedViewConfig` API.
     """
 
     def __init__(self, theme, view_name, draft):
@@ -37,6 +40,8 @@ class ViewConfig(object):
     @property
     def saved_view_config(self):
         """
+        Get a saved view config model depending on the current parameters.
+
         :return: A SavedViewConfig object for the current theme/view/draft mode, or None
         :rtype: shoop.xtheme.models.SavedViewConfig|None
         """
@@ -94,6 +99,12 @@ class ViewConfig(object):
         return False
 
     def publish(self):
+        """
+        Publish this revision of the view configuration as the currently public one.
+
+        :return: Success flag
+        :rtype: bool
+        """
         svc = self.saved_view_config
         if not svc:
             raise ValueError("Unable to publish view config. Is a theme set?")
@@ -102,6 +113,12 @@ class ViewConfig(object):
         return True
 
     def revert(self):
+        """
+        Revert this revision of the view configuration, if it's a draft.
+
+        :return: Success flag
+        :rtype: bool
+        """
         svc = self.saved_view_config
         if not svc:
             raise ValueError("Unable to revert view config. Is a theme set?")
@@ -111,6 +128,14 @@ class ViewConfig(object):
         return True
 
     def save_placeholder_layout(self, placeholder_name, layout):
+        """
+        Save the given layout as the layout for the given placeholder.
+
+        :param placeholder_name: The placeholder name.
+        :type placeholder_name: str
+        :param layout: Layout object (or dict)
+        :type layout: Layout|dict
+        """
         svc = self.saved_view_config
         if not svc:
             raise ValueError("Unable to retrieve view config; unable to save data. Is a theme set?")
