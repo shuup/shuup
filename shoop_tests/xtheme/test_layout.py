@@ -39,7 +39,7 @@ def test_layout_rendering(rf):
             expect = """
             <div class="xt-ph" id="xt-ph-test">
             <div class="row xt-ph-row">
-            <div class="col-md-12 hidden-xs xt-ph-cell">%s</div>
+            <div class="col-md-12 hidden-xs xt-ph-cell"><p>%s</p></div>
             </div>
             </div>
             """ % gibberish
