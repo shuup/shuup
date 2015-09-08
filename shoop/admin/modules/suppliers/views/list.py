@@ -28,8 +28,8 @@ class SupplierListView(PicotableListView):
             )
         ),
         Column("type", _(u"Type")),
-        Column("module_identifier", _(u"Module"), display="get_module_display", sortable=False)
+        Column("module_identifier", _(u"Module"), display="get_module_display", sortable=True)
     ]
 
     def get_module_display(self, instance):
-        return instance.module.name
+        return instance.module.name or _("No %s module") % self.model._meta.verbose_name
