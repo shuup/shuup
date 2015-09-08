@@ -113,42 +113,6 @@
     .folder-contents {
         min-height: 350px;
 
-        &.fd-zone {
-            position: relative;
-            transition: background 0.5s;
-            .empty-folder, .upload-hint {
-                transition: border-color, color 0.5s;
-            }
-        }
-
-        &.fd-zone.over {
-            .empty-folder {
-                visibility: hidden;
-                color: #fff;
-            }
-            .upload-hint {
-                opacity: 0;
-            }
-            .upload-indicator {
-                z-index: 10;
-                opacity: 1;
-                visibility: visible;
-                @keyframes uploadIndicator {
-                    0% { transform: scale(1) }
-                    40% { transform: scale(0.9) }
-                    100% { transform: scale(1) }
-                }
-                @-webkit-keyframes uploadIndicator {
-                    0% { transform: scale(1) }
-                    40% { transform: scale(0.9) }
-                    100% { transform: scale(1) }
-                }
-                .image {
-                    animation: uploadIndicator 1.5s infinite;
-                }
-            }
-        }
-
         .grid-folder, .grid-file {
             margin-bottom: 60px;
 
@@ -247,4 +211,56 @@
         }
     }
 
+}
+
+
+.fd-zone {
+    position: relative;
+    transition: background 0.5s;
+    .empty-folder, .upload-hint {
+        transition: border-color, color 0.5s;
+    }
+    &.over {
+        &.grid-folder {
+            background: fade(@brand-info, 85%);
+        }
+
+        .empty-folder {
+            visibility: hidden;
+            color: #fff;
+        }
+        .upload-hint {
+            opacity: 0;
+        }
+        .upload-indicator {
+            z-index: 10;
+            opacity: 1;
+            visibility: visible;
+            @keyframes uploadIndicator {
+                0% {
+                    transform: scale(1)
+                }
+                40% {
+                    transform: scale(0.9)
+                }
+                100% {
+                    transform: scale(1)
+                }
+            }
+            @-webkit-keyframes uploadIndicator {
+                0% {
+                    transform: scale(1)
+                }
+                40% {
+                    transform: scale(0.9)
+                }
+                100% {
+                    transform: scale(1)
+                }
+            }
+            .image {
+                animation: uploadIndicator 1.5s infinite;
+            }
+        }
+    }
 }

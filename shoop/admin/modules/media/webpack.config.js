@@ -21,11 +21,10 @@ module.exports = {
     },
     module: {
         loaders: [
-            // compact=false will disable the annoying Filedrop complaint
             {
                 test: /\.js(x?)$/,
                 exclude: /(node_modules|bower_components)/,
-                loader: 'babel-loader?compact=false&loose=all'
+                loader: 'babel-loader?loose=all'
             },
             {
                 test: /\.less/,
@@ -36,16 +35,7 @@ module.exports = {
             {
                 test: /\.(png|jpg|woff)$/,
                 loader: 'url-loader'
-            },
-            {
-                test: /filedrop\.js$/,
-                loader: 'imports?root=>window'
             }
         ]
-    },
-    resolve: {
-        alias: {
-            "filedrop": __dirname + "/bower_components/filedrop/filedrop.js"
-        }
     }
 };

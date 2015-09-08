@@ -7,12 +7,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 const m = require("mithril");
-const FileUpload = require("../FileUpload");
+const {supportsDnD} = require("../util/dragDrop");
 
 var NO_DND_UPLOAD_HINT = "Click the <strong>Upload</strong> button to upload files.";
 var DND_UPLOAD_HINT = "<span>Drag and drop</span> files here<br> or click the <span>Upload</span> button.";
 
-if (!FileUpload.supportsDnD) {
+if (!supportsDnD) {
     DND_UPLOAD_HINT = NO_DND_UPLOAD_HINT;
 }
 

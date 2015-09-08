@@ -10,16 +10,21 @@ const m = require("mithril");
 const _ = require("lodash");
 const fileLink = require("./fileLink");
 const folderLink = require("./folderLink");
+const {dropzoneConfig} = require("../util/dragDrop");
 
 export default function(ctrl, folders, files) {
     var folderItems = _.map(folders, function(folder) {
-        return m("div.col-xs-6.col-md-4.col-lg-3.grid-folder", {key: "folder-" + folder.id}, [
+        return m("div.col-xs-6.col-md-4.col-lg-3.grid-folder.fd-zone", {
+            key: "folder-" + folder.id,
+            "data-folder-id": folder.id,
+            config: dropzoneConfig(ctrl),
+        }, [
             m("a.file-preview", {
                 onclick: function() {
                     ctrl.setFolder(folder.id);
                     return false
                 },
-                href: "#",
+                href: "#"
             }, m("i.fa.fa-folder-open.folder-icon")),
             m("div.file-name", folderLink(ctrl, folder))
         ]);

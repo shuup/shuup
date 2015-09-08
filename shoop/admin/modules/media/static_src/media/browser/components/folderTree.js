@@ -8,7 +8,7 @@
  */
 const m = require("mithril");
 const _ = require("lodash");
-
+const {dropzoneConfig} = require("../util/dragDrop");
 
 export default function(ctrl) {
     var currentFolderId = ctrl.currentFolderId();
@@ -43,9 +43,15 @@ export default function(ctrl) {
             "current": isCurrent,
             "in-path": inPath,
             "has-children": (folder.children.length > 0),
+            "fd-zone": true
         }).pick(_.identity).keys().join(" ");
         return m("li",
-            {"key": folder.id, "className": className},
+            {
+                "key": folder.id,
+                "className": className,
+                "data-folder-id": folder.id,
+                "config": dropzoneConfig(ctrl)
+            },
             [nameLink, (childLis && childLis.length ? m("ul", childLis) : null)]
         );
     }

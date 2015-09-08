@@ -9,16 +9,12 @@ from __future__ import unicode_literals
 
 import json
 
-from django.conf import settings
-from django.core.files.uploadedfile import InMemoryUploadedFile, TemporaryUploadedFile
 from django.http.response import JsonResponse
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 from filer.models import File, Folder
 from mptt.templatetags.mptt_tags import cache_tree_children
-from six import BytesIO
-
 from shoop.utils.filer import filer_file_from_upload, filer_image_from_upload
 
 
@@ -59,40 +55,6 @@ def _filer_folder_to_json_dict(folder, children=None):
         "name": folder.name if folder else "Root",
         "children": [_filer_folder_to_json_dict(child) for child in children]
     }
-
-
-def handle_filedrop_upload(request):
-    """
-    Squeeze out an UploadedFile from a request sent through FileDrop.js.
-
-    FileDrop.js's AJAX mode passes the actual file data
-    as an unembellished binary stream as the POST payload
-    so we need to do some magic that normal (multipart/form-data)
-    uploads would not require.
-
-    Here's that magic.
-
-    :param request: HTTP request.
-    :type request: django.http.HttpRequest
-    :return: Uploaded file.
-    :rtype: django.core.files.uploadedfile.UploadedFile
-    """
-
-    content_type = request.META.get("HTTP_X_FILE_TYPE", "")
-    filename = request.META["HTTP_X_FILE_NAME"]
-    size = int(request.META["HTTP_X_FILE_SIZE"])
-
-    if size >= settings.FILE_UPLOAD_MAX_MEMORY_SIZE:
-        upload_file = TemporaryUploadedFile(
-            name=filename, content_type=content_type, size=size, charset="binary"
-        )
-    else:
-        upload_file = InMemoryUploadedFile(
-            name=filename, content_type=content_type, size=size, charset="binary", field_name="none", file=BytesIO()
-        )
-
-    upload_file.write(request.read())
-    return upload_file
 
 
 class MediaBrowserView(TemplateView):
@@ -169,16 +131,26 @@ class MediaBrowserView(TemplateView):
 
     def handle_upload(self):
         request = self.request
-        folder_id = int(request.REQUEST["folder_id"])
-        folder = Folder.objects.get(pk=folder_id)
-        upload_file = handle_filedrop_upload(request)
 
         try:
+            folder_id = int(request.REQUEST["folder_id"])
+            if folder_id != 0:
+                folder = Folder.objects.get(pk=folder_id)
+            else:
+                folder = None  # Root folder upload. How bold!
+            upload_file = request.FILES["file"]
+
             if upload_file.content_type.startswith("image/"):
                 filer_file = filer_image_from_upload(request, path=folder, upload_data=upload_file)
             else:
                 filer_file = filer_file_from_upload(request, path=folder, upload_data=upload_file)
         except Exception as exc:
-            return JsonResponse({"error": force_text(exc)})
+            return JsonResponse({"message": force_text(exc)})
 
-        return JsonResponse({"file": _filer_file_to_json_dict(filer_file)})
+        return JsonResponse({
+            "file": _filer_file_to_json_dict(filer_file),
+            "message": _("%(file)s uploaded to %(folder)s") % {
+                "file": filer_file.label,
+                "folder": (folder.name if folder else _("Root"))
+            }
+        })

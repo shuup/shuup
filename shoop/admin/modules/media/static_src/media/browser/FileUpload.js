@@ -6,59 +6,112 @@
  * This source code is licensed under the AGPLv3 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var fd = require("filedrop");
-export var supportsDnD = (window.File && window.FileList && window.FileReader);
+
+const m = require("mithril");
+const _ = require("lodash");
 
 const queue = [];
+const queueCompleteCallbacks = [];
 
-
-function processQueue(done) {
-    if (queue.length === 0) {
-        return;
+function handleFileXhrComplete(xhr, file, error) {
+    if (xhr.status >= 400) {
+        error = true;
     }
-    var spec = queue.shift();
-    var file = spec.file;
-    var url = spec.url;
-    file.event("xhrSetup", function(xhr) {
-        xhr.setRequestHeader("X-CSRFToken", window.ShoopAdminConfig.csrf);
-    });
-    file.event("done", function(xhr) {
-        var data = JSON.parse(xhr.responseText);
-        if (data.error) {
-            alert(data.error);
+    if (error) {
+        file.status = "error";
+
+    } else {
+        file.status = "done";
+        file.progress = 100;
+    }
+    setTimeout(processQueue, 50);  // Continue soon.
+    var messageText = null;
+    try {
+        const responseJson = JSON.parse(xhr.responseText);
+        if (responseJson && responseJson.message) {
+            messageText = responseJson.message;
         }
-        if(done) {
-            done(file, queue.length);
+    } catch (e) {
+        console.log(e); // invalid JSON? pffff.
+    }
+    if (window.Messages) {
+        if (error) {
+            window.Messages.enqueue({tags: "error", text: "Error: " + file.name + ":" + messageText});
+        } else {
+            if (!messageText) {
+                messageText = "Uploaded: " + file.name;
+            }
+            window.Messages.enqueue({tags: "success", text: messageText});
         }
-        processQueue(done);
-    });
-    file.sendTo(url);
+    }
 }
 
+function beginUpload(file) {
+    if (file.status !== "new") {  // Already uploaded? Huh.
+        return false;
+    }
+    file.progress = 0;
+    file.status = "uploading";
 
-function createMessageShowingDoneFunction(done) {
-    return function(file, queueLength) {  // eslint-disable-line no-unused-vars
-        if(window.Messages) {
-            window.Messages.enqueue({tags: "success", text: "Uploaded: " + file.name});
+    const formData = new FormData();
+    formData.append("file", file.nativeFile);
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", file.url);
+    xhr.setRequestHeader("X-CSRFToken", window.ShoopAdminConfig.csrf);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState !== 4) {
+            // Ready state 4:
+            // .. The data transfer has been completed or something went
+            // .. wrong during the transfer (e.g. infinite redirects).
+            // That's the only case we want to handle, so return otherwise.
+            return;
         }
-        done();
+        handleFileXhrComplete(xhr, file, false);
     };
+    xhr.onerror = function() {
+        handleFileXhrComplete(xhr, file, true);
+    };
+    xhr.upload.onprogress = function(event) {
+        if (event.lengthComputable) {
+            file.progress = (event.loaded / event.total);
+        } else {
+            file.progress = file.progress + (100 - file.progress) / 2;
+        }
+    };
+    xhr.send(formData);
 }
 
-/**
- * Upload native HTML 5 files
- * @param uploadUrl
- * @param nativeFiles Array[File]
- * @param done Function
- */
-export function uploadNativeFiles(uploadUrl, nativeFiles, done) {
-    /*for(var i = 0; i < nativeFiles.length; i++) {
-        var nativeFile = nativeFiles[i];
-        queue.push({url: uploadUrl, file: new fd.File(nativeFile)});
-    }*/
-    processQueue(createMessageShowingDoneFunction(done));
+export function enqueue(uploadUrl, file) {
+    queue.push({
+        url: uploadUrl,
+        name: file.name,
+        nativeFile: file,
+        status: "new",  // "new"/"uploading"/"error"/"done"
+        progress: 0
+    });
 }
 
-export function dropzoneConfig(ctrl) {
-    // TODO: Reimplement me...
+export function enqueueMultiple(uploadUrl, files) {
+    _.each(files, (file) => {
+        enqueue(uploadUrl, file);
+    });
+}
+
+export function addQueueCompletionCallback(callback) {
+    queueCompleteCallbacks.push(callback);
+}
+
+export function processQueue() {
+    if(_.any(queue, (file) => file.status === "uploading")) {
+        return;  // Don't allow uploading multiple files simultaneously though...
+    }
+    const nextFile = _.detect(queue, (file) => (file.status === "new"));
+    if (nextFile) {
+        beginUpload(nextFile);
+    } else {
+        while (queueCompleteCallbacks.length) {
+            const cb = queueCompleteCallbacks.shift();
+            cb();
+        }
+    }
 }

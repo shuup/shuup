@@ -88,9 +88,9 @@ export function controller() {
         });
     };
 
-    ctrl.getUploadUrl = function() {
-        var uploadUrl = window.location.pathname;
-        var folderId = ctrl.currentFolderId();
+    ctrl.getUploadUrl = function(folderId) {
+        const uploadUrl = window.location.pathname;
+        folderId = folderId === undefined ? ctrl.currentFolderId() : folderId;
         return uploadUrl + "?action=upload&folder_id=" + folderId;
     };
     ctrl.reloadFolderContentsSoon = _.debounce(ctrl.reloadFolderContents, 1000);

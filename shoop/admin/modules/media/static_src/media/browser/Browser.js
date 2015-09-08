@@ -9,6 +9,7 @@
 var m = require("mithril");
 var BrowserView = require("./BrowserView");
 var FileUpload = require("./FileUpload");
+const dragDrop = require("./util/dragDrop");
 var controller = null;
 
 export function init() {
@@ -23,6 +24,8 @@ export function init() {
         controller.setFolder(0);
     }
     controller.reloadFolderTree();
+
+    dragDrop.disableIntraPageDragDrop();
 }
 
 export function newFolder() {
@@ -32,15 +35,14 @@ export function newFolder() {
 export function setupUploadButton(element) {
     var input = document.createElement("input");
     input.type = "file";
+    input.multiple = true;
     input.className = "invisible-file-input";
     input.addEventListener("change", function(event) {
-        FileUpload.uploadNativeFiles(
-            controller.getUploadUrl(),
-            event.target.files,
-            controller.reloadFolderContentsSoon
-        );
+        FileUpload.enqueueMultiple(controller.getUploadUrl(), event.target.files);
+        FileUpload.addQueueCompletionCallback(() => { controller.reloadFolderContentsSoon(); });
+        FileUpload.processQueue();
     });
     element.style.width = element.offsetWidth + "px";
     element.style.height = element.offsetHeight + "px";
     element.appendChild(input);
-};
+}

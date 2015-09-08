@@ -13,7 +13,7 @@ const emptyFolderView = require("./emptyFolderView");
 const gridFileView = require("./gridFileView");
 const listFileView = require("./listFileView");
 const responsiveUploadHint = require("./responsiveUploadHint");
-const FileUpload = require("../FileUpload");
+const {dropzoneConfig} = require("../util/dragDrop");
 
 export default function folderView(ctrl) {
     var folderData = ctrl.folderData();
@@ -52,7 +52,10 @@ export default function folderView(ctrl) {
         }
         uploadHint = m("div.upload-hint", responsiveUploadHint);
     }
-    var container = m("div.folder-contents", {config: FileUpload.dropzoneConfig(ctrl)}, [
+    var container = m("div.folder-contents.fd-zone", {
+        "data-folder-id": folderData.id,
+        config: dropzoneConfig(ctrl),
+    }, [
         contents,
         uploadHint,
         m("div.upload-indicator", [
