@@ -1,5 +1,7 @@
+*.css.map
 *.egg
 *.egg-info/
+*.js.map
 *.log
 *.manifest
 *.mo
