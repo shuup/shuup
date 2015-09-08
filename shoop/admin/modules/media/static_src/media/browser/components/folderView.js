@@ -14,6 +14,7 @@ const gridFileView = require("./gridFileView");
 const listFileView = require("./listFileView");
 const responsiveUploadHint = require("./responsiveUploadHint");
 const {dropzoneConfig} = require("../util/dragDrop");
+const images = require("./images");
 
 export default function folderView(ctrl) {
     var folderData = ctrl.folderData();
@@ -60,7 +61,7 @@ export default function folderView(ctrl) {
         uploadHint,
         m("div.upload-indicator", [
             m("div.image",
-                m("img", {src: require("!url!./file-icons.svg")})
+                m("img", {src: images.uploadIndicator})
             ),
             m("div.text", [
                 m.trust("Drop your files here")
