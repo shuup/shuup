@@ -51,6 +51,7 @@ INSTALLED_APPS = add_enabled_addons(SHOOP_ENABLED_ADDONS_FILE, (
     'rest_framework',
     'shoop.api',
     'shoop.xtheme',
+    'shoop.simple_pricing'
 ))
 
 MIDDLEWARE_CLASSES = (

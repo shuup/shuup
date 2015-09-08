@@ -69,9 +69,12 @@ class SimplePricingForm(forms.Form):
         if clear:
             SimpleProductPrice.objects.filter(product=self.product, group=group, shop=shop).delete()
         else:
-            spp, _ = SimpleProductPrice.objects.get_or_create(product=self.product, group=group, shop=shop)
-            spp.price = value
-            spp.save()
+            (spp, created) = SimpleProductPrice.objects.get_or_create(
+                product=self.product, group=group, shop=shop,
+                defaults={'price': value})
+            if not created:
+                spp.price = value
+                spp.save()
 
     def save(self):
         if not self.has_changed():  # No changes, so no need to do anything.
