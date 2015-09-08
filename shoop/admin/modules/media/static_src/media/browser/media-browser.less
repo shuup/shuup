@@ -264,3 +264,49 @@
         }
     }
 }
+
+.queue-view {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 40px;
+    background: #eee;
+    padding: 5px;
+    box-shadow: 0 -2px 5px 0 rgba(0, 0, 0, 0.16), 0 -2px 10px 0 rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    transition: transform 0.4s;
+    &.done {
+        transform: translateY(100%)
+    }
+    .queue-file {
+        border: 2px solid #aaa;
+        background: #fff;
+        transition: background 0.5s;
+        &.uploading {
+            background: fade(@brand-primary, 20%);
+        }
+        &.error {
+            background: fade(@brand-danger, 20%);
+        }
+        &.done {
+            background: fade(@brand-success, 20%);
+            .qf-progress {
+                opacity: 0
+            }
+        }
+
+        border-radius: 4px;
+        float: left;
+        margin-right: 4px;
+        .qf-name {
+            padding: 3px;
+        }
+        .qf-progress {
+            height: 5px;
+            background: @brand-primary;
+            border-radius: 2px;
+            transition: width 0.1s, opacity 1s;
+        }
+    }
+}
