@@ -8,7 +8,7 @@
  */
 const m = require("mithril");
 const _ = require("lodash");
-const fileLink = require("./fileLink");
+const wrapFileLink = require("./wrapFileLink");
 const folderLink = require("./folderLink");
 const {dropzoneConfig} = require("../util/dragDrop");
 const images = require("./images");
@@ -34,11 +34,10 @@ export default function(ctrl, folders, files) {
         return m(
             "div.col-xs-6.col-md-4.col-lg-3.grid-file",
             {key: file.id},
-            m("a.file-preview",
-                {href: file.url, target: "_blank"},
+            wrapFileLink(file, "a.file-preview", [,
                 m("img.img-responsive", {src: file.thumbnail || images.defaultThumbnail}),
-                m("div.file-name", fileLink(file))
-            )
+                m("div.file-name", file.name)
+            ])
         );
     });
     return m("div.row", folderItems.concat(fileItems));

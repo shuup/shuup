@@ -9,7 +9,7 @@
 const _ = require("lodash");
 const m = require("mithril");
 const moment = require("moment");
-const fileLink = require("./fileLink");
+const wrapFileLink = require("./wrapFileLink");
 const folderLink = require("./folderLink");
 
 
@@ -21,7 +21,7 @@ export default function(ctrl, folders, files) {
     });
     var fileItems = _.map(files, function(file) {
         return m("tr", {key: file.id}, [
-            m("td", fileLink(file)),
+            m("td", wrapFileLink(file)),
             m("td.text-right", file.size),
             m("td.text-right", moment(file.date).format())
         ]);
