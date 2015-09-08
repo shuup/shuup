@@ -7,7 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 from contextlib import contextmanager
 from shoop.apps.provides import get_provide_objects, get_identifier_to_object_map
-from shoop.xtheme.models import ThemeSettings
 
 
 # TODO: Document how to create Xthemes
@@ -68,7 +67,7 @@ class Theme(object):
 
         :rtype: shoop.xtheme.models.ThemeSettings
         """
-        # Try to ensure this module can be imported from anywhere by lazily importing the model
+        # Ensure this module can be imported from anywhere by lazily importing the model
         from shoop.xtheme.models import ThemeSettings
         if self._settings_obj is None:
             self._settings_obj = ThemeSettings.objects.filter(theme_identifier=self.identifier).first()
@@ -182,6 +181,8 @@ def get_current_theme(request=None):
     theme = None
 
     try:
+        # Ensure this module can be imported from anywhere by lazily importing the model
+        from shoop.xtheme.models import ThemeSettings
         ts = ThemeSettings.objects.filter(active=True).first()
     except Exception as exc:
         # This is unfortunate and weird, but I don't want other tests to depend
