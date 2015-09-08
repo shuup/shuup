@@ -14,6 +14,7 @@ class ResourceInjectorPlugin(Plugin):
     identifier = "inject"
     message = "I've injected some resources into this page."
     meta_markup = "<meta data-meta=\"so meta\">"
+    editor_form_class = None  # Explicitly no form class here :)
 
     def render(self, context):
         add_resource(context, "body_start", "://example.com/js.js")

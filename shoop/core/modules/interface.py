@@ -10,7 +10,7 @@ from __future__ import unicode_literals, with_statement
 import six
 from django.utils.translation import ugettext_lazy as _
 
-from shoop.apps.provides import get_provide_specs_and_objects
+from shoop.apps.provides import get_provide_specs_and_objects, get_provide_objects
 from shoop.utils.importing import load
 from shoop.utils.text import force_ascii
 
@@ -54,8 +54,12 @@ class ModuleInterface(object):
             empty_label = _('No Choice')
         choices = [("", empty_label)]
 
-        for impl_id, spec in cls.get_module_implementation_map().items():
-            choices.append((impl_id, load(spec).name or impl_id))
+        for module in get_provide_objects(cls.module_provides_key):
+            if module.identifier:
+                choices.append((
+                    module.identifier,
+                    getattr(module, "name", None) or module.identifier
+                ))
         choices.sort()
         return choices
 

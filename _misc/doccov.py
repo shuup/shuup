@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import argparse
+import linecache
 import logging
 import re
 import sys
@@ -27,6 +28,7 @@ def nl2br(eval_ctx, value):
     if eval_ctx.autoescape:
         result = jinja2.Markup(result)
     return result
+
 
 REPORT_TEMPLATE = """
 <!DOCTYPE html>
@@ -116,7 +118,22 @@ IGNORED_FUNCTIONS = set([
     '__le__', '__loader__', '__lshift__', '__lt__', '__mod__',
     '__mul__', '__name__', '__ne__', '__neg__', '__not__', '__or__',
     '__package__', '__pos__', '__pow__', '__rshift__', '__setitem__',
-    '__spec__', '__sub__', '__truediv__', '__xor__'
+    '__spec__', '__sub__', '__truediv__', '__xor__',
+    # The usual suspects
+    '__str__',
+    '__repr__',
+    # CBV generics:
+    "dispatch",
+    "form_invalid",
+    "form_valid",
+    "get",
+    "get_context_data",
+    "get_form",
+    "get_form_class",
+    "get_form_kwargs",
+    "get_object",
+    "get_success_url",
+    "post",
 ])
 
 IGNORED_CLASSES = set([
@@ -130,17 +147,92 @@ IGNORED_FIRST_ARGS = set([
 
 IGNORED_ARGS = set([])
 
-NAMES_THAT_DONT_NEED_DOCS = set([
-    "__init__"
-])
-
 ARG_RE = re.compile(r":param\s+([a-z_0-9]+)", re.I)
 
 INTERNAL_NAME_RE = re.compile("^_[^_].+$")
 
+DOCCOV_DIRECTIVE_COMMENT_RE = re.compile("doccov:\s*(.+)", re.I)
+
+
+class ReturnValueVisitor(ast.NodeVisitor):
+    def __init__(self):
+        self.returned_values = set()
+
+    @property
+    def has_valueful_return(self):
+        return bool(self.returned_values)
+
+    def visit_Return(self, node):  # noqa (N802)
+        retval = node.value
+        if retval:
+            self.returned_values.add(retval)
+
+
+class Validator(object):
+    disabling_directives = []
+
+    def validate(self, docinfo):
+        pass
+
+
+class GenericDocstringValidator(Validator):
+    def validate(self, docinfo):
+        docstring = docinfo.docstring
+        if docstring:
+            if len(docstring) < 15:
+                yield "Docstring too short"
+            sep = (".\n" if "\n" in docstring else ".")
+            if sep not in docstring:
+                yield "Docstring doesn't seem to have an opening sentence"
+        else:
+            if not self.can_elide_docstring(docinfo):
+                yield "Docstring missing"
+
+    def can_elide_docstring(self, docinfo):
+        if docinfo.name == "__init__" and not docinfo.required_args:
+            return True
+        return False
+
+
+class ArgValidator(Validator):
+    disabling_directives = ("noargs",)
+
+    def validate(self, docinfo):
+        for arg in sorted(docinfo.missing_args):
+            yield u"Missing mention of arg `%s`" % arg
+        for arg in sorted(docinfo.extraneous_args):
+            yield u"Extraneous mention of arg `%s`" % arg
+
+
+class ReturnValidator(Validator):
+    disabling_directives = ("noreturn",)
+
+    def validate(self, docinfo):
+        node = docinfo.node
+        docstring = docinfo.docstring
+        if not isinstance(node, ast.FunctionDef):
+            return
+        rvv = ReturnValueVisitor()
+        rvv.visit(node)
+        if rvv.has_valueful_return:
+            if not (":return" in docstring or ":rtype" in docstring):
+                yield u"Undocumented return value(s)"
+
 
 class DocInfo(object):
-    def __init__(self, node):
+    validator_classes = [
+        GenericDocstringValidator,
+        ArgValidator,
+        ReturnValidator
+    ]
+
+    def __init__(self, node, filename):
+        self.node = node
+        self.filename = filename
+        self.directives = ""
+        directive_match = DOCCOV_DIRECTIVE_COMMENT_RE.search(linecache.getline(filename, node.lineno))
+        if directive_match:
+            self.directives = directive_match.group(1).lower()
         self.name = getattr(node, "name", None) or ""
         self.docstring = (self.parse_docstring(node) or u"").strip()
         self.named_args = ([a.arg for a in node.args.args] if hasattr(node, "args") else [])
@@ -150,26 +242,29 @@ class DocInfo(object):
         self.required_args = set(arg for arg in self.named_args if arg not in IGNORED_ARGS)
         self.mentioned_args = set(self.parse_arg_mentions(self.docstring))
         self.missing_args = self.required_args - self.mentioned_args
-        self.extraneous_args = self.mentioned_args - self.required_args
+        self.extraneous_args = self.mentioned_args - self.required_args - set(["args", "kwargs"])
         self.validation_errors = list(self.validate())
         self.valid = not self.validation_errors
 
-    def validate(self):
+    def _prevalidate(self):
+        if "migrations" in self.filename:  # Nothing in migration files is documentation-worthwhile
+            return False
+        if "ignore" in self.directives:
+            return False
         if INTERNAL_NAME_RE.match(self.name):
+            return False
+        return True
+
+    def validate(self):
+        if not self._prevalidate():
             return
-        if self.docstring:
-            if len(self.docstring) < 15:
-                yield "Docstring too short"
-            sep = (".\n" if "\n" in self.docstring else ".")
-            if sep not in self.docstring:
-                yield "Docstring doesn't seem to have an opening sentence"
-        else:
-            if not self.can_elide_docstring():
-                yield "Docstring missing"
-        for arg in sorted(self.missing_args):
-            yield u"Missing mention of arg `%s`" % arg
-        for arg in sorted(self.extraneous_args):
-            yield u"Extraneous mention of arg `%s`" % arg
+
+        for validator_class in self.validator_classes:
+            validator = validator_class()
+            if any((directive in self.directives) for directive in validator_class.disabling_directives):
+                continue
+            for error in validator.validate(self):
+                yield error
 
     @staticmethod
     def parse_docstring(node):
@@ -182,14 +277,10 @@ class DocInfo(object):
     def parse_arg_mentions(docstring):
         return set(m.group(1) for m in ARG_RE.finditer(docstring))
 
-    def can_elide_docstring(self):
-        if self.name == "__init__" and not self.required_args:
-            return True
-        return False
-
 
 class DocStringVisitor(ast.NodeVisitor):
-    def __init__(self):
+    def __init__(self, filename):
+        self.filename = filename
         self.objects = {}
         self._class_stack = []
 
@@ -208,12 +299,12 @@ class DocStringVisitor(ast.NodeVisitor):
     def visit_FunctionDef(self, node):  # noqa (N802)
         if node.name in IGNORED_FUNCTIONS:
             return
-        self.objects[self._get_name(node)] = DocInfo(node)
+        self.objects[self._get_name(node)] = DocInfo(node, self.filename)
 
     def visit_ClassDef(self, node):  # noqa (N802)
         if node.name in IGNORED_CLASSES:
             return
-        self.objects[self._get_name(node)] = DocInfo(node)
+        self.objects[self._get_name(node)] = DocInfo(node, self.filename)
         self._class_stack.append(node)
         self.generic_visit(node)
         self._class_stack.pop(-1)
@@ -237,7 +328,7 @@ class DocCov(object):
             except SyntaxError:
                 self.log.exception("Can't parse %s" % filename)
                 return
-        visitor = DocStringVisitor()
+        visitor = DocStringVisitor(filename=filename)
         visitor.visit(tree)
         self.objects_by_file[filename] = visitor.objects
 
@@ -276,18 +367,19 @@ class DocCov(object):
             grand_totals += file_totals
 
             if n_total:
+                object_stats = [{
+                    "type": type,
+                    "line": line,
+                    "obj": obj,
+                    "klass": "success" if (docinfo and docinfo.valid) else "error",
+                    "docinfo": docinfo
+                } for ((line, type, obj), docinfo) in sorted(objects.items())]
                 template_file_list.append({
                     "id": slugify(clean_path),
                     "path": clean_path,
                     "totals": file_totals,
                     "percentage": round(n_documented / float(n_total) * 100, 1),
-                    "object_stats": [{
-                        "type": type,
-                        "line": line,
-                        "obj": obj,
-                        "klass": "success" if (docinfo and docinfo.valid) else "error",
-                        "docinfo": docinfo
-                    } for ((line, type, obj), docinfo) in sorted(objects.items())]
+                    "object_stats": object_stats
                 })
 
         env = jinja2.Environment()
@@ -321,6 +413,7 @@ def main():
         dc.add_root(root)
     dc.check_files()
     dc.write_report(args.output)
+
 
 if __name__ == '__main__':
     main()

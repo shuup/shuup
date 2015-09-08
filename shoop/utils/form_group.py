@@ -13,6 +13,10 @@ import six
 from django.forms import BaseFormSet
 
 
+class FormInstantiationAttributeError(Exception):
+    """ AttributeErrors occurring within the `forms` property are transmogrified into these. """
+
+
 class FormDef(object):
     def __init__(self, name, form_class, required=True, kwargs=None):
         self.name = name
@@ -79,7 +83,22 @@ class FormGroup(object):
     @property
     def forms(self):
         if self._forms is None:
-            self.instantiate_forms()
+            try:
+                self.instantiate_forms()
+            except AttributeError as ae:
+                # As we're in a `property`, `AttributeError`s get hidden,
+                # but `instantiate_forms()` may do significant processing which might raise AttributeErrors.
+                # Thus we re-raise the exception as a FormInstantiationAttributeError, which the property mechanism
+                # won't hide.  Why not use `raise_from`? Because Django's technical 500 page doesn't understand chained
+                # exceptions and we'd end up with an utterly useless traceback.
+                import sys
+                tb = sys.exc_info()[2]
+                # Turns out the type argument is ignored in six's Py3 emulation of reraising if the value argument is
+                # is non-None. However that might not be the case for Python 2, so just to err on the safe side of
+                # caution, here's the word FormInstantiationAttributeError a few more times.
+                exc = FormInstantiationAttributeError(*ae.args)
+                six.reraise(FormInstantiationAttributeError, exc, tb)
+
         return self._forms
 
     def __getitem__(self, item):

@@ -14,6 +14,7 @@ from shoop.apps.provides import override_provides
 from shoop.xtheme.editing import is_edit_mode, set_edit_mode
 from shoop.xtheme.view_config import Layout
 from shoop.xtheme import parsing
+from shoop.xtheme.theme import Theme
 from shoop_tests.utils import printable_gibberish
 from shoop_tests.utils.faux_users import SuperUser
 
@@ -49,6 +50,14 @@ class FauxView(View):
     pass
 
 
+class FauxTheme(Theme):
+    identifier = "testing_faux_theme"
+
+
+class FauxTheme2(Theme):
+    identifier = "testing_faux_theme_too"
+
+
 def get_test_template_bits(request, pass_view=True, **extra_ctx):
     layout = Layout("test")
     gibberish = printable_gibberish()
@@ -64,8 +73,6 @@ def get_test_template_bits(request, pass_view=True, **extra_ctx):
     vars.update(extra_ctx)
     ctx = template.template.new_context(vars)
     return (template, layout, gibberish, ctx)
-
-
 
 
 def get_request(edit=False):

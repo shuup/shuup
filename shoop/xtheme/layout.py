@@ -42,12 +42,47 @@ class LayoutCell(object):
         """
         return Plugin.load(self.plugin_identifier)
 
-    def render(self, context):
+    @property
+    def plugin_name(self):
+        """
+        Get the name of the plugin in this cell for display purposes.
+
+        :return: Plugin name string
+        :rtype: str
+        """
         plugin_class = self.plugin_class
-        if plugin_class is None:
+        return getattr(plugin_class, "name", "None")
+
+    def instantiate_plugin(self):
+        """
+        Instantiate the plugin with the current config.
+
+        :return: Instantiated plugin (if a class is available)
+        :rtype: Plugin|None
+        """
+        plugin_class = self.plugin_class
+        if callable(plugin_class):
+            return plugin_class(config=self.config)
+        return None
+
+    def render(self, context):
+        """
+        Return the plugin's rendered contents.
+
+        :param context: Jinja2 rendering context.
+        :type context: jinja2.runtime.Context
+        :return: string of content
+        :rtype: str
+        """
+        if not self.plugin_identifier:
+            return ""  # Null!
+        plugin_inst = self.instantiate_plugin()
+        if plugin_inst is None:
             return mark_safe("<!-- %s? -->" % self.plugin_identifier)
-        assert callable(plugin_class)
-        return plugin_class(config=self.config).render(context=context)
+        if plugin_inst.is_context_valid(context=context):
+            return plugin_inst.render(context=context)
+        else:
+            return ""
 
     @classmethod
     def unserialize(cls, data):
@@ -60,8 +95,8 @@ class LayoutCell(object):
         :rtype: LayoutCell
         """
         return cls(
-            plugin_identifier=data["plugin"],
-            config=data["config"],
+            plugin_identifier=data.get("plugin"),
+            config=data.get("config"),
             sizes=data.get("sizes")
         )
 
@@ -72,11 +107,11 @@ class LayoutCell(object):
         :return: Layout cell data dict
         :rtype: dict
         """
-        return {
-            "plugin": self.plugin_identifier,
-            "config": self.config,
-            "sizes": self.sizes
-        }
+        return dict((k, v) for (k, v) in (
+            ("plugin", self.plugin_identifier),
+            ("config", self.config),
+            ("sizes", self.sizes)
+        ) if k and v)
 
 
 class LayoutRow(object):
@@ -86,6 +121,10 @@ class LayoutRow(object):
     # TODO: Add responsive hiding to full rows?
 
     def __init__(self, cells=None):
+        """
+        :param cells: Optional iterable of LayoutCells to populate this LayoutRow with.
+        :type rows: Iterable[LayoutCell]|None
+        """
         self.cells = []
         if cells:
             self.cells.extend(cells)
@@ -98,6 +137,14 @@ class LayoutRow(object):
         :rtype: Iterable[LayoutCell]
         """
         return iter(self.cells)
+
+    def __len__(self):
+        """
+        Return the number of cells in this row.
+
+        :rtype: int
+        """
+        return len(self.cells)
 
     @classmethod
     def unserialize(cls, data):
@@ -122,6 +169,19 @@ class LayoutRow(object):
         return {
             "cells": [c.serialize() for c in self]
         }
+
+    def add_cell(self, sizes=None):
+        """
+        Add an empty cell to this row. Used by the editor API.
+
+        :param sizes: An optional size dict, see `LayoutCell`
+        :type sizes: dict|None
+        :return: The new layout cell
+        :rtype: LayoutCell
+        """
+        cell = LayoutCell(plugin_identifier=None, sizes=sizes)
+        self.cells.append(cell)
+        return cell
 
 
 class Layout(object):
@@ -184,6 +244,14 @@ class Layout(object):
         """
         return iter(self.rows)
 
+    def __len__(self):
+        """
+        Return the number of rows in this layout.
+
+        :rtype: int
+        """
+        return len(self.rows)
+
     def begin_row(self):
         """
         Begin a new row in the layout.
@@ -194,9 +262,7 @@ class Layout(object):
         :return: The newly created row
         :rtype: LayoutRow
         """
-        row = LayoutRow()
-        self.rows.append(row)
-        return row
+        return self.insert_row()
 
     def begin_column(self, sizes=None):
         """
@@ -214,9 +280,7 @@ class Layout(object):
         """
         if not self.rows:
             self.begin_row()
-        cell = LayoutCell(None, sizes=sizes)
-        self.rows[-1].cells.append(cell)
-        return cell
+        return self.rows[-1].add_cell(sizes=sizes)
 
     def add_plugin(self, plugin_identifier, config):
         """
@@ -242,3 +306,83 @@ class Layout(object):
         cell.plugin_identifier = force_text(plugin_identifier)
         cell.config = config
         return cell
+
+    def get_cell(self, x, y):
+        """
+        Get a layout cell indicated by the given (zero-based) coordinates.
+
+        If the coordinates are out of range, returns None.
+
+        :param x: X (horizontal) coordinate
+        :type x: int
+        :param y: Y (vertical) coordinate
+        :type y: int
+        :return: Layout cell
+        :rtype: LayoutCell|None
+        """
+        x = int(x)
+        y = int(y)
+        if 0 <= y < len(self.rows):
+            row = self.rows[y]
+            if 0 <= x < len(row):
+                return row.cells[x]
+        return None
+
+    def insert_row(self, y=None):
+        """
+        Insert a new row at the given zero-based row and return it.
+
+        If `y` is None, the row in inserted at the end.
+
+        :param y: Y coordinate
+        :type y: int
+        :return: The new layout row
+        :rtype: LayoutRow
+        """
+        if y is None:
+            y = len(self.rows)
+        y = int(y)
+        if not (0 <= y <= len(self.rows)):
+            return
+        row = LayoutRow()
+        self.rows.insert(y, row)
+        return row
+
+    def delete_row(self, y):
+        """
+        Delete the y'th (zero-based) row.
+
+        If `y` is out of bounds, nothing is done.
+
+        :param y: Y coordinate
+        :type y: int
+        :return: Was something done?
+        :rtype: bool
+        """
+        y = int(y)
+        if not (0 <= y < len(self.rows)):
+            return False
+        self.rows.pop(y)
+        return True
+
+    def delete_cell(self, x, y):
+        """
+        Delete a layout cell indicated by the given (zero-based) coordinates.
+
+        If the coordinates are out of range, nothing is done.
+
+        :param x: X (horizontal) coordinate
+        :type x: int
+        :param y: Y (vertical) coordinate
+        :type y: int
+        :return: Was something done?
+        :rtype: bool
+        """
+        x = int(x)
+        y = int(y)
+        if 0 <= y < len(self.rows):
+            row = self.rows[y]
+            if 0 <= x < len(row):
+                row.cells.pop(x)
+                return True
+        return False

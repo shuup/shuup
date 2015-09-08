@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from markupsafe import Markup
+from shoop.core.fields.tagged_json import TaggedJSONEncoder
 
 from shoop.xtheme.editing import is_edit_mode
 from shoop.xtheme.theme import get_current_theme
@@ -27,6 +28,7 @@ def get_view_config(context):
     """
     # This uses the Jinja context's technically-immutable vars dict
     # to cache the view configuration. This is fine in our case, I'd say.
+    request = context.get("request")
     config = context.vars.get("_xtheme_view_config")
     if config is None:
         view_object = context.get("view")
@@ -36,14 +38,15 @@ def get_view_config(context):
         else:
             view_name = "UnknownView"
         config = ViewConfig(
-            theme=get_current_theme(),
-            view_name=view_name
+            theme=get_current_theme(request),
+            view_name=view_name,
+            draft=is_edit_mode(request)
         )
         context.vars["_xtheme_view_config"] = config
     return config
 
 
-def render_placeholder(context, placeholder_name, default_layout=None, template_name=None):
+def render_placeholder(context, placeholder_name, default_layout=None, template_name=None):  # doccov: noargs
     """
     Render a placeholder in a given context.
 
@@ -62,6 +65,11 @@ def render_placeholder(context, placeholder_name, default_layout=None, template_
 
 
 class PlaceholderRenderer(object):
+    """
+    Main class for materializing a placeholder's contents during template render time.
+    """
+    # TODO: Maybe make this pluggable per-theme?
+
     def __init__(self, context, placeholder_name, default_layout=None, template_name=None):
         """
         :param context: Rendering context
@@ -78,7 +86,8 @@ class PlaceholderRenderer(object):
         self.view_config = get_view_config(context)
         self.placeholder_name = placeholder_name
         self.template_name = template_name
-        self.layout = self.view_config.get_placeholder_layout(placeholder_name, default_layout)
+        self.default_layout = default_layout
+        self.layout = self.view_config.get_placeholder_layout(placeholder_name, self.default_layout)
         # Editing is only available for placeholders in the "base" template, i.e.
         # one that is not an `extend` parent.  Declaring placeholders in `include`d templates is fine,
         # but their configuration will not be shared among different uses of the same include.
@@ -86,6 +95,12 @@ class PlaceholderRenderer(object):
         self.edit = (is_base and is_edit_mode(context["request"]))
 
     def render(self):
+        """
+        Get this placeholder's rendered contents.
+
+        :return: Rendered markup.
+        :rtype: markupsafe.Markup
+        """
         wrapper_start = "<div%s>" % get_html_attrs(self._get_wrapper_attrs())
         buffer = []
         write = buffer.append
@@ -108,6 +123,8 @@ class PlaceholderRenderer(object):
         return attrs
 
     def _render_layout(self, write):
+        if self.edit and self.default_layout:
+            self._render_default_layout_script_tag(write)
         for y, row in enumerate(self.layout):
             self._render_row(write, y, row)
 
@@ -145,6 +162,8 @@ class PlaceholderRenderer(object):
         """
         classes = ["xt-ph-cell"]
         for breakpoint, width in cell.sizes.items():
+            if width is None:
+                continue
             if width <= 0:
                 classes.append(self.layout.hide_cell_class_template % {"breakpoint": breakpoint, "width": width})
             else:
@@ -159,3 +178,17 @@ class PlaceholderRenderer(object):
         if content is not None:  # pragma: no branch
             write(force_text(content))
         write("</div>")
+
+    def _render_default_layout_script_tag(self, write):
+        # This script tag is read by editor.js
+        write("<script%s>" % get_html_attrs({
+            "class": "xt-ph-default-layout",
+            "type": "text/plain"
+        }))
+        layout = self.default_layout
+        if hasattr(layout, "serialize"):
+            layout = layout.serialize()
+        # TODO: Might have to do something about ..
+        # TODO: .. http://www.w3.org/TR/html5/scripting-1.html#restrictions-for-contents-of-script-elements
+        write(TaggedJSONEncoder(separators=",:").encode(layout))
+        write("</script>")

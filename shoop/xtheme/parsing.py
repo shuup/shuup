@@ -19,7 +19,7 @@ from shoop.xtheme.view_config import Layout
 
 class Unflattenable(Exception):
     """
-    Exception raised when a node list can't be flattened into a constant
+    Exception raised when a node list can't be flattened into a constant.
     """
 
 

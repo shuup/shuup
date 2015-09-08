@@ -44,6 +44,8 @@ class InlineScriptResource(six.text_type):
 
         :param var_name: The variable to add into global scope
         :type var_name: str
+        :return: An `InlineScriptResource` object
+        :rtype: InlineScriptResource
         """
         ns = dict(*args, **kwargs)
         return cls("window.%s = %s;" % (var_name, TaggedJSONEncoder().encode(ns)))
@@ -72,20 +74,24 @@ class ResourceContainer(object):
         """
         Add a resource into the given location.
 
-        Duplicate resources are ignored. Resource injection order is retained.
+        Duplicate resources are ignored (and false is returned). Resource injection order is retained.
 
         :param location: The name of the location. See KNOWN_LOCATIONS.
         :type location: str
         :param resource: The actual resource. Either an URL string or one of the inline resource classes.
         :type resource: str|InlineMarkupResource|InlineScriptResource
+        :return: Success flag.
+        :rtype: bool
         """
         if not resource:
-            return
+            return False
         if location not in KNOWN_LOCATIONS:
             raise ValueError("%r is not a known xtheme resource location" % location)
         lst = self.resources.setdefault(location, [])
         if resource not in lst:
             lst.append(resource)
+            return True
+        return False
 
     def render_resources(self, location, clean=True):
         """
@@ -197,8 +203,10 @@ def add_resource(context, location, resource):
     :type location: str
     :param resource: Resource descriptor (URL or inline markup object)
     :type resource: str|InlineMarkupResource|InlineScriptResource
+    :return: Success flag
+    :rtype: bool
     """
     rc = get_resource_container(context)
     if rc:
-        return rc.add_resource(location, resource)
+        return bool(rc.add_resource(location, resource))
     return False

@@ -7,6 +7,9 @@
     "builtin": true,
     "es6": true
   },
+  "ecmaFeatures": {
+    "modules": true
+  },
   "globals": {},
   "rules": {
     "block-scoped-var": 2,

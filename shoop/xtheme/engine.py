@@ -12,11 +12,15 @@ import six
 from jinja2.environment import Environment, Template
 from jinja2.utils import concat, internalcode
 
+from shoop.xtheme.editing import add_edit_resources
 from shoop.xtheme.resources import RESOURCE_CONTAINER_VAR_NAME, ResourceContainer, inject_resources
 from shoop.xtheme.theme import get_current_theme
 
 
 class XthemeTemplate(Template):
+    """
+    A subclass of Jinja templates with additional post-processing magic.
+    """
     def render(self, *args, **kwargs):
         """
         Render the template and postprocess it.
@@ -36,6 +40,7 @@ class XthemeTemplate(Template):
 
     def _postprocess(self, context, content):
         # TODO: Add a hook here for addons to inject resources without plugins
+        add_edit_resources(context)
         content = inject_resources(context, content)
         return content
 
@@ -76,6 +81,20 @@ class XthemeEnvironment(Environment):
 
     @internalcode
     def get_or_select_template(self, template_name_or_list, parent=None, globals=None):
+        """
+        Does a typecheck and dispatches to :meth:`select_template` or :meth:`get_template`.
+
+        :param template_name_or_list: Template name or list
+        :type template_name_or_list: str|Iterable[str]
+        :param parent: If the `parent` parameter is not `None`, :meth:`join_path` is called
+                       to get the real template name before loading.
+        :type parent: str|None
+        :param globals: The `globals` parameter can be used to provide template wide globals.
+                        These variables are available in the context at render time.
+        :return: Template object
+        :rtype: shoop.xtheme.engine.XthemeTemplate
+        """
+
         # Overridden to redirect calls to super.
         if isinstance(template_name_or_list, six.string_types):
             return super(XthemeEnvironment, self).get_template(template_name_or_list, parent, globals)
