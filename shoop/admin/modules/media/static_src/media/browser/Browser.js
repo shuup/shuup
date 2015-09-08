@@ -36,13 +36,15 @@ export function setupUploadButton(element) {
     var input = document.createElement("input");
     input.type = "file";
     input.multiple = true;
-    input.className = "invisible-file-input";
+    input.style.display = "none";
     input.addEventListener("change", function(event) {
         FileUpload.enqueueMultiple(controller.getUploadUrl(), event.target.files);
         FileUpload.addQueueCompletionCallback(() => { controller.reloadFolderContentsSoon(); });
         FileUpload.processQueue();
     });
-    element.style.width = element.offsetWidth + "px";
-    element.style.height = element.offsetHeight + "px";
-    element.appendChild(input);
+    document.body.appendChild(input);
+    element.addEventListener("click", function(event) {
+        input.click();
+        event.preventDefault();
+    }, false);
 }
