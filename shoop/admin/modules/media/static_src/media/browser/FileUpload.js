@@ -7,10 +7,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 var fd = require("filedrop");
-var queue = [];
+export var supportsDnD = (window.File && window.FileList && window.FileReader);
+
+const queue = [];
+
 
 function processQueue(done) {
-    if (queue.length === 0) return;
+    if (queue.length === 0) {
+        return;
+    }
     var spec = queue.shift();
     var file = spec.file;
     var url = spec.url;
@@ -19,8 +24,12 @@ function processQueue(done) {
     });
     file.event("done", function(xhr) {
         var data = JSON.parse(xhr.responseText);
-        if (data.error) alert(data.error);
-        if(done) done(file, queue.length);
+        if (data.error) {
+            alert(data.error);
+        }
+        if(done) {
+            done(file, queue.length);
+        }
         processQueue(done);
     });
     file.sendTo(url);
@@ -28,29 +37,11 @@ function processQueue(done) {
 
 
 function createMessageShowingDoneFunction(done) {
-    return function(file, queueLength) {
-        if(window.Messages) Messages.enqueue({tags: "success", text: "Uploaded: " + file.name});
+    return function(file, queueLength) {  // eslint-disable-line no-unused-vars
+        if(window.Messages) {
+            window.Messages.enqueue({tags: "success", text: "Uploaded: " + file.name});
+        }
         done();
-    };
-}
-
-/**
- * Mithril.js configurator for a Filedrop drop zone
- * @param ctrl Controller supporting `.getUploadUrl()`
- */
-function dropzoneConfig(ctrl) {
-    return function(element, isInitialized) {
-        if (isInitialized) return;
-        var zone = element._filedrop_ = new fd.FileDrop(element, {input: false, multiple: true});
-
-
-        zone.event('send', function(files) {
-            var url = ctrl.getUploadUrl();
-            files.each(function(file) {
-                queue.push({url: url, file: file});
-            });
-            processQueue(createMessageShowingDoneFunction(done));
-        });
     };
 }
 
@@ -60,15 +51,14 @@ function dropzoneConfig(ctrl) {
  * @param nativeFiles Array[File]
  * @param done Function
  */
-function uploadNativeFiles(uploadUrl, nativeFiles, done) {
-    for(var i = 0; i < nativeFiles.length; i++) {
+export function uploadNativeFiles(uploadUrl, nativeFiles, done) {
+    /*for(var i = 0; i < nativeFiles.length; i++) {
         var nativeFile = nativeFiles[i];
         queue.push({url: uploadUrl, file: new fd.File(nativeFile)});
-    }
+    }*/
     processQueue(createMessageShowingDoneFunction(done));
 }
 
-module.exports = {
-    dropzoneConfig: dropzoneConfig,
-    uploadNativeFiles: uploadNativeFiles,
-};
+export function dropzoneConfig(ctrl) {
+    // TODO: Reimplement me...
+}

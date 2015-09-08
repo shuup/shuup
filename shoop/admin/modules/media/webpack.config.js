@@ -6,15 +6,26 @@
  * This source code is licensed under the AGPLv3 license found in the
  * LICENSE file in the root directory of this source tree.
  */
+var path = require("path");
+
 module.exports = {
-    entry: __dirname + "/static_src/media/browser/Browser",
+    context: path.join(__dirname, "static_src", "media", "browser"),
+    entry: "./Browser.js",
+    output: {
+        library: "MediaBrowser"
+    },
+    externals: {
+        "lodash": "window._",
+        "mithril": "window.m",
+        "moment": "window.moment"
+    },
     module: {
         loaders: [
             // compact=false will disable the annoying Filedrop complaint
             {
                 test: /\.js(x?)$/,
                 exclude: /(node_modules|bower_components)/,
-                loader: 'babel-loader?compact=false'
+                loader: 'babel-loader?compact=false&loose=all'
             },
             {
                 test: /\.less/,
@@ -33,9 +44,8 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['', '.js', '.jsx'],
         alias: {
-            "filedrop": __dirname + "/bower_components/filedrop/filedrop.js",
+            "filedrop": __dirname + "/bower_components/filedrop/filedrop.js"
         }
     }
 };
