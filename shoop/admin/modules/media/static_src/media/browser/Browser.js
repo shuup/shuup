@@ -17,12 +17,7 @@ export function init() {
         return;
     }
     controller = m.mount(document.getElementById("BrowserView"), BrowserView);
-    var currentIdMatch = /#!id=(\d+)/.exec(location.hash);
-    if (currentIdMatch) {
-        controller.setFolder(currentIdMatch[1]);
-    } else {
-        controller.setFolder(0);
-    }
+    controller.navigateByHash();
     controller.reloadFolderTree();
 
     dragDrop.disableIntraPageDragDrop();

@@ -32,7 +32,7 @@ export function view(ctrl) {
 
 export function controller() {
     var ctrl = this;
-    ctrl.currentFolderId = m.prop(0);
+    ctrl.currentFolderId = m.prop(null);
     ctrl.currentFolderPath = m.prop([]);
     ctrl.rootFolder = m.prop({});
     ctrl.folderData = m.prop({});
@@ -40,10 +40,21 @@ export function controller() {
     ctrl.sortMode = m.prop("+name");
 
     ctrl.setFolder = function(newFolderId) {
+        newFolderId = 0 | newFolderId;
+        if(ctrl.currentFolderId() === newFolderId) {
+            return;  // Nothing to do, don't cause trouble
+        }
         ctrl.currentFolderId(0 | newFolderId);
-        ctrl.currentFolderPath(findPathToFolder(ctrl.rootFolder(), newFolderId));
+        ctrl._refreshCurrentFolderPath();
         ctrl.reloadFolderContents();
         location.hash = "#!id=" + newFolderId;
+    };
+    ctrl._refreshCurrentFolderPath = function() {
+        const currentFolderId = ctrl.currentFolderId();
+        if(currentFolderId === null) {
+            return;  // Nothing loaded yet; defer to later
+        }
+        ctrl.currentFolderPath(findPathToFolder(ctrl.rootFolder(), currentFolderId));
     };
     ctrl.promptCreateFolder = function(parentFolderId) {
         var name;
@@ -74,7 +85,7 @@ export function controller() {
             data: {"action": "folders"}
         }).then(function(response) {
             ctrl.rootFolder(response.rootFolder);
-            ctrl.setFolder(ctrl.currentFolderId()); // Force reloading current folder too
+            ctrl._refreshCurrentFolderPath();
         });
     };
     ctrl.reloadFolderContents = function() {
@@ -94,4 +105,15 @@ export function controller() {
         return uploadUrl + "?action=upload&folder_id=" + folderId;
     };
     ctrl.reloadFolderContentsSoon = _.debounce(ctrl.reloadFolderContents, 1000);
+
+    ctrl.navigateByHash = function() {
+        const currentIdMatch = /#!id=(\d+)/.exec(location.hash);
+        const newFolderId = currentIdMatch ? currentIdMatch[1] : 0;
+        ctrl.setFolder(newFolderId);
+    };
+
+    window.addEventListener("hashchange", () => {
+        ctrl.navigateByHash();
+    }, false);
 }
+
