@@ -7,6 +7,9 @@
 # LICENSE file in the root directory of this source tree.
 from contextlib import contextmanager
 from shoop.apps.provides import get_provide_objects, get_identifier_to_object_map
+import logging
+
+log = logging.getLogger(__name__)
 
 
 # TODO: Document how to create Xthemes
@@ -195,7 +198,10 @@ def get_current_theme(request=None):
 
     if ts:
         theme_cls = get_identifier_to_object_map("xtheme").get(ts.theme_identifier)
-        theme = theme_cls(settings_obj=ts)
+        if theme_cls is not None:
+            theme = theme_cls(settings_obj=ts)
+        else:
+            log.warn("The active theme %r is not currently installed", ts.theme_identifier)
 
     if request:
         request._current_xtheme = theme
