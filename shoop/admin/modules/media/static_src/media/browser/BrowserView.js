@@ -15,6 +15,7 @@ const folderTree = require("./components/folderTree");
 const folderBreadcrumbs = require("./components/folderBreadcrumbs");
 const folderView = require("./components/folderView");
 const findPathToFolder = require("./util/findPathToFolder");
+const remote = require("./util/remote");
 
 
 export function view(ctrl) {
@@ -28,7 +29,6 @@ export function view(ctrl) {
         ])
     ]);
 }
-
 
 export function controller() {
     var ctrl = this;
@@ -79,22 +79,14 @@ export function controller() {
         return ctrl.promptCreateFolder(ctrl.currentFolderId());
     };
     ctrl.reloadFolderTree = function() {
-        m.request({
-            method: "GET",
-            url: location.pathname,
-            data: {"action": "folders"}
-        }).then(function(response) {
+        remote.get({"action": "folders"}).then(function(response) {
             ctrl.rootFolder(response.rootFolder);
             ctrl._refreshCurrentFolderPath();
         });
     };
     ctrl.reloadFolderContents = function() {
         var id = 0 | ctrl.currentFolderId();
-        m.request({
-            method: "GET",
-            url: location.pathname,
-            data: {"action": "folder", "id": id}
-        }).then(function(response) {
+        remote.get({"action": "folder", id}).then(function(response) {
             ctrl.folderData(response.folder || {});
         });
     };

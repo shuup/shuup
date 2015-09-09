@@ -9,6 +9,7 @@
 
 const m = require("mithril");
 const _ = require("lodash");
+const remote = require("./util/remote");
 
 const queue = [];
 const queueCompleteCallbacks = [];
@@ -70,14 +71,11 @@ function handleFileXhrComplete(xhr, file, error) {
         console.log(e); // invalid JSON? pffff.
     }
     if (window.Messages) {
-        if (error) {
-            window.Messages.enqueue({tags: "error", text: "Error: " + file.name + ":" + messageText});
-        } else {
-            if (!messageText) {
-                messageText = "Uploaded: " + file.name;
-            }
-            window.Messages.enqueue({tags: "success", text: messageText});
-        }
+        const response = {
+            error: (error ? "Error: " + file.name + ":" + messageText : null),
+            message: (!error ? messageText || "Uploaded: " + file.name : null)
+        };
+        remote.handleResponseMessages(response);
     }
 }
 
