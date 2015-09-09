@@ -8,6 +8,7 @@
  */
 const m = require("mithril");
 const FileUpload = require("../FileUpload");
+const fileActions = require("../actions/fileActions");
 
 export var supportsDnD = (window.File && window.FileList && window.FormData);
 
@@ -47,16 +48,29 @@ export function dropzoneConfig(ctrl) {
             const folderId = element.dataset.folderId;
             ignoreEvent(e);
             element.classList.remove("over");
-            const files = e.dataTransfer.files;
-            if (files.length === 0) {
-                alert("You can only drop files here.");
-                return;
+            var data = null;
+            try {
+                data = JSON.parse(e.dataTransfer.getData("text"));
+            } catch (exc) {
+                // not JSON, I guess
             }
-            FileUpload.enqueueMultiple(ctrl.getUploadUrl(folderId), files);
-            FileUpload.addQueueCompletionCallback(() => {
-                ctrl.reloadFolderContentsSoon();
-            });
-            FileUpload.processQueue();
+            if (data !== null) {
+                if(data.fileId) {
+                    fileActions.moveFile(ctrl, data.fileId, folderId);
+                    return;
+                }
+            } else {
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    FileUpload.enqueueMultiple(ctrl.getUploadUrl(folderId), files);
+                    FileUpload.addQueueCompletionCallback(() => {
+                        ctrl.reloadFolderContentsSoon();
+                    });
+                    FileUpload.processQueue();
+                    return;
+                }
+            }
+            alert("Sorry! You can only drop files here (from your computer or within the file manager).");
         });
     };
 }

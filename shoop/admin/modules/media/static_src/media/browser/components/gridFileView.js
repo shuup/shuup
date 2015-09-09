@@ -36,8 +36,23 @@ export default function(ctrl, folders, files) {
     const fileItems = _.map(files, function(file) {
         return m(
             "div.col-xs-6.col-md-4.col-lg-3.grid-file",
-            {key: file.id},
-
+            {
+                key: file.id,
+                draggable: true,
+                ondragstart: (event) => {
+                    event.stopPropagation();
+                    event.dataTransfer.effectAllowed = "copyMove";
+                    event.dataTransfer.setData("text", JSON.stringify({"fileId": file.id}));
+                    try {
+                        const dragIcon = document.createElement("img");
+                        dragIcon.src = file.thumbnail || images.defaultThumbnail;
+                        dragIcon.width = 100;
+                        event.dataTransfer.setDragImage(dragIcon, 0, 0);
+                    } catch(e) {
+                        // This isn't a problem
+                    }
+                }
+            },
             m("button.file-cog-btn.btn.btn-xs.btn-default", {
                 key: "filecog",
                 onclick: (event) => {

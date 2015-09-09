@@ -29,3 +29,10 @@ export function promptDeleteFile(controller, file) {
         });
     }
 }
+
+export function moveFile(controller, fileId, newFolderId) {
+    remote.post({action: "move_file", "file_id": fileId, "folder_id": newFolderId}).then(function(response) {
+        remote.handleResponseMessages(response);
+        controller.reloadFolderContents();
+    });
+}

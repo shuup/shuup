@@ -61,6 +61,10 @@ def _filer_folder_to_json_dict(folder, children=None):
     }
 
 
+def get_folder_name(folder):
+    return (folder.name if folder else _("Root"))
+
+
 class MediaBrowserView(TemplateView):
     """
     A view for browsing media.
@@ -135,7 +139,7 @@ class MediaBrowserView(TemplateView):
 
         return JsonResponse({"folder": {
             "id": folder.id if folder else 0,
-            "name": folder.name if folder else "Root",
+            "name": get_folder_name(folder),
             "files": [_filer_file_to_json_dict(file) for file in files],
             "folders": [
                 # Explicitly pass empty list of children to avoid recursion
@@ -166,7 +170,7 @@ class MediaBrowserView(TemplateView):
             "file": _filer_file_to_json_dict(filer_file),
             "message": _("%(file)s uploaded to %(folder)s") % {
                 "file": filer_file.label,
-                "folder": (folder.name if folder else _("Root"))
+                "folder": get_folder_name(folder)
             }
         })
 
@@ -195,3 +199,22 @@ class MediaBrowserView(TemplateView):
         except IntegrityError as ie:
             raise Problem(str(ie))
         return JsonResponse({"success": True, "message": _("File deleted.")})
+
+    def handle_post_move_file(self, data):
+        file = File.objects.get(pk=data["file_id"])
+        folder_id = int(data["folder_id"])
+        if folder_id:
+            folder = Folder.objects.get(pk=data["folder_id"])
+        else:
+            folder = None
+        old_folder = file.folder
+        file.folder = folder
+        file.save(update_fields=("folder",))
+        return JsonResponse({
+            "success": True,
+            "message": _("%(file)s moved from %(old)s to %(new)s.") % {
+                "file": file,
+                "old": get_folder_name(old_folder),
+                "new": get_folder_name(folder)
+            }
+        })
