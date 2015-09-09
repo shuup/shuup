@@ -187,15 +187,17 @@ class BaseProductMediaForm(MultiLanguageModelForm):
 
         self.file_url = self.instance.url
 
-        if self.instance.pk and self.instance.file:
-            if isinstance(self.instance.file, Image):
+        if self.instance.pk and self.instance.file and isinstance(self.instance.file, Image):
+            try:
                 thumbnail = self.instance.easy_thumbnails_thumbnailer.get_thumbnail({
                     'size': (64, 64),
                     'crop': True,
                     'upscale': True,
                 })
                 self.file_url = self.instance.url
-                self.thumbnail = thumbnail.url or None
+                self.thumbnail = thumbnail.url
+            except Exception:
+                self.thumbnail = None
         else:
             self.thumbnail = None
 
@@ -245,6 +247,7 @@ class ProductMediaForm(BaseProductMediaForm):
     def clean_external_url(self):
         external_url = self.cleaned_data.get("external_url")
 
+        # if form has been deleted, we don't want to validate fields
         if "DELETE" in self.changed_data:
             return external_url
 
@@ -284,3 +287,20 @@ class ProductImageMediaForm(BaseProductMediaForm):
 class ProductImageMediaFormSet(ProductMediaFormSet):
     allowed_media_kinds = [ProductMediaKind.IMAGE]
     form_class = ProductImageMediaForm
+
+    def save(self, commit=True):
+        """
+        Save the form.
+
+        In addition add the first saved image as primary image for the
+        product if none is selected as such.
+        """
+        super(ProductImageMediaFormSet, self).save(commit)
+
+        has_primary = any(form.cleaned_data.get("is_primary") for form in (self.forms or []))
+
+        if self.forms and not has_primary:
+            # make first form be the primary image as well
+            form_instance = self.forms[0]
+            form_instance.product.primary_image = form_instance.instance
+            form_instance.product.save()
