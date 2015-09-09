@@ -12,9 +12,12 @@ const wrapFileLink = require("./wrapFileLink");
 const folderLink = require("./folderLink");
 const {dropzoneConfig} = require("../util/dragDrop");
 const images = require("./images");
+const menuManager = require("../util/menuManager");
+const fileContextMenu = require("../menus/fileContextMenu");
+
 
 export default function(ctrl, folders, files) {
-    var folderItems = _.map(folders, function(folder) {
+    const folderItems = _.map(folders, function(folder) {
         return m("div.col-xs-6.col-md-4.col-lg-3.grid-folder.fd-zone", {
             key: "folder-" + folder.id,
             "data-folder-id": folder.id,
@@ -30,11 +33,19 @@ export default function(ctrl, folders, files) {
             m("div.file-name", folderLink(ctrl, folder))
         ]);
     });
-    var fileItems = _.map(files, function(file) {
+    const fileItems = _.map(files, function(file) {
         return m(
             "div.col-xs-6.col-md-4.col-lg-3.grid-file",
             {key: file.id},
-            wrapFileLink(file, "a.file-preview", [,
+
+            m("button.file-cog-btn.btn.btn-xs.btn-default", {
+                key: "filecog",
+                onclick: (event) => {
+                    menuManager.open(event.currentTarget, fileContextMenu(ctrl, file));
+                    event.preventDefault();
+                }
+            }, m("i.fa.fa-cog")),
+            wrapFileLink(file, "a.file-preview", [
                 m("img.img-responsive", {src: file.thumbnail || images.defaultThumbnail}),
                 m("div.file-name", file.name)
             ])
