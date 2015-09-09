@@ -153,7 +153,7 @@ class ProductAttributesForm(forms.Form):
         self.product.clear_attribute_cache()
 
 
-class ProductMediaForm(MultiLanguageModelForm):
+class BaseProductMediaForm(MultiLanguageModelForm):
     class Meta:
         model = ProductMedia
         fields = (
@@ -172,7 +172,7 @@ class ProductMediaForm(MultiLanguageModelForm):
         self.product = kwargs.pop("product")
         self.allowed_media_kinds = kwargs.pop("allowed_media_kinds")
         default_shop = kwargs.pop("default_shop")
-        super(ProductMediaForm, self).__init__(**kwargs)
+        super(BaseProductMediaForm, self).__init__(**kwargs)
 
         self.fields["file"].widget = MediaChoiceWidget()  # Filer misimplemented the field; we need to do this manually.
         self.fields["file"].required = True
@@ -186,7 +186,18 @@ class ProductMediaForm(MultiLanguageModelForm):
             self.fields["shops"].initial = [default_shop]
 
         self.file_url = self.instance.url
-        self.thumbnail = None
+
+        if self.instance.pk and self.instance.file:
+            if isinstance(self.instance.file, Image):
+                thumbnail = self.instance.easy_thumbnails_thumbnailer.get_thumbnail({
+                    'size': (64, 64),
+                    'crop': True,
+                    'upscale': True,
+                })
+                self.file_url = self.instance.url
+                self.thumbnail = thumbnail.url or None
+        else:
+            self.thumbnail = None
 
     def pre_master_save(self, instance):
         instance.product = self.product
@@ -225,24 +236,34 @@ class BaseProductMediaFormSet(BaseModelFormSet):
         return self.form_class(**kwargs)
 
 
+class ProductMediaForm(BaseProductMediaForm):
+
+    def __init__(self, **kwargs):
+        super(ProductMediaForm, self).__init__(**kwargs)
+        self.fields["file"].required = False
+
+    def clean_external_url(self):
+        external_url = self.cleaned_data.get("external_url")
+
+        if "DELETE" in self.changed_data:
+            return external_url
+
+        file = self.cleaned_data.get("file")
+        if external_url and file:
+            raise ValidationError(_("Use only URL or file, not both"))
+        return external_url
+
+
 class ProductMediaFormSet(BaseProductMediaFormSet):
     form_class = ProductMediaForm
 
 
-class ProductImageMediaForm(ProductMediaForm):
+class ProductImageMediaForm(BaseProductMediaForm):
     is_primary = forms.BooleanField(required=False)
 
     def __init__(self, **kwargs):
         super(ProductImageMediaForm, self).__init__(**kwargs)
         if self.instance.pk and self.instance.file:
-            if isinstance(self.instance.file, Image):
-                thumbnail = self.instance.easy_thumbnails_thumbnailer.get_thumbnail({
-                    'size': (64, 64),
-                    'crop': True,
-                    'upscale': True,
-                })
-                self.file_url = self.instance.url
-                self.thumbnail = thumbnail.url or None
             if self.product.primary_image_id == self.instance.pk:
                 self.fields["is_primary"].initial = True
 
