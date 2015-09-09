@@ -65,6 +65,7 @@ export function controller() {
     ctrl.reloadFolderContents = function() {
         var id = 0 | ctrl.currentFolderId();
         remote.get({"action": "folder", id}).then(function(response) {
+            remote.handleResponseMessages(response);
             ctrl.folderData(response.folder || {});
         });
     };

@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import json
+from django.core.exceptions import ObjectDoesNotExist
 
 from django.http.response import JsonResponse
 from django.utils.encoding import force_text
@@ -15,6 +16,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 from filer.models import File, Folder
 from mptt.templatetags.mptt_tags import cache_tree_children
+from shoop.utils.excs import Problem
 from shoop.utils.filer import filer_file_from_upload, filer_image_from_upload
 
 
@@ -68,11 +70,9 @@ class MediaBrowserView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         action = request.REQUEST.get("action")
-        if action == "folders":
-            return self.handle_get_folders(request.REQUEST)
-        if action == "folder":
-            return self.handle_folder(request.REQUEST)
-
+        handler = getattr(self, "handle_get_%s" % action, None)
+        if handler:
+            return handler(request.REQUEST)
         return super(MediaBrowserView, self).get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -86,15 +86,20 @@ class MediaBrowserView(TemplateView):
 
         data = json.loads(request.body.decode("utf-8"))
         action = data.get("action")
-        if action == "new_folder":
-            return self.handle_new_folder(data)
-        return JsonResponse({"error": "unknown action %s" % action})
+        handler = getattr(self, "handle_post_%s" % action, None)
+        if handler:
+            try:
+                return handler(data)
+            except Problem as prob:
+                return JsonResponse({"error": force_text(prob)})
+        else:
+            return JsonResponse({"error": "unknown action %s" % action})
 
     def handle_get_folders(self, data):
         root_folders = cache_tree_children(Folder.objects.all())
         return JsonResponse({"rootFolder": _filer_folder_to_json_dict(None, root_folders)})
 
-    def handle_new_folder(self, data):
+    def handle_post_new_folder(self, data):
         parent_id = int(data["parent"])
         if parent_id > 0:
             parent = Folder.objects.get(pk=parent_id)
@@ -107,16 +112,22 @@ class MediaBrowserView(TemplateView):
             folder.save()
         return JsonResponse({"success": True})
 
-    def handle_folder(self, data):
-        folder_id = int(data["id"])
-        if folder_id:
-            folder = Folder.objects.get(pk=folder_id)
-            subfolders = folder.get_children()
-            files = folder.files
-        else:
-            folder = None
-            subfolders = Folder.objects.filter(parent=None)
-            files = File.objects.filter(folder=None)
+    def handle_get_folder(self, data):
+        try:
+            folder_id = int(data["id"])
+            if folder_id:
+                folder = Folder.objects.get(pk=folder_id)
+                subfolders = folder.get_children()
+                files = folder.files
+            else:
+                folder = None
+                subfolders = Folder.objects.filter(parent=None)
+                files = File.objects.filter(folder=None)
+        except ObjectDoesNotExist:
+            return JsonResponse({
+                "folder": None,
+                "error": "Folder does not exist"
+            })
 
         return JsonResponse({"folder": {
             "id": folder.id if folder else 0,
@@ -154,3 +165,4 @@ class MediaBrowserView(TemplateView):
                 "folder": (folder.name if folder else _("Root"))
             }
         })
+
