@@ -45,12 +45,13 @@ $(function() {
 
     $(".media-add-new-panel").on("click", function(e){
         e.preventDefault();
-        var panelCount = $("#product-images-section .panel").length;
+        var panelCount = $("#"+ $(this).data("target-panels") +" .panel").length;
         var $source = $("#placeholder-panel");
         var html = $source.html().replace(/__prefix__/g, panelCount-1).replace(/__prefix_name__/g, panelCount);
 
         $(html).insertBefore($source);
-        var totalForms = parseInt($("#id_images-TOTAL_FORMS").val());
-        $("#id_images-TOTAL_FORMS").val(totalForms + 1);
+        var targetId = $(this).data("target-id");
+        var totalForms = parseInt($("#"+targetId+"-TOTAL_FORMS").val());
+        $("#"+targetId+"-TOTAL_FORMS").val(totalForms + 1);
     });
 });
