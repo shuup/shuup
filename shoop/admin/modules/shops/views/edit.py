@@ -5,13 +5,16 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.forms.models import modelform_factory
+from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.utils.views import CreateOrUpdateView
+from shoop.admin.toolbar import get_default_edit_toolbar
 from shoop.core.models import Shop
+from shoop.utils.excs import Problem
 from shoop.utils.multilanguage_model_form import MultiLanguageModelForm
 
 
@@ -20,3 +23,16 @@ class ShopEditView(CreateOrUpdateView):
     form_class = modelform_factory(Shop, MultiLanguageModelForm, exclude=("owner", "options"))
     template_name = "shoop/admin/shops/edit.jinja"
     context_object_name = "shop"
+
+    def get_object(self, queryset=None):
+        obj = super(ShopEditView, self).get_object(queryset)
+        if not settings.SHOOP_ENABLE_MULTIPLE_SHOPS:
+            if not obj.pk and Shop.objects.count() >= 1:
+                # This seems like a new object, but there already is (at least) one shop...
+                raise Problem(_(u"Only one shop permitted."))
+
+        return obj
+
+    def get_toolbar(self):
+        save_form_id = self.get_save_form_id()
+        return get_default_edit_toolbar(self, save_form_id, with_split_save=settings.SHOOP_ENABLE_MULTIPLE_SHOPS)

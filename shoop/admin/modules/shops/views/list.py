@@ -7,8 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
+from shoop.admin.toolbar import Toolbar
 from shoop.admin.utils.picotable import ChoicesFilter, Column, TextFilter
 from shoop.admin.utils.views import PicotableListView
 from shoop.core.models import Shop, ShopStatus
@@ -25,3 +27,9 @@ class ShopListView(PicotableListView):
         Column("identifier", _(u"Identifier")),
         Column("status", _(u"Status"), filter_config=ChoicesFilter(choices=ShopStatus.choices)),
     ]
+
+    def get_toolbar(self):
+        if settings.SHOOP_ENABLE_MULTIPLE_SHOPS:
+            return super(ShopListView, self).get_toolbar()
+        else:
+            return Toolbar([])
