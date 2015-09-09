@@ -56,28 +56,6 @@ export function controller() {
         }
         ctrl.currentFolderPath(findPathToFolder(ctrl.rootFolder(), currentFolderId));
     };
-    ctrl.promptCreateFolder = function(parentFolderId) {
-        var name;
-        if ((name = prompt("New folder name?"))) {
-            m.request({
-                method: "POST",
-                url: location.pathname,
-                data: {
-                    "action": "new_folder",
-                    "parent": parentFolderId,
-                    "name": name
-                },
-                config: function(xhr) {
-                    xhr.setRequestHeader("X-CSRFToken", window.ShoopAdminConfig.csrf);
-                }
-            }).then(function() {
-                ctrl.reloadFolderTree();
-            });
-        }
-    };
-    ctrl.promptCreateFolderHere = function() {
-        return ctrl.promptCreateFolder(ctrl.currentFolderId());
-    };
     ctrl.reloadFolderTree = function() {
         remote.get({"action": "folders"}).then(function(response) {
             ctrl.rootFolder(response.rootFolder);

@@ -6,10 +6,14 @@
  * This source code is licensed under the AGPLv3 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var m = require("mithril");
-var BrowserView = require("./BrowserView");
-var FileUpload = require("./FileUpload");
+
+const m = require("mithril");
+const BrowserView = require("./BrowserView");
 const dragDrop = require("./util/dragDrop");
+const FileUpload = require("./FileUpload");
+const menuManager = require("./util/menuManager");
+const folderContextMenu = require("./menus/folderContextMenu");
+
 var controller = null;
 
 export function init() {
@@ -23,8 +27,9 @@ export function init() {
     dragDrop.disableIntraPageDragDrop();
 }
 
-export function newFolder() {
-    controller.promptCreateFolderHere();
+export function openFolderContextMenu(event) {
+    const button = event.target;
+    menuManager.open(button, folderContextMenu(controller));
 }
 
 export function setupUploadButton(element) {

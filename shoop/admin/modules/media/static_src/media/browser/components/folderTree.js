@@ -9,6 +9,7 @@
 const m = require("mithril");
 const _ = require("lodash");
 const {dropzoneConfig} = require("../util/dragDrop");
+const folderActions = require("../actions/folderActions");
 
 export default function(ctrl) {
     var currentFolderId = ctrl.currentFolderId();
@@ -36,7 +37,7 @@ export default function(ctrl) {
         if (isCurrent) {
             childLis.push(m("li.new-folder-item", {key: "new-folder"}, m("a", {
                 href: "#",
-                onclick: _.bind(ctrl.promptCreateFolder, ctrl, folder.id),
+                onclick: _.bind(folderActions.promptCreateFolder, null, ctrl, folder.id),
             }, m("i.fa.fa-plus"), " New folder")));
         }
         var className = _({
