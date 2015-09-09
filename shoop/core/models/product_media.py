@@ -40,7 +40,10 @@ class ProductMedia(TranslatableModel):
         ProductMediaKind, db_index=True, default=ProductMediaKind.GENERIC_FILE, verbose_name=_('kind')
     )
     file = FilerFileField(blank=True, null=True, verbose_name=_('file'))
-    external_url = models.URLField(blank=True, null=True, verbose_name=u'URL')
+    external_url = models.URLField(
+        blank=True, null=True, verbose_name=u'URL',
+        help_text=_("Enter URL to external file. If this field is filled, the selected media doesn't apply.")
+    )
     ordering = models.IntegerField(default=0)
 
     # Status
