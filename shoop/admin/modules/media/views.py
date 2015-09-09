@@ -8,14 +8,16 @@
 from __future__ import unicode_literals
 
 import json
-from django.core.exceptions import ObjectDoesNotExist
 
+from django.core.exceptions import ObjectDoesNotExist
+from django.db import IntegrityError
 from django.http.response import JsonResponse
 from django.utils.encoding import force_text
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _, ugettext_lazy as _l
 from django.views.generic import TemplateView
 from filer.models import File, Folder
 from mptt.templatetags.mptt_tags import cache_tree_children
+from shoop.admin.modules.media.utils import delete_folder
 from shoop.utils.excs import Problem
 from shoop.utils.filer import filer_file_from_upload, filer_image_from_upload
 
@@ -66,7 +68,7 @@ class MediaBrowserView(TemplateView):
     Most of this is just a JSON API that the Javascript (`static_src/media/browser`) uses.
     """
     template_name = "shoop/admin/media/browser.jinja"
-    title = _(u"Browse Media")
+    title = _l(u"Browse Media")
 
     def get(self, request, *args, **kwargs):
         action = request.REQUEST.get("action")
@@ -90,6 +92,8 @@ class MediaBrowserView(TemplateView):
         if handler:
             try:
                 return handler(data)
+            except ObjectDoesNotExist as odne:
+                return JsonResponse({"error": force_text(odne)})
             except Problem as prob:
                 return JsonResponse({"error": force_text(prob)})
         else:
@@ -166,3 +170,28 @@ class MediaBrowserView(TemplateView):
             }
         })
 
+    def handle_post_rename_folder(self, data):
+        folder = Folder.objects.get(pk=data["id"])
+        folder.name = data["name"]
+        folder.save(update_fields=("name",))
+        return JsonResponse({"success": True, "message": _("Folder renamed.")})
+
+    def handle_post_delete_folder(self, data):
+        folder = Folder.objects.get(pk=data["id"])
+        new_selected_folder_id = folder.parent_id
+        message = delete_folder(folder)
+        return JsonResponse({"success": True, "message": message, "newFolderId": new_selected_folder_id})
+
+    def handle_post_rename_file(self, data):
+        file = File.objects.get(pk=data["id"])
+        file.name = data["name"]
+        file.save(update_fields=("name",))
+        return JsonResponse({"success": True, "message": _("File renamed.")})
+
+    def handle_post_delete_file(self, data):
+        file = File.objects.get(pk=data["id"])
+        try:
+            file.delete()
+        except IntegrityError as ie:
+            raise Problem(str(ie))
+        return JsonResponse({"success": True, "message": _("File deleted.")})

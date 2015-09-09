@@ -42,6 +42,8 @@ export function promptDeleteCurrentFolder(controller) {
     if(confirm("Are you sure you want to delete the " + name + " folder?")) {
         remote.post({action: "delete_folder", id}).then(function(response) {
             remote.handleResponseMessages(response);
+            const newCurrentFolder = 0 | response.newFolderId;  // eslint-disable-line no-bitwise
+            controller.setFolder(newCurrentFolder);
             controller.reloadFolderTree();
             controller.reloadFolderContents();
         });
