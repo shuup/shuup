@@ -33,7 +33,7 @@ def collect_settings(app_name, settings_module):
 
 def _declare_setting(app_name, module, name, default):
     if name in _KNOWN_SETTINGS:
-        other_app = _KNOWN_SETTINGS[name].get('app_name')
+        other_app = _KNOWN_SETTINGS[name].app_name
         raise ImproperlyConfigured(
             'Apps %s and %s define same setting %s' % (
                 other_app, app_name, name))
