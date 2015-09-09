@@ -74,6 +74,13 @@ class MediaBrowserView(TemplateView):
     template_name = "shoop/admin/media/browser.jinja"
     title = _l(u"Browse Media")
 
+    def get_context_data(self, **kwargs):
+        context = super(MediaBrowserView, self).get_context_data(**kwargs)
+        context["browser_config"] = {
+            "filter": self.request.REQUEST.get("filter")
+        }
+        return context
+
     def get(self, request, *args, **kwargs):
         action = request.REQUEST.get("action")
         handler = getattr(self, "handle_get_%s" % action, None)

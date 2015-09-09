@@ -24,7 +24,7 @@
 {% block extra_js %}
     <script src="{{ static("shoop_admin/js/media-browser.js") }}"></script>
     <script>
-    window.MediaBrowser.init();
+    window.MediaBrowser.init({{ browser_config|json }});
     window.MediaBrowser.setupUploadButton(document.getElementById("upload-button-wrapper"));
     </script>
 {% endblock %}

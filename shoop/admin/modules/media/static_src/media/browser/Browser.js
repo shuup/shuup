@@ -7,6 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+const _ = require("lodash");
 const m = require("mithril");
 const BrowserView = require("./BrowserView");
 const dragDrop = require("./util/dragDrop");
@@ -16,11 +17,14 @@ const folderContextMenu = require("./menus/folderContextMenu");
 
 var controller = null;
 
-export function init() {
+export function init(config={}) {
     if (controller !== null) {
         return;
     }
-    controller = m.mount(document.getElementById("BrowserView"), BrowserView);
+    controller = m.mount(document.getElementById("BrowserView"), {
+        view: BrowserView.view,
+        controller: _.partial(BrowserView.controller, config)
+    });
     controller.navigateByHash();
     controller.reloadFolderTree();
 

@@ -30,7 +30,7 @@ export function view(ctrl) {
     ]);
 }
 
-export function controller() {
+export function controller(config={}) {
     var ctrl = this;
     ctrl.currentFolderId = m.prop(null);
     ctrl.currentFolderPath = m.prop([]);
@@ -64,7 +64,7 @@ export function controller() {
     };
     ctrl.reloadFolderContents = function() {
         var id = 0 | ctrl.currentFolderId();
-        remote.get({"action": "folder", id}).then(function(response) {
+        remote.get({"action": "folder", id, filter: config.filter}).then(function(response) {
             remote.handleResponseMessages(response);
             ctrl.folderData(response.folder || {});
         });
