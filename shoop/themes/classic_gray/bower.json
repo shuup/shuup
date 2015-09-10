@@ -1,0 +1,20 @@
+{
+  "name": "classic_gray",
+  "version": "0.0.0",
+  "homepage": "-",
+  "authors": [
+    "Juha Kujala <juha.kujala@anders.fi>"
+  ],
+  "license": "-",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "font-awesome": "~4.4.0"
+  }
+}

@@ -1,0 +1,2 @@
+static/classic_gray/js/classic-gray.js
+static/classic_gray/css/style.css
