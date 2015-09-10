@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-import hashlib
+
+from contextlib import contextmanager
 
 import pytest
-from contextlib import contextmanager
 from django.template.base import TemplateDoesNotExist
 from shoop.apps.provides import override_provides, get_provide_objects
 from shoop.xtheme.models import ThemeSettings
@@ -33,8 +33,4 @@ def test_theme_selection():
             with wrapper:
                 t = je.get_template("42.jinja")
                 content = t.render().strip()
-                # I'm very aware this is sort of silly, but it's also harmless.
-                # I mean, harmless -- not even mostly harmless!
-                hex = hashlib.sha1(content.encode("UTF-8")).hexdigest()
-                assert hex.count("42") == 5
-
+                assert "a slice of lemon wrapped around a large gold brick" in content.replace("\n", " ")
