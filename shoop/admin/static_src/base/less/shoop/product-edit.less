@@ -112,9 +112,12 @@
         }
         .extra-fields {
             padding: 10px 0;
+            @media (max-width: @screen-sm-max) {
+                padding: 10px 15px;
+            }
         }
         .actions {
-            @media (min-width: @screen-sm-min) {
+            @media (max-width: @screen-xs-max) {
                 text-align: right;
             }
             .product-media-delete {

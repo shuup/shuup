@@ -28,9 +28,10 @@
             <div class="row">
                 <div class="col-sm-4 file-control">
                     <div class="form-group{% if f.file.errors %} has-error{% endif %}">
+                        {%- set thumbnail = f.get_thumbnail(request) %}
                         <span class="thumbnail">
-                            {% if f.thumbnail %}
-                                <a href="{{ f.file_url }}" target="_blank"><img src="{{ f.thumbnail }}"></a>
+                            {% if thumbnail %}
+                                <a href="{{ f.file_url }}" target="_blank"><img src="{{ thumbnail.url }}"></a>
                             {% else %}
                                 <small class="no-image">{% trans %}No image{% endtrans %}</small>
                             {% endif %}

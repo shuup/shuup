@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 from collections import defaultdict
 from django import forms
+from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.forms import BaseModelFormSet
 from django.forms.formsets import DEFAULT_MAX_NUM, DEFAULT_MIN_NUM
@@ -187,19 +188,20 @@ class BaseProductMediaForm(MultiLanguageModelForm):
 
         self.file_url = self.instance.url
 
-        if self.instance.pk and self.instance.file and isinstance(self.instance.file, Image):
-            try:
-                thumbnail = self.instance.easy_thumbnails_thumbnailer.get_thumbnail({
-                    'size': (64, 64),
-                    'crop': True,
-                    'upscale': True,
-                })
-                self.file_url = self.instance.url
-                self.thumbnail = thumbnail.url
-            except Exception:
-                self.thumbnail = None
-        else:
-            self.thumbnail = None
+    def get_thumbnail(self, request):
+        """
+        Get thumbnail url.
+
+        If thumbnail creation fails for whatever reason,
+        an error message is displayed for user.
+        """
+        try:
+            thumbnail = self.instance.get_thumbnail()
+        except Exception as error:
+            msg = _("Thumbnail generation of %s failed: %s") % (self.instance, error)
+            messages.error(request, msg)
+            thumbnail = None
+        return thumbnail
 
     def pre_master_save(self, instance):
         instance.product = self.product
