@@ -8,9 +8,9 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
-from django.forms.models import modelform_factory
 from django.utils.translation import ugettext_lazy as _
 
+from shoop.admin.forms.widgets import MediaChoiceWidget
 from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.admin.toolbar import get_default_edit_toolbar
 from shoop.core.models import Shop
@@ -18,9 +18,19 @@ from shoop.utils.excs import Problem
 from shoop.utils.multilanguage_model_form import MultiLanguageModelForm
 
 
+class ShopForm(MultiLanguageModelForm):
+    class Meta:
+        model = Shop
+        exclude = ("owner", "options")
+
+    def __init__(self, **kwargs):
+        super(ShopForm, self).__init__(**kwargs)
+        self.fields["logo"].widget = MediaChoiceWidget(clearable=True)
+
+
 class ShopEditView(CreateOrUpdateView):
     model = Shop
-    form_class = modelform_factory(Shop, MultiLanguageModelForm, exclude=("owner", "options"))
+    form_class = ShopForm
     template_name = "shoop/admin/shops/edit.jinja"
     context_object_name = "shop"
 
