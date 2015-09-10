@@ -1,0 +1,98 @@
+{% extends "shoop/front/base.jinja" %}
+
+{% block title %}{{ category.name }}{% endblock %}
+{% block content_title %}{{ category.name }}{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li><a href="/">{% trans %}Home{% endtrans %}</a></li>
+        {# TODO: Use correct url for products view #}
+        <li><a href="/p">{% trans %}Products{% endtrans %}</a></li>
+        {% for c in category.get_ancestors() if c.is_visible(customer=request.customer) %}
+            {% set category_url = url("shoop:category", pk=c.pk, slug=c.slug) %}
+            <li><a href="{{ category_url }}">{{ c.name }}</a></li>
+        {% endfor %}
+        <li class="active">{{ category.name }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    {% if category.description %}
+        <div class="category-description">
+            <p class="lead">{{ category.description|safe }}</p>
+        </div>
+    {% endif %}
+    {% set category_image = category.image|thumbnail(size=(1140,350), crop="smart", upscale=True) %}
+    {% if category_image %}
+        <div class="category-image">
+            <img src="{{ category_image }}" alt="{{ category.name }}">
+        </div>
+    {% endif %}
+    <hr>
+    <div class="row">
+        <div class="col-md-3 categories-nav">
+            {% include "shoop/front/includes/_category_menu.jinja" %}
+        </div>
+        <div class="col-md-9">
+            <div class="row product-list-actions">
+                <div class="col-sm-4">
+                    <form role="form" class="form-inline" method="get" action="" id="sorter">
+                        <label for="sort">{% trans %}Sort by{% endtrans %}</label>
+                        {# TODO: Add 'form-control' and 'selectpicker' classes to this select #}
+                        {{ form.sort|safe }}
+                    </form>
+                </div>
+                <div class="col-sm-8">
+                    <div class="toggle-view">
+                        {# TODO: Make the browser remember which view was on when browsing history backwards. #}
+                        <span class="control-label">Show Grid/List</span>
+                        <input id="product-list-view-type" type="checkbox">
+                        <label data-original-title="Grid / list view" for="product-list-view-type" data-toggle="tooltip" title="">
+                            <i class="grid fa fa-th"></i>
+                            <i class="list fa fa-list"></i>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <hr class="visible-sm visible-xs">
+            <div class="row product-list-view grid">
+                {% for product in products if shoop.product.is_visible(product) %}
+                    <div class="single-product">
+                        {{ macros.product_box(product, show_description=True, class="product-card box") }}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="clearfix">
+                <nav>
+                    <ul class="pagination text-center">
+                        <li>
+                            <a href="#" aria-label="Previous">
+                                <span aria-hidden="true"><i class="fa fa-angle-left"></i></span>
+                            </a>
+                        </li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li>
+                            <a href="#" aria-label="Next">
+                                <span aria-hidden="true"><i class="fa fa-angle-right"></i></span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extrajs %}
+    <script>
+        $(function() {
+            $("#sorter :input").change(function() {
+                $("#sorter").submit();
+            });
+        });
+    </script>
+{% endblock %}

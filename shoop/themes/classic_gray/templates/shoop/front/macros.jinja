@@ -1,0 +1,238 @@
+{% macro product_box(product, show_image=True, show_description=True, class="product-box", thumbnail_size=(500,500), shop=None) %}
+    {% set u = url("shoop:product", pk=product.pk, slug=product.slug) %}
+    {% set price_info = product.get_price_info(request) %}
+    <div class="product-card {{ class }}" id="product-{{ product.id }}">
+        <div class="labels">
+            <span class="label label-new"></span>
+            <span class="label label-sale"></span>
+            <span class="label"></span>
+        </div>
+        {% if show_image %}
+            {% set primary_image_thumb = product.primary_image|thumbnail(size=thumbnail_size) %}
+            <div class="image-wrap">
+                <a href="{{ u }}" class="image" rel="product-detail" style="background-image:url('{% if product.primary_image %}{{ primary_image_thumb }}{% else %}{{ STATIC_URL }}classic_gray/img/no_image.png{% endif %}')" title="{{ product.name }}"></a>
+            </div>
+        {% endif %}
+        <div class="detail-wrap">
+            <a href="{{ u }}" class="name">{{ product.name }}</a>
+            {% if show_description and product.description %}
+                <p class="description">{{ product.description|striptags|truncate(180)|safe }}</p>
+            {% endif %}
+            {% if shop %}<p class="shop">{{ shop }}</p>{% endif %}
+            {# TODO: (TAX) Check following line (gets taxful price of product)  #}
+            <div class="price">
+                {{ price_info.price|home_currency }}
+                {% if price_info.is_discounted %}
+                    ({{price_info.base_price|home_currency}}) <span class="discount-percent">{{ -price_info.discount_percentage|int }}%</span>
+                {% endif %}
+            </div>
+            <div class="actions clearfix">
+                <div class="col-xs-6">
+                    <button type="button" class="btn btn-block text-muted" data-toggle="modal" data-target="#product-{{ product.id }}-modal"><i class="fa fa-eye"></i> {% trans %}Preview{% endtrans %}</button>
+                </div>
+                <div class="col-xs-6">
+                    <a href="{{ u }}" class="btn btn-block text-muted"><i class="fa fa-search"></i> {% trans %}Open{% endtrans %}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro product_carousel(products, id) %}
+    <div class="carousel slide col-md-6" id="{{ id }}">
+        <div class="carousel-inner">
+            {% for slide in products|batch(3) %}
+                <div class="item{% if loop.first %} active{% endif %}">
+                    {% for product in slide %}
+                        {% if product %}
+                            <a href="{{ product.get_absolute_url() }}" class="span-third text-center recommended-product">
+                                <span class="image">{{ product.primary_image|thumbnail(size=(220, 230))|default(STATIC_URL + "site/img/no_image.png") }}</span>
+                                <span class="name">{{ product.name }}</span>
+                                {# TODO: (TAX) Check following line (gets taxful price of product)  #}
+                                {% set price_info = product.get_price_info(request) %}
+                                <span class="price inverse big">{{ price_info.price|home_currency }}</span>
+                                <span class="shop">{{ product.shop.name }}</span>
+                            </a>
+                        {% else %}
+                            <a href="#" class="span-third text-center recommended-product">
+                                <span class="image">&nbsp;</span>
+                                <span class="name">&nbsp;</span>
+                                <span class="shop">&nbsp;</span>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+
+        {# Carousel nav #}
+        <a class="carousel-control left" href="#{{ id }}" data-slide="prev">&lsaquo;</a>
+        <a class="carousel-control right" href="#{{ id }}" data-slide="next">&rsaquo;</a>
+    </div>
+{% endmacro %}
+
+{% macro render_cross_sell_products(product, relation_type="", title="") %}
+    {%- set cross_sell_products = shoop.product.get_product_cross_sells(product, relation_type) %}
+    {% if cross_sell_products %}
+        <hr>
+        {% if title %}<h3>{{ title }}</h3>{% endif %}
+        <div class="row">
+            {% for product in cross_sell_products %}
+                <div class="col-md-3">
+                    {{ product_box(product) }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro render_field(field, classes="") %}
+    {% if field.field.widget.is_hidden %}
+        {{ field.as_widget()|safe }}
+    {% else %}
+        {% set widget_name = field.field.widget.__class__.__name__|lower %}
+        {% if widget_name == "checkboxinput" %}
+            <div class="checkbox {{ widget_name }}{% if field.field.required %} required{% endif %}{% if field.errors %} has-error{% endif %} {{ classes }}">
+                <label for="{{ field.auto_id }}">
+                    {{ field.as_widget()|safe }} {{ field.label }}
+                </label>
+            </div>
+        {% else %}
+            <div class="form-group {{ widget_name }}{% if field.field.required %} required{% endif %}{% if field.errors %} has-error{% endif %} {{ classes }}">
+                <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                {{ field.as_widget(attrs={"class": "form-control"})|safe }}
+                {% if field.help_text %}
+                    <p class="help-block">{{ field.help_text }}</p>
+                {% endif %}
+                {% if field.errors %}
+                    <p class="help-block">
+                        {% for error in field.errors %}
+                            {{ error}}
+                        {% endfor %}
+                    </p>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endif %}
+{% endmacro %}
+
+{% macro alert(message, title=None, mode="") %}
+    <div class="alert{% if mode %} alert-{{ mode }}{% endif %}">
+        {% if title %}
+            <strong>{{ title }}</strong>
+        {% endif %}
+        {% if not caller %}
+            {{ message|safe }}
+        {% else %}
+            {{ caller() }}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro print_order_detail(order, show_attachments=False) %}
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">{% trans %}Products ordered{% endtrans %}</h2>
+        </div>
+        <div class="panel-body">
+            {% set lines = order.lines.order_by("ordering") %}
+            {% include "shoop/front/order/partials/product_table.jinja" %}
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">{% trans %}Tax breakdown{% endtrans %}</h2>
+        </div>
+        <div class="panel-body">
+            {% include "shoop/front/order/partials/taxes.jinja" %}
+        </div>
+    </div>
+
+    {% if show_attachments %}
+        {% set attachments = order.get_purchased_attachments() %}
+        {% if attachments %}
+            <h2>{% trans %}Files{% endtrans %}</h2>
+            <table class="table">
+                {% for attachment in attachments %}
+                    <tr>
+                        <td><a href="{{ attachment.get_effective_url() }}">{{ attachment.title }}</a></td>
+                        <td>
+                            {% if attachment.description %}
+                                {{ attachment.description|linebreaksbr }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    {% endif %}
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">{% trans %}Delivery{% endtrans %}</h2>
+                </div>
+                <div class="panel-body">
+                    <dl class="dl-horizontal">
+                        <dt>{% trans %}Delivery method{% endtrans %}:</dt>
+                        <dd>{{ order.shipping_method_name }}</dd>
+                        <dt>{% trans %}Shipping address{% endtrans %}:</dt>
+                        <dd>
+                            <address>
+                                {% for line in order.shipping_address.as_string_list() %}
+                                    {% if loop.first %}
+                                        <strong>{{ line }}</strong>
+                                    {% else %}
+                                        {{ line }}
+                                    {% endif %}
+                                    {% if not loop.last %}<br>{% endif %}
+                                {% endfor %}
+                            </address>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">{% trans %}Payment{% endtrans %}</h2>
+                </div>
+                <div class="panel-body">
+                    <dl class="dl-horizontal">
+                        <dt>{% trans %}Payment method{% endtrans %}:</dt>
+                        <dd>{{ order.payment_method_name }}</dd>
+                        <dt>{% trans %}Billing address{% endtrans %}:</dt>
+                        <dd>
+                            <address>
+                                {% for line in order.billing_address.as_string_list() %}
+                                    {% if loop.first %}
+                                        <strong>{{ line }}</strong>
+                                    {% else %}
+                                        {{ line }}
+                                    {% endif %}
+                                    {% if not loop.last %}<br>{% endif %}
+                                {% endfor %}
+                            </address>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if order.company %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">{% trans %}Company{% endtrans %}</h2>
+            </div>
+            <div class="panel-body">
+                <p>{{ order.company.name }} ({% trans %}Y-tunnus{% endtrans %} {{ order.company.vat_id }})</p>
+            </div>
+        </div>
+    {% endif %}
+
+{% endmacro %}

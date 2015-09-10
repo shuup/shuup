@@ -1,0 +1,61 @@
+{%- import "shoop/front/macros.jinja" as macros with context -%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block extrameta %}{% endblock %}
+
+    {# Page Title #}
+    <title>{{ request.shop }} &ndash; {% block title %}{% endblock %}</title>
+
+    {# Include Favicon #}
+    <link rel="icon" type="image/x-icon" href="{{ STATIC_URL }}classic_gray/img/favicon.ico">
+
+    {# Include Fonts #}
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+
+    {# Include Styles #}
+    <link rel="stylesheet" href="{{ STATIC_URL }}classic_gray/css/style.css">
+</head>
+<body>
+    <nav class="main-nav">
+        {% include "shoop/front/includes/_navigation.jinja" %}
+    </nav>
+    <main class="main-container" role="main">
+        <div class="container">
+            {% block breadcrumb %}{% endblock %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-dismissible alert-{{ message.tags }}" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% block before_content_title %}{% endblock %}
+            {% if self.content_title() %}
+                <h1 class="page-header">{% block content_title %}{% endblock %}</h1>
+            {% endif %}
+            <div class="page-content">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </main>
+    {# TODO: Actual footer content and then styling #}
+    <footer>
+        <div class="container">
+            <hr>
+            <small class="text-muted">Footer goes here</small>
+        </div>
+    </footer>
+
+    {# Include JavaScript libraries #}
+    <script src="{{ STATIC_URL }}classic_gray/js/classic-gray.js"></script>
+
+    {# Include all Extra JavaScript #}
+    {% block extrajs %}{% endblock %}
+</body>
+</html>

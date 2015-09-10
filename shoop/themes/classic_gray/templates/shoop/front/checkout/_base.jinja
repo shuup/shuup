@@ -1,0 +1,18 @@
+{% extends "shoop/front/base.jinja" %}
+{% block title %}{{ view.title }}{% endblock %}
+{% block content_title %}{{ view.title }}{% endblock %}
+{% block before_content_title %}
+    {% block checkout_phase_bar %}
+        {% if view and view.phases %}
+        <hr>
+        <ul class="nav nav-pills nav-justified">
+            {% for phase in view.phases if phase.title %}
+            <li {% if phase.is_current %}class="active"{% endif %}>
+                <a href="{{ url("shoop:checkout", phase=phase.identifier) }}">{{ loop.index }}. {{ phase.title }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        <hr>
+        {% endif %}
+    {% endblock %}
+{% endblock %}
