@@ -18,6 +18,7 @@ from django.views.generic import ListView
 from shoop.core.models import Product
 from shoop.front.utils.product_sorting import PRODUCT_SORT_CHOICES, sort_products
 from shoop.front.utils.views import cache_product_things
+from shoop.front.template_helpers.product import is_visible
 
 
 def get_search_product_ids(request, query):
@@ -72,6 +73,7 @@ class SearchView(ListView):
         if products:
             products = cache_product_things(self.request, products)
             products = sort_products(self.request, products, self.form.cleaned_data.get("sort"))
+            products = [p for p in products if is_visible({"request": self.request}, p)]
             context["products"] = products
         context["no_results"] = (self.form.is_valid() and not products)
         return context
