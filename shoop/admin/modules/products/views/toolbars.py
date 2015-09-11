@@ -33,20 +33,12 @@ class EditProductToolbar(Toolbar):
         product = self.product
         # :type product: shoop.core.models.Product
 
-        media_button = DropdownItem(
-            text=_("Manage Media"),
-            icon="fa fa-picture-o",
-            url=reverse("shoop_admin:product.edit_media", kwargs={"pk": product.pk}),
-        )
         cross_sell_button = DropdownItem(
             text=_("Manage Cross-Selling"),
             icon="fa fa-random",
             url=reverse("shoop_admin:product.edit_cross_sell", kwargs={"pk": product.pk}),
         )
         menu_items = [
-            DropdownHeader(text=_("Media")),
-            media_button,
-            DropdownDivider(),
             DropdownHeader(text=_("Cross-Selling")),
             cross_sell_button
         ]

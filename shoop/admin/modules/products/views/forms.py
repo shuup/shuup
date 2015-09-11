@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 from collections import defaultdict
 from django import forms
+from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.forms import BaseModelFormSet
 from django.forms.formsets import DEFAULT_MAX_NUM, DEFAULT_MIN_NUM
@@ -153,7 +154,7 @@ class ProductAttributesForm(forms.Form):
         self.product.clear_attribute_cache()
 
 
-class ProductMediaForm(MultiLanguageModelForm):
+class BaseProductMediaForm(MultiLanguageModelForm):
     class Meta:
         model = ProductMedia
         fields = (
@@ -172,7 +173,7 @@ class ProductMediaForm(MultiLanguageModelForm):
         self.product = kwargs.pop("product")
         self.allowed_media_kinds = kwargs.pop("allowed_media_kinds")
         default_shop = kwargs.pop("default_shop")
-        super(ProductMediaForm, self).__init__(**kwargs)
+        super(BaseProductMediaForm, self).__init__(**kwargs)
 
         self.fields["file"].widget = MediaChoiceWidget()  # Filer misimplemented the field; we need to do this manually.
         self.fields["file"].required = True
@@ -186,7 +187,21 @@ class ProductMediaForm(MultiLanguageModelForm):
             self.fields["shops"].initial = [default_shop]
 
         self.file_url = self.instance.url
-        self.thumbnail = None
+
+    def get_thumbnail(self, request):
+        """
+        Get thumbnail url.
+
+        If thumbnail creation fails for whatever reason,
+        an error message is displayed for user.
+        """
+        try:
+            thumbnail = self.instance.get_thumbnail()
+        except Exception as error:
+            msg = _("Thumbnail generation of %s failed: %s") % (self.instance, error)
+            messages.error(request, msg)
+            thumbnail = None
+        return thumbnail
 
     def pre_master_save(self, instance):
         instance.product = self.product
@@ -225,24 +240,35 @@ class BaseProductMediaFormSet(BaseModelFormSet):
         return self.form_class(**kwargs)
 
 
+class ProductMediaForm(BaseProductMediaForm):
+
+    def __init__(self, **kwargs):
+        super(ProductMediaForm, self).__init__(**kwargs)
+        self.fields["file"].required = False
+
+    def clean_external_url(self):
+        external_url = self.cleaned_data.get("external_url")
+
+        # if form has been deleted, we don't want to validate fields
+        if "DELETE" in self.changed_data:
+            return external_url
+
+        file = self.cleaned_data.get("file")
+        if external_url and file:
+            raise ValidationError(_("Use only URL or file, not both"))
+        return external_url
+
+
 class ProductMediaFormSet(BaseProductMediaFormSet):
     form_class = ProductMediaForm
 
 
-class ProductImageMediaForm(ProductMediaForm):
+class ProductImageMediaForm(BaseProductMediaForm):
     is_primary = forms.BooleanField(required=False)
 
     def __init__(self, **kwargs):
         super(ProductImageMediaForm, self).__init__(**kwargs)
         if self.instance.pk and self.instance.file:
-            if isinstance(self.instance.file, Image):
-                thumbnail = self.instance.easy_thumbnails_thumbnailer.get_thumbnail({
-                    'size': (64, 64),
-                    'crop': True,
-                    'upscale': True,
-                })
-                self.file_url = self.instance.url
-                self.thumbnail = thumbnail.url or None
             if self.product.primary_image_id == self.instance.pk:
                 self.fields["is_primary"].initial = True
 
@@ -263,3 +289,20 @@ class ProductImageMediaForm(ProductMediaForm):
 class ProductImageMediaFormSet(ProductMediaFormSet):
     allowed_media_kinds = [ProductMediaKind.IMAGE]
     form_class = ProductImageMediaForm
+
+    def save(self, commit=True):
+        """
+        Save the form.
+
+        In addition add the first saved image as primary image for the
+        product if none is selected as such.
+        """
+        super(ProductImageMediaFormSet, self).save(commit)
+
+        has_primary = any(form.cleaned_data.get("is_primary") for form in (self.forms or []))
+
+        if self.forms and not has_primary:
+            # make first form be the primary image as well
+            form_instance = self.forms[0]
+            form_instance.product.primary_image = form_instance.instance
+            form_instance.product.save()
