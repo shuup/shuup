@@ -9,7 +9,9 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
+from filer.fields.image import FilerImageField
 from jsonfield import JSONField
 from parler.models import TranslatableModel, TranslatedFields
 
@@ -29,9 +31,11 @@ class Shop(TranslatableModel):
     owner = models.ForeignKey("Contact", blank=True, null=True)
     options = JSONField(blank=True, null=True)
     prices_include_tax = models.BooleanField(default=True)
+    logo = FilerImageField(verbose_name=_('logo'), blank=True, null=True)
 
     translations = TranslatedFields(
-        name=models.CharField(max_length=64)
+        name=models.CharField(max_length=64),
+        public_name=models.CharField(max_length=64)
     )
 
     def __str__(self):
