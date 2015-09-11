@@ -58,6 +58,8 @@ INSTALLED_APPS = add_enabled_addons(SHOOP_ENABLED_ADDONS_FILE, (
     'filer',
     'registration',
     'rest_framework',
+
+    'shoop.discount_pricing'
 ))
 
 MIDDLEWARE_CLASSES = (
@@ -163,7 +165,7 @@ TEMPLATES = [
 
 SESSION_SERIALIZER = "django.contrib.sessions.serializers.PickleSerializer"
 
-SHOOP_PRICING_MODULE = "default_pricing"
+SHOOP_PRICING_MODULE = "discount_pricing"
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
