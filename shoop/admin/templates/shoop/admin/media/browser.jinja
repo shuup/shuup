@@ -1,5 +1,5 @@
 {% if request.GET.popup %}
-{% extends "shoop/admin/base_popup.jinja" %}
+{% extends "shoop/admin/base_popup_with_support.jinja" %}
 {% else %}
 {% extends "shoop/admin/base.jinja" %}
 {% endif %}
@@ -30,4 +30,5 @@
 {% endblock %}
 {% block extra_css %}
     <link rel="stylesheet" href="{{ static("shoop_admin/css/media-browser.css") }}">
+    <style>body.popup .support-nav {padding:0;padding-bottom: 10px}</style>
 {% endblock %}

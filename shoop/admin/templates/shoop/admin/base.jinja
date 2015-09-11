@@ -14,7 +14,7 @@
         {% block extra_head %}{% endblock -%}
         <script>var ShoopAdminConfig = {{ shoop_admin.get_config()|json }};</script>
     </head>
-    <body class="{% block body_class %}{% endblock %}">
+    <body class="{% block body_class %}{% endblock %} {{ "popup" if request.GET.popup else "" }}">
         {% block top %}
         <header id="top-header">{% include "shoop/admin/base/_navigation.jinja" %}</header>
         <nav id="main-menu">{# this content is loaded dynamically; see base/_main_menu.jinja #}</nav>
