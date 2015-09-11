@@ -27,7 +27,6 @@
             cursor: default;
         }
         .collapse-icon {
-            float: right;
             padding: 2px;
             @media (min-width: @screen-md-min) {
                 display: none;
@@ -45,7 +44,8 @@
         display: block;
         color: @text-color;
         border-bottom: 1px solid @border-color;
-        padding: 10px 15px;
+        padding: 10px 15px 10px 30px;
+        position: relative;
         &:hover, &:focus {
             background: darken(@body-bg, 5%);
             text-decoration: none;
@@ -53,7 +53,9 @@
     }
     i.menu-arrow {
         color: @brand-primary;
-        margin-right: 5px;
+        position: absolute;
+        left: 15px;
+        top: 13px;
         &:before {
             content: "\f105";
         }
@@ -83,12 +85,16 @@
         }
     }
     ul ul a {
-        padding-left: 30px;
+        padding-left: 45px;
         font-size: 1.3rem;
+        i.menu-arrow {
+            left: 30px;
+        }
     }
     ul ul ul a {
-        padding-left: 60px;
+        padding-left: 65px;
         font-size: 1.2rem;
+        i.menu-arrow { display: none; }
     }
     ul ul ul ul {
         display: none !important;
