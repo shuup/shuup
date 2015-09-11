@@ -145,15 +145,12 @@
 </div>
 <div class="bottom-nav">
     <div class="container">
-        {# TODO: Check if logo exists and add class "no-image" based on that #}
-        <div class="logo no-image">
-            {# TODO: Get the actual logo and logo url #}
-            {% if request.shop_logo %}
-                {% set logo_cropped = request.shop_logo|thumbnail(size(500,500))%}
-                <a href="/" class="image" style="background-image:url('{{ logo_cropped }}')"></a>
-                }
+        {% set cropped_logo = request.shop.logo|thumbnail(size=(500,500)) %}
+        <div class="logo {% if not cropped_logo %}no-image{% endif %}">
+            {% if cropped_logo %}
+                <a href="/" class="image" style="background-image:url('{{ cropped_logo }}')"></a>
             {% else %}
-                <a href="/" class="text"><h4>{{ request.shop }}</h4></a>
+                <a href="/" class="text"><h4>{{ request.shop.public_name }}</h4></a>
             {% endif %}
         </div>
         <button class="toggle-mobile-nav">
