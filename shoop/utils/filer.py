@@ -18,11 +18,17 @@ from filer.models import File, Folder, Image
 def filer_folder_from_path(path):
     """
     Split `path` by slashes and create a hierarchy of Filer Folder objects accordingly.
-    Blank path components are ignored, so "/////foo//////bar///" is the same as "foo/bar"
-    :param path: Pathname.
-    :return: Folder.
-    """
+    Blank path components are ignored, so "/////foo//////bar///" is the same as "foo/bar".
 
+    The empty string (and `None`) are handled as "no folder", i.e. root folder.
+
+    :param path: Pathname or None
+    :type path: str|None
+    :return: Folder
+    :rtype: filer.models.Folder
+    """
+    if path is None:
+        return None
     folder = None
     for component in six.text_type(path).split("/"):
         if component:

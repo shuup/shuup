@@ -6,18 +6,9 @@
  * This source code is licensed under the AGPLv3 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var _ = require("lodash");
+var gutil = require("gulp-util");
+var path = require("path");
 
-module.exports.DEST_DIR = "./static/shoop_admin";
-module.exports.PRODUCTION = (process.env.NODE_ENV === "production");
-
-var watchRules = [];
-
-module.exports.getWatchRules = function() {
-    return watchRules;
-};
-
-module.exports.addWatchRule = function(tasks, paths, func) {
-    if (!_.isArray(tasks)) tasks = [tasks];
-    watchRules.push({tasks: tasks, paths: paths, func: func});
-};
+module.exports.DEST_DIR = path.join(process.cwd(), "static", "shoop_admin");
+module.exports.PRODUCTION = gutil.env.production || (process.env.NODE_ENV === "production");
+module.exports.WATCH = !!gutil.env.watch;

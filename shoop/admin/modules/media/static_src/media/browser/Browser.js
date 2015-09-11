@@ -6,41 +6,49 @@
  * This source code is licensed under the AGPLv3 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-window.MediaBrowser = (function() {
-    var BrowserView = require("./BrowserView");
-    var FileUpload = require("./FileUpload");
-    var controller = null;
-    var init = function() {
-        controller = m.mount(document.getElementById("BrowserView"), BrowserView);
-        var currentIdMatch = /#!id=(\d+)/.exec(location.hash);
-        if(currentIdMatch) {
-            controller.setFolder(currentIdMatch[1]);
-        } else {
-            controller.setFolder(0);
-        }
-        controller.reloadFolderTree();
-    };
-    var newFolder = function() {
-        controller.promptCreateFolderHere();
-    };
-    var setupUploadButton = function(element) {
-        var input = document.createElement("input");
-        input.type = "file";
-        input.className = "invisible-file-input";
-        input.addEventListener("change", function(event) {
-            FileUpload.uploadNativeFiles(
-                controller.getUploadUrl(),
-                event.target.files,
-                controller.reloadFolderContentsSoon
-            );
-        });
-        element.style.width = element.offsetWidth + "px";
-        element.style.height = element.offsetHeight + "px";
-        element.appendChild(input);
-    };
-    return {
-        init: init,
-        newFolder: newFolder,
-        setupUploadButton: setupUploadButton,
-    };
-}());
+
+const _ = require("lodash");
+const m = require("mithril");
+const BrowserView = require("./BrowserView");
+const dragDrop = require("./util/dragDrop");
+const FileUpload = require("./FileUpload");
+const menuManager = require("./util/menuManager");
+const folderContextMenu = require("./menus/folderContextMenu");
+
+var controller = null;
+
+export function init(config={}) {
+    if (controller !== null) {
+        return;
+    }
+    controller = m.mount(document.getElementById("BrowserView"), {
+        view: BrowserView.view,
+        controller: _.partial(BrowserView.controller, config)
+    });
+    controller.navigateByHash();
+    controller.reloadFolderTree();
+
+    dragDrop.disableIntraPageDragDrop();
+}
+
+export function openFolderContextMenu(event) {
+    const button = event.target;
+    menuManager.open(button, folderContextMenu(controller));
+}
+
+export function setupUploadButton(element) {
+    var input = document.createElement("input");
+    input.type = "file";
+    input.multiple = true;
+    input.style.display = "none";
+    input.addEventListener("change", function(event) {
+        FileUpload.enqueueMultiple(controller.getUploadUrl(), event.target.files);
+        FileUpload.addQueueCompletionCallback(() => { controller.reloadFolderContentsSoon(); });
+        FileUpload.processQueue();
+    });
+    document.body.appendChild(input);
+    element.addEventListener("click", function(event) {
+        input.click();
+        event.preventDefault();
+    }, false);
+}
