@@ -140,6 +140,20 @@ class Theme(object):
         from .forms import GenericThemeForm
         return GenericThemeForm(theme=self, **form_kwargs)
 
+    def get_view(self, view_name):
+        """
+        Get an extra view for this theme.
+
+        Views may be either normal Django functions or CBVs (or anything that has `.as_view()` really).
+        Falsy values are considered "not found".
+
+        :param view_name: View name
+        :type view_name: str
+        :return: The extra view, if one exists for the given name.
+        :rtype: dict[str, View|callable]|None
+        """
+        return None
+
 
 _not_set = object()  # Can't use `None` here.
 _current_theme_class = _not_set
@@ -159,10 +173,14 @@ def override_current_theme_class(theme_class=_not_set):
     :type theme_class: class[Theme]
     """
     global _current_theme_class
+    # Circular import avoidance:
+    from shoop.xtheme.views.extra import clear_view_cache
     old_theme_class = _current_theme_class
     _current_theme_class = theme_class
+    clear_view_cache()
     yield
     _current_theme_class = old_theme_class
+    clear_view_cache()
 
 
 def get_current_theme(request=None):
