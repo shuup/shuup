@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block extrameta %}{% endblock %}
 
-    <title>{{ request.shop }} &ndash; {% block title %}{% endblock %}</title>
+    <title>{{ request.shop.public_name }} &ndash; {% block title %}{% endblock %}</title>
 
     {# Include favicon #}
     <link rel="icon" type="image/x-icon" href="{{ STATIC_URL }}shoop/img/favicon.ico">

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.http.response import HttpResponse
 
 import os
 import re
@@ -58,9 +59,21 @@ class FauxTheme2(Theme):
     identifier = "testing_faux_theme_too"
 
 
+def greeting_view(request):
+    return HttpResponse("So long, and thanks for all the fish, %s" % request.GET.get("name", "Humanity"))
+
+
+
 class H2G2Theme(Theme):
     template_dir = "h2g2"
     identifier = "h2g2"
+
+    def get_view(self, view_name):
+        return {
+            "greeting": greeting_view,
+            "faux": FauxView,
+            "true": True
+        }.get(view_name)
 
 
 def get_test_template_bits(request, pass_view=True, **extra_ctx):

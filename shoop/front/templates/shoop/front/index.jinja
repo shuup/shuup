@@ -1,7 +1,7 @@
 {% extends "shoop/front/base.jinja" %}
 
 {% block title %}{% trans %}Home{% endtrans %}{% endblock %}
-{% block content_title %}{% trans %}Welcome to {% endtrans %}{{ request.shop }}!{% endblock %}
+{% block content_title %}{% trans %}Welcome to {% endtrans %}{{ request.shop.public_name }}!{% endblock %}
 
 {% block content %}
 

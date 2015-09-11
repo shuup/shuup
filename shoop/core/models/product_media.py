@@ -40,7 +40,10 @@ class ProductMedia(TranslatableModel):
         ProductMediaKind, db_index=True, default=ProductMediaKind.GENERIC_FILE, verbose_name=_('kind')
     )
     file = FilerFileField(blank=True, null=True, verbose_name=_('file'))
-    external_url = models.URLField(blank=True, null=True, verbose_name=u'URL')
+    external_url = models.URLField(
+        blank=True, null=True, verbose_name=u'URL',
+        help_text=_("Enter URL to external file. If this field is filled, the selected media doesn't apply.")
+    )
     ordering = models.IntegerField(default=0)
 
     # Status
@@ -89,5 +92,39 @@ class ProductMedia(TranslatableModel):
 
     @property
     def easy_thumbnails_thumbnailer(self):
-        if self.file_id:
-            return get_thumbnailer(self.file)
+        """
+        Get `Thumbnailer` instance.
+
+        Will return `None` if file cannot be thumbnailed.
+
+        :rtype:easy_thumbnails.files.Thumbnailer|None
+        """
+        if not self.file_id:
+            return None
+
+        if self.kind != ProductMediaKind.IMAGE:
+            return None
+
+        return get_thumbnailer(self.file)
+
+    def get_thumbnail(self, **kwargs):
+        """
+        Get thumbnail for image
+
+        This will return `None` if there is no file or kind is not `ProductMediaKind.IMAGE`
+
+        :rtype: easy_thumbnails.files.ThumbnailFile|None
+        """
+        kwargs.setdefault("size", (64, 64))
+        kwargs.setdefault("crop", True)  # sane defaults
+        kwargs.setdefault("upscale", True)  # sane defaults
+
+        if kwargs["size"] is (0, 0):
+            return None
+
+        thumbnailer = self.easy_thumbnails_thumbnailer
+
+        if not thumbnailer:
+            return None
+
+        return thumbnailer.get_thumbnail(thumbnail_options=kwargs)

@@ -142,7 +142,8 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
         ProductBaseFormPart,
         ShopProductFormPart,
         ProductAttributeFormPart,
-        ProductImageMediaFormPart
+        ProductImageMediaFormPart,
+        ProductMediaFormPart
     ]
     form_part_class_provide_key = "admin_product_form_part"
 

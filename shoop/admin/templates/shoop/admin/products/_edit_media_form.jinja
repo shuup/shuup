@@ -26,11 +26,12 @@
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-sm-6 file-control">
+                <div class="col-sm-4 file-control">
                     <div class="form-group{% if f.file.errors %} has-error{% endif %}">
+                        {%- set thumbnail = f.get_thumbnail(request) %}
                         <span class="thumbnail">
-                            {% if f.thumbnail %}
-                                <a href="{{ f.file_url }}" target="_blank"><img src="{{ f.thumbnail }}"></a>
+                            {% if thumbnail %}
+                                <a href="{{ f.file_url }}" target="_blank"><img src="{{ thumbnail.url }}"></a>
                             {% else %}
                                 <small class="no-image">{% trans %}No image{% endtrans %}</small>
                             {% endif %}
@@ -39,12 +40,14 @@
                         {% if f.file.errors %}
                         <div class="help-block">{{ f.file.errors }}</div>
                         {% endif %}
-                        {% if not is_image_form %}
-                            {{ bs3.field(f.external_url) }}
-                        {% endif %}
                     </div>
                 </div>
-                <div class="col-sm-6 actions">
+                <div class="col-sm-4 extra-fields">
+                {% if not is_image_form %}
+                    {{ bs3.field(f.external_url) }}
+                {% endif %}
+                </div>
+                <div class="col-sm-4 actions">
                     {% if media_form.can_delete and f.instance.pk %}
                     <a href="#" class="text-muted product-media-delete"><i class="fa fa-times"></i> {% trans %}Delete{% endtrans %}</a>
                     <div class="hide">{{ f.DELETE }}</div>
@@ -92,7 +95,9 @@
         {{ render_media_form(media_form.empty_form, media_form, "__prefix_name__", is_image_form) }}
     </div>
     <hr>
-<a class="btn btn-lg btn-text media-add-new-panel" href="#">+ {% if is_image_form %}{% trans %}Add new image{% endtrans %}{% else %}Add new media{% endif %}</a>
+{%- set target_panels = "product-images-section" if is_image_form else "product-media-section" %}
+{%- set target_id = "id_images" if is_image_form else "id_media" %}
+<a class="btn btn-lg btn-text media-add-new-panel" href="#" data-target-id="{{ target_id }}" data-target-panels="{{ target_panels }}">+ {% if is_image_form %}{% trans %}Add new image{% endtrans %}{% else %}Add new media{% endif %}</a>
 
 {% endcall %}
 
