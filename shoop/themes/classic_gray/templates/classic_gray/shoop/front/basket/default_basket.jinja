@@ -5,13 +5,13 @@
 
 {% block content %}
     {% if basket.is_empty %}
-        <div class="alert alert-danger">
-            {% trans %}Your shopping cart is empty.{% endtrans %}
-        </div>
+        <p class="lead"><i class="fa fa-exclamation-circle text-danger"></i> {% trans %}Your shopping cart is empty.{% endtrans %}</p>
+        <hr>
+        <a href="/p/" class="btn btn-primary"><i class="fa fa-angle-double-left"></i> {% trans %}Back to Products{% endtrans %}</a>
     {% else %}
-        {% include "shoop/front/basket/partials/table.jinja" %}
-
+        {% include "shoop/front/basket/partials/_basket_content.jinja" %}
         {% if errors %}
+            <hr>
             <div class="alert alert-danger">
                 <p><strong>{% trans %}Errors{% endtrans %}</strong></p>
                 <ul>
@@ -21,9 +21,21 @@
                 </ul>
             </div>
         {% else %}
-            <a href="{{ url("shoop:checkout") }}" class="btn btn-primary btn-lg">
-                {% trans %}Proceed to checkout{% endtrans %}
+            <a href="/p/" class="text-muted btn continue-shopping hidden-xs"><i class="fa fa-angle-double-left"></i> {% trans %}Continue Shopping{% endtrans %}</a>
+            <a href="{{ url("shoop:checkout") }}" class="btn btn-primary pull-right btn-checkout">
+                <i class="fa fa-lock"></i> {% trans %}Proceed to checkout{% endtrans %} <i class="fa fa-angle-double-right"></i>
             </a>
         {% endif %}
     {% endif %}
+{% endblock %}
+
+{% block extrajs %}
+{# TODO: Someone maybe can figure out a better way to achieve this without a separate button #}
+<script type="text/javascript">
+    $(function() {
+        $("#update_basket_form .quantity :input").change(function() {
+            $("#update_basket_form").submit();
+        });
+    })
+</script>
 {% endblock %}
