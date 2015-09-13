@@ -12,9 +12,9 @@ const {dropzoneConfig} = require("../util/dragDrop");
 const folderActions = require("../actions/folderActions");
 
 export default function(ctrl) {
-    var currentFolderId = ctrl.currentFolderId();
-    var folderPath = ctrl.currentFolderPath();
-    var idsToCurrent = _.pluck(folderPath, "id");
+    const currentFolderId = ctrl.currentFolderId();
+    const folderPath = ctrl.currentFolderPath();
+    const idsToCurrent = _.pluck(folderPath, "id");
 
     function clickFolder(event, folderId) {
         ctrl.setFolder(folderId);
@@ -26,21 +26,21 @@ export default function(ctrl) {
         if (folder.id === undefined) {
             return;
         }
-        var inPath = (idsToCurrent.indexOf(folder.id) > -1);
-        var isCurrent = (currentFolderId === folder.id);
-        var nameLink = m("a", {href: "#", onclick: _.partialRight(clickFolder, folder.id)}, [
+        const inPath = (idsToCurrent.indexOf(folder.id) > -1);
+        const isCurrent = (currentFolderId === folder.id);
+        const nameLink = m("a", {href: "#", onclick: _.partialRight(clickFolder, folder.id)}, [
             (inPath ? m("i.caret-icon.fa.fa-caret-down") : m("i.caret-icon.fa.fa-caret-right")),
             (isCurrent ? m("i.folder-icon.fa.fa-folder-open") : m("i.folder-icon.fa.fa-folder")),
             m("span.name", folder.name)
         ]);
-        var childLis = (inPath ? _.map(folder.children, walk) : []);
+        const childLis = (inPath ? _.map(folder.children, walk) : []);
         if (isCurrent) {
             childLis.push(m("li.new-folder-item", {key: "new-folder"}, m("a", {
                 href: "#",
                 onclick: _.bind(folderActions.promptCreateFolder, null, ctrl, folder.id),
             }, m("i.fa.fa-plus"), " New folder")));
         }
-        var className = _({
+        const className = _({
             "current": isCurrent,
             "in-path": inPath,
             "has-children": (folder.children.length > 0),
@@ -57,6 +57,5 @@ export default function(ctrl) {
         );
     }
 
-    var rootLi = walk(ctrl.rootFolder());
-    return m("ul", rootLi);
+    return m("ul", walk(ctrl.rootFolder()));
 };

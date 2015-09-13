@@ -54,11 +54,12 @@ $(function() {
     });
 
     $(document).on("click", "#main-menu ul.menu-list > li a", function(e) {
-        if (!$(this).siblings("ul").length) return;
+        if (!$(this).siblings("ul").length) {
+            return;
+        }
         e.preventDefault();
-        var $listItems = $("ul.menu-list li");
-        var $currentListItem = $(this).parent("li");
-        var isOpen = $currentListItem.hasClass("open");
+        const $currentListItem = $(this).parent("li");
+        const isOpen = $currentListItem.hasClass("open");
         $(this).siblings("ul").slideToggle();
         $currentListItem.toggleClass("open", !isOpen);
     });

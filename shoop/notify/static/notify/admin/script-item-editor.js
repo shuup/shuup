@@ -6,11 +6,15 @@
  * This source code is licensed under the AGPLv3 license found in the
  * LICENSE file in the root directory of this source tree.
  */
+// This file is not transpiled, so prefer-const isn't valid
+/* eslint-disable prefer-const */
 (function() {
     var $lastFocusedTemplateInput = null;
 
     function insertTemplateVariableExpression(variableName) {
-        if (!$lastFocusedTemplateInput) return false;
+        if (!$lastFocusedTemplateInput) {
+            return false;
+        }
         var variableExpression = "{{ " + variableName + " }}";
         var caretPos = $lastFocusedTemplateInput.prop("selectionStart");
         var text = $lastFocusedTemplateInput.val();

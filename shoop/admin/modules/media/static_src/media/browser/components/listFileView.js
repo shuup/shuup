@@ -14,12 +14,12 @@ const folderLink = require("./folderLink");
 
 
 export default function(ctrl, folders, files) {
-    var folderItems = _.map(folders, function(folder) {
+    const folderItems = _.map(folders, function(folder) {
         return m("tr", {key: "folder-" + folder.id}, [
             m("td", {colspan: 3}, [m("i.fa.fa-folder.folder-icon"), " ", folderLink(ctrl, folder)]),
         ]);
     });
-    var fileItems = _.map(files, function(file) {
+    const fileItems = _.map(files, function(file) {
         return m("tr", {key: file.id}, [
             m("td", wrapFileLink(file)),
             m("td.text-right", file.size),

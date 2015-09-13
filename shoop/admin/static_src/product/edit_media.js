@@ -18,17 +18,17 @@ $(function() {
 
     $(document).on("click", ".set-as-primary", function(e){
         e.preventDefault();
-        var $panel = $(this).parents(".panel");
-        var prefix = $panel.data("prefix");
+        const $panel = $(this).parents(".panel");
+        const prefix = $panel.data("prefix");
 
-        var [start, current] = prefix.split("-");
+        const [, current] = prefix.split("-");
 
-        var $imagePanels = $("#product-images-section .panel");
+        const $imagePanels = $("#product-images-section .panel");
 
         $imagePanels.removeClass("panel-selected").addClass("panel-default");
 
         $(".is-primary-image").replaceWith(function(){
-            return $("<a>", {"class": "set-as-primary", "href": "javascript:void(0);"}).text("Set as primary image");
+            return $("<a>", {"class": "set-as-primary", "href": "#"}).text("Set as primary image");
         });
 
         $imagePanels.each(function(i){
@@ -45,13 +45,13 @@ $(function() {
 
     $(".media-add-new-panel").on("click", function(e){
         e.preventDefault();
-        var panelCount = $("#"+ $(this).data("target-panels") +" .panel").length;
-        var $source = $("#placeholder-panel");
-        var html = $source.html().replace(/__prefix__/g, panelCount-1).replace(/__prefix_name__/g, panelCount);
+        const panelCount = $("#"+ $(this).data("target-panels") +" .panel").length;
+        const $source = $("#placeholder-panel");
+        const html = $source.html().replace(/__prefix__/g, panelCount-1).replace(/__prefix_name__/g, panelCount);
 
         $(html).insertBefore($source);
-        var targetId = $(this).data("target-id");
-        var totalForms = parseInt($("#"+targetId+"-TOTAL_FORMS").val());
-        $("#"+targetId+"-TOTAL_FORMS").val(totalForms + 1);
+        const targetId = $(this).data("target-id");
+        const $totalFormsField = $("#"+targetId+"-TOTAL_FORMS");
+        $totalFormsField.val(parseInt($totalFormsField.val()) + 1);
     });
 });

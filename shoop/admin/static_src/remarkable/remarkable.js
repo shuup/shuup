@@ -6,16 +6,16 @@
  * This source code is licensed under the AGPLv3 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var marked = require("marked");
-var m = require("mithril");
+const marked = require("marked");
+const m = require("mithril");
 
 function escapeRegExp(str) {
     return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 }
 
 function wrapperModifyingFunction(preString, postString) {
-    var preRegexp = new RegExp(escapeRegExp(preString) + "$");  // pre ends with marker?
-    var postRegexp = new RegExp("^" + escapeRegExp(postString));  // post begins with marker
+    const preRegexp = new RegExp(escapeRegExp(preString) + "$");  // pre ends with marker?
+    const postRegexp = new RegExp("^" + escapeRegExp(postString));  // post begins with marker
     return function(data) {
         if (preRegexp.test(data.pre)) {  // removing
             data.pre = data.pre.replace(preRegexp, "");
@@ -33,7 +33,7 @@ function wrapperModifyingFunction(preString, postString) {
 }
 
 function lineModifyingFunction(preString) {
-    var preRegexp = new RegExp("^" + escapeRegExp(preString));  // pre begins with marker
+    const preRegexp = new RegExp("^" + escapeRegExp(preString));  // pre begins with marker
     return function(data) {
         data.mid = data.mid.split("\n").map(function(line) {
             if (!line.length) {
@@ -56,7 +56,7 @@ function link(data) {
 }
 
 function controller() {
-    var ctrl = this;
+    const ctrl = this;
     ctrl.overlay = m.prop(null);
     ctrl.targetTextArea = m.prop(null);
     ctrl.content = m.prop("");
@@ -79,7 +79,7 @@ function controller() {
         m.redraw();
     };
     ctrl.updateContent = function(content) {
-        var textArea = ctrl.targetTextArea();
+        const textArea = ctrl.targetTextArea();
         ctrl.content(content);
         if (textArea) {
             textArea.value = content;
@@ -90,7 +90,7 @@ function controller() {
         document.body.classList.add("shoop-modal-open");
     };
     ctrl.destroy = function() {
-        var ovl = ctrl.overlay();
+        const ovl = ctrl.overlay();
         m.mount(ovl, null);  // self-destruct
         ovl.parentNode.removeChild(ovl);
         document.body.classList.remove("shoop-modal-open");
@@ -99,8 +99,8 @@ function controller() {
 
 function callTool(ctrl, toolAction) {
     return function() {
-        var textArea = ctrl._editorTextArea;
-        var data = {
+        const textArea = ctrl._editorTextArea;
+        const data = {
             content: textArea.value,
             start: textArea.selectionStart,
             end: textArea.selectionEnd
@@ -109,7 +109,7 @@ function callTool(ctrl, toolAction) {
         data.mid = data.content.substring(data.start, data.end);
         data.post = data.content.substring(data.end, data.content.length);
 
-        var rv = toolAction(data);
+        const rv = toolAction(data);
         textArea.focus();
         if (rv) {
             if (rv.content) {
@@ -124,7 +124,7 @@ function callTool(ctrl, toolAction) {
 
 function makeToolbar(ctrl) {
     var currentGroup = [];
-    var toolGroups = [currentGroup];
+    const toolGroups = [currentGroup];
     ctrl.tools().forEach(function(tool) {
         if (tool.separator || tool === "|") {
             toolGroups.push(currentGroup = []);
@@ -169,7 +169,7 @@ function view(ctrl) {
                         config: function(el) {
                             ctrl._editorTextArea = el;  // normal attr instead of mithril prop on purpose
                             if (ctrl._nextRenderSelection) {  // Fix-up the selection if any
-                                var range = ctrl._nextRenderSelection;
+                                const range = ctrl._nextRenderSelection;
                                 el.setSelectionRange(range.start, range.end);
                                 ctrl._nextRenderSelection = null;
                             }
@@ -183,12 +183,12 @@ function view(ctrl) {
 }
 
 module.exports = function(targetTextArea) {
-    var overlay = document.createElement("div");
+    const overlay = document.createElement("div");
     overlay.id = "remarkable-overlay";
     overlay.className = "remarkable-overlay";
     overlay.style.display = "none";
     document.body.appendChild(overlay);
-    var ctrl = m.mount(overlay, {controller: controller, view: view});
+    const ctrl = m.mount(overlay, {controller: controller, view: view});
     ctrl.overlay(overlay);
     ctrl.setTargetTextArea(targetTextArea);
     return ctrl;

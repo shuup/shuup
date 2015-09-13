@@ -12,13 +12,15 @@ $(function() {
      * Return a Mithril module to create a navigator for the given navigatee form (jQuery object)
      */
     function getSectionNavigatorModule($navigateeForm) {
-        let $sections = $navigateeForm.find(".content-block");
+        const $sections = $navigateeForm.find(".content-block");
 
-        let navigationListItems = _.compact(_.map($sections, function(section) {
-            let $section = $(section);
-            let $blockTitle = $section.find(".block-title");
-            let titleText = $blockTitle.text();
-            if (!titleText) return;
+        const navigationListItems = _.compact(_.map($sections, function(section) {
+            const $section = $(section);
+            const $blockTitle = $section.find(".block-title");
+            const titleText = $blockTitle.text();
+            if (!titleText) {
+                return;
+            }
             if (!section.id) {
                 section.id = _.kebabCase(titleText) + "-section";
             }
@@ -37,7 +39,7 @@ $(function() {
 
         return {
             view: function view(ctrl) {
-                var currentId = ctrl.currentItemId();
+                const currentId = ctrl.currentItemId();
                 return m("div.sidebar-list", ctrl.navigationListItems().map(function(item) {
                     return m(
                         "a.sidebar-list-item" + (item.id === currentId ? ".active" : ""),
@@ -57,10 +59,10 @@ $(function() {
                 }));
             },
             controller: function controller() {
-                let ctrl = this;
+                const ctrl = this;
                 ctrl.showSection = function(section) {
                     $sections.hide();
-                    let $visibleSection = $("#" + section.id);
+                    const $visibleSection = $("#" + section.id);
                     $visibleSection.show();
                     ctrl.currentItemId(section.id);
                 };
@@ -71,10 +73,14 @@ $(function() {
         };
     }
     function activateSectionNavigation($sectionNavigation) {
-        if (!$sectionNavigation.length) return;
-        let navigateeId = $sectionNavigation.data("navigatee");
-        let $navigateeForm = $("#" + navigateeId);
-        if (!$navigateeForm.length) return;
+        if (!$sectionNavigation.length) {
+            return;
+        }
+        const navigateeId = $sectionNavigation.data("navigatee");
+        const $navigateeForm = $("#" + navigateeId);
+        if (!$navigateeForm.length) {
+            return;
+        }
         m.mount($sectionNavigation[0], getSectionNavigatorModule($navigateeForm));
     }
     $(".section-navigation, #section-navigation").each(function() {

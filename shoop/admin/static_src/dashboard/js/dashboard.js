@@ -6,27 +6,40 @@
  * This source code is licensed under the AGPLv3 license found in the
  * LICENSE file in the root directory of this source tree.
  */
+/* eslint-disable no-unused-vars */
 $(function() {
     "use strict";
-    DashboardCharts.init();
-    var msnry = new Masonry(document.getElementById("dashboard-wrapper"), {
-        itemSelector: ".block",
-        columnWidth: ".block"
-    });
+    if(window.DashboardCharts) {
+        window.DashboardCharts.init();
+    }
+    if(window.Masonry) {
+        const Masonry = window.Masonry;
+
+        const msnry = new Masonry(document.getElementById("dashboard-wrapper"), {
+            itemSelector: ".block",
+            columnWidth: ".block"
+        });
+    }
     $(document).on("click", "button.dismiss-button", function() {
-        var $button = $(this);
-        var url = $button.data("dismissUrl");
-        if(!url) return;
+        const $button = $(this);
+        const url = $button.data("dismissUrl");
+        if(!url) {
+            return;
+        }
         $.ajax({
             type: "POST",
             url: url,
             dataType: "json",
             success: function(data) {
                 if(data.ok) {
-                    var dismissTarget = $button.data("dismissTarget");
-                    if(dismissTarget) $(dismissTarget).remove();
+                    const dismissTarget = $button.data("dismissTarget");
+                    if(dismissTarget) {
+                        $(dismissTarget).remove();
+                    }
                 }
-                if(data.error) Messages.enqueue({text: data.error});
+                if(data.error && window.Messages) {
+                    window.Messages.enqueue({text: data.error});
+                }
             }
         });
     });

@@ -31,7 +31,7 @@ function reattachNow() {
     }
     const viewWidth = window.innerWidth;
     var x = parentCoords.left;
-    var y = parentCoords.top + parentCoords.height + 5;
+    const y = parentCoords.top + parentCoords.height + 5;
     const menuOffset = offset(menuContainer);
     const menuWidth = menuOffset ? menuOffset.width : 0;  // ah well
     if (viewWidth && x + menuWidth > viewWidth - widthMargin) {

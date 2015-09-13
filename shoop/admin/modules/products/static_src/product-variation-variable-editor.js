@@ -25,12 +25,12 @@ window.VariationVariableEditor = (function(m, _) {
     }
 
     function getIdfrAndLanguagesCells(cellSelector, object, langKey, langLabelFormat="$", showIdentifierFields=true) {
-        var changeIdentifier = m.withAttr("value", (value) => { object.identifier = value; refreshField(); });
-        var changeXlate = (code, value) => { object[langKey][code] = value; refreshField(); };
+        const changeIdentifier = m.withAttr("value", (value) => { object.identifier = value; refreshField(); });
+        const changeXlate = (code, value) => { object[langKey][code] = value; refreshField(); };
         return [
             _.map(languages, ({name, code}) => {
-                var changeXlateP = m.withAttr("value", _.partial(changeXlate, code));
-                var label = langLabelFormat.replace("$", name);
+                const changeXlateP = m.withAttr("value", _.partial(changeXlate, code));
+                const label = langLabelFormat.replace("$", name);
                 return m(cellSelector, [
                     (label && label.length ? m("label", label) : null),
                     m("input.form-control", {
@@ -54,7 +54,7 @@ window.VariationVariableEditor = (function(m, _) {
     }
 
     function valueTr(ctrl, value, index) {
-        var showIdentifierFields = ctrl.showIdentifierFields();
+        const showIdentifierFields = ctrl.showIdentifierFields();
         return m("tr",
             m("th", "Value " + (index + 1) + " Name"),
             getIdfrAndLanguagesCells("td", value, "texts", "", showIdentifierFields),
@@ -66,14 +66,14 @@ window.VariationVariableEditor = (function(m, _) {
     }
 
     function renderVariable(ctrl, variable) {
-        var showIdentifierFields = ctrl.showIdentifierFields();
-        var deleteVariableButton = m("a.btn.btn-xs.text-danger", {href: "#", onclick: () => {
+        const showIdentifierFields = ctrl.showIdentifierFields();
+        const deleteVariableButton = m("a.btn.btn-xs.text-danger", {href: "#", onclick: () => {
             if(variable.values.length === 0 || confirm("Are you sure?")) {
                 variable.DELETE = true;
                 refreshField();
             }
         }}, m("i.fa.fa-times-circle"), " Delete Variable");
-        var addValueButton = m("a.btn.btn-xs.btn-text", {href: "#", onclick: (event) => {
+        const addValueButton = m("a.btn.btn-xs.btn-text", {href: "#", onclick: (event) => {
             variable.values.push({pk: newPk(), identifier: "", texts: {}});
             event.preventDefault();
         }}, m("i.fa.fa-plus"), " Add new value");
@@ -137,7 +137,7 @@ window.VariationVariableEditor = (function(m, _) {
                 variables.push({pk: newPk(), identifier: "", names: {}, values: []});
                 event.preventDefault();
             }}, m("i.fa.fa-plus"), " Add new variable")
-        ])
+        ]);
     }
 
     function init(options) {
@@ -146,8 +146,10 @@ window.VariationVariableEditor = (function(m, _) {
         }
         languages = options.languages;
         variables = options.variables;
-        var domNode = document.getElementById("variation-variable-editor");
-        window.VariationVariableEditor.ctrl = ctrlSingleton = m.mount(domNode, {controller: controller, view: view});
+        window.VariationVariableEditor.ctrl = ctrlSingleton = m.mount(
+            document.getElementById("variation-variable-editor"),
+            {controller: controller, view: view}
+        );
     }
     return {init: init};
 }(window.m, window._));

@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 $(function() {
-    var isMobile = !!(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent));
+    const isMobile = !!(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent));
     $(".multiselect").selectpicker({
         mobile: isMobile,
         style: "btn btn-select",
