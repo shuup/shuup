@@ -1,4 +1,5 @@
 {
+  "root": true,
   "env": {
     "jasmine": true,
     "node": true,
@@ -10,7 +11,13 @@
   "ecmaFeatures": {
     "modules": true
   },
-  "globals": {},
+  "globals": {
+    "m": false, // Mithril
+    "$": false, // jQuery
+    "jQuery": false, // jQuery, again
+    "_": false, // Lodash
+    "moment": false, // Moment
+  },
   "rules": {
     "block-scoped-var": 2,
     "camelcase": 2,
@@ -53,12 +60,10 @@
     "no-undef": 2,
     "no-unused-vars": 2,
     "no-with": 2,
+    "prefer-const": 1,
     "quotes": 2,
-    "semi": [
-      0,
-      "never"
-    ],
-    "strict": 2,
+    "semi": 1,
+    "strict": 0,
     "valid-typeof": 2,
     "wrap-iife": 2
   }
