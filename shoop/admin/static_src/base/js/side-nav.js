@@ -40,7 +40,7 @@ $(function() {
                 var currentId = ctrl.currentItemId();
                 return m("div.sidebar-list", ctrl.navigationListItems().map(function(item) {
                     return m(
-                        "a.sidebar-list-item" + (item.id == currentId ? ".active" : ""),
+                        "a.sidebar-list-item" + (item.id === currentId ? ".active" : ""),
                         {
                             key: item.id,
                             href: "#" + item.id,

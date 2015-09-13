@@ -12,7 +12,7 @@ $(function() {
         mobile: isMobile,
         style: "btn btn-select",
         title: "",
-        selectedTextFormat: 'count > 3',
-        countSelectedText: '{0}/{1} selected'
+        selectedTextFormat: "count > 3",
+        countSelectedText: "{0}/{1} selected"
     });
 }());

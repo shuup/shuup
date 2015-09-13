@@ -141,7 +141,7 @@ var Picotable = (function(m, storage) {
     function addDummies(pageLinks) {
         var nDummy = 0;
         for (var i = 1; i < pageLinks.length; i++) {
-            if (pageLinks[i]._page != pageLinks[i - 1]._page + 1) {
+            if (pageLinks[i]._page !== pageLinks[i - 1]._page + 1) {
                 var li = m("li", {key: "dummy" + (nDummy++), className: "disabled"}, m("a", {href: "#"}, "\u22EF"));
                 pageLinks.splice(i, 0, li);
                 i++;
@@ -158,8 +158,8 @@ var Picotable = (function(m, storage) {
             return m("a", {rel: page, href: "#", onclick: callback}, title || page);
         };
         for (var page = 1; page <= paginationData.nPages; page++) {
-            if (page == 1 || page == paginationData.nPages || Math.abs(page - currentPage) <= 4 || page % 10 === 0) {
-                var li = m("li", {key: page, className: cx({active: currentPage == page})}, pageLink(page));
+            if (page === 1 || page === paginationData.nPages || Math.abs(page - currentPage) <= 4 || page % 10 === 0) {
+                var li = m("li", {key: page, className: cx({active: currentPage === page})}, pageLink(page));
                 li._page = page;
                 pageLinks.push(li);
             }
@@ -167,11 +167,11 @@ var Picotable = (function(m, storage) {
         addDummies(pageLinks);
         var prevLink = m("li", {
             key: "previous",
-            className: cx({disabled: currentPage == 1})
+            className: cx({disabled: currentPage === 1})
         }, pageLink(currentPage - 1, "Previous"));
         var nextLink = m("li", {
             key: "next",
-            className: cx({disabled: currentPage == paginationData.nPages})
+            className: cx({disabled: currentPage === paginationData.nPages})
         }, pageLink(currentPage + 1, "Next"));
         return m("nav", m("ul.pagination", prevLink, pageLinks, nextLink));
     }
@@ -278,8 +278,8 @@ var Picotable = (function(m, storage) {
         if (col.sortable) {
             var currentSort = ctrl.vm.sort();
             var thisColSort = null;
-            if (currentSort == "+" + col.id) thisColSort = "asc";
-            if (currentSort == "-" + col.id) thisColSort = "desc";
+            if (currentSort === "+" + col.id) thisColSort = "asc";
+            if (currentSort === "-" + col.id) thisColSort = "desc";
             var sortIcon = "fa-sort" + (thisColSort ? "-" + thisColSort : "");
             sortIndicator = m("i.fa." + sortIcon);
             classSet.sortable = true;
@@ -515,7 +515,7 @@ var Picotable = (function(m, storage) {
     function PicotableView(ctrl) {
         return m("div.table-view", [
             (ctrl.vm.showHeader() ? renderHeader(ctrl) : null),
-            (ctrl.vm.renderMode() == "mobile" ? renderMobileTable(ctrl) : renderTable(ctrl))
+            (ctrl.vm.renderMode() === "mobile" ? renderMobileTable(ctrl) : renderTable(ctrl))
         ]);
     }
 
@@ -539,7 +539,7 @@ var Picotable = (function(m, storage) {
         ctrl.setRenderMode = function(mode) {
             var oldMode = ctrl.vm.renderMode();
             ctrl.vm.renderMode(mode);
-            if (mode != oldMode) ctrl.refreshSoon();
+            if (mode !== oldMode) ctrl.refreshSoon();
         };
         ctrl.adaptRenderMode = function() {
             var width = window.innerWidth;
@@ -556,8 +556,8 @@ var Picotable = (function(m, storage) {
                     sortValue = colId;
                 } else {
                     var currentSort = ctrl.vm.sort();
-                    if (currentSort == "+" + colId) sortValue = "-" + colId;
-                    else if (currentSort == "-" + colId) sortValue = null;
+                    if (currentSort === "+" + colId) sortValue = "-" + colId;
+                    else if (currentSort === "-" + colId) sortValue = null;
                     else sortValue = "+" + colId;
                 }
             }
@@ -672,7 +672,7 @@ var Picotable = (function(m, storage) {
     return generator;
 }(window.m, window.localStorage));
 /* jshint ignore:start */
-if (typeof module != "undefined" && module !== null && module.exports) module.exports = Picotable;
+if (typeof module !== "undefined" && module !== null && module.exports) module.exports = Picotable;
 else if (typeof define === "function" && define.amd) define(function() {
     return Picotable;
 });

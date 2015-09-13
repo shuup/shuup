@@ -141,7 +141,7 @@ function Controller() {
     ctrl.moveStep = function(step, delta) {
         var steps = ctrl.steps();
         var oldIndex = _.indexOf(steps, step);
-        if (oldIndex == -1) return false;
+        if (oldIndex === -1) return false;
         var newIndex = oldIndex + delta;
         steps.splice(newIndex, 0, steps.splice(oldIndex, 1)[0]);
         ctrl.steps(steps);

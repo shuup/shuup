@@ -34,22 +34,22 @@ window.DashboardCharts = (function(Chartist) {
         var $chart = $(chart);
 
         var $toolTip = $chart
-            .append('<div class="ct-tooltip"></div>')
-            .find('.ct-tooltip')
+            .append("<div class=\"ct-tooltip\"></div>")
+            .find(".ct-tooltip")
             .hide();
 
-        $chart.on('mouseenter', elementSelector, function() {
+        $chart.on("mouseenter", elementSelector, function() {
             var $point = $(this),
-                value = $point.attr('ct:value'),
-                seriesName = $point.parent().attr('ct:series-name');
-            $toolTip.html(seriesName + '<br>' + value).show();
+                value = $point.attr("ct:value"),
+                seriesName = $point.parent().attr("ct:series-name");
+            $toolTip.html(seriesName + "<br>" + value).show();
         });
 
-        $chart.on('mouseleave', elementSelector, function() {
+        $chart.on("mouseleave", elementSelector, function() {
             $toolTip.hide();
         });
 
-        $chart.on('mousemove', function(event) {
+        $chart.on("mousemove", function(event) {
             $toolTip.css({
                 left: (event.offsetX || event.originalEvent.layerX) - $toolTip.width() / 2 - 10,
                 top: (event.offsetY || event.originalEvent.layerY) - $toolTip.height() - 40

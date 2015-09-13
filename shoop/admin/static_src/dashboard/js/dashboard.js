@@ -10,8 +10,8 @@ $(function() {
     "use strict";
     DashboardCharts.init();
     var msnry = new Masonry(document.getElementById("dashboard-wrapper"), {
-        itemSelector: '.block',
-        columnWidth: '.block'
+        itemSelector: ".block",
+        columnWidth: ".block"
     });
     $(document).on("click", "button.dismiss-button", function() {
         var $button = $(this);

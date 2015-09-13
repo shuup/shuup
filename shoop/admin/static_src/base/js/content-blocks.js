@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 $(function() {
-    $('.toggle-contents').click(function(e) {
+    $(".toggle-contents").click(function(e) {
         var $collapseElement = $(this).closest(".content-block").find(".content-wrap");
         e.preventDefault();
         // Checks if the bootstrap collapse animation is not ongoing

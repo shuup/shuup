@@ -7,11 +7,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 // Add slideDown animation to all bootstrap dropdowns
-$('.dropdown').on('show.bs.dropdown', function() {
-    $(this).find('.dropdown-menu').first().stop(true, true).slideDown(200, "easeInSine");
+$(".dropdown").on("show.bs.dropdown", function() {
+    $(this).find(".dropdown-menu").first().stop(true, true).slideDown(200, "easeInSine");
 });
 
 // Add slideUp animation to all bootstrap dropdowns
-$('.dropdown').on('hide.bs.dropdown', function() {
-    $(this).find('.dropdown-menu').first().stop(true, true).slideUp(300, "easeOutSine");
+$(".dropdown").on("hide.bs.dropdown", function() {
+    $(this).find(".dropdown-menu").first().stop(true, true).slideUp(300, "easeOutSine");
 });

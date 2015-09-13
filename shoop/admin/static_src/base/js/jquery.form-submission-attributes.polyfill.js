@@ -1,8 +1,8 @@
 (function($) {
     "use strict";
 
-    var allowedButtons = 'input[type="submit"], input[type="image"], button:not([type]), button[type="submit"]';
-    var formAttributes = ['action', 'method', 'enctype', 'target', 'novalidate'];
+    var allowedButtons = "input[type=\"submit\"], input[type=\"image\"], button:not([type]), button[type=\"submit\"]";
+    var formAttributes = ["action", "method", "enctype", "target", "novalidate"];
 
     $.fn.formSubmissionAttributes = function () {
         //based on https://github.com/mattberkowitz/Form-Submission-Attributes-Polyfill
@@ -14,20 +14,20 @@
 
             if (formId) {
                 // find buttons that are tied to this form and add them to $inputs
-                var buttons = $('input[form="' + formId + '"],button[form="' + formId + '"]');
+                var buttons = $("input[form=\"" + formId + "\"],button[form=\"" + formId + "\"]");
                 buttons = buttons.filter(allowedButtons);
                 $inputs = $inputs.add(buttons);
             }
 
             //backup originals
             $.each(formAttributes, function (idx, attr) {
-                $form.data('o' + attr, $form.attr(attr));
+                $form.data("o" + attr, $form.attr(attr));
             });
 
-            $inputs.on('click', function (e) {
+            $inputs.on("click", function (e) {
                 var $this = $(this);
                 $.each(formAttributes, function(idx, attr) {
-                    var value = $this.is('[form' + attr + ']') ? $this.attr('form' + attr) : $form.data('o' + attr);
+                    var value = $this.is("[form" + attr + "]") ? $this.attr("form" + attr) : $form.data("o" + attr);
                     $form.attr(attr, value);
                 });
             });

@@ -8,10 +8,10 @@
  */
 $(function() {
     "use strict";
-    $('[data-toggle="tooltip"]').tooltip({
+    $("[data-toggle=\"tooltip\"]").tooltip({
         delay: {"show": 750, "hide": 100}
     });
-    $('#dropdownMenu').tooltip({
+    $("#dropdownMenu").tooltip({
         delay: {"show": 750, "hide": 100}
     });
 }());

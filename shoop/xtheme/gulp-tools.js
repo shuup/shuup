@@ -12,7 +12,7 @@ var merge = require("merge");
 var path = require("path");
 var webpack = require("webpack");
 // --production works in place of the environment variable
-var PRODUCTION = (gutil.env.production) || (process.env.NODE_ENV == "production");
+var PRODUCTION = (gutil.env.production) || (process.env.NODE_ENV === "production");
 
 function buildWebpackConfig(entry, outputFilename) {
     return {
@@ -80,7 +80,7 @@ function webpackTasks(name, config) {
 
 function registerWatchTask(directDeps, fn) {
     var deps = [].concat(directDeps || []);
-    Object.keys(gulp.tasks).filter(function(n){return n.indexOf("watch:") == 0;}).forEach(function(n) {
+    Object.keys(gulp.tasks).filter(function(n){return n.indexOf("watch:") === 0;}).forEach(function(n) {
         deps.push(n);
     });
     gulp.task("watch", deps, fn || gutil.noop);

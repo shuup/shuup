@@ -39,7 +39,7 @@ window["Messages"] = (function Messages() {
     function hideOnClickOut(event) {
         var node = event.target;
         while(node) {
-            if(node.id == "message-container") return;
+            if(node.id === "message-container") return;
             node = node.parentNode;
         }
         hide();

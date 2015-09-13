@@ -25,7 +25,7 @@ $(function() {
     function loadMenu(force) {
         if(!menuLoaded || force) {
             $("#main-menu").empty().load(window.ShoopAdminConfig.menuUrl, function() {
-                $('#main-menu .scroll-inner-content').scrollbar("init", {
+                $("#main-menu .scroll-inner-content").scrollbar("init", {
                     disableBodyScroll: true
                 });
             });
@@ -34,14 +34,14 @@ $(function() {
     }
 
     $(document).click(function(e) {
-        if (mainNavIsOpen() && !$(e.target).closest('#main-menu').length) {
+        if (mainNavIsOpen() && !$(e.target).closest("#main-menu").length) {
             closeMainNav();
         }
     });
 
-    $('#menu-button').click(function(event) {
+    $("#menu-button").click(function(event) {
         loadMenu();
-        $('#site-search.mobile').removeClass('open'); // Close search if open on mobile
+        $("#site-search.mobile").removeClass("open"); // Close search if open on mobile
         event.stopPropagation();
         if (mainNavIsOpen()) {
             closeMainNav();
