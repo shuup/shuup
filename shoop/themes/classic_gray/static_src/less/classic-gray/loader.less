@@ -67,28 +67,33 @@
             text-transform: uppercase;
             font-weight: 500;
         }
-
     }
 
     &.loading {
         .load {
             display: block;
         }
+
         .ready {
             .scale(1);
         }
     }
+
     &.loaded {
         .ready {
             opacity: 1;
             .scale(1);
         }
     }
+
     &.error {
         .transparent-bg(@brand-danger, 0.8);
         .error-msg {
             display: block;
         }
-        .ready { display: none; }
+
+        .ready {
+            display: none;
+        }
     }
 }
