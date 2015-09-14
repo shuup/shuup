@@ -94,8 +94,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("root", nargs="?", default=".", help="Root directory (defaults to %(default)s)")
     args = ap.parse_args()
-    paths = find_files(args.root)
-    errors = check_sanity_of_files(paths)
+    generated_resources = set()
+    paths = find_files(args.root, generated_resources)
+    errors = check_sanity_of_files(paths, generated_resources)
     found_errors = False
     for error in errors:
         found_errors = True
@@ -104,12 +105,19 @@ def main():
         raise SystemExit(1)
 
 
-def find_files(root):
+def find_files(root, generated_resources=None):
     for (path, dirs, files) in os.walk(root):
         path = posixpath.normpath(path.replace(os.sep, "/"))
         remove_ignored_directories(path, dirs)
         for filename in files:
             filepath = posixpath.join(path, filename)
+            if generated_resources is not None and filename == "generated_resources.txt":
+                with open(filepath, "r") as generated_resources_manifest:
+                    for line in generated_resources_manifest:
+                        line = line.strip()
+                        if line:
+                            generated_resources.add(posixpath.join(path, line))
+                continue
             if should_check_file(filepath):
                 yield filepath
 
@@ -131,8 +139,10 @@ def should_check_file(path):
     return all(not fnmatch.fnmatch(name, x) for x in IGNORED_PATTERNS)
 
 
-def check_sanity_of_files(paths):
+def check_sanity_of_files(paths, ignored_paths):
     for path in paths:
+        if path in ignored_paths:
+            continue
         for error in check_sanity_of_file(path):
             yield error
 
