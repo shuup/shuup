@@ -16,6 +16,8 @@ export function promptCreateFolder(controller, parentFolderId) {
     }
     remote.post({action: "new_folder", parent: parentFolderId, name}).then(function(response) {
         remote.handleResponseMessages(response);
+        const newCurrentFolder = 0 | response.folder.id;  // eslint-disable-line no-bitwise
+        controller.setFolder(newCurrentFolder);
         controller.reloadFolderTree();
         controller.reloadFolderContents();
     });
