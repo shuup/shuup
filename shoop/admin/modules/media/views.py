@@ -119,7 +119,7 @@ class MediaBrowserView(TemplateView):
         return JsonResponse({"rootFolder": _filer_folder_to_json_dict(None, root_folders)})
 
     def handle_post_new_folder(self, data):
-        parent_id = int(data["parent"])
+        parent_id = int(data.get("parent", 0))
         if parent_id > 0:
             parent = Folder.objects.get(pk=parent_id)
         else:
@@ -129,11 +129,11 @@ class MediaBrowserView(TemplateView):
         if parent:
             folder.move_to(parent, "last-child")
             folder.save()
-        return JsonResponse({"success": True})
+        return JsonResponse({"success": True, "folder": _filer_folder_to_json_dict(folder, ())})
 
     def handle_get_folder(self, data):
         try:
-            folder_id = int(data["id"])
+            folder_id = int(data.get("id", 0))
             if folder_id:
                 folder = Folder.objects.get(pk=folder_id)
                 subfolders = folder.get_children()
@@ -166,11 +166,15 @@ class MediaBrowserView(TemplateView):
         request = self.request
 
         try:
-            folder_id = int(request.REQUEST["folder_id"])
+            folder_id = int(request.REQUEST.get("folder_id", 0))
             if folder_id != 0:
                 folder = Folder.objects.get(pk=folder_id)
             else:
                 folder = None  # Root folder upload. How bold!
+        except Exception as exc:
+            return JsonResponse({"error": "Invalid folder: %s" % force_text(exc)})
+
+        try:
             upload_file = request.FILES["file"]
 
             if upload_file.content_type.startswith("image/"):
@@ -178,7 +182,7 @@ class MediaBrowserView(TemplateView):
             else:
                 filer_file = filer_file_from_upload(request, path=folder, upload_data=upload_file)
         except Exception as exc:
-            return JsonResponse({"message": force_text(exc)})
+            return JsonResponse({"error": force_text(exc)})
 
         return JsonResponse({
             "file": _filer_file_to_json_dict(filer_file),
