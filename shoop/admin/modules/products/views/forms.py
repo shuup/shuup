@@ -241,7 +241,6 @@ class BaseProductMediaFormSet(BaseModelFormSet):
 
 
 class ProductMediaForm(BaseProductMediaForm):
-
     def __init__(self, **kwargs):
         super(ProductMediaForm, self).__init__(**kwargs)
         self.fields["file"].required = False
@@ -300,8 +299,10 @@ class ProductImageMediaFormSet(ProductMediaFormSet):
         super(ProductImageMediaFormSet, self).save(commit)
 
         has_primary = any(form.cleaned_data.get("is_primary") for form in (self.forms or []))
+        eligible_forms = [form for form in (self.forms or []) if
+                          (form.cleaned_data.get("file") and not form.cleaned_data.get("DELETE"))]
 
-        if self.forms and not has_primary:
+        if eligible_forms and not has_primary:
             # make first form be the primary image as well
             form_instance = self.forms[0]
             form_instance.product.primary_image = form_instance.instance
