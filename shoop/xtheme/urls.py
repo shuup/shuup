@@ -11,7 +11,7 @@ from shoop.xtheme.views.editor import EditorView
 from shoop.xtheme.views.extra import extra_view_dispatch
 
 urlpatterns = [
-    url(r"^xtheme/$", command_dispatch, name="xtheme"),
-    url(r"^xtheme/(?P<view>.+)/*$", extra_view_dispatch, name="xtheme_extra_view"),
     url(r"^xtheme/editor/$", EditorView.as_view(), name="xtheme_editor"),
+    url(r"^xtheme/(?P<view>.+)/*$", extra_view_dispatch, name="xtheme_extra_view"),
+    url(r"^xtheme/$", command_dispatch, name="xtheme"),
 ]
