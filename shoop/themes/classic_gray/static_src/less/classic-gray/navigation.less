@@ -89,6 +89,9 @@
                 left: auto;
                 right: 0;
                 padding: 15px;
+                @media (min-width: @screen-sm-min) {
+                    white-space: nowrap;
+                }
                 &:before, &:after {
                     left: auto;
                     right: 12px;
@@ -96,6 +99,23 @@
                 &:after {
                     margin-left: 0px;
                     margin-right: -1px;
+                }
+                td {
+                    font-size: 1.3rem;
+                }
+            }
+            .btn-view-cart {
+                padding: 10px 15px;
+                text-transform: uppercase;
+                i { margin-left: 5px; }
+            }
+            .empty-cart {
+                font-size: 1.6rem;
+                display: block;
+                padding: 5px;
+                i {
+                    margin-right: 5px;
+                    font-size: 1.8rem;
                 }
             }
         }
