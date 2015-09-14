@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
+from filer.models import Folder
 
 
 def delete_folder(folder):
@@ -26,5 +27,7 @@ def delete_folder(folder):
         folder.files.update(folder=parent_folder)
         message_bits.append(_("%d files moved to %s.") % (n_files, parent_name))
     folder.delete()
+    if subfolders:  # We had some subfolders to mangle, best rebuild now
+        Folder._tree_manager.rebuild()
     message_bits.insert(0, _("Folder %s deleted.") % folder.name)
     return "\n".join(message_bits)

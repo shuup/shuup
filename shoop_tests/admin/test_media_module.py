@@ -156,3 +156,17 @@ def test_get_folders(rf):
     assert set((folder1.id, folder2.id, folder3.id)) <= set(tree.keys())
     assert folder4.pk in tree[folder2.pk]
     assert folder5.pk in tree[folder3.pk]
+
+
+@pytest.mark.django_db
+def test_deleting_mid_folder(rf):
+    folder1 = Folder.objects.create(name=printable_gibberish())
+    folder2 = Folder.objects.create(name=printable_gibberish(), parent=folder1)
+    folder3 = Folder.objects.create(name=printable_gibberish(), parent=folder2)
+    tree = get_id_tree(mbv_command({"action": "folders"}, "GET"))
+    assert tree[folder1.pk] == {folder2.pk: {folder3.pk: {}}}
+    mbv_command({"action": "delete_folder", "id": folder2.pk})
+    tree = get_id_tree(mbv_command({"action": "folders"}, "GET"))
+    assert tree[folder1.pk] == {folder3.pk: {}}
+    folder1 = Folder.objects.get(pk=folder1.pk)
+    assert list(folder1.get_children()) == [folder3]
