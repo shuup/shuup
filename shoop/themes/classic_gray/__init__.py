@@ -20,7 +20,10 @@ class ClassicGrayThemeAppConfig(AppConfig):
     verbose_name = ClassicGrayTheme.name
     label = "shoop.themes.classic_gray"
     provides = {
-        "xtheme": "shoop.themes.classic_gray:ClassicGrayTheme"
+        "xtheme": "shoop.themes.classic_gray:ClassicGrayTheme",
+        "xtheme_plugin": [
+            "shoop.themes.classic_gray.plugins:ProductHighlightPlugin",
+        ]
     }
 
 
