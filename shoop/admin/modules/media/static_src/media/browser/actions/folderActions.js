@@ -29,7 +29,7 @@ export function promptRenameCurrentFolder(controller) {
     const {id, name} = controller.folderData();
     const newName = _.trim(prompt("New folder name?", name) || "");
     if (newName && name !== newName) {
-        remote.post({action: "rename_folder", id, name}).then(function(response) {
+        remote.post({action: "rename_folder", id, name: newName}).then(function(response) {
             remote.handleResponseMessages(response);
             controller.reloadFolderTree();
             controller.reloadFolderContents();
