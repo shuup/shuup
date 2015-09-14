@@ -61,3 +61,21 @@ class XthemeNamespace(object):
         if theme:
             return theme.get_setting(name, default=default)
         return default
+
+    def __getitem__(self, item):
+        """
+        Look for additional helper callables in the active theme.
+
+        Callables marked with the Django standard `alters_data` attribute will not be honored.
+
+        :param item: Template helper name
+        :type item: str
+        :return: Template helper, maybe
+        :rtype: object|None
+        """
+        theme = get_current_theme()
+        if theme:
+            helper = getattr(theme, item, None)
+            if helper and callable(helper) and not getattr(helper, "alters_data", False):
+                return helper
+        raise KeyError("No such template helper: %s" % item)

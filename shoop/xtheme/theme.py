@@ -83,6 +83,7 @@ class Theme(object):
         Set this theme as the active theme.
         """
         self.settings_obj.activate()
+    set_current.alters_data = True
 
     def get_setting(self, key, default=None):
         """
@@ -115,6 +116,7 @@ class Theme(object):
         Note: It's better to call this once than `set_setting` several times.
         """
         self.settings_obj.update_settings(dict(*args, **kwargs))
+    set_settings.alters_data = True
 
     def set_setting(self, key, value):
         """
@@ -126,6 +128,7 @@ class Theme(object):
         :type value: object
         """
         self.settings_obj.update_settings({key: value})
+    set_setting.alters_data = True
 
     def get_configuration_form(self, form_kwargs):
         """
