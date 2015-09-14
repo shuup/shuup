@@ -13,6 +13,7 @@ class ClassicGrayTheme(Theme):
     identifier = "shoop.themes.classic_gray"
     name = "Shoop Classic Gray Theme"
     author = "Juha Kujala"
+    template_dir = "classic_gray/"
 
 
 class ClassicGrayThemeAppConfig(AppConfig):
