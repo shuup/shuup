@@ -1,0 +1,35 @@
+{% extends "shoop/front/base.jinja" %}
+
+{% block title %}{% trans %}Home{% endtrans %}{% endblock %}
+{% block content_title %}{% trans %}Welcome to {% endtrans %}{{ request.shop.public_name }}!{% endblock %}
+
+{% block content %}
+
+    <section class="frontpage new-products">
+        <h2>{% trans %}New products{% endtrans %}</h2>
+        <div class="row">
+            {% for product in shoop.general.get_newest_products() if shoop.product.is_visible(product) %}
+                <div class="col-sm-4 col-md-3">
+                    {{ macros.product_box(product) }}
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+
+    {% set best_selling_products = shoop.general.get_best_selling_products() %}
+    {% if best_selling_products %}
+        <hr>
+        <section class="frontpage best-seller-products">
+            <h2>{% trans %}Best sellers{% endtrans %}</h2>
+            <div class="row">
+                {% for product in best_selling_products if shoop.product.is_visible(product) %}
+                    <div class="col-sm-4 col-md-3">
+                        {{ macros.product_box(product) }}
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+
+{% endblock %}
