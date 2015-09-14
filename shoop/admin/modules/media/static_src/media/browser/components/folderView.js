@@ -16,6 +16,15 @@ const responsiveUploadHint = require("./responsiveUploadHint");
 const {dropzoneConfig} = require("../util/dragDrop");
 const images = require("./images");
 
+function sortBySpec(data, sortString) {
+    sortString = /^([+-])(.+)$/.exec(sortString || "+name");
+    data = _.sortBy(data || [], sortString[2]);
+    if (sortString[1] === "-") {
+        data = data.reverse();
+    }
+    return data;
+}
+
 export default function folderView(ctrl) {
     const folderData = ctrl.folderData();
     const viewModeGroup = m("div.btn-group.btn-group-sm.icons", [
@@ -31,13 +40,8 @@ export default function folderView(ctrl) {
         button(ctrl.sortMode, "-size", "Largest first")
     ]);
     var toolbar = m("div.btn-toolbar", [viewModeGroup, sortGroup]);
-
-    const sortSpec = /^([+-])(.+)$/.exec(ctrl.sortMode());
-    var files = _.sortBy(folderData.files || [], sortSpec[2]);
-    if (sortSpec[1] === "-") {
-        files = files.reverse();
-    }
-    const folders = folderData.folders || [];
+    const files = sortBySpec(folderData.files || [], ctrl.sortMode());
+    const folders = sortBySpec(folderData.folders || [], ctrl.sortMode());
     var contents = null, uploadHint = null;
     if (folders.length === 0 && files.length === 0) {
         contents = emptyFolderView(ctrl, folderData);
