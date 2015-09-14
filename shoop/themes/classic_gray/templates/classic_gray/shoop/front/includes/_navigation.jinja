@@ -1,0 +1,191 @@
+{% from "shoop/front/macros.jinja" import render_field with context %}
+<div class="top-nav">
+    <div class="container">
+        <ul class="pull-left">
+            {% if shoop.simple_search %}
+                <li>
+                    {% block searchform %}
+                        {{ shoop.simple_search.get_search_form() }}
+                    {% endblock %}
+                </li>
+            {% endif %}
+            {% if user.is_authenticated() %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="menu-icon fa fa-user"></i>
+                        <span class="hidden-xs">
+                        {% if user.first_name or user.last_name %}
+                            {{ user.get_full_name() }}
+                        {% else %}
+                            {{ user }}
+                        {% endif %}
+                        </span>
+                        <i class="dropdown-icon fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="{{ url("shoop:customer_edit") }}">
+                                <i class="fa fa-user fa-fw"></i> {% trans %}Edit account details{% endtrans %}
+                            </a>
+                        </li>
+                        {% if shoop.urls.has_url("shoop:personal-orders") %}
+                        <li>
+                            <a href="{{ url("shoop:personal-orders") }}">
+                                <i class="fa fa-list-alt fa-fw"></i>
+                                {% trans %}My orders{% endtrans %}
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if user.is_superuser %}
+                            <li><a href="{{ url("shoop_admin:dashboard") }}"><i class="fa fa-dashboard fa-fw"></i> {% trans %}Admin panel{% endtrans %}</a></li>
+                        {% endif %}
+                        {% if shoop.urls.has_url("shoop:logout") %}
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="{{ url("shoop:logout") }}">
+                                <i class="fa fa-sign-out fa-fw"></i> {% trans %}Log out{% endtrans %}
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </li>
+            {% else %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="menu-icon fa fa-user"></i> <span class="hidden-xs">{% trans %}Log in{% endtrans %}</span>
+                        <i class="dropdown-icon fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu login" role="dropdown-menu">
+                        <li>
+                            <form role="form" method="post" action="{{ url("shoop:login") }}">
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.path }}">
+                                <div class="form-group">
+                                    <label for="username">{% trans %}Username{% endtrans %}</label>
+                                    <input type="text" name="username" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">{% trans %}Password{% endtrans %}</label>
+                                    <input type="password" name="password" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    {% trans %}Log in{% endtrans %}
+                                </button>
+                            </form>
+                        </li>
+                        <li class="divider"></li>
+                        {% if shoop.urls.has_url("shoop:recover_password") %}
+                        <li>
+                            <a href="{{ url("shoop:recover_password") }}">
+                                <i class="fa fa-question fa-fw"></i> {% trans %}Forgot your password?{% endtrans %}
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if shoop.urls.has_url("shoop:registration_register") %}
+                        <li>
+                            <a href="{{ url("shoop:registration_register") }}">
+                                <i class="fa fa-edit fa-fw"></i> {% trans %}New user? Register here!{% endtrans %}
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </li>
+            {% endif %}
+        </ul>
+        <ul class="pull-right">
+            <li class="dropdown cart">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="menu-icon fa fa-shopping-cart"></i>
+                    <span class="hidden-xs">{% trans %}Cart{% endtrans %}</span>
+                    <span>({{ request.basket.product_count }})</span>
+                    <i class="dropdown-icon fa fa-angle-down"></i>
+                </a>
+                <div class="dropdown-menu cart">
+                    {% if request.basket.get_lines() %}
+                        <table class="table">
+                            <colgroup>
+                                <col style="min-width: 180px;">
+                                <col style="min-width: 90px;">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>Items</th>
+                                    <th class="text-right">Price</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>
+                                        {% trans %}Total{% endtrans %}
+                                    </th>
+                                    <th class="text-right">
+                                        {{ request.basket.total_price|home_currency }}
+                                    </th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                {% for line in request.basket.get_lines() %}
+                                    <tr>
+                                        <td>{{ line.quantity|number }} &times; {{ line.text }}</td>
+                                        <td class="text-right">{{ line.total_price|home_currency }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <a href="{{ url("shoop:basket") }}" class="btn btn-block btn-lg btn-default">
+                            {% trans %}View cart{% endtrans %} <i class="fa fa-angle-double-right"></i>
+                        </a>
+                    {% else %}
+                        <i class="fa fa-exclamation-circle text-warning"></i> {% trans %}Your shopping cart is empty.{% endtrans %}
+                    {% endif %}
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="bottom-nav">
+    <div class="container">
+        {# TODO: Check if logo exists and add class "no-image" based on that #}
+        <div class="logo no-image">
+            {# TODO: Get the actual logo and logo url #}
+            {% if request.shop_logo %}
+                {% set logo_cropped = request.shop_logo|thumbnail(size(500,500))%}
+                <a href="/" class="image" style="background-image:url('{{ logo_cropped }}')"></a>
+                }
+            {% else %}
+                <a href="/" class="text"><h4>{{ request.shop }}</h4></a>
+            {% endif %}
+        </div>
+        <button class="toggle-mobile-nav">
+            <span class="sr-only">Menu</span>
+            <span class="hamburger"></span>
+        </button>
+        <div class="pages">
+            <ul class="nav-collapse">
+                {# TODO: Add class current to the current page's 'li' #}
+                <li class="current"><a href="/">Home</a></li>
+                {% if shoop.simple_cms %}
+                    {% set cms_pages = shoop.simple_cms.get_visible_pages() %}
+                    {% if cms_pages %}
+                        {% for page in cms_pages %}
+                            <li><a href="{{ url("shoop:cms_page", url=page.url) }}">{{ page }}</a></li>
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
+                {# TODO: Change these to one link "products" which needs a new view to display category menu and some products. Also add class 'current' to the products <li> when on category page #}
+                <li><a href="#">{% trans %}Products{% endtrans %}</a></li>
+                {% for c in shoop.general.get_root_categories() recursive %}
+                    {% set children = c.get_children() %}
+                    <li>
+                        {% if children %}
+                            <a href="{{ url("shoop:category", pk=c.pk, slug=c.slug) }}" class="dropdown-toggle" data-toggle="dropdown">{{ c }} <span class="caret"></span></a>
+                            <ul class="dropdown-menu">{{ loop(children) }}</ul>
+                        {% else %}
+                            <a href="{{ url("shoop:category", pk=c.pk, slug=c.slug) }}">{{ c }}</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

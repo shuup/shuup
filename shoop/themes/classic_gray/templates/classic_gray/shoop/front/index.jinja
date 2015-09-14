@@ -1,0 +1,20 @@
+{% extends "shoop/front/base.jinja" %}
+
+{% block title %}{% trans %}Home{% endtrans %}{% endblock %}
+{% block content_title %}{% trans %}Welcome to {% endtrans %}{{ request.shop }}!{% endblock %}
+
+{% block content %}
+
+    {% placeholder "front_content" %}
+        {% row %}
+            {% plugin "classic_gray.product_highlight" %}
+                type = "newest"
+                title = "Newest Products"
+            {% endplugin %}
+        {% endrow %}
+        {% row %}
+            {% plugin "classic_gray.product_highlight" %}type = "best_selling"{% endplugin %}
+        {% endrow %}
+    {% endplaceholder %}
+
+{% endblock %}

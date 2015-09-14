@@ -1,0 +1,23 @@
+{% extends "shoop/front/checkout/_base.jinja" %}
+
+{% block content %}
+<form role="form" method="post" action="">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="well">
+                {{ bs3.field(form.shipping_method) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="well">
+                {{ bs3.field(form.payment_method) }}
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-lg">
+        <i class="glyphicon glyphicon-ok"></i> {% trans %}Continue{% endtrans %}
+    </button>
+</form>
+{% endblock %}
