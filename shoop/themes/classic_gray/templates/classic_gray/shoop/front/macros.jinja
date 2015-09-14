@@ -28,7 +28,7 @@
             </div>
             <div class="actions clearfix">
                 <div class="col-xs-6">
-                    <button type="button" class="btn btn-block text-muted" data-toggle="modal" data-target="#product-{{ product.id }}-modal"><i class="fa fa-eye"></i> {% trans %}Preview{% endtrans %}</button>
+                    <button type="button" class="btn btn-block text-muted" onclick="javascript:showPreview('{{ product.id }}')"><i class="fa fa-eye"></i> {% trans %}Preview{% endtrans %}</button>
                 </div>
                 <div class="col-xs-6">
                     <a href="{{ u }}" class="btn btn-block text-muted"><i class="fa fa-search"></i> {% trans %}Open{% endtrans %}</a>

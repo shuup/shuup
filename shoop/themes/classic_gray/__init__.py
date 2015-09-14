@@ -15,6 +15,10 @@ class ClassicGrayTheme(Theme):
     author = "Juha Kujala"
     template_dir = "classic_gray/"
 
+    def get_view(self, view_name):
+        import shoop.themes.classic_gray.views as views
+        return getattr(views, view_name, None)
+
 
 class ClassicGrayThemeAppConfig(AppConfig):
     name = "shoop.themes.classic_gray"

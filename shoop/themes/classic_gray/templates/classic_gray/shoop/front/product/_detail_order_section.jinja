@@ -1,3 +1,15 @@
+{% if request.is_ajax() %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("form.add-to-basket").on("submit", function(e) {
+                e.preventDefault();
+                addToBasket($(this));
+                $(".product-preview-modal").modal("hide");
+            });
+        });
+    </script>
+{% endif %}
+
 {% macro quantity_box() %}
     <div class="form-group amount">
         <label for="product-quantity">{% trans %}Quantity{% endtrans %}</label>
@@ -23,7 +35,7 @@
         <p class="not-orderable">{% trans %}Product not orderable{% endtrans %}</p>
     {% else %}
         <div class="product-variations">
-            <form role="form" method="post" action="{{ url("shoop:basket") }}" class="form-inline">
+            <form role="form" method="post" action="{{ url("shoop:basket") }}" class="form-inline add-to-basket">
                 <input type="hidden" name="return" value="{{ request.path }}">
                 <input type="hidden" name="command" value="add">
                 <div class="form-group">
@@ -49,18 +61,21 @@
     {% set is_orderable=shop_product.is_orderable(supplier=None, customer=request.customer, quantity=1) %}
     <div class="prices row">
         {% if is_orderable %}
-            <form role="form" method="post" action="{{ url("shoop:basket") }}" class="form-inline">
+            <form role="form" method="post" action="{{ url("shoop:basket") }}" class="form-inline add-to-basket">
                 <div class="col-sm-12">
                     <input type="hidden" name="return" value="{{ request.path }}">
                     <input type="hidden" name="command" value="add">
                     <input type="hidden" name="product_id" value="{{ product.id }}">
                     {{ quantity_box() }}
-                    {# TODO: This should be dynamically updated from the backend with AJA
+                    {# 
+                    TODO: This should be dynamically updated from the backend with AJAX
+                    TODO: (TAX) Check following line (gets taxful price of product)
+                    #}
                     <div class="price pull-right">
                         <h4>
                             <small>Total: </small>
                             <span id="product-price-placeholder">
-                                {% set price_info = product.get_price(request) %}
+                                {% set price_info = product.get_price_info(request) %}
                                 {{ price_info.price|home_currency }}
                             </span>
                             <span class="sales-unit">
@@ -68,7 +83,6 @@
                             </span>
                         </h4>
                     </div>
-                    #}
                 </div>
                 <div class="col-sm-12">
                     <hr>
@@ -76,6 +90,5 @@
                 </div>
             </form>
         {% endif %}
-
     </div>
 {% endif %}

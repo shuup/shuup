@@ -1,3 +1,21 @@
+function showPreview(productId) {
+    var modal_select = "#product-" + productId + "-modal";
+    var product_modal = $(modal_select);
+    if (product_modal.length) {
+        product_modal.modal("show");
+        return;
+    }
+
+    $.ajax({
+        url: '/xtheme/product_quick_view?id=' + productId,
+        method: "GET",
+        success: function(data) {
+            $("body").append(data); 
+            $(modal_select).modal("show");
+        }
+    });
+}
+
 $(function() {
     $("#search-modal").on("show.bs.modal", function() {
         setTimeout(function(){

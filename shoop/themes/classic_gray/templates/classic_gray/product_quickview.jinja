@@ -1,0 +1,23 @@
+{% set product_url = url("shoop:product", pk=product.pk, slug=product.slug) %}
+<div class="product-preview-modal fade" id="product-{{ product.id }}-modal" tabindex="-1" role="dialog" aria-labelledby="product-{{ product.id }}-preview">
+    <div class="product-preview-modal-dialog" role="document">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="content" id="product-{{ product.id }}-preview">
+            <div class="row">
+                <div class="col-md-6">
+                    {% set image = product.primary_image|thumbnail(size=(600,600)) %}
+                    {% if image %}
+                        <div class="image" style="background-image:url('{{ image }}')" title="{{ product.name }}"></div>
+                    {% else %}
+                        <div class="image" style="background-image:url('{{ STATIC_URL }}classic_gray/img/no_image.png')"></div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    <a href="{{ product_url }}" class="name"><h3>{{ product.name }}</h3></a>
+                    <p class="description">{{ product.description|truncate(360) }}</p>
+                    {% include "shoop/front/product/_detail_order_section.jinja" with context %}
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>
