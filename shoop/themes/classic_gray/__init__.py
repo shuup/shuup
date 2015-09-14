@@ -5,6 +5,9 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
+from django import forms
+from django.utils.translation import ugettext_lazy as _
+
 from shoop.apps import AppConfig
 from shoop.xtheme.theme import Theme
 
@@ -14,6 +17,17 @@ class ClassicGrayTheme(Theme):
     name = "Shoop Classic Gray Theme"
     author = "Juha Kujala"
     template_dir = "classic_gray/"
+
+    fields = [
+        ("footer_html", forms.CharField(required=False, label=_("Footer custom HTML"), widget=forms.Textarea)),
+        ("footer_links", forms.CharField(required=False, label=_("Footer links"), widget=forms.Textarea,
+                                         help_text=_("One line per link in format '[url] [label]'"))),
+        ("footer_column_order", forms.ChoiceField(required=False, initial="", label=_("Footer column order"))),
+    ]
+
+    def get_configuration_form(self, form_kwargs):
+        from .config_form import ClassicGrayConfigForm
+        return ClassicGrayConfigForm(theme=self, **form_kwargs)
 
     def get_view(self, view_name):
         import shoop.themes.classic_gray.views as views
