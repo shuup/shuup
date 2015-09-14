@@ -52,10 +52,13 @@
         </div>
     </footer>
 
+    
+
     {# Include JavaScript libraries #}
     <script src="{{ STATIC_URL }}classic_gray/js/classic-gray.js"></script>
-
     {# Include all Extra JavaScript #}
     {% block extrajs %}{% endblock %}
+    {# Enable adding products to basket with ajax #}
+    {% include "classic_gray/add_product_to_basket.jinja" %}
 </body>
 </html>

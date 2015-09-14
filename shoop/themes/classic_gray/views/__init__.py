@@ -4,3 +4,7 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from .basket import basket_partial  # noqa
+
+
+__all__ = ["basket_partial"]

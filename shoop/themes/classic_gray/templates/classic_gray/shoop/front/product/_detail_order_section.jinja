@@ -23,7 +23,7 @@
         <p class="not-orderable">{% trans %}Product not orderable{% endtrans %}</p>
     {% else %}
         <div class="product-variations">
-            <form role="form" method="post" action="{{ url("shoop:basket") }}" class="form-inline">
+            <form role="form" method="post" action="{{ url("shoop:basket") }}" class="form-inline add-to-basket">
                 <input type="hidden" name="return" value="{{ request.path }}">
                 <input type="hidden" name="command" value="add">
                 <div class="form-group">
@@ -49,7 +49,7 @@
     {% set is_orderable=shop_product.is_orderable(supplier=None, customer=request.customer, quantity=1) %}
     <div class="prices row">
         {% if is_orderable %}
-            <form role="form" method="post" action="{{ url("shoop:basket") }}" class="form-inline">
+            <form role="form" method="post" action="{{ url("shoop:basket") }}" class="form-inline add-to-basket">
                 <div class="col-sm-12">
                     <input type="hidden" name="return" value="{{ request.path }}">
                     <input type="hidden" name="command" value="add">

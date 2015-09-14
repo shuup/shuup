@@ -1,0 +1,47 @@
+<li class="dropdown cart">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="menu-icon fa fa-shopping-cart"></i>
+        <span class="hidden-xs">{% trans %}Cart{% endtrans %}</span>
+        <span>({{ request.basket.product_count }})</span>
+        <i class="dropdown-icon fa fa-angle-down"></i>
+    </a>
+    <div class="dropdown-menu cart">
+        {% if request.basket.get_lines() %}
+            <table class="table">
+                <colgroup>
+                    <col style="min-width: 180px;">
+                    <col style="min-width: 90px;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Items</th>
+                        <th class="text-right">Price</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>
+                            {% trans %}Total{% endtrans %}
+                        </th>
+                        <th class="text-right">
+                            {{ request.basket.total_price|home_currency }}
+                        </th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {% for line in request.basket.get_lines() %}
+                        <tr>
+                            <td>{{ line.quantity|number }} &times; <a href="{{ shoop.urls.model_url(line.product) }}">{{ line.text }}</a></td>
+                            <td class="text-right">{{ line.total_price|home_currency }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{{ url("shoop:basket") }}" class="btn btn-block btn-primary btn-view-cart">
+                {% trans %}View cart{% endtrans %} <i class="fa fa-angle-double-right"></i>
+            </a>
+        {% else %}
+            <span class="empty-cart"><i class="fa fa-exclamation-circle text-warning"></i> {% trans %}Your shopping cart is empty.{% endtrans %}</span>
+        {% endif %}
+    </div>
+</li>
