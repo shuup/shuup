@@ -6,6 +6,8 @@
 # LICENSE file in the root directory of this source tree.
 
 from django import forms
+from django.conf import settings
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.apps import AppConfig
@@ -32,6 +34,24 @@ class ClassicGrayTheme(Theme):
     def get_view(self, view_name):
         import shoop.themes.classic_gray.views as views
         return getattr(views, view_name, None)
+
+    def get_footer_links(self):
+        for line in (self.get_setting("footer_links") or "").splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            line = line.split(None, 1)
+            if len(line) == 2:
+                yield {"url": line[0], "text": line[1]}
+            else:
+                yield {"url": line[0]}
+
+    def get_cms_links(self):
+        if "shoop.simple_cms" not in settings.INSTALLED_APPS:
+            return
+        from shoop.simple_cms.models import Page
+        for page in Page.objects.visible().filter(visible_in_menu=True):
+            yield {"url": page.url, "text": force_text(page)}
 
 
 class ClassicGrayThemeAppConfig(AppConfig):
