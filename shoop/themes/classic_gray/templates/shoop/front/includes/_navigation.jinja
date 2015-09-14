@@ -126,17 +126,17 @@
                             <tbody>
                                 {% for line in request.basket.get_lines() %}
                                     <tr>
-                                        <td>{{ line.quantity|number }} &times; {{ line.text }}</td>
+                                        <td>{{ line.quantity|number }} &times; <a href="{{ shoop.urls.model_url(line.product) }}">{{ line.text }}</a></td>
                                         <td class="text-right">{{ line.total_price|home_currency }}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
-                        <a href="{{ url("shoop:basket") }}" class="btn btn-block btn-lg btn-default">
+                        <a href="{{ url("shoop:basket") }}" class="btn btn-block btn-primary btn-view-cart">
                             {% trans %}View cart{% endtrans %} <i class="fa fa-angle-double-right"></i>
                         </a>
                     {% else %}
-                        <i class="fa fa-exclamation-circle text-warning"></i> {% trans %}Your shopping cart is empty.{% endtrans %}
+                        <span class="empty-cart"><i class="fa fa-exclamation-circle text-warning"></i> {% trans %}Your shopping cart is empty.{% endtrans %}</span>
                     {% endif %}
                 </div>
             </li>
