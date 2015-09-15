@@ -31,13 +31,13 @@ INSTALLED_APPS = add_enabled_addons(SHOOP_ENABLED_ADDONS_FILE, (
     'django.contrib.staticfiles',
     # shoop themes
     'shoop.themes.default_theme',
+    'shoop.themes.classic_gray',
     # shoop
     'shoop.addons',
     'shoop.admin',
     'shoop.api',
     'shoop.core',
     'shoop.default_tax',
-    'shoop.themes.classic_gray',
     'shoop.front',
     'shoop.front.apps.auth',
     'shoop.front.apps.customer_information',
