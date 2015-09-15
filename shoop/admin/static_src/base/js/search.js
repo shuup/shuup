@@ -8,6 +8,104 @@
  */
 $(function() {
     "use strict";
+    var searchResultController = null;
+
+    function getShortcutFinder() {
+        const usedShortcuts = {"s": true};
+        const firstChoices = "123456789";
+        const lastChoices = "abcdefghijklmnopqrstuvwxyz";
+        return function(text) {
+            const keys = (
+                firstChoices +
+                text.toLowerCase().replace(/[^a-z0-9]+/g, "") +
+                lastChoices
+            ).split("");
+            const key = _.detect(keys, (possibleKey) => !usedShortcuts[possibleKey]);
+            if (key !== null) {
+                usedShortcuts[key] = true;
+            }
+            return key;
+        };
+    }
+
+    function resultView(ctrl) {
+        const results = ctrl.results();
+        if (results !== null && results.length === 0) {
+            return m("div", "No results.");
+        }
+        const showShortcuts = !!ctrl.showShortcuts();
+        const [actionResults, standardResults] = _.partition(results, "isAction");
+        const getShortcut = getShortcutFinder();
+
+
+        const singleResultLi = function(result, linkClass) {
+            const key = (showShortcuts ? getShortcut(result.text) : null);
+            return m("li", {key: result.url},
+                m(linkClass, {href: result.url, accesskey: key}, [
+                    (result.icon ? m("i." + result.icon) : null),
+                    result.text,
+                    (key ? m("span.key", key.toUpperCase()) : null)
+                ])
+            );
+        };
+
+        const standardResultContents = m("div",
+            _(standardResults).groupBy("category").map(function(groupResults, category) {
+                return m("div.result-category", [
+                    m("h3.divider", ["" + category]),
+                    m("ul", _.map(groupResults, (result) => singleResultLi(result, "a.result")))
+                ]);
+            }).value()
+        );
+
+        const actionResultContents = m("div",
+            m("ul", _.map(actionResults, (result) => singleResultLi(result, "a.btn.btn-gray")))
+        );
+
+        return m("div.container-fluid",
+            m("div.results", {id: "site-search-standard-results"}, standardResultContents),
+            m("div.additional", {id: "site-search-action-results"}, actionResultContents)
+        );
+    }
+
+    function searchCtrl() {
+        const ctrl = this;
+        ctrl.results = m.prop(null);
+        ctrl.showShortcuts = m.prop(false);
+        this.doSearch = function(query) {
+            if (!query) {
+                ctrl.results([]);
+                m.redraw();
+                return;
+            }
+            $.ajax({
+                url: window.ShoopAdminConfig.searchUrl,
+                data: {"q": query}
+            }).done(function(data) {
+                ctrl.results(data.results);
+                m.redraw();
+            });
+        };
+        const setShowShortcuts = function(event) {
+            if (event.keyCode === 18) { // 18 = alt
+                ctrl.showShortcuts(event.type === "keydown");
+                m.redraw();
+            }
+        };
+        document.addEventListener("keydown", setShowShortcuts, false);
+        document.addEventListener("keyup", setShowShortcuts, false);
+    }
+
+    var doSearch = function(query) {
+        if (!searchResultController) {
+            const container = document.getElementById("site-search-results");
+            searchResultController = m.mount(container, {controller: searchCtrl, view: resultView});
+        }
+        searchResultController.doSearch(query);
+    };
+
+    const doSearchDebounced = _.debounce(doSearch, 500);
+
     $(document).click(function(e) {
         if (!$(e.target).closest("#site-search").length) {
             $("#site-search-results").slideUp(400, "easeOutCubic");
@@ -21,7 +119,7 @@ $(function() {
     });
 
     // Hide search results if results are open and search parent element is clicked
-    $("#site-search .mobile").click(function() {
+    $("#site-search").find(".mobile").click(function() {
         if ($(this).hasClass("open")) {
             $("#site-search-results").slideUp(400, "easeOutCubic");
         }
@@ -37,67 +135,9 @@ $(function() {
 
     $(window).resize(_.debounce(closeMobileSearchResults, 100));
 
-    function renderResults(results) {
+    const $searchInputs = $("#site-search-input, #site-search-input-mobile");
 
-        var [actionResults, standardResults] = _.partition(results, "isAction");
-        var standardResultContents = m("div",
-            _(standardResults).groupBy("category").map(function(results, category) {
-                return m("div.result-category", [
-                    m("h3.divider", ["" + category]),
-                    m("ul",
-                        _.map(results, function(result) {
-                            return m("li", {key: result.url},
-                                m("a.result", {href: result.url}, [
-                                    (result.icon ? m("i." + result.icon) : null),
-                                    result.text
-                                ])
-                            );
-                        })
-                    )
-                ]);
-            }).value()
-        );
-
-
-        var actionResultContents = m("div", [
-                m("ul",
-                    _.map(actionResults, function(result) {
-                        return m("li", {key: result.url},
-                            m("a.btn.btn-gray", {href: result.url}, [
-                                (result.icon ? m("i." + result.icon) : null),
-                                result.text
-                            ])
-                        );
-                    })
-                )
-            ]
-        );
-
-        var standardResultNode = document.getElementById("site-search-standard-results");
-        var actionResultNode = document.getElementById("site-search-action-results");
-        m.render(standardResultNode, standardResultContents);
-        m.render(actionResultNode, actionResultContents);
-
-    }
-
-    var doSearch = function(query) {
-        if (!query) {
-            renderResults([]);
-            return;
-        }
-        $.ajax({
-            url: ShoopAdminConfig.searchUrl,
-            data: {"q": query}
-        }).done(function(data) {
-            renderResults(data.results);
-        }).fail(function(data) {
-            $("#site-search-standard-results").text("An error occurred.");
-        });
-    };
-
-    var doSearchDebounced = _.debounce(doSearch, 500);
-
-    $("#site-search-input, #site-search-input-mobile").on("keyup", function() {
+    $searchInputs.on("keyup", function() {
         var query = $(this).val();
         if (query.length > 0) {
             $("#site-search-results").slideDown(300, "easeInSine");
@@ -106,7 +146,7 @@ $(function() {
             $("#site-search-results").slideUp(400, "easeOutSine");
         }
     });
-    $("#site-search-input, #site-search-input-mobile").on("focus", function() {
+    $searchInputs.on("focus", function() {
         if ($(this).val().length > 0) {
             $("#site-search-results").slideDown(300, "easeInSine");
         }

@@ -17,7 +17,7 @@
 
 <div id="site-search" class="site-search">
     <div class="desktop hidden-xs">
-        <input type="search" id="site-search-input" class="form-control site-search-input" placeholder="{% trans %}Search for{% endtrans %}..."><i class="input-icon fa fa-search"></i>
+        <input type="search" accesskey="s" id="site-search-input" class="form-control site-search-input" placeholder="{% trans %}Search for{% endtrans %}..."><i class="input-icon fa fa-search"></i>
     </div>
     <div class="mobile text-right visible-xs">
         <button class="dropdown-toggle" id="dropdownSearch" type="button" data-toggle="dropdown" aria-expanded="true">
@@ -28,12 +28,7 @@
         </div>
     </div>
 
-    <div id="site-search-results" class="site-search-results">
-        <div class="container-fluid">
-            <div class="results" id="site-search-standard-results"></div>
-            <div class="additional" id="site-search-action-results"></div>
-        </div>
-    </div>
+    <div id="site-search-results" class="site-search-results"></div>
 </div>
 
 {% set front_url=shoop_admin.get_front_url() %}
