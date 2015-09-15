@@ -29,7 +29,8 @@ $(function() {
                 el: section,
                 id: section.id,
                 title: titleText,
-                iconClass: $blockTitle.find(".fa").attr("class")
+                iconClass: $blockTitle.find(".fa").attr("class"),
+                errorClass: ($section.find(".has-error").length ? "normal" : null)
             };
         }));
 
@@ -53,7 +54,11 @@ $(function() {
                         },
                         [
                             (item.iconClass ? m("i", {className: item.iconClass}) : null),
-                            item.title
+                            item.title,
+                            (item.errorClass ? m(
+                                "div.error-indicator." + item.errorClass,
+                                m("i.fa.fa-exclamation-circle")
+                            ) : null)
                         ]
                     );
                 }));
@@ -62,6 +67,9 @@ $(function() {
                 const ctrl = this;
                 ctrl.showSection = function(section) {
                     $sections.hide();
+                    if(section.errorClass) {
+                        section.errorClass = "dismissed";
+                    }
                     const $visibleSection = $("#" + section.id);
                     $visibleSection.show();
                     ctrl.currentItemId(section.id);
