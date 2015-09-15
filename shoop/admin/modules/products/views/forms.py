@@ -178,10 +178,20 @@ class BaseProductMediaForm(MultiLanguageModelForm):
         self.fields["file"].widget = MediaChoiceWidget()  # Filer misimplemented the field; we need to do this manually.
         self.fields["file"].required = True
 
-        if len(self.allowed_media_kinds) == 1:
-            # only one media kind given, no point showing the dropdown
+        if self.allowed_media_kinds:
+            # multiple media kinds allowed, filter the choices list to reflect the `self.allowed_media_kinds`
+            allowed_kinds_values = set(v.value for v in self.allowed_media_kinds)
+            self.fields["kind"].choices = [
+                (value, choice)
+                for value, choice in self.fields["kind"].choices
+                if value in allowed_kinds_values
+            ]
+
+            if len(self.allowed_media_kinds) == 1:
+                # only one media kind given, no point showing the dropdown
+                self.fields["kind"].widget = forms.HiddenInput()
+
             self.fields["kind"].initial = self.allowed_media_kinds[0]
-            self.fields["kind"].widget = forms.HiddenInput()
 
         if not self.instance.pk:
             self.fields["shops"].initial = [default_shop]
@@ -241,7 +251,6 @@ class BaseProductMediaFormSet(BaseModelFormSet):
 
 
 class ProductMediaForm(BaseProductMediaForm):
-
     def __init__(self, **kwargs):
         super(ProductMediaForm, self).__init__(**kwargs)
         self.fields["file"].required = False
@@ -261,6 +270,7 @@ class ProductMediaForm(BaseProductMediaForm):
 
 class ProductMediaFormSet(BaseProductMediaFormSet):
     form_class = ProductMediaForm
+    allowed_media_kinds = [ProductMediaKind.GENERIC_FILE, ProductMediaKind.DOCUMENTATION, ProductMediaKind.SAMPLE]
 
 
 class ProductImageMediaForm(BaseProductMediaForm):
@@ -302,8 +312,10 @@ class ProductImageMediaFormSet(ProductMediaFormSet):
         super(ProductImageMediaFormSet, self).save(commit)
 
         has_primary = any(form.cleaned_data.get("is_primary") for form in (self.forms or []))
+        eligible_forms = [form for form in (self.forms or []) if
+                          (form.cleaned_data.get("file") and not form.cleaned_data.get("DELETE"))]
 
-        if self.forms and not has_primary:
+        if eligible_forms and not has_primary:
             # make first form be the primary image as well
             form_instance = self.forms[0]
             form_instance.product.primary_image = form_instance.instance
