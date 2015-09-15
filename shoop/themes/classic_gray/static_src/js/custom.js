@@ -16,6 +16,19 @@ function showPreview(productId) {
     });
 }
 
+function setProductListViewMode(isInListMode) {
+    if (typeof(Storage) !== "undefined") {
+        localStorage.setItem("product_list_view_list_mode", (isInListMode ? "list" : "grid"));
+    }
+}
+
+function getProductListViewMode() {
+    if (typeof(Storage) !== "undefined") {
+        return localStorage.getItem("product_list_view_list_mode");
+    }
+    return "grid";
+}
+
 $(function() {
     $("#search-modal").on("show.bs.modal", function() {
         setTimeout(function(){
@@ -56,9 +69,17 @@ $(function() {
     });
 
     $("#product-list-view-type").on("change", function() {
-        $(".product-list-view").toggleClass("list");
+        var $productListView = $(".product-list-view");
+        $productListView.toggleClass("list");
+        setProductListViewMode($productListView.hasClass("list"));
     })
 
     $(".selectpicker").selectpicker();
 
+    // By default product list view is in grid mode
+    var $productListView = $(".product-list-view");
+    if ($productListView.length > 0 && getProductListViewMode() == "list") {
+        $productListView.addClass("list");
+        $("#product-list-view-type").prop('checked', true);
+    }
 });
