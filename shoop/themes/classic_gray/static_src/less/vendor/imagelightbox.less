@@ -1,0 +1,73 @@
+// Lightbox styles for the lightbox image plugin
+#imagelightbox {
+    position: fixed;
+    z-index: 10000;
+    -ms-touch-action: none;
+    touch-action: none;
+}
+.imagelightbox-arrow {
+    width: 3.75em;
+    height: 7.5em;
+    background-color: @brand-primary;
+    color: #fff;
+    vertical-align: middle;
+    display: none;
+    position: fixed;
+    z-index: 10001;
+    top: 50%;
+    margin-top: -3.75em;
+    border: 0;
+    @media (max-width: @screen-xs-max) {
+        display: none !important;
+    }
+
+    &-left {
+        left: 2.5em;
+    }
+    &-right {
+        right: 2.5em;
+    }
+}
+
+#imagelightbox-overlay, #imagelightbox-close, .imagelightbox-arrow {
+    animation: 0.25s linear 0s normal none 1 running fade-in;
+}
+
+#imagelightbox-overlay {
+    background-color: rgba(255, 255, 255, 0.85);
+    position: fixed;
+    z-index: 9998;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+}
+
+#imagelightbox-close {
+    width: 2.5em;
+    height: 2.5em;
+    text-align: center;
+    background-color: @gray;
+    border: 0;
+    border-radius: 50%;
+    position: fixed;
+    z-index: 10002;
+    top: 2.5em;
+    right: 2.5em;
+    transition: color 0.3s ease 0s;
+    color: #fff;
+}
+
+#imagelightbox-loading {
+    position: fixed;
+    z-index: 9999;
+    top: 50%;
+    left: 50%;
+    margin-left: -20px;
+    margin-top: -20px;
+    i {
+        color: @gray-light;
+        font-size: 52px;
+        padding: 20px;
+    }
+}
