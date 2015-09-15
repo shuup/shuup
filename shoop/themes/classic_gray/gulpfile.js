@@ -9,6 +9,7 @@ var PRODUCTION = gutil.env.production || process.env.NODE_ENV == "production";
 
 gulp.task("less", function() {
     return gulp.src([
+        "bower_components/dist/assets/owl.carousel.css",
         "static_src/less/style.less"
     ])
         .pipe(plumber({}))
@@ -30,6 +31,8 @@ gulp.task("js", function() {
         "bower_components/jquery/dist/jquery.js",
         "bower_components/bootstrap/dist/js/bootstrap.js",
         "bower_components/bootstrap-select/dist/js/bootstrap-select.js",
+        "bower_components/jquery.easing/js/jquery.easing.js",
+        "bower_components/owl.carousel/dist/owl.carousel.js",
         "static_src/js/custom.js"
     ])
         .pipe(plumber({}))
