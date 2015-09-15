@@ -16,7 +16,7 @@ def test_contact_module_search(rf):
     cm = ContactModule()
     # This test has a chance to fail if the random person is from a strange locale
     # and the database does not like it. Therefore, use `en_US` here...
-    contact = create_random_person(locale="en_US")
+    contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
     request = rf.get("/")
     assert not empty_iterable(cm.get_search_results(request, query=contact.email))
     assert not empty_iterable(cm.get_search_results(request, query=contact.first_name))
