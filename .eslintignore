@@ -1,0 +1,5 @@
+**/node_modules/**/*.js
+**/bower_components/**/*.js
+shoop/admin/static/**/*.js
+**/webpack.config.js
+**/gulpfile.js

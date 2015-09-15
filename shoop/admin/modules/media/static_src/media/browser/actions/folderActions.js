@@ -10,7 +10,7 @@ const _ = require("lodash");
 const remote = require("../util/remote");
 
 export function promptCreateFolder(controller, parentFolderId) {
-    var name = prompt("New folder name?");
+    const name = prompt("New folder name?");
     if (!name) {  // Cancelled? :(
         return;
     }
@@ -27,7 +27,7 @@ export function promptCreateFolderHere(controller) {
 
 export function promptRenameCurrentFolder(controller) {
     const {id, name} = controller.folderData();
-    var newName = _.trim(prompt("New folder name?", name) || "");
+    const newName = _.trim(prompt("New folder name?", name) || "");
     if (newName && name !== newName) {
         remote.post({action: "rename_folder", id, name}).then(function(response) {
             remote.handleResponseMessages(response);

@@ -7,12 +7,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 $(function() {
-    var isMobile = !!(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent));
+    const isMobile = !!(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent));
     $(".multiselect").selectpicker({
         mobile: isMobile,
         style: "btn btn-select",
         title: "",
-        selectedTextFormat: 'count > 3',
-        countSelectedText: '{0}/{1} selected'
+        selectedTextFormat: "count > 3",
+        countSelectedText: "{0}/{1} selected"
     });
 }());

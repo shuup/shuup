@@ -25,7 +25,7 @@ $(function() {
     function loadMenu(force) {
         if(!menuLoaded || force) {
             $("#main-menu").empty().load(window.ShoopAdminConfig.menuUrl, function() {
-                $('#main-menu .scroll-inner-content').scrollbar("init", {
+                $("#main-menu .scroll-inner-content").scrollbar("init", {
                     disableBodyScroll: true
                 });
             });
@@ -34,14 +34,14 @@ $(function() {
     }
 
     $(document).click(function(e) {
-        if (mainNavIsOpen() && !$(e.target).closest('#main-menu').length) {
+        if (mainNavIsOpen() && !$(e.target).closest("#main-menu").length) {
             closeMainNav();
         }
     });
 
-    $('#menu-button').click(function(event) {
+    $("#menu-button").click(function(event) {
         loadMenu();
-        $('#site-search.mobile').removeClass('open'); // Close search if open on mobile
+        $("#site-search.mobile").removeClass("open"); // Close search if open on mobile
         event.stopPropagation();
         if (mainNavIsOpen()) {
             closeMainNav();
@@ -54,11 +54,12 @@ $(function() {
     });
 
     $(document).on("click", "#main-menu ul.menu-list > li a", function(e) {
-        if (!$(this).siblings("ul").length) return;
+        if (!$(this).siblings("ul").length) {
+            return;
+        }
         e.preventDefault();
-        var $listItems = $("ul.menu-list li");
-        var $currentListItem = $(this).parent("li");
-        var isOpen = $currentListItem.hasClass("open");
+        const $currentListItem = $(this).parent("li");
+        const isOpen = $currentListItem.hasClass("open");
         $(this).siblings("ul").slideToggle();
         $currentListItem.toggleClass("open", !isOpen);
     });

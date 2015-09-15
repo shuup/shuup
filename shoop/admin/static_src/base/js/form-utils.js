@@ -7,8 +7,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 window.setNextActionAndSubmit = function(formId, nextAction) {
-    var $form = $("#" + formId);
-    if(!$form.length) return;
+    const $form = $("#" + formId);
+    if(!$form.length) {
+        return;
+    }
     var $nextAction = $form.find("input[name=__next]");
     if(!$nextAction.length) {
         $nextAction = $("<input>", {

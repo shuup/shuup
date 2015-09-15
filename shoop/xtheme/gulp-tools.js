@@ -6,13 +6,14 @@
  * This source code is licensed under the AGPLv3 license found in the
  * LICENSE file in the root directory of this source tree.
  */
+/* eslint-disable prefer-const */
 var gulp = require("gulp");
 var gutil = require("gulp-util");
 var merge = require("merge");
 var path = require("path");
 var webpack = require("webpack");
 // --production works in place of the environment variable
-var PRODUCTION = (gutil.env.production) || (process.env.NODE_ENV == "production");
+var PRODUCTION = (gutil.env.production) || (process.env.NODE_ENV === "production");
 
 function buildWebpackConfig(entry, outputFilename) {
     return {
@@ -61,16 +62,20 @@ function webpackRunner(config, watch) {
 
     return function(callback) {
         var cb = function(err, stats) {
-            if (err) throw new gutil.PluginError("webpack", err);
+            if (err) {
+                throw new gutil.PluginError("webpack", err);
+            }
             gutil.log("[webpack]", stats.toString({colors: true}));
-            if(!watch) callback();
+            if(!watch) {
+                callback();
+            }
         };
         if(watch) {
             compiler.watch({}, cb);
         } else {
             compiler.run(cb);
         }
-    }
+    };
 }
 
 function webpackTasks(name, config) {
@@ -80,7 +85,7 @@ function webpackTasks(name, config) {
 
 function registerWatchTask(directDeps, fn) {
     var deps = [].concat(directDeps || []);
-    Object.keys(gulp.tasks).filter(function(n){return n.indexOf("watch:") == 0;}).forEach(function(n) {
+    Object.keys(gulp.tasks).filter(function(n){return n.indexOf("watch:") === 0;}).forEach(function(n) {
         deps.push(n);
     });
     gulp.task("watch", deps, fn || gutil.noop);

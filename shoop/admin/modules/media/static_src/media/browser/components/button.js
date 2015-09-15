@@ -10,7 +10,7 @@ const m = require("mithril");
 const _ = require("lodash");
 
 export default function(prop, value, label, title) {
-    var active = (prop() == value);  // eslint-disable-line eqeqeq
+    const active = (prop() == value);  // eslint-disable-line eqeqeq
     return m("button.btn.btn-default" + (active ? ".active" : ""), {
         type: "button",
         onclick: _.bind(prop, null, value),

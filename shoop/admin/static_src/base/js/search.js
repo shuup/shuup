@@ -97,18 +97,18 @@ $(function() {
 
     var doSearchDebounced = _.debounce(doSearch, 500);
 
-    $('#site-search-input, #site-search-input-mobile').on('keyup', function() {
+    $("#site-search-input, #site-search-input-mobile").on("keyup", function() {
         var query = $(this).val();
         if (query.length > 0) {
-            $('#site-search-results').slideDown(300, "easeInSine");
+            $("#site-search-results").slideDown(300, "easeInSine");
             doSearchDebounced(query);
         } else {
-            $('#site-search-results').slideUp(400, "easeOutSine");
+            $("#site-search-results").slideUp(400, "easeOutSine");
         }
     });
-    $('#site-search-input, #site-search-input-mobile').on('focus', function() {
+    $("#site-search-input, #site-search-input-mobile").on("focus", function() {
         if ($(this).val().length > 0) {
-            $('#site-search-results').slideDown(300, "easeInSine");
+            $("#site-search-results").slideDown(300, "easeInSine");
         }
     });
 });

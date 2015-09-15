@@ -37,7 +37,7 @@ export function openFolderContextMenu(event) {
 }
 
 export function setupUploadButton(element) {
-    var input = document.createElement("input");
+    const input = document.createElement("input");
     input.type = "file";
     input.multiple = true;
     input.style.display = "none";

@@ -6,13 +6,14 @@
  * This source code is licensed under the AGPLv3 license found in the
  * LICENSE file in the root directory of this source tree.
  */
+/* eslint-disable no-plusplus, prefer-const, curly, no-bitwise */
 /* exported Picotable */
 /* global alert, require */
-var Picotable = (function(m, storage) {
+const Picotable = (function(m, storage) {
     "use strict";
     m = m || require("mithril");
 
-    var Util = (function() {
+    const Util = (function() {
         function property(propertyName) {
             return function(obj) {
                 return obj[propertyName];
@@ -20,24 +21,30 @@ var Picotable = (function(m, storage) {
         }
 
         function map(obj, callback) {
-            if (Array.isArray(obj)) return obj.map(callback);
+            if (Array.isArray(obj)) {
+                return obj.map(callback);
+            }
             return Object.keys(obj).map(function(key) {
                 return callback(obj[key], key, obj);
             });
         }
 
         function any(obj, callback) {
-            if (Array.isArray(obj)) return obj.some(callback);
+            if (Array.isArray(obj)) {
+                return obj.some(callback);
+            }
             return Object.keys(obj).some(function(key) {
                 return callback(obj[key], key, obj);
             });
         }
 
         function extend(/*...*/) {
-            var target = arguments[0];
+            const target = arguments[0];
             for (var i = 1; i < arguments.length; i++) {
                 for (var key in arguments[i]) {
-                    if (arguments[i].hasOwnProperty(key)) target[key] = arguments[i][key];
+                    if (arguments[i].hasOwnProperty(key)) {
+                        target[key] = arguments[i][key];
+                    }
                 }
             }
             return target;
@@ -48,9 +55,11 @@ var Picotable = (function(m, storage) {
         }
 
         function omitNulls(object) {
-            var outputObject = {};
+            const outputObject = {};
             map(object, function(value, key) {
-                if (value !== null) outputObject[key] = value;
+                if (value !== null) {
+                    outputObject[key] = value;
+                }
             });
             return outputObject;
         }
@@ -63,37 +72,51 @@ var Picotable = (function(m, storage) {
                 timeout = null;
             }
 
-            var debounced = function() {
-                var context = this, args = arguments;
-                var later = function() {
+            const debounced = function() {
+                const context = this, args = arguments;
+                const later = function() {
                     cancel();
-                    if (!immediate) func.apply(context, args);
+                    if (!immediate) {
+                        func.apply(context, args);
+                    }
                 };
-                var callNow = immediate && !timeout;
+                const callNow = immediate && !timeout;
                 cancel();
                 timeout = setTimeout(later, wait);
-                if (callNow) func.apply(context, args);
+                if (callNow) {
+                    func.apply(context, args);
+                }
             };
             debounced.cancel = cancel;
             return debounced;
         }
 
         function stringValue(obj) {
-            if (obj === null || obj === undefined) return "";
-            if (Array.isArray(obj) && obj.length === 0) return "";
+            if (obj === null || obj === undefined) {
+                return "";
+            }
+            if (Array.isArray(obj) && obj.length === 0) {
+                return "";
+            }
             return "" + obj;
         }
 
         function isEmpty(obj) {
-            if (!!obj.length) return false;
-            for (var k in obj) if (obj.hasOwnProperty(k)) return false;
+            if (!!obj.length) {
+                return false;
+            }
+            for (var k in obj) {
+                if (obj.hasOwnProperty(k)) {
+                    return false;
+                }
+            }
             return true;
         }
 
         function boundPartial(thisArg, func/*, args */) {
-            var partialArgs = [].slice.call(arguments, 2);
+            const partialArgs = [].slice.call(arguments, 2);
             return function(/* args */) {
-                var fArgs = partialArgs.concat([].slice.call(arguments));
+                const fArgs = partialArgs.concat([].slice.call(arguments));
                 return func.apply(thisArg, fArgs);
             };
         }
@@ -112,7 +135,7 @@ var Picotable = (function(m, storage) {
         };
     }());
 
-    var lang = {
+    const lang = {
         "RANGE_FROM": "From",
         "RANGE_TO": "To",
         "ITEMS_PER_PAGE": "Items per page",
@@ -124,7 +147,7 @@ var Picotable = (function(m, storage) {
         "SORT_DEFAULT": "Default sorting"
     };
 
-    var cx = function generateClassName(classSet) {
+    const cx = function generateClassName(classSet) {
         var classValues = [];
         Util.map((classSet || {}), function(flag, key) {
             var className = null;
@@ -141,8 +164,8 @@ var Picotable = (function(m, storage) {
     function addDummies(pageLinks) {
         var nDummy = 0;
         for (var i = 1; i < pageLinks.length; i++) {
-            if (pageLinks[i]._page != pageLinks[i - 1]._page + 1) {
-                var li = m("li", {key: "dummy" + (nDummy++), className: "disabled"}, m("a", {href: "#"}, "\u22EF"));
+            if (pageLinks[i]._page !== pageLinks[i - 1]._page + 1) {
+                const li = m("li", {key: "dummy" + (nDummy++), className: "disabled"}, m("a", {href: "#"}, "\u22EF"));
                 pageLinks.splice(i, 0, li);
                 i++;
             }
@@ -158,8 +181,8 @@ var Picotable = (function(m, storage) {
             return m("a", {rel: page, href: "#", onclick: callback}, title || page);
         };
         for (var page = 1; page <= paginationData.nPages; page++) {
-            if (page == 1 || page == paginationData.nPages || Math.abs(page - currentPage) <= 4 || page % 10 === 0) {
-                var li = m("li", {key: page, className: cx({active: currentPage == page})}, pageLink(page));
+            if (page === 1 || page === paginationData.nPages || Math.abs(page - currentPage) <= 4 || page % 10 === 0) {
+                var li = m("li", {key: page, className: cx({active: currentPage === page})}, pageLink(page));
                 li._page = page;
                 pageLinks.push(li);
             }
@@ -167,11 +190,11 @@ var Picotable = (function(m, storage) {
         addDummies(pageLinks);
         var prevLink = m("li", {
             key: "previous",
-            className: cx({disabled: currentPage == 1})
+            className: cx({disabled: currentPage === 1})
         }, pageLink(currentPage - 1, "Previous"));
         var nextLink = m("li", {
             key: "next",
-            className: cx({disabled: currentPage == paginationData.nPages})
+            className: cx({disabled: currentPage === paginationData.nPages})
         }, pageLink(currentPage + 1, "Next"));
         return m("nav", m("ul.pagination", prevLink, pageLinks, nextLink));
     }
@@ -207,11 +230,13 @@ var Picotable = (function(m, storage) {
 
     function buildColumnRangeFilter(ctrl, col, value) {
         var setFilterValueFromInput = function(which) {
-            var value = Util.extend({}, ctrl.getFilterValue(col.id) || {}); // Copy current filter object
+            const filterObj = Util.extend({}, ctrl.getFilterValue(col.id) || {}); // Copy current filter object
             var newValue = this.value;
-            if (!Util.trim(newValue)) newValue = null;
-            value[which] = newValue;
-            ctrl.setFilterValue(col.id, value);
+            if (!Util.trim(newValue)) {
+                newValue = null;
+            }
+            filterObj[which] = newValue;
+            ctrl.setFilterValue(col.id, filterObj);
         };
         var attrs = {"type": col.filter.range.type || "text"};
         Util.map(["min", "max", "step"], function(key) {
@@ -278,12 +303,18 @@ var Picotable = (function(m, storage) {
         if (col.sortable) {
             var currentSort = ctrl.vm.sort();
             var thisColSort = null;
-            if (currentSort == "+" + col.id) thisColSort = "asc";
-            if (currentSort == "-" + col.id) thisColSort = "desc";
+            if (currentSort === "+" + col.id) {
+                thisColSort = "asc";
+            }
+            if (currentSort === "-" + col.id) {
+                thisColSort = "desc";
+            }
             var sortIcon = "fa-sort" + (thisColSort ? "-" + thisColSort : "");
             sortIndicator = m("i.fa." + sortIcon);
             classSet.sortable = true;
-            if (thisColSort) classSet["sorted-" + thisColSort] = true;
+            if (thisColSort) {
+                classSet["sorted-" + thisColSort] = true;
+            }
             columnOnClick = function() {
                 ctrl.setSortColumn(col.id);
             };
@@ -301,7 +332,9 @@ var Picotable = (function(m, storage) {
 
     function renderTable(ctrl) {
         var data = ctrl.vm.data();
-        if (data === null) return; // Not loaded, don't return anything
+        if (data === null) {  // Not loaded, don't return anything
+            return;
+        }
 
         // Build header
         var columnHeaderCells = Util.map(data.columns, function(col) {
@@ -326,7 +359,7 @@ var Picotable = (function(m, storage) {
         // Build body
         var isPick = !!ctrl.vm.pickId();
         var rows = Util.map(data.items, function(item) {
-            return m("tr", {key: "item-" + item._id}, Util.map(data.columns, function(col, index) {
+            return m("tr", {key: "item-" + item._id}, Util.map(data.columns, function(col) {
                 var content = item[col.id] || "";
                 if (!!col.raw) content = m.trust(content);
                 if (col.linked) {
@@ -441,11 +474,11 @@ var Picotable = (function(m, storage) {
             }
             if (content === null) {
                 content = Util.map(data.columns, function(col) {
-                    var content = item[col.id] || "";
-                    if (!!col.raw) content = m.trust(content);
+                    var colContent = item[col.id] || "";
+                    if (!!col.raw) colContent = m.trust(colContent);
                     return m("div.inner-row.with-title", [
                         m("div.column.title", col.title),
-                        m("div.column", content)
+                        m("div.column", colContent)
                     ]);
                 });
             }
@@ -515,7 +548,7 @@ var Picotable = (function(m, storage) {
     function PicotableView(ctrl) {
         return m("div.table-view", [
             (ctrl.vm.showHeader() ? renderHeader(ctrl) : null),
-            (ctrl.vm.renderMode() == "mobile" ? renderMobileTable(ctrl) : renderTable(ctrl))
+            (ctrl.vm.renderMode() === "mobile" ? renderMobileTable(ctrl) : renderTable(ctrl))
         ]);
     }
 
@@ -539,7 +572,7 @@ var Picotable = (function(m, storage) {
         ctrl.setRenderMode = function(mode) {
             var oldMode = ctrl.vm.renderMode();
             ctrl.vm.renderMode(mode);
-            if (mode != oldMode) ctrl.refreshSoon();
+            if (mode !== oldMode) ctrl.refreshSoon();
         };
         ctrl.adaptRenderMode = function() {
             var width = window.innerWidth;
@@ -556,8 +589,8 @@ var Picotable = (function(m, storage) {
                     sortValue = colId;
                 } else {
                     var currentSort = ctrl.vm.sort();
-                    if (currentSort == "+" + colId) sortValue = "-" + colId;
-                    else if (currentSort == "-" + colId) sortValue = null;
+                    if (currentSort === "+" + colId) sortValue = "-" + colId;
+                    else if (currentSort === "-" + colId) sortValue = null;
                     else sortValue = "+" + colId;
                 }
             }
@@ -660,7 +693,7 @@ var Picotable = (function(m, storage) {
         m.deferred.onerror = function(e) {
             if(e.toString().match(/^SyntaxError/)) return;
             // Original onerror behavior below.
-            if (type.call(e) === "[object Error]" && !e.constructor.toString().match(/ Error/)) throw e;
+            if ({}.toString.call(e) === "[object Error]" && !e.constructor.toString().match(/ Error/)) throw e;
         };
     }
 
@@ -671,8 +704,8 @@ var Picotable = (function(m, storage) {
     generator.lang = lang;
     return generator;
 }(window.m, window.localStorage));
-/* jshint ignore:start */
-if (typeof module != "undefined" && module !== null && module.exports) module.exports = Picotable;
+/* eslint-disable */
+if (typeof module !== "undefined" && module !== null && module.exports) module.exports = Picotable;
 else if (typeof define === "function" && define.amd) define(function() {
     return Picotable;
 });

@@ -10,7 +10,7 @@ const m = require("mithril");
 const FileUpload = require("../FileUpload");
 const fileActions = require("../actions/fileActions");
 
-export var supportsDnD = (window.File && window.FileList && window.FormData);
+export const supportsDnD = (window.File && window.FileList && window.FormData);
 
 function ignoreEvent(e) {
     e = e || event;

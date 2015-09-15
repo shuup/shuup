@@ -24,7 +24,7 @@ module.exports = {
             {
                 test: /\.js(x?)$/,
                 exclude: /(node_modules|bower_components)/,
-                loader: 'babel-loader?loose=all'
+                loader: "babel-loader?loose=all"
             },
             {
                 test: /\.less/,
@@ -34,7 +34,7 @@ module.exports = {
             },
             {
                 test: /\.(png|jpg|woff)$/,
-                loader: 'url-loader'
+                loader: "url-loader"
             }
         ]
     }

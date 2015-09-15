@@ -6,30 +6,34 @@
  * This source code is licensed under the AGPLv3 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var style = require("style!css!autoprefixer!less!./script-editor.less");
-
-var cx = require("classnames");
+const style = require("style!css!autoprefixer!less!./script-editor.less");  // eslint-disable-line no-unused-vars
+const cx = require("classnames");
+const Messages = window.Messages;
 
 var settings = {};
-var names = {};
-var infos = {};
+const names = {};
+const infos = {};
 var controller = null;
-var optionLists = {};
+const optionLists = {};
 
 function showSuccessAndError(data) {
-    if (data.error) Messages.enqueue({
-        text: _.isString(data.error) ? data.error : "An error occurred.",
-        tags: "error"
-    });
-    if (data.success) Messages.enqueue({
-        text: _.isString(data.success) ? data.success : "Success.",
-        tags: "success"
-    });
+    if (data.error) {
+        Messages.enqueue({
+            text: _.isString(data.error) ? data.error : "An error occurred.",
+            tags: "error"
+        });
+    }
+    if (data.success) {
+        Messages.enqueue({
+            text: _.isString(data.success) ? data.success : "Success.",
+            tags: "success"
+        });
+    }
 }
 
 function apiRequest(command, data, options) {
-    var request = _.extend({}, {"command": command}, data || {});
-    var req = m.request(_.extend({
+    const request = _.extend({}, {"command": command}, data || {});
+    const req = m.request(_.extend({
         method: "POST",
         url: settings.apiUrl,
         data: request,
@@ -37,8 +41,8 @@ function apiRequest(command, data, options) {
             xhr.setRequestHeader("X-CSRFToken", window.ShoopAdminConfig.csrf);
         }
     }, options));
-    req.then(function(data) {
-        showSuccessAndError(data);
+    req.then(function(response) {
+        showSuccessAndError(response);
     }, function() {
         Messages.enqueue({text: "An unspecified error occurred.", tags: "error"});
     });
@@ -46,7 +50,7 @@ function apiRequest(command, data, options) {
 }
 
 function Controller() {
-    var ctrl = this;
+    const ctrl = this;
     ctrl.steps = m.prop([]);
     ctrl.currentItem = m.prop(null);
     ctrl.newStepItemModalInfo = m.prop(null);
@@ -56,7 +60,7 @@ function Controller() {
     });
 
     ctrl.removeStepItem = function(step, itemType, item) {
-        var listName = itemType + "s";
+        const listName = itemType + "s";
         step[listName] = _.reject(step[listName], function(i) {
             return i === item;
         });
@@ -66,10 +70,12 @@ function Controller() {
     };
 
     ctrl.addStepItem = function(step, itemType, identifier, activateForEdit) {
-        var item = {"identifier": identifier};
-        var listName = itemType + "s";
+        const item = {"identifier": identifier};
+        const listName = itemType + "s";
         step[listName].push(item);
-        if (activateForEdit) ctrl.activateStepItem(step, itemType, item);
+        if (activateForEdit) {
+            ctrl.activateStepItem(step, itemType, item);
+        }
     };
     ctrl.setStepItemEditorState = function(state) {
         if(!!state) {
@@ -82,7 +88,7 @@ function Controller() {
     ctrl.activateStepItem = function(step, itemType, item) {
         if (step && item) {
             ctrl.currentItem(item);
-            var frm = _.extend(document.createElement("form"), {
+            const frm = _.extend(document.createElement("form"), {
                 target: "step-item-frame",
                 method: "POST",
                 action: settings.itemEditorUrl
@@ -105,7 +111,7 @@ function Controller() {
         }
     };
     ctrl.receiveItemEditData = function(data) {
-        var currentItem = ctrl.currentItem();
+        const currentItem = ctrl.currentItem();
         if(!currentItem) {
             alert("Unexpected edit data received.");
             return;
@@ -117,9 +123,8 @@ function Controller() {
     ctrl.saveState = function() {
         apiRequest("saveData", {
             steps: ctrl.steps()
-        }).then(function(data) {
-
         });
+        // TODO: Handle errors here?
     };
     ctrl.deleteStep = function(step) {
         ctrl.steps(_.reject(ctrl.steps(), function(s) {
@@ -127,22 +132,24 @@ function Controller() {
         }));
     };
     ctrl.addNewStep = function() {
-        var step = {
+        const step = {
             actions: [],
             conditions: [],
             enabled: true,
             next: "continue",
             condOp: "and"
         };
-        var steps = ctrl.steps();
+        const steps = ctrl.steps();
         steps.push(step);
         ctrl.steps(steps);
     };
     ctrl.moveStep = function(step, delta) {
-        var steps = ctrl.steps();
-        var oldIndex = _.indexOf(steps, step);
-        if (oldIndex == -1) return false;
-        var newIndex = oldIndex + delta;
+        const steps = ctrl.steps();
+        const oldIndex = _.indexOf(steps, step);
+        if (oldIndex === -1) {
+            return false;
+        }
+        const newIndex = oldIndex + delta;
         steps.splice(newIndex, 0, steps.splice(oldIndex, 1)[0]);
         ctrl.steps(steps);
     };
@@ -157,22 +164,26 @@ function Controller() {
         ctrl.newStepItemModalInfo(null);
     };
     ctrl.createNewStepItemFromModal = function(identifier) {
-        var info = ctrl.newStepItemModalInfo();
+        const info = ctrl.newStepItemModalInfo();
         ctrl.closeNewStepItemModal();
-        if (info === null) return;
+        if (info === null) {
+            return;
+        }
         ctrl.addStepItem(info.step, info.itemType, identifier, true);
     };
 }
 
 function workflowItemList(ctrl, step, itemType) {
-    var listName = itemType + "s";
-    var nameMap = names[itemType];
-    var items = step[listName];
-    var list = m("ul.action-list", items.map(function(item) {
-        var name = nameMap[item.identifier] || item.identifier;
+    const listName = itemType + "s";
+    const nameMap = names[itemType];
+    const items = step[listName];
+    const list = m("ul.action-list", items.map(function(item) {
+        const name = nameMap[item.identifier] || item.identifier;
         var tag = "li";
-        var current = (ctrl.currentItem() === item);
-        if(current) tag += ".current";
+        const current = (ctrl.currentItem() === item);
+        if(current) {
+            tag += ".current";
+        }
         return m(tag,
             [
                 m("a", {
@@ -182,7 +193,9 @@ function workflowItemList(ctrl, step, itemType) {
                 " ",
                 m("a.delete", {
                     href: "#", onclick: function() {
-                        if (!confirm("Delete this item?\nThis can not be undone.")) return;
+                        if (!confirm("Delete this item?\nThis can not be undone.")) {
+                            return;
+                        }
                         ctrl.removeStepItem(step, itemType, item);
                     }
                 }, m("i.fa.fa-trash"))
@@ -200,13 +213,13 @@ function workflowItemList(ctrl, step, itemType) {
 
 function stepTableRows(ctrl) {
     return _.map(ctrl.steps(), function(step, index) {
-        var condOpSelect = m("select", {
+        const condOpSelect = m("select", {
             value: step.cond_op,
             onchange: m.withAttr("value", function(value) {
-                step.cond_op = value;
+                step.cond_op = value;  // eslint-disable-line camelcase
             })
         }, optionLists.condOps);
-        var stepNextSelect = m("select", {
+        const stepNextSelect = m("select", {
             value: step.next,
             onchange: m.withAttr("value", function(value) {
                 step.next = value;
@@ -242,8 +255,9 @@ function stepTableRows(ctrl) {
                 ),
                 m("a", {
                     href: "#", title: "Delete", onclick: function() {
-                        if (!confirm("Are you sure you wish to delete this step?")) return;
-                        ctrl.deleteStep(step);
+                        if (confirm("Are you sure you wish to delete this step?")) {
+                            ctrl.deleteStep(step);
+                        }
                     }
                 }, m("i.fa.fa-trash"))
             ]),
@@ -271,7 +285,7 @@ function renderNewStepItemModal(ctrl, modalInfo) {
                 return m("div.item-option", {onclick: _.partial(ctrl.createNewStepItemFromModal, item.identifier)}, [
                     m("div.item-name", item.name),
                     (item.description ? m("div.item-description", item.description) : null)
-                ])
+                ]);
             }))
         ])
     ]);
@@ -300,10 +314,8 @@ function generateItemOptions(nameMap) {
     });
 }
 
-function itemInfosToNameMap(infos) {
-    return _(infos).map(function(info, identifier) {
-        return [identifier, info.name]
-    }).zipObject().value();
+function itemInfosToNameMap(itemInfos) {
+    return _(itemInfos).map((itemInfo, identifier) => [identifier, itemInfo.name]).zipObject().value();
 }
 
 
@@ -321,7 +333,9 @@ function init(iSettings) {
         view: view
     });
     window.addEventListener("message", function(event) {
-        if(event.data.new_data) controller.receiveItemEditData(event.data.new_data);
+        if(event.data.new_data) {
+            controller.receiveItemEditData(event.data.new_data);
+        }
     }, false);
 }
 

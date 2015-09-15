@@ -9,12 +9,12 @@
 const m = require("mithril");
 const {supportsDnD} = require("../util/dragDrop");
 
-var NO_DND_UPLOAD_HINT = "Click the <strong>Upload</strong> button to upload files.";
-var DND_UPLOAD_HINT = "<span>Drag and drop</span> files here<br> or click the <span>Upload</span> button.";
-
-if (!supportsDnD) {
-    DND_UPLOAD_HINT = NO_DND_UPLOAD_HINT;
-}
+const NO_DND_UPLOAD_HINT = "Click the <strong>Upload</strong> button to upload files.";
+const DND_UPLOAD_HINT = (
+    supportsDnD ?
+        "<span>Drag and drop</span> files here<br> or click the <span>Upload</span> button." :
+        NO_DND_UPLOAD_HINT
+);
 
 const responsiveUploadHint = [
     m("div.visible-sm.visible-xs", m.trust(NO_DND_UPLOAD_HINT)),

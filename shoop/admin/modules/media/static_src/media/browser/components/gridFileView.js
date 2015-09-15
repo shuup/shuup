@@ -26,7 +26,7 @@ export default function(ctrl, folders, files) {
             m("a.file-preview", {
                 onclick: function() {
                     ctrl.setFolder(folder.id);
-                    return false
+                    return false;
                 },
                 href: "#"
             }, m("i.fa.fa-folder-open.folder-icon")),

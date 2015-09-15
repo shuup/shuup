@@ -17,12 +17,12 @@ const {dropzoneConfig} = require("../util/dragDrop");
 const images = require("./images");
 
 export default function folderView(ctrl) {
-    var folderData = ctrl.folderData();
-    var viewModeGroup = m("div.btn-group.btn-group-sm.icons", [
+    const folderData = ctrl.folderData();
+    const viewModeGroup = m("div.btn-group.btn-group-sm.icons", [
         button(ctrl.viewMode, "grid", m("i.fa.fa-th"), "Grid"),
         button(ctrl.viewMode, "list", m("i.fa.fa-th-list"), "List")
     ]);
-    var sortGroup = m("div.btn-group.btn-group-sm", [
+    const sortGroup = m("div.btn-group.btn-group-sm", [
         button(ctrl.sortMode, "+name", "A-Z"),
         button(ctrl.sortMode, "-name", "Z-A"),
         button(ctrl.sortMode, "+date", "Oldest first"),
@@ -32,12 +32,12 @@ export default function folderView(ctrl) {
     ]);
     var toolbar = m("div.btn-toolbar", [viewModeGroup, sortGroup]);
 
-    var sortSpec = /^([+-])(.+)$/.exec(ctrl.sortMode());
+    const sortSpec = /^([+-])(.+)$/.exec(ctrl.sortMode());
     var files = _.sortBy(folderData.files || [], sortSpec[2]);
     if (sortSpec[1] === "-") {
         files = files.reverse();
     }
-    var folders = folderData.folders || [];
+    const folders = folderData.folders || [];
     var contents = null, uploadHint = null;
     if (folders.length === 0 && files.length === 0) {
         contents = emptyFolderView(ctrl, folderData);
@@ -53,7 +53,7 @@ export default function folderView(ctrl) {
         }
         uploadHint = m("div.upload-hint", responsiveUploadHint);
     }
-    var container = m("div.folder-contents.fd-zone", {
+    const container = m("div.folder-contents.fd-zone", {
         "data-folder-id": folderData.id,
         config: dropzoneConfig(ctrl),
     }, [
