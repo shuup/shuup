@@ -1,10 +1,6 @@
-.transparent-bg(@color, @alpha) {
-    background: rgba( red(@color), green(@color), blue(@color), @alpha);
-}
-
 // Cover modal for adding products to basket
 .cover-wrap {
-    .transparent-bg(@brand-success, 0.8);
+    background: fade(@brand-success, 80%);
     color: #fff;
     position: fixed;
     text-align: center;
@@ -43,7 +39,6 @@
                 font-size: 2.5em;
             }
         }
-
         .ready {
             opacity: 0;
             .scale(0.5);
@@ -53,7 +48,6 @@
                 margin-bottom: 20px;
             }
         }
-
         .error-msg {
             display: none;
             i {
@@ -61,7 +55,6 @@
                 margin-bottom: 20px;
             }
         }
-
         p {
             font-size: 1.75em;
             text-transform: uppercase;
@@ -73,7 +66,6 @@
         .load {
             display: block;
         }
-
         .ready {
             .scale(1);
         }
@@ -87,11 +79,10 @@
     }
 
     &.error {
-        .transparent-bg(@brand-danger, 0.8);
+        background: fade(@brand-danger, 80%);
         .error-msg {
             display: block;
         }
-
         .ready {
             display: none;
         }
