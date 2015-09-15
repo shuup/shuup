@@ -21,6 +21,7 @@ from shoop.core.models import Product
 
 class BasePopupChoiceWidget(Widget):
     browse_kind = None
+    filter = None
 
     def __init__(self, attrs=None, clearable=False, empty_text=u"\u2014"):
         self.clearable = clearable
@@ -80,6 +81,7 @@ class BasePopupChoiceWidget(Widget):
                 "data-browse-kind": self.browse_kind,
                 "data-clearable": self.clearable,
                 "data-empty-text": self.empty_text,
+                "data-filter": self.filter
             }),
             "content": "".join(bits)
         })
@@ -90,6 +92,10 @@ class MediaChoiceWidget(BasePopupChoiceWidget):
 
     def get_object(self, value):
         return File.objects.get(pk=value)
+
+
+class ImageChoiceWidget(MediaChoiceWidget):
+    filter = "images"
 
 
 class ProductChoiceWidget(BasePopupChoiceWidget):

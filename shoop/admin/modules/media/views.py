@@ -16,7 +16,9 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _, ugettext_lazy as _l
 from django.views.generic import TemplateView
 from filer.models import File, Folder
+from filer.models.imagemodels import Image
 from mptt.templatetags.mptt_tags import cache_tree_children
+
 from shoop.admin.modules.media.utils import delete_folder
 from shoop.utils.excs import Problem
 from shoop.utils.filer import filer_file_from_upload, filer_image_from_upload
@@ -77,11 +79,13 @@ class MediaBrowserView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(MediaBrowserView, self).get_context_data(**kwargs)
         context["browser_config"] = {
-            "filter": self.request.REQUEST.get("filter")
+            "filter": self.filter
         }
         return context
 
     def get(self, request, *args, **kwargs):
+        self.filter = request.REQUEST.get("filter")
+
         action = request.REQUEST.get("action")
         handler = getattr(self, "handle_get_%s" % action, None)
         if handler:
@@ -143,6 +147,9 @@ class MediaBrowserView(TemplateView):
                 "folder": None,
                 "error": "Folder does not exist"
             })
+
+        if self.filter == "images":
+            files = files.instance_of(Image)
 
         return JsonResponse({"folder": {
             "id": folder.id if folder else 0,
