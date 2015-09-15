@@ -42,14 +42,20 @@ $(function() {
             return;
         }
         const kind = $container.data("browse-kind");
+        const filter = $container.data("filter");
         const browserUrl = window.ShoopAdminConfig.browserUrls[kind];
         if(!browserUrl) {
             alert("Error: No browser URL for kind: " + kind);
             return false;
         }
         const id = "m-" + (+new Date);
+        const qs = _.compact([
+            "popup=1",
+            "pick=" + id,
+            (filter ? "filter=" + filter : null)
+        ]).join("&");
         const popup = window.open(
-            browserUrl + (browserUrl.indexOf("?") > -1 ? "&" : "?") + "popup=1&pick=" + id,
+            browserUrl + (browserUrl.indexOf("?") > -1 ? "&" : "?") + qs,
             "browser_popup_" + id,
             "resizable,menubar=no,location=no"
         );
