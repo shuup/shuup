@@ -37,6 +37,7 @@ INSTALLED_APPS = add_enabled_addons(SHOOP_ENABLED_ADDONS_FILE, (
     'shoop.api',
     'shoop.core',
     'shoop.default_tax',
+    'shoop.themes.classic_gray',
     'shoop.front',
     'shoop.front.apps.auth',
     'shoop.front.apps.customer_information',
