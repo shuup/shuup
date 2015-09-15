@@ -33,7 +33,7 @@
                         <input type="hidden" name="next" value="{{ next|default("") }}">
                         {{ render_field(form.username) }}
                         {{ render_field(form.password) }}
-                        <button type="submit" class="btn btn-primary btn-block"><i class="glyphicon glyphicon-log-in"></i> {% trans %}Log in{% endtrans %}</button>
+                        <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-sign-in"></i> {% trans %}Log in{% endtrans %}</button>
                         <hr>
                         <a href="{{ url("shoop:recover_password") }}">
                             {% trans %}Forgot your password?{% endtrans %}

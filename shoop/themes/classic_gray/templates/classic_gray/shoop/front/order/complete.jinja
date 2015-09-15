@@ -4,7 +4,7 @@
 {% block content_title %}{% trans name=order.billing_address.name %}Thank you for your order!{% endtrans %}{% endblock %}
 
 {% block content %}
-    <p><i class="glyphicon glyphicon-ok text-success"></i> {% trans %}Your order has been received. You can see the details of your order below.{% endtrans %}</p>
+    <p><i class="fa fa-check text-success"></i> {% trans %}Your order has been received. You can see the details of your order below.{% endtrans %}</p>
     <hr>
     {% if user.id and activation_form %}
         <form role="form" method="post" action="{{ url("user_activation", pk=user.id) }}">
