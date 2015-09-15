@@ -13,7 +13,7 @@ export function promptRenameFile(controller, file) {
     const {id, name} = file;
     const newName = _.trim(prompt("New file name?", name) || "");
     if (newName && name !== newName) {
-        remote.post({action: "rename_file", id, name}).then(function(response) {
+        remote.post({action: "rename_file", id, name: newName}).then(function(response) {
             remote.handleResponseMessages(response);
             controller.reloadFolderContents();
         });

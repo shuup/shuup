@@ -490,9 +490,27 @@ def create_random_address(fake=None, **values):
     return Address.objects.create(**values)
 
 
-def create_random_person(locale=None):
+def create_random_person(locale=None, minimum_name_comp_len=0):
+    """
+    Create a random PersonContact from the given locale (or a random one).
+
+    The minimum length for name components can be given, to work around
+    possible issues with components expecting a long-enough string.
+
+    :param locale: Locale name
+    :type locale: str|None
+    :param minimum_name_comp_len: Minimum name component length
+    :type minimum_name_comp_len: int
+    :return: Person contact
+    :rtype: PersonContact
+    """
     fake = get_faker(["person", "internet", "address"], locale=locale)
-    name = "%s %s" % (fake.first_name(), fake.last_name())
+    while True:
+        first_name = fake.first_name()
+        last_name = fake.last_name()
+        name = "%s %s" % (first_name, last_name)
+        if len(first_name) > minimum_name_comp_len and len(last_name) > minimum_name_comp_len:
+            break
     while True:
         email = fake.email()
         try:  # Faker sometimes generates invalid emails. That's terrible.

@@ -16,6 +16,8 @@ export function promptCreateFolder(controller, parentFolderId) {
     }
     remote.post({action: "new_folder", parent: parentFolderId, name}).then(function(response) {
         remote.handleResponseMessages(response);
+        const newCurrentFolder = 0 | response.folder.id;  // eslint-disable-line no-bitwise
+        controller.setFolder(newCurrentFolder);
         controller.reloadFolderTree();
         controller.reloadFolderContents();
     });
@@ -29,7 +31,7 @@ export function promptRenameCurrentFolder(controller) {
     const {id, name} = controller.folderData();
     const newName = _.trim(prompt("New folder name?", name) || "");
     if (newName && name !== newName) {
-        remote.post({action: "rename_folder", id, name}).then(function(response) {
+        remote.post({action: "rename_folder", id, name: newName}).then(function(response) {
             remote.handleResponseMessages(response);
             controller.reloadFolderTree();
             controller.reloadFolderContents();
