@@ -16,7 +16,7 @@ from django.forms.formsets import DEFAULT_MAX_NUM, DEFAULT_MIN_NUM
 from django.utils.translation import ugettext_lazy as _
 from filer.models import Image
 
-from shoop.admin.forms.widgets import MediaChoiceWidget
+from shoop.admin.forms.widgets import MediaChoiceWidget, ImageChoiceWidget
 from shoop.core.models import Attribute, AttributeType, Product, ProductMedia, ProductMediaKind, Shop, ShopProduct
 from shoop.utils.i18n import get_language_name
 from shoop.utils.multilanguage_model_form import MultiLanguageModelForm, to_language_codes
@@ -268,6 +268,8 @@ class ProductImageMediaForm(BaseProductMediaForm):
 
     def __init__(self, **kwargs):
         super(ProductImageMediaForm, self).__init__(**kwargs)
+        self.fields["file"].widget = ImageChoiceWidget()
+
         if self.instance.pk and self.instance.file:
             if self.product.primary_image_id == self.instance.pk:
                 self.fields["is_primary"].initial = True
