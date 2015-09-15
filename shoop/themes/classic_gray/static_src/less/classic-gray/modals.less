@@ -11,31 +11,20 @@
     outline: 0;
 
     .search-modal-dialog {
-        flex: 1;
         padding: 30px;
         max-width: 600px;
-        align-self: flex-start;
-        @media (min-width: @screen-sm-min) {
-            align-self: center;
-        }
+        margin: 0 auto;
     }
 
     &.fade .search-modal-dialog {
-        .translate(0, 25%);
+        .translate(0, 30%);
         .transition-transform(~"0.3s ease-out");
     }
 
     &.in .search-modal-dialog {
         .translate(0, 10%);
-        @media (min-width: @screen-sm-min) {
-            .translate(0, -20%);
-        }
-    }
-
-    .modal-open & {
-        display: flex !important;
-        @media (min-width: @screen-sm-min) {
-            justify-content: center;
+        @media (min-width: @screen-md-min) {
+            .translate(0, 20%);
         }
     }
 
@@ -47,11 +36,12 @@
     .search-input {
         position: relative;
         .form-control {
-            border-width: 0px 0px 1px 0px;
+            border-width: 0px 0px 2px 0px;
             padding-right: 30px;
             border-radius: 0;
             background: transparent;
             box-shadow: none;
+            font-size: 1.6rem;
         }
         .btn {
             position: absolute;
@@ -84,35 +74,28 @@
 
     &.in .product-preview-modal-dialog {
         .translate(0, 0);
+        @media (min-width: @screen-md-min) {
+            .translate(0, 15%);
+        }
     }
 
     .modal-open & {
         overflow-x: hidden;
         overflow-y: auto;
-        display: flex !important;
-        @media (min-width: @screen-sm-min) {
-            justify-content: center;
-        }
     }
 
     .product-preview-modal-dialog {
-        flex: 1;
         padding: 30px;
         max-width: 1000px;
-        align-self: flex-start;
-        @media (min-width: @screen-sm-min) {
-            align-self: center;
-        }
+        margin: 0 auto;
     }
-
     .close {
         padding: 10px 15px;
     }
-
     .content {
         background: #fff;
         border:  1px solid @border-color;
-        padding: 30px 15px;
+        padding: 30px;
         .image {
             background-position: 50%;
             background-size: contain;

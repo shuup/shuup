@@ -4,7 +4,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <div class="content" id="product-{{ product.id }}-preview">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 col-sm-5">
                     {% set image = product.primary_image|thumbnail(size=(600,600)) %}
                     {% if image %}
                         <div class="image" style="background-image:url('{{ image }}')" title="{{ product.name }}"></div>
@@ -12,12 +12,14 @@
                         <div class="image" style="background-image:url('{{ STATIC_URL }}classic_gray/img/no_image.png')"></div>
                     {% endif %}
                 </div>
-                <div class="col-md-6">
-                    <a href="{{ product_url }}" class="name"><h3>{{ product.name }}</h3></a>
-                    <p class="description">{{ product.description|truncate(360) }}</p>
+                <div class="col-md-6 col-sm-7">
+                    <h3>{{ product.name }}</h3>
+                    {% if product.description %}<p class="description">{{ product.description|truncate(360) }}</p>{% endif %}
+                    <hr>
                     {% include "shoop/front/product/_detail_order_section.jinja" with context %}
+                    <a href="{{ product_url }}" class="btn-open-page btn btn-default btn-block"><i class="fa fa-search"></i> {% trans %}Open product page{% endtrans %} <i class="fa fa-angle-double-right"></i></a>
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 </div>
