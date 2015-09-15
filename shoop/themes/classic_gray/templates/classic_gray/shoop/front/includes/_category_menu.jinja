@@ -5,7 +5,7 @@
     <ul>
         {% for c in shoop.general.get_root_categories() recursive %}
             {% set children = c.get_children() %}
-            <li>
+            <li{% if category and c == category %} class="current-page"{% endif %}>
                 {% if children %}
                     <a href="{{ url("shoop:category", pk=c.pk, slug=c.slug) }}"><i class="fa menu-arrow"></i> {{ c }}</a>
                     <ul>{{ loop(children) }}</ul>

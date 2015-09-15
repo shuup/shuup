@@ -82,4 +82,11 @@ $(function() {
         $productListView.addClass("list");
         $("#product-list-view-type").prop('checked', true);
     }
+
+    // Add proper classes to category navigation based on current-page class
+    var $currentlySelectedPage = $(".current-page");
+    if ($currentlySelectedPage.length > 0) {
+        $currentlySelectedPage.addClass("current");
+        $currentlySelectedPage.parents("li").addClass("current");
+    }
 });
