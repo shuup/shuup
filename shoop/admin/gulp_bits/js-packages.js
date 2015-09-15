@@ -23,10 +23,8 @@ module.exports = {
             "js/timesince.js",
             "js/messages.js",
             "js/browse-widget.js",
-            "js/dropdown-animation.js",
             "js/side-nav.js",
             "js/content-blocks.js",
-            "js/custom-selects.js",
             "js/remarkable-field.js",
             "js/form-utils.js",
             "js/jquery.form-submission-attributes.polyfill.js"

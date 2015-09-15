@@ -195,3 +195,29 @@ fieldset[disabled] .form-control {
     background-color: @input-bg-color;
     opacity: 0.6;
 }
+
+.error-indicator {
+    .pull-right();
+    margin-left: 0.5em;
+    color: @brand-danger;
+    animation-name: section-error-indicator-anim;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-out;
+    &.dismissed {
+        animation-name: none;
+        color: @gray;
+    }
+}
+
+@keyframes section-error-indicator-anim {
+    0% {
+        text-shadow: 0px 0px 2px fade(@brand-danger, 0%);
+    }
+    30% {
+        text-shadow: 0px 0px 10px fade(@brand-danger, 90%);
+    }
+    100% {
+        text-shadow: 0px 0px 30px fade(@brand-danger, 0%);
+    }
+}
