@@ -12,6 +12,7 @@ from mptt.templatetags.mptt_tags import cache_tree_children
 from shoop.core.models import Category, Manufacturer, Product
 from shoop.front.utils.product_statistics import get_best_selling_product_info
 from shoop.front.utils.views import cache_product_things
+from shoop.utils.translation import cache_translations_for_tree
 
 
 def _get_list_products(request):
@@ -87,4 +88,5 @@ def get_root_categories(context):
     roots = cache_tree_children(
         Category.objects.all_visible(
             customer=request.customer, shop=request.shop, language=language))
+    cache_translations_for_tree(roots, languages=[language])
     return roots

@@ -36,3 +36,23 @@ def cache_translations(objects, languages=None, meta=None):
             master._translations_cache[xlate_model][translation.language_code] = translation
             setattr(translation, translation.__class__.master.cache_name, master)
     return objects
+
+
+def cache_translations_for_tree(root_objects, languages=None):
+    """
+    Cache translation objects in given languages, iterating MPTT trees.
+
+    :param root_objects: List of MPTT models
+    :type root_objects: Iterable[model]
+    :param languages: List of languages
+    :type languages: Iterable[str]
+    """
+    all_objects = {}
+
+    def walk(object_list):
+        for object in object_list:
+            all_objects[object.pk] = object
+            walk(object.get_children())
+
+    walk(root_objects)
+    cache_translations(list(all_objects.values()), languages=languages)
