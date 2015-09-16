@@ -113,16 +113,8 @@
         </button>
         <div class="pages">
             <ul class="nav-collapse">
-                {# TODO: Add class current to the current page's 'li' #}
+                {# TODO: Add class current to the current page's 'li'. Also when on category or product page it should show that 'products' is the current one #}
                 <li class="current"><a href="/">Home</a></li>
-                {% if shoop.simple_cms %}
-                    {% set cms_pages = shoop.simple_cms.get_visible_pages() %}
-                    {% if cms_pages %}
-                        {% for page in cms_pages %}
-                            <li><a href="{{ url("shoop:cms_page", url=page.url) }}">{{ page }}</a></li>
-                        {% endfor %}
-                    {% endif %}
-                {% endif %}
                 {# TODO: Change these to one link "products" which needs a new view to display category menu and some products. Also add class 'current' to the products <li> when on category page #}
                 <li><a href="#">{% trans %}Products{% endtrans %}</a></li>
                 {% for c in shoop.general.get_root_categories() recursive %}
@@ -136,6 +128,14 @@
                         {% endif %}
                     </li>
                 {% endfor %}
+                {% if shoop.simple_cms %}
+                    {% set cms_pages = shoop.simple_cms.get_visible_pages() %}
+                    {% if cms_pages %}
+                        {% for page in cms_pages %}
+                            <li><a href="{{ url("shoop:cms_page", url=page.url) }}">{{ page }}</a></li>
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
             </ul>
         </div>
     </div>
