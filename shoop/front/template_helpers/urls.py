@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 from django.core.urlresolvers import NoReverseMatch, reverse
 from jinja2 import contextfunction
 
-from shoop.core.models import Product
+from shoop.core.models import Category, Product
 
 
 @contextfunction
@@ -18,6 +18,9 @@ def model_url(context, model, absolute=False):
     uri = None
     if isinstance(model, Product):
         uri = reverse("shoop:product", kwargs=dict(pk=model.pk, slug=model.slug))
+
+    if isinstance(model, Category):
+        uri = reverse("shoop:category", kwargs=dict(pk=model.pk, slug=model.slug))
 
     if not uri:  # pragma: no cover
         raise ValueError("Unable to figure out `model_url` for %r" % model)
