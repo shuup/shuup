@@ -7,5 +7,6 @@
 
 from .basket import basket_partial  # noqa
 from .product_preview import product_preview  # noqa
+from .products_view import products  # noqa
 
-__all__ = ["basket_partial", "product_preview"]
+__all__ = ["basket_partial", "product_preview", "products"]
