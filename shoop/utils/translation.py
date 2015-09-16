@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from shoop.utils.iterables import batch
 
 
 def cache_translations(objects, languages=None, meta=None):
@@ -26,8 +27,12 @@ def cache_translations(objects, languages=None, meta=None):
     object_map = dict((object.pk, object) for object in objects)
     languages.update(set(object._current_language for object in objects))
     master_ids = object_map.keys()
-    for translation in xlate_model.objects.filter(master_id__in=master_ids, language_code__in=languages):
-        master = object_map[translation.master_id]
-        master._translations_cache[xlate_model][translation.language_code] = translation
-        setattr(translation, translation.__class__.master.cache_name, master)
+
+    # SQLite limits host variables to 999 (see http://www.sqlite.org/limits.html#max_variable_number),
+    # so we're batching to a number around that, with enough leeway for other binds (`languages` in particular).
+    for master_ids in batch(master_ids, 950):
+        for translation in xlate_model.objects.filter(master_id__in=master_ids, language_code__in=languages):
+            master = object_map[translation.master_id]
+            master._translations_cache[xlate_model][translation.language_code] = translation
+            setattr(translation, translation.__class__.master.cache_name, master)
     return objects
