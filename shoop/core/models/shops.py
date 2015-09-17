@@ -16,6 +16,7 @@ from jsonfield import JSONField
 from parler.models import TranslatableModel, TranslatedFields
 
 from shoop.core.fields import InternalIdentifierField
+from shoop.core.pricing import TaxfulPrice, TaxlessPrice
 
 
 class ShopStatus(Enum):
@@ -40,3 +41,18 @@ class Shop(TranslatableModel):
 
     def __str__(self):
         return self.safe_translation_getter("name", default="Shop %d" % self.pk)
+
+    def create_price(self, value):
+        """
+        Create a price with given value and settings of this shop.
+
+        Takes the ``prices_include_tax`` setting into account, and in
+        future might also do the same for a currency setting.
+
+        :type value: decimal.Decimal
+        :rtype: shoop.core.pricing.Price
+        """
+        if self.prices_include_tax:
+            return TaxfulPrice(value)
+        else:
+            return TaxlessPrice(value)

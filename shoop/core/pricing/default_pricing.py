@@ -8,7 +8,7 @@
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.core.models import ShopProduct
-from shoop.core.pricing import PriceInfo, PricingContext, PricingModule, TaxfulPrice, TaxlessPrice
+from shoop.core.pricing import PriceInfo, PricingContext, PricingModule
 
 
 class DefaultPricingContext(PricingContext):
@@ -38,13 +38,13 @@ class DefaultPricingModule(PricingModule):
         Since `ShopProduct.default_price` can be `None` it will
         be set to zero (0) if `None`.
         """
+        shop = context.shop
         shop_product = ShopProduct.objects.get(product=product, shop=context.shop)
 
         default_price = (shop_product.default_price or 0)
 
-        price_cls = (TaxfulPrice if context.shop.prices_include_tax else TaxlessPrice)
         return PriceInfo(
-            price=price_cls(default_price * quantity),
-            base_price=price_cls(default_price * quantity),
+            price=shop.create_price(default_price * quantity),
+            base_price=shop.create_price(default_price * quantity),
             quantity=quantity,
         )

@@ -25,7 +25,7 @@ import six
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.core.models import ShopProduct
-from shoop.core.pricing import PriceInfo, PricingContext, PricingModule, TaxfulPrice, TaxlessPrice
+from shoop.core.pricing import PriceInfo, PricingContext, PricingModule
 
 from .models import DiscountedProductPrice
 
@@ -47,6 +47,7 @@ class DiscountPricingModule(PricingModule):
         )
 
     def get_price_info(self, context, product, quantity=1):
+        shop = context.shop
 
         if isinstance(product, six.integer_types):
             product_id = product
@@ -56,8 +57,6 @@ class DiscountPricingModule(PricingModule):
             product_id = product.pk
 
         default_price = (shop_product.default_price or 0)
-
-        includes_tax = context.shop.prices_include_tax
 
         result = (DiscountedProductPrice.objects.filter(product=product_id, shop=context.shop)
                   .order_by("price")[:1]
@@ -71,9 +70,8 @@ class DiscountPricingModule(PricingModule):
         else:
             price = default_price
 
-        price_cls = (TaxfulPrice if includes_tax else TaxlessPrice)
         return PriceInfo(
-            price=price_cls(price * quantity),
-            base_price=price_cls(default_price * quantity),
+            price=shop.create_price(price * quantity),
+            base_price=shop.create_price(default_price * quantity),
             quantity=quantity,
         )

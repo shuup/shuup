@@ -10,7 +10,7 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.core.models import ShopProduct
-from shoop.core.pricing import PriceInfo, PricingContext, PricingModule, TaxfulPrice, TaxlessPrice
+from shoop.core.pricing import PriceInfo, PricingContext, PricingModule
 
 from .models import SimpleProductPrice
 
@@ -51,8 +51,6 @@ class SimplePricingModule(PricingModule):
 
         default_price = (shop_product.default_price or 0)
 
-        includes_tax = context.shop.prices_include_tax
-
         if context.customer_group_ids:
             filter = Q(price__gt=0, product=product_id, shop=context.shop, group__in=context.customer_group_ids)
             result = (
@@ -70,9 +68,8 @@ class SimplePricingModule(PricingModule):
         else:
             price = default_price
 
-        price_cls = (TaxfulPrice if includes_tax else TaxlessPrice)
         return PriceInfo(
-            price=price_cls(price * quantity),
-            base_price=price_cls(price * quantity),
+            price=shop.create_price(price * quantity),
+            base_price=shop.create_price(price * quantity),
             quantity=quantity,
         )
