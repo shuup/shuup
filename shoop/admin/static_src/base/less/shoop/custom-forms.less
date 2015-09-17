@@ -197,27 +197,38 @@ fieldset[disabled] .form-control {
 }
 
 .error-indicator {
-    .pull-right();
+    display: inline-block;
     margin-left: 0.5em;
     color: @brand-danger;
     animation-name: section-error-indicator-anim;
-    animation-duration: 4s;
+    animation-duration: 3s;
     animation-iteration-count: infinite;
     animation-timing-function: ease-out;
     &.dismissed {
         animation-name: none;
         color: @gray;
     }
+    .sidebar-list-item & {
+        position: absolute;
+        right: 10px;
+        top: 13px;
+    }
+}
+
+.mobile-error-indicator {
+    @media (max-width: @screen-sm-max) {
+        color: @brand-danger;
+    }
 }
 
 @keyframes section-error-indicator-anim {
     0% {
-        text-shadow: 0px 0px 2px fade(@brand-danger, 0%);
+        transform: scale(0.7);
     }
-    30% {
-        text-shadow: 0px 0px 10px fade(@brand-danger, 90%);
+    50% {
+        transform: scale(1.2);
     }
     100% {
-        text-shadow: 0px 0px 30px fade(@brand-danger, 0%);
+        transform: scale(0.7);
     }
 }

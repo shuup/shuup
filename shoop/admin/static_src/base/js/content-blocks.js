@@ -16,4 +16,9 @@ $(function() {
             $(this).closest(".title").toggleClass("open");
         }
     });
-}());
+    $(".content-block").each(function() {
+        if ($(this).find(".has-error").length) {
+            $(this).find(".block-title").addClass("mobile-error-indicator");
+        }
+    });
+});
