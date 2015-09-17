@@ -73,6 +73,6 @@ class DiscountPricingModule(PricingModule):
 
         price_cls = (TaxfulPrice if includes_tax else TaxlessPrice)
         return PriceInfo(
-            price=price_cls(price),
-            base_price=price_cls(default_price)
+            price=price_cls(price * quantity),
+            base_price=price_cls(default_price * quantity),
         )
