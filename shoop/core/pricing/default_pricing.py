@@ -39,7 +39,7 @@ class DefaultPricingModule(PricingModule):
         be set to zero (0) if `None`.
         """
         shop = context.shop
-        shop_product = ShopProduct.objects.get(product=product, shop=context.shop)
+        shop_product = ShopProduct.objects.get(product=product, shop=shop)
 
         default_price = (shop_product.default_price or 0)
 

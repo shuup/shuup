@@ -41,18 +41,21 @@ class SimplePricingModule(PricingModule):
         )
 
     def get_price_info(self, context, product, quantity=1):
+        shop = context.shop
 
         if isinstance(product, six.integer_types):
             product_id = product
-            shop_product = ShopProduct.objects.get(product_id=product_id, shop_id=context.shop.pk)
+            shop_product = ShopProduct.objects.get(product_id=product_id, shop=shop)
         else:
-            shop_product = product.get_shop_instance(context.shop)
+            shop_product = product.get_shop_instance(shop)
             product_id = product.pk
 
         default_price = (shop_product.default_price or 0)
 
         if context.customer_group_ids:
-            filter = Q(price__gt=0, product=product_id, shop=context.shop, group__in=context.customer_group_ids)
+            filter = Q(
+                price__gt=0, product=product_id, shop=shop,
+                group__in=context.customer_group_ids)
             result = (
                 SimpleProductPrice.objects.filter(filter)
                 .order_by("price")[:1]
