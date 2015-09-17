@@ -15,7 +15,7 @@ from shoop.utils.numbers import UnitedDecimal
 class BaseDecimal(UnitedDecimal):
     unit = None
 
-    def _units_match(self, other):
+    def unit_matches_with(self, other):
         return self.unit == getattr(other, 'unit', None)
 
 
@@ -109,7 +109,7 @@ def test_invalid_power():
 
 def test_base_class_units_match_unimplemented():
     with pytest.raises(NotImplementedError):
-        UnitedDecimal()._units_match(UnitedDecimal())
+        UnitedDecimal().unit_matches_with(UnitedDecimal())
 
 
 def test_floordiv():

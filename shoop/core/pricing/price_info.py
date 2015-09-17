@@ -24,7 +24,7 @@ class PriceInfo(object):
 
         assert isinstance(price, Price)
         assert isinstance(base_price, Price)
-        assert price._units_match(base_price)
+        assert price.unit_matches_with(base_price)
         self.price = price
         self.base_price = base_price
         self.expires_on = expires_on

@@ -33,6 +33,6 @@ def test_units_match():
     m3._currency = 'XXX'
     m4 = XxxMoney(4)
 
-    assert m1._units_match(m2)
-    assert not m1._units_match(m3)
-    assert m3._units_match(m4)
+    assert m1.unit_matches_with(m2)
+    assert not m1.unit_matches_with(m3)
+    assert m3.unit_matches_with(m4)

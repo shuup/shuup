@@ -20,7 +20,7 @@ class Money(numbers.UnitedDecimal):
     def currency(self):
         return (self._currency or settings.SHOOP_HOME_CURRENCY)
 
-    def _units_match(self, other):
+    def unit_matches_with(self, other):
         return (
             (isinstance(other, Money) and self._currency == other._currency)
             or
