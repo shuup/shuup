@@ -124,3 +124,47 @@ label {
 .bootstrap-select .btn-default {
     border: 1px solid @border-color;
 }
+
+.nav-tabs {
+    li.active a {
+        background: #fff;
+        &:hover, &:focus {
+            background: #fff;
+        }
+    }
+    li a {
+        font-weight: bold;
+        font-size: 1.3rem;
+    }
+    li a:hover,
+    li a:focus {
+        background: #fff;
+    }
+}
+
+.tab-content {
+    padding: 30px 15px;
+    background: #fff;
+    border: solid @border-color;
+    border-width: 0px 1px 1px 1px;
+    dl {
+        margin: 0;
+    }
+}
+
+.dl-horizontal {
+    dd {
+        margin-bottom: 10px;
+    }
+    @media (min-width: @screen-sm-min) {
+        dt {
+            width: 180px;
+            padding: 3px 0px;
+        }
+        dd {
+            margin-left: 200px;
+            padding: 3px 0px;
+            margin-bottom: 0;
+        }
+    }
+}
