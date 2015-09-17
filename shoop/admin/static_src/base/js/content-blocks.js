@@ -21,4 +21,6 @@ $(function() {
             $(this).find(".block-title").addClass("mobile-error-indicator");
         }
     });
+    // Activate first sidebar-list-item with errors
+    $("a.sidebar-list-item.errors").first().trigger("click");
 });
