@@ -29,8 +29,8 @@ prices for a product with the module's
 :func:`~PricingModule.get_price_info` method.
 (:class:`~shoop.core.models.products.Product` objects contain the
 convenience methods
+:func:`~shoop.core.models.products.Product.get_price_info`,
 :func:`~shoop.core.models.products.Product.get_price`,
-:func:`~shoop.core.models.products.Product.get_base_price`,
 and :func:`~shoop.core.models.products.Product.get_base_price`
 which do these steps for you.)
 
@@ -131,26 +131,34 @@ class PricingModule(six.with_metaclass(abc.ABCMeta)):
         """
         pass
 
-    def get_pricing_steps(self, context, product_id):
+    def get_pricing_steps(self, context, product):
         """
         Get context-specific list pricing steps for the given product.
 
-        Returns a list of tuples
+        Returns a list of PriceInfos ``[pi0, pi1, pi2, ...]`` where each
+        PriceInfo object is at the border unit price change: unit price
+        for ``0 <= quantity < pi1.quantity1`` is ``pi0.unit_price``, and
+        unit price for ``pi1.quantity <= quantity < pi2.quantity`` is
+        ``pi1.unit_price``, and so on.
 
-        [(0, price0), (quantity1, price1), (quantity2, price2), ...]
+        If there are "no steps", the return value will be a list of single
+        PriceInfo object with the constant price, i.e. ``[price_info]``.
 
-        where price for 0 <= quantity < quantity1 is price0, and price
-        for quantity1 <= quantity < quantity2 is price1, and so on.
-
-        If there are "no steps", the return value will be a list of
-        single step with the constant price, i.e. [(0, price)].
-
-        :rtype: list[tuple[Decimal,Price]]
+        :param product: Product or product id
+        :type product: shoop.core.models.Product|int
+        :rtype: list[PriceInfo]
         """
-        return [(0, TaxlessPrice(0))]
+        return [self.get_price_info(context, product, quantity=1)]
 
     def get_price_infos(self, context, products, quantity=1):
         """
+        Get PriceInfo objects for a bunch of products.
+
+        Returns a dict with product id as key and PriceInfo as value.
+
+        May be faster than doing :func:`get_price_info` for each product
+        separately, since inheriting class may override this.
+
         :param products: a list of `Product`s or id's
         :type products:  Iterable[shoop.core.models.Product|int]
         :rtype: dict[int,PriceInfo]
@@ -161,7 +169,21 @@ class PricingModule(six.with_metaclass(abc.ABCMeta)):
             for product_id in product_ids
         }
 
-    def get_pricing_steps_for_products(self, context, product_ids):
+    def get_pricing_steps_for_products(self, context, products):
+        """
+        Get pricing steps for a bunch of products.
+
+        Returns a dict with product id as key and step data (as list of
+        PriceInfos) as values.
+
+        May be faster than doing :func:`get_pricing_steps` for each
+        product separately, since inheriting class may override this.
+
+        :param products: a list of `Product`s or id's
+        :type products:  Iterable[shoop.core.models.Product|int]
+        :rtype: dict[int,list[PriceInfo]]
+        """
+        product_ids = [getattr(x, "pk", x) for x in products]
         return {
             product_id: self.get_pricing_steps(context, product_id=product_id)
             for product_id in product_ids

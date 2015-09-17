@@ -26,11 +26,16 @@ class UnitedDecimal(decimal.Decimal):
         decimal_repr = super(UnitedDecimal, self).__repr__()
         return decimal_repr.replace('Decimal', type(self).__name__)
 
-    def _units_match(self, other):
+    def unit_matches_with(self, other):
+        """
+        Test if self and other have matching units.
+
+        :rtype: bool
+        """
         raise NotImplementedError()
 
     def _check_units_match(self, other):
-        if not self._units_match(other):
+        if not self.unit_matches_with(other):
             raise UnitMixupError(self, other)
 
     def __lt__(self, other, **kwargs):
@@ -50,12 +55,12 @@ class UnitedDecimal(decimal.Decimal):
         return super(UnitedDecimal, self).__ge__(other, **kwargs)
 
     def __eq__(self, other, *args, **kwargs):
-        if not self._units_match(other):
+        if not self.unit_matches_with(other):
             return False
         return super(UnitedDecimal, self).__eq__(other, **kwargs)
 
     def __ne__(self, other, *args, **kwargs):
-        if not self._units_match(other):
+        if not self.unit_matches_with(other):
             return True
         return super(UnitedDecimal, self).__ne__(other, **kwargs)
 

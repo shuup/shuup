@@ -70,3 +70,11 @@ def test_default_price_value_allowed(rf):
     shop = get_default_shop()
     product = create_product("test-product", shop=shop, default_price=100)
     assert product.get_price(request) == TaxlessPrice(100)
+
+
+@pytest.mark.django_db
+def test_non_one_quantity(rf):
+    request, shop, group = initialize_test(rf, False)
+    shop = get_default_shop()
+    product = create_product("test-product", shop=shop, default_price=100)
+    assert product.get_price(request, quantity=5) == TaxlessPrice(500)

@@ -602,7 +602,7 @@ def create_random_order(customer=None, products=(), completion_probability=0):
     for i in range(random.randint(3, 10)):
         product = random.choice(products)
         quantity = random.randint(1, 5)
-        price = product.get_price(context, quantity=quantity)
+        price_info = product.get_price_info(context, quantity=quantity)
         shop_product = product.get_shop_instance(source.shop)
         supplier = shop_product.suppliers.first()
         line = SourceLine(
@@ -610,10 +610,12 @@ def create_random_order(customer=None, products=(), completion_probability=0):
             product=product,
             supplier=supplier,
             quantity=quantity,
-            unit_price=price,
+            unit_price=price_info.unit_base_price,
+            total_discount=price_info.discount_amount,
             sku=product.sku,
             text=product.safe_translation_getter("name", any_language=True)
         )
+        assert line.total_price == price_info.price
         source.lines.append(line)
     with atomic():
         oc = OrderCreator(request)

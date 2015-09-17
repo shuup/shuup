@@ -17,8 +17,8 @@ class Price(Money):
             raise TypeError('Do not create direct instances of Price')
         return super(Price, cls).__new__(cls, value, *args, **kwargs)
 
-    def _units_match(self, other):
-        if not super(Price, self)._units_match(other):
+    def unit_matches_with(self, other):
+        if not super(Price, self).unit_matches_with(other):
             return False
         self_includes_tax = getattr(self, 'includes_tax', None)
         other_includes_tax = getattr(other, 'includes_tax', None)
