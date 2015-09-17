@@ -56,10 +56,6 @@ class PriceInfo(object):
             expire_str)
 
     @property
-    def includes_tax(self):
-        return self.price.includes_tax
-
-    @property
     def discount_amount(self):
         """
         Amount of discount for the total quantity.

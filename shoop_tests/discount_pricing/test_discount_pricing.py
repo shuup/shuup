@@ -144,11 +144,9 @@ def test_set_taxful_price_works(rf):
     price_info = product.get_price_info(pricing_context, quantity=1)
 
     assert price_info.price == TaxfulPrice(250)
-    assert price_info.includes_tax
 
     pp = product.get_price(pricing_context, quantity=1)
 
-    assert pp.includes_tax
     assert pp == TaxfulPrice("250")
 
 
@@ -167,11 +165,9 @@ def test_set_taxful_price_works_with_product_id(rf):
     price_info = dpm.get_price_info(pricing_context, product=product.pk, quantity=1)
 
     assert price_info.price == TaxfulPrice(250)
-    assert price_info.includes_tax
 
     pp = product.get_price(pricing_context, quantity=1)
 
-    assert pp.includes_tax
     assert pp == TaxfulPrice("250")
 
 
