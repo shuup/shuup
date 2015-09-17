@@ -75,4 +75,5 @@ class DiscountPricingModule(PricingModule):
         return PriceInfo(
             price=price_cls(price * quantity),
             base_price=price_cls(default_price * quantity),
+            quantity=quantity,
         )

@@ -46,4 +46,5 @@ class DefaultPricingModule(PricingModule):
         return PriceInfo(
             price=price_cls(default_price * quantity),
             base_price=price_cls(default_price * quantity),
+            quantity=quantity,
         )

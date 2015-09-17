@@ -74,4 +74,5 @@ class SimplePricingModule(PricingModule):
         return PriceInfo(
             price=price_cls(price * quantity),
             base_price=price_cls(price * quantity),
+            quantity=quantity,
         )
