@@ -12,7 +12,7 @@ from django.views.generic import DetailView
 
 from shoop.core.models import Category, Manufacturer, Product
 from shoop.front.utils.product_sorting import PRODUCT_SORT_CHOICES, sort_products
-from shoop.front.utils.views import cache_product_things
+from shoop.front.utils.views import cache_product_things, get_pagination_variables
 
 
 class ProductListForm(forms.Form):
@@ -54,4 +54,5 @@ class CategoryView(DetailView):
         products = cache_product_things(self.request, products)
         products = sort_products(self.request, products, self.request.GET.get("sort"))
         context["products"] = products
+        context.update(get_pagination_variables(self.request, products))
         return context
