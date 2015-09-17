@@ -1,4 +1,5 @@
 {% extends "shoop/front/base.jinja" %}
+{% set priceinfo = product.get_price_info(request) %}
 
 {% block extrameta %}
     <meta property="og:site_name" content="{{ request.shop }}">
@@ -27,14 +28,47 @@
 {% endblock %}
 
 {% block content %}
-
     <div class="row product-main">
-        <div class="product-image col-sm-5">
+        <div class="visible-xs">
+            <div class="col-sm-12">
+                <h1 class="product-name">{{ product.name }}</h1>
+                <p class="text-muted product-sku"><small>{{ product.sku }}</small></p>
+                {% if product.description %}
+                    <p class="product-short-description">{{ product.description|safe|truncate(150, False) }}</p>
+                {% endif %}
+                <hr>
+            </div>
+        </div>
+        <div class="product-image col-sm-6 col-md-5">
+            {% if priceinfo.is_discounted %}
+                <div class="discount">
+                    <span class="label label-danger">{% trans %}Save{% endtrans %} {{ priceinfo.discount_percentage|int }} %</span>
+                </div>
+            {% endif %}
             {% include "shoop/front/product/_product_images.jinja" %}
         </div>
-        <div class="product-basic-details col-sm-7">
-            <h1>{{ product.name }}</h1>
-            <p>{% trans %}SKU{% endtrans %}: {{ product.sku }}</p>
+        <div class="product-basic-details col-sm-6 col-md-7">
+            <div class="hidden-xs">
+                <h1 class="product-name">{{ product.name }}</h1>
+                <p class="text-muted product-sku"><small>{{ product.sku }}</small></p>
+                {% if product.description %}
+                    <p class="product-short-description">{{ product.description|safe|truncate(150, False) }}</p>
+                {% endif %}
+            </div>
+            <hr>
+            <div class="product-price">
+                {% if priceinfo.is_discounted %}
+                    <div class="price-line">
+                        <h4 class="visible-xs">{% trans %}Price{% endtrans %}</h4>
+                        <span class="lead">
+                            <small class="text-muted original-price"><s>{{ priceinfo.base_price|floatformat(2)|home_currency }}</s></small>
+                            <strong>{{ priceinfo.price|floatformat(2)|home_currency }}</strong><small> / {{ product.sales_unit.short_name }}</small>
+                        </span>
+                    </div>
+                {% else %}
+                    <div class="price-line"><span class="lead"><strong>{{ priceinfo.price|floatformat(2)|home_currency }}</strong><small> / {{ product.sales_unit.short_name }}</small></span></div>
+                {% endif %}
+            </div>
             <hr>
             <div class="well">
                 {% include "shoop/front/product/_detail_order_section.jinja" with context %}
@@ -42,27 +76,32 @@
         </div>
     </div>
     <hr>
-    {% if product.description %}
-        <div class="product-description clearfix">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2 class="panel-title">{% trans %}Product description{% endtrans %}</h2>
-                </div>
-                <div class="panel-body">
-                    {{ product.description|markdown }}
-                </div>
-            </div>
-        </div>
-    {% endif %}
+    <h3>{% trans %}Product Information{% endtrans %}</h3>
 
-    <div class="product-attributes clearfix">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h2 class="panel-title">{% trans %}Product attributes{% endtrans %}</h2>
+    <div class="product-tabs" role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">{% trans %}Description{% endtrans %}</a></li>
+            <li role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">{% trans %}Details{% endtrans %}</a></li>
+            {% if shoop.product.get_visible_attributes(product) %}
+                <li role="presentation"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">{% trans %}Attributes{% endtrans %}</a></li>
+            {% endif %}
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="product-description tab-pane fade in active" id="tab1">
+                {% if product.description %}
+                    {{ product.description|markdown|safe }}
+                {% else %}
+                    {% trans %}No product description available{% endtrans %}
+                {% endif %}
             </div>
-            <div class="panel-body">
-                {% include "shoop/front/product/_detail_attributes_section.jinja" %}
+            <div role="tabpanel" class="product-attributes tab-pane fade" id="tab2">
+                {% include "shoop/front/product/_detail_details_section.jinja" %}
             </div>
+            {% if shoop.product.get_visible_attributes(product) %}
+                <div role="tabpanel" class="product-attributes tab-pane fade" id="tab3">
+                    {% include "shoop/front/product/_detail_attributes_section.jinja" %}
+                </div>
+            {% endif %}
         </div>
     </div>
 
