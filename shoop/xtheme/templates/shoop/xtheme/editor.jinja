@@ -2,14 +2,16 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ static("xtheme/editor.css") }}">
     <script>var CSRF_TOKEN = "{{ csrf_token_str }}";</script>
     <script src="{{ static("xtheme/editor.js") }}"></script>
 </head>
 <body>
 <div id="global-toolbar">
-    <button class="publish-btn">{% trans %}Publish Changes{% endtrans %}</button>
-    <button class="revert-btn">{% trans %}Revert Changes{% endtrans %}</button>
+    <button class="revert-btn"><i class="fa fa-undo"></i> {% trans %}Revert Changes{% endtrans %}</button>
+    <button class="publish-btn"><i class="fa fa-check"></i> {% trans %}Publish Changes{% endtrans %}</button>
 </div>
 {% include "shoop/xtheme/_editor_layout.jinja" %}
 {% if current_cell %}

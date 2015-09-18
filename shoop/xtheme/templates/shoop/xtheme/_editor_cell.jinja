@@ -1,13 +1,15 @@
 <button class="del-cell-btn"
         data-x="{{ current_cell_coords[0] }}"
         data-y="{{ current_cell_coords[1] }}">
-    {% trans %}Delete Cell{% endtrans %}
+    <i class="fa fa-trash"></i> {% trans %}Delete This Cell{% endtrans %}
 </button>
 {% if form %}
     <form action="" method="POST">
         {% csrf_token %}
         <input name="save" type="hidden" value="1"/>
-        {{ form.general|safe }}
+        <table>
+            {{ form.general.as_table()|safe }}
+        </table>
         <hr>
         {% if "plugin" in form.forms %}
             <table>
@@ -16,6 +18,7 @@
         {% else %}
             <i>{% trans %}There's nothing to configure in this plugin.{% endtrans %}</i>
         {% endif %}
-        <input type="submit" value="Save">
+        <hr>
+        <button class="submit-form-btn" type="submit"><i class="fa fa-save"></i> {% trans %}Save Plugin{% endtrans %}</button>
     </form>
 {% endif %}

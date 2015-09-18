@@ -1,30 +1,155 @@
+@color-green: #74AD40;
+@color-red: #DB5959;
+@color-blue: #55ACCC;
+
+* {
+    box-sizing: border-box;
+}
+
 body {
-    margin: 2px;
-    font: 10pt/1.1 sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    padding: 0 1rem;
+    margin: 0;
+    color: #555;
+}
+
+hr {
+    border: 0;
+    margin: 1rem 0px;
+    border-bottom: 1px solid #ddd;
+}
+
+button, .xt-button {
+    font-family: inherit;
+    border: 0;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#global-toolbar {
+    background: #eee;
+    border-bottom: 1px solid #ddd;
+    padding: 0.5rem 1rem;
+    margin-left: -1rem;
+    margin-right: -1rem;
+    margin-bottom: 1rem;
+    .publish-btn {
+        background: @color-green;
+        color: #fff;
+        padding: 6px 12px;
+        float: right;
+        border-radius: 4px;
+        &:hover, &:focus {
+            background: lighten(@color-green, 5%);
+        }
+    }
+    .revert-btn {
+        color: #999;
+        padding: 6px 12px;
+        background: transparent;
+    }
 }
 
 #layout {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #ddd;
     .layout-row {
-        background: khaki;
         display: flex;
-        button {
-            background: orangered;
-            min-width: 1em;
+        margin-bottom: 1rem;
+    }
+    .layout-add-row-btn {
+        padding: 5px 10px;
+        color: #555;
+        background: transparent;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        font-size: 13px;
+        &:hover, &:focus {
+            background: #eee;
         }
+    }
+    .layout-add-cell-btn,
+    .layout-del-row-btn {
+        background: transparent;
+        padding: 0px 6px;
+        border: 1px solid #ddd;
+        border-radius: 2px;
+        &:hover, &:focus {
+            background: #eee;
+        }
+    }
+    .layout-add-cell-btn {
+        margin-right: 2px;
+        color: @color-green;
+    }
+    .layout-del-row-btn {
+        color: @color-red;
     }
     .layout-row-cells {
         display: flex;
         flex: 1;
+        margin-right: 1px;
         .layout-cell {
             flex: 1;
-            border: 1px solid orangered;
-            padding: 2px;
+            border: 1px solid #ddd;
             text-align: center;
             cursor: pointer;
-            &.current {
-                background: purple;
+            font-weight: bold;
+            color: @color-blue;
+            margin: 0px 1px;
+            font-size: 12px;
+            padding: 0.5rem;
+            border-radius: 2px;
+            &.current, &:hover, &:focus {
+                background: @color-blue;
                 color: #fff;
+                border-color: @color-blue;
             }
+        }
+    }
+}
+
+.del-cell-btn {
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px 10px;
+    color: @color-red;
+    background: transparent;
+    font-size: 13px;
+    &:hover, &:focus {
+        background: #eee;
+    }
+}
+
+form {
+    label {
+        display: block;
+        margin-bottom: 2px;
+    }
+    input, select {
+        width: 100%;
+        height: 34px;
+        padding: 0px 1rem;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+    }
+    table {
+        width: 100%;
+    }
+    .submit-form-btn {
+        padding: 5px 10px;
+        font-size: 13px;
+        border-radius: 4px;
+        color: #fff;
+        background: @color-green;
+        &:hover, &:focus {
+            background: lighten(@color-green, 5%);
         }
     }
 }

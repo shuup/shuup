@@ -24,7 +24,7 @@ function getSidebarDiv() {
                         setSidebarVisibility();
                     }
                 }
-            }),
+            }, ["Close Editor"]),
             (_sidebarIframe = el("iframe"))
         ]);
         document.body.appendChild(_sidebarDiv);
@@ -86,7 +86,7 @@ function addEditToggleMarkup() {
             hidden("command", (editing ? "edit_off" : "edit_on")),
             el("button", {
                 "type": "submit"
-            }, (editing ? "Exit Edit" : "Edit"))
+            }, (editing ? "Exit Edit" : "Edit Page"))
         ])
     ]);
     document.body.appendChild(div);

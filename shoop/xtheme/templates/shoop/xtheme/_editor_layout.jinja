@@ -1,4 +1,5 @@
 <div id="layout">
+    <h3>Edit Placeholder: {{ layout.placeholder_name }}</h3>
     {% for row in layout.rows %}
         {% set y = loop.index0 %}
         <div class="layout-row">
@@ -11,14 +12,14 @@
                 {%- endfor %}
             </div>
             <button class="layout-add-cell-btn" data-y="{{ y }}">
-                +
+                <i class="fa fa-plus-circle"></i>
             </button>
             <button class="layout-del-row-btn" data-y="{{ y }}">
-                -
+                <i class="fa fa-minus-circle"></i>
             </button>
         </div>
     {% endfor %}
     <button class="layout-add-row-btn">
-        +
+        <i class="fa fa-plus"></i> {% trans %}Add new row{% endtrans %}
     </button>
 </div>
