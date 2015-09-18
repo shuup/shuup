@@ -8,6 +8,7 @@
  */
 const m = require("mithril");
 const _ = require("lodash");
+const folderClick = require("./folderClick");
 
 export default function(ctrl) {
     const items = [];
@@ -17,7 +18,7 @@ export default function(ctrl) {
             m("a.breadcrumb-link" + (index === folderPath.length - 1 ? ".current" : ""), {
                 href: "#",
                 key: folder.id,
-                onclick: _.partial(ctrl.setFolder, folder.id)
+                onclick: folderClick(ctrl, folder)
             }, folder.name)
         );
         items.push(m("i.fa.fa-angle-right"));
