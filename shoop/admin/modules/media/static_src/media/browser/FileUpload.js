@@ -71,8 +71,11 @@ function handleFileXhrComplete(xhr, file, error) {
         console.log(e); // invalid JSON? pffff.
     }
     if (window.Messages) {
+        if (error && !messageText) {
+            messageText = "Unexpected error while uploading files.";
+        }
         const response = {
-            error: (error ? "Error: " + file.name + ":" + messageText : null),
+            error: (error ? "Error: " + file.name + ": " + messageText : null),
             message: (!error ? messageText || "Uploaded: " + file.name : null)
         };
         remote.handleResponseMessages(response);

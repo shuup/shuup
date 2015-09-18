@@ -11,24 +11,32 @@ const m = require("mithril");
 const moment = require("moment");
 const wrapFileLink = require("./wrapFileLink");
 const folderLink = require("./folderLink");
+const menuManager = require("../util/menuManager");
+const fileContextMenu = require("../menus/fileContextMenu");
 
 
 export default function(ctrl, folders, files) {
     const folderItems = _.map(folders, function(folder) {
         return m("tr", {key: "folder-" + folder.id}, [
-            m("td", {colspan: 3}, [m("i.fa.fa-folder.folder-icon"), " ", folderLink(ctrl, folder)]),
+            m("td", {colspan: 4}, [m("i.fa.fa-folder.folder-icon"), " ", folderLink(ctrl, folder)]),
         ]);
     });
     const fileItems = _.map(files, function(file) {
         return m("tr", {key: file.id}, [
             m("td", wrapFileLink(file)),
             m("td.text-right", file.size),
-            m("td.text-right", moment(file.date).format())
+            m("td.text-right", moment(file.date).format()),
+            m("td", {key: "filecog",
+                onclick: (event) => {
+                    menuManager.open(event.currentTarget, fileContextMenu(ctrl, file));
+                    event.preventDefault();
+                }
+            }, m("i.fa.fa-cog"))
         ]);
     });
     return m("div.table-responsive", [
         m("table.table.table-condensed.table-striped.table-bordered", [
-            m("thead", m("tr", _.map(["Name", "Size", "Date"], function(title) {
+            m("thead", m("tr", _.map(["Name", "Size", "Date", "Edit"], function(title) {
                 return m("th", title);
             }))),
             m("tbody", folderItems.concat(fileItems))
