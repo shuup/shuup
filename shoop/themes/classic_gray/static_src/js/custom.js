@@ -56,6 +56,29 @@ function reloadProducts() {
     $("#ajax_content").load(location.pathname + filterString);
 }
 
+function updateProductPrice(productId) {
+    var $quantity = $("#product-quantity");
+    if (!$quantity.is(":valid")) {
+        return;
+    }
+    var data = {
+        id: productId,
+        quantity: $quantity.val()
+    };
+    var $selectedChild = $("#product-variations");
+    if ($selectedChild.length > 0) {
+        data.child = $selectedChild.val();
+    }
+    $.ajax({
+        url: "/xtheme/product_price",
+        method: "GET",
+        data: data,
+        success: function(html) {
+            $("#product-price-section").html(html);
+        }
+    });
+}
+
 $(function() {
     $("#search-modal").on("show.bs.modal", function() {
         setTimeout(function(){

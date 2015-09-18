@@ -10,6 +10,10 @@
     </script>
 {% endif %}
 
+{% if not quantity %}
+    {% set quantity = shop_product.rounded_minimum_purchase_quantity %}
+{% endif %}
+
 {% macro quantity_box() %}
     <div class="form-group amount">
         <label for="product-quantity">{% trans %}Quantity{% endtrans %}</label>
@@ -20,8 +24,9 @@
             name="quantity"
             id="product-quantity"
             step="{{ shop_product.quantity_step }}"
-            value="{{ shop_product.rounded_minimum_purchase_quantity }}"
-            min="{{ shop_product.rounded_minimum_purchase_quantity }}">
+            value="{{ quantity }}"
+            min="{{ shop_product.rounded_minimum_purchase_quantity }}"
+            onchange="updateProductPrice('{{ product.pk }}')">
             <span class="input-group-addon sales-unit">{{ product.sales_unit.short_name }}</span>
         </div>
     </div>
@@ -41,13 +46,12 @@
                 <div class="form-group">
                     <select name="product_id" id="product-variations" class="form-control">
                         {% for p in orderable_variation_children %}
-                            {% set price = p.get_price(request) %}
-                            <option value="{{ p.id }}">
+                            {% set price_info = p.get_price_info(request, quantity) %}
+                            <option value="{{ p.id }}"{% if selected_child and selected_child == p.id %} selected{% endif %}>
                                 {{ p.variation_name or p.name }}
                                 {# TODO: Tax rendering of variation children #}
-                                {# TODO: Remove hard coded euro in rendering of variation children prices #}
-                                ({{ price.taxful_price|floatformat(2) }} &euro; {% trans %}incl. VAT{% endtrans %} {{ product.get_tax_value_display() }}%,
-                                {{ price.taxless_price|floatformat(2)}} &euro; {% trans %}VAT{% endtrans %} 0%)
+                                {{ price_info.price|home_currency }}
+                                ({{ price_info.unit_price|home_currency }}/{{ product.sales_unit.short_name }})
                             </option>
                         {% endfor %}
                     </select>
@@ -58,7 +62,7 @@
         </div>
     {% endif %}
 {% else %}
-    {% set is_orderable=shop_product.is_orderable(supplier=None, customer=request.customer, quantity=1) %}
+    {% set is_orderable=shop_product.is_orderable(supplier=None, customer=request.customer, quantity=quantity) %}
     <div class="prices">
         {% if is_orderable %}
             <form role="form" method="post" action="{{ url("shoop:basket") }}" class="form-inline add-to-basket">
@@ -68,23 +72,23 @@
                         <input type="hidden" name="command" value="add">
                         <input type="hidden" name="product_id" value="{{ product.id }}">
                         {{ quantity_box() }}
-                        {#
-                        TODO: This should be dynamically updated from the backend with AJAX
-                        TODO: (TAX) Check following line (gets taxful price of product)
-                        #}
+                        {# TODO: (TAX) Check following line (gets taxful price of product) #}
                     </div>
                     <div class="col-sm-6">
                         <div class="price text-right">
+                            {% set price_info = product.get_price_info(request, quantity) %}
                             Total<br>
                             <h4>
                                 <span id="product-price-placeholder">
-                                    {% set price_info = product.get_price_info(request) %}
                                     {{ price_info.price|home_currency }}
                                 </span>
                                 <span class="sales-unit">
                                     {{ product.sales_unit.short_name }}
                                 </span>
                             </h4>
+                            <span class="small">
+                                {{ price_info.unit_price|home_currency }}/{{ product.sales_unit.short_name }}
+                            </span>
                         </div>
                     </div>
                 </div>
