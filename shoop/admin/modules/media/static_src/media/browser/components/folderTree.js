@@ -10,17 +10,12 @@ const m = require("mithril");
 const _ = require("lodash");
 const {dropzoneConfig} = require("../util/dragDrop");
 const folderActions = require("../actions/folderActions");
+const folderClick = require("./folderClick");
 
 export default function(ctrl) {
     const currentFolderId = ctrl.currentFolderId();
     const folderPath = ctrl.currentFolderPath();
     const idsToCurrent = _.pluck(folderPath, "id");
-
-    function clickFolder(event, folderId) {
-        ctrl.setFolder(folderId);
-        event.preventDefault();
-        return false;
-    }
 
     function walk(folder) {
         if (folder.id === undefined) {
@@ -28,7 +23,7 @@ export default function(ctrl) {
         }
         const inPath = (idsToCurrent.indexOf(folder.id) > -1);
         const isCurrent = (currentFolderId === folder.id);
-        const nameLink = m("a", {href: "#", onclick: _.partialRight(clickFolder, folder.id)}, [
+        const nameLink = m("a", {href: "#", onclick: folderClick(ctrl, folder)}, [
             (inPath ? m("i.caret-icon.fa.fa-caret-down") : m("i.caret-icon.fa.fa-caret-right")),
             (isCurrent ? m("i.folder-icon.fa.fa-folder-open") : m("i.folder-icon.fa.fa-folder")),
             m("span.name", folder.name)
