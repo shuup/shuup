@@ -7,10 +7,13 @@ function showPreview(productId) {
     }
 
     $.ajax({
-        url: '/xtheme/product_quick_view?id=' + productId,
+        url: "/xtheme/product_preview",
         method: "GET",
+        data: {
+            id: productId
+        },
         success: function(data) {
-            $("body").append(data); 
+            $("body").append(data);
             $(modal_select).modal("show");
         }
     });

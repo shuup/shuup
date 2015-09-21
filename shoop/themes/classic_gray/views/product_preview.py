@@ -8,7 +8,7 @@
 from shoop.front.views.product import ProductDetailView
 
 
-def product_quick_view(request):
-    return ProductDetailView.as_view(template_name="classic_gray/product_quickview.jinja")(
+def product_preview(request):
+    return ProductDetailView.as_view(template_name="classic_gray/product_preview.jinja")(
         request, pk=request.GET["id"]
     )
