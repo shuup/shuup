@@ -30,8 +30,11 @@
         </div>
     </div>
 {% endmacro %}
+
 {% block content %}
-    {% include "shoop/front/checkout/_confirm_table.jinja" %}
+    <div class="well">
+        {% include "shoop/front/checkout/_confirm_table.jinja" %}
+    </div>
     <div class="row">
         <div class="col-sm-6">
             {{ method_panel(
@@ -48,13 +51,23 @@
             ) }}
         </div>
     </div>
-    <hr>
     {% if orderable %}
         <form role="form" method="post">
             {% csrf_token %}
-            <div class="well">{{ bs3.field(form.comment) }}</div>
-            {{ bs3.field(form.marketing) }}
-            {{ bs3.field(form.accept_terms) }}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        {% trans %}Add comment{% endtrans %}
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    {{ bs3.field(form.comment) }}
+                </div>
+            </div>
+            <hr>
+            {{ macros.render_field(form.marketing) }}
+            {{ macros.render_field(form.accept_terms) }}
+            <hr>
             <button type="submit" class="btn btn-primary btn-lg">
                 <i class="fa fa-check"></i> {% trans %}Place Order{% endtrans %}
             </button>
