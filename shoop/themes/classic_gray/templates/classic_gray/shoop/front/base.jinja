@@ -1,22 +1,17 @@
 {%- import "shoop/front/macros.jinja" as macros with context -%}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block extrameta %}{% endblock %}
-
     {# Page Title #}
     <title>{{ request.shop.public_name }} &ndash; {% block title %}{% endblock %}</title>
-
     {# Include Favicon #}
     <link rel="icon" type="image/x-icon" href="{{ STATIC_URL }}classic_gray/img/favicon.ico">
-
     {# Include Fonts #}
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
-
     {# Include Styles #}
     <link rel="stylesheet" href="{{ STATIC_URL }}classic_gray/css/style.css">
 </head>
@@ -35,6 +30,12 @@
                     </div>
                 {% endfor %}
             {% endif %}
+            {% if form and form.errors %}
+                <div class="alert alert-dismissible alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <i class="fa fa-exclamation-circle"></i> {% trans %}There were errors on submitted form fields. Please check them and try again.{% endtrans %}
+                </div>
+            {% endif %}
             {% block before_content_title %}{% endblock %}
             {% if self.content_title() %}
                 <h1 class="page-header">{% block content_title %}{% endblock %}</h1>
@@ -45,8 +46,6 @@
         </div>
     </main>
     {% include "shoop/front/includes/_footer.jinja" %}
-
-    
 
     {# Include JavaScript libraries #}
     <script src="{{ STATIC_URL }}classic_gray/js/classic-gray.js"></script>
