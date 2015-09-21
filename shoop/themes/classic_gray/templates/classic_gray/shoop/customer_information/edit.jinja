@@ -1,0 +1,53 @@
+{% extends "shoop/front/base.jinja" %}
+{% block title %}{% trans %}User account information{% endtrans %}{% endblock %}
+{% block content_title %}{% trans %}User account information{% endtrans %}{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li><a href="/">{% trans %}Home{% endtrans %}</a></li>
+        <li class="active">{% trans %}User account information{% endtrans %}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="user-account">
+        <form role="form" method="post" action="">
+            <button type="submit" class="submit-button-up btn btn-primary"><i class="fa fa-check"></i> {% trans %}Save changes{% endtrans %}</button>
+            {% csrf_token %}
+            {% for field in form.contact.hidden_fields() %}{{ field|safe }}{% endfor %}
+            {% for field in form.billing.hidden_fields() %}{{ field|safe }}{% endfor %}
+            {% for field in form.shipping.hidden_fields() %}{{ field|safe }}{% endfor %}
+            <div class="well">
+                <fieldset>
+                    <legend>{% trans %}User information{% endtrans %}</legend>
+                    {% for field in form.contact.visible_fields() %}
+                        {{ macros.render_field(field) }}
+                    {% endfor %}
+                </fieldset>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="well">
+                        <fieldset>
+                            <legend>{% trans %}Billing information{% endtrans %}</legend>
+                            {% for field in form.billing.visible_fields() %}
+                                {{ macros.render_field(field) }}
+                            {% endfor %}
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="well">
+                        <fieldset>
+                            <legend>{% trans %}Shipping information{% endtrans %}</legend>
+                            {% for field in form.shipping.visible_fields() %}
+                                {{ macros.render_field(field) }}
+                            {% endfor %}
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="submit-button btn btn-primary"><i class="fa fa-check"></i> {% trans %}Save changes{% endtrans %}</button>
+        </form>
+    </div>
+{% endblock %}
