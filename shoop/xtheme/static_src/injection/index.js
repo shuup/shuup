@@ -24,7 +24,7 @@ function getSidebarDiv() {
                         setSidebarVisibility();
                     }
                 }
-            }, ["Close Editor"]),
+            }, [el("i.fa"), "Toggle Editor"]),
             (_sidebarIframe = el("iframe"))
         ]);
         document.body.appendChild(_sidebarDiv);
