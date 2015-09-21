@@ -25,6 +25,7 @@ class ClassicGrayTheme(Theme):
         ("footer_links", forms.CharField(required=False, label=_("Footer links"), widget=forms.Textarea,
                                          help_text=_("One line per link in format '[url] [label]'"))),
         ("footer_column_order", forms.ChoiceField(required=False, initial="", label=_("Footer column order"))),
+        ("show_welcome_text", forms.BooleanField(required=False, initial=True, label=_("Show Frontpage Welcome Text"))),
     ]
 
     def get_configuration_form(self, form_kwargs):
