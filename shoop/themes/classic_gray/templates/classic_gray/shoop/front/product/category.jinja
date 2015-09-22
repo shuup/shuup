@@ -36,10 +36,8 @@
         <div class="col-md-9">
             <div class="row product-list-actions">
                 <div class="col-sm-4">
-                    <form role="form" class="form-inline" method="get" action="" id="sorter">
-                        <label for="sort">{% trans %}Sort by{% endtrans %}</label>
-                        {# TODO: Add 'form-control' and 'selectpicker' classes to this select #}
-                        {{ form.sort|safe }}
+                    <form role="form" method="get" action="" id="sorter">
+                        {{ macros.render_field(form.sort) }}
                     </form>
                 </div>
                 <div class="col-sm-8">

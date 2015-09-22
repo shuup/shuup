@@ -1,9 +1,13 @@
 {% extends "shoop/front/base.jinja" %}
 
 {% block title %}{% trans %}Home{% endtrans %}{% endblock %}
-{% block content_title %}{% trans %}Welcome to {% endtrans %}{{ request.shop.public_name }}!{% endblock %}
+{% block content_title %}{% endblock %}
 
 {% block content %}
+
+    {% if xtheme.get("show_welcome_text", True) %}
+        <h1 class="page-header">{% trans %}Welcome to {% endtrans %}{{ request.shop.public_name }}!</h1>
+    {% endif %}
 
     {% placeholder "front_content" %}
         {% row %}

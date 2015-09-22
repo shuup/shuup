@@ -29,9 +29,9 @@
                     {% if product %}
                         {% set image = product.primary_image %}
                         {% if image %}
-                            <img class="image-responsive" src="{{ image|thumbnail(size=(70, 70)) }}" width="70" height="70">
+                            <img class="img-responsive" src="{{ image|thumbnail(size=(70, 70)) }}" width="70" height="70">
                         {% else %}
-                            <img class="image-responsive" src="{{ STATIC_URL }}shoop/img/no_image_thumbnail.png" width="70" height="70">
+                            <img class="img-responsive" src="{{ STATIC_URL }}shoop/img/no_image_thumbnail.png" width="70" height="70">
                         {% endif %}
                     {% endif %}
                 </td>

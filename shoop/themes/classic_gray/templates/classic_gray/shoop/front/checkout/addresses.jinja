@@ -6,7 +6,11 @@
     {% csrf_token %}
     <div class="well">
         <fieldset>
-            <legend>{% trans %}Billing address{% endtrans %}</legend>
+            <div class="row">
+                <div class="order-for-company col-md-9 col-md-offset-3">
+                    <legend>{% trans %}Billing address{% endtrans %}</legend>
+                </div>
+            </div>
             <div id="billing" class="form-horizontal">
                 {% for field in forms.billing %}
                     {{ bs3.field(field, layout="horizontal") }}
@@ -16,7 +20,7 @@
                 <div class="row">
                     <div class="order-for-company col-md-9 col-md-offset-3">
                         <hr>
-                        <h4><strong>{% trans %}Ordering for a company?{% endtrans %}</strong></h4>
+                        <h4>{% trans %}Ordering for a company?{% endtrans %}</h4>
                         <p>{% trans %}Please fill out these fields if you are ordering for a company.{% endtrans %}</p>
                     </div>
                 </div>
@@ -27,19 +31,18 @@
             {% endif %}
         </fieldset>
     </div>
-
-    <hr>
-
     <div class="well">
         <fieldset>
-            <legend>{% trans %}Shipping address{% endtrans %}</legend>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" name="same_as_billing" id="same_as_billing" value="1"{% if request.POST.get("same_as_billing", true) %} checked{% endif %}>
-                    {% trans %}Ship to my billing address{% endtrans %}
-                </label>
+            <div class="row">
+                <div class="order-for-company col-md-9 col-md-offset-3">
+                    <legend>{% trans %}Shipping address{% endtrans %}</legend>
+                    <div class="custom-checkbox">
+                        <input type="checkbox" name="same_as_billing" id="same_as_billing" value="1"{% if request.POST.get("same_as_billing", true) %} checked{% endif %}>
+                        <label for="same_as_billing">{% trans %}Ship to my billing address{% endtrans %}</label>
+                    </div>
+                    <hr>
+                </div>
             </div>
-            <hr>
             <div id="shipping" class="form-horizontal">
                 {% for field in forms.shipping %}
                     {{ bs3.field(field, layout="horizontal") }}
@@ -47,10 +50,11 @@
             </div>
         </fieldset>
     </div>
-
-    <button type="submit" class="btn btn-primary btn-lg">
-        <i class="fa fa-check"></i> {% trans %}Continue{% endtrans %}
-    </button>
+    <div class="clearfix">
+        <button type="submit" class="btn btn-primary btn-lg pull-right">
+            <i class="fa fa-check"></i> {% trans %}Continue{% endtrans %}
+        </button>
+    </div>
 </form>
 {% endblock %}
 

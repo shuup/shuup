@@ -4,6 +4,14 @@
     {{ _("Order %(identifier)s", identifier=order.identifier) }}
 {%- endblock %}
 
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li><a href="/">{% trans %}Home{% endtrans %}</a></li>
+        <li><a href="{{ url("shoop:personal-orders") }}">{% trans %}Order History{% endtrans %}</a></li>
+        <li class="active">{{ _("Details of order %(identifier)s", identifier=order.identifier) }}</li>
+    </ol>
+{% endblock %}
+
 {% block content %}
     <h1 class="page-header">
         {{ _("Details of order %(identifier)s", identifier=order.identifier) }}
