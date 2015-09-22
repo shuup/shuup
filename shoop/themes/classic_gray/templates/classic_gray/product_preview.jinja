@@ -1,10 +1,16 @@
 {% set product_url = url("shoop:product", pk=product.pk, slug=product.slug) %}
+{% set priceinfo = product.get_price_info(request) %}
 <div class="product-preview-modal fade" id="product-{{ product.id }}-modal" tabindex="-1" role="dialog" aria-labelledby="product-{{ product.id }}-preview">
     <div class="product-preview-modal-dialog" role="document">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <div class="content" id="product-{{ product.id }}-preview">
             <div class="row">
                 <div class="col-md-6 col-sm-5">
+                    {% if priceinfo.is_discounted %}
+                        <div class="discount">
+                            <span class="label label-danger">{% trans %}Save{% endtrans %} {{ priceinfo.discount_percentage|int }} %</span>
+                        </div>
+                    {% endif %}
                     {% set image = product.primary_image|thumbnail(size=(600,600)) %}
                     {% if image %}
                         <div class="image" style="background-image:url('{{ image }}')" title="{{ product.name }}"></div>
@@ -13,8 +19,21 @@
                     {% endif %}
                 </div>
                 <div class="col-md-6 col-sm-7">
-                    <h3>{{ product.name }}</h3>
-                    {% if product.description %}<p class="description">{{ product.description|truncate(360) }}</p>{% endif %}
+                    <h2 class="text-primary">{{ product.name }}</h2>
+                    {% if product.description %}<p class="description">{{ product.description|safe|truncate(150, False) }}</p>{% endif %}
+                    <hr>
+                    <div class="product-price">
+                        {% if priceinfo.is_discounted %}
+                            <div class="price-line">
+                                <span class="lead">
+                                    <small class="text-muted original-price"><s>{{ priceinfo.base_price|floatformat(2)|home_currency }}</s></small>
+                                    <strong>{{ priceinfo.price|floatformat(2)|home_currency }}</strong><small> / {{ product.sales_unit.short_name }}</small>
+                                </span>
+                            </div>
+                        {% else %}
+                            <div class="price-line"><span class="lead"><strong>{{ priceinfo.price|floatformat(2)|home_currency }}</strong><small> / {{ product.sales_unit.short_name }}</small></span></div>
+                        {% endif %}
+                    </div>
                     <hr>
                     {% include "shoop/front/product/_detail_order_section.jinja" with context %}
                     <a href="{{ product_url }}" class="btn-open-page btn btn-default btn-block"><i class="fa fa-search"></i> {% trans %}Open product page{% endtrans %} <i class="fa fa-angle-double-right"></i></a>

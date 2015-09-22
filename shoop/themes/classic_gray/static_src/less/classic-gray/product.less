@@ -1,4 +1,18 @@
+.product-main {
+    margin-bottom: 45px;
+    .product-name {
+        color: @brand-primary;
+        margin-top: 0;
+    }
+}
+
 .product-image {
+    .discount {
+        position: absolute;
+        right: 20px;
+        top: 5px;
+        z-index: 10;
+    }
     .product-carousel {
         margin-bottom: 10px;
 
@@ -100,7 +114,37 @@
     }
 }
 
+.product-basic-details {
+    @media (min-width: @screen-md-min) {
+        padding-left: 45px;
+    }
+}
+
+.product-tabs {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.product-price {
+    margin: 30px 0;
+    .lead {
+        margin-bottom: 0;
+    }
+    .original-price {
+        margin-right: 5px;
+    }
+}
+
 .btn-add-to-cart {
     .clearfix;
     margin: 25px 0px;
+    .btn {
+        padding: 10px 15px;
+        text-transform: uppercase;
+        font-size: 1.4rem;
+        i {
+            margin-right: 5px;
+            font-size: 1.6rem;
+        }
+    }
 }

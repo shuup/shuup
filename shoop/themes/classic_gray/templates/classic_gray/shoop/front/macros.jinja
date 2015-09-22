@@ -2,11 +2,11 @@
     {% set u = url("shoop:product", pk=product.pk, slug=product.slug) %}
     {% set price_info = product.get_price_info(request) %}
     <div class="product-card {{ class }}" id="product-{{ product.id }}">
-        <div class="labels">
-            <span class="label label-new"></span>
-            <span class="label label-sale"></span>
-            <span class="label"></span>
-        </div>
+        {% if price_info.is_discounted %}
+            <div class="labels">
+                <span class="label label-sale">{{ -price_info.discount_percentage|int }}%</span>
+            </div>
+        {% endif %}
         {% if show_image %}
             {% set primary_image_thumb = product.primary_image|thumbnail(size=thumbnail_size) %}
             <div class="image-wrap">
@@ -23,7 +23,7 @@
             <div class="price">
                 {{ price_info.price|home_currency }}
                 {% if price_info.is_discounted %}
-                    ({{price_info.base_price|home_currency}}) <span class="discount-percent">{{ -price_info.discount_percentage|int }}%</span>
+                    <span class="original">{{price_info.base_price|home_currency}}</span>
                 {% endif %}
             </div>
             <div class="actions clearfix">
