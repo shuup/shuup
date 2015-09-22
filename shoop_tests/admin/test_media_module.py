@@ -21,7 +21,7 @@ def test_media_view_images(rf):
     file = File.objects.create(name="normalfile", folder=folder)
     img = Image.objects.create(name="imagefile", folder=folder)
 
-    request = apply_request_middleware(rf.get("/sa/media", {"filter": "images", "action": "folder", "id": folder.id}))
+    request = apply_request_middleware(rf.get("/", {"filter": "images", "action": "folder", "id": folder.id}))
     view_func = MediaBrowserView.as_view()
     response = view_func(request)
     assert isinstance(response, JsonResponse)
