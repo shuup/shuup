@@ -5,11 +5,10 @@ from django.conf import settings
 from django.db import models, migrations
 import filer.fields.image
 
-from shoop.core.models import Shop
-
 
 def copy_names(apps, schema_editor):
-    for shop in Shop.objects.all():
+    shop_model = apps.get_model("shoop", "Shop")
+    for shop in shop_model.objects.all():
         for lang_code, lang_name in settings.LANGUAGES:
             shop.set_current_language(lang_code)
             shop.public_name = shop.name
