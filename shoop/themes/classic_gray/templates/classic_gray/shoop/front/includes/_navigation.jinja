@@ -113,26 +113,15 @@
         </button>
         <div class="pages">
             <ul class="nav-collapse">
-                {# TODO: Add class current to the current page's 'li'. Also when on category or product page it should show that 'products' is the current one #}
-                <li class="current"><a href="/">Home</a></li>
-                {# TODO: Change these to one link "products" which needs a new view to display category menu and some products. Also add class 'current' to the products <li> when on category page #}
-                <li><a href="#">{% trans %}Products{% endtrans %}</a></li>
-                {% for c in shoop.general.get_root_categories() recursive %}
-                    {% set children = c.get_children() %}
-                    <li>
-                        {% if children %}
-                            <a href="{{ url("shoop:category", pk=c.pk, slug=c.slug) }}" class="dropdown-toggle" data-toggle="dropdown">{{ c }} <span class="caret"></span></a>
-                            <ul class="dropdown-menu">{{ loop(children) }}</ul>
-                        {% else %}
-                            <a href="{{ url("shoop:category", pk=c.pk, slug=c.slug) }}">{{ c }}</a>
-                        {% endif %}
-                    </li>
-                {% endfor %}
+                <li{% if request.path == "/" %} class="current"{% endif %}><a href="/">{% trans %}Home{% endtrans %}</a></li>
+                {% set products_url = url('shoop:xtheme_extra_view', view='products') %}
+                <li{% if request.path == products_url %} class="current"{% endif %}><a href="{{ products_url }}">{% trans %}Products{% endtrans %}</a></li>
                 {% if shoop.simple_cms %}
                     {% set cms_pages = shoop.simple_cms.get_visible_pages() %}
                     {% if cms_pages %}
                         {% for page in cms_pages %}
-                            <li><a href="{{ url("shoop:cms_page", url=page.url) }}">{{ page }}</a></li>
+                            {% set page_url = url("shoop:cms_page", url=page.url) %}
+                            <li{% if request.path == page_url %} class="current"{% endif %}><a href="{{ page_url }}">{{ page }}</a></li>
                         {% endfor %}
                     {% endif %}
                 {% endif %}
