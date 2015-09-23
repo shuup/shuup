@@ -29,7 +29,7 @@ function normalJsBundle(spec, name) {
             .pipe((!!spec.es6 ? babel() : gutil.noop()))
             .pipe(concat(name + ".js"))
             .pipe((settings.PRODUCTION ? uglify() : gutil.noop()))
-            .pipe(sourcemaps.write(destDir))
+            .pipe(sourcemaps.write("."))
             .pipe(size({title: taskName}))
             .pipe(gulp.dest(destDir));
     });

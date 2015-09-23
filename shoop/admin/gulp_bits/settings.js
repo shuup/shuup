@@ -9,6 +9,6 @@
 var gutil = require("gulp-util");
 var path = require("path");
 
-module.exports.DEST_DIR = path.join(process.cwd(), "static", "shoop_admin");
+module.exports.DEST_DIR = path.join("static", "shoop_admin");
 module.exports.PRODUCTION = gutil.env.production || (process.env.NODE_ENV === "production");
 module.exports.WATCH = !!gutil.env.watch;
