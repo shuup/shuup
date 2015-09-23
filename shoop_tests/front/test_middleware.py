@@ -100,3 +100,25 @@ def test_intra_request_user_changing(rf, regular_user):
     assert request.user == AnonymousUser()
     assert request.person == shoop.core.models.AnonymousContact()
     assert request.customer == shoop.core.models.AnonymousContact()
+
+
+@pytest.mark.django_db
+def test_maintenance_mode(rf, regular_user, admin_user):
+    shop = get_default_shop()
+    shop.maintenance_mode = True
+    shop.save()
+
+    mw = ShoopFrontMiddleware()
+
+    request = apply_request_middleware(rf.get("/"), user=regular_user)
+    maintenance_response = mw.process_request(request)
+    assert maintenance_response is not None
+    assert maintenance_response.status_code == 503
+    assert mw._get_maintenance_response(request).content == maintenance_response.content
+
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
+    admin_response = mw.process_request(request)
+    assert admin_response is None
+
+    shop.maintenance_mode = False
+    shop.save()

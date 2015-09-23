@@ -9,6 +9,8 @@ from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.core.exceptions import ImproperlyConfigured
+from django.http import HttpResponse
+from django.template import loader
 from django.utils import timezone
 
 from shoop.core.middleware import ExceptionMiddleware
@@ -65,6 +67,10 @@ class ShoopFrontMiddleware(object):
         self._set_basket(request)
         self._set_timezone(request)
 
+        maintenance_response = self._get_maintenance_response(request)
+        if maintenance_response:
+            return maintenance_response
+
     def _set_shop(self, request):
         # TODO: Not the best logic :)
         request.shop = Shop.objects.first()
@@ -84,6 +90,10 @@ class ShoopFrontMiddleware(object):
         if request.person.timezone:
             timezone.activate(request.person.timezone)
             # TODO: Fallback to request.shop.timezone (and add such field)
+
+    def _get_maintenance_response(self, request):
+        if request.shop.maintenance_mode and not request.user.is_superuser:
+            return HttpResponse(loader.render_to_string("shoop/front/maintenance.jinja", request=request), status=503)
 
     def process_response(self, request, response):
         if hasattr(request, "basket") and request.basket.dirty:
