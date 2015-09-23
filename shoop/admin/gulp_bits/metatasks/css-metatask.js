@@ -31,7 +31,7 @@ module.exports = function(spec, name) {
             }))
             .pipe(concat(name + ".css"))
             .pipe((settings.PRODUCTION ? mincss() : gutil.noop()))
-            .pipe(sourcemaps.write(destDir))
+            .pipe(sourcemaps.write("."))
             .pipe(size({title: taskName}))
             .pipe(gulp.dest(destDir));
     });
