@@ -20,7 +20,7 @@ def get_request(path="/", user=None):
 
 
 def get_request_with_basket(path="/", user=None, ajax=False):
-    request = get_request()
+    request = get_request(path, user)
     get_default_shop()  # Create a Shop
     ShoopFrontMiddleware().process_request(request)
     request.session = {}
