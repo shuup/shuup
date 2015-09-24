@@ -29,6 +29,7 @@ URL names
 """
 
 import django.conf
+from registration.signals import user_activated, login_user
 from shoop.apps import AppConfig
 
 
@@ -61,6 +62,9 @@ class RegistrationAppConfig(AppConfig):
             # By default, Django-Registration considers this False, but
             # we override it to True. unless otherwise set by the user.
             django.conf.settings.REGISTRATION_AUTO_LOGIN = True
+
+            # connect signal here since the setting value has changed
+            user_activated.connect(login_user)
 
         if not hasattr(django.conf.settings, "REGISTRATION_EMAIL_HTML"):
             # We only provide txt templates out of the box, so default to
