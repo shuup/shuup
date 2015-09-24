@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.conf import settings
-from django.contrib.auth import get_user
+from django.contrib.auth import get_user, REDIRECT_FIELD_NAME
 from django.core.urlresolvers import reverse
 from shoop.testing.factories import get_default_shop
 from shoop_tests.utils.fixtures import REGULAR_USER_PASSWORD, regular_user
@@ -29,10 +29,16 @@ def test_login_logs_the_user_in(client, regular_user, rf):
 
     get_default_shop()
     prepare_user(regular_user)
-    client.post(reverse("shoop:login"), data={
+    redirect_target = "/redirect-success/"
+    response = client.post(reverse("shoop:login"), data={
         "username": regular_user.username,
         "password": REGULAR_USER_PASSWORD,
+        REDIRECT_FIELD_NAME: redirect_target
     })
+
+    assert response.get("location")
+    assert response.get("location").endswith(redirect_target)
+
     request = rf.get("/")
     request.session = client.session
     assert get_user(request) == regular_user, "User is logged in"

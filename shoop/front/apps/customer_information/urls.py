@@ -8,9 +8,10 @@
 from django.conf.urls import patterns, url
 
 from . import views
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = patterns(
     '',
-    url(r'^customer/$', views.CustomerEditView.as_view(),
+    url(r'^customer/$', login_required(views.CustomerEditView.as_view()),
         name='customer_edit'),
 )

@@ -30,6 +30,15 @@ class LoginView(FormView):
     template_name = 'shoop/user/login.jinja'
     form_class = AuthenticationForm
 
+    def get_form(self, form_class=None):
+        form = super(LoginView, self).get_form(form_class)
+        form.fields[REDIRECT_FIELD_NAME] = forms.CharField(
+            widget=forms.HiddenInput,
+            required=False,
+            initial=self.request.REQUEST.get(REDIRECT_FIELD_NAME)
+        )
+        return form
+
     def form_valid(self, form):
         user = form.get_user()
         login(self.request, user)

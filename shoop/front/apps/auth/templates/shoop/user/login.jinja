@@ -22,7 +22,7 @@
             <div class="well">
                 <form role="form" method="post" action="{{ request.path }}">
                     {% csrf_token %}
-                    <input type="hidden" name="next" value="{{ next|default("") }}">
+                    {% for f in form.hidden_fields() %}{{ f }}{% endfor %}
                     {{ render_field(form.username) }}
                     {{ render_field(form.password) }}
                     <button type="submit" class="btn btn-primary btn-block"><i class="glyphicon glyphicon-log-in"></i> {% trans %}Log in{% endtrans %}</button>
