@@ -162,6 +162,8 @@ TEMPLATES = [
     },
 ]
 
+# set login url here because of `login_required` decorators
+LOGIN_URL = "/login"
 
 SESSION_SERIALIZER = "django.contrib.sessions.serializers.PickleSerializer"
 
