@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.conf import settings
 from shoop.apps import AppConfig
 from shoop.apps.settings import validate_templates_configuration
 
@@ -25,6 +26,10 @@ class ShoopFrontAppConfig(AppConfig):
 
     def ready(self):
         validate_templates_configuration()
+
+        if settings.SHOOP_FRONT_INSTALL_ERROR_HANDLERS:
+            from .error_handling import install_error_handlers
+            install_error_handlers()
 
 
 default_app_config = "shoop.front.ShoopFrontAppConfig"
