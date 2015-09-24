@@ -6,8 +6,10 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
+from django.shortcuts import resolve_url
 import pytest
 from shoop.testing.factories import get_default_shop
 from shoop.testing.soup_utils import extract_form_fields
@@ -52,3 +54,11 @@ def test_new_user_information_edit():
 
     assert response.status_code == 302
     assert get_user_model().objects.get(pk=user.pk).email == new_email
+
+
+@pytest.mark.django_db
+def test_customer_edit_redirects_to_login_if_not_logged_in():
+    get_default_shop()  # Front middleware needs a Shop to exists
+    response = SmartClient().get(reverse("shoop:customer_edit"), follow=False)
+    assert response.status_code == 302  # Redirection ("Found")
+    assert resolve_url(settings.LOGIN_URL) in response.url
