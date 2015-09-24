@@ -1,4 +1,9 @@
-{% extends "shoop/front/base.jinja" %}
+{% if request.is_ajax() %}
+    {% extends "classic_gray/base_ajax_content_only.jinja" %}
+    {% import "classic_gray/shoop/front/macros.jinja" as macros with context %}
+{% else %}
+    {% extends "shoop/front/base.jinja" %}
+{% endif %}
 
 {% block title %}{{ category.name }}{% endblock %}
 {% block content_title %}{{ category.name }}{% endblock %}
@@ -51,33 +56,22 @@
                 </div>
             </div>
             <hr class="visible-sm visible-xs">
-            <div class="row product-list-view grid">
-                {% for product in products if shoop.product.is_visible(product) %}
-                    <div class="single-product">
-                        {{ macros.product_box(product, show_description=True, class="product-card box") }}
-                    </div>
-                {% endfor %}
-            </div>
-            <div class="clearfix">
-                <nav>
-                    <ul class="pagination text-center">
-                        <li>
-                            <a href="#" aria-label="Previous">
-                                <span aria-hidden="true"><i class="fa fa-angle-left"></i></span>
-                            </a>
-                        </li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li>
-                            <a href="#" aria-label="Next">
-                                <span aria-hidden="true"><i class="fa fa-angle-right"></i></span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+            <div id="ajax_content">
+            {% block ajax_content %}
+                {%  set pagination = shoop.general.get_pagination_variables(products, 12) %}
+                <div class="row product-list-view grid">
+                    {% for product in pagination.objects if shoop.product.is_visible(product) %}
+                        <div class="single-product">
+                            {{ macros.product_box(product, show_description=True, class="product-card box") }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="clearfix">
+                    {% if pagination.is_paginated %}
+                        {{ macros.pagination(pagination.page, pagination.paginator) }}
+                    {% endif %}
+                </div>
+            {% endblock %}
             </div>
         </div>
     </div>

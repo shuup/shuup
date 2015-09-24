@@ -233,3 +233,44 @@
     {% endif %}
 
 {% endmacro %}
+
+{% macro pagination(page, paginator) %}
+    <script>
+        window.PAGE_NUMBER = "{{ page.number }}";
+    </script>
+    <nav>
+        <ul class="pagination text-center">
+            {% if page.has_previous() %}
+                <li id="previous_page">
+                    <a href="#" onclick="moveToPage({{ page.previous_page_number()}}); return false;" aria-label="{% trans %}Previous{% endtrans %}">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                </li>
+            {% else %}
+                <li id="previous_page" class="disabled">
+                    <span aria-label="{% trans %}Previous{% endtrans %}">
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    </span>
+                </li>
+            {% endif %}
+            {% for i in paginator.page_range %}
+                <li id="pagination_page_{{ i }}" class="{% if i == page.number %}active{% endif %}">
+                    <a href="#" onclick="moveToPage({{ i }}); return false;">{{ i }}</a>
+                </li>
+            {% endfor %}
+            {% if page.has_next() %}
+                <li id="next_page">
+                    <a href="#" onclick="moveToPage({{ page.next_page_number() }}); return false;" aria-label="{% trans %}Next{% endtrans %}">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </li>
+            {% else %}
+                <li id="next_page" class="disabled">
+                    <span aria-label="{% trans %}Next{% endtrans %}">
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </span>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endmacro %}

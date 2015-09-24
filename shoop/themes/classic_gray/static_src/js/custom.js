@@ -32,6 +32,30 @@ function getProductListViewMode() {
     return "grid";
 }
 
+function moveToPage(pageNumber) {
+    var pagination = $("ul.pagination");
+    // Prevent double clicking when ajax is loading
+    if (pagination.prop("disabled")) {
+        return false;
+    }
+    pagination.prop("disabled", true);
+
+    if (typeof(pageNumber) !== "number") {
+        pageNumber = parseInt(pageNumber);
+        if (isNaN(pageNumber)) {
+            return;
+        }
+    }
+    window.PAGE_NUMBER = pageNumber;
+
+    reloadProducts();
+}
+
+function reloadProducts() {
+    var filterString = "?sort=" + $("#id_sort").val() + "&page=" + window.PAGE_NUMBER;
+    $("#ajax_content").load(location.pathname + filterString);
+}
+
 $(function() {
     $("#search-modal").on("show.bs.modal", function() {
         setTimeout(function(){
