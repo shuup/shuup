@@ -67,10 +67,6 @@ class ShoopFrontMiddleware(object):
         self._set_basket(request)
         self._set_timezone(request)
 
-        maintenance_response = self._get_maintenance_response(request)
-        if maintenance_response:
-            return maintenance_response
-
     def _set_shop(self, request):
         # TODO: Not the best logic :)
         request.shop = Shop.objects.first()
@@ -91,13 +87,10 @@ class ShoopFrontMiddleware(object):
             timezone.activate(request.person.timezone)
             # TODO: Fallback to request.shop.timezone (and add such field)
 
-    def _get_maintenance_response(self, request):
-        if request.shop.maintenance_mode and not request.user.is_superuser:
-            return HttpResponse(loader.render_to_string("shoop/front/maintenance.jinja", request=request), status=503)
-
     def process_response(self, request, response):
         if hasattr(request, "basket") and request.basket.dirty:
             request.basket.save()
+
         return response
 
     @classmethod
@@ -126,6 +119,18 @@ class ShoopFrontMiddleware(object):
             cls.refresh_on_user_change(request)
         finally:
             request.user = current_user
+
+    def process_view(self, request, view_func, *view_args, **view_kwargs):
+        maintenance_response = self._get_maintenance_response(request, view_func)
+        if maintenance_response:
+            return maintenance_response
+
+    def _get_maintenance_response(self, request, view_func):
+        if "login" in view_func.__name__:
+            return
+
+        if request.shop.maintenance_mode and not request.user.is_superuser:
+            return HttpResponse(loader.render_to_string("shoop/front/maintenance.jinja", request=request), status=503)
 
 if (
     "django.contrib.auth" in settings.INSTALLED_APPS and
