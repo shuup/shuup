@@ -107,8 +107,12 @@ def get_pagination_variables(context, objects, limit):
 
     variables["paginator"] = paginator = Paginator(objects, limit)
     variables["is_paginated"] = (paginator.num_pages > 1)
-    current_page = context["request"].GET.get("page")
-    variables["page"] = page = paginator.page(min(current_page, paginator.num_pages) if current_page else 1)
+    try:
+        current_page = int(context["request"].GET.get("page") or 0)
+    except ValueError:
+        current_page = 1
+    page = paginator.page(min((current_page or 1), paginator.num_pages))
+    variables["page"] = page
     variables["objects"] = page.object_list
 
     return variables
