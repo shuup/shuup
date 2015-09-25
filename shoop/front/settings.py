@@ -52,3 +52,14 @@ SHOOP_BASKET_STORAGE_CLASS_SPEC = (
 #: switch in a view with a different ``phase_specs``.
 SHOOP_CHECKOUT_VIEW_SPEC = (
     "shoop.front.views.checkout:DefaultCheckoutView")
+
+#: Whether Shoop uses its own error handlers.
+#:
+#: If this value is set to ``False`` django defaults are used or the ones specified
+#: in ``settings.ROOT_URLCONF`` file.
+#:
+#: Setting this to ``True`` won't override handlers specified
+#: in ``settings.ROOT_URLCONF``.
+#:
+#: Handled error cases are: 400, 403, 404, and 500
+SHOOP_FRONT_INSTALL_ERROR_HANDLERS = True

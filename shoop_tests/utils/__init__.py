@@ -55,7 +55,7 @@ def prepare_logger_for_stdout(logger, level=logging.DEBUG):
 
 
 @contextlib.contextmanager
-def replace_urls(patterns):
+def replace_urls(patterns, extra=None):
     """
     Context manager to replace the root URLconf with a list of URLpatterns in-memory.
 
@@ -63,11 +63,14 @@ def replace_urls(patterns):
 
     :param patterns: List of URLpatterns
     :type patterns: list[RegexURLResolver]
+    :param extra: Dict to add to the created urlconf
+    :type extra: dict
     """
     old_urlconf = get_urlconf(default=settings.ROOT_URLCONF)
     urlconf_module_name = "replace_urls_%s" % uuid.uuid4()
     module = types.ModuleType(urlconf_module_name)
     module.urlpatterns = patterns
+    module.__dict__.update(extra or ())
     sys.modules[urlconf_module_name] = module
     set_urlconf(urlconf_module_name)
     clear_url_caches()
