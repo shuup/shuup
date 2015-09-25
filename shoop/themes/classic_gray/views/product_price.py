@@ -5,7 +5,9 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from shoop.core.models import ProductVariationResult
 from shoop.front.views.product import ProductDetailView
+from django.utils.translation import ugettext as _
 
 
 class ProductPriceView(ProductDetailView):
@@ -13,10 +15,39 @@ class ProductPriceView(ProductDetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ProductPriceView, self).get_context_data(**kwargs)
-        product = context["product"]
-        context["quantity"] = product.sales_unit.round(self.request.GET.get("quantity"))
-        context["selected_child"] = int(self.request.GET.get("child") or 0)
+        vars = self.get_variation_variables()
+        if vars:  # complex variation variables detected
+            context["product"] = ProductVariationResult.resolve(context["product"], vars)
+        context["quantity"] = self.request.GET.get("quantity")
+
+        if context["product"]:  # Might be null from ProductVariationResult resolution
+            context["quantity"] = context["product"].sales_unit.round(context["quantity"])
+
         return context
+
+    def get_variation_variables(self):
+        return dict(
+            (int(k.split("_")[-1]), int(v))
+            for (k, v) in self.request.GET.items()
+            if k.startswith("var_")
+        )
+
+    def get(self, request, *args, **kwargs):
+        # `ProductDetailView` issues redirects for variation children, so we override
+        # this here.
+        product = self.object = self.get_object()
+        shop_product = self.shop_product = product.get_shop_instance(request.shop)
+
+        if not shop_product:
+            errors = [_(u"This product is not available in this shop.")]
+        else:
+            errors = list(shop_product.get_visibility_errors(customer=request.customer))
+
+        if errors:
+            return self.render_to_response({"product": None, "error": "\n".join(errors)})
+
+        # Skipping ProductPriceView.super for a reason.
+        return super(ProductDetailView, self).get(request, *args, **kwargs)
 
 
 def product_price(request):
