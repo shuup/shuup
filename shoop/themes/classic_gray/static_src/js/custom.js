@@ -56,26 +56,28 @@ function reloadProducts() {
     $("#ajax_content").load(location.pathname + filterString);
 }
 
-function updateProductPrice(productId) {
+function updatePrice() {
     var $quantity = $("#product-quantity");
     if (!$quantity.is(":valid")) {
         return;
     }
     var data = {
-        id: productId,
+        id: $("input[name=product_id]").val(),
         quantity: $quantity.val()
     };
-    var $selectedChild = $("#product-variations");
-    if ($selectedChild.length > 0) {
-        data.child = $selectedChild.val();
+    var $simpleVariationSelect = $("#product-variations");
+    if ($simpleVariationSelect.length > 0) {
+        // Smells like a simple variation; use the selected child's ID instead.
+        data.id = $simpleVariationSelect.val();
+    } else {
+        // See if we have variable variation select boxes; if we do, add those.
+        $("select.variable-variation").serializeArray().forEach(function(obj) {
+            data[obj.name] = obj.value;
+        });
     }
-    $.ajax({
-        url: "/xtheme/product_price",
-        method: "GET",
-        data: data,
-        success: function(html) {
-            $("#product-price-section").html(html);
-        }
+    jQuery.ajax({url: "/xtheme/product_price", dataType: "html", data: data}).done(function(responseText) {
+        var $content = jQuery("<div>").append(jQuery.parseHTML(responseText)).find("#product-price-div");
+        jQuery("#product-price-div").html($content);
     });
 }
 
@@ -139,4 +141,7 @@ $(function() {
         $currentlySelectedPage.addClass("current");
         $currentlySelectedPage.parents("li").addClass("current");
     }
+
+    $(document).on("change", ".variable-variation, #product-variations, #product-quantity", updatePrice);
+    updatePrice();
 });

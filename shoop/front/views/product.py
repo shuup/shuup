@@ -53,7 +53,7 @@ class ProductDetailView(DetailView):
                 )
             ]
         elif product.mode == ProductMode.VARIABLE_VARIATION_PARENT:
-            raise NotImplementedError("Not currently implemented: variable variation parent")
+            context["variation_variables"] = product.variation_variables.all().prefetch_related("values")
         elif product.mode == ProductMode.PACKAGE_PARENT:
             children = (
                 product.package_children
