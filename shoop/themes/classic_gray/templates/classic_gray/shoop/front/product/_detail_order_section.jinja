@@ -84,7 +84,7 @@
 
 {% macro simple_variation_form() %}
     {% if not orderable_variation_children %}
-        <p class="not-orderable">{% trans %}Product not orderable{% endtrans %}</p>
+        <p class="not-orderable">{% trans %}Product is not orderable{% endtrans %}</p>
     {% else %}
         <div class="product-variations">
             <input type="hidden" name="command" value="add">
@@ -126,7 +126,13 @@
                 <button type="submit" class="btn btn-primary btn-block btn-lg"><i class="fa fa-shopping-cart"></i>
                     {% trans %}Add to cart{% endtrans %}</button>
             </div>
-        {% endif %}
+            {% else %}
+            <div class="row">
+                <div class="col-sm-12">
+                <p>{% trans %}Product is not orderable{% endtrans %}</p>
+                </div>
+            </div>
+            {% endif %}
     </div>
 {% endmacro %}
 
