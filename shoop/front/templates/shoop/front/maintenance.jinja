@@ -2,58 +2,61 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ static("img/shoop.ico") }}">
+    <link href='//code.cdn.mozilla.net/fonts/fira.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <title>{% trans %}Maintenance mode{% endtrans %}</title>
     <style>
-        @font-face {
-            font-family: 'Fira Sans';
-            src: local("Fira Sans"), url('{{ static("shoop_admin/fonts/fira/FiraSans-Regular.woff") }}') format('woff');
-        }
         body {
-            overflow: hidden;
-            margin: 0;
-            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaBAMAAABbZFH9AAAAElBMVEX6+vrs7Ozr6+vu7u7v7+/t7e3EXgZMAAAAf0lEQVR4Xl3OMQrDMBSDYR/hTyG7mhNoyS4o3VV6/7sUb7UFb/p4SOP1Oc77cV3P93l8h8d/nBlLSNqNiqkYDRaTaKCmeHSxCtsEJR1aDJDspK62v1iaqDret1QSzPPexyQqJLPtZKLcAtq22IUQIzGyWEliSqC7ldglUrL2/QBWYh5FPnmMCgAAAABJRU5ErkJggg==);
-            font: 14pt/1.4 "Fira Sans", "Open Sans", "Helvetica", sans-serif;
-        }
-        a {
-            color: #17907d;
-        }
-        #bottom {
-            margin: auto;
-            padding-top: 1em;
-            padding-bottom: 10em;
-            text-align: center;
-            box-shadow: 0 -8px 17px 0 rgba(0, 0, 0, 0.1), 0 -6px 20px 0 rgba(0, 0, 0, 0.09)
-        }
-        #top {
-            padding: 4em;
-            background: #fff;
-        }
-        #top img {
-            display: block;
-            margin: auto;
-        }
-        #content {
-            width: 40em;
-            margin: auto;
+            font-family: "Fira Sans", sans-sefif;
+            background: #f4f4f4;
         }
         h1 {
-            margin: 0;
-            padding: 0.5em 0;
-            border-bottom: 1px solid #333;
+            font-weight: normal;
+            font-size: 2em;
+        }
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            width: 100%;
+            height: auto;
+            margin: 30px 0px;
+        }
+        .container {
+            padding: 75px 0px;
+        }
+        .well {
+            background: #fff;
+            box-shadow: none;
+            padding: 20px;
+        }
+        .texts {
+            margin: 30px 0px;
         }
     </style>
 </head>
 <body>
-<div id="top">
-    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTk4NSIgd2lkdGg9IjE5ODUiPjxkZWZzPjxjbGlwUGF0aCBpZD0iYSI+PGNpcmNsZSByPSI5OTIiIGN5PSI5OTIiIGN4PSI5OTIiLz48L2NsaXBQYXRoPjwvZGVmcz48Y2lyY2xlIHI9Ijk5MiIgY3k9Ijk5MiIgY3g9Ijk5MiIgZmlsbD0iIzFiYWI5NSIvPjxwYXRoIGNsaXAtcGF0aD0idXJsKCNhKSIgZD0iTTE0MzYuNTAyIDM1NS41MTJMNTMzLjMzNiA0OTguNzg1djU0Mi42OEw4NjEuNjIgMTM2OS43MiA0NjUuNSAxNTkzLjUxbDM5Ny4xMDcgMzkzLjAwNyAxMTE2LjEwNy0xMS4wMTNjMC0zMC4yMzcgMTAuMjA4LTEwNTQuNzQ1IDcuNTU3LTEwODQuMjk0eiIgZmlsbD0iIzE3OTA3ZCIvPjxwYXRoIGQ9Ik05MzYuMzEgNTExLjM4N2MuMDkgMzIuMDkuMTgzIDY0LjE4LjI3NCA5Ni4yNjhoNTAwLjc2NlYzNTYuMzk4Yy0yMjUuMDc1LjgwNy00NTAuMjE0LTEuNjY2LTY3NS4yNDYgMS4zMzMtMTA2LjAyMiAzLjk0LTIyNS43MjMgNDMuODktMjczLjA3NCAxNDcuMjc4LTUwLjQyNiAxMDYuMTI2LTQyLjIxIDIyNy41NS0zNi4yIDM0MS42NzggOC4xOSA5OC44ODUgNTUuMjc4IDIwNC40MzQgMTUxLjkyIDI0NC43MjIgMTE2Ljc2NCA1MS45NjcgMjQ2LjgxIDMyLjk3NiAzNzAuODEzIDM2LjcxaDE0NC4wOTJjLS40OS0zNS4xMjItLjk4Mi03MC4yNDQtMS40NzMtMTA1LjM2NWwyNjkuNDQgMjIyLjA0LTI2OS40NCAyMzUuNDk3di0xMDAuOTNjLTIxNy44NTMtNi40NzUtNDM1LjY1LTE1LjEzLTY1My4yODItMjYuOTF2MjQyLjI4M2MyNTUuOTk3IDE5Ljg0IDUxMi42OTIgMzYuNDA2IDc2OS41NTUgMzUuMTY3IDEwNC40ODYtMi4yMzYgMjIyLjIxMy00MS40NTMgMjY5LjczMi0xNDIuNTMgNTAuNjM4LTEwMi4zNTYgMzguMTc1LTIxOS40NDQgMzcuNzI4LTMyOS45OC0zLjQ5Mi0xMDMuOTczLTQ3LjIxMy0yMTkuMTgtMTQ5LjAxNS0yNjIuOTItMTExLjU4Mi01MC44Mi0yMzYuNDM1LTMxLjczNS0zNTUuMjA0LTM1LjU2SDkzNi4wMWwuMyAxMDMuMjgyLTI2Mi43MDctMjIyLjA0Qzc2MS4xNyA2NjMuOSA4NDguNzQ1IDU4Ny42MjUgOTM2LjMxIDUxMS4zODd6IiBmaWxsPSIjZmZmIi8+PC9zdmc+"
-         width="160">
-</div>
-<div id="bottom">
-    <div id="content">
-        <h1>{{ request.shop.public_name }}</h1>
-        <p>{{ request.shop.maintenance_message }}</p>
+    <div class="container">
+        <div class="col-sm-6 col-sm-push-3">
+            <div class="well text-center">
+                {% set cropped_logo = request.shop.logo|thumbnail(size=(500,500)) %}
+                {% if cropped_logo %}
+                    <img src="{{ cropped_logo }}" alt="{{ request.shop.public_name }}">
+                {% else %}
+                    <img src="{{ static("shoop_admin/img/logo_with_text.svg") }}" alt="">
+                {% endif %}
+                <div class="texts">
+                    <h1>{{ request.shop.public_name }}</h1>
+                    {% if request.shop.maintenance_message %}
+                        <p class="lead">{{ request.shop.maintenance_message }}</p>
+                    {% else %}
+                        <p class="lead">{% trans %}Shop is currently down for maintenance.{% endtrans %}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-
 </body>
 </html>
