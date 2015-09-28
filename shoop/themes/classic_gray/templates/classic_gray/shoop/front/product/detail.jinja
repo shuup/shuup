@@ -38,6 +38,19 @@
                 {% if product.description %}
                     <p class="product-short-description">{{ product.description|safe|truncate(150, False) }}</p>
                 {% endif %}
+                <div class="product-price">
+                    {% if priceinfo.is_discounted %}
+                        <div class="price-line">
+                            <h4 class="visible-xs">{% trans %}Price{% endtrans %}</h4>
+                            <span class="lead">
+                                <small class="text-muted original-price"><s>{{ priceinfo.base_price|floatformat(2)|home_currency }}</s></small>
+                                <strong>{{ priceinfo.price|floatformat(2)|home_currency }}</strong><small> / {{ product.sales_unit.short_name }}</small>
+                            </span>
+                        </div>
+                    {% else %}
+                        <div class="price-line"><span class="lead"><strong>{{ priceinfo.price|floatformat(2)|home_currency }}</strong><small> / {{ product.sales_unit.short_name }}</small></span></div>
+                    {% endif %}
+                </div>
                 <hr>
             </div>
         </div>
@@ -56,23 +69,22 @@
                 {% if product.description %}
                     <p class="product-short-description">{{ product.description|safe|truncate(150, False) }}</p>
                 {% endif %}
+                <div class="product-price">
+                    {% if priceinfo.is_discounted %}
+                        <div class="price-line">
+                            <h4 class="visible-xs">{% trans %}Price{% endtrans %}</h4>
+                            <span class="lead">
+                                <small class="text-muted original-price"><s>{{ priceinfo.base_price|floatformat(2)|home_currency }}</s></small>
+                                <strong>{{ priceinfo.price|floatformat(2)|home_currency }}</strong><small> / {{ product.sales_unit.short_name }}</small>
+                            </span>
+                        </div>
+                    {% else %}
+                        <div class="price-line"><span class="lead"><strong>{{ priceinfo.price|floatformat(2)|home_currency }}</strong><small> / {{ product.sales_unit.short_name }}</small></span></div>
+                    {% endif %}
+                </div>
             </div>
             <hr>
-            <div class="product-price">
-                {% if priceinfo.is_discounted %}
-                    <div class="price-line">
-                        <h4 class="visible-xs">{% trans %}Price{% endtrans %}</h4>
-                        <span class="lead">
-                            <small class="text-muted original-price"><s>{{ priceinfo.base_price|floatformat(2)|home_currency }}</s></small>
-                            <strong>{{ priceinfo.price|floatformat(2)|home_currency }}</strong><small> / {{ product.sales_unit.short_name }}</small>
-                        </span>
-                    </div>
-                {% else %}
-                    <div class="price-line"><span class="lead"><strong>{{ priceinfo.price|floatformat(2)|home_currency }}</strong><small> / {{ product.sales_unit.short_name }}</small></span></div>
-                {% endif %}
-            </div>
-            <hr>
-            <div class="well" id="product-price-section">
+            <div id="product-price-section">
                 {% include "shoop/front/product/_detail_order_section.jinja" with context %}
             </div>
         </div>

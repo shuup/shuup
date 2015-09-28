@@ -21,7 +21,6 @@
                 <div class="col-md-6 col-sm-7">
                     <h2>{{ product.name }}</h2>
                     {% if product.description %}<p class="description">{{ product.description|safe|truncate(150, False) }}</p>{% endif %}
-                    <hr>
                     <div class="product-price">
                         {% if priceinfo.is_discounted %}
                             <div class="price-line">
