@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
+
 def maintenance_mode_exempt(view_func):
     """
     Make view ignore shop maintenance mode
