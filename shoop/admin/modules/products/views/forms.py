@@ -57,6 +57,10 @@ class ProductBaseForm(MultiLanguageModelForm):
             "keywords": forms.TextInput()
         }
 
+    def __init__(self, **kwargs):
+        super(ProductBaseForm, self).__init__(**kwargs)
+        self.fields["sales_unit"].required = True  # TODO: Move this to model
+
 
 class ShopProductForm(forms.ModelForm):
     class Meta:
@@ -80,6 +84,13 @@ class ShopProductForm(forms.ModelForm):
             "categories",
             # TODO: "shop_primary_image",
         )
+
+    # TODO: Move this to model
+    def clean_minimum_purchase_quantity(self):
+        minimum_purchase_quantity = self.cleaned_data.get("minimum_purchase_quantity")
+        if minimum_purchase_quantity <= 0:
+            raise ValidationError(_("Minimum Purchase Quantity must be greater than 0."))
+        return minimum_purchase_quantity
 
 
 class ProductAttributesForm(forms.Form):
