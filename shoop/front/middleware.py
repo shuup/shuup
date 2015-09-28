@@ -126,7 +126,7 @@ class ShoopFrontMiddleware(object):
             return maintenance_response
 
     def _get_maintenance_response(self, request, view_func):
-        if "login" in view_func.__name__:
+        if "login" in view_func.__name__ or getattr(view_func, "maintenance_mode_exempt", False):
             return
 
         if request.shop.maintenance_mode and not request.user.is_superuser:
