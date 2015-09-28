@@ -41,6 +41,26 @@
     {% endif %}
 {% endmacro %}
 
+{% macro form_section(title, icon="fa-info-circle") %}
+    {% set ss_caller = caller %}
+    {% call content_block(title, icon=icon) %}
+        {{ ss_caller() }}
+    {% endcall %}
+{% endmacro %}
+
+{% macro multi_section_single_form(form_id) %}
+<form method="post" id="{{ form_id }}">{% csrf_token %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 section-navigation" data-navigatee="{{ form_id }}"></div>
+            <div class="col-md-9">
+                {{ caller() }}
+            </div>
+        </div>
+    </div>
+</form>
+{% endmacro %}
+
 {% macro single_section_form(form_id, form, section_title="") %}
     <div class="container-fluid">
         <div class="row">
@@ -57,7 +77,6 @@
                                 {{ bs3.field(field) }}
                             {% endfor %}
                         {% endif %}
-
                     {% endcall %}
                 </form>
             </div>
