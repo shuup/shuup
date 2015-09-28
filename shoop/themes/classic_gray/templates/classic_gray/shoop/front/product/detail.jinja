@@ -1,5 +1,10 @@
 {% extends "shoop/front/base.jinja" %}
-{% set priceinfo = product.get_price_info(request) %}
+
+{% if product.is_variation_parent()  %}
+    {% set priceinfo = product.get_cheapest_child_price_info(request) %}
+{% else %}
+    {% set priceinfo = product.get_price_info(request) %}
+{% endif %}
 
 {% block extrameta %}
     <meta property="og:site_name" content="{{ request.shop }}">
@@ -39,17 +44,7 @@
                     <p class="product-short-description">{{ product.description|safe|truncate(150, False) }}</p>
                 {% endif %}
                 <div class="product-price">
-                    {% if priceinfo.is_discounted %}
-                        <div class="price-line">
-                            <h4 class="visible-xs">{% trans %}Price{% endtrans %}</h4>
-                            <span class="lead">
-                                <small class="text-muted original-price"><s>{{ priceinfo.base_price|floatformat(2)|home_currency }}</s></small>
-                                <strong>{{ priceinfo.price|floatformat(2)|home_currency }}</strong><small> / {{ product.sales_unit.short_name }}</small>
-                            </span>
-                        </div>
-                    {% else %}
-                        <div class="price-line"><span class="lead"><strong>{{ priceinfo.price|floatformat(2)|home_currency }}</strong><small> / {{ product.sales_unit.short_name }}</small></span></div>
-                    {% endif %}
+                    {{ macros.render_product_price(product, priceinfo) }}
                 </div>
                 <hr>
             </div>
@@ -70,17 +65,7 @@
                     <p class="product-short-description">{{ product.description|safe|truncate(150, False) }}</p>
                 {% endif %}
                 <div class="product-price">
-                    {% if priceinfo.is_discounted %}
-                        <div class="price-line">
-                            <h4 class="visible-xs">{% trans %}Price{% endtrans %}</h4>
-                            <span class="lead">
-                                <small class="text-muted original-price"><s>{{ priceinfo.base_price|floatformat(2)|home_currency }}</s></small>
-                                <strong>{{ priceinfo.price|floatformat(2)|home_currency }}</strong><small> / {{ product.sales_unit.short_name }}</small>
-                            </span>
-                        </div>
-                    {% else %}
-                        <div class="price-line"><span class="lead"><strong>{{ priceinfo.price|floatformat(2)|home_currency }}</strong><small> / {{ product.sales_unit.short_name }}</small></span></div>
-                    {% endif %}
+                    {{ macros.render_product_price(product, priceinfo) }}
                 </div>
             </div>
             <hr>
