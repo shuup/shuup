@@ -83,6 +83,14 @@ class ShopProductFormPart(FormPart):
                 continue
             if not shop_product_form.instance.pk:
                 shop_product_form.instance.product = self.object
+
+            original_quantity = shop_product_form.instance.minimum_purchase_quantity
+            rounded_quantity = self.object.sales_unit.round(original_quantity)
+            if original_quantity != rounded_quantity:
+                messages.info(self.request, _("Minimum Purchase Quantity has been rounded to match Sales Unit."))
+
+            shop_product_form.instance.minimum_purchase_quantity = rounded_quantity
+
             inst = shop_product_form.save()
             messages.success(self.request, _("Changes to shop instance for %s saved") % inst.shop)
 
