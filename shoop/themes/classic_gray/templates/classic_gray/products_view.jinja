@@ -1,22 +1,23 @@
 {% extends "shoop/front/base.jinja" %}
 
-{% block title %}{% trans %}Products{% endtrans %}{% endblock %}
-{% block content_title %}{% trans %}Products{% endtrans %}{% endblock %}
+{% block title %}{% trans %}Newest products{% endtrans %}{% endblock %}
+{% block content_title %}{% trans %}Newest products{% endtrans %}{% endblock %}
 
 {% block breadcrumb %}
     <ol class="breadcrumb">
         <li><a href="/">{% trans %}Home{% endtrans %}</a></li>
-        <li class="active">{% trans %}Products{% endtrans %}</li>
+        <li class="active">{% trans %}Newest products{% endtrans %}</li>
     </ol>
 {% endblock %}
 
 {% block content %}
+    <hr>
     <div class="row">
         <div class="col-md-3 categories-nav">
             {% include "shoop/front/includes/_category_menu.jinja" %}
         </div>
         <div class="col-md-9">
-            <div class="row product-list-actions">
+            <div class="clearfix product-list-actions">
                 <div class="toggle-view">
                     <span class="control-label">{% trans %}Show Grid/List{% endtrans %}</span>
                     <input id="product-list-view-type" type="checkbox">
