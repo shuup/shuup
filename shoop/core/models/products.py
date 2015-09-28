@@ -151,7 +151,6 @@ class ProductQuerySet(TranslatableQuerySet):
 
 @python_2_unicode_compatible
 class Product(AttributableMixin, TranslatableModel):
-
     COMMON_SELECT_RELATED = ("type", "primary_image", "tax_class")
 
     # Metadata
@@ -253,10 +252,48 @@ class Product(AttributableMixin, TranslatableModel):
         return shop_inst
 
     def get_cheapest_child_price(self, context, quantity=1):
-        return sorted(
-            c.get_price(context, quantity=quantity)
-            for c in self.variation_children.all()
-        )[0]
+        price_info = self.get_cheapest_child_price_info(context, quantity)
+        if price_info:
+            return price_info.price
+
+    def get_child_price_range(self, context, quantity=1):
+        """
+        Get the prices for cheapest and the most expensive child
+
+        The attribute used for sorting is `PriceInfo.price`.
+
+        Return (`None`, `None`) if `self.variation_children` do not exist.
+        This is because we cannot return anything sensible.
+
+        :type context: shoop.core.contexts.PriceTaxContext
+        :type quantity: int
+        :return: a tuple of prices
+        :rtype: (shoop.core.pricing.Price, shoop.core.pricing.Price)
+        """
+        items = [c.get_price_info(context, quantity=quantity) for c in self.variation_children.all()]
+        if not items:
+            return (None, None)
+
+        infos = sorted(items, key=lambda x: x.price)
+        return (infos[0].price, infos[-1].price)
+
+    def get_cheapest_child_price_info(self, context, quantity=1):
+        """
+        Get the `PriceInfo` of the cheapest variation child
+
+        The attribute used for sorting is `PriceInfo.price`.
+
+        Return `None` if `self.variation_children` do not exist.
+        This is because we cannot return anything sensible.
+
+        :type context: shoop.core.contexts.PriceTaxContext
+        :rtype: shoop.core.pricing.PriceInfo
+        """
+        items = [c.get_price_info(context, quantity=quantity) for c in self.variation_children.all()]
+        if not items:
+            return None
+
+        return sorted(items, key=lambda x: x.price)[0]
 
     def get_price_info(self, context, quantity=1):
         """
