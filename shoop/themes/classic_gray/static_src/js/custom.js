@@ -77,7 +77,7 @@ function updatePrice() {
     }
     jQuery.ajax({url: "/xtheme/product_price", dataType: "html", data: data}).done(function(responseText) {
         var $content = jQuery("<div>").append(jQuery.parseHTML(responseText)).find("#product-price-div");
-        jQuery("#product-price-div").html($content);
+        jQuery("#product-price-div").replaceWith($content);
     });
 }
 
