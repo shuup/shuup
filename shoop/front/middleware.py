@@ -126,6 +126,10 @@ class ShoopFrontMiddleware(object):
             return maintenance_response
 
     def _get_maintenance_response(self, request, view_func):
+        if settings.DEBUG:
+            # Allow media and static accesses in debug mode
+            if request.path.startswith("/media") or request.path.startswith("/static"):
+                return None
         if getattr(view_func, "maintenance_mode_exempt", False):
             return None
         if "login" in view_func.__name__:
