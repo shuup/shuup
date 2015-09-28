@@ -16,6 +16,11 @@ recursive-include shoop_tests *.jinja
 # included still, since it's a Python package.
 # recursive-include shoop_workbench ...
 
-prune shoop/admin/static_src/*/bower_components
-prune shoop/admin/modules/*/bower_components
+prune shoop/*/bower_components
+prune shoop/*/*/bower_components
+prune shoop/*/*/*/bower_components
+prune shoop/*/*/*/*/bower_components
+prune shoop/*/*/*/*/node_modules
+prune shoop/*/*/*/node_modules
+prune shoop/*/*/node_modules
 prune shoop/*/node_modules
