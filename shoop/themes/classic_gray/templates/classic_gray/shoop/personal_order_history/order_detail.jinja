@@ -154,11 +154,11 @@
 {% endmacro %}
 
 {% macro price_row(header, value) %}
-    {{ info_row(header, value|home_currency) }}
+    {{ info_row(header, value|money) }}
 {% endmacro %}
 
 {% macro price_cell(value, elem="td") %}
-    {{ number_cell(value|home_currency, elem) }}
+    {{ number_cell(value|money, elem) }}
 {% endmacro %}
 
 {% macro number_cell(value, elem="td") %}

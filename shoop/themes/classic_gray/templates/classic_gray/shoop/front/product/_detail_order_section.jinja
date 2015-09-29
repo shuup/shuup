@@ -63,13 +63,13 @@
         {% set price_info = product.get_price_info(request, quantity) %}
         <h2>
             <small class="text-muted">Total:</small>
-            <span id="product-price"><strong>{{ price_info.price|home_currency }}</strong></span>
+            <span id="product-price"><strong>{{ price_info.price|money }}</strong></span>
         </h2>
         <span class="small text-muted">
             {% if price_info.is_discounted %}
-            (<s>{{ price_info.unit_base_price|home_currency }}</s>)
+            (<s>{{ price_info.unit_base_price|money }}</s>)
             {% endif %}
-            {{ price_info.unit_price|home_currency }}/{{ product.sales_unit.short_name }}
+            {{ price_info.unit_price|money }}/{{ product.sales_unit.short_name }}
         </span>
     </div>
 {% endmacro %}

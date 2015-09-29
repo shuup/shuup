@@ -24,7 +24,7 @@
                     </a></td>
                     <td>{{ order.order_date|datetime }}</td>
                     <td>{{ order.get_status_display() }}</td>
-                    <td>{{ order.taxful_total_price|home_currency }}</td>
+                    <td>{{ order.taxful_total_price|money }}</td>
                 </tr>
             {% endfor %}
         </table>

@@ -35,7 +35,7 @@
                             <td>{{- order.identifier -}}</td>
                             <td>{{ order.order_date|datetime }}</td>
                             <td>{{ order.get_status_display() }}</td>
-                            <td class="text-right">{{ order.taxful_total_price|home_currency }}</td>
+                            <td class="text-right">{{ order.taxful_total_price|money }}</td>
                             <td class="text-right"><a href="{{ url("shoop:show-order", pk=order.pk) }}"><i class="fa fa-search"></i> {% trans %}Details{% endtrans %}</a></td>
                         </tr>
                     {% endfor %}

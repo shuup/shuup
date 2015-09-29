@@ -61,7 +61,7 @@
                             <small>Total: </small>
                             <span id="product-price-placeholder">
                                 {% set price_info = product.get_price(request) %}
-                                {{ price_info.price|home_currency }}
+                                {{ price_info.price|money }}
                             </span>
                             <span class="sales-unit">
                                 {{ product.sales_unit.short_name }}

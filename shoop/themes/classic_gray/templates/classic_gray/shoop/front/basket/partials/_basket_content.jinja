@@ -50,7 +50,7 @@
                 <div class="product-sum">
                     <h4 class="price">
                         {# TODO: Show discounts if any #}
-                        <small>{% trans %}Total{% endtrans %}:</small> {{ line.total_price|home_currency }}
+                        <small>{% trans %}Total{% endtrans %}:</small> {{ line.total_price|money }}
                     </h4>
                 </div>
                 <div class="delete">
@@ -69,7 +69,7 @@
                     {# TODO: Show shipping costs and tax breakdown #}
                     <div class="row">
                         <div class="col-xs-6"><h4><strong>{% trans %}Total{% endtrans %}</strong></h4></div>
-                        <div class="total-price text-right col-xs-6"><h2>{{ basket.total_price|home_currency }}</h2></div>
+                        <div class="total-price text-right col-xs-6"><h2>{{ basket.total_price|money }}</h2></div>
                     </div>
                 </div>
             </div>

@@ -18,7 +18,7 @@
         <tr>
             <td colspan="5" class="text-right">
                 {% trans %}Total{% endtrans %}:
-                <span class="total-price"><strong>{{ basket.taxful_total_price|home_currency }}</strong></span>
+                <span class="total-price"><strong>{{ basket.taxful_total_price|money }}</strong></span>
             </td>
         </tr>
         </tfoot>
@@ -41,16 +41,16 @@
                     {{ line.text }}
                 </td>
                 <td class="text-right">
-                    {{ line.taxful_unit_price|home_currency }}
+                    {{ line.taxful_unit_price|money }}
                     {% if line.total_tax_amount %}
-                        <br><small class="text-muted">({{ line.taxless_unit_price|home_currency }} excl. tax)</small>
+                        <br><small class="text-muted">({{ line.taxless_unit_price|money }} excl. tax)</small>
                     {% endif %}
                 </td>
                 <td class="text-right">
                     {{ line.quantity|number }}
                 </td>
                 <td class="text-right">
-                    <span class="line-total">{{ line.taxful_total_price|home_currency }}</span>
+                    <span class="line-total">{{ line.taxful_total_price|money }}</span>
                 </td>
             </tr>
         {% endfor %}

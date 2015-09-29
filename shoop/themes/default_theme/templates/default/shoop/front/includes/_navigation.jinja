@@ -71,7 +71,7 @@
                                             {% trans %}Total{% endtrans %}
                                         </th>
                                         <th class="text-right">
-                                            {{ request.basket.total_price|home_currency }}
+                                            {{ request.basket.total_price|money }}
                                         </th>
                                     </tr>
                                 </tfoot>
@@ -79,7 +79,7 @@
                                     {% for line in request.basket.get_lines() %}
                                         <tr>
                                             <td>{{ line.quantity|number }} &times; {{ line.text }}</td>
-                                            <td class="text-right">{{ line.total_price|home_currency }}</td>
+                                            <td class="text-right">{{ line.total_price|money }}</td>
                                         </tr>
                                     {% else %}
                                         <tr>

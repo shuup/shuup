@@ -283,15 +283,15 @@
     {% if product.is_variation_parent() %}
         {% set min_price, max_price = product.get_child_price_range(request) %}
         {% if min_price == max_price %}
-            <strong>{{ min_price|home_currency if min_price else "" }}</strong>
+            <strong>{{ min_price|money if min_price else "" }}</strong>
         {% else %}
-            <strong>{{ min_price|home_currency }} - {{ max_price|home_currency }}</strong>
+            <strong>{{ min_price|money }} - {{ max_price|money }}</strong>
         {% endif %}
     {% else %}
         {% if price_info.is_discounted %}
-            <small class="text-muted original-price original"><s>{{ price_info.base_price|floatformat(2)|home_currency }}</s></small>
+            <small class="text-muted original-price original"><s>{{ price_info.base_price|money }}</s></small>
         {% endif %}
-        <strong>{{ price_info.price|floatformat(2)|home_currency }}</strong>
+        <strong>{{ price_info.price|money }}</strong>
     {% endif %}
     {% if show_units %}
     <small> / {{ product.sales_unit.short_name }}</small>

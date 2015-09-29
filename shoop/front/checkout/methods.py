@@ -17,8 +17,8 @@ from django.views.generic import View
 from django.views.generic.edit import FormView
 
 from shoop.core.models import PaymentMethod, ShippingMethod
-from shoop.core.templatetags.shoop_common import home_currency
 from shoop.front.checkout import CheckoutPhaseViewMixin
+from shoop.utils.i18n import format_money
 
 LOG = logging.getLogger(__name__)
 
@@ -38,7 +38,7 @@ class MethodModelChoiceField(forms.ModelChoiceField):
             try:
                 price = obj.get_effective_taxless_price(self.basket)
                 if price:
-                    formatted_price = home_currency(price)
+                    formatted_price = format_money(price)
                     label = "%s (%s)" % (label, formatted_price)  # TODO: Add tax handling.
             except:
                 LOG.exception("Unable to get or format method price for method %s" % obj)

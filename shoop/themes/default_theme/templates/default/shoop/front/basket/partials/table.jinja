@@ -28,7 +28,7 @@
                     </td>
                     <td class="text-right">
                         {% trans %}Total{% endtrans %}:
-                        <span class="total-price"><strong>{{ basket.total_price|home_currency }}</strong></span>
+                        <span class="total-price"><strong>{{ basket.total_price|money }}</strong></span>
                     </td>
                     <td></td>
                 </tr>
@@ -59,13 +59,13 @@
                         </td>
                         <td class="text-right">
                             {% if line.discount_text %}
-                                {{ line.discounted_unit_price|home_currency }}
+                                {{ line.discounted_unit_price|money }}
                                 <small style="display: block">
-                                    <del>{{ line.unit_price|home_currency }}</del>
+                                    <del>{{ line.unit_price|money }}</del>
                                     <br>{{ line.discount_text }}
                                 </small>
                             {% else %}
-                                {{ line.unit_price|home_currency }}
+                                {{ line.unit_price|money }}
                             {% endif %}
                         </td>
                         <td class="text-right">
@@ -81,7 +81,7 @@
                             {% endif %}
                         </td>
                         <td class="text-right">
-                            <span class="line-total">{{ line.total_price|home_currency }}</span>
+                            <span class="line-total">{{ line.total_price|money }}</span>
                         </td>
                         <td class="del-basket-line-form">
                             {% if line.can_delete %}
