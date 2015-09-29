@@ -41,6 +41,13 @@ def test_user_detail_works_at_all(rf, admin_user):
 def test_user_detail_contact_seed(rf):
     get_default_shop()
     contact = create_random_person()
+
+    # Using random data for name and email would need escaping when
+    # checking if it is rendered, therefore use something very basic instead
+    contact.name = "Matti Perustyyppi"
+    contact.email = "matti.perustyyppi@perus.fi"
+    contact.save()
+
     view_func = UserDetailView.as_view()
     # Check that fields populate . . .
     request = apply_request_middleware(rf.get("/", {"contact_id": contact.pk}))
