@@ -135,6 +135,15 @@ class ShopProduct(models.Model):
         for error in self.get_visibility_errors(customer):
             yield error
 
+        if supplier is None and not self.suppliers.exists():
+            # `ShopProduct` must have at least one `Supplier`.
+            # If supplier is not given and the `ShopProduct` itself
+            # doesn't have suppliers we cannot sell this product.
+            yield ValidationError(
+                _('The product has no supplier.'),
+                code="no_supplier"
+            )
+
         if not ignore_minimum and quantity < self.minimum_purchase_quantity:
             yield ValidationError(
                 _('The purchase quantity needs to be at least %d for this product.') % self.minimum_purchase_quantity,
