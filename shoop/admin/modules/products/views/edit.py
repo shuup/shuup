@@ -161,3 +161,20 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
 
     def get_toolbar(self):
         return EditProductToolbar(view=self)
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductEditView, self).get_context_data(**kwargs)
+        orderability_errors = []
+
+        if self.object.pk:
+            for shop in Shop.objects.all():
+                shop_product = self.object.get_shop_instance(shop)
+                orderability_errors.extend(
+                    ["%s: %s" % (shop.name, msg.message)
+                     for msg in shop_product.get_orderability_errors(
+                        supplier=None,
+                        quantity=shop_product.minimum_purchase_quantity,
+                        customer=None)])
+
+        context["orderability_errors"] = orderability_errors
+        return context
