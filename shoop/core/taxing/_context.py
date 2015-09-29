@@ -12,3 +12,4 @@ class TaxingContext(object):
         self.country_code = getattr(location, "country_code", None) or getattr(location, "country", None)
         self.region_code = getattr(location, "region_code", None)
         self.postal_code = getattr(location, "postal_code", None)
+        self.location = location
