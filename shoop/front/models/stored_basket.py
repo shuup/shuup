@@ -11,7 +11,7 @@ from django.db import models
 from django.db.models.fields.related import ManyToManyField
 from django.utils.crypto import get_random_string
 
-from shoop.core.fields import MoneyField, TaggedJSONField
+from shoop.core.fields import MoneyValueField, TaggedJSONField
 
 
 def generate_key():
@@ -33,8 +33,8 @@ class StoredBasket(models.Model):
     data = TaggedJSONField()
 
     # For statistics etc., as `data` is opaque:
-    taxless_total = MoneyField(default=0, null=True, blank=True)
-    taxful_total = MoneyField(default=0, null=True, blank=True)
+    taxless_total = MoneyValueField(default=0, null=True, blank=True)
+    taxful_total = MoneyValueField(default=0, null=True, blank=True)
     product_count = models.IntegerField(default=0)
     products = ManyToManyField("shoop.Product", blank=True)
 

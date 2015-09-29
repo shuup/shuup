@@ -25,7 +25,7 @@ from parler.models import TranslatableModel, TranslatedFields
 
 from shoop.core import taxing
 from shoop.core.excs import NoPaymentToCreateException, NoProductsToShipException
-from shoop.core.fields import InternalIdentifierField, LanguageField, MoneyField, UnsavedForeignKey
+from shoop.core.fields import InternalIdentifierField, LanguageField, MoneyValueField, UnsavedForeignKey
 from shoop.core.models.products import Product
 from shoop.core.models.suppliers import Supplier
 from shoop.core.pricing import TaxlessPrice
@@ -214,8 +214,8 @@ class Order(models.Model):
     extra_data = JSONField(blank=True, null=True)
 
     # Money stuff
-    taxful_total_price = MoneyField(editable=False, verbose_name=_('grand total'), default=0)
-    taxless_total_price = MoneyField(editable=False, verbose_name=_('taxless total'), default=0)
+    taxful_total_price = MoneyValueField(editable=False, verbose_name=_('grand total'), default=0)
+    taxless_total_price = MoneyValueField(editable=False, verbose_name=_('taxless total'), default=0)
     display_currency = models.CharField(max_length=4, blank=True)
     display_currency_rate = models.DecimalField(max_digits=36, decimal_places=9, default=1)
 

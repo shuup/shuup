@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='simpleproductprice',
             name='price',
-            field=shoop.core.fields.MoneyField(max_digits=36, decimal_places=9),
+            field=shoop.core.fields.MoneyValueField(max_digits=36, decimal_places=9),
         ),
     ]

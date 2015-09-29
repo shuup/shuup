@@ -16,7 +16,7 @@ from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from jsonfield import JSONField
 
-from shoop.core.fields import MoneyField, QuantityField, UnsavedForeignKey
+from shoop.core.fields import MoneyValueField, QuantityField, UnsavedForeignKey
 from shoop.core.pricing import Price, TaxfulPrice, TaxlessPrice
 from shoop.core.taxing import LineTax
 from shoop.core.utils.prices import LinePriceMixin
@@ -84,8 +84,8 @@ class OrderLine(models.Model, LinePriceMixin):
 
     # The following fields govern calculation of the prices
     quantity = QuantityField(verbose_name=_('quantity'), default=1)
-    _unit_price_amount = MoneyField(verbose_name=_('unit price amount'), default=0)
-    _total_discount_amount = MoneyField(verbose_name=_('total amount of discount'), default=0)
+    _unit_price_amount = MoneyValueField(verbose_name=_('unit price amount'), default=0)
+    _total_discount_amount = MoneyValueField(verbose_name=_('total amount of discount'), default=0)
     _prices_include_tax = models.BooleanField(default=True)
 
     objects = OrderLineManager()
@@ -184,8 +184,8 @@ class OrderLineTax(ShoopModel, LineTax):
         on_delete=models.PROTECT, verbose_name=_('tax')
     )
     name = models.CharField(max_length=200, verbose_name=_('tax name'))
-    amount = MoneyField(verbose_name=_('tax amount'))
-    base_amount = MoneyField(
+    amount = MoneyValueField(verbose_name=_('tax amount'))
+    base_amount = MoneyValueField(
         verbose_name=_('base amount'),
         help_text=_('Amount that this tax is calculated from'))
     ordering = models.IntegerField(default=0, verbose_name=_('ordering'))

@@ -10,14 +10,14 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from shoop.core.fields import MoneyField
+from shoop.core.fields import MoneyValueField
 
 
 class SimpleProductPrice(models.Model):
     product = models.ForeignKey("shoop.Product", related_name="+")
     shop = models.ForeignKey("shoop.Shop", db_index=True)
     group = models.ForeignKey("shoop.ContactGroup", db_index=True)
-    price = MoneyField()
+    price = MoneyValueField()
 
     # TODO: (TAX) Check includes_tax consistency (see below)
     #

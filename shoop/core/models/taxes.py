@@ -13,7 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 from parler.models import TranslatedFields
 
 from shoop.core.excs import ImmutabilityError
-from shoop.core.fields import InternalIdentifierField, MoneyField
+from shoop.core.fields import InternalIdentifierField, MoneyValueField
 
 from ._base import TranslatableShoopModel
 
@@ -32,7 +32,7 @@ class Tax(TranslatableShoopModel):
         verbose_name=_('tax rate'),
         help_text=_("The percentage rate of the tax. Mutually exclusive with flat amounts.")
     )
-    amount = MoneyField(
+    amount = MoneyValueField(
         default=None, blank=True, null=True,
         verbose_name=_('tax amount'),
         help_text=_("The flat amount of the tax. Mutually exclusive with percentage rates.")

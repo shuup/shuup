@@ -9,7 +9,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from shoop.core.fields import MoneyField
+from shoop.core.fields import MoneyValueField
 
 __all__ = ("Payment",)
 
@@ -20,7 +20,7 @@ class Payment(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     gateway_id = models.CharField(max_length=32)  # TODO: do we need this?
     payment_identifier = models.CharField(max_length=96, unique=True)
-    amount = MoneyField()
+    amount = MoneyValueField()
     description = models.CharField(max_length=256, blank=True)
     # TODO: Currency here?
 

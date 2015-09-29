@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='shopproduct',
             name='default_price',
-            field=shoop.core.fields.MoneyField(blank=True, null=True, verbose_name='Default price', decimal_places=9,
+            field=shoop.core.fields.MoneyValueField(blank=True, null=True, verbose_name='Default price', decimal_places=9,
                                                max_digits=36),
         ),
         migrations.AddField(
