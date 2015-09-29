@@ -25,7 +25,8 @@ class Money(numbers.UnitedDecimal):
         Create new Money instance with given value and currency.
 
         If no currency is given explicitly and `value` has a property
-        named `currency`, then that will be used.
+        named `currency`, then that will be used.  Otherwise currency is
+        a required argument and not passing one will raise a TypeError.
 
         :param str|numbers.Number value:
           Value as string or number
@@ -34,6 +35,8 @@ class Money(numbers.UnitedDecimal):
         """
         if currency is None and hasattr(value, 'currency'):
             currency = value.currency
+        if not currency:
+            raise TypeError('%s: currency must be given' % cls.__name__)
         instance = super(Money, cls).__new__(cls, value, *args, **kwargs)
         instance.currency = currency
         return instance
@@ -50,11 +53,7 @@ class Money(numbers.UnitedDecimal):
         return cls(value, currency)
 
     def unit_matches_with(self, other):
-        return (
-            (isinstance(other, Money) and self.currency == other.currency)
-            or
-            (self.currency == getattr(other, "currency", None))
-        )
+        return (self.currency == getattr(other, 'currency', None))
 
     def new(self, value):
         return type(self)(value, currency=self.currency)

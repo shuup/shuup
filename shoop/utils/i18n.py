@@ -8,11 +8,8 @@
 
 import babel
 from babel.numbers import format_currency
-from django.conf import settings
 from django.utils import translation
 from django.utils.lru_cache import lru_cache
-
-from shoop.utils.money import Money
 
 
 @lru_cache()
@@ -55,15 +52,6 @@ def format_money(amount, digits=None, widen=0, locale=None):
         pattern = pattern.replace(".00", "." + (digits * "0"))
     if widen:
         pattern = pattern.replace(".00", ".00" + (widen * "0"))
-
-    if not hasattr(amount, "value"):
-        # Temporary support for bare Decimals. Will be removed soon.
-        amount = Money(amount, settings.SHOOP_HOME_CURRENCY)
-
-    if not amount.currency:
-        # Temporary support for amounts without currency. Will be removed soon.
-        amount = Money(amount, settings.SHOOP_HOME_CURRENCY)
-
     return format_currency(amount.value, amount.currency, pattern, loc)
 
 

@@ -17,12 +17,12 @@ def test_money_init_does_not_call_settings():
         assert False, 'nobody should read settings yet'
 
     with patch.object(type(settings), '__getattr__', guarded_getattr):
+        Money(42, 'EUR')
+
+
+def test_money_without_currency():
+    with pytest.raises(TypeError):
         Money(42)
-
-
-def test_money_default_currency():
-    m = Money(42)
-    assert m.currency is None
 
 
 def test_money_init_from_money():
@@ -40,8 +40,8 @@ def test_units_match():
     class XxxMoney(int):
         currency = 'XXX'
 
-    m1 = Money(1)
-    m2 = Money(2)
+    m1 = Money(1, 'EUR')
+    m2 = Money(2, 'EUR')
     m3 = Money(3, 'XXX')
     m4 = XxxMoney(4)
 
