@@ -39,6 +39,11 @@ def test_united_decimal_basics():
     assert -FooDecimal(4) == FooDecimal('-4')
 
 
+def test_united_decimal_value():
+    assert FooDecimal(42).value == 42
+    assert type(FooDecimal(42).value) == Decimal
+
+
 def test_unit_mixups():
     with pytest.raises(TypeError):
         FooDecimal(1) + BarDecimal(2)

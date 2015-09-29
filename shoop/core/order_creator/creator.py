@@ -88,7 +88,7 @@ class OrderCreator(object):
                 quantity=(order_line.quantity * child_quantity),
             )
             # Package children are free
-            assert child_order_line.unit_price.amount == 0
+            assert child_order_line.unit_price.value == 0
             child_order_line.source_line = order_line.source_line
             child_order_line.supplier = order_line.supplier
             self._check_orderability(child_order_line)

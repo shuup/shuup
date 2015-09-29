@@ -10,10 +10,11 @@ from decimal import ROUND_HALF_EVEN, Decimal
 
 import six
 
-from ._united_decimal import UnitedDecimal
+from ._united_decimal import UnitedDecimal, UnitMixupError
 
 __all__ = [
     "UnitedDecimal",
+    "UnitMixupError",
     "bankers_round",
     "strip_non_float_chars",
     "parse_decimal_string",

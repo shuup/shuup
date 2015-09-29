@@ -22,6 +22,15 @@ class UnitedDecimal(decimal.Decimal):
     :class:`~shoop.core.princing.TaxlessPrice` are subclasses of
     :class:`UnitedDecimal`.
     """
+    @property
+    def value(self):
+        """
+        Value of this decimal without the unit.
+
+        :rtype: decimal.Decimal
+        """
+        return decimal.Decimal(self)
+
     def __repr__(self):
         decimal_repr = super(UnitedDecimal, self).__repr__()
         return decimal_repr.replace('Decimal', type(self).__name__)
@@ -33,6 +42,19 @@ class UnitedDecimal(decimal.Decimal):
         :rtype: bool
         """
         raise NotImplementedError()
+
+    def new(self, value):
+        """
+        Create new instance with given value using same unit as self.
+
+        Post-condition: If ``x = y.new(v)``, then
+        ``x.unit_matches_with(y) and x.value == v``.
+
+        :type value:
+        :return: Object with same type as self and matching unit, but with given decimal value
+        :rtype: UnitedDecimal
+        """
+        return type(self)(value)
 
     def _check_units_match(self, other):
         if not self.unit_matches_with(other):
@@ -66,16 +88,16 @@ class UnitedDecimal(decimal.Decimal):
 
     def __add__(self, other, **kwargs):
         self._check_units_match(other)
-        return type(self)(super(UnitedDecimal, self).__add__(other, **kwargs))
+        return self.new(super(UnitedDecimal, self).__add__(other, **kwargs))
 
     def __sub__(self, other, **kwargs):
         self._check_units_match(other)
-        return type(self)(super(UnitedDecimal, self).__sub__(other, **kwargs))
+        return self.new(super(UnitedDecimal, self).__sub__(other, **kwargs))
 
     def __mul__(self, other, **kwargs):
         if isinstance(other, UnitedDecimal):
             raise TypeError('Cannot multiply %r with %r' % (self, other))
-        return type(self)(super(UnitedDecimal, self).__mul__(other, **kwargs))
+        return self.new(super(UnitedDecimal, self).__mul__(other, **kwargs))
 
     def __radd__(self, other, **kwargs):
         return self.__add__(other, **kwargs)
@@ -92,7 +114,7 @@ class UnitedDecimal(decimal.Decimal):
             return super(UnitedDecimal, self).__truediv__(other, **kwargs)
         else:
             value = super(UnitedDecimal, self).__truediv__(other, **kwargs)
-            return type(self)(value)
+            return self.new(value)
 
     def __rtruediv__(self, other, **kwargs):
         if not isinstance(other, UnitedDecimal):
@@ -125,7 +147,7 @@ class UnitedDecimal(decimal.Decimal):
             type_name = type(self).__name__
             raise TypeError('Cannot modulo {0} with non-{0}'.format(type_name))
         self._check_units_match(other)
-        return type(self)(super(UnitedDecimal, self).__mod__(other, **kwargs))
+        return self.new(super(UnitedDecimal, self).__mod__(other, **kwargs))
 
     def __divmod__(self, other, **kwargs):
         if not isinstance(other, UnitedDecimal):
@@ -133,20 +155,20 @@ class UnitedDecimal(decimal.Decimal):
             raise TypeError('Cannot divmod {0} with non-{0}'.format(type_name))
         self._check_units_match(other)
         (div, mod) = super(UnitedDecimal, self).__divmod__(other, **kwargs)
-        return (div, type(self)(mod))
+        return (div, self.new(mod))
 
     def __pow__(self, other, **kwargs):
         type_name = type(self).__name__
         raise TypeError('{} cannot be powered'.format(type_name))
 
     def __neg__(self, **kwargs):
-        return type(self)(super(UnitedDecimal, self).__neg__(**kwargs))
+        return self.new(super(UnitedDecimal, self).__neg__(**kwargs))
 
     def __pos__(self, **kwargs):
-        return type(self)(super(UnitedDecimal, self).__pos__(**kwargs))
+        return self.new(super(UnitedDecimal, self).__pos__(**kwargs))
 
     def __abs__(self, **kwargs):
-        return type(self)(super(UnitedDecimal, self).__abs__(**kwargs))
+        return self.new(super(UnitedDecimal, self).__abs__(**kwargs))
 
     def __int__(self, **kwargs):
         return super(UnitedDecimal, self).__int__(**kwargs)
@@ -156,18 +178,28 @@ class UnitedDecimal(decimal.Decimal):
 
     def __round__(self, ndigits=0, **kwargs):
         value = super(UnitedDecimal, self).__round__(ndigits, **kwargs)
-        return type(self)(value)  # pragma: nocover
+        return self.new(value)
 
     def quantize(self, exp, *args, **kwargs):
         value = super(UnitedDecimal, self).quantize(exp, *args, **kwargs)
-        return type(self)(value)
+        return self.new(value)
 
     def copy_negate(self, *args, **kwargs):
         value = super(UnitedDecimal, self).copy_negate(*args, **kwargs)
-        return type(self)(value)
+        return self.new(value)
 
 
 class UnitMixupError(TypeError):
+    """
+    Invoked operation for UnitedDecimal and object with non-matching unit.
+
+    The objects involved are stored in instance variables `obj1` and
+    `obj2`.  Former is instance of :class:`UnitedDecimal` or its
+    subclass and the other could be any object.
+
+    :ivar UnitedDecimal obj1: Involved object 1
+    :ivar Any obj2: Involved object 2
+    """
     def __init__(self, obj1, obj2, msg='Unit mixup'):
         self.obj1 = obj1
         self.obj2 = obj2

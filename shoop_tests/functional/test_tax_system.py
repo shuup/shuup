@@ -48,7 +48,7 @@ def test_stacked_tax_taxless_price():
             line = source.get_final_lines()[0]
             assert isinstance(line, SourceLine)
             assert line.taxes
-            assert line.taxful_total_price.amount == Decimal("10.800")
+            assert line.taxful_total_price.value == Decimal("10.800")
             source.uncache()
 
             # Let's move out to a taxless location.
@@ -56,7 +56,7 @@ def test_stacked_tax_taxless_price():
             line = source.get_final_lines()[0]
             assert isinstance(line, SourceLine)
             assert not line.taxes
-            assert line.taxful_total_price.amount == Decimal("10")
+            assert line.taxful_total_price.value == Decimal("10")
 
 
 @pytest.mark.django_db

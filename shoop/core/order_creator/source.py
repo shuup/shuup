@@ -368,7 +368,8 @@ class SourceLine(LinePriceMixin):
         elif key in self._PRICE_FIELDS:
             assert isinstance(value, Price)
             return [
-                (key + "_amount", value.amount),
+                (key, None),
+                (key + "_amount", value.value),
                 (key + "_includes_tax", value.includes_tax),
             ]
         return [(key, value)]
@@ -385,6 +386,6 @@ class SourceLine(LinePriceMixin):
             amount = result.pop(name + "_amount", None)
             includes_tax = result.pop(name + "_includes_tax", None)
             if amount is not None:
-                result[name] = Price.from_value(amount, includes_tax)
+                result[name] = Price.from_data(amount, None, includes_tax)
 
         return result
