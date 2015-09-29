@@ -52,7 +52,7 @@ class ClassicGrayTheme(Theme):
             return
         from shoop.simple_cms.models import Page
         for page in Page.objects.visible().filter(visible_in_menu=True):
-            yield {"url": page.url, "text": force_text(page)}
+            yield {"url": "/%s" % page.url, "text": force_text(page)}
 
 
 class ClassicGrayThemeAppConfig(AppConfig):
