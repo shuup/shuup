@@ -9,17 +9,16 @@
         <hr>
         <a href="/xtheme/products" class="btn btn-primary"><i class="fa fa-angle-double-left"></i> {% trans %}Back to Products{% endtrans %}</a>
     {% else %}
+        {% if errors %}
+            <p class="text-danger">There were errors on following items:</p>
+            {% for error in errors %}
+                <p>{{ error.message }}</p>
+            {% endfor %}
+            <hr>
+        {% endif %}
         {% include "shoop/front/basket/partials/_basket_content.jinja" %}
         {% if errors %}
-            <hr>
-            <div class="alert alert-danger">
-                <p><strong>{% trans %}Errors{% endtrans %}</strong></p>
-                <ul>
-                    {% for error in errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
+            <p class="lead text-right"><i class="fa fa-exclamation-triangle text-danger"></i> You are unable to proceed to checkout!</p>
         {% else %}
             <a href="/xtheme/products" class="text-muted btn continue-shopping hidden-xs"><i class="fa fa-angle-double-left"></i> {% trans %}Continue Shopping{% endtrans %}</a>
             <a href="{{ url("shoop:checkout") }}" class="btn btn-primary pull-right btn-checkout">
