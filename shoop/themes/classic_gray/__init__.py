@@ -42,10 +42,13 @@ class ClassicGrayTheme(Theme):
             if not line:
                 continue
             line = line.split(None, 1)
+            url = line[0]
+            if "//" not in url and not url.startswith("/"):  # "Fix up" relative URLs and CMS page identifiers
+                url = "/%s" % url
             if len(line) == 2:
-                yield {"url": line[0], "text": line[1]}
+                yield {"url": url, "text": line[1]}
             else:
-                yield {"url": line[0]}
+                yield {"url": url}
 
     def get_cms_links(self):
         if "shoop.simple_cms" not in settings.INSTALLED_APPS:
