@@ -28,23 +28,23 @@ class TaxModule(object):
 
     taxing_context_class = TaxingContext
 
-    def get_context(self, context):
-        """
-        :rtype: TaxingContext
-        """
-        if isinstance(context, self.taxing_context_class):
-            return context
-        elif isinstance(context, HttpRequest):
-            return self.get_context_from_request(context)
-        else:
-            return self.get_context_from_data(**(context or {}))
-
     def get_context_from_request(self, request):
-        # This implementation does not use `request` at all.
-        return self.taxing_context_class()
+        customer = getattr(request, "customer", None)
+        return self.get_context_from_data(customer=customer)
 
     def get_context_from_data(self, **context_data):
-        return self.taxing_context_class(**context_data)
+        customer = context_data.get("customer")
+        customer_tax_group = (
+            context_data.get("customer_tax_group") or
+            (customer.tax_group if customer else None))
+        location = (
+            context_data.get("location") or
+            context_data.get("shipping_address") or
+            (customer.default_shipping_address if customer else None))
+        return self.taxing_context_class(
+            customer_tax_group=customer_tax_group,
+            location=location,
+        )
 
     def determine_product_tax(self, context, product):
         """
