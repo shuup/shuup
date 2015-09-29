@@ -83,10 +83,12 @@ function updatePrice() {
         jQuery("#product-price-div").replaceWith($content);
         if($content.find("#no-price").length > 0)
         {
-            $("#add-to-cart-button").attr("disabled", true);
+            $("#add-to-cart-button").prop("disabled", true);
         }
         else
-            $("#add-to-cart-button").attr("disabled", false);
+        {
+            $("#add-to-cart-button").not(".not-orderable").prop("disabled", false);
+        }
     });
 }
 

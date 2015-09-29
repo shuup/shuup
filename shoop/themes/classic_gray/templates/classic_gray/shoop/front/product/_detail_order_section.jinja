@@ -14,10 +14,17 @@
     {% set quantity = shop_product.rounded_minimum_purchase_quantity %}
 {% endif %}
 
-{% macro add_to_cart_btn() %}
+{% macro add_to_cart_btn(is_orderable) %}
+    {% if is_orderable %}
     <div class="clearfix btn-add-to-cart">
         <button type="submit" class="btn btn-primary btn-block btn-lg" id="add-to-cart-button"><i class="fa fa-shopping-cart"></i> {% trans %}Add to cart{% endtrans %}</button>
     </div>
+    {% else %}
+    <div class="clearfix btn-add-to-cart">
+        <button type="submit" class="btn btn-primary btn-block btn-lg not-orderable" id="add-to-cart-button" disabled><i class="fa fa-shopping-cart"></i> {% trans %}Add to cart{% endtrans %}</button>
+        <p class="text-right text-muted"><i class="fa fa-info-circle text-info"></i> {% trans %}Product is not orderable.{% endtrans %}</p>
+    </div>
+    {% endif %}
 {% endmacro %}
 
 {% macro quantity_box() %}
@@ -38,7 +45,7 @@
     </div>
 {% endmacro %}
 
-{% macro product_order_section(product, quantity) %}
+{% macro product_order_section(product, quantity, is_orderable) %}
     <div class="row">
         <div class="col-sm-6">
             {{ quantity_box() }}
@@ -47,7 +54,7 @@
             {{ product_price_div(product, quantity) }}
         </div>
     </div>
-    {{ add_to_cart_btn() }}
+    {{ add_to_cart_btn(is_orderable) }}
 {% endmacro %}
 
 {% macro product_price_div(product, quantity) %}
@@ -81,30 +88,27 @@
                 </select>
             </div>
         {% endfor %}
-        {{ product_order_section(product, quantity) }}
+        {{ product_order_section(product, quantity, True) }}
     </div>
 {% endmacro %}
 
 {% macro simple_variation_form() %}
-    {% if not orderable_variation_children %}
-        <p class="not-orderable">{% trans %}Product is not orderable{% endtrans %}</p>
-    {% else %}
-        <div class="product-variations">
-            <input type="hidden" name="command" value="add">
-            <div class="form-group">
-                <label for="product-variations">{% trans %}Select product{% endtrans %}</label>
-                <select name="product_id" id="product-variations" class="form-control selectpicker">
-                    {% for p in orderable_variation_children %}
-                        {% set price_info = p.get_price_info(request, quantity) %}
-                        <option value="{{ p.id }}"{% if selected_child and selected_child == p.id %} selected{% endif %}>
-                            {{ p.variation_name or p.name }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </div>
-            {{ product_order_section(product, quantity) }}
+    {% set is_orderable = bool(orderable_variation_children) %}
+    <div class="product-variations">
+        <input type="hidden" name="command" value="add">
+        <div class="form-group">
+            <label for="product-variations">{% trans %}Select product{% endtrans %}</label>
+            <select name="product_id" id="product-variations" class="form-control selectpicker">
+                {% for p in orderable_variation_children %}
+                    {% set price_info = p.get_price_info(request, quantity) %}
+                    <option value="{{ p.id }}"{% if selected_child and selected_child == p.id %} selected{% endif %}>
+                        {{ p.variation_name or p.name }}
+                    </option>
+                {% endfor %}
+            </select>
         </div>
-    {% endif %}
+        {{ product_order_section(product, quantity, is_orderable) }}
+    </div>
 {% endmacro %}
 
 {% macro simple_product_form() %}
@@ -112,15 +116,7 @@
     <input type="hidden" name="product_id" value="{{ product.id }}">
     {% set is_orderable=shop_product.is_orderable(supplier=None, customer=request.customer, quantity=quantity) %}
     <div class="prices">
-        {% if is_orderable %}
-            {{ product_order_section(product, quantity) }}
-        {% else %}
-            <div class="row">
-                <div class="col-sm-12">
-                    <p><i class="fa fa-info-circle text-info"></i> {% trans %}Product is not orderable{% endtrans %}</p>
-                </div>
-            </div>
-        {% endif %}
+        {{ product_order_section(product, quantity, is_orderable) }}
     </div>
 {% endmacro %}
 
