@@ -12,7 +12,7 @@ from django.views.generic import DetailView
 
 from shoop.core.models import Product, ProductMode
 from shoop.front.utils.views import cache_product_things
-from shoop.utils.excs import Problem
+from shoop.utils.excs import Problem, extract_messages
 from shoop.utils.numbers import get_string_sort_order
 
 
@@ -91,6 +91,6 @@ class ProductDetailView(DetailView):
         errors = list(shop_product.get_visibility_errors(customer=request.customer))
 
         if errors:
-            raise Problem("\n".join(errors))
+            raise Problem("\n".join(extract_messages(errors)))
 
         return super(ProductDetailView, self).get(request, *args, **kwargs)
