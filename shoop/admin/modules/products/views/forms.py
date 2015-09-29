@@ -41,7 +41,6 @@ class ProductBaseForm(MultiLanguageModelForm):
             "sales_unit",
             "shipping_mode",
             "sku",
-            "stock_behavior",
             "suggested_retail_price",
             "tax_class",
             "type",

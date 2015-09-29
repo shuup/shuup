@@ -15,7 +15,12 @@
     {{ bs3.field(product_form.barcode) }}
     {{ bs3.field(product_form.gtin) }}
     {{ bs3.field(product_form.category) }}
-    {{ bs3.field(product_form.stock_behavior) }}
+    {# TODO: This should be enabled in near future. #}
+    {#  bs3.field(product_form.stock_behavior) #}
+    <div class="form-group">
+        <label class="control-label" for="id_stock">{% trans %}Stock{% endtrans %}</label>
+        <input class="form-control" id="id_stock" maxlength="40" name="base-stock" value="{% trans %}Unstocked{% endtrans %}" disabled="disabled" type="text">
+     </div>
     {{ bs3.field(product_form.shipping_mode) }}
     {% call(form, language, map) language_dependent_content_tabs(product_form, tab_id_prefix="additional-language") %}
         {{ bs3.field(product_form[map.variation_name]) }}
