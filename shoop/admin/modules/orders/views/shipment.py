@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+from shoop.admin.utils.forms import add_form_errors_as_messages
 
 import six
 from django import forms
@@ -73,6 +74,10 @@ class OrderCreateShipmentView(UpdateView):
             form.fields["q_%s" % product_id] = field
 
         return form
+
+    def form_invalid(self, form):
+        add_form_errors_as_messages(self.request, form)
+        return super(OrderCreateShipmentView, self).form_invalid(form)
 
     def form_valid(self, form):
         product_ids_to_quantities = dict(
