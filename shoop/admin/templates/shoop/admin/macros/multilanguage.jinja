@@ -8,7 +8,7 @@ May be called
 
 When using multiple language_dependent_content_tabs in a single page, do remember to pass `tab_id_prefix`.
 #}
-{% macro language_dependent_content_tabs(form, field_names=[], tab_id_prefix="language") %}
+{% macro language_dependent_content_tabs(form, field_names=[], exclude=[], tab_id_prefix="language") %}
 <div class="language-dependent-content">
     <div class="row language-tabs">
         <div class="col-sm-8 col-sm-push-4 col-lg-6 col-lg-push-3">
@@ -33,7 +33,7 @@ When using multiple language_dependent_content_tabs in a single page, do remembe
                             {{ bs3.field(form[map[field_name]]) }}
                         {% endfor %}
                     {% else %}
-                        {% for field_name in map %}
+                        {% for field_name in map if field_name not in exclude %}
                             {{ bs3.field(form[map[field_name]]) }}
                         {% endfor %}
                     {% endif %}
@@ -48,10 +48,12 @@ When using multiple language_dependent_content_tabs in a single page, do remembe
 Render fields that is not translated for MultiLanguageModelForm.
 Optional `field_names` parameter to render only specific fields.
 #}
-{% macro render_monolingual_fields(form, field_names=[]) %}
+{% macro render_monolingual_fields(form, field_names=[], exclude=[]) %}
     {% for field in form %}
         {% if field.name not in form.translated_field_names %}
             {% if field_names and field.name not in field_names %}
+                {% continue %}
+            {% elif exclude and field.name in exclude %}
                 {% continue %}
             {% else %}
                 {{ bs3.field(field) }}

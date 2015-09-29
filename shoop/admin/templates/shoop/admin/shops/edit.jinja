@@ -1,9 +1,23 @@
 {% extends "shoop/admin/base.jinja" %}
-{% from "shoop/admin/macros/general.jinja" import single_section_form with context %}
+{% import "shoop/admin/macros/general.jinja" as gm with context %}
 {% from "shoop/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
 {% block content %}
-    {% call single_section_form("shop_form", form) %}
-        {{ language_dependent_content_tabs(form) }}
-        {{ render_monolingual_fields(form) }}
+    {% call gm.multi_section_single_form("shop_form") %}
+        {% call gm.form_section(_("General Information")) %}
+            {{ language_dependent_content_tabs(form, exclude=["maintenance_message"]) }}
+            <div class="row">
+                <div class="col-sm-8 col-sm-push-4 col-lg-6 col-lg-push-3">
+                    <hr>
+                </div>
+            </div>
+            {{ render_monolingual_fields(form, exclude=["maintenance_mode", "logo"]) }}
+        {% endcall %}
+        {% call gm.form_section(_("Shop Logo"), icon="fa-image") %}
+            {{ render_monolingual_fields(form, field_names=["logo"]) }}
+        {% endcall %}
+        {% call gm.form_section(_("Maintenance Mode"), icon="fa-cogs") %}
+            {{ render_monolingual_fields(form, field_names=["maintenance_mode"]) }}
+            {{ language_dependent_content_tabs(form, field_names=["maintenance_message"], tab_id_prefix="maint") }}
+        {% endcall %}
     {% endcall %}
 {% endblock %}
