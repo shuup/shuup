@@ -28,7 +28,7 @@ def test_customers(django_user_model):
 def test_companies(django_user_model):
     peons = [django_user_model.objects.create_user('Peon-%d' % x, 'Peon%d@example.com' % x, 'password') for x in range(10)]
     for cx in range(10):
-        company = CompanyContact.objects.create(name="Company %d" % cx, vat_code="FI2101%d" % cx)
+        company = CompanyContact.objects.create(name="Company %d" % cx, tax_number="FI2101%d" % cx)
         assert str(company)
         for x in range(5):
             off = (cx * 3 + x) % len(peons)

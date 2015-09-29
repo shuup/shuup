@@ -20,7 +20,7 @@ def fill_address_inputs(soup, with_company=False):
     test_address = get_address()
     for key, value in extract_form_fields(soup.find(method="post")).items():
         if not value:
-            if key in ("order-vat_code", "order-company_name"):
+            if key in ("order-tax_number", "order-company_name"):
                 continue
             if key.startswith("shipping-") or key.startswith("billing-"):
                 bit = key.split("-")[1]
@@ -32,7 +32,7 @@ def fill_address_inputs(soup, with_company=False):
         inputs[key] = value
 
     if with_company:
-        inputs["company-vat_code"] = "FI1234567-1"
+        inputs["company-tax_number"] = "FI1234567-1"
         inputs["company-company_name"] = "Example Oy"
     else:
         inputs = dict((k, v) for (k, v) in inputs.items() if not k.startswith("company-"))

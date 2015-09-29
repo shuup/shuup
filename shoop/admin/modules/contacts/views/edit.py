@@ -46,7 +46,7 @@ class ContactBaseForm(BaseModelForm):
             "tax_group",
         ),
         "PersonContact": ("gender", "birth_date"),
-        "CompanyContact": ("vat_code",)
+        "CompanyContact": ("tax_number",)
     }
 
     def __init__(self, bind_user=None, *args, **kwargs):

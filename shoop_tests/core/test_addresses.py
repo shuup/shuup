@@ -95,10 +95,10 @@ def test_address_ownership(admin_user):
 @pytest.mark.django_db
 def test_address_form():
     form = modelform_factory(Address, exclude=())(data=DEFAULT_ADDRESS_DATA)
-    company = CompanyContact(name=u"Doge Ltd", vat_code="1000-1000")
+    company = CompanyContact(name=u"Doge Ltd", tax_number="1000-1000")
     address = Address.objects.from_address_form(form, company=company)
     assert address.company == company.name, "Company name was copied correctly"
-    assert address.vat_code == company.vat_code, "VAT code was copied correctly"
+    assert address.tax_number == company.tax_number, "Tax number was copied correctly"
 
 
 def test_home_country_in_address():

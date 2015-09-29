@@ -175,7 +175,7 @@ class Order(models.Model):
         "Address", related_name='shipping_orders',  blank=True, null=True,
         on_delete=models.PROTECT,
         verbose_name=_('shipping address'))
-    vat_code = models.CharField(max_length=20, blank=True, verbose_name=_('VAT code'))
+    tax_number = models.CharField(max_length=20, blank=True, verbose_name=_('Tax number'))
     phone = models.CharField(max_length=32, blank=True, verbose_name=_('phone'))
     email = models.EmailField(max_length=128, blank=True, verbose_name=_('email address'))
 
@@ -268,7 +268,7 @@ class Order(models.Model):
             self.orderer,
         ]
 
-        fields = ("vat_code", "email", "phone")
+        fields = ("tax_number", "email", "phone")
 
         for field in fields:
             if getattr(self, field, None):

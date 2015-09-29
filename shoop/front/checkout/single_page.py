@@ -5,6 +5,8 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from __future__ import unicode_literals
+
 from django import forms
 from django.core.exceptions import ValidationError
 from django.shortcuts import redirect
@@ -12,12 +14,13 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
 
 from shoop.core.models import Address, CompanyContact, OrderStatus, PaymentMethod, ShippingMethod
-from shoop.core.utils.vat import verify_vat
 from shoop.front.basket import get_basket_order_creator
 from shoop.front.basket.objects import BaseBasket
 from shoop.front.checkout import CheckoutPhaseViewMixin
 from shoop.utils.fields import RelaxedModelChoiceField
 from shoop.utils.form_group import FormGroup
+
+from ._mixins import TaxNumberCleanMixin
 
 
 class AddressForm(forms.ModelForm):
@@ -30,9 +33,9 @@ def _to_choices(objects):
     return [(x.id, x) for x in objects]
 
 
-class OrderForm(forms.Form):
+class OrderForm(TaxNumberCleanMixin, forms.Form):
     company_name = forms.CharField(max_length=128, required=False, label=_(u"Company name"))
-    vat_code = forms.CharField(max_length=32, required=False, label=_(u"VAT code"))
+    tax_number = forms.CharField(max_length=32, required=False, label=_("Tax number"))
     shipping_method = RelaxedModelChoiceField(queryset=ShippingMethod.objects.none(), label=_(u"Shipping method"))
     payment_method = RelaxedModelChoiceField(queryset=PaymentMethod.objects.none(), label=_(u"Payment method"))
     accept_terms = forms.BooleanField(required=True, label=_(u"I accept the terms and conditions"))
@@ -52,21 +55,6 @@ class OrderForm(forms.Form):
         payment_methods = basket.get_available_payment_methods(shop)
         self["shipping_method"].field.choices = _to_choices(shipping_methods)
         self["payment_method"].field.choices = _to_choices(payment_methods)
-
-    def clean(self):
-        company_name = self.cleaned_data.get("company_name")
-        vat_code = self.cleaned_data.get("vat_code")
-        if bool(company_name) ^ bool(vat_code):  # XOR used to check for "both or neither".
-            raise ValidationError(_(u"Fill both the company name and VAT code fields."))
-        return self.cleaned_data
-
-    def clean_vat_code(self):
-        vat_code = self.cleaned_data["vat_code"].strip()
-        if vat_code:
-            prefix, parts = verify_vat(vat_code, "FI")  # TODO: 'fi' isn't the best default
-            if not vat_code.startswith(prefix):
-                vat_code = prefix + vat_code  # Always add prefix
-        return vat_code
 
 
 class SingleCheckoutPhase(CheckoutPhaseViewMixin, FormView):
@@ -113,13 +101,13 @@ class SingleCheckoutPhase(CheckoutPhaseViewMixin, FormView):
         basket.payment_method = order_data.pop("payment_method")
         basket.status = OrderStatus.objects.get_default_initial()
         company_name = order_data.pop("company_name")
-        vat_code = order_data.pop("vat_code")
-        if company_name and vat_code:
+        tax_number = order_data.pop("tax_number")
+        if company_name and tax_number:
             # Not using `get_or_create` here because duplicates are better than accidental information leakage
-            basket.customer = CompanyContact.objects.create(name=company_name, vat_code=vat_code)
+            basket.customer = CompanyContact.objects.create(name=company_name, tax_number=tax_number)
             for address in (basket.shipping_address, basket.billing_address):
                 address.company_name = basket.customer.name
-                address.vat_code = basket.customer.vat_code
+                address.tax_number = basket.customer.tax_number
         basket.marketing_permission = order_data.pop("marketing")
         basket.customer_comment = order_data.pop("comment")
 

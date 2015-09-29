@@ -228,7 +228,7 @@
                 <h2 class="panel-title">{% trans %}Company{% endtrans %}</h2>
             </div>
             <div class="panel-body">
-                <p>{{ order.company.name }} ({% trans %}VAT code{% endtrans %} {{ order.company.vat_id }})</p>
+                <p>{{ order.company.name }} ({% trans %}Tax number{% endtrans %}: {{ order.company.tax_number }})</p>
             </div>
         </div>
     {% endif %}

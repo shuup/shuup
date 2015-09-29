@@ -48,7 +48,7 @@
             {{ info_row(_("Creator"), order.creator) }}
             {{ info_row(_("Phone"), order.phone, "tel:" ~ order.phone) }}
             {{ info_row(_("Email"), order.email, "mailto:" ~ order.email) }}
-            {{ info_row(_("VAT Code"), order.vat_code) }}
+            {{ info_row(_("Tax Number"), order.tax_number) }}
             {{ price_row(_("Total Price"), order.taxful_total_price) }}
             {{ price_row(_("Total Price (taxless)"), order.taxless_total_price) }}
         </table>

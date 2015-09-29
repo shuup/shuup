@@ -91,7 +91,7 @@ class AddressManager(models.Manager):
 
         if company:
             address.company = company.name
-            address.vat_code = company.vat_code
+            address.tax_number = company.tax_number
 
         return (self.try_get_exactly_like(address) or address)
 
@@ -104,7 +104,7 @@ class Address(NameMixin, models.Model):
     suffix = models.CharField(verbose_name=_('name suffix'), max_length=64, blank=True)
     name_ext = models.CharField(verbose_name=_('name extension'), max_length=255, blank=True)
     company_name = models.CharField(verbose_name=_('company name'), max_length=255, blank=True)
-    vat_code = models.CharField(verbose_name=_('VAT code'), max_length=64, blank=True)
+    tax_number = models.CharField(verbose_name=_('Tax number'), max_length=64, blank=True)
     phone = models.CharField(verbose_name=_('phone'), max_length=64, blank=True)
     email = models.EmailField(verbose_name=_('email'), max_length=128, blank=True)
     street = models.CharField(verbose_name=_('street'), max_length=255)

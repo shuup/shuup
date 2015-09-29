@@ -37,12 +37,16 @@ class TaxModule(object):
         customer_tax_group = (
             context_data.get("customer_tax_group") or
             (customer.tax_group if customer else None))
+        customer_tax_number = (
+            context_data.get("customer_tax_number") or
+            getattr(customer, "tax_number", None))
         location = (
             context_data.get("location") or
             context_data.get("shipping_address") or
             (customer.default_shipping_address if customer else None))
         return self.taxing_context_class(
             customer_tax_group=customer_tax_group,
+            customer_tax_number=customer_tax_number,
             location=location,
         )
 
