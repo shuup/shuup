@@ -58,7 +58,7 @@ function reloadProducts() {
 
 function updatePrice() {
     var $quantity = $("#product-quantity");
-    if (!$quantity.is(":valid")) {
+    if ($quantity.length === 0 || !$quantity.is(":valid")) {
         return;
     }
     var data = {
