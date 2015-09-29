@@ -126,8 +126,13 @@ class ShoopFrontMiddleware(object):
             return maintenance_response
 
     def _get_maintenance_response(self, request, view_func):
-        if "login" in view_func.__name__ or getattr(view_func, "maintenance_mode_exempt", False):
-            return
+        if getattr(view_func, "maintenance_mode_exempt", False):
+            return None
+        if "login" in view_func.__name__:
+            return None
+        resolver_match = getattr(request, "resolver_match", None)
+        if resolver_match and resolver_match.app_name == "shoop_admin":
+            return None
 
         if request.shop.maintenance_mode and not request.user.is_superuser:
             return HttpResponse(loader.render_to_string("shoop/front/maintenance.jinja", request=request), status=503)
