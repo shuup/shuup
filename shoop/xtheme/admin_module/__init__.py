@@ -18,8 +18,7 @@ class XthemeAdminModule(AdminModule):
     Allows theme activation/deactivation and further configuration.
     """
     name = _("Shoop Extensible Theme Engine")
-    category = _("System")
-    breadcrumbs_menu_entry = MenuEntry(_("Theme Configuration"), "shoop_admin:xtheme.config")
+    breadcrumbs_menu_entry = MenuEntry(_("Themes"), "shoop_admin:xtheme.config")
 
     def get_urls(self):  # doccov: ignore
         return [
@@ -35,11 +34,14 @@ class XthemeAdminModule(AdminModule):
             )
         ]
 
+    def get_menu_category_icons(self):
+        return {self.name: "fa fa-paint-brush"}
+
     def get_menu_entries(self, request):  # doccov: ignore
         return [
             MenuEntry(
-                text=_("Theme Configuration"), icon="fa fa-paint-brush",
+                text=_("Themes"), icon="fa fa-paint-brush",
                 url="shoop_admin:xtheme.config",
-                category=self.category
+                category=self.name
             )
         ]
