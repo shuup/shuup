@@ -42,7 +42,7 @@ class DefaultTaxModule(taxing.TaxModule):
         return _calculate_taxes(
             source_line.total_price,
             taxing_context=taxing_context,
-            tax_class=source_line.get_tax_class(),
+            tax_class=source_line.tax_class,
         ).taxes
 
 

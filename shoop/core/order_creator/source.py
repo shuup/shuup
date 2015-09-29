@@ -15,6 +15,7 @@ from django.utils.timezone import now
 from shoop.core import taxing
 from shoop.core.models import OrderStatus, PaymentMethod, Product, ShippingMethod, Shop, Supplier, TaxClass
 from shoop.core.pricing import Price, TaxfulPrice, TaxlessPrice
+from shoop.core.taxing import TaxableItem
 from shoop.core.utils.prices import LinePriceMixin
 from shoop.utils.decorators import non_reentrant
 
@@ -235,7 +236,7 @@ def _collect_lines_from_signal(signal_results):
                 yield line
 
 
-class SourceLine(LinePriceMixin):
+class SourceLine(TaxableItem, LinePriceMixin):
     _FIELDS = [
         "line_id", "parent_line_id", "type",
         "shop", "product", "supplier", "tax_class",
@@ -268,7 +269,13 @@ class SourceLine(LinePriceMixin):
         self.type = kwargs.pop("type", None)
         self.shop = kwargs.pop("shop", None)
         self.product = kwargs.pop("product", None)
-        self.tax_class = kwargs.get("tax_class", None)
+        tax_class = kwargs.pop("tax_class", None)
+        if not self.product:
+            # Only set tax_class when there is no product set, since
+            # tax_class property will get the value from the product and
+            # setter will fail when trying to set conflicting tax class
+            # (happens when tax_class of the Product has changed)
+            self.tax_class = tax_class
         self.supplier = kwargs.pop("supplier", None)
         self.quantity = kwargs.pop("quantity", 0)
         self.unit_price = kwargs.pop("unit_price", self._create_price(0))
@@ -291,12 +298,6 @@ class SourceLine(LinePriceMixin):
         assert self.shop is None or isinstance(self.shop, Shop)
         assert self.product is None or isinstance(self.product, Product)
         assert self.supplier is None or isinstance(self.supplier, Supplier)
-
-        if self.product and self.tax_class and (
-                self.product.tax_class != self.tax_class):
-            raise ValueError(
-                "Conflicting product and line tax classes: %r vs %r" % (
-                    self.product.tax_class, self.tax_class))
 
     @classmethod
     def from_dict(cls, source, data):
@@ -342,8 +343,17 @@ class SourceLine(LinePriceMixin):
             return getattr(self, key, default)
         return self._data.get(key, default)
 
-    def get_tax_class(self):
-        return self.product.tax_class if self.product else self.tax_class
+    @property
+    def tax_class(self):
+        return self.product.tax_class if self.product else self._tax_class
+
+    @tax_class.setter
+    def tax_class(self, value):
+        if self.product and value and value != self.product.tax_class:
+            raise ValueError(
+                "Conflicting product and line tax classes: %r vs %r" % (
+                    self.product.tax_class, value))
+        self._tax_class = value
 
     @property
     def total_tax_amount(self):

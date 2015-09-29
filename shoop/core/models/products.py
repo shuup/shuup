@@ -18,6 +18,7 @@ from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
 
 from shoop.core.fields import InternalIdentifierField, MeasurementField
+from shoop.core.taxing import TaxableItem
 from shoop.core.utils.slugs import generate_multilanguage_slugs
 from shoop.utils.analog import LogEntryKind, define_log_model
 
@@ -150,7 +151,7 @@ class ProductQuerySet(TranslatableQuerySet):
 
 
 @python_2_unicode_compatible
-class Product(AttributableMixin, TranslatableModel):
+class Product(TaxableItem, AttributableMixin, TranslatableModel):
     COMMON_SELECT_RELATED = ("type", "primary_image", "tax_class")
 
     # Metadata

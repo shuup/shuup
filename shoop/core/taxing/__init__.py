@@ -9,12 +9,14 @@ from ._line_tax import LineTax, SourceLineTax
 from ._module import TaxModule, get_tax_module
 from ._price import TaxedPrice
 from ._tax_summary import TaxSummary
+from ._taxable import TaxableItem
 
 __all__ = [
     "LineTax",
     "SourceLineTax",
     "TaxModule",
     "TaxSummary",
+    "TaxableItem",
     "TaxedPrice",
     "TaxingContext",
     "get_tax_module",
