@@ -19,37 +19,35 @@ def stacked_value_added_taxes(price, taxes):
 
     Note that this will not take compound taxation (Quebec) into account.
 
-    :param price: Price
+    :param price: Taxful or taxless price to calculate taxes for
     :type price: shoop.core.pricing.Price
     :param taxes: List of Tax objects
     :type taxes: list[shoop.core.models.Tax]
     :return: TaxedPrice with the calculated taxes.
     :rtype: TaxedPrice
     """
-    if not taxes:
-        return TaxedPrice(TaxfulPrice(price), TaxlessPrice(price))
+    def money_sum(iterable):
+        return sum(iterable, Money(0, price.currency))
 
-    taxful = None
+    if not taxes:
+        return TaxedPrice(TaxfulPrice(price), TaxlessPrice(price), [])
 
     if price.includes_tax:
         taxful = price
         rate_sum = sum(tax.rate for tax in taxes if tax.rate)
-        amount_sum = sum(tax.amount for tax in taxes if tax.amount)
+        amount_sum = money_sum(tax.amount for tax in taxes if tax.amount)
         taxless = TaxlessPrice((taxful.amount - amount_sum) / (1 + rate_sum))
     else:
+        taxful = None  # will be calculated below
         taxless = price
 
     line_taxes = [
-        SourceLineTax(
-            tax=tax,
-            name=tax.name,
-            amount=tax.calculate_amount(taxless.amount),
-            base_amount=taxless.amount,
-        )
+        SourceLineTax.from_tax(tax=tax, base_amount=taxless.amount)
         for tax in taxes
     ]
 
     if taxful is None:
-        taxful = TaxfulPrice(taxless.amount + sum(lt.amount for lt in line_taxes))
+        total_tax_amount = money_sum(x.amount for x in line_taxes)
+        taxful = TaxfulPrice(taxless.amount + total_tax_amount)
 
     return TaxedPrice(taxful, taxless, line_taxes)
