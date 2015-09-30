@@ -162,13 +162,6 @@ class OrderCreator(object):
             lines.extend(self.source_line_to_order_lines(order, line))
         return lines
 
-    def get_creator(self, order_source):
-        if order_source and order_source.creator:
-            return order_source.creator
-        if self.request and hasattr(self.request, "user"):
-            return self.request.user
-        return None
-
     def create_order(self, order_source):
         # order_provision.target_user = self._maybe_create_user(
         #     user=order_provision.target_user,
@@ -189,7 +182,7 @@ class OrderCreator(object):
             customer_comment=order_source.customer_comment,
             marketing_permission=bool(order_source.marketing_permission),
             ip_address=(self.request.META.get("REMOTE_ADDR") if self.request else None),
-            creator=real_user_or_none(self.get_creator(order_source)),
+            creator=real_user_or_none(order_source.creator),
             orderer=(order_source.orderer or None),
             customer=(order_source.customer or None),
             billing_address=order_source.billing_address,
