@@ -51,7 +51,7 @@ def test_stacked_tax_taxless_price():
                 street="16215 Alton Pkwy",
                 postal_code="92602",
             )
-            line = source.get_final_lines()[0]
+            line = source.get_final_lines(with_taxes=True)[0]
             assert isinstance(line, SourceLine)
             assert line.taxes
             assert line.taxful_total_price.value == Decimal("10.800")
@@ -59,7 +59,7 @@ def test_stacked_tax_taxless_price():
 
             # Let's move out to a taxless location.
             source.shipping_address.postal_code = "11111"
-            line = source.get_final_lines()[0]
+            line = source.get_final_lines(with_taxes=True)[0]
             assert isinstance(line, SourceLine)
             assert not line.taxes
             assert line.taxful_total_price.value == Decimal("10")
@@ -77,7 +77,7 @@ def test_stacked_tax_taxful_price():
                 street="16215 Alton Pkwy",
                 postal_code="92602",
             )
-            line = source.get_final_lines()[0]
+            line = source.get_final_lines(with_taxes=True)[0]
             assert isinstance(line, SourceLine)
             assert line.taxes
             assert line.taxful_total_price == TaxfulPrice(20)
@@ -86,7 +86,7 @@ def test_stacked_tax_taxful_price():
 
             # Let's move out to a taxless location.
             source.shipping_address.postal_code = "11111"
-            line = source.get_final_lines()[0]
+            line = source.get_final_lines(with_taxes=True)[0]
             assert isinstance(line, SourceLine)
             assert not line.taxes
             assert line.taxful_total_price == TaxfulPrice(20)

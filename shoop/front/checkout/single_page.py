@@ -80,6 +80,7 @@ class SingleCheckoutPhase(CheckoutPhaseViewMixin, FormView):
         ctx = FormView.get_context_data(self, **kwargs)
         basket = self.request.basket  # type: shoop.front.basket.objects.BaseBasket
         ctx["basket"] = basket
+        basket.calculate_taxes()
         errors = list(basket.get_validation_errors(shop=self.request.shop))
         ctx["errors"] = errors
         ctx["orderable"] = (not errors)

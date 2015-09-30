@@ -57,6 +57,19 @@ class OrderSource(object):
 
         self._lines = []
 
+        # TODO: (TAX) How to set calculate_taxes_automatically? From a setting?
+        self.calculate_taxes_automatically = False
+        """
+        Calculate taxes automatically when lines are added or processed.
+
+        Set to False to minimize costs and latency, since it is possible
+        that the current TaxModule implemements tax calculations with an
+        integration to a remote system which charges per transaction.
+        """
+
+        self._taxes_calculated = False
+        self._processed_lines_cache = None
+
     def update(self, **values):
         for key, value in values.items():
             if not hasattr(self, key):
@@ -129,12 +142,48 @@ class OrderSource(object):
         """
         return self._lines
 
-    def get_final_lines(self):
-        lines = getattr(self, "_processed_lines_cache", None)
+    def get_final_lines(self, with_taxes=False):
+        """
+        Get lines with processed lines added.
+
+        This implementation includes the all lines returned by
+        `get_lines` and in addition, lines from shipping and payment
+        methods, but these lines can be extended, deleted or replaced by
+        a subclass (by overriding `_compute_processed_lines` method) and
+        with the `post_compute_source_lines` signal.
+
+        .. note::
+
+           By default, taxes for the returned lines are not calculated
+           when `self.calculate_taxes_automatically` is false.  Pass in
+           ``True`` to `with_taxes` argument or use `calculate_taxes`
+           method to force tax calculation.
+        """
+
+        lines = self._processed_lines_cache
         if lines is None:
             lines = self.__compute_lines()
             self._processed_lines_cache = lines
+        if not self._taxes_calculated:
+            if with_taxes or self.calculate_taxes_automatically:
+                self._calculate_taxes(lines)
         return lines
+
+    def calculate_taxes(self, force_recalculate=False):
+        if force_recalculate:
+            self._taxes_calculated = False
+        self.get_final_lines(with_taxes=True)
+
+    def _calculate_taxes(self, lines):
+        tax_module = taxing.get_tax_module()
+        tax_module.add_taxes(self, lines)
+        self._taxes_calculated = True
+
+    def calculate_taxes_or_raise(self):
+        if not self._taxes_calculated:
+            if not self.calculate_taxes_automatically:
+                raise TaxesNotCalculated('Taxes are not calculated')
+            self.calculate_taxes()
 
     def uncache(self):
         """
@@ -144,6 +193,7 @@ class OrderSource(object):
         (re)accessing lines with :obj:`get_final_lines`.
         """
         self._processed_lines_cache = None
+        self._taxes_calculated = False
 
     @non_reentrant
     def __compute_lines(self):
@@ -160,8 +210,6 @@ class OrderSource(object):
             post_compute_source_lines.send(
                 sender=type(self), source=self, lines=lines)))
 
-        self._compute_taxes(lines)
-
         return lines
 
     def _compute_payment_method_lines(self):
@@ -173,10 +221,6 @@ class OrderSource(object):
         if self.shipping_method:
             for line in self.shipping_method.get_source_lines(self):
                 yield line
-
-    def _compute_taxes(self, lines):
-        tax_module = taxing.get_tax_module()
-        tax_module.add_taxes(self, lines)
 
     def prices_include_tax(self):
         # TODO: (TAX) Get taxfulness default from request or PriceTaxContext or customer or whatever
@@ -216,7 +260,6 @@ class OrderSource(object):
         # This does not use get_final_lines because it will be called
         # when final lines is being computed
         product_lines = [l for l in self.get_lines() if l.product]
-        self._compute_taxes(product_lines)
         return product_lines
 
     def get_validation_errors(self):

@@ -38,8 +38,10 @@ class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
 
     def get_context_data(self, **kwargs):
         context = super(ConfirmPhase, self).get_context_data(**kwargs)
-        basket = self.request.basket  # type: shoop.front.basket.objects.BaseBasket
-        errors = list(basket.get_validation_errors(shop=self.request.shop))
+        basket = self.request.basket
+        assert isinstance(basket, BaseBasket)
+        basket.calculate_taxes()
+        errors = list(basket.get_validation_errors())
         context["basket"] = basket
         context["errors"] = errors
         context["orderable"] = (not errors)

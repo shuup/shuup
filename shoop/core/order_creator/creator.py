@@ -158,7 +158,7 @@ class OrderCreator(object):
         # Since we just updated `order_provision`, we need to uncache
         # the processed lines.
         source.uncache()
-        for line in source.get_final_lines():
+        for line in source.get_final_lines(with_taxes=True):
             lines.extend(self.source_line_to_order_lines(order, line))
         return lines
 
