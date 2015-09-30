@@ -79,13 +79,14 @@ class DatabaseBasketStorage(BasketStorage):
         return "basket_%s_key" % basket.basket_name
 
     def save(self, basket, data):
+        """
+        :type basket: shoop.front.basket.objects.BaseBasket
+        """
         request = basket.request
         stored_basket = self._get_stored_basket(basket)
         stored_basket.data = data
-        # TODO: (TAX) the `basket.*_price` getters probably raise some sort of exception
-        #       if a given price can't be calculated?
-        stored_basket.taxless_total = basket.taxless_total_price
-        stored_basket.taxful_total = basket.taxful_total_price
+        stored_basket.taxless_total_price = basket.taxless_total_price_or_none
+        stored_basket.taxful_total_price = basket.taxful_total_price_or_none
         stored_basket.product_count = basket.product_count
         stored_basket.customer = (basket.customer or None)
         stored_basket.orderer = (basket.orderer or None)
