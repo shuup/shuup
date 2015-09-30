@@ -118,13 +118,9 @@
                 {% set products_url = url('shoop:xtheme_extra_view', view='products') %}
                 <li{% if request.path == products_url %} class="current"{% endif %}><a href="{{ products_url }}">{% trans %}Products{% endtrans %}</a></li>
                 {% if shoop.simple_cms %}
-                    {% set cms_pages = shoop.simple_cms.get_visible_pages() %}
-                    {% if cms_pages %}
-                        {% for page in cms_pages %}
-                            {% set page_url = url("shoop:cms_page", url=page.url) %}
-                            <li{% if request.path == page_url %} class="current"{% endif %}><a href="{{ page_url }}">{{ page }}</a></li>
-                        {% endfor %}
-                    {% endif %}
+                    {% for link in xtheme.get_cms_links() %}
+                        <li{% if request.path == "%s/" % link.url %} class="current"{% endif %}><a href="{{ link.url }}">{{ link.text }}</a></li>
+                    {% endfor %}
                 {% endif %}
             </ul>
         </div>
