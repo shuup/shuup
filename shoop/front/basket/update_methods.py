@@ -66,6 +66,7 @@ class BasketUpdateMethods(object):
                 message = u"%s: %s" % (linked_line.get("text") or linked_line.get("name"), error_texts)
                 messages.warning(self.request, message)
                 continue
+            self.basket.update_line(linked_line, quantity=new_quantity)
             linked_line["quantity"] = new_quantity
             changed = True
 

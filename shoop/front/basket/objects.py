@@ -74,9 +74,9 @@ class BasketLine(SourceLine):
             raise ValueError("Invalid basket line type. Only values of OrderLineType are allowed.")
         self.__dict__["type"] = type
 
-    def add_quantity(self, quantity):
+    def set_quantity(self, quantity):
         cls = Decimal if self.product.sales_unit.allow_fractions else int
-        self.quantity = cls(max(0, self.quantity + quantity))
+        self.quantity = cls(max(0, quantity))
 
     @property
     def can_delete(self):
@@ -248,14 +248,20 @@ class BaseBasket(OrderSource):
         if not data:
             data = self._initialize_product_line_data(product=product, supplier=supplier, shop=shop)
 
-        line = BasketLine.from_dict(self, data)
-        line.add_quantity(quantity)
-        line.cache_info(self.request)
-        line.update(**extra)
-
         if parent_line:
-            line.parent_line_id = parent_line.line_id
+            data["parent_line_id"] = parent_line.line_id
 
+        new_quantity = max(0, data["quantity"] + Decimal(quantity))
+
+        return self.update_line(data, quantity=new_quantity, **extra)
+
+    def update_line(self, data_line, **kwargs):
+        line = BasketLine.from_dict(self, data_line)
+        new_quantity = kwargs.pop("quantity", None)
+        if new_quantity is not None:
+            line.set_quantity(new_quantity)
+        line.update(**kwargs)
+        line.cache_info(self.request)
         self._add_or_replace_line(line)
         return line
 
