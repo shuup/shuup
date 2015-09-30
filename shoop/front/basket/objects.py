@@ -230,8 +230,13 @@ class BaseBasket(OrderSource):
         if isinstance(data_line, SourceLine):
             data_line = data_line.to_dict()
         assert isinstance(data_line, dict)
+        line_ids = [x["line_id"] for x in self._data_lines]
+        try:
+            index = line_ids.index(data_line["line_id"])
+        except ValueError:
+            index = len(line_ids)
         self.delete_line(data_line["line_id"])
-        self._data_lines.append(data_line)
+        self._data_lines.insert(index, data_line)
         self.uncache()
 
     def add_product(self, supplier, shop, product, quantity, force_new_line=False, extra=None, parent_line=None):
