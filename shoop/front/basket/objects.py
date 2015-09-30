@@ -96,6 +96,8 @@ class BaseBasket(OrderSource):
         self._data = None
         self.dirty = False
         self.customer = getattr(request, "customer", None)
+        self.orderer = getattr(request, "person", None)
+        self.creator = getattr(request, "user", None)
         self.shop = getattr(request, "shop", None)
         self.__computing_processed_lines = None
 

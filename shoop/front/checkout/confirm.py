@@ -60,9 +60,10 @@ class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
     def create_order(self):
         basket = self.request.basket
         assert isinstance(basket, BaseBasket)
-        basket.shop = self.request.shop
+        assert basket.shop == self.request.shop
         basket.orderer = self.request.person
         basket.customer = self.request.customer
+        basket.creator = self.request.user
         basket.status = OrderStatus.objects.get_default_initial()
         order_creator = get_basket_order_creator(request=self.request)
         order = order_creator.create_order(basket)
