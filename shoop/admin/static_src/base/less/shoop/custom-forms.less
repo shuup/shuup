@@ -31,7 +31,7 @@
             padding-top: 8px;
         }
 
-        .control-label + div {
+        .control-label + div:not(.input-group) {
             .make-sm-column(8);
             .make-lg-column(6);
             padding: 0;
@@ -62,6 +62,17 @@
             .make-lg-column(6);
             padding-left: 12px;
             padding-right: 12px;
+        }
+
+        .input-group {
+            .make-sm-column(8);
+            .make-lg-column(6);
+            float: none;
+            padding: 0;
+            .form-control {
+                width: 100%;
+                float: none;
+            }
         }
 
         .help-block {
@@ -198,6 +209,14 @@ label, .radio label, .checkbox label {
 fieldset[disabled] .form-control {
     background-color: @input-bg-color;
     opacity: 0.6;
+}
+
+.input-group-addon {
+    background: #fff;
+    border: 2px solid @input-border-color;
+    .has-error & {
+        background: #fff;
+    }
 }
 
 .error-indicator {
