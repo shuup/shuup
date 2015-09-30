@@ -9,7 +9,7 @@ import markdown
 from django.conf import settings
 from django.db import models
 from django.db.models import Q
-from django.utils.encoding import python_2_unicode_compatible
+from django.utils.encoding import python_2_unicode_compatible, force_text
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from parler.managers import TranslatableQuerySet
@@ -88,4 +88,4 @@ class Page(TranslatableModel):
         return markdown.markdown(self.content)
 
     def __str__(self):
-        return self.safe_translation_getter("title", any_language=True)
+        return force_text(self.safe_translation_getter("title", any_language=True, default=_("Untitled")))
