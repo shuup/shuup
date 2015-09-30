@@ -4,6 +4,7 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.core import taxing
@@ -55,7 +56,9 @@ def _calculate_taxes(price, taxing_context, tax_class):
 
     tax_rules = TaxRule.objects.filter(enabled=True, tax_classes=tax_class)
     if customer_tax_group:
-        tax_rules = tax_rules.filter(customer_tax_groups=customer_tax_group)
+        tax_rules = tax_rules.filter(
+            Q(customer_tax_groups=customer_tax_group) |
+            Q(customer_tax_groups=None))
     tax_rules = tax_rules.order_by("-priority")  # TODO: (TAX) Do the Right Thing with priority
     taxes = [tax_rule for tax_rule in tax_rules if tax_rule.matches(taxing_context)]
     tax_rule = first(taxes)  # TODO: (TAX) Do something better than just using the first tax!

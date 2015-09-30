@@ -10,6 +10,8 @@ from django.db import models
 from django.utils.encoding import force_text, python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
+from shoop.core.models import CustomerTaxGroup, Tax, TaxClass
+
 
 def _pattern_matches(pattern, target):
     target = "%s" % target
@@ -33,14 +35,14 @@ PRIORITY_HELP = _(
 @python_2_unicode_compatible
 class TaxRule(models.Model):
     enabled = models.BooleanField(default=True, verbose_name=_('enabled'), db_index=True)
-    tax_classes = models.ManyToManyField("shoop.TaxClass")
-    customer_tax_groups = models.ManyToManyField("shoop.CustomerTaxGroup")
+    tax_classes = models.ManyToManyField(TaxClass)
+    customer_tax_groups = models.ManyToManyField(CustomerTaxGroup, blank=True)
     country_codes_pattern = models.CharField(max_length=300, blank=True)
     region_codes_pattern = models.CharField(max_length=500, blank=True)
     postal_codes_pattern = models.CharField(max_length=500, blank=True)
     # TODO: (TAX) Priority is not supported yet
     priority = models.IntegerField(default=0, help_text=PRIORITY_HELP)
-    tax = models.ForeignKey("shoop.Tax")
+    tax = models.ForeignKey(Tax)
 
     def matches(self, taxing_context):
         if self.country_codes_pattern:
