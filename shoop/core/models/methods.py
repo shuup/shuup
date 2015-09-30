@@ -47,7 +47,7 @@ class MethodQuerySet(TranslatableQuerySet):
     def enabled(self):
         return self.filter(status=MethodStatus.ENABLED)
 
-    def available_ids(self, shop_id, product_ids):
+    def available_ids(self, shop, products):
         """
         Retrieve the common, available methods for a given shop and
         product IDs.
@@ -64,8 +64,8 @@ class MethodQuerySet(TranslatableQuerySet):
         shop_product_limiter_attr = "limit_%s" % self.model.shop_product_m2m
 
         limiting_products_query = {
-            "shop_id": shop_id,
-            "product_id__in": product_ids,
+            "shop": shop,
+            "product__in": products,
             shop_product_limiter_attr: True
         }
 
@@ -78,8 +78,8 @@ class MethodQuerySet(TranslatableQuerySet):
 
         return available_method_ids
 
-    def available(self, shop_id, product_ids):
-        return self.filter(pk__in=self.available_ids(shop_id, product_ids))
+    def available(self, shop, products):
+        return self.filter(pk__in=self.available_ids(shop, products))
 
 
 @python_2_unicode_compatible

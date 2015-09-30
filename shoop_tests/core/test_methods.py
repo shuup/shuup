@@ -195,4 +195,4 @@ def test_limited_methods():
         ((common_product.pk, impossible_product.pk,), ()),
     ]:
         product_ids = set(product_ids)
-        assert ShippingMethod.objects.available_ids(shop_id=shop.id, product_ids=product_ids) == set(method_ids)
+        assert ShippingMethod.objects.available_ids(shop=shop, products=product_ids) == set(method_ids)
