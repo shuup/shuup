@@ -159,20 +159,20 @@ def test_weight_limits():
 
 
 # TODO: (TAX) Taxing of shipping methods
-# @pytest.mark.django_db
-# def test_tax():
-#     sm = ShippingMethod(tax_class=None, module_data={"taxless_price": 50})
-#     source = BasketishOrderSource()
-#     source.lines = [  # Since `tax_class` is None, the highest tax percentage in the order should be used:
-#                       SourceLine(type=OrderLineType.PRODUCT, tax_rate=Decimal("0.8")),
-#                       SourceLine(type=OrderLineType.PRODUCT, tax_rate=Decimal("0.3")),
-#     ]
-#     line = list(sm.get_source_lines(source))[0]
-#     assert line.tax_rate == Decimal("0.8")
+@pytest.mark.xfail # TODO: (TAX) Make this test not fail
+@pytest.mark.django_db
+def test_tax():
+    sm = ShippingMethod(tax_class=None, module_data={"price": 50})
+    source = BasketishOrderSource(get_default_shop())
+    # Since `tax_class` is None, the highest tax percentage in the order should be used:
+    source.add_line(type=OrderLineType.PRODUCT, tax_rate=Decimal("0.8"))
+    source.add_line(type=OrderLineType.PRODUCT, tax_rate=Decimal("0.3"))
+    line = list(sm.get_source_lines(source))[0]
+    assert line.tax_rate == Decimal("0.8")
 
-#     sm.tax_class = get_default_tax_group()
-#     line = list(sm.get_source_lines(source))[0]
-#     assert line.tax_rate == sm.tax_class.tax_rate
+    sm.tax_class = get_default_tax_group()
+    line = list(sm.get_source_lines(source))[0]
+    assert line.tax_rate == sm.tax_class.tax_rate
 
 
 @pytest.mark.django_db
