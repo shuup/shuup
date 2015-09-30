@@ -8,7 +8,6 @@
 import pytest
 from shoop.front.basket import get_basket
 from shoop.front.models import StoredBasket
-from shoop.simple_pricing.models import SimpleProductPrice
 from shoop.testing.factories import get_default_shop, create_product, get_default_supplier
 from shoop_tests.utils import printable_gibberish
 from django.db.models import Sum
