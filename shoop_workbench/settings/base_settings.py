@@ -12,7 +12,6 @@ BASE_DIR = os.getenv("SHOOP_WORKBENCH_BASE_DIR") or (
     os.path.dirname(os.path.dirname(__file__)))
 SECRET_KEY = "Shhhhh"
 DEBUG = True
-TEMPLATE_DEBUG = True
 ALLOWED_HOSTS = []
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "var", "media")
@@ -21,7 +20,7 @@ MEDIA_URL = "/media/"
 
 SHOOP_ENABLED_ADDONS_FILE = os.getenv("SHOOP_ENABLED_ADDONS_FILE") or (
     os.path.join(BASE_DIR, "var", "enabled_addons"))
-INSTALLED_APPS = add_enabled_addons(SHOOP_ENABLED_ADDONS_FILE, (
+INSTALLED_APPS = add_enabled_addons(SHOOP_ENABLED_ADDONS_FILE, [
     # django
     'django.contrib.admin',
     'django.contrib.auth',
@@ -60,9 +59,9 @@ INSTALLED_APPS = add_enabled_addons(SHOOP_ENABLED_ADDONS_FILE, (
     'rest_framework',
 
     'shoop.discount_pricing'
-))
+])
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE_CLASSES = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -73,8 +72,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'shoop.front.middleware.ProblemMiddleware',
     'shoop.front.middleware.ShoopFrontMiddleware',
-
-)
+]
 
 ROOT_URLCONF = 'shoop_workbench.urls'
 WSGI_APPLICATION = 'shoop_workbench.wsgi.application'
@@ -128,7 +126,7 @@ PARLER_LANGUAGES = {
     }
 }
 
-TEMPLATE_CONTEXT_PROCESSORS = (
+_TEMPLATE_CONTEXT_PROCESSORS = [
     "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
@@ -137,7 +135,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages"
-)
+]
 
 TEMPLATES = [
     {
@@ -145,9 +143,9 @@ TEMPLATES = [
         "APP_DIRS": True,
         "OPTIONS": {
             "match_extension": ".jinja",
-            "context_processors": TEMPLATE_CONTEXT_PROCESSORS,
+            "context_processors": _TEMPLATE_CONTEXT_PROCESSORS,
             "newstyle_gettext": True,
-            "environment": "shoop.xtheme.engine.XthemeEnvironment"
+            "environment": "shoop.xtheme.engine.XthemeEnvironment",
         },
         "NAME": "jinja2",
     },
@@ -156,8 +154,8 @@ TEMPLATES = [
         "DIRS": [],
         "APP_DIRS": True,
         "OPTIONS": {
-            "context_processors": TEMPLATE_CONTEXT_PROCESSORS,
-            "debug": True
+            "context_processors": _TEMPLATE_CONTEXT_PROCESSORS,
+            "debug": DEBUG
         }
     },
 ]
