@@ -17,7 +17,7 @@ from enumfields import Enum, EnumIntegerField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
 
-from shoop.core.fields import InternalIdentifierField, MeasurementField, MoneyValueField
+from shoop.core.fields import InternalIdentifierField, MeasurementField
 from shoop.core.utils.slugs import generate_multilanguage_slugs
 from shoop.utils.analog import LogEntryKind, define_log_model
 
@@ -196,8 +196,6 @@ class Product(AttributableMixin, TranslatableModel):
     gross_weight = MeasurementField(unit="g", verbose_name=_('gross weight (g)'))
 
     # Misc.
-    purchase_price = MoneyValueField(verbose_name=_('purchase price'), blank=True, null=True)
-    suggested_retail_price = MoneyValueField(verbose_name=_('suggested retail price'), blank=True, null=True)
     manufacturer = models.ForeignKey("Manufacturer", blank=True, null=True, verbose_name=_('manufacturer'))
     primary_image = models.ForeignKey(
         "ProductMedia", null=True, blank=True,
