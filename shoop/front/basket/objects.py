@@ -12,12 +12,13 @@ from collections import Counter
 from decimal import Decimal
 
 import six
+from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.core.models import OrderLineType, PaymentMethod, ShippingMethod
 from shoop.core.order_creator.source import OrderSource, SourceLine
-from shoop.front.basket.storage import get_storage
+from shoop.front.basket.storage import BasketCompatibilityError, get_storage
 from shoop.utils.numbers import parse_decimal_string
 from shoop.utils.objects import compare_partial_dicts
 
@@ -110,7 +111,13 @@ class BaseBasket(OrderSource):
         :rtype: dict
         """
         if self._data is None:
-            self._data = self.storage.load(basket=self)
+            try:
+                self._data = self.storage.load(basket=self)
+            except BasketCompatibilityError as error:
+                msg = _("Basket loading failed: Incompatible basket (%s)")
+                messages.error(self.request, msg % error)
+                self.storage.delete(basket=self)
+                self._data = self.storage.load(basket=self)
             self.dirty = False
         return self._data
 
