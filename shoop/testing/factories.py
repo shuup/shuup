@@ -145,6 +145,7 @@ class ShopProductFactory(DjangoModelFactory):
     listed = FuzzyBoolean(probability=0.7)
     purchasable = FuzzyBoolean(probability=0.7)
     searchable = FuzzyBoolean(probability=0.7)
+    default_price_value = fuzzy.FuzzyDecimal(0, 500)
 
 
 def _generate_product_image(product):
