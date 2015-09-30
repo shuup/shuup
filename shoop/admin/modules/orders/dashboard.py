@@ -58,7 +58,7 @@ def get_subtitle(count):
     return _("Based on %d orders") % count
 
 
-def get_sales_of_the_day_block(currency, request):
+def get_sales_of_the_day_block(request, currency):
     orders = get_orders_by_currency(currency)
     # Sales of the day
     todays_order_data = (
@@ -76,7 +76,7 @@ def get_sales_of_the_day_block(currency, request):
     )
 
 
-def get_lifetime_sales_block(currency, request):
+def get_lifetime_sales_block(request, currency):
     orders = get_orders_by_currency(currency)
 
     # Lifetime sales
@@ -96,7 +96,7 @@ def get_lifetime_sales_block(currency, request):
     )
 
 
-def get_avg_purchase_size_block(currency, request):
+def get_avg_purchase_size_block(request, currency):
     orders = get_orders_by_currency(currency)
 
     lifetime_sales_data = orders.complete().aggregate(
@@ -119,7 +119,7 @@ def get_avg_purchase_size_block(currency, request):
     )
 
 
-def get_open_orders_block(currency, request):
+def get_open_orders_block(request, currency):
     orders = get_orders_by_currency(currency)
 
     # Open orders / open orders value
@@ -138,5 +138,5 @@ def get_open_orders_block(currency, request):
     )
 
 
-def get_order_value_chart_dashboard_block(currency, request):
+def get_order_value_chart_dashboard_block(request, currency):
     return OrderValueChartDashboardBlock(id="order_value_chart", currency=currency)

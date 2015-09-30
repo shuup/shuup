@@ -31,5 +31,5 @@ def test_order_set_status_works(admin_user, rf):
 @pytest.mark.django_db
 def test_order_chart_works():
     order = create_random_order(customer=create_random_person(), products=(get_default_product(),))
-    chart = OrderValueChartDashboardBlock("test").get_chart()
+    chart = OrderValueChartDashboardBlock("test", order.currency).get_chart()
     assert len(chart.series[0]) > 0
