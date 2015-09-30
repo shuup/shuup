@@ -173,8 +173,7 @@ class DatabaseBasketStorage(BasketStorage):
         stored_basket.orderer = (basket.orderer or None)
         stored_basket.creator = real_user_or_none(basket.creator)
         stored_basket.save()
-        product_ids = set(basket.get_product_ids_and_quantities().keys())
-        stored_basket.products = product_ids
+        stored_basket.products = set(basket.product_ids)
         basket_get_kwargs = {"pk": stored_basket.pk, "key": stored_basket.key}
         request.session[self._get_session_key(basket)] = basket_get_kwargs
 
