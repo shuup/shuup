@@ -11,10 +11,9 @@ import abc
 
 import six
 from django.conf import settings
-from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ImproperlyConfigured
 
-from shoop.core.models import AnonymousContact
+from shoop.core.utils.users import real_user_or_none
 from shoop.front.models import StoredBasket
 from shoop.utils.importing import cached_load
 
@@ -88,12 +87,9 @@ class DatabaseBasketStorage(BasketStorage):
         stored_basket.taxless_total = basket.taxless_total_price
         stored_basket.taxful_total = basket.taxful_total_price
         stored_basket.product_count = basket.product_count
-        user = getattr(request, "user", AnonymousUser())
-        customer = getattr(request, "customer", AnonymousContact())
-        if not user.is_anonymous:
-            stored_basket.owner_user = user
-        if not customer.is_anonymous:
-            stored_basket.owner_contact = customer
+        stored_basket.customer = (basket.customer or None)
+        stored_basket.orderer = (basket.orderer or None)
+        stored_basket.creator = real_user_or_none(basket.creator)
         stored_basket.save()
         product_ids = set(basket.get_product_ids_and_quantities().keys())
         stored_basket.products = product_ids

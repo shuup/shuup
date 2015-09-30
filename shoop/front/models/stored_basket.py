@@ -12,6 +12,7 @@ from django.db.models.fields.related import ManyToManyField
 from django.utils.crypto import get_random_string
 
 from shoop.core.fields import MoneyValueField, TaggedJSONField
+from shoop.core.models import Contact, PersonContact
 
 
 def generate_key():
@@ -21,8 +22,15 @@ def generate_key():
 class StoredBasket(models.Model):
     # A combination of the PK and key is used to retrieve a basket for session situations.
     key = models.CharField(max_length=32, default=generate_key)
-    owner_contact = models.ForeignKey("shoop.Contact", blank=True, null=True)
-    owner_user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
+    customer = models.ForeignKey(
+        Contact, blank=True, null=True,
+        related_name="customer_baskets")
+    orderer = models.ForeignKey(
+        PersonContact, blank=True, null=True,
+        related_name="orderer_baskets")
+    creator = models.ForeignKey(
+        settings.AUTH_USER_MODEL, blank=True, null=True,
+        related_name="baskets_created")
 
     created_on = models.DateTimeField(auto_now_add=True, db_index=True, editable=False)
     updated_on = models.DateTimeField(auto_now=True, db_index=True, editable=False)
