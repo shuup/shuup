@@ -59,7 +59,8 @@
                         <li>
                             <form role="form" method="post" action="{{ url("shoop:login") }}">
                                 {% csrf_token %}
-                                <input type="hidden" name="next" value="{{ request.path }}">
+                                {% if request.resolver_match.url_name == "logout" %}{% set next="/" %}{% endif %}
+                                <input type="hidden" name="next" value="{{ next or request.path }}">
                                 <div class="form-group">
                                     <label for="username">{% trans %}Username{% endtrans %}</label>
                                     <input type="text" name="username" class="form-control">
