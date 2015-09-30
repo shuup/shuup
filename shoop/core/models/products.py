@@ -339,15 +339,6 @@ class Product(AttributableMixin, TranslatableModel):
         """
         return self.get_price_info(context, quantity=quantity).base_price
 
-    def get_taxed_price(self, context, quantity=1):
-        """
-        :type context: shoop.core.contexts.PriceTaxContext
-        :rtype: shoop.core.pricing.TaxedPrice
-        """
-        from shoop.core import taxing
-        module = taxing.get_tax_module()
-        return module.determine_product_tax(context, self)
-
     def get_available_attribute_queryset(self):
         if self.type_id:
             return self.type.attributes.visible()
