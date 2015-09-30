@@ -41,7 +41,6 @@ class ProductBaseForm(MultiLanguageModelForm):
             "sales_unit",
             "shipping_mode",
             "sku",
-            "stock_behavior",
             "suggested_retail_price",
             "tax_class",
             "type",
@@ -84,6 +83,11 @@ class ShopProductForm(forms.ModelForm):
             "categories",
             # TODO: "shop_primary_image",
         )
+
+    def __init__(self, **kwargs):
+        if not kwargs["instance"].pk:
+            kwargs["instance"].visible = False
+        super(ShopProductForm, self).__init__(**kwargs)
 
     # TODO: Move this to model
     def clean_minimum_purchase_quantity(self):

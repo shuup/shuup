@@ -36,9 +36,21 @@
                     </tfoot>
                     <tbody>
                     {% for product_id, info in form.product_summary.items() %}
+                        {% set field = form["q_" ~ product_id] %}
                         <tr>
                             <td>{{ form.product_names.get(product_id) }}</td>
-                            <td class="text-right quantity-column">{{ form["q_" ~ product_id] }}</td>
+                            <td class="text-right quantity-column">
+                                <div class="{% if field.errors %}has-error{% endif %}">
+                                    {{ field }}
+                                    {% if field.errors %}
+                                        <div class="help-text text-danger">
+                                        {% for error in field.errors %}
+                                            {{ error }}<br>
+                                        {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </td>
                             <td class="text-right hidden-xs">{{ info.ordered|number }}</td>
                             <td class="text-right hidden-xs">{{ info.shipped|number }}</td>
                             <td class="text-right hidden-xs">{{ info.unshipped|number }}</td>

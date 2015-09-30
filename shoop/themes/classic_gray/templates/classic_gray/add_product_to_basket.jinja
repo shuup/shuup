@@ -25,6 +25,18 @@
         });
     }
 
+    // TODO: Show error message?
+    function handleError(cover) {
+        setTimeout(function() {
+            // Hide the loader and change to error message
+            cover.removeClass("loading").addClass('error');
+            setTimeout(function() {
+                // Hide the error message and the modal
+                cover.removeClass("error in");
+            }, 1750);
+        }, 500);
+    }
+
     function addToBasket(form) {
         var cover = $(".cover-wrap");
         cover.addClass("in loading");
@@ -33,6 +45,11 @@
             method: "POST",
             data: form.serializeArray(),
             success: function(response) {
+                if(response.error) {
+                    handleError(cover);
+                    return;
+                }
+
                 updateNavigationBasket();
                 setTimeout(function() {
                     // Hide the loader and show the message
@@ -46,16 +63,12 @@
                         }, 250);
                     }, 1500);
                 }, 500);
+
+
             },
             error: function() {
-                setTimeout(function() {
-                    // Hide the loader and change to error message
-                    cover.removeClass("loading").addClass('error');
-                    setTimeout(function() {
-                        // Hide the error message and the modal
-                        cover.removeClass("error in");
-                    }, 1750);
-                }, 500);
+                handleError(cover);
+
             }
         });
     }

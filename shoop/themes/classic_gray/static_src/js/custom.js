@@ -15,6 +15,8 @@ function showPreview(productId) {
         success: function(data) {
             $("body").append(data);
             $(modal_select).modal("show");
+            updatePrice();
+            $(".selectpicker").selectpicker();
         }
     });
 }
@@ -61,6 +63,7 @@ function updatePrice() {
     if ($quantity.length === 0 || !$quantity.is(":valid")) {
         return;
     }
+
     var data = {
         id: $("input[name=product_id]").val(),
         quantity: $quantity.val()
@@ -78,6 +81,14 @@ function updatePrice() {
     jQuery.ajax({url: "/xtheme/product_price", dataType: "html", data: data}).done(function(responseText) {
         var $content = jQuery("<div>").append(jQuery.parseHTML(responseText)).find("#product-price-div");
         jQuery("#product-price-div").replaceWith($content);
+        if($content.find("#no-price").length > 0)
+        {
+            $("#add-to-cart-button").prop("disabled", true);
+        }
+        else
+        {
+            $("#add-to-cart-button").not(".not-orderable").prop("disabled", false);
+        }
     });
 }
 

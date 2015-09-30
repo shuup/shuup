@@ -18,6 +18,8 @@ class ProductPriceView(ProductDetailView):
         vars = self.get_variation_variables()
         if vars:  # complex variation variables detected
             context["product"] = ProductVariationResult.resolve(context["product"], vars)
+            if not context["product"]:
+                self.template_name = "shoop/front/product/_detail_order_section_no_product.jinja"
         context["quantity"] = self.request.GET.get("quantity")
 
         if context["product"]:  # Might be null from ProductVariationResult resolution

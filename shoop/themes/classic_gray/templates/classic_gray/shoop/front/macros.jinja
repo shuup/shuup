@@ -1,6 +1,10 @@
 {% macro product_box(product, show_image=True, show_description=True, class="product-box", thumbnail_size=(500,500), shop=None) %}
     {% set u = url("shoop:product", pk=product.pk, slug=product.slug) %}
-    {% set price_info = product.get_price_info(request) %}
+    {% if product.is_variation_parent()  %}
+        {% set price_info = product.get_cheapest_child_price_info(request) %}
+    {% else %}
+        {% set price_info = product.get_price_info(request) %}
+    {% endif %}
     <div class="product-card {{ class }}" id="product-{{ product.id }}">
         {% if price_info.is_discounted %}
             <div class="labels">
@@ -21,10 +25,7 @@
             {% if shop %}<p class="shop">{{ shop }}</p>{% endif %}
             {# TODO: (TAX) Check following line (gets taxful price of product)  #}
             <div class="price">
-                {{ price_info.price|home_currency }}
-                {% if price_info.is_discounted %}
-                    <span class="original">{{price_info.base_price|home_currency}}</span>
-                {% endif %}
+                {{ render_product_price(product, price_info, show_units=False) }}
             </div>
             <div class="actions clearfix">
                 <div class="col-xs-6">
@@ -273,4 +274,28 @@
             {% endif %}
         </ul>
     </nav>
+{% endmacro %}
+
+
+{% macro render_product_price(product, price_info, show_units=True) %}
+<div class="price-line">
+    <span class="lead">
+    {% if product.is_variation_parent() %}
+        {% set min_price, max_price = product.get_child_price_range(request) %}
+        {% if min_price == max_price %}
+            <strong>{{ min_price|home_currency }}</strong>
+        {% else %}
+            <strong>{{ min_price|home_currency }} - {{ max_price|home_currency }}</strong>
+        {% endif %}
+    {% else %}
+        {% if price_info.is_discounted %}
+            <small class="text-muted original-price original"><s>{{ price_info.base_price|floatformat(2)|home_currency }}</s></small>
+        {% endif %}
+        <strong>{{ price_info.price|floatformat(2)|home_currency }}</strong>
+    {% endif %}
+    {% if show_units %}
+    <small> / {{ product.sales_unit.short_name }}</small>
+    {% endif %}
+    </span>
+</div>
 {% endmacro %}

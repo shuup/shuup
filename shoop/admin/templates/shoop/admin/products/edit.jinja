@@ -2,6 +2,14 @@
 {% block content %}
     <div class="container-fluid">
         <div class="row">
+            {% if orderability_errors %}
+                <div class="clearfix">
+                {# TODO: FIX THIS FOR MOBILE SCREEN SIZES #}
+                    <p class="pull-right" data-toggle="tooltip" data-title="{% for error in orderability_errors %}{{ error }} {% endfor %}" data-placement="bottom">
+                        <i class="fa fa-info-circle text-info"></i> {% trans %}This product is currently not orderable.{% endtrans %}
+                    </p>
+                </div>
+            {% endif %}
             <div class="col-md-3 section-navigation" data-navigatee="product_form"></div>
             <div class="col-md-9">
                 <form method="post" id="product_form">

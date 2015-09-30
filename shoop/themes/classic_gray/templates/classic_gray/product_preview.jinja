@@ -1,3 +1,4 @@
+{%- import "shoop/front/macros.jinja" as macros with context -%}
 {% set product_url = url("shoop:product", pk=product.pk, slug=product.slug) %}
 {% set priceinfo = product.get_price_info(request) %}
 <div class="product-preview-modal fade" id="product-{{ product.id }}-modal" tabindex="-1" role="dialog" aria-labelledby="product-{{ product.id }}-preview">
@@ -22,16 +23,7 @@
                     <h2>{{ product.name }}</h2>
                     {% if product.description %}<p class="description">{{ product.description|safe|truncate(150, False) }}</p>{% endif %}
                     <div class="product-price">
-                        {% if priceinfo.is_discounted %}
-                            <div class="price-line">
-                                <span class="lead">
-                                    <small class="text-muted original-price"><s>{{ priceinfo.base_price|floatformat(2)|home_currency }}</s></small>
-                                    <strong>{{ priceinfo.price|floatformat(2)|home_currency }}</strong><small> / {{ product.sales_unit.short_name }}</small>
-                                </span>
-                            </div>
-                        {% else %}
-                            <div class="price-line"><span class="lead"><strong>{{ priceinfo.price|floatformat(2)|home_currency }}</strong><small> / {{ product.sales_unit.short_name }}</small></span></div>
-                        {% endif %}
+                        {{ macros.render_product_price(product, priceinfo) }}
                     </div>
                     <hr>
                     {% include "shoop/front/product/_detail_order_section.jinja" with context %}
