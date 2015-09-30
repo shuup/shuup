@@ -6,9 +6,14 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
+from django.template import engines
 from django.utils.translation import ugettext_lazy as _
-from shoop.admin.base import AdminModule, MenuEntry
+from django_jinja.backend import Jinja2
+from shoop.admin.base import AdminModule, MenuEntry, Notification
 from shoop.admin.utils.urls import admin_url
+from shoop.xtheme.engine import XthemeEnvironment
+from shoop.xtheme.theme import get_current_theme
 
 
 class XthemeAdminModule(AdminModule):
@@ -45,3 +50,19 @@ class XthemeAdminModule(AdminModule):
                 category=self.name
             )
         ]
+
+    def get_notifications(self, request):
+        try:
+            engine = engines["jinja2"]
+        except KeyError:
+            engine = None
+
+        if engine and isinstance(engine, Jinja2):  # The engine is what we expect...
+            if isinstance(engine.env, XthemeEnvironment):  # ... and it's capable of loading themes...
+                if not get_current_theme(request):  # ... but there's no theme active?!
+                    # Panic!
+                    yield Notification(
+                        text=_("No theme is active. Click here to activate one."),
+                        title=_("Theming"),
+                        url="shoop_admin:xtheme.config"
+                    )

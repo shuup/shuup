@@ -332,7 +332,12 @@ def get_default_supplier():
 def get_default_shop():
     shop = default_by_identifier(Shop)
     if not shop:
-        shop = Shop.objects.create(name=DEFAULT_NAME, identifier=DEFAULT_IDENTIFIER, status=ShopStatus.ENABLED)
+        shop = Shop.objects.create(
+            name=DEFAULT_NAME,
+            identifier=DEFAULT_IDENTIFIER,
+            status=ShopStatus.ENABLED,
+            public_name=DEFAULT_NAME
+        )
         assert str(shop) == DEFAULT_NAME
     return shop
 
