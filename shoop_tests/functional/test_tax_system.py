@@ -20,11 +20,15 @@ from shoop.core.taxing.utils import stacked_value_added_taxes
 from shoop.testing.factories import get_tax
 
 
+TAX_MODULE_SPEC = [__name__ + ":IrvineCaliforniaTaxation"]
+
+
 class IrvineCaliforniaTaxation(TaxModule):
     identifier = "irvine"
-    def get_line_taxes(self, source_line):
+
+    def get_taxed_price_for(self, context, item, price):
         taxes = []
-        if source_line.source.billing_address.postal_code == "92602":
+        if context.postal_code == "92602":
             taxes = [
                 # Based on data from TaxJar
                 get_tax("CA", "California", rate="0.065"),
@@ -32,7 +36,7 @@ class IrvineCaliforniaTaxation(TaxModule):
                 get_tax("CA-OC-IR", "Irvine", rate="0.00"),
                 get_tax("CA-OC-IR-DS", "District tax", rate="0.005"),
             ]
-        return stacked_value_added_taxes(source_line.total_price, taxes).taxes
+        return stacked_value_added_taxes(price, taxes)
 
 
 @pytest.mark.django_db
@@ -41,9 +45,9 @@ def test_stacked_tax_taxless_price():
     source.add_line(
         type=OrderLineType.OTHER, quantity=1, unit_price=TaxlessPrice(10)
     )
-    with override_provides("tax_module", ["shoop_tests.functional.test_tax_system:IrvineCaliforniaTaxation"]):
+    with override_provides("tax_module", TAX_MODULE_SPEC):
         with override_settings(SHOOP_TAX_MODULE="irvine"):
-            source.billing_address = Address(
+            source.shipping_address = Address(
                 street="16215 Alton Pkwy",
                 postal_code="92602",
             )
@@ -54,7 +58,7 @@ def test_stacked_tax_taxless_price():
             source.uncache()
 
             # Let's move out to a taxless location.
-            source.billing_address.postal_code = "11111"
+            source.shipping_address.postal_code = "11111"
             line = source.get_final_lines()[0]
             assert isinstance(line, SourceLine)
             assert not line.taxes
@@ -67,9 +71,9 @@ def test_stacked_tax_taxful_price():
     source.add_line(
         type=OrderLineType.OTHER, quantity=1, unit_price=TaxfulPrice(20)
     )
-    with override_provides("tax_module", ["shoop_tests.functional.test_tax_system:IrvineCaliforniaTaxation"]):
+    with override_provides("tax_module", TAX_MODULE_SPEC):
         with override_settings(SHOOP_TAX_MODULE="irvine"):
-            source.billing_address = Address(
+            source.shipping_address = Address(
                 street="16215 Alton Pkwy",
                 postal_code="92602",
             )
@@ -81,7 +85,7 @@ def test_stacked_tax_taxful_price():
             source.uncache()
 
             # Let's move out to a taxless location.
-            source.billing_address.postal_code = "11111"
+            source.shipping_address.postal_code = "11111"
             line = source.get_final_lines()[0]
             assert isinstance(line, SourceLine)
             assert not line.taxes

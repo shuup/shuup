@@ -9,7 +9,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from shoop.core import taxing
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
-from shoop.core.taxing._context import TaxingContext
 from shoop.core.taxing.utils import stacked_value_added_taxes
 from shoop.default_tax.models import TaxRule
 from shoop.utils.iterables import first
@@ -19,32 +18,8 @@ class DefaultTaxModule(taxing.TaxModule):
     identifier = "default_tax"
     name = _("Default Taxation")
 
-    def determine_product_tax(self, context, product):
-        """
-        :type context: shoop.core.contexts.PriceTaxContext
-        :type product: shoop.core.models.Product
-        """
-        price = product.get_price(context)
-        return _calculate_taxes(
-            price,
-            taxing_context=context.taxing_context,
-            tax_class=product.tax_class,
-        )
-
-    def get_line_taxes(self, source_line):
-        """
-        :type source_line: shoop.core.order_creator.SourceLine
-        :rtype: Iterable[LineTax]
-        """
-        taxing_context = TaxingContext(
-            customer_tax_group=_resolve(source_line, 'source.customer.tax_group'),
-            location=_resolve(source_line, 'source.billing_address'),
-        )
-        return _calculate_taxes(
-            source_line.total_price,
-            taxing_context=taxing_context,
-            tax_class=source_line.tax_class,
-        ).taxes
+    def get_taxed_price_for(self, context, item, price):
+        return _calculate_taxes(price, context, item.tax_class)
 
 
 def _calculate_taxes(price, taxing_context, tax_class):
@@ -64,9 +39,3 @@ def _calculate_taxes(price, taxing_context, tax_class):
     tax_rule = first(taxes)  # TODO: (TAX) Do something better than just using the first tax!
     tax = getattr(tax_rule, "tax", None)
     return stacked_value_added_taxes(price, [tax] if tax else [])
-
-
-def _resolve(obj, path):
-    for name in path.split('.'):
-        obj = getattr(obj, name, None)
-    return obj

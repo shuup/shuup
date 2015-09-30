@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
+from shoop.utils.money import Money
 
 from ._line_tax import SourceLineTax
 from ._price import TaxedPrice

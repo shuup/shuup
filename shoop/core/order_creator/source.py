@@ -176,9 +176,7 @@ class OrderSource(object):
 
     def _compute_taxes(self, lines):
         tax_module = taxing.get_tax_module()
-        for line in lines:
-            if not line.parent_line_id:
-                line.taxes = tax_module.get_line_taxes(line)
+        tax_module.add_taxes(self, lines)
 
     def prices_include_tax(self):
         # TODO: (TAX) Get taxfulness default from request or PriceTaxContext or customer or whatever
