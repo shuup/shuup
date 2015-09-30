@@ -143,7 +143,7 @@ class Attribute(TranslatableModel):
         elif self.type == AttributeType.TIMEDELTA:
             kwargs.setdefault("help_text", "(as seconds)")
             # TODO: This should be more user friendly
-            return forms.IntegerField(**kwargs)
+            return forms.DecimalField(**kwargs)
         elif self.type == AttributeType.DATETIME:
             return forms.DateTimeField(**kwargs)
         elif self.type == AttributeType.DATE:
