@@ -48,19 +48,17 @@ class DefaultTaxModule(taxing.TaxModule):
 
 def _calculate_taxes(price, taxing_context, tax_class):
     customer_tax_group = taxing_context.customer_tax_group
-    # Check tax exempt
-    # TODO: Should this be done in some better way?
+    # TODO: (TAX) Should tax exempt be done in some better way?
     if customer_tax_group and customer_tax_group.identifier == 'tax_exempt':
         return taxing.TaxedPrice(
-            TaxfulPrice(price.amount), TaxlessPrice(price.amount), []
-        )
+            TaxfulPrice(price.amount), TaxlessPrice(price.amount), [])
 
     tax_rules = TaxRule.objects.filter(enabled=True, tax_classes=tax_class)
     if customer_tax_group:
         tax_rules = tax_rules.filter(customer_tax_groups=customer_tax_group)
-    tax_rules = tax_rules.order_by("-priority")  # TODO: Do the Right Thing with priority
+    tax_rules = tax_rules.order_by("-priority")  # TODO: (TAX) Do the Right Thing with priority
     taxes = [tax_rule for tax_rule in tax_rules if tax_rule.matches(taxing_context)]
-    tax_rule = first(taxes)  # TODO: Do something better than just using the first tax!
+    tax_rule = first(taxes)  # TODO: (TAX) Do something better than just using the first tax!
     tax = getattr(tax_rule, "tax", None)
     return stacked_value_added_taxes(price, [tax] if tax else [])
 
