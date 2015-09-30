@@ -301,8 +301,13 @@ class OrderSource(object):
                 yield line
 
     def _get_product_lines(self):
-        # This does not use get_final_lines because it will be called
-        # when final lines is being computed
+        """
+        Get lines with a product.
+
+        This does not use get_final_lines because it will be called when
+        final lines is being computed (for example to determine shipping
+        discounts based on the total price of all products).
+        """
         product_lines = [l for l in self.get_lines() if l.product]
         return product_lines
 
@@ -327,6 +332,12 @@ def _collect_lines_from_signal(signal_results):
 
 
 class SourceLine(TaxableItem, LinePriceMixin):
+    """
+    Line of OrderSource.
+
+    Note: Properties like total_price, taxful_total_price, tax_rate,
+    etc. are inherited from the LinePriceMixin.
+    """
     _FIELDS = [
         "line_id", "parent_line_id", "type",
         "shop", "product", "supplier", "tax_class",
@@ -378,6 +389,14 @@ class SourceLine(TaxableItem, LinePriceMixin):
         self.accounting_identifier = kwargs.pop("accounting_identifier", "")
 
         self.taxes = []
+        """
+        Taxes of this line.
+
+        Determined by a TaxModule in :func:`OrderSource.calculate_taxes`.
+
+        :type: list[shoop.core.taxing.LineTax]
+        """
+
         self._data = kwargs.copy()
 
         self._state_check()

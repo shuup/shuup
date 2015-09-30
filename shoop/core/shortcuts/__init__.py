@@ -11,6 +11,8 @@ from shoop.core.models import OrderLineType
 
 def update_order_line_from_product(request, order_line, product, quantity=1, supplier=None):
     """
+    Update OrderLine data from a product.
+
     This is a convenience method for simple applications.
     """
 

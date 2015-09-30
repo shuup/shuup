@@ -16,14 +16,17 @@ class LineTax(object):
     """
     Tax of some line.
 
+    This is an interface for specifying taxes of an `OrderLine` or
+    `SourceLine`.
+
     :ivar tax: The tax that this line is about.
     :type tax: shoop.core.models.Tax
     :ivar name: Name of the tax.
     :type name: six.text_type
     :ivar amount: Tax amount.
-    :type amount: decimal.Decimal
+    :type amount: shoop.utils.money.Money
     :ivar base_amount: Amount that this tax is calculated from.
-    :type base_amount: decimal.Decimal
+    :type base_amount: shoop.utils.money.Money
     """
 
     @property

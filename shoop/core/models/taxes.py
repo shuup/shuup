@@ -57,6 +57,12 @@ class Tax(MoneyPropped, TranslatableShoopModel):
         super(Tax, self).save(*args, **kwargs)
 
     def calculate_amount(self, base_amount):
+        """
+        Calculate tax amount with this tax for given base amount.
+
+        :type base_amount: shoop.utils.money.Money
+        :rtype: shoop.utils.money.Money
+        """
         if self.amount is not None:
             return self.amount
         if self.rate is not None:
