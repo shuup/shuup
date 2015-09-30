@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
 import pytest
-from shoop.core.pricing import TaxlessPrice, get_pricing_module
+from shoop.core.pricing import get_pricing_module
 from shoop.core.pricing.default_pricing import DefaultPricingModule
 from shoop.testing.factories import create_product, get_default_shop, create_random_person, get_default_customer_group
 
@@ -53,7 +53,7 @@ def test_default_price_none_allowed(rf):
     request, shop, group = initialize_test(rf, False)
     shop = get_default_shop()
     product = create_product("test-product", shop=shop, default_price=None)
-    assert product.get_price(request) == TaxlessPrice(0)
+    assert product.get_price(request) == shop.create_price(0)
 
 
 @pytest.mark.django_db
@@ -61,7 +61,7 @@ def test_default_price_zero_allowed(rf):
     request, shop, group = initialize_test(rf, False)
     shop = get_default_shop()
     product = create_product("test-product", shop=shop, default_price=0)
-    assert product.get_price(request) == TaxlessPrice(0)
+    assert product.get_price(request) == shop.create_price(0)
 
 
 @pytest.mark.django_db
@@ -69,7 +69,7 @@ def test_default_price_value_allowed(rf):
     request, shop, group = initialize_test(rf, False)
     shop = get_default_shop()
     product = create_product("test-product", shop=shop, default_price=100)
-    assert product.get_price(request) == TaxlessPrice(100)
+    assert product.get_price(request) == shop.create_price(100)
 
 
 @pytest.mark.django_db
@@ -77,4 +77,4 @@ def test_non_one_quantity(rf):
     request, shop, group = initialize_test(rf, False)
     shop = get_default_shop()
     product = create_product("test-product", shop=shop, default_price=100)
-    assert product.get_price(request, quantity=5) == TaxlessPrice(500)
+    assert product.get_price(request, quantity=5) == shop.create_price(500)

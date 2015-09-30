@@ -4,7 +4,8 @@
 {% block content %}
     {% call single_section_form("tax_form", form) %}
         {{ bs3.field(form.rate) }}
-        {{ bs3.field(form.amount) }}
+        {{ bs3.field(form.amount_value) }}
+        {{ bs3.field(form.currency) }}
         {{ bs3.field(form.enabled) }}
         {{ language_dependent_content_tabs(form, ["name"]) }}
     {% endcall %}

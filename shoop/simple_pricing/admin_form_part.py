@@ -38,7 +38,7 @@ class SimplePricingForm(forms.Form):
             ((shop_id or 0, group_id or 0), price)
             for (shop_id, group_id, price)
             in SimpleProductPrice.objects.filter(product=self.product)
-            .values_list("shop_id", "group_id", "price")
+            .values_list("shop_id", "group_id", "price_value")
         )
 
         for group in self.groups:
@@ -71,9 +71,9 @@ class SimplePricingForm(forms.Form):
         else:
             (spp, created) = SimpleProductPrice.objects.get_or_create(
                 product=self.product, group=group, shop=shop,
-                defaults={'price': value})
+                defaults={'price_value': value})
             if not created:
-                spp.price = value
+                spp.price_value = value
                 spp.save()
 
     def save(self):

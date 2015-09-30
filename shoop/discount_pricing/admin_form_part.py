@@ -30,7 +30,7 @@ class DiscountPricingForm(forms.Form):
             (shop_id, price)
             for (shop_id, price)
             in DiscountedProductPrice.objects.filter(product=self.product)
-            .values_list("shop_id", "price")
+            .values_list("shop_id", "price_value")
         )
 
         for shop in self.shops:
@@ -54,9 +54,9 @@ class DiscountPricingForm(forms.Form):
         else:
             (spp, created) = DiscountedProductPrice.objects.get_or_create(
                 product=self.product, shop=shop,
-                defaults={'price': value})
+                defaults={'price_value': value})
             if not created:
-                spp.price = value
+                spp.price_value = value
                 spp.save()
 
     def save(self):

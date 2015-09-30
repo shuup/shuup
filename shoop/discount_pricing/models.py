@@ -11,20 +11,14 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.core.fields import MoneyValueField
+from shoop.utils.properties import MoneyPropped, PriceProperty
 
 
-class DiscountedProductPrice(models.Model):
+class DiscountedProductPrice(MoneyPropped, models.Model):
     product = models.ForeignKey("shoop.Product", related_name="+")
     shop = models.ForeignKey("shoop.Shop", db_index=True)
-    price = MoneyValueField()
-
-    # TODO: (TAX) Check includes_tax consistency (see below)
-    #
-    # DiscountedProductPrice entries in single shop should all have same
-    # value of includes_tax, because inconsistencies in taxfulness of
-    # prices may cause basket totals to be unsummable, since taxes are
-    # unknown before customer has given their address and TaxfulPrice
-    # cannot be summed with TaxlessPrice.
+    price = PriceProperty("price_value", "shop.currency", "shop.prices_include_tax")
+    price_value = MoneyValueField()
 
     class Meta:
         unique_together = (('product', 'shop'),)

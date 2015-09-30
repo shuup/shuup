@@ -11,7 +11,6 @@ import pytest
 from shoop.core.models import OrderLineType, AnonymousContact, ProductMode, Shop
 from shoop.core.order_creator import OrderCreator
 from shoop.core.order_creator.source import SourceLine
-from shoop.core.pricing import TaxlessPrice
 from shoop.testing.factories import create_product, get_default_shop, get_default_supplier, get_initial_order_status
 from shoop_tests.utils import apply_request_middleware
 from shoop_tests.utils.basketish_order_source import BasketishOrderSource
@@ -37,16 +36,15 @@ def test_package():
 
     # Check that OrderCreator can deal with packages
 
-    source = BasketishOrderSource()
+    source = BasketishOrderSource(get_default_shop())
     source.add_line(
         type=OrderLineType.PRODUCT,
         product=package_product,
         supplier=get_default_supplier(),
         quantity=10,
-        unit_price=TaxlessPrice(10),
+        unit_price=source.create_price(10),
     )
 
-    source.shop = get_default_shop()
     source.status = get_initial_order_status()
 
     request = apply_request_middleware(RequestFactory().get("/"))

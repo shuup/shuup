@@ -16,6 +16,7 @@ from shoop.core.models import Order, OrderStatus, OrderLine, OrderLineType
 from shoop.core.models.order_lines import OrderLineTax
 from shoop.core.models.orders import ShippingStatus
 from shoop.core.pricing import TaxlessPrice, TaxfulPrice
+from shoop.utils.money import Money
 from shoop.testing.factories import (get_address, get_default_shop, get_default_product,
     get_default_supplier, create_order_with_product, create_empty_order, get_initial_order_status, get_default_tax)
 import six
@@ -56,24 +57,26 @@ def test_broken_order_lines():
 
 @pytest.mark.django_db
 def test_line_discount():
-    order = create_empty_order()
+    order = create_empty_order(prices_include_tax=False)
     order.save()
+    currency = order.shop.currency
     ol = OrderLine(
         order=order,
         type=OrderLineType.OTHER,
         quantity=5,
         text="Thing"
     )
-    ol.total_discount = TaxlessPrice(50)
-    ol.unit_price = TaxlessPrice(40)
+    ol.total_discount = order.shop.create_price(50)
+    ol.unit_price = order.shop.create_price(40)
     ol.save()
-    ol.taxes.add(OrderLineTax.from_tax(get_default_tax(), ol.taxless_total_price))
-    assert ol.taxless_total_discount == TaxlessPrice(50)
-    assert ol.taxful_total_discount == TaxfulPrice(75)
-    assert ol.taxless_total_price == TaxlessPrice(150)
-    assert ol.taxful_total_price == TaxfulPrice(150 + 75)
-    assert ol.taxless_unit_price == TaxlessPrice(40)
-    assert ol.taxful_unit_price == TaxfulPrice(60)
+    ol.taxes.add(OrderLineTax.from_tax(
+        get_default_tax(), ol.taxless_total_price.amount, order_line=ol))
+    assert ol.taxless_total_discount == order.shop.create_price(50)
+    assert ol.taxful_total_discount == TaxfulPrice(75, currency)
+    assert ol.taxless_total_price == order.shop.create_price(150)
+    assert ol.taxful_total_price == TaxfulPrice(150 + 75, currency)
+    assert ol.taxless_unit_price == order.shop.create_price(40)
+    assert ol.taxful_unit_price == TaxfulPrice(60, currency)
     assert "Thing" in six.text_type(ol)
 
 
@@ -83,19 +86,21 @@ def test_line_discount_more():
     order.save()
     ol = OrderLine(order=order, type=OrderLineType.OTHER)
     ol.quantity = 5
-    ol.unit_price = TaxlessPrice(30)
-    ol.total_discount = TaxlessPrice(50)
+    ol.unit_price = order.shop.create_price(30)
+    ol.total_discount = order.shop.create_price(50)
     ol.save()
-    assert ol.taxless_unit_price == TaxlessPrice(30)
-    assert ol.taxless_total_discount == TaxlessPrice(50)
-    assert ol.taxless_total_price == TaxlessPrice(5 * 30 - 50)
-    ol.taxes.add(OrderLineTax.from_tax(get_default_tax(), ol.taxless_total_price))
-    assert ol.taxless_total_discount == TaxlessPrice(50)
-    assert ol.taxful_total_discount == TaxfulPrice(75)
-    assert ol.taxless_total_price == TaxlessPrice(100)
-    assert ol.taxful_total_price == TaxfulPrice(150)
-    assert ol.taxless_unit_price == TaxlessPrice(30)
-    assert ol.taxful_unit_price == TaxfulPrice(45)
+    currency = order.shop.currency
+    assert ol.taxless_unit_price == TaxlessPrice(30, currency)
+    assert ol.taxless_total_discount == TaxlessPrice(50, currency)
+    assert ol.taxless_total_price == TaxlessPrice(5 * 30 - 50, currency)
+    ol.taxes.add(OrderLineTax.from_tax(
+        get_default_tax(), ol.taxless_total_price.amount, order_line=ol))
+    assert ol.taxless_total_discount == TaxlessPrice(50, currency)
+    assert ol.taxful_total_discount == TaxfulPrice(75, currency)
+    assert ol.taxless_total_price == TaxlessPrice(100, currency)
+    assert ol.taxful_total_price == TaxfulPrice(150, currency)
+    assert ol.taxless_unit_price == TaxlessPrice(30, currency)
+    assert ol.taxful_unit_price == TaxfulPrice(45, currency)
 
 
 @pytest.mark.django_db
@@ -110,16 +115,19 @@ def test_basic_order():
         taxless_unit_price=10,
         tax_rate=Decimal("0.5")
     )
+    assert order.shop.prices_include_tax is False
+    price = order.shop.create_price
+    currency = order.currency
 
     discount_order_line = OrderLine(order=order, quantity=1, type=OrderLineType.OTHER)
-    discount_order_line.total_discount = TaxfulPrice(30)
-    assert discount_order_line.total_price == TaxfulPrice(-30)
+    discount_order_line.total_discount = price(30)
+    assert discount_order_line.total_price == price(-30)
     discount_order_line.save()
 
     order.cache_prices()
     order.check_all_verified()
     order.save()
-    assert order.taxful_total_price == Decimal(PRODUCTS_TO_SEND * (10 + 5) - 30)
+    assert order.taxful_total_price == TaxfulPrice(PRODUCTS_TO_SEND * (10 + 5) - 30, currency)
     shipment = order.create_shipment_of_all_products(supplier=supplier)
     assert shipment.total_products == PRODUCTS_TO_SEND, "All products were shipped"
     assert shipment.weight == product.net_weight * PRODUCTS_TO_SEND, "Gravity works"
@@ -128,7 +136,7 @@ def test_basic_order():
     order.create_payment(order.taxful_total_price)
     assert order.payments.exists(), "A payment was created"
     with pytest.raises(NoPaymentToCreateException):
-        order.create_payment(6)
+        order.create_payment(Money(6, currency))
     assert order.is_paid(), "Order got paid"
     assert order.can_set_complete(), "Finalization is possible"
     order.status = OrderStatus.objects.get_default_complete()
@@ -138,11 +146,11 @@ def test_basic_order():
     assert len(summary) == 2
     assert summary[0].tax_id is None
     assert summary[0].tax_code == ''
-    assert summary[0].tax_amount == 0
+    assert summary[0].tax_amount == Money(0, currency)
     assert summary[0].tax_rate == 0
     assert summary[1].tax_rate * 100 == 50
-    assert summary[1].based_on == 100
-    assert summary[1].tax_amount == 50
+    assert summary[1].based_on == Money(100, currency)
+    assert summary[1].tax_amount == Money(50, currency)
     assert summary[1].taxful == summary[1].based_on + summary[1].tax_amount
 
 

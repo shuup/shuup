@@ -24,7 +24,7 @@ class TaxListView(PicotableListView):
             placeholder=_("Filter by name...")
         )),
         Column("rate", _(u"Rate")),
-        Column("amount", _(u"Amount")),
+        Column("amount_value", _(u"Amount")),
         Column("enabled", _(u"Enabled"), filter_config=true_or_false_filter),
     ]
 

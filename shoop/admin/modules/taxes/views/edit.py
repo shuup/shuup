@@ -13,7 +13,7 @@ from shoop.utils.multilanguage_model_form import MultiLanguageModelForm
 class TaxForm(MultiLanguageModelForm):
     class Meta:
         model = Tax
-        fields = ["name", "rate", "amount", "enabled"]
+        fields = ["name", "rate", "amount_value", "currency", "enabled"]
 
     rate = Tax._meta.get_field("rate").formfield(form_class=PercentageField)
 

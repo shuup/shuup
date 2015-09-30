@@ -89,7 +89,7 @@ class BasketLine(SourceLine):
 
 class BaseBasket(OrderSource):
     def __init__(self, request, basket_name="basket"):
-        super(BaseBasket, self).__init__()
+        super(BaseBasket, self).__init__(request.shop)
         self.basket_name = basket_name
         self.request = request
         self.storage = get_storage()
@@ -98,7 +98,6 @@ class BaseBasket(OrderSource):
         self.customer = getattr(request, "customer", None)
         self.orderer = getattr(request, "person", None)
         self.creator = getattr(request, "user", None)
-        self.shop = getattr(request, "shop", None)
 
     def _load(self):
         """
@@ -321,12 +320,12 @@ class BaseBasket(OrderSource):
 
     orderable = property(_get_orderable)
 
-    def get_validation_errors(self, shop):
+    def get_validation_errors(self):
         for error in super(BaseBasket, self).get_validation_errors():
             yield error
 
-        shipping_methods = self.get_available_shipping_methods(shop)
-        payment_methods = self.get_available_payment_methods(shop)
+        shipping_methods = self.get_available_shipping_methods()
+        payment_methods = self.get_available_payment_methods()
 
         advice = _(
             "Try to remove some products from the basket "
@@ -344,7 +343,7 @@ class BaseBasket(OrderSource):
             product = line.product
             if not product:
                 continue
-            shop_product = product.get_shop_instance(shop=shop)
+            shop_product = product.get_shop_instance(shop=self.shop)
             if not shop_product:
                 yield ValidationError(
                     _("%s not available in this shop") % product.name,
@@ -367,29 +366,27 @@ class BaseBasket(OrderSource):
 
         return dict(q_counter)
 
-    def get_available_shipping_methods(self, shop):
+    def get_available_shipping_methods(self):
         """
-        Get available shipping methods for given shop.
+        Get available shipping methods.
 
-        :type shop: Shop
         :rtype: list[ShippingMethod]
         """
         return [
             m for m
-            in ShippingMethod.objects.available(shop_id=shop.pk, product_ids=self.product_ids)
+            in ShippingMethod.objects.available(shop=self.shop, products=self.product_ids)
             if m.is_valid_for_source(source=self)
         ]
 
-    def get_available_payment_methods(self, shop):
+    def get_available_payment_methods(self):
         """
-        Get available payment methods for given shop.
+        Get available payment methods.
 
-        :type shop: Shop
         :rtype: list[PaymentMethod]
         """
         return [
             m for m
-            in PaymentMethod.objects.available(shop_id=shop.pk, product_ids=self.product_ids)
+            in PaymentMethod.objects.available(shop=self.shop, products=self.product_ids)
             if m.is_valid_for_source(source=self)
         ]
 
@@ -408,7 +405,3 @@ class BaseBasket(OrderSource):
     @property
     def is_empty(self):
         return not bool(self.get_lines())
-
-    @property
-    def shop_ids(self):
-        return set(l.shop.id for l in self.get_lines() if l.shop)

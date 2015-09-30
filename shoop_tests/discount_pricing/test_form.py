@@ -16,7 +16,7 @@ from shoop_tests.utils.forms import get_form_data
 def _get_test_product(product_price=125, discounted_price=108):
     shop = get_default_shop()
     product = create_product("Just-A-Pricing-Product", shop, default_price=product_price)
-    DiscountedProductPrice.objects.create(product=product, shop=shop, price=discounted_price)
+    DiscountedProductPrice.objects.create(product=product, shop=shop, price_value=discounted_price)
     return product
 
 @pytest.mark.django_db
@@ -37,7 +37,7 @@ def test_no_changes_into_form():
     frm = DiscountPricingForm(product=product, data=form_data, empty_permitted=True)
     frm.full_clean()
     frm.save()
-    assert DiscountedProductPrice.objects.get(product=product, shop=shop).price == 108
+    assert DiscountedProductPrice.objects.get(product=product, shop=shop).price.value == 108
 
 @pytest.mark.django_db
 def test_change_shop_price():
@@ -53,7 +53,7 @@ def test_change_shop_price():
     frm = DiscountPricingForm(product=product, data=form_data, empty_permitted=True)
     frm.full_clean()
     frm.save()
-    assert DiscountedProductPrice.objects.get(product=product, shop=shop).price == 120
+    assert DiscountedProductPrice.objects.get(product=product, shop=shop).price.value == 120
 
     # Never mind actually, same price for all shops
     form_data[form_field] = ""

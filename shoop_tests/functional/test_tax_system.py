@@ -17,7 +17,7 @@ from shoop.core.order_creator.source import OrderSource, SourceLine
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
 from shoop.core.taxing import TaxModule
 from shoop.core.taxing.utils import stacked_value_added_taxes
-from shoop.testing.factories import get_tax
+from shoop.testing.factories import get_shop, get_tax
 
 
 TAX_MODULE_SPEC = [__name__ + ":IrvineCaliforniaTaxation"]
@@ -41,9 +41,10 @@ class IrvineCaliforniaTaxation(TaxModule):
 
 @pytest.mark.django_db
 def test_stacked_tax_taxless_price():
-    source = OrderSource()
+    source = OrderSource(get_shop(prices_include_tax=False))
+    assert source.prices_include_tax is False
     source.add_line(
-        type=OrderLineType.OTHER, quantity=1, unit_price=TaxlessPrice(10)
+        type=OrderLineType.OTHER, quantity=1, unit_price=source.create_price(10)
     )
     with override_provides("tax_module", TAX_MODULE_SPEC):
         with override_settings(SHOOP_TAX_MODULE="irvine"):
@@ -67,9 +68,11 @@ def test_stacked_tax_taxless_price():
 
 @pytest.mark.django_db
 def test_stacked_tax_taxful_price():
-    source = OrderSource()
+    shop = get_shop(prices_include_tax=True, currency='EUR')
+    source = OrderSource(shop)
+    assert source.prices_include_tax
     source.add_line(
-        type=OrderLineType.OTHER, quantity=1, unit_price=TaxfulPrice(20)
+        type=OrderLineType.OTHER, quantity=1, unit_price=source.create_price(20)
     )
     with override_provides("tax_module", TAX_MODULE_SPEC):
         with override_settings(SHOOP_TAX_MODULE="irvine"):
@@ -80,8 +83,8 @@ def test_stacked_tax_taxful_price():
             line = source.get_final_lines(with_taxes=True)[0]
             assert isinstance(line, SourceLine)
             assert line.taxes
-            assert line.taxful_total_price == TaxfulPrice(20)
-            assert abs(line.taxless_total_price.amount - Decimal("18.519")) < Decimal("0.01")
+            assert line.taxful_total_price == TaxfulPrice(20, 'EUR')
+            assert_almost_equal(line.taxless_total_price, TaxlessPrice("18.518518", 'EUR'))
             source.uncache()
 
             # Let's move out to a taxless location.
@@ -89,5 +92,9 @@ def test_stacked_tax_taxful_price():
             line = source.get_final_lines(with_taxes=True)[0]
             assert isinstance(line, SourceLine)
             assert not line.taxes
-            assert line.taxful_total_price == TaxfulPrice(20)
-            assert line.taxless_total_price.amount == Decimal("20")
+            assert line.taxful_total_price == TaxfulPrice(20, source.currency)
+            assert line.taxless_total_price.value == Decimal("20")
+
+
+def assert_almost_equal(x, y):
+    assert Decimal(abs(x - y)) < 0.00001

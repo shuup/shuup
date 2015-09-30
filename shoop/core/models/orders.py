@@ -25,13 +25,18 @@ from parler.models import TranslatableModel, TranslatedFields
 
 from shoop.core import taxing
 from shoop.core.excs import NoPaymentToCreateException, NoProductsToShipException
-from shoop.core.fields import InternalIdentifierField, LanguageField, MoneyValueField, UnsavedForeignKey
+from shoop.core.fields import (
+    CurrencyField, InternalIdentifierField, LanguageField,
+    MoneyValueField, UnsavedForeignKey
+)
 from shoop.core.models.products import Product
 from shoop.core.models.suppliers import Supplier
-from shoop.core.pricing import TaxlessPrice
+from shoop.core.pricing import TaxfulPrice, TaxlessPrice
 from shoop.core.utils.reference import get_order_identifier, get_reference_number
 from shoop.utils.analog import LogEntryKind, define_log_model
+from shoop.utils.money import Money
 from shoop.utils.numbers import bankers_round
+from shoop.utils.properties import TaxfulPriceProperty, TaxlessPriceProperty
 
 from .order_lines import OrderLineType
 
@@ -214,9 +219,15 @@ class Order(models.Model):
     extra_data = JSONField(blank=True, null=True)
 
     # Money stuff
-    taxful_total_price = MoneyValueField(editable=False, verbose_name=_('grand total'), default=0)
-    taxless_total_price = MoneyValueField(editable=False, verbose_name=_('taxless total'), default=0)
-    display_currency = models.CharField(max_length=4, blank=True)
+    taxful_total_price = TaxfulPriceProperty('taxful_total_price_value', 'currency')
+    taxless_total_price = TaxlessPriceProperty('taxless_total_price_value', 'currency')
+
+    taxful_total_price_value = MoneyValueField(editable=False, verbose_name=_('grand total'), default=0)
+    taxless_total_price_value = MoneyValueField(editable=False, verbose_name=_('taxless total'), default=0)
+    currency = CurrencyField()
+    prices_include_tax = models.BooleanField()  # TODO: (TAX) Document Order.prices_include_tax
+
+    display_currency = CurrencyField(blank=True)
     display_currency_rate = models.DecimalField(max_digits=36, decimal_places=9, default=1)
 
     # Other
@@ -252,11 +263,11 @@ class Order(models.Model):
             return "Order %s (%s)" % (self.identifier, name)
 
     def cache_prices(self):
-        taxful_total = Decimal(0)
-        taxless_total = Decimal(0)
+        taxful_total = TaxfulPrice(0, self.currency)
+        taxless_total = TaxlessPrice(0, self.currency)
         for line in self.lines.all():
-            taxful_total += line.taxful_total_price.amount
-            taxless_total += line.taxless_total_price.amount
+            taxful_total += line.taxful_total_price
+            taxless_total += line.taxless_total_price
         self.taxful_total_price = _round_price(taxful_total)
         self.taxless_total_price = _round_price(taxless_total)
 
@@ -285,8 +296,14 @@ class Order(models.Model):
         if not self.label:
             self.label = settings.SHOOP_DEFAULT_ORDER_LABEL
 
+        if not self.currency:
+            self.currency = self.shop.currency
+
+        if not self.prices_include_tax:
+            self.prices_include_tax = self.shop.prices_include_tax
+
         if not self.display_currency:
-            self.display_currency = settings.SHOOP_HOME_CURRENCY
+            self.display_currency = self.currency
             self.display_currency_rate = 1
 
         if self.shipping_method_id and not self.shipping_method_name:
@@ -356,8 +373,8 @@ class Order(models.Model):
         return (self.payment_status == PaymentStatus.FULLY_PAID)
 
     def get_total_paid_amount(self):
-        amounts = self.payments.values_list('amount', flat=True)
-        return sum(amounts, Decimal(0))
+        amounts = self.payments.values_list('amount_value', flat=True)
+        return Money(sum(amounts, Decimal(0)), self.currency)
 
     def create_payment(self, amount, payment_identifier=None, description=''):
         """
@@ -369,19 +386,29 @@ class Order(models.Model):
         If the end sum of all payments is equal or greater than
         self.taxful_total_price, then the order is marked as paid.
 
-        :param amount: amount of the payment to be created
-        :param gateway_id: identifier of the gateway used to make this payment. Leave empty for non-gateway payments.
-        :param payment_identifier: Identifier of the created payment. If
-           not set, default value of "gateway_id:order_id:number" will
-           be used (where number is number of payments in the order).
-        :param description: Description of the payment. Will be set to `method` property of the created payment.
+        :param amount:
+          Amount of the payment to be created
+        :type amount: Money
+        :param payment_identifier:
+          Identifier of the created payment. If not set, default value
+          of "gateway_id:order_id:number" will be used (where number is
+          number of payments in the order).
+        :type payment_identifier: str|None
+        :param description:
+          Description of the payment. Will be set to `method` property
+          of the created payment.
+        :type description: str
 
-        Returns the created Payment object.
+        :returns: The created Payment object
+        :rtype: shoop.core.models.Payment
         """
+        assert isinstance(amount, Money)
+        assert amount.currency == self.currency
+
         payments = self.payments.order_by('created_on')
 
         total_paid_amount = self.get_total_paid_amount()
-        if total_paid_amount >= self.taxful_total_price:
+        if total_paid_amount >= self.taxful_total_price.amount:
             raise NoPaymentToCreateException(
                 "Order %s has already been fully paid (%s >= %s)." %
                 (
@@ -395,11 +422,11 @@ class Order(models.Model):
 
         payment = self.payments.create(
             payment_identifier=payment_identifier,
-            amount=amount,
+            amount_value=amount.value,
             description=description,
         )
 
-        if self.get_total_paid_amount() >= self.taxful_total_price:
+        if self.get_total_paid_amount() >= self.taxful_total_price.amount:
             self._set_paid()  # also calls save
 
         return payment
@@ -501,7 +528,7 @@ class Order(models.Model):
         :rtype: taxing.TaxSummary
         """
         all_line_taxes = []
-        untaxed = TaxlessPrice(0)
+        untaxed = TaxlessPrice(0, self.currency)
         for line in self.lines.all():
             line_taxes = list(line.taxes.all())
             all_line_taxes.extend(line_taxes)

@@ -140,19 +140,21 @@ class OrderCreator(object):
             self.process_saved_order_line(order=order, order_line=order_line)
 
     def add_line_taxes(self, lines):
-        index = 0
         for line in lines:
-            for line_tax in line.source_line.taxes:
-                index += 1
+            for (index, line_tax) in enumerate(line.source_line.taxes, 1):
                 line.taxes.create(
                     tax=line_tax.tax,
                     name=line_tax.tax.name,
-                    amount=line_tax.amount,
-                    base_amount=line_tax.base_amount,
+                    amount_value=line_tax.amount.value,
+                    base_amount_value=line_tax.base_amount.value,
                     ordering=index,
                 )
 
     def get_source_order_lines(self, source, order):
+        """
+        :type source: shoop.core.order_creator.OrderSource
+        :type order: shoop.core.models.Order
+        """
         lines = []
         source.update_from_order(order)
         # Since we just updated `order_provision`, we need to uncache
@@ -177,6 +179,8 @@ class OrderCreator(object):
 
         order = Order(
             shop=order_source.shop,
+            currency=order_source.currency,
+            prices_include_tax=order_source.prices_include_tax,
             shipping_method=order_source.shipping_method,
             payment_method=order_source.payment_method,
             customer_comment=order_source.customer_comment,

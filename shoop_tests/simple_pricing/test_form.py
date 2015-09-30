@@ -20,7 +20,9 @@ pytestmark = pytest.mark.skipif("shoop.simple_pricing" not in settings.INSTALLED
 def _get_test_product():
     shop = get_default_shop()
     product = create_product("Just-A-Pricing-Product", shop, default_price=200)
-    SimpleProductPrice.objects.create(product=product, shop=shop, group=get_default_customer_group(), price=250)
+    SimpleProductPrice.objects.create(
+        product=product, shop=shop, group=get_default_customer_group(),
+        price_value=250)
     return product
 
 
@@ -46,7 +48,7 @@ def test_no_changes_into_form():
     frm = SimplePricingForm(product=product, data=form_data, empty_permitted=True)
     frm.full_clean()
     frm.save()
-    assert SimpleProductPrice.objects.get(product=product, shop=shop).price == 250
+    assert SimpleProductPrice.objects.get(product=product, shop=shop).price.value == 250
 
 
 @pytest.mark.django_db
@@ -54,6 +56,7 @@ def test_change_shop_price():
     product = _get_test_product()
     shop = get_default_shop()
     group = get_default_customer_group()
+    price = shop.create_price
 
     form_field = "s_%d_g_%d" % (shop.id, group.id)
 
@@ -64,7 +67,7 @@ def test_change_shop_price():
     frm = SimplePricingForm(product=product, data=form_data, empty_permitted=True)
     frm.full_clean()
     frm.save()
-    assert SimpleProductPrice.objects.get(product=product, shop=shop, group=group).price == 4000
+    assert SimpleProductPrice.objects.get(product=product, shop=shop, group=group).price == price(4000)
 
     # Never mind actually, same price for all shops
     form_data[form_field] = ""

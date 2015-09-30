@@ -18,9 +18,10 @@ from shoop.core.fields import MoneyValueField, QuantityField, UnsavedForeignKey
 from shoop.core.models.product_media import ProductMediaKind
 from shoop.core.models.products import ProductVisibility, StockBehavior
 from shoop.core.signals import get_orderability_errors, get_visibility_errors
+from shoop.utils.properties import MoneyPropped, PriceProperty
 
 
-class ShopProduct(models.Model):
+class ShopProduct(MoneyPropped, models.Model):
     shop = models.ForeignKey("Shop", related_name="shop_products")
     product = UnsavedForeignKey("Product", related_name="shop_products")
     suppliers = models.ManyToManyField("Supplier", related_name="shop_products", blank=True)
@@ -56,9 +57,9 @@ class ShopProduct(models.Model):
         "ProductMedia", null=True, blank=True, related_name="primary_image_for_shop_products", on_delete=models.SET_NULL
     )
 
-    # the default price of this product in the shop, taxfulness is determined in
-    # `Shop.prices_include_tax`
-    default_price = MoneyValueField(verbose_name=_("Default price"), null=True, blank=True)
+    # the default price of this product in the shop
+    default_price = PriceProperty('default_price_value', 'shop.currency', 'shop.prices_include_tax')
+    default_price_value = MoneyValueField(verbose_name=_("Default price"), null=True, blank=True)
 
     class Meta:
         unique_together = (("shop", "product",),)

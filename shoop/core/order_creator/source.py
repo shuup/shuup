@@ -7,9 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import decimal
-
-from django.conf import settings
 from django.utils.timezone import now
 
 from shoop.core import taxing
@@ -18,8 +15,65 @@ from shoop.core.pricing import Price, TaxfulPrice, TaxlessPrice
 from shoop.core.taxing import TaxableItem
 from shoop.core.utils.prices import LinePriceMixin
 from shoop.utils.decorators import non_reentrant
+from shoop.utils.money import Money
 
 from .signals import post_compute_source_lines
+
+
+class TaxesNotCalculated(TypeError):
+    """
+    Requested tax calculated price but taxes are not calculated.
+
+    Raised when requesting a price with taxful/taxless mismatching with
+    shop.prices_include_tax and taxes are not yet calculated.
+    """
+
+
+class _PriceSum(object):
+    """
+    Property that calculates sum of prices.
+
+    Used to implement various total price proprties to OrderSource.
+    """
+    def __init__(self, field, line_getter="get_final_lines"):
+        self.field = field
+        self.line_getter = line_getter
+        self.params = {}
+        if 'taxful' in self.field:
+            self.params['includes_tax'] = True
+        elif 'taxless' in self.field:
+            self.params['includes_tax'] = False
+
+    def __get__(self, instance, type=None):
+        if instance is None:
+            return self
+        taxful = self.params.get('includes_tax', instance.prices_include_tax)
+        zero = (TaxfulPrice if taxful else TaxlessPrice)(0, instance.currency)
+        lines = getattr(instance, self.line_getter)()
+        return sum((getattr(x, self.field) for x in lines), zero)
+
+    @property
+    def or_none(self):
+        return _UnknownTaxesAsNone(self)
+
+
+class _UnknownTaxesAsNone(object):
+    """
+    Property that turns TaxesNotCalculated exception to None.
+
+    Used to implement the OrderSource taxful/taxless total price
+    properties with the "_or_none" suffix.
+    """
+    def __init__(self, prop):
+        self.prop = prop
+
+    def __get__(self, instance, type=None):
+        if instance is None:
+            return self
+        try:
+            return self.prop.__get__(instance)
+        except TaxesNotCalculated:
+            return None
 
 
 class OrderSource(object):
@@ -33,11 +87,16 @@ class OrderSource(object):
     The core API of `OrderCreator` reads an `OrderSource`.
 
     No objects held here need be saved, but they may be.
+
+    :type shop: shoop.core.models.Shop
     """
 
-    def __init__(self):
-        self.shop = None
-        self.display_currency = settings.SHOOP_HOME_CURRENCY
+    def __init__(self, shop):
+        assert isinstance(shop, Shop)
+        self.shop = shop
+        self.currency = shop.currency
+        self.prices_include_tax = shop.prices_include_tax
+        self.display_currency = shop.currency
         self.display_currency_rate = 1
         self.shipping_address = None
         self.billing_address = None
@@ -56,6 +115,9 @@ class OrderSource(object):
         self.extra_data = {}
 
         self._lines = []
+
+        self.zero_price = shop.create_price(0)
+        self.create_price = self.zero_price.new
 
         # TODO: (TAX) How to set calculate_taxes_automatically? From a setting?
         self.calculate_taxes_automatically = False
@@ -82,6 +144,8 @@ class OrderSource(object):
     def update_from_order(self, order):
         return self.update(
             shop=order.shop,
+            currency=order.currency,
+            prices_include_tax=order.prices_include_tax,
             shipping_address=order.shipping_address,
             billing_address=order.billing_address,
             customer=order.customer,
@@ -100,6 +164,20 @@ class OrderSource(object):
             shipping_data=order.shipping_data,
             extra_data=order.extra_data,
         )
+
+    total_price = _PriceSum("total_price")
+    taxful_total_price = _PriceSum("taxful_total_price")
+    taxless_total_price = _PriceSum("taxless_total_price")
+    taxful_total_price_or_none = taxful_total_price.or_none
+    taxless_total_price_or_none = taxless_total_price.or_none
+
+    total_discount = _PriceSum("total_discount")
+    taxful_total_discount = _PriceSum("taxful_total_discount")
+    taxless_total_discount = _PriceSum("taxless_total_discount")
+    taxful_total_discount_or_none = taxful_total_discount.or_none
+    taxless_total_discount_or_none = taxless_total_discount.or_none
+
+    total_price_of_products = _PriceSum("total_price", "_get_product_lines")
 
     @property
     def shipping_method(self):
@@ -222,40 +300,6 @@ class OrderSource(object):
             for line in self.shipping_method.get_source_lines(self):
                 yield line
 
-    def prices_include_tax(self):
-        # TODO: (TAX) Get taxfulness default from request or PriceTaxContext or customer or whatever
-        return False
-
-    @property
-    def total_price(self):
-        if self.prices_include_tax():
-            return self.taxful_total_price
-        else:
-            return self.taxless_total_price
-
-    @property
-    def taxful_total_price(self):
-        return sum_taxful_totals(self.get_final_lines())
-
-    @property
-    def taxless_total_price(self):
-        return sum_taxless_totals(self.get_final_lines())
-
-    @property
-    def product_total_price(self):
-        if self.prices_include_tax():
-            return self.taxful_product_total_price
-        else:
-            return self.taxless_product_total_price
-
-    @property
-    def taxful_product_total_price(self):
-        return sum_taxful_totals(self._get_product_lines())
-
-    @property
-    def taxless_product_total_price(self):
-        return sum_taxless_totals(self._get_product_lines())
-
     def _get_product_lines(self):
         # This does not use get_final_lines because it will be called
         # when final lines is being computed
@@ -273,14 +317,6 @@ class OrderSource(object):
         if payment_method:
             for error in payment_method.get_validation_errors(source=self):
                 yield error
-
-
-def sum_taxful_totals(lines):
-    return sum((x.taxful_total_price for x in lines), TaxfulPrice(0))
-
-
-def sum_taxless_totals(lines):
-    return sum((x.taxless_total_price for x in lines), TaxlessPrice(0))
 
 
 def _collect_lines_from_signal(signal_results):
@@ -309,7 +345,7 @@ class SourceLine(TaxableItem, LinePriceMixin):
     }
     _PRICE_FIELDS = set(["unit_price", "total_discount"])
 
-    def __init__(self, source=None, **kwargs):
+    def __init__(self, source, **kwargs):
         """
         Initialize SourceLine with given source and data.
 
@@ -317,6 +353,7 @@ class SourceLine(TaxableItem, LinePriceMixin):
         :type source: OrderSource
         :param kwargs: Data for the `SourceLine`.
         """
+        assert isinstance(source, OrderSource)
         self.source = source
         self.line_id = kwargs.pop("line_id", None)
         self.parent_line_id = kwargs.pop("parent_line_id", None)
@@ -332,21 +369,22 @@ class SourceLine(TaxableItem, LinePriceMixin):
             self.tax_class = tax_class
         self.supplier = kwargs.pop("supplier", None)
         self.quantity = kwargs.pop("quantity", 0)
-        self.unit_price = kwargs.pop("unit_price", self._create_price(0))
-        self.total_discount = (kwargs.get("total_discount", None) or
-                               0 * self.unit_price)
+        self.unit_price = kwargs.pop("unit_price", source.zero_price)
+        self.total_discount = (kwargs.pop("total_discount", None) or
+                               source.zero_price)
         self.sku = kwargs.pop("sku", "")
         self.text = kwargs.pop("text", "")
         self.require_verification = kwargs.pop("require_verification", False)
         self.accounting_identifier = kwargs.pop("accounting_identifier", "")
+
         self.taxes = []
         self._data = kwargs.copy()
 
         self._state_check()
 
     def _state_check(self):
-        if self.unit_price.includes_tax != self.total_discount.includes_tax:
-            raise TypeError('Unit price %r tax mismatch with discount %r' % (
+        if not self.unit_price.unit_matches_with(self.total_discount):
+            raise TypeError('Unit price %r unit mismatch with discount %r' % (
                 self.unit_price, self.total_discount))
 
         assert self.shop is None or isinstance(self.shop, Shop)
@@ -362,7 +400,7 @@ class SourceLine(TaxableItem, LinePriceMixin):
         :type data: dict
         :rtype: cls
         """
-        return cls(source, **cls._deserialize_data(data))
+        return cls(source, **cls._deserialize_data(source, data))
 
     def to_dict(self):
         data = self._data.copy()
@@ -412,15 +450,11 @@ class SourceLine(TaxableItem, LinePriceMixin):
     @property
     def total_tax_amount(self):
         """
-        :rtype: decimal.Decimal
+        :rtype: shoop.utils.money.Money
         """
-        return sum((x.amount for x in self.taxes), decimal.Decimal(0))
-
-    def _create_price(self, amount):
-        if self.source and self.source.prices_include_tax():
-            return TaxfulPrice(amount)
-        else:
-            return TaxlessPrice(amount)
+        self.source.calculate_taxes_or_raise()
+        zero = self.source.zero_price.amount
+        return sum((x.amount for x in self.taxes), zero)
 
     def _serialize_field(self, key):
         value = getattr(self, key)
@@ -429,17 +463,19 @@ class SourceLine(TaxableItem, LinePriceMixin):
                 return []
             assert isinstance(value, self._OBJECT_FIELDS[key])
             return [(key + "_id", value.id)]
-        elif key in self._PRICE_FIELDS:
-            assert isinstance(value, Price)
-            return [
-                (key, None),
-                (key + "_amount", value.value),
-                (key + "_includes_tax", value.includes_tax),
-            ]
+        elif isinstance(value, Price):
+            if key not in self._PRICE_FIELDS:
+                raise TypeError('Non-price field "%s" has %r' % (key, value))
+            if not value.unit_matches_with(self.source.zero_price):
+                raise TypeError(
+                    'Price %r (in field "%s") not compatible with %r' % (
+                        value, key, self.source.zero_price))
+            return [(key, value.value)]
+        assert not isinstance(value, Money)
         return [(key, value)]
 
     @classmethod
-    def _deserialize_data(cls, data):
+    def _deserialize_data(cls, source, data):
         result = data.copy()
         for (name, model) in cls._OBJECT_FIELDS.items():
             id = result.pop(name + "_id", None)
@@ -447,9 +483,8 @@ class SourceLine(TaxableItem, LinePriceMixin):
                 result[name] = model.objects.get(id=id)
 
         for name in cls._PRICE_FIELDS:
-            amount = result.pop(name + "_amount", None)
-            includes_tax = result.pop(name + "_includes_tax", None)
-            if amount is not None:
-                result[name] = Price.from_data(amount, None, includes_tax)
+            value = result.get(name)
+            if value is not None:
+                result[name] = source.create_price(value)
 
         return result

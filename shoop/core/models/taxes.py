@@ -13,12 +13,13 @@ from django.utils.translation import ugettext_lazy as _
 from parler.models import TranslatedFields
 
 from shoop.core.excs import ImmutabilityError
-from shoop.core.fields import InternalIdentifierField, MoneyValueField
+from shoop.core.fields import CurrencyField, InternalIdentifierField, MoneyValueField
+from shoop.utils.properties import MoneyProperty, MoneyPropped
 
 from ._base import TranslatableShoopModel
 
 
-class Tax(TranslatableShoopModel):
+class Tax(MoneyPropped, TranslatableShoopModel):
     identifier_attr = 'code'
 
     code = InternalIdentifierField(unique=True)
@@ -32,11 +33,13 @@ class Tax(TranslatableShoopModel):
         verbose_name=_('tax rate'),
         help_text=_("The percentage rate of the tax. Mutually exclusive with flat amounts.")
     )
-    amount = MoneyValueField(
+    amount = MoneyProperty('amount_value', 'currency')
+    amount_value = MoneyValueField(
         default=None, blank=True, null=True,
         verbose_name=_('tax amount'),
         help_text=_("The flat amount of the tax. Mutually exclusive with percentage rates.")
     )
+    currency = CurrencyField(default=None, blank=True, null=True)
     enabled = models.BooleanField(default=True, verbose_name=_('enabled'))
 
     def clean(self):
