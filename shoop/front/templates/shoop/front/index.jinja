@@ -43,7 +43,7 @@
                     <img src="{{ static("shoop_admin/img/logo_with_text.svg") }}" alt="">
                 {% endif %}
                 <div class="texts">
-                    <h1>{% trans name=request.shop.public_name %}Welcome to {{ name }}{% endtrans %}</h1>
+                    <h1>{% trans name=request.shop.public_name or _("your shop") %}Welcome to {{ name }}!{% endtrans %}</h1>
                     <p>{% trans %}You are seeing this page because there is no theme selected for the default frontend.{% endtrans %}</p>
                     <p>
                         {% if user.is_superuser or user.is_anonymous %}
