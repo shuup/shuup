@@ -7,6 +7,10 @@
 
 from __future__ import unicode_literals
 
+import shoop.core.models
+import shoop.utils.money
+import six
+
 
 class LineTax(object):
     """
@@ -27,12 +31,20 @@ class LineTax(object):
         return (self.amount / self.base_amount)
 
     @classmethod
-    def from_tax(cls, tax, base_amount):
+    def from_tax(cls, tax, base_amount, **kwargs):
+        """
+        Create tax line for given tax and base amount.
+
+        :type cls: type
+        :type tax: shoop.core.models.Tax
+        :type base_amount: shoop.utils.money.Money
+        """
         return cls(
             tax=tax,
-            name=tax,
+            name=tax.name,
             base_amount=base_amount,
-            amount=tax.calculate_amount(base_amount)
+            amount=tax.calculate_amount(base_amount),
+            **kwargs
         )
 
 
@@ -43,9 +55,13 @@ class SourceLineTax(LineTax):
 
         :type tax: shoop.core.models.Tax
         :type name: six.text_type
-        :type amount: decimal.Decimal
-        :type base_amount: decimal.Decimal
+        :type amount: shoop.utils.money.Money
+        :type base_amount: shoop.utils.money.Money
         """
+        assert isinstance(tax, shoop.core.models.Tax)
+        assert isinstance(name, six.text_type)
+        assert isinstance(amount, shoop.utils.money.Money)
+        assert isinstance(base_amount, shoop.utils.money.Money)
         self.tax = tax
         self.name = name
         self.amount = amount
