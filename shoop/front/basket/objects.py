@@ -99,7 +99,6 @@ class BaseBasket(OrderSource):
         self.orderer = getattr(request, "person", None)
         self.creator = getattr(request, "user", None)
         self.shop = getattr(request, "shop", None)
-        self.__computing_processed_lines = None
 
     def load(self):
         """
