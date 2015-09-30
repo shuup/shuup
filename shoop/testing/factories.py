@@ -603,14 +603,13 @@ def create_random_order(customer=None, products=(), completion_probability=0):
     if not products:
         products = list(Product.objects.list_visible(source.shop, customer).order_by("?")[:40])
 
-    source.lines = []
     for i in range(random.randint(3, 10)):
         product = random.choice(products)
         quantity = random.randint(1, 5)
         price_info = product.get_price_info(context, quantity=quantity)
         shop_product = product.get_shop_instance(source.shop)
         supplier = shop_product.suppliers.first()
-        line = SourceLine(
+        line = source.add_line(
             type=OrderLineType.PRODUCT,
             product=product,
             supplier=supplier,
@@ -621,7 +620,6 @@ def create_random_order(customer=None, products=(), completion_probability=0):
             text=product.safe_translation_getter("name", any_language=True)
         )
         assert line.total_price == price_info.price
-        source.lines.append(line)
     with atomic():
         oc = OrderCreator(request)
         order = oc.create_order(source)

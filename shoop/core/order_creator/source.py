@@ -55,6 +55,8 @@ class OrderSource(object):
         self.shipping_data = {}
         self.extra_data = {}
 
+        self._lines = []
+
     def update(self, **values):
         for key, value in values.items():
             if not hasattr(self, key):
@@ -113,8 +115,19 @@ class OrderSource(object):
     def status(self, status):
         self.status_id = (status.id if status else None)
 
-    def get_lines(self):  # pragma: no cover
-        return getattr(self, "lines", ())
+    def add_line(self, **kwargs):
+        line = SourceLine(source=self, **kwargs)
+        self._lines.append(line)
+        self.uncache()
+        return line
+
+    def get_lines(self):
+        """
+        Get unprocessed lines in this OrderSource.
+
+        See also `get_final_lines`.
+        """
+        return self._lines
 
     def get_final_lines(self):
         lines = getattr(self, "_processed_lines_cache", None)

@@ -70,16 +70,15 @@ def override_provides_for_expensive_sweden_shipping_method():
 @pytest.mark.parametrize("country", ["FI", "SE", "NL", "NO"])
 def test_methods(admin_user, country):
     contact = get_person_contact(admin_user)
-    source = BasketishOrderSource(lines=[
-        SourceLine(
-            type=OrderLineType.PRODUCT,
-            product=get_default_product(),
-            supplier=get_default_supplier(),
-            quantity=1,
-            unit_price=TaxlessPrice(10),
-            weight=Decimal("0.2")
-        )
-    ])
+    source = BasketishOrderSource()
+    source.add_line(
+        type=OrderLineType.PRODUCT,
+        product=get_default_product(),
+        supplier=get_default_supplier(),
+        quantity=1,
+        unit_price=TaxlessPrice(10),
+        weight=Decimal("0.2")
+    )
     billing_address = get_address()
     shipping_address = get_address(name="Shippy Doge", country=country)
     source.shop = get_default_shop()
@@ -137,14 +136,12 @@ def test_waiver():
     assert not source.prices_include_tax()
     assert sm.get_effective_name(source) == u"Waivey"
     assert sm.get_effective_price(source) == TaxlessPrice(100)
-    source.lines = [
-        SourceLine(
-            type=OrderLineType.PRODUCT,
-            product=get_default_product(),
-            unit_price=TaxlessPrice(400),
-            quantity=1
-        )
-    ]
+    source.add_line(
+        type=OrderLineType.PRODUCT,
+        product=get_default_product(),
+        unit_price=TaxlessPrice(400),
+        quantity=1
+    )
     assert sm.get_effective_price(source) == TaxlessPrice(0)
 
 
@@ -154,7 +151,7 @@ def test_weight_limits():
     sm.module_data = {"min_weight": "100", "max_weight": "500"}
     source = BasketishOrderSource()
     assert any(ve.code == "min_weight" for ve in sm.get_validation_errors(source))
-    source.lines = [SourceLine(type=OrderLineType.PRODUCT, weight=600)]
+    source.add_line(type=OrderLineType.PRODUCT, weight=600)
     assert any(ve.code == "max_weight" for ve in sm.get_validation_errors(source))
 
 

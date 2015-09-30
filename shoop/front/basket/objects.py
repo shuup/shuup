@@ -165,6 +165,11 @@ class BaseBasket(OrderSource):
         self.dirty = True
         self.uncache()
 
+    def add_line(self, **kwargs):
+        line = BasketLine(source=self, **kwargs)
+        self._data_lines = self._data_lines + [line.to_dict()]
+        return line
+
     def get_lines(self):
         return [BasketLine.from_dict(self, line) for line in self._data_lines]
 

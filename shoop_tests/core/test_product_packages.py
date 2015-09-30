@@ -38,13 +38,13 @@ def test_package():
     # Check that OrderCreator can deal with packages
 
     source = BasketishOrderSource()
-    source.lines.append(SourceLine(
+    source.add_line(
         type=OrderLineType.PRODUCT,
         product=package_product,
         supplier=get_default_supplier(),
         quantity=10,
         unit_price=TaxlessPrice(10),
-    ))
+    )
 
     source.shop = get_default_shop()
     source.status = get_initial_order_status()

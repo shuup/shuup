@@ -36,9 +36,9 @@ class IrvineCaliforniaTaxation(TaxModule):
 @pytest.mark.django_db
 def test_stacked_tax_taxless_price():
     source = OrderSource()
-    source.lines = [
-        SourceLine(source=source, type=OrderLineType.OTHER, quantity=1, unit_price=TaxlessPrice(10))
-    ]
+    source.add_line(
+        type=OrderLineType.OTHER, quantity=1, unit_price=TaxlessPrice(10)
+    )
     with override_provides("tax_module", ["shoop_tests.functional.test_tax_system:IrvineCaliforniaTaxation"]):
         with override_settings(SHOOP_TAX_MODULE="irvine"):
             source.billing_address = Address(
@@ -62,9 +62,9 @@ def test_stacked_tax_taxless_price():
 @pytest.mark.django_db
 def test_stacked_tax_taxful_price():
     source = OrderSource()
-    source.lines = [
-        SourceLine(source=source, type=OrderLineType.OTHER, quantity=1, unit_price=TaxfulPrice(20))
-    ]
+    source.add_line(
+        type=OrderLineType.OTHER, quantity=1, unit_price=TaxfulPrice(20)
+    )
     with override_provides("tax_module", ["shoop_tests.functional.test_tax_system:IrvineCaliforniaTaxation"]):
         with override_settings(SHOOP_TAX_MODULE="irvine"):
             source.billing_address = Address(
