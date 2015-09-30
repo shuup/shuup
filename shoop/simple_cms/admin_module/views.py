@@ -5,6 +5,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+from django.core.exceptions import ValidationError
 
 from django.forms import DateTimeField
 from django.utils.translation import ugettext_lazy as _
@@ -46,6 +47,7 @@ class PageForm(MultiLanguageModelForm):
         required by default in model level.
         """
         data = super(PageForm, self).clean()
+
         something_filled = False
         for language, field_names in self.trans_name_map.items():
             if not any(data.get(field_name) for field_name in field_names.values()):
@@ -53,7 +55,11 @@ class PageForm(MultiLanguageModelForm):
                 continue
             something_filled = True
             for field_name in field_names.values():
-                if data.get(field_name):  # No need to bother complaining about this field
+                value = data.get(field_name)
+                if value:  # No need to bother complaining about this field
+                    if field_name.startswith("url__"):  # url needs a second look though
+                        if not self.is_url_valid(language, field_name, value):
+                            self.add_error(field_name, ValidationError(_("URL already exists."), code="invalid_url"))
                     continue
                 self.add_error(
                     field_name,
@@ -68,6 +74,33 @@ class PageForm(MultiLanguageModelForm):
             self.add_error(titlefield, _("Please fill at least one language fully."))
 
         return data
+
+    def is_url_valid(self, language_code, field_name, url):
+        """
+        Ensure URL given is unique.
+
+        Check through the pages translation model objects to make
+        sure that the url given doesn't already exist.
+
+        Possible failure cases:
+        for new page:
+        * URL already exists
+
+        for existing page:
+        * URL (other than owned by existing page) exists
+        * URL exists in other languages of existing page
+        """
+        qs = self._get_translation_model().objects.filter(url=url)
+        if not self.instance.pk:
+            if qs.exists():
+                return False
+        other_qs = qs.exclude(master=self.instance)
+        if other_qs.exists():
+            return False
+        own_qs = qs.filter(master=self.instance).exclude(language_code=language_code)
+        if own_qs.exists():
+            return False
+        return True
 
     def _save_translation(self, instance, translation):
         if not translation.url:  # No url? Skip saving this.
@@ -104,7 +137,7 @@ class PageListView(PicotableListView):
 
     def get_object_abstract(self, instance, item):
         return [
-            {"text": "%s" % instance or _("Page"), "class": "header"},
+            {"text": "%s" % (instance or _("Page")), "class": "header"},
             {"title": _(u"Available from"), "text": item["available_from"]},
             {"title": _(u"Available to"), "text": item["available_to"]} if instance.available_to else None
         ]

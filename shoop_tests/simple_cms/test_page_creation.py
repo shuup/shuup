@@ -59,9 +59,39 @@ def test_page_form(rf):
     page = form.save()
     assert set(page.get_available_languages()) == {"fi"}  # The page should be only in Finnish
     # Let's edit that page
-    data.update({"title__en": "englaish", "url__en": "errrnglish", "content__en": "ennnn ennnn ennnnnnn-nn-n-n"})
+    original_url = "errrnglish"
+    data.update({"title__en": "englaish", "url__en": original_url, "content__en": "ennnn ennnn ennnnnnn-nn-n-n"})
     form = form_class(**dict(form_kwargs, data=data, instance=page))
     form.full_clean()
     assert not form.errors
     page = form.save()
     assert set(page.get_available_languages()) == {"fi", "en"}  # English GET
+
+    # add dummy page with simple url, page is in english
+    dummy = create_page(url="test")
+
+    # edit page again and try to set duplicate url
+    data.update({"title__en": "englaish", "url__en": "test", "content__en": "ennnn ennnn ennnnnnn-nn-n-n"})
+    form = form_class(**dict(form_kwargs, data=data, instance=page))
+    form.full_clean()
+
+    assert len(form.errors) == 1
+    assert "url__en" in form.errors
+    assert form.errors["url__en"].as_data()[0].code == "invalid_url"
+
+    # it should be possible to change back to the original url
+    data.update({"title__en": "englaish", "url__en": original_url, "content__en": "ennnn ennnn ennnnnnn-nn-n-n"})
+    form = form_class(**dict(form_kwargs, data=data, instance=page))
+    form.full_clean()
+    assert not form.errors
+    page = form.save()
+
+    # add finnish urls, it should not be possible to enter original url
+    data.update({"title__fi": "englaish", "url__fi": original_url, "content__fi": "ennnn ennnn ennnnnnn-nn-n-n"})
+    form = form_class(**dict(form_kwargs, data=data, instance=page))
+    form.full_clean()
+    assert len(form.errors) == 1
+    assert "url__fi" in form.errors
+    assert form.errors["url__fi"].as_data()[0].code == "invalid_url"
+
+
