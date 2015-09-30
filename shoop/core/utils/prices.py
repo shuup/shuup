@@ -16,14 +16,19 @@ class LinePriceMixin(object):
     Needs quantity, unit_price, total_discount and total_tax_amount
     properties.
 
-    The unit_price and total_discount must have compatible types.
+    The unit_price, total_discount and total_tax_amount must have
+    compatible units (taxness and currency).
 
-    Invariant: total_price = unit_price * quantity - total_discount
+    Invariants (excluding type conversions):
+      * total_price = unit_price * quantity - total_discount
+      * taxful_total_price = taxless_total_price + total_tax_amount
+      * tax_rate = (taxful_total_price / taxless_total_price) - 1
+      * tax_percentage = 100 * tax_rate
     """
     @property
     def total_price(self):
         """
-        :rtype: Price
+        :rtype: shoop.core.pricing.Price
         """
         return self.unit_price * self.quantity - self.total_discount
 
@@ -34,7 +39,7 @@ class LinePriceMixin(object):
         """
         total = self.total_price
         if total.includes_tax:
-            return TaxfulPrice(total.amount)
+            return total
         else:
             return TaxfulPrice(total.amount + self.total_tax_amount)
 
@@ -47,7 +52,7 @@ class LinePriceMixin(object):
         if total.includes_tax:
             return TaxlessPrice(total.amount - self.total_tax_amount)
         else:
-            return TaxlessPrice(total.amount)
+            return total
 
     @property
     def tax_rate(self):
@@ -61,41 +66,56 @@ class LinePriceMixin(object):
         return (taxful_total.amount / taxless_total.amount) - 1
 
     @property
+    def tax_percentage(self):
+        """
+        :rtype: decimal.Decimal
+        """
+        return self.tax_rate * 100
+
+    @property
     def taxful_unit_price(self):
-        """
-        :rtype: TaxfulPrice
-        """
-        if self.unit_price.includes_tax:
-            return self.unit_price
-        else:
-            return TaxfulPrice(self.unit_price.amount * (1 + self.tax_rate))
+        return self._make_taxful(self.unit_price)
 
     @property
     def taxless_unit_price(self):
-        """
-        :rtype: TaxlessPrice
-        """
-        if self.unit_price.includes_tax:
-            return TaxlessPrice(self.unit_price.amount / (1 + self.tax_rate))
-        else:
-            return self.unit_price
+        return self._make_taxless(self.unit_price)
 
     @property
     def taxful_total_discount(self):
-        """
-        :rtype: TaxfulPrice
-        """
-        if self.total_discount.includes_tax:
-            return self.total_discount
-        else:
-            return TaxfulPrice(self.total_discount.amount * (1 + self.tax_rate))
+        return self._make_taxful(self.total_discount)
 
     @property
     def taxless_total_discount(self):
+        return self._make_taxless(self.total_discount)
+
+    @property
+    def discounted_unit_price(self):
+        if not self.quantity:
+            return self.unit_price
+        return self.unit_price - (self.total_discount / self.quantity)
+
+    @property
+    def taxful_discounted_unit_price(self):
+        return self._make_taxful(self.discounted_unit_price)
+
+    @property
+    def taxless_discounted_unit_price(self):
+        return self._make_taxless(self.discounted_unit_price)
+
+    def _make_taxful(self, price):
+        """
+        :rtype: TaxfulPrice
+        """
+        if price.includes_tax:
+            return price
+        else:
+            return TaxfulPrice(price.amount * (1 + self.tax_rate))
+
+    def _make_taxless(self, price):
         """
         :rtype: TaxlessPrice
         """
-        if self.total_discount.includes_tax:
-            return TaxlessPrice(self.total_discount.amount / (1 + self.tax_rate))
+        if price.includes_tax:
+            return TaxlessPrice(price.amount / (1 + self.tax_rate))
         else:
-            return self.total_discount
+            return price
