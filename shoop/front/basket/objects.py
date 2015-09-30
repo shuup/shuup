@@ -49,7 +49,6 @@ class BasketLine(SourceLine):
         self.unit_price = price_info.unit_base_price
         self.total_discount = price_info.discount_amount
         assert self.total_price == price_info.price
-        # TODO: (TAX) Cache also taxes for BasketLine? (with product.get_taxed_price)
         self.net_weight = product.net_weight
         self.gross_weight = product.gross_weight
         self.shipping_mode = product.shipping_mode
