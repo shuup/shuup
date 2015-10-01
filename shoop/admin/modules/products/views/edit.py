@@ -59,8 +59,9 @@ class ShopProductFormPart(FormPart):
         self.shops = Shop.objects.filter(status=ShopStatus.ENABLED)
 
     def get_shop_instance(self, shop):
-        shop_product = self.object.get_shop_instance(shop)
-        if not shop_product:
+        try:
+            shop_product = self.object.get_shop_instance(shop)
+        except ShopProduct.DoesNotExist:
             shop_product = ShopProduct(shop=shop, product=self.object)
         return shop_product
 

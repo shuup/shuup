@@ -242,11 +242,10 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         if cached:
             return cached
 
-        shop_inst = self.shop_products.filter(shop=shop).first()
-        if shop_inst:
-            shop_inst._product_cache = self
-            shop_inst._shop_cache = shop
-            shop_inst_cache[shop] = shop_inst
+        shop_inst = self.shop_products.get(shop=shop)
+        shop_inst._product_cache = self
+        shop_inst._shop_cache = shop
+        shop_inst_cache[shop] = shop_inst
 
         return shop_inst
 
