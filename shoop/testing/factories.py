@@ -342,6 +342,19 @@ def get_default_shop():
     return shop
 
 
+def get_shop(prices_include_tax, currency="EUR"):
+    key = "shop:%s/taxful=%s" % (currency, prices_include_tax)
+    values = {"prices_include_tax": prices_include_tax, "currency": currency}
+    shop = Shop.objects.get_or_create(identifier=key, defaults=values)[0]
+
+    # Make our default product available to the new shop
+    product = get_default_product()
+    sp = ShopProduct.objects.get_or_create(product=product, shop=shop)[0]
+    sp.suppliers.add(get_default_supplier())
+
+    return shop
+
+
 def get_default_product():
     product = Product.objects.filter(sku=DEFAULT_IDENTIFIER).first()
     if not product:
@@ -424,9 +437,9 @@ def create_product(sku, shop=None, supplier=None, default_price=None):
     return product
 
 
-def create_empty_order():
+def create_empty_order(prices_include_tax=False, shop=None):
     order = Order(
-        shop=get_default_shop(),
+        shop=(shop or get_shop(prices_include_tax=prices_include_tax)),
         payment_method=get_default_payment_method(),
         shipping_method=get_default_shipping_method(),
         billing_address=get_address(name="Mony Doge"),
@@ -437,12 +450,15 @@ def create_empty_order():
     return order
 
 
-def create_order_with_product(product, supplier, quantity, taxless_unit_price, tax_rate=0, n_lines=1):
-    order = create_empty_order()
+def create_order_with_product(
+        product, supplier, quantity, taxless_unit_price, tax_rate=0, n_lines=1,
+        shop=None):
+    order = create_empty_order(shop=shop)
     order.full_clean()
     order.save()
 
     request = apply_request_middleware(RequestFactory().get("/"))
+    request.shop = order.shop
 
     for x in range(n_lines):
         product_order_line = OrderLine(order=order)
