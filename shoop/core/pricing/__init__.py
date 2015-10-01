@@ -53,10 +53,12 @@ from django.utils.encoding import force_bytes
 from django.utils.timezone import now
 
 from .price import Price, TaxfulPrice, TaxlessPrice
+from .priceful import Priceful
 from .price_info import PriceInfo
 
 __all__ = [
     "Price",
+    "Priceful",
     "PriceInfo",
     "PricingContext",
     "PricingModule",

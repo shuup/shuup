@@ -9,7 +9,7 @@ import decimal
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
 
 
-class LinePriceMixin(object):
+class Priceful(object):
     """
     Define line price properties by others.
 

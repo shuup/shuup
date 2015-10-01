@@ -11,9 +11,8 @@ from django.utils.timezone import now
 
 from shoop.core import taxing
 from shoop.core.models import OrderStatus, PaymentMethod, Product, ShippingMethod, Shop, Supplier, TaxClass
-from shoop.core.pricing import Price, TaxfulPrice, TaxlessPrice
+from shoop.core.pricing import Price, Priceful, TaxfulPrice, TaxlessPrice
 from shoop.core.taxing import TaxableItem
-from shoop.core.utils.prices import LinePriceMixin
 from shoop.utils.decorators import non_reentrant
 from shoop.utils.money import Money
 
@@ -331,12 +330,12 @@ def _collect_lines_from_signal(signal_results):
                 yield line
 
 
-class SourceLine(TaxableItem, LinePriceMixin):
+class SourceLine(TaxableItem, Priceful):
     """
     Line of OrderSource.
 
     Note: Properties like total_price, taxful_total_price, tax_rate,
-    etc. are inherited from the LinePriceMixin.
+    etc. are inherited from the `Priceful` mixin.
     """
     _FIELDS = [
         "line_id", "parent_line_id", "type",

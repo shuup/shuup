@@ -14,7 +14,7 @@ import shoop.core.models.product_variation
 import django_countries.fields
 import mptt.fields
 import shoop.core.models.suppliers
-import shoop.core.utils.prices
+import shoop.core.pricing
 import enumfields.fields
 import filer.fields.file
 import shoop.core.models.attributes
@@ -330,7 +330,7 @@ class Migration(migrations.Migration):
                 'verbose_name_plural': 'order lines',
                 'verbose_name': 'order line',
             },
-            bases=(models.Model, shoop.core.utils.prices.LinePriceMixin),
+            bases=(models.Model, shoop.core.pricing.Priceful),
         ),
         migrations.CreateModel(
             name='OrderLineTax',

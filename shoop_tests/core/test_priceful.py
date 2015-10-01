@@ -5,15 +5,14 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-
 from decimal import Decimal as D
 
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
-from shoop.core.utils.prices import LinePriceMixin
+from shoop.core.pricing.priceful import Priceful
 from shoop.utils.money import Money
 
 
-class Line(LinePriceMixin):
+class Line(Priceful):
     def __init__(self, base_unit_price, quantity, total_discount, total_tax_amount):
         self.base_unit_price = base_unit_price
         self.quantity = quantity

@@ -15,8 +15,8 @@ from enumfields import Enum, EnumIntegerField
 from jsonfield import JSONField
 
 from shoop.core.fields import MoneyValueField, QuantityField, UnsavedForeignKey
+from shoop.core.pricing import Priceful
 from shoop.core.taxing import LineTax
-from shoop.core.utils.prices import LinePriceMixin
 from shoop.utils.money import Money
 from shoop.utils.properties import MoneyProperty, MoneyPropped, PriceProperty
 
@@ -57,7 +57,7 @@ class OrderLineManager(models.Manager):
 
 
 @python_2_unicode_compatible
-class OrderLine(models.Model, LinePriceMixin):
+class OrderLine(models.Model, Priceful):
     order = UnsavedForeignKey("Order", related_name='lines', on_delete=models.PROTECT, verbose_name=_('order'))
     product = UnsavedForeignKey(
         "Product", blank=True, null=True, related_name="order_lines",
