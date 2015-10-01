@@ -68,7 +68,7 @@
             {% if price_info.is_discounted %}
             (<s>{{ price_info.base_unit_price|money }}</s>)
             {% endif %}
-            {{ price_info.unit_price|money }}/{{ product.sales_unit.short_name }}
+            {{ price_info.discounted_unit_price|money }}/{{ product.sales_unit.short_name }}
         </span>
     </div>
 {% endmacro %}

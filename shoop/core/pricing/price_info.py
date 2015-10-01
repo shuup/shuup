@@ -29,7 +29,7 @@ class PriceInfo(object):
           calculated based on this.
         :param numbers.Number quantity:
           Quantity that the given price is for.  Unit price is
-          calculated by ``unit_price = price / quantity``.
+          calculated by ``discounted_unit_price = price / quantity``.
           Note: Quantity could be non-integral (i.e. decimal).
         :param numbers.Number|None expires_on:
           Timestamp, comparable to values returned by :func:`time.time`,
@@ -86,7 +86,7 @@ class PriceInfo(object):
         return (self.price < self.base_price)
 
     @property
-    def unit_price(self):
+    def discounted_unit_price(self):
         return self.price / self.quantity
 
     @property

@@ -137,9 +137,10 @@ class PricingModule(six.with_metaclass(abc.ABCMeta)):
 
         Returns a list of PriceInfos ``[pi0, pi1, pi2, ...]`` where each
         PriceInfo object is at the border unit price change: unit price
-        for ``0 <= quantity < pi1.quantity1`` is ``pi0.unit_price``, and
-        unit price for ``pi1.quantity <= quantity < pi2.quantity`` is
-        ``pi1.unit_price``, and so on.
+        for ``0 <= quantity < pi1.quantity1`` is
+        ``pi0.discounted_unit_price``, and unit price for ``pi1.quantity
+        <= quantity < pi2.quantity`` is ``pi1.discounted_unit_price``,
+        and so on.
 
         If there are "no steps", the return value will be a list of single
         PriceInfo object with the constant price, i.e. ``[price_info]``.
