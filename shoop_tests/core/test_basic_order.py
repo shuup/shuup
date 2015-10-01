@@ -52,8 +52,8 @@ def create_order(request, creator, customer, product):
     ))
 
     discount_order_line = OrderLine(order=order, quantity=1, type=OrderLineType.OTHER)
-    discount_order_line.total_discount = shop.create_price(30)
-    assert discount_order_line.total_discount.value == 30
+    discount_order_line.discount_amount = shop.create_price(30)
+    assert discount_order_line.discount_amount.value == 30
     assert discount_order_line.total_price.value == -30
     assert discount_order_line.base_unit_price.value == 0
     discount_order_line.save()

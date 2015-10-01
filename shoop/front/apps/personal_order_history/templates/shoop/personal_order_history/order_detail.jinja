@@ -100,7 +100,7 @@
                         <td>{{ line.text }}</td>
                         {{ price_cell(line.taxless_base_unit_price) }}
                         {{ number_cell(line.quantity) }}
-                        {{ price_or_empty_cell(line.taxless_total_discount) }}
+                        {{ price_or_empty_cell(line.taxless_discount_amount) }}
                         {{ number_cell(line.tax_rate|percent) }}
                         {{ price_cell(line.taxless_total_price) }}
                         {{ price_cell(line.taxful_total_price) }}

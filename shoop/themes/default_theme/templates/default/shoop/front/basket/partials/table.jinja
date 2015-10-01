@@ -58,7 +58,7 @@
                             {% endif %}
                         </td>
                         <td class="text-right">
-                            {% if line.total_discount %}
+                            {% if line.discount_amount %}
                                 {{ line.discounted_unit_price|money }}
                                 <small style="display: block">
                                     <del>{{ line.base_unit_price|money }}</del>

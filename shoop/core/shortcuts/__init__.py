@@ -35,5 +35,5 @@ def update_order_line_from_product(request, order_line, product, quantity=1, sup
     order_line.require_verification = bool(getattr(product, "require_verification", False))
     order_line.verified = False
     order_line.base_unit_price = price_info.base_unit_price
-    order_line.total_discount = price_info.discount_amount
+    order_line.discount_amount = price_info.discount_amount
     assert order_line.total_price == price_info.price

@@ -46,10 +46,10 @@
                 </td>
                 <td class="text-right">
                     {{ line.taxful_discounted_unit_price|money }}
-                    {% if line.total_tax_amount %}
+                    {% if line.tax_amount %}
                         <br><small class="text-muted">({{ line.taxless_discounted_unit_price|money }} excl. tax)</small>
                     {% endif %}
-                    {% if line.total_discount %}
+                    {% if line.discount_amount %}
                         <br><small class="text-muted"><del>{{ line.taxful_base_unit_price|money }}</del></small>
                     {% endif %}
                 </td>

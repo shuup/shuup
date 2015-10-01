@@ -13,18 +13,18 @@ from shoop.utils.money import Money
 
 
 class Line(Priceful):
-    def __init__(self, base_unit_price, quantity, total_discount, total_tax_amount):
+    def __init__(self, base_unit_price, quantity, discount_amount, tax_amount):
         self.base_unit_price = base_unit_price
         self.quantity = quantity
-        self.total_discount = total_discount
-        self.total_tax_amount = total_tax_amount
+        self.discount_amount = discount_amount
+        self.tax_amount = tax_amount
 
 def get_line():
     return Line(
         base_unit_price=TaxfulPrice(5, 'EUR'),
         quantity=9,
-        total_discount=TaxfulPrice(12, 'EUR'),
-        total_tax_amount=Money(3, 'EUR')
+        discount_amount=TaxfulPrice(12, 'EUR'),
+        tax_amount=Money(3, 'EUR')
     )
 
 
@@ -49,12 +49,12 @@ def test_base_unit_price():
     assert line.taxful_base_unit_price == TaxfulPrice(5, 'EUR')
 
 
-def test_total_discount():
+def test_discount_amount():
     line = get_line()
     assert_almost_equal(
-        line.taxless_total_discount, TaxlessPrice(12, 'EUR') / D('1.1'))
+        line.taxless_discount_amount, TaxlessPrice(12, 'EUR') / D('1.1'))
 
-    assert line.taxful_total_discount == TaxfulPrice(12, 'EUR')
+    assert line.taxful_discount_amount == TaxfulPrice(12, 'EUR')
 
 
 def assert_almost_equal(x, y):

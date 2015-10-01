@@ -170,9 +170,9 @@ class OrderSource(object):
     taxful_total_price_or_none = taxful_total_price.or_none
     taxless_total_price_or_none = taxless_total_price.or_none
 
-    total_discount = _PriceSum("total_discount")
-    taxful_total_discount = _PriceSum("taxful_total_discount")
-    taxless_total_discount = _PriceSum("taxless_total_discount")
+    total_discount = _PriceSum("discount_amount")
+    taxful_total_discount = _PriceSum("taxful_discount_amount")
+    taxless_total_discount = _PriceSum("taxless_discount_amount")
     taxful_total_discount_or_none = taxful_total_discount.or_none
     taxless_total_discount_or_none = taxless_total_discount.or_none
 
@@ -340,7 +340,7 @@ class SourceLine(TaxableItem, Priceful):
     _FIELDS = [
         "line_id", "parent_line_id", "type",
         "shop", "product", "supplier", "tax_class",
-        "quantity", "base_unit_price", "total_discount",
+        "quantity", "base_unit_price", "discount_amount",
         "sku", "text",
         "require_verification", "accounting_identifier",
         # TODO: Maybe add following attrs to SourceLine?
@@ -353,7 +353,7 @@ class SourceLine(TaxableItem, Priceful):
         "supplier": Supplier,
         "tax_class": TaxClass,
     }
-    _PRICE_FIELDS = set(["base_unit_price", "total_discount"])
+    _PRICE_FIELDS = set(["base_unit_price", "discount_amount"])
 
     def __init__(self, source, **kwargs):
         """
@@ -380,8 +380,8 @@ class SourceLine(TaxableItem, Priceful):
         self.supplier = kwargs.pop("supplier", None)
         self.quantity = kwargs.pop("quantity", 0)
         self.base_unit_price = kwargs.pop("base_unit_price", source.zero_price)
-        self.total_discount = (kwargs.pop("total_discount", None) or
-                               source.zero_price)
+        self.discount_amount = (kwargs.pop("discount_amount", None) or
+                                source.zero_price)
         self.sku = kwargs.pop("sku", "")
         self.text = kwargs.pop("text", "")
         self.require_verification = kwargs.pop("require_verification", False)
@@ -401,9 +401,9 @@ class SourceLine(TaxableItem, Priceful):
         self._state_check()
 
     def _state_check(self):
-        if not self.base_unit_price.unit_matches_with(self.total_discount):
+        if not self.base_unit_price.unit_matches_with(self.discount_amount):
             raise TypeError('Unit price %r unit mismatch with discount %r' % (
-                self.base_unit_price, self.total_discount))
+                self.base_unit_price, self.discount_amount))
 
         assert self.shop is None or isinstance(self.shop, Shop)
         assert self.product is None or isinstance(self.product, Product)
@@ -466,7 +466,7 @@ class SourceLine(TaxableItem, Priceful):
         self._tax_class = value
 
     @property
-    def total_tax_amount(self):
+    def tax_amount(self):
         """
         :rtype: shoop.utils.money.Money
         """

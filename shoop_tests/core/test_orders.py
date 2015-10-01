@@ -66,13 +66,13 @@ def test_line_discount():
         quantity=5,
         text="Thing"
     )
-    ol.total_discount = order.shop.create_price(50)
+    ol.discount_amount = order.shop.create_price(50)
     ol.base_unit_price = order.shop.create_price(40)
     ol.save()
     ol.taxes.add(OrderLineTax.from_tax(
         get_default_tax(), ol.taxless_total_price.amount, order_line=ol))
-    assert ol.taxless_total_discount == order.shop.create_price(50)
-    assert ol.taxful_total_discount == TaxfulPrice(75, currency)
+    assert ol.taxless_discount_amount == order.shop.create_price(50)
+    assert ol.taxful_discount_amount == TaxfulPrice(75, currency)
     assert ol.taxless_total_price == order.shop.create_price(150)
     assert ol.taxful_total_price == TaxfulPrice(150 + 75, currency)
     assert ol.taxless_base_unit_price == order.shop.create_price(40)
@@ -87,16 +87,16 @@ def test_line_discount_more():
     ol = OrderLine(order=order, type=OrderLineType.OTHER)
     ol.quantity = 5
     ol.base_unit_price = order.shop.create_price(30)
-    ol.total_discount = order.shop.create_price(50)
+    ol.discount_amount = order.shop.create_price(50)
     ol.save()
     currency = order.shop.currency
     assert ol.taxless_base_unit_price == TaxlessPrice(30, currency)
-    assert ol.taxless_total_discount == TaxlessPrice(50, currency)
+    assert ol.taxless_discount_amount == TaxlessPrice(50, currency)
     assert ol.taxless_total_price == TaxlessPrice(5 * 30 - 50, currency)
     ol.taxes.add(OrderLineTax.from_tax(
         get_default_tax(), ol.taxless_total_price.amount, order_line=ol))
-    assert ol.taxless_total_discount == TaxlessPrice(50, currency)
-    assert ol.taxful_total_discount == TaxfulPrice(75, currency)
+    assert ol.taxless_discount_amount == TaxlessPrice(50, currency)
+    assert ol.taxful_discount_amount == TaxfulPrice(75, currency)
     assert ol.taxless_total_price == TaxlessPrice(100, currency)
     assert ol.taxful_total_price == TaxfulPrice(150, currency)
     assert ol.taxless_base_unit_price == TaxlessPrice(30, currency)
@@ -120,7 +120,7 @@ def test_basic_order():
     currency = order.currency
 
     discount_order_line = OrderLine(order=order, quantity=1, type=OrderLineType.OTHER)
-    discount_order_line.total_discount = price(30)
+    discount_order_line.discount_amount = price(30)
     assert discount_order_line.total_price == price(-30)
     discount_order_line.save()
 

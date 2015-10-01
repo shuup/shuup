@@ -51,8 +51,8 @@ class OrderCreator(object):
         order_line.text = (text(source_line.text))[:192]
         if source_line.base_unit_price:
             order_line.base_unit_price = source_line.base_unit_price
-        if source_line.total_discount:
-            order_line.total_discount = source_line.total_discount
+        if source_line.discount_amount:
+            order_line.discount_amount = source_line.discount_amount
         order_line.type = (source_line.type if source_line.type is not None
                            else OrderLineType.OTHER)
         order_line.accounting_identifier = text(source_line.accounting_identifier)
