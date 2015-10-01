@@ -66,7 +66,7 @@
         </h2>
         <span class="small text-muted">
             {% if price_info.is_discounted %}
-            (<s>{{ price_info.unit_base_price|money }}</s>)
+            (<s>{{ price_info.base_unit_price|money }}</s>)
             {% endif %}
             {{ price_info.unit_price|money }}/{{ product.sales_unit.short_name }}
         </span>

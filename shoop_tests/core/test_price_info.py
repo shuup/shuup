@@ -37,7 +37,7 @@ def test_quantity_not_one_without_discounts():
     assert pi.discount_amount == price(0)
     assert pi.discount_percentage == 0
     assert pi.unit_price == price('12.3')
-    assert pi.unit_base_price == price('12.3')
+    assert pi.base_unit_price == price('12.3')
     assert pi.unit_discount_amount == price(0)
 
 
@@ -48,7 +48,7 @@ def test_quantity_not_one_with_discounts():
     assert pi.discount_amount == price('72.5')
     assert pi.discount_percentage == Decimal('72.5')
     assert pi.unit_price == price(11)
-    assert pi.unit_base_price == price(40)
+    assert pi.base_unit_price == price(40)
     assert pi.unit_discount_amount == price(29)
 
 

@@ -637,7 +637,7 @@ def create_random_order(customer=None, products=(), completion_probability=0):
             product=product,
             supplier=supplier,
             quantity=quantity,
-            unit_price=price_info.unit_base_price,
+            unit_price=price_info.base_unit_price,
             total_discount=price_info.discount_amount,
             sku=product.sku,
             text=product.safe_translation_getter("name", any_language=True)

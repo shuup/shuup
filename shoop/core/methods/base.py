@@ -154,7 +154,7 @@ class BaseMethodModule(object):
             quantity=1,
             type=self.method.line_type,
             text=self.get_effective_name(source),
-            unit_price=price_info.unit_base_price,
+            unit_price=price_info.base_unit_price,
             total_discount=price_info.discount_amount,
             tax_class=self.method.tax_class,
         )

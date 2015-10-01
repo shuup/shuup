@@ -90,7 +90,7 @@ class PriceInfo(object):
         return self.price / self.quantity
 
     @property
-    def unit_base_price(self):
+    def base_unit_price(self):
         return self.base_price / self.quantity
 
     @property
