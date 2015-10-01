@@ -93,7 +93,7 @@
 {% endmacro %}
 
 {% macro simple_variation_form() %}
-    {% set is_orderable = bool(orderable_variation_children) %}
+    {% set is_orderable = (orderable_variation_children|length > 0) %}
     <div class="product-variations">
         <input type="hidden" name="command" value="add">
         <div class="form-group">
