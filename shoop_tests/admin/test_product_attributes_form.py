@@ -7,14 +7,15 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 import datetime
+from decimal import Decimal
+
 from django.utils.timezone import make_aware, utc
 import pytest
 from shoop.admin.modules.products.views.forms import ProductAttributesForm
-from shoop.core.models.products import Product, ProductAttribute
+from shoop.core.models.products import ProductAttribute
 from shoop.testing.factories import create_product, get_default_shop
 from shoop.utils.objects import compare_partial_dicts
 from shoop_tests.utils.forms import get_form_data
-
 
 VOGONY_DATE = datetime.date(1979, 10, 12)
 
@@ -27,6 +28,7 @@ def test_product_attributes_form():
     product.set_attribute_value("bogomips", 6400)
     product.set_attribute_value("genre", "Kauhu", "fi")
     product.set_attribute_value("genre", "Horror", "en")
+    product.set_attribute_value("time_to_finish", 12.05)
     product.set_attribute_value("release_date", VOGONY_DATE)
     assert product.get_attribute_value("bogomips") == 6400
 
@@ -38,6 +40,7 @@ def test_product_attributes_form():
         "genre__fi": "Kauhu",
         "genre__en": "Horror",
         "release_date": VOGONY_DATE,
+        "time_to_finish": Decimal("12.05")
     })
     form_data = get_form_data(paf)
     form_data.update({  # Change, clear and add fields
