@@ -12,15 +12,18 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from parler.models import TranslatedFields
 
-from shoop.core.excs import ImmutabilityError
 from shoop.core.fields import CurrencyField, InternalIdentifierField, MoneyValueField
 from shoop.utils.properties import MoneyProperty, MoneyPropped
 
-from ._base import TranslatableShoopModel
+from ._base import ImmutableMixin, TranslatableShoopModel
 
 
-class Tax(MoneyPropped, TranslatableShoopModel):
+class Tax(MoneyPropped, ImmutableMixin, TranslatableShoopModel):
     identifier_attr = 'code'
+
+    immutability_message = _(
+        "Cannot change business critical fields of Tax that is in use")
+    unprotected_fields = ['enabled']
 
     code = InternalIdentifierField(unique=True)
 
@@ -49,13 +52,6 @@ class Tax(MoneyPropped, TranslatableShoopModel):
         if self.amount is not None and self.rate is not None:
             raise ValidationError(_('Cannot have both rate and amount'))
 
-    def save(self, *args, **kwargs):
-        self.clean()
-        if self.pk:
-            # TODO: (TAX) Make it possible to disable Tax
-            raise ImmutabilityError('Tax objects are immutable')
-        super(Tax, self).save(*args, **kwargs)
-
     def calculate_amount(self, base_amount):
         """
         Calculate tax amount with this tax for given base amount.
@@ -68,6 +64,9 @@ class Tax(MoneyPropped, TranslatableShoopModel):
         if self.rate is not None:
             return self.rate * base_amount
         raise ValueError("Improperly configured tax: %s" % self)
+
+    def _is_in_use(self):
+        return self.order_line_taxes.exists()
 
     class Meta:
         verbose_name = _('tax')
