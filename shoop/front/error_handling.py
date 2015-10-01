@@ -6,7 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
-from django.template.response import TemplateResponse
+from django.shortcuts import render
 from django.utils import importlib
 
 
@@ -15,7 +15,7 @@ def make_error_view(status, template_name=None):
         template_name = "shoop/front/errors/%s.jinja" % status
 
     def view(request, *args, **kwargs):
-        return TemplateResponse(request, template_name, status=status)
+        return render(request=request, template_name=template_name, status=status)
 
     return view
 

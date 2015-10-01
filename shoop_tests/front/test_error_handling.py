@@ -1,10 +1,10 @@
-from django.conf import settings
+import os
 from django.conf.urls import url
 from django.core.handlers.base import BaseHandler
-from django.core.urlresolvers import get_urlconf, get_resolver
+from django.core.urlresolvers import get_resolver
 from django.http import HttpResponse
-from django.template.response import TemplateResponse
 from django.test.utils import override_settings
+from django.utils.encoding import force_text
 from shoop.front.error_handling import install_error_handlers
 from shoop_tests.utils import replace_urls
 
@@ -23,9 +23,22 @@ def test_error_handlers(rf):
     without overwriting possible custom ones.
     """
     with override_settings(
-            DEBUG=False,
-            SHOOP_FRONT_INSTALL_ERROR_HANDLERS=True,
-            MIDDLEWARE_CLASSES=[]
+        DEBUG=False,
+        SHOOP_FRONT_INSTALL_ERROR_HANDLERS=True,
+        MIDDLEWARE_CLASSES=[],
+        TEMPLATES=[  # Overriden to be sure about the contents of our 500.jinja
+            {
+                "BACKEND": "django_jinja.backend.Jinja2",
+                "DIRS": [
+                    os.path.realpath(os.path.join(os.path.dirname(__file__), "templates"))
+                ],
+                "OPTIONS": {
+                    "match_extension": ".jinja",
+                    "newstyle_gettext": True,
+                },
+                "NAME": "jinja2",
+            }
+        ]
     ):
         with replace_urls([
             url("^aaargh/", errorful_view)
@@ -40,8 +53,7 @@ def test_error_handlers(rf):
             # Test 500
             response = handler.get_response(rf.get("/aaargh/"))
             assert response.status_code == 500  # Uh oh!
-            assert isinstance(response, TemplateResponse)  # Looks good!
-            assert response.template_name.startswith("shoop")  # Woop!
+            assert "intergalactic testing 500" in force_text(response.content)
             # Test 404
             response = handler.get_response(rf.get("/another_castle/"))
             assert response.status_code == 200  # Our custom 404 handler made it a 200!
