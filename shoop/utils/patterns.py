@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
 from django.utils import lru_cache
 from django.utils.encoding import force_text
+from django.utils.translation import ugettext_lazy as _
 import fnmatch
+
+PATTERN_SYNTAX_HELP_TEXT = _(
+    "Comma-separated values or ranges, e.g. A-Z,10000-19000. "
+    "Use exclamation marks to negate (A-Z,!G will not match G)."
+)
 
 
 class Pattern(object):
