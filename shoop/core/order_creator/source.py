@@ -337,6 +337,10 @@ class SourceLine(TaxableItem, Priceful):
     Note: Properties like total_price, taxful_total_price, tax_rate,
     etc. are inherited from the `Priceful` mixin.
     """
+    quantity = None
+    base_unit_price = None
+    discount_amount = None
+
     _FIELDS = [
         "line_id", "parent_line_id", "type",
         "shop", "product", "supplier", "tax_class",
