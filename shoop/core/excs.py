@@ -26,3 +26,9 @@ class ProductNotOrderableProblem(Problem):
 
 class ProductNotVisibleProblem(Problem):
     pass
+
+
+class ImpossibleProductModeException(ValueError):
+    def __init__(self, message, code=None):
+        super(ImpossibleProductModeException, self).__init__(message)
+        self.code = code
