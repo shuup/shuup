@@ -6,6 +6,11 @@ function showPreview(productId) {
         return;
     }
 
+    // make sure modals disappear and are not "cached"
+    $(document).on('hidden.bs.modal', modal_select, function(){
+        $(modal_select).remove();
+    });
+
     $.ajax({
         url: "/xtheme/product_preview",
         method: "GET",
