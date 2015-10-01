@@ -50,12 +50,19 @@ class ClassicGrayTheme(Theme):
             else:
                 yield {"url": url}
 
-    def get_cms_links(self):
+    def _format_cms_links(self, **query_kwargs):
         if "shoop.simple_cms" not in settings.INSTALLED_APPS:
             return
         from shoop.simple_cms.models import Page
-        for page in Page.objects.visible().filter(visible_in_menu=True):
+        for page in Page.objects.visible().filter(**query_kwargs):
             yield {"url": "/%s" % page.url, "text": force_text(page)}
+
+    def get_cms_navigation_links(self):
+        return self._format_cms_links(visible_in_menu=True)
+
+    def get_cms_footer_links(self):
+        page_ids = self.get_setting("footer_cms_pages") or []
+        return self._format_cms_links(id__in=page_ids)
 
 
 class ClassicGrayThemeAppConfig(AppConfig):
