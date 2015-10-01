@@ -9,13 +9,17 @@ from __future__ import unicode_literals
 
 import json
 
+import six
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Model
+from django.db.transaction import atomic
 from django.utils.crypto import get_random_string
+from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.forms.widgets import ProductChoiceWidget
+from shoop.core.excs import ImpossibleProductModeException, Problem
 from shoop.core.models import Product, ProductVariationVariable, ProductVariationVariableValue
 from shoop.core.models.product_variation import get_all_available_combinations
 from shoop.utils.i18n import get_language_name
@@ -33,6 +37,7 @@ class VariableVariationChildrenForm(forms.Form):
         for combo in get_all_available_combinations(self.parent_product):
             field = forms.ModelChoiceField(
                 queryset=Product.objects.all(),
+                # TODO: Add a mode for ProductChoiceWidget to only allow eligible variation children to be selected
                 widget=ProductChoiceWidget(clearable=True),
                 required=False,
                 initial=combo["result_product_pk"]
@@ -57,13 +62,17 @@ class VariableVariationChildrenForm(forms.Form):
             except ObjectDoesNotExist:
                 pass
         if new_product:
-            new_product.link_to_parent(parent=self.parent_product, combination_hash=combo["hash"])
+            try:
+                new_product.link_to_parent(parent=self.parent_product, combination_hash=combo["hash"])
+            except ImpossibleProductModeException as ipme:
+                six.raise_from(Problem(_("Unable to link %s: %s") % (new_product, ipme)), ipme)
 
     def save(self):
         if not self.has_changed():  # See `SimplePricingForm.save()`.
             return
-        for combo in get_all_available_combinations(self.parent_product):
-            self._save_combo(combo)
+        with atomic():
+            for combo in get_all_available_combinations(self.parent_product):
+                self._save_combo(combo)
 
 
 class VariationVariablesDataForm(forms.Form):

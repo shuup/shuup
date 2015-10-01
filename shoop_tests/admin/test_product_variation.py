@@ -3,10 +3,12 @@ from django.forms import formset_factory
 import pytest
 from shoop.admin.modules.products.views.variation.simple_variation_forms import SimpleVariationChildForm, SimpleVariationChildFormSet
 from shoop.admin.modules.products.views.variation.variable_variation_forms import VariableVariationChildrenForm
-from shoop.core.models.product_variation import ProductVariationVariable, ProductVariationVariableValue
+from shoop.core.excs import ImpossibleProductModeException
 from shoop.testing.factories import create_product
+from shoop.utils.excs import Problem
 from shoop_tests.utils import printable_gibberish
 from shoop_tests.utils.forms import get_form_data
+import six
 
 
 @pytest.mark.django_db
@@ -32,6 +34,28 @@ def test_simple_children_formset():
     formset = FormSet(parent_product=parent, data=data)
     formset.save()
     assert not parent.variation_children.exists()  # Got unlinked
+
+
+@pytest.mark.django_db
+def test_impossible_simple_variation():
+    FormSet = formset_factory(SimpleVariationChildForm, SimpleVariationChildFormSet, extra=5, can_delete=True)
+    parent = create_product(printable_gibberish())
+    child = create_product(printable_gibberish())
+    grandchild = create_product(printable_gibberish())
+    grandchild.link_to_parent(child)
+    assert child.variation_children.exists()
+
+    formset = FormSet(parent_product=parent)
+    data = dict(get_form_data(formset, True), **{"form-0-child": child.pk})
+    formset = FormSet(parent_product=parent, data=data)
+    assert formset.is_valid()  # It's technically valid, but...
+    with pytest.raises(Problem) as ei:
+        formset.save()
+
+    if six.PY3:  # Can only test inner exceptions on Py3. Ah well.
+        inner_exc = ei.value.__context__
+        assert isinstance(inner_exc, ImpossibleProductModeException)
+        assert inner_exc.code == "multilevel"
 
 
 @pytest.mark.django_db

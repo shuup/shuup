@@ -7,16 +7,20 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import six
 from django import forms
 from django.contrib import messages
+from django.db.transaction import atomic
 from django.forms.formsets import DELETION_FIELD_NAME, BaseFormSet
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.forms.widgets import ProductChoiceWidget
+from shoop.core.excs import ImpossibleProductModeException, Problem
 from shoop.core.models import Product
 
 
 class SimpleVariationChildForm(forms.Form):
+    # TODO: Add a mode for ProductChoiceWidget to only allow eligible variation children to be selected
     child = forms.ModelChoiceField(queryset=Product.objects.all(), widget=ProductChoiceWidget())
 
 
@@ -38,28 +42,20 @@ class SimpleVariationChildFormSet(BaseFormSet):
         return form
 
     def save(self):
-        deleted_forms = self.deleted_forms
         parent_product = self.parent_product
         current_products = set(parent_product.variation_children.all())
-        unlinked_products = set()
-        selected_products = set()
-        for child_form in self.forms:
-            child_product = child_form.cleaned_data.get("child")
-            if not child_product:
-                continue
-            if child_product == parent_product:  # Ignore feeble attempts at circular hierarchies
-                continue
-            if child_form in deleted_forms:
-                unlinked_products.add(child_product)
-            else:
-                selected_products.add(child_product)
+        selected_products, unlinked_products = self.get_selected_and_unlinked()
 
-        products_to_add = selected_products - current_products
-        products_to_remove = current_products & unlinked_products
-        for child_product in products_to_remove:
-            child_product.unlink_from_parent()
-        for child_product in products_to_add:
-            child_product.link_to_parent(parent_product)
+        with atomic():
+            products_to_add = selected_products - current_products
+            products_to_remove = current_products & unlinked_products
+            for child_product in products_to_remove:
+                child_product.unlink_from_parent()
+            for child_product in products_to_add:
+                try:
+                    child_product.link_to_parent(parent_product)
+                except ImpossibleProductModeException as ipme:
+                    six.raise_from(Problem(_("Unable to link %s: %s") % (child_product, ipme)), ipme)
 
         message_parts = []
         if products_to_add:
@@ -68,3 +64,17 @@ class SimpleVariationChildFormSet(BaseFormSet):
             message_parts.append(_("Removed: %d") % len(products_to_remove))
         if message_parts and self.request:
             messages.success(self.request, ", ".join(message_parts))
+
+    def get_selected_and_unlinked(self):
+        deleted_forms = self.deleted_forms
+        unlinked_products = set()
+        selected_products = set()
+        for child_form in self.forms:
+            child_product = child_form.cleaned_data.get("child")
+            if not child_product:
+                continue
+            if child_form in deleted_forms:
+                unlinked_products.add(child_product)
+            else:
+                selected_products.add(child_product)
+        return (selected_products, unlinked_products)
