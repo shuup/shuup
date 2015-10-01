@@ -11,19 +11,7 @@ from django.utils.encoding import force_text, python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.core.models import CustomerTaxGroup, Tax, TaxClass
-
-
-def _pattern_matches(pattern, target):
-    target = "%s" % target
-    for pat in pattern.split(","):
-        pat = pat.strip()
-        if pat == "*" or pat == target:
-            return True
-        if "-" in pat:
-            a, b = pat.split("-", 1)
-            if a < target < b:
-                return True
-
+from shoop.utils.patterns import pattern_matches
 
 PRIORITY_HELP = _(
     'Rules with same priority are value-added (e.g. US taxes) '
@@ -46,13 +34,13 @@ class TaxRule(models.Model):
 
     def matches(self, taxing_context):
         if self.country_codes_pattern:
-            if not _pattern_matches(self.country_codes_pattern, taxing_context.country_code):
+            if not pattern_matches(self.country_codes_pattern, taxing_context.country_code):
                 return False
         if self.region_codes_pattern:
-            if not _pattern_matches(self.region_codes_pattern, taxing_context.region_code):
+            if not pattern_matches(self.region_codes_pattern, taxing_context.region_code):
                 return False
         if self.postal_codes_pattern:
-            if not _pattern_matches(self.postal_codes_pattern, taxing_context.postal_code):
+            if not pattern_matches(self.postal_codes_pattern, taxing_context.postal_code):
                 return False
         return True
 
