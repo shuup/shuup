@@ -117,7 +117,8 @@ class ProductQuerySet(TranslatableQuerySet):
         root = (self.language(language) if language else self)
 
         if customer and customer.is_all_seeing:
-            qs = root.all().exclude(deleted=True).filter(shop_products__shop=shop)
+            exclude_q = Q(deleted=True) | Q(mode=ProductMode.VARIATION_CHILD)
+            qs = root.all().exclude(exclude_q).filter(shop_products__shop=shop)
         else:
             qs = root.all().exclude(deleted=True).filter(
                 shop_products__shop=shop,
