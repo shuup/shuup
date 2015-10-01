@@ -52,7 +52,7 @@
                     {% if line.tax_amount %}
                         <br><small class="text-muted">({{ line.taxless_discounted_unit_price|money }} excl. tax)</small>
                     {% endif %}
-                    {% if line.discount_amount %}
+                    {% if line.is_discounted %}
                         <br><small class="text-muted"><del>{{ line.taxful_base_unit_price|money }}</del></small>
                     {% endif %}
                 </td>
