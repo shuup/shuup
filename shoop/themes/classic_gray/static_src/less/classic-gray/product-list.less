@@ -212,21 +212,26 @@
                 justify-content: center;
                 height: 100%;
                 padding: 15px;
-                padding-bottom: 45px;
             }
             .single-product {
                 width: 100%;
                 .product-card {
-                    padding-bottom: 0;
+                    padding-bottom: 42px;
                     text-align: left;
+                    > a {
+                        .clearfix;
+                        flex: 1 1 0%;
+                        height: 100%;
+                        padding-bottom: 0;
+                    }
                     .name {
                         font-size: 1.8rem;
                     }
                     .description {
                         display: block;
                     }
-                    .actions {
-                        border: 0;
+                    .actions .btn {
+                        padding: 10px 0;
                     }
                 }
             }

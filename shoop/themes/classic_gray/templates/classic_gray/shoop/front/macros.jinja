@@ -1,4 +1,4 @@
-{% macro product_box(product, show_image=True, show_description=True, class="product-box", thumbnail_size=(500,500), shop=None) %}
+{% macro product_box(product, show_image=True, show_description=True, class="product-box", thumbnail_size=(500,500)) %}
     {% set u = url("shoop:product", pk=product.pk, slug=product.slug) %}
     {% if product.is_variation_parent()  %}
         {% set price_info = product.get_cheapest_child_price_info(request) %}
@@ -6,35 +6,31 @@
         {% set price_info = product.get_price_info(request) %}
     {% endif %}
     <div class="product-card {{ class }}" id="product-{{ product.id }}">
-        {% if price_info.is_discounted %}
-            <div class="labels">
-                <span class="label label-sale">{{ -price_info.discount_percentage|int }}%</span>
-            </div>
-        {% endif %}
-        {% if show_image %}
-            {% set primary_image_thumb = product.primary_image|thumbnail(size=thumbnail_size) %}
-            <div class="image-wrap">
-                <a href="{{ u }}" class="image" rel="product-detail" style="background-image:url('{% if product.primary_image %}{{ primary_image_thumb }}{% else %}{{ STATIC_URL }}classic_gray/img/no_image.png{% endif %}')" title="{{ product.name }}"></a>
-            </div>
-        {% endif %}
-        <div class="detail-wrap">
-            <a href="{{ u }}" class="name">{{ product.name }}</a>
-            {% if show_description and product.description %}
-                <p class="description">{{ product.description|striptags|truncate(180)|safe }}</p>
+        <a href="{{ u }}" rel="product-detail" title="{{ product.name }}">
+            {% if price_info.is_discounted %}
+                <div class="labels">
+                    <span class="label label-sale">{{ -price_info.discount_percentage|int }}%</span>
+                </div>
             {% endif %}
-            {% if shop %}<p class="shop">{{ shop }}</p>{% endif %}
-            {# TODO: (TAX) Check following line (gets taxful price of product)  #}
-            <div class="price">
-                {{ render_product_price(product, price_info, show_units=False) }}
-            </div>
-            <div class="actions clearfix">
-                <div class="col-xs-6">
-                    <button type="button" class="btn btn-block text-muted" onclick="javascript:showPreview('{{ product.id }}')"><i class="fa fa-eye"></i> {% trans %}Preview{% endtrans %}</button>
+            {% if show_image %}
+                {% set primary_image_thumb = product.primary_image|thumbnail(size=thumbnail_size) %}
+                <div class="image-wrap">
+                    <div class="image" style="background-image:url('{% if product.primary_image %}{{ primary_image_thumb }}{% else %}{{ STATIC_URL }}classic_gray/img/no_image.png{% endif %}')"></div>
                 </div>
-                <div class="col-xs-6">
-                    <a href="{{ u }}" class="btn btn-block text-muted"><i class="fa fa-search"></i> {% trans %}Open{% endtrans %}</a>
+            {% endif %}
+            <div class="detail-wrap">
+                <div class="name">{{ product.name }}</div>
+                {% if show_description and product.description %}
+                    <p class="description">{{ product.description|striptags|truncate(180)|safe }}</p>
+                {% endif %}
+                {# TODO: (TAX) Check following line (gets taxful price of product)  #}
+                <div class="price">
+                    {{ render_product_price(product, price_info, show_units=False) }}
                 </div>
             </div>
+        </a>
+        <div class="actions clearfix">
+            <button type="button" class="btn btn-block text-muted" onclick="javascript:showPreview('{{ product.id }}')"><i class="fa fa-eye"></i> {% trans %}Preview{% endtrans %}</button>
         </div>
     </div>
 {% endmacro %}
