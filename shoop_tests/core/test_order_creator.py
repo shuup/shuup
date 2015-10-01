@@ -48,12 +48,12 @@ def test_order_creator(rf, admin_user):
         product=get_default_product(),
         supplier=get_default_supplier(),
         quantity=1,
-        unit_price=source.create_price(10),
+        base_unit_price=source.create_price(10),
     )
     source.add_line(
         type=OrderLineType.OTHER,
         quantity=1,
-        unit_price=source.create_price(10),
+        base_unit_price=source.create_price(10),
         require_verification=True,
     )
 
@@ -76,7 +76,7 @@ def test_order_creator_supplierless_product_line_conversion_should_fail(rf, admi
         product=get_default_product(),
         supplier=None,
         quantity=1,
-        unit_price=source.create_price(10),
+        base_unit_price=source.create_price(10),
     )
 
     request = apply_request_middleware(rf.get("/"))
@@ -95,7 +95,7 @@ def test_order_source_parentage(rf, admin_user):
         product=product,
         supplier=get_default_supplier(),
         quantity=1,
-        unit_price=source.create_price(10),
+        base_unit_price=source.create_price(10),
         line_id="parent"
     )
     source.add_line(
@@ -103,7 +103,7 @@ def test_order_source_parentage(rf, admin_user):
         text="Child Line",
         sku="KIDKIDKID",
         quantity=1,
-        unit_price=source.create_price(5),
+        base_unit_price=source.create_price(5),
         parent_line_id="parent"
     )
     request = apply_request_middleware(rf.get("/"))

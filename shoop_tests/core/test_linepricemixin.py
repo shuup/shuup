@@ -14,15 +14,15 @@ from shoop.utils.money import Money
 
 
 class Line(LinePriceMixin):
-    def __init__(self, unit_price, quantity, total_discount, total_tax_amount):
-        self.unit_price = unit_price
+    def __init__(self, base_unit_price, quantity, total_discount, total_tax_amount):
+        self.base_unit_price = base_unit_price
         self.quantity = quantity
         self.total_discount = total_discount
         self.total_tax_amount = total_tax_amount
 
 def get_line():
     return Line(
-        unit_price=TaxfulPrice(5, 'EUR'),
+        base_unit_price=TaxfulPrice(5, 'EUR'),
         quantity=9,
         total_discount=TaxfulPrice(12, 'EUR'),
         total_tax_amount=Money(3, 'EUR')
@@ -42,12 +42,12 @@ def test_tax_rate_and_percentage():
     assert_almost_equal(line.tax_percentage, 10)
 
 
-def test_unit_price():
+def test_base_unit_price():
     line = get_line()
 
     assert_almost_equal(
-        line.taxless_unit_price, TaxlessPrice(5, 'EUR') / D('1.1'))
-    assert line.taxful_unit_price == TaxfulPrice(5, 'EUR')
+        line.taxless_base_unit_price, TaxlessPrice(5, 'EUR') / D('1.1'))
+    assert line.taxful_base_unit_price == TaxfulPrice(5, 'EUR')
 
 
 def test_total_discount():

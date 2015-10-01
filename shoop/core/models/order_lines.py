@@ -83,10 +83,10 @@ class OrderLine(models.Model, LinePriceMixin):
 
     # The following fields govern calculation of the prices
     quantity = QuantityField(verbose_name=_('quantity'), default=1)
-    unit_price = PriceProperty('unit_price_value', 'order.currency', 'order.prices_include_tax')
+    base_unit_price = PriceProperty('base_unit_price_value', 'order.currency', 'order.prices_include_tax')
     total_discount = PriceProperty('total_discount_value', 'order.currency', 'order.prices_include_tax')
 
-    unit_price_value = MoneyValueField(verbose_name=_('unit price amount'), default=0)
+    base_unit_price_value = MoneyValueField(verbose_name=_('unit price amount (undiscounted)'), default=0)
     total_discount_value = MoneyValueField(verbose_name=_('total amount of discount'), default=0)
 
     objects = OrderLineManager()

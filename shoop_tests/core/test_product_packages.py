@@ -42,7 +42,7 @@ def test_package():
         product=package_product,
         supplier=get_default_supplier(),
         quantity=10,
-        unit_price=source.create_price(10),
+        base_unit_price=source.create_price(10),
     )
 
     source.status = get_initial_order_status()

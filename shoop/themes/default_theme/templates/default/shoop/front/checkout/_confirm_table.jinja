@@ -43,9 +43,9 @@
                     {{ line.text }}
                 </td>
                 <td class="text-right">
-                    {{ line.taxful_unit_price|money }}
+                    {{ line.taxful_base_unit_price|money }}
                     {% if line.total_tax_amount %}
-                        <br><small class="text-muted">({{ line.taxless_unit_price|money }} excl. tax)</small>
+                        <br><small class="text-muted">({{ line.taxless_base_unit_price|money }} excl. tax)</small>
                     {% endif %}
                 </td>
                 <td class="text-right">

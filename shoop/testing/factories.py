@@ -457,7 +457,7 @@ def create_empty_order(prices_include_tax=False, shop=None):
 
 
 def create_order_with_product(
-        product, supplier, quantity, taxless_unit_price, tax_rate=0, n_lines=1,
+        product, supplier, quantity, taxless_base_unit_price, tax_rate=0, n_lines=1,
         shop=None):
     order = create_empty_order(shop=shop)
     order.full_clean()
@@ -472,7 +472,7 @@ def create_order_with_product(
                                        order_line=product_order_line,
                                        product=product, quantity=quantity,
                                        supplier=supplier)
-        product_order_line.unit_price = order.shop.create_price(taxless_unit_price)
+        product_order_line.base_unit_price = order.shop.create_price(taxless_base_unit_price)
         product_order_line.save()
         product_order_line.taxes.add(OrderLineTax.from_tax(
             get_test_tax(tax_rate),
@@ -637,7 +637,7 @@ def create_random_order(customer=None, products=(), completion_probability=0):
             product=product,
             supplier=supplier,
             quantity=quantity,
-            unit_price=price_info.base_unit_price,
+            base_unit_price=price_info.base_unit_price,
             total_discount=price_info.discount_amount,
             sku=product.sku,
             text=product.safe_translation_getter("name", any_language=True)

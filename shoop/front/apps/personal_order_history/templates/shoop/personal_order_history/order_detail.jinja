@@ -98,7 +98,7 @@
                     <tr>
                         <td>{{ line.sku }}</td>
                         <td>{{ line.text }}</td>
-                        {{ price_cell(line.taxless_unit_price) }}
+                        {{ price_cell(line.taxless_base_unit_price) }}
                         {{ number_cell(line.quantity) }}
                         {{ price_or_empty_cell(line.taxless_total_discount) }}
                         {{ number_cell(line.tax_rate|percent) }}

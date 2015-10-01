@@ -13,14 +13,14 @@ class LinePriceMixin(object):
     """
     Define line price properties by others.
 
-    Needs quantity, unit_price, total_discount and total_tax_amount
+    Needs quantity, base_unit_price, total_discount and total_tax_amount
     properties.
 
-    The unit_price, total_discount and total_tax_amount must have
+    The base_unit_price, total_discount and total_tax_amount must have
     compatible units (taxness and currency).
 
     Invariants (excluding type conversions):
-      * total_price = unit_price * quantity - total_discount
+      * total_price = base_unit_price * quantity - total_discount
       * taxful_total_price = taxless_total_price + total_tax_amount
       * tax_rate = (taxful_total_price / taxless_total_price) - 1
       * tax_percentage = 100 * tax_rate
@@ -30,7 +30,7 @@ class LinePriceMixin(object):
         """
         :rtype: shoop.core.pricing.Price
         """
-        return self.unit_price * self.quantity - self.total_discount
+        return self.base_unit_price * self.quantity - self.total_discount
 
     @property
     def taxful_total_price(self):
@@ -73,12 +73,12 @@ class LinePriceMixin(object):
         return self.tax_rate * 100
 
     @property
-    def taxful_unit_price(self):
-        return self._make_taxful(self.unit_price)
+    def taxful_base_unit_price(self):
+        return self._make_taxful(self.base_unit_price)
 
     @property
-    def taxless_unit_price(self):
-        return self._make_taxless(self.unit_price)
+    def taxless_base_unit_price(self):
+        return self._make_taxless(self.base_unit_price)
 
     @property
     def taxful_total_discount(self):
@@ -91,8 +91,8 @@ class LinePriceMixin(object):
     @property
     def discounted_unit_price(self):
         if not self.quantity:
-            return self.unit_price
-        return self.unit_price - (self.total_discount / self.quantity)
+            return self.base_unit_price
+        return self.base_unit_price - (self.total_discount / self.quantity)
 
     @property
     def taxful_discounted_unit_price(self):

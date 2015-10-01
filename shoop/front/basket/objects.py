@@ -46,7 +46,7 @@ class BasketLine(SourceLine):
         product = self.product
         # TODO: ensure shop identity?
         price_info = product.get_price_info(request, quantity=self.quantity)
-        self.unit_price = price_info.base_unit_price
+        self.base_unit_price = price_info.base_unit_price
         self.total_discount = price_info.discount_amount
         assert self.total_price == price_info.price
         self.net_weight = product.net_weight

@@ -341,7 +341,7 @@ class SourceLine(TaxableItem, LinePriceMixin):
     _FIELDS = [
         "line_id", "parent_line_id", "type",
         "shop", "product", "supplier", "tax_class",
-        "quantity", "unit_price", "total_discount",
+        "quantity", "base_unit_price", "total_discount",
         "sku", "text",
         "require_verification", "accounting_identifier",
         # TODO: Maybe add following attrs to SourceLine?
@@ -354,7 +354,7 @@ class SourceLine(TaxableItem, LinePriceMixin):
         "supplier": Supplier,
         "tax_class": TaxClass,
     }
-    _PRICE_FIELDS = set(["unit_price", "total_discount"])
+    _PRICE_FIELDS = set(["base_unit_price", "total_discount"])
 
     def __init__(self, source, **kwargs):
         """
@@ -380,7 +380,7 @@ class SourceLine(TaxableItem, LinePriceMixin):
             self.tax_class = tax_class
         self.supplier = kwargs.pop("supplier", None)
         self.quantity = kwargs.pop("quantity", 0)
-        self.unit_price = kwargs.pop("unit_price", source.zero_price)
+        self.base_unit_price = kwargs.pop("base_unit_price", source.zero_price)
         self.total_discount = (kwargs.pop("total_discount", None) or
                                source.zero_price)
         self.sku = kwargs.pop("sku", "")
@@ -402,9 +402,9 @@ class SourceLine(TaxableItem, LinePriceMixin):
         self._state_check()
 
     def _state_check(self):
-        if not self.unit_price.unit_matches_with(self.total_discount):
+        if not self.base_unit_price.unit_matches_with(self.total_discount):
             raise TypeError('Unit price %r unit mismatch with discount %r' % (
-                self.unit_price, self.total_discount))
+                self.base_unit_price, self.total_discount))
 
         assert self.shop is None or isinstance(self.shop, Shop)
         assert self.product is None or isinstance(self.product, Product)

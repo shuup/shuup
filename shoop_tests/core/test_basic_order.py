@@ -39,7 +39,7 @@ def create_order(request, creator, customer, product):
     supplier = get_default_supplier()
     product_order_line = OrderLine(order=order)
     update_order_line_from_product(order_line=product_order_line, product=product, request=request, quantity=5, supplier=supplier)
-    product_order_line.unit_price = shop.create_price(100)
+    product_order_line.base_unit_price = shop.create_price(100)
     assert product_order_line.total_price.value > 0
     product_order_line.save()
 
@@ -55,7 +55,7 @@ def create_order(request, creator, customer, product):
     discount_order_line.total_discount = shop.create_price(30)
     assert discount_order_line.total_discount.value == 30
     assert discount_order_line.total_price.value == -30
-    assert discount_order_line.unit_price.value == 0
+    assert discount_order_line.base_unit_price.value == 0
     discount_order_line.save()
 
     order.cache_prices()

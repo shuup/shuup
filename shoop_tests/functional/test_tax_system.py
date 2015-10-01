@@ -44,7 +44,7 @@ def test_stacked_tax_taxless_price():
     source = OrderSource(get_shop(prices_include_tax=False))
     assert source.prices_include_tax is False
     source.add_line(
-        type=OrderLineType.OTHER, quantity=1, unit_price=source.create_price(10)
+        type=OrderLineType.OTHER, quantity=1, base_unit_price=source.create_price(10)
     )
     with override_provides("tax_module", TAX_MODULE_SPEC):
         with override_settings(SHOOP_TAX_MODULE="irvine"):
@@ -72,7 +72,7 @@ def test_stacked_tax_taxful_price():
     source = OrderSource(shop)
     assert source.prices_include_tax
     source.add_line(
-        type=OrderLineType.OTHER, quantity=1, unit_price=source.create_price(20)
+        type=OrderLineType.OTHER, quantity=1, base_unit_price=source.create_price(20)
     )
     with override_provides("tax_module", TAX_MODULE_SPEC):
         with override_settings(SHOOP_TAX_MODULE="irvine"):

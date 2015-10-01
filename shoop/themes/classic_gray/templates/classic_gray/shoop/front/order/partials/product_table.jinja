@@ -50,7 +50,7 @@
                         <br><small class="text-muted">({{ line.taxless_discounted_unit_price|money }} excl. tax)</small>
                     {% endif %}
                     {% if line.total_discount %}
-                        <br><small class="text-muted"><del>{{ line.taxful_unit_price|money }}</del></small>
+                        <br><small class="text-muted"><del>{{ line.taxful_base_unit_price|money }}</del></small>
                     {% endif %}
                 </td>
                 <td class="text-right">

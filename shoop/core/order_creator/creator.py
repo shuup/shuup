@@ -49,8 +49,8 @@ class OrderCreator(object):
         order_line.supplier = source_line.supplier
         order_line.sku = text(source_line.sku)
         order_line.text = (text(source_line.text))[:192]
-        if source_line.unit_price:
-            order_line.unit_price = source_line.unit_price
+        if source_line.base_unit_price:
+            order_line.base_unit_price = source_line.base_unit_price
         if source_line.total_discount:
             order_line.total_discount = source_line.total_discount
         order_line.type = (source_line.type if source_line.type is not None
@@ -82,7 +82,7 @@ class OrderCreator(object):
                 quantity=(order_line.quantity * child_quantity),
             )
             # Package children are free
-            assert child_order_line.unit_price.value == 0
+            assert child_order_line.base_unit_price.value == 0
             child_order_line.source_line = order_line.source_line
             child_order_line.supplier = order_line.supplier
             self._check_orderability(child_order_line)

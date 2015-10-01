@@ -78,7 +78,7 @@ def test_methods(admin_user, country):
         product=get_default_product(),
         supplier=get_default_supplier(),
         quantity=1,
-        unit_price=source.create_price(10),
+        base_unit_price=source.create_price(10),
         weight=Decimal("0.2")
     )
     billing_address = get_address()
@@ -136,7 +136,7 @@ def test_waiver():
     source.add_line(
         type=OrderLineType.PRODUCT,
         product=get_default_product(),
-        unit_price=source.shop.create_price(400),
+        base_unit_price=source.shop.create_price(400),
         quantity=1
     )
     assert sm.get_effective_price_info(source).price == source.shop.create_price(0)
