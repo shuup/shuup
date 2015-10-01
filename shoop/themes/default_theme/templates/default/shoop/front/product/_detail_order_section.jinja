@@ -32,10 +32,7 @@
                             {% set price = p.get_price(request) %}
                             <option value="{{ p.id }}">
                                 {{ p.variation_name or p.name }}
-                                {# TODO: Tax rendering of variation children #}
-                                {# TODO: Remove hard coded euro in rendering of variation children prices #}
-                                ({{ price.taxful_price|floatformat(2) }} &euro; {% trans %}incl. VAT{% endtrans %} {{ product.get_tax_value_display() }}%,
-                                {{ price.taxless_price|floatformat(2)}} &euro; {% trans %}VAT{% endtrans %} 0%)
+                                ({{ price|money }})
                             </option>
                         {% endfor %}
                     </select>
