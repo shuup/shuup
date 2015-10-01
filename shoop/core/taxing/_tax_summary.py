@@ -11,20 +11,27 @@ from decimal import Decimal
 
 from django.utils.translation import ugettext as _
 
-from shoop.core.pricing import TaxlessPrice
+from shoop.utils.money import Money
 
 from ._line_tax import LineTax
 
 
 class TaxSummary(list):
     @classmethod
-    def from_line_taxes(cls, line_taxes, untaxed=TaxlessPrice(0)):
-        tax_amount_by_tax = defaultdict(Decimal)
-        base_amount_by_tax = defaultdict(Decimal)
+    def from_line_taxes(cls, line_taxes, untaxed):
+        """
+        Create TaxSummary from LineTaxes.
+
+        :param line_taxes: List of line taxes to summarize
+        :type line_taxes: list[LineTax]
+        :param untaxed: Sum of taxless prices that have no taxes added
+        :type untaxed: shoop.core.pricing.TaxlessPrice
+        """
+        zero_amount = Money(0, untaxed.currency)
+        tax_amount_by_tax = defaultdict(lambda: zero_amount)
+        base_amount_by_tax = defaultdict(lambda: zero_amount)
         for line_tax in line_taxes:
             assert isinstance(line_tax, LineTax)
-            if line_tax.amount == 0:
-                continue
             tax_amount_by_tax[line_tax.tax] += line_tax.amount
             base_amount_by_tax[line_tax.tax] += line_tax.base_amount
 
@@ -36,9 +43,9 @@ class TaxSummary(list):
             lines.append(
                 TaxSummaryLine(
                     tax_id=None, tax_code='', tax_name=_("Untaxed"),
-                    tax_rate=Decimal(0), based_on=Decimal(untaxed),
-                    tax_amount=Decimal(0)))
-        return cls(sorted(lines, key=lambda x: x.tax_rate))
+                    tax_rate=Decimal(0), based_on=untaxed.amount,
+                    tax_amount=zero_amount))
+        return cls(sorted(lines, key=(lambda x: (x.tax_rate or 0))))
 
     def __repr__(self):
         super_repr = super(TaxSummary, self).__repr__()

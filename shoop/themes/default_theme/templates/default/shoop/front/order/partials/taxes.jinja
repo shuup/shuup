@@ -19,9 +19,9 @@
                             {{ item.tax_rate|percent(ndigits=3) }}
                         {%- endif -%}
                     </td>
-                    <td class="text-right">{{ item.based_on|home_currency }}</td>
-                    <td class="text-right">{{ item.tax_amount|home_currency }}</td>
-                    <td class="text-right">{{ item.taxful|home_currency }}</td>
+                    <td class="text-right">{{ item.based_on|money }}</td>
+                    <td class="text-right">{{ item.tax_amount|money }}</td>
+                    <td class="text-right">{{ item.taxful|money }}</td>
                 </tr>
             {% endfor %}
         {% endif %}

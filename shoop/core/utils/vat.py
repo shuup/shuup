@@ -215,6 +215,22 @@ def compile_pattern(prefix, pattern):
     return re.compile("^" + prefix + r + "$", re.I)
 
 
+class VatValidationError(ValidationError):
+    code = None
+
+    def __init__(self, *args, **kwargs):
+        code = kwargs.pop("code", self.code)
+        super(VatValidationError, self).__init__(*args, code=code, **kwargs)
+
+
+class VatCannotIdentifyValidationError(VatValidationError):
+    code = "vat_cannot_identify"
+
+
+class VatInvalidValidationError(VatValidationError):
+    code = "vat_invalid"
+
+
 def verify_vat(vat_id, default_prefix=""):
     """ Verify an EU VAT ID.
 
@@ -241,7 +257,7 @@ def verify_vat(vat_id, default_prefix=""):
     # Then see if we know about this prefix.
     spec = PATTERNS.get(prefix)
     if not spec or not prefix:  # Sorry, no dice. :/
-        raise ValidationError("VAT ID could not be identified.", code="vat_cannot_identify")
+        raise VatCannotIdentifyValidationError("VAT ID could not be identified")
 
     if not vat_id.startswith(prefix):  # Add the prefix back into the VAT if required
         vat_id = prefix + vat_id
@@ -257,9 +273,8 @@ def verify_vat(vat_id, default_prefix=""):
         if match:
             return (prefix, match.groups())
 
-    raise ValidationError("VAT ID for %(country)s could not be validated." % {
-        "country": spec["country"]
-    }, code="vat_invalid")
+    raise VatInvalidValidationError(
+        "VAT ID for %(country)s could not be validated" % spec)
 
 
 def get_vat_prefix_for_country(iso3166):

@@ -16,7 +16,7 @@ from shoop.core.models.contacts import PersonContact, get_person_contact
 from shoop.core.models.methods import ShippingMethod, PaymentMethod
 from shoop.core.models.order_lines import OrderLineType
 from shoop.core.order_creator.source import SourceLine
-from shoop.core.pricing import TaxfulPrice, TaxlessPrice
+from shoop.core.pricing import PriceInfo
 from shoop.testing.factories import (
     get_address, get_default_shop, get_default_product, get_default_supplier, get_default_tax_class,
     create_product
@@ -31,10 +31,12 @@ class ExpensiveSwedenShippingModule(BaseShippingMethodModule):
     def get_effective_name(self, source, **kwargs):
         return u"Expenseefe-a Svedee Sheepping"
 
-    def get_effective_price(self, source, **kwargs):
+    def get_effective_price_info(self, source, **kwargs):
+        four = source.shop.create_price('4.00')
+        five = source.shop.create_price('5.00')
         if source.shipping_address and source.shipping_address.country == "SE":
-            return TaxfulPrice("5.00")
-        return TaxfulPrice("4.00")
+            return PriceInfo(five, four, 1)
+        return PriceInfo(four, four, 1)
 
     def get_validation_errors(self, source, **kwargs):
         for error in super(ExpensiveSwedenShippingModule, self).get_validation_errors(source, **kwargs):
@@ -70,19 +72,17 @@ def override_provides_for_expensive_sweden_shipping_method():
 @pytest.mark.parametrize("country", ["FI", "SE", "NL", "NO"])
 def test_methods(admin_user, country):
     contact = get_person_contact(admin_user)
-    source = BasketishOrderSource(lines=[
-        SourceLine(
-            type=OrderLineType.PRODUCT,
-            product=get_default_product(),
-            supplier=get_default_supplier(),
-            quantity=1,
-            unit_price=TaxlessPrice(10),
-            weight=Decimal("0.2")
-        )
-    ])
+    source = BasketishOrderSource(get_default_shop())
+    source.add_line(
+        type=OrderLineType.PRODUCT,
+        product=get_default_product(),
+        supplier=get_default_supplier(),
+        quantity=1,
+        base_unit_price=source.create_price(10),
+        weight=Decimal("0.2")
+    )
     billing_address = get_address()
     shipping_address = get_address(name="Shippy Doge", country=country)
-    source.shop = get_default_shop()
     source.billing_address = billing_address
     source.shipping_address = shipping_address
     source.customer = contact
@@ -107,18 +107,15 @@ def test_methods(admin_user, country):
 
         assert any(line.type == OrderLineType.SHIPPING for line in final_lines)
 
-        # TODO: (TAX) for some reason SourceLine.taxless_total_price property has been removed
-        # I think it should be implemented back like in OrderLine / janne
-
         for line in final_lines:
             if line.type == OrderLineType.SHIPPING:
                 if country == "SE":  # We _are_ using Expenseefe-a Svedee Sheepping after all.
-                    assert line.taxless_total_price == TaxlessPrice("5.00")
+                    assert line.total_price == source.shop.create_price("5.00")
                 else:
-                    assert line.taxless_total_price == TaxlessPrice("4.00")
+                    assert line.total_price == source.shop.create_price("4.00")
                 assert line.text == u"Expenseefe-a Svedee Sheepping"
             if line.type == OrderLineType.PAYMENT:
-                assert line.taxless_total_price == TaxlessPrice("4")
+                assert line.total_price == source.shop.create_price(4)
 
 
 @pytest.mark.django_db
@@ -133,46 +130,43 @@ def test_waiver():
                             "price_waiver_product_minimum": "370",
                             "price": "100"
                         })
-    source = BasketishOrderSource()
-    assert not source.prices_include_tax()
+    source = BasketishOrderSource(get_default_shop())
     assert sm.get_effective_name(source) == u"Waivey"
-    assert sm.get_effective_price(source) == TaxlessPrice(100)
-    source.lines = [
-        SourceLine(
-            type=OrderLineType.PRODUCT,
-            product=get_default_product(),
-            unit_price=TaxlessPrice(400),
-            quantity=1
-        )
-    ]
-    assert sm.get_effective_price(source) == TaxlessPrice(0)
+    assert sm.get_effective_price_info(source).price == source.shop.create_price(100)
+    source.add_line(
+        type=OrderLineType.PRODUCT,
+        product=get_default_product(),
+        base_unit_price=source.shop.create_price(400),
+        quantity=1
+    )
+    assert sm.get_effective_price_info(source).price == source.shop.create_price(0)
 
 
 @pytest.mark.django_db
 def test_weight_limits():
     sm = ShippingMethod(tax_class=get_default_tax_class())
     sm.module_data = {"min_weight": "100", "max_weight": "500"}
-    source = BasketishOrderSource()
+    source = BasketishOrderSource(get_default_shop())
     assert any(ve.code == "min_weight" for ve in sm.get_validation_errors(source))
-    source.lines = [SourceLine(type=OrderLineType.PRODUCT, weight=600)]
+    source.add_line(type=OrderLineType.PRODUCT, weight=600)
     assert any(ve.code == "max_weight" for ve in sm.get_validation_errors(source))
 
 
 # TODO: (TAX) Taxing of shipping methods
-# @pytest.mark.django_db
-# def test_tax():
-#     sm = ShippingMethod(tax_class=None, module_data={"taxless_price": 50})
-#     source = BasketishOrderSource()
-#     source.lines = [  # Since `tax_class` is None, the highest tax percentage in the order should be used:
-#                       SourceLine(type=OrderLineType.PRODUCT, tax_rate=Decimal("0.8")),
-#                       SourceLine(type=OrderLineType.PRODUCT, tax_rate=Decimal("0.3")),
-#     ]
-#     line = list(sm.get_source_lines(source))[0]
-#     assert line.tax_rate == Decimal("0.8")
+@pytest.mark.xfail # TODO: (TAX) Make this test not fail
+@pytest.mark.django_db
+def test_tax():
+    sm = ShippingMethod(tax_class=None, module_data={"price": 50})
+    source = BasketishOrderSource(get_default_shop())
+    # Since `tax_class` is None, the highest tax percentage in the order should be used:
+    source.add_line(type=OrderLineType.PRODUCT, tax_rate=Decimal("0.8"))
+    source.add_line(type=OrderLineType.PRODUCT, tax_rate=Decimal("0.3"))
+    line = list(sm.get_source_lines(source))[0]
+    assert line.tax_rate == Decimal("0.8")
 
-#     sm.tax_class = get_default_tax_group()
-#     line = list(sm.get_source_lines(source))[0]
-#     assert line.tax_rate == sm.tax_class.tax_rate
+    sm.tax_class = get_default_tax_group()
+    line = list(sm.get_source_lines(source))[0]
+    assert line.tax_rate == sm.tax_class.tax_rate
 
 
 @pytest.mark.django_db
@@ -180,7 +174,7 @@ def test_limited_methods():
     """
     Test that products can declare that they limit available shipping methods.
     """
-    unique_shipping_method = ShippingMethod(tax_class=get_default_tax_class(), module_data={"taxless_price": 0})
+    unique_shipping_method = ShippingMethod(tax_class=get_default_tax_class(), module_data={"price": 0})
     unique_shipping_method.save()
     shop = get_default_shop()
     common_product = create_product(sku="SH_COMMON", shop=shop)  # A product that does not limit shipping methods
@@ -201,4 +195,4 @@ def test_limited_methods():
         ((common_product.pk, impossible_product.pk,), ()),
     ]:
         product_ids = set(product_ids)
-        assert ShippingMethod.objects.available_ids(shop_id=shop.id, product_ids=product_ids) == set(method_ids)
+        assert ShippingMethod.objects.available_ids(shop=shop, products=product_ids) == set(method_ids)

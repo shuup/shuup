@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             name='DiscountedProductPrice',
             fields=[
                 ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
-                ('price', shoop.core.fields.MoneyField(max_digits=36, decimal_places=9)),
+                ('price', shoop.core.fields.MoneyValueField(max_digits=36, decimal_places=9)),
                 ('product', models.ForeignKey(to='shoop.Product', related_name='+')),
                 ('shop', models.ForeignKey(to='shoop.Shop')),
             ],

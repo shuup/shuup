@@ -17,7 +17,7 @@ class DefaultBasketView(TemplateView):
         context = super(DefaultBasketView, self).get_context_data()
         basket = self.request.basket  # type: shoop.front.basket.objects.BaseBasket
         context["basket"] = basket
-        context["errors"] = list(basket.get_validation_errors(shop=self.request.shop))
+        context["errors"] = list(basket.get_validation_errors())
         return context
 
 

@@ -17,13 +17,26 @@ from django.utils.timezone import localtime
 from django_jinja import library
 from jinja2.runtime import Undefined
 
-from shoop.utils.i18n import format_home_currency, get_current_babel_locale
+from shoop.utils.i18n import format_money, get_current_babel_locale
 from shoop.utils.serialization import ExtendedJSONEncoder
 
 
 @library.filter
-def home_currency(value):
-    return format_home_currency(value, locale=get_current_babel_locale())
+def money(amount, digits=None, widen=0):
+    """
+    Format money amount according to current locale settings.
+
+    :param amount: Money or Price object to format
+    :type amount: shoop.utils.money.Money
+    :param digits: Number of digits to use, by default use locale's default
+    :type digits: int|None
+    :param widen: Number of extra digits to add; for formatting with
+      additional precision, e.g. `widen`=3 will use 5 digits instead of 2
+    :type widen: int
+    :return: Formatted string representing the given amount
+    :rtype: str
+    """
+    return format_money(amount, digits, widen)
 
 
 @library.filter

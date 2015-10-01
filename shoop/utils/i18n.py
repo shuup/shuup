@@ -8,11 +8,8 @@
 
 import babel
 from babel.numbers import format_currency
-from django.conf import settings
 from django.utils import translation
 from django.utils.lru_cache import lru_cache
-
-from shoop.utils.numbers import parse_decimal_string
 
 
 @lru_cache()
@@ -43,9 +40,19 @@ def get_current_babel_locale():
     return get_babel_locale(locale_string=translation.get_language())
 
 
-def format_home_currency(value, locale=None):
-    value = parse_decimal_string(value)
-    return format_currency(value, currency=settings.SHOOP_HOME_CURRENCY, locale=locale or get_current_babel_locale())
+def format_money(amount, digits=None, widen=0, locale=None):
+    loc = babel.Locale.parse(locale or get_current_babel_locale())
+
+    pattern = loc.currency_formats.get(None).pattern
+
+    # pattern is a formatting string.  Couple examples:
+    # '¤#,##0.00', '#,##0.00\xa0¤', '\u200e¤#,##0.00', and '¤#0.00'
+
+    if digits is not None:
+        pattern = pattern.replace(".00", "." + (digits * "0"))
+    if widen:
+        pattern = pattern.replace(".00", ".00" + (widen * "0"))
+    return format_currency(amount.value, amount.currency, pattern, loc)
 
 
 def get_language_name(language_code):

@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
             name='SimpleProductPrice',
             fields=[
                 ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
-                ('price', shoop.core.fields.MoneyField(default=0, decimal_places=9, max_digits=36)),
+                ('price', shoop.core.fields.MoneyValueField(default=0, decimal_places=9, max_digits=36)),
                 ('includes_tax', models.BooleanField(default=True)),
                 ('group', models.ForeignKey(null=True, to='shoop.ContactGroup', blank=True)),
                 ('product', models.ForeignKey(to='shoop.Product', related_name='+')),

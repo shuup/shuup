@@ -6,7 +6,6 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from babel.numbers import format_currency, format_number
-from django.conf import settings
 from django.template import loader
 from django.utils.encoding import force_text
 
@@ -63,8 +62,8 @@ class DashboardNumberBlock(DashboardValueBlock):
 
 
 class DashboardMoneyBlock(DashboardValueBlock):
-    def __init__(self, id, value, title, currency=None, **kwargs):
-        self.currency = (currency or settings.SHOOP_HOME_CURRENCY)
+    def __init__(self, id, value, title, currency, **kwargs):
+        self.currency = currency
         value = parse_decimal_string(value)
         value = format_currency(value, currency=self.currency, locale=get_current_babel_locale())
         super(DashboardMoneyBlock, self).__init__(id, value, title, **kwargs)

@@ -7,8 +7,10 @@
 from __future__ import unicode_literals
 
 import parler.models
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.translation import ugettext_lazy as _
 
 from shoop.utils import text
 
@@ -43,3 +45,30 @@ class TranslatableShoopModel(ShoopModel, parler.models.TranslatableModel):
 
     class Meta:
         abstract = True
+
+
+class ImmutableMixin(object):
+    unprotected_fields = []
+    immutability_message = _("Cannot change immutable object that is in use")
+
+    def clean(self, *args, **kwargs):
+        super(ImmutableMixin, self).clean(*args, **kwargs)
+        if self.pk:
+            if self._has_any_protected_field_changed() and self._is_in_use():
+                raise ValidationError(self.immutability_message)
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super(ImmutableMixin, self).save(*args, **kwargs)
+
+    def _is_in_use(self):
+        return True
+
+    def _has_any_protected_field_changed(self):
+        protected_fields = [
+            x.name for x in self._meta.get_fields()
+            if not x.is_relation and x.name not in self.unprotected_fields]
+        in_db = type(self).objects.get(pk=self.pk)
+        return any(
+            getattr(self, field) != getattr(in_db, field)
+            for field in protected_fields)

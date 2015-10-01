@@ -87,10 +87,12 @@ class DemoModule(AdminModule):
         yield DashboardNumberBlock(id="test-x", color="gray", title="Registered Users", value=1240, icon="fa fa-user")
         yield DashboardNumberBlock(id="test-x", color="orange", title="Orders", value=32, icon="fa fa-inbox")
         yield DashboardMoneyBlock(
-            id="test-x", color="green", title="Open Orders Value", value=32000, icon="fa fa-line-chart"
+            id="test-x", color="green", title="Open Orders Value", value=32000, currency="USD", icon="fa fa-line-chart"
         )
         yield DashboardNumberBlock(id="test-x", color="yellow", title="Current Visitors", value=6, icon="fa fa-users")
-        yield DashboardMoneyBlock(id="test-x", color="none", title="Sales this week", value=430.30, icon="fa fa-dollar")
+        yield DashboardMoneyBlock(
+            id="test-x", color="none", title="Sales this week", value=430.30, currency="USD", icon="fa fa-dollar"
+        )
         yield DashboardValueBlock(
             id="test-1", value="\u03C0", title="The most delicious number", color="purple", icon="fa fa-smile-o"
         )

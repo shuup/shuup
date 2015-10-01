@@ -36,12 +36,12 @@ from shoop.core.models import (
     ProductMediaKind, ProductType, SalesUnit, ShippingMethod, Shop, ShopProduct, ShopStatus, StockBehavior, Supplier,
     SupplierType, Tax, TaxClass
 )
-from shoop.core.order_creator import OrderCreator, OrderSource, SourceLine
-from shoop.core.pricing import TaxlessPrice
+from shoop.core.order_creator import OrderCreator, OrderSource
 from shoop.core.shortcuts import update_order_line_from_product
 from shoop.default_tax.models import TaxRule
 from shoop.testing.text_data import random_title
 from shoop.utils.filer import filer_image_from_data
+from shoop.utils.money import Money
 from shoop_tests.utils import apply_request_middleware
 
 from .image_generator import generate_image
@@ -145,6 +145,7 @@ class ShopProductFactory(DjangoModelFactory):
     listed = FuzzyBoolean(probability=0.7)
     purchasable = FuzzyBoolean(probability=0.7)
     searchable = FuzzyBoolean(probability=0.7)
+    default_price_value = fuzzy.FuzzyDecimal(0, 500)
 
 
 def _generate_product_image(product):
@@ -246,13 +247,15 @@ def get_default_product_type():
 
 
 def get_tax(code, name, rate=None, amount=None):
+    assert amount is None or isinstance(amount, Money)
     tax = Tax.objects.filter(code=code).first()
     if not tax:
         tax = Tax.objects.create(
             code=code,
             name=name,
             rate=Decimal(rate) if rate is not None else None,
-            amount=Decimal(amount) if amount is not None else None
+            amount_value=getattr(amount, 'value', None),
+            currency=getattr(amount, 'currency', None),
         )
         assert tax.pk
         assert str(tax) == name
@@ -342,6 +345,19 @@ def get_default_shop():
     return shop
 
 
+def get_shop(prices_include_tax, currency="EUR"):
+    key = "shop:%s/taxful=%s" % (currency, prices_include_tax)
+    values = {"prices_include_tax": prices_include_tax, "currency": currency}
+    shop = Shop.objects.get_or_create(identifier=key, defaults=values)[0]
+
+    # Make our default product available to the new shop
+    product = get_default_product()
+    sp = ShopProduct.objects.get_or_create(product=product, shop=shop)[0]
+    sp.suppliers.add(get_default_supplier())
+
+    return shop
+
+
 def get_default_product():
     product = Product.objects.filter(sku=DEFAULT_IDENTIFIER).first()
     if not product:
@@ -400,6 +416,9 @@ def get_completed_order_status():
 
 
 def create_product(sku, shop=None, supplier=None, default_price=None):
+    if default_price is not None:
+        default_price = shop.create_price(default_price)
+
     product = Product(
         type=get_default_product_type(),
         tax_class=get_default_tax_class(),
@@ -424,9 +443,9 @@ def create_product(sku, shop=None, supplier=None, default_price=None):
     return product
 
 
-def create_empty_order():
+def create_empty_order(prices_include_tax=False, shop=None):
     order = Order(
-        shop=get_default_shop(),
+        shop=(shop or get_shop(prices_include_tax=prices_include_tax)),
         payment_method=get_default_payment_method(),
         shipping_method=get_default_shipping_method(),
         billing_address=get_address(name="Mony Doge"),
@@ -437,12 +456,15 @@ def create_empty_order():
     return order
 
 
-def create_order_with_product(product, supplier, quantity, taxless_unit_price, tax_rate=0, n_lines=1):
-    order = create_empty_order()
+def create_order_with_product(
+        product, supplier, quantity, taxless_base_unit_price, tax_rate=0, n_lines=1,
+        shop=None):
+    order = create_empty_order(shop=shop)
     order.full_clean()
     order.save()
 
     request = apply_request_middleware(RequestFactory().get("/"))
+    request.shop = order.shop
 
     for x in range(n_lines):
         product_order_line = OrderLine(order=order)
@@ -450,11 +472,13 @@ def create_order_with_product(product, supplier, quantity, taxless_unit_price, t
                                        order_line=product_order_line,
                                        product=product, quantity=quantity,
                                        supplier=supplier)
-        product_order_line.unit_price = TaxlessPrice(taxless_unit_price)
+        product_order_line.base_unit_price = order.shop.create_price(taxless_base_unit_price)
         product_order_line.save()
-        product_order_line.taxes.add(
-            OrderLineTax.from_tax(get_test_tax(tax_rate), product_order_line.taxless_total_price)
-        )
+        product_order_line.taxes.add(OrderLineTax.from_tax(
+            get_test_tax(tax_rate),
+            product_order_line.taxless_total_price.amount,
+            order_line=product_order_line,
+        ))
     assert order.get_product_ids_and_quantities()[product.pk] == (quantity * n_lines), "Things got added"
     return order
 
@@ -584,7 +608,7 @@ def create_random_order(customer=None, products=(), completion_probability=0):
                                        customer=customer)
 
     context = PriceTaxContext.from_request(request)
-    source = OrderSource()
+    source = OrderSource(shop)
     source.customer = customer
     source.customer_comment = "Mock Order"
 
@@ -596,32 +620,29 @@ def create_random_order(customer=None, products=(), completion_probability=0):
         source.shipping_address = create_random_address()
     source.order_date = now() - datetime.timedelta(days=random.uniform(0, 400))
 
-    source.shop = shop
     source.language = customer.language
     source.status = get_initial_order_status()
 
     if not products:
         products = list(Product.objects.list_visible(source.shop, customer).order_by("?")[:40])
 
-    source.lines = []
     for i in range(random.randint(3, 10)):
         product = random.choice(products)
         quantity = random.randint(1, 5)
         price_info = product.get_price_info(context, quantity=quantity)
         shop_product = product.get_shop_instance(source.shop)
         supplier = shop_product.suppliers.first()
-        line = SourceLine(
+        line = source.add_line(
             type=OrderLineType.PRODUCT,
             product=product,
             supplier=supplier,
             quantity=quantity,
-            unit_price=price_info.unit_base_price,
-            total_discount=price_info.discount_amount,
+            base_unit_price=price_info.base_unit_price,
+            discount_amount=price_info.discount_amount,
             sku=product.sku,
             text=product.safe_translation_getter("name", any_language=True)
         )
         assert line.total_price == price_info.price
-        source.lines.append(line)
     with atomic():
         oc = OrderCreator(request)
         order = oc.create_order(source)

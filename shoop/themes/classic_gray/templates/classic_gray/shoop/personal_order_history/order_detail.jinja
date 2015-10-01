@@ -48,7 +48,7 @@
             {{ info_row(_("Creator"), order.creator) }}
             {{ info_row(_("Phone"), order.phone, "tel:" ~ order.phone) }}
             {{ info_row(_("Email"), order.email, "mailto:" ~ order.email) }}
-            {{ info_row(_("VAT Code"), order.vat_code) }}
+            {{ info_row(_("Tax Number"), order.tax_number) }}
             {{ price_row(_("Total Price"), order.taxful_total_price) }}
             {{ price_row(_("Total Price (taxless)"), order.taxless_total_price) }}
         </table>
@@ -106,9 +106,9 @@
                     <tr>
                         <td>{{ line.sku }}</td>
                         <td>{{ line.text }}</td>
-                        {{ price_cell(line.taxless_unit_price) }}
+                        {{ price_cell(line.taxless_base_unit_price) }}
                         {{ number_cell(line.quantity) }}
-                        {{ price_or_empty_cell(line.taxless_total_discount) }}
+                        {{ price_or_empty_cell(line.taxless_discount_amount) }}
                         {{ number_cell(line.tax_rate|percent) }}
                         {{ price_cell(line.taxless_total_price) }}
                         {{ price_cell(line.taxful_total_price) }}
@@ -154,11 +154,11 @@
 {% endmacro %}
 
 {% macro price_row(header, value) %}
-    {{ info_row(header, value|home_currency) }}
+    {{ info_row(header, value|money) }}
 {% endmacro %}
 
 {% macro price_cell(value, elem="td") %}
-    {{ number_cell(value|home_currency, elem) }}
+    {{ number_cell(value|money, elem) }}
 {% endmacro %}
 
 {% macro number_cell(value, elem="td") %}

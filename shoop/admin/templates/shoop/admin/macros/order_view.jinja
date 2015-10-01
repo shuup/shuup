@@ -17,7 +17,7 @@
                 <tr>
                     <td><a href="{{ shoop_admin.model_url(order) }}">{{ order.identifier }}</a></td>
                     <td>{{ order.order_date|datetime(format="short") }}</td>
-                    <td class="text-right">{{ order.taxful_total_price|home_currency }}</td>
+                    <td class="text-right">{{ order.taxful_total_price|money }}</td>
                     <td>{{ order.get_status_display() }}</td>
                     <td>{{ order.get_shipping_status_display() }}</td>
                     <td>{{ order.get_payment_status_display() }}</td>
@@ -42,7 +42,7 @@
                         {{ order.get_payment_status_display() }}.
                     </p>
                     <p class="list-group-item-text">
-                        {% trans %}Total{% endtrans %} <strong>{{ order.taxful_total_price|home_currency }}</strong>
+                        {% trans %}Total{% endtrans %} <strong>{{ order.taxful_total_price|money }}</strong>
                     </p>
                 </li>
             {% endfor %}

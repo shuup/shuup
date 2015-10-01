@@ -10,19 +10,13 @@ from __future__ import unicode_literals
 from decimal import Decimal
 
 import six
-from django.contrib.auth import get_user_model
 from django.utils.encoding import force_text
 
 from shoop.core.models import Order, OrderLine, OrderLineType
 from shoop.core.shortcuts import update_order_line_from_product
+from shoop.core.utils.users import real_user_or_none
 from shoop.front.signals import order_creator_finished
 from shoop.utils.numbers import bankers_round
-
-
-def real_user_or_none(user):
-    assert (user is None or user.is_anonymous() or
-            isinstance(user, get_user_model()))
-    return user if (user and not user.is_anonymous()) else None
 
 
 class OrderCreator(object):
@@ -55,10 +49,10 @@ class OrderCreator(object):
         order_line.supplier = source_line.supplier
         order_line.sku = text(source_line.sku)
         order_line.text = (text(source_line.text))[:192]
-        if source_line.unit_price:
-            order_line.unit_price = source_line.unit_price
-        if source_line.total_discount:
-            order_line.total_discount = source_line.total_discount
+        if source_line.base_unit_price:
+            order_line.base_unit_price = source_line.base_unit_price
+        if source_line.discount_amount:
+            order_line.discount_amount = source_line.discount_amount
         order_line.type = (source_line.type if source_line.type is not None
                            else OrderLineType.OTHER)
         order_line.accounting_identifier = text(source_line.accounting_identifier)
@@ -88,7 +82,7 @@ class OrderCreator(object):
                 quantity=(order_line.quantity * child_quantity),
             )
             # Package children are free
-            assert child_order_line.unit_price.amount == 0
+            assert child_order_line.base_unit_price.value == 0
             child_order_line.source_line = order_line.source_line
             child_order_line.supplier = order_line.supplier
             self._check_orderability(child_order_line)
@@ -146,34 +140,29 @@ class OrderCreator(object):
             self.process_saved_order_line(order=order, order_line=order_line)
 
     def add_line_taxes(self, lines):
-        index = 0
         for line in lines:
-            for line_tax in line.source_line.taxes:
-                index += 1
+            for (index, line_tax) in enumerate(line.source_line.taxes, 1):
                 line.taxes.create(
                     tax=line_tax.tax,
                     name=line_tax.tax.name,
-                    amount=line_tax.amount,
-                    base_amount=line_tax.base_amount,
+                    amount_value=line_tax.amount.value,
+                    base_amount_value=line_tax.base_amount.value,
                     ordering=index,
                 )
 
     def get_source_order_lines(self, source, order):
+        """
+        :type source: shoop.core.order_creator.OrderSource
+        :type order: shoop.core.models.Order
+        """
         lines = []
         source.update_from_order(order)
         # Since we just updated `order_provision`, we need to uncache
         # the processed lines.
         source.uncache()
-        for line in source.get_final_lines():
+        for line in source.get_final_lines(with_taxes=True):
             lines.extend(self.source_line_to_order_lines(order, line))
         return lines
-
-    def get_creator(self, order_source):
-        if order_source and order_source.creator:
-            return order_source.creator
-        if self.request and hasattr(self.request, "user"):
-            return self.request.user
-        return None
 
     def create_order(self, order_source):
         # order_provision.target_user = self._maybe_create_user(
@@ -190,12 +179,14 @@ class OrderCreator(object):
 
         order = Order(
             shop=order_source.shop,
+            currency=order_source.currency,
+            prices_include_tax=order_source.prices_include_tax,
             shipping_method=order_source.shipping_method,
             payment_method=order_source.payment_method,
             customer_comment=order_source.customer_comment,
             marketing_permission=bool(order_source.marketing_permission),
             ip_address=(self.request.META.get("REMOTE_ADDR") if self.request else None),
-            creator=real_user_or_none(self.get_creator(order_source)),
+            creator=real_user_or_none(order_source.creator),
             orderer=(order_source.orderer or None),
             customer=(order_source.customer or None),
             billing_address=order_source.billing_address,

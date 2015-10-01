@@ -17,7 +17,8 @@ from enumfields import Enum, EnumIntegerField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
 
-from shoop.core.fields import InternalIdentifierField, MeasurementField, MoneyField
+from shoop.core.fields import InternalIdentifierField, MeasurementField
+from shoop.core.taxing import TaxableItem
 from shoop.core.utils.slugs import generate_multilanguage_slugs
 from shoop.utils.analog import LogEntryKind, define_log_model
 
@@ -150,7 +151,7 @@ class ProductQuerySet(TranslatableQuerySet):
 
 
 @python_2_unicode_compatible
-class Product(AttributableMixin, TranslatableModel):
+class Product(TaxableItem, AttributableMixin, TranslatableModel):
     COMMON_SELECT_RELATED = ("type", "primary_image", "tax_class")
 
     # Metadata
@@ -196,8 +197,6 @@ class Product(AttributableMixin, TranslatableModel):
     gross_weight = MeasurementField(unit="g", verbose_name=_('gross weight (g)'))
 
     # Misc.
-    purchase_price = MoneyField(verbose_name=_('purchase price'), blank=True, null=True)
-    suggested_retail_price = MoneyField(verbose_name=_('suggested retail price'), blank=True, null=True)
     manufacturer = models.ForeignKey("Manufacturer", blank=True, null=True, verbose_name=_('manufacturer'))
     primary_image = models.ForeignKey(
         "ProductMedia", null=True, blank=True,
@@ -243,11 +242,10 @@ class Product(AttributableMixin, TranslatableModel):
         if cached:
             return cached
 
-        shop_inst = self.shop_products.filter(shop=shop).first()
-        if shop_inst:
-            shop_inst._product_cache = self
-            shop_inst._shop_cache = shop
-            shop_inst_cache[shop] = shop_inst
+        shop_inst = self.shop_products.get(shop=shop)
+        shop_inst._product_cache = self
+        shop_inst._shop_cache = shop
+        shop_inst_cache[shop] = shop_inst
 
         return shop_inst
 
@@ -338,15 +336,6 @@ class Product(AttributableMixin, TranslatableModel):
         :rtype: shoop.core.pricing.Price
         """
         return self.get_price_info(context, quantity=quantity).base_price
-
-    def get_taxed_price(self, context, quantity=1):
-        """
-        :type context: shoop.core.contexts.PriceTaxContext
-        :rtype: shoop.core.pricing.TaxedPrice
-        """
-        from shoop.core import taxing
-        module = taxing.get_tax_module()
-        return module.determine_product_tax(context, self)
 
     def get_available_attribute_queryset(self):
         if self.type_id:

@@ -15,9 +15,9 @@
             <h4 class="name">{{ product.name }}</h4>
             {# TODO: (TAX) Check following line (gets taxful price of product)  #}
             <p class="price">
-                {{ price_info.price|home_currency }}
+                {{ price_info.price|money }}
                 {% if price_info.is_discounted %}
-                    ({{price_info.base_price|home_currency}}) <span class="discount-percent">{{ -price_info.discount_percentage|int }}%</span>
+                    ({{price_info.base_price|money}}) <span class="discount-percent">{{ -price_info.discount_percentage|int }}%</span>
                 {% endif %}
             </p>
             {% if show_description %}
@@ -40,7 +40,7 @@
                                 <span class="name">{{ product.name }}</span>
                                 {# TODO: (TAX) Check following line (gets taxful price of product)  #}
                                 {% set price_info = product.get_price_info(request) %}
-                                <span class="price inverse big">{{ price_info.price|home_currency }}</span>
+                                <span class="price inverse big">{{ price_info.price|money }}</span>
                                 <span class="shop">{{ product.shop.name }}</span>
                             </a>
                         {% else %}
@@ -220,7 +220,7 @@
                 <h2 class="panel-title">{% trans %}Company{% endtrans %}</h2>
             </div>
             <div class="panel-body">
-                <p>{{ order.company.name }} ({% trans %}VAT Code{% endtrans %} {{ order.company.vat_id }})</p>
+                <p>{{ order.company.name }} ({% trans %}Tax number{% endtrans %}: {{ order.company.tax_number }})</p>
             </div>
         </div>
     {% endif %}

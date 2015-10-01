@@ -21,6 +21,6 @@ class PriceTaxContext(object):
     @classmethod
     def from_request(cls, request):
         return cls(
-            pricing_context=get_pricing_module().get_context(request),
-            taxing_context=get_tax_module().get_context(request)
+            pricing_context=get_pricing_module().get_context_from_request(request),
+            taxing_context=get_tax_module().get_context_from_request(request),
         )

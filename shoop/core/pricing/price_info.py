@@ -6,13 +6,17 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
-import decimal
 import numbers
 
-from shoop.core.pricing import Price
+from .priceful import Priceful
+from .price import Price
 
 
-class PriceInfo(object):
+class PriceInfo(Priceful):
+    price = None
+    base_price = None
+    quantity = None
+
     """
     Object for passing around pricing data of an item.
     """
@@ -29,7 +33,7 @@ class PriceInfo(object):
           calculated based on this.
         :param numbers.Number quantity:
           Quantity that the given price is for.  Unit price is
-          calculated by ``unit_price = price / quantity``.
+          calculated by ``discounted_unit_price = price / quantity``.
           Note: Quantity could be non-integral (i.e. decimal).
         :param numbers.Number|None expires_on:
           Timestamp, comparable to values returned by :func:`time.time`,
@@ -54,45 +58,3 @@ class PriceInfo(object):
         return "%s(%r, %r, %r%s)" % (
             type(self).__name__, self.price, self.base_price, self.quantity,
             expire_str)
-
-    @property
-    def discount_amount(self):
-        """
-        Amount of discount for the total quantity.
-
-        :rtype: Price
-        """
-        return (self.base_price - self.price)
-
-    @property
-    def discount_percentage(self):
-        """
-        Discount percentage, 100 meaning totally discounted.
-
-        Note: Could be negative, when base price is smaller than
-        effective price.  Could also be greater than 100, when effective
-        price is negative.
-
-        If base price is 0, will return 0.
-
-        :rtype: decimal.Decimal
-        """
-        if not self.base_price:
-            return decimal.Decimal(0)
-        return (1 - (self.price / self.base_price)) * 100
-
-    @property
-    def is_discounted(self):
-        return (self.price < self.base_price)
-
-    @property
-    def unit_price(self):
-        return self.price / self.quantity
-
-    @property
-    def unit_base_price(self):
-        return self.base_price / self.quantity
-
-    @property
-    def unit_discount_amount(self):
-        return self.discount_amount / self.quantity

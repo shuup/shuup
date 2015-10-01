@@ -14,7 +14,7 @@ import shoop.core.models.product_variation
 import django_countries.fields
 import mptt.fields
 import shoop.core.models.suppliers
-import shoop.core.utils.prices
+import shoop.core.pricing
 import enumfields.fields
 import filer.fields.file
 import shoop.core.models.attributes
@@ -285,8 +285,8 @@ class Migration(migrations.Migration):
                 ('shipping_method_name', models.CharField(default='', verbose_name='shipping method name', blank=True, max_length=64)),
                 ('shipping_data', jsonfield.fields.JSONField(blank=True, null=True)),
                 ('extra_data', jsonfield.fields.JSONField(blank=True, null=True)),
-                ('taxful_total_price', shoop.core.fields.MoneyField(default=0, verbose_name='grand total', editable=False, decimal_places=9, max_digits=36)),
-                ('taxless_total_price', shoop.core.fields.MoneyField(default=0, verbose_name='taxless total', editable=False, decimal_places=9, max_digits=36)),
+                ('taxful_total_price', shoop.core.fields.MoneyValueField(default=0, verbose_name='grand total', editable=False, decimal_places=9, max_digits=36)),
+                ('taxless_total_price', shoop.core.fields.MoneyValueField(default=0, verbose_name='taxless total', editable=False, decimal_places=9, max_digits=36)),
                 ('display_currency', models.CharField(blank=True, max_length=4)),
                 ('display_currency_rate', models.DecimalField(default=1, decimal_places=9, max_digits=36)),
                 ('ip_address', models.GenericIPAddressField(verbose_name='IP address', blank=True, null=True)),
@@ -320,8 +320,8 @@ class Migration(migrations.Migration):
                 ('verified', models.BooleanField(default=False, verbose_name='verified')),
                 ('extra_data', jsonfield.fields.JSONField(blank=True, null=True)),
                 ('quantity', shoop.core.fields.QuantityField(default=1, verbose_name='quantity', decimal_places=9, max_digits=36)),
-                ('_unit_price_amount', shoop.core.fields.MoneyField(default=0, verbose_name='unit price amount', decimal_places=9, max_digits=36)),
-                ('_total_discount_amount', shoop.core.fields.MoneyField(default=0, verbose_name='total amount of discount', decimal_places=9, max_digits=36)),
+                ('_unit_price_amount', shoop.core.fields.MoneyValueField(default=0, verbose_name='unit price amount', decimal_places=9, max_digits=36)),
+                ('_total_discount_amount', shoop.core.fields.MoneyValueField(default=0, verbose_name='total amount of discount', decimal_places=9, max_digits=36)),
                 ('_prices_include_tax', models.BooleanField(default=True)),
                 ('order', shoop.core.fields.UnsavedForeignKey(on_delete=django.db.models.deletion.PROTECT, verbose_name='order', to='shoop.Order', related_name='lines')),
                 ('parent_line', shoop.core.fields.UnsavedForeignKey(on_delete=django.db.models.deletion.PROTECT, verbose_name='parent line', blank=True, related_name='child_lines', to='shoop.OrderLine', null=True)),
@@ -330,15 +330,15 @@ class Migration(migrations.Migration):
                 'verbose_name_plural': 'order lines',
                 'verbose_name': 'order line',
             },
-            bases=(models.Model, shoop.core.utils.prices.LinePriceMixin),
+            bases=(models.Model, shoop.core.pricing.Priceful),
         ),
         migrations.CreateModel(
             name='OrderLineTax',
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('name', models.CharField(verbose_name='tax name', max_length=200)),
-                ('amount', shoop.core.fields.MoneyField(default=0, verbose_name='tax amount', decimal_places=9, max_digits=36)),
-                ('base_amount', shoop.core.fields.MoneyField(default=0, verbose_name='base amount', help_text='Amount that this tax is calculated from', decimal_places=9, max_digits=36)),
+                ('amount', shoop.core.fields.MoneyValueField(default=0, verbose_name='tax amount', decimal_places=9, max_digits=36)),
+                ('base_amount', shoop.core.fields.MoneyValueField(default=0, verbose_name='base amount', help_text='Amount that this tax is calculated from', decimal_places=9, max_digits=36)),
                 ('ordering', models.IntegerField(default=0, verbose_name='ordering')),
                 ('order_line', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, verbose_name='order line', to='shoop.OrderLine', related_name='taxes')),
             ],
@@ -399,7 +399,7 @@ class Migration(migrations.Migration):
                 ('created_on', models.DateTimeField(auto_now_add=True)),
                 ('gateway_id', models.CharField(max_length=32)),
                 ('payment_identifier', models.CharField(max_length=96, unique=True)),
-                ('amount', shoop.core.fields.MoneyField(default=0, decimal_places=9, max_digits=36)),
+                ('amount', shoop.core.fields.MoneyValueField(default=0, decimal_places=9, max_digits=36)),
                 ('description', models.CharField(blank=True, max_length=256)),
                 ('order', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='shoop.Order', related_name='payments')),
             ],
@@ -474,8 +474,8 @@ class Migration(migrations.Migration):
                 ('depth', shoop.core.fields.MeasurementField(default=0, verbose_name='depth (mm)', unit='mm', decimal_places=9, max_digits=36)),
                 ('net_weight', shoop.core.fields.MeasurementField(default=0, verbose_name='net weight (g)', unit='g', decimal_places=9, max_digits=36)),
                 ('gross_weight', shoop.core.fields.MeasurementField(default=0, verbose_name='gross weight (g)', unit='g', decimal_places=9, max_digits=36)),
-                ('purchase_price', shoop.core.fields.MoneyField(default=0, verbose_name='purchase price', decimal_places=9, max_digits=36)),
-                ('suggested_retail_price', shoop.core.fields.MoneyField(default=0, verbose_name='suggested retail price', decimal_places=9, max_digits=36)),
+                ('purchase_price', shoop.core.fields.MoneyValueField(default=0, verbose_name='purchase price', decimal_places=9, max_digits=36)),
+                ('suggested_retail_price', shoop.core.fields.MoneyValueField(default=0, verbose_name='suggested retail price', decimal_places=9, max_digits=36)),
                 ('category', models.ForeignKey(to='shoop.Category', verbose_name='primary category', blank=True, related_name='primary_products', help_text='only used for administration and reporting', null=True)),
                 ('manufacturer', models.ForeignKey(to='shoop.Manufacturer', verbose_name='manufacturer', blank=True, null=True)),
             ],
@@ -877,8 +877,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('sku', models.CharField(verbose_name='SKU', max_length=128, db_index=True)),
                 ('alert_limit', models.IntegerField(default=0, verbose_name='alert limit')),
-                ('purchase_price', shoop.core.fields.MoneyField(default=0, verbose_name='purchase price', decimal_places=9, max_digits=36)),
-                ('suggested_retail_price', shoop.core.fields.MoneyField(default=0, verbose_name='suggested retail price', decimal_places=9, max_digits=36)),
+                ('purchase_price', shoop.core.fields.MoneyValueField(default=0, verbose_name='purchase price', decimal_places=9, max_digits=36)),
+                ('suggested_retail_price', shoop.core.fields.MoneyValueField(default=0, verbose_name='suggested retail price', decimal_places=9, max_digits=36)),
                 ('physical_count', shoop.core.fields.QuantityField(default=0, verbose_name='physical stock count', editable=False, decimal_places=9, max_digits=36)),
                 ('logical_count', shoop.core.fields.QuantityField(default=0, verbose_name='logical stock count', editable=False, decimal_places=9, max_digits=36)),
                 ('product', models.ForeignKey(to='shoop.Product')),
@@ -903,7 +903,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('code', shoop.core.fields.InternalIdentifierField(verbose_name='internal identifier', blank=True, unique=True, editable=False, help_text="Do not change this value if you are not sure what you're doing.", max_length=64, null=True)),
                 ('rate', models.DecimalField(verbose_name='tax rate', blank=True, decimal_places=5, help_text='The percentage rate of the tax. Mutually exclusive with flat amounts.', null=True, max_digits=6)),
-                ('amount', shoop.core.fields.MoneyField(verbose_name='tax amount', blank=True, decimal_places=9, default=None, help_text='The flat amount of the tax. Mutually exclusive with percentage rates.', null=True, max_digits=36)),
+                ('amount', shoop.core.fields.MoneyValueField(verbose_name='tax amount', blank=True, decimal_places=9, default=None, help_text='The flat amount of the tax. Mutually exclusive with percentage rates.', null=True, max_digits=36)),
                 ('enabled', models.BooleanField(default=True, verbose_name='enabled')),
             ],
             options={

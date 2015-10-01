@@ -37,11 +37,9 @@ class ProductBaseForm(MultiLanguageModelForm):
             "manufacturer",
             "net_weight",
             "profit_center",
-            "purchase_price",
             "sales_unit",
             "shipping_mode",
             "sku",
-            "suggested_retail_price",
             "tax_class",
             "type",
             "width",
@@ -65,7 +63,7 @@ class ShopProductForm(forms.ModelForm):
     class Meta:
         model = ShopProduct
         fields = (
-            "default_price",
+            "default_price_value",
             "suppliers",
             "visible",
             "listed",

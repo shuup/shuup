@@ -17,8 +17,8 @@ from django.views.generic import View
 from django.views.generic.edit import FormView
 
 from shoop.core.models import PaymentMethod, ShippingMethod
-from shoop.core.templatetags.shoop_common import home_currency
 from shoop.front.checkout import CheckoutPhaseViewMixin
+from shoop.utils.i18n import format_money
 
 LOG = logging.getLogger(__name__)
 
@@ -30,20 +30,16 @@ class MethodModelChoiceField(forms.ModelChoiceField):
         super(MethodModelChoiceField, self).__init__(*args, **kwargs)
 
     def label_from_instance(self, obj):
-        label = force_text(obj)
-        if hasattr(obj, "get_effective_name"):
-            label = force_text(obj.get_effective_name(self.basket))
+        label = force_text(obj.get_effective_name(self.basket))
 
-        if self.basket and self.show_prices and hasattr(obj, "get_effective_taxless_price"):
-            try:
-                price = obj.get_effective_taxless_price(self.basket)
-                if price:
-                    formatted_price = home_currency(price)
-                    label = "%s (%s)" % (label, formatted_price)  # TODO: Add tax handling.
-            except:
-                LOG.exception("Unable to get or format method price for method %s" % obj)
+        price_info = (
+            obj.get_effective_price_info(self.basket)
+            if self.basket and self.show_prices else None)
+        price_text = (
+            format_money(price_info.price)
+            if price_info and price_info.price else None)
 
-        return label
+        return ("{} ({})".format(label, price_text) if price_text else label)
 
 
 class MethodsForm(forms.Form):
@@ -58,10 +54,9 @@ class MethodsForm(forms.Form):
 
     def limit_method_fields(self):
         basket = self.basket  # type: shoop.front.basket.objects.BaseBasket
-        shop = self.shop
         for field_name, methods in (
-                ("shipping_method", basket.get_available_shipping_methods(shop)),
-                ("payment_method", basket.get_available_payment_methods(shop)),
+                ("shipping_method", basket.get_available_shipping_methods()),
+                ("payment_method", basket.get_available_payment_methods()),
         ):
             field = self.fields[field_name]
             field.basket = self.basket

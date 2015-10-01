@@ -18,14 +18,18 @@ class TaxedPrice(object):
         """
         assert isinstance(taxful, TaxfulPrice)
         assert isinstance(taxless, TaxlessPrice)
-        if not taxes:
-            taxes = ()
         self.taxful = taxful
         self.taxless = taxless
-        self.taxes = taxes
-        assert not taxes or (
-            taxful.amount == (taxless.amount + sum(x.amount for x in taxes))
-        )
+        self.taxes = taxes or []
+
+        # Validation
+        expected_taxful_amount = taxless.amount + self.tax_amount
+        assert abs(taxful.amount - expected_taxful_amount).value < 0.00001
+
+    @property
+    def tax_amount(self):
+        zero = self.taxful.new(0).amount
+        return sum((x.amount for x in self.taxes), zero)
 
     @property
     def tax_rate(self):

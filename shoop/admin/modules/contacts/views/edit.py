@@ -43,9 +43,10 @@ class ContactBaseForm(BaseModelForm):
         "Contact": (
             "is_active", "language", "marketing_permission", "phone", "www",
             "timezone", "prefix", "name", "suffix", "name_ext", "email",
+            "tax_group",
         ),
         "PersonContact": ("gender", "birth_date"),
-        "CompanyContact": ("vat_code",)
+        "CompanyContact": ("tax_number",)
     }
 
     def __init__(self, bind_user=None, *args, **kwargs):

@@ -14,11 +14,12 @@ from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.base import AdminModule
+from shoop.admin.currencybound import CurrencyBound
 from shoop.admin.dashboard import DashboardMoneyBlock
 from shoop.front.models.stored_basket import StoredBasket
 
 
-def get_unfinalized_basket_block(days=14):
+def get_unfinalized_basket_block(currency, days=14):
     days = int(days)
 
     early_cutoff = now() - datetime.timedelta(days=days)
@@ -28,10 +29,10 @@ def get_unfinalized_basket_block(days=14):
     late_cutoff = now() - datetime.timedelta(hours=2)
 
     data = (
-        StoredBasket.objects
+        StoredBasket.objects.filter(currency=currency)
         .filter(updated_on__range=(early_cutoff, late_cutoff), product_count__gte=0)
         .exclude(deleted=True, finished=True)
-        .aggregate(count=Count("id"), sum=Sum("taxful_total"))
+        .aggregate(count=Count("id"), sum=Sum("taxful_total_price_value"))
     )
     if not data["count"]:
         return
@@ -41,13 +42,16 @@ def get_unfinalized_basket_block(days=14):
         color="red",
         title=_("Abandoned Basket Value"),
         value=(data.get("sum") or 0),
+        currency=currency,
         icon="fa fa-calculator",
         subtitle=_("Based on %d baskets over the last %d days") % (data.get("count"), days)
     )
 
 
-class BasketAdminModule(AdminModule):
+class BasketAdminModule(CurrencyBound, AdminModule):
     def get_dashboard_blocks(self, request):
-        unfinalized_block = get_unfinalized_basket_block(days=14)
+        if not self.currency:
+            return
+        unfinalized_block = get_unfinalized_basket_block(self.currency, days=14)
         if unfinalized_block:
             yield unfinalized_block

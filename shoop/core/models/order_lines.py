@@ -7,8 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals, with_statement
 
-import decimal
-
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
@@ -16,10 +14,11 @@ from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from jsonfield import JSONField
 
-from shoop.core.fields import MoneyField, QuantityField, UnsavedForeignKey
-from shoop.core.pricing import Price, TaxfulPrice, TaxlessPrice
+from shoop.core.fields import MoneyValueField, QuantityField, UnsavedForeignKey
+from shoop.core.pricing import Priceful
 from shoop.core.taxing import LineTax
-from shoop.core.utils.prices import LinePriceMixin
+from shoop.utils.money import Money
+from shoop.utils.properties import MoneyProperty, MoneyPropped, PriceProperty
 
 from ._base import ShoopModel
 
@@ -58,7 +57,7 @@ class OrderLineManager(models.Manager):
 
 
 @python_2_unicode_compatible
-class OrderLine(models.Model, LinePriceMixin):
+class OrderLine(models.Model, Priceful):
     order = UnsavedForeignKey("Order", related_name='lines', on_delete=models.PROTECT, verbose_name=_('order'))
     product = UnsavedForeignKey(
         "Product", blank=True, null=True, related_name="order_lines",
@@ -84,9 +83,11 @@ class OrderLine(models.Model, LinePriceMixin):
 
     # The following fields govern calculation of the prices
     quantity = QuantityField(verbose_name=_('quantity'), default=1)
-    _unit_price_amount = MoneyField(verbose_name=_('unit price amount'), default=0)
-    _total_discount_amount = MoneyField(verbose_name=_('total amount of discount'), default=0)
-    _prices_include_tax = models.BooleanField(default=True)
+    base_unit_price = PriceProperty('base_unit_price_value', 'order.currency', 'order.prices_include_tax')
+    discount_amount = PriceProperty('discount_amount_value', 'order.currency', 'order.prices_include_tax')
+
+    base_unit_price_value = MoneyValueField(verbose_name=_('unit price amount (undiscounted)'), default=0)
+    discount_amount_value = MoneyValueField(verbose_name=_('total amount of discount'), default=0)
 
     objects = OrderLineManager()
 
@@ -98,66 +99,12 @@ class OrderLine(models.Model, LinePriceMixin):
         return "%dx %s (%s)" % (self.quantity, self.text, self.get_type_display())
 
     @property
-    def unit_price(self):
+    def tax_amount(self):
         """
-        Unit price of OrderLine.
-
-        :rtype: Price
+        :rtype: shoop.utils.money.Money
         """
-        if self._prices_include_tax:
-            return TaxfulPrice(self._unit_price_amount)
-        else:
-            return TaxlessPrice(self._unit_price_amount)
-
-    @unit_price.setter
-    def unit_price(self, price):
-        """
-        Set unit price of OrderLine.
-
-        :type price: TaxfulPrice|TaxlessPrice
-        """
-        self._check_input_price(price)
-        self._unit_price_amount = price.amount
-        self._prices_include_tax = price.includes_tax
-
-    @property
-    def total_discount(self):
-        """
-        Total discount of OrderLine.
-
-        :rtype: Price
-        """
-        if self._prices_include_tax:
-            return TaxfulPrice(self._total_discount_amount)
-        else:
-            return TaxlessPrice(self._total_discount_amount)
-
-    @total_discount.setter
-    def total_discount(self, discount):
-        """
-        Set total discount of OrderLine.
-
-        :type discount: TaxfulPrice|TaxlessPrice
-        """
-        self._check_input_price(discount)
-        self._total_discount_amount = discount.amount
-        self._prices_include_tax = discount.includes_tax
-
-    @property
-    def total_tax_amount(self):
-        """
-        :rtype: decimal.Decimal
-        """
-        return sum((x.amount for x in self.taxes.all()), decimal.Decimal(0))
-
-    def _check_input_price(self, price):
-        if not isinstance(price, Price):
-            raise TypeError('%r is not a Price object' % (price,))
-        if self._unit_price_amount or self._total_discount_amount:
-            if price.includes_tax != self._prices_include_tax:
-                tp = TaxfulPrice if self._prices_include_tax else TaxlessPrice
-                msg = 'Cannot accept %r because we want a %s'
-                raise TypeError(msg % (price, tp.__name__))
+        zero = Money(0, self.order.currency)
+        return sum((x.amount for x in self.taxes.all()), zero)
 
     def save(self, *args, **kwargs):
         if not self.sku:
@@ -175,19 +122,23 @@ class OrderLine(models.Model, LinePriceMixin):
 
 
 @python_2_unicode_compatible
-class OrderLineTax(ShoopModel, LineTax):
+class OrderLineTax(MoneyPropped, ShoopModel, LineTax):
     order_line = models.ForeignKey(
         OrderLine, related_name='taxes', on_delete=models.PROTECT,
         verbose_name=_('order line'))
-    tax = models.ForeignKey(  # TODO: (TAX) Should we allow NULL? When deciding, see get_tax_summary
+    tax = models.ForeignKey(
         "Tax", related_name="order_line_taxes",
-        on_delete=models.PROTECT, verbose_name=_('tax')
-    )
+        on_delete=models.PROTECT, verbose_name=_('tax'))
     name = models.CharField(max_length=200, verbose_name=_('tax name'))
-    amount = MoneyField(verbose_name=_('tax amount'))
-    base_amount = MoneyField(
+
+    amount = MoneyProperty('amount_value', 'order_line.order.currency')
+    base_amount = MoneyProperty('base_amount_value', 'order_line.order.currency')
+
+    amount_value = MoneyValueField(verbose_name=_('tax amount'))
+    base_amount_value = MoneyValueField(
         verbose_name=_('base amount'),
         help_text=_('Amount that this tax is calculated from'))
+
     ordering = models.IntegerField(default=0, verbose_name=_('ordering'))
 
     class Meta:

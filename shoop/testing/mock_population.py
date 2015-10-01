@@ -47,7 +47,7 @@ class Populator:
             from shoop.simple_pricing.models import SimpleProductPrice
             SimpleProductPrice.objects.create(
                 product=product,
-                price=random.randint(15, 340),
+                price_value=random.randint(15, 340),
                 shop=get_default_shop(),
                 group=get_default_customer_group()
             )

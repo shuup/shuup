@@ -7,6 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 
 from .creator import OrderCreator
-from .source import OrderSource, SourceLine
+from .source import OrderSource, SourceLine, TaxesNotCalculated
 
-__all__ = ["OrderCreator", "OrderSource", "SourceLine"]
+__all__ = ["OrderCreator", "OrderSource", "SourceLine", "TaxesNotCalculated"]

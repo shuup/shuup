@@ -8,7 +8,6 @@
 import pytest
 from shoop.front.basket import get_basket
 from shoop.front.models import StoredBasket
-from shoop.simple_pricing.models import SimpleProductPrice
 from shoop.testing.factories import get_default_shop, create_product, get_default_supplier
 from shoop_tests.utils import printable_gibberish
 from django.db.models import Sum
@@ -53,7 +52,11 @@ def test_basket(rf, storage):
         if is_database:
             stats = StoredBasket.objects.all().aggregate(
                 n=Sum("product_count"),
-                s=Sum("taxless_total"),
+                tfs=Sum("taxful_total_price_value"),
+                tls=Sum("taxless_total_price_value"),
             )
             assert stats["n"] == sum(quantities)
-            assert stats["s"] == sum(quantities) * 50
+            if shop.prices_include_tax:
+                assert stats["tfs"] == sum(quantities) * 50
+            else:
+                assert stats["tls"] == sum(quantities) * 50

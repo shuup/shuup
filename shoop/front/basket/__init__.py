@@ -32,7 +32,7 @@ def get_basket(request):
     :type request: django.http.request.HttpRequest
     :rtype: shoop.front.basket.objects.BaseBasket
     """
-    if not hasattr(request, "basket"):  # pragma: no branch
+    if not hasattr(request, "basket"):
         basket_class = cached_load("SHOOP_BASKET_CLASS_SPEC")
         # This is a little weird in that this is likely to be called from `BasketMiddleware`,
         # which would do the following assignment anyway. However, in case it's _not_ called

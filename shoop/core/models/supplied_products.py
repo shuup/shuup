@@ -8,7 +8,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from shoop.core.fields import MoneyField, QuantityField
+from shoop.core.fields import QuantityField
 
 
 class SuppliedProduct(models.Model):
@@ -16,8 +16,6 @@ class SuppliedProduct(models.Model):
     product = models.ForeignKey("Product")
     sku = models.CharField(db_index=True, max_length=128, verbose_name=_('SKU'))
     alert_limit = models.IntegerField(default=0, verbose_name=_('alert limit'))
-    purchase_price = MoneyField(verbose_name=_('purchase price'), blank=True, null=True)
-    suggested_retail_price = MoneyField(verbose_name=_('suggested retail price'), blank=True, null=True)
     physical_count = QuantityField(editable=False, verbose_name=_('physical stock count'))
     logical_count = QuantityField(editable=False, verbose_name=_('logical stock count'))
 

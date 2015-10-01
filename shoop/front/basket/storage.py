@@ -11,23 +11,66 @@ import abc
 
 import six
 from django.conf import settings
-from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ImproperlyConfigured
 
-from shoop.core.models import AnonymousContact
+from shoop.core.utils.users import real_user_or_none
 from shoop.front.models import StoredBasket
 from shoop.utils.importing import cached_load
 
 
+class BasketCompatibilityError(Exception):
+    pass
+
+
+class ShopMismatchBasketCompatibilityError(BasketCompatibilityError):
+    pass
+
+
+class PriceUnitMismatchBasketCompatibilityError(BasketCompatibilityError):
+    pass
+
+
 class BasketStorage(six.with_metaclass(abc.ABCMeta)):
-    @abc.abstractmethod
-    def load(self, basket):  # pragma: no cover
+    def load(self, basket):
         """
         Load the given basket's data dictionary from the storage.
 
         :type basket: shoop.front.basket.objects.BaseBasket
+        :rtype: dict
+        :raises:
+          `BasketCompatibilityError` if basket loaded from the storage
+          is not compatible with the requested basket.
         """
-        return {}
+        stored_basket = self._load_stored_basket(basket)
+        if not stored_basket:
+            return {}
+        if stored_basket.shop_id != basket.shop.id:
+            msg = (
+                "Cannot load basket of a different Shop ("
+                "%s id=%r with Shop=%s, Dest. Basket Shop=%s)" % (
+                    type(stored_basket).__name__,
+                    stored_basket.id, stored_basket.shop_id, basket.shop.id))
+            raise ShopMismatchBasketCompatibilityError(msg)
+        price_unit_diff = _price_units_diff(stored_basket, basket.shop)
+        if price_unit_diff:
+            msg = "%s %r: Price unit mismatch with Shop (%s)" % (
+                type(stored_basket).__name__, stored_basket.id,
+                price_unit_diff)
+            raise PriceUnitMismatchBasketCompatibilityError(msg)
+        return stored_basket.data or {}
+
+    @abc.abstractmethod
+    def _load_stored_basket(self, basket):
+        """
+        Load stored basket for the given basket from the storage.
+
+        The returned object should have ``id``, ``shop_id``,
+        ``currency``, ``prices_include_tax`` and ``data`` attributes.
+
+        :type basket: shoop.front.basket.objects.BaseBasket
+        :return: Stored basket or None
+        """
+        pass
 
     @abc.abstractmethod
     def save(self, basket, data):  # pragma: no cover
@@ -35,6 +78,7 @@ class BasketStorage(six.with_metaclass(abc.ABCMeta)):
         Save the given data dictionary into the storage for the given basket.
 
         :type basket: shoop.front.basket.objects.BaseBasket
+        :type data: dict
         """
         pass
 
@@ -66,13 +110,49 @@ class DirectSessionBasketStorage(BasketStorage):
             )
 
     def save(self, basket, data):
-        basket.request.session[basket.basket_name] = data
+        stored_basket = DictStoredBasket.from_basket_and_data(basket, data)
+        basket.request.session[basket.basket_name] = stored_basket.as_dict()
 
-    def load(self, basket):
-        return basket.request.session.get(basket.basket_name) or {}
+    def _load_stored_basket(self, basket):
+        stored_basket_dict = basket.request.session.get(basket.basket_name)
+        if not stored_basket_dict:
+            return None
+        return DictStoredBasket.from_dict(stored_basket_dict)
 
     def delete(self, basket):
         basket.request.session.pop(basket.basket_name, None)
+
+
+class DictStoredBasket(object):
+    def __init__(self, id, shop_id, currency, prices_include_tax, data):
+        self.id = id
+        self.shop_id = shop_id
+        self.currency = currency
+        self.prices_include_tax = prices_include_tax
+        self.data = (data or {})
+
+    @classmethod
+    def from_basket_and_data(cls, basket, data):
+        return cls(
+            id=(getattr(basket, "id", None) or basket.basket_name),
+            shop_id=basket.shop.id,
+            currency=basket.currency,
+            prices_include_tax=basket.prices_include_tax,
+            data=data,
+        )
+
+    @classmethod
+    def from_dict(cls, mapping):
+        return cls(**mapping)
+
+    def as_dict(self):
+        return {
+            "id": self.id,
+            "shop_id": self.shop_id,
+            "currency": self.currency,
+            "prices_include_tax": self.prices_include_tax,
+            "data": self.data,
+        }
 
 
 class DatabaseBasketStorage(BasketStorage):
@@ -80,29 +160,25 @@ class DatabaseBasketStorage(BasketStorage):
         return "basket_%s_key" % basket.basket_name
 
     def save(self, basket, data):
+        """
+        :type basket: shoop.front.basket.objects.BaseBasket
+        """
         request = basket.request
         stored_basket = self._get_stored_basket(basket)
         stored_basket.data = data
-        # TODO: (TAX) the `basket.*_price` getters probably raise some sort of exception
-        #       if a given price can't be calculated?
-        stored_basket.taxless_total = basket.taxless_total_price
-        stored_basket.taxful_total = basket.taxful_total_price
+        stored_basket.taxless_total_price = basket.taxless_total_price_or_none
+        stored_basket.taxful_total_price = basket.taxful_total_price_or_none
         stored_basket.product_count = basket.product_count
-        user = getattr(request, "user", AnonymousUser())
-        customer = getattr(request, "customer", AnonymousContact())
-        if not user.is_anonymous:
-            stored_basket.owner_user = user
-        if not customer.is_anonymous:
-            stored_basket.owner_contact = customer
+        stored_basket.customer = (basket.customer or None)
+        stored_basket.orderer = (basket.orderer or None)
+        stored_basket.creator = real_user_or_none(basket.creator)
         stored_basket.save()
-        product_ids = set(basket.get_product_ids_and_quantities().keys())
-        stored_basket.products = product_ids
+        stored_basket.products = set(basket.product_ids)
         basket_get_kwargs = {"pk": stored_basket.pk, "key": stored_basket.key}
         request.session[self._get_session_key(basket)] = basket_get_kwargs
 
-    def load(self, basket):
-        stored_basket = self._get_stored_basket(basket)
-        return stored_basket.data or {}
+    def _load_stored_basket(self, basket):
+        return self._get_stored_basket(basket)
 
     def delete(self, basket):
         stored_basket = self._get_stored_basket(basket)
@@ -128,8 +204,22 @@ class DatabaseBasketStorage(BasketStorage):
         if not stored_basket:
             if basket_get_kwargs:
                 request.session.pop(self._get_session_key(basket), None)
-            stored_basket = StoredBasket()
+            stored_basket = StoredBasket(
+                shop=basket.shop,
+                currency=basket.currency,
+                prices_include_tax=basket.prices_include_tax,
+            )
         return stored_basket
+
+
+def _price_units_diff(x, y):
+    diff = []
+    if x.currency != y.currency:
+        diff.append('currency: %r vs %r' % (x.currency, y.currency))
+    if x.prices_include_tax != y.prices_include_tax:
+        diff.append('includes_tax: %r vs %r' % (
+            x.prices_include_tax, y.prices_include_tax))
+    return ', '.join(diff)
 
 
 def get_storage():

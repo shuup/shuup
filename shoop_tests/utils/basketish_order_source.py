@@ -10,20 +10,4 @@ from shoop.core.order_creator.source import OrderSource
 
 
 class BasketishOrderSource(OrderSource):
-
-    def __init__(self, lines=()):
-        super(BasketishOrderSource, self).__init__()
-        self.lines = list(lines)
-        for line in self.lines:
-            line.source = self
-
-    def get_lines(self):
-        return self.lines
-
-    def get_final_lines(self):
-        lines = self.get_lines()
-        if self.shipping_method:
-            lines.extend(self.shipping_method.get_source_lines(source=self))
-        if self.payment_method:
-            lines.extend(self.payment_method.get_source_lines(source=self))
-        return lines
+    pass

@@ -28,11 +28,11 @@ def test_cheapest_price_found(rf):
     request.shop = shop
     parent = init_test(request, shop, prices)
 
-    tax_cls = TaxfulPrice if shop.prices_include_tax else TaxlessPrice
-    assert parent.get_cheapest_child_price(request) == tax_cls(min(prices))
+    price = shop.create_price
+    assert parent.get_cheapest_child_price(request) == price(min(prices))
 
     price_info = parent.get_cheapest_child_price_info(request)
-    assert price_info.price == tax_cls(min(prices))
+    assert price_info.price == price(min(prices))
 
 
 @pytest.mark.django_db
@@ -44,8 +44,8 @@ def test_correct_range_found(rf):
     request.shop = shop
     parent = init_test(request, shop, prices)
 
-    tax_cls = TaxfulPrice if shop.prices_include_tax else TaxlessPrice
-    assert parent.get_child_price_range(request) == (tax_cls(min(prices)), tax_cls(max(prices)))
+    price = shop.create_price
+    assert parent.get_child_price_range(request) == (price(min(prices)), price(max(prices)))
 
 
 @pytest.mark.django_db
@@ -59,8 +59,8 @@ def test_only_one_variation_child(rf):
 
     price_info = parent.get_cheapest_child_price_info(request)
 
-    tax_cls = TaxfulPrice if shop.prices_include_tax else TaxlessPrice
+    price = shop.create_price
 
-    assert parent.get_cheapest_child_price(request) == tax_cls(min(prices))
-    assert parent.get_child_price_range(request) == (tax_cls(min(prices)), tax_cls(max(prices)))
-    assert price_info.price == tax_cls(min(prices))
+    assert parent.get_cheapest_child_price(request) == price(min(prices))
+    assert parent.get_child_price_range(request) == (price(min(prices)), price(max(prices)))
+    assert price_info.price == price(min(prices))

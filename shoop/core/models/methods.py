@@ -18,6 +18,7 @@ from parler.models import TranslatableModel, TranslatedFields
 from shoop.core.fields import InternalIdentifierField
 from shoop.core.models.order_lines import OrderLineType
 from shoop.core.modules import ModuleInterface
+from shoop.core.taxing import TaxableItem
 from shoop.utils.text import force_ascii
 from shoop.front.signals import get_method_validation_errors
 
@@ -46,7 +47,7 @@ class MethodQuerySet(TranslatableQuerySet):
     def enabled(self):
         return self.filter(status=MethodStatus.ENABLED)
 
-    def available_ids(self, shop_id, product_ids):
+    def available_ids(self, shop, products):
         """
         Retrieve the common, available methods for a given shop and
         product IDs.
@@ -63,8 +64,8 @@ class MethodQuerySet(TranslatableQuerySet):
         shop_product_limiter_attr = "limit_%s" % self.model.shop_product_m2m
 
         limiting_products_query = {
-            "shop_id": shop_id,
-            "product_id__in": product_ids,
+            "shop": shop,
+            "product__in": products,
             shop_product_limiter_attr: True
         }
 
@@ -77,12 +78,12 @@ class MethodQuerySet(TranslatableQuerySet):
 
         return available_method_ids
 
-    def available(self, shop_id, product_ids):
-        return self.filter(pk__in=self.available_ids(shop_id, product_ids))
+    def available(self, shop, products):
+        return self.filter(pk__in=self.available_ids(shop, products))
 
 
 @python_2_unicode_compatible
-class Method(ModuleInterface, TranslatableModel):
+class Method(TaxableItem, ModuleInterface, TranslatableModel):
     tax_class = models.ForeignKey("TaxClass", verbose_name=_('tax class'))
     status = EnumIntegerField(MethodStatus, db_index=True, default=MethodStatus.ENABLED, verbose_name=_('status'))
     identifier = InternalIdentifierField(unique=True)
@@ -113,8 +114,8 @@ class Method(ModuleInterface, TranslatableModel):
             return False
         return True
 
-    def get_effective_price(self, source):
-        return self.module.get_effective_price(source=source)
+    def get_effective_price_info(self, source):
+        return self.module.get_effective_price_info(source=source)
 
     def get_effective_name(self, source):
         return self.module.get_effective_name(source=source)

@@ -15,31 +15,31 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='orderline',
             name='_total_discount_amount',
-            field=shoop.core.fields.MoneyField(default=0, verbose_name='total amount of discount', max_digits=36, decimal_places=9),
+            field=shoop.core.fields.MoneyValueField(default=0, verbose_name='total amount of discount', max_digits=36, decimal_places=9),
         ),
         migrations.AlterField(
             model_name='orderline',
             name='_unit_price_amount',
-            field=shoop.core.fields.MoneyField(default=0, verbose_name='unit price amount', max_digits=36, decimal_places=9),
+            field=shoop.core.fields.MoneyValueField(default=0, verbose_name='unit price amount', max_digits=36, decimal_places=9),
         ),
         migrations.AlterField(
             model_name='product',
             name='purchase_price',
-            field=shoop.core.fields.MoneyField(null=True, verbose_name='purchase price', max_digits=36, decimal_places=9, blank=True),
+            field=shoop.core.fields.MoneyValueField(null=True, verbose_name='purchase price', max_digits=36, decimal_places=9, blank=True),
         ),
         migrations.AlterField(
             model_name='product',
             name='suggested_retail_price',
-            field=shoop.core.fields.MoneyField(null=True, verbose_name='suggested retail price', max_digits=36, decimal_places=9, blank=True),
+            field=shoop.core.fields.MoneyValueField(null=True, verbose_name='suggested retail price', max_digits=36, decimal_places=9, blank=True),
         ),
         migrations.AlterField(
             model_name='suppliedproduct',
             name='purchase_price',
-            field=shoop.core.fields.MoneyField(null=True, verbose_name='purchase price', max_digits=36, decimal_places=9, blank=True),
+            field=shoop.core.fields.MoneyValueField(null=True, verbose_name='purchase price', max_digits=36, decimal_places=9, blank=True),
         ),
         migrations.AlterField(
             model_name='suppliedproduct',
             name='suggested_retail_price',
-            field=shoop.core.fields.MoneyField(null=True, verbose_name='suggested retail price', max_digits=36, decimal_places=9, blank=True),
+            field=shoop.core.fields.MoneyValueField(null=True, verbose_name='suggested retail price', max_digits=36, decimal_places=9, blank=True),
         ),
     ]

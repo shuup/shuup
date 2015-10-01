@@ -18,7 +18,14 @@
         <tr>
             <td colspan="5" class="text-right">
                 {% trans %}Total{% endtrans %}:
-                <span class="total-price"><strong>{{ basket.taxful_total_price|home_currency }}</strong></span>
+                {# TODO: (TAX) Ensure taxes are calculated in _confirm_table.jinja #}
+                {% set taxful_total_price = basket.taxful_total_price %}
+                {% set taxless_total_price = basket.taxless_total_price %}
+                <span class="total-price"><strong>{{ taxful_total_price|money }}</strong></span>
+                {% if taxless_total_price != taxful_total_price %}
+                <br>
+                <span class="total-price text-muted">({{ taxless_total_price|money }} {{ _("excl. tax") }})</span>
+                {% endif %}
             </td>
         </tr>
         </tfoot>
@@ -41,16 +48,19 @@
                     {{ line.text }}
                 </td>
                 <td class="text-right">
-                    {{ line.taxful_unit_price|home_currency }}
-                    {% if line.total_tax_amount %}
-                        <br><small class="text-muted">({{ line.taxless_unit_price|home_currency }} excl. tax)</small>
+                    {{ line.taxful_discounted_unit_price|money }}
+                    {% if line.tax_amount %}
+                        <br><small class="text-muted">({{ line.taxless_discounted_unit_price|money }} excl. tax)</small>
+                    {% endif %}
+                    {% if line.is_discounted %}
+                        <br><small class="text-muted"><del>{{ line.taxful_base_unit_price|money }}</del></small>
                     {% endif %}
                 </td>
                 <td class="text-right">
                     {{ line.quantity|number }}
                 </td>
                 <td class="text-right">
-                    <span class="line-total">{{ line.taxful_total_price|home_currency }}</span>
+                    <span class="line-total">{{ line.taxful_total_price|money }}</span>
                 </td>
             </tr>
         {% endfor %}

@@ -16,11 +16,11 @@ For reference, here's a list of your order's contents.
 
 {% for line in order.lines.all() %}
 {%- if line.taxful_total_price -%}
-* {{ line.quantity }} x {{ line.text }} - {{ line.taxful_total_price|home_currency }}
+* {{ line.quantity }} x {{ line.text }} - {{ line.taxful_total_price|money }}
 {%- endif -%}
 {%- endfor %}
 
-Order Total: {{ order.taxful_total_price|home_currency }}
+Order Total: {{ order.taxful_total_price|money }}
 
 {% if not order.is_paid() %}
 Please note that no record of your order being paid currently exists.

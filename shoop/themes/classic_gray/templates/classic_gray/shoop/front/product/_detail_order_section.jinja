@@ -59,17 +59,16 @@
 
 {% macro product_price_div(product, quantity) %}
     <div class="price text-right" id="product-price-div">
-        {# TODO: (TAX) Check following line (gets taxful price of product) #}
         {% set price_info = product.get_price_info(request, quantity) %}
         <h2>
             <small class="text-muted">Total:</small>
-            <span id="product-price"><strong>{{ price_info.price|home_currency }}</strong></span>
+            <span id="product-price"><strong>{{ price_info.price|money }}</strong></span>
         </h2>
         <span class="small text-muted">
             {% if price_info.is_discounted %}
-            (<s>{{ price_info.unit_base_price|home_currency }}</s>)
+            (<s>{{ price_info.base_unit_price|money }}</s>)
             {% endif %}
-            {{ price_info.unit_price|home_currency }}/{{ product.sales_unit.short_name }}
+            {{ price_info.discounted_unit_price|money }}/{{ product.sales_unit.short_name }}
         </span>
     </div>
 {% endmacro %}
@@ -93,14 +92,13 @@
 {% endmacro %}
 
 {% macro simple_variation_form() %}
-    {% set is_orderable = bool(orderable_variation_children) %}
+    {% set is_orderable = (orderable_variation_children|length > 0) %}
     <div class="product-variations">
         <input type="hidden" name="command" value="add">
         <div class="form-group">
             <label for="product-variations">{% trans %}Select product{% endtrans %}</label>
             <select name="product_id" id="product-variations" class="form-control selectpicker">
                 {% for p in orderable_variation_children %}
-                    {% set price_info = p.get_price_info(request, quantity) %}
                     <option value="{{ p.id }}"{% if selected_child and selected_child == p.id %} selected{% endif %}>
                         {{ p.variation_name or p.name }}
                     </option>

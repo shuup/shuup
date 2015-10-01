@@ -17,7 +17,7 @@ from django.utils.encoding import force_bytes
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.core.models import PaymentStatus
-from shoop.core.pricing import TaxfulPrice, TaxlessPrice
+from shoop.core.pricing import PriceInfo
 
 
 class BaseMethodModule(object):
@@ -102,36 +102,38 @@ class BaseMethodModule(object):
         :rtype: bool
         """
         options = self.get_options()
-        waive_limit = options.get("price_waiver_product_minimum")
+        waive_limit_value = options.get("price_waiver_product_minimum")
 
-        if waive_limit and waive_limit > 0:
-            assert isinstance(waive_limit, Decimal)
-            if not source.product_total_price:
+        if waive_limit_value and waive_limit_value > 0:
+            assert isinstance(waive_limit_value, Decimal)
+            waive_limit = source.create_price(waive_limit_value)
+            product_total = source.total_price_of_products
+            if not product_total:
                 return False
-            return (source.product_total_price.amount >= waive_limit)
+            return (product_total >= waive_limit)
         return False
 
-    def get_effective_price(self, source, **kwargs):
+    def get_effective_price_info(self, source, **kwargs):
         """
-        Return the effective price.
+        Get price of this method for given OrderSource.
 
         :param source: source object
         :type source: shoop.core.order_creator.OrderSource
         :param kwargs: Other kwargs for future expansion
-        :return: taxless or taxful price
-        :rtype: shoop.core.pricing.Price
+        :rtype: shoop.core.pricing.PriceInfo
         """
-        taxful = source.prices_include_tax()
-        price_cls = TaxfulPrice if taxful else TaxlessPrice
+        price_value = self.get_options().get("price", 0)
+        normal_price = source.shop.create_price(price_value)
         if self._is_price_waived(source):
-            return price_cls(0)
-        return price_cls(self.get_options().get("price", 0))
+            return PriceInfo(source.shop.create_price(0), normal_price, 1)
+        return PriceInfo(normal_price, normal_price, 1)
 
     def get_effective_name(self, source, **kwargs):
         """
         Return the effective name for this method. Useful to add shipping mode ("letter", "parcel") for instance.
 
         :param source: source object
+        :type source: shoop.core.order_creator.OrderSource
         :param kwargs: Other kwargs for future expansion
         :return: name
         :rtype: unicode
@@ -145,13 +147,15 @@ class BaseMethodModule(object):
     def get_source_lines(self, source):
         from shoop.core.order_creator.source import SourceLine
 
-        price = self.get_effective_price(source)
+        price_info = self.get_effective_price_info(source)
+        assert price_info.quantity == 1
         yield SourceLine(
             source=source,
             quantity=1,
             type=self.method.line_type,
             text=self.get_effective_name(source),
-            unit_price=price,
+            base_unit_price=price_info.base_unit_price,
+            discount_amount=price_info.discount_amount,
             tax_class=self.method.tax_class,
         )
 

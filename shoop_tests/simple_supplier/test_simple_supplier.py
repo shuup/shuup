@@ -34,7 +34,7 @@ def test_simple_supplier(rf):
     supplier.adjust_stock(product.pk, +num)
     assert supplier.get_stock_status(product.pk).logical_count == num
     # Create order ...
-    order = create_order_with_product(product, supplier, 10, 3)
+    order = create_order_with_product(product, supplier, 10, 3, shop=shop)
     quantities = order.get_product_ids_and_quantities()
     supplier.update_stocks(product_ids=quantities.keys())
     pss = supplier.get_stock_status(product.pk)

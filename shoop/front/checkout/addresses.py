@@ -8,15 +8,15 @@
 from __future__ import unicode_literals
 
 from django import forms
-from django.core.exceptions import ValidationError
 from django.forms.models import model_to_dict
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import FormView
 
 from shoop.core.models import Address, CompanyContact
-from shoop.core.utils.vat import verify_vat
 from shoop.front.checkout import CheckoutPhaseViewMixin
 from shoop.utils.form_group import FormGroup
+
+from ._mixins import TaxNumberCleanMixin
 
 
 class AddressForm(forms.ModelForm):
@@ -25,28 +25,12 @@ class AddressForm(forms.ModelForm):
         fields = ("name", "phone", "email", "street", "street2", "postal_code", "city", "region", "country")
 
 
-class CompanyForm(forms.ModelForm):
+class CompanyForm(TaxNumberCleanMixin, forms.ModelForm):
+    company_name_field = "name"
+
     class Meta:
         model = CompanyContact
-        fields = ("name", "vat_code",)
-
-    def clean_vat_code(self):
-        vat_code = self.cleaned_data["vat_code"].strip()
-        if vat_code:
-            prefix, parts = verify_vat(vat_code, "FI")  # TODO: 'fi' isn't the best default
-            if not vat_code.startswith(prefix):
-                vat_code = prefix + vat_code  # Always add prefix
-        return vat_code
-
-    def clean(self):
-        company_name = self.cleaned_data.get("name")
-        vat_code = self.cleaned_data.get("vat_code")
-        if bool(company_name) ^ bool(vat_code):  # XOR used to check for "both or neither".
-            raise ValidationError(_(u"Fill both the company name and VAT code fields."))
-        else:
-            if not (company_name or vat_code):
-                return {}
-        return self.cleaned_data
+        fields = ("name", "tax_number",)
 
 
 class AddressesPhase(CheckoutPhaseViewMixin, FormView):
@@ -99,4 +83,4 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
             basket.customer = self.storage.get("company")
             for address in (basket.shipping_address, basket.billing_address):
                 address.company_name = basket.customer.name
-                address.vat_code = basket.customer.vat_code
+                address.tax_number = basket.customer.tax_number

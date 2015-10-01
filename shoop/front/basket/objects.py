@@ -12,12 +12,13 @@ from collections import Counter
 from decimal import Decimal
 
 import six
+from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.core.models import OrderLineType, PaymentMethod, ShippingMethod
 from shoop.core.order_creator.source import OrderSource, SourceLine
-from shoop.front.basket.storage import get_storage
+from shoop.front.basket.storage import BasketCompatibilityError, get_storage
 from shoop.utils.numbers import parse_decimal_string
 from shoop.utils.objects import compare_partial_dicts
 
@@ -45,10 +46,9 @@ class BasketLine(SourceLine):
         product = self.product
         # TODO: ensure shop identity?
         price_info = product.get_price_info(request, quantity=self.quantity)
-        self.unit_price = price_info.unit_base_price
-        self.total_discount = price_info.discount_amount
+        self.base_unit_price = price_info.base_unit_price
+        self.discount_amount = price_info.discount_amount
         assert self.total_price == price_info.price
-        # TODO: (TAX) Cache also taxes for BasketLine? (with product.get_taxed_price)
         self.net_weight = product.net_weight
         self.gross_weight = product.gross_weight
         self.shipping_mode = product.shipping_mode
@@ -74,9 +74,9 @@ class BasketLine(SourceLine):
             raise ValueError("Invalid basket line type. Only values of OrderLineType are allowed.")
         self.__dict__["type"] = type
 
-    def add_quantity(self, quantity):
+    def set_quantity(self, quantity):
         cls = Decimal if self.product.sales_unit.allow_fractions else int
-        self.quantity = cls(max(0, self.quantity + quantity))
+        self.quantity = cls(max(0, quantity))
 
     @property
     def can_delete(self):
@@ -89,27 +89,34 @@ class BasketLine(SourceLine):
 
 class BaseBasket(OrderSource):
     def __init__(self, request, basket_name="basket"):
-        super(BaseBasket, self).__init__()
+        super(BaseBasket, self).__init__(request.shop)
         self.basket_name = basket_name
         self.request = request
         self.storage = get_storage()
         self._data = None
         self.dirty = False
         self.customer = getattr(request, "customer", None)
-        self.shop = getattr(request, "shop", None)
-        self.__computing_processed_lines = None
+        self.orderer = getattr(request, "person", None)
+        self.creator = getattr(request, "user", None)
 
-    def load(self):
+    def _load(self):
         """
         Get the currently persisted data for this basket.
 
-        This will only access the storage once per request in usual circumstances.
+        This will only access the storage once per request in usual
+        circumstances.
 
         :return: Data dict.
         :rtype: dict
         """
         if self._data is None:
-            self._data = self.storage.load(basket=self)
+            try:
+                self._data = self.storage.load(basket=self)
+            except BasketCompatibilityError as error:
+                msg = _("Basket loading failed: Incompatible basket (%s)")
+                messages.error(self.request, msg % error)
+                self.storage.delete(basket=self)
+                self._data = self.storage.load(basket=self)
             self.dirty = False
         return self._data
 
@@ -118,7 +125,8 @@ class BaseBasket(OrderSource):
         Persist any changes made into the basket to storage.
 
         One does not usually need to directly call this;
-        `shoop.front.middleware.ShoopFrontMiddleware` will usually take care of it.
+        :obj:`~shoop.front.middleware.ShoopFrontMiddleware` will usually
+        take care of it.
         """
         self.clean_empty_lines()
         self.storage.save(basket=self, data=self._data)
@@ -154,13 +162,18 @@ class BaseBasket(OrderSource):
 
     @property
     def _data_lines(self):
-        return self.load().setdefault("lines", [])
+        return self._load().setdefault("lines", [])
 
     @_data_lines.setter
     def _data_lines(self, new_lines):
-        self.load()["lines"] = new_lines
+        self._load()["lines"] = new_lines
         self.dirty = True
         self.uncache()
+
+    def add_line(self, **kwargs):
+        line = BasketLine(source=self, **kwargs)
+        self._data_lines = self._data_lines + [line.to_dict()]
+        return line
 
     def get_lines(self):
         return [BasketLine.from_dict(self, line) for line in self._data_lines]
@@ -228,8 +241,13 @@ class BaseBasket(OrderSource):
         if isinstance(data_line, SourceLine):
             data_line = data_line.to_dict()
         assert isinstance(data_line, dict)
+        line_ids = [x["line_id"] for x in self._data_lines]
+        try:
+            index = line_ids.index(data_line["line_id"])
+        except ValueError:
+            index = len(line_ids)
         self.delete_line(data_line["line_id"])
-        self._data_lines.append(data_line)
+        self._data_lines.insert(index, data_line)
         self.uncache()
 
     def add_product(self, supplier, shop, product, quantity, force_new_line=False, extra=None, parent_line=None):
@@ -246,14 +264,20 @@ class BaseBasket(OrderSource):
         if not data:
             data = self._initialize_product_line_data(product=product, supplier=supplier, shop=shop)
 
-        line = BasketLine.from_dict(self, data)
-        line.add_quantity(quantity)
-        line.cache_info(self.request)
-        line.update(**extra)
-
         if parent_line:
-            line.parent_line_id = parent_line.line_id
+            data["parent_line_id"] = parent_line.line_id
 
+        new_quantity = max(0, data["quantity"] + Decimal(quantity))
+
+        return self.update_line(data, quantity=new_quantity, **extra)
+
+    def update_line(self, data_line, **kwargs):
+        line = BasketLine.from_dict(self, data_line)
+        new_quantity = kwargs.pop("quantity", None)
+        if new_quantity is not None:
+            line.set_quantity(new_quantity)
+        line.update(**kwargs)
+        line.cache_info(self.request)
         self._add_or_replace_line(line)
         return line
 
@@ -302,12 +326,12 @@ class BaseBasket(OrderSource):
 
     orderable = property(_get_orderable)
 
-    def get_validation_errors(self, shop):
+    def get_validation_errors(self):
         for error in super(BaseBasket, self).get_validation_errors():
             yield error
 
-        shipping_methods = self.get_available_shipping_methods(shop)
-        payment_methods = self.get_available_payment_methods(shop)
+        shipping_methods = self.get_available_shipping_methods()
+        payment_methods = self.get_available_payment_methods()
 
         advice = _(
             "Try to remove some products from the basket "
@@ -325,7 +349,7 @@ class BaseBasket(OrderSource):
             product = line.product
             if not product:
                 continue
-            shop_product = product.get_shop_instance(shop=shop)
+            shop_product = product.get_shop_instance(shop=self.shop)
             if not shop_product:
                 yield ValidationError(
                     _("%s not available in this shop") % product.name,
@@ -348,29 +372,27 @@ class BaseBasket(OrderSource):
 
         return dict(q_counter)
 
-    def get_available_shipping_methods(self, shop):
+    def get_available_shipping_methods(self):
         """
-        Get available shipping methods for given shop.
+        Get available shipping methods.
 
-        :type shop: Shop
         :rtype: list[ShippingMethod]
         """
         return [
             m for m
-            in ShippingMethod.objects.available(shop_id=shop.pk, product_ids=self.product_ids)
+            in ShippingMethod.objects.available(shop=self.shop, products=self.product_ids)
             if m.is_valid_for_source(source=self)
         ]
 
-    def get_available_payment_methods(self, shop):
+    def get_available_payment_methods(self):
         """
-        Get available payment methods for given shop.
+        Get available payment methods.
 
-        :type shop: Shop
         :rtype: list[PaymentMethod]
         """
         return [
             m for m
-            in PaymentMethod.objects.available(shop_id=shop.pk, product_ids=self.product_ids)
+            in PaymentMethod.objects.available(shop=self.shop, products=self.product_ids)
             if m.is_valid_for_source(source=self)
         ]
 
@@ -389,7 +411,3 @@ class BaseBasket(OrderSource):
     @property
     def is_empty(self):
         return not bool(self.get_lines())
-
-    @property
-    def shop_ids(self):
-        return set(l.shop.id for l in self.get_lines() if l.shop)

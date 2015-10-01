@@ -10,50 +10,66 @@ from django.utils.timezone import now
 import pytest
 from shoop.core.models import Order, OrderLine, OrderLineType, get_person_contact
 from shoop.core.models.order_lines import OrderLineTax
-from shoop.core.pricing import TaxfulPrice, TaxlessPrice
 from shoop.core.shortcuts import update_order_line_from_product
+from shoop.default_tax.module import DefaultTaxModule
 from shoop.testing.factories import get_address, get_default_payment_method, get_default_shipping_method, \
-    get_default_supplier, get_default_product, get_default_shop, get_initial_order_status, get_default_tax
+    get_default_supplier, get_default_product, get_shop, get_initial_order_status, get_default_tax
 
 
 def create_order(request, creator, customer, product):
     billing_address = get_address()
     shipping_address = get_address(name="Shippy Doge")
     shipping_address.save()
+    shop = request.shop
     order = Order(
         creator=creator,
         customer=customer,
-        shop=get_default_shop(),
+        shop=shop,
         payment_method=get_default_payment_method(),
         shipping_method=get_default_shipping_method(),
         billing_address=billing_address,
         shipping_address=shipping_address,
         order_date=now(),
-        status=get_initial_order_status()
+        status=get_initial_order_status(),
+        currency=shop.currency,
+        prices_include_tax=shop.prices_include_tax,
     )
     order.full_clean()
     order.save()
     supplier = get_default_supplier()
     product_order_line = OrderLine(order=order)
     update_order_line_from_product(order_line=product_order_line, product=product, request=request, quantity=5, supplier=supplier)
-    product_order_line.unit_price = TaxlessPrice(100)
-    assert product_order_line.taxful_total_price.amount > 0
+    product_order_line.base_unit_price = shop.create_price(100)
+    assert product_order_line.total_price.value > 0
     product_order_line.save()
-    product_order_line.taxes.add(OrderLineTax.from_tax(get_default_tax(), product_order_line.taxless_total_price))
+
+    line_tax = get_line_taxes_for(product_order_line)[0]
+
+    product_order_line.taxes.add(OrderLineTax.from_tax(
+        tax=line_tax.tax,
+        base_amount=line_tax.base_amount,
+        order_line=product_order_line,
+    ))
 
     discount_order_line = OrderLine(order=order, quantity=1, type=OrderLineType.OTHER)
-    discount_order_line.total_discount = TaxfulPrice(30)
-    assert discount_order_line.taxful_total_discount.amount == 30
-    assert discount_order_line.taxful_total_price.amount == -30
-    assert discount_order_line.taxful_unit_price.amount == 0
+    discount_order_line.discount_amount = shop.create_price(30)
+    assert discount_order_line.discount_amount.value == 30
+    assert discount_order_line.total_price.value == -30
+    assert discount_order_line.base_unit_price.value == 0
     discount_order_line.save()
 
     order.cache_prices()
     order.check_all_verified()
     order.save()
-    base_amount = 5 * 100
-    tax_value = get_default_tax().calculate_amount(base_amount)
-    assert order.taxful_total_price == base_amount + tax_value - 30, "Math works"
+    base = 5 * shop.create_price(100).amount
+    discount = shop.create_price(30).amount
+    tax_value = line_tax.amount
+    if not order.prices_include_tax:
+        assert order.taxless_total_price.amount == base - discount
+        assert order.taxful_total_price.amount == base + tax_value - discount
+    else:
+        assert_almost_equal(order.taxless_total_price.amount, base - tax_value - discount)
+        assert_almost_equal(order.taxful_total_price.amount, base - discount)
 
     shipment = order.create_shipment_of_all_products(supplier=supplier)
     assert shipment.total_products == 5, "All products were shipped"
@@ -65,9 +81,25 @@ def create_order(request, creator, customer, product):
     assert Order.objects.paid().filter(pk=order.pk).exists(), "It was paid! Honestly!"
 
 
+def assert_almost_equal(x, y):
+    assert abs(x - y).value <= 0.005
+
+
+def get_line_taxes_for(order_line):
+    get_default_tax()  # Creates the Tax and TaxRule
+    tax_module = DefaultTaxModule()
+    tax_ctx = tax_module.get_context_from_order_source(order_line.order)
+    product = order_line.product
+    price = order_line.total_price
+    taxed_price = tax_module.get_taxed_price_for(tax_ctx, product, price)
+    return taxed_price.taxes
+
+
 @pytest.mark.django_db
-def test_basic_order(rf, admin_user):
-    shop = get_default_shop()
+@pytest.mark.parametrize("mode", ["taxful", "taxless"])
+def test_basic_order(rf, admin_user, mode):
+    prices_include_tax = (mode == "taxful")
+    shop = get_shop(prices_include_tax=prices_include_tax)
 
     request = rf.get('/')
     request.shop = shop
