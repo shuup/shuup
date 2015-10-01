@@ -23,10 +23,13 @@ class TaxedPrice(object):
         self.taxes = taxes or []
 
         # Validation
-        zero = taxful.new(0).amount
-        total_tax_amount = sum((x.amount for x in self.taxes), zero)
-        expected_taxful_amount = taxless.amount + total_tax_amount
+        expected_taxful_amount = taxless.amount + self.tax_amount
         assert abs(taxful.amount - expected_taxful_amount).value < 0.00001
+
+    @property
+    def tax_amount(self):
+        zero = self.taxful.new(0).amount
+        return sum((x.amount for x in self.taxes), zero)
 
     @property
     def tax_rate(self):
