@@ -14,10 +14,12 @@ from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from filer.fields.image import FilerImageField
 from jsonfield import JSONField
-from parler.models import TranslatableModel, TranslatedFields
+from parler.models import TranslatedFields
 
 from shoop.core.fields import CurrencyField, InternalIdentifierField
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
+
+from ._base import TranslatableShoopModel
 
 
 def _get_default_currency():
@@ -30,7 +32,7 @@ class ShopStatus(Enum):
 
 
 @python_2_unicode_compatible
-class Shop(TranslatableModel):
+class Shop(TranslatableShoopModel):
     identifier = InternalIdentifierField(unique=True)
     domain = models.CharField(max_length=128, blank=True, null=True, unique=True)
     status = EnumIntegerField(ShopStatus, default=ShopStatus.DISABLED)
