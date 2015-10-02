@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals, with_statement
+from shoop.core.excs import ImpossibleProductModeException
 
 import six
 from django.core.exceptions import ObjectDoesNotExist
@@ -452,32 +453,49 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         :type variables: dict|None
         """
         if parent.is_variation_child():
-            raise ValueError("Multilevel parentage hierarchies aren't supported (parent is a child already)")
+            raise ImpossibleProductModeException(
+                _("Multilevel parentage hierarchies aren't supported (parent is a child already)"),
+                code="multilevel"
+            )
         if parent.mode == ProductMode.VARIABLE_VARIATION_PARENT and not variables:
-            raise ValueError("Parent is a variable variation parent, yet variables were not passed to `link_to_parent`")
+            raise ImpossibleProductModeException(
+                _("Parent is a variable variation parent, yet variables were not passed"),
+                code="no_variables"
+            )
         if parent.mode == ProductMode.SIMPLE_VARIATION_PARENT and variables:
-            raise ValueError("Parent is a simple variation parent, yet variables were passed to `link_to_parent`")
+            raise ImpossibleProductModeException(
+                "Parent is a simple variation parent, yet variables were passed",
+                code="extra_variables"
+            )
         if self.mode == ProductMode.SIMPLE_VARIATION_PARENT:
-            raise ValueError(
-                "Multilevel parentage hierarchies aren't supported (this product is a simple variation parent)"
+            raise ImpossibleProductModeException(
+                _("Multilevel parentage hierarchies aren't supported (this product is a simple variation parent)"),
+                code="multilevel"
             )
         if self.mode == ProductMode.VARIABLE_VARIATION_PARENT:
-            raise ValueError(
-                "Multilevel parentage hierarchies aren't supported (this product is a variable variation parent)"
+            raise ImpossibleProductModeException(
+                _("Multilevel parentage hierarchies aren't supported (this product is a variable variation parent)"),
+                code="multilevel"
             )
 
     def make_package(self, package_def):
         if self.mode != ProductMode.NORMAL:
-            raise ValueError("Product is currently not a normal product, can't turn into package")
+            raise ImpossibleProductModeException(
+                _("Product is currently not a normal product, can't turn into package"),
+                code="abnormal"
+            )
 
         for child_product, quantity in six.iteritems(package_def):
             # :type child_product: Product
             if child_product.is_variation_parent():
-                raise ValueError("Variation parents can not belong into a package")
+                raise ImpossibleProductModeException(
+                    _("Variation parents can not belong into a package"),
+                    code="abnormal"
+                )
             if child_product.is_package_parent():
-                raise ValueError("Can't nest packages")
+                raise ImpossibleProductModeException(_("Packages can't be nested"), code="multilevel")
             if quantity <= 0:
-                raise ValueError("Quantity %s is invalid" % quantity)
+                raise ImpossibleProductModeException(_("Quantity %s is invalid") % quantity, code="quantity")
             ProductPackageLink.objects.create(parent=self, child=child_product, quantity=quantity)
         self.verify_mode()
 
