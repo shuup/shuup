@@ -13,11 +13,17 @@
             <hr>
         </div>
     </div>
-    {{ bs3.field(category_form.image) }}
     {{ bs3.field(category_form.parent) }}
-    {{ bs3.field(category_form.shops, widget_class="multiselect") }}
     {{ bs3.field(category_form.ordering) }}
+{% endcall %}
+
+{% call content_block(_("Visibility"), "fa-eye") %}
     {{ bs3.field(category_form.status) }}
     {{ bs3.field(category_form.visibility) }}
     {{ bs3.field(category_form.visibility_groups, widget_class="multiselect") }}
+    {{ bs3.field(category_form.shops, widget_class="multiselect") }}
+{% endcall %}
+
+{% call content_block(_("Category Image"), "fa-camera") %}
+    {{ bs3.field(category_form.image) }}
 {% endcall %}
