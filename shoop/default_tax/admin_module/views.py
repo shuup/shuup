@@ -7,11 +7,12 @@
 from __future__ import unicode_literals
 
 from django import forms
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _, string_concat
 
 from shoop.admin.utils.picotable import Column
 from shoop.admin.utils.views import CreateOrUpdateView, PicotableListView
 from shoop.default_tax.models import TaxRule
+from shoop.utils.patterns import PATTERN_SYNTAX_HELP_TEXT
 
 
 class TaxRuleForm(forms.ModelForm):
@@ -27,6 +28,20 @@ class TaxRuleForm(forms.ModelForm):
             "enabled",
             "priority",
         ]
+        help_texts = {
+            "country_codes_pattern": string_concat(
+                PATTERN_SYNTAX_HELP_TEXT,
+                " ",
+                _("Use ISO 3166-1 country codes (US, FI etc.)")
+            ),
+            "region_codes_pattern": PATTERN_SYNTAX_HELP_TEXT,
+            "postal_codes_pattern": PATTERN_SYNTAX_HELP_TEXT,
+        }
+
+    def clean(self):
+        data = super(TaxRuleForm, self).clean()
+        data["country_codes_pattern"] = data["country_codes_pattern"].upper()
+        return data
 
 
 class TaxRuleEditView(CreateOrUpdateView):
