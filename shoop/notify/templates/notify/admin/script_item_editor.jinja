@@ -52,8 +52,13 @@
     <div class="iframe-content-block">
         <h2 class="iframe-title">{{ script_item.name }}</h2>
         {% if script_item.description %}<p>{{ script_item.description }}</p>{% endif %}
-        <form enctype="multipart/form-data" action="" method="post">
-            {% if form.errors %}{{ form.errors }}{% endif %}
+        <form enctype="multipart/form-data" action="" method="post" novalidate>
+            {% if form.errors %}
+                <div class="alert alert-dismissible alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <i class="fa fa-exclamation-circle"></i> {% trans %}There were errors on submitted form.{% endtrans %}
+                </div>
+            {% endif %}
             <input name="init_data" type="hidden" value="{{ init_data }}">
             <ul class="nav nav-tabs" id="main-tabs">
                 <li role="presentation" class="active"><a href="#variables">Variables</a></li>
