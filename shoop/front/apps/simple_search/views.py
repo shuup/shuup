@@ -64,7 +64,8 @@ class SearchView(ListView):
         query = self.form.cleaned_data["q"]
         if not query:  # pragma: no cover
             return Product.objects.none()
-        return Product.objects.filter(pk__in=get_search_product_ids(self.request, query))
+        return Product.objects.list_visible(self.request.shop, self.request.customer).filter(
+            pk__in=get_search_product_ids(self.request, query))
 
     def get_context_data(self, **kwargs):
         context = super(SearchView, self).get_context_data(**kwargs)
