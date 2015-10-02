@@ -41,15 +41,18 @@ class TaxModule(AdminModule):
     def get_menu_entries(self, request):
         return [
             MenuEntry(
-                text=_("List Taxes"), icon="fa fa-list", url="shoop_admin:tax.list",
+                text=_("Taxes"), icon="fa fa-pie-chart",
+                url="shoop_admin:tax.list",
                 category=self.category
             ),
             MenuEntry(
-                text=_("List Customer Tax Groups"), icon="fa fa-list", url="shoop_admin:customer_tax_group.list",
+                text=_("Customer Tax Groups"), icon="fa fa-pie-chart",
+                url="shoop_admin:customer_tax_group.list",
                 category=self.category
             ),
             MenuEntry(
-                text=_("List Tax Classes"), icon="fa fa-list", url="shoop_admin:tax_class.list",
+                text=_("Tax Classes"), icon="fa fa-pie-chart",
+                url="shoop_admin:tax_class.list",
                 category=self.category
             )
         ]
