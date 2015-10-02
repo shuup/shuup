@@ -15,7 +15,6 @@ from shoop.core.models import Tax, TaxClass, CustomerTaxGroup
 class TaxModule(AdminModule):
     name = _("Taxes")
     category = name
-    breadcrumbs_menu_entry = MenuEntry(name, url="shoop_admin:tax_class.list")
 
     def get_urls(self):
         # TODO: Add url for tax dashboard?
