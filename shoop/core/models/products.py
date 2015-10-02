@@ -454,12 +454,12 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         """
         if parent.is_variation_child():
             raise ImpossibleProductModeException(
-                "Multilevel parentage hierarchies aren't supported (parent is a child already)",
+                _("Multilevel parentage hierarchies aren't supported (parent is a child already)"),
                 code="multilevel"
             )
         if parent.mode == ProductMode.VARIABLE_VARIATION_PARENT and not variables:
             raise ImpossibleProductModeException(
-                "Parent is a variable variation parent, yet variables were not passed",
+                _("Parent is a variable variation parent, yet variables were not passed"),
                 code="no_variables"
             )
         if parent.mode == ProductMode.SIMPLE_VARIATION_PARENT and variables:
@@ -469,19 +469,19 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
             )
         if self.mode == ProductMode.SIMPLE_VARIATION_PARENT:
             raise ImpossibleProductModeException(
-                "Multilevel parentage hierarchies aren't supported (this product is a simple variation parent)",
+                _("Multilevel parentage hierarchies aren't supported (this product is a simple variation parent)"),
                 code="multilevel"
             )
         if self.mode == ProductMode.VARIABLE_VARIATION_PARENT:
             raise ImpossibleProductModeException(
-                "Multilevel parentage hierarchies aren't supported (this product is a variable variation parent)",
+                _("Multilevel parentage hierarchies aren't supported (this product is a variable variation parent)"),
                 code="multilevel"
             )
 
     def make_package(self, package_def):
         if self.mode != ProductMode.NORMAL:
             raise ImpossibleProductModeException(
-                "Product is currently not a normal product, can't turn into package",
+                _("Product is currently not a normal product, can't turn into package"),
                 code="abnormal"
             )
 
@@ -489,13 +489,13 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
             # :type child_product: Product
             if child_product.is_variation_parent():
                 raise ImpossibleProductModeException(
-                    "Variation parents can not belong into a package",
+                    _("Variation parents can not belong into a package"),
                     code="abnormal"
                 )
             if child_product.is_package_parent():
-                raise ImpossibleProductModeException("Can't nest packages", code="multilevel")
+                raise ImpossibleProductModeException(_("Packages can't be nested"), code="multilevel")
             if quantity <= 0:
-                raise ImpossibleProductModeException("Quantity %s is invalid" % quantity, code="quantity")
+                raise ImpossibleProductModeException(_("Quantity %s is invalid") % quantity, code="quantity")
             ProductPackageLink.objects.create(parent=self, child=child_product, quantity=quantity)
         self.verify_mode()
 
