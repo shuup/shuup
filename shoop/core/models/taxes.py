@@ -13,6 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 from parler.models import TranslatedFields
 
 from shoop.core.fields import CurrencyField, InternalIdentifierField, MoneyValueField
+from shoop.utils.i18n import format_money, format_percent
 from shoop.utils.properties import MoneyProperty, MoneyPropped
 
 from ._base import ImmutableMixin, TranslatableShoopModel
@@ -51,6 +52,9 @@ class Tax(MoneyPropped, ImmutableMixin, TranslatableShoopModel):
             raise ValidationError(_('Either rate or amount is required'))
         if self.amount is not None and self.rate is not None:
             raise ValidationError(_('Cannot have both rate and amount'))
+        if self.amount is not None and not self.currency:
+            raise ValidationError(
+                _("Currency is required if amount is specified"))
 
     def calculate_amount(self, base_amount):
         """
@@ -64,6 +68,14 @@ class Tax(MoneyPropped, ImmutableMixin, TranslatableShoopModel):
         if self.rate is not None:
             return self.rate * base_amount
         raise ValueError("Improperly configured tax: %s" % self)
+
+    def __str__(self):
+        text = super(Tax, self).__str__()
+        if self.rate is not None:
+            text += " ({})".format(format_percent(self.rate, digits=3))
+        if self.amount is not None:
+            text += " ({})".format(format_money(self.amount))
+        return text
 
     def _is_in_use(self):
         return self.order_line_taxes.exists()

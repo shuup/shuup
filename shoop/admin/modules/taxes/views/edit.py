@@ -21,7 +21,7 @@ class _Breadcrumbed(object):
 class TaxForm(MultiLanguageModelForm):
     class Meta:
         model = Tax
-        fields = ["name", "rate", "amount_value", "currency", "enabled"]
+        fields = ["name", "code", "rate", "amount_value", "currency", "enabled"]
 
     rate = Tax._meta.get_field("rate").formfield(form_class=PercentageField)
 

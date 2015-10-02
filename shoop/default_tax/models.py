@@ -7,7 +7,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.utils.encoding import force_text, python_2_unicode_compatible
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.core.models import CustomerTaxGroup, Tax, TaxClass
@@ -45,10 +45,4 @@ class TaxRule(models.Model):
         return True
 
     def __str__(self):
-        tax_classes = sorted(self.tax_classes.values_list("identifier", flat=True))
-        customer_tax_groups = sorted(self.customer_tax_groups.values_list("identifier", flat=True))
-        return ("%s for %s: %s" % (
-            ", ".join(force_text(identifier) for identifier in tax_classes),
-            ", ".join(force_text(identifier) for identifier in customer_tax_groups),
-            self.tax
-        ))
+        return _("Tax rule {} ({})").format(self.pk, self.tax)

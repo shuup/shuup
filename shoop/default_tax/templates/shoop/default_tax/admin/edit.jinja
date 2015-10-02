@@ -8,19 +8,65 @@
         <div class="col-md-9">
             <form method="post" id="tax_rule_form">
                 {% csrf_token %}
-                {% call content_block(_("General information"), "fa-info-circle") %}
+                {% call content_block(_("Tax rule information"), "fa-info-circle") %}
                     {{ bs3.field(form.enabled) }}
-                    {{ bs3.field(form.tax) }}
+
+                    <div class="row">
+                      <div class="col-sm-8 col-sm-push-4 col-lg-6 col-lg-push-3">
+                        <h3>{{ _("Matching criteria") }}</h3>
+                        <p>
+                          {% trans %}
+                            The following fields determine when this
+                            rule applies.  All non-empty fields must
+                            match for the rule to apply.  Empty fields
+                            are not considered, e.g. if "Customer tax
+                            groups" is left empty, all customer tax
+                            groups will match.
+                          {% endtrans %}
+                        </p>
+                        <p>
+                          {% trans %}
+                            Pattern can be a single value or a comma
+                            separated list of items, where each item can
+                            be a single value or a range, such as
+                            "value1-value2".  Special value "*" matches
+                            everything.  For example, a pattern
+                            "1,2,50-90" will match values "1" and "2",
+                            and "50", "90", and everything between.  The
+                            range uses alphabetical ordering unless
+                            start, end and the string to be matched are
+                            all numerical, i.e. "50-90" will match also
+                            "6a" and "700X", since they are
+                            alphabetically between "50" and "90", but it
+                            will not match "700000" since for numerical
+                            items natural numeric ordering is used.
+                          {% endtrans %}
+                        </p>
+                        <br>
+                      </div>
+                    </div>
                     {{ bs3.field(form.tax_classes, widget_class="multiselect") }}
                     {{ bs3.field(form.customer_tax_groups, widget_class="multiselect") }}
                     {{ bs3.field(form.country_codes_pattern) }}
                     {{ bs3.field(form.region_codes_pattern) }}
                     {{ bs3.field(form.postal_codes_pattern) }}
                     {{ bs3.field(form.priority) }}
+
+                    <div class="row">
+                      <div class="col-sm-8 col-sm-push-4 col-lg-6 col-lg-push-3">
+                        <h3>{{ _("Applied tax") }}</h3>
+                        <p>
+                          {% trans %}
+                            When this rule applies, apply the following tax.
+                          {% endtrans %}
+                        </p>
+                        <br>
+                      </div>
+                    </div>
+                    {{ bs3.field(form.tax) }}
                 {% endcall %}
             </form>
         </div>
     </div>
 </div>
 {% endblock %}
-

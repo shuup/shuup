@@ -3,10 +3,14 @@
 {% from "shoop/admin/macros/multilanguage.jinja" import language_dependent_content_tabs %}
 {% block content %}
     {% call single_section_form("tax_form", form) %}
+        {{ language_dependent_content_tabs(form, ["name"]) }}
+        <div class="row">
+          <div class="col-sm-8 col-sm-push-4 col-lg-6 col-lg-push-3"> <hr></div>
+        </div>
+        {{ bs3.field(form.enabled) }}
+        {{ bs3.field(form.code) }}
         {{ bs3.field(form.rate) }}
         {{ bs3.field(form.amount_value) }}
         {{ bs3.field(form.currency) }}
-        {{ bs3.field(form.enabled) }}
-        {{ language_dependent_content_tabs(form, ["name"]) }}
     {% endcall %}
 {% endblock %}

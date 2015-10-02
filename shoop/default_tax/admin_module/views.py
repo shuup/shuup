@@ -34,7 +34,11 @@ class TaxRuleForm(forms.ModelForm):
                 " ",
                 _("Use ISO 3166-1 country codes (US, FI etc.)")
             ),
-            "region_codes_pattern": PATTERN_SYNTAX_HELP_TEXT,
+            "region_codes_pattern": string_concat(
+                PATTERN_SYNTAX_HELP_TEXT,
+                " ",
+                _("Use two letter state codes for the US")
+            ),
             "postal_codes_pattern": PATTERN_SYNTAX_HELP_TEXT,
         }
 

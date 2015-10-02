@@ -258,7 +258,7 @@ def get_tax(code, name, rate=None, amount=None):
             currency=getattr(amount, 'currency', None),
         )
         assert tax.pk
-        assert str(tax) == name
+        assert name in str(tax)
     return tax
 
 
