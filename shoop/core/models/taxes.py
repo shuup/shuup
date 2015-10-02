@@ -26,7 +26,8 @@ class Tax(MoneyPropped, ImmutableMixin, TranslatableShoopModel):
         "Cannot change business critical fields of Tax that is in use")
     unprotected_fields = ['enabled']
 
-    code = InternalIdentifierField(unique=True)
+    code = InternalIdentifierField(
+        unique=True, editable=True, verbose_name=_("code"), help_text="")
 
     translations = TranslatedFields(
         name=models.CharField(max_length=64),
