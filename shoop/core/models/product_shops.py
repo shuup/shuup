@@ -90,6 +90,7 @@ class ShopProduct(MoneyPropped, models.Model):
     def get_visibility_errors(self, customer):
         if self.product.deleted:
             yield ValidationError(_('This product has been deleted.'), code="product_deleted")
+
         if customer and customer.is_all_seeing:  # None of the further conditions matter for omniscient customers.
             return
 
@@ -103,7 +104,7 @@ class ShopProduct(MoneyPropped, models.Model):
                 _('The Product is invisible to users not logged in.'),
                 code="product_not_visible_to_anonymous")
 
-        if self.visibility_limit == ProductVisibility.VISIBLE_TO_GROUPS:
+        if is_logged_in and self.visibility_limit == ProductVisibility.VISIBLE_TO_GROUPS:
             # TODO: Optimization
             user_groups = set(customer.groups.all().values_list("pk", flat=True))
             my_groups = set(self.visibility_groups.values_list("pk", flat=True))
