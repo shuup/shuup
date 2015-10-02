@@ -6,8 +6,8 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
-from django.template.response import TemplateResponse
-from django.utils import importlib
+from django.shortcuts import render
+from importlib import import_module
 
 
 def make_error_view(status, template_name=None):
@@ -15,7 +15,7 @@ def make_error_view(status, template_name=None):
         template_name = "shoop/front/errors/%s.jinja" % status
 
     def view(request, *args, **kwargs):
-        return TemplateResponse(request, template_name, status=status)
+        return render(request=request, template_name=template_name, status=status)
 
     return view
 
@@ -30,7 +30,16 @@ def install_error_handlers():
     * `settings.SHOOP_FRONT_INSTALL_ERROR_HANDLERS` is `True`
     * `settings.ROOT_URLCONF` doesn't already contain the handler
     """
-    root_urlconf = importlib.import_module(settings.ROOT_URLCONF)
+
+    root_urlconf_module = getattr(settings, "ROOT_URLCONF", None)
+
+    if not root_urlconf_module:  # That's weird, but let's not crash here.
+        return
+
+    try:
+        root_urlconf = import_module(root_urlconf_module)
+    except ImportError:  # Also weird, but not worth a crash.
+        return
 
     for status in (400, 403, 404, 500):
         handler_attr = "handler%s" % status

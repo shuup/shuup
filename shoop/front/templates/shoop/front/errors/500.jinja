@@ -1,9 +1,30 @@
-{% extends "shoop/front/base.jinja" %}
-
-{% block content %}
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% trans %}Internal Server Error{% endtrans %} (500)</title>
+    <style>
+        body {
+            background: #f4f4f4;
+            color: #666;
+        }
+        h1 {
+            font-weight: normal;
+            font-size: 2.6em;
+            margin-bottom: 25px;
+        }
+        .container {
+            padding: 75px 0px;
+            max-width: 500px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
 <div class="container">
     <h1>{% trans %}Server Error{% endtrans %} (500)</h1>
     <hr>
     <a href="/">{% trans %}Back to home{% endtrans %}</a>
 </div>
-{% endblock %}
+</body>
+</html>
