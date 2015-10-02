@@ -19,14 +19,14 @@ class TaxRuleForm(forms.ModelForm):
     class Meta:
         model = TaxRule
         fields = [
-            "tax",
             "tax_classes",
             "customer_tax_groups",
             "country_codes_pattern",
             "region_codes_pattern",
             "postal_codes_pattern",
-            "enabled",
             "priority",
+            "tax",
+            "enabled",
         ]
         help_texts = {
             "country_codes_pattern": string_concat(
@@ -56,7 +56,13 @@ class TaxRuleListView(PicotableListView):
     model = TaxRule
 
     columns = [
-        Column("tax", _(u"Tax")),
+        Column("id", _("Tax Rule")),
+        Column("tax", _("Tax")),
+        Column("tax_classes", _("Tax Classes")),
+        Column("customer_tax_groups", _("Customer Tax Groups")),
+        Column("country_codes_pattern", _("Countries")),
+        Column("region_codes_pattern", _("Regions")),
+        Column("postal_codes_pattern", _("Postal Codes")),
         Column("priority", _(u"Priority")),
         Column("enabled", _(u"Enabled")),
     ]
