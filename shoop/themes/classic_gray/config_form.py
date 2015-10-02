@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 import itertools
+from django import forms
+from django.conf import settings
 
 from django.utils.encoding import force_text
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _, get_language
 
 from shoop.xtheme.forms import GenericThemeForm
 
@@ -11,6 +13,7 @@ class ClassicGrayConfigForm(GenericThemeForm):
     def __init__(self, **kwargs):
         super(ClassicGrayConfigForm, self).__init__(**kwargs)
         self._populate_footer_column_order_choices()
+        self._populate_cms_page_field()
 
     def _populate_footer_column_order_choices(self):
         column_mnemonics_to_labels = {
@@ -30,3 +33,16 @@ class ClassicGrayConfigForm(GenericThemeForm):
         footer_column_order_choices.insert(0, ("", _("None")))
         order_field = self.fields["footer_column_order"]
         order_field.choices = order_field.widget.choices = footer_column_order_choices
+
+    def _populate_cms_page_field(self):
+        if "shoop.simple_cms" in settings.INSTALLED_APPS:
+            from shoop.simple_cms.models import Page
+            self.fields["footer_cms_pages"] = forms.ModelMultipleChoiceField(
+                label=_("Footer CMS pages"),
+                queryset=Page.objects.translated(get_language())
+            )
+
+    def clean(self):
+        cleaned_data = super(ClassicGrayConfigForm, self).clean()
+        cleaned_data["footer_cms_pages"] = [p.pk for p in cleaned_data.get("footer_cms_pages", ())]
+        return cleaned_data

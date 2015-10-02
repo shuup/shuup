@@ -9,7 +9,7 @@
 {% endmacro %}
 
 {% macro cms_column() %}
-    {{ link_list(xtheme.get_cms_links()) }}
+    {{ link_list(xtheme.get_cms_footer_links()) }}
 {% endmacro %}
 
 {% macro html_column() %}
@@ -25,7 +25,9 @@
     {% set col_width = (12 / col_order|length)|int %}
     {% set col_macros = {"cms": cms_column, "html": html_column, "links": links_column} %}
     <div class="container">
+        {% if col_order.length %}
         <hr>
+        {% endif %}
         <div class="row">
             {% for col in col_order %}
                 <div class="col-md-{{ col_width }}">
