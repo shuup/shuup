@@ -56,7 +56,7 @@
             {% if form.errors %}
                 <div class="alert alert-dismissible alert-danger" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <i class="fa fa-exclamation-circle"></i> {% trans %}There were errors on submitted form.{% endtrans %}
+                    <i class="fa fa-exclamation-circle"></i> {% trans %}Please correct the errors below.{% endtrans %}
                 </div>
             {% endif %}
             <input name="init_data" type="hidden" value="{{ init_data }}">
