@@ -34,7 +34,7 @@ class TaxListView(PicotableListView):
         ),
         Column("code", _(u"Code")),
         Column("rate", _("Rate"), display=_format_rate),
-        Column("amount", _(u"Amount")),
+        # Column("amount", _(u"Amount")),
         Column("enabled", _(u"Enabled"), filter_config=true_or_false_filter),
     ]
 
