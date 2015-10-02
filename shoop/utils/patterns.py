@@ -42,7 +42,8 @@ class Pattern(object):
             else:
                 negate = False
             if "-" in piece:
-                piece = tuple(piece.split("-", 1))
+                (min, max) = piece.split("-", 1)
+                piece = (min.strip(), max.strip())
             if negate:
                 self.negative_pieces.add(piece)
             else:
