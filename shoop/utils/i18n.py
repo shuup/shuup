@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 
 import babel
+import babel.numbers
 from babel.numbers import format_currency
 from django.utils import translation
 from django.utils.lru_cache import lru_cache
@@ -38,6 +39,15 @@ def get_current_babel_locale():
     :rtype: babel.Locale
     """
     return get_babel_locale(locale_string=translation.get_language())
+
+
+def format_percent(value, digits):
+    locale = get_current_babel_locale()
+    if not digits:
+        return babel.numbers.format_percent(value, locale)
+    pattern = locale.percent_formats.get(None).pattern
+    new_pattern = pattern.replace("0", "0." + (digits * "#"))
+    return babel.numbers.format_percent(value, new_pattern, locale)
 
 
 def format_money(amount, digits=None, widen=0, locale=None):
