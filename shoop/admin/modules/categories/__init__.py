@@ -14,8 +14,8 @@ import six
 
 
 class CategoryModule(AdminModule):
-    name = _("Products")
-    category = name
+    name = _("Categories")
+    category = _("Products")
     breadcrumbs_menu_entry = MenuEntry(text=name, url="shoop_admin:category.list")
 
     def get_urls(self):
