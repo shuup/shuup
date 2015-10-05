@@ -3,7 +3,7 @@ import fnmatch
 import os
 import posixpath
 import re
-from ast import iter_fields, AST
+from ast import iter_fields, AST, Attribute, Name
 
 if sys.version_info[0] == 3:
     string_types = (str,)
@@ -156,3 +156,11 @@ class XNodeVisitor(object):
                         self.visit(item, parents)
             elif isinstance(value, AST):
                 self.visit(value, parents)
+
+
+def dotify_ast_name(name):
+    if isinstance(name, Attribute):
+        return "%s.%s" % (dotify_ast_name(name.value), name.attr)
+    if isinstance(name, Name):
+        return name.id
+    return "<%s>" % name.__class__.__name__
