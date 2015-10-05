@@ -23,6 +23,11 @@ class Bootstrap3Namespace(object):
     def form(self, form, **kwargs):
         return mark_safe(FormRenderer(form, **kwargs).render())
 
+    def datetime_field(self, field, **kwargs):
+        kwargs.setdefault("widget_class", "datetime")
+        kwargs.setdefault("addon_after", "<span class='fa fa-calendar'></span>")
+        return self.field(field, **kwargs)
+
 
 library.global_function(name="shoop_admin", fn=shoop_admin_template_helpers)
 library.global_function(name="bs3", fn=Bootstrap3Namespace())
