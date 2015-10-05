@@ -42,8 +42,10 @@ class Page(TranslatableModel):
     available_from = models.DateTimeField(null=True, blank=True)
     available_to = models.DateTimeField(null=True, blank=True)
 
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, related_name="+")
-    modified_by = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, related_name="+")
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, blank=True, null=True, related_name="+", on_delete=models.SET_NULL)
+    modified_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, blank=True, null=True, related_name="+", on_delete=models.SET_NULL)
 
     created_on = models.DateTimeField(auto_now_add=True, editable=False)
     modified_on = models.DateTimeField(auto_now=True, editable=False)

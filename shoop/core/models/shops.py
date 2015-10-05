@@ -36,11 +36,11 @@ class Shop(TranslatableShoopModel):
     identifier = InternalIdentifierField(unique=True)
     domain = models.CharField(max_length=128, blank=True, null=True, unique=True)
     status = EnumIntegerField(ShopStatus, default=ShopStatus.DISABLED)
-    owner = models.ForeignKey("Contact", blank=True, null=True)
+    owner = models.ForeignKey("Contact", blank=True, null=True, on_delete=models.SET_NULL)
     options = JSONField(blank=True, null=True)
     currency = CurrencyField(default=_get_default_currency)
     prices_include_tax = models.BooleanField(default=True)
-    logo = FilerImageField(verbose_name=_("logo"), blank=True, null=True)
+    logo = FilerImageField(verbose_name=_("logo"), blank=True, null=True, on_delete=models.SET_NULL)
     maintenance_mode = models.BooleanField(verbose_name=_("maintenance mode"), default=False)
 
     translations = TranslatedFields(

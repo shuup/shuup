@@ -15,7 +15,7 @@ class StockAdjustment(models.Model):
     product = models.ForeignKey("shoop.Product", related_name="+")
     supplier = models.ForeignKey("shoop.Supplier")
     created_on = models.DateTimeField(auto_now_add=True, editable=False, db_index=True)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.PROTECT)
     delta = QuantityField(default=0)
 
     class Meta:

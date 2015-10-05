@@ -43,7 +43,8 @@ class Notification(models.Model):
     A model for persistent notifications to be shown in the admin, etc.
     """
     recipient_type = EnumIntegerField(RecipientType, default=RecipientType.ADMINS)
-    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, related_name="+")
+    recipient = models.ForeignKey(
+        settings.AUTH_USER_MODEL, blank=True, null=True, related_name="+", on_delete=models.SET_NULL)
     created_on = models.DateTimeField(auto_now_add=True, editable=False)
     message = models.CharField(max_length=140, editable=False, default="")
     identifier = InternalIdentifierField(unique=False)
@@ -51,8 +52,8 @@ class Notification(models.Model):
     _data = JSONField(blank=True, null=True, editable=False, db_column="data")
 
     marked_read = models.BooleanField(db_index=True, editable=False, default=False)
-    marked_read_by = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                       blank=True, null=True, editable=False, related_name="+")
+    marked_read_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, blank=True, null=True, editable=False, related_name="+", on_delete=models.SET_NULL)
     marked_read_on = models.DateTimeField(null=True, blank=True)
 
     objects = NotificationManager()

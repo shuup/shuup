@@ -48,7 +48,8 @@ class ShopProduct(MoneyPropped, models.Model):
         "PaymentMethod", related_name='payment_products', verbose_name=_('payment methods'), blank=True
     )
     primary_category = models.ForeignKey(
-        "Category", related_name='primary_shop_products', verbose_name=_('primary category'), blank=True, null=True
+        "Category", related_name='primary_shop_products', verbose_name=_('primary category'), blank=True, null=True,
+        on_delete=models.PROTECT
     )
     categories = models.ManyToManyField(
         "Category", related_name='shop_products', verbose_name=_('categories'), blank=True

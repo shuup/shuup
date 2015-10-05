@@ -56,10 +56,10 @@ class Contact(NameMixin, PolymorphicModel):
         on_delete=models.PROTECT
     )
     default_shipping_method = models.ForeignKey(
-        "ShippingMethod", verbose_name=_('default shipping method'), blank=True, null=True
+        "ShippingMethod", verbose_name=_('default shipping method'), blank=True, null=True, on_delete=models.SET_NULL
     )
     default_payment_method = models.ForeignKey(
-        "PaymentMethod", verbose_name=_('default payment method'), blank=True, null=True
+        "PaymentMethod", verbose_name=_('default payment method'), blank=True, null=True, on_delete=models.SET_NULL
     )
 
     language = LanguageField(verbose_name=_('language'), blank=True)
@@ -73,7 +73,7 @@ class Contact(NameMixin, PolymorphicModel):
     name_ext = models.CharField(max_length=256, blank=True, verbose_name=_('name extension'))
     email = models.EmailField(max_length=256, blank=True, verbose_name=_('email'))
 
-    tax_group = models.ForeignKey("CustomerTaxGroup", blank=True, null=True)
+    tax_group = models.ForeignKey("CustomerTaxGroup", blank=True, null=True, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.full_name

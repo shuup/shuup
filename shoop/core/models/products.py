@@ -169,8 +169,8 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         verbose_name=_('variation parent'))
     stock_behavior = EnumIntegerField(StockBehavior, default=StockBehavior.UNSTOCKED, verbose_name=_('stock'))
     shipping_mode = EnumIntegerField(ShippingMode, default=ShippingMode.NOT_SHIPPED, verbose_name=_('shipping mode'))
-    sales_unit = models.ForeignKey("SalesUnit", verbose_name=_('unit'), blank=True, null=True)
-    tax_class = models.ForeignKey("TaxClass", verbose_name=_('tax class'))
+    sales_unit = models.ForeignKey("SalesUnit", verbose_name=_('unit'), blank=True, null=True, on_delete=models.PROTECT)
+    tax_class = models.ForeignKey("TaxClass", verbose_name=_('tax class'), on_delete=models.PROTECT)
 
     # Identification
     type = models.ForeignKey(
@@ -189,7 +189,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
     category = models.ForeignKey(
         "Category", related_name='primary_products', blank=True, null=True,
         verbose_name=_('primary category'),
-        help_text=_("only used for administration and reporting"))
+        help_text=_("only used for administration and reporting"), on_delete=models.PROTECT)
 
     # Physical dimensions
     width = MeasurementField(unit="mm", verbose_name=_('width (mm)'))
@@ -199,7 +199,9 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
     gross_weight = MeasurementField(unit="g", verbose_name=_('gross weight (g)'))
 
     # Misc.
-    manufacturer = models.ForeignKey("Manufacturer", blank=True, null=True, verbose_name=_('manufacturer'))
+    manufacturer = models.ForeignKey(
+        "Manufacturer", blank=True, null=True,
+        verbose_name=_('manufacturer'), on_delete=models.PROTECT)
     primary_image = models.ForeignKey(
         "ProductMedia", null=True, blank=True,
         related_name="primary_image_for_products",

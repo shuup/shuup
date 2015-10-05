@@ -76,7 +76,7 @@ class Category(MPTTModel, TranslatableModel):
     shops = models.ManyToManyField("Shop", blank=True, related_name="categories")
     identifier = InternalIdentifierField(unique=True)
     status = EnumIntegerField(CategoryStatus, db_index=True, verbose_name=_('status'), default=CategoryStatus.INVISIBLE)
-    image = FilerImageField(verbose_name=_('image'), blank=True, null=True)
+    image = FilerImageField(verbose_name=_('image'), blank=True, null=True, on_delete=models.SET_NULL)
     ordering = models.IntegerField(default=0, verbose_name=_('ordering'))
     visibility = EnumIntegerField(
         CategoryVisibility, db_index=True, default=CategoryVisibility.VISIBLE_TO_ALL,

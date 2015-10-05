@@ -30,7 +30,7 @@ class TaxRule(models.Model):
     postal_codes_pattern = models.CharField(max_length=500, blank=True)
     # TODO: (TAX) Priority is not supported yet
     priority = models.IntegerField(default=0, help_text=PRIORITY_HELP)
-    tax = models.ForeignKey(Tax)
+    tax = models.ForeignKey(Tax, on_delete=models.PROTECT)
 
     def matches(self, taxing_context):
         if self.country_codes_pattern:
