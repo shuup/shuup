@@ -30,7 +30,8 @@ gulp.task("bower", [], function(complete) {
             var install = bower.commands.install(
                 [],
                 {},
-                {cwd: dir, directory: "bower_components"}
+                {cwd: dir, directory: "bower_components"},
+                {"interactive": false}
             );
             install.on("log", function(log) {
                 gutil.log("Bower/" + bowerJsonPath + ":" + log.message);

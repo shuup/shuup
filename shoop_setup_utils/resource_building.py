@@ -57,6 +57,7 @@ class Builder(object):
         self.command = 'npm run build'.split()
         self.env = os.environ.copy()
         self.env['NODE_ENV'] = 'production' if self.opts.production else ''
+        self.env['CI'] = 'true'
         self.cache_base = os.path.join(CACHE_ROOT, 'shoop', 'build_resources')
 
         self._cachedirs = {}
