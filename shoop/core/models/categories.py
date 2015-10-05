@@ -72,11 +72,13 @@ class CategoryManager(TranslatableManager, TreeManager):
 
 @python_2_unicode_compatible
 class Category(MPTTModel, TranslatableModel):
-    parent = TreeForeignKey('self', null=True, blank=True, related_name='children', verbose_name=_('parent category'))
+    parent = TreeForeignKey(
+        'self', null=True, blank=True, related_name='children',
+        verbose_name=_('parent category'), on_delete=models.CASCADE)
     shops = models.ManyToManyField("Shop", blank=True, related_name="categories")
     identifier = InternalIdentifierField(unique=True)
     status = EnumIntegerField(CategoryStatus, db_index=True, verbose_name=_('status'), default=CategoryStatus.INVISIBLE)
-    image = FilerImageField(verbose_name=_('image'), blank=True, null=True)
+    image = FilerImageField(verbose_name=_('image'), blank=True, null=True, on_delete=models.SET_NULL)
     ordering = models.IntegerField(default=0, verbose_name=_('ordering'))
     visibility = EnumIntegerField(
         CategoryVisibility, db_index=True, default=CategoryVisibility.VISIBLE_TO_ALL,

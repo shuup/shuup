@@ -24,16 +24,19 @@ class StoredBasket(models.Model):
     # A combination of the PK and key is used to retrieve a basket for session situations.
     key = models.CharField(max_length=32, default=generate_key)
 
-    shop = models.ForeignKey(Shop)
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
 
     customer = models.ForeignKey(
         Contact, blank=True, null=True,
+        on_delete=models.CASCADE,
         related_name="customer_baskets")
     orderer = models.ForeignKey(
         PersonContact, blank=True, null=True,
+        on_delete=models.CASCADE,
         related_name="orderer_baskets")
     creator = models.ForeignKey(
         settings.AUTH_USER_MODEL, blank=True, null=True,
+        on_delete=models.CASCADE,
         related_name="baskets_created")
 
     created_on = models.DateTimeField(auto_now_add=True, db_index=True, editable=False)

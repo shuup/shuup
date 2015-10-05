@@ -74,7 +74,7 @@ class Shipment(models.Model):
 @python_2_unicode_compatible
 class ShipmentProduct(models.Model):
     shipment = models.ForeignKey(Shipment, related_name='products', on_delete=models.PROTECT)
-    product = models.ForeignKey("Product", related_name='shipments')
+    product = models.ForeignKey("Product", related_name='shipments', on_delete=models.CASCADE)
     quantity = QuantityField()
     unit_volume = MeasurementField(unit="m3")  # volume is m^3, not mm^3, because mm^3 are tiny. like ants.
     unit_weight = MeasurementField(unit="g")

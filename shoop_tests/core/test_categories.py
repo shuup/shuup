@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
+from filer.models import Folder, Image
 from shoop.core.models import Category, CategoryVisibility, CategoryStatus, get_person_contact, AnonymousContact
 from shoop.testing.factories import DEFAULT_NAME
 from shoop_tests.utils.fixtures import regular_user
@@ -51,3 +52,20 @@ def test_category_visibility(admin_user, regular_user):
         assert category.is_visible(customer) == expect, "Direct visibility of %s for %s as expected" % (category.identifier, customer)
 
     assert not Category.objects.all_except_deleted().filter(pk=deleted_public_category.pk).exists(), "Deleted category does not show up in 'all_except_deleted'"
+
+
+@pytest.mark.django_db
+def test_category_wont_be_deleted():
+    category = Category.objects.create(
+        status=CategoryStatus.VISIBLE,
+        visibility=CategoryVisibility.VISIBLE_TO_ALL,
+        identifier="visible_public", name=DEFAULT_NAME)
+
+    folder = Folder.objects.create(name="Root")
+    img = Image.objects.create(name="imagefile", folder=folder)
+
+    category.image = img
+    category.save()
+    img.delete()
+
+    Category.objects.get(pk=1)

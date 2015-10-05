@@ -153,7 +153,7 @@ class OrderQuerySet(models.QuerySet):
 @python_2_unicode_compatible
 class Order(models.Model):
     # Identification
-    shop = UnsavedForeignKey("Shop")
+    shop = UnsavedForeignKey("Shop", on_delete=models.PROTECT)
     created_on = models.DateTimeField(auto_now_add=True, editable=False)
     identifier = InternalIdentifierField(unique=True, db_index=True, verbose_name=_('order identifier'))
     # TODO: label is actually a choice field, need to check migrations/choice deconstruction
@@ -168,9 +168,11 @@ class Order(models.Model):
     # Contact information
     customer = UnsavedForeignKey(
         "Contact", related_name='customer_orders', blank=True, null=True,
+        on_delete=models.PROTECT,
         verbose_name=_('customer'))
     orderer = UnsavedForeignKey(
         "PersonContact", related_name='orderer_orders', blank=True, null=True,
+        on_delete=models.PROTECT,
         verbose_name=_('orderer'))
     billing_address = UnsavedForeignKey(
         "Address", related_name="billing_orders", blank=True, null=True,
@@ -187,9 +189,10 @@ class Order(models.Model):
     # Status
     creator = UnsavedForeignKey(
         settings.AUTH_USER_MODEL, related_name='orders_created', blank=True, null=True,
+        on_delete=models.PROTECT,
         verbose_name=_('creating user'))
     deleted = models.BooleanField(db_index=True, default=False)
-    status = UnsavedForeignKey("OrderStatus", verbose_name=_('status'))
+    status = UnsavedForeignKey("OrderStatus", verbose_name=_('status'), on_delete=models.PROTECT)
     payment_status = EnumIntegerField(
         PaymentStatus, db_index=True, default=PaymentStatus.NOT_PAID,
         verbose_name=_('payment status'))
