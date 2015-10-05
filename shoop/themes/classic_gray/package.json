@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npm i && bower install && gulp"
+    "build": "npm i && bower install --config.interactive=false && gulp"
   },
   "author": "",
   "license": "AGPL-3.0",
