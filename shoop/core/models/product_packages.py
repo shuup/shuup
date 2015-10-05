@@ -12,8 +12,8 @@ from shoop.core.fields import QuantityField
 
 
 class ProductPackageLink(models.Model):
-    parent = models.ForeignKey("Product", related_name='+')
-    child = models.ForeignKey("Product", related_name='+')
+    parent = models.ForeignKey("Product", related_name='+', on_delete=models.CASCADE)
+    child = models.ForeignKey("Product", related_name='+', on_delete=models.CASCADE)
     quantity = QuantityField(default=1)
 
     class Meta:

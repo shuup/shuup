@@ -59,7 +59,7 @@ def define_log_model(model_class):
         abstract = False
 
     class_dict = {
-        "target": models.ForeignKey(model_class, related_name="log_entries"),
+        "target": models.ForeignKey(model_class, related_name="log_entries", on_delete=models.CASCADE),
         "__module__": model_class.__module__,
         "Meta": Meta,
         "logged_model": model_class,

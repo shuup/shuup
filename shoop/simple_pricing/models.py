@@ -15,9 +15,9 @@ from shoop.utils.properties import MoneyPropped, PriceProperty
 
 
 class SimpleProductPrice(MoneyPropped, models.Model):
-    product = models.ForeignKey("shoop.Product", related_name="+")
-    shop = models.ForeignKey("shoop.Shop", db_index=True)
-    group = models.ForeignKey("shoop.ContactGroup", db_index=True)
+    product = models.ForeignKey("shoop.Product", related_name="+", on_delete=models.CASCADE)
+    shop = models.ForeignKey("shoop.Shop", db_index=True, on_delete=models.CASCADE)
+    group = models.ForeignKey("shoop.ContactGroup", db_index=True, on_delete=models.CASCADE)
     price = PriceProperty("price_value", "shop.currency", "shop.prices_include_tax")
     price_value = MoneyValueField()
 

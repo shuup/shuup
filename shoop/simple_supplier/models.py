@@ -12,8 +12,8 @@ from shoop.core.fields import QuantityField
 
 
 class StockAdjustment(models.Model):
-    product = models.ForeignKey("shoop.Product", related_name="+")
-    supplier = models.ForeignKey("shoop.Supplier")
+    product = models.ForeignKey("shoop.Product", related_name="+", on_delete=models.CASCADE)
+    supplier = models.ForeignKey("shoop.Supplier", on_delete=models.CASCADE)
     created_on = models.DateTimeField(auto_now_add=True, editable=False, db_index=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.PROTECT)
     delta = QuantityField(default=0)
@@ -23,8 +23,8 @@ class StockAdjustment(models.Model):
 
 
 class StockCount(models.Model):
-    product = models.ForeignKey("shoop.Product", related_name="+", editable=False)
-    supplier = models.ForeignKey("shoop.Supplier", editable=False)
+    product = models.ForeignKey("shoop.Product", related_name="+", editable=False, on_delete=models.CASCADE)
+    supplier = models.ForeignKey("shoop.Supplier", editable=False, on_delete=models.CASCADE)
     logical_count = QuantityField(default=0, editable=False)
     physical_count = QuantityField(default=0, editable=False)
 

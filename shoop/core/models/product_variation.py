@@ -36,7 +36,7 @@ class ProductVariationLinkStatus(Enum):
 
 @python_2_unicode_compatible
 class ProductVariationVariable(TranslatableModel):
-    product = models.ForeignKey("Product", related_name='variation_variables')
+    product = models.ForeignKey("Product", related_name='variation_variables', on_delete=models.CASCADE)
     identifier = InternalIdentifierField(unique=False)
     translations = TranslatedFields(
         name=models.CharField(max_length=128, verbose_name=_('name')),

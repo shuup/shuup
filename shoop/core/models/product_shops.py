@@ -22,8 +22,8 @@ from shoop.utils.properties import MoneyPropped, PriceProperty
 
 
 class ShopProduct(MoneyPropped, models.Model):
-    shop = models.ForeignKey("Shop", related_name="shop_products")
-    product = UnsavedForeignKey("Product", related_name="shop_products")
+    shop = models.ForeignKey("Shop", related_name="shop_products", on_delete=models.CASCADE)
+    product = UnsavedForeignKey("Product", related_name="shop_products", on_delete=models.CASCADE)
     suppliers = models.ManyToManyField("Supplier", related_name="shop_products", blank=True)
 
     visible = models.BooleanField(default=True, db_index=True)

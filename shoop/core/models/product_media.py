@@ -34,12 +34,12 @@ class ProductMediaKind(Enum):
 @python_2_unicode_compatible
 class ProductMedia(TranslatableModel):
     identifier = InternalIdentifierField(unique=True)
-    product = models.ForeignKey("Product", related_name="media")
+    product = models.ForeignKey("Product", related_name="media", on_delete=models.CASCADE)
     shops = models.ManyToManyField("Shop", related_name="product_media")
     kind = EnumIntegerField(
         ProductMediaKind, db_index=True, default=ProductMediaKind.GENERIC_FILE, verbose_name=_('kind')
     )
-    file = FilerFileField(blank=True, null=True, verbose_name=_('file'))
+    file = FilerFileField(blank=True, null=True, verbose_name=_('file'), on_delete=models.CASCADE)
     external_url = models.URLField(
         blank=True, null=True, verbose_name=u'URL',
         help_text=_("Enter URL to external file. If this field is filled, the selected media doesn't apply.")

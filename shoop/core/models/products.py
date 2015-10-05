@@ -540,8 +540,8 @@ ProductLogEntry = define_log_model(Product)
 
 
 class ProductCrossSell(models.Model):
-    product1 = models.ForeignKey(Product, related_name="cross_sell_1")
-    product2 = models.ForeignKey(Product, related_name="cross_sell_2")
+    product1 = models.ForeignKey(Product, related_name="cross_sell_1", on_delete=models.CASCADE)
+    product2 = models.ForeignKey(Product, related_name="cross_sell_2", on_delete=models.CASCADE)
     weight = models.IntegerField(default=0)
     type = EnumIntegerField(ProductCrossSellType)
 
@@ -552,7 +552,7 @@ class ProductCrossSell(models.Model):
 
 class ProductAttribute(AppliedAttribute):
     _applied_fk_field = "product"
-    product = models.ForeignKey(Product, related_name='attributes')
+    product = models.ForeignKey(Product, related_name='attributes', on_delete=models.CASCADE)
 
     translations = TranslatedFields(
         translated_string_value=models.TextField(blank=True)
