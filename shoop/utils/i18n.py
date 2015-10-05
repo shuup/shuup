@@ -31,14 +31,24 @@ def get_babel_locale(locale_string):
     return babel.Locale.parse(locale_string, "-")
 
 
-def get_current_babel_locale():
+def get_current_babel_locale(fallback="en-US-POSIX"):
     """
     Get a Babel locale based on the thread's locale context.
 
+    :param fallback:
+      Locale to fallback to; set to None to raise an exception instead.
     :return: Babel Locale
     :rtype: babel.Locale
     """
-    return get_babel_locale(locale_string=translation.get_language())
+    locale = get_babel_locale(locale_string=translation.get_language())
+    if not locale:
+        if fallback:
+            locale = get_babel_locale(fallback)
+        if not locale:
+            raise ValueError(
+                "Failed to get current babel locale (lang=%s)" %
+                (translation.get_language(),))
+    return locale
 
 
 def format_percent(value, digits):
