@@ -15,35 +15,34 @@
             <form method="post" id="page_form">
             {% csrf_token %}
             {% call content_block(_("General Information"), "fa-info-circle") %}
-            <div class="row language-tabs">
-                <div class="col-md-6 col-md-push-3">
-                    <ul class="nav nav-tabs">
-                        {% for language in form.languages %}
-                        <li role="presentation" {% if loop.first %}class="active"{% endif %}>
-                            <a href="#language-{{ language }}" role="tab" data-toggle="tab" id="tab-{{ language }}">{{ form.language_names[language] }}</a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-            <div class="tab-content">
-                {% for language in form.languages %}
-                    <div class="tab-pane {% if loop.first %}active{% endif %}" id="language-{{ language }}">
-                        {% set map = form.trans_name_map[language] %}
-                        {{ bs3.field(form[map.title]) }}
-                        {{ bs3.field(form[map.url]) }}
-                        {{ bs3.field(form[map.content], widget_class="remarkable-field") }}
+                <div class="row language-tabs">
+                    <div class="col-md-6 col-md-push-3">
+                        <ul class="nav nav-tabs">
+                            {% for language in form.languages %}
+                            <li role="presentation" {% if loop.first %}class="active"{% endif %}>
+                                <a href="#language-{{ language }}" role="tab" data-toggle="tab" id="tab-{{ language }}">{{ form.language_names[language] }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
                     </div>
-                {% endfor %}
-            </div>
+                </div>
+                <div class="tab-content">
+                    {% for language in form.languages %}
+                        <div class="tab-pane {% if loop.first %}active{% endif %}" id="language-{{ language }}">
+                            {% set map = form.trans_name_map[language] %}
+                            {{ bs3.field(form[map.title]) }}
+                            {{ bs3.field(form[map.url]) }}
+                            {{ bs3.field(form[map.content], widget_class="remarkable-field") }}
+                        </div>
+                    {% endfor %}
+                </div>
             {% endcall %}
 
             {% call content_block(_("Availability"), "fa-clock-o") %}
                 {{ bs3.field(form.visible_in_menu) }}
-                {{ bs3.field(form.available_from) }}
-                {{ bs3.field(form.available_to) }}
+                {{ bs3.datetime_field(form.available_from) }}
+                {{ bs3.datetime_field(form.available_to) }}
             {% endcall %}
-
 
             {% call content_block(_("Extras"), "fa-plus-circle") %}
                 {{ bs3.field(form.identifier) }}
