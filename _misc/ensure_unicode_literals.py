@@ -99,10 +99,7 @@ def fix_file(path):
 def gather_files(dirnames, filenames):
     files_to_process = []
     files_to_process.extend(filename for filename in filenames if filename.endswith(".py"))
-    for dirname in dirnames:
-        for filename in find_files(dirname):
-            if filename.endswith(".py"):
-                files_to_process.append(filename)
+    files_to_process.extend(find_files(dirnames, allowed_extensions=(".py",)))
     return files_to_process
 
 

@@ -1,7 +1,13 @@
+import sys
 import fnmatch
 import os
 import posixpath
 import re
+
+if sys.version_info[0] == 3:
+    string_types = (str,)
+else:
+    string_types = (basestring,)  # noqa
 
 IGNORED_DIRS = [
     '*.egg-info',
@@ -60,18 +66,19 @@ IGNORED_PATTERNS = [
 
 
 def find_files(
-        root, generated_resources=None,
+        roots, generated_resources=None,
         ignored_patterns=IGNORED_PATTERNS,
         ignored_dirs=IGNORED_DIRS,
         ignored_path_regexps=IGNORED_PATH_REGEXPS,
         allowed_extensions=None
-    ):
+):
     """
-    Find files in `root` with ignores, `generated_resources` handling etc.
+    Find files in `roots` with ignores, `generated_resources` handling etc.
 
-    :param root: Root directory
-    :type root: str
-    :param generated_resources: Output set of generated resources (mutated during find_files)
+    :param roots: Root directory or directories
+    :type roots: str
+    :param generated_resources:
+        Output set of generated resources (mutated during find_files)
     :type generated_resources: set
     :param ignored_patterns: fnmatch file patterns to ignore
     :type ignored_patterns: Iterable[str]
@@ -79,33 +86,49 @@ def find_files(
     :type ignored_dirs: Iterable[str]
     :param ignored_path_regexps: Path regexps to ignore
     :type ignored_path_regexps: Iterable[str]
-    :param allowed_extensions: Extensions (really filename suffixes) to ignore (optional)
+    :param allowed_extensions:
+        Extensions (really filename suffixes) to ignore (optional)
     :type allowed_extensions: Iterable[str]|None
     :return: Iterable of file paths
     :rtype: Iterable[str]
     """
     if generated_resources is None:
         generated_resources = set()
-    for (path, dirs, files) in os.walk(root):
-        path = posixpath.normpath(path.replace(os.sep, "/"))
-        remove_ignored_directories(path, dirs, ignored_dirs, ignored_path_regexps)
-        for filename in files:
-            filepath = posixpath.join(path, filename)
-            if filename == "generated_resources.txt":
-                with open(filepath, "r") as generated_resources_manifest:
-                    for line in generated_resources_manifest:
-                        line = line.strip()
-                        if line:
-                            generated_resources.add(posixpath.join(path, line))
-                continue
-            if not all(not fnmatch.fnmatch(filename, x) for x in ignored_patterns):
-                continue
-            if allowed_extensions is not None and not any(filepath.endswith(extension) for extension in allowed_extensions):
-                continue
-            yield filepath
+    if isinstance(roots, string_types):
+        roots = [roots]
+    if isinstance(allowed_extensions, string_types):
+        allowed_extensions = set([allowed_extensions])
+    for root in roots:
+        for (path, dirs, files) in os.walk(root):
+            path = posixpath.normpath(path.replace(os.sep, "/"))
+            _remove_ignored_directories(path, dirs, ignored_dirs, ignored_path_regexps)
+            for filename in files:
+                filepath = posixpath.join(path, filename)
+                if filename == "generated_resources.txt":
+                    _process_generated_resources(path, filepath, generated_resources)
+                    continue
+                if not all(not fnmatch.fnmatch(filename, x) for x in ignored_patterns):
+                    continue
+                if not _check_allowed_extension(filepath, allowed_extensions):
+                    continue
+                yield filepath
 
 
-def remove_ignored_directories(path, dirs, ignored_dirs, ignored_path_regexps):
+def _check_allowed_extension(filepath, allowed_extensions):
+    if allowed_extensions is None:
+        return True
+    return any(filepath.endswith(extension) for extension in allowed_extensions)
+
+
+def _process_generated_resources(path, manifest_filename, generated_resources):
+    with open(manifest_filename, "r") as generated_resources_manifest:
+        for line in generated_resources_manifest:
+            line = line.strip()
+            if line:
+                generated_resources.add(posixpath.join(path, line))
+
+
+def _remove_ignored_directories(path, dirs, ignored_dirs, ignored_path_regexps):
     matches = set()
     for ignored_dir in ignored_dirs:
         matches.update(set(dir for dir in dirs if fnmatch.fnmatch(dir, ignored_dir)))
