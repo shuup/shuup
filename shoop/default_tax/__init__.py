@@ -17,7 +17,7 @@ class AppConfig(shoop.apps.AppConfig):
 
     provides = {
         "tax_module": ["shoop.default_tax.module:DefaultTaxModule"],
-        "admin_module": ["shoop.default_tax.admin_module:DefaultTaxAdminModule"],
+        "admin_module": ["shoop.default_tax.admin_module:TaxRulesAdminModule"],
     }
 
 

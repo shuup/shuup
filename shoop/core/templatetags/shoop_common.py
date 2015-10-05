@@ -11,13 +11,15 @@ from datetime import date
 from json import dumps as json_dump
 
 from babel.dates import format_date, format_datetime, format_time
-from babel.numbers import format_decimal, format_percent
+from babel.numbers import format_decimal
 from django.utils.safestring import mark_safe
 from django.utils.timezone import localtime
 from django_jinja import library
 from jinja2.runtime import Undefined
 
-from shoop.utils.i18n import format_money, get_current_babel_locale
+from shoop.utils.i18n import (
+    format_money, get_current_babel_locale, format_percent
+)
 from shoop.utils.serialization import ExtendedJSONEncoder
 
 
@@ -41,13 +43,7 @@ def money(amount, digits=None, widen=0):
 
 @library.filter
 def percent(value, ndigits=3):
-    locale = get_current_babel_locale()
-    if not ndigits:
-        return format_percent(value, locale=locale)
-    else:
-        format = locale.percent_formats.get(None)
-        new_fmt = format.pattern.replace("0", "0." + (ndigits * "#"))
-        return format_percent(value, format=new_fmt, locale=locale)
+    return format_percent(value, ndigits)
 
 
 @library.filter

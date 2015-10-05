@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 
 import babel
+import babel.numbers
 from babel.numbers import format_currency
 from django.utils import translation
 from django.utils.lru_cache import lru_cache
@@ -30,14 +31,33 @@ def get_babel_locale(locale_string):
     return babel.Locale.parse(locale_string, "-")
 
 
-def get_current_babel_locale():
+def get_current_babel_locale(fallback="en-US-POSIX"):
     """
     Get a Babel locale based on the thread's locale context.
 
+    :param fallback:
+      Locale to fallback to; set to None to raise an exception instead.
     :return: Babel Locale
     :rtype: babel.Locale
     """
-    return get_babel_locale(locale_string=translation.get_language())
+    locale = get_babel_locale(locale_string=translation.get_language())
+    if not locale:
+        if fallback:
+            locale = get_babel_locale(fallback)
+        if not locale:
+            raise ValueError(
+                "Failed to get current babel locale (lang=%s)" %
+                (translation.get_language(),))
+    return locale
+
+
+def format_percent(value, digits):
+    locale = get_current_babel_locale()
+    if not digits:
+        return babel.numbers.format_percent(value, locale)
+    pattern = locale.percent_formats.get(None).pattern
+    new_pattern = pattern.replace("0", "0." + (digits * "#"))
+    return babel.numbers.format_percent(value, new_pattern, locale)
 
 
 def format_money(amount, digits=None, widen=0, locale=None):

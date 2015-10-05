@@ -6,16 +6,18 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from django.utils.translation import ugettext_lazy as _
+
 from shoop.admin.base import AdminModule, MenuEntry
 from shoop.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shoop.default_tax.models import TaxRule
 
 
-class DefaultTaxAdminModule(AdminModule):
-    name = _("Default Tax Module")
+class TaxRulesAdminModule(AdminModule):
+    name = _("Tax Rules")
     category = _("Taxes")
-    breadcrumbs_menu_entry = MenuEntry(category, "shoop_admin:default_tax.tax_rule.list")
+    breadcrumbs_menu_entry = MenuEntry(name, "shoop_admin:default_tax.tax_rule.list")
 
     def get_urls(self):
         return get_edit_and_list_urls(
@@ -27,7 +29,7 @@ class DefaultTaxAdminModule(AdminModule):
     def get_menu_entries(self, request):
         return [
             MenuEntry(
-                text=_("List Tax Rules"), icon="fa fa-file-text",
+                text=_("Tax Rules"), icon="fa fa-file-text",
                 url="shoop_admin:default_tax.tax_rule.list",
                 category=self.category, aliases=[_("Show tax rules")]
             )

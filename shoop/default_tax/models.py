@@ -7,32 +7,51 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.utils.encoding import force_text, python_2_unicode_compatible
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.core.models import CustomerTaxGroup, Tax, TaxClass
 from shoop.utils.patterns import pattern_matches
 
-PRIORITY_HELP = _(
-    'Rules with same priority are value-added (e.g. US taxes) '
-    'and rules with different priority are compound taxes '
-    '(e.g. Canada Quebec PST case)'
-)
-
 
 @python_2_unicode_compatible
 class TaxRule(models.Model):
     enabled = models.BooleanField(default=True, verbose_name=_('enabled'), db_index=True)
-    tax_classes = models.ManyToManyField(TaxClass)
-    customer_tax_groups = models.ManyToManyField(CustomerTaxGroup, blank=True)
-    country_codes_pattern = models.CharField(max_length=300, blank=True)
-    region_codes_pattern = models.CharField(max_length=500, blank=True)
-    postal_codes_pattern = models.CharField(max_length=500, blank=True)
-    # TODO: (TAX) Priority is not supported yet
-    priority = models.IntegerField(default=0, help_text=PRIORITY_HELP)
+    tax_classes = models.ManyToManyField(
+        TaxClass,
+        verbose_name=_("Tax classes"), help_text=_(
+            "Tax classes of the items to be taxed"))
+    customer_tax_groups = models.ManyToManyField(
+        CustomerTaxGroup, blank=True,
+        verbose_name=_("Customer tax groups"))
+    country_codes_pattern = models.CharField(
+        max_length=300, blank=True,
+        verbose_name=_("Country codes pattern"))
+    region_codes_pattern = models.CharField(
+        max_length=500, blank=True,
+        verbose_name=_("Region codes pattern"))
+    postal_codes_pattern = models.CharField(
+        max_length=500, blank=True,
+        verbose_name=_("Postal codes pattern"))
+    priority = models.IntegerField(
+        default=0,
+        verbose_name=_("priority"), help_text=_(
+            "Rules with same priority are value-added (e.g. US taxes) "
+            "and rules with different priority are compound taxes "
+            "(e.g. Canada Quebec PST case)"))
     tax = models.ForeignKey(Tax, on_delete=models.PROTECT)
 
     def matches(self, taxing_context):
+        """
+        Check if this tax rule matches given taxing context.
+
+        :type taxing_context: shoop.core.taxing.TaxingContext
+        """
+        if taxing_context.customer_tax_group:
+            tax_groups = set(self.customer_tax_groups.all())
+            if tax_groups:
+                if taxing_context.customer_tax_group not in tax_groups:
+                    return False
         if self.country_codes_pattern:
             if not pattern_matches(self.country_codes_pattern, taxing_context.country_code):
                 return False
@@ -45,10 +64,4 @@ class TaxRule(models.Model):
         return True
 
     def __str__(self):
-        tax_classes = sorted(self.tax_classes.values_list("identifier", flat=True))
-        customer_tax_groups = sorted(self.customer_tax_groups.values_list("identifier", flat=True))
-        return ("%s for %s: %s" % (
-            ", ".join(force_text(identifier) for identifier in tax_classes),
-            ", ".join(force_text(identifier) for identifier in customer_tax_groups),
-            self.tax
-        ))
+        return _("Tax rule {} ({})").format(self.pk, self.tax)
