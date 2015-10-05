@@ -42,6 +42,16 @@ class TaxRule(models.Model):
     tax = models.ForeignKey(Tax, on_delete=models.PROTECT)
 
     def matches(self, taxing_context):
+        """
+        Check if this tax rule matches given taxing context.
+
+        :type taxing_context: shoop.core.taxing.TaxingContext
+        """
+        if taxing_context.customer_tax_group:
+            tax_groups = set(self.customer_tax_groups.all())
+            if tax_groups:
+                if taxing_context.customer_tax_group not in tax_groups:
+                    return False
         if self.country_codes_pattern:
             if not pattern_matches(self.country_codes_pattern, taxing_context.country_code):
                 return False
