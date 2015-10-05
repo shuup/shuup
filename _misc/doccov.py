@@ -16,6 +16,7 @@ from django.utils.text import slugify
 import jinja2
 import os
 import ast
+from sanity_utils import find_files
 
 _paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
 
@@ -335,16 +336,11 @@ class DocCov(object):
     def add_root(self, path):
         path = os.path.realpath(path)
         if os.path.isdir(path):
-            for dirpath, dirnames, filenames in os.walk(path):
-                for filename in filenames:
-                    if filename.endswith('.py'):
-                        fullname = os.path.join(dirpath, filename)
-
-                        if filename.startswith("test_"):
-                            self.log.info("Skipping: %s" % fullname)
-                            continue
-
-                        self.filenames.add(fullname)
+            for filepath in find_files(path, allowed_extensions=(".py",)):
+                if filepath.startswith("test_"):
+                    self.log.info("Skipping: %s" % filepath)
+                    continue
+                self.filenames.add(filepath)
         elif path.endswith('.py'):
             self.filenames.add(path)
 

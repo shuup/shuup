@@ -5,30 +5,15 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-import re
-import os
+from ast import parse, BinOp, Mod
+
 import click
-from ast import parse, iter_fields, AST, BinOp, Mod
+
+import re
+from sanity_utils import find_files, XNodeVisitor
 from six import text_type
 
 encoding_comment_regexp = re.compile(r'^#.+coding[=:]\s*([-\w.]+).+$', re.MULTILINE | re.I)
-
-
-class XNodeVisitor(object):
-    def visit(self, node, parents=None):
-        method = 'visit_' + node.__class__.__name__
-        visitor = getattr(self, method, self.generic_visit)
-        return visitor(node=node, parents=parents)
-
-    def generic_visit(self, node, parents=None):
-        parents = (parents or []) + [node]
-        for field, value in iter_fields(node):
-            if isinstance(value, list):
-                for item in value:
-                    if isinstance(item, AST):
-                        self.visit(item, parents)
-            elif isinstance(value, AST):
-                self.visit(value, parents)
 
 
 class StringVisitor(XNodeVisitor):
@@ -99,12 +84,7 @@ def fix_file(path):
 def gather_files(dirnames, filenames):
     files_to_process = []
     files_to_process.extend(filename for filename in filenames if filename.endswith(".py"))
-    if dirnames:
-        for dirname in dirnames:
-            for path, dirnames, filenames in os.walk(dirname):
-                for filename in filenames:
-                    if filename.endswith(".py"):
-                        files_to_process.append(os.path.join(path, filename))
+    files_to_process.extend(find_files(dirnames, allowed_extensions=(".py",)))
     return files_to_process
 
 
