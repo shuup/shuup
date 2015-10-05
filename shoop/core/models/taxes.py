@@ -30,21 +30,23 @@ class Tax(MoneyPropped, ImmutableMixin, TranslatableShoopModel):
         unique=True, editable=True, verbose_name=_("code"), help_text="")
 
     translations = TranslatedFields(
-        name=models.CharField(max_length=64),
+        name=models.CharField(max_length=64, verbose_name=_("name")),
     )
 
     rate = models.DecimalField(
         max_digits=6, decimal_places=5, blank=True, null=True,
-        verbose_name=_('tax rate'),
-        help_text=_("The percentage rate of the tax. Mutually exclusive with flat amounts.")
-    )
+        verbose_name=_("tax rate"), help_text=_(
+            "The percentage rate of the tax."))
     amount = MoneyProperty('amount_value', 'currency')
     amount_value = MoneyValueField(
         default=None, blank=True, null=True,
-        verbose_name=_('tax amount'),
-        help_text=_("The flat amount of the tax. Mutually exclusive with percentage rates.")
-    )
-    currency = CurrencyField(default=None, blank=True, null=True)
+        verbose_name=_("tax amount value"), help_text=_(
+            "The flat amount of the tax. "
+            "Mutually exclusive with percentage rates."))
+    currency = CurrencyField(
+        default=None, blank=True, null=True,
+        verbose_name=_("currency of tax amount"))
+
     enabled = models.BooleanField(default=True, verbose_name=_('enabled'))
 
     def clean(self):
