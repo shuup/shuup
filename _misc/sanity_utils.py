@@ -3,6 +3,7 @@ import fnmatch
 import os
 import posixpath
 import re
+from ast import iter_fields, AST
 
 if sys.version_info[0] == 3:
     string_types = (str,)
@@ -138,3 +139,20 @@ def _remove_ignored_directories(path, dirs, ignored_dirs, ignored_path_regexps):
 
     for ignored_dir in matches:
         dirs.remove(ignored_dir)
+
+
+class XNodeVisitor(object):
+    def visit(self, node, parents=None):
+        method = 'visit_' + node.__class__.__name__
+        visitor = getattr(self, method, self.generic_visit)
+        return visitor(node=node, parents=parents)
+
+    def generic_visit(self, node, parents=None):
+        parents = (parents or []) + [node]
+        for field, value in iter_fields(node):
+            if isinstance(value, list):
+                for item in value:
+                    if isinstance(item, AST):
+                        self.visit(item, parents)
+            elif isinstance(value, AST):
+                self.visit(value, parents)
