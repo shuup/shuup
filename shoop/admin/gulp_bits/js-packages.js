@@ -27,7 +27,8 @@ module.exports = {
             "js/content-blocks.js",
             "js/remarkable-field.js",
             "js/form-utils.js",
-            "js/jquery.form-submission-attributes.polyfill.js"
+            "js/jquery.form-submission-attributes.polyfill.js",
+            "js/datetimepicker.js"
         ]
     },
     "dashboard": {
