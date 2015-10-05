@@ -6,9 +6,9 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import re
-import os
 import click
 from ast import parse, iter_fields, AST, BinOp, Mod
+from sanity_utils import find_files
 from six import text_type
 
 encoding_comment_regexp = re.compile(r'^#.+coding[=:]\s*([-\w.]+).+$', re.MULTILINE | re.I)
@@ -99,12 +99,10 @@ def fix_file(path):
 def gather_files(dirnames, filenames):
     files_to_process = []
     files_to_process.extend(filename for filename in filenames if filename.endswith(".py"))
-    if dirnames:
-        for dirname in dirnames:
-            for path, dirnames, filenames in os.walk(dirname):
-                for filename in filenames:
-                    if filename.endswith(".py"):
-                        files_to_process.append(os.path.join(path, filename))
+    for dirname in dirnames:
+        for filename in find_files(dirname):
+            if filename.endswith(".py"):
+                files_to_process.append(filename)
     return files_to_process
 
 

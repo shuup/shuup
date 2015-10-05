@@ -6,6 +6,7 @@ from __future__ import unicode_literals
 
 import os
 import argparse
+import sanity_utils
 
 HEADER = """
 This file is part of Shoop.
@@ -64,26 +65,15 @@ def main():
 
 
 def find_files(root, extensions):
-    for (path, dirnames, filenames) in os.walk(root):
-        dirnames[:] = [
-            dirname for dirname in dirnames if not is_file_ignored(os.path.join(path, dirname))
-            ]
-        for filename in filenames:
-            if any(filename.endswith(extension) for extension in extensions):
-                filepath = os.path.join(path, filename)
-                if not is_file_ignored(filepath):
-                    yield filepath
+    for filepath in sanity_utils.find_files(root, allowed_extensions=extensions):
+        if not is_file_ignored(filepath):
+            yield filepath
 
 
 def is_file_ignored(filepath):
     filepath = filepath.replace(os.sep, "/")
     return (
-        ('.git' in filepath) or
-        ('venv' in filepath) or
-        ('__pycache__' in filepath) or
         ('vendor' in filepath) or
-        ('node_modules' in filepath) or
-        ('bower_components' in filepath) or
         ('doc/_ext/djangodocs.py' in filepath)
     )
 
