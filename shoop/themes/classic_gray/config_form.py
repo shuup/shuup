@@ -39,7 +39,8 @@ class ClassicGrayConfigForm(GenericThemeForm):
             from shoop.simple_cms.models import Page
             self.fields["footer_cms_pages"] = forms.ModelMultipleChoiceField(
                 label=_("Footer CMS pages"),
-                queryset=Page.objects.translated(get_language())
+                queryset=Page.objects.translated(get_language()),
+                required=False
             )
 
     def clean(self):

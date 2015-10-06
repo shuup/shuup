@@ -17,8 +17,9 @@ class AdminFieldRenderer(FieldRenderer):
         self.set_placeholder = bool(kwargs.pop("set_placeholder", True))
         self.widget_class = kwargs.pop("widget_class", None)
         default_show_help_block = True
-        if isinstance(field, ModelMultipleChoiceField):
+        if isinstance(field.field, ModelMultipleChoiceField):
             default_show_help_block = False
+            self.widget_class = "multiselect"
         self.show_help_block = bool(kwargs.pop("show_help_block", default_show_help_block))
 
         kwargs["required_css_class"] = "required-field"
