@@ -36,7 +36,7 @@
         <div class="col-md-3 categories-nav">
             {% include "shoop/front/includes/_category_menu.jinja" %}
         </div>
-        <div class="col-md-9">
+        <div class="col-md-9 products-wrap">
             <div class="row product-list-actions">
                 <div class="col-sm-4">
                     <form role="form" method="get" action="" id="sorter">
@@ -74,6 +74,7 @@
             </div>
         </div>
     </div>
+    {% placeholder "category_bottom_extra" %}{% endplaceholder %}
 {% endblock %}
 
 {% block extrajs %}

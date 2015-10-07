@@ -11,12 +11,13 @@
 {% endblock %}
 
 {% block content %}
+    {% placeholder "products_extra" %}{% endplaceholder %}
     <hr>
     <div class="row">
         <div class="col-md-3 categories-nav">
             {% include "shoop/front/includes/_category_menu.jinja" %}
         </div>
-        <div class="col-md-9">
+        <div class="col-md-9 products-wrap">
             <div class="clearfix product-list-actions">
                 <div class="toggle-view">
                     <span class="control-label">{% trans %}Show Grid/List{% endtrans %}</span>

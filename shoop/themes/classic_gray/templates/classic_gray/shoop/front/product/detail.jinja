@@ -68,10 +68,12 @@
                     {{ macros.render_product_price(product, priceinfo) }}
                 </div>
             </div>
+            {% placeholder "product_extra_1" %}{% endplaceholder %}
             <hr>
             <div id="product-price-section">
                 {% include "shoop/front/product/_detail_order_section.jinja" with context %}
             </div>
+            {% placeholder "product_extra_2" %}{% endplaceholder %}
         </div>
     </div>
     <hr>
@@ -103,6 +105,8 @@
             {% endif %}
         </div>
     </div>
+
+    {% placeholder "product_extra_bottom" %}{% endplaceholder %}
 
     {% if package_children %}
         <hr>

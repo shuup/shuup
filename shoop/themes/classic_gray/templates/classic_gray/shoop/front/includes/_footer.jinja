@@ -25,7 +25,7 @@
     {% set col_width = (12 / col_order|length)|int %}
     {% set col_macros = {"cms": cms_column, "html": html_column, "links": links_column} %}
     <div class="container">
-        {% if col_order.length %}
+        {% if col_order|length %}
         <hr>
         {% endif %}
         <div class="row">
