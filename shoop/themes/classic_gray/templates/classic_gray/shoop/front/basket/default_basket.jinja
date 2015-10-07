@@ -7,7 +7,9 @@
     {% if basket.is_empty %}
         <p class="lead"><i class="fa fa-exclamation-circle text-danger"></i> {% trans %}Your shopping cart is empty.{% endtrans %}</p>
         <hr>
-        <a href="/xtheme/products" class="btn btn-primary"><i class="fa fa-angle-double-left"></i> {% trans %}Back to Products{% endtrans %}</a>
+        <div class="cart-actions">
+            <a href="/xtheme/products" class="btn btn-primary"><i class="fa fa-angle-double-left"></i> {% trans %}Back to Products{% endtrans %}</a>
+        </div>
     {% else %}
         {% if errors %}
             <p class="text-danger">There were errors on following items:</p>
@@ -16,16 +18,20 @@
             {% endfor %}
             <hr>
         {% endif %}
+        {% placeholder "cart_top_extra" %}{% endplaceholder %}
         {% include "shoop/front/basket/partials/_basket_content.jinja" %}
-        {% if errors %}
-            <p class="lead text-right"><i class="fa fa-exclamation-triangle text-danger"></i> You are unable to proceed to checkout!</p>
-        {% else %}
-            <a href="/xtheme/products" class="text-muted btn continue-shopping hidden-xs"><i class="fa fa-angle-double-left"></i> {% trans %}Continue Shopping{% endtrans %}</a>
-            <a href="{{ url("shoop:checkout") }}" class="btn btn-primary pull-right btn-checkout">
-                <i class="fa fa-lock"></i> {% trans %}Proceed to checkout{% endtrans %} <i class="fa fa-angle-double-right"></i>
-            </a>
-        {% endif %}
+        <div class="cart-actions">
+            {% if errors %}
+                <p class="lead text-right"><i class="fa fa-exclamation-triangle text-danger"></i> You are unable to proceed to checkout!</p>
+            {% else %}
+                <a href="/xtheme/products" class="text-muted btn continue-shopping hidden-xs"><i class="fa fa-angle-double-left"></i> {% trans %}Continue Shopping{% endtrans %}</a>
+                <a href="{{ url("shoop:checkout") }}" class="btn btn-primary pull-right btn-checkout">
+                    <i class="fa fa-lock"></i> {% trans %}Proceed to checkout{% endtrans %} <i class="fa fa-angle-double-right"></i>
+                </a>
+            {% endif %}
+        </div>
     {% endif %}
+    {% placeholder "cart_bottom_extra" %}{% endplaceholder %}
 {% endblock %}
 
 {% block extrajs %}
