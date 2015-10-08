@@ -20,8 +20,8 @@
 {% call content_block(_("Visibility"), "fa-eye") %}
     {{ bs3.field(category_form.status) }}
     {{ bs3.field(category_form.visibility) }}
-    {{ bs3.field(category_form.visibility_groups, widget_class="multiselect") }}
-    {{ bs3.field(category_form.shops, widget_class="multiselect") }}
+    {{ bs3.field(category_form.visibility_groups) }}
+    {{ bs3.field(category_form.shops) }}
 {% endcall %}
 
 {% call content_block(_("Category Image"), "fa-camera") %}
