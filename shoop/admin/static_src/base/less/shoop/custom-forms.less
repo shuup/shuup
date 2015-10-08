@@ -83,6 +83,7 @@
             .make-lg-column-push(3);
             padding-left: 0;
             font-size: 1.2rem;
+            margin-bottom: 5px;
         }
 
         .radio, .checkbox {
@@ -178,6 +179,28 @@
                 content: @fa-var-check;
                 font-family: FontAwesome;
             }
+        }
+    }
+
+    // Separator line that can be used between form fields
+    .form-divider {
+        &:before {
+            .make-xs-column(12);
+            .make-sm-column(8);
+            .make-sm-column-push(4);
+            .make-lg-column(6);
+            .make-lg-column-push(3);
+            content: "";
+            margin: 10px 0px 20px 0px;
+            border-bottom: 1px solid @border-color;
+            @media (min-width: @screen-sm-min) {
+                margin: 10px 0px 30px 0;
+            }
+        }
+        &:after {
+            content: "";
+            display: table;
+            clear: both;
         }
     }
 }

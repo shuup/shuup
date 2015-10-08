@@ -3,7 +3,8 @@
 {% from "shoop/admin/macros/multilanguage.jinja" import language_dependent_content_tabs %}
 {% block content %}
     {% call single_section_form("tax_class_form", form) %}
-        {{ bs3.field(form.enabled) }}
         {{ language_dependent_content_tabs(form, ["name"]) }}
+        <div class="form-divider"></div>
+        {{ bs3.field(form.enabled) }}
     {% endcall %}
 {% endblock %}

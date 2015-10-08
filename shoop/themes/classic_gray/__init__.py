@@ -21,11 +21,11 @@ class ClassicGrayTheme(Theme):
     template_dir = "classic_gray/"
 
     fields = [
+        ("show_welcome_text", forms.BooleanField(required=False, initial=True, label=_("Show Frontpage Welcome Text"))),
         ("footer_html", forms.CharField(required=False, label=_("Footer custom HTML"), widget=forms.Textarea)),
         ("footer_links", forms.CharField(required=False, label=_("Footer links"), widget=forms.Textarea,
                                          help_text=_("One line per link in format 'http://example.com Example Link'"))),
         ("footer_column_order", forms.ChoiceField(required=False, initial="", label=_("Footer column order"))),
-        ("show_welcome_text", forms.BooleanField(required=False, initial=True, label=_("Show Frontpage Welcome Text"))),
     ]
 
     def get_configuration_form(self, form_kwargs):

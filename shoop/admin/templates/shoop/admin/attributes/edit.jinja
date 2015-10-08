@@ -5,6 +5,7 @@
 {% block content %}
     {% call single_section_form("attribute_form", form) %}
         {{ language_dependent_content_tabs(form) }}
+        <div class="form-divider"></div>
         {{ render_monolingual_fields(form) }}
     {% endcall %}
 {% endblock %}
