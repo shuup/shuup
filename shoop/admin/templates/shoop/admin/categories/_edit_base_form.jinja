@@ -8,11 +8,7 @@
         {{ bs3.field(category_form[map.slug]) }}
         {{ bs3.field(category_form[map.description], widget_class="remarkable-field") }}
     {% endcall %}
-    <div class="row">
-        <div class="col-sm-8 col-sm-push-4 col-lg-6 col-lg-push-3">
-            <hr>
-        </div>
-    </div>
+    <div class="form-divider"></div>
     {{ bs3.field(category_form.parent) }}
     {{ bs3.field(category_form.ordering) }}
 {% endcall %}
