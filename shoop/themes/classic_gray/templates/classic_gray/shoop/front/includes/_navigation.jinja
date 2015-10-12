@@ -62,7 +62,7 @@
                                 {% if request.resolver_match.url_name == "logout" %}{% set next="/" %}{% endif %}
                                 <input type="hidden" name="next" value="{{ next or request.path }}">
                                 <div class="form-group">
-                                    <label for="username">{% trans %}Username{% endtrans %}</label>
+                                    <label for="username">{% trans %}Username or email address{% endtrans %}</label>
                                     <input type="text" name="username" class="form-control">
                                 </div>
                                 <div class="form-group">

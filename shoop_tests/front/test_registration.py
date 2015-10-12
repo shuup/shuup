@@ -48,7 +48,7 @@ def test_settings_has_account_activation_days():
 
 
 @pytest.mark.django_db
-def test_password_recovery_user_receives_email(client):
+def test_password_recovery_user_receives_email_1(client):
     get_default_shop()
     user = get_user_model().objects.create_user(
         username="random_person",
@@ -65,6 +65,54 @@ def test_password_recovery_user_receives_email(client):
     assert (len(mail.outbox) == n_outbox_pre + 1), "Sending recovery email has failed"
     assert 'http' in mail.outbox[-1].body, "No recovery url in email"
     # ticket #SHOOP-606
+    assert 'site_name' not in mail.outbox[-1].body, "site_name variable has no content"
+
+
+@pytest.mark.django_db
+def test_password_recovery_user_receives_email_2(client):
+    get_default_shop()
+    user = get_user_model().objects.create_user(
+        username="random_person",
+        password="asdfg",
+        email="random@shoop.local"
+    )
+    n_outbox_pre = len(mail.outbox)
+    # Recover with username
+    client.post(
+        reverse("shoop:recover_password"),
+        data={
+            "username": user.username
+        }
+    )
+    assert (len(mail.outbox) == n_outbox_pre + 1), "Sending recovery email has failed"
+    assert 'http' in mail.outbox[-1].body, "No recovery url in email"
+    assert 'site_name' not in mail.outbox[-1].body, "site_name variable has no content"
+
+
+@pytest.mark.django_db
+def test_password_recovery_user_receives_email_3(client):
+    get_default_shop()
+    user = get_user_model().objects.create_user(
+        username="random_person",
+        password="asdfg",
+        email="random@shoop.local"
+    )
+    get_user_model().objects.create_user(
+        username="another_random_person",
+        password="asdfg",
+        email="random@shoop.local"
+    )
+
+    n_outbox_pre = len(mail.outbox)
+    # Recover all users with email random@shoop.local
+    client.post(
+        reverse("shoop:recover_password"),
+        data={
+            "email": user.email
+        }
+    )
+    assert (len(mail.outbox) == n_outbox_pre + 2), "Sending 2 recovery emails has failed"
+    assert 'http' in mail.outbox[-1].body, "No recovery url in email"
     assert 'site_name' not in mail.outbox[-1].body, "site_name variable has no content"
 
 
