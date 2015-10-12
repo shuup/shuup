@@ -1,6 +1,7 @@
 {% extends "shoop/admin/base.jinja" %}
 {% import "shoop/admin/macros/general.jinja" as gm with context %}
 {% from "shoop/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
+
 {% block content %}
     {% call gm.multi_section_single_form("shop_form") %}
         {% call gm.form_section(_("General Information")) %}

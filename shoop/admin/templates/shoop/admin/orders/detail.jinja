@@ -1,140 +1,136 @@
 {% extends "shoop/admin/base.jinja" %}
-{% from "shoop/admin/macros/general.jinja" import content_block, info_row %}
+{% from "shoop/admin/macros/general.jinja" import content_block, info_row, content_with_sidebar %}
+
 {% block content %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3 section-navigation" data-navigatee="order_details"></div>
-            <div class="col-md-9">
-                <div id="order_details">
-                    {% call content_block(_("Details & Status"), "fa-info-circle") %}
-                        <dl class="dl-horizontal">
-                            {{ info_row(_("Order Number"), order.identifier) }}
-                            {{ info_row(_("Order Date"), order.order_date|datetime) }}
-                            {{ info_row(_("Reference"), order.reference_number) }}
-                            {{ info_row(_("Label"), order.label) }}
-                            {{ info_row(_("Customer"), order.customer, "#") }}
-                            {{ info_row(_("Ordered by"), order.orderer, "#") }}
-                            {{ info_row(_("Creator"), order.creator, "#") }}
-                            {{ info_row(_("Phone"), order.phone, "tel:" ~ order.phone) }}
-                            {{ info_row(_("Email"), order.email, "mailto:" ~ order.email) }}
-                            {{ info_row(_("Tax number"), order.tax_number) }}
-                            {{ info_row(_("Total Price (taxless)"), order.taxless_total_price|money) }}
-                            {{ info_row(_("Total Price"), order.taxful_total_price|money) }}
-                        </dl>
-                        <hr>
-                        <dl class="dl-horizontal">
-                            {{ info_row(_("Order Status"), order.get_status_display()) }}
-                            {{ info_row(_("Payment Status"), order.get_payment_status_display()) }}
-                            {{ info_row(_("Shipping Status"), order.get_shipping_status_display()) }}
-                        </dl>
-                    {% endcall %}
+    {% call content_with_sidebar(content_id="order_details") %}
+        <div id="order_details">
+            {% call content_block(_("Details & Status"), "fa-info-circle") %}
+                <dl class="dl-horizontal">
+                    {{ info_row(_("Order Number"), order.identifier) }}
+                    {{ info_row(_("Order Date"), order.order_date|datetime) }}
+                    {{ info_row(_("Reference"), order.reference_number) }}
+                    {{ info_row(_("Label"), order.label) }}
+                    {{ info_row(_("Customer"), order.customer, "#") }}
+                    {{ info_row(_("Ordered by"), order.orderer, "#") }}
+                    {{ info_row(_("Creator"), order.creator, "#") }}
+                    {{ info_row(_("Phone"), order.phone, "tel:" ~ order.phone) }}
+                    {{ info_row(_("Email"), order.email, "mailto:" ~ order.email) }}
+                    {{ info_row(_("Tax number"), order.tax_number) }}
+                    {{ info_row(_("Total Price (taxless)"), order.taxless_total_price|money) }}
+                    {{ info_row(_("Total Price"), order.taxful_total_price|money) }}
+                </dl>
+                <hr>
+                <dl class="dl-horizontal">
+                    {{ info_row(_("Order Status"), order.get_status_display()) }}
+                    {{ info_row(_("Payment Status"), order.get_payment_status_display()) }}
+                    {{ info_row(_("Shipping Status"), order.get_shipping_status_display()) }}
+                </dl>
+            {% endcall %}
 
-                    {% if order.shipping_address_id or order.billing_address_id %}
-                        {% call content_block(_("Addresses"), "fa-map-marker") %}
-                            <div class="row contact-addresses">
-                                <div class="col-md-6 shipping-address">
-                                    <h4 class="underline"><i class="fa fa-truck"></i> {% trans %}Shipping address{% endtrans %}</h4>
-                                    {% for line in order.shipping_address %}
-                                        <p>{{ line }}</p>
-                                    {% else %}
-                                        <p><i class="fa fa-warning text-warning"></i> {% trans %}No shipping address defined.{% endtrans %}</p>
-                                    {% endfor %}
-                                </div>
-                                <div class="col-md-6 billing-address">
-                                    <h4 class="underline"><i class="fa fa-file-text"></i> {% trans %}Billing address{% endtrans %}</h4>
-                                    {% for line in order.billing_address %}
-                                        <p>{{ line }}</p>
-                                    {% else %}
-                                        <p><i class="fa fa-warning text-warning"></i> {% trans %}No billing address defined.{% endtrans %}</p>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        {% endcall %}
-                    {% endif %}
-
-                    {% call content_block(_("Order Contents"), "fa-file-text") %}
-                        <div class="hidden-xs">
-                            <table class="table table-striped table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>{% trans %}SKU{% endtrans %}</th>
-                                        <th>{% trans %}Text{% endtrans %}</th>
-                                        <th class="text-right">{% trans %}Taxless Unit Price{% endtrans %}</th>
-                                        <th class="text-right">{% trans %}Quantity{% endtrans %}</th>
-                                        <th class="text-right">{% trans %}Taxless Discount{% endtrans %}</th>
-                                        <th class="text-right">{% trans %}Tax{% endtrans %}</th>
-                                        <th class="text-right">{% trans %}Taxless Total{% endtrans %}</th>
-                                        <th class="text-right">{% trans %}Total incl. Tax{% endtrans %}</th>
-                                    </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th colspan="6"></th>
-                                        <th class="text-right">{{ order.taxless_total_price|money }}</th>
-                                        <th class="text-right">{{ order.taxful_total_price|money }}</th>
-                                    </tr>
-                                </tfoot>
-                                <tbody>
-                                    {% for line in order.lines.order_by("ordering") %}
-                                    <tr>
-                                        <td>{{ line.sku }}</td>
-                                        <td>{{ line.text }}</td>
-                                        <td class="text-right">{{ line.taxless_base_unit_price|money }}</td>
-                                        <td class="text-right">{{ line.quantity|number }}</td>
-                                        <td class="text-right">{% if line.taxless_discount_amount %}{{ line.taxless_discount_amount|money }}{% else %}-{% endif %}</td>
-                                        <td class="text-right">{{ line.tax_rate|percent }}</td>
-                                        <td class="text-right">{{ line.taxless_total_price|money }}</td>
-                                        <td class="text-right">{{ line.taxful_total_price|money }}</td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
+            {% if order.shipping_address_id or order.billing_address_id %}
+                {% call content_block(_("Addresses"), "fa-map-marker") %}
+                    <div class="row contact-addresses">
+                        <div class="col-md-6 shipping-address">
+                            <h4 class="underline"><i class="fa fa-truck"></i> {% trans %}Shipping address{% endtrans %}</h4>
+                            {% for line in order.shipping_address %}
+                                <p>{{ line }}</p>
+                            {% else %}
+                                <p><i class="fa fa-warning text-warning"></i> {% trans %}No shipping address defined.{% endtrans %}</p>
+                            {% endfor %}
                         </div>
-                        <div class="visible-xs mobile-list-group">
-                            <ul class="list-group">
-                                {% for line in order.lines.order_by("ordering") %}
-                                    <li class="list-group-item">
-                                        <div class="row">
-                                            <div class="col-xs-6">
-                                                <strong>{{ line.sku }}</strong>
-                                            </div>
-                                            <div class="col-xs-6 text-right">
-                                                {{ line.text }}
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-6">
-                                                {{ line.quantity|number }} &times; {{ line.taxless_base_unit_price|money }} {% if line.taxless_discount_amount %}<span class="text-muted">{% trans %}Discount{% endtrans %}{{ line.taxless_discount_amount|money }}</span>{% endif %}
-                                            </div>
-                                            <div class="col-xs-6 text-right">
-                                                <strong>{% trans %}Total{% endtrans %}: {{ line.taxful_total_price|money }}</strong>
-                                            </div>
-                                            <div class="col-xs-12 text-right text-muted">
-                                                {{ line.tax_rate|percent }} {% trans %}Tax{% endtrans %} ({{ line.taxless_total_price|money }} {% trans %}Taxless{% endtrans %})
-                                            </div>
-                                        </div>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                            <div class="clearfix">
-                                <div class="col-xs-6"><strong>{% trans %}Taxless Total{% endtrans %}</strong></div>
-                                <div class="col-xs-6 text-right"><strong>{{ order.taxless_total_price|money }}</strong></div>
-                            </div>
-                            <div class="clearfix">
-                                <div class="col-xs-6"><strong>{% trans %}Total incl. Tax{% endtrans %}</strong></div>
-                                <div class="col-xs-6 text-right"><strong>{{ order.taxful_total_price|money }}</strong></div>
-                            </div>
+                        <div class="col-md-6 billing-address">
+                            <h4 class="underline"><i class="fa fa-file-text"></i> {% trans %}Billing address{% endtrans %}</h4>
+                            {% for line in order.billing_address %}
+                                <p>{{ line }}</p>
+                            {% else %}
+                                <p><i class="fa fa-warning text-warning"></i> {% trans %}No billing address defined.{% endtrans %}</p>
+                            {% endfor %}
                         </div>
-                    {% endcall %}
+                    </div>
+                {% endcall %}
+            {% endif %}
 
-                    {% set payments=order.payments.all() %}
-                    {% if payments %}
-                        {% call content_block(_("Payments"), "fa-dollar") %}
-                            {% include "shoop/admin/orders/_detail_payments.jinja" with context %}
-                        {% endcall %}
-                    {% endif %}
+            {% call content_block(_("Order Contents"), "fa-file-text") %}
+                <div class="hidden-xs">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>{% trans %}SKU{% endtrans %}</th>
+                                <th>{% trans %}Text{% endtrans %}</th>
+                                <th class="text-right">{% trans %}Taxless Unit Price{% endtrans %}</th>
+                                <th class="text-right">{% trans %}Quantity{% endtrans %}</th>
+                                <th class="text-right">{% trans %}Taxless Discount{% endtrans %}</th>
+                                <th class="text-right">{% trans %}Tax{% endtrans %}</th>
+                                <th class="text-right">{% trans %}Taxless Total{% endtrans %}</th>
+                                <th class="text-right">{% trans %}Total incl. Tax{% endtrans %}</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th colspan="6"></th>
+                                <th class="text-right">{{ order.taxless_total_price|money }}</th>
+                                <th class="text-right">{{ order.taxful_total_price|money }}</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            {% for line in order.lines.order_by("ordering") %}
+                            <tr>
+                                <td>{{ line.sku }}</td>
+                                <td>{{ line.text }}</td>
+                                <td class="text-right">{{ line.taxless_base_unit_price|money }}</td>
+                                <td class="text-right">{{ line.quantity|number }}</td>
+                                <td class="text-right">{% if line.taxless_discount_amount %}{{ line.taxless_discount_amount|money }}{% else %}-{% endif %}</td>
+                                <td class="text-right">{{ line.tax_rate|percent }}</td>
+                                <td class="text-right">{{ line.taxless_total_price|money }}</td>
+                                <td class="text-right">{{ line.taxful_total_price|money }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
-            </div>
+                <div class="visible-xs mobile-list-group">
+                    <ul class="list-group">
+                        {% for line in order.lines.order_by("ordering") %}
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <strong>{{ line.sku }}</strong>
+                                    </div>
+                                    <div class="col-xs-6 text-right">
+                                        {{ line.text }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        {{ line.quantity|number }} &times; {{ line.taxless_base_unit_price|money }} {% if line.taxless_discount_amount %}<span class="text-muted">{% trans %}Discount{% endtrans %}{{ line.taxless_discount_amount|money }}</span>{% endif %}
+                                    </div>
+                                    <div class="col-xs-6 text-right">
+                                        <strong>{% trans %}Total{% endtrans %}: {{ line.taxful_total_price|money }}</strong>
+                                    </div>
+                                    <div class="col-xs-12 text-right text-muted">
+                                        {{ line.tax_rate|percent }} {% trans %}Tax{% endtrans %} ({{ line.taxless_total_price|money }} {% trans %}Taxless{% endtrans %})
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="clearfix">
+                        <div class="col-xs-6"><strong>{% trans %}Taxless Total{% endtrans %}</strong></div>
+                        <div class="col-xs-6 text-right"><strong>{{ order.taxless_total_price|money }}</strong></div>
+                    </div>
+                    <div class="clearfix">
+                        <div class="col-xs-6"><strong>{% trans %}Total incl. Tax{% endtrans %}</strong></div>
+                        <div class="col-xs-6 text-right"><strong>{{ order.taxful_total_price|money }}</strong></div>
+                    </div>
+                </div>
+            {% endcall %}
+
+            {% set payments=order.payments.all() %}
+            {% if payments %}
+                {% call content_block(_("Payments"), "fa-dollar") %}
+                    {% include "shoop/admin/orders/_detail_payments.jinja" with context %}
+                {% endcall %}
+            {% endif %}
         </div>
-    </div>
+    {% endcall %}
 {% endblock %}

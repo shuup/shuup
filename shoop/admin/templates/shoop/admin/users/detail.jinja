@@ -1,19 +1,15 @@
 {% extends "shoop/admin/base.jinja" %}
-{% from "shoop/admin/macros/general.jinja" import content_block, info_row %}
+{% from "shoop/admin/macros/general.jinja" import content_block, info_row, content_with_sidebar %}
+
 {% block content %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3 section-navigation" data-navigatee="user_form"></div>
-            <div class="col-md-9">
-                <form method="post" id="user_form">
-                    {% csrf_token %}
-                    {% call content_block(_("User Information"), "fa-info-circle") %}
-                        {% for field in form %}
-                            {{ bs3.field(field) }}
-                        {% endfor %}
-                    {% endcall %}
-                </form>
-            </div>
-        </div>
-    </div>
+    {% call content_with_sidebar(content_id="user_form") %}
+        <form method="post" id="user_form">
+            {% csrf_token %}
+            {% call content_block(_("User Information"), "fa-info-circle") %}
+                {% for field in form %}
+                    {{ bs3.field(field) }}
+                {% endfor %}
+            {% endcall %}
+        </form>
+    {% endcall %}
 {% endblock %}

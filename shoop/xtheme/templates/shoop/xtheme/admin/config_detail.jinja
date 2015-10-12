@@ -1,27 +1,23 @@
 {% extends "shoop/admin/base.jinja" %}
-{% from "shoop/admin/macros/general.jinja" import content_block %}
-{% block title %}{% trans name=theme.name %}Theme Configuration: {{ name }}{% endtrans %}{% endblock %}
-{% block content %}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3 section-navigation" data-navigatee="theme_settings_form"></div>
-        <div class="col-md-9">
-            <form method="post" id="theme_settings_form">
-                {% csrf_token %}
-                {% call content_block(_("Theme Configuration"), "fa-info-circle") %}
-                    {% if form.fields %}
-                        {% for field in form %}
-                            {{ bs3.field(field) }}
-                        {% endfor %}
-                    {% else %}
-                        <div class="alert alert-info">
-                            {% trans %}There's nothing to configure in this theme.{% endtrans %}
-                        </div>
-                    {% endif %}
-                {% endcall %}
-            </form>
-        </div>
-    </div>
-</div>
-{% endblock %}
+{% from "shoop/admin/macros/general.jinja" import content_block, content_with_sidebar %}
 
+{% block title %}{% trans name=theme.name %}Theme Configuration: {{ name }}{% endtrans %}{% endblock %}
+
+{% block content %}
+    {% call content_with_sidebar(content_id="theme_settings_form") %}
+        <form method="post" id="theme_settings_form">
+            {% csrf_token %}
+            {% call content_block(_("Theme Configuration"), "fa-cog") %}
+                {% if form.fields %}
+                    {% for field in form %}
+                        {{ bs3.field(field) }}
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert-info">
+                        {% trans %}There's nothing to configure in this theme.{% endtrans %}
+                    </div>
+                {% endif %}
+            {% endcall %}
+        </form>
+    {% endcall %}
+{% endblock %}

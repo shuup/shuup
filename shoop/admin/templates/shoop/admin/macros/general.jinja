@@ -9,6 +9,17 @@
     </div>
 {% endmacro %}
 
+{% macro content_with_sidebar(content_id="", extra_classes="") %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 section-navigation" data-navigatee="{{ content_id }}"></div>
+            <div class="col-md-9 {{ extra_classes }}">
+                {{ caller() }}
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
 {% macro content_block(heading, icon, extra_classes="") %}
     <div class="content-block">
         <div class="title">
@@ -23,6 +34,15 @@
             <div class="content">
                 {{ caller() }}
             </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro text_between_fields() %}
+    <div class="row">
+        <div class="col-sm-8 col-sm-push-4 col-lg-6 col-lg-push-3">
+            {{ caller() }}
+            <br>
         </div>
     </div>
 {% endmacro %}

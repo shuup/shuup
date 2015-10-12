@@ -1,32 +1,28 @@
 {% extends "shoop/admin/base.jinja" %}
-{% from "shoop/admin/macros/general.jinja" import content_block %}
+{% from "shoop/admin/macros/general.jinja" import content_block, content_with_sidebar %}
 {% from "shoop/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
+
 {% block content %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3 section-navigation" data-navigatee="contact_group_form"></div>
-            <div class="col-md-9">
-                <form method="post" id="contact_group_form">
-                    {% csrf_token %}
-                    {% call content_block(_("General information"), "fa-info-circle") %}
-                        {{ language_dependent_content_tabs(form) }}
-                        {{ render_monolingual_fields(form) }}
-                    {% endcall %}
-                    {% if contact_group.pk %}
-                        {% call content_block(_("Members"), "fa-users") %}
-                            {# TODO: This is very bare-bones; should probably have UI to add/remove members etc... #}
-                            <ul>
-                            {% for member in contact_group.members.all() %}
-                                {% set u=shoop_admin.model_url(member, default="") %}
-                                <li>{% if u %}<a href="{{ u }}">{% endif %}{{ member }}{% if u %}</a>{% endif %}</li>
-                            {% else %}
-                                <li><i>{% trans %}No members.{% endtrans %}</i></li>
-                            {% endfor %}
-                            </ul>
-                        {% endcall %}
-                    {% endif %}
-                </form>
-            </div>
-        </div>
-    </div>
+    {% call content_with_sidebar(content_id="contact_group_form") %}
+        <form method="post" id="contact_group_form">
+            {% csrf_token %}
+            {% call content_block(_("General information"), "fa-info-circle") %}
+                {{ language_dependent_content_tabs(form) }}
+                {{ render_monolingual_fields(form) }}
+            {% endcall %}
+            {% if contact_group.pk %}
+                {% call content_block(_("Members"), "fa-users") %}
+                    {# TODO: This is very bare-bones; should probably have UI to add/remove members etc... #}
+                    <ul>
+                    {% for member in contact_group.members.all() %}
+                        {% set u=shoop_admin.model_url(member, default="") %}
+                        <li>{% if u %}<a href="{{ u }}">{% endif %}{{ member }}{% if u %}</a>{% endif %}</li>
+                    {% else %}
+                        <li><i>{% trans %}No members.{% endtrans %}</i></li>
+                    {% endfor %}
+                    </ul>
+                {% endcall %}
+            {% endif %}
+        </form>
+    {% endcall %}
 {% endblock %}

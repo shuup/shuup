@@ -1,29 +1,25 @@
 {% extends "shoop/admin/base.jinja" %}
-{% from "shoop/admin/macros/general.jinja" import content_block %}
+{% from "shoop/admin/macros/general.jinja" import content_block, content_with_sidebar %}
 {% block title %}{% trans %}Upload Addon - Install{% endtrans %}{% endblock %}
+
 {% block content %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3 section-navigation" data-navigatee="install_form"></div>
-            <div class="col-md-9">
-                <form method="post" enctype="multipart/form-data" id="install_form">
-                    {% csrf_token %}
-                    {% call content_block(_("Package Information"), "fa-info-circle") %}
-                        {% if pkg_info %}
-                            <pre><code>{{ pkg_info }}</code></pre>
-                        {% else %}
-                            <i>{% trans %}No package information could be extracted.{% endtrans %}</i>
-                        {% endif %}
-                    {% endcall %}
-                    {% call content_block(_("File List"), "fa-files-o") %}
-                        <table class="table table-striped">
-                            {% for filename in filenames %}
-                                <tr><td>{{ filename }}</td></tr>
-                            {% endfor %}
-                        </table>
-                    {% endcall %}
-                </form>
-            </div>
-        </div>
-    </div>
+    {% call content_with_sidebar(content_id="install_form") %}
+        <form method="post" enctype="multipart/form-data" id="install_form">
+            {% csrf_token %}
+            {% call content_block(_("Package Information"), "fa-info-circle") %}
+                {% if pkg_info %}
+                    <pre><code>{{ pkg_info }}</code></pre>
+                {% else %}
+                    <i>{% trans %}No package information could be extracted.{% endtrans %}</i>
+                {% endif %}
+            {% endcall %}
+            {% call content_block(_("File List"), "fa-files-o") %}
+                <table class="table table-striped">
+                    {% for filename in filenames %}
+                        <tr><td>{{ filename }}</td></tr>
+                    {% endfor %}
+                </table>
+            {% endcall %}
+        </form>
+    {% endcall %}
 {% endblock %}
