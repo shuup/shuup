@@ -48,3 +48,18 @@ def test_product_edit_view_works_at_all(rf, admin_user):
             assert (product.sku in response.rendered_content)  # it's probable the SKU is there
             response = view_func(request, pk=None)  # "new mode"
             assert response.rendered_content  # yeah, something gets rendered
+
+
+@pytest.mark.django_db
+def test_product_edit_view_with_params(rf, admin_user):
+    get_default_shop()
+    sku = "test-sku"
+    name = "test name"
+    request = apply_request_middleware(rf.get("/", {"name": name, "sku": sku}), user=admin_user)
+
+    with replace_modules([ProductModule]):
+        with admin_only_urls():
+            view_func = ProductEditView.as_view()
+            response = view_func(request)
+            assert (sku in response.rendered_content)  # it's probable the SKU is there
+            assert (name in response.rendered_content)  # it's probable the name is there
