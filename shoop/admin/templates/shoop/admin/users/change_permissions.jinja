@@ -1,19 +1,15 @@
 {% extends "shoop/admin/base.jinja" %}
-{% from "shoop/admin/macros/general.jinja" import content_block, info_row %}
+{% from "shoop/admin/macros/general.jinja" import content_block, info_row, content_with_sidebar %}
+
 {% block content %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3 section-navigation" data-navigatee="permissions_form"></div>
-            <div class="col-md-9">
-                <form method="post" id="permissions_form">
-                    {% csrf_token %}
-                    {% call content_block(title, "fa-key") %}
-                        {{ bs3.field(form.old_password, show_help_block=True) }}
-                        {{ bs3.field(form.is_staff) }}
-                        {{ bs3.field(form.is_superuser) }}
-                    {% endcall %}
-                </form>
-            </div>
-        </div>
-    </div>
+    {% call content_with_sidebar(content_id="permissions_form") %}
+        <form method="post" id="permissions_form">
+            {% csrf_token %}
+            {% call content_block(title, "fa-key") %}
+                {{ bs3.field(form.old_password, show_help_block=True) }}
+                {{ bs3.field(form.is_staff) }}
+                {{ bs3.field(form.is_superuser) }}
+            {% endcall %}
+        </form>
+    {% endcall %}
 {% endblock %}

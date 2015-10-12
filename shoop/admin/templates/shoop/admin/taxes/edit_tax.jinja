@@ -1,6 +1,7 @@
 {% extends "shoop/admin/base.jinja" %}
 {% from "shoop/admin/macros/general.jinja" import single_section_form with context %}
 {% from "shoop/admin/macros/multilanguage.jinja" import language_dependent_content_tabs %}
+
 {% block content %}
     {% call single_section_form("tax_form", form) %}
         {{ language_dependent_content_tabs(form, ["name"]) }}
