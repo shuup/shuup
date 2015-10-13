@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.contrib import messages
 from django.db.transaction import atomic
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, get_language
 
 from shoop.admin.form_part import FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
 from shoop.admin.utils.views import CreateOrUpdateView
@@ -45,7 +45,10 @@ class ProductBaseFormPart(FormPart):
     def get_initial(self):
         if not self.object.pk:
             # Sane defaults...
+            name_field = "name__%s" % get_language()
             return {
+                name_field: self.request.GET.get("name", ""),
+                "sku": self.request.GET.get("sku", ""),
                 "type": ProductType.objects.first(),
                 "tax_class": TaxClass.objects.first()
             }
