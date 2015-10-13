@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.conf import settings
-from django.contrib.auth import get_user, REDIRECT_FIELD_NAME
+from django.contrib.auth import get_user, REDIRECT_FIELD_NAME, get_user_model
 from django.core.urlresolvers import reverse
 from shoop.testing.factories import get_default_shop
 from shoop_tests.utils.fixtures import REGULAR_USER_PASSWORD, regular_user
@@ -58,3 +58,67 @@ def test_login_fails_without_valid_password(client, regular_user, rf):
     request = rf.get("/")
     request.session = client.session
     assert get_user(request).is_anonymous(), "User is still anonymous"
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("regular_user")
+def test_login_with_email(client, regular_user, rf):
+    if "shoop.front.apps.auth" not in settings.INSTALLED_APPS:
+        pytest.skip("Need shoop.front.apps.auth in INSTALLED_APPS")
+
+    get_default_shop()
+    prepare_user(regular_user)
+    redirect_target = "/redirect-success/"
+    response = client.post(reverse("shoop:login"), data={
+        "username": regular_user.email,
+        "password": REGULAR_USER_PASSWORD,
+        REDIRECT_FIELD_NAME: redirect_target
+    })
+
+    assert response.get("location")
+    assert response.get("location").endswith(redirect_target)
+
+    request = rf.get("/")
+    request.session = client.session
+    assert get_user(request) == regular_user, "User is logged in"
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("regular_user")
+def test_login_with_email(client, regular_user, rf):
+    if "shoop.front.apps.auth" not in settings.INSTALLED_APPS:
+        pytest.skip("Need shoop.front.apps.auth in INSTALLED_APPS")
+
+    # Create user with same email as regular user to fail login
+    get_user_model().objects.create_user(
+        username="el_person",
+        password="123123",
+        email=regular_user.email
+    )
+
+    get_default_shop()
+    prepare_user(regular_user)
+    redirect_target = "/redirect-success/"
+    client.post(reverse("shoop:login"), data={
+        "username": regular_user.email,
+        "password": REGULAR_USER_PASSWORD,
+        REDIRECT_FIELD_NAME: redirect_target
+    })
+
+    request = rf.get("/")
+    request.session = client.session
+    assert get_user(request).is_anonymous(), "User is still anonymous"
+
+    # Login with username should work normally
+    response = client.post(reverse("shoop:login"), data={
+        "username": regular_user.username,
+        "password": REGULAR_USER_PASSWORD,
+        REDIRECT_FIELD_NAME: redirect_target
+    })
+
+    assert response.get("location")
+    assert response.get("location").endswith(redirect_target)
+
+    request = rf.get("/")
+    request.session = client.session
+    assert get_user(request) == regular_user, "User is logged in"
