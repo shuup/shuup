@@ -102,7 +102,7 @@ const Picotable = (function(m, storage) {
         }
 
         function isEmpty(obj) {
-            if (!!obj.length) {
+            if (obj.length) {
                 return false;
             }
             for (var k in obj) {
@@ -154,9 +154,9 @@ const Picotable = (function(m, storage) {
             if (key === "") { // The empty string as a class set means the entire value is used if not empty
                 className = (flag && flag.length ? "" + flag : null);
             } else {
-                className = !!flag ? key : null;
+                className = flag ? key : null;
             }
-            if (!!className) classValues.push(className);
+            if (className) classValues.push(className);
         });
         return classValues.join(" ");
     };
@@ -361,7 +361,7 @@ const Picotable = (function(m, storage) {
         var rows = Util.map(data.items, function(item) {
             return m("tr", {key: "item-" + item._id}, Util.map(data.columns, function(col) {
                 var content = item[col.id] || "";
-                if (!!col.raw) content = m.trust(content);
+                if (col.raw) content = m.trust(content);
                 if (col.linked) {
                     if(isPick) {
                         content = m("a", {
@@ -456,7 +456,7 @@ const Picotable = (function(m, storage) {
                     if (!line) return;
                     if (typeof line === "string") line = {text: line};
                     if (!line.text) return;
-                    if (!!line.raw) line.text = m.trust(line.raw);
+                    if (line.raw) line.text = m.trust(line.raw);
                     var rowClass = "div.inner-row." +
                         (line.title ? "with-title" : "") +
                         (line.class ? "." + line.class : "");
@@ -475,7 +475,7 @@ const Picotable = (function(m, storage) {
             if (content === null) {
                 content = Util.map(data.columns, function(col) {
                     var colContent = item[col.id] || "";
-                    if (!!col.raw) colContent = m.trust(colContent);
+                    if (col.raw) colContent = m.trust(colContent);
                     return m("div.inner-row.with-title", [
                         m("div.column.title", col.title),
                         m("div.column", colContent)

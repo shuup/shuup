@@ -42,4 +42,4 @@ export default function(ctrl, folders, files) {
             m("tbody", folderItems.concat(fileItems))
         ])
     ]);
-};
+}

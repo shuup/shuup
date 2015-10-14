@@ -68,7 +68,8 @@ function handleFileXhrComplete(xhr, file, error) {
             messageText = responseJson.message;
         }
     } catch (e) {
-        console.log(e); // invalid JSON? pffff.
+        // invalid JSON? pffff.
+        console.log(e); // eslint-disable-line
     }
     if (window.Messages) {
         if (error && !messageText) {

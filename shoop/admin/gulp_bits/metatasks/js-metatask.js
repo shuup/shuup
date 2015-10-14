@@ -26,7 +26,7 @@ function normalJsBundle(spec, name) {
         return gulp.src(paths)
             .pipe(plumber())
             .pipe(sourcemaps.init())
-            .pipe((!!spec.es6 ? babel() : gutil.noop()))
+            .pipe((spec.es6 ? babel() : gutil.noop()))
             .pipe(concat(name + ".js"))
             .pipe((settings.PRODUCTION ? uglify() : gutil.noop()))
             .pipe(sourcemaps.write("."))

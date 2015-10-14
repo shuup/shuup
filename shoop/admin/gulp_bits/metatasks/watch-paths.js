@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 var _ = require("lodash");
 var chokidar = require("chokidar");
 var gulp = require("gulp");

@@ -20,7 +20,7 @@ window.DashboardCharts = (function(Chartist) {
         }
         const typeInfo = chartTypeInfo[config.type];
         if (!typeInfo) {
-            console.log("Unable to initialize chart - no type info", config);
+            console.log("Unable to initialize chart - no type info", config); // eslint-disable-line
             return;
         }
         const chartElement = document.createElement("div");

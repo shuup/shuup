@@ -67,4 +67,4 @@ export default function(ctrl, folders, files) {
         );
     });
     return m("div.row", folderItems.concat(fileItems));
-};
+}

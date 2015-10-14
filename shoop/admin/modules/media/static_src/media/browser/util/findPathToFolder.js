@@ -27,5 +27,4 @@ export default function(rootFolder, folderId) {
 
     walk(rootFolder, []);
     return pathToFolder || [];
-};
-
+}

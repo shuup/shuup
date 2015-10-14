@@ -15,4 +15,4 @@ export default function(ctrl, folder) {
             return false;
         }
     }, folder.name);
-};
+}

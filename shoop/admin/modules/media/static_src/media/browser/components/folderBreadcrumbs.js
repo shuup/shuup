@@ -26,4 +26,4 @@ export default function(ctrl) {
     items.pop(); // pop last chevron
     items.unshift(m("i.fa.fa-folder-open.folder-icon"));
     return items;
-};
+}
