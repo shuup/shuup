@@ -34,4 +34,4 @@ export default function ajax(options) {
         client.onreadystatechange = noop;
     };
     return client;
-};
+}

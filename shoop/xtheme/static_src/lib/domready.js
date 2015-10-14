@@ -32,4 +32,4 @@ export default function(fn) {
     else {
         callbacks.push(fn);
     }
-};
+}

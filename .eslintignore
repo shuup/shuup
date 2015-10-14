@@ -5,3 +5,4 @@ shoop/admin/static/**/*.js
 **/gulpfile.js
 **/vendor/**.js
 shoop/themes/classic_gray/static/**/*.js
+shoop/xtheme/static/**/*.js

@@ -66,8 +66,12 @@ function webpackRunner(config, watch) {
                 throw new gutil.PluginError("webpack", err);
             }
             gutil.log("[webpack]", stats.toString({colors: true}));
-            if(callback) callback();
-            if(watch) callback = null;  // can't call the callback more than once
+            if(callback) {
+                callback();
+            }
+            if(watch) {
+                callback = null;  // can't call the callback more than once
+            }
         };
         if(watch) {
             compiler.watch({}, cb);

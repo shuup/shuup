@@ -64,4 +64,4 @@ export default function el(selector, attrs, children) {
     processAttrs(element, attrs);
     processChildren(element, children);
     return element;
-};
+}
