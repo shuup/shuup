@@ -78,7 +78,7 @@ function Controller() {
         }
     };
     ctrl.setStepItemEditorState = function(state) {
-        if(!!state) {
+        if(state) {
             document.getElementById("step-item-wrapper").style.display = "block";
         } else {
             document.getElementById("step-item-wrapper").style.display = "none";
