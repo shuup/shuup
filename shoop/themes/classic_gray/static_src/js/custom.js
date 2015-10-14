@@ -27,13 +27,13 @@ window.showPreview = function showPreview(productId) {
 };
 
 function setProductListViewMode(isInListMode) {
-    if (typeof(Storage) !== "undefined") {
+    if (typeof (Storage) !== "undefined") {
         localStorage.setItem("product_list_view_list_mode", (isInListMode ? "list" : "grid"));
     }
 }
 
 function getProductListViewMode() {
-    if (typeof(Storage) !== "undefined") {
+    if (typeof (Storage) !== "undefined") {
         return localStorage.getItem("product_list_view_list_mode");
     }
     return "grid";
@@ -41,13 +41,14 @@ function getProductListViewMode() {
 
 window.moveToPage = function moveToPage(pageNumber) {
     var pagination = $("ul.pagination");
+
     // Prevent double clicking when ajax is loading
     if (pagination.prop("disabled")) {
         return false;
     }
     pagination.prop("disabled", true);
 
-    if (typeof(pageNumber) !== "number") {
+    if (typeof (pageNumber) !== "number") {
         pageNumber = parseInt(pageNumber);
         if (isNaN(pageNumber)) {
             return;
@@ -88,8 +89,7 @@ function updatePrice() {
         jQuery("#product-price-div").replaceWith($content);
         if ($content.find("#no-price").length > 0) {
             $("#add-to-cart-button").prop("disabled", true);
-        }
-        else {
+        } else {
             $("#add-to-cart-button").not(".not-orderable").prop("disabled", false);
         }
     });

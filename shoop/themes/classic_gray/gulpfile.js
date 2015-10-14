@@ -13,7 +13,7 @@ gulp.task("less", function() {
         "static_src/less/style.less"
     ])
         .pipe(plumber({}))
-        .pipe(less().on("error", function (err) {
+        .pipe(less().on("error", function(err) {
             console.log(err.message);
             this.emit("end");
         }))
@@ -48,4 +48,5 @@ gulp.task("js:watch", ["js"], function() {
 
 gulp.task("default", ["js", "less"]);
 
-gulp.task("watch", ["js:watch", "less:watch"], function() {});
+gulp.task("watch", ["js:watch", "less:watch"], function() {
+});
