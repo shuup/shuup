@@ -3,3 +3,5 @@
 shoop/admin/static/**/*.js
 **/webpack.config.js
 **/gulpfile.js
+**/vendor/**.js
+shoop/themes/classic_gray/static/**/*.js
