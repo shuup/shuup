@@ -11,6 +11,7 @@ const qs = require("../lib/qs");
 const el = require("../lib/el");
 const $ = require("../lib/miniq");
 
+
 function post(args) {
     if (window.CSRF_TOKEN) {
         args.csrfmiddlewaretoken = window.CSRF_TOKEN;
@@ -33,8 +34,12 @@ domready(() => {
         location.href = "?" + newQs;
     });
     $(".layout-add-cell-btn").on("click", function() {
-        const {y} = this.dataset;
-        post({y, command: "add_cell"});
+        const {y, cellCount, cellLimit} = this.dataset;
+        if (cellCount >= cellLimit) {
+            alert("Error: Cannot add more than "+ cellLimit + " cells to one row.");
+            return;
+        }
+        post({y: y, command: "add_cell"});
     });
     $(".layout-add-row-btn").on("click", function() {
         const {y} = this.dataset;

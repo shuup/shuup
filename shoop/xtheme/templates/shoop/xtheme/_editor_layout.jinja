@@ -2,6 +2,7 @@
     <h3>Edit Placeholder: {{ layout.placeholder_name }}</h3>
     {% for row in layout.rows %}
         {% set y = loop.index0 %}
+        {% set row_count = row.cells|count %}
         <div class="layout-row">
             <div class="layout-row-cells">
                 {% for cell in row.cells -%}
@@ -11,7 +12,7 @@
                     </div>
                 {%- endfor %}
             </div>
-            <button class="layout-add-cell-btn" data-y="{{ y }}">
+            <button class="layout-add-cell-btn"{% if row_count >= cell_limit %} disabled="disabled"{% endif %} data-y="{{ y }}" data-cell-count="{{ row_count }}" data-cell-limit="{{ cell_limit }}">
                 <i class="fa fa-plus-circle"></i>
             </button>
             <button class="layout-del-row-btn" data-y="{{ y }}">

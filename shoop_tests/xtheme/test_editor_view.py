@@ -9,7 +9,7 @@ from shoop.utils.excs import Problem
 from shoop.xtheme.layout import Layout
 from shoop.xtheme.models import SavedViewConfig, SavedViewConfigStatus
 from shoop.xtheme.theme import override_current_theme_class
-from shoop.xtheme.views.editor import EditorView
+from shoop.xtheme.views.editor import EditorView, ROW_CELL_LIMIT
 from shoop_tests.utils import printable_gibberish
 from shoop_tests.utils.faux_users import SuperUser
 from shoop_tests.utils.forms import get_form_data
@@ -133,3 +133,19 @@ def test_editor_view_unknown_command():
         view_obj.request.POST = {"command": printable_gibberish()}
         with pytest.raises(Problem):
             view_obj.dispatch(view_obj.request)
+
+
+@pytest.mark.django_db
+def test_editor_cell_limits():
+    layout, svc = get_test_layout_and_svc()
+    with initialize_editor_view(svc.view_name, layout.placeholder_name) as view_obj:
+        view_obj.request.GET.update({"x": 0, "y": 0})
+        view_obj.dispatch(view_obj.request)
+
+        for i in range(1, ROW_CELL_LIMIT):
+            view_obj.dispatch_add_cell(y=0)
+
+        assert len(view_obj.layout.rows[0]) == ROW_CELL_LIMIT
+
+        with pytest.raises(ValueError):
+            view_obj.dispatch_add_cell(y=0)
