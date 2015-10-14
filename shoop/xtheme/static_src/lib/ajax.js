@@ -27,8 +27,7 @@ export default function ajax(options) {
         }
         if (this.status === 200) {
             options.success(this.responseText, this);
-        }
-        else {
+        } else {
             options.error(this.status, this.statusText, this);
         }
         client.onreadystatechange = noop;

@@ -12,7 +12,7 @@ var loaded = (document.readyState === "complete");
 
 function listener() {
     events.forEach((ev) => { document.removeEventListener(ev, listener); });
-    if(!loaded) {
+    if (!loaded) {
         loaded = true;
         var fn;
         while ((fn = callbacks.shift())) {
@@ -28,8 +28,7 @@ if (!loaded) {
 export default function(fn) {
     if (loaded) {
         setTimeout(fn, 0);
-    }
-    else {
+    } else {
         callbacks.push(fn);
     }
 }
