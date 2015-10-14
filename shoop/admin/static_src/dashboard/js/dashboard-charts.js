@@ -15,7 +15,7 @@ window.DashboardCharts = (function(Chartist) {
     };
     function activate(config, id) {
         const parent = Chartist.querySelector("#chart-" + id);
-        if(!parent) {
+        if (!parent) {
             return;
         }
         const typeInfo = chartTypeInfo[config.type];
@@ -29,7 +29,7 @@ window.DashboardCharts = (function(Chartist) {
         parent.appendChild(chartElement);
         const ChartFactory = typeInfo.factory;
         config.instance = new ChartFactory(chartElement, config.data, config.options);
-        if(typeInfo.elementSelector) {
+        if (typeInfo.elementSelector) {
             setupTooltips(chartElement, typeInfo.elementSelector);
         }
     }

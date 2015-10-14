@@ -15,7 +15,6 @@ const images = require("./images");
 const menuManager = require("../util/menuManager");
 const fileContextMenu = require("../menus/fileContextMenu");
 
-
 export default function(ctrl, folders, files) {
     const folderItems = _.map(folders, function(folder) {
         return m("div.col-xs-6.col-md-4.col-lg-3.grid-folder.fd-zone", {
@@ -48,7 +47,7 @@ export default function(ctrl, folders, files) {
                         dragIcon.src = file.thumbnail || images.defaultThumbnail;
                         dragIcon.width = 100;
                         event.dataTransfer.setDragImage(dragIcon, 0, 0);
-                    } catch(e) {
+                    } catch (e) {
                         // This isn't a problem
                     }
                 }

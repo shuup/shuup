@@ -41,7 +41,7 @@ export function promptRenameCurrentFolder(controller) {
 
 export function promptDeleteCurrentFolder(controller) {
     const {id, name} = controller.folderData();
-    if(confirm("Are you sure you want to delete the " + name + " folder?")) {
+    if (confirm("Are you sure you want to delete the " + name + " folder?")) {
         remote.post({action: "delete_folder", id}).then(function(response) {
             remote.handleResponseMessages(response);
             const newCurrentFolder = 0 | response.newFolderId;  // eslint-disable-line no-bitwise

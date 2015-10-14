@@ -25,8 +25,12 @@ window.VariationVariableEditor = (function(m, _) {
     }
 
     function getIdfrAndLanguagesCells(cellSelector, object, langKey, langLabelFormat="$", showIdentifierFields=true) {
-        const changeIdentifier = m.withAttr("value", (value) => { object.identifier = value; refreshField(); });
-        const changeXlate = (code, value) => { object[langKey][code] = value; refreshField(); };
+        const changeIdentifier = m.withAttr("value", (value) => {
+            object.identifier = value; refreshField();
+        });
+        const changeXlate = (code, value) => {
+            object[langKey][code] = value; refreshField();
+        };
         return [
             _.map(languages, ({name, code}) => {
                 const changeXlateP = m.withAttr("value", _.partial(changeXlate, code));
@@ -68,7 +72,7 @@ window.VariationVariableEditor = (function(m, _) {
     function renderVariable(ctrl, variable) {
         const showIdentifierFields = ctrl.showIdentifierFields();
         const deleteVariableButton = m("a.btn.btn-xs.text-danger", {href: "#", onclick: () => {
-            if(variable.values.length === 0 || confirm("Are you sure?")) {
+            if (variable.values.length === 0 || confirm("Are you sure?")) {
                 variable.DELETE = true;
                 refreshField();
             }
@@ -122,7 +126,7 @@ window.VariationVariableEditor = (function(m, _) {
                 " Show identifier fields (for advanced users)"
             ])
         ]);
-        if(!variables.length) {
+        if (!variables.length) {
             variablesDiv = m("p.text-info", [
                 m("i.fa.fa-exclamation-circle"), " There are no variables defined.",
                 m("hr")
@@ -141,7 +145,7 @@ window.VariationVariableEditor = (function(m, _) {
     }
 
     function init(options) {
-        if(ctrlSingleton) {
+        if (ctrlSingleton) {
             return;
         }
         languages = options.languages;

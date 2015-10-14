@@ -17,7 +17,6 @@ const folderView = require("./components/folderView");
 const findPathToFolder = require("./util/findPathToFolder");
 const remote = require("./util/remote");
 
-
 export function view(ctrl) {
     return m("div.container-fluid", [
         m("div.row", [
@@ -41,7 +40,7 @@ export function controller(config={}) {
 
     ctrl.setFolder = function(newFolderId) {
         newFolderId = 0 | newFolderId;
-        if(ctrl.currentFolderId() === newFolderId) {
+        if (ctrl.currentFolderId() === newFolderId) {
             return;  // Nothing to do, don't cause trouble
         }
         ctrl.currentFolderId(0 | newFolderId);
@@ -51,7 +50,7 @@ export function controller(config={}) {
     };
     ctrl._refreshCurrentFolderPath = function() {
         const currentFolderId = ctrl.currentFolderId();
-        if(currentFolderId === null) {
+        if (currentFolderId === null) {
             return;  // Nothing loaded yet; defer to later
         }
         ctrl.currentFolderPath(findPathToFolder(ctrl.rootFolder(), currentFolderId));

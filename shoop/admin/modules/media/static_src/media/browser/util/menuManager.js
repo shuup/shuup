@@ -90,11 +90,11 @@ function initializeMenuContainer() {
             } while ((node = node.parentElement));
             close();
         }, false);
+
         //setInterval(reattachSoon, 100);
     }
     return menuContainer;
 }
-
 
 export function open(parent, view) {
     if (currentMenuParent === parent) {
@@ -107,7 +107,7 @@ export function open(parent, view) {
     currentMenuParent = parent;
     currentMenuComponent = (view ? {view: menuView(view), controller: _.noop} : null);
     currentMenuOpenTs = +new Date();
-    if(menuContainer) {
+    if (menuContainer) {
         m.mount(menuContainer, currentMenuComponent);
         fallbackParentCoords = parent ? offset(parent) : null;
         if (view) {
@@ -116,7 +116,6 @@ export function open(parent, view) {
         }
     }
 }
-
 
 export function close() {
     open(null, null);

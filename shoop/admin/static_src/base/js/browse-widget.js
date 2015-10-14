@@ -38,13 +38,13 @@ $(function() {
 
     $(document).on("click", ".browse-widget .browse-btn", function() {
         const $container = $(this).closest(".browse-widget");
-        if(!$container.length) {
+        if (!$container.length) {
             return;
         }
         const kind = $container.data("browse-kind");
         const filter = $container.data("filter");
         const browserUrl = window.ShoopAdminConfig.browserUrls[kind];
-        if(!browserUrl) {
+        if (!browserUrl) {
             alert("Error: No browser URL for kind: " + kind);
             return false;
         }
@@ -67,7 +67,7 @@ $(function() {
 
     $(document).on("click", ".browse-widget .clear-btn", function() {
         const $container = $(this).closest(".browse-widget");
-        if(!$container.length) {
+        if (!$container.length) {
             return;
         }
         const emptyText = $container.data("empty-text") || "";
@@ -79,7 +79,7 @@ $(function() {
 
     $(document).on("click", ".browse-widget .browse-text", function(event) {
         const href = $(this).prop("href");
-        if(/#$/.test(href)) {  // Looks empty, so prevent clicks
+        if (/#$/.test(href)) {  // Looks empty, so prevent clicks
             event.preventDefault();
             return false;
         }

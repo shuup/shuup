@@ -17,7 +17,7 @@ module.exports = function(spec, name) {
     var watcher = null;
 
     gulp.task(taskName, function() {
-        if(settings.WATCH && !watcher) {
+        if (settings.WATCH && !watcher) {
             var watches = (spec.watches || [spec.entrypoint]).map(basifyFile.bind(null, spec));
             watcher = watchPaths(watches, [taskName]);
         }

@@ -14,8 +14,10 @@
 window.materialize = function materialize(mithrilElement) {
     // Cache a document fragment for materialization
     const root = (window._materializeRoot || (window._materializeRoot = document.createDocumentFragment()));
+
     // Render something into that root
     m.render(root, mithrilElement, true);
+
     // Then return the first child
     return root.firstChild;
 };

@@ -23,7 +23,7 @@ $(function() {
     }
 
     function loadMenu(force) {
-        if(!menuLoaded || force) {
+        if (!menuLoaded || force) {
             $("#main-menu").empty().load(window.ShoopAdminConfig.menuUrl, function() {
                 $("#main-menu .scroll-inner-content").scrollbar("init", {
                     disableBodyScroll: true

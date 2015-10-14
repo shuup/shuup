@@ -22,7 +22,7 @@ export function promptRenameFile(controller, file) {
 
 export function promptDeleteFile(controller, file) {
     const {id, name} = file;
-    if(confirm("Are you sure you want to delete the file " + name + "?")) {
+    if (confirm("Are you sure you want to delete the file " + name + "?")) {
         remote.post({action: "delete_file", id}).then(function(response) {
             remote.handleResponseMessages(response);
             controller.reloadFolderContents();

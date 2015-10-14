@@ -14,7 +14,6 @@ const folderLink = require("./folderLink");
 const menuManager = require("../util/menuManager");
 const fileContextMenu = require("../menus/fileContextMenu");
 
-
 export default function(ctrl, folders, files) {
     const folderItems = _.map(folders, function(folder) {
         return m("tr", {key: "folder-" + folder.id}, [

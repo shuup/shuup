@@ -17,7 +17,7 @@ var queueStatusDiv = null;
 
 function queueView() {
     var className = "empty";
-    if(queue.length >= 0) {
+    if (queue.length >= 0) {
         className = (
             _.all(queue, (file) => (file.status === "done" || file.status === "error")) ?
                 "done" : "busy"
@@ -33,13 +33,14 @@ function queueView() {
 }
 
 function updateQueueView() {
-    if(queueStatusDiv === null) {
-        if(queue.length === 0) {
+    if (queueStatusDiv === null) {
+        if (queue.length === 0) {
             return;  // Don't bother setting up the div if we're not doing anything actually
         }
         queueStatusDiv = document.createElement("div");
         queueStatusDiv.id = "queue-status-ctr";
         document.body.appendChild(queueStatusDiv);
+
         // Yes, we're throwing away the ctrl instance; we don't need it
         // and eslint would kvetch about it otherwise :)
         m.mount(queueStatusDiv, {view: queueView, controller: _.noop});
@@ -142,7 +143,7 @@ export function addQueueCompletionCallback(callback) {
 }
 
 export function processQueue() {
-    if(_.any(queue, (file) => file.status === "uploading")) {
+    if (_.any(queue, (file) => file.status === "uploading")) {
         return;  // Don't allow uploading multiple files simultaneously though...
     }
     const nextFile = _.detect(queue, (file) => (file.status === "new"));

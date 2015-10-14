@@ -42,8 +42,9 @@ $(function() {
             view: function view(ctrl) {
                 const currentId = ctrl.currentItemId();
                 return m("div.sidebar-list", ctrl.navigationListItems().map(function(item) {
+                    const classes = (item.id === currentId ? ".active" : "") + (item.errorClass ? ".errors" : "");
                     return m(
-                        "a.sidebar-list-item" + (item.id === currentId ? ".active" : "") + (item.errorClass ? ".errors" : ""),
+                        "a.sidebar-list-item" + classes,
                         {
                             key: item.id,
                             href: "#" + item.id,
@@ -67,7 +68,7 @@ $(function() {
                 const ctrl = this;
                 ctrl.showSection = function(section) {
                     $sections.hide();
-                    if(section.errorClass) {
+                    if (section.errorClass) {
                         section.errorClass = "dismissed";
                     }
                     const $visibleSection = $("#" + section.id);

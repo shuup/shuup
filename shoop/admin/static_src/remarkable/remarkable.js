@@ -134,8 +134,7 @@ function makeToolbar(ctrl) {
         var buttonText = "";
         if (tool.icon) {
             className += " fa fa-" + tool.icon;
-        }
-        else {
+        } else {
             buttonText = tool.title;
         }
         currentGroup.push(m("button", {

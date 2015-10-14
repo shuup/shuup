@@ -10,7 +10,6 @@
 const folderActions = require("../actions/folderActions");
 const menuItem = require("./menuItem");
 
-
 export default function(controller) {
     return function() {
         const isRoot = (0 | controller.currentFolderId()) === 0;

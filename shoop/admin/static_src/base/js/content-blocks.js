@@ -10,6 +10,7 @@ $(function() {
     $(".toggle-contents").click(function(event) {
         const $collapseElement = $(this).closest(".content-block").find(".content-wrap");
         event.preventDefault();
+
         // Checks if the bootstrap collapse animation is not ongoing
         if (!$collapseElement.hasClass("collapsing")) {
             $collapseElement.collapse("toggle");
@@ -21,6 +22,7 @@ $(function() {
             $(this).find(".block-title").addClass("mobile-error-indicator");
         }
     });
+
     // Activate first sidebar-list-item with errors
     $("a.sidebar-list-item.errors").first().trigger("click");
 });

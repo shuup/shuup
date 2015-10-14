@@ -4,10 +4,10 @@
     const allowedButtons = "input[type=\"submit\"], input[type=\"image\"], button:not([type]), button[type=\"submit\"]";
     const formAttributes = ["action", "method", "enctype", "target", "novalidate"];
 
-    $.fn.formSubmissionAttributes = function () {
+    $.fn.formSubmissionAttributes = function() {
         //based on https://github.com/mattberkowitz/Form-Submission-Attributes-Polyfill
 
-        this.each(function () {
+        this.each(function() {
             const $form = $(this);
             var $inputs = $form.find(allowedButtons);
             const formId = $form.attr("id");
@@ -20,11 +20,11 @@
             }
 
             //backup originals
-            $.each(formAttributes, function (idx, attr) {
+            $.each(formAttributes, function(idx, attr) {
                 $form.data("o" + attr, $form.attr(attr));
             });
 
-            $inputs.on("click", function () {
+            $inputs.on("click", function() {
                 const $this = $(this);
                 $.each(formAttributes, function(idx, attr) {
                     const value = $this.is("[form" + attr + "]") ? $this.attr("form" + attr) : $form.data("o" + attr);
@@ -34,7 +34,7 @@
         });
     };
 
-    if(window.navigator.userAgent.indexOf("MSIE ") > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))
+    if (window.navigator.userAgent.indexOf("MSIE ") > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))
     {
         $(document).on("click", "[type=submit][form]", function(event) {
             event.preventDefault();
