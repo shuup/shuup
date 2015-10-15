@@ -1,6 +1,7 @@
 @color-green: #74AD40;
 @color-red: #DB5959;
 @color-blue: #55ACCC;
+@color-gray: #888888;
 
 * {
     box-sizing: border-box;
@@ -85,6 +86,14 @@ button, .xt-button {
     .layout-add-cell-btn {
         margin-right: 2px;
         color: @color-green;
+        &[disabled] {
+            color: @color-gray;
+            opacity: 0.6;
+            cursor: not-allowed;
+            &:hover, &:focus {
+                background-color: transparent;
+            }
+        }
     }
     .layout-del-row-btn {
         color: @color-red;

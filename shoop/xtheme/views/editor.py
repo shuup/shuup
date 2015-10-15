@@ -10,12 +10,17 @@ import json
 from django.http.response import HttpResponseRedirect, HttpResponse
 from django.middleware.csrf import get_token
 from django.utils.http import urlencode
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 from shoop.utils.excs import Problem
 from shoop.xtheme.editing import could_edit
 from shoop.xtheme.theme import get_theme_by_identifier
 from shoop.xtheme.view_config import ViewConfig
 from shoop.xtheme.views.forms import LayoutCellFormGroup
+
+# since layouts will most likely break with multiple cells per row, we are
+# limiting the amount.
+ROW_CELL_LIMIT = 4
 
 
 class EditorView(TemplateView):
@@ -38,6 +43,7 @@ class EditorView(TemplateView):
         ctx["current_cell"] = self.current_cell
         ctx["form"] = self.form
         ctx["changed"] = self.changed
+        ctx["cell_limit"] = ROW_CELL_LIMIT
         return ctx
 
     def dispatch(self, request, *args, **kwargs):  # doccov: ignore
@@ -115,6 +121,9 @@ class EditorView(TemplateView):
 
     def dispatch_add_cell(self, y, **kwargs):
         y = int(y)
+        if len(self.layout.rows[y].cells) >= ROW_CELL_LIMIT:
+            raise ValueError(_("Cannot add more than %d cells in one row.") % ROW_CELL_LIMIT)
+
         if not (0 <= y < len(self.layout.rows)):
             # No need to raise an exception, really.
             # It must have been a honest mistake.

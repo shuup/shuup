@@ -15,6 +15,17 @@ from shoop.xtheme.plugins.base import Plugin
 class LayoutCellGeneralInfoForm(forms.Form):
     plugin = forms.ChoiceField(label=_("Plugin"), required=False)
 
+    CELL_FULL_WIDTH = 12
+
+    CELL_WIDTH_CHOICES = [
+        (int(CELL_FULL_WIDTH), _("Full Width")),
+        (int(CELL_FULL_WIDTH * 3 / 4), _("Three Fourths (3/4)")),
+        (int(CELL_FULL_WIDTH * 2 / 3), _("Two Thirds (2/3)")),
+        (int(CELL_FULL_WIDTH / 2), _("Half (1/2)")),
+        (int(CELL_FULL_WIDTH / 3), _("One Third (1/3)")),
+        (int(CELL_FULL_WIDTH / 4), _("One Fourth (1/4)")),
+    ]
+
     def __init__(self, **kwargs):
         self.layout_cell = kwargs.pop("layout_cell")
         super(LayoutCellGeneralInfoForm, self).__init__(**kwargs)
@@ -24,17 +35,12 @@ class LayoutCellGeneralInfoForm(forms.Form):
         """
         Populate the form with fields for size and plugin selection.
         """
-        sizes = ["sm", "md"]  # TODO: Parametrize? Currently Bootstrap dependent.
-        sizes.extend(set(self.layout_cell.sizes) - set(sizes))
-        self.sizes = sizes
-        for size in self.sizes:
-            self.fields["size_%s" % size] = forms.IntegerField(
-                label=size.upper(),
-                required=False,
-                min_value=0,
-                max_value=12,  # TODO: Parametrize? Currently Bootstrap dependent.
-                initial=self.layout_cell.sizes.get(size)
-            )
+
+        initial_cell_width = self.layout_cell.sizes.get("sm") or self.CELL_FULL_WIDTH
+
+        self.fields["cell_width"] = forms.ChoiceField(
+            label=_("Cell width"), choices=self.CELL_WIDTH_CHOICES, initial=initial_cell_width)
+
         plugin_choices = Plugin.get_plugin_choices(empty_label=_("No Plugin"))
         plugin_field = self.fields["plugin"]
         plugin_field.choices = plugin_field.widget.choices = plugin_choices
@@ -43,10 +49,16 @@ class LayoutCellGeneralInfoForm(forms.Form):
     def save(self):
         """
         Save size configuration. Plugin configuration is done via JavaScript POST.
+
+        Both breakpoints (`sm`and `md`) are set to same value defined in `cell_width_field`.
+        The reason for this is that the difference between these breakpoints is so
+        minor that manually assigning both of these by shop admin introduces too much
+        complexity to row-cell management UI.
         """
         data = self.cleaned_data
-        for size in self.sizes:
-            self.layout_cell.sizes[size] = data["size_%s" % size]
+        sizes = ["sm", "md"]  # TODO: Parametrize? Currently Bootstrap dependent.
+        for size in sizes:
+            self.layout_cell.sizes[size] = int(data["cell_width"])
 
 
 class LayoutCellFormGroup(FormGroup):
