@@ -103,7 +103,8 @@ class SavedViewConfig(models.Model):
     def revert(self):
         if not self.draft:
             raise ValueError("Unable to revert a non-draft view configuration")
-        self.delete()
+        if self.pk:
+            self.delete()
 
     def set_layout_data(self, placeholder_name, layout):
         if not layout:  # pragma: no cover

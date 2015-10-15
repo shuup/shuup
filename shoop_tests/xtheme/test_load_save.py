@@ -90,3 +90,9 @@ def test_unthemebound_view_config_cant_do_much():
         vc.save_placeholder_layout("hurr", {"foo": True})
     l = vc.get_placeholder_layout("hurr")  # loading should work, but . . .
     assert not len(l.rows)  # . . . there shouldn't be much in there
+
+
+@pytest.mark.django_db
+def test_unsaved_vc_reversion():
+    vc = ViewConfig(theme=TestTheme(), view_name=printable_gibberish(), draft=True)
+    vc.revert()  # No-op, since this has never been saved (but shouldn't crash either)
