@@ -12,6 +12,7 @@ import six
 from jinja2.environment import Environment, Template
 from jinja2.utils import concat, internalcode
 
+from shoop.apps.provides import get_provide_objects
 from shoop.xtheme.editing import add_edit_resources
 from shoop.xtheme.resources import RESOURCE_CONTAINER_VAR_NAME, ResourceContainer, inject_resources
 from shoop.xtheme.theme import get_current_theme
@@ -39,7 +40,9 @@ class XthemeTemplate(Template):
         return self.environment.handle_exception(exc_info, True)
 
     def _postprocess(self, context, content):
-        # TODO: Add a hook here for addons to inject resources without plugins
+        for inject_func in get_provide_objects("xtheme_resource_injection"):
+            if callable(inject_func):
+                inject_func(context, content)
         add_edit_resources(context)
         content = inject_resources(context, content)
         return content
