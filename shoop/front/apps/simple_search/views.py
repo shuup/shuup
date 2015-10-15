@@ -10,12 +10,12 @@ from __future__ import unicode_literals
 import hashlib
 
 from django import forms
-from django.core.cache import cache
 from django.db.models import Q
 from django.utils.encoding import force_bytes
 from django.views.generic import ListView
 
-from shoop.core.models import Product
+from shoop.core import cache
+from shoop.core.models.products import Product
 from shoop.front.utils.product_sorting import PRODUCT_SORT_CHOICES, sort_products
 from shoop.front.utils.views import cache_product_things
 from shoop.front.template_helpers.product import is_visible
@@ -23,7 +23,7 @@ from shoop.front.template_helpers.product import is_visible
 
 def get_search_product_ids(request, query):
     query = query.strip().lower()
-    cache_key = "simple_search_%s" % hashlib.sha1(force_bytes(query)).hexdigest()
+    cache_key = "simple_search:%s" % hashlib.sha1(force_bytes(query)).hexdigest()
     product_ids = cache.get(cache_key)
     if product_ids is None:
         product_ids = Product.objects.filter(

@@ -9,7 +9,7 @@ from __future__ import unicode_literals, with_statement
 
 import datetime
 
-from django.core.cache import cache
+from shoop.core import cache
 from django.db.models import Sum
 from django.utils.translation import get_language
 
@@ -19,7 +19,7 @@ from shoop.core.models import OrderLine, OrderLineType, Product
 def get_best_selling_product_info(shop_ids, cutoff_days=30):
     shop_ids = sorted(map(int, shop_ids))
     cutoff_date = datetime.date.today() - datetime.timedelta(days=cutoff_days)
-    cache_key = "best_sellers_%r_%s" % (shop_ids, cutoff_date)
+    cache_key = "best_sellers:%r_%s" % (shop_ids, cutoff_date)
     sales_data = cache.get(cache_key)
     if sales_data is None:
         sales_data = (
@@ -39,7 +39,7 @@ def get_best_selling_product_info(shop_ids, cutoff_days=30):
 
 
 def get_products_ordered_with(prod, count=20, request=None, language=None):
-    cache_key = "ordered_with_%d" % prod.pk
+    cache_key = "ordered_with:%d" % prod.pk
     product_ids = cache.get(cache_key)
     if product_ids is None:
         # XXX: could this be optimized more? (and does it matter?)
