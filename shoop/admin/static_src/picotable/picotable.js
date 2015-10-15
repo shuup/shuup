@@ -102,7 +102,7 @@ const Picotable = (function(m, storage) {
         }
 
         function isEmpty(obj) {
-            if (!!obj.length) {
+            if (obj.length) {
                 return false;
             }
             for (var k in obj) {
@@ -154,9 +154,9 @@ const Picotable = (function(m, storage) {
             if (key === "") { // The empty string as a class set means the entire value is used if not empty
                 className = (flag && flag.length ? "" + flag : null);
             } else {
-                className = !!flag ? key : null;
+                className = flag ? key : null;
             }
-            if (!!className) classValues.push(className);
+            if (className) classValues.push(className);
         });
         return classValues.join(" ");
     };
@@ -361,15 +361,14 @@ const Picotable = (function(m, storage) {
         var rows = Util.map(data.items, function(item) {
             return m("tr", {key: "item-" + item._id}, Util.map(data.columns, function(col) {
                 var content = item[col.id] || "";
-                if (!!col.raw) content = m.trust(content);
+                if (col.raw) content = m.trust(content);
                 if (col.linked) {
-                    if(isPick) {
+                    if (isPick) {
                         content = m("a", {
                             href: "#",
                             onclick: Util.boundPartial(ctrl, ctrl.pickObject, item)
                         }, content);
-                    }
-                    else if(item._url) {
+                    } else if (item._url) {
                         content = m("a", {href: item._url}, content);
                     }
                 }
@@ -456,7 +455,7 @@ const Picotable = (function(m, storage) {
                     if (!line) return;
                     if (typeof line === "string") line = {text: line};
                     if (!line.text) return;
-                    if (!!line.raw) line.text = m.trust(line.raw);
+                    if (line.raw) line.text = m.trust(line.raw);
                     var rowClass = "div.inner-row." +
                         (line.title ? "with-title" : "") +
                         (line.class ? "." + line.class : "");
@@ -475,7 +474,7 @@ const Picotable = (function(m, storage) {
             if (content === null) {
                 content = Util.map(data.columns, function(col) {
                     var colContent = item[col.id] || "";
-                    if (!!col.raw) colContent = m.trust(colContent);
+                    if (col.raw) colContent = m.trust(colContent);
                     return m("div.inner-row.with-title", [
                         m("div.column.title", col.title),
                         m("div.column", colContent)
@@ -483,7 +482,7 @@ const Picotable = (function(m, storage) {
                 });
             }
             var linkAttrs = {href: item._url};
-            if(isPick) {
+            if (isPick) {
                 linkAttrs.onclick = Util.boundPartial(ctrl, ctrl.pickObject, item);
                 linkAttrs.href = "#";
             }
@@ -659,19 +658,19 @@ const Picotable = (function(m, storage) {
         };
         ctrl.pickObject = function(object) {
             var opener = window.opener;
-            if(!opener) {
+            if (!opener) {
                 alert("Window has no opener. Can't pick object.");
                 return;
             }
             var text = null;  // Try to figure out a name for the object
             Util.map(["_text", "_name", "title", "name", "text"], function(prop) {
-                if(!text && object[prop]) text = object[prop];
+                if (!text && object[prop]) text = object[prop];
             });
-            if(!text && object._abstract && object._abstract.length > 0) {
+            if (!text && object._abstract && object._abstract.length > 0) {
                 text = object._abstract[0];
-                if(text.text) text = text.text; // Unwrap possible abstract text
+                if (text.text) text = text.text; // Unwrap possible abstract text
             }
-            if(!text) text = "#" + object._id;
+            if (!text) text = "#" + object._id;
             opener.postMessage({
                 "pick": {
                     "id": ctrl.vm.pickId(),
@@ -691,7 +690,8 @@ const Picotable = (function(m, storage) {
         // Replace Mithril's deferred error monitor with one that can ignore JSON-parsing syntax errors.
         // See https://lhorie.github.io/mithril/mithril.deferred.html#the-exception-monitor
         m.deferred.onerror = function(e) {
-            if(e.toString().match(/^SyntaxError/)) return;
+            if (e.toString().match(/^SyntaxError/)) return;
+
             // Original onerror behavior below.
             if ({}.toString.call(e) === "[object Error]" && !e.constructor.toString().match(/ Error/)) throw e;
         };

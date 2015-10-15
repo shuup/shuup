@@ -1,14 +1,14 @@
-function showPreview(productId) {
-    var modal_select = "#product-" + productId + "-modal";
-    var product_modal = $(modal_select);
-    if (product_modal.length) {
-        product_modal.modal("show");
+window.showPreview = function showPreview(productId) {
+    var modalSelector = "#product-" + productId + "-modal";
+    var $productModal = $(modalSelector);
+    if ($productModal.length) {
+        $productModal.modal("show");
         return;
     }
 
     // make sure modals disappear and are not "cached"
-    $(document).on('hidden.bs.modal', modal_select, function(){
-        $(modal_select).remove();
+    $(document).on("hidden.bs.modal", modalSelector, function() {
+        $(modalSelector).remove();
     });
 
     $.ajax({
@@ -19,35 +19,36 @@ function showPreview(productId) {
         },
         success: function(data) {
             $("body").append(data);
-            $(modal_select).modal("show");
+            $(modalSelector).modal("show");
             updatePrice();
             $(".selectpicker").selectpicker();
         }
     });
-}
+};
 
 function setProductListViewMode(isInListMode) {
-    if (typeof(Storage) !== "undefined") {
+    if (typeof (Storage) !== "undefined") {
         localStorage.setItem("product_list_view_list_mode", (isInListMode ? "list" : "grid"));
     }
 }
 
 function getProductListViewMode() {
-    if (typeof(Storage) !== "undefined") {
+    if (typeof (Storage) !== "undefined") {
         return localStorage.getItem("product_list_view_list_mode");
     }
     return "grid";
 }
 
-function moveToPage(pageNumber) {
+window.moveToPage = function moveToPage(pageNumber) {
     var pagination = $("ul.pagination");
+
     // Prevent double clicking when ajax is loading
     if (pagination.prop("disabled")) {
         return false;
     }
     pagination.prop("disabled", true);
 
-    if (typeof(pageNumber) !== "number") {
+    if (typeof (pageNumber) !== "number") {
         pageNumber = parseInt(pageNumber);
         if (isNaN(pageNumber)) {
             return;
@@ -56,7 +57,7 @@ function moveToPage(pageNumber) {
     window.PAGE_NUMBER = pageNumber;
 
     reloadProducts();
-}
+};
 
 function reloadProducts() {
     var filterString = "?sort=" + $("#id_sort").val() + "&page=" + window.PAGE_NUMBER;
@@ -86,12 +87,9 @@ function updatePrice() {
     jQuery.ajax({url: "/xtheme/product_price", dataType: "html", data: data}).done(function(responseText) {
         var $content = jQuery("<div>").append(jQuery.parseHTML(responseText)).find("#product-price-div");
         jQuery("#product-price-div").replaceWith($content);
-        if($content.find("#no-price").length > 0)
-        {
+        if ($content.find("#no-price").length > 0) {
             $("#add-to-cart-button").prop("disabled", true);
-        }
-        else
-        {
+        } else {
             $("#add-to-cart-button").not(".not-orderable").prop("disabled", false);
         }
     });
@@ -99,9 +97,9 @@ function updatePrice() {
 
 $(function() {
     $("#search-modal").on("show.bs.modal", function() {
-        setTimeout(function(){
+        setTimeout(function() {
             $("#site-search").focus();
-        }, 300)
+        }, 300);
     });
 
     function openMobileNav() {
@@ -112,13 +110,13 @@ $(function() {
         $(document.body).removeClass("menu-open");
     }
 
-    function MobileNavIsOpen() {
+    function mobileNavIsOpen() {
         return $(document.body).hasClass("menu-open");
     }
 
     $(".toggle-mobile-nav").click(function(e) {
         e.stopPropagation();
-        if (MobileNavIsOpen()) {
+        if (mobileNavIsOpen()) {
             closeMobileNav();
         } else {
             openMobileNav();
@@ -126,7 +124,7 @@ $(function() {
     });
 
     $(document).click(function(e) {
-        if (MobileNavIsOpen() && !$(e.target).closest(".pages .nav-collapse").length) {
+        if (mobileNavIsOpen() && !$(e.target).closest(".pages .nav-collapse").length) {
             closeMobileNav();
         }
 
@@ -140,15 +138,15 @@ $(function() {
         var $productListView = $(".product-list-view");
         $productListView.toggleClass("list");
         setProductListViewMode($productListView.hasClass("list"));
-    })
+    });
 
     $(".selectpicker").selectpicker();
 
     // By default product list view is in grid mode
     var $productListView = $(".product-list-view");
-    if ($productListView.length > 0 && getProductListViewMode() == "list") {
+    if ($productListView.length > 0 && getProductListViewMode() === "list") {
         $productListView.addClass("list");
-        $("#product-list-view-type").prop('checked', true);
+        $("#product-list-view-type").prop("checked", true);
     }
 
     // Add proper classes to category navigation based on current-page class

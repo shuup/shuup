@@ -23,4 +23,4 @@ export default function item(label, action, attrs = {}) {
             menuManager.close();
         }
     }, label));
-};
+}

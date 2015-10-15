@@ -55,7 +55,7 @@ export function dropzoneConfig(ctrl) {
                 // not JSON, I guess
             }
             if (data !== null) {
-                if(data.fileId) {
+                if (data.fileId) {
                     fileActions.moveFile(ctrl, data.fileId, folderId);
                     return;
                 }

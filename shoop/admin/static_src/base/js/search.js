@@ -37,7 +37,6 @@ $(function() {
         const [actionResults, standardResults] = _.partition(results, "isAction");
         const getShortcut = getShortcutFinder();
 
-
         const singleResultLi = function(result, linkClass) {
             const key = (showShortcuts ? getShortcut(result.text) : null);
             return m("li", {key: result.url},

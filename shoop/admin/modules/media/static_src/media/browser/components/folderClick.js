@@ -11,5 +11,5 @@ export default function(ctrl, folder) {
         ctrl.setFolder(folder.id);
         event.preventDefault();
         return false;
-    }
-};
+    };
+}

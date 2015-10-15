@@ -64,7 +64,7 @@ function Controller() {
         step[listName] = _.reject(step[listName], function(i) {
             return i === item;
         });
-        if(ctrl.currentItem() === item) {
+        if (ctrl.currentItem() === item) {
             ctrl.activateStepItem(null, null, null);
         }
     };
@@ -78,7 +78,7 @@ function Controller() {
         }
     };
     ctrl.setStepItemEditorState = function(state) {
-        if(!!state) {
+        if (state) {
             document.getElementById("step-item-wrapper").style.display = "block";
         } else {
             document.getElementById("step-item-wrapper").style.display = "none";
@@ -112,7 +112,7 @@ function Controller() {
     };
     ctrl.receiveItemEditData = function(data) {
         const currentItem = ctrl.currentItem();
-        if(!currentItem) {
+        if (!currentItem) {
             alert("Unexpected edit data received.");
             return;
         }
@@ -124,6 +124,7 @@ function Controller() {
         apiRequest("saveData", {
             steps: ctrl.steps()
         });
+
         // TODO: Handle errors here?
     };
     ctrl.deleteStep = function(step) {
@@ -181,7 +182,7 @@ function workflowItemList(ctrl, step, itemType) {
         const name = nameMap[item.identifier] || item.identifier;
         var tag = "li";
         const current = (ctrl.currentItem() === item);
-        if(current) {
+        if (current) {
             tag += ".current";
         }
         return m(tag,
@@ -300,7 +301,11 @@ function view(ctrl) {
         m("div.steps", [
             stepTableRows(ctrl),
             m("hr.script-separator"),
-            m("a.new-step-link.btn.btn-info.btn-sm", {href: "#", onclick: ctrl.addNewStep}, m("i.fa.fa-plus"), " New step")
+            m(
+                "a.new-step-link.btn.btn-info.btn-sm",
+                {href: "#", onclick: ctrl.addNewStep},
+                m("i.fa.fa-plus"), " New step"
+            )
         ]),
         modal
     ]);
@@ -318,7 +323,6 @@ function itemInfosToNameMap(itemInfos) {
     return _(itemInfos).map((itemInfo, identifier) => [identifier, itemInfo.name]).zipObject().value();
 }
 
-
 function init(iSettings) {
     settings = _.extend({}, iSettings);
     infos.condition = settings.conditionInfos;
@@ -333,7 +337,7 @@ function init(iSettings) {
         view: view
     });
     window.addEventListener("message", function(event) {
-        if(event.data.new_data) {
+        if (event.data.new_data) {
             controller.receiveItemEditData(event.data.new_data);
         }
     }, false);
@@ -346,7 +350,7 @@ function save() {
 module.exports.init = init;
 module.exports.save = save;
 module.exports.hideEditModal = function() {
-    if(controller) {
+    if (controller) {
         m.startComputation();
         controller.setStepItemEditorState(false);
         controller.activateStepItem(null);  // Deactivate the modal once data is received

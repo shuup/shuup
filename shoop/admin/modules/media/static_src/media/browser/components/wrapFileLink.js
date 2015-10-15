@@ -29,4 +29,4 @@ export default function(file, tag = "a", content = file.name) {
         };
     }
     return m(tag, attrs, content);
-};
+}

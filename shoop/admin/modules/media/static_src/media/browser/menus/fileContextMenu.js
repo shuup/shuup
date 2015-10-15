@@ -9,7 +9,6 @@
 const fileActions = require("../actions/fileActions");
 const menuItem = require("./menuItem");
 
-
 export default function(controller, file) {
     return function() {
         return [

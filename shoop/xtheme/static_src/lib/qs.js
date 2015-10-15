@@ -8,8 +8,8 @@
  */
 export function stringify(obj) {
     const bits = [];
-    for(var key in obj) {
-        if(obj.hasOwnProperty(key) && obj[key]) {
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key) && obj[key]) {
             bits.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
         }
     }
@@ -18,7 +18,7 @@ export function stringify(obj) {
 
 export function parse(queryString) {
     const kw = {};
-    if(queryString === null || queryString === undefined) {
+    if (queryString === null || queryString === undefined) {
         queryString = location.search.replace(/^\?/, "");
     }
     queryString.split("&").forEach((bit) => {
@@ -29,15 +29,14 @@ export function parse(queryString) {
 }
 
 export function mutateObj(obj, mutations) {
-    for(var key in mutations) {
-        if(!mutations.hasOwnProperty(key)) {
+    for (var key in mutations) {
+        if (!mutations.hasOwnProperty(key)) {
             continue;
         }
         const val = mutations[key];
-        if(val === null || val === undefined) {
+        if (val === null || val === undefined) {
             delete obj[key];
-        }
-        else {
+        } else {
             obj[key] = val;
         }
     }

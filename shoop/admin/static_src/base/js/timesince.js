@@ -12,11 +12,11 @@ $(function() {
         $(".timesince").each(function() {
             const $el = $(this);
             const ts = $el.data("ts");
-            if(!ts) {
+            if (!ts) {
                 return;
             }
             const time = moment(ts);
-            if(!time.isValid()) {
+            if (!time.isValid()) {
                 return;
             }
             $el.text(time.fromNow());

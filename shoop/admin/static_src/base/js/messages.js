@@ -10,7 +10,7 @@ window.Messages = (function Messages(document) {
     const queue = [];
     var container = null;
     function createContainer() {
-        if(!container) {
+        if (!container) {
             container = document.createElement("div");
             container.id = "message-container";
             document.body.appendChild(container);
@@ -18,13 +18,13 @@ window.Messages = (function Messages(document) {
         }
     }
     function show() {
-        if(container) {
+        if (container) {
             container.classList.remove("clear");
             container.classList.add("visible");
         }
     }
     function hide() {
-        if(container) {
+        if (container) {
             container.classList.remove("visible");
             container.classList.add("clear");
             setTimeout(clear, 2000);
@@ -32,14 +32,14 @@ window.Messages = (function Messages(document) {
     }
     function clear() {
         container.classList.remove("clear");
-        while(container && container.firstChild) {
+        while (container && container.firstChild) {
             container.removeChild(container.firstChild);
         }
     }
     function hideOnClickOut(event) {
         var node = event.target;
-        while(node) {
-            if(node.id === "message-container") {
+        while (node) {
+            if (node.id === "message-container") {
                 return;
             }
             node = node.parentNode;
@@ -49,7 +49,7 @@ window.Messages = (function Messages(document) {
     function renderMessage(message) {
         const messageDiv = document.createElement("div");
         var tags = message.tags || [];
-        if(_.isString(tags)) {
+        if (_.isString(tags)) {
             tags = tags.split(" ");
         }
         messageDiv.className = "message " + tags.join(" ");
@@ -60,14 +60,14 @@ window.Messages = (function Messages(document) {
         return messageDiv;
     }
     function flush() {
-        if(!queue.length) {
+        if (!queue.length) {
             return;
         }
-        if(!document.body) {  // Try again soon
+        if (!document.body) {  // Try again soon
             return setTimeout(flush, 50);
         }
         createContainer();
-        while(queue.length > 0) {
+        while (queue.length > 0) {
             container.appendChild(renderMessage(queue.shift()));
         }
         _.defer(show);

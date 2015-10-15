@@ -12,6 +12,7 @@ var gutil = require("gulp-util");
 var merge = require("merge");
 var path = require("path");
 var webpack = require("webpack");
+
 // --production works in place of the environment variable
 var PRODUCTION = (gutil.env.production) || (process.env.NODE_ENV === "production");
 
@@ -42,11 +43,10 @@ function buildWebpackConfig(entry, outputFilename) {
     };
 }
 
-
 function webpackRunner(config, watch) {
     config = merge.recursive({}, config);
     config.plugins = config.plugins || [];
-    if(PRODUCTION) {
+    if (PRODUCTION) {
         var UglifyJsPlugin = require("webpack/lib/optimize/UglifyJsPlugin");
         var OccurenceOrderPlugin = require("webpack/lib/optimize/OccurenceOrderPlugin");
         config.plugins.push(new UglifyJsPlugin());
@@ -66,10 +66,14 @@ function webpackRunner(config, watch) {
                 throw new gutil.PluginError("webpack", err);
             }
             gutil.log("[webpack]", stats.toString({colors: true}));
-            if(callback) callback();
-            if(watch) callback = null;  // can't call the callback more than once
+            if (callback) {
+                callback();
+            }
+            if (watch) {
+                callback = null;  // can't call the callback more than once
+            }
         };
-        if(watch) {
+        if (watch) {
             compiler.watch({}, cb);
         } else {
             compiler.run(cb);
@@ -84,7 +88,7 @@ function webpackTasks(name, config) {
 
 function registerWatchTask(directDeps, fn) {
     var deps = [].concat(directDeps || []);
-    Object.keys(gulp.tasks).filter(function(n){return n.indexOf("watch:") === 0;}).forEach(function(n) {
+    Object.keys(gulp.tasks).filter(function(n) {return n.indexOf("watch:") === 0;}).forEach(function(n) {
         deps.push(n);
     });
     gulp.task("watch", deps, fn || gutil.noop);

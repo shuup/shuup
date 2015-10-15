@@ -16,5 +16,5 @@ export default function(prop, value, label, title) {
         onclick: _.bind(prop, null, value),
         title: title
     }, label);
-};
+}
 

@@ -74,4 +74,4 @@ export default function folderView(ctrl) {
     ]);
 
     return m("div.folder-view", [toolbar, container]);
-};
+}

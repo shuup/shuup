@@ -16,4 +16,4 @@ export default function(ctrl, folder) {  // eslint-disable-line no-unused-vars
         ),
         m("div.empty-text", responsiveUploadHint)
     ]);
-};
+}

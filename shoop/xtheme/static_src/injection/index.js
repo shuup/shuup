@@ -41,12 +41,10 @@ function setSidebarVisibility(visible) {
     const sidebarDiv = getSidebarDiv();
     if (visible === undefined) {
         sidebarDiv.classList.toggle("visible");
-    }
-    else {
+    } else {
         sidebarDiv.classList.toggle("visible", !!visible);
     }
 }
-
 
 function openPlaceholderEditor(domElement) {
     const placeholderName = domElement.dataset.xtPlaceholderName;
@@ -60,6 +58,7 @@ function openPlaceholderEditor(domElement) {
         view: viewName,
         theme: window.XthemeEditorConfig.themeIdentifier,
         ph: placeholderName,
+
         // TODO: Hopefully we won't get any problems with too-long query strings (2048 is the maximum for IE):
         "default_config": defaultConfigJSON
     };

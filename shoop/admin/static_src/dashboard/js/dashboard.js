@@ -9,10 +9,10 @@
 /* eslint-disable no-unused-vars */
 $(function() {
     "use strict";
-    if(window.DashboardCharts) {
+    if (window.DashboardCharts) {
         window.DashboardCharts.init();
     }
-    if(window.Masonry) {
+    if (window.Masonry) {
         const Masonry = window.Masonry;
 
         const msnry = new Masonry(document.getElementById("dashboard-wrapper"), {
@@ -23,7 +23,7 @@ $(function() {
     $(document).on("click", "button.dismiss-button", function() {
         const $button = $(this);
         const url = $button.data("dismissUrl");
-        if(!url) {
+        if (!url) {
             return;
         }
         $.ajax({
@@ -31,18 +31,17 @@ $(function() {
             url: url,
             dataType: "json",
             success: function(data) {
-                if(data.ok) {
+                if (data.ok) {
                     const dismissTarget = $button.data("dismissTarget");
-                    if(dismissTarget) {
+                    if (dismissTarget) {
                         $(dismissTarget).remove();
                     }
                 }
-                if(data.error && window.Messages) {
+                if (data.error && window.Messages) {
                     window.Messages.enqueue({text: data.error});
                 }
             }
         });
     });
-
 
 });

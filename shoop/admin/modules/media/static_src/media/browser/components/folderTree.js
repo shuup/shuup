@@ -53,4 +53,4 @@ export default function(ctrl) {
     }
 
     return m("ul", walk(ctrl.rootFolder()));
-};
+}

@@ -12,7 +12,7 @@ const functions = {};
  * @return Array
  */
 function maybeSplit(strOrArray) {
-    if(Array.isArray(strOrArray)) {
+    if (Array.isArray(strOrArray)) {
         return strOrArray;
     }
     return ("" + strOrArray).split(/,\s*/);
@@ -42,12 +42,13 @@ functions.each = function(fn) {
 export default function init(selector, context=document) {
     const rv = {
         context: context,
+
         // querySelectorAll returns a non-live collection anyway, so it's not a bad idea
         // to array-fy it right here.
         elements: [].slice.call(context.querySelectorAll(selector))
     };
-    for(var key in functions) {
-        if(functions.hasOwnProperty(key)) {
+    for (var key in functions) {
+        if (functions.hasOwnProperty(key)) {
             rv[key] = functions[key].bind(rv);
         }
     }
