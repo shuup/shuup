@@ -62,10 +62,18 @@ class RecoverPasswordForm(forms.Form):
 
     def clean(self):
         data = self.cleaned_data
-        if not (data["username"] or data["email"]):
-            raise forms.ValidationError(
-                _("Please provide either username or password"), code="no_email_or_username"
-            )
+        username = data["username"]
+        email = data["email"]
+        if username and email:
+            msg = _("Please provide only one of username or email")
+            self.add_error("username", msg)
+            self.add_error("email", msg)
+
+        if not (username or email):
+            msg = _("Please provide either username or email")
+            self.add_error("username", msg)
+            self.add_error("email", msg)
+
         return data
 
     def save(self, request):
