@@ -91,3 +91,5 @@ Provide Categories
     XTheme themes (full theme sets).
 ``xtheme_plugin``
     XTheme plugins (that are placed into placeholders within themes).
+``xtheme_resource_injection``
+    XTheme resources injection function that takes current context and content as parameters.
