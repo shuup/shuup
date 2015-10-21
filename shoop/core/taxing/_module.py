@@ -81,7 +81,7 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
         :type line: shoop.core.order_creator.SourceLine
         :rtype: Iterable[LineTax]
         """
-        taxed_price = self.get_taxed_price_for(context, line, line.total_price)
+        taxed_price = self.get_taxed_price_for(context, line, line.price)
         return taxed_price.taxes
 
     @abc.abstractmethod

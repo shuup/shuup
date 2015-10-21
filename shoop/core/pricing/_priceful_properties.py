@@ -52,17 +52,3 @@ class TaxlessFrom(PriceRate):
             return TaxlessPrice(price.amount * inv_tax_ratio)
         else:
             return price
-
-
-class Alias(object):
-    def __init__(self, field):
-        self.field = field
-        self.__doc__ = "Alias of `%s`" % (field,)
-
-    def __get__(self, instance, type=None):
-        if instance is None:
-            return self
-        return getattr(instance, self.field)
-
-    def __set__(self, instance, value):
-        setattr(instance, self.field, value)

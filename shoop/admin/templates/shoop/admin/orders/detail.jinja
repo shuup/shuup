@@ -81,8 +81,8 @@
                                 <td class="text-right">{{ line.quantity|number }}</td>
                                 <td class="text-right">{% if line.taxless_discount_amount %}{{ line.taxless_discount_amount|money }}{% else %}-{% endif %}</td>
                                 <td class="text-right">{{ line.tax_rate|percent }}</td>
-                                <td class="text-right">{{ line.taxless_total_price|money }}</td>
-                                <td class="text-right">{{ line.taxful_total_price|money }}</td>
+                                <td class="text-right">{{ line.taxless_price|money }}</td>
+                                <td class="text-right">{{ line.taxful_price|money }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -105,10 +105,10 @@
                                         {{ line.quantity|number }} &times; {{ line.taxless_base_unit_price|money }} {% if line.taxless_discount_amount %}<span class="text-muted">{% trans %}Discount{% endtrans %}{{ line.taxless_discount_amount|money }}</span>{% endif %}
                                     </div>
                                     <div class="col-xs-6 text-right">
-                                        <strong>{% trans %}Total{% endtrans %}: {{ line.taxful_total_price|money }}</strong>
+                                        <strong>{% trans %}Total{% endtrans %}: {{ line.taxful_price|money }}</strong>
                                     </div>
                                     <div class="col-xs-12 text-right text-muted">
-                                        {{ line.tax_rate|percent }} {% trans %}Tax{% endtrans %} ({{ line.taxless_total_price|money }} {% trans %}Taxless{% endtrans %})
+                                        {{ line.tax_rate|percent }} {% trans %}Tax{% endtrans %} ({{ line.taxless_price|money }} {% trans %}Taxless{% endtrans %})
                                     </div>
                                 </div>
                             </li>

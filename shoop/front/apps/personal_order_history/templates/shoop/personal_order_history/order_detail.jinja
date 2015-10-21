@@ -102,8 +102,8 @@
                         {{ number_cell(line.quantity) }}
                         {{ price_or_empty_cell(line.taxless_discount_amount) }}
                         {{ number_cell(line.tax_rate|percent) }}
-                        {{ price_cell(line.taxless_total_price) }}
-                        {{ price_cell(line.taxful_total_price) }}
+                        {{ price_cell(line.taxless_price) }}
+                        {{ price_cell(line.taxful_price) }}
                     </tr>
                 {% endfor %}
                 </tbody>

@@ -45,7 +45,7 @@
                     {{ line.quantity|number }}
                 </td>
                 <td class="text-right">
-                    <span class="line-total">{{ line.taxful_total_price|money }}</span>
+                    <span class="line-total">{{ line.taxful_price|money }}</span>
                 </td>
             </tr>
         {% endfor %}

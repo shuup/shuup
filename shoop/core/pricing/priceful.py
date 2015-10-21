@@ -6,7 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 import decimal
 
-from ._priceful_properties import Alias, TaxfulFrom, TaxlessFrom
+from ._priceful_properties import TaxfulFrom, TaxlessFrom
 from .price import TaxfulPrice, TaxlessPrice
 
 
@@ -199,9 +199,3 @@ class Priceful(object):
 
     taxful_unit_discount_amount = TaxfulFrom('unit_discount_amount')
     taxless_unit_discount_amount = TaxlessFrom('unit_discount_amount')
-
-    # TODO: Replace occurences of these aliases with their source fields
-
-    total_price = Alias('price')
-    taxful_total_price = Alias('taxful_price')
-    taxless_total_price = Alias('taxless_price')

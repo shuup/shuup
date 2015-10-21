@@ -79,7 +79,7 @@
                                     {% for line in request.basket.get_lines() %}
                                         <tr>
                                             <td>{{ line.quantity|number }} &times; {{ line.text }}</td>
-                                            <td class="text-right">{{ line.total_price|money }}</td>
+                                            <td class="text-right">{{ line.price|money }}</td>
                                         </tr>
                                     {% else %}
                                         <tr>

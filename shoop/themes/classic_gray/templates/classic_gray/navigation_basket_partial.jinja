@@ -32,7 +32,7 @@
                     {% for line in request.basket.get_lines() %}
                         <tr>
                             <td>{{ line.quantity|number }} &times; <a href="{{ shoop.urls.model_url(line.product) }}">{{ line.text }}</a></td>
-                            <td class="text-right">{{ line.total_price|money }}</td>
+                            <td class="text-right">{{ line.price|money }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

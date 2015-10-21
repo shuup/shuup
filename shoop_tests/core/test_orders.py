@@ -70,11 +70,11 @@ def test_line_discount():
     ol.base_unit_price = order.shop.create_price(40)
     ol.save()
     ol.taxes.add(OrderLineTax.from_tax(
-        get_default_tax(), ol.taxless_total_price.amount, order_line=ol))
+        get_default_tax(), ol.taxless_price.amount, order_line=ol))
     assert ol.taxless_discount_amount == order.shop.create_price(50)
     assert ol.taxful_discount_amount == TaxfulPrice(75, currency)
-    assert ol.taxless_total_price == order.shop.create_price(150)
-    assert ol.taxful_total_price == TaxfulPrice(150 + 75, currency)
+    assert ol.taxless_price == order.shop.create_price(150)
+    assert ol.taxful_price == TaxfulPrice(150 + 75, currency)
     assert ol.taxless_base_unit_price == order.shop.create_price(40)
     assert ol.taxful_base_unit_price == TaxfulPrice(60, currency)
     assert "Thing" in six.text_type(ol)
@@ -92,13 +92,13 @@ def test_line_discount_more():
     currency = order.shop.currency
     assert ol.taxless_base_unit_price == TaxlessPrice(30, currency)
     assert ol.taxless_discount_amount == TaxlessPrice(50, currency)
-    assert ol.taxless_total_price == TaxlessPrice(5 * 30 - 50, currency)
+    assert ol.taxless_price == TaxlessPrice(5 * 30 - 50, currency)
     ol.taxes.add(OrderLineTax.from_tax(
-        get_default_tax(), ol.taxless_total_price.amount, order_line=ol))
+        get_default_tax(), ol.taxless_price.amount, order_line=ol))
     assert ol.taxless_discount_amount == TaxlessPrice(50, currency)
     assert ol.taxful_discount_amount == TaxfulPrice(75, currency)
-    assert ol.taxless_total_price == TaxlessPrice(100, currency)
-    assert ol.taxful_total_price == TaxfulPrice(150, currency)
+    assert ol.taxless_price == TaxlessPrice(100, currency)
+    assert ol.taxful_price == TaxfulPrice(150, currency)
     assert ol.taxless_base_unit_price == TaxlessPrice(30, currency)
     assert ol.taxful_base_unit_price == TaxfulPrice(45, currency)
 
@@ -121,7 +121,7 @@ def test_basic_order():
 
     discount_order_line = OrderLine(order=order, quantity=1, type=OrderLineType.OTHER)
     discount_order_line.discount_amount = price(30)
-    assert discount_order_line.total_price == price(-30)
+    assert discount_order_line.price == price(-30)
     discount_order_line.save()
 
     order.cache_prices()
