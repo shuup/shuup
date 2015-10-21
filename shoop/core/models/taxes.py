@@ -22,7 +22,7 @@ from ._base import ChangeProtected, TranslatableShoopModel
 class Tax(MoneyPropped, ChangeProtected, TranslatableShoopModel):
     identifier_attr = 'code'
 
-    immutability_message = _(
+    change_protect_message = _(
         "Cannot change business critical fields of Tax that is in use")
     unprotected_fields = ['enabled']
 
