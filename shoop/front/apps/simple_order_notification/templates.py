@@ -15,9 +15,9 @@ Your order has been received and will be processed as soon as possible.
 For reference, here's a list of your order's contents.
 
 {% for line in order.lines.all() %}
-{%- if line.taxful_total_price -%}
+{%- if line.taxful_total_price %}
 * {{ line.quantity }} x {{ line.text }} - {{ line.taxful_total_price|money }}
-{%- endif -%}
+{% endif -%}
 {%- endfor %}
 
 Order Total: {{ order.taxful_total_price|money }}
