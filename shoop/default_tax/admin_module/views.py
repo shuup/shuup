@@ -25,6 +25,7 @@ class TaxRuleForm(forms.ModelForm):
             "region_codes_pattern",
             "postal_codes_pattern",
             "priority",
+            "override_group",
             "tax",
             "enabled",
         ]
@@ -68,5 +69,6 @@ class TaxRuleListView(PicotableListView):
         Column("region_codes_pattern", _("Regions")),
         Column("postal_codes_pattern", _("Postal Codes")),
         Column("priority", _(u"Priority")),
+        Column("override_group", _(u"Override Group")),
         Column("enabled", _(u"Enabled")),
     ]

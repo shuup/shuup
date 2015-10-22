@@ -39,6 +39,13 @@ class TaxRule(models.Model):
             "Rules with same priority are value-added (e.g. US taxes) "
             "and rules with different priority are compound taxes "
             "(e.g. Canada Quebec PST case)"))
+    override_group = models.IntegerField(
+        default=0,
+        verbose_name=_("override group number"), help_text=_(
+            "If several rules match, only the rules with the highest "
+            "override group number will be effective.  This can be "
+            "used, for example, to implement tax exemption by adding "
+            "a rule with very high priority that sets a zero tax."))
     tax = models.ForeignKey(Tax, on_delete=models.PROTECT)
 
     def matches(self, taxing_context):
