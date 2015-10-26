@@ -62,7 +62,7 @@ def test_login_fails_without_valid_password(client, regular_user, rf):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("regular_user")
-def test_login_with_email(client, regular_user, rf):
+def test_login_with_email_1(client, regular_user, rf):
     if "shoop.front.apps.auth" not in settings.INSTALLED_APPS:
         pytest.skip("Need shoop.front.apps.auth in INSTALLED_APPS")
 
@@ -85,7 +85,7 @@ def test_login_with_email(client, regular_user, rf):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("regular_user")
-def test_login_with_email(client, regular_user, rf):
+def test_login_with_email_2(client, regular_user, rf):
     if "shoop.front.apps.auth" not in settings.INSTALLED_APPS:
         pytest.skip("Need shoop.front.apps.auth in INSTALLED_APPS")
 
@@ -109,6 +109,17 @@ def test_login_with_email(client, regular_user, rf):
     request.session = client.session
     assert get_user(request).is_anonymous(), "User is still anonymous"
 
+    # Login with unknown email
+    client.post(reverse("shoop:login"), data={
+        "username": "unknown@example.com",
+        "password": REGULAR_USER_PASSWORD,
+        REDIRECT_FIELD_NAME: redirect_target
+    })
+
+    request = rf.get("/")
+    request.session = client.session
+    assert get_user(request).is_anonymous(), "User is still anonymous"
+
     # Login with username should work normally
     response = client.post(reverse("shoop:login"), data={
         "username": regular_user.username,
@@ -122,3 +133,35 @@ def test_login_with_email(client, regular_user, rf):
     request = rf.get("/")
     request.session = client.session
     assert get_user(request) == regular_user, "User is logged in"
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("regular_user")
+def test_login_with_email_3(client, regular_user, rf):
+    if "shoop.front.apps.auth" not in settings.INSTALLED_APPS:
+        pytest.skip("Need shoop.front.apps.auth in INSTALLED_APPS")
+
+    new_user_password = "123123"
+    new_user = get_user_model().objects.create_user(
+        username=regular_user.email,
+        password=new_user_password,
+        email=regular_user.email
+    )
+
+    get_default_shop()
+    prepare_user(regular_user)
+    redirect_target = "/redirect-success/"
+
+    # Login with new_user username should work even if there is users with same email
+    response = client.post(reverse("shoop:login"), data={
+        "username": regular_user.email,
+        "password": new_user_password,
+        REDIRECT_FIELD_NAME: redirect_target
+    })
+
+    assert response.get("location")
+    assert response.get("location").endswith(redirect_target)
+
+    request = rf.get("/")
+    request.session = client.session
+    assert get_user(request) == new_user, "User is logged in"
