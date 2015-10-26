@@ -136,3 +136,10 @@ SHOOP_TELEMETRY_ENABLED = True
 
 #: The submission URL for Shoop's telemetry (statistics) system
 SHOOP_TELEMETRY_URL = "https://telemetry.shoop.io/collect/"
+
+#: Default cache duration for various caches in seconds
+SHOOP_DEFAULT_CACHE_DURATION = 60 * 30
+
+#: Overrides for default cache durations by key namespace.
+#: These override possible defaults in `shoop.core.cache.impl.DEFAULT_CACHE_DURATIONS`.
+SHOOP_CACHE_DURATIONS = {}
