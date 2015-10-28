@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 import threading
 import time
+import random
 
 from django.conf import settings
 from django.core.cache import caches
@@ -72,7 +73,7 @@ class VersionedCache(object):
         :type cache_key: str
         """
         namespace = _get_cache_key_namespace(cache_key)
-        version = str(time.time())
+        version = str("%s/%s" % (time.time(), random.random()))
         self.set(str("_version:") + namespace, version)
         setattr(_versions, namespace, version)
 
