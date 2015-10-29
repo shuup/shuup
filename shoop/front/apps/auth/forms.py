@@ -65,12 +65,12 @@ class RecoverPasswordForm(forms.Form):
         username = data["username"]
         email = data["email"]
         if username and email:
-            msg = _("Please provide only one of username or email")
+            msg = _("Please provide either username or email, not both.")
             self.add_error("username", msg)
             self.add_error("email", msg)
 
         if not (username or email):
-            msg = _("Please provide either username or email")
+            msg = _("Please provide either username or email, not both.")
             self.add_error("username", msg)
             self.add_error("email", msg)
 
