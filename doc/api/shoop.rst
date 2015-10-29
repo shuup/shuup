@@ -29,6 +29,18 @@ shoop.version module
     :show-inheritance:
 
 
+Submodules
+----------
+
+shoop.configuration module
+--------------------------
+
+.. automodule:: shoop.configuration
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 Module contents
 ---------------
 
