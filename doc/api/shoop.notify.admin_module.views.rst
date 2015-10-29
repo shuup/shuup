@@ -4,6 +4,14 @@ shoop.notify.admin_module.views package
 Submodules
 ----------
 
+shoop.notify.admin_module.views.edit module
+-------------------------------------------
+
+.. automodule:: shoop.notify.admin_module.views.edit
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.notify.admin_module.views.editor module
 ---------------------------------------------
 

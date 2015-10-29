@@ -4,6 +4,14 @@ shoop.front.apps.auth package
 Submodules
 ----------
 
+shoop.front.apps.auth.forms module
+----------------------------------
+
+.. automodule:: shoop.front.apps.auth.forms
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.front.apps.auth.urls module
 ---------------------------------
 

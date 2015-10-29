@@ -79,6 +79,22 @@ language = 'en'
 # Else, today_fmt is used as the format for a strftime call.
 today_fmt = '%Y-%m-%d'
 
+# Default role for pure backticked references without interpreted text role
+default_role = 'obj'
+
+# Insert both the class’ and the __init__ method’s docstring into the
+# main body of an autoclass directive
+autoclass_content = 'both'
+
+autodoc_member_order = 'bysource'
+autodoc_default_flags = [
+    'members',
+    'undoc-members',
+    # 'special-members',
+    # 'inherited-members',
+    'show-inheritance',
+]
+
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 exclude_patterns = ['_build']

@@ -12,6 +12,14 @@ shoop.core.order_creator.creator module
     :undoc-members:
     :show-inheritance:
 
+shoop.core.order_creator.signals module
+---------------------------------------
+
+.. automodule:: shoop.core.order_creator.signals
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.core.order_creator.source module
 --------------------------------------
 

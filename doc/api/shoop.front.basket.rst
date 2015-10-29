@@ -36,6 +36,14 @@ shoop.front.basket.order_creator module
     :undoc-members:
     :show-inheritance:
 
+shoop.front.basket.storage module
+---------------------------------
+
+.. automodule:: shoop.front.basket.storage
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.front.basket.update_methods module
 ----------------------------------------
 
