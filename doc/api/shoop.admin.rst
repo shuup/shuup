@@ -25,6 +25,22 @@ shoop.admin.base module
     :undoc-members:
     :show-inheritance:
 
+shoop.admin.breadcrumbs module
+------------------------------
+
+.. automodule:: shoop.admin.breadcrumbs
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shoop.admin.currencybound module
+--------------------------------
+
+.. automodule:: shoop.admin.currencybound
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.admin.form_part module
 ----------------------------
 

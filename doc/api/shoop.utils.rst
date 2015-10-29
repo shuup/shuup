@@ -20,6 +20,14 @@ shoop.utils.dates module
     :undoc-members:
     :show-inheritance:
 
+shoop.utils.decorators module
+-----------------------------
+
+.. automodule:: shoop.utils.decorators
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.utils.excs module
 -----------------------
 
@@ -60,6 +68,14 @@ shoop.utils.forms module
     :undoc-members:
     :show-inheritance:
 
+shoop.utils.http module
+-----------------------
+
+.. automodule:: shoop.utils.http
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.utils.i18n module
 -----------------------
 
@@ -92,6 +108,14 @@ shoop.utils.models module
     :undoc-members:
     :show-inheritance:
 
+shoop.utils.money module
+------------------------
+
+.. automodule:: shoop.utils.money
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.utils.multilanguage_model_form module
 -------------------------------------------
 
@@ -112,6 +136,30 @@ shoop.utils.objects module
 --------------------------
 
 .. automodule:: shoop.utils.objects
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shoop.utils.patterns module
+---------------------------
+
+.. automodule:: shoop.utils.patterns
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shoop.utils.properties module
+-----------------------------
+
+.. automodule:: shoop.utils.properties
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shoop.utils.serialization module
+--------------------------------
+
+.. automodule:: shoop.utils.serialization
     :members:
     :undoc-members:
     :show-inheritance:

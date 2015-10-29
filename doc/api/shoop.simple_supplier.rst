@@ -1,6 +1,13 @@
 shoop.simple_supplier package
 =============================
 
+Subpackages
+-----------
+
+.. toctree::
+
+    shoop.simple_supplier.migrations
+
 Submodules
 ----------
 

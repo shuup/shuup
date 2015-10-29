@@ -4,6 +4,14 @@ shoop.core.utils package
 Submodules
 ----------
 
+shoop.core.utils.maintenance module
+-----------------------------------
+
+.. automodule:: shoop.core.utils.maintenance
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.core.utils.model_caching_descriptor module
 ------------------------------------------------
 
@@ -48,6 +56,22 @@ shoop.core.utils.slugs module
 -----------------------------
 
 .. automodule:: shoop.core.utils.slugs
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shoop.core.utils.tax_numbers module
+-----------------------------------
+
+.. automodule:: shoop.core.utils.tax_numbers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shoop.core.utils.users module
+-----------------------------
+
+.. automodule:: shoop.core.utils.users
     :members:
     :undoc-members:
     :show-inheritance:

@@ -20,10 +20,10 @@ shoop.front.views.category module
     :undoc-members:
     :show-inheritance:
 
-shoop.front.views.default_basket module
----------------------------------------
+shoop.front.views.checkout module
+---------------------------------
 
-.. automodule:: shoop.front.views.default_basket
+.. automodule:: shoop.front.views.checkout
     :members:
     :undoc-members:
     :show-inheritance:
