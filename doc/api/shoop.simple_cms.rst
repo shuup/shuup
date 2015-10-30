@@ -7,7 +7,6 @@ Subpackages
 .. toctree::
 
     shoop.simple_cms.admin_module
-    shoop.simple_cms.migrations
 
 Submodules
 ----------

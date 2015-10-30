@@ -9,7 +9,6 @@ Subpackages
     shoop.notify.actions
     shoop.notify.admin_module
     shoop.notify.conditions
-    shoop.notify.migrations
     shoop.notify.models
 
 Submodules

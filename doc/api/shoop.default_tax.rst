@@ -7,7 +7,6 @@ Subpackages
 .. toctree::
 
     shoop.default_tax.admin_module
-    shoop.default_tax.migrations
 
 Submodules
 ----------

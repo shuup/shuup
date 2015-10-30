@@ -1,13 +1,6 @@
 shoop.discount_pricing package
 ==============================
 
-Subpackages
------------
-
-.. toctree::
-
-    shoop.discount_pricing.migrations
-
 Submodules
 ----------
 

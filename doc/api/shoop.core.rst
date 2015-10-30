@@ -12,7 +12,6 @@ Subpackages
     shoop.core.fields
     shoop.core.management
     shoop.core.methods
-    shoop.core.migrations
     shoop.core.models
     shoop.core.modules
     shoop.core.order_creator

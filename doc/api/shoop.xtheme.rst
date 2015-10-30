@@ -7,7 +7,6 @@ Subpackages
 .. toctree::
 
     shoop.xtheme.admin_module
-    shoop.xtheme.migrations
     shoop.xtheme.plugins
     shoop.xtheme.templatetags
     shoop.xtheme.views
