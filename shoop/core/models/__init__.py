@@ -8,6 +8,7 @@ from .addresses import Address, SavedAddress, SavedAddressRole, SavedAddressStat
 from .taxes import CustomerTaxGroup, Tax, TaxClass
 from .attributes import Attribute, AttributeType, AttributeVisibility
 from .categories import Category, CategoryVisibility, CategoryStatus
+from .configurations import ConfigurationItem
 from .counters import Counter, CounterType
 from .contacts import Contact, ContactGroup, CompanyContact, PersonContact, AnonymousContact, Gender, get_person_contact
 from .methods import ShippingMethod, PaymentMethod, MethodType, MethodStatus
@@ -42,6 +43,7 @@ __all__ = [
     "CategoryStatus",
     "CategoryVisibility",
     "CompanyContact",
+    "ConfigurationItem",
     "Contact",
     "ContactGroup",
     "Counter",

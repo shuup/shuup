@@ -23,6 +23,18 @@ Subpackages
     shoop.utils
     shoop.xtheme
 
+Submodules
+----------
+
+shoop.configuration module
+--------------------------
+
+.. automodule:: shoop.configuration
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 Module contents
 ---------------
 

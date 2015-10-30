@@ -28,6 +28,14 @@ shoop.core.models.categories module
     :undoc-members:
     :show-inheritance:
 
+shoop.core.models.configurations module
+---------------------------------------
+
+.. automodule:: shoop.core.models.configurations
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.core.models.contacts module
 ---------------------------------
 
