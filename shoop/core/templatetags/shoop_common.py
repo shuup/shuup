@@ -42,7 +42,7 @@ def money(amount, digits=None, widen=0):
 
 
 @library.filter
-def percent(value, ndigits=3):
+def percent(value, ndigits=0):
     return format_percent(value, ndigits)
 
 
