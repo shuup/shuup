@@ -13,29 +13,34 @@ from .price import Price
 
 
 class PriceInfo(Priceful):
+    """
+    Object for passing around pricing data of an item.
+    """
+
     price = None
     base_price = None
     quantity = None
 
-    """
-    Object for passing around pricing data of an item.
-    """
     def __init__(self, price, base_price, quantity, expires_on=None):
         """
         Initialize PriceInfo with prices and other parameters.
 
         Prices can be taxful or taxless, but their types must match.
 
-        :param Price price:
+        :type price: Price
+        :param price:
           Effective price for the specified quantity.
-        :param Price base_price:
+        :type base_price: Price
+        :param base_price:
           Base price for the specified quantity.  Discounts are
           calculated based on this.
-        :param numbers.Number quantity:
+        :type quantity: numbers.Number
+        :param quantity:
           Quantity that the given price is for.  Unit price is
           calculated by ``discounted_unit_price = price / quantity``.
           Note: Quantity could be non-integral (i.e. decimal).
-        :param numbers.Number|None expires_on:
+        :type expires_on: numbers.Number|None
+        :param expires_on:
           Timestamp, comparable to values returned by :func:`time.time`,
           determining the point in time when the prices are no longer
           valid, or None if no expire time is set (which could mean
