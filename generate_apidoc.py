@@ -24,10 +24,16 @@ def main():
         if filename.endswith('.rst') and filename != 'modules.rst':
             os.remove(os.path.join(apidoc_dir, filename))
 
+    # Generate a list of migration dirs to exclude
+    migration_excludes = []
+    for (root, dirnames, filenames) in os.walk('shoop'):
+        if 'migrations' in dirnames:
+            migration_excludes.append(os.path.join(root, 'migrations'))
+
     # Generate new
     retcode = subprocess.call(
         ['sphinx-apidoc', '-o', 'doc/api', 'shoop'] +
-        APIDOC_EXCLUDES + sys.argv)
+        APIDOC_EXCLUDES + migration_excludes + sys.argv)
     raise SystemExit(retcode)
 
 
