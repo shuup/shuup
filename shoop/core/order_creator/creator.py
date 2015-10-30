@@ -76,7 +76,7 @@ class OrderCreator(object):
         for child_product, child_quantity in six.iteritems(parent_product.get_package_child_to_quantity_map()):
             child_order_line = OrderLine(order=order, parent_line=order_line)
             update_order_line_from_product(
-                request=self.request,
+                pricing_context=self.request,
                 order_line=child_order_line,
                 product=child_product,
                 quantity=(order_line.quantity * child_quantity),

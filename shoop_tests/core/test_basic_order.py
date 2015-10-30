@@ -38,7 +38,12 @@ def create_order(request, creator, customer, product):
     order.save()
     supplier = get_default_supplier()
     product_order_line = OrderLine(order=order)
-    update_order_line_from_product(order_line=product_order_line, product=product, request=request, quantity=5, supplier=supplier)
+    update_order_line_from_product(
+        pricing_context=request,
+        order_line=product_order_line,
+        product=product,
+        quantity=5,
+        supplier=supplier)
     product_order_line.base_unit_price = shop.create_price(100)
     assert product_order_line.total_price.value > 0
     product_order_line.save()
