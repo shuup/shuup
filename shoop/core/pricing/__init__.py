@@ -131,6 +131,9 @@ class PricingModule(six.with_metaclass(abc.ABCMeta)):
 
     def get_context(self, context):
         """
+        Create pricing context from pricing contextable object.
+
+        :type context: PricingContextable
         :rtype: PricingContext
         """
         if hasattr(context, "pricing_context"):
@@ -143,10 +146,22 @@ class PricingModule(six.with_metaclass(abc.ABCMeta)):
             return self.get_context_from_data(**(context or {}))
 
     def get_context_from_request(self, request):
-        # This implementation does not use `request` at all.
+        """
+        Create pricing context from HTTP request.
+
+        This base class implementation does not use `request` at all.
+
+        :type request: HttpRequest
+        :rtype: PricingContext
+        """
         return self.pricing_context_class()
 
     def get_context_from_data(self, **context_data):
+        """
+        Create pricing context from keyword arguments.
+
+        :rtype: PricingContext
+        """
         return self.pricing_context_class(**context_data)
 
     @abc.abstractmethod
