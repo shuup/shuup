@@ -136,14 +136,11 @@ class PricingModule(six.with_metaclass(abc.ABCMeta)):
         :type context: PricingContextable
         :rtype: PricingContext
         """
-        if hasattr(context, "pricing_context"):
-            context = context.pricing_context
         if isinstance(context, self.pricing_context_class):
             return context
         elif isinstance(context, HttpRequest):
             return self.get_context_from_request(context)
-        else:
-            return self.get_context_from_data(**(context or {}))
+        raise TypeError("Not pricing contextable: %r" % (context,))
 
     def get_context_from_request(self, request):
         """
