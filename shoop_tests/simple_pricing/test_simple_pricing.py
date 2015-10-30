@@ -8,7 +8,7 @@
 import pytest
 from django.conf import settings
 from shoop.core.pricing.price import TaxfulPrice, TaxlessPrice
-from shoop.testing.factories import get_default_shop, create_product, get_default_customer_group, create_random_person
+from shoop.testing.factories import get_shop, create_product, get_default_customer_group, create_random_person
 from shoop.simple_pricing.module import SimplePricingModule
 from shoop.simple_pricing.models import SimpleProductPrice
 from shoop.core.pricing import get_pricing_module
@@ -27,15 +27,8 @@ def teardown_module(module):
     settings.SHOOP_PRICING_MODULE = original_pricing_module
 
 
-def get_shop_with_tax(include_tax):
-    shop = get_default_shop()
-    shop.prices_include_tax = include_tax
-    shop.save()
-    return shop
-
-
 def initialize_test(rf, include_tax=False):
-    shop = get_shop_with_tax(include_tax=include_tax)
+    shop = get_shop(prices_include_tax=include_tax)
 
     group = get_default_customer_group()
     customer = create_random_person()
@@ -48,7 +41,10 @@ def initialize_test(rf, include_tax=False):
     return request, shop, group
 
 
-def test_module_is_active():  # this test is because we want to make sure `SimplePricing` is active
+def test_module_is_active():
+    """
+    Check that SimplePricingModule is active.
+    """
     module = get_pricing_module()
     assert isinstance(module, SimplePricingModule)
 
@@ -62,7 +58,6 @@ def test_shop_specific_cheapest_price_1(rf):
 
     # SimpleProductPrice.objects.create(product=product, shop=None, price=200)
     SimpleProductPrice.objects.create(product=product, shop=shop, group=group, price_value=250)
-    spm = SimplePricingModule()
 
     # Cheaper price is valid even if shop-specific price exists
     assert product.get_price(request, quantity=1) == price(200)
@@ -76,7 +71,6 @@ def test_shop_specific_cheapest_price_2(rf):
     product = create_product("Just-A-Product-Too", shop, default_price=199)
 
     SimpleProductPrice.objects.create(product=product, shop=shop, group=group, price_value=250)
-    spm = SimplePricingModule()
 
     # Cheaper price is valid even if the other way around applies
     assert product.get_price(request, quantity=1) == price(199)
@@ -93,12 +87,10 @@ def test_set_taxful_price_works(rf):
     spp = SimpleProductPrice(product=product, shop=shop, group=group, price_value=250)
     spp.save()
 
-    spm = SimplePricingModule()
-    pricing_context = spm.get_context_from_request(request)
-    price_info = product.get_price_info(pricing_context, quantity=1)
+    price_info = product.get_price_info(request, quantity=1)
 
     assert price_info.price == price(250)
-    assert product.get_price(pricing_context, quantity=1) == price(250)
+    assert product.get_price(request, quantity=1) == price(250)
 
 
 @pytest.mark.django_db
@@ -112,13 +104,11 @@ def test_set_taxful_price_works_with_product_id(rf):
     spp = SimpleProductPrice(product=product, shop=shop, group=group, price_value=250)
     spp.save()
 
-    spm = SimplePricingModule()
-    pricing_context = spm.get_context_from_request(request)
-    price_info = spm.get_price_info(pricing_context, product=product.pk, quantity=1)
+    price_info = product.get_price_info(request, quantity=1)
 
     assert price_info.price == price(250)
 
-    assert product.get_price(pricing_context, quantity=1) == price(250)
+    assert product.get_price(request, quantity=1) == price(250)
 
 
 @pytest.mark.django_db
@@ -137,7 +127,8 @@ def test_price_infos(rf):
 
     product_ids = [product_one.pk, product_two.pk]
 
-    spm = SimplePricingModule()
+    spm = get_pricing_module()
+    assert isinstance(spm, SimplePricingModule)
     pricing_context = spm.get_context_from_request(request)
     price_infos = spm.get_price_infos(pricing_context, product_ids)
 
@@ -154,21 +145,16 @@ def test_price_infos(rf):
 
 @pytest.mark.django_db
 def test_no_customer(rf):
-    shop = get_default_shop()
-    group = get_default_customer_group()
+    request, shop, group = initialize_test(rf, True)
     price = shop.create_price
 
     product = create_product("random-1", shop=shop, default_price=100)
 
     SimpleProductPrice.objects.create(product=product, group=group, shop=shop, price_value=50)
 
-    request = rf.get("/")
-    request.shop = shop
+    request.customer = None
 
-    spm = SimplePricingModule()
-    pricing_context = spm.get_context_from_request(request)
-
-    price_info = spm.get_price_info(pricing_context, product)
+    price_info = product.get_price_info(request)
 
     assert price_info.price == price(100)
 
@@ -183,8 +169,6 @@ def test_zero_default_price(rf):
 
     SimpleProductPrice.objects.create(product=product, group=group, shop=shop, price_value=50)
 
-    spm = SimplePricingModule()
-    pricing_context = spm.get_context_from_request(request)
-    price_info = spm.get_price_info(pricing_context, product)
+    price_info = product.get_price_info(request)
 
     assert price_info.price == price(50)
