@@ -9,7 +9,10 @@
                 <div class="col-md-6 col-sm-5">
                     {% if priceinfo.is_discounted %}
                         <div class="discount">
-                            <span class="label label-danger">{% trans %}Save{% endtrans %} {{ priceinfo.discount_percentage|int }} %</span>
+                          <span class="label label-danger">
+                            {% set discount_percent = priceinfo.discount_rate|percent %}
+                            {{- _("Save %(discount_percent)s", discount_percent=discount_percent) -}}
+                          </span>
                         </div>
                     {% endif %}
                     {% set image = product.primary_image|thumbnail(size=(600,600)) %}
