@@ -337,9 +337,9 @@ class SourceLine(TaxableItem, Priceful):
     Note: Properties like price, taxful_price, tax_rate, etc. are
     inherited from the `Priceful` mixin.
     """
-    quantity = None
-    base_unit_price = None
-    discount_amount = None
+    quantity = None  # override property from Priceful
+    base_unit_price = None  # override property from Priceful
+    discount_amount = None  # override property from Priceful
 
     _FIELDS = [
         "line_id", "parent_line_id", "type",
