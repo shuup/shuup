@@ -9,7 +9,6 @@ Subpackages
     shoop.front.apps
     shoop.front.basket
     shoop.front.checkout
-    shoop.front.migrations
     shoop.front.models
     shoop.front.template_helpers
     shoop.front.templatetags

@@ -1,13 +1,6 @@
 shoop.simple_pricing package
 ============================
 
-Subpackages
------------
-
-.. toctree::
-
-    shoop.simple_pricing.migrations
-
 Submodules
 ----------
 
