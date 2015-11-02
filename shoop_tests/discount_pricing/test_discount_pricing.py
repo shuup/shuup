@@ -10,7 +10,7 @@ from django.conf import settings
 from shoop.core.pricing.price import TaxfulPrice, TaxlessPrice
 from shoop.discount_pricing.models import DiscountedProductPrice
 from shoop.discount_pricing.module import DiscountPricingModule
-from shoop.testing.factories import get_default_shop, create_product
+from shoop.testing.factories import get_shop, create_product
 from shoop.core.pricing import get_pricing_module
 
 pytestmark = pytest.mark.skipif("shoop.discount_pricing" not in settings.INSTALLED_APPS,
@@ -27,19 +27,17 @@ def teardown_module(module):
     settings.SHOOP_PRICING_MODULE = original_pricing_module
 
 
-def test_module_is_active():  # this test is because we want to make sure `SimplePricing` is active
+def test_module_is_active():
+    """
+    Check that DiscountPricingModule is active.
+    """
     module = get_pricing_module()
     assert isinstance(module, DiscountPricingModule)
 
-def get_shop_with_tax(include_tax):
-    shop = get_default_shop()
-    shop.prices_include_tax = include_tax
-    shop.save()
-    return shop
 
 def initialize_test(rf, include_tax=False):
     request = rf.get("/")
-    request.shop = get_shop_with_tax(include_tax=include_tax)
+    request.shop = get_shop(prices_include_tax=include_tax)
     return request
 
 # Tests for Discount Pricing
@@ -61,7 +59,7 @@ def test_price_infos_are_discounted(rf):
 
     product_ids = [product_one.pk, product_two.pk]
 
-    dpm = DiscountPricingModule()
+    dpm = get_pricing_module()
     pricing_context = dpm.get_context_from_request(request)
     price_infos = dpm.get_price_infos(pricing_context, product_ids)
 
@@ -84,19 +82,14 @@ def test_price_infos_are_discounted(rf):
 
 @pytest.mark.django_db
 def test_price_is_discounted(rf):
-    shop = get_default_shop()
+    request = initialize_test(rf, False)
+    shop = request.shop
 
     product = create_product("random-1", shop=shop, default_price=100)
 
     DiscountedProductPrice.objects.create(product=product, shop=shop, price_value=50)
 
-    request = rf.get("/")
-    request.shop = shop
-
-    dpm = DiscountPricingModule()
-    pricing_context = dpm.get_context_from_request(request)
-
-    price_info = dpm.get_price_info(pricing_context, product)
+    price_info = product.get_price_info(request)
 
     assert price_info.price == shop.create_price(50)
 
@@ -108,7 +101,6 @@ def test_shop_specific_cheapest_price_1(rf):
 
     product = create_product("Just-A-Product", request.shop, default_price=200)
 
-    # DiscountedProductPrice.objects.create(product=product, shop=None, price=200)
     DiscountedProductPrice.objects.create(product=product, shop=request.shop, price_value=250)
 
     # Cheaper price is valid even if shop-specific discount exists
@@ -138,9 +130,7 @@ def test_set_taxful_price_works(rf):
     spp = DiscountedProductPrice(product=product, shop=request.shop, price_value=250)
     spp.save()
 
-    dpm = DiscountPricingModule()
-    pricing_context = dpm.get_context_from_request(request)
-    price_info = product.get_price_info(pricing_context, quantity=1)
+    price_info = product.get_price_info(request, quantity=1)
 
     assert price_info.price == price(250)
 
@@ -158,13 +148,11 @@ def test_set_taxful_price_works_with_product_id(rf):
     spp = DiscountedProductPrice(product=product, shop=request.shop, price_value=250)
     spp.save()
 
-    dpm = DiscountPricingModule()
-    pricing_context = dpm.get_context_from_request(request)
-    price_info = dpm.get_price_info(pricing_context, product=product.pk, quantity=1)
+    price_info = product.get_price_info(request, quantity=1)
 
-    assert price_info.price == request.shop.create_price(250)
+    assert price_info.price == price(250)
 
-    assert product.get_price(pricing_context, quantity=1) == price(250)
+    assert product.get_price(request, quantity=1) == price(250)
 
 
 @pytest.mark.django_db
@@ -177,9 +165,7 @@ def test_zero_default_price(rf):
 
     DiscountedProductPrice.objects.create(product=product, shop=request.shop, price_value=50)
 
-    dpm = DiscountPricingModule()
-    pricing_context = dpm.get_context_from_request(request)
-    price_info = dpm.get_price_info(pricing_context, product)
+    price_info = product.get_price_info(request)
 
     assert price_info.price == price(0)
 

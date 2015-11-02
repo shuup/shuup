@@ -28,7 +28,6 @@ from faker.utils.loading import find_available_locales
 from filer.models import imagemodels
 from six import BytesIO
 
-from shoop.core.contexts import PriceTaxContext
 from shoop.core.defaults.order_statuses import create_default_order_statuses
 from shoop.core.models import (
     Address, Attribute, AttributeType, Category, CategoryStatus, CompanyContact, Contact, ContactGroup, Order,
@@ -468,7 +467,7 @@ def create_order_with_product(
 
     for x in range(n_lines):
         product_order_line = OrderLine(order=order)
-        update_order_line_from_product(request=request,
+        update_order_line_from_product(pricing_context=request,
                                        order_line=product_order_line,
                                        product=product, quantity=quantity,
                                        supplier=supplier)
@@ -607,7 +606,6 @@ def create_random_order(customer=None, products=(), completion_probability=0):
     request = apply_request_middleware(RequestFactory().get("/"),
                                        customer=customer)
 
-    context = PriceTaxContext.from_request(request)
     source = OrderSource(shop)
     source.customer = customer
     source.customer_comment = "Mock Order"
@@ -629,7 +627,7 @@ def create_random_order(customer=None, products=(), completion_probability=0):
     for i in range(random.randint(3, 10)):
         product = random.choice(products)
         quantity = random.randint(1, 5)
-        price_info = product.get_price_info(context, quantity=quantity)
+        price_info = product.get_price_info(request, quantity=quantity)
         shop_product = product.get_shop_instance(source.shop)
         supplier = shop_product.suppliers.first()
         line = source.add_line(

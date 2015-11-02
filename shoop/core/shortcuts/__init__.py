@@ -5,15 +5,21 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from shoop.core.contexts import PriceTaxContext
 from shoop.core.models import OrderLineType
 
 
-def update_order_line_from_product(request, order_line, product, quantity=1, supplier=None):
+def update_order_line_from_product(
+        pricing_context, order_line, product, quantity=1, supplier=None):
     """
     Update OrderLine data from a product.
 
     This is a convenience method for simple applications.
+
+    :type pricing_context: shoop.core.pricing.PricingContextable
+    :type order_line: shoop.core.models.OrderLine
+    :type product: shoop.core.models.Product
+    :type quantity: int|decimal.Decimal
+    :type supplier: shoop.core.models.Supplier|None
     """
 
     if order_line.pk:  # pragma: no cover
@@ -22,9 +28,7 @@ def update_order_line_from_product(request, order_line, product, quantity=1, sup
     if not product:  # pragma: no cover
         raise Exception("set_from_product may not be used without product")
 
-    # TODO: (TAX) Taxes in update_order_line_from_product
-    context = PriceTaxContext.from_request(request)
-    price_info = product.get_price_info(context, quantity=quantity)
+    price_info = product.get_price_info(pricing_context, quantity=quantity)
     order_line.supplier = supplier
     order_line.type = OrderLineType.PRODUCT
     order_line.product = product

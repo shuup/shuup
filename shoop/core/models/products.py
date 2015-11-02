@@ -267,7 +267,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         Return (`None`, `None`) if `self.variation_children` do not exist.
         This is because we cannot return anything sensible.
 
-        :type context: shoop.core.contexts.PriceTaxContext
+        :type context: shoop.core.pricing.PricingContextable
         :type quantity: int
         :return: a tuple of prices
         :rtype: (shoop.core.pricing.Price, shoop.core.pricing.Price)
@@ -288,7 +288,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         Return `None` if `self.variation_children` do not exist.
         This is because we cannot return anything sensible.
 
-        :type context: shoop.core.contexts.PriceTaxContext
+        :type context: shoop.core.pricing.PricingContextable
         :rtype: shoop.core.pricing.PriceInfo
         """
         items = [c.get_price_info(context, quantity=quantity) for c in self.variation_children.all()]
@@ -305,7 +305,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         `base_price`.  The calculation of prices is handled in the
         current pricing module.
 
-        :type context: shoop.core.contexts.PriceTaxContext
+        :type context: shoop.core.pricing.PricingContextable
         :rtype: shoop.core.pricing.PriceInfo
         """
         from shoop.core.pricing import get_pricing_module
@@ -324,7 +324,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
            ``p.get_price(ctx, quantity=123)``, since there could be
            quantity discounts in effect, but usually they are equal.
 
-        :type context: shoop.core.contexts.PriceTaxContext
+        :type context: shoop.core.pricing.PricingContextable
         :rtype: shoop.core.pricing.Price
         """
         return self.get_price_info(context, quantity).price
@@ -336,7 +336,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         Base price differs from the (effective) price when there are
         discounts in effect.
 
-        :type context: shoop.core.contexts.PriceTaxContext
+        :type context: shoop.core.pricing.PricingContextable
         :rtype: shoop.core.pricing.Price
         """
         return self.get_price_info(context, quantity=quantity).base_price

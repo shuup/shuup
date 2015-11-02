@@ -75,7 +75,32 @@ def get_pricing_module():
     return load_module("SHOOP_PRICING_MODULE", "pricing_module")()
 
 
-class PricingContext(object):
+class PricingContextable(six.with_metaclass(abc.ABCMeta)):
+    """
+    Object that is or can be converted to a pricing context.
+
+    Currently there exists two kind of `PricingContextable` objects:
+    `PricingContext`(and its subclasses) and `HttpRequest`.
+
+    .. note::
+
+       Expression ``isinstance(request, PricingContextable)`` will
+       return True for a ``request`` which is `HttpRequest`, because
+       `HttpRequest` is registered as a subclass of this abstract base
+       class.
+
+    This abstract base class is just a helper to allow writing simpler
+    type specifiers, since we want to allow passing `HttpRequest` as a
+    pricing context even though it is not a `PricingContext`.
+    """
+    pass
+PricingContextable.register(HttpRequest)
+
+
+class PricingContext(PricingContextable):
+    """
+    Context for pricing.
+    """
     REQUIRED_VALUES = ()
 
     def __init__(self, **kwargs):
@@ -106,22 +131,34 @@ class PricingModule(six.with_metaclass(abc.ABCMeta)):
 
     def get_context(self, context):
         """
+        Create pricing context from pricing contextable object.
+
+        :type context: PricingContextable
         :rtype: PricingContext
         """
-        if hasattr(context, "pricing_context"):
-            context = context.pricing_context
         if isinstance(context, self.pricing_context_class):
             return context
         elif isinstance(context, HttpRequest):
             return self.get_context_from_request(context)
-        else:
-            return self.get_context_from_data(**(context or {}))
+        raise TypeError("Not pricing contextable: %r" % (context,))
 
     def get_context_from_request(self, request):
-        # This implementation does not use `request` at all.
+        """
+        Create pricing context from HTTP request.
+
+        This base class implementation does not use `request` at all.
+
+        :type request: HttpRequest
+        :rtype: PricingContext
+        """
         return self.pricing_context_class()
 
     def get_context_from_data(self, **context_data):
+        """
+        Create pricing context from keyword arguments.
+
+        :rtype: PricingContext
+        """
         return self.pricing_context_class(**context_data)
 
     @abc.abstractmethod
