@@ -83,7 +83,7 @@
                             {% endif %}
                         </td>
                         <td class="text-right">
-                            <span class="line-total">{{ line.total_price|money }}</span>
+                            <span class="line-total">{{ line.price|money }}</span>
                         </td>
                         <td class="del-basket-line-form">
                             {% if line.can_delete %}

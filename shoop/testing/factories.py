@@ -476,7 +476,7 @@ def create_order_with_product(
         product_order_line.save()
         product_order_line.taxes.add(OrderLineTax.from_tax(
             get_test_tax(tax_rate),
-            product_order_line.taxless_total_price.amount,
+            product_order_line.taxless_price.amount,
             order_line=product_order_line,
         ))
     assert order.get_product_ids_and_quantities()[product.pk] == (quantity * n_lines), "Things got added"
@@ -642,7 +642,7 @@ def create_random_order(customer=None, products=(), completion_probability=0):
             sku=product.sku,
             text=product.safe_translation_getter("name", any_language=True)
         )
-        assert line.total_price == price_info.price
+        assert line.price == price_info.price
     with atomic():
         oc = OrderCreator(request)
         order = oc.create_order(source)

@@ -53,6 +53,7 @@ def test_discount_rate():
 def test_discount_percentage():
     assert line.discount_percentage == 100 * (Decimal(12) / 45)
 
+
 def test_is_discounted():
     assert line.is_discounted == True
     assert line2.is_discounted == False
@@ -63,8 +64,8 @@ def test_unit_discount_amount():
 
 
 def test_taxed_prices():
-    assert line.taxful_total_price == line.total_price
-    assert line.taxless_total_price == TaxlessPrice(30, 'EUR')  # 33 - 3
+    assert line.taxful_price == line.price
+    assert line.taxless_price == TaxlessPrice(30, 'EUR')  # 33 - 3
 
 
 def test_tax_rate_and_percentage():
@@ -158,17 +159,6 @@ def test_tax_special_cases3():
     assert taxless_line.tax_rate == 0
 
 
-def test_aliases():
-    line = Line(
-        base_unit_price=TaxfulPrice(100, 'EUR'),
-        quantity=3,
-        discount_amount=TaxfulPrice(5, 'EUR'),
-        tax_amount=Money(1, 'EUR'),
-    )
-    assert line.total_price == line.price
-    assert line.total_price == TaxfulPrice(295, 'EUR')
-
-
 def assert_almost_equal(x, y):
     assert Decimal(abs(x - y)) < 0.0000000000000000000000001
 
@@ -176,4 +166,3 @@ def assert_almost_equal(x, y):
 def test_property_docs():
     assert Line.taxful_discount_amount.__doc__ == "Taxful `discount_amount`"
     assert Line.taxless_discount_amount.__doc__ == "Taxless `discount_amount`"
-    assert Line.total_price.__doc__ == "Alias of `price`"

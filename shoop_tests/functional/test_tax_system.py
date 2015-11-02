@@ -55,7 +55,7 @@ def test_stacked_tax_taxless_price():
             line = source.get_final_lines(with_taxes=True)[0]
             assert isinstance(line, SourceLine)
             assert line.taxes
-            assert line.taxful_total_price.value == Decimal("10.800")
+            assert line.taxful_price.value == Decimal("10.800")
             source.uncache()
 
             # Let's move out to a taxless location.
@@ -63,7 +63,7 @@ def test_stacked_tax_taxless_price():
             line = source.get_final_lines(with_taxes=True)[0]
             assert isinstance(line, SourceLine)
             assert not line.taxes
-            assert line.taxful_total_price.value == Decimal("10")
+            assert line.taxful_price.value == Decimal("10")
 
 
 @pytest.mark.django_db
@@ -83,8 +83,8 @@ def test_stacked_tax_taxful_price():
             line = source.get_final_lines(with_taxes=True)[0]
             assert isinstance(line, SourceLine)
             assert line.taxes
-            assert line.taxful_total_price == TaxfulPrice(20, 'EUR')
-            assert_almost_equal(line.taxless_total_price, TaxlessPrice("18.518518", 'EUR'))
+            assert line.taxful_price == TaxfulPrice(20, 'EUR')
+            assert_almost_equal(line.taxless_price, TaxlessPrice("18.518518", 'EUR'))
             source.uncache()
 
             # Let's move out to a taxless location.
@@ -92,8 +92,8 @@ def test_stacked_tax_taxful_price():
             line = source.get_final_lines(with_taxes=True)[0]
             assert isinstance(line, SourceLine)
             assert not line.taxes
-            assert line.taxful_total_price == TaxfulPrice(20, source.currency)
-            assert line.taxless_total_price.value == Decimal("20")
+            assert line.taxful_price == TaxfulPrice(20, source.currency)
+            assert line.taxless_price.value == Decimal("20")
 
 
 def assert_almost_equal(x, y):

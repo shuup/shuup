@@ -9,7 +9,7 @@
         <a href="{{ u }}" rel="product-detail" title="{{ product.name }}">
             {% if price_info.is_discounted %}
                 <div class="labels">
-                    <span class="label label-sale">{{ -price_info.discount_percentage|int }}%</span>
+                    <span class="label label-sale">{{ -price_info.discount_rate|percent }}</span>
                 </div>
             {% endif %}
             {% if show_image %}

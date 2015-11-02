@@ -48,7 +48,7 @@ class BasketLine(SourceLine):
         price_info = product.get_price_info(request, quantity=self.quantity)
         self.base_unit_price = price_info.base_unit_price
         self.discount_amount = price_info.discount_amount
-        assert self.total_price == price_info.price
+        assert self.price == price_info.price
         self.net_weight = product.net_weight
         self.gross_weight = product.gross_weight
         self.shipping_mode = product.shipping_mode

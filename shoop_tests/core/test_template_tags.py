@@ -39,6 +39,64 @@ def test_number_formatters_fi():
         assert number(Decimal("38.05000")) == "38,05"
 
 
+def en_percent(num, ndigits="not-given"):
+    """
+    Format given number as percent in en-US locale.
+    """
+    with translation.override("en-US"):
+        if ndigits == "not-given":
+            return percent(Decimal(num))
+        else:
+            return percent(Decimal(num), ndigits)
+
+
+def test_percent_formatter_simple():
+    assert en_percent("0.1") == "10%"
+    assert en_percent("0.16") == "16%"
+    assert en_percent("0.99") == "99%"
+
+
+def test_percent_formatter_special_numbers():
+    assert en_percent("0") == "0%"
+    assert en_percent("1") == "100%"
+    assert en_percent("2") == "200%"
+    assert en_percent("3000") == "300,000%"
+    assert en_percent("-0.1") == "-10%"
+    assert en_percent("-1") == "-100%"
+    assert en_percent("-10") == "-1,000%"
+
+
+def test_percent_formatter_default_is_0_digits():
+    assert en_percent("0.111") == "11%"
+    assert en_percent("0.111111") == "11%"
+
+
+def test_percent_formatter_more_digits():
+    assert en_percent("0.166", 1) == "16.6%"
+    assert en_percent("0.166", 2) == "16.60%"
+    assert en_percent("0.166", 3) == "16.600%"
+    assert en_percent("0.166", 9) == "16.600000000%"
+    assert en_percent("0.1", 1) == "10.0%"
+    assert en_percent("0.1", 2) == "10.00%"
+    assert en_percent("0.1", 3) == "10.000%"
+    assert en_percent("0", 1) == "0.0%"
+
+
+def test_percent_formatter_fewer_digits():
+    assert en_percent("0.11111", 2) ==  "11.11%"
+    assert en_percent("0.11111", 1) ==  "11.1%"
+    assert en_percent("0.11111", 0) ==  "11%"
+
+
+def test_percent_formatter_fewer_digits_rounding():
+    assert en_percent("0.2714", 1) == "27.1%"
+    assert en_percent("0.2715", 1) == "27.2%"  # towards even
+    assert en_percent("0.2716", 1) == "27.2%"
+    assert en_percent("0.2724", 1) == "27.2%"
+    assert en_percent("0.2725", 1) == "27.2%"  # towards even
+    assert en_percent("0.2726", 1) == "27.3%"
+
+
 def test_money_formatter_en():
     with translation.override("en-US"):
         assert money(Money("29.99", "USD")) == "$29.99"

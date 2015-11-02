@@ -17,7 +17,8 @@
             <p class="price">
                 {{ price_info.price|money }}
                 {% if price_info.is_discounted %}
-                    ({{price_info.base_price|money}}) <span class="discount-percent">{{ -price_info.discount_percentage|int }}%</span>
+                    ({{price_info.base_price|money}})
+                    <span class="discount-percent">{{ -price_info.discount_rate|percent }}</span>
                 {% endif %}
             </p>
             {% if show_description %}

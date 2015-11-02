@@ -110,12 +110,12 @@ def test_methods(admin_user, country):
         for line in final_lines:
             if line.type == OrderLineType.SHIPPING:
                 if country == "SE":  # We _are_ using Expenseefe-a Svedee Sheepping after all.
-                    assert line.total_price == source.shop.create_price("5.00")
+                    assert line.price == source.shop.create_price("5.00")
                 else:
-                    assert line.total_price == source.shop.create_price("4.00")
+                    assert line.price == source.shop.create_price("4.00")
                 assert line.text == u"Expenseefe-a Svedee Sheepping"
             if line.type == OrderLineType.PAYMENT:
-                assert line.total_price == source.shop.create_price(4)
+                assert line.price == source.shop.create_price(4)
 
 
 @pytest.mark.django_db

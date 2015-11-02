@@ -164,9 +164,9 @@ class OrderSource(object):
             extra_data=order.extra_data,
         )
 
-    total_price = _PriceSum("total_price")
-    taxful_total_price = _PriceSum("taxful_total_price")
-    taxless_total_price = _PriceSum("taxless_total_price")
+    total_price = _PriceSum("price")
+    taxful_total_price = _PriceSum("taxful_price")
+    taxless_total_price = _PriceSum("taxless_price")
     taxful_total_price_or_none = taxful_total_price.or_none
     taxless_total_price_or_none = taxless_total_price.or_none
 
@@ -176,7 +176,7 @@ class OrderSource(object):
     taxful_total_discount_or_none = taxful_total_discount.or_none
     taxless_total_discount_or_none = taxless_total_discount.or_none
 
-    total_price_of_products = _PriceSum("total_price", "_get_product_lines")
+    total_price_of_products = _PriceSum("price", "_get_product_lines")
 
     @property
     def shipping_method(self):
@@ -334,12 +334,12 @@ class SourceLine(TaxableItem, Priceful):
     """
     Line of OrderSource.
 
-    Note: Properties like total_price, taxful_total_price, tax_rate,
-    etc. are inherited from the `Priceful` mixin.
+    Note: Properties like price, taxful_price, tax_rate, etc. are
+    inherited from the `Priceful` mixin.
     """
-    quantity = None
-    base_unit_price = None
-    discount_amount = None
+    quantity = None  # override property from Priceful
+    base_unit_price = None  # override property from Priceful
+    discount_amount = None  # override property from Priceful
 
     _FIELDS = [
         "line_id", "parent_line_id", "type",

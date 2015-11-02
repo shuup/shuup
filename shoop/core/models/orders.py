@@ -269,8 +269,8 @@ class Order(models.Model):
         taxful_total = TaxfulPrice(0, self.currency)
         taxless_total = TaxlessPrice(0, self.currency)
         for line in self.lines.all():
-            taxful_total += line.taxful_total_price
-            taxless_total += line.taxless_total_price
+            taxful_total += line.taxful_price
+            taxless_total += line.taxless_price
         self.taxful_total_price = _round_price(taxful_total)
         self.taxless_total_price = _round_price(taxless_total)
 
@@ -536,7 +536,7 @@ class Order(models.Model):
             line_taxes = list(line.taxes.all())
             all_line_taxes.extend(line_taxes)
             if not line_taxes:
-                untaxed += line.taxless_total_price
+                untaxed += line.taxless_price
         return taxing.TaxSummary.from_line_taxes(all_line_taxes, untaxed)
 
     def get_product_ids_and_quantities(self):

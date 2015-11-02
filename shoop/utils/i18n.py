@@ -51,12 +51,10 @@ def get_current_babel_locale(fallback="en-US-POSIX"):
     return locale
 
 
-def format_percent(value, digits):
+def format_percent(value, digits=0):
     locale = get_current_babel_locale()
-    if not digits:
-        return babel.numbers.format_percent(value, locale)
     pattern = locale.percent_formats.get(None).pattern
-    new_pattern = pattern.replace("0", "0." + (digits * "#"))
+    new_pattern = pattern.replace("0", "0." + (digits * "0"))
     return babel.numbers.format_percent(value, new_pattern, locale)
 
 

@@ -40,7 +40,7 @@ def create_order(request, creator, customer, product):
     product_order_line = OrderLine(order=order)
     update_order_line_from_product(order_line=product_order_line, product=product, request=request, quantity=5, supplier=supplier)
     product_order_line.base_unit_price = shop.create_price(100)
-    assert product_order_line.total_price.value > 0
+    assert product_order_line.price.value > 0
     product_order_line.save()
 
     line_tax = get_line_taxes_for(product_order_line)[0]
@@ -54,7 +54,7 @@ def create_order(request, creator, customer, product):
     discount_order_line = OrderLine(order=order, quantity=1, type=OrderLineType.OTHER)
     discount_order_line.discount_amount = shop.create_price(30)
     assert discount_order_line.discount_amount.value == 30
-    assert discount_order_line.total_price.value == -30
+    assert discount_order_line.price.value == -30
     assert discount_order_line.base_unit_price.value == 0
     discount_order_line.save()
 
@@ -90,7 +90,7 @@ def get_line_taxes_for(order_line):
     tax_module = DefaultTaxModule()
     tax_ctx = tax_module.get_context_from_order_source(order_line.order)
     product = order_line.product
-    price = order_line.total_price
+    price = order_line.price
     taxed_price = tax_module.get_taxed_price_for(tax_ctx, product, price)
     return taxed_price.taxes
 
