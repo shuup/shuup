@@ -39,6 +39,11 @@ class OrderModule(CurrencyBound, AdminModule):
                 name="order.detail"
             ),
             admin_url(
+                "^orders/new/$",
+                "shoop.admin.modules.orders.views.OrderCreateView",
+                name="order.new"
+            ),
+            admin_url(
                 "^orders/$",
                 "shoop.admin.modules.orders.views.OrderListView",
                 name="order.list"

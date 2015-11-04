@@ -1,0 +1,18 @@
+{% extends "shoop/admin/base.jinja" %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="content-block">
+            <div class="content-wrap">
+                <div class="content">
+                    <div id="order-tool-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{{ static("shoop_admin/js/order-creator.js") }}"></script>
+    <script>OrderCreator.init()</script>
+{% endblock %}
