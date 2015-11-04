@@ -12,10 +12,11 @@
  * popup window (just like the Django admin, mind)
  * but could just as well use an <iframe> modal.
  */
-$(function() {
+
+window.BrowseAPI = (function() {
     const browseData = {};
 
-    window.addEventListener("message", function(event) {
+    window.addEventListener("message", function (event) {
         const data = event.data;
         if (!data.pick) {
             return;
@@ -29,24 +30,27 @@ $(function() {
         if (!obj) {
             return;
         }
-        info.$container.find("input").val(obj.id);
-        const $text = info.$container.find(".browse-text");
-        $text.text(obj.text);
-        $text.prop("href", obj.url || "#");
+        if (_.isFunction(info.onSelect)) {
+            info.onSelect.call(this, obj);
+        }
         delete browseData[data.pick.id];
     }, false);
 
-    $(document).on("click", ".browse-widget .browse-btn", function() {
-        const $container = $(this).closest(".browse-widget");
-        if (!$container.length) {
-            return;
-        }
-        const kind = $container.data("browse-kind");
-        const filter = $container.data("filter");
+    /**
+     * Open a browsing window with the given options.
+     *
+     * Currently supported options are:
+     * * `kind`: kind string (e.g. "product")
+     * * `filter`: filter string (kind-dependent)
+     * * `onSelect`: a function invoked when an object is selected
+     * @return {Object}
+     */
+    function openBrowseWindow(options) {
+        const filter = options.filter;
+        const kind = options.kind;
         const browserUrl = window.ShoopAdminConfig.browserUrls[kind];
         if (!browserUrl) {
-            alert("Error: No browser URL for kind: " + kind);
-            return false;
+            throw new Error("No browser URL for kind: " + kind);
         }
         const id = "m-" + (+new Date);
         const qs = _.compact([
@@ -59,10 +63,36 @@ $(function() {
             "browser_popup_" + id,
             "resizable,menubar=no,location=no"
         );
-        browseData[id] = {
-            $container: $container,
-            popup: popup
-        };
+        return browseData[id] = _.extend(
+            {popup, $container: null, onSelect: null},
+            options
+        );
+    }
+
+    return {
+        openBrowseWindow
+    };
+}());
+
+$(function() {
+    $(document).on("click", ".browse-widget .browse-btn", function() {
+        const $container = $(this).closest(".browse-widget");
+        if (!$container.length) {
+            return;
+        }
+        const kind = $container.data("browse-kind");
+        const filter = $container.data("filter");
+        try {
+            return window.BrowseAPI.openBrowseWindow({kind, filter, onSelect: (obj) => {
+                $container.find("input").val(obj.id);
+                const $text = $container.find(".browse-text");
+                $text.text(obj.text);
+                $text.prop("href", obj.url || "#");
+            }});
+        } catch(e) {
+            alert(e);
+            return false;
+        }
     });
 
     $(document).on("click", ".browse-widget .clear-btn", function() {
