@@ -17,7 +17,7 @@ from bs4 import BeautifulSoup
 from django.conf import settings
 from django.core.exceptions import MiddlewareNotUsed
 from django.core.urlresolvers import set_urlconf, clear_url_caches, get_urlconf
-from django.test import override_settings, Client
+from django.test import override_settings, Client, TestCase
 from django.utils.crypto import get_random_string
 from django.utils.module_loading import import_string
 from django.utils.timezone import now
@@ -130,3 +130,9 @@ def apply_request_middleware(request, **attrs):
 
 def very_recently(datetime, how_recently=1):
     return (abs(datetime - now()).total_seconds() < how_recently)
+
+
+_test_case = TestCase('setUp')  # gotta pass something to the ctor.
+
+assert_contains = _test_case.assertContains
+assert_not_contains = _test_case.assertNotContains
