@@ -7,14 +7,31 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import json
+import traceback
+
+from django.contrib import messages
 from django.contrib.auth.models import AnonymousUser
+from django.core.exceptions import ValidationError
+from django.db.transaction import atomic
 from django.http.response import HttpResponse, JsonResponse
 from django.test.client import RequestFactory
 from django.utils.encoding import force_text
+from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView
 
+from shoop.admin.modules.orders.json_order_creator import JsonOrderCreator
+from shoop.admin.utils.urls import get_model_url
 from shoop.core.models import Contact, MethodStatus, Order, Product, ShippingMethod, Shop, ShopStatus
 from shoop.core.pricing import get_pricing_module
+
+
+def create_order_from_state(state, **kwargs):
+    joc = JsonOrderCreator()
+    order = joc.create_order_from_state(state, **kwargs)
+    if not order:
+        raise ValidationError(list(joc.errors))
+    return order
 
 
 class OrderCreateView(TemplateView):
@@ -90,3 +107,23 @@ class OrderCreateView(TemplateView):
                 "includesTax": price_info.price.includes_tax
             }
         }
+
+    @atomic
+    def handle_create(self, request):
+        try:
+            state = json.loads(request.body.decode("utf-8"))["state"]
+            order = create_order_from_state(state, creator=request.user)
+            messages.success(request, _("Order %(identifier)s created.") % vars(order))
+            return JsonResponse({
+                "success": True,
+                "orderIdentifier": order.identifier,
+                "url": get_model_url(order)
+            })
+        except Exception as exc:
+            tb = traceback.format_exc()
+            message = _("Could not create order:")
+            if isinstance(exc, ValidationError):  # pragma: no branch
+                message += "\n" + "\n".join(force_text(err) for err in exc.messages)
+            else:
+                message += " " + tb  # pragma: no cover
+            return JsonResponse({"success": False, "errorMessage": message}, status=400)

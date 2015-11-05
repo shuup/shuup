@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 import {createAction} from "redux-actions";
-import {get} from "../api";
+import {get, post} from "../api";
 import _ from "lodash";
 
 export const setCustomer = createAction("setCustomer");
@@ -43,8 +43,38 @@ export const retrieveProductData = function ({id, forLine}) {
 export const receiveProductData = createAction("receiveProductData");
 export const endCreatingOrder = createAction("endCreatingOrder");
 
+function handleCreateResponse(dispatch, data) {
+    const {success, errorMessage, orderIdentifier, url} = data;
+    if (success) {
+        if (url) {
+            location.href = url;
+        } else {
+            // Very, very unlikely that we'd ever get here
+            alert("Order" + orderIdentifier + " created.");
+        }
+        return;
+    }
+    dispatch(endCreatingOrder());  // Only flag end if something went awry
+    if (errorMessage) {
+        const {Messages} = window;
+        if (Messages) {
+            Messages.enqueue({type: "error", text: errorMessage});
+        } else {
+            alert(errorMessage);
+        }
+        return;
+    }
+    alert("An unspecified error occurred.\n" + data);
+}
+
 export const beginCreatingOrder = function () {
-    return () => {
-        // TODO: Send something
+    return (dispatch, getState) => {
+        const state = _.assign({}, getState(), {productData: null, order: null}); // We don't care about that substate
+        post("create", {state}).then((data) => {
+            handleCreateResponse(dispatch, data);
+        }, (data) => {  // error handler
+            handleCreateResponse(dispatch, data);
+        });
+        dispatch(createAction("beginCreatingOrder")());
     };
 };
