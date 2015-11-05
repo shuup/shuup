@@ -89,7 +89,7 @@ class JsonOrderCreator(object):
         sl_kwargs["text"] = product.name
         return True
 
-    def convert_json_line_to_source_line(self, source, sline):
+    def _add_json_line_to_source(self, source, sline):
         valid = True
         type = sline.pop("type")
         sl_kwargs = dict(
@@ -109,46 +109,79 @@ class JsonOrderCreator(object):
                 valid = False
 
         if valid:
-            return source.add_line(**sl_kwargs)
-        else:
+            source.add_line(**sl_kwargs)
+
+    def _process_lines(self, source, state):
+        state_lines = state.pop("lines", [])
+        if not state_lines:
+            self.add_error(ValidationError(_("Please add lines to the order."), code="no_lines"))
+        for sline in state_lines:
+            try:
+                self._add_json_line_to_source(source, sline)
+            except Exception as exc:  # pragma: no cover
+                self.add_error(exc)
+
+    def _initialize_source_from_state(self, state, creator):
+        customer_data = state.pop("customer", None) or {}
+        shop_data = state.pop("shop", None) or {}
+        methods_data = state.pop("methods", None) or {}
+        customer = self.safe_get_first(Contact, pk=customer_data.get("id"))
+        shop = self.safe_get_first(Shop, pk=shop_data.pop("id", None))
+
+        if not customer:
+            self.add_error(ValidationError(_("Please choose a valid customer."), code="no_customer"))
+
+        if not shop:
+            self.add_error(ValidationError(_("Please choose a valid shop."), code="no_shop"))
             return None
 
+        source = OrderSource(shop=shop)
+        source.update(
+            creator=creator,
+            customer=customer,
+            status=OrderStatus.objects.get_default_initial(),
+            shipping_method=self.safe_get_first(ShippingMethod, pk=methods_data.pop("shippingMethodId")),
+            payment_method=self.safe_get_first(PaymentMethod, pk=methods_data.pop("paymentMethodId")),
+        )
+        return source
+
+    def _postprocess_order(self, order, state):
+        comment = (state.pop("comment", None) or "")
+        if comment:
+            order.add_log_entry(comment, kind=LogEntryKind.NOTE, user=order.creator)
+
     def create_order_from_state(self, state, creator=None):
+        """
+        Create an order from a state dict unserialized from JSON.
+
+        :param state: State dictionary
+        :type state: dict
+        :param creator: Creator user
+        :type creator: django.contrib.auth.models.User|None
+        :return: The created order, or None if something failed along the way
+        :rtype: Order|None
+        """
         if not self.is_valid:  # pragma: no cover
             raise ValueError("Create a new JsonOrderCreator for each order.")
         # We'll be mutating the state to make it easier to track we've done everything,
         # so it's nice to deepcopy things first.
         state = deepcopy(state)
-        customer_data = state.pop("customer", None) or {}
-        shop_data = state.pop("shop", None) or {}
-        methods_data = state.pop("methods", None) or {}
-        customer = self.safe_get_first(Contact, pk=customer_data.get("id"))
-        if not customer:
-            self.add_error(ValidationError(_("Please choose a valid customer."), code="no_customer"))
-        shop = self.safe_get_first(Shop, pk=shop_data.pop("id", None))
-        if not shop:
-            self.add_error(ValidationError(_("Please choose a valid shop."), code="no_shop"))
+
+        # First, initialize an OrderSource.
+        source = self._initialize_source_from_state(state, creator)
+        if not source:
             return None
-        state_lines = state.pop("lines", [])
-        source = OrderSource(shop=shop)
-        source.creator = creator
-        source.customer = customer
-        source.status = OrderStatus.objects.get_default_initial()
-        source.shipping_method = self.safe_get_first(ShippingMethod, pk=methods_data.pop("shippingMethodId"))
-        source.payment_method = self.safe_get_first(PaymentMethod, pk=methods_data.pop("paymentMethodId"))
-        for sline in state_lines:
-            try:
-                self.convert_json_line_to_source_line(source, sline)
-            except Exception as exc:  # pragma: no cover
-                self.add_error(exc)
+
+        # Then, copy some lines into it.
+        self._process_lines(source, state)
         if not self.is_valid:  # If we encountered any errors thus far, don't bother going forward
             return None
+
+        # Then create an OrderCreator and try to get things done!
         creator = OrderCreator(request=None)
         try:
             order = creator.create_order(order_source=source)
-            comment = (state.pop("comment", None) or "")
-            if comment:
-                order.add_log_entry(comment, kind=LogEntryKind.NOTE, user=order.creator)
+            self._postprocess_order(order, state)
             return order
         except Exception as exc:  # pragma: no cover
             self.add_error(exc)
