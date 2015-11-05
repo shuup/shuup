@@ -65,5 +65,11 @@ module.exports = {
         "files": [
             "edit_media.js"
         ]
+    },
+    "order-creator": {
+        "webpack": root + "/modules/orders/static_src/create/webpack.config.js",
+        "watch": [
+            root + "/modules/orders/static_src/create/**/*.js"
+        ]
     }
 };
