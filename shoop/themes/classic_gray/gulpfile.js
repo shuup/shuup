@@ -46,7 +46,14 @@ gulp.task("js:watch", ["js"], function() {
     gulp.watch(["static_src/js/**/*.js"], ["js"]);
 });
 
-gulp.task("default", ["js", "less"]);
+gulp.task("copy_fonts", function() {
+    return gulp.src([
+        "bower_components/bootstrap/fonts/*",
+        "bower_components/font-awesome/fonts/*"
+    ]).pipe(gulp.dest("static/classic_gray/fonts/"));
+});
+
+gulp.task("default", ["js", "less", "copy_fonts"]);
 
 gulp.task("watch", ["js:watch", "less:watch"], function() {
 });
