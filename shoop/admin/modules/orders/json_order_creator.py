@@ -14,6 +14,7 @@ from django.utils.translation import ugettext as _
 
 from shoop.core.models import Contact, OrderLineType, OrderStatus, PaymentMethod, Product, ShippingMethod, Shop
 from shoop.core.order_creator import OrderCreator, OrderSource
+from shoop.utils.analog import LogEntryKind
 from shoop.utils.numbers import parse_decimal_string
 
 
@@ -144,7 +145,11 @@ class JsonOrderCreator(object):
             return None
         creator = OrderCreator(request=None)
         try:
-            return creator.create_order(order_source=source)
+            order = creator.create_order(order_source=source)
+            comment = (state.pop("comment", None) or "")
+            if comment:
+                order.add_log_entry(comment, kind=LogEntryKind.NOTE, user=order.creator)
+            return order
         except Exception as exc:  # pragma: no cover
             self.add_error(exc)
             return

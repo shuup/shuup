@@ -11,6 +11,7 @@ import {get, post} from "../api";
 import _ from "lodash";
 
 export const setCustomer = createAction("setCustomer");
+export const setComment = createAction("setComment");
 export const setShopId = createAction("setShopId");
 export const setShopChoices = createAction("setShopChoices");
 export const setShippingMethodChoices = createAction("setShippingMethodChoices");

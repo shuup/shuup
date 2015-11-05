@@ -11,6 +11,8 @@ from shoop.testing.factories import (
 from shoop_tests.utils import printable_gibberish, apply_request_middleware, assert_contains
 from shoop.admin.modules.orders.views.create import OrderCreateView
 
+TEST_COMMENT = "Hello. Is it me you're looking for?"
+
 
 def get_frontend_order_state(contact, valid_lines=True):
     """
@@ -48,7 +50,8 @@ def get_frontend_order_state(contact, valid_lines=True):
         },
         "shop": {
             "id": shop.id
-        }
+        },
+        "comment": TEST_COMMENT,
     }
     return state
 
@@ -74,6 +77,7 @@ def test_order_creator_valid(rf, admin_user):
     assert order.lines.count() == 4  # 3 submitted, one for the shipping method
     assert order.creator == admin_user
     assert order.customer == contact
+    assert order.log_entries.filter(message=TEST_COMMENT).exists()
 
 
 def test_order_creator_invalid_base_data(rf, admin_user):

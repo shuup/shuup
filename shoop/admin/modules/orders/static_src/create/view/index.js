@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 import m from "mithril";
-import {shopSelectView, customerSelectView, methodSelectView} from "./meta";
+import {shopSelectView, customerSelectView, methodSelectView, commentView} from "./meta";
 import {orderLinesView} from "./lines";
 import {beginCreatingOrder} from "../actions";
 import store from "../store";
@@ -20,6 +20,7 @@ export default function view() {
                 shopSelectView(store),
                 customerSelectView(store),
                 methodSelectView(store),
+                commentView(store),
             ]),
             m("div.col-md-8", orderLinesView(store))
         ),

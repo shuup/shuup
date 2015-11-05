@@ -13,8 +13,9 @@ import shop from "./shop";
 import customer from "./customer";
 import methods from "./methods";
 import order from "./order";
+import comment from "./comment";
 
-const childReducer = combineReducers({lines, productData, shop, customer, methods, order});
+const childReducer = combineReducers({lines, productData, shop, customer, methods, order, comment});
 
 export default function(state, action) {
     if(action.type === "_replaceState") { // For debugging purposes.

@@ -6,7 +6,7 @@
  * This source code is licensed under the AGPLv3 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import {setCustomer, setShopId, setShippingMethodId} from "../actions";
+import {setCustomer, setShopId, setShippingMethodId, setComment} from "../actions";
 import {selectBox} from "./utils";
 import BrowseAPI from "BrowseAPI";
 
@@ -44,5 +44,16 @@ export function methodSelectView(store) {
         selectBox(methods.shippingMethodId || 0, function () {
             store.dispatch(setShippingMethodId(this.value));
         }, [].concat({id: 0, name: "No shipping method"}, methods.shippingMethodChoices || []))
+    ]);
+}
+
+export function commentView(store) {
+    const {comment} = store.getState();
+    return m("div.form-group", [
+        m("label.control-label", "Order Notes"),
+        m("textarea.form-control", {
+            value: comment,
+            onchange: function() { store.dispatch(setComment(this.value)); }
+        })
     ]);
 }
