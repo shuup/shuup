@@ -136,7 +136,7 @@ class ResourceContainer(object):
             return "<script%s></script>" % get_html_attrs({"src": resource})
 
         if resource.endswith(".css"):
-            return "<link%s>" % get_html_attrs({"href": resource, "type": "stylesheet"})
+            return "<link%s>" % get_html_attrs({"href": resource, "rel": "stylesheet"})
 
         return "<!-- (unknown resource type: %s) -->" % escape(resource)
 
