@@ -49,7 +49,7 @@ def initialize_test(rf, include_tax=False):
     return request, shop, group
 
 
-def test_module_is_active():  # this test is because we want to make sure `SimplePricing` is active
+def test_module_is_active():  # this test is because we want to make sure `CustomerGroupPricing` is active
     module = get_pricing_module()
     assert isinstance(module, DefaultPricingModule)
 

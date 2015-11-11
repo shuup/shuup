@@ -95,7 +95,7 @@ def test_price_is_discounted(rf):
 
     assert price_info.price == shop.create_price(50)
 
-# These are basic tests for pricing module "copied" from Simple Pricing
+# These are basic tests for pricing module "copied" from Customer Group Pricing
 @pytest.mark.django_db
 def test_shop_specific_cheapest_price_1(rf):
     request = initialize_test(rf, False)

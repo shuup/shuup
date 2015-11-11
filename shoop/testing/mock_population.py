@@ -44,9 +44,9 @@ class Populator:
             self.generate_pricing(product)
 
     def generate_pricing(self, product):
-        if "shoop.simple_pricing" in settings.INSTALLED_APPS:
-            from shoop.simple_pricing.models import SimpleProductPrice
-            SimpleProductPrice.objects.create(
+        if "shoop.customer_group_pricing" in settings.INSTALLED_APPS:
+            from shoop.customer_group_pricing.models import CgpPrice
+            CgpPrice.objects.create(
                 product=product,
                 price_value=random.randint(15, 340),
                 shop=get_default_shop(),

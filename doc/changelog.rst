@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Rename ``simple_pricing`` to ``customer_group_pricing``
 - Rename ``CAMPAIGN`` in ``OrderLineType`` enum to ``DISCOUNT``
 - Add ``OrderSourceModifierModule`` interface for modifying order source
 - Add ``DiscountModule`` interface for pricing

@@ -11,7 +11,7 @@ Shoop modular product pricing functionality.
 The pricing module in use is declared by the
 :obj:`~shoop.core.settings.SHOOP_PRICING_MODULE` setting.  The
 default is a pricing module that always prices everything to be free.
-The base distribution contains :obj:`shoop.simple_pricing`, which is an
+The base distribution contains :obj:`shoop.customer_group_pricing`, which is an
 useful pricing module for many cases.
 
 To acquire an instance of the current pricing module, use

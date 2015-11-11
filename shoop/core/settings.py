@@ -63,7 +63,7 @@ SHOOP_REFERENCE_NUMBER_PREFIX = ""
 #:
 #: Determines how product prices are calculated.  See
 #: :obj:`shoop.core.pricing` for details.
-SHOOP_PRICING_MODULE = "simple_pricing"
+SHOOP_PRICING_MODULE = "customer_group_pricing"
 
 #: List of identifiers of discount modules to use.
 #:

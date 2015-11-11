@@ -45,7 +45,7 @@ INSTALLED_APPS = add_enabled_addons(SHOOP_ENABLED_ADDONS_FILE, [
     'shoop.front.apps.simple_search',
     'shoop.notify',
     'shoop.simple_cms',
-    'shoop.simple_pricing',
+    'shoop.customer_group_pricing',
     'shoop.campaigns',
     'shoop.simple_supplier',
     'shoop.order_printouts',
@@ -167,7 +167,7 @@ LOGIN_URL = "/login"
 
 SESSION_SERIALIZER = "django.contrib.sessions.serializers.PickleSerializer"
 
-SHOOP_PRICING_MODULE = "simple_pricing"
+SHOOP_PRICING_MODULE = "customer_group_pricing"
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
