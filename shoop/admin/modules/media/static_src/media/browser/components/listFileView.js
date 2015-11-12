@@ -35,7 +35,7 @@ export default function(ctrl, folders, files) {
     });
     return m("div.table-responsive", [
         m("table.table.table-condensed.table-striped.table-bordered", [
-            m("thead", m("tr", _.map(["Name", "Size", "Date", "Edit"], function(title) {
+            m("thead", m("tr", _.map([gettext("Name"), gettext("Size"), gettext("Date"), gettext("Edit")], function(title) {
                 return m("th", title);
             }))),
             m("tbody", folderItems.concat(fileItems))

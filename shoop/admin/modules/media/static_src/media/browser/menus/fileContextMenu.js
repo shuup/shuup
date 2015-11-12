@@ -12,10 +12,10 @@ const menuItem = require("./menuItem");
 export default function(controller, file) {
     return function() {
         return [
-            menuItem("Rename file...", () => {
+            menuItem(gettext("Rename file"), () => {
                 fileActions.promptRenameFile(controller, file);
             }),
-            menuItem("Delete file", () => {
+            menuItem(gettext("Delete file"), () => {
                 fileActions.promptDeleteFile(controller, file);
             })
         ];

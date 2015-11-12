@@ -58,7 +58,7 @@ def _filer_folder_to_json_dict(folder, children=None):
         children = folder.get_children()
     return {
         "id": folder.pk if folder else 0,
-        "name": folder.name if folder else "Root",
+        "name": folder.name if folder else _("Root"),
         "children": [_filer_folder_to_json_dict(child) for child in children]
     }
 

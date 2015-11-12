@@ -11,7 +11,7 @@ const remote = require("../util/remote");
 
 export function promptRenameFile(controller, file) {
     const {id, name} = file;
-    const newName = _.trim(prompt("New file name?", name) || "");
+    const newName = _.trim(prompt(gettext("New file name?"), name) || "");
     if (newName && name !== newName) {
         remote.post({action: "rename_file", id, name: newName}).then(function(response) {
             remote.handleResponseMessages(response);
@@ -22,7 +22,7 @@ export function promptRenameFile(controller, file) {
 
 export function promptDeleteFile(controller, file) {
     const {id, name} = file;
-    if (confirm("Are you sure you want to delete the file " + name + "?")) {
+    if (confirm(interpolate(gettext("Are you sure you want to delete the file %s?"), [name]))) {
         remote.post({action: "delete_file", id}).then(function(response) {
             remote.handleResponseMessages(response);
             controller.reloadFolderContents();

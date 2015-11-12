@@ -34,10 +34,10 @@ export default function folderView(ctrl) {
     const sortGroup = m("div.btn-group.btn-group-sm", [
         button(ctrl.sortMode, "+name", "A-Z"),
         button(ctrl.sortMode, "-name", "Z-A"),
-        button(ctrl.sortMode, "+date", "Oldest first"),
-        button(ctrl.sortMode, "-date", "Newest first"),
-        button(ctrl.sortMode, "+size", "Smallest first"),
-        button(ctrl.sortMode, "-size", "Largest first")
+        button(ctrl.sortMode, "+date", gettext("Oldest first")),
+        button(ctrl.sortMode, "-date", gettext("Newest first")),
+        button(ctrl.sortMode, "+size", gettext("Smallest first")),
+        button(ctrl.sortMode, "-size", gettext("Largest first"))
     ]);
     var toolbar = m("div.btn-toolbar", [viewModeGroup, sortGroup]);
     const files = sortBySpec(folderData.files || [], ctrl.sortMode());
@@ -68,7 +68,7 @@ export default function folderView(ctrl) {
                 m("img", {src: images.uploadIndicator})
             ),
             m("div.text", [
-                m.trust("Drop your files here")
+                m.trust(gettext("Drop your files here"))
             ])
         ])
     ]);
