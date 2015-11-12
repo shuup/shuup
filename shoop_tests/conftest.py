@@ -22,10 +22,10 @@ def pytest_configure(config):
 
 
 def pytest_runtest_call(item):
-    # All tests are run with a default theme override `shoop.themes.default_theme.DefaultTheme`.
+    # All tests are run with a theme override `shoop.themes.classic_gray.ClassicGrayTheme`.
     # To un-override, use `with override_current_theme_class()` (no arguments to re-enable database lookup)
-    from shoop.themes.default_theme import DefaultTheme
-    item.session._theme_overrider = override_current_theme_class(DefaultTheme)
+    from shoop.themes.classic_gray import ClassicGrayTheme
+    item.session._theme_overrider = override_current_theme_class(ClassicGrayTheme)
     item.session._theme_overrider.__enter__()
 
 

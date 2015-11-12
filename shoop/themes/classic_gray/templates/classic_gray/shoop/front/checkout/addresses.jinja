@@ -1,7 +1,7 @@
 {% extends "shoop/front/checkout/_base.jinja" %}
 
 {% block content %}
-<form role="form" method="post" action="">
+<form role="form" method="post" action="" id="addresses">
     {% set forms = form.forms %}
     {% csrf_token %}
     <div class="well">
