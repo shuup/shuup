@@ -17,6 +17,8 @@
     "jQuery": false, // jQuery, again
     "_": false, // Lodash
     "moment": false, // Moment
+    "gettext": false,
+    "interpolate": false
   },
   "extends": "eslint:recommended",
   "rules": {

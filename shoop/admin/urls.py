@@ -11,8 +11,9 @@ from __future__ import unicode_literals
 import warnings
 
 import django.contrib.auth.views as auth_views
-from django.conf.urls import patterns
+from django.conf.urls import patterns, url
 from django.contrib.auth import logout as do_logout
+from django.views.i18n import javascript_catalog
 
 from shoop.admin.module_registry import get_module_urls
 from shoop.admin.utils.urls import AdminRegexURLPattern, admin_url
@@ -55,6 +56,9 @@ def get_urls():
     for u in urls:  # pragma: no cover
         if not isinstance(u, AdminRegexURLPattern):
             warnings.warn("Admin URL %r is not an AdminRegexURLPattern" % u)
+
+    # Add Django javascript catalog url
+    urls.append(url(r'^jsi18n.js$', javascript_catalog, {'packages': ('shoop',)}, name='js-catalog'))
 
     return tuple(urls)
 

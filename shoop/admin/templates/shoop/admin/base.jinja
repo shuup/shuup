@@ -13,6 +13,7 @@
         {% block extra_css %}{% endblock -%}
         {% block extra_head %}{% endblock -%}
         <script>var ShoopAdminConfig = {{ shoop_admin.get_config()|json }};</script>
+        <script type="text/javascript" src="{{ url("shoop_admin:js-catalog") }}"></script>
     </head>
     <body class="{% block body_class %}{% endblock %} {{ "popup" if request.GET.popup else "" }}">
         {% block top %}
