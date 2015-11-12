@@ -6,7 +6,6 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
-from shoop.admin.utils.forms import add_form_errors_as_messages
 
 import six
 from django import forms
@@ -16,6 +15,7 @@ from django.utils.translation import ugettext as _
 from django.views.generic import UpdateView
 
 from shoop.admin.toolbar import PostActionButton, Toolbar
+from shoop.admin.utils.forms import add_form_errors_as_messages
 from shoop.admin.utils.urls import get_model_url
 from shoop.core.excs import NoProductsToShipException
 from shoop.core.models import Order, Product, Supplier

@@ -32,7 +32,8 @@ gulp.task("default", function() {
 
 gulp.task("watch", function() {
     console.log(gutil.colors.cyan.bold(
-        "*** Please use `gulp [task ...] --watch` instead of `gulp watch`!\n"
+        "*** Please use `gulp [task ...] --watch` instead of `gulp watch`!\n" +
+        "  * That is, `gulp css:base --watch` for instance.\n"
     ));
 });
 
