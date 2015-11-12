@@ -12,7 +12,7 @@ from shoop.core.models import OrderLineType, AnonymousContact, ProductMode, Shop
 from shoop.core.order_creator import OrderCreator
 from shoop.core.order_creator.source import SourceLine
 from shoop.testing.factories import create_product, get_default_shop, get_default_supplier, get_initial_order_status
-from shoop_tests.utils import apply_request_middleware
+from shoop.testing.utils import apply_request_middleware
 from shoop_tests.utils.basketish_order_source import BasketishOrderSource
 import six
 

@@ -13,8 +13,9 @@ from shoop.admin.modules.users.views import UserDetailView
 from shoop.core.models.contacts import Contact
 from shoop.testing.factories import get_default_shop, create_random_person
 from shoop.testing.soup_utils import extract_form_fields
+from shoop.testing.utils import apply_request_middleware
 from shoop.utils.excs import Problem
-from shoop_tests.utils import apply_request_middleware, printable_gibberish
+from shoop_tests.utils import printable_gibberish
 
 
 @pytest.mark.django_db

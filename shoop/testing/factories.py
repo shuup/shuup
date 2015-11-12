@@ -41,9 +41,9 @@ from shoop.default_tax.models import TaxRule
 from shoop.testing.text_data import random_title
 from shoop.utils.filer import filer_image_from_data
 from shoop.utils.money import Money
-from shoop_tests.utils import apply_request_middleware
 
 from .image_generator import generate_image
+from .utils import apply_request_middleware
 
 DEFAULT_IDENTIFIER = "default"
 DEFAULT_NAME = "Default"

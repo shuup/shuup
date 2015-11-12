@@ -14,7 +14,7 @@ from shoop.admin.urls import login
 from shoop.front.middleware import ShoopFrontMiddleware
 from shoop.front.views.index import IndexView
 from shoop.testing.factories import get_default_shop
-from shoop_tests.utils import apply_request_middleware
+from shoop.testing.utils import apply_request_middleware
 from shoop_tests.utils.fixtures import regular_user
 from .fixtures import get_request
 

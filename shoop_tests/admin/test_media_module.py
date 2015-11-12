@@ -11,7 +11,8 @@ from six import BytesIO
 
 from shoop.admin.modules.media.views import MediaBrowserView
 from shoop.testing.factories import get_default_shop
-from shoop_tests.utils import apply_request_middleware, printable_gibberish
+from shoop.testing.utils import apply_request_middleware
+from shoop_tests.utils import printable_gibberish
 
 
 @pytest.mark.django_db

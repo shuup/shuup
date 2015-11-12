@@ -13,8 +13,9 @@ from shoop.admin.utils.urls import get_model_url
 from shoop.admin.views.search import get_search_results
 from shoop.core.models import ProductVisibility
 from shoop_tests.admin.utils import admin_only_urls
-from shoop_tests.utils import empty_iterable, apply_request_middleware
+from shoop_tests.utils import empty_iterable
 from shoop.testing.factories import get_default_product, get_default_shop, create_product
+from shoop.testing.utils import apply_request_middleware
 
 
 @pytest.mark.django_db

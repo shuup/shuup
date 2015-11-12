@@ -9,7 +9,7 @@ import pytest
 
 from shoop.admin.modules.shops.views.edit import ShopEditView
 from shoop.testing.factories import get_default_shop
-from shoop_tests.utils import apply_request_middleware
+from shoop.testing.utils import apply_request_middleware
 from shoop.utils.excs import Problem
 
 

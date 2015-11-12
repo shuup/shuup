@@ -10,7 +10,7 @@ from shoop.admin.modules.orders.dashboard import OrderValueChartDashboardBlock
 from shoop.admin.modules.orders.views.detail import OrderSetStatusView
 from shoop.core.models.orders import OrderStatusRole, OrderStatus, Order
 from shoop.testing.factories import create_random_order, get_default_product, create_random_person
-from shoop_tests.utils import apply_request_middleware
+from shoop.testing.utils import apply_request_middleware
 
 
 @pytest.mark.django_db

@@ -13,7 +13,7 @@ from shoop.testing.factories import (
     create_random_person, get_default_shop
 )
 from shoop.utils.importing import load
-from shoop_tests.utils import apply_request_middleware
+from shoop.testing.utils import apply_request_middleware
 
 
 @pytest.mark.parametrize("class_spec", [

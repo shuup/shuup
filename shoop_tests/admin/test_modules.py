@@ -20,9 +20,10 @@ from shoop.admin.menu import get_menu_entry_categories
 from shoop.admin.module_registry import replace_modules, get_module_urls, get_modules
 from shoop.admin.views.search import get_search_results
 from shoop.testing.factories import get_default_shop
+from shoop.testing.utils import apply_request_middleware
 from shoop.utils.excs import Problem
 from shoop_tests.admin.fixtures.test_module import TestModule
-from shoop_tests.utils import empty_iterable, apply_request_middleware
+from shoop_tests.utils import empty_iterable
 from shoop_tests.utils.faux_users import AnonymousUser, StaffUser, SuperUser, AuthenticatedUser
 from shoop_tests.utils.templates import get_templates_setting_for_specific_directories
 

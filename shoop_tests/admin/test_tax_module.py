@@ -12,7 +12,7 @@ from shoop.admin.modules.taxes import TaxModule
 from shoop.admin.modules.taxes.views import TaxClassEditView
 from shoop.testing.factories import get_default_shop, get_default_tax_class
 from shoop_tests.admin.utils import admin_only_urls
-from shoop_tests.utils import apply_request_middleware
+from shoop.testing.utils import apply_request_middleware
 
 
 @pytest.mark.django_db
