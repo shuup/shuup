@@ -8,7 +8,8 @@ from shoop.testing.factories import (
     get_default_supplier, get_default_shop,
     get_default_shipping_method, get_initial_order_status
 )
-from shoop_tests.utils import printable_gibberish, apply_request_middleware, assert_contains
+from shoop.testing.utils import apply_request_middleware
+from shoop_tests.utils import printable_gibberish, assert_contains
 from shoop.admin.modules.orders.views.create import OrderCreateView
 
 TEST_COMMENT = "Hello. Is it me you're looking for?"

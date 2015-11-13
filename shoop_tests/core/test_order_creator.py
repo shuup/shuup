@@ -12,7 +12,7 @@ from shoop.core.order_creator import OrderCreator, OrderSource, SourceLine
 from shoop.testing.factories import get_address, get_default_shop, get_default_payment_method, \
     get_default_shipping_method, get_default_product, get_default_supplier, get_initial_order_status
 from shoop.utils.models import get_data_dict
-from shoop_tests.utils import apply_request_middleware
+from shoop.testing.utils import apply_request_middleware
 from shoop_tests.utils.basketish_order_source import BasketishOrderSource
 
 def test_invalid_order_source_updating():

@@ -10,7 +10,7 @@ from django.utils import translation
 import pytest
 from shoop.front.apps.simple_search.views import get_search_product_ids, SearchView
 from shoop.testing.factories import get_default_product, get_default_shop, create_product
-from shoop_tests.utils import apply_request_middleware
+from shoop.testing.utils import apply_request_middleware
 
 
 UNLIKELY_STRING = "TJiCrQWaGChYNathovfViXPWO"

@@ -10,7 +10,7 @@ from django.core import mail
 import pytest
 from shoop.admin.modules.contacts.views.reset import ContactResetPasswordView
 from shoop.testing.factories import get_default_shop, create_random_person
-from shoop_tests.utils import apply_request_middleware
+from shoop.testing.utils import apply_request_middleware
 
 
 @pytest.mark.django_db

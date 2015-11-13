@@ -15,11 +15,9 @@ import types
 from bs4 import BeautifulSoup
 
 from django.conf import settings
-from django.core.exceptions import MiddlewareNotUsed
 from django.core.urlresolvers import set_urlconf, clear_url_caches, get_urlconf
 from django.test import override_settings, Client, TestCase
 from django.utils.crypto import get_random_string
-from django.utils.module_loading import import_string
 from django.utils.timezone import now
 
 
@@ -100,32 +98,6 @@ def error_exists(errors, code):
 
 def error_does_not_exist(errors, code):
     return error_code_test(errors, False, code)
-
-
-def apply_request_middleware(request, **attrs):
-    """
-    Apply all the `process_request` capable middleware configured
-    into the given request.
-
-    :param request: The request to massage.
-    :type request: django.http.HttpRequest
-    :param attrs: Additional attributes to set after massage.
-    :type attrs: dict
-    :return: The same request, massaged in-place.
-    :rtype: django.http.HttpRequest
-    """
-    for middleware_path in settings.MIDDLEWARE_CLASSES:
-        mw_class = import_string(middleware_path)
-        try:
-            mw_instance = mw_class()
-        except MiddlewareNotUsed:
-            continue
-
-        if hasattr(mw_instance, 'process_request'):
-            mw_instance.process_request(request)
-    for key, value in attrs.items():
-        setattr(request, key, value)
-    return request
 
 
 def very_recently(datetime, how_recently=1):
