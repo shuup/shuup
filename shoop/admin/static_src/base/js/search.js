@@ -31,7 +31,7 @@ $(function() {
     function resultView(ctrl) {
         const results = ctrl.results();
         if (results !== null && results.length === 0) {
-            return m("div", "No results.");
+            return m("div", gettext("No results."));
         }
         const showShortcuts = !!ctrl.showShortcuts();
         const [actionResults, standardResults] = _.partition(results, "isAction");
