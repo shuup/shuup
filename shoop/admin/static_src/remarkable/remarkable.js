@@ -65,13 +65,13 @@ function controller() {
         {title: "H2", action: lineModifyingFunction("## ")},
         {title: "H3", action: lineModifyingFunction("### ")},
         "|",
-        {icon: "bold", title: "Bold", action: wrapperModifyingFunction("**", "**")},
-        {icon: "italic", title: "Italic", action: wrapperModifyingFunction("*", "*")},
+        {icon: "bold", title: gettext("Bold"), action: wrapperModifyingFunction("**", "**")},
+        {icon: "italic", title: gettext("Italic"), action: wrapperModifyingFunction("*", "*")},
         "|",
-        {icon: "list", title: "List", action: lineModifyingFunction("* ")},
-        {icon: "list-ol", title: "Ordered list", action: lineModifyingFunction("1. ")},
+        {icon: "list", title: gettext("List"), action: lineModifyingFunction("* ")},
+        {icon: "list-ol", title: gettext("Ordered list"), action: lineModifyingFunction("1. ")},
         "|",
-        {icon: "link", title: "Link", action: link}
+        {icon: "link", title: gettext("Link"), action: link}
     ]);
     ctrl.setTargetTextArea = function(targetTextArea) {
         ctrl.targetTextArea(targetTextArea);
@@ -152,11 +152,11 @@ function view(ctrl) {
     return m("div.remarkable-wrap", [
         m("div.remarkable-container", [
             m("div.remarkable-header", [
-                m("h2.pull-left", m("i.fa.fa-pencil"), "Editor"),
+                m("h2.pull-left", m("i.fa.fa-pencil"), gettext("Editor")),
                 m("button.btn.btn-success.pull-right", {
                     title: "done",
                     onclick: ctrl.destroy
-                }, m("i.fa.fa-check"), "Done")
+                }, m("i.fa.fa-check"), gettext("Done"))
             ]),
             m("div.remarkable-editor-panel", [
                 m("div.remarkable-toolbar", makeToolbar(ctrl)),
