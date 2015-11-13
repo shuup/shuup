@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.contrib.auth.models import AnonymousUser
+from django.core.urlresolvers import reverse
 from django.middleware.csrf import get_token
 from shoop.xtheme.resources import add_resource, InlineScriptResource
 
@@ -97,4 +98,5 @@ def add_edit_resources(context):
         "edit": is_edit_mode(request),
         "csrfToken": get_token(request),
     }))
+    add_resource(context, "head_end", reverse("shoop_admin:js-catalog"))
     add_resource(context, "body_end", staticfiles_storage.url("xtheme/editor-injection.js"))
