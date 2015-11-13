@@ -10,9 +10,9 @@ import m from "mithril";
 import _ from "lodash";
 
 export const LINE_TYPES = [
-    {id: "product", name: "Product"},
-    {id: "other", name: "Other"},
-    {id: "text", name: "Text/Comment"}
+    {id: "product", name: gettext("Product")},
+    {id: "other", name: gettext("Other")},
+    {id: "text", name: gettext("Text/Comment")}
 ];
 
 export function selectBox(value, onchange, choices, valueGetter = "id", nameGetter = "name") {

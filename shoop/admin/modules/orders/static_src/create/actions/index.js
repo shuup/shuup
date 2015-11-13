@@ -51,7 +51,7 @@ function handleCreateResponse(dispatch, data) {
             location.href = url;
         } else {
             // Very, very unlikely that we'd ever get here
-            alert("Order" + orderIdentifier + " created.");
+            alert(interpolate(gettext("Order %s created."), [orderIdentifier]));
         }
         return;
     }
@@ -65,7 +65,7 @@ function handleCreateResponse(dispatch, data) {
         }
         return;
     }
-    alert("An unspecified error occurred.\n" + data);
+    alert(gettext("An unspecified error occurred.\n") + data);
 }
 
 export const beginCreatingOrder = function () {

@@ -26,7 +26,7 @@ export function renderOrderLines(store, lines) {
                         }
                     });
                 }
-            }, (line.product ? line.product.text : "No product selected"));
+            }, (line.product ? line.product.text : gettext("No product selected")));
             canEditPrice = (line.product && line.product.id);
         } else {
             text = m("input.form-control", {
@@ -75,7 +75,8 @@ export function renderOrderLines(store, lines) {
 export function orderLinesView(store) {
     const {lines} = store.getState();
     return m("table.table.table-condensed.table-striped", [
-        m("thead", ["Type", "SKU", "Text", "Quantity", "Unit Price", "Total Price"].map((text) => m("th", text))),
+        m("thead", [gettext("Type"), gettext("SKU"), gettext("Text"), gettext("Quantity"),
+            gettext("Unit Price"), gettext("Total Price")].map((text) => m("th", text))),
         m("tbody",
             renderOrderLines(store, lines),
             m("tr", [
@@ -84,7 +85,7 @@ export function orderLinesView(store) {
                     href: "#", onclick: () => {
                         store.dispatch(addLine());
                     }
-                }, "Add new line...")),
+                }, gettext("Add new line..."))),
             ])
         )
     ]);
