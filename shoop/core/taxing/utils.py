@@ -15,7 +15,7 @@ from ._price import TaxedPrice
 
 def stacked_value_added_taxes(price, taxes):
     """
-    Stack value-added taxes on the given price without compounding.
+    Stack added taxes on the given price without compounding.
 
     Note that this will not take compound taxation (Quebec) into account.
 

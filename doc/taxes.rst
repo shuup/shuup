@@ -80,7 +80,7 @@ default_tax.TaxRule
   * regions (regexp? :D)
   * postal_codes (regexp? :D)
   * tax (FK)
-  * priority (Rules with same priority are value-added (e.g. US taxes)
+  * priority (Rules with same priority are added (e.g. US taxes)
     and rules with different priority are compound taxes (e.g. Canada
     Quobec PST usecase))
 
