@@ -35,7 +35,7 @@ export default function view() {
                             store.dispatch(beginCreatingOrder());
                         }
                     }
-                }, m("i.fa.fa-check"), " Create Order")
+                }, m("i.fa.fa-check"), " " + gettext("Create Order"))
             ])
         )
     );

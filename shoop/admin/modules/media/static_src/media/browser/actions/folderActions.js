@@ -10,7 +10,7 @@ const _ = require("lodash");
 const remote = require("../util/remote");
 
 export function promptCreateFolder(controller, parentFolderId) {
-    const name = prompt("New folder name?");
+    const name = prompt(gettext("New folder name?"));
     if (!name) {  // Cancelled? :(
         return;
     }
@@ -29,7 +29,7 @@ export function promptCreateFolderHere(controller) {
 
 export function promptRenameCurrentFolder(controller) {
     const {id, name} = controller.folderData();
-    const newName = _.trim(prompt("New folder name?", name) || "");
+    const newName = _.trim(prompt(gettext("New folder name?"), name) || "");
     if (newName && name !== newName) {
         remote.post({action: "rename_folder", id, name: newName}).then(function(response) {
             remote.handleResponseMessages(response);
@@ -41,7 +41,7 @@ export function promptRenameCurrentFolder(controller) {
 
 export function promptDeleteCurrentFolder(controller) {
     const {id, name} = controller.folderData();
-    if (confirm("Are you sure you want to delete the " + name + " folder?")) {
+    if (confirm(interpolate(gettext("Are you sure you want to delete the %s folder?"), [name]))) {
         remote.post({action: "delete_folder", id}).then(function(response) {
             remote.handleResponseMessages(response);
             const newCurrentFolder = 0 | response.newFolderId;  // eslint-disable-line no-bitwise

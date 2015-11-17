@@ -136,15 +136,15 @@ const Picotable = (function(m, storage) {
     }());
 
     const lang = {
-        "RANGE_FROM": "From",
-        "RANGE_TO": "To",
-        "ITEMS_PER_PAGE": "Items per page",
-        "RESET_FILTERS": "Reset filters",
-        "RESET": "Reset",
-        "SORT_BY": "Sort by",
-        "SORT_ASC": "ascending",
-        "SORT_DESC": "descending",
-        "SORT_DEFAULT": "Default sorting"
+        "RANGE_FROM": gettext("From"),
+        "RANGE_TO": gettext("To"),
+        "ITEMS_PER_PAGE": gettext("Items per page"),
+        "RESET_FILTERS": gettext("Reset filters"),
+        "RESET": gettext("Reset"),
+        "SORT_BY": gettext("Sort by"),
+        "SORT_ASC": gettext("ascending"),
+        "SORT_DESC": gettext("descending"),
+        "SORT_DEFAULT": gettext("Default sorting")
     };
 
     const cx = function generateClassName(classSet) {
@@ -191,11 +191,11 @@ const Picotable = (function(m, storage) {
         var prevLink = m("li", {
             key: "previous",
             className: cx({disabled: currentPage === 1})
-        }, pageLink(currentPage - 1, "Previous"));
+        }, pageLink(currentPage - 1, gettext("Previous")));
         var nextLink = m("li", {
             key: "next",
             className: cx({disabled: currentPage === paginationData.nPages})
-        }, pageLink(currentPage + 1, "Next"));
+        }, pageLink(currentPage + 1, gettext("Next")));
         return m("nav", m("ul.pagination", prevLink, pageLinks, nextLink));
     }
 
@@ -391,7 +391,7 @@ const Picotable = (function(m, storage) {
         return m("div.mobile-filters.shoop-modal-bg", {key: "mobileFilterModal"}, [
             m("div.shoop-modal-container", [
                 m("div.shoop-modal-header", [
-                    m("h2.pull-left", [m("i.fa.fa-filter")], "Filters"),
+                    m("h2.pull-left", [m("i.fa.fa-filter")], gettext("Filters")),
                     m("button.btn.btn-success.pull-right", {
                         onclick: function() {
                             ctrl.vm.showMobileFilterSettings(false);

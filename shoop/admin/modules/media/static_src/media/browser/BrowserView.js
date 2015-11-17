@@ -86,4 +86,3 @@ export function controller(config={}) {
         ctrl.navigateByHash();
     }, false);
 }
-

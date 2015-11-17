@@ -7,9 +7,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 $(function() {
-    const EXPAND_EDITOR_MARKUP = (
+    var EXPAND_EDITOR_MARKUP = (
         "<button class='btn btn-info btn-sm' type='button'>" +
-        "<i class='fa fa-expand'></i> Expand Editor" +
+        "<i class='fa fa-expand'></i> " + gettext("Expand Editor") +
         "</button>"
     );
     const remarkable = window.Remarkable;

@@ -85,7 +85,7 @@ function addEditToggleMarkup() {
             hidden("command", (editing ? "edit_off" : "edit_on")),
             el("button", {
                 "type": "submit"
-            }, (editing ? "Exit Edit" : "Edit Page"))
+            }, (editing ? gettext("Exit Edit") : gettext("Edit Page")))
         ])
     ]);
     document.body.appendChild(div);

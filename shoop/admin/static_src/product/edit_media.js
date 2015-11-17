@@ -9,7 +9,7 @@
 $(function() {
     $(".product-media-delete").on("click", function(e) {
         e.preventDefault();
-        if (confirm("Are you sure you want to delete this media?"))
+        if (confirm(gettext("Are you sure you want to delete this media?")))
         {
             $(this).parents(".panel").fadeOut();
             $(this).next(".hide").find("input").prop("checked", true);
@@ -28,7 +28,7 @@ $(function() {
         $imagePanels.removeClass("panel-selected").addClass("panel-default");
 
         $(".is-primary-image").replaceWith(function() {
-            return $("<a>", {"class": "set-as-primary", "href": "#"}).text("Set as primary image");
+            return $("<a>", {"class": "set-as-primary", "href": "#"}).text(gettext("Set as primary image"));
         });
 
         $imagePanels.each(function(i) {
@@ -36,7 +36,7 @@ $(function() {
         });
 
         $(this).replaceWith(function() {
-            return $("<span>", {"class": "is-primary-image"}).text("Primary image");
+            return $("<span>", {"class": "is-primary-image"}).text(gettext("Primary image"));
         });
 
         $panel.addClass("panel-selected");

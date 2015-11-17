@@ -9,10 +9,10 @@
 const m = require("mithril");
 const {supportsDnD} = require("../util/dragDrop");
 
-const NO_DND_UPLOAD_HINT = "Click the <strong>Upload</strong> button to upload files.";
+const NO_DND_UPLOAD_HINT = gettext("Click the <strong>Upload</strong> button to upload files.");
 const DND_UPLOAD_HINT = (
     supportsDnD ?
-        "<span>Drag and drop</span> files here<br> or click the <span>Upload</span> button." :
+        gettext("<span>Drag and drop</span> files here<br> or click the <span>Upload</span> button.") :
         NO_DND_UPLOAD_HINT
 );
 

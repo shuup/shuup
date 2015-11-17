@@ -19,13 +19,13 @@ const optionLists = {};
 function showSuccessAndError(data) {
     if (data.error) {
         Messages.enqueue({
-            text: _.isString(data.error) ? data.error : "An error occurred.",
+            text: _.isString(data.error) ? data.error : gettext("An error occurred."),
             tags: "error"
         });
     }
     if (data.success) {
         Messages.enqueue({
-            text: _.isString(data.success) ? data.success : "Success.",
+            text: _.isString(data.success) ? data.success : gettext("Success."),
             tags: "success"
         });
     }
@@ -44,7 +44,7 @@ function apiRequest(command, data, options) {
     req.then(function(response) {
         showSuccessAndError(response);
     }, function() {
-        Messages.enqueue({text: "An unspecified error occurred.", tags: "error"});
+        Messages.enqueue({text: gettext("An unspecified error occurred."), tags: "error"});
     });
     return req;
 }
@@ -113,7 +113,7 @@ function Controller() {
     ctrl.receiveItemEditData = function(data) {
         const currentItem = ctrl.currentItem();
         if (!currentItem) {
-            alert("Unexpected edit data received.");
+            alert(gettext("Unexpected edit data received."));
             return;
         }
         m.startComputation();
@@ -158,7 +158,7 @@ function Controller() {
         ctrl.newStepItemModalInfo({
             step: step,
             itemType: itemType,
-            title: "Add new " + itemType
+            title: gettext("Add new") + " " + itemType
         });
     };
     ctrl.closeNewStepItemModal = function() {
@@ -194,7 +194,7 @@ function workflowItemList(ctrl, step, itemType) {
                 " ",
                 m("a.delete", {
                     href: "#", onclick: function() {
-                        if (!confirm("Delete this item?\nThis can not be undone.")) {
+                        if (!confirm(gettext("Delete this item?\nThis can not be undone."))) {
                             return;
                         }
                         ctrl.removeStepItem(step, itemType, item);
@@ -208,7 +208,7 @@ function workflowItemList(ctrl, step, itemType) {
         m("div.action-new", [m("a.btn.btn-xs.btn-primary", {
             href: "#",
             onclick: _.partial(ctrl.promptForNewStepItem, step, itemType)
-        }, m("i.fa.fa-plus"), " New " + itemType)])
+        }, m("i.fa.fa-plus"), " " + gettext("New") + " " + itemType)])
     ]);
 }
 
@@ -234,44 +234,44 @@ function stepTableRows(ctrl) {
             m("div.step-buttons", [
                 (index > 0 ? m("a", {
                     href: "#",
-                    title: "Move Up",
+                    title: gettext("Move Up"),
                     onclick: _.partial(ctrl.moveStep, step, -1)
                 }, m("i.fa.fa-caret-up")) : null),
                 (index < ctrl.steps().length - 1 ? m("a", {
                     href: "#",
-                    title: "Move Down",
+                    title: gettext("Move Down"),
                     onclick: _.partial(ctrl.moveStep, step, +1)
                 }, m("i.fa.fa-caret-down")) : null),
                 (step.enabled ?
                     m("a", {
-                        href: "#", title: "Disable", onclick: function() {
+                        href: "#", title: gettext("Disable"), onclick: function() {
                             step.enabled = false;
                         }
                     }, m("i.fa.fa-ban")) :
                     m("a", {
-                        href: "#", title: "Enable", onclick: function() {
+                        href: "#", title: gettext("Enable"), onclick: function() {
                             step.enabled = true;
                         }
                     }, m("i.fa.fa-check-circle"))
                 ),
                 m("a", {
-                    href: "#", title: "Delete", onclick: function() {
-                        if (confirm("Are you sure you wish to delete this step?")) {
+                    href: "#", title: gettext("Delete"), onclick: function() {
+                        if (confirm(gettext("Are you sure you wish to delete this step?"))) {
                             ctrl.deleteStep(step);
                         }
                     }
                 }, m("i.fa.fa-trash"))
             ]),
             m("div.step-conds", [
-                m("span.hint", "If ", condOpSelect, " of these conditions hold..."),
+                m("span.hint", interpolate(gettext("If %s of these conditions hold..."), [condOpSelect])),
                 workflowItemList(ctrl, step, "condition")
             ]),
             m("div.step-actions", [
-                m("span.hint", "then execute these actions..."),
+                m("span.hint", gettext("then execute these actions...")),
                 workflowItemList(ctrl, step, "action")
             ]),
             m("div.step-next", [
-                m("span.hint", "and then..."),
+                m("span.hint", gettext("and then...")),
                 stepNextSelect
             ])
         ]);
@@ -304,7 +304,7 @@ function view(ctrl) {
             m(
                 "a.new-step-link.btn.btn-info.btn-sm",
                 {href: "#", onclick: ctrl.addNewStep},
-                m("i.fa.fa-plus"), " New step"
+                m("i.fa.fa-plus"), " " + gettext("New step")
             )
         ]),
         modal

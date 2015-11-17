@@ -33,7 +33,7 @@ export default function(ctrl) {
             childLis.push(m("li.new-folder-item", {key: "new-folder"}, m("a", {
                 href: "#",
                 onclick: _.bind(folderActions.promptCreateFolder, null, ctrl, folder.id),
-            }, m("i.fa.fa-plus"), " New folder")));
+            }, m("i.fa.fa-plus"), " " + gettext("New folder"))));
         }
         const className = _({
             "current": isCurrent,

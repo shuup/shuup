@@ -74,11 +74,11 @@ function handleFileXhrComplete(xhr, file, error) {
     }
     if (window.Messages) {
         if (error && !messageText) {
-            messageText = "Unexpected error while uploading files.";
+            messageText = gettext("Unexpected error while uploading files.");
         }
         const response = {
-            error: (error ? "Error: " + file.name + ": " + messageText : null),
-            message: (!error ? messageText || "Uploaded: " + file.name : null)
+            error: (error ? gettext("Error:") + " " + file.name + ": " + messageText : null),
+            message: (!error ? messageText || gettext("Uploaded:") + " " + file.name : null)
         };
         remote.handleResponseMessages(response);
     }

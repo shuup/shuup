@@ -36,7 +36,7 @@ domready(() => {
     $(".layout-add-cell-btn").on("click", function() {
         const {y, cellCount, cellLimit} = this.dataset;
         if (cellCount >= cellLimit) {
-            alert("Error: Cannot add more than "+ cellLimit + " cells to one row.");
+            alert(interpolate(gettext("Error: Cannot add more than %s cells to one row."), [cellLimit]));
             return;
         }
         post({y: y, command: "add_cell"});
@@ -46,27 +46,27 @@ domready(() => {
         post({y, command: "add_row"});
     });
     $(".layout-del-row-btn").on("click", function() {
-        if (!confirm("Are you sure you wish to delete this row?")) {
+        if (!confirm(gettext("Are you sure you wish to delete this row?"))) {
             return;
         }
         const {y} = this.dataset;
         post({y, command: "del_row"});
     });
     $(".del-cell-btn").on("click", function() {
-        if (!confirm("Are you sure you wish to delete this cell?")) {
+        if (!confirm(gettext("Are you sure you wish to delete this cell?"))) {
             return;
         }
         const {x, y} = this.dataset;
         post({x, y, command: "del_cell"});
     });
     $(".publish-btn").on("click", function() {
-        if (!confirm("Are you sure you wish to publish changes made to this view?")) {
+        if (!confirm(gettext("Are you sure you wish to publish changes made to this view?"))) {
             return;
         }
         post({command: "publish"});
     });
     $(".revert-btn").on("click", function() {
-        if (!confirm("Are you sure you wish to revert all changes made since the last published version?")) {
+        if (!confirm(gettext("Are you sure you wish to revert all changes made since the last published version?"))) {
             return;
         }
         post({command: "revert"});
@@ -80,7 +80,7 @@ domready(() => {
     });
     $("#id_general-plugin").on("change", function() {
         if (changesMade) {
-            if (!confirm("Changing plugins will cause other changes made on this form to be lost.")) {
+            if (!confirm(gettext("Changing plugins will cause other changes made on this form to be lost."))) {
                 return;
             }
         }

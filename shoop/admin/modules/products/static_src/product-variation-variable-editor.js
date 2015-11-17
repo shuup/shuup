@@ -46,10 +46,10 @@ window.VariationVariableEditor = (function(m, _) {
                 ]);
             }),
             (showIdentifierFields ? m(cellSelector, [
-                "Identifier",
+                gettext("Identifier"),
                 m("input.form-control", {
                     value: object.identifier,
-                    placeholder: "Identifier",
+                    placeholder: gettext("Identifier"),
                     oninput: changeIdentifier,
                     onchange: changeIdentifier
                 })
@@ -60,39 +60,39 @@ window.VariationVariableEditor = (function(m, _) {
     function valueTr(ctrl, value, index) {
         const showIdentifierFields = ctrl.showIdentifierFields();
         return m("tr",
-            m("th", "Value " + (index + 1) + " Name"),
+            m("th", interpolate(gettext("Value %s Name"), [(index + 1)])),
             getIdfrAndLanguagesCells("td", value, "texts", "", showIdentifierFields),
             m("td", m("a.btn.text-danger.btn-xs", {href: "#", onclick: () => {
                 value.DELETE = true;
                 refreshField();
-            }}, m("i.fa.fa-times-circle"), " Delete value"))
+            }}, m("i.fa.fa-times-circle"), " " + gettext("Delete value")))
         );
     }
 
     function renderVariable(ctrl, variable) {
         const showIdentifierFields = ctrl.showIdentifierFields();
         const deleteVariableButton = m("a.btn.btn-xs.text-danger", {href: "#", onclick: () => {
-            if (variable.values.length === 0 || confirm("Are you sure?")) {
+            if (variable.values.length === 0 || confirm(gettext("Are you sure?"))) {
                 variable.DELETE = true;
                 refreshField();
             }
-        }}, m("i.fa.fa-times-circle"), " Delete Variable");
+        }}, m("i.fa.fa-times-circle"), " " + gettext("Delete Variable"));
         const addValueButton = m("a.btn.btn-xs.btn-text", {href: "#", onclick: (event) => {
             variable.values.push({pk: newPk(), identifier: "", texts: {}});
             event.preventDefault();
-        }}, m("i.fa.fa-plus"), " Add new value");
+        }}, m("i.fa.fa-plus"), " " + gettext("Add new value"));
         var bodyRows = [];
         bodyRows.push(
-            m("tr", [m("th", "Variable Name")].concat(
+            m("tr", [m("th", gettext("Variable Name"))].concat(
                 getIdfrAndLanguagesCells("td", variable, "names", "", showIdentifierFields)
             ).concat([m("td")]))
         );
         bodyRows = bodyRows.concat(
-            _.map(_.reject(variable.values, "DELETE"), _.partial(valueTr, ctrl))
+            _.map(_.reject(variable.values, gettext("DELETE")), _.partial(valueTr, ctrl))
         );
         return m("div.product-variable", {key: variable.pk}, [
             m("div.variable-heading.clearfix", [
-                m("h3.pull-left", "Variable"),
+                m("h3.pull-left", gettext("Variable")),
                 m("div.pull-right", deleteVariableButton)
             ]),
             m("div.variable-body", [
@@ -114,7 +114,7 @@ window.VariationVariableEditor = (function(m, _) {
     function view(ctrl) {
         var variablesDiv = m(
             "div.product-variable-wrap",
-            _.map(_.reject(variables, "DELETE"), _.partial(renderVariable, ctrl))
+            _.map(_.reject(variables, gettext("DELETE")), _.partial(renderVariable, ctrl))
         );
         var identifierFieldsCheckbox = m("p", [
             m("label.small", [
@@ -123,12 +123,12 @@ window.VariationVariableEditor = (function(m, _) {
                     checked: !!ctrl.showIdentifierFields(),
                     onclick: m.withAttr("checked", ctrl.showIdentifierFields)
                 }),
-                " Show identifier fields (for advanced users)"
+                " " + gettext("Show identifier fields (for advanced users)")
             ])
         ]);
         if (!variables.length) {
             variablesDiv = m("p.text-info", [
-                m("i.fa.fa-exclamation-circle"), " There are no variables defined.",
+                m("i.fa.fa-exclamation-circle"), " " + gettext("There are no variables defined."),
                 m("hr")
             ]);
             identifierFieldsCheckbox = null;
@@ -140,7 +140,7 @@ window.VariationVariableEditor = (function(m, _) {
             m("a.btn.btn-lg.btn-text", {href: "#", onclick: (event) => {
                 variables.push({pk: newPk(), identifier: "", names: {}, values: []});
                 event.preventDefault();
-            }}, m("i.fa.fa-plus"), " Add new variable")
+            }}, m("i.fa.fa-plus"), " " + gettext("Add new variable"))
         ]);
     }
 

@@ -50,7 +50,7 @@ window.BrowseAPI = (function() {
         const kind = options.kind;
         const browserUrl = window.ShoopAdminConfig.browserUrls[kind];
         if (!browserUrl) {
-            throw new Error("No browser URL for kind: " + kind);
+            throw new Error(gettext("No browser URL for kind:") + " " + kind);
         }
         const id = "m-" + (+new Date);
         const qs = _.compact([

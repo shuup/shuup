@@ -14,13 +14,13 @@ export default function(controller) {
     return function() {
         const isRoot = (0 | controller.currentFolderId()) === 0;
         return [
-            menuItem("New folder...", () => {
+            menuItem(gettext("New folder"), () => {
                 folderActions.promptCreateFolderHere(controller);
             }),
-            menuItem("Rename folder...", () => {
+            menuItem(gettext("Rename folder"), () => {
                 folderActions.promptRenameCurrentFolder(controller);
             }, {disabled: isRoot}),
-            menuItem("Delete folder", () => {
+            menuItem(gettext("Delete folder"), () => {
                 folderActions.promptDeleteCurrentFolder(controller);
             }, {disabled: isRoot})
         ];
