@@ -5,19 +5,19 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from shoop.apps import AppConfig
+import shoop.apps
 
 
-class AppConfig(AppConfig):
-    name = 'shoop_tests.core'
+class AppConfig(shoop.apps.AppConfig):
+    name = __name__
     label = 'shoop_tests_core'
 
     provides = {
         "module_test_module": [
-            "shoop_tests.core.module_test_module:ModuleTestModule",
-            "shoop_tests.core.module_test_module:AnotherModuleTestModule",
+            __name__ + ".module_test_module:ModuleTestModule",
+            __name__ + ".module_test_module:AnotherModuleTestModule",
         ]
     }
 
 
-default_app_config = 'shoop_tests.core.AppConfig'
+default_app_config = __name__ + ".AppConfig"

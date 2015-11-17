@@ -4,22 +4,22 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from shoop.apps import AppConfig
+import shoop.apps
 from .manager import add_enabled_addons
 
 __all__ = ["add_enabled_addons"]
 
 
-class ShoopAddonsAppConfig(AppConfig):
-    name = "shoop.addons"
+class AppConfig(shoop.apps.AppConfig):
+    name = __name__
     verbose_name = "Shoop Addons"
     label = "shoop_addons"
 
     provides = {
         "admin_module": [
-            "shoop.addons.admin_module:AddonModule",
+            __name__ + ".admin_module:AddonModule",
         ]
     }
 
 
-default_app_config = "shoop.addons.ShoopAddonsAppConfig"
+default_app_config = __name__ + ".AppConfig"

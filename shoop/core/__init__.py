@@ -5,11 +5,11 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from shoop.apps import AppConfig
+import shoop.apps
 
 
-class ShoopCoreAppConfig(AppConfig):
-    name = "shoop.core"
+class AppConfig(shoop.apps.AppConfig):
+    name = __name__
     verbose_name = "Shoop Core"
     label = "shoop"  # Use "shoop" as app_label instead of "core"
     required_installed_apps = (
@@ -20,12 +20,12 @@ class ShoopCoreAppConfig(AppConfig):
     )
     provides = {
         "api_populator": [
-            "shoop.core.api:populate_core_api"
+            __name__ + ".api:populate_core_api"
         ],
         "pricing_module": [
-            "shoop.core.pricing.default_pricing:DefaultPricingModule"
+            __name__ + ".pricing.default_pricing:DefaultPricingModule"
         ],
     }
 
 
-default_app_config = "shoop.core.ShoopCoreAppConfig"
+default_app_config = __name__ + ".AppConfig"

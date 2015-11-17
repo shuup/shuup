@@ -13,7 +13,7 @@ from django.http import HttpResponseRedirect
 from django.test.utils import override_settings
 from django.utils.timezone import now
 import os
-from shoop.admin import ShoopAdminAppConfig
+import shoop.admin
 from shoop.admin.base import AdminModule
 from shoop.admin.dashboard import DashboardContentBlock, get_activity
 from shoop.admin.menu import get_menu_entry_categories
@@ -54,7 +54,7 @@ def test_modules_in_core_admin_work(rf, admin_user):
     request = rf.get("/")
     apply_request_middleware(request, user=admin_user)
     request = apply_request_middleware(rf.get("/"), user=admin_user)
-    with replace_modules(ShoopAdminAppConfig.provides["admin_module"]):
+    with replace_modules(shoop.admin.AppConfig.provides["admin_module"]):
         assert all(get_module_urls())
         assert get_menu_entry_categories(request)
 

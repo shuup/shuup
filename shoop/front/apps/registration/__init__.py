@@ -30,11 +30,12 @@ URL names
 
 import django.conf
 from registration.signals import user_activated, login_user
-from shoop.apps import AppConfig
+
+import shoop.apps
 
 
-class RegistrationAppConfig(AppConfig):
-    name = "shoop.front.apps.registration"
+class AppConfig(shoop.apps.AppConfig):
+    name = __name__
     verbose_name = "Shoop Frontend - User Registration"
     label = "shoop_front.registration"
 
@@ -44,7 +45,7 @@ class RegistrationAppConfig(AppConfig):
 
     provides = {
         "front_urls": [
-            "shoop.front.apps.registration.urls:urlpatterns"
+            __name__ + ".urls:urlpatterns"
         ],
     }
 
@@ -71,4 +72,4 @@ class RegistrationAppConfig(AppConfig):
             # false for HTML mails.
             django.conf.settings.REGISTRATION_EMAIL_HTML = False
 
-default_app_config = "shoop.front.apps.registration.RegistrationAppConfig"
+default_app_config = __name__ + ".AppConfig"

@@ -6,7 +6,8 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from shoop.apps import AppConfig
+import shoop.apps
+
 from .base import Condition, Action, Event, Variable, Binding
 from .enums import ConstantUse, TemplateUse
 from .script import Context
@@ -23,30 +24,30 @@ __all__ = (
 )
 
 
-class ShoopNotifyAppConfig(AppConfig):
-    name = "shoop.notify"
+class AppConfig(shoop.apps.AppConfig):
+    name = __name__
     verbose_name = "Shoop Notification Framework"
     label = "shoop_notify"
     provides = {
         "notify_condition": [
-            "shoop.notify.conditions:LanguageEqual",
-            "shoop.notify.conditions:BooleanEqual",
-            "shoop.notify.conditions:IntegerEqual",
-            "shoop.notify.conditions:TextEqual",
-            "shoop.notify.conditions:Empty",
-            "shoop.notify.conditions:NonEmpty",
+            __name__ + ".conditions:LanguageEqual",
+            __name__ + ".conditions:BooleanEqual",
+            __name__ + ".conditions:IntegerEqual",
+            __name__ + ".conditions:TextEqual",
+            __name__ + ".conditions:Empty",
+            __name__ + ".conditions:NonEmpty",
         ],
         "notify_action": [
-            "shoop.notify.actions:SetDebugFlag",
-            "shoop.notify.actions:AddOrderLogEntry",
-            "shoop.notify.actions:SendEmail",
-            "shoop.notify.actions:AddNotification",
+            __name__ + ".actions:SetDebugFlag",
+            __name__ + ".actions:AddOrderLogEntry",
+            __name__ + ".actions:SendEmail",
+            __name__ + ".actions:AddNotification",
         ],
         "notify_event": [],
         "admin_module": [
-            "shoop.notify.admin_module:NotifyAdminModule",
+            __name__ + ".admin_module:NotifyAdminModule",
         ]
     }
 
 
-default_app_config = "shoop.notify.ShoopNotifyAppConfig"
+default_app_config = __name__ + ".AppConfig"

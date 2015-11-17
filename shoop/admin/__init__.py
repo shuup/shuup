@@ -5,34 +5,34 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from shoop.apps import AppConfig
+import shoop.apps
 from shoop.apps.settings import validate_templates_configuration
 
 
-class ShoopAdminAppConfig(AppConfig):
-    name = "shoop.admin"
+class AppConfig(shoop.apps.AppConfig):
+    name = __name__
     verbose_name = "Shoop Admin"
     label = "shoop_admin"
     required_installed_apps = ["bootstrap3"]
     provides = {
         "admin_module": [
-            "shoop.admin.modules.system:SystemModule",
-            "shoop.admin.modules.products:ProductModule",
-            "shoop.admin.modules.product_types:ProductTypeModule",
-            "shoop.admin.modules.media:MediaModule",
-            "shoop.admin.modules.orders:OrderModule",
-            "shoop.admin.modules.taxes:TaxModule",
-            "shoop.admin.modules.categories:CategoryModule",
-            "shoop.admin.modules.contacts:ContactModule",
-            "shoop.admin.modules.contact_groups:ContactGroupModule",
-            "shoop.admin.modules.users:UserModule",
-            "shoop.admin.modules.methods:MethodModule",
-            "shoop.admin.modules.attributes:AttributeModule",
-            "shoop.admin.modules.sales_units:SalesUnitModule",
-            "shoop.admin.modules.shops:ShopModule",
-            "shoop.admin.modules.demo:DemoModule",
-            "shoop.admin.modules.manufacturers:ManufacturerModule",
-            "shoop.admin.modules.suppliers:SupplierModule"
+            __name__ + ".modules.system:SystemModule",
+            __name__ + ".modules.products:ProductModule",
+            __name__ + ".modules.product_types:ProductTypeModule",
+            __name__ + ".modules.media:MediaModule",
+            __name__ + ".modules.orders:OrderModule",
+            __name__ + ".modules.taxes:TaxModule",
+            __name__ + ".modules.categories:CategoryModule",
+            __name__ + ".modules.contacts:ContactModule",
+            __name__ + ".modules.contact_groups:ContactGroupModule",
+            __name__ + ".modules.users:UserModule",
+            __name__ + ".modules.methods:MethodModule",
+            __name__ + ".modules.attributes:AttributeModule",
+            __name__ + ".modules.sales_units:SalesUnitModule",
+            __name__ + ".modules.shops:ShopModule",
+            __name__ + ".modules.demo:DemoModule",
+            __name__ + ".modules.manufacturers:ManufacturerModule",
+            __name__ + ".modules.suppliers:SupplierModule"
         ]
     }
 
@@ -40,4 +40,4 @@ class ShoopAdminAppConfig(AppConfig):
         validate_templates_configuration()
 
 
-default_app_config = "shoop.admin.ShoopAdminAppConfig"
+default_app_config = __name__ + ".AppConfig"

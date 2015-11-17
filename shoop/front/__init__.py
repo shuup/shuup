@@ -6,21 +6,22 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
-from shoop.apps import AppConfig
+
+import shoop.apps
 from shoop.apps.settings import validate_templates_configuration
 
 
-class ShoopFrontAppConfig(AppConfig):
-    name = "shoop.front"
+class AppConfig(shoop.apps.AppConfig):
+    name = __name__
     verbose_name = "Shoop Frontend"
     label = "shoop_front"
 
     provides = {
         "admin_module": [
-            "shoop.front.admin_module.BasketAdminModule",
+            __name__ + ".admin_module.BasketAdminModule",
         ],
         "notify_event": [
-            "shoop.front.notify_events:OrderReceived"
+            __name__ + ".notify_events:OrderReceived"
         ]
     }
 
@@ -32,4 +33,4 @@ class ShoopFrontAppConfig(AppConfig):
             install_error_handlers()
 
 
-default_app_config = "shoop.front.ShoopFrontAppConfig"
+default_app_config = __name__ + ".AppConfig"
