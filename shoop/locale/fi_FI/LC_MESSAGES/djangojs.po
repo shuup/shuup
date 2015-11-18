@@ -1,0 +1,424 @@
+# Translations template for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# 
+# Translators:
+# Aarni Koskela, 2015
+# Juha Kujala <juha.kujala@shoop.io>, 2015
+# Teemu Selkälä <teemu.selkala@anders.fi>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: Shoop\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2015-11-17 12:40+0200\n"
+"PO-Revision-Date: 2015-11-17 11:42+0000\n"
+"Last-Translator: Aarni Koskela\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/language/fi_FI/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 1.3\n"
+"Language: fi_FI\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: shoop/admin/modules/media/static_src/media/browser/components/responsiveUploadHint.js:0
+msgid ""
+"<span>Drag and drop</span> files here<br> or click the <span>Upload</span> "
+"button."
+msgstr "<span>Raahaa ja pudota</span> tiedostot tähän<br> tai klikkaa <span>Lataa</span> -painiketta."
+
+#: shoop/notify/static_src/script-editor.js:0
+msgid "Add new"
+msgstr "Lisää uusi"
+
+#: shoop/admin/modules/orders/static_src/create/view/lines.js:0
+msgid "Add new line..."
+msgstr "Lisää uusi rivi..."
+
+#: shoop/admin/modules/products/static_src/product-variation-variable-editor.js:0
+msgid "Add new value"
+msgstr "Lisää uusi arvo"
+
+#: shoop/admin/modules/products/static_src/product-variation-variable-editor.js:0
+msgid "Add new variable"
+msgstr "Lisää uusi muuttuja"
+
+#: shoop/notify/static_src/script-editor.js:0
+msgid "An error occurred."
+msgstr "Tapahtui virhe."
+
+#: shoop/notify/static_src/script-editor.js:0
+msgid "An unspecified error occurred."
+msgstr "Tapahtui määrittelemätön virhe."
+
+#: shoop/admin/modules/orders/static_src/create/actions/index.js:0
+msgid "An unspecified error occurred.\n"
+msgstr "Määrittelemätön virhe tapahtui.\n"
+
+#: shoop/admin/modules/media/static_src/media/browser/actions/folderActions.js:0
+#, python-format
+msgid "Are you sure you want to delete the %s folder?"
+msgstr "Oletko varma että haluat poistaa %s kansion?"
+
+#: shoop/admin/modules/media/static_src/media/browser/actions/fileActions.js:0
+#, python-format
+msgid "Are you sure you want to delete the file %s?"
+msgstr "Oletko varma, että haluat poistaa tiedoston %s?"
+
+#: shoop/admin/static_src/product/edit_media.js:0
+msgid "Are you sure you want to delete this media?"
+msgstr "Oletko varma, että haluat poistaa tämän median?"
+
+#: shoop/notify/static_src/script-editor.js:0
+msgid "Are you sure you wish to delete this step?"
+msgstr "Oletko varma että haluat poistaa tämän vaiheen?"
+
+#: shoop/admin/modules/products/static_src/product-variation-variable-editor.js:0
+msgid "Are you sure?"
+msgstr "Oletko varma?"
+
+#: shoop/admin/static_src/remarkable/remarkable.js:0
+msgid "Bold"
+msgstr "Lihavoitu"
+
+#: shoop/admin/modules/media/static_src/media/browser/components/responsiveUploadHint.js:0
+msgid "Click the <strong>Upload</strong> button to upload files."
+msgstr "Klikkaa <strong>Lataa</strong> -painiketta ladataksesi tiedostoja palvelimelle."
+
+#: shoop/admin/modules/orders/static_src/create/view/index.js:0
+msgid "Create Order"
+msgstr "Luo tilaus"
+
+#: shoop/admin/modules/orders/static_src/create/view/meta.js:0
+msgid "Customer"
+msgstr "Asiakas"
+
+#: shoop/admin/modules/products/static_src/product-variation-variable-editor.js:0
+msgid "DELETE"
+msgstr "POISTA"
+
+#: shoop/admin/modules/media/static_src/media/browser/components/listFileView.js:0
+msgid "Date"
+msgstr "Päivämäärä"
+
+#: shoop/admin/static_src/picotable/picotable.js:0
+msgid "Default sorting"
+msgstr "Oletusjärjestys"
+
+#: shoop/notify/static_src/script-editor.js:0
+msgid "Delete"
+msgstr "Poista"
+
+#: shoop/admin/modules/products/static_src/product-variation-variable-editor.js:0
+msgid "Delete Variable"
+msgstr "Poista muuttuja"
+
+#: shoop/admin/modules/media/static_src/media/browser/menus/fileContextMenu.js:0
+msgid "Delete file"
+msgstr "Poista tiedosto"
+
+#: shoop/admin/modules/media/static_src/media/browser/menus/folderContextMenu.js:0
+msgid "Delete folder"
+msgstr "Poista kansio"
+
+#: shoop/notify/static_src/script-editor.js:0
+msgid ""
+"Delete this item?\n"
+"This can not be undone."
+msgstr "Haluatko poistaa kohdan?\nPoistamista ei pysty peruuttamaan."
+
+#: shoop/admin/modules/products/static_src/product-variation-variable-editor.js:0
+msgid "Delete value"
+msgstr "Poista arvo"
+
+#: shoop/notify/static_src/script-editor.js:0
+msgid "Disable"
+msgstr "Poista käytöstä"
+
+#: shoop/admin/static_src/remarkable/remarkable.js:0
+msgid "Done"
+msgstr "Valmis"
+
+#: shoop/admin/modules/media/static_src/media/browser/components/folderView.js:0
+msgid "Drop your files here"
+msgstr "Pudota tiedostosi tähän"
+
+#: shoop/admin/modules/media/static_src/media/browser/components/listFileView.js:0
+msgid "Edit"
+msgstr "Muokkaa"
+
+#: shoop/admin/static_src/remarkable/remarkable.js:0
+msgid "Editor"
+msgstr "Editori"
+
+#: shoop/notify/static_src/script-editor.js:0
+msgid "Enable"
+msgstr "Ota käyttöön"
+
+#: shoop/admin/modules/media/static_src/media/browser/FileUpload.js:0
+msgid "Error:"
+msgstr "Virhe"
+
+#: shoop/admin/static_src/base/js/remarkable-field.js:0
+msgid "Expand Editor"
+msgstr "Laajenna editori"
+
+#: shoop/admin/static_src/picotable/picotable.js:0
+msgid "Filters"
+msgstr "Suodattimet"
+
+#: shoop/admin/static_src/picotable/picotable.js:0
+msgid "From"
+msgstr "Mistä"
+
+#: shoop/admin/modules/products/static_src/product-variation-variable-editor.js:0
+msgid "Identifier"
+msgstr "Tunniste"
+
+#: shoop/notify/static_src/script-editor.js:0
+#, python-format
+msgid "If %s of these conditions hold..."
+msgstr "Jos %s näistä ehdoista pitää..."
+
+#: shoop/admin/static_src/remarkable/remarkable.js:0
+msgid "Italic"
+msgstr "Kursiivi"
+
+#: shoop/admin/static_src/picotable/picotable.js:0
+msgid "Items per page"
+msgstr "Tuloksia per sivu"
+
+#: shoop/admin/modules/media/static_src/media/browser/components/folderView.js:0
+msgid "Largest first"
+msgstr "Suurin ensin"
+
+#: shoop/admin/static_src/remarkable/remarkable.js:0
+msgid "Link"
+msgstr "Linkki"
+
+#: shoop/admin/static_src/remarkable/remarkable.js:0
+msgid "List"
+msgstr "Lista"
+
+#: shoop/notify/static_src/script-editor.js:0
+msgid "Move Down"
+msgstr "Siirrä alas"
+
+#: shoop/notify/static_src/script-editor.js:0
+msgid "Move Up"
+msgstr "Siirrä ylös"
+
+#: shoop/admin/modules/media/static_src/media/browser/components/listFileView.js:0
+msgid "Name"
+msgstr "Nimi"
+
+#: shoop/notify/static_src/script-editor.js:0
+msgid "New"
+msgstr "Uusi"
+
+#: shoop/admin/modules/media/static_src/media/browser/actions/fileActions.js:0
+msgid "New file name?"
+msgstr "Uusi tiedostonimi?"
+
+#: shoop/admin/modules/media/static_src/media/browser/components/folderTree.js:0
+#: shoop/admin/modules/media/static_src/media/browser/menus/folderContextMenu.js:0
+msgid "New folder"
+msgstr "Uusi kansio"
+
+#: shoop/admin/modules/media/static_src/media/browser/actions/folderActions.js:0
+msgid "New folder name?"
+msgstr "Uusi kansion nimi?"
+
+#: shoop/notify/static_src/script-editor.js:0
+msgid "New step"
+msgstr "Seuraava vaihe"
+
+#: shoop/admin/modules/media/static_src/media/browser/components/folderView.js:0
+msgid "Newest first"
+msgstr "Uusin ensin"
+
+#: shoop/admin/static_src/picotable/picotable.js:0
+msgid "Next"
+msgstr "Seuraava"
+
+#: shoop/admin/static_src/base/js/browse-widget.js:0
+msgid "No browser URL for kind:"
+msgstr "Ei URL-osoitetta selaimessa tyypille:"
+
+#: shoop/admin/modules/orders/static_src/create/view/lines.js:0
+msgid "No product selected"
+msgstr "Tuotetta ei ole valittuna"
+
+#: shoop/admin/static_src/base/js/search.js:0
+msgid "No results."
+msgstr "Ei tuloksia."
+
+#: shoop/admin/modules/orders/static_src/create/view/meta.js:0
+msgid "No shipping method"
+msgstr "Ei toimitustapaa"
+
+#: shoop/admin/modules/orders/static_src/create/view/meta.js:0
+msgid "None selected"
+msgstr "Ei yhtään valittuna"
+
+#: shoop/admin/modules/media/static_src/media/browser/components/folderView.js:0
+msgid "Oldest first"
+msgstr "Vanhin ensin"
+
+#: shoop/admin/modules/orders/static_src/create/actions/index.js:0
+#, python-format
+msgid "Order %s created."
+msgstr "Tilaus %s luotu."
+
+#: shoop/admin/modules/orders/static_src/create/view/meta.js:0
+msgid "Order Notes"
+msgstr "Tilauksen huomiot"
+
+#: shoop/admin/static_src/remarkable/remarkable.js:0
+msgid "Ordered list"
+msgstr "Järjestetty lista"
+
+#: shoop/admin/modules/orders/static_src/create/view/utils.js:0
+msgid "Other"
+msgstr "Muu"
+
+#: shoop/admin/static_src/picotable/picotable.js:0
+msgid "Previous"
+msgstr "Edellinen"
+
+#: shoop/admin/static_src/product/edit_media.js:0
+msgid "Primary image"
+msgstr "Pääkuva"
+
+#: shoop/admin/modules/orders/static_src/create/view/utils.js:0
+msgid "Product"
+msgstr "Tuote"
+
+#: shoop/admin/modules/orders/static_src/create/view/lines.js:0
+msgid "Quantity"
+msgstr "Määrä"
+
+#: shoop/admin/modules/media/static_src/media/browser/menus/fileContextMenu.js:0
+msgid "Rename file"
+msgstr "Uudelleennimeä tiedosto"
+
+#: shoop/admin/modules/media/static_src/media/browser/menus/folderContextMenu.js:0
+msgid "Rename folder"
+msgstr "Uudelleennimeä kansio"
+
+#: shoop/admin/static_src/picotable/picotable.js:0
+msgid "Reset"
+msgstr "Tyhjennä"
+
+#: shoop/admin/static_src/picotable/picotable.js:0
+msgid "Reset filters"
+msgstr "Tyhjennä suodattimet"
+
+#: shoop/admin/modules/orders/static_src/create/view/lines.js:0
+msgid "SKU"
+msgstr "Tuotekoodi"
+
+#: shoop/admin/static_src/product/edit_media.js:0
+msgid "Set as primary image"
+msgstr "Aseta pääkuvaksi"
+
+#: shoop/admin/modules/orders/static_src/create/view/meta.js:0
+msgid "Shipping Method"
+msgstr "Toimitustapa"
+
+#: shoop/admin/modules/orders/static_src/create/view/meta.js:0
+msgid "Shop"
+msgstr "Kauppa"
+
+#: shoop/admin/modules/products/static_src/product-variation-variable-editor.js:0
+msgid "Show identifier fields (for advanced users)"
+msgstr "Näytä tunnistekentät (Edistyneille käyttäjille)"
+
+#: shoop/admin/modules/media/static_src/media/browser/components/listFileView.js:0
+msgid "Size"
+msgstr "Koko"
+
+#: shoop/admin/modules/media/static_src/media/browser/components/folderView.js:0
+msgid "Smallest first"
+msgstr "Pienin ensin"
+
+#: shoop/admin/static_src/picotable/picotable.js:0
+msgid "Sort by"
+msgstr "Järjestä"
+
+#: shoop/notify/static_src/script-editor.js:0
+msgid "Success."
+msgstr "Tapahtuma onnistui."
+
+#: shoop/admin/modules/orders/static_src/create/view/lines.js:0
+msgid "Text"
+msgstr "Teksti"
+
+#: shoop/admin/modules/orders/static_src/create/view/utils.js:0
+msgid "Text/Comment"
+msgstr "Teksti/Kommentti"
+
+#: shoop/admin/modules/products/static_src/product-variation-variable-editor.js:0
+msgid "There are no variables defined."
+msgstr "Yhtään muuttujaa ei ole määritetty."
+
+#: shoop/admin/static_src/picotable/picotable.js:0
+msgid "To"
+msgstr "Mihin"
+
+#: shoop/admin/modules/orders/static_src/create/view/lines.js:0
+msgid "Total Price"
+msgstr "Kokonaishinta"
+
+#: shoop/admin/modules/orders/static_src/create/view/lines.js:0
+msgid "Type"
+msgstr "Tyyppi"
+
+#: shoop/notify/static_src/script-editor.js:0
+msgid "Unexpected edit data received."
+msgstr "Odottamaton muokkaustieto vastaanotettu."
+
+#: shoop/admin/modules/media/static_src/media/browser/FileUpload.js:0
+msgid "Unexpected error while uploading files."
+msgstr "Odottamaton virhe ladattaessa tiedostoja palvelimelle."
+
+#: shoop/admin/modules/orders/static_src/create/view/lines.js:0
+msgid "Unit Price"
+msgstr "Yksikköhinta"
+
+#: shoop/admin/modules/media/static_src/media/browser/FileUpload.js:0
+msgid "Uploaded:"
+msgstr "Ladattu:"
+
+#: shoop/admin/modules/products/static_src/product-variation-variable-editor.js:0
+#, python-format
+msgid "Value %s Name"
+msgstr "Arvon %s nimi"
+
+#: shoop/admin/modules/products/static_src/product-variation-variable-editor.js:0
+msgid "Variable"
+msgstr "Muuttuja"
+
+#: shoop/admin/modules/products/static_src/product-variation-variable-editor.js:0
+msgid "Variable Name"
+msgstr "Muuttujan nimi"
+
+#: shoop/notify/static_src/script-editor.js:0
+msgid "and then..."
+msgstr "ja sitten..."
+
+#: shoop/admin/static_src/picotable/picotable.js:0
+msgid "ascending"
+msgstr "Nouseva"
+
+#: shoop/admin/modules/media/static_src/media/browser/components/folderTree.js:0
+msgid "current"
+msgstr "Nykyinen"
+
+#: shoop/admin/static_src/picotable/picotable.js:0
+msgid "descending"
+msgstr "Laskeva"
+
+#: shoop/notify/static_src/script-editor.js:0
+msgid "then execute these actions..."
+msgstr "jonka jälkeen suorita nämä toimet..."
