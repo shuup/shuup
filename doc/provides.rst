@@ -24,7 +24,7 @@ the keys and lists of loading specs as values for new provides to be discovered.
 
 .. code-block:: python
 
-   class PigeonAppConfig(AppConfig):
+   class AppConfig(shoop.apps.AppConfig):
 
        provides = {
            "shipping_method_module": [

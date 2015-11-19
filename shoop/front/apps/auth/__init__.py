@@ -4,19 +4,19 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from shoop.apps import AppConfig
+import shoop.apps
 
 
-class AuthAppConfig(AppConfig):
-    name = "shoop.front.apps.auth"
+class AppConfig(shoop.apps.AppConfig):
+    name = __name__
     verbose_name = "Shoop Frontend - User Authentication"
     label = "shoop_front.auth"
 
     provides = {
         "front_urls": [
-            "shoop.front.apps.auth.urls:urlpatterns"
+            __name__ + ".urls:urlpatterns"
         ],
     }
 
 
-default_app_config = "shoop.front.apps.auth.AuthAppConfig"
+default_app_config = __name__ + ".AppConfig"

@@ -10,11 +10,11 @@ from django.conf import settings
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
-from shoop.apps import AppConfig
-from shoop.xtheme.theme import Theme
+import shoop.apps
+import shoop.xtheme
 
 
-class ClassicGrayTheme(Theme):
+class Theme(shoop.xtheme.Theme):
     identifier = "shoop.themes.classic_gray"
     name = "Shoop Classic Gray Theme"
     author = "Juha Kujala"
@@ -65,16 +65,16 @@ class ClassicGrayTheme(Theme):
         return self._format_cms_links(id__in=page_ids)
 
 
-class ClassicGrayThemeAppConfig(AppConfig):
-    name = "shoop.themes.classic_gray"
-    verbose_name = ClassicGrayTheme.name
+class AppConfig(shoop.apps.AppConfig):
+    name = __name__
+    verbose_name = Theme.name
     label = "shoop.themes.classic_gray"
     provides = {
-        "xtheme": "shoop.themes.classic_gray:ClassicGrayTheme",
+        "xtheme": __name__ + ":Theme",
         "xtheme_plugin": [
-            "shoop.themes.classic_gray.plugins:ProductHighlightPlugin",
+            __name__ + ".plugins:ProductHighlightPlugin",
         ]
     }
 
 
-default_app_config = "shoop.themes.classic_gray.ClassicGrayThemeAppConfig"
+default_app_config = __name__ + ".AppConfig"

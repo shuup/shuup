@@ -6,11 +6,12 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.core.exceptions import ImproperlyConfigured
-from shoop.apps import AppConfig
+
+import shoop.apps
 
 
-class ShoopApiAppConfig(AppConfig):
-    name = "shoop.api"
+class AppConfig(shoop.apps.AppConfig):
+    name = __name__
     verbose_name = "Shoop API"
     label = "shoop_api"
     required_installed_apps = (
@@ -18,7 +19,7 @@ class ShoopApiAppConfig(AppConfig):
     )
 
     def ready(self):
-        super(ShoopApiAppConfig, self).ready()
+        super(AppConfig, self).ready()
         from django.conf import settings
         rest_framework_config = getattr(settings, "REST_FRAMEWORK", None)
         if not (rest_framework_config and rest_framework_config.get("DEFAULT_PERMISSION_CLASSES")):
@@ -28,4 +29,4 @@ class ShoopApiAppConfig(AppConfig):
             )
 
 
-default_app_config = "shoop.api.ShoopApiAppConfig"
+default_app_config = __name__ + ".AppConfig"

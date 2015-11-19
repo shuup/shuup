@@ -16,8 +16,8 @@ class AppConfig(shoop.apps.AppConfig):
     label = "default_tax"
 
     provides = {
-        "tax_module": ["shoop.default_tax.module:DefaultTaxModule"],
-        "admin_module": ["shoop.default_tax.admin_module:TaxRulesAdminModule"],
+        "tax_module": [__name__ + ".module:DefaultTaxModule"],
+        "admin_module": [__name__ + ".admin_module:TaxRulesAdminModule"],
     }
 
 

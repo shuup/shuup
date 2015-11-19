@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from shoop.themes.classic_gray import ClassicGrayTheme
+import shoop.themes.classic_gray
 
 
-class DatabaseNaiveClassicGrayTheme(ClassicGrayTheme):
+class DatabaseNaiveClassicGrayTheme(shoop.themes.classic_gray.Theme):
     def __init__(self, test_settings):
         self.test_settings = test_settings
         super(DatabaseNaiveClassicGrayTheme, self).__init__()

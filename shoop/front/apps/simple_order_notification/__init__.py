@@ -6,14 +6,18 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 import logging
+
 from django.core.mail.message import EmailMessage
+from django.template import engines
 from django.template.utils import InvalidTemplateEngineError
 from django.utils import translation
-from shoop.apps import AppConfig
+
+import shoop.apps
 from shoop.utils.analog import LogEntryKind
+
 from .templates import MESSAGE_BODY_TEMPLATE, MESSAGE_SUBJECT_TEMPLATE
-from django.template import engines
 
 LOG = logging.getLogger("shoop.simple_order_notification")
 NOTIFICATION_SUCCESS_LOG_IDENTIFIER = "simple_order_notification_ok"
@@ -57,14 +61,14 @@ def send_simple_order_notification(sender, order, request, **kwargs):
             kind=LogEntryKind.ERROR)
 
 
-class SimpleOrderNotificationAppConfig(AppConfig):
-    name = "shoop.front.apps.simple_order_notification"
+class AppConfig(shoop.apps.AppConfig):
+    name = __name__
     verbose_name = "Shoop Frontend - Simple Order Notification"
     label = "shoop_front.simple_order_notification"
 
     provides = {
         "admin_module": [
-            "shoop.front.apps.simple_order_notification.admin_module:SimpleOrderNotificationModule",
+            __name__ + ".admin_module:SimpleOrderNotificationModule",
         ]
     }
 
@@ -76,4 +80,4 @@ class SimpleOrderNotificationAppConfig(AppConfig):
             dispatch_uid="simple_order_notification.send_simple_order_notification")
 
 
-default_app_config = "shoop.front.apps.simple_order_notification.SimpleOrderNotificationAppConfig"
+default_app_config = __name__ + ".AppConfig"

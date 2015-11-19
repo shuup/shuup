@@ -5,21 +5,21 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from shoop.apps import AppConfig
+import shoop.apps
 
 
-class DiscountPricingAppConfig(AppConfig):
-    name = "shoop.discount_pricing"
+class AppConfig(shoop.apps.AppConfig):
+    name = __name__
     verbose_name = "Shoop Discount Pricing"
     label = "discount_pricing"
     provides = {
         "pricing_module": [
-            "shoop.discount_pricing.module:DiscountPricingModule"
+            __name__ + ".module:DiscountPricingModule"
         ],
         "admin_product_form_part": [
-            "shoop.discount_pricing.admin_form_part:DiscountPricingFormPart"
+            __name__ + ".admin_form_part:DiscountPricingFormPart"
         ],
     }
 
 
-default_app_config = "shoop.discount_pricing.DiscountPricingAppConfig"
+default_app_config = __name__ + ".AppConfig"

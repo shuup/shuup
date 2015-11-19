@@ -5,21 +5,21 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from shoop.apps import AppConfig
+import shoop.apps
 
 
-class ShoopTestingAppConfig(AppConfig):
-    name = "shoop.testing"
+class AppConfig(shoop.apps.AppConfig):
+    name = __name__
     verbose_name = "Shoop Testing & Demo Utilities"
     label = "shoop_testing"
     provides = {
         "admin_module": [
-            "shoop.testing.admin_module:TestingAdminModule"
+            __name__ + ".admin_module:TestingAdminModule"
         ],
         "payment_method_module": [
-            "shoop.testing.pseudo_payment:PseudoPaymentMethodModule",
+            __name__ + ".pseudo_payment:PseudoPaymentMethodModule",
         ]
     }
 
 
-default_app_config = "shoop.testing.ShoopTestingAppConfig"
+default_app_config = __name__ + ".AppConfig"
