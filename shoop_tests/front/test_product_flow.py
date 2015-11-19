@@ -18,7 +18,7 @@ from shoop_tests.utils import SmartClient
 def fill_address_inputs(soup, with_company=False):
     inputs = {}
     test_address = get_address()
-    for key, value in extract_form_fields(soup.find(method="post")).items():
+    for key, value in extract_form_fields(soup.find('form', id='addresses')).items():
         if not value:
             if key in ("order-tax_number", "order-company_name"):
                 continue
