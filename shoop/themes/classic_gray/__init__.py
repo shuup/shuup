@@ -6,7 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 
 from django import forms
-from django.conf import settings
+import django.conf
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
@@ -51,7 +51,7 @@ class ClassicGrayTheme(Theme):
                 yield {"url": url}
 
     def _format_cms_links(self, **query_kwargs):
-        if "shoop.simple_cms" not in settings.INSTALLED_APPS:
+        if "shoop.simple_cms" not in django.conf.settings.INSTALLED_APPS:
             return
         from shoop.simple_cms.models import Page
         for page in Page.objects.visible().filter(**query_kwargs):
