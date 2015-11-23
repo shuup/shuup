@@ -14,7 +14,7 @@ import types
 
 from bs4 import BeautifulSoup
 
-from django.conf import settings
+import django.conf
 from django.core.urlresolvers import set_urlconf, clear_url_caches, get_urlconf
 from django.test import override_settings, Client, TestCase
 from django.utils.crypto import get_random_string
@@ -64,7 +64,7 @@ def replace_urls(patterns, extra=None):
     :param extra: Dict to add to the created urlconf
     :type extra: dict
     """
-    old_urlconf = get_urlconf(default=settings.ROOT_URLCONF)
+    old_urlconf = get_urlconf(default=django.conf.settings.ROOT_URLCONF)
     urlconf_module_name = "replace_urls_%s" % uuid.uuid4()
     module = types.ModuleType(urlconf_module_name)
     module.urlpatterns = patterns
