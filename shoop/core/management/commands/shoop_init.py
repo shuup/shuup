@@ -13,7 +13,8 @@ from six import print_
 
 from shoop.core.defaults.order_statuses import create_default_order_statuses
 from shoop.core.models import (
-    Category, OrderStatus, PaymentMethod, ProductType, SalesUnit, ShippingMethod, Shop, ShopStatus, Supplier, TaxClass
+    Category, CustomerTaxGroup, OrderStatus, PaymentMethod, ProductType, SalesUnit, ShippingMethod, Shop, ShopStatus,
+    Supplier, TaxClass
 )
 
 
@@ -32,6 +33,8 @@ class Initializer(object):
         schema(Supplier, "default", name="Default Supplier"),
         schema(SalesUnit, "pcs", name="Pieces"),
         schema(Category, "default", name="Default Category"),
+        schema(CustomerTaxGroup, "default_person_customers", name="Retail Customers"),
+        schema(CustomerTaxGroup, "default_company_customers", name="Company Customers")
     ]
 
     def __init__(self):
