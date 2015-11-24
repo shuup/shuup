@@ -95,6 +95,10 @@ function updatePrice() {
     });
 }
 
+function changeLanguage() {
+    $("#language-field").attr("value", $(this).data("value")).closest("form").submit();
+}
+
 $(function() {
     $("#search-modal").on("show.bs.modal", function() {
         setTimeout(function() {
@@ -158,4 +162,5 @@ $(function() {
 
     $(document).on("change", ".variable-variation, #product-variations, #product-quantity", updatePrice);
     updatePrice();
+    $(".languages li a").click(changeLanguage);
 });
