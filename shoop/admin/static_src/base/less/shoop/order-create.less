@@ -44,4 +44,31 @@
             font-weight: 400;
         }
     }
+    #order-tool-container {
+        padding-bottom: 50px;
+    }
+    .order-footer {
+        z-index: 10;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 50px;
+        line-height: 50px;
+        background: #fff;
+        border-top: 1px solid @border-color;
+        text-align: right;
+        .text {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 25px;
+            h2 {
+                margin: 0;
+            }
+        }
+        .proceed-button {
+            vertical-align: middle;
+            display: inline-block;
+        }
+    }
 }
