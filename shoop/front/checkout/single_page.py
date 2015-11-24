@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 from django import forms
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
@@ -27,6 +28,12 @@ class AddressForm(forms.ModelForm):
     class Meta:
         model = Address
         fields = ("name", "phone", "email", "street", "street2", "postal_code", "city", "region", "country")
+
+    def __init__(self, **kwargs):
+        super(AddressForm, self).__init__(**kwargs)
+        if not kwargs.get("instance"):
+            # Set default country
+            self.fields["country"].initial = settings.SHOOP_ADDRESS_HOME_COUNTRY
 
 
 def _to_choices(objects):
