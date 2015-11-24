@@ -29,7 +29,7 @@ class OrderCreateShipmentView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(OrderCreateShipmentView, self).get_context_data(**kwargs)
-        context["title"] = _("Create Shipment \u2014 %s") % context["order"]
+        context["title"] = _("Create Shipment -- %s") % context["order"]
         context["toolbar"] = Toolbar([
             PostActionButton(
                 icon="fa fa-check-circle",
