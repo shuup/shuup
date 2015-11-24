@@ -1,0 +1,4721 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-24 11:58+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+
+#: shoop/addons/admin_module/__init__.py:14
+#: shoop/addons/admin_module/__init__.py:48
+#: shoop/addons/templates/shoop/admin/addons/list.jinja:3
+#: shoop/addons/templates/shoop/admin/addons/reload.jinja:3
+msgid "Addons"
+msgstr ""
+
+#: shoop/addons/admin_module/views/list.py:35
+#, python-format
+msgid "Enable %s"
+msgstr ""
+
+#: shoop/addons/admin_module/views/list.py:58
+#, python-format
+msgid "%d new addons enabled."
+msgstr ""
+
+#: shoop/addons/admin_module/views/list.py:60
+#, python-format
+msgid "%d previously enabled addons disabled."
+msgstr ""
+
+#: shoop/addons/admin_module/views/list.py:74
+msgid "No changes were made."
+msgstr ""
+
+#: shoop/addons/admin_module/views/list.py:83
+msgid "Save addon changes"
+msgstr ""
+
+#: shoop/addons/admin_module/views/list.py:88
+msgid "Upload new addon"
+msgstr ""
+
+#: shoop/addons/admin_module/views/list.py:97
+msgid "Reload application"
+msgstr ""
+
+#: shoop/addons/admin_module/views/reload.py:38
+msgid "Reload Method"
+msgstr ""
+
+#: shoop/addons/admin_module/views/upload.py:32
+msgid "Addon file (ZIP)"
+msgstr ""
+
+#: shoop/addons/admin_module/views/upload.py:33
+msgid "Only upload addon files you trust."
+msgstr ""
+
+#: shoop/addons/admin_module/views/upload.py:63
+#: shoop/admin/templates/shoop/admin/media/browser.jinja:16
+msgid "Upload"
+msgstr ""
+
+#: shoop/addons/admin_module/views/upload.py:97
+msgid "Install Addon"
+msgstr ""
+
+#: shoop/addons/templates/shoop/admin/addons/list.jinja:10
+msgid "Installed addons"
+msgstr ""
+
+#: shoop/addons/templates/shoop/admin/addons/list.jinja:14
+msgid "Addon name"
+msgstr ""
+
+#: shoop/addons/templates/shoop/admin/addons/list.jinja:15
+msgid "Is enabled"
+msgstr ""
+
+#: shoop/addons/templates/shoop/admin/addons/list.jinja:31
+msgid "You don't have any installed addons"
+msgstr ""
+
+#: shoop/addons/templates/shoop/admin/addons/reload.jinja:9
+#: shoop/addons/templates/shoop/admin/addons/reload.jinja:20
+msgid "Reload Application Server"
+msgstr ""
+
+#: shoop/addons/templates/shoop/admin/addons/reload.jinja:14
+msgid ""
+"When you reload the application server, it may take some time for the new"
+" instance of your application to properly initialize."
+msgstr ""
+
+#: shoop/addons/templates/shoop/admin/addons/reload.jinja:15
+msgid ""
+"In addition, there is always a chance for the server to not properly "
+"initialize at all, in which case you may need to troubleshoot the problem"
+" yourself (or have a system administrator handy)."
+msgstr ""
+
+#: shoop/addons/templates/shoop/admin/addons/upload.jinja:7
+msgid "Select file"
+msgstr ""
+
+#: shoop/addons/templates/shoop/admin/addons/upload_complete.jinja:5
+msgid "Installation Finished"
+msgstr ""
+
+#: shoop/addons/templates/shoop/admin/addons/upload_complete.jinja:7
+msgid "Installation Failed"
+msgstr ""
+
+#: shoop/addons/templates/shoop/admin/addons/upload_complete.jinja:14
+msgid "Success"
+msgstr ""
+
+#: shoop/addons/templates/shoop/admin/addons/upload_complete.jinja:15
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/macros.jinja:260
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/macros.jinja:266
+msgid "Next"
+msgstr ""
+
+#: shoop/addons/templates/shoop/admin/addons/upload_complete.jinja:15
+msgid "activate the newly installed addon"
+msgstr ""
+
+#: shoop/addons/templates/shoop/admin/addons/upload_complete.jinja:15
+msgid "and"
+msgstr ""
+
+#: shoop/addons/templates/shoop/admin/addons/upload_complete.jinja:15
+msgid "reload your application server"
+msgstr ""
+
+#: shoop/addons/templates/shoop/admin/addons/upload_complete.jinja:18
+#: shoop/core/middleware.py:31
+msgid "Error"
+msgstr ""
+
+#: shoop/addons/templates/shoop/admin/addons/upload_complete.jinja:25
+msgid "Installer Log"
+msgstr ""
+
+#: shoop/addons/templates/shoop/admin/addons/upload_confirm.jinja:3
+msgid "Upload Addon - Install"
+msgstr ""
+
+#: shoop/addons/templates/shoop/admin/addons/upload_confirm.jinja:9
+msgid "Package Information"
+msgstr ""
+
+#: shoop/addons/templates/shoop/admin/addons/upload_confirm.jinja:13
+msgid "No package information could be extracted."
+msgstr ""
+
+#: shoop/addons/templates/shoop/admin/addons/upload_confirm.jinja:16
+msgid "File List"
+msgstr ""
+
+#: shoop/admin/breadcrumbs.py:96
+#: shoop/themes/classic_gray/templates/classic_gray/products_view.jinja:8
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/customer_information/edit.jinja:7
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/index.jinja:3
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/errors/400.jinja:8
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/errors/403.jinja:8
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/errors/404.jinja:8
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/includes/_navigation.jinja:118
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/category.jinja:13
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/detail.jinja:24
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:9
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_list.jinja:9
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/simple_cms/page.jinja:8
+#: shoop/themes/default_theme/templates/default/shoop/front/index.jinja:3
+msgid "Home"
+msgstr ""
+
+#: shoop/admin/toolbar.py:116
+msgid "Create new"
+msgstr ""
+
+#: shoop/admin/toolbar.py:135
+#, python-format
+msgid "New %(model)s"
+msgstr ""
+
+#: shoop/admin/toolbar.py:323
+msgid "Discard Changes"
+msgstr ""
+
+#: shoop/admin/toolbar.py:362
+#: shoop/admin/modules/products/views/edit_cross_sell.py:85
+#: shoop/admin/modules/products/views/edit_media.py:100
+msgid "Save"
+msgstr ""
+
+#: shoop/admin/toolbar.py:368
+msgid "Save and Exit"
+msgstr ""
+
+#: shoop/admin/toolbar.py:369
+msgid "Save and Create New"
+msgstr ""
+
+#: shoop/admin/toolbar.py:382
+#: shoop/admin/templates/shoop/admin/products/_edit_media_form.jinja:52
+msgid "Delete"
+msgstr ""
+
+#: shoop/admin/toolbar.py:385
+#, python-format
+msgid "Are you sure you wish to delete %s?"
+msgstr ""
+
+#: shoop/admin/forms/widgets.py:35
+msgid "Browse"
+msgstr ""
+
+#: shoop/admin/forms/widgets.py:42
+msgid "Clear"
+msgstr ""
+
+#: shoop/admin/modules/attributes/__init__.py:16
+#: shoop/admin/modules/attributes/__init__.py:32
+#: shoop/admin/templates/shoop/admin/product_types/edit.jinja:14
+#: shoop/admin/templates/shoop/admin/products/_edit_attribute_form.jinja:6
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/detail.jinja:90
+msgid "Attributes"
+msgstr ""
+
+#: shoop/admin/modules/attributes/views/list.py:21
+#: shoop/admin/modules/shops/views/list.py:27
+#: shoop/admin/templates/shoop/admin/orders/_detail_payments.jinja:6
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_list.jinja:15
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_list.jinja:25
+msgid "Identifier"
+msgstr ""
+
+#: shoop/admin/modules/attributes/views/list.py:23
+msgid "Filter by identifier..."
+msgstr ""
+
+#: shoop/admin/modules/attributes/views/list.py:25
+#: shoop/admin/modules/categories/views/list.py:21
+#: shoop/admin/modules/contact_groups/views/list.py:22
+#: shoop/admin/modules/contacts/views/list.py:21
+#: shoop/admin/modules/manufacturers/views/list.py:22
+#: shoop/admin/modules/methods/views/list.py:20
+#: shoop/admin/modules/product_types/views/list.py:21
+#: shoop/admin/modules/products/views/list.py:21
+#: shoop/admin/modules/sales_units/views/list.py:20
+#: shoop/admin/modules/shops/views/list.py:22
+#: shoop/admin/modules/suppliers/views/list.py:22
+#: shoop/admin/modules/taxes/views/list.py:29
+#: shoop/admin/modules/taxes/views/list.py:47
+#: shoop/admin/modules/taxes/views/list.py:61 shoop/core/models/orders.py:118
+#: shoop/notify/admin_module/views/list.py:23
+msgid "Name"
+msgstr ""
+
+#: shoop/admin/modules/attributes/views/list.py:27
+#: shoop/admin/modules/categories/views/list.py:24
+#: shoop/admin/modules/contact_groups/views/list.py:24
+#: shoop/admin/modules/manufacturers/views/list.py:27
+#: shoop/admin/modules/methods/views/list.py:22
+#: shoop/admin/modules/product_types/views/list.py:23
+#: shoop/admin/modules/products/views/list.py:23
+#: shoop/admin/modules/sales_units/views/list.py:22
+#: shoop/admin/modules/shops/views/list.py:24
+#: shoop/admin/modules/suppliers/views/list.py:27
+#: shoop/admin/modules/taxes/views/list.py:32
+#: shoop/admin/modules/taxes/views/list.py:50
+#: shoop/admin/modules/taxes/views/list.py:64
+msgid "Filter by name..."
+msgstr ""
+
+#: shoop/admin/modules/attributes/views/list.py:29
+#: shoop/admin/modules/contacts/views/list.py:22
+#: shoop/admin/modules/products/views/list.py:25
+#: shoop/admin/modules/products/views/list.py:37
+#: shoop/admin/modules/suppliers/views/list.py:30
+msgid "Type"
+msgstr ""
+
+#: shoop/admin/modules/attributes/views/list.py:30
+msgid "Visibility Mode"
+msgstr ""
+
+#: shoop/admin/modules/attributes/views/list.py:31
+msgid "Searchable"
+msgstr ""
+
+#: shoop/admin/modules/attributes/views/list.py:32
+msgid "Used in # Product Types"
+msgstr ""
+
+#: shoop/admin/modules/categories/__init__.py:17
+#: shoop/admin/modules/categories/__init__.py:31
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/includes/_category_menu.jinja:2
+#: shoop/themes/default_theme/templates/default/shoop/front/includes/_navigation.jinja:16
+msgid "Categories"
+msgstr ""
+
+#: shoop/admin/modules/categories/__init__.py:18
+#: shoop/admin/modules/manufacturers/__init__.py:29
+#: shoop/admin/modules/product_types/__init__.py:27
+#: shoop/admin/modules/products/__init__.py:23
+#: shoop/admin/modules/products/__init__.py:54
+#: shoop/admin/modules/products/__init__.py:57
+#: shoop/admin/modules/products/__init__.py:83
+#: shoop/admin/modules/sales_units/__init__.py:27
+#: shoop/admin/modules/suppliers/__init__.py:29
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/includes/_navigation.jinja:120
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/category.jinja:14
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/detail.jinja:31
+msgid "Products"
+msgstr ""
+
+#: shoop/admin/modules/categories/views/list.py:27
+#: shoop/admin/modules/categories/views/list.py:38
+#: shoop/admin/modules/methods/views/list.py:24
+#: shoop/admin/modules/methods/views/list.py:30
+#: shoop/admin/modules/orders/views/list.py:32
+#: shoop/admin/modules/orders/views/list.py:55
+#: shoop/admin/modules/shops/views/list.py:28
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:51
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_list.jinja:17
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:59
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_list.jinja:27
+msgid "Status"
+msgstr ""
+
+#: shoop/admin/modules/categories/views/list.py:28
+#: shoop/admin/templates/shoop/admin/categories/_edit_base_form.jinja:16
+#: shoop/admin/templates/shoop/admin/products/_edit_shop_form.jinja:6
+msgid "Visibility"
+msgstr ""
+
+#: shoop/admin/modules/categories/views/list.py:29
+#: shoop/admin/modules/categories/views/list.py:39
+msgid "Parent"
+msgstr ""
+
+#: shoop/admin/modules/contact_groups/__init__.py:16
+msgid "Contact Groups"
+msgstr ""
+
+#: shoop/admin/modules/contact_groups/__init__.py:17
+#: shoop/admin/modules/contacts/__init__.py:18
+#: shoop/admin/modules/contacts/__init__.py:58
+#: shoop/admin/modules/users/__init__.py:18
+msgid "Contacts"
+msgstr ""
+
+#: shoop/admin/modules/contact_groups/views/list.py:26
+msgid "Number of Members"
+msgstr ""
+
+#: shoop/admin/modules/contacts/dashboard.py:19
+msgid "Active customers"
+msgstr ""
+
+#: shoop/admin/modules/contacts/dashboard.py:22
+msgid "Based on orders within 30 days"
+msgstr ""
+
+#: shoop/admin/modules/contacts/views/detail.py:32
+msgid "The Shoop frontend is not enabled."
+msgstr ""
+
+#: shoop/admin/modules/contacts/views/detail.py:34
+msgid "Contact has no associated user."
+msgstr ""
+
+#: shoop/admin/modules/contacts/views/detail.py:36
+msgid "User has no associated email."
+msgstr ""
+
+#: shoop/admin/modules/contacts/views/detail.py:42
+msgid "Reset password"
+msgstr ""
+
+#: shoop/admin/modules/contacts/views/detail.py:43
+msgid "Send a password renewal email."
+msgstr ""
+
+#: shoop/admin/modules/contacts/views/detail.py:44
+#, python-format
+msgid "Are you sure you wish to send a password recovery email to %s?"
+msgstr ""
+
+#: shoop/admin/modules/contacts/views/detail.py:55
+msgid "New User"
+msgstr ""
+
+#: shoop/admin/modules/contacts/views/detail.py:56
+msgid "Create an user for the contact."
+msgstr ""
+
+#: shoop/admin/modules/contacts/views/detail.py:65
+msgid "Editâ€¦"
+msgstr ""
+
+#: shoop/admin/modules/contacts/views/edit.py:74
+#: shoop/admin/modules/contacts/views/list.py:34
+msgid "Person"
+msgstr ""
+
+#: shoop/admin/modules/contacts/views/edit.py:75
+#: shoop/admin/modules/contacts/views/list.py:36
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/macros.jinja:224
+#: shoop/themes/default_theme/templates/default/shoop/front/macros.jinja:221
+msgid "Company"
+msgstr ""
+
+#: shoop/admin/modules/contacts/views/list.py:23
+#: shoop/admin/modules/users/views/list.py:23
+#: shoop/admin/templates/shoop/admin/contacts/detail.jinja:11
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:17
+#: shoop/front/apps/auth/forms.py:57
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:42
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:50
+msgid "Email"
+msgstr ""
+
+#: shoop/admin/modules/contacts/views/list.py:24
+#: shoop/admin/templates/shoop/admin/contacts/detail.jinja:10
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:16
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:41
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:49
+msgid "Phone"
+msgstr ""
+
+#: shoop/admin/modules/contacts/views/list.py:25
+#: shoop/admin/modules/contacts/views/list.py:46
+#: shoop/admin/modules/users/views/list.py:26
+#: shoop/admin/modules/users/views/list.py:46
+msgid "Active"
+msgstr ""
+
+#: shoop/admin/modules/contacts/views/list.py:26
+msgid "# Orders"
+msgstr ""
+
+#: shoop/admin/modules/contacts/views/list.py:38
+#: shoop/admin/modules/contacts/views/list.py:52
+msgid "Contact"
+msgstr ""
+
+#: shoop/admin/modules/contacts/views/list.py:46
+#: shoop/admin/modules/users/views/list.py:46
+msgid "Inactive"
+msgstr ""
+
+#: shoop/admin/modules/contacts/views/list.py:47
+#: shoop/admin/modules/users/views/list.py:47
+#, python-format
+msgid "Email: %s"
+msgstr ""
+
+#: shoop/admin/modules/contacts/views/list.py:48
+#, python-format
+msgid "Phone: %s"
+msgstr ""
+
+#: shoop/admin/modules/contacts/views/list.py:49
+#, python-format
+msgid "%d orders"
+msgstr ""
+
+#: shoop/admin/modules/contacts/views/reset.py:24
+msgid "The contact does not have an associated user."
+msgstr ""
+
+#: shoop/admin/modules/demo/__init__.py:22
+msgid "Demo"
+msgstr ""
+
+#: shoop/admin/modules/manufacturers/__init__.py:18
+#: shoop/admin/modules/manufacturers/__init__.py:32
+msgid "Manufacturers"
+msgstr ""
+
+#: shoop/admin/modules/media/__init__.py:19
+#: shoop/admin/modules/media/__init__.py:34
+msgid "Media"
+msgstr ""
+
+#: shoop/admin/modules/media/__init__.py:37
+msgid "Media browser"
+msgstr ""
+
+#: shoop/admin/modules/media/utils.py:17 shoop/admin/modules/media/views.py:61
+#: shoop/admin/modules/media/views.py:67
+msgid "Root"
+msgstr ""
+
+#: shoop/admin/modules/media/utils.py:24
+#, python-format
+msgid "%d subfolders moved to %s."
+msgstr ""
+
+#: shoop/admin/modules/media/utils.py:28
+#, python-format
+msgid "%d files moved to %s."
+msgstr ""
+
+#: shoop/admin/modules/media/utils.py:32
+#, python-format
+msgid "Folder %s deleted."
+msgstr ""
+
+#: shoop/admin/modules/media/views.py:189
+#, python-format
+msgid "%(file)s uploaded to %(folder)s"
+msgstr ""
+
+#: shoop/admin/modules/media/views.py:199
+msgid "Folder renamed."
+msgstr ""
+
+#: shoop/admin/modules/media/views.py:211
+msgid "File renamed."
+msgstr ""
+
+#: shoop/admin/modules/media/views.py:219
+msgid "File deleted."
+msgstr ""
+
+#: shoop/admin/modules/media/views.py:233
+#, python-format
+msgid "%(file)s moved from %(old)s to %(new)s."
+msgstr ""
+
+#: shoop/admin/modules/methods/__init__.py:17
+msgid "Methods"
+msgstr ""
+
+#: shoop/admin/modules/methods/__init__.py:62
+msgid "Shipping Methods"
+msgstr ""
+
+#: shoop/admin/modules/methods/__init__.py:68
+msgid "Payment Methods"
+msgstr ""
+
+#: shoop/admin/modules/methods/views/edit.py:39
+msgid "The selected module has no details to configure"
+msgstr ""
+
+#: shoop/admin/modules/methods/views/edit.py:41
+msgid "The selected module is not currently available"
+msgstr ""
+
+#: shoop/admin/modules/methods/views/edit.py:48
+#: shoop/admin/modules/methods/views/edit_detail.py:21
+msgid "Edit Details"
+msgstr ""
+
+#: shoop/admin/modules/methods/views/edit.py:64
+#, python-format
+msgid "Edit %(model)s"
+msgstr ""
+
+#: shoop/admin/modules/methods/views/edit.py:83
+#, python-format
+msgid "Default %s module"
+msgstr ""
+
+#: shoop/admin/modules/orders/__init__.py:21
+#: shoop/admin/modules/orders/__init__.py:57
+#: shoop/admin/modules/orders/__init__.py:60
+#: shoop/admin/modules/orders/__init__.py:83
+#: shoop/admin/templates/shoop/admin/contacts/detail.jinja:41
+msgid "Orders"
+msgstr ""
+
+#: shoop/admin/modules/orders/__init__.py:64
+msgid "Show orders"
+msgstr ""
+
+#: shoop/admin/modules/orders/__init__.py:106
+msgid "Outstanding Orders"
+msgstr ""
+
+#: shoop/admin/modules/orders/__init__.py:107
+#, python-format
+msgid "%d outstanding orders"
+msgstr ""
+
+#: shoop/admin/modules/orders/dashboard.py:43
+msgid "Sales per Month (last year)"
+msgstr ""
+
+#: shoop/admin/modules/orders/dashboard.py:48
+#, python-format
+msgid "Sales (%(currency)s)"
+msgstr ""
+
+#: shoop/admin/modules/orders/dashboard.py:58
+#, python-format
+msgid "Based on %d orders"
+msgstr ""
+
+#: shoop/admin/modules/orders/dashboard.py:71
+msgid "Today's Sales"
+msgstr ""
+
+#: shoop/admin/modules/orders/dashboard.py:91
+msgid "Lifetime Sales"
+msgstr ""
+
+#: shoop/admin/modules/orders/dashboard.py:114
+msgid "Average Purchase"
+msgstr ""
+
+#: shoop/admin/modules/orders/dashboard.py:133
+msgid "Open Orders Value"
+msgstr ""
+
+#: shoop/admin/modules/orders/json_order_creator.py:47
+#, python-format
+msgid "The quantity '%(quantity)s' (for line %(text)s) is invalid (%(error)s)"
+msgstr ""
+
+#: shoop/admin/modules/orders/json_order_creator.py:59
+#, python-format
+msgid "The price '%(price)s' (for line %(text)s) is invalid (%(error)s)"
+msgstr ""
+
+#: shoop/admin/modules/orders/json_order_creator.py:71
+msgid "Product line does not have a product set."
+msgstr ""
+
+#: shoop/admin/modules/orders/json_order_creator.py:75
+#, python-format
+msgid "Product %s does not exist."
+msgstr ""
+
+#: shoop/admin/modules/orders/json_order_creator.py:80
+#, python-format
+msgid "Product %(product)s is not available in the %(shop)s shop."
+msgstr ""
+
+#: shoop/admin/modules/orders/json_order_creator.py:117
+msgid "Please add lines to the order."
+msgstr ""
+
+#: shoop/admin/modules/orders/json_order_creator.py:132
+msgid "Please choose a valid customer."
+msgstr ""
+
+#: shoop/admin/modules/orders/json_order_creator.py:135
+msgid "Please choose a valid shop."
+msgstr ""
+
+#: shoop/admin/modules/orders/views/create.py:41
+msgid "Create Order"
+msgstr ""
+
+#: shoop/admin/modules/orders/views/create.py:116
+#, python-format
+msgid "Order %(identifier)s created."
+msgstr ""
+
+#: shoop/admin/modules/orders/views/create.py:124
+msgid "Could not create order:"
+msgstr ""
+
+#: shoop/admin/modules/orders/views/detail.py:32
+#: shoop/admin/modules/orders/views/shipment.py:37
+msgid "Create Shipment"
+msgstr ""
+
+#: shoop/admin/modules/orders/views/detail.py:34
+msgid "There are no products to ship"
+msgstr ""
+
+#: shoop/admin/modules/orders/views/detail.py:43
+msgid "Set Complete"
+msgstr ""
+
+#: shoop/admin/modules/orders/views/detail.py:46
+msgid "This order can not be set as complete at this point"
+msgstr ""
+
+#: shoop/admin/modules/orders/views/detail.py:73
+msgid "Unable to set order as completed at this point"
+msgstr ""
+
+#: shoop/admin/modules/orders/views/detail.py:77
+#, python-format
+msgid "Order status changed: %s to %s"
+msgstr ""
+
+#: shoop/admin/modules/orders/views/list.py:26
+#: shoop/admin/templates/shoop/admin/macros/order_view.jinja:36
+msgid "Order"
+msgstr ""
+
+#: shoop/admin/modules/orders/views/list.py:27
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:10
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:35
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:43
+msgid "Order Date"
+msgstr ""
+
+#: shoop/admin/modules/orders/views/list.py:29
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:13
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:38
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:46
+msgid "Customer"
+msgstr ""
+
+#: shoop/admin/modules/orders/views/list.py:33
+#: shoop/admin/templates/shoop/admin/macros/order_view.jinja:11
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:25
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:54
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:62
+msgid "Payment Status"
+msgstr ""
+
+#: shoop/admin/modules/orders/views/list.py:34
+#: shoop/admin/templates/shoop/admin/macros/order_view.jinja:10
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:26
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:55
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:63
+msgid "Shipping Status"
+msgstr ""
+
+#: shoop/admin/modules/orders/views/list.py:36
+#: shoop/admin/modules/orders/views/list.py:54
+#: shoop/admin/templates/shoop/admin/macros/order_view.jinja:8
+#: shoop/admin/templates/shoop/admin/macros/order_view.jinja:45
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:108
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:112
+#: shoop/themes/classic_gray/templates/classic_gray/navigation_basket_partial.jinja:24
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/basket/partials/_basket_content.jinja:52
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/basket/partials/_basket_content.jinja:72
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/_confirm_table.jinja:14
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/_confirm_table.jinja:20
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/order/partials/product_table.jinja:13
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/order/partials/product_table.jinja:19
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:120
+#: shoop/themes/default_theme/templates/default/shoop/front/basket/partials/table.jinja:18
+#: shoop/themes/default_theme/templates/default/shoop/front/basket/partials/table.jinja:30
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/_confirm_table.jinja:14
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/_confirm_table.jinja:20
+#: shoop/themes/default_theme/templates/default/shoop/front/includes/_navigation.jinja:71
+#: shoop/themes/default_theme/templates/default/shoop/front/order/partials/product_table.jinja:13
+#: shoop/themes/default_theme/templates/default/shoop/front/order/partials/product_table.jinja:19
+msgid "Total"
+msgstr ""
+
+#: shoop/admin/modules/orders/views/shipment.py:32
+#, python-format
+msgid "Create Shipment -- %s"
+msgstr ""
+
+#: shoop/admin/modules/orders/views/shipment.py:54
+msgid "Supplier"
+msgstr ""
+
+#: shoop/admin/modules/orders/views/shipment.py:102
+msgid "No products to ship."
+msgstr ""
+
+#: shoop/admin/modules/orders/views/shipment.py:105
+#, python-format
+msgid "Shipment %s created."
+msgstr ""
+
+#: shoop/admin/modules/product_types/__init__.py:16
+msgid "Product Types"
+msgstr ""
+
+#: shoop/admin/modules/product_types/__init__.py:30
+msgid "Product types"
+msgstr ""
+
+#: shoop/admin/modules/product_types/views/list.py:25
+msgid "Number of Attributes"
+msgstr ""
+
+#: shoop/admin/modules/products/__init__.py:91
+#, python-format
+msgid "Create Product Called \"%s\""
+msgstr ""
+
+#: shoop/admin/modules/products/__init__.py:98
+#, python-format
+msgid "Create Product with SKU \"%s\""
+msgstr ""
+
+#: shoop/admin/modules/products/views/delete.py:31
+#, python-format
+msgid "%s has been marked deleted."
+msgstr ""
+
+#: shoop/admin/modules/products/views/edit.py:94
+msgid "Minimum Purchase Quantity has been rounded to match Sales Unit."
+msgstr ""
+
+#: shoop/admin/modules/products/views/edit.py:99
+#, python-format
+msgid "Changes to shop instance for %s saved"
+msgstr ""
+
+#: shoop/admin/modules/products/views/edit_cross_sell.py:37
+#: shoop/admin/templates/shoop/admin/orders/create_shipment.jinja:11
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/_confirm_table.jinja:11
+#: shoop/themes/default_theme/templates/default/shoop/front/basket/partials/table.jinja:15
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/_confirm_table.jinja:11
+msgid "Product"
+msgstr ""
+
+#: shoop/admin/modules/products/views/edit_cross_sell.py:80
+#, python-format
+msgid "Edit Cross-Sell: %s"
+msgstr ""
+
+#: shoop/admin/modules/products/views/edit_cross_sell.py:103
+#: shoop/admin/modules/products/views/edit_media.py:115
+msgid "Changes saved."
+msgstr ""
+
+#: shoop/admin/modules/products/views/edit_media.py:95
+#, python-format
+msgid "Edit Media: %s"
+msgstr ""
+
+#: shoop/admin/modules/products/views/forms.py:94
+msgid "Minimum Purchase Quantity must be greater than 0."
+msgstr ""
+
+#: shoop/admin/modules/products/views/forms.py:224
+#, python-format
+msgid "Thumbnail generation of %s failed: %s"
+msgstr ""
+
+#: shoop/admin/modules/products/views/forms.py:280
+msgid "Use only URL or file, not both"
+msgstr ""
+
+#: shoop/admin/modules/products/views/forms.py:303
+msgid "Only images allowed in this field"
+msgstr ""
+
+#: shoop/admin/modules/products/views/list.py:20
+#: shoop/admin/modules/products/views/list.py:36
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:58
+#: shoop/core/models/products.py:180 shoop/core/models/supplied_products.py:17
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:86
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/_detail_details_section.jinja:2
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:94
+#: shoop/themes/default_theme/templates/default/shoop/front/product/_detail_attributes_section.jinja:2
+#: shoop/themes/default_theme/templates/default/shoop/front/product/detail.jinja:66
+msgid "SKU"
+msgstr ""
+
+#: shoop/admin/modules/products/views/list.py:20
+msgid "Filter by SKU..."
+msgstr ""
+
+#: shoop/admin/modules/products/views/list.py:26
+msgid "Mode"
+msgstr ""
+
+#: shoop/admin/modules/products/views/list.py:27
+#: shoop/admin/modules/products/views/list.py:38
+msgid "Primary Category"
+msgstr ""
+
+#: shoop/admin/modules/products/views/toolbars.py:37
+msgid "Manage Cross-Selling"
+msgstr ""
+
+#: shoop/admin/modules/products/views/toolbars.py:42
+msgid "Cross-Selling"
+msgstr ""
+
+#: shoop/admin/modules/products/views/toolbars.py:52
+#: shoop/admin/modules/users/views/detail.py:116
+msgid "Actions"
+msgstr ""
+
+#: shoop/admin/modules/products/views/toolbars.py:64
+#: shoop/admin/modules/products/views/toolbars.py:78
+#: shoop/admin/modules/products/views/toolbars.py:98
+#: shoop/admin/modules/products/views/toolbars.py:114
+#: shoop/admin/modules/products/views/toolbars.py:124
+msgid "Variations"
+msgstr ""
+
+#: shoop/admin/modules/products/views/toolbars.py:66
+#: shoop/admin/modules/products/views/toolbars.py:81
+msgid "Manage Variations"
+msgstr ""
+
+#: shoop/admin/modules/products/views/toolbars.py:72
+#: shoop/admin/modules/products/views/toolbars.py:106
+#, python-format
+msgid "Child: %s"
+msgstr ""
+
+#: shoop/admin/modules/products/views/toolbars.py:86
+#, python-format
+msgid "Parent: %s"
+msgstr ""
+
+#: shoop/admin/modules/products/views/toolbars.py:92
+#, python-format
+msgid "Sibling: %s"
+msgstr ""
+
+#: shoop/admin/modules/products/views/toolbars.py:100
+msgid "Manage Package"
+msgstr ""
+
+#: shoop/admin/modules/products/views/toolbars.py:117
+#, python-format
+msgid "Package Parent: %s"
+msgstr ""
+
+#: shoop/admin/modules/products/views/toolbars.py:126
+msgid "Convert to Variation Parent"
+msgstr ""
+
+#: shoop/admin/modules/products/views/variation/edit_variation.py:93
+msgid ""
+"Are you sure? This will unlink all children and remove all variation "
+"variables."
+msgstr ""
+
+#: shoop/admin/modules/products/views/variation/edit_variation.py:94
+msgid "Clear variation"
+msgstr ""
+
+#: shoop/admin/modules/products/views/variation/edit_variation.py:106
+msgid ""
+"Are you sure? This will remove all variation variables, converting "
+"children to direct links."
+msgstr ""
+
+#: shoop/admin/modules/products/views/variation/edit_variation.py:108
+msgid "Convert to simple variation"
+msgstr ""
+
+#: shoop/admin/modules/products/views/variation/edit_variation.py:150
+#, python-format
+msgid "Edit Variation: %s"
+msgstr ""
+
+#: shoop/admin/modules/products/views/variation/edit_variation.py:169
+msgid "Variation cleared."
+msgstr ""
+
+#: shoop/admin/modules/products/views/variation/edit_variation.py:172
+msgid "Variation simplified."
+msgstr ""
+
+#: shoop/admin/modules/products/views/variation/simple_variation_forms.py:41
+msgid "Unlink"
+msgstr ""
+
+#: shoop/admin/modules/products/views/variation/simple_variation_forms.py:58
+#: shoop/admin/modules/products/views/variation/variable_variation_forms.py:68
+#, python-format
+msgid "Unable to link %s: %s"
+msgstr ""
+
+#: shoop/admin/modules/products/views/variation/simple_variation_forms.py:62
+#, python-format
+msgid "New: %d"
+msgstr ""
+
+#: shoop/admin/modules/products/views/variation/simple_variation_forms.py:64
+#, python-format
+msgid "Removed: %d"
+msgstr ""
+
+#: shoop/admin/modules/sales_units/__init__.py:16
+msgid "Sales Units"
+msgstr ""
+
+#: shoop/admin/modules/sales_units/views/list.py:24
+msgid "Short Name"
+msgstr ""
+
+#: shoop/admin/modules/sales_units/views/list.py:25
+msgid "Allowed decimals"
+msgstr ""
+
+#: shoop/admin/modules/shops/__init__.py:16
+msgid "Shops"
+msgstr ""
+
+#: shoop/admin/modules/shops/__init__.py:27
+#: shoop/admin/modules/system/__init__.py:16
+#: shoop/testing/admin_module/__init__.py:24
+msgid "System"
+msgstr ""
+
+#: shoop/admin/modules/shops/views/edit.py:42
+msgid "Only one shop permitted."
+msgstr ""
+
+#: shoop/admin/modules/shops/views/list.py:26
+msgid "Domain"
+msgstr ""
+
+#: shoop/admin/modules/suppliers/__init__.py:18
+#: shoop/admin/modules/suppliers/__init__.py:32
+msgid "Suppliers"
+msgstr ""
+
+#: shoop/admin/modules/suppliers/views/edit.py:35
+#: shoop/admin/modules/suppliers/views/list.py:35
+#, python-format
+msgid "No %s module"
+msgstr ""
+
+#: shoop/admin/modules/suppliers/views/list.py:31
+msgid "Module"
+msgstr ""
+
+#: shoop/admin/modules/system/__init__.py:34
+#: shoop/admin/modules/system/__init__.py:43
+#: shoop/admin/modules/system/views/telemetry.py:26
+msgid "Telemetry"
+msgstr ""
+
+#: shoop/admin/modules/system/__init__.py:42
+msgid ""
+"Statistics will be periodically sent to Shoop.io after 24 hours. Click "
+"here for more information."
+msgstr ""
+
+#: shoop/admin/modules/taxes/__init__.py:16
+#: shoop/admin/modules/taxes/__init__.py:44
+#: shoop/admin/modules/taxes/views/edit.py:47
+#: shoop/default_tax/admin_module/__init__.py:19
+msgid "Taxes"
+msgstr ""
+
+#: shoop/admin/modules/taxes/__init__.py:49
+#: shoop/admin/modules/taxes/views/edit.py:56
+#: shoop/default_tax/admin_module/views.py:67
+msgid "Customer Tax Groups"
+msgstr ""
+
+#: shoop/admin/modules/taxes/__init__.py:54
+#: shoop/admin/modules/taxes/views/edit.py:65
+#: shoop/default_tax/admin_module/views.py:66
+msgid "Tax Classes"
+msgstr ""
+
+#: shoop/admin/modules/taxes/views/list.py:35
+msgid "Code"
+msgstr ""
+
+#: shoop/admin/modules/taxes/views/list.py:36
+msgid "Rate"
+msgstr ""
+
+#: shoop/admin/modules/taxes/views/list.py:38
+#: shoop/default_tax/admin_module/views.py:73
+#: shoop/notify/admin_module/views/list.py:25
+#: shoop/notify/admin_module/views/list.py:48
+msgid "Enabled"
+msgstr ""
+
+#: shoop/admin/modules/users/__init__.py:17
+#: shoop/admin/modules/users/__init__.py:62
+msgid "Users"
+msgstr ""
+
+#: shoop/admin/modules/users/views/detail.py:33
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/includes/_navigation.jinja:69
+msgid "Password"
+msgstr ""
+
+#: shoop/admin/modules/users/views/detail.py:35
+msgid "Permissions"
+msgstr ""
+
+#: shoop/admin/modules/users/views/detail.py:38
+msgid "See the permissions view to change these."
+msgstr ""
+
+#: shoop/admin/modules/users/views/detail.py:47
+msgid "staff"
+msgstr ""
+
+#: shoop/admin/modules/users/views/detail.py:48
+msgid "superuser"
+msgstr ""
+
+#: shoop/admin/modules/users/views/detail.py:49
+msgid "No special permissions"
+msgstr ""
+
+#: shoop/admin/modules/users/views/detail.py:79
+#: shoop/admin/templates/shoop/admin/users/change_password.jinja:8
+#: shoop/front/apps/auth/templates/shoop/user/recover_password_confirm.jinja:11
+#: shoop/front/apps/auth/templates/shoop/user/recover_password_confirm.jinja:23
+msgid "Change Password"
+msgstr ""
+
+#: shoop/admin/modules/users/views/detail.py:83
+msgid "User has no email address"
+msgstr ""
+
+#: shoop/admin/modules/users/views/detail.py:84
+msgid "Send Password Reset Email"
+msgstr ""
+
+#: shoop/admin/modules/users/views/detail.py:88
+msgid "Edit Permissions"
+msgstr ""
+
+#: shoop/admin/modules/users/views/detail.py:103
+msgid "Contact Details"
+msgstr ""
+
+#: shoop/admin/modules/users/views/detail.py:110
+msgid "New Contact"
+msgstr ""
+
+#: shoop/admin/modules/users/views/detail.py:111
+msgid "Create a new contact and associate it with this user"
+msgstr ""
+
+#: shoop/admin/modules/users/views/detail.py:125
+msgid "Activate User"
+msgstr ""
+
+#: shoop/admin/modules/users/views/detail.py:134
+msgid "Deactivate User"
+msgstr ""
+
+#: shoop/admin/modules/users/views/detail.py:183
+#, python-format
+msgid "User bound to contact %(contact)s."
+msgstr ""
+
+#: shoop/admin/modules/users/views/detail.py:192
+msgid "You can not deactivate a superuser."
+msgstr ""
+
+#: shoop/admin/modules/users/views/detail.py:194
+msgid "You can not deactivate yourself."
+msgstr ""
+
+#: shoop/admin/modules/users/views/detail.py:198
+#, python-format
+msgid "%(user)s is now %(state)s."
+msgstr ""
+
+#: shoop/admin/modules/users/views/detail.py:200
+msgid "active"
+msgstr ""
+
+#: shoop/admin/modules/users/views/detail.py:200
+msgid "inactive"
+msgstr ""
+
+#: shoop/admin/modules/users/views/list.py:22 shoop/front/apps/auth/forms.py:56
+msgid "Username"
+msgstr ""
+
+#: shoop/admin/modules/users/views/list.py:24
+msgid "First Name"
+msgstr ""
+
+#: shoop/admin/modules/users/views/list.py:25
+msgid "Last Name"
+msgstr ""
+
+#: shoop/admin/modules/users/views/list.py:27
+#: shoop/admin/modules/users/views/list.py:48
+msgid "Staff"
+msgstr ""
+
+#: shoop/admin/modules/users/views/list.py:28
+#: shoop/admin/modules/users/views/list.py:49
+msgid "Superuser"
+msgstr ""
+
+#: shoop/admin/modules/users/views/list.py:44
+#, python-format
+msgid "First Name: %s"
+msgstr ""
+
+#: shoop/admin/modules/users/views/list.py:45
+#, python-format
+msgid "Last Name: %s"
+msgstr ""
+
+#: shoop/admin/modules/users/views/list.py:52
+#: shoop/admin/templates/shoop/admin/base/_navigation.jinja:38
+msgid "User"
+msgstr ""
+
+#: shoop/admin/modules/users/views/password.py:26
+msgid "The two password fields didn't match."
+msgstr ""
+
+#: shoop/admin/modules/users/views/password.py:27
+msgid "Your old password was entered incorrectly. Please enter it again."
+msgstr ""
+
+#: shoop/admin/modules/users/views/password.py:30
+#: shoop/admin/modules/users/views/permissions.py:25
+msgid "Your Password"
+msgstr ""
+
+#: shoop/admin/modules/users/views/password.py:32
+#: shoop/admin/modules/users/views/permissions.py:27
+msgid "For security purposes, we need your current password."
+msgstr ""
+
+#: shoop/admin/modules/users/views/password.py:34
+msgid "New Password"
+msgstr ""
+
+#: shoop/admin/modules/users/views/password.py:35
+msgid "New Password (again)"
+msgstr ""
+
+#: shoop/admin/modules/users/views/password.py:42
+msgid "You can not change the password of a superuser."
+msgstr ""
+
+#: shoop/admin/modules/users/views/password.py:85
+msgid "Change User Password"
+msgstr ""
+
+#: shoop/admin/modules/users/views/password.py:112
+#, python-format
+msgid "Password changed for %s."
+msgstr ""
+
+#: shoop/admin/modules/users/views/password.py:122
+msgid "Reset User Password"
+msgstr ""
+
+#: shoop/admin/modules/users/views/password.py:129
+msgid "The `shoop.front.apps.auth` app needs to be enabled for password reset."
+msgstr ""
+
+#: shoop/admin/modules/users/views/password.py:134
+#, python-format
+msgid "Password recovery email sent to %(email)s"
+msgstr ""
+
+#: shoop/admin/modules/users/views/password.py:136
+msgid "Sending the password recovery email failed."
+msgstr ""
+
+#: shoop/admin/modules/users/views/permissions.py:59
+msgid "You can't unset this status for yourself."
+msgstr ""
+
+#: shoop/admin/modules/users/views/permissions.py:66
+msgid "Change User Permissions"
+msgstr ""
+
+#: shoop/admin/modules/users/views/permissions.py:95
+#, python-format
+msgid "Change Permissions: %s"
+msgstr ""
+
+#: shoop/admin/modules/users/views/permissions.py:100
+#, python-format
+msgid "Permissions changed for %s."
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/attributes/edit.jinja:4
+msgid "New Attribute"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/auth/login.jinja:2
+#: shoop/admin/templates/shoop/admin/auth/login.jinja:26
+msgid "Login"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/auth/logout.jinja:2
+#: shoop/front/apps/auth/templates/shoop/user/logout.jinja:2
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/user/logout.jinja:2
+msgid "Logged out"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/auth/logout.jinja:6
+msgid "You have been logged out. Good bye!"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/auth/logout.jinja:11
+msgid "Log in again"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/auth/logout.jinja:16
+#: shoop/admin/templates/shoop/admin/base/_navigation.jinja:35
+msgid "Visit shop"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/base/_navigation.jinja:1
+msgid "Menu"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/base/_navigation.jinja:8
+msgid "Dashboard"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/base/_navigation.jinja:20
+#: shoop/admin/templates/shoop/admin/base/_navigation.jinja:27
+msgid "Search for"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/base/_navigation.jinja:44
+msgid "Hello"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/base/_navigation.jinja:48
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/includes/_navigation.jinja:46
+#: shoop/themes/default_theme/templates/default/shoop/front/includes/_navigation.jinja:128
+msgid "Log out"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/categories/_edit_base_form.jinja:5
+#: shoop/admin/templates/shoop/admin/macros/general.jinja:92
+#: shoop/admin/templates/shoop/admin/products/_edit_base_form.jinja:5
+#: shoop/admin/templates/shoop/admin/shops/edit.jinja:7
+#: shoop/simple_cms/templates/shoop/simple_cms/admin/edit.jinja:11
+msgid "General Information"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/categories/_edit_base_form.jinja:23
+msgid "Category Image"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/contact_groups/edit.jinja:9
+#: shoop/admin/templates/shoop/admin/methods/edit.jinja:9
+#: shoop/admin/templates/shoop/admin/product_types/edit.jinja:9
+msgid "General information"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/contact_groups/edit.jinja:14
+msgid "Members"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/contact_groups/edit.jinja:21
+msgid "No members."
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/contacts/_edit_addresses_form.jinja:19
+#: shoop/admin/templates/shoop/admin/contacts/detail.jinja:19
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:31
+#: shoop/front/checkout/addresses.py:38
+msgid "Addresses"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/contacts/_edit_addresses_form.jinja:22
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:72
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:80
+msgid "Billing Address"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/contacts/_edit_addresses_form.jinja:26
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:62
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:70
+msgid "Shipping Address"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/contacts/_edit_base_form.jinja:4
+msgid "Basic details"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/contacts/detail.jinja:7
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:32
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:40
+msgid "Basic Information"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/contacts/detail.jinja:9
+msgid "Full Name"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/contacts/detail.jinja:12
+msgid "Groups"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/contacts/detail.jinja:12
+msgid "No groups"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/contacts/detail.jinja:13
+msgid "Bound User"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/contacts/detail.jinja:22
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:34
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/macros.jinja:176
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/addresses.jinja:38
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/confirm.jinja:41
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/single_phase.jinja:59
+#: shoop/themes/default_theme/templates/default/shoop/front/macros.jinja:173
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/addresses.jinja:35
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/confirm.jinja:38
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/single_phase.jinja:59
+msgid "Shipping address"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/contacts/detail.jinja:26
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:38
+msgid "No shipping address defined."
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/contacts/detail.jinja:30
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:42
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/macros.jinja:202
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/addresses.jinja:11
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/confirm.jinja:48
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/single_phase.jinja:47
+#: shoop/themes/default_theme/templates/default/shoop/front/macros.jinja:199
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/addresses.jinja:9
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/confirm.jinja:45
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/single_phase.jinja:47
+msgid "Billing address"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/contacts/detail.jinja:34
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:46
+msgid "No billing address defined."
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/dashboard/dashboard.jinja:3
+msgid "Welcome!"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/dashboard/dashboard.jinja:32
+#: shoop/notify/admin_module/__init__.py:21
+#: shoop/notify/admin_module/__init__.py:51
+msgid "Notifications"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/dashboard/dashboard.jinja:38
+msgid "Mark as read"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/dashboard/dashboard.jinja:60
+msgid "Activity Feed"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/macros/order_view.jinja:7
+#: shoop/admin/templates/shoop/admin/orders/_detail_payments.jinja:5
+msgid "Date"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/macros/order_view.jinja:9
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:24
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:53
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:61
+msgid "Order Status"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/media/browser.jinja:11
+msgid "Edit"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/_detail_payments.jinja:7
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/detail.jinja:87
+msgid "Description"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/_detail_payments.jinja:8
+msgid "Amount"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/create_shipment.jinja:12
+msgid "To Ship"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/create_shipment.jinja:13
+#: shoop/admin/templates/shoop/admin/orders/create_shipment.jinja:16
+msgid "Ordered"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/create_shipment.jinja:14
+#: shoop/admin/templates/shoop/admin/orders/create_shipment.jinja:16
+msgid "Shipped"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/create_shipment.jinja:15
+#: shoop/admin/templates/shoop/admin/orders/create_shipment.jinja:16
+msgid "Unshipped"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/create_shipment.jinja:24
+msgid "Set All Products To Ship"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/create_shipment.jinja:25
+msgid "Ship All"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:7
+msgid "Details & Status"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:9
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:34
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:42
+msgid "Order Number"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:11
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:36
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:44
+msgid "Reference"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:12
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:37
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:45
+msgid "Label"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:14
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:39
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:47
+msgid "Ordered by"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:15
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:40
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:48
+msgid "Creator"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:18
+#: shoop/core/models/addresses.py:107 shoop/core/models/contacts.py:90
+#: shoop/core/models/orders.py:185
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:43
+#: shoop/front/checkout/single_page.py:38
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/macros.jinja:227
+#: shoop/themes/default_theme/templates/default/shoop/front/macros.jinja:224
+msgid "Tax number"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:19
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:45
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:53
+msgid "Total Price (taxless)"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:20
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:44
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:52
+msgid "Total Price"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:53
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:81
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:89
+msgid "Order Contents"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:59
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:87
+#: shoop/notify/typology.py:76
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:95
+msgid "Text"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:60
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:88
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:96
+msgid "Taxless Unit Price"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:61
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:89
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/_confirm_table.jinja:13
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/order/partials/product_table.jinja:12
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/_detail_order_section.jinja:32
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:97
+#: shoop/themes/default_theme/templates/default/shoop/front/basket/partials/table.jinja:17
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/_confirm_table.jinja:13
+#: shoop/themes/default_theme/templates/default/shoop/front/order/partials/product_table.jinja:12
+#: shoop/themes/default_theme/templates/default/shoop/front/product/_detail_order_section.jinja:3
+msgid "Quantity"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:62
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:90
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:98
+msgid "Taxless Discount"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:63
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:111
+#: shoop/default_tax/admin_module/views.py:65
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:91
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/order/partials/taxes.jinja:4
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:99
+#: shoop/themes/default_theme/templates/default/shoop/front/order/partials/taxes.jinja:4
+msgid "Tax"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:64
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:118
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:92
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:100
+msgid "Taxless Total"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:65
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:122
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:93
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:101
+msgid "Total incl. Tax"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:105
+msgid "Discount"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:111
+msgid "Taxless"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/orders/detail.jinja:130
+msgid "Payments"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/_edit_base_form.jinja:14
+msgid "Additional Details"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/_edit_base_form.jinja:21
+msgid "Stock"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/_edit_base_form.jinja:22
+msgid "Unstocked"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/_edit_base_form.jinja:32
+msgid "Accounting"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/_edit_base_form.jinja:39
+msgid "Physical Properties"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/_edit_base_form.jinja:48
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/_detail_details_section.jinja:9
+#: shoop/themes/default_theme/templates/default/shoop/front/product/_detail_attributes_section.jinja:9
+msgid "Manufacturer"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/_edit_media_form.jinja:14
+#, python-format
+msgid "%(name)s"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/_edit_media_form.jinja:19
+msgid "Primary image"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/_edit_media_form.jinja:21
+msgid "Set as primary image"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/_edit_media_form.jinja:36
+msgid "No image"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/_edit_media_form.jinja:78
+msgid "Advanced options"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/_edit_media_form.jinja:87
+msgid "Product Images"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/_edit_media_form.jinja:87
+msgid "Product Media"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/_edit_media_form.jinja:100
+msgid "Add new image"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/_edit_shop_form.jinja:16
+msgid "Purchasing"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/_edit_shop_form.jinja:23
+#: shoop/front/checkout/methods.py:71
+msgid "Shipping & Payment"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/edit.jinja:9
+msgid "This product is currently not orderable."
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/edit_cross_sell.jinja:9
+msgid "Cross-sells"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/edit_cross_sell.jinja:13
+msgid "Cross-sell"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/edit_media.jinja:11
+msgid "File "
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/variation/_simple_variation_children.jinja:4
+msgid "Simple Variation Children"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/variation/_variable_variation_children.jinja:4
+msgid "Variable Children"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/variation/_variation_variables.jinja:4
+msgid "Variables"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/variation/edit.jinja:5
+msgid "This product is not yet a variation."
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/variation/edit.jinja:7
+msgid "To create a simple variation, choose products below."
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/products/variation/edit.jinja:8
+msgid ""
+"To create a variation with multiple variables, create the variables on "
+"the Variables tab and then link them to products here."
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/shops/edit.jinja:12
+msgid "Shop Logo"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/shops/edit.jinja:15
+msgid "Maintenance Mode"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/system/telemetry.jinja:7
+msgid "About Shoop Telemetry"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/system/telemetry.jinja:8
+msgid "Shoop will occasionally send telemetry data to a Shoop.io server."
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/system/telemetry.jinja:9
+msgid ""
+"The data contains an unique installation key, as well as the hostname of "
+"the installation (as sent by the visiting browser; currently"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/system/telemetry.jinja:10
+msgid ""
+"No business data or other customer information is ever sent. Shoop.io "
+"only uses the telemetry data for statistical purposes and for insights "
+"about the software's installation base."
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/system/telemetry.jinja:12
+msgid "Opt-in / opt-out"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/system/telemetry.jinja:16
+#: shoop/admin/templates/shoop/admin/system/telemetry.jinja:19
+msgid "You are currently"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/system/telemetry.jinja:16
+msgid "opted in"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/system/telemetry.jinja:16
+msgid "to send telemetry data to Shoop.io."
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/system/telemetry.jinja:16
+msgid "Thank you for your valuable contribution."
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/system/telemetry.jinja:17
+msgid "Opt out"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/system/telemetry.jinja:19
+msgid "opted out"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/system/telemetry.jinja:19
+msgid "of Shoop telemetry."
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/system/telemetry.jinja:20
+msgid "Opt in"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/system/telemetry.jinja:24
+msgid "Last Telemetry"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/system/telemetry.jinja:26
+msgid ""
+"Telemetry submission is currently suspended; data will only be sent 24 "
+"hours after installation if still opted in at that point."
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/system/telemetry.jinja:28
+msgid "Telemetry data was last submitted at"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/system/telemetry.jinja:28
+msgid "ago"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/system/telemetry.jinja:29
+msgid "See the data that was submitted."
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/system/telemetry.jinja:31
+msgid "Telemetry data has not yet been submitted."
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/system/telemetry.jinja:36
+msgid "Telemetry Data"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/system/telemetry.jinja:37
+msgid "Here is an example of the data that would be submitted right now."
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/users/detail.jinja:8
+msgid "User Information"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/users/reset_password.jinja:9
+#, python-format
+msgid "Send a password reset email to %(email)s?"
+msgstr ""
+
+#: shoop/admin/templates/shoop/admin/users/reset_password.jinja:11
+msgid "Send Reset Email"
+msgstr ""
+
+#: shoop/admin/utils/picotable.py:206
+msgid "no"
+msgstr ""
+
+#: shoop/admin/utils/picotable.py:207
+msgid "yes"
+msgstr ""
+
+#: shoop/admin/utils/picotable.py:309
+#, python-format
+msgid "Showing %(per_page)s of %(n_items)s %(verbose_name_plural)s"
+msgstr ""
+
+#: shoop/admin/utils/picotable.py:331
+msgid "objects"
+msgstr ""
+
+#: shoop/admin/utils/urls.py:59
+#, python-format
+msgid "Can't view this page. %(reason)s"
+msgstr ""
+
+#: shoop/admin/utils/urls.py:60
+msgid "Log in with different credentialsâ€¦"
+msgstr ""
+
+#: shoop/admin/utils/urls.py:75
+msgid "You must be logged in."
+msgstr ""
+
+#: shoop/admin/utils/urls.py:77
+msgid "You must be a staff member."
+msgstr ""
+
+#: shoop/admin/utils/urls.py:81
+#, python-format
+msgid "You do not have the required permissions: %r"
+msgstr ""
+
+#: shoop/admin/utils/views.py:104
+#, python-format
+msgid "New %s created."
+msgstr ""
+
+#: shoop/admin/utils/views.py:106
+#, python-format
+msgid "%s edited."
+msgstr ""
+
+#: shoop/admin/utils/views.py:123
+#, python-format
+msgid "New %s"
+msgstr ""
+
+#: shoop/admin/utils/views.py:133
+#, python-format
+msgid "Unnamed %s"
+msgstr ""
+
+#: shoop/core/fields/__init__.py:31
+msgid "internal identifier"
+msgstr ""
+
+#: shoop/core/fields/__init__.py:32
+msgid "Do not change this value if you are not sure what you're doing."
+msgstr ""
+
+#: shoop/core/methods/base.py:36
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/_confirm_table.jinja:12
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/order/partials/product_table.jinja:11
+#: shoop/themes/default_theme/templates/default/shoop/front/basket/partials/table.jinja:16
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/_confirm_table.jinja:12
+#: shoop/themes/default_theme/templates/default/shoop/front/order/partials/product_table.jinja:11
+msgid "Price"
+msgstr ""
+
+#: shoop/core/methods/base.py:39
+msgid "Waiver minimum"
+msgstr ""
+
+#: shoop/core/methods/base.py:40
+msgid ""
+"Waive the price when the total price of products in the order reaches "
+"this amount"
+msgstr ""
+
+#: shoop/core/methods/base.py:168
+msgid "0 or below: no lower limit"
+msgstr ""
+
+#: shoop/core/methods/base.py:171
+msgid "minimum weight"
+msgstr ""
+
+#: shoop/core/methods/base.py:172
+msgid "maximum weight"
+msgstr ""
+
+#: shoop/core/methods/base.py:184
+msgid "Minimum weight not met."
+msgstr ""
+
+#: shoop/core/methods/base.py:191
+msgid "Maximum weight exceeded."
+msgstr ""
+
+#: shoop/core/methods/default.py:16
+msgid "Default Shipping"
+msgstr ""
+
+#: shoop/core/methods/default.py:21
+msgid "Default Payment"
+msgstr ""
+
+#: shoop/core/models/_base.py:52
+msgid "Cannot change immutable object that is in use"
+msgstr ""
+
+#: shoop/core/models/addresses.py:44 shoop/core/models/contacts.py:51
+#: shoop/core/models/orders.py:184
+msgid "shipping address"
+msgstr ""
+
+#: shoop/core/models/addresses.py:45 shoop/core/models/contacts.py:55
+#: shoop/core/models/orders.py:180
+msgid "billing address"
+msgstr ""
+
+#: shoop/core/models/addresses.py:53 shoop/core/models/methods.py:42
+msgid "disabled"
+msgstr ""
+
+#: shoop/core/models/addresses.py:54 shoop/core/models/methods.py:43
+#: shoop/core/models/product_media.py:50 shoop/core/models/taxes.py:50
+#: shoop/core/models/taxes.py:96 shoop/core/models/taxes.py:108
+#: shoop/default_tax/models.py:19
+msgid "enabled"
+msgstr ""
+
+#: shoop/core/models/addresses.py:102 shoop/core/models/contacts.py:70
+msgid "name prefix"
+msgstr ""
+
+#: shoop/core/models/addresses.py:103 shoop/core/models/categories.py:92
+#: shoop/core/models/contacts.py:30 shoop/core/models/contacts.py:71
+#: shoop/core/models/manufacturers.py:24 shoop/core/models/methods.py:136
+#: shoop/core/models/methods.py:152 shoop/core/models/product_variation.py:42
+#: shoop/core/models/products.py:103 shoop/core/models/products.py:211
+#: shoop/core/models/taxes.py:33 shoop/core/models/taxes.py:94
+#: shoop/core/models/taxes.py:106
+msgid "name"
+msgstr ""
+
+#: shoop/core/models/addresses.py:104 shoop/core/models/contacts.py:72
+msgid "name suffix"
+msgstr ""
+
+#: shoop/core/models/addresses.py:105 shoop/core/models/contacts.py:73
+msgid "name extension"
+msgstr ""
+
+#: shoop/core/models/addresses.py:106
+msgid "company name"
+msgstr ""
+
+#: shoop/core/models/addresses.py:108 shoop/core/models/contacts.py:67
+#: shoop/core/models/orders.py:186
+msgid "phone"
+msgstr ""
+
+#: shoop/core/models/addresses.py:109 shoop/core/models/contacts.py:74
+#: shoop/utils/analog.py:33
+msgid "email"
+msgstr ""
+
+#: shoop/core/models/addresses.py:110
+msgid "street"
+msgstr ""
+
+#: shoop/core/models/addresses.py:111
+msgid "street (2)"
+msgstr ""
+
+#: shoop/core/models/addresses.py:112
+msgid "street (3)"
+msgstr ""
+
+#: shoop/core/models/addresses.py:113
+msgid "ZIP / Postal code"
+msgstr ""
+
+#: shoop/core/models/addresses.py:114
+msgid "city"
+msgstr ""
+
+#: shoop/core/models/addresses.py:115
+msgid "region code"
+msgstr ""
+
+#: shoop/core/models/addresses.py:116
+msgid "region"
+msgstr ""
+
+#: shoop/core/models/addresses.py:117
+msgid "country"
+msgstr ""
+
+#: shoop/core/models/addresses.py:118
+msgid "immutable"
+msgstr ""
+
+#: shoop/core/models/addresses.py:132 shoop/core/models/addresses.py:199
+msgid "address"
+msgstr ""
+
+#: shoop/core/models/addresses.py:133
+msgid "addresses"
+msgstr ""
+
+#: shoop/core/models/addresses.py:200
+msgid "role"
+msgstr ""
+
+#: shoop/core/models/addresses.py:201 shoop/core/models/categories.py:80
+#: shoop/core/models/methods.py:88 shoop/core/models/orders.py:195
+msgid "status"
+msgstr ""
+
+#: shoop/core/models/addresses.py:202 shoop/core/models/product_media.py:57
+msgid "title"
+msgstr ""
+
+#: shoop/core/models/addresses.py:206
+msgid "saved address"
+msgstr ""
+
+#: shoop/core/models/addresses.py:207
+msgid "saved addresses"
+msgstr ""
+
+#: shoop/core/models/attributes.py:47
+msgid "hidden"
+msgstr ""
+
+#: shoop/core/models/attributes.py:48
+msgid "shown on product page"
+msgstr ""
+
+#: shoop/core/models/attributes.py:49
+msgid "searchable metadata"
+msgstr ""
+
+#: shoop/core/models/attributes.py:50
+msgid "private metadata"
+msgstr ""
+
+#: shoop/core/models/attributes.py:66
+msgid "integer"
+msgstr ""
+
+#: shoop/core/models/attributes.py:67
+msgid "decimal"
+msgstr ""
+
+#: shoop/core/models/attributes.py:68
+msgid "boolean"
+msgstr ""
+
+#: shoop/core/models/attributes.py:69
+msgid "time interval"
+msgstr ""
+
+#: shoop/core/models/attributes.py:71
+msgid "date and time"
+msgstr ""
+
+#: shoop/core/models/attributes.py:72
+msgid "date only"
+msgstr ""
+
+#: shoop/core/models/attributes.py:74
+msgid "translated string"
+msgstr ""
+
+#: shoop/core/models/attributes.py:75
+msgid "untranslated string"
+msgstr ""
+
+#: shoop/core/models/attributes.py:115
+msgid "attribute"
+msgstr ""
+
+#: shoop/core/models/attributes.py:116 shoop/core/models/products.py:107
+msgid "attributes"
+msgstr ""
+
+#: shoop/core/models/categories.py:31 shoop/core/models/product_variation.py:33
+msgid "invisible"
+msgstr ""
+
+#: shoop/core/models/categories.py:32 shoop/core/models/product_variation.py:34
+msgid "visible"
+msgstr ""
+
+#: shoop/core/models/categories.py:33
+msgid "deleted"
+msgstr ""
+
+#: shoop/core/models/categories.py:42 shoop/core/models/products.py:54
+msgid "visible to all"
+msgstr ""
+
+#: shoop/core/models/categories.py:43
+msgid "visible to logged in customers"
+msgstr ""
+
+#: shoop/core/models/categories.py:44
+msgid "visible to certain customer groups"
+msgstr ""
+
+#: shoop/core/models/categories.py:77
+msgid "parent category"
+msgstr ""
+
+#: shoop/core/models/categories.py:81 shoop/core/models/product_media.py:29
+msgid "image"
+msgstr ""
+
+#: shoop/core/models/categories.py:82 shoop/core/models/order_lines.py:75
+#: shoop/core/models/order_lines.py:142
+msgid "ordering"
+msgstr ""
+
+#: shoop/core/models/categories.py:85 shoop/core/models/product_shops.py:35
+msgid "visibility limitations"
+msgstr ""
+
+#: shoop/core/models/categories.py:88 shoop/core/models/product_shops.py:38
+msgid "visible for groups"
+msgstr ""
+
+#: shoop/core/models/categories.py:93 shoop/core/models/product_media.py:58
+#: shoop/core/models/products.py:212
+msgid "description"
+msgstr ""
+
+#: shoop/core/models/categories.py:94 shoop/core/models/products.py:213
+msgid "slug"
+msgstr ""
+
+#: shoop/core/models/categories.py:100
+msgid "category"
+msgstr ""
+
+#: shoop/core/models/categories.py:101 shoop/core/models/product_shops.py:55
+msgid "categories"
+msgstr ""
+
+#: shoop/core/models/configurations.py:22 shoop/core/models/orders.py:163
+msgid "key"
+msgstr ""
+
+#: shoop/core/models/configurations.py:23
+#: shoop/core/models/product_variation.py:60
+msgid "value"
+msgstr ""
+
+#: shoop/core/models/configurations.py:27
+msgid "configuration item"
+msgstr ""
+
+#: shoop/core/models/configurations.py:28
+msgid "configuration items"
+msgstr ""
+
+#: shoop/core/models/configurations.py:32
+#, python-format
+msgid "%(key)s for shop %(shop)s"
+msgstr ""
+
+#: shoop/core/models/configurations.py:34
+#, python-format
+msgid "%(key)s (global)"
+msgstr ""
+
+#: shoop/core/models/contacts.py:26
+msgid "members"
+msgstr ""
+
+#: shoop/core/models/contacts.py:27
+msgid "show as pricing option"
+msgstr ""
+
+#: shoop/core/models/contacts.py:34
+msgid "contact group"
+msgstr ""
+
+#: shoop/core/models/contacts.py:35
+msgid "contact groups"
+msgstr ""
+
+#: shoop/core/models/contacts.py:59
+msgid "default shipping method"
+msgstr ""
+
+#: shoop/core/models/contacts.py:62
+msgid "default payment method"
+msgstr ""
+
+#: shoop/core/models/contacts.py:65 shoop/core/models/orders.py:243
+msgid "language"
+msgstr ""
+
+#: shoop/core/models/contacts.py:66 shoop/core/models/orders.py:248
+msgid "marketing permission"
+msgstr ""
+
+#: shoop/core/models/contacts.py:68
+msgid "web address"
+msgstr ""
+
+#: shoop/core/models/contacts.py:82
+msgid "contact"
+msgstr ""
+
+#: shoop/core/models/contacts.py:83
+msgid "contacts"
+msgstr ""
+
+#: shoop/core/models/contacts.py:91
+msgid "e.g. EIN in US or VAT code in Europe"
+msgstr ""
+
+#: shoop/core/models/contacts.py:94
+msgid "company"
+msgstr ""
+
+#: shoop/core/models/contacts.py:95
+msgid "companies"
+msgstr ""
+
+#: shoop/core/models/contacts.py:112
+msgid "person"
+msgstr ""
+
+#: shoop/core/models/contacts.py:113
+msgid "persons"
+msgstr ""
+
+#: shoop/core/models/counters.py:21
+msgid "order reference"
+msgstr ""
+
+#: shoop/core/models/counters.py:29
+msgid "counter"
+msgstr ""
+
+#: shoop/core/models/counters.py:30
+msgid "counters"
+msgstr ""
+
+#: shoop/core/models/manufacturers.py:21
+msgid "added"
+msgstr ""
+
+#: shoop/core/models/manufacturers.py:25
+msgid "URL"
+msgstr ""
+
+#: shoop/core/models/manufacturers.py:28 shoop/core/models/products.py:204
+msgid "manufacturer"
+msgstr ""
+
+#: shoop/core/models/manufacturers.py:29
+msgid "manufacturers"
+msgstr ""
+
+#: shoop/core/models/methods.py:33 shoop/core/models/order_lines.py:35
+msgid "shipping"
+msgstr ""
+
+#: shoop/core/models/methods.py:34 shoop/core/models/order_lines.py:36
+#: shoop/core/models/payments.py:35
+msgid "payment"
+msgstr ""
+
+#: shoop/core/models/methods.py:87 shoop/core/models/products.py:173
+#: shoop/core/models/taxes.py:99
+msgid "tax class"
+msgstr ""
+
+#: shoop/core/models/methods.py:90 shoop/core/models/suppliers.py:33
+msgid "module"
+msgstr ""
+
+#: shoop/core/models/methods.py:140 shoop/core/models/orders.py:216
+msgid "shipping method"
+msgstr ""
+
+#: shoop/core/models/methods.py:141 shoop/core/models/product_shops.py:45
+msgid "shipping methods"
+msgstr ""
+
+#: shoop/core/models/methods.py:156 shoop/core/models/orders.py:207
+msgid "payment method"
+msgstr ""
+
+#: shoop/core/models/methods.py:157 shoop/core/models/product_shops.py:48
+msgid "payment methods"
+msgstr ""
+
+#: shoop/core/models/order_lines.py:34 shoop/core/models/order_lines.py:64
+#: shoop/core/models/products.py:230
+msgid "product"
+msgstr ""
+
+#: shoop/core/models/order_lines.py:37
+msgid "campaign"
+msgstr ""
+
+#: shoop/core/models/order_lines.py:38 shoop/utils/analog.py:28
+msgid "other"
+msgstr ""
+
+#: shoop/core/models/order_lines.py:61 shoop/core/models/orders.py:255
+msgid "order"
+msgstr ""
+
+#: shoop/core/models/order_lines.py:68
+msgid "supplier"
+msgstr ""
+
+#: shoop/core/models/order_lines.py:73
+msgid "parent line"
+msgstr ""
+
+#: shoop/core/models/order_lines.py:76
+msgid "line type"
+msgstr ""
+
+#: shoop/core/models/order_lines.py:77
+msgid "line SKU"
+msgstr ""
+
+#: shoop/core/models/order_lines.py:78
+msgid "line text"
+msgstr ""
+
+#: shoop/core/models/order_lines.py:79
+msgid "accounting identifier"
+msgstr ""
+
+#: shoop/core/models/order_lines.py:80
+msgid "require verification"
+msgstr ""
+
+#: shoop/core/models/order_lines.py:81
+msgid "verified"
+msgstr ""
+
+#: shoop/core/models/order_lines.py:85
+msgid "quantity"
+msgstr ""
+
+#: shoop/core/models/order_lines.py:89
+msgid "unit price amount (undiscounted)"
+msgstr ""
+
+#: shoop/core/models/order_lines.py:90
+msgid "total amount of discount"
+msgstr ""
+
+#: shoop/core/models/order_lines.py:95 shoop/core/models/order_lines.py:128
+msgid "order line"
+msgstr ""
+
+#: shoop/core/models/order_lines.py:96
+msgid "order lines"
+msgstr ""
+
+#: shoop/core/models/order_lines.py:131 shoop/core/models/taxes.py:87
+msgid "tax"
+msgstr ""
+
+#: shoop/core/models/order_lines.py:132
+msgid "tax name"
+msgstr ""
+
+#: shoop/core/models/order_lines.py:137
+msgid "tax amount"
+msgstr ""
+
+#: shoop/core/models/order_lines.py:139
+msgid "base amount"
+msgstr ""
+
+#: shoop/core/models/order_lines.py:140
+msgid "Amount that this tax is calculated from"
+msgstr ""
+
+#: shoop/core/models/orders.py:52
+msgid "not paid"
+msgstr ""
+
+#: shoop/core/models/orders.py:53
+msgid "partially paid"
+msgstr ""
+
+#: shoop/core/models/orders.py:54
+msgid "fully paid"
+msgstr ""
+
+#: shoop/core/models/orders.py:55 shoop/core/models/orders.py:80
+msgid "canceled"
+msgstr ""
+
+#: shoop/core/models/orders.py:56
+msgid "deferred"
+msgstr ""
+
+#: shoop/core/models/orders.py:65 shoop/core/models/products.py:84
+msgid "not shipped"
+msgstr ""
+
+#: shoop/core/models/orders.py:66
+msgid "partially shipped"
+msgstr ""
+
+#: shoop/core/models/orders.py:67
+msgid "fully shipped"
+msgstr ""
+
+#: shoop/core/models/orders.py:77 shoop/notify/enums.py:44
+msgid "none"
+msgstr ""
+
+#: shoop/core/models/orders.py:78
+msgid "initial"
+msgstr ""
+
+#: shoop/core/models/orders.py:79
+msgid "complete"
+msgstr ""
+
+#: shoop/core/models/orders.py:158
+msgid "order identifier"
+msgstr ""
+
+#: shoop/core/models/orders.py:160
+msgid "label"
+msgstr ""
+
+#: shoop/core/models/orders.py:166
+msgid "reference number"
+msgstr ""
+
+#: shoop/core/models/orders.py:172
+msgid "customer"
+msgstr ""
+
+#: shoop/core/models/orders.py:176
+msgid "orderer"
+msgstr ""
+
+#: shoop/core/models/orders.py:187
+msgid "email address"
+msgstr ""
+
+#: shoop/core/models/orders.py:193
+msgid "creating user"
+msgstr ""
+
+#: shoop/core/models/orders.py:198
+msgid "payment status"
+msgstr ""
+
+#: shoop/core/models/orders.py:201
+msgid "shipping status"
+msgstr ""
+
+#: shoop/core/models/orders.py:210
+msgid "payment method name"
+msgstr ""
+
+#: shoop/core/models/orders.py:219
+msgid "shipping method name"
+msgstr ""
+
+#: shoop/core/models/orders.py:228
+msgid "grand total"
+msgstr ""
+
+#: shoop/core/models/orders.py:229
+msgid "taxless total"
+msgstr ""
+
+#: shoop/core/models/orders.py:237
+msgid "IP address"
+msgstr ""
+
+#: shoop/core/models/orders.py:239
+msgid "order date"
+msgstr ""
+
+#: shoop/core/models/orders.py:240
+msgid "payment date"
+msgstr ""
+
+#: shoop/core/models/orders.py:244
+msgid "customer comment"
+msgstr ""
+
+#: shoop/core/models/orders.py:245
+msgid "admin comment/notes"
+msgstr ""
+
+#: shoop/core/models/orders.py:246
+msgid "requires verification"
+msgstr ""
+
+#: shoop/core/models/orders.py:247
+msgid "all lines verified"
+msgstr ""
+
+#: shoop/core/models/orders.py:256
+msgid "orders"
+msgstr ""
+
+#: shoop/core/models/orders.py:370
+msgid "Order marked as paid."
+msgstr ""
+
+#: shoop/core/models/orders.py:470
+#, python-format
+msgid "Shipment #%d created."
+msgstr ""
+
+#: shoop/core/models/orders.py:516
+msgid "All rows requiring verification have been verified."
+msgstr ""
+
+#: shoop/core/models/orders.py:560
+msgid "All products have been shipped. Fully Shipped status set."
+msgstr ""
+
+#: shoop/core/models/payments.py:36
+msgid "payments"
+msgstr ""
+
+#: shoop/core/models/persistent_cache.py:20
+msgid "cache entry"
+msgstr ""
+
+#: shoop/core/models/persistent_cache.py:21
+msgid "cache entries"
+msgstr ""
+
+#: shoop/core/models/product_media.py:28 shoop/core/models/product_media.py:42
+msgid "file"
+msgstr ""
+
+#: shoop/core/models/product_media.py:30
+msgid "documentation"
+msgstr ""
+
+#: shoop/core/models/product_media.py:31
+msgid "sample"
+msgstr ""
+
+#: shoop/core/models/product_media.py:40
+msgid "kind"
+msgstr ""
+
+#: shoop/core/models/product_media.py:45
+msgid ""
+"Enter URL to external file. If this field is filled, the selected media "
+"doesn't apply."
+msgstr ""
+
+#: shoop/core/models/product_media.py:51
+msgid "public (shown on product page)"
+msgstr ""
+
+#: shoop/core/models/product_media.py:53
+msgid "purchased (shown for finished purchases)"
+msgstr ""
+
+#: shoop/core/models/product_media.py:62
+msgid "product attachment"
+msgstr ""
+
+#: shoop/core/models/product_media.py:63
+msgid "product attachments"
+msgstr ""
+
+#: shoop/core/models/product_media.py:81
+msgid "attachment"
+msgstr ""
+
+#: shoop/core/models/product_shops.py:40
+msgid "purchase multiple"
+msgstr ""
+
+#: shoop/core/models/product_shops.py:41
+msgid "minimum purchase"
+msgstr ""
+
+#: shoop/core/models/product_shops.py:51 shoop/core/models/products.py:191
+msgid "primary category"
+msgstr ""
+
+#: shoop/core/models/product_shops.py:63
+msgid "Default price"
+msgstr ""
+
+#: shoop/core/models/product_shops.py:93
+msgid "This product has been deleted."
+msgstr ""
+
+#: shoop/core/models/product_shops.py:99
+msgid "This product is not visible."
+msgstr ""
+
+#: shoop/core/models/product_shops.py:105
+msgid "The Product is invisible to users not logged in."
+msgstr ""
+
+#: shoop/core/models/product_shops.py:114
+msgid "This product is not visible to your group."
+msgstr ""
+
+#: shoop/core/models/product_shops.py:146
+msgid "The product has no supplier."
+msgstr ""
+
+#: shoop/core/models/product_shops.py:152
+#, python-format
+msgid "The purchase quantity needs to be at least %d for this product."
+msgstr ""
+
+#: shoop/core/models/product_shops.py:158
+#, python-format
+msgid "The product is not supplied by %s."
+msgstr ""
+
+#: shoop/core/models/product_shops.py:186
+#, python-format
+msgid ""
+"The product can only be ordered in multiples of %(package_size)s, for "
+"example %(smaller_p)s %(unit)s."
+msgstr ""
+
+#: shoop/core/models/product_shops.py:193
+#, python-format
+msgid ""
+"The product can only be ordered in multiples of %(package_size)s, for "
+"example %(smaller_p)s or %(larger_p)s %(unit)s."
+msgstr ""
+
+#: shoop/core/models/product_variation.py:46
+msgid "variation variable"
+msgstr ""
+
+#: shoop/core/models/product_variation.py:47
+msgid "variation variables"
+msgstr ""
+
+#: shoop/core/models/product_variation.py:64
+msgid "variation value"
+msgstr ""
+
+#: shoop/core/models/product_variation.py:65
+msgid "variation values"
+msgstr ""
+
+#: shoop/core/models/product_variation.py:89
+msgid "variation result"
+msgstr ""
+
+#: shoop/core/models/product_variation.py:90
+msgid "variation results"
+msgstr ""
+
+#: shoop/core/models/products.py:41
+msgid "normal"
+msgstr ""
+
+#: shoop/core/models/products.py:42
+msgid "package parent"
+msgstr ""
+
+#: shoop/core/models/products.py:43
+msgid "variation parent (simple)"
+msgstr ""
+
+#: shoop/core/models/products.py:44
+msgid "variation parent (variable)"
+msgstr ""
+
+#: shoop/core/models/products.py:45
+msgid "variation child"
+msgstr ""
+
+#: shoop/core/models/products.py:55
+msgid "visible to logged in"
+msgstr ""
+
+#: shoop/core/models/products.py:56
+msgid "visible to groups"
+msgstr ""
+
+#: shoop/core/models/products.py:64
+msgid "stocked"
+msgstr ""
+
+#: shoop/core/models/products.py:65
+msgid "unstocked"
+msgstr ""
+
+#: shoop/core/models/products.py:74
+msgid "recommended"
+msgstr ""
+
+#: shoop/core/models/products.py:75
+msgid "related"
+msgstr ""
+
+#: shoop/core/models/products.py:76
+msgid "computed"
+msgstr ""
+
+#: shoop/core/models/products.py:85
+msgid "shipped"
+msgstr ""
+
+#: shoop/core/models/products.py:94
+msgid "no verification required"
+msgstr ""
+
+#: shoop/core/models/products.py:95
+msgid "admin verification required"
+msgstr ""
+
+#: shoop/core/models/products.py:96
+msgid "third party verification required"
+msgstr ""
+
+#: shoop/core/models/products.py:110 shoop/core/models/products.py:179
+msgid "product type"
+msgstr ""
+
+#: shoop/core/models/products.py:111
+msgid "product types"
+msgstr ""
+
+#: shoop/core/models/products.py:169
+msgid "variation parent"
+msgstr ""
+
+#: shoop/core/models/products.py:170
+msgid "stock"
+msgstr ""
+
+#: shoop/core/models/products.py:171
+msgid "shipping mode"
+msgstr ""
+
+#: shoop/core/models/products.py:172
+msgid "unit"
+msgstr ""
+
+#: shoop/core/models/products.py:181
+msgid "GTIN"
+msgstr ""
+
+#: shoop/core/models/products.py:181
+msgid "Global Trade Item Number"
+msgstr ""
+
+#: shoop/core/models/products.py:182
+msgid "barcode"
+msgstr ""
+
+#: shoop/core/models/products.py:183
+msgid "bookkeeping account"
+msgstr ""
+
+#: shoop/core/models/products.py:184
+msgid "profit center"
+msgstr ""
+
+#: shoop/core/models/products.py:185
+msgid "cost center"
+msgstr ""
+
+#: shoop/core/models/products.py:192
+msgid "only used for administration and reporting"
+msgstr ""
+
+#: shoop/core/models/products.py:195
+msgid "width (mm)"
+msgstr ""
+
+#: shoop/core/models/products.py:196
+msgid "height (mm)"
+msgstr ""
+
+#: shoop/core/models/products.py:197
+msgid "depth (mm)"
+msgstr ""
+
+#: shoop/core/models/products.py:198
+msgid "net weight (g)"
+msgstr ""
+
+#: shoop/core/models/products.py:199
+msgid "gross weight (g)"
+msgstr ""
+
+#: shoop/core/models/products.py:214
+msgid "keywords"
+msgstr ""
+
+#: shoop/core/models/products.py:217
+msgid "status text"
+msgstr ""
+
+#: shoop/core/models/products.py:218
+msgid ""
+"This text will be shown alongside the product in the shop. (Ex.: "
+"\"Available in a month\")"
+msgstr ""
+
+#: shoop/core/models/products.py:223
+msgid "variation name"
+msgstr ""
+
+#: shoop/core/models/products.py:231
+msgid "products"
+msgstr ""
+
+#: shoop/core/models/products.py:459
+msgid ""
+"Multilevel parentage hierarchies aren't supported (parent is a child "
+"already)"
+msgstr ""
+
+#: shoop/core/models/products.py:464
+msgid "Parent is a variable variation parent, yet variables were not passed"
+msgstr ""
+
+#: shoop/core/models/products.py:474
+msgid ""
+"Multilevel parentage hierarchies aren't supported (this product is a "
+"simple variation parent)"
+msgstr ""
+
+#: shoop/core/models/products.py:479
+msgid ""
+"Multilevel parentage hierarchies aren't supported (this product is a "
+"variable variation parent)"
+msgstr ""
+
+#: shoop/core/models/products.py:486
+msgid "Product is currently not a normal product, can't turn into package"
+msgstr ""
+
+#: shoop/core/models/products.py:494
+msgid "Variation parents can not belong into a package"
+msgstr ""
+
+#: shoop/core/models/products.py:498
+msgid "Packages can't be nested"
+msgstr ""
+
+#: shoop/core/models/products.py:500
+#, python-format
+msgid "Quantity %s is invalid"
+msgstr ""
+
+#: shoop/core/models/products.py:549
+msgid "cross sell link"
+msgstr ""
+
+#: shoop/core/models/products.py:550
+msgid "cross sell links"
+msgstr ""
+
+#: shoop/core/models/products.py:563
+msgid "product attribute"
+msgstr ""
+
+#: shoop/core/models/products.py:564
+msgid "product attributes"
+msgstr ""
+
+#: shoop/core/models/shipments.py:31
+msgid "not sent"
+msgstr ""
+
+#: shoop/core/models/shipments.py:32
+msgid "sent"
+msgstr ""
+
+#: shoop/core/models/shipments.py:33
+msgid "received"
+msgstr ""
+
+#: shoop/core/models/shipments.py:34 shoop/utils/analog.py:35
+msgid "error"
+msgstr ""
+
+#: shoop/core/models/shipments.py:42
+msgid "tracking code"
+msgstr ""
+
+#: shoop/core/models/shipments.py:49
+msgid "shipment"
+msgstr ""
+
+#: shoop/core/models/shipments.py:50
+msgid "shipments"
+msgstr ""
+
+#: shoop/core/models/shipments.py:83
+msgid "sent product"
+msgstr ""
+
+#: shoop/core/models/shipments.py:84
+msgid "sent products"
+msgstr ""
+
+#: shoop/core/models/shops.py:43
+msgid "logo"
+msgstr ""
+
+#: shoop/core/models/shops.py:44
+msgid "maintenance mode"
+msgstr ""
+
+#: shoop/core/models/supplied_products.py:18
+msgid "alert limit"
+msgstr ""
+
+#: shoop/core/models/supplied_products.py:19
+msgid "physical stock count"
+msgstr ""
+
+#: shoop/core/models/supplied_products.py:20
+msgid "logical stock count"
+msgstr ""
+
+#: shoop/core/models/taxes.py:25
+msgid "Cannot change business critical fields of Tax that is in use"
+msgstr ""
+
+#: shoop/core/models/taxes.py:30
+msgid "code"
+msgstr ""
+
+#: shoop/core/models/taxes.py:38
+msgid "tax rate"
+msgstr ""
+
+#: shoop/core/models/taxes.py:38
+msgid "The percentage rate of the tax."
+msgstr ""
+
+#: shoop/core/models/taxes.py:43
+msgid "tax amount value"
+msgstr ""
+
+#: shoop/core/models/taxes.py:43
+msgid "The flat amount of the tax. Mutually exclusive with percentage rates."
+msgstr ""
+
+#: shoop/core/models/taxes.py:48
+msgid "currency of tax amount"
+msgstr ""
+
+#: shoop/core/models/taxes.py:55
+msgid "Either rate or amount is required"
+msgstr ""
+
+#: shoop/core/models/taxes.py:57
+msgid "Cannot have both rate and amount"
+msgstr ""
+
+#: shoop/core/models/taxes.py:60
+msgid "Currency is required if amount is specified"
+msgstr ""
+
+#: shoop/core/models/taxes.py:88
+msgid "taxes"
+msgstr ""
+
+#: shoop/core/models/taxes.py:100
+msgid "tax classes"
+msgstr ""
+
+#: shoop/core/models/taxes.py:111
+msgid "customer tax group"
+msgstr ""
+
+#: shoop/core/models/taxes.py:112
+msgid "customer tax groups"
+msgstr ""
+
+#: shoop/core/models/units.py:27
+msgid "allowed decimals"
+msgstr ""
+
+#: shoop/core/models/units.py:35
+msgid "sales unit"
+msgstr ""
+
+#: shoop/core/models/units.py:36
+msgid "sales units"
+msgstr ""
+
+#: shoop/core/modules/interface.py:54
+msgid "No Choice"
+msgstr ""
+
+#: shoop/core/pricing/default_pricing.py:21
+msgid "Default Pricing"
+msgstr ""
+
+#: shoop/core/suppliers/base.py:65
+msgid "Insufficient stock"
+msgstr ""
+
+#: shoop/core/taxing/_tax_summary.py:45
+msgid "Untaxed"
+msgstr ""
+
+#: shoop/core/utils/name_mixin.py:15
+msgid "First Last"
+msgstr ""
+
+#: shoop/default_tax/__init__.py:15
+msgid "Shoop Default Tax"
+msgstr ""
+
+#: shoop/default_tax/models.py:22
+msgid "Tax classes"
+msgstr ""
+
+#: shoop/default_tax/models.py:22
+msgid "Tax classes of the items to be taxed"
+msgstr ""
+
+#: shoop/default_tax/models.py:26
+msgid "Customer tax groups"
+msgstr ""
+
+#: shoop/default_tax/models.py:29
+msgid "Country codes pattern"
+msgstr ""
+
+#: shoop/default_tax/models.py:32
+msgid "Region codes pattern"
+msgstr ""
+
+#: shoop/default_tax/models.py:35
+msgid "Postal codes pattern"
+msgstr ""
+
+#: shoop/default_tax/models.py:38
+msgid "priority"
+msgstr ""
+
+#: shoop/default_tax/models.py:38
+msgid ""
+"Rules with same priority are value-added (e.g. US taxes) and rules with "
+"different priority are compound taxes (e.g. Canada Quebec PST case)"
+msgstr ""
+
+#: shoop/default_tax/models.py:44
+msgid "override group number"
+msgstr ""
+
+#: shoop/default_tax/models.py:44
+msgid ""
+"If several rules match, only the rules with the highest override group "
+"number will be effective.  This can be used, for example, to implement "
+"tax exemption by adding a rule with very high priority that sets a zero "
+"tax."
+msgstr ""
+
+#: shoop/default_tax/models.py:74
+msgid "Tax rule {} ({})"
+msgstr ""
+
+#: shoop/default_tax/module.py:21
+msgid "Default Taxation"
+msgstr ""
+
+#: shoop/default_tax/admin_module/__init__.py:18
+#: shoop/default_tax/admin_module/__init__.py:32
+msgid "Tax Rules"
+msgstr ""
+
+#: shoop/default_tax/admin_module/__init__.py:34
+msgid "Show tax rules"
+msgstr ""
+
+#: shoop/default_tax/admin_module/views.py:36
+msgid "Use ISO 3166-1 country codes (US, FI etc.)"
+msgstr ""
+
+#: shoop/default_tax/admin_module/views.py:41
+msgid "Use two letter state codes for the US"
+msgstr ""
+
+#: shoop/default_tax/admin_module/views.py:64
+msgid "Tax Rule"
+msgstr ""
+
+#: shoop/default_tax/admin_module/views.py:68
+msgid "Countries"
+msgstr ""
+
+#: shoop/default_tax/admin_module/views.py:69
+msgid "Regions"
+msgstr ""
+
+#: shoop/default_tax/admin_module/views.py:70
+msgid "Postal Codes"
+msgstr ""
+
+#: shoop/default_tax/admin_module/views.py:71
+msgid "Priority"
+msgstr ""
+
+#: shoop/default_tax/admin_module/views.py:72
+msgid "Override Group"
+msgstr ""
+
+#: shoop/default_tax/templates/shoop/default_tax/admin/edit.jinja:8
+msgid "Tax rule information"
+msgstr ""
+
+#: shoop/default_tax/templates/shoop/default_tax/admin/edit.jinja:12
+msgid "Matching criteria"
+msgstr ""
+
+#: shoop/default_tax/templates/shoop/default_tax/admin/edit.jinja:25
+msgid "Applied tax"
+msgstr ""
+
+#: shoop/default_tax/templates/shoop/default_tax/admin/edit.jinja:37
+msgid ""
+"\n"
+"            The following fields determine when this rule applies.  All\n"
+"            non-empty fields must match for the rule to apply.  Empty "
+"fields are\n"
+"            not considered, e.g. if \"Customer tax groups\" is left "
+"empty, all\n"
+"            customer tax groups will match.\n"
+"        "
+msgstr ""
+
+#: shoop/default_tax/templates/shoop/default_tax/admin/edit.jinja:45
+msgid ""
+"\n"
+"            Pattern can be a single value or a comma separated list of "
+"items,\n"
+"            where each item can be a single value or a range, such as\n"
+"            \"value1-value2\".  Special value \"*\" matches everything.  "
+"For\n"
+"            example, a pattern \"1,2,50-90\" will match values \"1\" and "
+"\"2\", and\n"
+"            \"50\", \"90\", and everything between.  The range uses "
+"alphabetical\n"
+"            ordering unless start, end and the string to be matched are "
+"all\n"
+"            numerical, i.e. \"50-90\" will match also \"6a\" and "
+"\"700X\", since they\n"
+"            are alphabetically between \"50\" and \"90\", but it will not"
+" match\n"
+"            \"700000\" since for numerical items natural numeric ordering"
+" is used.\n"
+"        "
+msgstr ""
+
+#: shoop/default_tax/templates/shoop/default_tax/admin/edit.jinja:60
+msgid "When this rule applies, apply the following tax."
+msgstr ""
+
+#: shoop/discount_pricing/admin_form_part.py:41
+#, python-format
+msgid "Price (%s)"
+msgstr ""
+
+#: shoop/discount_pricing/models.py:25 shoop/simple_pricing/models.py:34
+msgid "product price"
+msgstr ""
+
+#: shoop/discount_pricing/models.py:26 shoop/simple_pricing/models.py:35
+msgid "product prices"
+msgstr ""
+
+#: shoop/discount_pricing/module.py:40
+msgid "Discount Pricing"
+msgstr ""
+
+#: shoop/discount_pricing/templates/shoop/admin/discount_pricing/form_part.jinja:3
+msgid "Discounted Price"
+msgstr ""
+
+#: shoop/discount_pricing/templates/shoop/admin/discount_pricing/form_part.jinja:9
+msgid "Discounted Price for Shop"
+msgstr ""
+
+#: shoop/front/admin_module.py:43
+msgid "Abandoned Basket Value"
+msgstr ""
+
+#: shoop/front/admin_module.py:47
+#, python-format
+msgid "Based on %d baskets over the last %d days"
+msgstr ""
+
+#: shoop/front/apps/auth/forms.py:24
+#, python-format
+msgid ""
+"Please enter a correct %(username)s and password. Note that both fields "
+"may be case-sensitive. In case of multiple accounts with same email only "
+"username can be used to login."
+msgstr ""
+
+#: shoop/front/apps/auth/forms.py:27
+msgid "This account is inactive."
+msgstr ""
+
+#: shoop/front/apps/auth/forms.py:32
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/includes/_navigation.jinja:65
+msgid "Username or email address"
+msgstr ""
+
+#: shoop/front/apps/auth/forms.py:68
+msgid "Please provide either username or email, not both."
+msgstr ""
+
+#: shoop/front/apps/auth/forms.py:73
+msgid "Please provide either username or email."
+msgstr ""
+
+#: shoop/front/apps/auth/forms.py:97
+msgid "shop"
+msgstr ""
+
+#: shoop/front/apps/auth/views.py:101
+msgid "This recovery link is invalid."
+msgstr ""
+
+#: shoop/front/apps/auth/templates/shoop/user/login.jinja:4
+#: shoop/front/apps/auth/templates/shoop/user/login.jinja:16
+#: shoop/front/apps/auth/templates/shoop/user/login.jinja:28
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/includes/_navigation.jinja:55
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/includes/_navigation.jinja:73
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/user/login.jinja:4
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/user/login.jinja:11
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/user/login.jinja:21
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/user/login.jinja:36
+#: shoop/themes/default_theme/templates/default/shoop/front/includes/_navigation.jinja:137
+#: shoop/themes/default_theme/templates/default/shoop/front/includes/_navigation.jinja:144
+msgid "Log in"
+msgstr ""
+
+#: shoop/front/apps/auth/templates/shoop/user/login.jinja:30
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/includes/_navigation.jinja:81
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/user/login.jinja:39
+msgid "Forgot your password?"
+msgstr ""
+
+#: shoop/front/apps/auth/templates/shoop/user/logout.jinja:3
+msgid "You have been logged out."
+msgstr ""
+
+#: shoop/front/apps/auth/templates/shoop/user/recover_password.jinja:4
+#: shoop/front/apps/auth/templates/shoop/user/recover_password.jinja:10
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/user/recover_password.jinja:4
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/user/recover_password.jinja:10
+msgid "Recover your password"
+msgstr ""
+
+#: shoop/front/apps/auth/templates/shoop/user/recover_password.jinja:21
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/user/recover_password.jinja:25
+msgid "Send password recovery instructions"
+msgstr ""
+
+#: shoop/front/apps/auth/templates/shoop/user/recover_password_complete.jinja:2
+msgid "Password Changed"
+msgstr ""
+
+#: shoop/front/apps/auth/templates/shoop/user/recover_password_complete.jinja:3
+msgid "Your password has been changed and you have been logged in."
+msgstr ""
+
+#: shoop/front/apps/auth/templates/shoop/user/recover_password_confirm.jinja:4
+#: shoop/front/apps/auth/templates/shoop/user/recover_password_sent.jinja:3
+msgid "Password Recovery"
+msgstr ""
+
+#: shoop/front/apps/auth/templates/shoop/user/recover_password_mail_content.jinja:3
+#, python-format
+msgid "In case you've forgotten, your username is %(username)s."
+msgstr ""
+
+#: shoop/front/apps/auth/templates/shoop/user/recover_password_mail_content.jinja:5
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for "
+"your user account at %(site_name)s."
+msgstr ""
+
+#: shoop/front/apps/auth/templates/shoop/user/recover_password_mail_content.jinja:6
+msgid "Please go to the following page and choose a new password:"
+msgstr ""
+
+#: shoop/front/apps/auth/templates/shoop/user/recover_password_sent.jinja:6
+msgid ""
+"\n"
+"    If an user account is associated with the information you entered,\n"
+"    you should receive instructions on how to reset your password "
+"shortly.\n"
+"    "
+msgstr ""
+
+#: shoop/front/apps/customer_information/__init__.py:14
+msgid "Shoop Frontend - Customer Information Editing"
+msgstr ""
+
+#: shoop/front/apps/customer_information/views.py:66
+msgid "Account information saved successfully."
+msgstr ""
+
+#: shoop/front/apps/customer_information/templates/shoop/customer_information/edit.jinja:2
+#: shoop/front/apps/customer_information/templates/shoop/customer_information/edit.jinja:3
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/customer_information/edit.jinja:2
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/customer_information/edit.jinja:3
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/customer_information/edit.jinja:8
+msgid "User account information"
+msgstr ""
+
+#: shoop/front/apps/customer_information/templates/shoop/customer_information/edit.jinja:13
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/customer_information/edit.jinja:22
+msgid "User information"
+msgstr ""
+
+#: shoop/front/apps/customer_information/templates/shoop/customer_information/edit.jinja:23
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/customer_information/edit.jinja:32
+msgid "Billing information"
+msgstr ""
+
+#: shoop/front/apps/customer_information/templates/shoop/customer_information/edit.jinja:33
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/customer_information/edit.jinja:42
+msgid "Shipping information"
+msgstr ""
+
+#: shoop/front/apps/customer_information/templates/shoop/customer_information/edit.jinja:42
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/customer_information/edit.jinja:15
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/customer_information/edit.jinja:50
+msgid "Save changes"
+msgstr ""
+
+#: shoop/front/apps/personal_order_history/__init__.py:14
+msgid "Shoop Frontend - Personal Order History"
+msgstr ""
+
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:4
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:4
+#, python-format
+msgid "Order %(identifier)s"
+msgstr ""
+
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_detail.jinja:9
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:11
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:17
+#, python-format
+msgid "Details of order %(identifier)s"
+msgstr ""
+
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_list.jinja:4
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:10
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_list.jinja:4
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_list.jinja:10
+msgid "Order History"
+msgstr ""
+
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_list.jinja:9
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_list.jinja:16
+msgid "Order history"
+msgstr ""
+
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_list.jinja:16
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_list.jinja:26
+msgid "Order date"
+msgstr ""
+
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_list.jinja:18
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_list.jinja:28
+msgid "Total price"
+msgstr ""
+
+#: shoop/front/apps/personal_order_history/templates/shoop/personal_order_history/order_list.jinja:32
+msgid "No orders"
+msgstr ""
+
+#: shoop/front/apps/registration/views.py:20
+msgid "Activation successful!"
+msgstr ""
+
+#: shoop/front/apps/registration/views.py:28
+msgid ""
+"Registration complete. Please follow the instructions sent to your email "
+"address."
+msgstr ""
+
+#: shoop/front/apps/registration/templates/shoop/registration/activation_failed.jinja:3
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/registration/activation_failed.jinja:6
+msgid "Account activation failed."
+msgstr ""
+
+#: shoop/front/apps/registration/templates/shoop/registration/register.jinja:8
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/registration/register.jinja:10
+msgid "Registration"
+msgstr ""
+
+#: shoop/front/apps/registration/templates/shoop/registration/register.jinja:19
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/registration/register.jinja:21
+#: shoop/themes/default_theme/templates/default/shoop/front/includes/_navigation.jinja:151
+msgid "Register"
+msgstr ""
+
+#: shoop/front/apps/simple_order_notification/admin_module/__init__.py:15
+msgid "Simple order notifications"
+msgstr ""
+
+#: shoop/front/apps/simple_search/templates/shoop/simple_search/search.jinja:2
+#: shoop/front/apps/simple_search/templates/shoop/simple_search/search.jinja:4
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/simple_search/search.jinja:2
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/simple_search/search.jinja:4
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/simple_search/search.jinja:13
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/simple_search/search_form.jinja:1
+msgid "Search"
+msgstr ""
+
+#: shoop/front/apps/simple_search/templates/shoop/simple_search/search.jinja:13
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/simple_search/search.jinja:23
+#, python-format
+msgid "No results found for \"<strong>%(query)s</strong>\"."
+msgstr ""
+
+#: shoop/front/apps/simple_search/templates/shoop/simple_search/search_form.jinja:3
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/simple_search/search.jinja:9
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/simple_search/search_form.jinja:4
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/simple_search/search_form.jinja:6
+msgid "Search for products"
+msgstr ""
+
+#: shoop/front/basket/command_dispatcher.py:67
+#, python-format
+msgid "Invalid command %s"
+msgstr ""
+
+#: shoop/front/basket/commands.py:51
+#, python-format
+msgid "The quantity %f is not allowed. Please use an integer value."
+msgstr ""
+
+#: shoop/front/basket/commands.py:57 shoop/front/basket/commands.py:60
+#, python-format
+msgid "The quantity %s is not valid."
+msgstr ""
+
+#: shoop/front/basket/commands.py:101
+msgid "This variation is not available."
+msgstr ""
+
+#: shoop/front/basket/objects.py:116
+#, python-format
+msgid "Basket loading failed: Incompatible basket (%s)"
+msgstr ""
+
+#: shoop/front/basket/objects.py:336
+msgid "Try to remove some products from the basket and order them separately."
+msgstr ""
+
+#: shoop/front/basket/objects.py:341
+#, python-format
+msgid "Products in basket cannot be shipped together. %s"
+msgstr ""
+
+#: shoop/front/basket/objects.py:345
+#, python-format
+msgid "Products in basket have no common payment method. %s"
+msgstr ""
+
+#: shoop/front/basket/objects.py:355
+#, python-format
+msgid "%s not available in this shop"
+msgstr ""
+
+#: shoop/front/checkout/_mixins.py:31
+msgid "Tax number required for companies"
+msgstr ""
+
+#: shoop/front/checkout/_mixins.py:33
+msgid "Cannot use tax number without company name"
+msgstr ""
+
+#: shoop/front/checkout/confirm.py:20 shoop/front/checkout/single_page.py:41
+msgid "I accept the terms and conditions"
+msgstr ""
+
+#: shoop/front/checkout/confirm.py:21
+msgid "I want to subscribe to your newsletter"
+msgstr ""
+
+#: shoop/front/checkout/confirm.py:27
+msgid "Confirmation"
+msgstr ""
+
+#: shoop/front/checkout/empty.py:16
+msgid "Empty Basket"
+msgstr ""
+
+#: shoop/front/checkout/single_page.py:37
+msgid "Company name"
+msgstr ""
+
+#: shoop/front/checkout/single_page.py:39
+msgid "Shipping method"
+msgstr ""
+
+#: shoop/front/checkout/single_page.py:40
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/macros.jinja:200
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/confirm.jinja:48
+#: shoop/themes/default_theme/templates/default/shoop/front/macros.jinja:197
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/confirm.jinja:45
+msgid "Payment method"
+msgstr ""
+
+#: shoop/front/checkout/single_page.py:42
+msgid "Please send me marketing correspondence"
+msgstr ""
+
+#: shoop/front/templates/shoop/front/index.jinja:10
+msgid "Welcome to Shoop!"
+msgstr ""
+
+#: shoop/front/templates/shoop/front/index.jinja:46
+#, python-format
+msgid "Welcome to %(name)s!"
+msgstr ""
+
+#: shoop/front/templates/shoop/front/index.jinja:46
+msgid "your shop"
+msgstr ""
+
+#: shoop/front/templates/shoop/front/index.jinja:47
+msgid ""
+"You are seeing this page because there is no theme selected for the "
+"default frontend."
+msgstr ""
+
+#: shoop/front/templates/shoop/front/index.jinja:52
+msgid "Log in to the administration interface"
+msgstr ""
+
+#: shoop/front/templates/shoop/front/index.jinja:52
+msgid "to choose a theme and set up your shop."
+msgstr ""
+
+#: shoop/front/templates/shoop/front/index.jinja:54
+msgid ""
+"The administration interface does not seem to be available. Use other "
+"means to choose a theme."
+msgstr ""
+
+#: shoop/front/templates/shoop/front/index.jinja:57
+msgid "You are not an administrator"
+msgstr ""
+
+#: shoop/front/templates/shoop/front/index.jinja:57
+msgid "ask an administrator to select a theme."
+msgstr ""
+
+#: shoop/front/templates/shoop/front/maintenance.jinja:10
+msgid "Maintenance mode"
+msgstr ""
+
+#: shoop/front/templates/shoop/front/maintenance.jinja:55
+msgid "Shop is currently down for maintenance."
+msgstr ""
+
+#: shoop/front/templates/shoop/front/errors/400.jinja:5
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/errors/400.jinja:3
+msgid "Bad Request"
+msgstr ""
+
+#: shoop/front/templates/shoop/front/errors/400.jinja:7
+#: shoop/front/templates/shoop/front/errors/403.jinja:7
+#: shoop/front/templates/shoop/front/errors/404.jinja:7
+#: shoop/front/templates/shoop/front/errors/500.jinja:27
+msgid "Back to home"
+msgstr ""
+
+#: shoop/front/templates/shoop/front/errors/403.jinja:5
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/errors/403.jinja:3
+msgid "Permission Denied"
+msgstr ""
+
+#: shoop/front/templates/shoop/front/errors/404.jinja:5
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/errors/404.jinja:3
+msgid "Page not Found"
+msgstr ""
+
+#: shoop/front/templates/shoop/front/errors/500.jinja:5
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/errors/500.jinja:11
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/errors/500.jinja:47
+msgid "Internal Server Error"
+msgstr ""
+
+#: shoop/front/templates/shoop/front/errors/500.jinja:25
+msgid "Server Error"
+msgstr ""
+
+#: shoop/front/utils/product_sorting.py:12
+msgid "Name - A-Z"
+msgstr ""
+
+#: shoop/front/utils/product_sorting.py:13
+msgid "Name - Z-A"
+msgstr ""
+
+#: shoop/front/utils/product_sorting.py:14
+msgid "Price - Low to High"
+msgstr ""
+
+#: shoop/front/utils/product_sorting.py:15
+msgid "Price - High to Low"
+msgstr ""
+
+#: shoop/front/views/product.py:89
+#: shoop/themes/classic_gray/views/product_price.py:44
+msgid "This product is not available in this shop."
+msgstr ""
+
+#: shoop/notify/enums.py:32
+msgid "continue to the next step"
+msgstr ""
+
+#: shoop/notify/enums.py:33
+msgid "stop processing"
+msgstr ""
+
+#: shoop/notify/enums.py:42
+msgid "all"
+msgstr ""
+
+#: shoop/notify/enums.py:43
+msgid "any"
+msgstr ""
+
+#: shoop/notify/enums.py:52
+msgid "any shop administrator"
+msgstr ""
+
+#: shoop/notify/enums.py:53
+msgid "a specific user"
+msgstr ""
+
+#: shoop/notify/typology.py:55
+msgid "Boolean"
+msgstr ""
+
+#: shoop/notify/typology.py:60
+msgid "Integer Number"
+msgstr ""
+
+#: shoop/notify/typology.py:68
+msgid "Decimal Number"
+msgstr ""
+
+#: shoop/notify/typology.py:85 shoop/notify/actions/email.py:30
+msgid "Language"
+msgstr ""
+
+#: shoop/notify/typology.py:90
+msgid "Email Address"
+msgstr ""
+
+#: shoop/notify/typology.py:98
+msgid "URL Address"
+msgstr ""
+
+#: shoop/notify/typology.py:106
+msgid "Phone Number"
+msgstr ""
+
+#: shoop/notify/actions/email.py:25
+msgid "Subject"
+msgstr ""
+
+#: shoop/notify/actions/email.py:26
+msgid "Email Body"
+msgstr ""
+
+#: shoop/notify/actions/email.py:29
+msgid "Recipient"
+msgstr ""
+
+#: shoop/notify/actions/email.py:32
+msgid "Fallback language"
+msgstr ""
+
+#: shoop/notify/actions/email.py:35
+msgid "Send Identifier"
+msgstr ""
+
+#: shoop/notify/actions/email.py:36
+msgid ""
+"If set, this identifier will be logged into the event's log target. If "
+"the identifier has already been logged, the e-mail won't be sent again."
+msgstr ""
+
+#: shoop/notify/admin_module/__init__.py:54
+msgid "Notification scripts"
+msgstr ""
+
+#: shoop/notify/admin_module/__init__.py:56
+msgid "Show notification scripts"
+msgstr ""
+
+#: shoop/notify/admin_module/forms.py:25
+#: shoop/notify/admin_module/views/list.py:24
+#: shoop/notify/admin_module/views/list.py:47
+msgid "Event"
+msgstr ""
+
+#: shoop/notify/admin_module/forms.py:26
+msgid "Choose which event to bind this script to."
+msgstr ""
+
+#: shoop/notify/admin_module/forms.py:29
+msgid "Script Name"
+msgstr ""
+
+#: shoop/notify/admin_module/forms.py:30
+msgid "Type in a descriptive name for your new script."
+msgstr ""
+
+#: shoop/notify/admin_module/forms.py:33
+msgid "Enable Script"
+msgstr ""
+
+#: shoop/notify/admin_module/forms.py:34
+msgid "Choose whether this script should be activated when its event fires."
+msgstr ""
+
+#: shoop/notify/admin_module/forms.py:49
+msgid ""
+"Warning: Changing the event for an existing script may have unexpected "
+"effects."
+msgstr ""
+
+#: shoop/notify/admin_module/forms.py:79
+msgid "Template"
+msgstr ""
+
+#: shoop/notify/admin_module/views/edit.py:31
+msgid "Edit Script Contents..."
+msgstr ""
+
+#: shoop/notify/conditions/simple.py:21
+msgid ""
+"Check whether the bound value `value` exists and is non-empty and non-"
+"zero."
+msgstr ""
+
+#: shoop/notify/conditions/simple.py:22
+msgid "Non-Empty"
+msgstr ""
+
+#: shoop/notify/conditions/simple.py:31
+msgid "Check whether the bound value `value` is empty or zero."
+msgstr ""
+
+#: shoop/notify/conditions/simple.py:32
+msgid "Empty"
+msgstr ""
+
+#: shoop/notify/templates/notify/admin/edit_script.jinja:5
+msgid "Edit Script Information"
+msgstr ""
+
+#: shoop/notify/templates/notify/admin/edit_script.jinja:7
+msgid "Create a new script"
+msgstr ""
+
+#: shoop/notify/templates/notify/admin/edit_script.jinja:15
+msgid "Script Details"
+msgstr ""
+
+#: shoop/notify/templates/notify/admin/edit_script.jinja:22
+msgid "OK"
+msgstr ""
+
+#: shoop/notify/templates/notify/admin/script_content_editor.jinja:2
+msgid "Edit Script"
+msgstr ""
+
+#: shoop/notify/templates/notify/admin/script_content_editor.jinja:14
+msgid "Edit Step"
+msgstr ""
+
+#: shoop/notify/templates/notify/admin/script_content_editor.jinja:17
+msgid "Done"
+msgstr ""
+
+#: shoop/notify/templates/notify/admin/script_item_editor.jinja:59
+msgid "Please correct the errors below."
+msgstr ""
+
+#: shoop/simple_cms/__init__.py:14 shoop/simple_cms/admin_module/__init__.py:16
+#: shoop/simple_cms/admin_module/__init__.py:30
+msgid "Simple CMS"
+msgstr ""
+
+#: shoop/simple_cms/models.py:55
+msgid "This identifier can be used in templates to create URLs"
+msgstr ""
+
+#: shoop/simple_cms/models.py:59
+msgid "Visible in menu"
+msgstr ""
+
+#: shoop/simple_cms/models.py:62
+msgid "Page Title"
+msgstr ""
+
+#: shoop/simple_cms/models.py:64
+msgid "Page URL"
+msgstr ""
+
+#: shoop/simple_cms/models.py:70
+msgid "Content"
+msgstr ""
+
+#: shoop/simple_cms/models.py:77
+msgid "page"
+msgstr ""
+
+#: shoop/simple_cms/models.py:78
+msgid "pages"
+msgstr ""
+
+#: shoop/simple_cms/models.py:93
+msgid "Untitled"
+msgstr ""
+
+#: shoop/simple_cms/admin_module/__init__.py:33
+#: shoop/themes/default_theme/templates/default/shoop/front/includes/_navigation.jinja:35
+msgid "Pages"
+msgstr ""
+
+#: shoop/simple_cms/admin_module/__init__.py:35
+msgid "Show pages"
+msgstr ""
+
+#: shoop/simple_cms/admin_module/views.py:21
+#: shoop/simple_cms/admin_module/views.py:132
+#: shoop/simple_cms/admin_module/views.py:141
+msgid "Available from"
+msgstr ""
+
+#: shoop/simple_cms/admin_module/views.py:22
+#: shoop/simple_cms/admin_module/views.py:133
+#: shoop/simple_cms/admin_module/views.py:142
+msgid "Available to"
+msgstr ""
+
+#: shoop/simple_cms/admin_module/views.py:62
+msgid "URL already exists."
+msgstr ""
+
+#: shoop/simple_cms/admin_module/views.py:66
+#, python-format
+msgid "%(label)s is required when any %(language)s field is filled."
+msgstr ""
+
+#: shoop/simple_cms/admin_module/views.py:74
+msgid "Please fill at least one language fully."
+msgstr ""
+
+#: shoop/simple_cms/admin_module/views.py:131
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/order/partials/product_table.jinja:10
+#: shoop/themes/default_theme/templates/default/shoop/front/order/partials/product_table.jinja:10
+msgid "Title"
+msgstr ""
+
+#: shoop/simple_cms/admin_module/views.py:134
+msgid "Created by"
+msgstr ""
+
+#: shoop/simple_cms/admin_module/views.py:135
+msgid "Date created"
+msgstr ""
+
+#: shoop/simple_cms/admin_module/views.py:140
+msgid "Page"
+msgstr ""
+
+#: shoop/simple_cms/templates/shoop/simple_cms/admin/edit.jinja:5
+msgid "New Page"
+msgstr ""
+
+#: shoop/simple_cms/templates/shoop/simple_cms/admin/edit.jinja:19
+msgid "Availability"
+msgstr ""
+
+#: shoop/simple_cms/templates/shoop/simple_cms/admin/edit.jinja:25
+msgid "Extras"
+msgstr ""
+
+#: shoop/simple_pricing/admin_form_part.py:51
+#, python-format
+msgid "Price (%s/%s)"
+msgstr ""
+
+#: shoop/simple_pricing/module.py:26
+msgid "Simple Pricing"
+msgstr ""
+
+#: shoop/simple_pricing/templates/shoop/admin/simple_pricing/form_part.jinja:3
+msgid "Customer Group Pricing"
+msgstr ""
+
+#: shoop/themes/classic_gray/__init__.py:24
+msgid "Show Frontpage Welcome Text"
+msgstr ""
+
+#: shoop/themes/classic_gray/__init__.py:25
+msgid "Footer custom HTML"
+msgstr ""
+
+#: shoop/themes/classic_gray/__init__.py:26
+msgid "Footer links"
+msgstr ""
+
+#: shoop/themes/classic_gray/__init__.py:27
+msgid "One line per link in format 'http://example.com Example Link'"
+msgstr ""
+
+#: shoop/themes/classic_gray/__init__.py:28
+msgid "Footer column order"
+msgstr ""
+
+#: shoop/themes/classic_gray/config_form.py:20
+msgid "CMS Page Links"
+msgstr ""
+
+#: shoop/themes/classic_gray/config_form.py:21
+msgid "Custom HTML"
+msgstr ""
+
+#: shoop/themes/classic_gray/config_form.py:22
+msgid "Footer Links"
+msgstr ""
+
+#: shoop/themes/classic_gray/config_form.py:33
+msgid "None"
+msgstr ""
+
+#: shoop/themes/classic_gray/config_form.py:41
+msgid "Footer CMS pages"
+msgstr ""
+
+#: shoop/themes/classic_gray/plugins.py:16
+msgid "Product Highlights"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/add_product_to_basket.jinja:5
+msgid "Product added to cart"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/add_product_to_basket.jinja:12
+msgid "There was an error adding the product to the basket"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/navigation_basket_partial.jinja:4
+#: shoop/themes/default_theme/templates/default/shoop/front/includes/_navigation.jinja:54
+msgid "Cart"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/navigation_basket_partial.jinja:41
+#: shoop/themes/default_theme/templates/default/shoop/front/includes/_navigation.jinja:92
+msgid "View cart"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/navigation_basket_partial.jinja:44
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/basket/default_basket.jinja:8
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/empty.jinja:5
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/single_phase.jinja:9
+#: shoop/themes/default_theme/templates/default/shoop/front/basket/default_basket.jinja:9
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/empty.jinja:5
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/single_phase.jinja:9
+msgid "Your shopping cart is empty."
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/product_preview.jinja:14
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/detail.jinja:57
+#, python-format
+msgid "Save %(discount_percent)s"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/product_preview.jinja:33
+msgid "Open product page"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/products_view.jinja:3
+#: shoop/themes/classic_gray/templates/classic_gray/products_view.jinja:4
+#: shoop/themes/classic_gray/templates/classic_gray/products_view.jinja:9
+msgid "Newest products"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/products_view.jinja:23
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/category.jinja:48
+msgid "Show Grid/List"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/products_view.jinja:25
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/category.jinja:50
+msgid "Grid/list view"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/base.jinja:22
+msgid "Shop is currently in maintenance mode."
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/base.jinja:42
+msgid ""
+"There were errors on submitted form fields. Please check them and try "
+"again."
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/index.jinja:9
+#: shoop/themes/default_theme/templates/default/shoop/front/index.jinja:4
+msgid "Welcome to "
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/macros.jinja:33
+msgid "Preview"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/macros.jinja:130
+#: shoop/themes/default_theme/templates/default/shoop/front/macros.jinja:127
+msgid "Products ordered"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/macros.jinja:140
+#: shoop/themes/default_theme/templates/default/shoop/front/macros.jinja:137
+msgid "Tax breakdown"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/macros.jinja:150
+#: shoop/themes/default_theme/templates/default/shoop/front/macros.jinja:147
+msgid "Files"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/macros.jinja:170
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/confirm.jinja:41
+#: shoop/themes/default_theme/templates/default/shoop/front/macros.jinja:167
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/confirm.jinja:38
+msgid "Delivery"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/macros.jinja:174
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/confirm.jinja:41
+#: shoop/themes/default_theme/templates/default/shoop/front/macros.jinja:171
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/confirm.jinja:38
+msgid "Delivery method"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/macros.jinja:196
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/methods.jinja:23
+#: shoop/themes/default_theme/templates/default/shoop/front/macros.jinja:193
+msgid "Payment"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/macros.jinja:242
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/macros.jinja:248
+msgid "Previous"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/basket/default_basket.jinja:3
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/basket/default_basket.jinja:4
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/single_phase.jinja:3
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/single_phase.jinja:4
+#: shoop/themes/default_theme/templates/default/shoop/front/basket/default_basket.jinja:3
+#: shoop/themes/default_theme/templates/default/shoop/front/basket/default_basket.jinja:4
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/single_phase.jinja:3
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/single_phase.jinja:4
+msgid "Shopping cart"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/basket/default_basket.jinja:11
+msgid "Back to Products"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/basket/default_basket.jinja:27
+msgid "Continue Shopping"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/basket/default_basket.jinja:29
+#: shoop/themes/default_theme/templates/default/shoop/front/basket/default_basket.jinja:25
+msgid "Proceed to checkout"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/basket/partials/_basket_content.jinja:35
+msgid "Qty"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/basket/partials/_basket_content.jinja:60
+#: shoop/themes/default_theme/templates/default/shoop/front/basket/partials/table.jinja:90
+msgid "Remove product from basket"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/_base.jinja:4
+msgid "Checkout"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/_confirm_table.jinja:27
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/order/partials/product_table.jinja:25
+msgid "excl. tax"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/addresses.jinja:23
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/addresses.jinja:19
+msgid "Ordering for a company?"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/addresses.jinja:24
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/single_phase.jinja:85
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/addresses.jinja:20
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/single_phase.jinja:85
+msgid "Please fill out these fields if you are ordering for a company."
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/addresses.jinja:41
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/addresses.jinja:39
+msgid "Ship to my billing address"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/addresses.jinja:55
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/methods.jinja:35
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/addresses.jinja:52
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/methods.jinja:20
+msgid "Continue"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/confirm.jinja:48
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/confirm.jinja:45
+msgid "Billing"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/confirm.jinja:60
+msgid "Add comment"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/confirm.jinja:72
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/confirm.jinja:59
+msgid "Place Order"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/methods.jinja:11
+msgid "Shipping"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/single_phase.jinja:16
+#: shoop/themes/default_theme/templates/default/shoop/front/basket/default_basket.jinja:16
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/single_phase.jinja:16
+msgid "Errors"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/single_phase.jinja:84
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/single_phase.jinja:84
+msgid "Ordering for a company"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/single_phase.jinja:105
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/single_phase.jinja:105
+msgid "Other information"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/checkout/single_phase.jinja:132
+#: shoop/themes/default_theme/templates/default/shoop/front/checkout/single_phase.jinja:132
+msgid "Place the order"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/errors/400.jinja:14
+msgid "Unfortunately the server couldn't process your request."
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/errors/400.jinja:16
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/errors/403.jinja:16
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/errors/404.jinja:16
+msgid "Back to Homepage"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/errors/403.jinja:14
+msgid "Unfortunately you didn't have permission to display this page."
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/errors/404.jinja:14
+msgid "Unfortunately the page you were looking for does not exist."
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/errors/500.jinja:48
+msgid ""
+"Unfortunately an internal server error occurred. Try refreshing the page "
+"or try again later."
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/includes/_navigation.jinja:28
+#: shoop/themes/default_theme/templates/default/shoop/front/includes/_navigation.jinja:110
+msgid "Edit account details"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/includes/_navigation.jinja:35
+#: shoop/themes/default_theme/templates/default/shoop/front/includes/_navigation.jinja:117
+msgid "My orders"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/includes/_navigation.jinja:40
+#: shoop/themes/default_theme/templates/default/shoop/front/includes/_navigation.jinja:122
+msgid "Admin panel"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/includes/_navigation.jinja:88
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/user/login.jinja:45
+msgid "New user? Register here!"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/order/complete.jinja:3
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/order/complete.jinja:4
+#: shoop/themes/default_theme/templates/default/shoop/front/order/complete.jinja:3
+#: shoop/themes/default_theme/templates/default/shoop/front/order/complete.jinja:4
+msgid "Thank you for your order!"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/order/complete.jinja:7
+#: shoop/themes/default_theme/templates/default/shoop/front/order/complete.jinja:7
+msgid "Your order has been received. You can see the details of your order below."
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/order/complete.jinja:11
+#: shoop/themes/default_theme/templates/default/shoop/front/order/complete.jinja:11
+msgid "User account activation"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/order/complete.jinja:13
+#: shoop/themes/default_theme/templates/default/shoop/front/order/complete.jinja:13
+msgid ""
+"If you want to be able to see your order history, please create a "
+"password for your account: "
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/order/complete.jinja:17
+#: shoop/themes/default_theme/templates/default/shoop/front/order/complete.jinja:17
+msgid "Send"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/order/payment_canceled.jinja:3
+#: shoop/themes/default_theme/templates/default/shoop/front/order/payment_canceled.jinja:3
+msgid "Payment canceled"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/order/payment_canceled.jinja:6
+#: shoop/themes/default_theme/templates/default/shoop/front/order/payment_canceled.jinja:6
+msgid "You have canceled payment"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/order/payment_canceled.jinja:8
+#: shoop/themes/default_theme/templates/default/shoop/front/order/payment_canceled.jinja:8
+msgid "Retry payment"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/order/partials/taxes.jinja:5
+#: shoop/themes/default_theme/templates/default/shoop/front/order/partials/taxes.jinja:5
+msgid "Tax percentage"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/order/partials/taxes.jinja:6
+#: shoop/themes/default_theme/templates/default/shoop/front/order/partials/taxes.jinja:6
+msgid "Based on amount"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/order/partials/taxes.jinja:7
+#: shoop/themes/default_theme/templates/default/shoop/front/order/partials/taxes.jinja:7
+msgid "Amount of tax"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/order/partials/taxes.jinja:8
+#: shoop/themes/default_theme/templates/default/shoop/front/order/partials/taxes.jinja:8
+msgid "Total including tax"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/_detail_details_section.jinja:5
+#: shoop/themes/default_theme/templates/default/shoop/front/product/_detail_attributes_section.jinja:5
+msgid "Barcode"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/_detail_details_section.jinja:19
+#: shoop/themes/default_theme/templates/default/shoop/front/product/_detail_attributes_section.jinja:19
+msgid "Package Size"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/_detail_details_section.jinja:23
+#: shoop/themes/default_theme/templates/default/shoop/front/product/_detail_attributes_section.jinja:23
+msgid "Width"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/_detail_details_section.jinja:25
+#: shoop/themes/default_theme/templates/default/shoop/front/product/_detail_attributes_section.jinja:25
+msgid "Height"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/_detail_details_section.jinja:27
+#: shoop/themes/default_theme/templates/default/shoop/front/product/_detail_attributes_section.jinja:27
+msgid "Depth"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/_detail_details_section.jinja:31
+#: shoop/themes/default_theme/templates/default/shoop/front/product/_detail_attributes_section.jinja:31
+msgid "Net Weight"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/_detail_details_section.jinja:41
+#: shoop/themes/default_theme/templates/default/shoop/front/product/_detail_attributes_section.jinja:41
+msgid "Gross Weight"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/_detail_details_section.jinja:51
+#: shoop/themes/default_theme/templates/default/shoop/front/product/_detail_attributes_section.jinja:51
+msgid "External link"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/_detail_order_section.jinja:20
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/_detail_order_section.jinja:24
+#: shoop/themes/default_theme/templates/default/shoop/front/product/_detail_order_section.jinja:41
+#: shoop/themes/default_theme/templates/default/shoop/front/product/_detail_order_section.jinja:72
+msgid "Add to cart"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/_detail_order_section.jinja:25
+msgid "Product is not orderable."
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/_detail_order_section.jinja:82
+msgid "Select"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/_detail_order_section.jinja:99
+msgid "Select product"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/_detail_order_section_no_product.jinja:6
+msgid "Combination not available"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/detail.jinja:83
+msgid "Product Information"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/detail.jinja:88
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_list.jinja:39
+msgid "Details"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/detail.jinja:98
+msgid "No product description available"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/detail.jinja:116
+#: shoop/themes/default_theme/templates/default/shoop/front/product/detail.jinja:112
+msgid "Includes these products"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/detail.jinja:127
+#: shoop/themes/default_theme/templates/default/shoop/front/product/detail.jinja:123
+msgid "Also available in"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/detail.jinja:138
+#: shoop/themes/default_theme/templates/default/shoop/front/product/detail.jinja:134
+msgid "Related products"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/detail.jinja:142
+#: shoop/themes/default_theme/templates/default/shoop/front/product/detail.jinja:138
+msgid "We recommend these products"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/front/product/detail.jinja:146
+#: shoop/themes/default_theme/templates/default/shoop/front/product/detail.jinja:142
+msgid "Users who bought this product also bought"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_detail.jinja:51
+msgid "Tax Number"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/personal_order_history/order_list.jinja:47
+msgid "You haven't made any orders yet."
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/registration/activation_failed.jinja:5
+msgid "Account activation"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/simple_search/search.jinja:25
+#, python-format
+msgid "%(n)s results found for \"<strong>%(query)s</strong>\"."
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/user/login.jinja:14
+msgid "You have already been logged in as"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/user/logout.jinja:3
+msgid "You have been logged out. Thank you for visiting!"
+msgstr ""
+
+#: shoop/themes/classic_gray/templates/classic_gray/shoop/user/recover_password.jinja:12
+msgid "You can recover your password with either username or email."
+msgstr ""
+
+#: shoop/themes/default_theme/templates/default/shoop/front/index.jinja:9
+msgid "New products"
+msgstr ""
+
+#: shoop/themes/default_theme/templates/default/shoop/front/index.jinja:24
+msgid "Best sellers"
+msgstr ""
+
+#: shoop/themes/default_theme/templates/default/shoop/front/basket/partials/table.jinja:26
+msgid "Update quantities"
+msgstr ""
+
+#: shoop/themes/default_theme/templates/default/shoop/front/includes/_navigation.jinja:86
+msgid "Your shopping cart is empty"
+msgstr ""
+
+#: shoop/themes/default_theme/templates/default/shoop/front/product/_detail_order_section.jinja:23
+msgid "Product not orderable"
+msgstr ""
+
+#: shoop/themes/default_theme/templates/default/shoop/front/product/category.jinja:19
+msgid "Sort by"
+msgstr ""
+
+#: shoop/themes/default_theme/templates/default/shoop/front/product/detail.jinja:90
+msgid "Product description"
+msgstr ""
+
+#: shoop/themes/default_theme/templates/default/shoop/front/product/detail.jinja:102
+msgid "Product attributes"
+msgstr ""
+
+#: shoop/utils/analog.py:29
+msgid "audit"
+msgstr ""
+
+#: shoop/utils/analog.py:30
+msgid "edit"
+msgstr ""
+
+#: shoop/utils/analog.py:31
+msgid "deletion"
+msgstr ""
+
+#: shoop/utils/analog.py:32
+msgid "note"
+msgstr ""
+
+#: shoop/utils/analog.py:34
+msgid "warning"
+msgstr ""
+
+#: shoop/utils/patterns.py:7
+msgid ""
+"Comma-separated values or ranges, e.g. A-Z,10000-19000. Use exclamation "
+"marks to negate (A-Z,!G will not match G)."
+msgstr ""
+
+#: shoop/xtheme/models.py:149
+#, python-format
+msgid "Theme configuration for %s"
+msgstr ""
+
+#: shoop/xtheme/rendering.py:122
+#, python-format
+msgid "Click to edit placeholder: %s"
+msgstr ""
+
+#: shoop/xtheme/admin_module/__init__.py:25
+msgid "Shoop Extensible Theme Engine"
+msgstr ""
+
+#: shoop/xtheme/admin_module/__init__.py:26
+#: shoop/xtheme/admin_module/__init__.py:48
+#: shoop/xtheme/templates/shoop/xtheme/admin/config.jinja:3
+msgid "Themes"
+msgstr ""
+
+#: shoop/xtheme/admin_module/__init__.py:65
+msgid "No theme is active. Click here to activate one."
+msgstr ""
+
+#: shoop/xtheme/admin_module/__init__.py:66
+msgid "Theming"
+msgstr ""
+
+#: shoop/xtheme/admin_module/views.py:47
+msgid "Theme activated."
+msgstr ""
+
+#: shoop/xtheme/plugins/base.py:30 shoop/xtheme/views/forms.py:16
+msgid "Plugin"
+msgstr ""
+
+#: shoop/xtheme/templates/shoop/xtheme/_editor_cell.jinja:4
+msgid "Delete This Cell"
+msgstr ""
+
+#: shoop/xtheme/templates/shoop/xtheme/_editor_cell.jinja:19
+msgid "There's nothing to configure in this plugin."
+msgstr ""
+
+#: shoop/xtheme/templates/shoop/xtheme/_editor_cell.jinja:22
+msgid "Save Plugin"
+msgstr ""
+
+#: shoop/xtheme/templates/shoop/xtheme/_editor_layout.jinja:2
+msgid "Edit Placeholder"
+msgstr ""
+
+#: shoop/xtheme/templates/shoop/xtheme/_editor_layout.jinja:15
+msgid "Add new cell"
+msgstr ""
+
+#: shoop/xtheme/templates/shoop/xtheme/_editor_layout.jinja:18
+msgid "Delete row"
+msgstr ""
+
+#: shoop/xtheme/templates/shoop/xtheme/_editor_layout.jinja:24
+msgid "Add new row"
+msgstr ""
+
+#: shoop/xtheme/templates/shoop/xtheme/editor.jinja:14
+msgid "Revert Changes"
+msgstr ""
+
+#: shoop/xtheme/templates/shoop/xtheme/editor.jinja:15
+msgid "Publish Changes"
+msgstr ""
+
+#: shoop/xtheme/templates/shoop/xtheme/admin/config.jinja:9
+#: shoop/xtheme/templates/shoop/xtheme/admin/config_detail.jinja:10
+msgid "Theme Configuration"
+msgstr ""
+
+#: shoop/xtheme/templates/shoop/xtheme/admin/config.jinja:17
+msgid "No themes are installed."
+msgstr ""
+
+#: shoop/xtheme/templates/shoop/xtheme/admin/config.jinja:46
+msgid "Author"
+msgstr ""
+
+#: shoop/xtheme/templates/shoop/xtheme/admin/config.jinja:51
+msgid "Currently active"
+msgstr ""
+
+#: shoop/xtheme/templates/shoop/xtheme/admin/config.jinja:54
+msgid "Activate"
+msgstr ""
+
+#: shoop/xtheme/templates/shoop/xtheme/admin/config.jinja:60
+msgid "Configure"
+msgstr ""
+
+#: shoop/xtheme/templates/shoop/xtheme/admin/config_detail.jinja:4
+#, python-format
+msgid "Theme Configuration: %(name)s"
+msgstr ""
+
+#: shoop/xtheme/templates/shoop/xtheme/admin/config_detail.jinja:17
+msgid "There's nothing to configure in this theme."
+msgstr ""
+
+#: shoop/xtheme/views/editor.py:125
+#, python-format
+msgid "Cannot add more than %d cells in one row."
+msgstr ""
+
+#: shoop/xtheme/views/forms.py:21
+msgid "Full Width"
+msgstr ""
+
+#: shoop/xtheme/views/forms.py:22
+msgid "Three Fourths (3/4)"
+msgstr ""
+
+#: shoop/xtheme/views/forms.py:23
+msgid "Two Thirds (2/3)"
+msgstr ""
+
+#: shoop/xtheme/views/forms.py:24
+msgid "Half (1/2)"
+msgstr ""
+
+#: shoop/xtheme/views/forms.py:25
+msgid "One Third (1/3)"
+msgstr ""
+
+#: shoop/xtheme/views/forms.py:26
+msgid "One Fourth (1/4)"
+msgstr ""
+
+#: shoop/xtheme/views/forms.py:42
+msgid "Cell width"
+msgstr ""
+
+#: shoop/xtheme/views/forms.py:44
+msgid "No Plugin"
+msgstr ""
+
+#~ msgid "EditÃ¢â‚¬Â¦"
+#~ msgstr ""
+
+#~ msgid "Log in with different credentialsÃ¢â‚¬Â¦"
+#~ msgstr ""
+
