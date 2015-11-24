@@ -110,3 +110,17 @@ class CustomerTaxGroup(TranslatableShoopModel):
     class Meta:
         verbose_name = _('customer tax group')
         verbose_name_plural = _('customer tax groups')
+
+    @classmethod
+    def get_default_person_group(cls):
+        obj, c = CustomerTaxGroup.objects.get_or_create(identifier="default_person_customers", defaults={
+            "name": _("Retail Customers")
+        })
+        return obj
+
+    @classmethod
+    def get_default_company_group(cls):
+        obj, c = CustomerTaxGroup.objects.get_or_create(identifier="default_company_customers", defaults={
+            "name": _("Company Customers")
+        })
+        return obj
