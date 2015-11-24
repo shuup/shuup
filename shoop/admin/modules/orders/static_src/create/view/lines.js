@@ -6,87 +6,146 @@
  * This source code is licensed under the AGPLv3 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import {addLine, deleteLine, retrieveProductData, setLineProperty} from "../actions";
-import {selectBox, LINE_TYPES} from "./utils";
+import {addLine, deleteLine, retrieveProductData, setLineProperty, updateTotals} from "../actions";
+import {LINE_TYPES, selectBox} from "./utils";
 import BrowseAPI from "BrowseAPI";
 
-export function renderOrderLines(store, lines) {
+function renderNumberCell(store, line, value, fieldId, canEditPrice, min=null) {
+    return m("input.form-control", {
+            type: "number",
+            step: line.step,
+            min: min != null ? min : "",
+            value: value,
+            disabled: !canEditPrice,
+            onchange: function () {
+                store.dispatch(setLineProperty(line.id, fieldId, this.value));
+                if (fieldId === "quantity" && line.product) {
+                    store.dispatch(retrieveProductData(
+                        {id: line.product.id, forLine: line.id, quantity: this.value}
+                    ));
+                }
+                store.dispatch(updateTotals(store.getState));
+            }
+    });
+}
+
+export function renderOrderLines(store, shop, lines) {
     return _(lines).map((line) => {
         var text = line.text, canEditPrice = true;
         const showPrice = (line.type !== "text");
         if (line.type === "product") {
             text = m("a", {
-                href: "#",
-                onclick: () => {
-                    BrowseAPI.openBrowseWindow({
-                        kind: "product",
-                        onSelect: (obj) => {
-                            store.dispatch(setLineProperty(line.id, "product", obj));
-                            store.dispatch(retrieveProductData({id: obj.id, forLine: line.id}));
-                        }
-                    });
-                }
-            }, (line.product ? line.product.text : gettext("No product selected")));
+                    href: "#",
+                    onclick: () => {
+                        BrowseAPI.openBrowseWindow({
+                            kind: "product",
+                            filter: {"shop": shop.id},
+                            onSelect: (obj) => {
+                                store.dispatch(setLineProperty(line.id, "product", obj));
+                                store.dispatch(retrieveProductData(
+                                    {id: obj.id, forLine: line.id, quantity: line.quantity}
+                                ));
+                            }
+                        });
+                    }
+                }, (line.product ?
+                    [line.product.text, m("br"), m("small", "(" + line.sku + ")")] : gettext("Select product"))
+            );
             canEditPrice = (line.product && line.product.id);
         } else {
-            text = m("input.form-control", {
-                value: line.text,
-                onchange: function () {
-                    store.dispatch(setLineProperty(line.id, "text", this.value));
-                }
-            });
+            text = [
+                m("label", gettext("Text/Comment")),
+                m("input.form-control", {
+                    type: "text",
+                    value: line.text,
+                    onchange: function () {
+                        store.dispatch(setLineProperty(line.id, "text", this.value));
+                    }
+                })
+            ];
         }
         const priceCells = [
-            m("td", m("input.form-control", {
-                type: "number",
-                min: 0,
-                value: line.quantity,
-                disabled: !canEditPrice,
-                onchange: function () {
-                    store.dispatch(setLineProperty(line.id, "quantity", this.value));
-                }
-            })),
-            m("td", m("input.form-control", {
-                type: "number",
-                value: line.unitPrice,
-                disabled: !canEditPrice,
-                onchange: function () {
-                    store.dispatch(setLineProperty(line.id, "unitPrice", this.value));
-                }
-            })),
-            m("td.text-right", (line.quantity * line.unitPrice).toFixed(2))
+            m("div.line-cell", [
+                m("label", gettext("Qty")),
+                renderNumberCell(store, line, line.quantity, "quantity", canEditPrice, 0)
+            ]),
+            m("div.line-cell", [
+                m("label", gettext("Unit Price")),
+                renderNumberCell(store, line, line.unitPrice, "unitPrice", canEditPrice)
+            ]),
+            m("div.line-cell", [
+                m("label", gettext("Total Price")),
+                renderNumberCell(store, line, line.total, "total", canEditPrice)
+            ])
         ];
-        return m("tr", [
-            m("td", selectBox(line.type, function () {
-                store.dispatch(setLineProperty(line.id, "type", this.value));
-            }, LINE_TYPES)),
-            m("td", line.sku),
-            m("td", {colspan: showPrice ? 1 : priceCells.length + 1}, text),
-            (showPrice ? priceCells : null),
-            m("td", m("button.btn.btn-xs.btn-danger", {
-                onclick: function () {
-                    store.dispatch(deleteLine(line.id));
-                }
-            }, m("i.fa.fa-trash")))
+        const productPriceCells = [
+            m("div.line-cell", [
+                m("label", gettext("Qty")),
+                renderNumberCell(store, line, line.quantity, "quantity", canEditPrice, 0)
+            ]),
+            m("div.line-cell", [
+                m("label", gettext("Base Unit Price")),
+                renderNumberCell(store, line, line.baseUnitPrice, "baseUnitPrice", false)
+            ]),
+            m("div.line-cell", [
+                m("label", gettext("Discounted Unit Price")),
+                renderNumberCell(store, line, line.unitPrice, "unitPrice", canEditPrice)
+            ]),
+            m("div.line-cell", [
+                m("label", gettext("Discount Percent")),
+                renderNumberCell(store, line, line.discountPercent, "discountPercent", canEditPrice)
+            ]),
+            m("div.line-cell", [
+                m("label", gettext("Total Discount Amount")),
+                renderNumberCell(store, line, line.discountAmount, "discountAmount", canEditPrice)
+            ]),
+            m("div.line-cell", [
+                m("label", gettext("Line Total")),
+                renderNumberCell(store, line, line.total, "total", canEditPrice)
+            ])
+        ];
+        return m("div.list-group-item", [
+            m("div.cells", [
+                m("div.line-cell.line-type-select", [
+                    m("label", gettext("Orderline type")),
+                    selectBox(line.type, function () {
+                        store.dispatch(setLineProperty(line.id, "type", this.value));
+                        store.dispatch(updateTotals(store.getState));
+                    }, LINE_TYPES)
+                ]),
+                m("div.line-cell", text),
+                (showPrice ? (line.type === "product" ? productPriceCells : priceCells) : null),
+                m("div.line-cell.delete",
+                    m("button.btn.btn-sm.text-danger", {
+                        onclick: function () {
+                            store.dispatch(deleteLine(line.id));
+                            store.dispatch(updateTotals(store.getState));
+                        }
+                    }, m("i.fa.fa-trash")))
+            ]),
+            line.errors ? m("p.text-danger", line.errors) : null
         ]);
     }).compact().value();
 }
 
-export function orderLinesView(store) {
-    const {lines} = store.getState();
-    return m("table.table.table-condensed.table-striped", [
-        m("thead", [gettext("Type"), gettext("SKU"), gettext("Text"), gettext("Quantity"),
-            gettext("Unit Price"), gettext("Total Price")].map((text) => m("th", text))),
-        m("tbody",
-            renderOrderLines(store, lines),
-            m("tr", [
-                m("td"),
-                m("td", {colspan: 6}, m("a", {
-                    href: "#", onclick: () => {
-                        store.dispatch(addLine());
-                    }
-                }, gettext("Add new line..."))),
-            ])
-        )
+export function orderLinesView(store, isCreating) {
+    const {lines, shop} = store.getState();
+    return m("div", [
+        m("p", gettext("If your product prices vary based on customers you might wan't to select customer first.")),
+        m("p", gettext(gettext("All prices is in ") + shop.selected.currency + " currency.")),
+        m(
+            "p",
+            shop.selected.pricesIncludeTaxes ? gettext("All prices include taxes.") : gettext("Taxes is not included.")
+        ),
+        m("div.list-group", renderOrderLines(store, shop.selected, lines)),
+        m("hr"),
+        m("button.btn.text-success" + (isCreating ? ".disabled": ""), {
+            disabled: isCreating,
+            onclick: () => {
+                if(!isCreating) {
+                    store.dispatch(addLine());
+                }
+            }
+        }, m("i.fa.fa-plus"), " " + gettext("Add new line"))
     ]);
 }

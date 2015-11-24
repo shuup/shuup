@@ -7,36 +7,61 @@
  * LICENSE file in the root directory of this source tree.
  */
 import m from "mithril";
-import {shopSelectView, customerSelectView, methodSelectView, commentView} from "./meta";
+import {shopSelectView} from "./shops";
 import {orderLinesView} from "./lines";
-import {beginCreatingOrder} from "../actions";
+import {customerSelectView} from "./customers";
+import {shipmentMethodSelectView, paymentMethodSelectView} from "./methods";
+import {confirmView} from "./confirm";
+import {contentBlock} from "./utils";
+import {beginCreatingOrder, clearOrderSourceData, retrieveCustomerData, retrieveOrderSourceData} from "../actions";
 import store from "../store";
 
 export default function view() {
-    const isCreating = store.getState().order.creating;
-    return m("div",
-        m("div.row",
-            m("div.col-md-4", [
-                shopSelectView(store),
-                customerSelectView(store),
-                methodSelectView(store),
-                commentView(store),
-            ]),
-            m("div.col-md-8", orderLinesView(store))
-        ),
-        m("hr"),
-        m("div.row",
-            m("div.col-md-4"),
-            m("div.col-md-2.pull-right", [
-                m("button.btn.btn-primary.btn-block" + (isCreating ? ".disabled" : ""), {
-                    disabled: isCreating,
+    const {creating, source, total} = store.getState().order;
+    const {choices, selected} = store.getState().shop;
+    if (source) {
+        return m("div.container-fluid",
+            confirmView(source),
+            m("div", [
+                m("button.btn.btn-danger.btn-lg" + (creating ? ".disabled" : ""), {
+                    disabled: creating,
                     onclick: () => {
-                        if(!isCreating) {
-                            store.dispatch(beginCreatingOrder());
-                        }
+                        store.dispatch(retrieveCustomerData({id: source.customerId}));
+                        store.dispatch(clearOrderSourceData());
                     }
-                }, m("i.fa.fa-check"), " " + gettext("Create Order"))
+                }, m("i.fa.fa-close"), " " + gettext("Cancel")),
+                m("button.btn.btn-success.btn-lg.pull-right" + (creating ? ".disabled" : ""), {
+                    disabled: creating,
+                    onclick: () => {
+                        store.dispatch(beginCreatingOrder());
+                    }
+                }, m("i.fa.fa-check"), " " + gettext("Confirm"))
             ])
-        )
-    );
+        );
+    } else {
+        return m("div.container-fluid",
+            (choices.length > 1 ? contentBlock("i.fa.fa-building", gettext("Select Shop"), shopSelectView(store)) : null),
+            contentBlock("i.fa.fa-cubes", gettext("Order Contents"), orderLinesView(store, creating)),
+            contentBlock("i.fa.fa-user", gettext("Customer Details"), customerSelectView(store)),
+            contentBlock("i.fa.fa-truck", gettext("Shipping Method"), shipmentMethodSelectView(store)),
+            contentBlock("i.fa.fa-credit-card", gettext("Payment Method"), paymentMethodSelectView(store)),
+            m("div.order-footer",
+                m("div.text", m(
+                    "small",
+                    gettext("Method rules, taxes and possible extra discounts are calculated after proceeding."))
+                ),
+                m("div.text", m("h2", m("small", gettext("Total") + ": "), total + " " + selected.currency)),
+                m("div.proceed-button", [
+                    m("button.btn.btn-success.btn-block" + (creating ? ".disabled" : ""), {
+                        disabled: creating,
+                        onclick: () => {
+                            if(!source) {
+                                store.dispatch(retrieveOrderSourceData());
+                            }
+                        }
+                    }, m("i.fa.fa-check"), " " + gettext("Proceed"))
+                ])
+            )
+        );
+    }
 }
