@@ -48,6 +48,7 @@ class TranslatableShoopModel(ShoopModel, parler.models.TranslatableModel):
 
 
 class ChangeProtected(object):
+    protected_fields = None
     unprotected_fields = []
     change_protect_message = _("The following fields can not be changed")
 
@@ -70,9 +71,12 @@ class ChangeProtected(object):
         return True
 
     def _get_changed_protected_fields(self):
-        protected_fields = [
-            x.name for x in self._meta.get_fields()
-            if not x.is_relation and x.name not in self.unprotected_fields]
+        if self.protected_fields is not None:
+            protected_fields = self.protected_fields
+        else:
+            protected_fields = [
+                x.name for x in self._meta.get_fields()
+                if not x.is_relation and x.name not in self.unprotected_fields]
         in_db = type(self).objects.get(pk=self.pk)
         return [
             field for field in protected_fields
