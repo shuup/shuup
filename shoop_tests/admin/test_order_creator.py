@@ -6,7 +6,8 @@ from shoop.core.models import Order
 from shoop.testing.factories import (
     create_random_person, create_product,
     get_default_supplier, get_default_shop,
-    get_default_shipping_method, get_initial_order_status
+    get_default_shipping_method, get_default_payment_method,
+    get_initial_order_status
 )
 from shoop.testing.utils import apply_request_middleware
 from shoop_tests.utils import printable_gibberish, assert_contains
@@ -29,7 +30,7 @@ def get_frontend_order_state(contact, valid_lines=True):
     )
     if valid_lines:
         lines = [
-            {"id": "x", "type": "product", "product": {"id": product.id}, "quantity": "32", "unitPrice": 50},
+            {"id": "x", "type": "product", "product": {"id": product.id}, "quantity": "32", "baseUnitPrice": 50},
             {"id": "y", "type": "other", "sku": "hello", "text": "A greeting", "quantity": 1, "unitPrice": "5.5"},
             {"id": "z", "type": "text", "text": "This was an order!", "quantity": 0},
         ]
@@ -46,39 +47,43 @@ def get_frontend_order_state(contact, valid_lines=True):
         "customer": {"id": contact.id if contact else None},
         "lines": lines,
         "methods": {
-            "shippingMethodId": get_default_shipping_method().id,
-            "paymentMethodId": None,
+            "shippingMethod": {"id": get_default_shipping_method().id},
+            "paymentMethod": {"id": get_default_payment_method().id},
         },
         "shop": {
-            "id": shop.id
-        },
-        "comment": TEST_COMMENT,
+            "selected": {
+                "id": shop.id,
+                "name": shop.name,
+                "currency": shop.currency,
+                "priceIncludeTaxes": shop.prices_include_tax
+            }
+        }
     }
     return state
 
 
-def get_frontend_create_request(state, user):
+def get_frontend_request_for_command(state, command, user):
     json_data = json.dumps({"state": state})
     return apply_request_middleware(RequestFactory().post(
         "/",
         data=json_data,
         content_type="application/json; charset=UTF-8",
-        QUERY_STRING="command=create"
+        QUERY_STRING="command=%s" % command
     ), user=user)
+
 
 
 def test_order_creator_valid(rf, admin_user):
     get_initial_order_status()  # Needed for the API
     contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
-    request = get_frontend_create_request(get_frontend_order_state(contact), admin_user)
+    request = get_frontend_request_for_command(get_frontend_order_state(contact), "create", admin_user)
     response = OrderCreateView.as_view()(request)
     assert_contains(response, "orderIdentifier")  # this checks for status codes as a side effect
     data = json.loads(response.content.decode("utf8"))
     order = Order.objects.get(identifier=data["orderIdentifier"])
-    assert order.lines.count() == 4  # 3 submitted, one for the shipping method
+    assert order.lines.count() == 5  # 3 submitted, two for the shipping and payment method
     assert order.creator == admin_user
     assert order.customer == contact
-    assert order.log_entries.filter(message=TEST_COMMENT).exists()
 
 
 def test_order_creator_invalid_base_data(rf, admin_user):
@@ -86,8 +91,8 @@ def test_order_creator_invalid_base_data(rf, admin_user):
     state = get_frontend_order_state(contact=None)
     # Remove some critical data...
     state["customer"]["id"] = None
-    state["shop"]["id"] = None
-    request = get_frontend_create_request(state, admin_user)
+    state["shop"]["selected"]["id"] = None
+    request = get_frontend_request_for_command(state, "create", admin_user)
     response = OrderCreateView.as_view()(request)
     assert_contains(response, "errorMessage", status_code=400)
 
@@ -96,7 +101,7 @@ def test_order_creator_invalid_line_data(rf, admin_user):
     get_initial_order_status()  # Needed for the API
     contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
     state = get_frontend_order_state(contact=contact, valid_lines=False)
-    request = get_frontend_create_request(state, admin_user)
+    request = get_frontend_request_for_command(state, "create", admin_user)
     response = OrderCreateView.as_view()(request)
     # Let's see that we get a cornucopia of trouble:
     assert_contains(response, "does not exist", status_code=400)
@@ -128,8 +133,30 @@ def test_order_creator_product_data(rf, admin_user):
         "command": "product_data",
         "shop_id": shop.id,
         "id": product.id,
+        "quantity": 42
     }), user=admin_user)
     response = OrderCreateView.as_view()(request)
     assert_contains(response, "taxClass")
     assert_contains(response, "sku")
     assert_contains(response, product.sku)
+
+
+def test_order_creator_customer_data(rf, admin_user):
+    get_default_shop()
+    contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
+    request = apply_request_middleware(rf.get("/", {
+        "command": "customer_data",
+        "id": contact.id
+    }), user=admin_user)
+    response = OrderCreateView.as_view()(request)
+    assert_contains(response, "name")
+    assert_contains(response, contact.name)
+
+
+def test_order_creator_source_data(rf, admin_user):
+    get_initial_order_status()  # Needed for the API
+    contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
+    request = get_frontend_request_for_command(get_frontend_order_state(contact), "source_data", admin_user)
+    response = OrderCreateView.as_view()(request)
+    data = json.loads(response.content.decode("utf8"))
+    assert len(data.get("orderLines")) == 5
