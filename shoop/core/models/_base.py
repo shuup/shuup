@@ -47,19 +47,19 @@ class TranslatableShoopModel(ShoopModel, parler.models.TranslatableModel):
         abstract = True
 
 
-class ImmutableMixin(object):
+class ChangeProtected(object):
     unprotected_fields = []
     immutability_message = _("Cannot change immutable object that is in use")
 
     def clean(self, *args, **kwargs):
-        super(ImmutableMixin, self).clean(*args, **kwargs)
+        super(ChangeProtected, self).clean(*args, **kwargs)
         if self.pk:
             if self._has_any_protected_field_changed() and self._is_in_use():
                 raise ValidationError(self.immutability_message)
 
     def save(self, *args, **kwargs):
         self.clean()
-        super(ImmutableMixin, self).save(*args, **kwargs)
+        super(ChangeProtected, self).save(*args, **kwargs)
 
     def _is_in_use(self):
         return True

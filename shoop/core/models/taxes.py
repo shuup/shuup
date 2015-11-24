@@ -16,10 +16,10 @@ from shoop.core.fields import CurrencyField, InternalIdentifierField, MoneyValue
 from shoop.utils.i18n import format_money, format_percent
 from shoop.utils.properties import MoneyProperty, MoneyPropped
 
-from ._base import ImmutableMixin, TranslatableShoopModel
+from ._base import ChangeProtected, TranslatableShoopModel
 
 
-class Tax(MoneyPropped, ImmutableMixin, TranslatableShoopModel):
+class Tax(MoneyPropped, ChangeProtected, TranslatableShoopModel):
     identifier_attr = 'code'
 
     immutability_message = _(
