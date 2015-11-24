@@ -19,7 +19,8 @@ from parler.models import TranslatedFields
 from shoop.core.fields import CurrencyField, InternalIdentifierField
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
 
-from ._base import TranslatableShoopModel
+from ._base import ChangeProtected, TranslatableShoopModel
+from .orders import Order
 
 
 def _get_default_currency():
@@ -32,7 +33,9 @@ class ShopStatus(Enum):
 
 
 @python_2_unicode_compatible
-class Shop(TranslatableShoopModel):
+class Shop(ChangeProtected, TranslatableShoopModel):
+    protected_fields = ["currency", "prices_include_tax"]
+
     identifier = InternalIdentifierField(unique=True)
     domain = models.CharField(max_length=128, blank=True, null=True, unique=True)
     status = EnumIntegerField(ShopStatus, default=ShopStatus.DISABLED)
@@ -66,3 +69,6 @@ class Shop(TranslatableShoopModel):
             return TaxfulPrice(value, self.currency)
         else:
             return TaxlessPrice(value, self.currency)
+
+    def _is_in_use(self):
+        return Order.objects.filter(shop=self).exists()
