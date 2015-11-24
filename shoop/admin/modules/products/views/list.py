@@ -28,7 +28,11 @@ class ProductListView(PicotableListView):
     ]
 
     def get_queryset(self):
-        return Product.objects.all_except_deleted()
+        shop_id = self.get_filter().get("shop")
+        qs = Product.objects.all_except_deleted()
+        if shop_id:
+            qs = qs.filter(shop_products__shop_id=int(shop_id))
+        return qs
 
     def get_object_abstract(self, instance, item):
         return [

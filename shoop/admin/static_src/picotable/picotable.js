@@ -632,7 +632,13 @@ const Picotable = (function(m, storage) {
                 page: 0 | ctrl.vm.page(),
                 filters: ctrl.vm.filterValues()
             };
-            m.request({method: "GET", url: url, data: {"jq": JSON.stringify(data)}}).then(ctrl.vm.data, function() {
+            const params = m.route.parseQueryString(decodeURI(location.search));
+            params.jq = JSON.stringify(data);
+            m.request({
+                method: "GET",
+                url: url,
+                data: params
+            }).then(ctrl.vm.data, function() {
                 alert("An error occurred.");
             });
             ctrl.saveSettings();

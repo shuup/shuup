@@ -375,3 +375,7 @@ class PicotableViewMixin(object):
         :rtype: Iterable[dict]
         """
         return None
+
+    def get_filter(self):
+        filter_string = self.request.GET.get("filter")
+        return json.loads(filter_string) if filter_string else {}

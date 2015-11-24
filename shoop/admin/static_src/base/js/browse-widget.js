@@ -46,11 +46,14 @@ window.BrowseAPI = (function() {
      * @return {Object}
      */
     function openBrowseWindow(options) {
-        const filter = options.filter;
+        var filter = options.filter;
         const kind = options.kind;
         const browserUrl = window.ShoopAdminConfig.browserUrls[kind];
         if (!browserUrl) {
             throw new Error(gettext("No browser URL for kind:") + " " + kind);
+        }
+        if(typeof filter !== "string") {
+            filter = JSON.stringify(filter);
         }
         const id = "m-" + (+new Date);
         const qs = _.compact([
