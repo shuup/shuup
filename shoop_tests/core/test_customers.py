@@ -6,7 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-from shoop.core.models import CompanyContact, PersonContact, get_person_contact
+from shoop.core.models import CompanyContact, PersonContact, get_person_contact, CustomerTaxGroup
 from shoop.testing.factories import DEFAULT_NAME, get_default_customer_group, DEFAULT_IDENTIFIER
 
 
@@ -34,3 +34,17 @@ def test_companies(django_user_model):
             off = (cx * 3 + x) % len(peons)
             contact = get_person_contact(user=peons[off])
             company.members.add(contact)
+
+
+@pytest.mark.django_db
+def test_customer_tax_group1():
+    # test that created person is assigned to proper group
+    person = PersonContact.objects.create(email="test@example.com", name="Test Tester")
+    assert person.tax_group.identifier == "default_person_customers"
+
+
+@pytest.mark.django_db
+def test_customer_tax_group2():
+    # test that created company is assigned to proper group
+    company = CompanyContact.objects.create(email="test@example.com", name="Test Tester", tax_number="FI123123")
+    assert company.tax_group.identifier == "default_company_customers"

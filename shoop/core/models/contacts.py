@@ -17,6 +17,7 @@ from polymorphic.polymorphic_model import PolymorphicModel
 from timezone_field.fields import TimeZoneField
 
 from shoop.core.fields import InternalIdentifierField, LanguageField
+from shoop.core.models import CustomerTaxGroup
 from shoop.core.utils.name_mixin import NameMixin
 
 
@@ -42,6 +43,7 @@ class ContactGroup(TranslatableModel):
 class Contact(NameMixin, PolymorphicModel):
     is_anonymous = False
     is_all_seeing = False
+    default_tax_group_getter = None
 
     created_on = models.DateTimeField(auto_now_add=True, editable=False)
     identifier = InternalIdentifierField(unique=True, null=True, blank=True)
@@ -82,8 +84,15 @@ class Contact(NameMixin, PolymorphicModel):
         verbose_name = _('contact')
         verbose_name_plural = _('contacts')
 
+    def __init__(self, *args, **kwargs):
+        if self.default_tax_group_getter:
+            kwargs.setdefault("tax_group", self.default_tax_group_getter())
+        super(Contact, self).__init__(*args, **kwargs)
+
 
 class CompanyContact(Contact):
+    default_tax_group_getter = CustomerTaxGroup.get_default_company_group
+
     members = models.ManyToManyField("Contact", related_name="company_memberships", blank=True)
     tax_number = models.CharField(
         max_length=32, blank=True,
@@ -103,6 +112,8 @@ class Gender(Enum):
 
 
 class PersonContact(Contact):
+    default_tax_group_getter = CustomerTaxGroup.get_default_person_group
+
     user = models.OneToOneField(settings.AUTH_USER_MODEL, blank=True, null=True, related_name="contact")
     gender = EnumField(Gender, default=Gender.UNDISCLOSED, max_length=4)
     birth_date = models.DateField(blank=True, null=True)
