@@ -10,11 +10,6 @@ import {handleActions} from "redux-actions";
 import _ from "lodash";
 
 export default handleActions({
-    setShopChoices: ((state, {payload}) => _.assign(state, {choices: payload})),
-    setCountries: ((state, {payload}) =>_.assign(state, {countries: payload})),
-    setShop: ((state, {payload}) =>_.assign(state, {selected: payload}))
-}, {
-    choices: [],
-    countries: [],
-    selected: null
-});
+    retrieveCustomerData: _.identity,
+    receiveCustomerData: ((state, {payload}) => _.assign(state, {[payload.id]: payload.data}))
+}, {});

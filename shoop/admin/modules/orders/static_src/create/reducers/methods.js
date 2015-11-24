@@ -10,13 +10,13 @@ import {handleActions} from "redux-actions";
 import _ from "lodash";
 
 export default handleActions({
-    setShippingMethodId: ((state, {payload}) => _.assign(state, {shippingMethodId: payload})),
+    setShippingMethod: ((state, {payload}) => _.assign(state, {shippingMethod: payload})),
     setShippingMethodChoices: ((state, {payload}) => _.assign(state, {shippingMethodChoices: payload})),
-    setPaymentMethodId: ((state, {payload}) => _.assign(state, {paymentMethodId: payload})),
-    setPaymentMethodChoices: ((state, {payload}) => _.assign(state, {paymentMethodChoices: payload})),
+    setPaymentMethod: ((state, {payload}) => _.assign(state, {paymentMethod: payload})),
+    setPaymentMethodChoices: ((state, {payload}) => _.assign(state, {paymentMethodChoices: payload}))
 }, {
     shippingMethodChoices: [],
-    shippingMethodId: null,
+    shippingMethod: null,
     paymentMethodChoices: [],
-    paymentMethodId: null,
+    paymentMethod: null
 });

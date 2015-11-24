@@ -16,9 +16,15 @@ function newLine() {
         product: null,
         sku: null,
         text: null,
+        errors: null,
         quantity: 1,
+        step: "",
+        baseUnitPrice: 0,
         unitPrice: 0,
-        unitPriceIncludesTax: false
+        unitPriceIncludesTax: false,
+        discountPercent: 0,
+        discountAmount: 0,
+        total: 0
     };
 }
 
@@ -27,8 +33,28 @@ function setLineProperties(linesState, lineId, props) {
         if (line.id === lineId) {
             return _.assign({}, line, props);
         }
+
         return line;
     });
+}
+
+function getDiscountsAndTotal(quantity, baseUnitPrice, unitPrice, updateUnitPrice=false) {
+    const updates = {};
+    if (updateUnitPrice) {
+        updates.unitPrice = unitPrice;
+    }
+    var totalBeforeDiscount = baseUnitPrice * quantity;
+    var total = +(unitPrice * quantity).toFixed(2);
+    updates.total = total;
+    if (baseUnitPrice < unitPrice || unitPrice < 0) {
+        updates.discountPercent = 0;
+        updates.discountAmount = 0;
+        return updates;
+    }
+    var discountAmount = totalBeforeDiscount - total;
+    updates.discountAmount = discountAmount;
+    updates.discountPercent = ((discountAmount / totalBeforeDiscount) * 100).toFixed(2);
+    return updates;
 }
 
 function updateLineFromProduct(state, {payload}) {
@@ -37,20 +63,30 @@ function updateLineFromProduct(state, {payload}) {
     if (!line) {
         return state;
     }
-    const updates = {};
+    var updates = {};
+    if (!product.sku) {
+        // error happened before getting actual product information
+        updates.errors = product.errors;
+        return setLineProperties(state, id, updates);
+    }
     if (line.unitPrice === 0) {
+        updates = getDiscountsAndTotal(product.quantity, product.baseUnitPrice.value, product.unitPrice.value);
+        updates.baseUnitPrice = product.baseUnitPrice.value;
         updates.unitPrice = product.unitPrice.value;
         updates.unitPriceIncludesTax = product.unitPrice.includesTax;
     }
     updates.sku = product.sku;
     updates.text = product.name;
+    updates.quantity = product.quantity;
+    updates.step = product.purchaseMultiple;
+    updates.errors = product.errors;
     return setLineProperties(state, id, updates);
 }
 
 function setLineProperty(state, {payload}) {
     const {id, property, value} = payload;
     const line = _.detect(state, (sLine) => sLine.id === id);
-    const updates = {};
+    var updates = {};
     if (line) {
         switch (property) {
             case "product":
@@ -68,15 +104,40 @@ function setLineProperty(state, {payload}) {
                     updates.sku = null;
                 }
                 if (value === "text") {
+                    updates = getDiscountsAndTotal(0, line.baseUnitPrice, 0);
                     updates.unitPrice = 0;
                     updates.quantity = 0;
                 }
+                updates.type = value;
                 break;
             case "quantity":
-                updates.quantity = Math.max(0, parseFloat(value));
+                var quantity = Math.max(0, parseFloat(value));
+                updates = getDiscountsAndTotal(quantity, line.baseUnitPrice, line.unitPrice);
+                updates.quantity = quantity;
                 break;
             case "unitPrice":
-                updates.unitPrice = Math.max(0, parseFloat(value));
+                var unitPrice = parseFloat(value);
+                updates = getDiscountsAndTotal(line.quantity, line.baseUnitPrice, unitPrice);
+                updates.unitPrice = unitPrice;
+                break;
+            case "discountPercent":
+                var discountPercent = Math.max(0, parseFloat(value));
+                updates = getDiscountsAndTotal(
+                    line.quantity, line.baseUnitPrice, (line.baseUnitPrice * (1 - (discountPercent / 100))), true
+                );
+                updates.discountPercent = discountPercent;
+                break;
+            case "discountAmount":
+                var discountAmount = Math.max(0, parseFloat(value));
+                updates = getDiscountsAndTotal(
+                    line.quantity, line.baseUnitPrice, (line.baseUnitPrice - (discountAmount / line.quantity)), true
+                );
+                updates.discountAmount = discountAmount;
+                break;
+            case "total":
+                var total = +parseFloat(value).toFixed(2);
+                updates = getDiscountsAndTotal(line.quantity, line.baseUnitPrice, (total / line.quantity), true);
+                updates.total = total;
                 break;
         }
     }

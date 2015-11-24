@@ -7,8 +7,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 import {handleActions} from "redux-actions";
-import _ from 'lodash';
+import _ from "lodash";
 
 export default handleActions({
-    setComment: ((state, {payload}) => _.trim(payload || "")),
+    setComment: ((state, {payload}) => _.trim(payload || ""))
 }, null);
