@@ -12,7 +12,10 @@ from copy import deepcopy
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.utils.translation import ugettext as _
 
-from shoop.core.models import Contact, OrderLineType, OrderStatus, PaymentMethod, Product, ShippingMethod, Shop
+from shoop.core.models import (
+    Address, Contact, CompanyContact, PersonContact, OrderLineType,
+    OrderStatus, PaymentMethod, Product, ShippingMethod, Shop
+)
 from shoop.core.order_creator import OrderCreator, OrderSource
 from shoop.utils.analog import LogEntryKind
 from shoop.utils.numbers import parse_decimal_string
@@ -52,7 +55,8 @@ class JsonOrderCreator(object):
             self.add_error(ValidationError(msg, code="invalid_quantity"))
             return False
 
-        price_val = sline.pop("unitPrice", None)
+        is_product = bool(sline.get("type") == "product")
+        price_val = sline.pop("baseUnitPrice", None) if is_product else sline.pop("unitPrice", None)
         try:
             sl_kwargs["base_unit_price"] = source.create_price(parse_decimal_string(price_val))
         except Exception as exc:
@@ -63,6 +67,18 @@ class JsonOrderCreator(object):
             }
             self.add_error(ValidationError(msg, code="invalid_price"))
             return False
+
+        discount_val = sline.pop("discountAmount", parse_decimal_string(str("0.00")))
+        try:
+            sl_kwargs["discount_amount"] = source.create_price(parse_decimal_string(discount_val))
+        except Exception as exc:
+            msg = _("The discount '%(discount)s' (for line %(text)s is invalid (%(error)s)") % {
+                "discount": discount_val,
+                "text": sl_kwargs["text"],
+                "error": exc
+            }
+            self.add_error(ValidationError(msg, code="invalid_discount"))
+
         return True
 
     def _process_product_line(self, source, sline, sl_kwargs):
@@ -91,7 +107,7 @@ class JsonOrderCreator(object):
 
     def _add_json_line_to_source(self, source, sline):
         valid = True
-        type = sline.pop("type")
+        type = sline.get("type")
         sl_kwargs = dict(
             line_id=sline.pop("id"),
             sku=sline.pop("sku", None),
@@ -121,27 +137,94 @@ class JsonOrderCreator(object):
             except Exception as exc:  # pragma: no cover
                 self.add_error(exc)
 
+    def _create_contact_from_address(self, billing_address, is_company):
+        name = billing_address.get("name", None)
+        if not name:
+            self.add_error(
+                ValidationError(_("Name is required for customer"), code="no_name")
+            )
+            return
+
+        phone = billing_address.get("phone", "")
+        email = billing_address.get("email", "")
+        fields = {"name": name, "phone": phone, "email": email}
+        if is_company:
+            tax_number = billing_address.pop("tax_number", None)
+            if not tax_number:
+                self.add_error(
+                    ValidationError(_("Tax number is not set for company."), code="no_tax_number")
+                )
+                return
+
+            fields.update({"tax_number": tax_number})
+            customer = CompanyContact.objects.create(**fields)
+        else:
+            customer = PersonContact.objects.create(**fields)
+        return customer
+
+    def _create_address(self, address):
+        address_fields = [
+            "name", "tax_number", "phone", "email", "street", "street2", "postal_code", "city", "region", "country"
+        ]
+        fields = {"is_immutable": True}
+        for field in address_fields:
+            fields[field] = address.get(field, "")
+
+        address = Address.objects.filter(**fields).first()
+        if not address:
+            address = Address.objects.create(**fields)
+
+        return address
+
     def _initialize_source_from_state(self, state, creator):
-        customer_data = state.pop("customer", None) or {}
-        shop_data = state.pop("shop", None) or {}
-        methods_data = state.pop("methods", None) or {}
-        customer = self.safe_get_first(Contact, pk=customer_data.get("id"))
+        shop_data = state.pop("shop", None).get("selected", {})
         shop = self.safe_get_first(Shop, pk=shop_data.pop("id", None))
-
-        if not customer:
-            self.add_error(ValidationError(_("Please choose a valid customer."), code="no_customer"))
-
         if not shop:
             self.add_error(ValidationError(_("Please choose a valid shop."), code="no_shop"))
             return None
 
         source = OrderSource(shop=shop)
+
+        customer_data = state.pop("customer", None)
+        billing_address = customer_data.pop("billingAddress", {})
+        shipping_address = customer_data.pop("shippingAddress", {})
+        ship_to_billing_address = customer_data.pop("shipToBillingAddress", False)
+        is_company = customer_data.pop("isCompany", False)
+        save_address = customer_data.pop("saveAddress", False)
+        customer = self.safe_get_first(Contact, pk=customer_data.get("id")) if customer_data else None
+        if not customer:
+            customer = self._create_contact_from_address(billing_address, is_company)
+            if not customer:
+                return
+
+        billing_address = self._create_address(billing_address)
+        shipping_address = billing_address if ship_to_billing_address else self._create_address(shipping_address)
+
+        if save_address:
+            customer.default_billing_address = billing_address
+            customer.default_shipping_address = shipping_address
+            customer.save()
+
+        methods_data = state.pop("methods", None) or {}
+        shipping_method = methods_data.pop("shippingMethod")
+        if not shipping_method:
+            self.add_error(ValidationError(_("Please select shipping method."), code="no_shipping_method"))
+
+        payment_method = methods_data.pop("paymentMethod")
+        if not payment_method:
+            self.add_error(ValidationError(_("Please select payment method."), code="no_payment_method"))
+
+        if self.errors:
+            return
+
         source.update(
             creator=creator,
             customer=customer,
+            billing_address=billing_address,
+            shipping_address=shipping_address,
             status=OrderStatus.objects.get_default_initial(),
-            shipping_method=self.safe_get_first(ShippingMethod, pk=methods_data.pop("shippingMethodId")),
-            payment_method=self.safe_get_first(PaymentMethod, pk=methods_data.pop("paymentMethodId")),
+            shipping_method=self.safe_get_first(ShippingMethod, pk=shipping_method.get("id")),
+            payment_method=self.safe_get_first(PaymentMethod, pk=payment_method.get("id")),
         )
         return source
 
@@ -150,16 +233,16 @@ class JsonOrderCreator(object):
         if comment:
             order.add_log_entry(comment, kind=LogEntryKind.NOTE, user=order.creator)
 
-    def create_order_from_state(self, state, creator=None):
+    def create_source_from_state(self, state, creator=None):
         """
-        Create an order from a state dict unserialized from JSON.
+        Create an order source from a state dict unserialized from JSON.
 
         :param state: State dictionary
         :type state: dict
         :param creator: Creator user
         :type creator: django.contrib.auth.models.User|None
-        :return: The created order, or None if something failed along the way
-        :rtype: Order|None
+        :return: The created order source, or None if something failed along the way
+        :rtype: OrderSource|None
         """
         if not self.is_valid:  # pragma: no cover
             raise ValueError("Create a new JsonOrderCreator for each order.")
@@ -176,6 +259,21 @@ class JsonOrderCreator(object):
         self._process_lines(source, state)
         if not self.is_valid:  # If we encountered any errors thus far, don't bother going forward
             return None
+
+        return source
+
+    def create_order_from_state(self, state, creator=None):
+        """
+        Create an order from a state dict unserialized from JSON.
+
+        :param state: State dictionary
+        :type state: dict
+        :param creator: Creator user
+        :type creator: django.contrib.auth.models.User|None
+        :return: The created order, or None if something failed along the way
+        :rtype: Order|None
+        """
+        source = self.create_source_from_state(state, creator)
 
         # Then create an OrderCreator and try to get things done!
         creator = OrderCreator(request=None)
