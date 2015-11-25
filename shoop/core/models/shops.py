@@ -70,5 +70,5 @@ class Shop(ChangeProtected, TranslatableShoopModel):
         else:
             return TaxlessPrice(value, self.currency)
 
-    def _is_in_use(self):
+    def _are_changes_protected(self):
         return Order.objects.filter(shop=self).exists()

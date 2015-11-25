@@ -56,7 +56,7 @@ class ChangeProtected(object):
         super(ChangeProtected, self).clean(*args, **kwargs)
         if self.pk:
             changed_protected_fields = self._get_changed_protected_fields()
-            if changed_protected_fields and self._is_in_use():
+            if changed_protected_fields and self._are_changes_protected():
                 message = "{change_protect_message}: {fields}".format(
                     change_protect_message=self.change_protect_message,
                     fields=", ".join(sorted(changed_protected_fields)),
@@ -67,7 +67,15 @@ class ChangeProtected(object):
         self.clean()
         super(ChangeProtected, self).save(*args, **kwargs)
 
-    def _is_in_use(self):
+    def _are_changes_protected(self):
+        """
+        Check if changes of this object should be protected.
+
+        This can be overridden in the subclasses to make it possible to
+        avoid change protection e.g. if object is not in use yet.
+
+        The base class implementation just returns True.
+        """
         return True
 
     def _get_changed_protected_fields(self):

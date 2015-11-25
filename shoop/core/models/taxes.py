@@ -80,7 +80,7 @@ class Tax(MoneyPropped, ChangeProtected, TranslatableShoopModel):
             text += " ({})".format(format_money(self.amount))
         return text
 
-    def _is_in_use(self):
+    def _are_changes_protected(self):
         return self.order_line_taxes.exists()
 
     class Meta:
