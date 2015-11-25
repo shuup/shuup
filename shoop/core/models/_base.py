@@ -47,28 +47,45 @@ class TranslatableShoopModel(ShoopModel, parler.models.TranslatableModel):
         abstract = True
 
 
-class ImmutableMixin(object):
+class ChangeProtected(object):
+    protected_fields = None
     unprotected_fields = []
-    immutability_message = _("Cannot change immutable object that is in use")
+    change_protect_message = _("The following fields can not be changed")
 
     def clean(self, *args, **kwargs):
-        super(ImmutableMixin, self).clean(*args, **kwargs)
+        super(ChangeProtected, self).clean(*args, **kwargs)
         if self.pk:
-            if self._has_any_protected_field_changed() and self._is_in_use():
-                raise ValidationError(self.immutability_message)
+            changed_protected_fields = self._get_changed_protected_fields()
+            if changed_protected_fields and self._are_changes_protected():
+                message = "{change_protect_message}: {fields}".format(
+                    change_protect_message=self.change_protect_message,
+                    fields=", ".join(sorted(changed_protected_fields)),
+                )
+                raise ValidationError(message)
 
     def save(self, *args, **kwargs):
         self.clean()
-        super(ImmutableMixin, self).save(*args, **kwargs)
+        super(ChangeProtected, self).save(*args, **kwargs)
 
-    def _is_in_use(self):
+    def _are_changes_protected(self):
+        """
+        Check if changes of this object should be protected.
+
+        This can be overridden in the subclasses to make it possible to
+        avoid change protection e.g. if object is not in use yet.
+
+        The base class implementation just returns True.
+        """
         return True
 
-    def _has_any_protected_field_changed(self):
-        protected_fields = [
-            x.name for x in self._meta.get_fields()
-            if not x.is_relation and x.name not in self.unprotected_fields]
+    def _get_changed_protected_fields(self):
+        if self.protected_fields is not None:
+            protected_fields = self.protected_fields
+        else:
+            protected_fields = [
+                x.name for x in self._meta.get_fields()
+                if not x.is_relation and x.name not in self.unprotected_fields]
         in_db = type(self).objects.get(pk=self.pk)
-        return any(
-            getattr(self, field) != getattr(in_db, field)
-            for field in protected_fields)
+        return [
+            field for field in protected_fields
+            if getattr(self, field) != getattr(in_db, field)]

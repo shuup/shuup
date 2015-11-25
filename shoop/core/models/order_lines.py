@@ -57,7 +57,7 @@ class OrderLineManager(models.Manager):
 
 
 @python_2_unicode_compatible
-class OrderLine(models.Model, Priceful):
+class OrderLine(MoneyPropped, models.Model, Priceful):
     order = UnsavedForeignKey("Order", related_name='lines', on_delete=models.PROTECT, verbose_name=_('order'))
     product = UnsavedForeignKey(
         "Product", blank=True, null=True, related_name="order_lines",

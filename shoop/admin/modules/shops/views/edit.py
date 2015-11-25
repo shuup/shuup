@@ -33,6 +33,7 @@ class ShopEditView(CreateOrUpdateView):
     form_class = ShopForm
     template_name = "shoop/admin/shops/edit.jinja"
     context_object_name = "shop"
+    add_form_errors_as_messages = True
 
     def get_object(self, queryset=None):
         obj = super(ShopEditView, self).get_object(queryset)

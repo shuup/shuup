@@ -16,13 +16,13 @@ from shoop.core.fields import CurrencyField, InternalIdentifierField, MoneyValue
 from shoop.utils.i18n import format_money, format_percent
 from shoop.utils.properties import MoneyProperty, MoneyPropped
 
-from ._base import ImmutableMixin, TranslatableShoopModel
+from ._base import ChangeProtected, TranslatableShoopModel
 
 
-class Tax(MoneyPropped, ImmutableMixin, TranslatableShoopModel):
+class Tax(MoneyPropped, ChangeProtected, TranslatableShoopModel):
     identifier_attr = 'code'
 
-    immutability_message = _(
+    change_protect_message = _(
         "Cannot change business critical fields of Tax that is in use")
     unprotected_fields = ['enabled']
 
@@ -80,7 +80,7 @@ class Tax(MoneyPropped, ImmutableMixin, TranslatableShoopModel):
             text += " ({})".format(format_money(self.amount))
         return text
 
-    def _is_in_use(self):
+    def _are_changes_protected(self):
         return self.order_line_taxes.exists()
 
     class Meta:

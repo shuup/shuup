@@ -13,14 +13,16 @@ from django.utils.crypto import get_random_string
 
 from shoop.core.fields import CurrencyField, MoneyValueField, TaggedJSONField
 from shoop.core.models import Contact, PersonContact, Product, Shop
-from shoop.utils.properties import TaxfulPriceProperty, TaxlessPriceProperty
+from shoop.utils.properties import (
+    MoneyPropped, TaxfulPriceProperty, TaxlessPriceProperty,
+)
 
 
 def generate_key():
     return get_random_string(32)
 
 
-class StoredBasket(models.Model):
+class StoredBasket(MoneyPropped, models.Model):
     # A combination of the PK and key is used to retrieve a basket for session situations.
     key = models.CharField(max_length=32, default=generate_key)
 

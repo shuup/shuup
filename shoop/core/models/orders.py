@@ -36,7 +36,9 @@ from shoop.core.utils.reference import get_order_identifier, get_reference_numbe
 from shoop.utils.analog import LogEntryKind, define_log_model
 from shoop.utils.money import Money
 from shoop.utils.numbers import bankers_round
-from shoop.utils.properties import TaxfulPriceProperty, TaxlessPriceProperty
+from shoop.utils.properties import (
+    MoneyPropped, TaxfulPriceProperty, TaxlessPriceProperty,
+)
 
 from .order_lines import OrderLineType
 
@@ -151,7 +153,7 @@ class OrderQuerySet(models.QuerySet):
 
 
 @python_2_unicode_compatible
-class Order(models.Model):
+class Order(MoneyPropped, models.Model):
     # Identification
     shop = UnsavedForeignKey("Shop", on_delete=models.PROTECT)
     created_on = models.DateTimeField(auto_now_add=True, editable=False)
