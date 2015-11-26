@@ -61,7 +61,7 @@
     <div class="price text-right" id="product-price-div">
         {% set price_info = product.get_price_info(request, quantity) %}
         <h2>
-            <small class="text-muted">Total:</small>
+            <small class="text-muted">{% trans %}Total{% endtrans %}:</small>
             <span id="product-price"><strong>{{ price_info.price|money }}</strong></span>
         </h2>
         <span class="small text-muted">

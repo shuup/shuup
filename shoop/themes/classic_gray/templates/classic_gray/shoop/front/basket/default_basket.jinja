@@ -12,7 +12,7 @@
         </div>
     {% else %}
         {% if errors %}
-            <p class="text-danger">There were errors on following items:</p>
+            <p class="text-danger">{% trans %}There were errors on following items{% endtrans %}:</p>
             {% for error in errors %}
                 <p>{{ error.message }}</p>
             {% endfor %}
@@ -22,7 +22,7 @@
         {% include "shoop/front/basket/partials/_basket_content.jinja" %}
         <div class="cart-actions">
             {% if errors %}
-                <p class="lead text-right"><i class="fa fa-exclamation-triangle text-danger"></i> You are unable to proceed to checkout!</p>
+                <p class="lead text-right"><i class="fa fa-exclamation-triangle text-danger"></i> {% trans %}You are unable to proceed to checkout!{% endtrans %}</p>
             {% else %}
                 <a href="/xtheme/products" class="text-muted btn continue-shopping hidden-xs"><i class="fa fa-angle-double-left"></i> {% trans %}Continue Shopping{% endtrans %}</a>
                 <a href="{{ url("shoop:checkout") }}" class="btn btn-primary pull-right btn-checkout">

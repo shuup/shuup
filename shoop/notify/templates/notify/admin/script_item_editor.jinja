@@ -61,7 +61,7 @@
             {% endif %}
             <input name="init_data" type="hidden" value="{{ init_data }}">
             <ul class="nav nav-tabs" id="main-tabs">
-                <li role="presentation" class="active"><a href="#variables">Variables</a></li>
+                <li role="presentation" class="active"><a href="#variables">{% trans %}Variables{% endtrans %}</a></li>
                 {% for language_code, language_name in form.template_languages %}
                 <li role="presentation"><a href="#template-{{ language_code }}">{{ language_name }}</a></li>
                 {% endfor %}
@@ -77,7 +77,7 @@
                     </div>
                 </div>
             {% endfor %}
-            <input class="btn btn-success" type="submit" value="Save changes">
+            <input class="btn btn-success" type="submit" value="{% trans %}Save changes{% endtrans %}">
         </form>
     </div>
 {% endblock %}
