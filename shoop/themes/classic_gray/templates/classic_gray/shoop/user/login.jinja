@@ -13,7 +13,7 @@
         <p class="lead">
             {% trans %}You have already been logged in as{% endtrans %} <strong>{% if user.first_name or user.last_name %}{{ user.get_full_name() }}{% else %}{{ user }}{% endif %}</strong>
         </p>
-        <a href="/" class="btn btn-primary"><i class="fa fa-angle-double-left"></i> Go to Homepage</a>
+        <a href="/" class="btn btn-primary"><i class="fa fa-angle-double-left"></i> {% trans %}Go to Homepage{% endtrans %}</a>
     {% else %}
         <div class="row">
             <div class="col-sm-8 col-sm-push-2 col-md-6 col-md-push-3">
