@@ -7,12 +7,12 @@
             <tr>
                 <th></th>
                 {% for group in sp_form.groups %}
-                    <th scope="col">{% if group %}{{ group }}{% else %}<i>Default price</i>{% endif %}</th>
+                    <th scope="col">{% if group %}{{ group }}{% else %}<i>{% trans %}Default price{% endtrans %}</i>{% endif %}</th>
                 {% endfor %}
             </tr>
             {% for shop in sp_form.shops %}
                 <tr>
-                    <th scope="row">{% if shop %}{{ shop }}{% else %}<i>other shops</i>{% endif %}</th>
+                    <th scope="row">{% if shop %}{{ shop }}{% else %}<i>{% trans %}Other shops{% endtrans %}</i>{% endif %}</th>
                     {% for group in sp_form.groups %}
                         <td>{{ bs3.field(sp_form.get_shop_group_field(shop, group), set_placeholder=False, render_label=False) }}</td>
                     {% endfor %}
