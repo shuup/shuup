@@ -28,7 +28,7 @@
                     <div class="col-xs-8">
                         {{ payment.created_on|datetime }}<br>
                         {{ payment.description }}<br>
-                        Identifier: {{ payment.payment_identifier }}
+                        {% trans %}Identifier{% endtrans %}: {{ payment.payment_identifier }}
                     </div>
                     <div class="col-xs-4 text-right">
                         <strong>{{ payment.amount|money }}</strong>

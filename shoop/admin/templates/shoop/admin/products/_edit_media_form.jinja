@@ -97,7 +97,7 @@
     <hr>
 {%- set target_panels = "product-images-section" if is_image_form else "product-media-section" %}
 {%- set target_id = "id_images" if is_image_form else "id_media" %}
-<a class="btn btn-lg btn-text media-add-new-panel" href="#" data-target-id="{{ target_id }}" data-target-panels="{{ target_panels }}">+ {% if is_image_form %}{% trans %}Add new image{% endtrans %}{% else %}Add new media{% endif %}</a>
+<a class="btn btn-lg btn-text media-add-new-panel" href="#" data-target-id="{{ target_id }}" data-target-panels="{{ target_panels }}">+ {% if is_image_form %}{% trans %}Add new image{% endtrans %}{% else %}{% trans %}Add new media{% endtrans %}{% endif %}</a>
 
 {% endcall %}
 
