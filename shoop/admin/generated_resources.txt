@@ -9,6 +9,7 @@ static/shoop_admin/js/base.js.map
 static/shoop_admin/js/dashboard.js
 static/shoop_admin/js/dashboard.js.map
 static/shoop_admin/js/media-browser.js
+static/shoop_admin/js/order-creator.js
 static/shoop_admin/js/picotable.js
 static/shoop_admin/js/picotable.js.map
 static/shoop_admin/js/product-variation-variable-editor.js
