@@ -177,6 +177,10 @@ REST_FRAMEWORK = {
     )
 }
 
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, "../shoop/locale"),
+)
+
 if os.environ.get("SHOOP_WORKBENCH_DISABLE_MIGRATIONS") == "1":
     from .utils import DisableMigrations
     MIGRATION_MODULES = DisableMigrations()

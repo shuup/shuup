@@ -1,0 +1,19 @@
+{% if LANGUAGES|length > 1 %}
+<form method="post" action="/set-language/" class="hidden">
+    {% csrf_token %}
+    <input type="hidden" name="language" id="language-field">
+</form>
+
+<li class="dropdown" id="language-changer">
+    <a aria-expanded="false" href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="menu-icon fa fa-globe hidden-xs"></i> {{ LANGUAGE_CODE|upper }}
+        <i class="dropdown-icon fa fa-angle-down"></i>
+    </a>
+    <ul class="dropdown-menu languages" role="menu">
+        {% for lang in LANGUAGES %}
+        <li><a href="#" class="language" data-value="{{ lang.0 }}">{{ lang.1 }}</a></li>
+        {% endfor %}
+    </ul>
+</form>
+</li>
+{% endif %}

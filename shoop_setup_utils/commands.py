@@ -4,14 +4,17 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from distutils.command.build import build as du_build
 import distutils.core
 import distutils.errors
+import os
+from distutils.command.build import build as du_build
 
+import django
+from django.conf import settings
+from django.core import management
 from setuptools.command.build_py import build_py as st_build_py
 
-from . import excludes
-from . import resource_building
+from . import excludes, resource_building
 
 
 class BuildCommand(du_build):
@@ -21,6 +24,7 @@ class BuildCommand(du_build):
         super_cmds = du_build.get_sub_commands(self)
         my_cmds = [
             BuildProductionResourcesCommand.command_name,
+            BuildTranslationsCommand.command_name,
         ]
         return my_cmds + super_cmds
 
@@ -82,9 +86,29 @@ class BuildProductionResourcesCommand(BuildResourcesCommand):
     clean = True
 
 
+class BuildTranslationsCommand(distutils.core.Command):
+    command_name = 'build_translations'
+    description = 'compile message catalogs to MO files via Django compilemessages'
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        os.chdir("shoop")
+        settings.configure()
+        django.setup()
+        management.call_command("compilemessages")
+        os.chdir("..")
+
+
 COMMANDS = dict((x.command_name, x) for x in [
     BuildCommand,
     BuildPyCommand,
     BuildResourcesCommand,
     BuildProductionResourcesCommand,
+    BuildTranslationsCommand,
 ])
