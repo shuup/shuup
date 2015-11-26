@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 import parler.models
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
+from django.utils.encoding import force_text, python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.utils import text
@@ -41,7 +41,7 @@ class TranslatableShoopModel(ShoopModel, parler.models.TranslatableModel):
         name = self.safe_translation_getter(self.name_attr, any_language=True)
         if name is None:
             return '{}:{}'.format(type(self).__name__, self.pk)
-        return name
+        return force_text(name)  # ensure no lazy objects are returned
 
     class Meta:
         abstract = True
