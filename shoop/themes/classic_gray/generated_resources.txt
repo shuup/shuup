@@ -1,4 +1,3 @@
-static/classic_gray/js/classic-gray.js
 static/classic_gray/css/style.css
 static/classic_gray/fonts/FontAwesome.otf
 static/classic_gray/fonts/fontawesome-webfont.eot
@@ -11,3 +10,4 @@ static/classic_gray/fonts/glyphicons-halflings-regular.svg
 static/classic_gray/fonts/glyphicons-halflings-regular.ttf
 static/classic_gray/fonts/glyphicons-halflings-regular.woff
 static/classic_gray/fonts/glyphicons-halflings-regular.woff2
+static/classic_gray/js/classic-gray.js
