@@ -48,7 +48,9 @@ class SimplePricingForm(forms.Form):
                 price = prices_by_shop_and_group.get(shop_group_id_tuple)
                 price_field = forms.DecimalField(
                     min_value=0, initial=price,
-                    label=_("Price (%s/%s)") % (shop, group), required=False
+                    label=(_("Price (%(shop)s/%(group)s)") %
+                           {"shop": shop, "group": group}),
+                    required=False
                 )
                 self.fields[name] = price_field
 
