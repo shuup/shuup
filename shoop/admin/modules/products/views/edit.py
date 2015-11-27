@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 from django.db.transaction import atomic
 from django.utils.translation import ugettext as _, get_language
 
@@ -172,13 +173,15 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
 
         if self.object.pk:
             for shop in Shop.objects.all():
-                shop_product = self.object.get_shop_instance(shop)
-                orderability_errors.extend(
-                    ["%s: %s" % (shop.name, msg.message)
-                     for msg in shop_product.get_orderability_errors(
-                        supplier=None,
-                        quantity=shop_product.minimum_purchase_quantity,
-                        customer=None)])
-
+                try:
+                    shop_product = self.object.get_shop_instance(shop)
+                    orderability_errors.extend(
+                        ["%s: %s" % (shop.name, msg.message)
+                         for msg in shop_product.get_orderability_errors(
+                            supplier=None,
+                            quantity=shop_product.minimum_purchase_quantity,
+                            customer=None)])
+                except ObjectDoesNotExist:
+                    orderability_errors.extend(["%s: %s" % (shop.name, _("Product is not available."))])
         context["orderability_errors"] = orderability_errors
         return context

@@ -1,15 +1,10 @@
 {% extends "shoop/admin/base.jinja" %}
+{% from "shoop/admin/macros/general.jinja" import content_block, text_between_fields %}
+
+{% block body_class %}order-create{% endblock %}
 
 {% block content %}
-    <div class="container-fluid">
-        <div class="content-block">
-            <div class="content-wrap">
-                <div class="content">
-                    <div id="order-tool-container"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div id="order-tool-container"></div>
 {% endblock %}
 
 {% block extra_js %}

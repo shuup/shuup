@@ -15,6 +15,19 @@ export const LINE_TYPES = [
     {id: "text", name: gettext("Text/Comment")}
 ];
 
+export const ADDRESS_FIELDS = [
+    {key: "name", label: gettext("Name"), "required": true},
+    {key: "tax_number", label: gettext("Tax number"), "required": false},
+    {key: "phone", label: gettext("Phone"), "required": false},
+    {key: "email", label: gettext("Email"), "required": false},
+    {key: "street", label: gettext("Street"), "required": true},
+    {key: "street2", label: gettext("Street (2)"), "required": false},
+    {key: "postal_code", label: gettext("ZIP / Postal code"), "required": false},
+    {key: "city", label: gettext("City"), "required": true},
+    {key: "region", label: gettext("Region"), "required": false},
+    {key: "country", label: gettext("Country"), "required": true}
+];
+
 export function selectBox(value, onchange, choices, valueGetter = "id", nameGetter = "name") {
     if (_.isString(valueGetter)) {
         valueGetter = _.partialRight(_.get, valueGetter);
@@ -25,4 +38,16 @@ export function selectBox(value, onchange, choices, valueGetter = "id", nameGett
     return m("select.form-control", {value, onchange}, choices.map(
         (obj) => m("option", {value: valueGetter(obj)}, nameGetter(obj))
     ));
+}
+
+export function contentBlock(icon, title, view) {
+    return m("div.content-block",
+        m("div.title",
+            m("h2.block-title", m(icon), " " + title),
+            m("a.toggle-contents", m("i.fa.fa-chevron-right"))
+        ),
+        m("div.content-wrap.collapse",
+            m("div.content", view)
+        )
+    );
 }
