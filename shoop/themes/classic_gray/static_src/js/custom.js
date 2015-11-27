@@ -95,6 +95,20 @@ function updatePrice() {
     });
 }
 
+function changeLanguage() {
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = "/set-language/";
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = "language";
+    input.id = "language-field";
+    input.value = $(this).data("value");
+    form.appendChild(input);
+    document.body.appendChild(form);
+    form.submit();
+}
+
 $(function() {
     $("#search-modal").on("show.bs.modal", function() {
         setTimeout(function() {
@@ -158,4 +172,5 @@ $(function() {
 
     $(document).on("change", ".variable-variation, #product-variations, #product-quantity", updatePrice);
     updatePrice();
+    $(".languages li a").click(changeLanguage);
 });

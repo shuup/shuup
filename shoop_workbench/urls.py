@@ -8,11 +8,9 @@ from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.views.i18n import set_language
 
 urlpatterns = patterns(
     '',
-    url(r'^set-language/', set_language, name="set-language"),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^sa/', include('shoop.admin.urls', namespace="shoop_admin", app_name="shoop_admin")),
     url(r'^api/', include('shoop.api.urls')),
