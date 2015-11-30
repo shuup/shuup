@@ -35,6 +35,7 @@ class ShopStatus(Enum):
 @python_2_unicode_compatible
 class Shop(ChangeProtected, TranslatableShoopModel):
     protected_fields = ["currency", "prices_include_tax"]
+    change_protect_message = _("The following fields cannot be changed since there are existing orders for this shop")
 
     identifier = InternalIdentifierField(unique=True)
     domain = models.CharField(max_length=128, blank=True, null=True, unique=True)

@@ -594,14 +594,15 @@ def create_random_company():
     )
 
 
-def create_random_order(customer=None, products=(), completion_probability=0):
+def create_random_order(customer=None, products=(), completion_probability=0, shop=None):
     if not customer:
         customer = Contact.objects.all().order_by("?").first()
 
     if not customer:
         raise ValueError("No valid contacts")
 
-    shop = get_default_shop()
+    if shop is None:
+        shop = get_default_shop()
 
     request = apply_request_middleware(RequestFactory().get("/"),
                                        customer=customer)

@@ -45,22 +45,11 @@ def get_form_data(form, prepared=False):
 
         if data_value:
             value = data_value
-            data[prefixed_name] = value
         else:
-            if not field.show_hidden_initial:
-                initial_value = form.initial.get(name, field.initial)
-                if callable(initial_value):
-                    initial_value = initial_value()
-            else:
-                initial_prefixed_name = form.add_initial_prefix(name)
-                hidden_widget = field.hidden_widget()
-                try:
-                    initial_value = field.to_python(hidden_widget.value_from_datadict(
-                        form.data, form.files, initial_prefixed_name))
-                except ValidationError:
-                    form._changed_data.append(name)
-                    continue
-            value = initial_value
+            value = form.initial.get(name, field.initial)
+            if callable(value):
+                value = value()
+
         if prepared:
             value = field.prepare_value(value)
             if value is None:
