@@ -136,7 +136,7 @@ class Address(NameMixin, models.Model):
         return " / ".join(self.as_string_list())
 
     def save(self, *args, **kwargs):
-        if self.is_immutable and not kwargs.pop("__setting_immutability", None):
+        if self.is_immutable and not kwargs.pop("__setting_immutability", None) and self.pk:
             raise ImmutabilityError(
                 "This %r object is immutable. Use .copy() to get a pristine instance." % self.__class__
             )
