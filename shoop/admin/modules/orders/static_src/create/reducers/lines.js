@@ -40,20 +40,26 @@ function setLineProperties(linesState, lineId, props) {
 
 function getDiscountsAndTotal(quantity, baseUnitPrice, unitPrice, updateUnitPrice=false) {
     const updates = {};
+
     if (updateUnitPrice) {
         updates.unitPrice = unitPrice;
     }
     var totalBeforeDiscount = baseUnitPrice * quantity;
     var total = +(unitPrice * quantity).toFixed(2);
     updates.total = total;
+
     if (baseUnitPrice < unitPrice || unitPrice < 0) {
         updates.discountPercent = 0;
         updates.discountAmount = 0;
         return updates;
     }
     var discountAmount = totalBeforeDiscount - total;
+    if (isNaN(discountAmount)) {
+        discountAmount = 0;
+    }
     updates.discountAmount = discountAmount;
     updates.discountPercent = ((discountAmount / totalBeforeDiscount) * 100).toFixed(2);
+
     return updates;
 }
 
@@ -81,6 +87,14 @@ function updateLineFromProduct(state, {payload}) {
     updates.step = product.purchaseMultiple;
     updates.errors = product.errors;
     return setLineProperties(state, id, updates);
+}
+
+function ensureNumericValue(value, defaultValue=0) {
+    value = parseFloat(value);
+    if (isNaN(value)) {
+        return defaultValue;
+    }
+    return value;
 }
 
 function setLineProperty(state, {payload}) {
@@ -111,33 +125,42 @@ function setLineProperty(state, {payload}) {
                 updates.type = value;
                 break;
             case "quantity":
-                var quantity = Math.max(0, parseFloat(value));
+                const quantity = Math.max(0, ensureNumericValue(value, 1));
                 updates = getDiscountsAndTotal(quantity, line.baseUnitPrice, line.unitPrice);
                 updates.quantity = quantity;
                 break;
             case "unitPrice":
-                var unitPrice = parseFloat(value);
-                updates = getDiscountsAndTotal(line.quantity, line.baseUnitPrice, unitPrice);
-                updates.unitPrice = unitPrice;
+                updates = getDiscountsAndTotal(
+                    line.quantity,
+                    line.baseUnitPrice,
+                    ensureNumericValue(value, line.baseUnitPrice),
+                    true
+                );
                 break;
             case "discountPercent":
-                var discountPercent = Math.max(0, parseFloat(value));
+                var discountPercent = Math.max(0, ensureNumericValue(value));
                 updates = getDiscountsAndTotal(
                     line.quantity, line.baseUnitPrice, (line.baseUnitPrice * (1 - (discountPercent / 100))), true
                 );
-                updates.discountPercent = discountPercent;
                 break;
             case "discountAmount":
-                var discountAmount = Math.max(0, parseFloat(value));
                 updates = getDiscountsAndTotal(
-                    line.quantity, line.baseUnitPrice, (line.baseUnitPrice - (discountAmount / line.quantity)), true
+                    line.quantity,
+                    line.baseUnitPrice,
+                    (line.baseUnitPrice - (Math.max(0, ensureNumericValue(value)) / line.quantity)),
+                    true
                 );
-                updates.discountAmount = discountAmount;
                 break;
             case "total":
-                var total = +parseFloat(value).toFixed(2);
-                updates = getDiscountsAndTotal(line.quantity, line.baseUnitPrice, (total / line.quantity), true);
-                updates.total = total;
+                const calculatedTotal = line.quantity * line.baseUnitPrice;
+                // TODO: change the hardcoded rounding when doing SHOOP-1912
+                const total = +ensureNumericValue(value, calculatedTotal).toFixed(2);
+                updates = getDiscountsAndTotal(
+                    line.quantity,
+                    line.baseUnitPrice,
+                    (total / line.quantity),
+                    true
+                );
                 break;
         }
     }
