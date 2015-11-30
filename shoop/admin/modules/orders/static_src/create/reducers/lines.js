@@ -113,6 +113,7 @@ function setLineProperty(state, {payload}) {
                 break;
             case "type":
                 updates.type = value;
+                updates.errors = null;
                 if (value === "other" || value === "text") {
                     updates.product = null;
                     updates.sku = null;
