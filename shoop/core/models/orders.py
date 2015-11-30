@@ -230,7 +230,7 @@ class Order(MoneyPropped, models.Model):
     taxful_total_price_value = MoneyValueField(editable=False, verbose_name=_('grand total'), default=0)
     taxless_total_price_value = MoneyValueField(editable=False, verbose_name=_('taxless total'), default=0)
     currency = CurrencyField()
-    prices_include_tax = models.BooleanField()  # TODO: (TAX) Document Order.prices_include_tax
+    prices_include_tax = models.BooleanField()
 
     display_currency = CurrencyField(blank=True)
     display_currency_rate = models.DecimalField(max_digits=36, decimal_places=9, default=1)
@@ -241,7 +241,6 @@ class Order(MoneyPropped, models.Model):
     order_date = models.DateTimeField(editable=False, verbose_name=_('order date'))
     payment_date = models.DateTimeField(null=True, editable=False, verbose_name=_('payment date'))
 
-    # TODO: (TAX) Add me? customer_tax_group = models.ForeignKey(CustomerTaxGroup, blank=True, null=True)
     language = LanguageField(blank=True, verbose_name=_('language'))
     customer_comment = models.TextField(blank=True, verbose_name=_('customer comment'))
     admin_comment = models.TextField(blank=True, verbose_name=_('admin comment/notes'))
@@ -620,4 +619,4 @@ OrderLogEntry = define_log_model(Order)
 
 
 def _round_price(value):
-    return bankers_round(value, settings.SHOOP_ORDER_TOTAL_DECIMALS)
+    return bankers_round(value, 2)  # TODO: To be fixed in SHOOP-1912

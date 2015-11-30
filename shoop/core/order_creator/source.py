@@ -118,7 +118,6 @@ class OrderSource(object):
         self.zero_price = shop.create_price(0)
         self.create_price = self.zero_price.new
 
-        # TODO: (TAX) How to set calculate_taxes_automatically? From a setting?
         self.calculate_taxes_automatically = False
         """
         Calculate taxes automatically when lines are added or processed.

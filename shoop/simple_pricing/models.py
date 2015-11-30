@@ -21,14 +21,6 @@ class SimpleProductPrice(MoneyPropped, models.Model):
     price = PriceProperty("price_value", "shop.currency", "shop.prices_include_tax")
     price_value = MoneyValueField()
 
-    # TODO: (TAX) Check includes_tax consistency (see below)
-    #
-    # SimpleProductPrice entries in single shop should all have same
-    # value of includes_tax, because inconsistencies in taxfulness of
-    # prices may cause basket totals to be unsummable, since taxes are
-    # unknown before customer has given their address and TaxfulPrice
-    # cannot be summed with TaxlessPrice.
-
     class Meta:
         unique_together = (('product', 'shop', 'group'),)
         verbose_name = _(u"product price")

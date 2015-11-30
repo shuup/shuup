@@ -23,7 +23,6 @@
                 {% if show_description and product.description %}
                     <p class="description">{{ product.description|striptags|truncate(180)|safe }}</p>
                 {% endif %}
-                {# TODO: (TAX) Check following line (gets taxful price of product)  #}
                 <div class="price">
                     {{ render_product_price(product, price_info, show_units=False) }}
                 </div>

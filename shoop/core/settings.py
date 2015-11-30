@@ -78,16 +78,6 @@ SHOOP_ENABLE_ATTRIBUTES = True
 #: but having it disabled may confer a small performance increase.
 SHOOP_ENABLE_MULTIPLE_SHOPS = False
 
-
-#: TODO: Document SHOOP_ORDER_LINE_TOTAL_DECIMALS
-# TODO: (TAX) Is this really needed? Shouldn't order lines be stored with full precision
-# and rendered with precision of the used currency conventions?
-SHOOP_ORDER_LINE_TOTAL_DECIMALS = 2
-
-#: TODO: Document SHOOP_ORDER_TOTAL_DECIMALS
-# TODO: (TAX) How is this used?
-SHOOP_ORDER_TOTAL_DECIMALS = 2
-
 #: A list of order labels (2-tuples of internal identifier / visible name).
 #:
 #: Order labels serve as a simple taxonomy layer for easy "tagging" of orders even within
