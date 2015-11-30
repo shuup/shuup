@@ -1,0 +1,946 @@
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Aarni Koskela, 2015.
+# Antti Mäki <antti@anttimaki.com>, 2015.
+# Eetu Häivälä <eetu.haivala@anders.fi>, 2015.
+# Janne Tammi <janne.tammi@shoop.io>, 2015.
+# Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015.
+# Juha Kujala <juha.kujala@shoop.io>, 2015.
+# Juha Louhiranta <charni@gmail.com>, 2015.
+# Rauli Laine <rauli.laine@iki.fi>, 2015.
+# Shoop Admin <admin@shoop.io>, 2015.
+# Teemu Selkälä <teemu.selkala@anders.fi>, 2015.
+# tomijarvi <tomi@jarvi.pro>, 2015.
+# Tuomas Suutari <tuomas.suutari@anders.fi>, 2015.
+msgid ""
+msgstr ""
+"Project-Id-Version: Shoop\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-30 23:37+0000\n"
+"PO-Revision-Date: 2015-11-26 18:44+0200\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@anders.fi>\n"
+"Language-Team: English <kde-i18n-doc@kde.org>\n"
+"Language: fi_FI\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 1.3\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 2.0\n"
+
+msgid "internal identifier"
+msgstr "sisäinen tunniste"
+
+msgid "Do not change this value if you are not sure what you're doing."
+msgstr "Älä muuta tätä arvoa, jos et ole varma siitä mitä olet tekemässä."
+
+msgid "Price"
+msgstr "Hinta"
+
+msgid "Waiver minimum"
+msgstr "Vähimmäismäärä"
+
+msgid ""
+"Waive the price when the total price of products in the order reaches this "
+"amount"
+msgstr "Nollaa hinta tuotteiden summan yltäessä tähän arvoon"
+
+msgid "0 or below: no lower limit"
+msgstr "0 tai pienempi: ei alarajaa"
+
+msgid "minimum weight"
+msgstr "minimipaino"
+
+msgid "maximum weight"
+msgstr "maksimipaino"
+
+msgid "Minimum weight not met."
+msgstr "Minimipaino ei täyty."
+
+msgid "Maximum weight exceeded."
+msgstr "Maksimipaino ylitetty."
+
+msgid "Default Shipping"
+msgstr "Oletustoimitus"
+
+msgid "Default Payment"
+msgstr "Oletusmaksu"
+
+msgid "Error"
+msgstr "Virhe"
+
+msgid "The following fields can not be changed"
+msgstr "Seuraavia kenttiä ei voi muuttaa"
+
+msgid "shipping address"
+msgstr "toimitusosoite"
+
+msgid "billing address"
+msgstr "laskutusosoite"
+
+msgid "disabled"
+msgstr "pois käytöstä"
+
+msgid "enabled"
+msgstr "käytössä"
+
+msgid "name prefix"
+msgstr "nimen etuliite"
+
+msgid "name"
+msgstr "nimi"
+
+msgid "name suffix"
+msgstr "nimen jälkiliite"
+
+msgid "name extension"
+msgstr "nimen laajenne"
+
+msgid "company name"
+msgstr "yrityksen nimi"
+
+msgid "Tax number"
+msgstr "veronumero"
+
+msgid "phone"
+msgstr "puhelin"
+
+msgid "email"
+msgstr "sähköposti"
+
+msgid "street"
+msgstr "katuosoite"
+
+msgid "street (2)"
+msgstr "katuosoite (2)"
+
+msgid "street (3)"
+msgstr "katuosoite (3)"
+
+msgid "ZIP / Postal code"
+msgstr "Postinumero"
+
+msgid "city"
+msgstr "kaupunki"
+
+msgid "region code"
+msgstr "aluekoodi"
+
+msgid "region"
+msgstr "alue"
+
+msgid "country"
+msgstr "maa"
+
+msgid "immutable"
+msgstr "muuttumato"
+
+msgid "address"
+msgstr "osoite"
+
+msgid "addresses"
+msgstr "osoitteet"
+
+msgid "role"
+msgstr "rooli"
+
+msgid "status"
+msgstr "tila"
+
+msgid "title"
+msgstr "otsikko"
+
+msgid "saved address"
+msgstr "tallennettu osoite"
+
+msgid "saved addresses"
+msgstr "tallennetut osoitteet"
+
+msgid "hidden"
+msgstr "piilotettu"
+
+msgid "shown on product page"
+msgstr "näkyy tuotesivulla"
+
+msgid "searchable metadata"
+msgstr "haettava metadata"
+
+msgid "private metadata"
+msgstr "yksityinen metadata"
+
+msgid "integer"
+msgstr "kokonaisluku"
+
+msgid "decimal"
+msgstr "desimaali"
+
+msgid "boolean"
+msgstr "totuusarvo"
+
+msgid "time interval"
+msgstr "aikaväli"
+
+msgid "date and time"
+msgstr "päivämäärä ja aika"
+
+msgid "date only"
+msgstr "vain päivämäärä"
+
+msgid "translated string"
+msgstr "käännösteksti"
+
+msgid "untranslated string"
+msgstr "teksti"
+
+msgid "attribute"
+msgstr "attribuutti"
+
+msgid "attributes"
+msgstr "attribuutit"
+
+msgid "invisible"
+msgstr "näkymätö"
+
+msgid "visible"
+msgstr "näkyvissä"
+
+msgid "deleted"
+msgstr "poistettu"
+
+msgid "visible to all"
+msgstr "näkyvissä kaikille"
+
+msgid "visible to logged in customers"
+msgstr "näkyvissä kirjautuneille asiakkaille"
+
+msgid "visible to certain customer groups"
+msgstr "näkyvillä tietyille asiakasryhmille"
+
+msgid "parent category"
+msgstr "yläkategoria"
+
+msgid "image"
+msgstr "kuva"
+
+msgid "ordering"
+msgstr "järjestys"
+
+msgid "visibility limitations"
+msgstr "näkyvyysrajoitukset"
+
+msgid "visible for groups"
+msgstr "näkyvissä ryhmille"
+
+msgid "description"
+msgstr "selite"
+
+msgid "slug"
+msgstr "lyhytnimi"
+
+msgid "category"
+msgstr "kategoria"
+
+msgid "categories"
+msgstr "kategoriat"
+
+msgid "key"
+msgstr "avain"
+
+msgid "value"
+msgstr "arvo"
+
+msgid "configuration item"
+msgstr "konfiguraatiotieto"
+
+msgid "configuration items"
+msgstr "konfiguraatiotiedot"
+
+#, python-format
+msgid "%(key)s for shop %(shop)s"
+msgstr "%(key)s kaupalle %(shop)s"
+
+#, python-format
+msgid "%(key)s (global)"
+msgstr "%(key)s (globaali)"
+
+msgid "members"
+msgstr "jäsenet"
+
+msgid "show as pricing option"
+msgstr "näytä hinnoitteluvaihtoehtona"
+
+msgid "contact group"
+msgstr "kontaktiryhmä"
+
+msgid "contact groups"
+msgstr "kontaktiryhmät"
+
+msgid "default shipping method"
+msgstr "oletustoimitustapa"
+
+msgid "default payment method"
+msgstr "oletusmaksutapa"
+
+msgid "language"
+msgstr "kieli"
+
+msgid "marketing permission"
+msgstr "markkinointilupa"
+
+msgid "web address"
+msgstr "web-osoite"
+
+msgid "contact"
+msgstr "kontakti"
+
+msgid "contacts"
+msgstr "kontaktit"
+
+msgid "e.g. EIN in US or VAT code in Europe"
+msgstr "esim. Y-tunnus, EIN tai VAT-koodi"
+
+msgid "company"
+msgstr "yritys"
+
+msgid "companies"
+msgstr "yritykset"
+
+msgid "person"
+msgstr "henkilö"
+
+msgid "persons"
+msgstr "henkilöt"
+
+msgid "order reference"
+msgstr "tilausviite"
+
+msgid "counter"
+msgstr "laskur"
+
+msgid "counters"
+msgstr "laskurit"
+
+msgid "added"
+msgstr "lisätty"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "manufacturer"
+msgstr "valmistaja"
+
+msgid "manufacturers"
+msgstr "valmistajat"
+
+msgid "shipping"
+msgstr "toimitus"
+
+msgid "payment"
+msgstr "maksu"
+
+msgid "tax class"
+msgstr "veroluokka"
+
+msgid "module"
+msgstr "moduuli"
+
+msgid "shipping method"
+msgstr "toimitustapa"
+
+msgid "shipping methods"
+msgstr "toimitustavat"
+
+msgid "payment method"
+msgstr "maksutapa"
+
+msgid "payment methods"
+msgstr "maksutavat"
+
+msgid "product"
+msgstr "tuote"
+
+msgid "campaign"
+msgstr "kampanja"
+
+msgid "other"
+msgstr "muu"
+
+msgid "order"
+msgstr "tilaus"
+
+msgid "supplier"
+msgstr "toimittaja"
+
+msgid "parent line"
+msgstr "ylärivi"
+
+msgid "line type"
+msgstr "rivityyppi"
+
+msgid "line SKU"
+msgstr "rivin tuotetunnus"
+
+msgid "line text"
+msgstr "rivin teksti"
+
+msgid "accounting identifier"
+msgstr "kirjanpitotunniste"
+
+msgid "require verification"
+msgstr "vaadi hyväksyntä"
+
+msgid "verified"
+msgstr "hyväksytty"
+
+msgid "quantity"
+msgstr "lukumäärä"
+
+msgid "unit price amount (undiscounted)"
+msgstr "alentamaton yksikköhinnan määrä"
+
+msgid "total amount of discount"
+msgstr "alennuksen kokonaismäärä"
+
+msgid "order line"
+msgstr "tilausrivi"
+
+msgid "order lines"
+msgstr "tilausrivit"
+
+msgid "tax"
+msgstr "vero"
+
+msgid "tax name"
+msgstr "veron nimi"
+
+msgid "tax amount"
+msgstr "veron määrä"
+
+msgid "base amount"
+msgstr "perusmäärä"
+
+msgid "Amount that this tax is calculated from"
+msgstr "Määrä, josta vero lasketaan"
+
+msgid "not paid"
+msgstr "ei maksettu"
+
+msgid "partially paid"
+msgstr "osittain maksettu"
+
+msgid "fully paid"
+msgstr "täysin maksettu"
+
+msgid "canceled"
+msgstr "peruttu"
+
+msgid "deferred"
+msgstr "odottaa"
+
+msgid "not shipped"
+msgstr "ei toimitettu"
+
+msgid "partially shipped"
+msgstr "osittain toimitettu"
+
+msgid "fully shipped"
+msgstr "täysin toimitettu"
+
+msgid "none"
+msgstr "ei mitään"
+
+msgid "initial"
+msgstr "alk"
+
+msgid "complete"
+msgstr "valmis"
+
+msgid "Name"
+msgstr "Nimi"
+
+msgid "order identifier"
+msgstr "tilaustunniste"
+
+msgid "label"
+msgstr "merkki"
+
+msgid "reference number"
+msgstr "viitenumero"
+
+msgid "customer"
+msgstr "asiakas"
+
+msgid "orderer"
+msgstr "tilaaja"
+
+msgid "email address"
+msgstr "sähköpostiosoite"
+
+msgid "creating user"
+msgstr "luojakäyttäjä"
+
+msgid "payment status"
+msgstr "maksutila"
+
+msgid "shipping status"
+msgstr "toimitustila"
+
+msgid "payment method name"
+msgstr "maksutavan nimi"
+
+msgid "shipping method name"
+msgstr "toimitustavan nimi"
+
+msgid "grand total"
+msgstr "loppusumma"
+
+msgid "taxless total"
+msgstr "veroton summa"
+
+msgid "IP address"
+msgstr "IP-osoite"
+
+msgid "order date"
+msgstr "tilauspäivämäärä"
+
+msgid "payment date"
+msgstr "maksupäivämäärä"
+
+msgid "customer comment"
+msgstr "asiakkaan kommentti"
+
+msgid "admin comment/notes"
+msgstr "ylläpitäjän kommentti/muistiinpanot"
+
+msgid "requires verification"
+msgstr "vaatii hyväksynnän"
+
+msgid "all lines verified"
+msgstr "kaikki rivit hyväksytty"
+
+msgid "orders"
+msgstr "tilaukset"
+
+msgid "Order marked as paid."
+msgstr "Tilaus merkitty maksetuksi."
+
+#, python-format
+msgid "Shipment #%d created."
+msgstr "Lähetys #%d luotu."
+
+msgid "All rows requiring verification have been verified."
+msgstr "Kaikki hyväksyntää vaativat rivit merkitty hyväksytyksi."
+
+msgid "All products have been shipped. Fully Shipped status set."
+msgstr "Kaikki tuotteet toimitettu. Tila asetettu täysin toimitetuksi."
+
+msgid "payments"
+msgstr "maksut"
+
+msgid "cache entry"
+msgstr "välimuistimerkintä"
+
+msgid "cache entries"
+msgstr "välimuistimerkinnät"
+
+msgid "file"
+msgstr "tiedosto"
+
+msgid "documentation"
+msgstr "dokumentaatio"
+
+msgid "sample"
+msgstr "esimerkki"
+
+msgid "kind"
+msgstr "laji"
+
+msgid ""
+"Enter URL to external file. If this field is filled, the selected media "
+"doesn't apply."
+msgstr ""
+"Syötä URL ulkoiseen tiedostoon. Valittu media ei tule voimaan, jos tämä "
+"kenttä on täytetty."
+
+msgid "public (shown on product page)"
+msgstr "julkinen (näkyy tuotesivulla)"
+
+msgid "purchased (shown for finished purchases)"
+msgstr "ostettu (näkyy hyväksytyille ostoksille)"
+
+msgid "product attachment"
+msgstr "tuoteliite"
+
+msgid "product attachments"
+msgstr "tuoteliitteet"
+
+msgid "attachment"
+msgstr "liite"
+
+msgid "purchase multiple"
+msgstr "tilausmonikerta"
+
+msgid "minimum purchase"
+msgstr "vähimmäistilaus"
+
+msgid "primary category"
+msgstr "pääkategoria"
+
+msgid "Default price"
+msgstr "oletushinta"
+
+msgid "This product has been deleted."
+msgstr "Tuote on poistettu."
+
+msgid "This product is not visible."
+msgstr "Tuote ei ole näkyvissä."
+
+msgid "The Product is invisible to users not logged in."
+msgstr "Tuote ei ole näkyvissä kirjautumattomille käyttäjille."
+
+msgid "This product is not visible to your group."
+msgstr "Tuote ei ole näkyvillä ryhmällesi."
+
+msgid "The product has no supplier."
+msgstr "Tuotteella ei ole toimittajaa."
+
+#, python-format
+msgid "The purchase quantity needs to be at least %d for this product."
+msgstr "Tätä tuotetta tarvitsee ostaa vähintään %d."
+
+#, python-format
+msgid "The product is not supplied by %s."
+msgstr "%s ei toimita tuotetta."
+
+#, python-format
+msgid ""
+"The product can only be ordered in multiples of %(package_size)s, for "
+"example %(smaller_p)s %(unit)s."
+msgstr ""
+"Tuotetta voi tilata vain %(package_size)s kerrannaisina (esim. %(smaller_p)s "
+"%(unit)s)."
+
+#, python-format
+msgid ""
+"The product can only be ordered in multiples of %(package_size)s, for "
+"example %(smaller_p)s or %(larger_p)s %(unit)s."
+msgstr ""
+"Tuotetta voi tilata vain %(package_size)s kerrannaisina (esim. %(smaller_p)s "
+"tai %(larger_p)s %(unit)s)."
+
+msgid "variation variable"
+msgstr "variaatiomuuttuja"
+
+msgid "variation variables"
+msgstr "variaatiomuuttujat"
+
+msgid "variation value"
+msgstr "variaatioarvo"
+
+msgid "variation values"
+msgstr "variaatioarvot"
+
+msgid "variation result"
+msgstr "variaation tulos"
+
+msgid "variation results"
+msgstr "variaation tulokset"
+
+msgid "normal"
+msgstr "normaali"
+
+msgid "package parent"
+msgstr "paketti-isäntä"
+
+msgid "variation parent (simple)"
+msgstr "variaatioisäntä (yksinkertainen)"
+
+msgid "variation parent (variable)"
+msgstr "variaatioisäntä (muuttujin)"
+
+msgid "variation child"
+msgstr "variaatiolapsi"
+
+msgid "visible to logged in"
+msgstr "näkyvissä kirjautuneille"
+
+msgid "visible to groups"
+msgstr "näkyvissä ryhmille"
+
+msgid "stocked"
+msgstr "varastoitu"
+
+msgid "unstocked"
+msgstr "varastoimaton"
+
+msgid "recommended"
+msgstr "suositeltu"
+
+msgid "related"
+msgstr "liittyvä"
+
+msgid "computed"
+msgstr "laskettu"
+
+msgid "shipped"
+msgstr "lähetetty"
+
+msgid "no verification required"
+msgstr "ei vaadi vahvistusta"
+
+msgid "admin verification required"
+msgstr "vaatii ylläpitovahvistukse"
+
+msgid "third party verification required"
+msgstr "vaatii kolmannen osapuolen vahvistukse"
+
+msgid "product type"
+msgstr "tuotetyyppi"
+
+msgid "product types"
+msgstr "tuotetyypit"
+
+msgid "variation parent"
+msgstr "variaatioisäntä"
+
+msgid "stock"
+msgstr "varasto"
+
+msgid "shipping mode"
+msgstr "toimitustila"
+
+msgid "unit"
+msgstr "yksikkö"
+
+msgid "SKU"
+msgstr "Tuotekoodi"
+
+msgid "GTIN"
+msgstr "GTIN"
+
+msgid "Global Trade Item Number"
+msgstr "Global Trade Item Number"
+
+msgid "barcode"
+msgstr "viivakoodi"
+
+msgid "bookkeeping account"
+msgstr "kirjanpitotili"
+
+msgid "profit center"
+msgstr "tulosyksikkö"
+
+msgid "cost center"
+msgstr "kustannusyksikkö"
+
+msgid "only used for administration and reporting"
+msgstr "käytetään vain ylläpitoon ja raportointiin"
+
+msgid "width (mm)"
+msgstr "leveys (mm)"
+
+msgid "height (mm)"
+msgstr "korkeus (mm)"
+
+msgid "depth (mm)"
+msgstr "syvyys (mm)"
+
+msgid "net weight (g)"
+msgstr "nettopaino (g)"
+
+msgid "gross weight (g)"
+msgstr "bruttopaino (g)"
+
+msgid "keywords"
+msgstr "avainsanat"
+
+msgid "status text"
+msgstr "tilateksti"
+
+msgid ""
+"This text will be shown alongside the product in the shop. (Ex.: \"Available "
+"in a month\")"
+msgstr ""
+"Tämä teksti näytetään kaupan tuotesivulla. (Esim. \"Saatavilla kuukauden "
+"päästä\")"
+
+msgid "variation name"
+msgstr "variaation nimi"
+
+msgid "products"
+msgstr "tuotteet"
+
+msgid ""
+"Multilevel parentage hierarchies aren't supported (parent is a child already)"
+msgstr "Monitasoisia isännyysrakenteita ei tueta (isäntä on jo variaatiolapsi)"
+
+msgid "Parent is a variable variation parent, yet variables were not passed"
+msgstr ""
+"Isäntä on muuttujallisen variaation isäntätuote, mutta muuttujia ei annettu"
+
+msgid ""
+"Multilevel parentage hierarchies aren't supported (this product is a simple "
+"variation parent)"
+msgstr ""
+"Monitasoisia isännyysrakenteita ei tueta (tämä tuote on yksinkertaisen "
+"variaation isäntätuote)"
+
+msgid ""
+"Multilevel parentage hierarchies aren't supported (this product is a "
+"variable variation parent)"
+msgstr ""
+"Monitasoisia isännyysrakenteita ei tueta (tämä tuote on muuttujallisen "
+"variaation isäntätuote)"
+
+msgid "Product is currently not a normal product, can't turn into package"
+msgstr "Tuote ei ole tavallinen tuote, ei voi tehdä pakettia"
+
+msgid "Variation parents can not belong into a package"
+msgstr "Variaatioisännät eivät voi kuulua paketteihin"
+
+msgid "Packages can't be nested"
+msgstr "Paketteja ei voi luoda sisäkkäin"
+
+#, python-format
+msgid "Quantity %s is invalid"
+msgstr "Määrä %s ei kelpaa"
+
+msgid "cross sell link"
+msgstr "ristiinmyyntilinkitys"
+
+msgid "cross sell links"
+msgstr "ristiinmyyntilinkitykset"
+
+msgid "product attribute"
+msgstr "tuoteattribuutti"
+
+msgid "product attributes"
+msgstr "tuoteattribuutit"
+
+msgid "not sent"
+msgstr "ei lähetetty"
+
+msgid "sent"
+msgstr "lähetetty"
+
+msgid "received"
+msgstr "vastaanotettu"
+
+msgid "error"
+msgstr "virhe"
+
+msgid "tracking code"
+msgstr "seurantakoodi"
+
+msgid "shipment"
+msgstr "lähetys"
+
+msgid "shipments"
+msgstr "lähetykset"
+
+msgid "sent product"
+msgstr "lähetetty tuote"
+
+msgid "sent products"
+msgstr "lähetetyt tuotteet"
+
+#, fuzzy
+#| msgid "The following fields can not be changed"
+msgid ""
+"The following fields cannot be changed since there are existing orders for "
+"this shop"
+msgstr "Seuraavia kenttiä ei voi muuttaa"
+
+msgid "logo"
+msgstr "logo"
+
+msgid "maintenance mode"
+msgstr "huoltotila"
+
+msgid "alert limit"
+msgstr "hälytysmäärä"
+
+msgid "physical stock count"
+msgstr "fyysinen varastomäärä"
+
+msgid "logical stock count"
+msgstr "looginen varastomäärä"
+
+msgid "Cannot change business critical fields of Tax that is in use"
+msgstr "Käytössäolevan veron liiketoimintakriittisiä kenttiä ei voi muokata"
+
+msgid "code"
+msgstr "koodi"
+
+msgid "tax rate"
+msgstr "veromäärä"
+
+msgid "The percentage rate of the tax."
+msgstr "Veron määrä prosentein."
+
+msgid "tax amount value"
+msgstr "veroarvo"
+
+msgid "The flat amount of the tax. Mutually exclusive with percentage rates."
+msgstr "Veron raha-arvo. Ei voi olla käytössä veromäärän kanssa."
+
+msgid "currency of tax amount"
+msgstr "veron valuutta"
+
+msgid "Either rate or amount is required"
+msgstr "Joko määrä tai arvo vaaditaan"
+
+msgid "Cannot have both rate and amount"
+msgstr "Ei voi olla sekä määrää että arvoa"
+
+msgid "Currency is required if amount is specified"
+msgstr "Valuutta vaaditaan jos määrä on asetettu"
+
+msgid "taxes"
+msgstr "verot"
+
+msgid "tax classes"
+msgstr "veroluokat"
+
+msgid "customer tax group"
+msgstr "asiakkaan veroryhmä"
+
+msgid "customer tax groups"
+msgstr "asiakkaan veroryhmät"
+
+msgid "Retail Customers"
+msgstr "Yksityisasiakkaat"
+
+msgid "Company Customers"
+msgstr "Yritysasiakkaat"
+
+msgid "allowed decimals"
+msgstr "sallitut desimaalit"
+
+msgid "sales unit"
+msgstr "myyntiyksikkö"
+
+msgid "sales units"
+msgstr "myyntiyksiköt"
+
+msgid "No Choice"
+msgstr "ei valintaa"
+
+msgid "Default Pricing"
+msgstr "Oletushinnoittelu"
+
+msgid "Insufficient stock"
+msgstr "Varastomäärä ei riitä"
+
+msgid "Untaxed"
+msgstr "Verottamaton"
+
+#, fuzzy
+#| msgid "The following fields can not be changed"
+msgid "This field cannot be changed since it is protected."
+msgstr "Seuraavia kenttiä ei voi muuttaa"
+
+msgid "First Last"
+msgstr "Ensimmäinen Viimeinen"

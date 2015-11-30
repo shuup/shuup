@@ -1,0 +1,435 @@
+# Translations template for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+#
+# Translators:
+# Aarni Koskela, 2015
+# Juha Kujala <juha.kujala@shoop.io>, 2015
+# Teemu Selkälä <teemu.selkala@anders.fi>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: Shoop\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-30 23:37+0000\n"
+"PO-Revision-Date: 2015-11-17 11:42+0000\n"
+"Last-Translator: Aarni Koskela\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
+"language/fi_FI/)\n"
+"Language: fi_FI\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 1.3\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Unexpected error while uploading files."
+msgstr "Odottamaton virhe ladattaessa tiedostoja palvelimelle."
+
+msgid "Error:"
+msgstr "Virhe"
+
+msgid "Uploaded:"
+msgstr "Ladattu:"
+
+msgid "New file name?"
+msgstr "Uusi tiedostonimi?"
+
+#, javascript-format
+msgid "Are you sure you want to delete the file %s?"
+msgstr "Oletko varma, että haluat poistaa tiedoston %s?"
+
+msgid "New folder name?"
+msgstr "Uusi kansion nimi?"
+
+#, javascript-format
+msgid "Are you sure you want to delete the %s folder?"
+msgstr "Oletko varma että haluat poistaa %s kansion?"
+
+msgid "New folder"
+msgstr "Uusi kansio"
+
+msgid "current"
+msgstr "Nykyinen"
+
+msgid "Oldest first"
+msgstr "Vanhin ensin"
+
+msgid "Newest first"
+msgstr "Uusin ensin"
+
+msgid "Smallest first"
+msgstr "Pienin ensin"
+
+msgid "Largest first"
+msgstr "Suurin ensin"
+
+msgid "Drop your files here"
+msgstr "Pudota tiedostosi tähän"
+
+msgid "Name"
+msgstr "Nimi"
+
+msgid "Size"
+msgstr "Koko"
+
+msgid "Date"
+msgstr "Päivämäärä"
+
+msgid "Edit"
+msgstr "Muokkaa"
+
+msgid "Click the <strong>Upload</strong> button to upload files."
+msgstr ""
+"Klikkaa <strong>Lataa</strong> -painiketta ladataksesi tiedostoja "
+"palvelimelle."
+
+msgid ""
+"<span>Drag and drop</span> files here<br> or click the <span>Upload</span> "
+"button."
+msgstr ""
+"<span>Raahaa ja pudota</span> tiedostot tähän<br> tai klikkaa <span>Lataa</"
+"span> -painiketta."
+
+msgid "Rename file"
+msgstr "Uudelleennimeä tiedosto"
+
+msgid "Delete file"
+msgstr "Poista tiedosto"
+
+msgid "Rename folder"
+msgstr "Uudelleennimeä kansio"
+
+msgid "Delete folder"
+msgstr "Poista kansio"
+
+#, javascript-format
+msgid "Order %s created."
+msgstr "Tilaus %s luotu."
+
+msgid "An unspecified error occurred.\n"
+msgstr "Määrittelemätön virhe tapahtui.\n"
+
+msgid "SKU"
+msgstr "Tuotekoodi"
+
+msgid "Text"
+msgstr "Teksti"
+
+msgid "Quantity"
+msgstr "Määrä"
+
+msgid "Unit Price"
+msgstr "Yksikköhinta"
+
+msgid "Discount amount"
+msgstr ""
+
+msgid "Total (excluding taxes)"
+msgstr ""
+
+msgid "Tax percent"
+msgstr ""
+
+#, fuzzy
+#| msgid "Total Price"
+msgid "Total"
+msgstr "Kokonaishinta"
+
+msgid "Billing address"
+msgstr ""
+
+#, fuzzy
+#| msgid "Shipping Method"
+msgid "Shipping address"
+msgstr "Toimitustapa"
+
+msgid "Customer"
+msgstr "Asiakas"
+
+msgid "Select Existing Customer"
+msgstr ""
+
+#, fuzzy
+#| msgid "Customer"
+msgid "New Customer"
+msgstr "Asiakas"
+
+msgid "Save customer details while creating order"
+msgstr ""
+
+msgid "Ship to billing address"
+msgstr ""
+
+msgid "Order for company"
+msgstr ""
+
+msgid "Billing Address"
+msgstr ""
+
+#, fuzzy
+#| msgid "Shipping Method"
+msgid "Shipping Address"
+msgstr "Toimitustapa"
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Confirm"
+msgstr ""
+
+msgid "Select Shop"
+msgstr ""
+
+#, fuzzy
+#| msgid "Order Notes"
+msgid "Order Contents"
+msgstr "Tilauksen huomiot"
+
+#, fuzzy
+#| msgid "Customer"
+msgid "Customer Details"
+msgstr "Asiakas"
+
+msgid "Shipping Method"
+msgstr "Toimitustapa"
+
+msgid "Payment Method"
+msgstr ""
+
+msgid ""
+"Method rules, taxes and possible extra discounts are calculated after "
+"proceeding."
+msgstr ""
+
+msgid "Proceed"
+msgstr ""
+
+msgid "Select product"
+msgstr ""
+
+msgid "Text/Comment"
+msgstr "Teksti/Kommentti"
+
+msgid "Qty"
+msgstr ""
+
+msgid "Total Price"
+msgstr "Kokonaishinta"
+
+#, fuzzy
+#| msgid "Unit Price"
+msgid "Base Unit Price"
+msgstr "Yksikköhinta"
+
+#, fuzzy
+#| msgid "Unit Price"
+msgid "Discounted Unit Price"
+msgstr "Yksikköhinta"
+
+msgid "Discount Percent"
+msgstr ""
+
+msgid "Total Discount Amount"
+msgstr ""
+
+msgid "Line Total"
+msgstr ""
+
+#, fuzzy
+#| msgid "Order Notes"
+msgid "Orderline type"
+msgstr "Tilauksen huomiot"
+
+msgid ""
+"If your product prices vary based on customers you might wan't to select "
+"customer first."
+msgstr ""
+
+msgid "All prices is in "
+msgstr ""
+
+#, fuzzy
+#| msgid "current"
+msgid " currency."
+msgstr "Nykyinen"
+
+msgid "All prices include taxes."
+msgstr ""
+
+msgid "Taxes is not included."
+msgstr ""
+
+#, fuzzy
+#| msgid "Add new line..."
+msgid "Add new line"
+msgstr "Lisää uusi rivi..."
+
+#, fuzzy
+#| msgid "Unit Price"
+msgid "Price"
+msgstr "Yksikköhinta"
+
+msgid "Waiver limit"
+msgstr ""
+
+msgid "Minimum weight"
+msgstr ""
+
+msgid "Maximum weight"
+msgstr ""
+
+msgid "No shipping method"
+msgstr "Ei toimitustapaa"
+
+#, fuzzy
+#| msgid "No shipping method"
+msgid "No payment method"
+msgstr "Ei toimitustapaa"
+
+msgid "Shop"
+msgstr "Kauppa"
+
+msgid "Product"
+msgstr "Tuote"
+
+msgid "Other"
+msgstr "Muu"
+
+msgid "Tax number"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Street"
+msgstr ""
+
+msgid "Street (2)"
+msgstr ""
+
+msgid "ZIP / Postal code"
+msgstr ""
+
+msgid "City"
+msgstr ""
+
+msgid "Region"
+msgstr ""
+
+msgid "Country"
+msgstr ""
+
+msgid "Identifier"
+msgstr "Tunniste"
+
+#, javascript-format
+msgid "Value %s Name"
+msgstr "Arvon %s nimi"
+
+msgid "Delete value"
+msgstr "Poista arvo"
+
+msgid "Are you sure?"
+msgstr "Oletko varma?"
+
+msgid "Delete Variable"
+msgstr "Poista muuttuja"
+
+msgid "Add new value"
+msgstr "Lisää uusi arvo"
+
+msgid "Variable Name"
+msgstr "Muuttujan nimi"
+
+msgid "DELETE"
+msgstr "POISTA"
+
+msgid "Variable"
+msgstr "Muuttuja"
+
+msgid "Show identifier fields (for advanced users)"
+msgstr "Näytä tunnistekentät (Edistyneille käyttäjille)"
+
+msgid "There are no variables defined."
+msgstr "Yhtään muuttujaa ei ole määritetty."
+
+msgid "Add new variable"
+msgstr "Lisää uusi muuttuja"
+
+msgid "No results."
+msgstr "Ei tuloksia."
+
+msgid "No browser URL for kind:"
+msgstr "Ei URL-osoitetta selaimessa tyypille:"
+
+msgid "Expand Editor"
+msgstr "Laajenna editori"
+
+msgid "From"
+msgstr "Mistä"
+
+msgid "To"
+msgstr "Mihin"
+
+msgid "Items per page"
+msgstr "Tuloksia per sivu"
+
+msgid "Reset filters"
+msgstr "Tyhjennä suodattimet"
+
+msgid "Reset"
+msgstr "Tyhjennä"
+
+msgid "Sort by"
+msgstr "Järjestä"
+
+msgid "ascending"
+msgstr "Nouseva"
+
+msgid "descending"
+msgstr "Laskeva"
+
+msgid "Default sorting"
+msgstr "Oletusjärjestys"
+
+msgid "Previous"
+msgstr "Edellinen"
+
+msgid "Next"
+msgstr "Seuraava"
+
+msgid "Filters"
+msgstr "Suodattimet"
+
+msgid "Are you sure you want to delete this media?"
+msgstr "Oletko varma, että haluat poistaa tämän median?"
+
+msgid "Set as primary image"
+msgstr "Aseta pääkuvaksi"
+
+msgid "Primary image"
+msgstr "Pääkuva"
+
+msgid "Bold"
+msgstr "Lihavoitu"
+
+msgid "Italic"
+msgstr "Kursiivi"
+
+msgid "List"
+msgstr "Lista"
+
+msgid "Ordered list"
+msgstr "Järjestetty lista"
+
+msgid "Link"
+msgstr "Linkki"
+
+msgid "Editor"
+msgstr "Editori"
+
+msgid "Done"
+msgstr "Valmis"

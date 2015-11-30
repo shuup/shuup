@@ -1,0 +1,124 @@
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Aarni Koskela, 2015.
+# Antti Mäki <antti@anttimaki.com>, 2015.
+# Eetu Häivälä <eetu.haivala@anders.fi>, 2015.
+# Janne Tammi <janne.tammi@shoop.io>, 2015.
+# Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015.
+# Juha Kujala <juha.kujala@shoop.io>, 2015.
+# Juha Louhiranta <charni@gmail.com>, 2015.
+# Rauli Laine <rauli.laine@iki.fi>, 2015.
+# Shoop Admin <admin@shoop.io>, 2015.
+# Teemu Selkälä <teemu.selkala@anders.fi>, 2015.
+# tomijarvi <tomi@jarvi.pro>, 2015.
+# Tuomas Suutari <tuomas.suutari@anders.fi>, 2015.
+msgid ""
+msgstr ""
+"Project-Id-Version: Shoop\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-30 23:37+0000\n"
+"PO-Revision-Date: 2015-11-26 18:44+0200\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@anders.fi>\n"
+"Language-Team: English <kde-i18n-doc@kde.org>\n"
+"Language: fi_FI\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 1.3\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#, python-format
+msgid ""
+"Please enter a correct %(username)s and password. Note that both fields may "
+"be case-sensitive. In case of multiple accounts with same email only "
+"username can be used to login."
+msgstr ""
+"Syötä oikea %(username)s ja salasana. Huomaathan, että molemmissa kentissä "
+"voi olla isoja ja pieniä kirjaimia. Jos teillä on useita tilejä samalla "
+"sähköpostilla niin vain käyttäjätunnusta voidaan käyttää kirjautumiseen."
+
+msgid "This account is inactive."
+msgstr "Tämä tili ei ole aktiivinen"
+
+msgid "Username or email address"
+msgstr "Käyttäjänimi tai sähköpostiosoite"
+
+msgid "Username"
+msgstr "Käyttäjänimi"
+
+msgid "Email"
+msgstr "Sähköposti"
+
+msgid "Please provide either username or email, not both."
+msgstr "Syötäthän joko käyttäjätunnuksen tai sähköpostin, ei molempia."
+
+msgid "Please provide either username or email."
+msgstr "Syötäthän joko käyttäjätunnuksen tai sähköpostin"
+
+msgid "shop"
+msgstr "kauppa"
+
+msgid "Log in"
+msgstr "Kirjaudu sisään"
+
+msgid "Forgot your password?"
+msgstr "Unohditko salasanasi?"
+
+msgid "Logged out"
+msgstr "Kirjaudu ulos"
+
+msgid "You have been logged out."
+msgstr "Olet kirjautunut ulos."
+
+msgid "Recover your password"
+msgstr "Palauta salasanasi"
+
+msgid "Send password recovery instructions"
+msgstr "Lähetä salasanan palautusohjeet"
+
+msgid "Password Changed"
+msgstr "Salasana vaihdettu"
+
+msgid "Your password has been changed and you have been logged in."
+msgstr "Salasanasi on vaihdettu ja sinut on kirjattu sisään."
+
+msgid "Password Recovery"
+msgstr "Salasanan palautus"
+
+msgid "Change Password"
+msgstr "Vaihda salasana"
+
+#, python-format
+msgid "Hi %(fullname)s"
+msgstr ""
+
+#, python-format
+msgid "In case you've forgotten, your username is %(username)s."
+msgstr "Mikäli olet unohtanut, käyttäjätunnuksesi on %(username)s"
+
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr ""
+"Sait tämän sähköpostin koska pyysit salasananpalautusta sivustolla "
+"%(site_name)s."
+
+msgid "Please go to the following page and choose a new password:"
+msgstr "Siirry oheiselle sivulle ja valitse uusi salasana:"
+
+msgid ""
+"\n"
+"    If an user account is associated with the information you entered,\n"
+"    you should receive instructions on how to reset your password shortly.\n"
+"    "
+msgstr ""
+"\n"
+"Jos syöttämääsi sähköpostiosoitteeseen liittyy asiakastili, vastaanottanet "
+"piakkoin sähköpostiisi salasananpalautusohjeet."
+
+msgid "This recovery link is invalid."
+msgstr "Tämä palautuslinkki on virheellinen."

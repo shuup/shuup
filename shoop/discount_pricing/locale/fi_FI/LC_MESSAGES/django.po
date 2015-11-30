@@ -30,33 +30,21 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 2.0\n"
 
-msgid "other"
-msgstr "muu"
+#, python-format
+msgid "Price (%s)"
+msgstr "Hinta (%s)"
 
-msgid "audit"
-msgstr "tarkastelu"
+msgid "product price"
+msgstr "tuotehinta"
 
-msgid "edit"
-msgstr "muokkaus"
+msgid "product prices"
+msgstr "tuotehinnat"
 
-msgid "deletion"
-msgstr "poisto"
+msgid "Discount Pricing"
+msgstr "Alennushinnat"
 
-msgid "note"
-msgstr "huomautus"
+msgid "Discounted Price"
+msgstr "Alennettu hinta"
 
-msgid "email"
-msgstr "sähköposti"
-
-msgid "warning"
-msgstr "varoitus"
-
-msgid "error"
-msgstr "virhe"
-
-msgid ""
-"Comma-separated values or ranges, e.g. A-Z,10000-19000. Use exclamation "
-"marks to negate (A-Z,!G will not match G)."
-msgstr ""
-"Pilkulla erotellut arvot tai arvoalueet, esim. \"A-Z,10000-19000\". Käytä "
-"huutomerkkejä estääksesi arvoja (esim. \"A-Z,!G\" ei täsmää arvoon G)."
+msgid "Discounted Price for Shop"
+msgstr "Alennettu hinta kaupalle"

@@ -30,33 +30,5 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 2.0\n"
 
-msgid "other"
-msgstr "muu"
-
-msgid "audit"
-msgstr "tarkastelu"
-
-msgid "edit"
-msgstr "muokkaus"
-
-msgid "deletion"
-msgstr "poisto"
-
-msgid "note"
-msgstr "huomautus"
-
-msgid "email"
-msgstr "sähköposti"
-
-msgid "warning"
-msgstr "varoitus"
-
-msgid "error"
-msgstr "virhe"
-
-msgid ""
-"Comma-separated values or ranges, e.g. A-Z,10000-19000. Use exclamation "
-"marks to negate (A-Z,!G will not match G)."
-msgstr ""
-"Pilkulla erotellut arvot tai arvoalueet, esim. \"A-Z,10000-19000\". Käytä "
-"huutomerkkejä estääksesi arvoja (esim. \"A-Z,!G\" ei täsmää arvoon G)."
+msgid "Simple order notifications"
+msgstr "Yksinkertaiset tilaustiedot"

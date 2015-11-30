@@ -30,33 +30,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 2.0\n"
 
-msgid "other"
-msgstr "muu"
+msgid "Shoop Frontend - Customer Information Editing"
+msgstr "Kauppa - asiakastietojen muokkaaminen"
 
-msgid "audit"
-msgstr "tarkastelu"
+msgid "User account information"
+msgstr "Käyttäjätunnuksen tiedot"
 
-msgid "edit"
-msgstr "muokkaus"
+msgid "User information"
+msgstr "Käyttäjätiedot"
 
-msgid "deletion"
-msgstr "poisto"
+msgid "Billing information"
+msgstr "Laskutustiedot"
 
-msgid "note"
-msgstr "huomautus"
+msgid "Shipping information"
+msgstr "Toimitustiedot"
 
-msgid "email"
-msgstr "sähköposti"
+msgid "Save changes"
+msgstr "Tallenna muutokset"
 
-msgid "warning"
-msgstr "varoitus"
-
-msgid "error"
-msgstr "virhe"
-
-msgid ""
-"Comma-separated values or ranges, e.g. A-Z,10000-19000. Use exclamation "
-"marks to negate (A-Z,!G will not match G)."
-msgstr ""
-"Pilkulla erotellut arvot tai arvoalueet, esim. \"A-Z,10000-19000\". Käytä "
-"huutomerkkejä estääksesi arvoja (esim. \"A-Z,!G\" ei täsmää arvoon G)."
+msgid "Account information saved successfully."
+msgstr "Tilitiedot tallennettu."

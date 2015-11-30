@@ -30,33 +30,21 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 2.0\n"
 
-msgid "other"
-msgstr "muu"
+msgid "Account activation failed."
+msgstr "Tilin aktivointi epäonnistui"
 
-msgid "audit"
-msgstr "tarkastelu"
+msgid "Registration"
+msgstr "Rekisteröityminen"
 
-msgid "edit"
-msgstr "muokkaus"
+msgid "Register"
+msgstr "Rekisteröidy"
 
-msgid "deletion"
-msgstr "poisto"
-
-msgid "note"
-msgstr "huomautus"
-
-msgid "email"
-msgstr "sähköposti"
-
-msgid "warning"
-msgstr "varoitus"
-
-msgid "error"
-msgstr "virhe"
+msgid "Activation successful!"
+msgstr "Aktivointi onnistui!"
 
 msgid ""
-"Comma-separated values or ranges, e.g. A-Z,10000-19000. Use exclamation "
-"marks to negate (A-Z,!G will not match G)."
+"Registration complete. Please follow the instructions sent to your email "
+"address."
 msgstr ""
-"Pilkulla erotellut arvot tai arvoalueet, esim. \"A-Z,10000-19000\". Käytä "
-"huutomerkkejä estääksesi arvoja (esim. \"A-Z,!G\" ei täsmää arvoon G)."
+"Rekisteröinti valmis. Ole hyvä ja seuraa sähköpostiosoitteeseesi lähetettyjä "
+"ohjeita."
