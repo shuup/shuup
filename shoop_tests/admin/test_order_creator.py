@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
+import pytest
 
 from django.test import RequestFactory
 from shoop.core.models import Order
@@ -11,7 +12,7 @@ from shoop.testing.factories import (
 )
 from shoop.testing.utils import apply_request_middleware
 from shoop_tests.utils import printable_gibberish, assert_contains
-from shoop.admin.modules.orders.views.create import OrderCreateView
+from shoop.admin.modules.orders.views.create import OrderCreateView, encode_method
 
 TEST_COMMENT = "Hello. Is it me you're looking for?"
 
@@ -160,3 +161,11 @@ def test_order_creator_source_data(rf, admin_user):
     response = OrderCreateView.as_view()(request)
     data = json.loads(response.content.decode("utf8"))
     assert len(data.get("orderLines")) == 5
+
+
+@pytest.mark.django_db
+def test_encode_method_weights():
+    payment_method = get_default_payment_method()
+    assert encode_method(payment_method).get("minWeight") is None
+    shipping_method = get_default_shipping_method()
+    assert encode_method(shipping_method).get("minWeight") is None
