@@ -11,14 +11,17 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.forms.widgets import MediaChoiceWidget
-from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.admin.toolbar import get_default_edit_toolbar
+from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.core.models import Shop
+from shoop.core.utils.form_mixins import ProtectedFieldsMixin
 from shoop.utils.excs import Problem
 from shoop.utils.multilanguage_model_form import MultiLanguageModelForm
 
 
-class ShopForm(MultiLanguageModelForm):
+class ShopForm(ProtectedFieldsMixin, MultiLanguageModelForm):
+    change_protect_field_text = _("This field cannot be changed since there are existing orders for this shop.")
+
     class Meta:
         model = Shop
         exclude = ("owner", "options")
