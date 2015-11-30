@@ -70,8 +70,8 @@ def encode_method_extras(method):
     return {
         "price": module_data.get("price") if module_data else decimal.Decimal("0.00"),
         "waiverMinimum": module_data.get("price_waiver_product_minimum") if module_data else decimal.Decimal("0.00"),
-        "minWeight": module_data.get("min_weight") if is_shipping else None,
-        "maxWeight": module_data.get("max_weight") if is_shipping else None
+        "minWeight": module_data.get("min_weight") if module_data and is_shipping else None,
+        "maxWeight": module_data.get("max_weight") if module_data and is_shipping else None
     }
 
 
