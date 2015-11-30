@@ -29,7 +29,7 @@ export default function view() {
                         store.dispatch(retrieveCustomerData({id: source.customerId}));
                         store.dispatch(clearOrderSourceData());
                     }
-                }, m("i.fa.fa-close"), " " + gettext("Cancel")),
+                }, m("i.fa.fa-close"), " " + gettext("Back")),
                 m("button.btn.btn-success.btn-lg.pull-right" + (creating ? ".disabled" : ""), {
                     disabled: creating,
                     onclick: () => {
