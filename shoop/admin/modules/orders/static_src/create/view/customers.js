@@ -40,6 +40,8 @@ function renderAddress(store, shop, customer, address, addressType) {
 export function customerSelectView(store) {
     const {customer, shop} = store.getState();
     return m("div.form-group", [
+        (!customer.id ? m("p", gettext("A new customer will be created based on billing address.")) : null),
+        m("br"),
         m("label.control-label", gettext("Customer")),
         m("div.btn-group", [
             m("button.btn.btn-default" + (customer.id ? " active" : ""), {

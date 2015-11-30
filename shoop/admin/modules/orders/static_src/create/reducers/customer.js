@@ -31,7 +31,7 @@ function setAddressProperty(state, {payload}) {
 }
 
 export default handleActions({
-    setCustomer: ((state, {payload}) => payload),
+    setCustomer: ((state, {payload}) => _.assign(state, payload)),
     clearExistingCustomer,
     setAddressProperty,
     setAddressSavingOption: ((state, {payload}) => _.assign(state, {saveAddress: payload})),
@@ -40,7 +40,7 @@ export default handleActions({
 }, {
     id: null,
     name: "",
-    saveAddress: false,
+    saveAddress: true,
     shipToBillingAddress: false,
     isCompany: false,
     billingAddress: {},
