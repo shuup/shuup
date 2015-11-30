@@ -149,7 +149,7 @@ class JsonOrderCreator(object):
         email = billing_address.get("email", "")
         fields = {"name": name, "phone": phone, "email": email}
         if is_company:
-            tax_number = billing_address.pop("tax_number", None)
+            tax_number = billing_address.get("tax_number", None)
             if not tax_number:
                 self.add_error(
                     ValidationError(_("Tax number is not set for company."), code="no_tax_number")

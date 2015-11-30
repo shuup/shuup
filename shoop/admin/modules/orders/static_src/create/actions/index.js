@@ -81,6 +81,7 @@ export const retrieveOrderSourceData = function () {
         post("source_data", {state}).then((data) => {
             dispatch(receiveOrderSourceData({data}));
             dispatch(setOrderSource(data));
+            dispatch(retrieveCustomerData({id: data.customerId}));
         }, (data) => {  // error handler
             const {Messages} = window;
             if (Messages) {
