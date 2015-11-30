@@ -97,7 +97,6 @@ def encode_line(line):
 def get_price_info(shop, customer, product, quantity):
     ctx_request = RequestFactory().get("/")
     ctx_request.shop = shop
-    customer = None
     if customer:
         ctx_request.customer = customer
     ctx_request.user = AnonymousUser()
@@ -188,7 +187,7 @@ class OrderCreateView(TemplateView):
             },
             "unitPrice": {
                 "value": price_info.price.value,
-                "includesTax": price_info.base_price.includes_tax
+                "includesTax": price_info.price.includes_tax
             }
         }
 
