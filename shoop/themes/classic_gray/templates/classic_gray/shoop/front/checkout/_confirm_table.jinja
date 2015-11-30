@@ -18,7 +18,6 @@
         <tr>
             <td colspan="5" class="text-right">
                 {% trans %}Total{% endtrans %}:
-                {# TODO: (TAX) Ensure taxes are calculated in _confirm_table.jinja #}
                 {% set taxful_total_price = basket.taxful_total_price %}
                 {% set taxless_total_price = basket.taxless_total_price %}
                 <span class="total-price"><strong>{{ taxful_total_price|money }}</strong></span>

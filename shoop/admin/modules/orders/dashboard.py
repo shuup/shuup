@@ -9,7 +9,6 @@
 from __future__ import unicode_literals
 
 from babel.dates import format_date
-from django.conf import settings
 from django.db.models import Avg, Count, Sum
 from django.utils.translation import ugettext_lazy as _
 
@@ -47,7 +46,7 @@ class OrderValueChartDashboardBlock(DashboardChartBlock):
         bar_chart.add_data(
             _("Sales (%(currency)s)") % {"currency": self.currency},
             [
-                bankers_round(v["sum"], settings.SHOOP_ORDER_TOTAL_DECIMALS)
+                bankers_round(v["sum"], 2)  # TODO: To be fixed in SHOOP-1912
                 for v in aggregate_data.values()
             ]
         )

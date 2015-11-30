@@ -25,10 +25,6 @@ from shoop.utils.objects import compare_partial_dicts
 
 class BasketLine(SourceLine):
     def __init__(self, source=None, **kwargs):
-        # TODO: (TAX) Remove following asserts maybe?
-        assert "shop_id" not in kwargs
-        assert "product_id" not in kwargs
-        assert "supplier_id" not in kwargs
         self.__in_init = True
         super(BasketLine, self).__init__(source, **kwargs)
         self.__in_init = False
@@ -178,7 +174,6 @@ class BaseBasket(OrderSource):
     def get_lines(self):
         return [BasketLine.from_dict(self, line) for line in self._data_lines]
 
-    # TODO: (TAX) Move get_final_lines from Basket to OrderSource (see also non_reentrant decorator below)
     def _initialize_product_line_data(self, product, supplier, shop, quantity=0):
         if product.variation_children.count():
             raise ValueError("Attempting to add variation parent to basket")
