@@ -98,8 +98,21 @@ class JsonOrderCreator(object):
                 "shop": source.shop
             }), code="no_shop_product"))
             return False
+        supplier = shop_product.suppliers.first()  # TODO: Allow setting a supplier?
+        is_orderable = True
+        for message in shop_product.get_orderability_errors(
+                supplier=supplier, quantity=sl_kwargs["quantity"], customer=source.customer):
+            self.add_error(ValidationError((_("Product %(product)s is not orderable: %(error)s") % {
+                "product": product,
+                "error": str(message.args[0])
+            }), code=str(message.args[1])))
+            is_orderable = False
+
+        if not is_orderable:
+            return False
+
         sl_kwargs["product"] = product
-        sl_kwargs["supplier"] = shop_product.suppliers.first()  # TODO: Allow setting a supplier?
+        sl_kwargs["supplier"] = supplier
         sl_kwargs["type"] = OrderLineType.PRODUCT
         sl_kwargs["sku"] = product.sku
         sl_kwargs["text"] = product.name
