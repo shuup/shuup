@@ -1,0 +1,13 @@
+sudo: false
+language: python
+cache:
+  directories:
+    - $HOME/.cache/pip
+python:
+  - "2.7"
+  - "3.4"
+install:
+  - pip install -U pip
+  - pip install coveralls -e .[everything]
+script: py.test -vvv --cov shoop shoop_tests
+after_success: coveralls
