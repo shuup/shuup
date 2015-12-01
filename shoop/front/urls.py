@@ -12,9 +12,10 @@ from itertools import chain
 from django.conf.urls import url
 from django.http.response import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.views.i18n import javascript_catalog, set_language
+from django.views.i18n import set_language
 
 from shoop.apps.provides import get_provide_objects
+from shoop.utils.i18n import javascript_catalog_all
 
 from .views.basket import BasketView
 from .views.category import CategoryView
@@ -39,7 +40,7 @@ checkout_view = get_checkout_view()
 
 urlpatterns = [
     url(r'^set-language/$', csrf_exempt(set_language), name="set-language"),
-    url(r'^jsi18n.js$', javascript_catalog, {'packages': ('shoop',)}, name='js-catalog'),
+    url(r'^i18n.js$', javascript_catalog_all, name='js-catalog'),
     url(r'^checkout/$', checkout_view, name='checkout'),
     url(r'^checkout/(?P<phase>.+)/$', checkout_view, name='checkout'),
     url(r'^basket/$', csrf_exempt(BasketView.as_view()), name='basket'),

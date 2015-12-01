@@ -1,0 +1,130 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-30 23:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: en <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Generated-By: Babel 2.1.1\n"
+
+msgid "Addons"
+msgstr ""
+
+#, python-format
+msgid "Enable %s"
+msgstr ""
+
+#, python-format
+msgid "%d new addons enabled."
+msgstr ""
+
+#, python-format
+msgid "%d previously enabled addons disabled."
+msgstr ""
+
+msgid "No changes were made."
+msgstr ""
+
+msgid "Save addon changes"
+msgstr ""
+
+msgid "Upload new addon"
+msgstr ""
+
+msgid "Reload application"
+msgstr ""
+
+msgid "Reload Method"
+msgstr ""
+
+msgid "Addon file (ZIP)"
+msgstr ""
+
+msgid "Only upload addon files you trust."
+msgstr ""
+
+msgid "Upload"
+msgstr ""
+
+msgid "Install Addon"
+msgstr ""
+
+msgid "Installed addons"
+msgstr ""
+
+msgid "Addon name"
+msgstr ""
+
+msgid "Is enabled"
+msgstr ""
+
+msgid "You don't have any installed addons"
+msgstr ""
+
+msgid "Reload Application Server"
+msgstr ""
+
+msgid ""
+"When you reload the application server, it may take some time for the new "
+"instance of your application to properly initialize."
+msgstr ""
+
+msgid ""
+"In addition, there is always a chance for the server to not properly "
+"initialize at all, in which case you may need to troubleshoot the problem "
+"yourself (or have a system administrator handy)."
+msgstr ""
+
+msgid "Select file"
+msgstr ""
+
+msgid "Installation Finished"
+msgstr ""
+
+msgid "Installation Failed"
+msgstr ""
+
+msgid "Success"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+msgid "activate the newly installed addon"
+msgstr ""
+
+msgid "and"
+msgstr ""
+
+msgid "reload your application server"
+msgstr ""
+
+msgid "Error"
+msgstr ""
+
+msgid "Installer Log"
+msgstr ""
+
+msgid "Upload Addon - Install"
+msgstr ""
+
+msgid "Package Information"
+msgstr ""
+
+msgid "No package information could be extracted."
+msgstr ""
+
+msgid "File List"
+msgstr ""

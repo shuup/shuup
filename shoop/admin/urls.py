@@ -13,13 +13,13 @@ import warnings
 import django.contrib.auth.views as auth_views
 from django.conf.urls import patterns, url
 from django.contrib.auth import logout as do_logout
-from django.views.i18n import javascript_catalog
 
 from shoop.admin.module_registry import get_module_urls
 from shoop.admin.utils.urls import AdminRegexURLPattern, admin_url
 from shoop.admin.views.dashboard import DashboardView
 from shoop.admin.views.menu import MenuView
 from shoop.admin.views.search import SearchView
+from shoop.utils.i18n import javascript_catalog_all
 
 
 def login(request, **kwargs):
@@ -58,7 +58,7 @@ def get_urls():
             warnings.warn("Admin URL %r is not an AdminRegexURLPattern" % u)
 
     # Add Django javascript catalog url
-    urls.append(url(r'^jsi18n.js$', javascript_catalog, {'packages': ('shoop',)}, name='js-catalog'))
+    urls.append(url(r'^i18n.js$', javascript_catalog_all, name='js-catalog'))
 
     return tuple(urls)
 

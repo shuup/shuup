@@ -4,9 +4,11 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from distutils.command.build import build as du_build
 import distutils.core
 import distutils.errors
+import os
+import subprocess
+from distutils.command.build import build as du_build
 
 from setuptools.command.build_py import build_py as st_build_py
 
@@ -21,6 +23,7 @@ class BuildCommand(du_build):
         super_cmds = du_build.get_sub_commands(self)
         my_cmds = [
             BuildProductionResourcesCommand.command_name,
+            BuildMessagesCommand.command_name,
         ]
         return my_cmds + super_cmds
 
@@ -82,9 +85,37 @@ class BuildProductionResourcesCommand(BuildResourcesCommand):
     clean = True
 
 
+class BuildMessagesCommand(distutils.core.Command):
+    command_name = 'build_messages'
+    description = "compile message catalogs via Django compilemessages"
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        appdirs = set()
+        rootdir = os.getcwd()
+        for (dirpath, dirnames, filenames) in os.walk(rootdir):
+            if 'LC_MESSAGES' in dirnames:
+                parent_dir = os.path.dirname(dirpath)
+                if os.path.basename(parent_dir) == 'locale':
+                    appdirs.add(os.path.dirname(parent_dir))
+        for appdir in sorted(appdirs):
+            os.chdir(appdir)
+            try:
+                subprocess.check_call(['django-admin', 'compilemessages'])
+            finally:
+                os.chdir(rootdir)
+
+
 COMMANDS = dict((x.command_name, x) for x in [
     BuildCommand,
     BuildPyCommand,
     BuildResourcesCommand,
     BuildProductionResourcesCommand,
+    BuildMessagesCommand,
 ])

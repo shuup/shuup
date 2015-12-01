@@ -1,0 +1,918 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-30 23:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: en <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Generated-By: Babel 2.1.1\n"
+
+msgid "internal identifier"
+msgstr ""
+
+msgid "Do not change this value if you are not sure what you're doing."
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
+msgid "Waiver minimum"
+msgstr ""
+
+msgid ""
+"Waive the price when the total price of products in the order reaches this "
+"amount"
+msgstr ""
+
+msgid "0 or below: no lower limit"
+msgstr ""
+
+msgid "minimum weight"
+msgstr ""
+
+msgid "maximum weight"
+msgstr ""
+
+msgid "Minimum weight not met."
+msgstr ""
+
+msgid "Maximum weight exceeded."
+msgstr ""
+
+msgid "Default Shipping"
+msgstr ""
+
+msgid "Default Payment"
+msgstr ""
+
+msgid "Error"
+msgstr ""
+
+msgid "The following fields can not be changed"
+msgstr ""
+
+msgid "shipping address"
+msgstr ""
+
+msgid "billing address"
+msgstr ""
+
+msgid "disabled"
+msgstr ""
+
+msgid "enabled"
+msgstr ""
+
+msgid "name prefix"
+msgstr ""
+
+msgid "name"
+msgstr ""
+
+msgid "name suffix"
+msgstr ""
+
+msgid "name extension"
+msgstr ""
+
+msgid "company name"
+msgstr ""
+
+msgid "Tax number"
+msgstr ""
+
+msgid "phone"
+msgstr ""
+
+msgid "email"
+msgstr ""
+
+msgid "street"
+msgstr ""
+
+msgid "street (2)"
+msgstr ""
+
+msgid "street (3)"
+msgstr ""
+
+msgid "ZIP / Postal code"
+msgstr ""
+
+msgid "city"
+msgstr ""
+
+msgid "region code"
+msgstr ""
+
+msgid "region"
+msgstr ""
+
+msgid "country"
+msgstr ""
+
+msgid "immutable"
+msgstr ""
+
+msgid "address"
+msgstr ""
+
+msgid "addresses"
+msgstr ""
+
+msgid "role"
+msgstr ""
+
+msgid "status"
+msgstr ""
+
+msgid "title"
+msgstr ""
+
+msgid "saved address"
+msgstr ""
+
+msgid "saved addresses"
+msgstr ""
+
+msgid "hidden"
+msgstr ""
+
+msgid "shown on product page"
+msgstr ""
+
+msgid "searchable metadata"
+msgstr ""
+
+msgid "private metadata"
+msgstr ""
+
+msgid "integer"
+msgstr ""
+
+msgid "decimal"
+msgstr ""
+
+msgid "boolean"
+msgstr ""
+
+msgid "time interval"
+msgstr ""
+
+msgid "date and time"
+msgstr ""
+
+msgid "date only"
+msgstr ""
+
+msgid "translated string"
+msgstr ""
+
+msgid "untranslated string"
+msgstr ""
+
+msgid "attribute"
+msgstr ""
+
+msgid "attributes"
+msgstr ""
+
+msgid "invisible"
+msgstr ""
+
+msgid "visible"
+msgstr ""
+
+msgid "deleted"
+msgstr ""
+
+msgid "visible to all"
+msgstr ""
+
+msgid "visible to logged in customers"
+msgstr ""
+
+msgid "visible to certain customer groups"
+msgstr ""
+
+msgid "parent category"
+msgstr ""
+
+msgid "image"
+msgstr ""
+
+msgid "ordering"
+msgstr ""
+
+msgid "visibility limitations"
+msgstr ""
+
+msgid "visible for groups"
+msgstr ""
+
+msgid "description"
+msgstr ""
+
+msgid "slug"
+msgstr ""
+
+msgid "category"
+msgstr ""
+
+msgid "categories"
+msgstr ""
+
+msgid "key"
+msgstr ""
+
+msgid "value"
+msgstr ""
+
+msgid "configuration item"
+msgstr ""
+
+msgid "configuration items"
+msgstr ""
+
+#, python-format
+msgid "%(key)s for shop %(shop)s"
+msgstr ""
+
+#, python-format
+msgid "%(key)s (global)"
+msgstr ""
+
+msgid "members"
+msgstr ""
+
+msgid "show as pricing option"
+msgstr ""
+
+msgid "contact group"
+msgstr ""
+
+msgid "contact groups"
+msgstr ""
+
+msgid "default shipping method"
+msgstr ""
+
+msgid "default payment method"
+msgstr ""
+
+msgid "language"
+msgstr ""
+
+msgid "marketing permission"
+msgstr ""
+
+msgid "web address"
+msgstr ""
+
+msgid "contact"
+msgstr ""
+
+msgid "contacts"
+msgstr ""
+
+msgid "e.g. EIN in US or VAT code in Europe"
+msgstr ""
+
+msgid "company"
+msgstr ""
+
+msgid "companies"
+msgstr ""
+
+msgid "person"
+msgstr ""
+
+msgid "persons"
+msgstr ""
+
+msgid "order reference"
+msgstr ""
+
+msgid "counter"
+msgstr ""
+
+msgid "counters"
+msgstr ""
+
+msgid "added"
+msgstr ""
+
+msgid "URL"
+msgstr ""
+
+msgid "manufacturer"
+msgstr ""
+
+msgid "manufacturers"
+msgstr ""
+
+msgid "shipping"
+msgstr ""
+
+msgid "payment"
+msgstr ""
+
+msgid "tax class"
+msgstr ""
+
+msgid "module"
+msgstr ""
+
+msgid "shipping method"
+msgstr ""
+
+msgid "shipping methods"
+msgstr ""
+
+msgid "payment method"
+msgstr ""
+
+msgid "payment methods"
+msgstr ""
+
+msgid "product"
+msgstr ""
+
+msgid "campaign"
+msgstr ""
+
+msgid "other"
+msgstr ""
+
+msgid "order"
+msgstr ""
+
+msgid "supplier"
+msgstr ""
+
+msgid "parent line"
+msgstr ""
+
+msgid "line type"
+msgstr ""
+
+msgid "line SKU"
+msgstr ""
+
+msgid "line text"
+msgstr ""
+
+msgid "accounting identifier"
+msgstr ""
+
+msgid "require verification"
+msgstr ""
+
+msgid "verified"
+msgstr ""
+
+msgid "quantity"
+msgstr ""
+
+msgid "unit price amount (undiscounted)"
+msgstr ""
+
+msgid "total amount of discount"
+msgstr ""
+
+msgid "order line"
+msgstr ""
+
+msgid "order lines"
+msgstr ""
+
+msgid "tax"
+msgstr ""
+
+msgid "tax name"
+msgstr ""
+
+msgid "tax amount"
+msgstr ""
+
+msgid "base amount"
+msgstr ""
+
+msgid "Amount that this tax is calculated from"
+msgstr ""
+
+msgid "not paid"
+msgstr ""
+
+msgid "partially paid"
+msgstr ""
+
+msgid "fully paid"
+msgstr ""
+
+msgid "canceled"
+msgstr ""
+
+msgid "deferred"
+msgstr ""
+
+msgid "not shipped"
+msgstr ""
+
+msgid "partially shipped"
+msgstr ""
+
+msgid "fully shipped"
+msgstr ""
+
+msgid "none"
+msgstr ""
+
+msgid "initial"
+msgstr ""
+
+msgid "complete"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "order identifier"
+msgstr ""
+
+msgid "label"
+msgstr ""
+
+msgid "reference number"
+msgstr ""
+
+msgid "customer"
+msgstr ""
+
+msgid "orderer"
+msgstr ""
+
+msgid "email address"
+msgstr ""
+
+msgid "creating user"
+msgstr ""
+
+msgid "payment status"
+msgstr ""
+
+msgid "shipping status"
+msgstr ""
+
+msgid "payment method name"
+msgstr ""
+
+msgid "shipping method name"
+msgstr ""
+
+msgid "grand total"
+msgstr ""
+
+msgid "taxless total"
+msgstr ""
+
+msgid "IP address"
+msgstr ""
+
+msgid "order date"
+msgstr ""
+
+msgid "payment date"
+msgstr ""
+
+msgid "customer comment"
+msgstr ""
+
+msgid "admin comment/notes"
+msgstr ""
+
+msgid "requires verification"
+msgstr ""
+
+msgid "all lines verified"
+msgstr ""
+
+msgid "orders"
+msgstr ""
+
+msgid "Order marked as paid."
+msgstr ""
+
+#, python-format
+msgid "Shipment #%d created."
+msgstr ""
+
+msgid "All rows requiring verification have been verified."
+msgstr ""
+
+msgid "All products have been shipped. Fully Shipped status set."
+msgstr ""
+
+msgid "payments"
+msgstr ""
+
+msgid "cache entry"
+msgstr ""
+
+msgid "cache entries"
+msgstr ""
+
+msgid "file"
+msgstr ""
+
+msgid "documentation"
+msgstr ""
+
+msgid "sample"
+msgstr ""
+
+msgid "kind"
+msgstr ""
+
+msgid ""
+"Enter URL to external file. If this field is filled, the selected media "
+"doesn't apply."
+msgstr ""
+
+msgid "public (shown on product page)"
+msgstr ""
+
+msgid "purchased (shown for finished purchases)"
+msgstr ""
+
+msgid "product attachment"
+msgstr ""
+
+msgid "product attachments"
+msgstr ""
+
+msgid "attachment"
+msgstr ""
+
+msgid "purchase multiple"
+msgstr ""
+
+msgid "minimum purchase"
+msgstr ""
+
+msgid "primary category"
+msgstr ""
+
+msgid "Default price"
+msgstr ""
+
+msgid "This product has been deleted."
+msgstr ""
+
+msgid "This product is not visible."
+msgstr ""
+
+msgid "The Product is invisible to users not logged in."
+msgstr ""
+
+msgid "This product is not visible to your group."
+msgstr ""
+
+msgid "The product has no supplier."
+msgstr ""
+
+#, python-format
+msgid "The purchase quantity needs to be at least %d for this product."
+msgstr ""
+
+#, python-format
+msgid "The product is not supplied by %s."
+msgstr ""
+
+#, python-format
+msgid ""
+"The product can only be ordered in multiples of %(package_size)s, for "
+"example %(smaller_p)s %(unit)s."
+msgstr ""
+
+#, python-format
+msgid ""
+"The product can only be ordered in multiples of %(package_size)s, for "
+"example %(smaller_p)s or %(larger_p)s %(unit)s."
+msgstr ""
+
+msgid "variation variable"
+msgstr ""
+
+msgid "variation variables"
+msgstr ""
+
+msgid "variation value"
+msgstr ""
+
+msgid "variation values"
+msgstr ""
+
+msgid "variation result"
+msgstr ""
+
+msgid "variation results"
+msgstr ""
+
+msgid "normal"
+msgstr ""
+
+msgid "package parent"
+msgstr ""
+
+msgid "variation parent (simple)"
+msgstr ""
+
+msgid "variation parent (variable)"
+msgstr ""
+
+msgid "variation child"
+msgstr ""
+
+msgid "visible to logged in"
+msgstr ""
+
+msgid "visible to groups"
+msgstr ""
+
+msgid "stocked"
+msgstr ""
+
+msgid "unstocked"
+msgstr ""
+
+msgid "recommended"
+msgstr ""
+
+msgid "related"
+msgstr ""
+
+msgid "computed"
+msgstr ""
+
+msgid "shipped"
+msgstr ""
+
+msgid "no verification required"
+msgstr ""
+
+msgid "admin verification required"
+msgstr ""
+
+msgid "third party verification required"
+msgstr ""
+
+msgid "product type"
+msgstr ""
+
+msgid "product types"
+msgstr ""
+
+msgid "variation parent"
+msgstr ""
+
+msgid "stock"
+msgstr ""
+
+msgid "shipping mode"
+msgstr ""
+
+msgid "unit"
+msgstr ""
+
+msgid "SKU"
+msgstr ""
+
+msgid "GTIN"
+msgstr ""
+
+msgid "Global Trade Item Number"
+msgstr ""
+
+msgid "barcode"
+msgstr ""
+
+msgid "bookkeeping account"
+msgstr ""
+
+msgid "profit center"
+msgstr ""
+
+msgid "cost center"
+msgstr ""
+
+msgid "only used for administration and reporting"
+msgstr ""
+
+msgid "width (mm)"
+msgstr ""
+
+msgid "height (mm)"
+msgstr ""
+
+msgid "depth (mm)"
+msgstr ""
+
+msgid "net weight (g)"
+msgstr ""
+
+msgid "gross weight (g)"
+msgstr ""
+
+msgid "keywords"
+msgstr ""
+
+msgid "status text"
+msgstr ""
+
+msgid ""
+"This text will be shown alongside the product in the shop. (Ex.: \"Available "
+"in a month\")"
+msgstr ""
+
+msgid "variation name"
+msgstr ""
+
+msgid "products"
+msgstr ""
+
+msgid ""
+"Multilevel parentage hierarchies aren't supported (parent is a child already)"
+msgstr ""
+
+msgid "Parent is a variable variation parent, yet variables were not passed"
+msgstr ""
+
+msgid ""
+"Multilevel parentage hierarchies aren't supported (this product is a simple "
+"variation parent)"
+msgstr ""
+
+msgid ""
+"Multilevel parentage hierarchies aren't supported (this product is a "
+"variable variation parent)"
+msgstr ""
+
+msgid "Product is currently not a normal product, can't turn into package"
+msgstr ""
+
+msgid "Variation parents can not belong into a package"
+msgstr ""
+
+msgid "Packages can't be nested"
+msgstr ""
+
+#, python-format
+msgid "Quantity %s is invalid"
+msgstr ""
+
+msgid "cross sell link"
+msgstr ""
+
+msgid "cross sell links"
+msgstr ""
+
+msgid "product attribute"
+msgstr ""
+
+msgid "product attributes"
+msgstr ""
+
+msgid "not sent"
+msgstr ""
+
+msgid "sent"
+msgstr ""
+
+msgid "received"
+msgstr ""
+
+msgid "error"
+msgstr ""
+
+msgid "tracking code"
+msgstr ""
+
+msgid "shipment"
+msgstr ""
+
+msgid "shipments"
+msgstr ""
+
+msgid "sent product"
+msgstr ""
+
+msgid "sent products"
+msgstr ""
+
+msgid ""
+"The following fields cannot be changed since there are existing orders for "
+"this shop"
+msgstr ""
+
+msgid "logo"
+msgstr ""
+
+msgid "maintenance mode"
+msgstr ""
+
+msgid "alert limit"
+msgstr ""
+
+msgid "physical stock count"
+msgstr ""
+
+msgid "logical stock count"
+msgstr ""
+
+msgid "Cannot change business critical fields of Tax that is in use"
+msgstr ""
+
+msgid "code"
+msgstr ""
+
+msgid "tax rate"
+msgstr ""
+
+msgid "The percentage rate of the tax."
+msgstr ""
+
+msgid "tax amount value"
+msgstr ""
+
+msgid "The flat amount of the tax. Mutually exclusive with percentage rates."
+msgstr ""
+
+msgid "currency of tax amount"
+msgstr ""
+
+msgid "Either rate or amount is required"
+msgstr ""
+
+msgid "Cannot have both rate and amount"
+msgstr ""
+
+msgid "Currency is required if amount is specified"
+msgstr ""
+
+msgid "taxes"
+msgstr ""
+
+msgid "tax classes"
+msgstr ""
+
+msgid "customer tax group"
+msgstr ""
+
+msgid "customer tax groups"
+msgstr ""
+
+msgid "Retail Customers"
+msgstr ""
+
+msgid "Company Customers"
+msgstr ""
+
+msgid "allowed decimals"
+msgstr ""
+
+msgid "sales unit"
+msgstr ""
+
+msgid "sales units"
+msgstr ""
+
+msgid "No Choice"
+msgstr ""
+
+msgid "Default Pricing"
+msgstr ""
+
+msgid "Insufficient stock"
+msgstr ""
+
+msgid "Untaxed"
+msgstr ""
+
+msgid "This field cannot be changed since it is protected."
+msgstr ""
+
+msgid "First Last"
+msgstr ""

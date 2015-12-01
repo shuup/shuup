@@ -1,0 +1,1216 @@
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Aarni Koskela, 2015.
+# Antti Mäki <antti@anttimaki.com>, 2015.
+# Eetu Häivälä <eetu.haivala@anders.fi>, 2015.
+# Janne Tammi <janne.tammi@shoop.io>, 2015.
+# Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015.
+# Juha Kujala <juha.kujala@shoop.io>, 2015.
+# Juha Louhiranta <charni@gmail.com>, 2015.
+# Rauli Laine <rauli.laine@iki.fi>, 2015.
+# Shoop Admin <admin@shoop.io>, 2015.
+# Teemu Selkälä <teemu.selkala@anders.fi>, 2015.
+# tomijarvi <tomi@jarvi.pro>, 2015.
+# Tuomas Suutari <tuomas.suutari@anders.fi>, 2015.
+msgid ""
+msgstr ""
+"Project-Id-Version: Shoop\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-30 23:37+0000\n"
+"PO-Revision-Date: 2015-11-26 18:44+0200\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@anders.fi>\n"
+"Language-Team: English <kde-i18n-doc@kde.org>\n"
+"Language: fi_FI\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 1.3\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 2.0\n"
+
+msgid "Home"
+msgstr "Koti"
+
+msgid "Browse"
+msgstr "Selaa"
+
+msgid "Clear"
+msgstr "Tyhjennä"
+
+msgid "Attributes"
+msgstr "Attribuutit"
+
+msgid "Identifier"
+msgstr "Tunniste"
+
+msgid "Filter by identifier..."
+msgstr "Rajaa tunnisteen mukaan"
+
+msgid "Name"
+msgstr "Nimi"
+
+msgid "Filter by name..."
+msgstr "Rajaa nimen mukaan"
+
+msgid "Type"
+msgstr "Tyyppi"
+
+msgid "Visibility Mode"
+msgstr "Näkyvyystila"
+
+msgid "Searchable"
+msgstr "Haettavissa"
+
+msgid "Used in # Product Types"
+msgstr "Käytössä # Tuotetyypissä"
+
+msgid "Categories"
+msgstr "Kategoriat"
+
+msgid "Products"
+msgstr "Tuotteet"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Visibility"
+msgstr "Näkyvyys"
+
+msgid "Parent"
+msgstr "Isäntä"
+
+msgid "Contact Groups"
+msgstr "Kontaktiryhmät"
+
+msgid "Contacts"
+msgstr "Kontaktit"
+
+msgid "Number of Members"
+msgstr "Jäsenien määrä"
+
+msgid "Active customers"
+msgstr "Aktiivisia asiakkaita"
+
+msgid "Based on orders within 30 days"
+msgstr "Perustuen viimeisen 30 päivän tilauksiin"
+
+msgid "The Shoop frontend is not enabled."
+msgstr "Shoop-kauppakäyttöliittymä ei ole päällä."
+
+msgid "Contact has no associated user."
+msgstr "Kontaktilla ei ole liitettyä käyttäjää."
+
+msgid "User has no associated email."
+msgstr "Käyttäjällä ei ole sähköpostia."
+
+msgid "Reset password"
+msgstr "Nollaa salasana"
+
+msgid "Send a password renewal email."
+msgstr "Lähetä salasananuusintasähköposti."
+
+#, python-format
+msgid "Are you sure you wish to send a password recovery email to %s?"
+msgstr ""
+"Haluatko varmasti lähettää salasananpalautussähköpostin osoitteeseen %s?"
+
+msgid "New User"
+msgstr "Uusi käyttäjä"
+
+msgid "Create an user for the contact."
+msgstr "Luo kontaktille käyttäjä."
+
+msgid "Edit…"
+msgstr "Muokkaa..."
+
+msgid "Person"
+msgstr "Henkilö"
+
+msgid "Company"
+msgstr "Yritys"
+
+msgid "Email"
+msgstr "Sähköposti"
+
+msgid "Phone"
+msgstr "Puhelin"
+
+msgid "Active"
+msgstr "Aktiivinen"
+
+msgid "# Orders"
+msgstr "Tilauslkm"
+
+msgid "Contact"
+msgstr "Kontakti"
+
+msgid "Inactive"
+msgstr "Passiivinen"
+
+#, python-format
+msgid "Email: %s"
+msgstr "Sähköposti: %s"
+
+#, python-format
+msgid "Phone: %s"
+msgstr "Puhelin: %s"
+
+#, python-format
+msgid "%d orders"
+msgstr "%d tilausta"
+
+msgid "The contact does not have an associated user."
+msgstr "Kontaktilla ei ole liitettyä käyttäjää."
+
+msgid "Demo"
+msgstr "Demo"
+
+msgid "Manufacturers"
+msgstr "Valmistajat"
+
+msgid "Media"
+msgstr "Media"
+
+msgid "Media browser"
+msgstr "Mediaselain"
+
+msgid "Root"
+msgstr "Juuri"
+
+#, python-format
+msgid "%d subfolders moved to %s."
+msgstr "%d alikansiota siirretty kohteeseen %s."
+
+#, python-format
+msgid "%d files moved to %s."
+msgstr "%d tiedostoa siirretty kohteeseen %s."
+
+#, python-format
+msgid "Folder %s deleted."
+msgstr "Kansio %s poistettu."
+
+#, python-format
+msgid "%(file)s uploaded to %(folder)s"
+msgstr "%(file)s lähetetty kansioon %(folder)s"
+
+msgid "Folder renamed."
+msgstr "Kansio uudelleennimetty."
+
+msgid "File renamed."
+msgstr "Tiedosto uudelleennimetty."
+
+msgid "File deleted."
+msgstr "Tiedosto poistettu."
+
+#, python-format
+msgid "%(file)s moved from %(old)s to %(new)s."
+msgstr "%(file)s siirretty sijainnista %(old)s sijaintiin %(new)s."
+
+msgid "Methods"
+msgstr "Tavat"
+
+msgid "Shipping Methods"
+msgstr "Toimitustavat"
+
+msgid "Payment Methods"
+msgstr "Maksutavat"
+
+msgid "The selected module has no details to configure"
+msgstr "Valitulla moduulilla ei ole lisäasetuksia."
+
+msgid "The selected module is not currently available"
+msgstr "Valittu moduuli ei ole saatavilla"
+
+msgid "Edit Details"
+msgstr "Muokkaa tietoja"
+
+#, python-format
+msgid "Edit %(model)s"
+msgstr "Muokkaa %(model)s"
+
+#, python-format
+msgid "Default %s module"
+msgstr "Oletus%smoduuli"
+
+msgid "Orders"
+msgstr "Tilaukset"
+
+msgid "Show orders"
+msgstr "Näytä tilaukset"
+
+msgid "Outstanding Orders"
+msgstr "Avoimet tilaukset"
+
+#, python-format
+msgid "%d outstanding orders"
+msgstr "%d avointa tilausta"
+
+msgid "Sales per Month (last year)"
+msgstr "Myynti/kk (viime vuosi)"
+
+#, python-format
+msgid "Sales (%(currency)s)"
+msgstr "Myynti (%(currency)s)"
+
+#, python-format
+msgid "Based on %d orders"
+msgstr "Perustuen %d tilaukseen"
+
+msgid "Today's Sales"
+msgstr "Päivän myynti"
+
+msgid "Lifetime Sales"
+msgstr "Myynti kautta aikain"
+
+msgid "Average Purchase"
+msgstr "Keskiostos"
+
+msgid "Open Orders Value"
+msgstr "Avoimia tilauksia"
+
+#, python-format
+msgid "The quantity '%(quantity)s' (for line %(text)s) is invalid (%(error)s)"
+msgstr "Määrä '%(quantity)s' (rivillä %(text)s) ei ole kelvollinen (%(error)s)"
+
+#, python-format
+msgid "The price '%(price)s' (for line %(text)s) is invalid (%(error)s)"
+msgstr "Hinta '%(price)s' (rivillä %(text)s) ei ole kelvollinen (%(error)s)"
+
+#, fuzzy, python-format
+#| msgid "The price '%(price)s' (for line %(text)s) is invalid (%(error)s)"
+msgid "The discount '%(discount)s' (for line %(text)s is invalid (%(error)s)"
+msgstr "Hinta '%(price)s' (rivillä %(text)s) ei ole kelvollinen (%(error)s)"
+
+msgid "Product line does not have a product set."
+msgstr "Tuoterivillä ei ole asetettua tuotetta."
+
+#, python-format
+msgid "Product %s does not exist."
+msgstr "Tuotetta %s ei ole olemassa"
+
+#, python-format
+msgid "Product %(product)s is not available in the %(shop)s shop."
+msgstr "Tuotetta %(product)s ei ole saatavilla %(shop)s kaupassa."
+
+msgid "Please add lines to the order."
+msgstr "Lisää rivejä tilaukseen"
+
+msgid "Name is required for customer"
+msgstr ""
+
+msgid "Tax number is not set for company."
+msgstr ""
+
+msgid "Please choose a valid shop."
+msgstr "Valitse kelvollinen kauppa"
+
+msgid "Please select shipping method."
+msgstr ""
+
+msgid "Please select payment method."
+msgstr ""
+
+msgid "Create Order"
+msgstr "Luo tilaus"
+
+#, fuzzy, python-format
+#| msgid "Product %s does not exist."
+msgid "Contact %s does not exist."
+msgstr "Tuotetta %s ei ole olemassa"
+
+#, fuzzy
+#| msgid "Could not create order:"
+msgid "Could not proceed with order:"
+msgstr "Ei voitu luoda tilausta:"
+
+#, python-format
+msgid "Order %(identifier)s created."
+msgstr "Tilaus %(identifier)s luotu"
+
+msgid "Could not create order:"
+msgstr "Ei voitu luoda tilausta:"
+
+msgid "Create Shipment"
+msgstr "Luo lähetys"
+
+msgid "There are no products to ship"
+msgstr "Ei toimitettavia tuotteita"
+
+msgid "Set Complete"
+msgstr "Aseta käsitellyksi"
+
+msgid "This order can not be set as complete at this point"
+msgstr "Tilausta ei voi asettaa käsitellyksi tällä hetkellä"
+
+msgid "Unable to set order as completed at this point"
+msgstr "Tilausta ei voi asettaa käsitellyksi tällä hetkellä"
+
+#, python-format
+msgid "Order status changed: %s to %s"
+msgstr "Tilauksen tila muutettu: Tilasta %s tilaan %s"
+
+msgid "Order"
+msgstr "Tilaus"
+
+msgid "Order Date"
+msgstr "Tilauspäivämäärä"
+
+msgid "Customer"
+msgstr "Asiakas"
+
+msgid "Payment Status"
+msgstr "Maksutila"
+
+msgid "Shipping Status"
+msgstr "Toimitustila"
+
+msgid "Total"
+msgstr "Yhteensä"
+
+#, python-format
+msgid "Create Shipment -- %s"
+msgstr "Luo toimitus -- %s"
+
+msgid "Supplier"
+msgstr "Toimittaja"
+
+msgid "No products to ship."
+msgstr "Ei toimitettavia tuotteita."
+
+#, python-format
+msgid "Shipment %s created."
+msgstr "Lähetys %s luotu."
+
+msgid "Product Types"
+msgstr "Tuotetyypit"
+
+msgid "Product types"
+msgstr "Tuotetyypit"
+
+msgid "Number of Attributes"
+msgstr "Attribuuttien määrä"
+
+#, python-format
+msgid "Create Product Called \"%s\""
+msgstr "Luo tuote \"%s\""
+
+#, python-format
+msgid "Create Product with SKU \"%s\""
+msgstr "Luo tuote tuotekoodilla \"%s\""
+
+#, python-format
+msgid "%s has been marked deleted."
+msgstr "%s on merkitty poistetuksi."
+
+msgid "Minimum Purchase Quantity has been rounded to match Sales Unit."
+msgstr "Minimiostomäärä pyöristettiin yhteensopivaksi myyntikoon kanssa."
+
+#, python-format
+msgid "Changes to shop instance for %s saved"
+msgstr "Muutokset kauppaan %s tallennettu"
+
+#, fuzzy
+#| msgid "This product is not yet a variation."
+msgid "Product is not available."
+msgstr "Tämä tuote ei ole vielä variaatio."
+
+msgid "Product"
+msgstr "Tuote"
+
+#, python-format
+msgid "Edit Cross-Sell: %s"
+msgstr "Muokkaa ristiinmyyntiä: %s"
+
+msgid "Save"
+msgstr "Tallenna"
+
+msgid "Changes saved."
+msgstr "Muutokset tallennettu."
+
+#, python-format
+msgid "Edit Media: %s"
+msgstr "Muokkaa mediaa: %s"
+
+msgid "Minimum Purchase Quantity must be greater than 0."
+msgstr "Minimiostomäärän tulee olla vähintään 0."
+
+#, python-format
+msgid "Thumbnail generation of %s failed: %s"
+msgstr "Pikkukuvan muodostus %s:lle epäonnistui: %s"
+
+msgid "Use only URL or file, not both"
+msgstr "Vain URL-osoite tai tiedosto, ei molempia"
+
+msgid "Only images allowed in this field"
+msgstr "Voit liittää tähän vain kuvatiedostoja"
+
+msgid "SKU"
+msgstr "Tuotekoodi"
+
+msgid "Filter by SKU..."
+msgstr "Rajaa tuotekoodin mukaan..."
+
+msgid "Mode"
+msgstr "Tila"
+
+msgid "Primary Category"
+msgstr "Pääkategoria"
+
+msgid "Manage Cross-Selling"
+msgstr "Hallinnoi ristiinmyyntiä"
+
+msgid "Cross-Selling"
+msgstr "Ristiinmyynti"
+
+msgid "Actions"
+msgstr "Toiminnot"
+
+msgid "Variations"
+msgstr "Variaatiot"
+
+msgid "Manage Variations"
+msgstr "Hallinnoi variaatioita"
+
+#, python-format
+msgid "Child: %s"
+msgstr "Lapsi: %s"
+
+#, python-format
+msgid "Parent: %s"
+msgstr "Isäntä: %s"
+
+#, python-format
+msgid "Sibling: %s"
+msgstr "Sisarus: %s"
+
+msgid "Manage Package"
+msgstr "Hallinnoi pakettia"
+
+#, python-format
+msgid "Package Parent: %s"
+msgstr "Paketti-isäntä: %s"
+
+msgid "Convert to Variation Parent"
+msgstr "Muunna variaatioisännäksi"
+
+msgid ""
+"Are you sure? This will unlink all children and remove all variation "
+"variables."
+msgstr ""
+"Oletko varma? Tämä toiminto poistaa liitokset kaikkiin lapsiin ja poistaa "
+"kaikki variaatiomuuttujat."
+
+msgid "Clear variation"
+msgstr "Tyhjennä variaatio"
+
+msgid ""
+"Are you sure? This will remove all variation variables, converting children "
+"to direct links."
+msgstr ""
+"Oletko varma? Tämä toiminto poistaa kaikki variaatiomuuttujat ja muuttaa "
+"lapset suoriksi linkeiksi."
+
+msgid "Convert to simple variation"
+msgstr "Muunna yksinkertaiseksi variaatioksi"
+
+#, python-format
+msgid "Edit Variation: %s"
+msgstr "Muokkaa variaatiota: %s"
+
+msgid "Variation cleared."
+msgstr "Variaatio tyhjennetty."
+
+msgid "Variation simplified."
+msgstr "Variaatio yksinkertaistettu."
+
+msgid "Unlink"
+msgstr "Poista linkki"
+
+#, python-format
+msgid "Unable to link %s: %s"
+msgstr "Ei voi linkata %s: %s"
+
+#, python-format
+msgid "New: %d"
+msgstr "Uusi: %d"
+
+#, python-format
+msgid "Removed: %d"
+msgstr "Poistettu: %d"
+
+msgid "Sales Units"
+msgstr "Myyntiyksiköt"
+
+msgid "Short Name"
+msgstr "Lyhyt nimi"
+
+msgid "Allowed decimals"
+msgstr "Sallitut desimaalit"
+
+msgid "Shops"
+msgstr "Kaupat"
+
+msgid "System"
+msgstr "Järjestelmä"
+
+msgid ""
+"This field cannot be changed since there are existing orders for this shop."
+msgstr ""
+
+msgid "Only one shop permitted."
+msgstr "Vain yksi kauppa sallittu"
+
+msgid "Domain"
+msgstr "Verkkotunnus"
+
+msgid "Suppliers"
+msgstr "Toimittajat"
+
+#, python-format
+msgid "No %s module"
+msgstr "Ei %s -moduulia"
+
+msgid "Module"
+msgstr "Moduuli"
+
+msgid "Telemetry"
+msgstr "Telemetria"
+
+msgid ""
+"Statistics will be periodically sent to Shoop.io after 24 hours. Click here "
+"for more information."
+msgstr ""
+"Tilastot lähetetään 24 tunnin jälkeen määräajoin shoop.io:hon. Klikkaa tästä "
+"saadaksesi lisää tietoja."
+
+msgid "Taxes"
+msgstr "Verot"
+
+msgid "Customer Tax Groups"
+msgstr "Asiakasveroryhmät"
+
+msgid "Tax Classes"
+msgstr "Veroluokat"
+
+msgid "Code"
+msgstr "Koodi"
+
+msgid "Rate"
+msgstr "Määrä"
+
+msgid "Enabled"
+msgstr "Käytössä"
+
+msgid "Users"
+msgstr "Käyttäjät"
+
+msgid "Password"
+msgstr "Salasana"
+
+msgid "Permissions"
+msgstr "Oikeudet"
+
+msgid "See the permissions view to change these."
+msgstr "Katso käyttöoikeusnäkymää muuttaaksesi näitä."
+
+msgid "staff"
+msgstr "henkilökunta"
+
+msgid "superuser"
+msgstr "pääkäyttäjä"
+
+msgid "No special permissions"
+msgstr "Ei erityisiä oikeuksia"
+
+msgid "Change Password"
+msgstr "Vaihda salasana"
+
+msgid "User has no email address"
+msgstr "Käyttäjällä ei ole sähköpostia"
+
+msgid "Send Password Reset Email"
+msgstr "Lähetä salasanan palautussähköposti"
+
+msgid "Edit Permissions"
+msgstr "Muokkaa oikeuksia"
+
+msgid "Contact Details"
+msgstr "Yhteystiedot"
+
+msgid "New Contact"
+msgstr "Uusi kontakti"
+
+msgid "Create a new contact and associate it with this user"
+msgstr "Luo uusi kontakti ja liitä se tähän käyttäjään"
+
+msgid "Activate User"
+msgstr "Aktivoi käyttäjä"
+
+msgid "Deactivate User"
+msgstr "Deaktivoi käyttäjä"
+
+#, python-format
+msgid "User bound to contact %(contact)s."
+msgstr "Käyttäjä liitetty kontaktiin %(contact)s."
+
+msgid "You can not deactivate a superuser."
+msgstr "Et voi deaktivoida pääkäyttäjää."
+
+msgid "You can not deactivate yourself."
+msgstr "Et voi deaktivoida itseäsi"
+
+#, python-format
+msgid "%(user)s is now %(state)s."
+msgstr "%(user)s on nyt %(state)s."
+
+msgid "active"
+msgstr "aktiivinen"
+
+msgid "inactive"
+msgstr "passiivinen"
+
+msgid "Username"
+msgstr "Käyttäjänimi"
+
+msgid "First Name"
+msgstr "Etunimi"
+
+msgid "Last Name"
+msgstr "Sukunimi"
+
+msgid "Staff"
+msgstr "Henkilökunta"
+
+msgid "Superuser"
+msgstr "Pääkäyttäjä"
+
+#, python-format
+msgid "First Name: %s"
+msgstr "Etunimi: %s"
+
+#, python-format
+msgid "Last Name: %s"
+msgstr "Sukunimi: %s"
+
+msgid "User"
+msgstr "Käyttäjä"
+
+msgid "The two password fields didn't match."
+msgstr "Salasanakentät eivät täsmää"
+
+msgid "Your old password was entered incorrectly. Please enter it again."
+msgstr "Syötit vanhan salasanan väärin. Kokeiletko uudelleen, kiitos."
+
+msgid "Your Password"
+msgstr "Salasanasi"
+
+msgid "For security purposes, we need your current password."
+msgstr "Turvallisuussyistä tarvitsemme nykyisen salasanasi."
+
+msgid "New Password"
+msgstr "Uusi salasana"
+
+msgid "New Password (again)"
+msgstr "Uusi salasana (uudelleen)"
+
+msgid "You can not change the password of a superuser."
+msgstr "Et voi vaihtaa pääkäyttäjän salasanaa."
+
+msgid "Change User Password"
+msgstr "Muuta käyttäjän salasana"
+
+#, python-format
+msgid "Password changed for %s."
+msgstr "Käyttäjän %s salasana vaihdettu."
+
+msgid "Reset User Password"
+msgstr "Nollaa käyttäjän salasana"
+
+msgid "The `shoop.front.apps.auth` app needs to be enabled for password reset."
+msgstr ""
+"Salasanan palautusta varten `shoop.front.apps.auth` sovellus pitää kytkeä "
+"päälle."
+
+#, python-format
+msgid "Password recovery email sent to %(email)s"
+msgstr "Salasananpalautussähköposti lähetetty: %(email)s"
+
+msgid "Sending the password recovery email failed."
+msgstr "Salasanan palauttamissähköpostin lähettäminen epäonnistui."
+
+msgid "You can't unset this status for yourself."
+msgstr "Et voi poistaa tätä tilaa itseltäsi."
+
+msgid "Change User Permissions"
+msgstr "Muokkaa käyttäjän oikeuksia"
+
+#, python-format
+msgid "Change Permissions: %s"
+msgstr "Muokkaa oikeuksia: %s"
+
+#, python-format
+msgid "Permissions changed for %s."
+msgstr "Käyttäjän %s oikeuksia muutettu."
+
+msgid "New Attribute"
+msgstr "Uusi attribuutti"
+
+msgid "Login"
+msgstr "Kirjaudu sisään"
+
+msgid "Logged out"
+msgstr "Kirjaudu ulos"
+
+msgid "You have been logged out. Good bye!"
+msgstr "Olet kirjautunut ulos. Näkemiin!"
+
+msgid "Log in again"
+msgstr "Kirjaudu uudelleen"
+
+msgid "Visit shop"
+msgstr "Vieraile kaupassa."
+
+msgid "Menu"
+msgstr "Valikko"
+
+msgid "Dashboard"
+msgstr "Kojelauta"
+
+msgid "Search for"
+msgstr "Etsi"
+
+msgid "Hello"
+msgstr "Hei"
+
+msgid "Log out"
+msgstr "Kirjaudu ulos"
+
+msgid "General Information"
+msgstr "Yleiset tiedot"
+
+msgid "Category Image"
+msgstr "Kategorian kuva"
+
+msgid "General information"
+msgstr "Yleiset tiedot"
+
+msgid "Members"
+msgstr "Jäsenet"
+
+msgid "No members."
+msgstr "Ei jäseniä."
+
+msgid "Addresses"
+msgstr "Osoitteet"
+
+msgid "Billing Address"
+msgstr "Laskutusosoitteet"
+
+msgid "Shipping Address"
+msgstr "Toimitusosoitteet"
+
+msgid "Basic details"
+msgstr "Perustiedot"
+
+msgid "Basic Information"
+msgstr "Perustiedot"
+
+msgid "Full Name"
+msgstr "Koko nimi"
+
+msgid "Groups"
+msgstr "Ryhmät"
+
+msgid "No groups"
+msgstr "Ei ryhmiä"
+
+msgid "Bound User"
+msgstr "Sidottu käyttäjä"
+
+msgid "Shipping address"
+msgstr "Toimitusosoite"
+
+msgid "No shipping address defined."
+msgstr "Toimitusosoitetta ei ole asetettu."
+
+msgid "Billing address"
+msgstr "Laskutusosoite"
+
+msgid "No billing address defined."
+msgstr "Laskutusosoitetta ei ole asetettu."
+
+#, fuzzy
+#| msgid "Removed: %d"
+msgid "Remove block"
+msgstr "Poistettu: %d"
+
+msgid "Resize block"
+msgstr ""
+
+msgid "Welcome!"
+msgstr "Tervetuloa!"
+
+msgid "Notifications"
+msgstr "Ilmoitukset"
+
+msgid "Mark as read"
+msgstr "Merkitse luetuksi"
+
+msgid "Activity Feed"
+msgstr "Syöte"
+
+msgid "Date"
+msgstr "Päivämäärä"
+
+msgid "Order Status"
+msgstr "Tilauksen tila"
+
+msgid "Edit"
+msgstr "Muokkaa"
+
+msgid "Upload"
+msgstr "Lataa"
+
+msgid "Description"
+msgstr "Kuvaus"
+
+msgid "Amount"
+msgstr "Määrä"
+
+msgid "To Ship"
+msgstr "Lähetettäväksi"
+
+msgid "Ordered"
+msgstr "Tilattu"
+
+msgid "Shipped"
+msgstr "Lähetetty"
+
+msgid "Unshipped"
+msgstr "Lähettämätön"
+
+msgid "Set All Products To Ship"
+msgstr "Aseta kaikki tuotteet lähetettäväksi"
+
+msgid "Ship All"
+msgstr "Lähetä kaikki"
+
+msgid "Details & Status"
+msgstr "Tiedot & Tila"
+
+msgid "Order Number"
+msgstr "Tilausnumero"
+
+msgid "Reference"
+msgstr "Viite"
+
+msgid "Label"
+msgstr "Merkki"
+
+msgid "Ordered by"
+msgstr "Järjestä"
+
+msgid "Creator"
+msgstr "Laatija"
+
+msgid "Tax number"
+msgstr "veronumero"
+
+msgid "Total Price (taxless)"
+msgstr "Kokonaishinta (veroton)"
+
+msgid "Total Price"
+msgstr "Kokonaishinta"
+
+msgid "Order Contents"
+msgstr "Tilauksen sisältö"
+
+msgid "Text"
+msgstr "Teksti"
+
+msgid "Taxless Unit Price"
+msgstr "Veroton yksikköhinta"
+
+msgid "Quantity"
+msgstr "Lukumäärä"
+
+msgid "Taxless Discount"
+msgstr "Veroton alennus"
+
+msgid "Tax"
+msgstr "Vero"
+
+msgid "Taxless Total"
+msgstr "Veroton yhteensä"
+
+msgid "Total incl. Tax"
+msgstr "Verollinen yhteensä"
+
+msgid "Discount"
+msgstr "Alennus"
+
+msgid "Taxless"
+msgstr "Veroton"
+
+msgid "Payments"
+msgstr "Maksut"
+
+msgid "Additional Details"
+msgstr "Lisätietoja"
+
+msgid "Stock"
+msgstr "Varasto"
+
+msgid "Unstocked"
+msgstr "Varastoimaton"
+
+msgid "Accounting"
+msgstr "Kirjanpito"
+
+msgid "Physical Properties"
+msgstr "Fyysiset ominaisuudet"
+
+msgid "Manufacturer"
+msgstr "Valmistaja"
+
+#, python-format
+msgid "Product image %(index)s"
+msgstr "Tuotekuva %(index)s"
+
+#, python-format
+msgid "Product media %(index)s"
+msgstr "Tuotemedia %(index)s"
+
+msgid "Primary image"
+msgstr "Pääkuva"
+
+msgid "Set as primary image"
+msgstr "Aseta pääkuvaksi"
+
+msgid "No image"
+msgstr "Ei kuvaa"
+
+msgid "Delete"
+msgstr "Poista"
+
+msgid "Advanced options"
+msgstr "Edistyneet asetukset"
+
+msgid "Product Images"
+msgstr "Tuotekuvat"
+
+msgid "Product Media"
+msgstr "Tuotemedia"
+
+msgid "Add new image"
+msgstr "Lisää uusi kuva"
+
+#, fuzzy
+#| msgid "Add new image"
+msgid "Add new media"
+msgstr "Lisää uusi kuva"
+
+msgid "Purchasing"
+msgstr "Ostaminen"
+
+msgid "Shipping & Payment"
+msgstr "Toimitukset & Maksaminen"
+
+msgid "This product is currently not orderable."
+msgstr "Tämä tuote ei ole tällä hetkellä tilattavissa."
+
+msgid "Cross-sells"
+msgstr "Ristiinmyynnit"
+
+msgid "Cross-sell"
+msgstr "Ristiinmyynti"
+
+msgid "File "
+msgstr "Tiedosto"
+
+msgid "Simple Variation Children"
+msgstr "Yksinkertainen variaatiolapsi"
+
+msgid "Variable Children"
+msgstr "Variaatiolapsi"
+
+msgid "Combination"
+msgstr ""
+
+msgid "Variables"
+msgstr "Muuttujat"
+
+msgid "This product is not yet a variation."
+msgstr "Tämä tuote ei ole vielä variaatio."
+
+msgid "To create a simple variation, choose products below."
+msgstr "Valitse alla olevat tuotteet tehdäksesi yksinkertaisen variaation."
+
+msgid ""
+"To create a variation with multiple variables, create the variables on the "
+"Variables tab and then link them to products here."
+msgstr ""
+"Luodaksesi variaation useammalla muuttujalla, luo muuttujat Muuttujat-"
+"välilehdellä ja linkitä ne sitten täällä tuotteisiin."
+
+msgid "Shop Logo"
+msgstr "Kaupan logo"
+
+msgid "Maintenance Mode"
+msgstr "Huoltotila"
+
+msgid "About Shoop Telemetry"
+msgstr "Tietoja Shoopin telemetriasta"
+
+msgid "Shoop will occasionally send telemetry data to a Shoop.io server."
+msgstr "Shoop lähettää aina välillä telemetriadataa shoop.io palvelimelle."
+
+msgid ""
+"The data contains an unique installation key, as well as the hostname of the "
+"installation (as sent by the visiting browser; currently"
+msgstr ""
+"Tiedot sisältävät uniikin asennusavaimen sekä asennuksen osoitteen (selaimen "
+"lähettämänä; nyt "
+
+msgid ""
+"No business data or other customer information is ever sent. Shoop.io only "
+"uses the telemetry data for statistical purposes and for insights about the "
+"software's installation base."
+msgstr ""
+"Liiketoiminta- tai asiakastietoja ei lähetetä koskaan. Shoop.io käyttää "
+"telemetriatietoja vain tilastointia varten ja kerätäkseen tietoja "
+"ohjelmiston asennuksista."
+
+msgid "Opt-in / opt-out"
+msgstr "Mukanaolo"
+
+msgid "You are currently"
+msgstr "Olet tällä hetkellä"
+
+msgid "opted in"
+msgstr "olet mukana"
+
+msgid "to send telemetry data to Shoop.io."
+msgstr "lähettämässä telemetriadataa Shoop.io-palvelimelle."
+
+msgid "Thank you for your valuable contribution."
+msgstr "Kiitos arvokkaasta panostuksestasi."
+
+msgid "Opt out"
+msgstr "Jättäydy syrjään"
+
+msgid "opted out"
+msgstr "Jättäydytty syrjään"
+
+msgid "of Shoop telemetry."
+msgstr "Shoopin telemetriasta."
+
+msgid "Opt in"
+msgstr "Tule mukaan"
+
+msgid "Last Telemetry"
+msgstr "Viimeisin telemetria"
+
+msgid ""
+"Telemetry submission is currently suspended; data will only be sent 24 hours "
+"after installation if still opted in at that point."
+msgstr ""
+"Telemetrialähetykset ovat tällä hetkellä keskeytetty. Tietoja lähetetään "
+"vasta 24 tunnin kuluessa asennuksesta jollei lähetystä ole siihen mennessä "
+"kytketty pois päältä."
+
+msgid "Telemetry data was last submitted at"
+msgstr "Telemetriadata on viimeksi toimitettu"
+
+msgid "ago"
+msgstr "sitten"
+
+msgid "See the data that was submitted."
+msgstr "Katso data, joka toimitettiin."
+
+msgid "Telemetry data has not yet been submitted."
+msgstr "Telemetriadataa ei ole vielä toimitettu."
+
+msgid "Telemetry Data"
+msgstr "Telemetrian data"
+
+msgid "Here is an example of the data that would be submitted right now."
+msgstr "Tässä on esimerkki datasta, joka lähetettäisiin tällä hetkellä."
+
+msgid "User Information"
+msgstr "Käyttäjän tiedot"
+
+#, python-format
+msgid "Send a password reset email to %(email)s?"
+msgstr "Lähetä salasananpalautussähköposti osoitteeseen %(email)s?"
+
+msgid "Send Reset Email"
+msgstr "Lähetä palautussähköposti"
+
+msgid "Create new"
+msgstr "Luo uusi"
+
+#, python-format
+msgid "New %(model)s"
+msgstr "Uusi %(model)s"
+
+msgid "Discard Changes"
+msgstr "Hylkää muutokset"
+
+msgid "Save and Exit"
+msgstr "Tallenna ja poistu"
+
+msgid "Save and Create New"
+msgstr "Tallenna ja luo uusi"
+
+#, python-format
+msgid "Are you sure you wish to delete %s?"
+msgstr "Haluatko poistaa %s?"
+
+msgid "no"
+msgstr "ei"
+
+msgid "yes"
+msgstr "kyllä"
+
+#, python-format
+msgid "Showing %(per_page)s of %(n_items)s %(verbose_name_plural)s"
+msgstr "Näytetään %(per_page)s/%(n_items)s %(verbose_name_plural)s-kohdetta"
+
+msgid "objects"
+msgstr "esineet"
+
+#, python-format
+msgid "Can't view this page. %(reason)s"
+msgstr "Sivua ei voida näyttää. %(reason)s"
+
+msgid "Log in with different credentials…"
+msgstr "Kirjaudu sisään toisilla tunnuksilla..."
+
+msgid "You must be logged in."
+msgstr "Sinun täytyy olla kirjautunut sisään."
+
+msgid "You must be a staff member."
+msgstr "Sinun tulee olla henkilökunnan jäsen."
+
+#, python-format
+msgid "You do not have the required permissions: %r"
+msgstr "Sinulla ei ole tarvittavia oikeuksia: %r"
+
+#, python-format
+msgid "New %s created."
+msgstr "Uusi %s luotu."
+
+#, python-format
+msgid "%s edited."
+msgstr "%s muokattu."
+
+#, python-format
+msgid "New %s"
+msgstr "Uusi %s"
+
+#, python-format
+msgid "Unnamed %s"
+msgstr "Nimeämätön %s"

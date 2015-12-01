@@ -9,8 +9,11 @@
 import babel
 import babel.numbers
 from babel.numbers import format_currency
+from django.apps import apps
 from django.utils import translation
 from django.utils.lru_cache import lru_cache
+from django.views.decorators.cache import cache_page
+from django.views.i18n import javascript_catalog
 
 
 @lru_cache()
@@ -75,3 +78,12 @@ def format_money(amount, digits=None, widen=0, locale=None):
 
 def get_language_name(language_code):
     return get_current_babel_locale().languages.get(language_code, language_code)
+
+
+@cache_page(3600)
+def javascript_catalog_all(request, domain='djangojs'):
+    """
+    Get JavaScript message catalog for all apps in INSTALLED_APPS.
+    """
+    all_apps = [x.name for x in apps.get_app_configs()]
+    return javascript_catalog(request, domain, all_apps)

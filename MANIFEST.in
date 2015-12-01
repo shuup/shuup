@@ -8,7 +8,7 @@ include tox.ini
 recursive-include shoop \
     *.jinja *.txt *.js *.css *.json *.less \
     *.ico *.png *.svg \
-    *.woff *.woff2 *.eot *.otf *.ttf
+    *.woff *.woff2 *.eot *.otf *.ttf *.po *.mo
 
 recursive-include shoop_tests *.jinja
 
