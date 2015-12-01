@@ -104,10 +104,19 @@ class BuildMessagesCommand(distutils.core.Command):
                 parent_dir = os.path.dirname(dirpath)
                 if os.path.basename(parent_dir) == 'locale':
                     appdirs.add(os.path.dirname(parent_dir))
+
+        # Have to clear DJANGO_SETTINGS_MODULE to make sure it does not
+        # get into way when compiling messages, since sometimes it might
+        # be set to e.g. 'shoop_workbench.settings' but if we're in
+        # middle of installing Shoop, then management commands will fail
+        # because shoop_workbench is not yet installed.
+        env = dict(os.environ, DJANGO_SETTINGS_MODULE='')
+        command = ['django-admin', 'compilemessages']
+
         for appdir in sorted(appdirs):
             os.chdir(appdir)
             try:
-                subprocess.check_call(['django-admin', 'compilemessages'])
+                subprocess.check_call(command, env=env)
             finally:
                 os.chdir(rootdir)
 
