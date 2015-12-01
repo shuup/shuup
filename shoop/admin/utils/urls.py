@@ -16,7 +16,7 @@ from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import ImproperlyConfigured
 from django.core.urlresolvers import NoReverseMatch, RegexURLPattern, get_callable, reverse
 from django.http.response import HttpResponseForbidden
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str, force_text
 from django.utils.http import urlencode
 from django.utils.translation import ugettext_lazy as _
 
@@ -48,10 +48,9 @@ class AdminRegexURLPattern(RegexURLPattern):
         """
         if request.is_ajax():
             return HttpResponseForbidden(json.dumps({"error": force_text(reason)}))
-        resp = redirect_to_login(
-            next=request.path,
-            login_url="%s?%s" % (reverse("shoop_admin:login"), urlencode({"error": reason}))
-        )
+        error_params = urlencode({"error": reason})
+        login_url = force_str(reverse("shoop_admin:login") + "?" + error_params)
+        resp = redirect_to_login(next=request.path, login_url=login_url)
         if request.user.is_authenticated():
             # Instead of redirecting to the login page, let the user know what's wrong with
             # a helpful link.
