@@ -15,7 +15,7 @@ function renderNumberCell(store, line, value, fieldId, canEditPrice, min=null) {
             type: "number",
             step: line.step,
             min: min != null ? min : "",
-            value: "" + value, // emptying the field causes empty value in field instead of having default value
+            value: value,
             disabled: !canEditPrice,
             onchange: function () {
                 store.dispatch(setLineProperty(line.id, fieldId, this.value));

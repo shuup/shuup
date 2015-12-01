@@ -139,18 +139,20 @@ function setLineProperty(state, {payload}) {
                 );
                 break;
             case "discountPercent":
-                const discountPercent = Math.min(100, Math.max(0, ensureNumericValue(discountPercent)));
+                const discountPercent = Math.min(100, Math.max(0, ensureNumericValue(value)));
                 updates = getDiscountsAndTotal(
                     line.quantity, line.baseUnitPrice, (line.baseUnitPrice * (1 - (discountPercent / 100))), true
                 );
                 break;
             case "discountAmount":
+                const newDiscountAmount = Math.max(0, ensureNumericValue(value));
                 updates = getDiscountsAndTotal(
                     line.quantity,
                     line.baseUnitPrice,
-                    (line.baseUnitPrice - (Math.max(0, ensureNumericValue(value)) / line.quantity)),
+                    (line.baseUnitPrice -  newDiscountAmount / line.quantity),
                     true
                 );
+                updates.discountAmount = newDiscountAmount;
                 break;
             case "total":
                 const calculatedTotal = line.quantity * line.baseUnitPrice;
