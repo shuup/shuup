@@ -89,7 +89,7 @@ def encode_line(line):
         "unitPrice": format_money(line.base_unit_price.amount),
         "discountAmount": format_money(line.discount_amount.amount),
         "taxlessTotal": format_money(line.taxless_price.amount),
-        "taxPercentage": format_percent(line.tax_percentage, 2),
+        "taxPercentage": format_percent(line.tax_rate, 2),
         "taxfulTotal": format_money(line.taxful_price.amount)
     }
 
