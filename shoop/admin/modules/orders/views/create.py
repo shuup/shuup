@@ -89,7 +89,7 @@ def encode_line(line):
         "unitPrice": format_money(line.base_unit_price.amount),
         "discountAmount": format_money(line.discount_amount.amount),
         "taxlessTotal": format_money(line.taxless_price.amount),
-        "taxPercentage": format_percent(line.tax_percentage, 2),
+        "taxPercentage": format_percent(line.tax_rate, 2),
         "taxfulTotal": format_money(line.taxful_price.amount)
     }
 
@@ -97,7 +97,6 @@ def encode_line(line):
 def get_price_info(shop, customer, product, quantity):
     ctx_request = RequestFactory().get("/")
     ctx_request.shop = shop
-    customer = None
     if customer:
         ctx_request.customer = customer
     ctx_request.user = AnonymousUser()
@@ -188,7 +187,7 @@ class OrderCreateView(TemplateView):
             },
             "unitPrice": {
                 "value": price_info.price.value,
-                "includesTax": price_info.base_price.includes_tax
+                "includesTax": price_info.price.includes_tax
             }
         }
 

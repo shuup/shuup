@@ -58,6 +58,7 @@ export function renderOrderLines(store, shop, lines) {
                 m("input.form-control", {
                     type: "text",
                     value: line.text,
+                    maxlength: 256,
                     onchange: function () {
                         store.dispatch(setLineProperty(line.id, "text", this.value));
                     }
