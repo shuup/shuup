@@ -11,14 +11,19 @@ var sourcemaps = require("gulp-sourcemaps");
 var uglify = require("gulp-uglify");
 var webpack = require("webpack");
 var watchPaths = require("./watch-paths");
+var gulpif = require("gulp-if");
 
 function normalJsBundle(spec, name) {
     var paths = spec.files.map(basifyFile.bind(null, spec));
     var taskName = "js:" + name;
     var destDir = settings.DEST_DIR + "/js";
     var watcher = null;
-
-    gulp.task(taskName, function() {
+    var transpiler = gutil.noop();
+    if (spec.es6) {
+        // Don't transpile Bower components.
+        transpiler = gulpif(/bower_components/, gutil.noop(), babel());
+    }
+    gulp.task(taskName, function () {
         if (settings.WATCH && !watcher) {
             watcher = watchPaths(paths, [taskName]);
         }
@@ -26,7 +31,7 @@ function normalJsBundle(spec, name) {
         return gulp.src(paths)
             .pipe(plumber())
             .pipe(sourcemaps.init())
-            .pipe((spec.es6 ? babel() : gutil.noop()))
+            .pipe(transpiler)
             .pipe(concat(name + ".js"))
             .pipe((settings.PRODUCTION ? uglify() : gutil.noop()))
             .pipe(sourcemaps.write("."))
@@ -46,14 +51,16 @@ function getWebpackConfig(specWebpack, name) {
         filename: name + ".js"
     });
     if (settings.PRODUCTION) {
-        specWebpack.plugins = [
+        if(!Array.isArray(specWebpack.plugins)) {
+            specWebpack.plugins = [];
+        }
+        specWebpack.plugins = specWebpack.plugins.concat([
             new webpack.optimize.UglifyJsPlugin(),
             new webpack.optimize.DedupePlugin()
-        ];
-    } else {
-        if (!specWebpack.devtool) {
-            specWebpack.devtool = "cheap-module-source-map";
-        }
+        ]);
+    }
+    if (!specWebpack.devtool) {
+        specWebpack.devtool = (settings.PRODUCTION ? "source-map" : "cheap-module-source-map");
     }
     return specWebpack;
 }
