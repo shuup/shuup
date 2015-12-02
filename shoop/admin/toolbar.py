@@ -9,26 +9,15 @@ from __future__ import unicode_literals
 
 import json
 
-import six
 from django.core.urlresolvers import NoReverseMatch, reverse
-from django.forms.utils import flatatt
 from django.middleware.csrf import get_token
 from django.utils.encoding import force_text
 from django.utils.html import conditional_escape, format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
+from shoop.admin.utils.forms import flatatt_filter
 from shoop.admin.utils.urls import NoModelUrl, get_model_url
-
-
-def flatatt_filter(attrs):
-    attrs = dict(
-        (key, value)
-        for (key, value)
-        in six.iteritems(attrs)
-        if key and value
-    )
-    return flatatt(attrs)
 
 
 class BaseActionButton(object):
