@@ -32,6 +32,7 @@ module.exports = {
         ]
     },
     "dashboard": {
+        "es6": true,
         "files": bowerFiles("./static_src/dashboard")
     },
     "media-browser": {
@@ -47,6 +48,7 @@ module.exports = {
         ]
     },
     "picotable": {
+        "es6": true,
         "base": "./static_src/picotable",
         "files": [
             "picotable.js"

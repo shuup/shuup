@@ -8,13 +8,13 @@
 from __future__ import unicode_literals
 
 from django.forms import HiddenInput, Widget
-from django.forms.utils import flatatt
 from django.utils.encoding import force_text
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from filer.models import File
 
+from shoop.admin.utils.forms import flatatt_filter
 from shoop.admin.utils.urls import NoModelUrl, get_model_url
 from shoop.core.models import Product
 
@@ -76,7 +76,7 @@ class BasePopupChoiceWidget(Widget):
             bits.insert(1, self.get_clear_markup())
 
         return mark_safe("<div %(attrs)s>%(content)s</div>" % {
-            "attrs": flatatt({
+            "attrs": flatatt_filter({
                 "class": "browse-widget %s-browse-widget" % self.browse_kind,
                 "data-browse-kind": self.browse_kind,
                 "data-clearable": self.clearable,

@@ -7,8 +7,11 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import six
+
 from django.contrib import messages
 from django.core.exceptions import NON_FIELD_ERRORS
+from django.forms.utils import flatatt
 
 
 def filter_form_field_choices(field, predicate, invert=False):
@@ -63,3 +66,13 @@ def add_form_errors_as_messages(request, form):
             messages.error(request, "%s %s" % (field_label, error))
             n_messages += 1
     return n_messages
+
+
+def flatatt_filter(attrs):
+    attrs = dict(
+        (key, value)
+        for (key, value)
+        in six.iteritems(attrs)
+        if key and value
+    )
+    return flatatt(attrs)
