@@ -48,6 +48,7 @@ module.exports = {
         ]
     },
     "picotable": {
+        "es6": true,
         "base": "./static_src/picotable",
         "files": [
             "picotable.js"
