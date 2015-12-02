@@ -24,6 +24,7 @@
     "gulp-babel": "^5.2.1",
     "gulp-buffer": "0.0.2",
     "gulp-concat": "^2.6.0",
+    "gulp-if": "^2.0.0",
     "gulp-less": "^3.0.3",
     "gulp-minify-css": "^1.2.1",
     "gulp-plumber": "^1.0.1",
