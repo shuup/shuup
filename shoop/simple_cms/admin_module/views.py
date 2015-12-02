@@ -128,7 +128,10 @@ class PageEditView(CreateOrUpdateView):
 class PageListView(PicotableListView):
     model = Page
     columns = [
-        Column("title", _(u"Title"), linked=True, filter_config=TextFilter(operator="startswith")),
+        Column(
+            "title", _(u"Title"), sort_field="translations__title", display="title", linked=True,
+            filter_config=TextFilter(operator="startswith")
+        ),
         Column("available_from", _(u"Available from")),
         Column("available_to", _(u"Available to")),
         Column("created_by", _(u"Created by")),
