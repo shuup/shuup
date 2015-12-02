@@ -51,14 +51,16 @@ function getWebpackConfig(specWebpack, name) {
         filename: name + ".js"
     });
     if (settings.PRODUCTION) {
-        specWebpack.plugins = [
+        if(!Array.isArray(specWebpack.plugins)) {
+            specWebpack.plugins = [];
+        }
+        specWebpack.plugins = specWebpack.plugins.concat([
             new webpack.optimize.UglifyJsPlugin(),
             new webpack.optimize.DedupePlugin()
-        ];
-    } else {
-        if (!specWebpack.devtool) {
-            specWebpack.devtool = "cheap-module-source-map";
-        }
+        ]);
+    }
+    if (!specWebpack.devtool) {
+        specWebpack.devtool = (settings.PRODUCTION ? "source-map" : "cheap-module-source-map");
     }
     return specWebpack;
 }
