@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-30 23:37+0000\n"
-"PO-Revision-Date: 2015-11-26 18:44+0200\n"
+"PO-Revision-Date: 2015-12-03 18:34+0200\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@anders.fi>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: fi_FI\n"
@@ -93,7 +93,7 @@ msgstr "Vaihda salasana"
 
 #, python-format
 msgid "Hi %(fullname)s"
-msgstr ""
+msgstr "Hei %(fullname)s"
 
 #, python-format
 msgid "In case you've forgotten, your username is %(username)s."
