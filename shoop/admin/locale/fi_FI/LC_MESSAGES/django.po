@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-30 23:37+0000\n"
+"POT-Creation-Date: 2015-12-03 16:00+0000\n"
 "PO-Revision-Date: 2015-11-26 18:44+0200\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@anders.fi>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -292,6 +292,11 @@ msgstr "Tuotetta %s ei ole olemassa"
 
 #, python-format
 msgid "Product %(product)s is not available in the %(shop)s shop."
+msgstr "Tuotetta %(product)s ei ole saatavilla %(shop)s kaupassa."
+
+#, fuzzy, python-format
+#| msgid "Product %(product)s is not available in the %(shop)s shop."
+msgid "Product %(product)s is not orderable: %(error)s"
 msgstr "Tuotetta %(product)s ei ole saatavilla %(shop)s kaupassa."
 
 msgid "Please add lines to the order."

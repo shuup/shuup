@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-30 23:37+0000\n"
+"POT-Creation-Date: 2015-12-03 16:00+0000\n"
 "PO-Revision-Date: 2015-11-17 11:42+0000\n"
 "Last-Translator: Aarni Koskela\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
@@ -143,6 +143,9 @@ msgstr ""
 msgid "Shipping address"
 msgstr "Toimitustapa"
 
+msgid "A new customer will be created based on billing address."
+msgstr ""
+
 msgid "Customer"
 msgstr "Asiakas"
 
@@ -171,7 +174,7 @@ msgstr ""
 msgid "Shipping Address"
 msgstr "Toimitustapa"
 
-msgid "Cancel"
+msgid "Back"
 msgstr ""
 
 msgid "Confirm"
@@ -368,6 +371,15 @@ msgstr "Ei URL-osoitetta selaimessa tyypille:"
 msgid "Expand Editor"
 msgstr "Laajenna editori"
 
+msgid "Previous"
+msgstr "Edellinen"
+
+msgid "Next"
+msgstr "Seuraava"
+
+msgid "Filters"
+msgstr "Suodattimet"
+
 msgid "From"
 msgstr "Mistä"
 
@@ -394,15 +406,6 @@ msgstr "Laskeva"
 
 msgid "Default sorting"
 msgstr "Oletusjärjestys"
-
-msgid "Previous"
-msgstr "Edellinen"
-
-msgid "Next"
-msgstr "Seuraava"
-
-msgid "Filters"
-msgstr "Suodattimet"
 
 msgid "Are you sure you want to delete this media?"
 msgstr "Oletko varma, että haluat poistaa tämän median?"
@@ -433,3 +436,6 @@ msgstr "Editori"
 
 msgid "Done"
 msgstr "Valmis"
+
+msgid "en"
+msgstr ""
