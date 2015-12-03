@@ -61,11 +61,12 @@ Topic :: Software Development :: Libraries :: Python Modules
 """.strip().splitlines()
 
 utils.set_exclude_patters([
-    'build', 'doc',
+    '__pycache__', '*.py[cod]',
     'node_modules', 'bower_components',
-    'var', '__pycache__', 'LC_MESSAGES',
-    '.tox', 'venv*',
+    'build', 'doc', 'var',
+    '.tox', '.cache', 'venv*',
     '.git', '.gitignore',
+    'LC_MESSAGES',
     'local_settings.py',
 ])
 
