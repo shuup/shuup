@@ -6,7 +6,7 @@ include ChangeLog.rst
 include tox.ini
 
 recursive-include shoop \
-    *.jinja *.txt *.js *.css *.json *.less \
+    *.jinja *.txt *.js *.css *.json *.less *.map \
     *.ico *.png *.svg \
     *.woff *.woff2 *.eot *.otf *.ttf *.po *.mo
 
