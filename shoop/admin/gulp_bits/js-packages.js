@@ -32,7 +32,6 @@ module.exports = {
         ]
     },
     "dashboard": {
-        "es6": true,
         "files": bowerFiles("./static_src/dashboard")
     },
     "media-browser": {
