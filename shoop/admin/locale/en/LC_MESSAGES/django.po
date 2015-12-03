@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-30 23:37+0000\n"
+"POT-Creation-Date: 2015-12-03 16:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -279,6 +279,10 @@ msgstr ""
 
 #, python-format
 msgid "Product %(product)s is not available in the %(shop)s shop."
+msgstr ""
+
+#, python-format
+msgid "Product %(product)s is not orderable: %(error)s"
 msgstr ""
 
 msgid "Please add lines to the order."
