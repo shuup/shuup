@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-07 12:39+0000\n"
+"POT-Creation-Date: 2015-12-07 13:02+0000\n"
 "PO-Revision-Date: 2015-11-26 08:48+0000\n"
 "Last-Translator: Yuki Miyagi <yuki.miyagi@anders.fi>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
@@ -24,7 +24,7 @@ msgid "Abandoned Basket Value"
 msgstr "放棄されたカートの価値"
 
 #, python-brace-format
-msgid "Based on {1} baskets over the last {2} days"
+msgid "Based on {b} baskets over the last {d} days"
 msgstr ""
 
 #, python-format
