@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-30 23:37+0000\n"
-"PO-Revision-Date: 2015-11-26 18:44+0200\n"
+"PO-Revision-Date: 2015-12-03 18:38+0200\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@anders.fi>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: fi_FI\n"
@@ -30,10 +30,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 2.0\n"
 
-#, fuzzy, python-format
-#| msgid "Price (%s/%s)"
+#, python-format
 msgid "Price (%(shop)s/%(group)s)"
-msgstr "Hinta (%s/%s)"
+msgstr "Hinta (%(shop)s/%(group)s)"
 
 msgid "product price"
 msgstr "tuotehinta"
@@ -47,10 +46,8 @@ msgstr "Yksinkertainen hinnoittelu"
 msgid "Customer Group Pricing"
 msgstr "Asiakasryhmähinnoittelu"
 
-#, fuzzy
-#| msgid "product price"
 msgid "Default price"
-msgstr "tuotehinta"
+msgstr "Oletushinta"
 
 msgid "Other shops"
-msgstr ""
+msgstr "Muut kaupat"
