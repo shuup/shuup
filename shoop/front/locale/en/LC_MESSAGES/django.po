@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-30 23:37+0000\n"
+"POT-Creation-Date: 2015-12-03 16:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -23,7 +23,7 @@ msgid "Abandoned Basket Value"
 msgstr ""
 
 #, python-brace-format
-msgid "Based on {1} baskets over the last {2} days"
+msgid "Based on {b} baskets over the last {d} days"
 msgstr ""
 
 #, python-format

@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-30 23:37+0000\n"
+"POT-Creation-Date: 2015-12-03 16:54+0000\n"
 "PO-Revision-Date: 2015-12-03 18:36+0200\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@anders.fi>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -34,8 +34,8 @@ msgid "Abandoned Basket Value"
 msgstr "Hylättyjen ostoskorien arvo"
 
 #, python-brace-format
-msgid "Based on {1} baskets over the last {2} days"
-msgstr "Perustuen {1} koriin viimeisen {2} päivän aikana"
+msgid "Based on {b} baskets over the last {d} days"
+msgstr "Perustuen {b} koriin viimeisen {d} päivän aikana"
 
 #, python-format
 msgid "Invalid command %s"
