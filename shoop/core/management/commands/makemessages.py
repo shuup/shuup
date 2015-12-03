@@ -10,6 +10,8 @@ Patched version of Django's Makemessages that works with Jinja2.
 Works by monkey patching django.utils.translation.trans_real.templatize
 with our version.
 """
+from __future__ import unicode_literals
+
 import datetime
 import os
 from io import BytesIO
@@ -137,7 +139,7 @@ def jinja_messages_to_python(src, origin=None):
     """
     Convert Jinja2 file to Python preserving only messages.
     """
-    output = StringIO()
+    output = StringIO('')
     output_lineno = 1
     for (lineno, message, comments, context) in extract_jinja(src, origin):
         for comment in comments:
