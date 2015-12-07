@@ -32,6 +32,8 @@ class Command(makemessages.Command):
                     kwargs["default"] = True
                 elif args[0] == "--no-location":
                     kwargs["default"] = True
+                elif args[0] == "--no-pot-date":
+                    kwargs["default"] = True
                 parser.add_argument(*args, **kwargs)
                 if args[0].startswith("--no-") and kwargs.get("default"):
                     name = "--include-" + args[0][5:]
