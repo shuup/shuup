@@ -1,0 +1,927 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Jessica Wang <jessica.wang@shoop.io>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: Shoop\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-12-07 12:26+0000\n"
+"PO-Revision-Date: 2015-12-07 11:12+0000\n"
+"Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
+"language/cmn/)\n"
+"Language: cmn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 1.3\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "internal identifier"
+msgstr "内部标识符 "
+
+msgid "Do not change this value if you are not sure what you're doing."
+msgstr "如果您不确定请不要更改该值。"
+
+msgid "Price"
+msgstr "价格"
+
+msgid "Waiver minimum"
+msgstr "最低放弃值"
+
+msgid ""
+"Waive the price when the total price of products in the order reaches this "
+"amount"
+msgstr "当订单产品总价达到这个数额时，放弃该价格"
+
+msgid "0 or below: no lower limit"
+msgstr "0 或者以下：没有下限"
+
+msgid "minimum weight"
+msgstr "最低重量"
+
+msgid "maximum weight"
+msgstr "最大重量"
+
+msgid "Minimum weight not met."
+msgstr "没有达到最低重量。"
+
+msgid "Maximum weight exceeded."
+msgstr "最大重量超过。"
+
+msgid "Default Shipping"
+msgstr "默认配送方式"
+
+msgid "Default Payment"
+msgstr "默认支付方式"
+
+msgid "Error"
+msgstr "错误"
+
+msgid "The following fields can not be changed"
+msgstr ""
+
+msgid "shipping address"
+msgstr "收货地址"
+
+msgid "billing address"
+msgstr "账单地址"
+
+msgid "disabled"
+msgstr "关闭"
+
+msgid "enabled"
+msgstr "已启用"
+
+msgid "name prefix"
+msgstr "名称前缀"
+
+msgid "name"
+msgstr "名称"
+
+msgid "name suffix"
+msgstr "名称后缀"
+
+msgid "name extension"
+msgstr "扩展名 "
+
+msgid "company name"
+msgstr "公司名称"
+
+msgid "Tax number"
+msgstr "税号"
+
+msgid "phone"
+msgstr "电话"
+
+msgid "email"
+msgstr "邮箱"
+
+msgid "street"
+msgstr "街道"
+
+msgid "street (2)"
+msgstr "街道 (2)"
+
+msgid "street (3)"
+msgstr "街道 (3)"
+
+msgid "ZIP / Postal code"
+msgstr "邮政编码"
+
+msgid "city"
+msgstr "城市"
+
+msgid "region code"
+msgstr "区域编码"
+
+msgid "region"
+msgstr "区域"
+
+msgid "country"
+msgstr "国家"
+
+msgid "immutable"
+msgstr "不可变"
+
+msgid "address"
+msgstr "地址"
+
+msgid "addresses"
+msgstr "地址"
+
+msgid "role"
+msgstr "职位"
+
+msgid "status"
+msgstr "状态"
+
+msgid "title"
+msgstr "名称"
+
+msgid "saved address"
+msgstr "地址已保存"
+
+msgid "saved addresses"
+msgstr "地址已保存"
+
+msgid "hidden"
+msgstr "隐藏"
+
+msgid "shown on product page"
+msgstr "在产品页面显示"
+
+msgid "searchable metadata"
+msgstr "可供搜索的元数据"
+
+msgid "private metadata"
+msgstr "私有元数据 "
+
+msgid "integer"
+msgstr "integer"
+
+msgid "decimal"
+msgstr "小数"
+
+msgid "boolean"
+msgstr "布尔"
+
+msgid "time interval"
+msgstr "时距"
+
+msgid "date and time"
+msgstr "日期和时间"
+
+msgid "date only"
+msgstr "仅日期"
+
+msgid "translated string"
+msgstr "已翻译的字符串"
+
+msgid "untranslated string"
+msgstr "未翻译的字符串"
+
+msgid "attribute"
+msgstr "属性"
+
+msgid "attributes"
+msgstr "属性"
+
+msgid "invisible"
+msgstr "不可见"
+
+msgid "visible"
+msgstr "可见"
+
+msgid "deleted"
+msgstr "已删除"
+
+msgid "visible to all"
+msgstr "所有人可见"
+
+msgid "visible to logged in customers"
+msgstr "登录用户可见"
+
+msgid "visible to certain customer groups"
+msgstr "某些顾客群组可见"
+
+msgid "parent category"
+msgstr "父分类"
+
+msgid "image"
+msgstr "图像"
+
+msgid "ordering"
+msgstr "订单"
+
+msgid "visibility limitations"
+msgstr "可见限制"
+
+msgid "visible for groups"
+msgstr "群组可见"
+
+msgid "description"
+msgstr "描述"
+
+msgid "slug"
+msgstr "slug"
+
+msgid "category"
+msgstr "分类"
+
+msgid "categories"
+msgstr "分类"
+
+msgid "key"
+msgstr "键"
+
+msgid "value"
+msgstr "值"
+
+msgid "configuration item"
+msgstr "配置项目"
+
+msgid "configuration items"
+msgstr "配置项目"
+
+#, python-format
+msgid "%(key)s for shop %(shop)s"
+msgstr "%(key)s 商城 %(shop)s"
+
+#, python-format
+msgid "%(key)s (global)"
+msgstr "%(key)s (全局)"
+
+msgid "members"
+msgstr "成员"
+
+msgid "show as pricing option"
+msgstr "以定价选项显示"
+
+msgid "contact group"
+msgstr "联系群组"
+
+msgid "contact groups"
+msgstr "联系群组"
+
+msgid "default shipping method"
+msgstr "默认配送方式"
+
+msgid "default payment method"
+msgstr "默认支付方式"
+
+msgid "language"
+msgstr "语言"
+
+msgid "marketing permission"
+msgstr "营销许可 "
+
+msgid "web address"
+msgstr "网址"
+
+msgid "contact"
+msgstr "联系"
+
+msgid "contacts"
+msgstr "联系"
+
+msgid "e.g. EIN in US or VAT code in Europe"
+msgstr "例如美国的雇主识别号码EIN或者欧洲的增值税代码VAT"
+
+msgid "company"
+msgstr "公司"
+
+msgid "companies"
+msgstr "公司"
+
+msgid "person"
+msgstr "联系人"
+
+msgid "persons"
+msgstr "联系人"
+
+msgid "order reference"
+msgstr "订单参考"
+
+msgid "counter"
+msgstr "柜台"
+
+msgid "counters"
+msgstr "柜台"
+
+msgid "added"
+msgstr "已添加"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "manufacturer"
+msgstr "制造商"
+
+msgid "manufacturers"
+msgstr "制造商"
+
+msgid "shipping"
+msgstr "配送"
+
+msgid "payment"
+msgstr "支付"
+
+msgid "tax class"
+msgstr "税种"
+
+msgid "module"
+msgstr "模块"
+
+msgid "shipping method"
+msgstr "配送方式"
+
+msgid "shipping methods"
+msgstr "配送方式"
+
+msgid "payment method"
+msgstr "支付方式"
+
+msgid "payment methods"
+msgstr "支付方式"
+
+msgid "product"
+msgstr "产品"
+
+msgid "campaign"
+msgstr "活动"
+
+msgid "other"
+msgstr "其他"
+
+msgid "order"
+msgstr "订单"
+
+msgid "supplier"
+msgstr "供应商"
+
+msgid "parent line"
+msgstr "父行"
+
+msgid "line type"
+msgstr "类型行"
+
+msgid "line SKU"
+msgstr "SKU行"
+
+msgid "line text"
+msgstr "文本行"
+
+msgid "accounting identifier"
+msgstr "审计标识符"
+
+msgid "require verification"
+msgstr "验证要求"
+
+msgid "verified"
+msgstr "已验证"
+
+msgid "quantity"
+msgstr "数量"
+
+msgid "unit price amount (undiscounted)"
+msgstr "单价金额 (无折扣)"
+
+msgid "total amount of discount"
+msgstr "折扣总额"
+
+msgid "order line"
+msgstr "订单行"
+
+msgid "order lines"
+msgstr "订单行"
+
+msgid "tax"
+msgstr "税收"
+
+msgid "tax name"
+msgstr "税名"
+
+msgid "tax amount"
+msgstr "税收合计"
+
+msgid "base amount"
+msgstr "基本金额"
+
+msgid "Amount that this tax is calculated from"
+msgstr "计算所得税的金额 "
+
+msgid "not paid"
+msgstr "未付"
+
+msgid "partially paid"
+msgstr "部分支付 "
+
+msgid "fully paid"
+msgstr "已全付"
+
+msgid "canceled"
+msgstr "已取消"
+
+msgid "deferred"
+msgstr "延迟的"
+
+msgid "not shipped"
+msgstr "未发货"
+
+msgid "partially shipped"
+msgstr "部分出货"
+
+msgid "fully shipped"
+msgstr "全出货"
+
+msgid "none"
+msgstr "无"
+
+msgid "initial"
+msgstr "最初"
+
+msgid "complete"
+msgstr "完成"
+
+msgid "Name"
+msgstr "名称"
+
+msgid "order identifier"
+msgstr "订单标识符"
+
+msgid "label"
+msgstr "标签"
+
+msgid "reference number"
+msgstr "参考号"
+
+msgid "customer"
+msgstr "顾客"
+
+msgid "orderer"
+msgstr "订货人"
+
+msgid "email address"
+msgstr "邮箱地址"
+
+msgid "creating user"
+msgstr "创建用户"
+
+msgid "payment status"
+msgstr "支付状态"
+
+msgid "shipping status"
+msgstr "配送状态"
+
+msgid "payment method name"
+msgstr "支付方式名"
+
+msgid "shipping method name"
+msgstr "配送方式名"
+
+msgid "grand total"
+msgstr "共计"
+
+msgid "taxless total"
+msgstr "免税合计"
+
+msgid "IP address"
+msgstr "IP地址"
+
+msgid "order date"
+msgstr "订单日期"
+
+msgid "payment date"
+msgstr "支付日期"
+
+msgid "customer comment"
+msgstr "顾客评论"
+
+msgid "admin comment/notes"
+msgstr "管理评论/注释"
+
+msgid "requires verification"
+msgstr "验证要求"
+
+msgid "all lines verified"
+msgstr "所有订单行已验证"
+
+msgid "orders"
+msgstr "订单"
+
+msgid "Order marked as paid."
+msgstr "标记为已付的订单。"
+
+#, python-format
+msgid "Shipment #%d created."
+msgstr "#%d 已发货。"
+
+msgid "All rows requiring verification have been verified."
+msgstr "所有需要的验证行列已验证。"
+
+msgid "All products have been shipped. Fully Shipped status set."
+msgstr "所有产品已发货，全运状态。"
+
+msgid "payments"
+msgstr "支付"
+
+msgid "cache entry"
+msgstr "高速缓存条目"
+
+msgid "cache entries"
+msgstr "高速缓存条目"
+
+msgid "file"
+msgstr "文件"
+
+msgid "documentation"
+msgstr "文档"
+
+msgid "sample"
+msgstr "样品"
+
+msgid "kind"
+msgstr "类"
+
+msgid ""
+"Enter URL to external file. If this field is filled, the selected media "
+"doesn't apply."
+msgstr "请输入URL网址至外部文件。如果该字段已填，则不适用于被选中的媒体。"
+
+msgid "public (shown on product page)"
+msgstr "发布 (在产品页面显示)"
+
+msgid "purchased (shown for finished purchases)"
+msgstr "已购买 (显示已完成的订购)"
+
+msgid "product attachment"
+msgstr "产品附件"
+
+msgid "product attachments"
+msgstr "产品附件"
+
+msgid "attachment"
+msgstr "附件"
+
+msgid "purchase multiple"
+msgstr "购买多个"
+
+msgid "minimum purchase"
+msgstr "最低购买"
+
+msgid "primary category"
+msgstr "主分类"
+
+msgid "Default price"
+msgstr "默认价格"
+
+msgid "This product has been deleted."
+msgstr "该产品已删除。"
+
+msgid "This product is not visible."
+msgstr "无法显示该产品。"
+
+msgid "The Product is invisible to users not logged in."
+msgstr "对未登录用户隐藏该产品。"
+
+msgid "This product is not visible to your group."
+msgstr "该产品在您的群组里不可见。"
+
+msgid "The product has no supplier."
+msgstr "该产品没有供应商。"
+
+#, python-format
+msgid "The purchase quantity needs to be at least %d for this product."
+msgstr "该产品的购买数量至少为 %d。"
+
+#, python-format
+msgid "The product is not supplied by %s."
+msgstr "%s不供应该产品。"
+
+#, python-format
+msgid ""
+"The product can only be ordered in multiples of %(package_size)s, for "
+"example %(smaller_p)s %(unit)s."
+msgstr "该产品只可多个%(package_size)s 订购，例如 %(smaller_p)s %(unit)s。"
+
+#, python-format
+msgid ""
+"The product can only be ordered in multiples of %(package_size)s, for "
+"example %(smaller_p)s or %(larger_p)s %(unit)s."
+msgstr ""
+"该产品只可多个%(package_size)s订购，例如%(smaller_p)s 或者 %(larger_p)s "
+"%(unit)s。"
+
+msgid "variation variable"
+msgstr "变体变量"
+
+msgid "variation variables"
+msgstr "变体变量"
+
+msgid "variation value"
+msgstr "变体价值"
+
+msgid "variation values"
+msgstr "变体价值"
+
+msgid "variation result"
+msgstr "变体结果"
+
+msgid "variation results"
+msgstr "变体结果"
+
+msgid "normal"
+msgstr "正常"
+
+msgid "package parent"
+msgstr "父包"
+
+msgid "variation parent (simple)"
+msgstr "父级变体 (单纯)"
+
+msgid "variation parent (variable)"
+msgstr "父级变体 (变量)"
+
+msgid "variation child"
+msgstr "子级变体"
+
+msgid "visible to logged in"
+msgstr "登录可见"
+
+msgid "visible to groups"
+msgstr "群组可见"
+
+msgid "stocked"
+msgstr "有库存"
+
+msgid "unstocked"
+msgstr "没库存"
+
+msgid "recommended"
+msgstr "已推荐"
+
+msgid "related"
+msgstr "相关"
+
+msgid "computed"
+msgstr "计算的"
+
+msgid "shipped"
+msgstr "已发货"
+
+msgid "no verification required"
+msgstr "无需验证"
+
+msgid "admin verification required"
+msgstr "要求管理验证"
+
+msgid "third party verification required"
+msgstr "要求第三方验证"
+
+msgid "product type"
+msgstr "产品类型"
+
+msgid "product types"
+msgstr "产品类型"
+
+msgid "variation parent"
+msgstr "父级变体"
+
+msgid "stock"
+msgstr "库存"
+
+msgid "shipping mode"
+msgstr "配送模式"
+
+msgid "unit"
+msgstr "单位"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "GTIN"
+msgstr "全球贸易项目代码"
+
+msgid "Global Trade Item Number"
+msgstr "全球贸易项目代码"
+
+msgid "barcode"
+msgstr "条形码"
+
+msgid "bookkeeping account"
+msgstr "记账账号"
+
+msgid "profit center"
+msgstr "利润中心"
+
+msgid "cost center"
+msgstr "成本中心"
+
+msgid "only used for administration and reporting"
+msgstr "只用于管理和报告"
+
+msgid "width (mm)"
+msgstr "宽 (毫米)"
+
+msgid "height (mm)"
+msgstr "高 (毫米)"
+
+msgid "depth (mm)"
+msgstr "深 (毫米)"
+
+msgid "net weight (g)"
+msgstr "净重 (克)"
+
+msgid "gross weight (g)"
+msgstr "毛重 (克)"
+
+msgid "keywords"
+msgstr "关键词"
+
+msgid "status text"
+msgstr "状态文本"
+
+msgid ""
+"This text will be shown alongside the product in the shop. (Ex.: \"Available "
+"in a month\")"
+msgstr "该文本将会在产品旁边显示。(例如 \"一个月后可供\")"
+
+msgid "variation name"
+msgstr "变体产品名称"
+
+msgid "products"
+msgstr "产品"
+
+msgid ""
+"Multilevel parentage hierarchies aren't supported (parent is a child already)"
+msgstr "不支持多级父子级操作 (父级已经是子级)"
+
+msgid "Parent is a variable variation parent, yet variables were not passed"
+msgstr "父级产品是一个变量变体父产品，但是变量不能被传递。"
+
+msgid ""
+"Multilevel parentage hierarchies aren't supported (this product is a simple "
+"variation parent)"
+msgstr "不支持多级父子级操作 (该产品为单纯变体父产品)"
+
+msgid ""
+"Multilevel parentage hierarchies aren't supported (this product is a "
+"variable variation parent)"
+msgstr "不支持多级父子级操作  (该产品为变量变体父产品)"
+
+msgid "Product is currently not a normal product, can't turn into package"
+msgstr "该产品目前不是一般产品，不能成为套装"
+
+msgid "Variation parents can not belong into a package"
+msgstr "父级变体产品不能归属到套装。"
+
+msgid "Packages can't be nested"
+msgstr "包不能嵌套"
+
+#, python-format
+msgid "Quantity %s is invalid"
+msgstr "该数量%s 无效"
+
+msgid "cross sell link"
+msgstr "交叉销售链接"
+
+msgid "cross sell links"
+msgstr "交叉销售链接"
+
+msgid "product attribute"
+msgstr "产品属性"
+
+msgid "product attributes"
+msgstr "产品属性"
+
+msgid "not sent"
+msgstr "未发送"
+
+msgid "sent"
+msgstr "发送"
+
+msgid "received"
+msgstr "已接收"
+
+msgid "error"
+msgstr "错误"
+
+msgid "tracking code"
+msgstr "追踪编号"
+
+msgid "shipment"
+msgstr "装运"
+
+msgid "shipments"
+msgstr "装运"
+
+msgid "sent product"
+msgstr "发货"
+
+msgid "sent products"
+msgstr "发货"
+
+msgid ""
+"The following fields cannot be changed since there are existing orders for "
+"this shop"
+msgstr ""
+
+msgid "logo"
+msgstr "商标"
+
+msgid "maintenance mode"
+msgstr "维修模式"
+
+msgid "alert limit"
+msgstr "警告限制"
+
+msgid "physical stock count"
+msgstr "物理库存计数"
+
+msgid "logical stock count"
+msgstr "逻辑库存计数"
+
+msgid "Cannot change business critical fields of Tax that is in use"
+msgstr "无法改变使用中的税收业务关键字段"
+
+msgid "code"
+msgstr "代码"
+
+msgid "tax rate"
+msgstr "税率"
+
+msgid "The percentage rate of the tax."
+msgstr "税率"
+
+msgid "tax amount value"
+msgstr "税额价值"
+
+msgid "The flat amount of the tax. Mutually exclusive with percentage rates."
+msgstr ""
+
+msgid "currency of tax amount"
+msgstr "税额货币"
+
+msgid "Either rate or amount is required"
+msgstr "费率或金额选其一"
+
+msgid "Cannot have both rate and amount"
+msgstr "无法同时获取费率和金额"
+
+msgid "Currency is required if amount is specified"
+msgstr "指定金额要求货币选择"
+
+msgid "taxes"
+msgstr "税收"
+
+msgid "tax classes"
+msgstr "税种"
+
+msgid "customer tax group"
+msgstr "顾客税组"
+
+msgid "customer tax groups"
+msgstr "顾客税组"
+
+#, fuzzy
+#| msgid "Active customers"
+msgid "Retail Customers"
+msgstr "活跃客户"
+
+#, fuzzy
+#| msgid "Company name"
+msgid "Company Customers"
+msgstr "公司名称"
+
+msgid "allowed decimals"
+msgstr "允许小数点"
+
+msgid "sales unit"
+msgstr "销售单位"
+
+msgid "sales units"
+msgstr "销售单位"
+
+msgid "No Choice"
+msgstr "没有选项"
+
+msgid "Default Pricing"
+msgstr "默认定价"
+
+msgid "Insufficient stock"
+msgstr "储存量不足"
+
+msgid "Untaxed"
+msgstr "未上税"
+
+#, fuzzy
+#| msgid "This order can not be set as complete at this point"
+msgid "This field cannot be changed since it is protected."
+msgstr "该订单无法在此阶段设为完成"
+
+msgid "First Last"
+msgstr "名姓"
