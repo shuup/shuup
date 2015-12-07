@@ -6,13 +6,14 @@
 # Aarni Koskela, 2015
 # Juha Kujala <juha.kujala@shoop.io>, 2015
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
+# Tuomas Suutari <tuomas.suutari@shoop.io>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-30 23:37+0000\n"
-"PO-Revision-Date: 2015-11-17 11:42+0000\n"
-"Last-Translator: Aarni Koskela\n"
+"POT-Creation-Date: 2015-12-03 16:00+0000\n"
+"PO-Revision-Date: 2015-12-03 18:29+0200\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
 "language/fi_FI/)\n"
 "Language: fi_FI\n"
@@ -122,169 +123,149 @@ msgid "Unit Price"
 msgstr "Yksikköhinta"
 
 msgid "Discount amount"
-msgstr ""
+msgstr "Alennus"
 
 msgid "Total (excluding taxes)"
-msgstr ""
+msgstr "Kokonaishinta (veroton)"
 
 msgid "Tax percent"
-msgstr ""
+msgstr "Veroprosentti"
 
-#, fuzzy
-#| msgid "Total Price"
 msgid "Total"
 msgstr "Kokonaishinta"
 
 msgid "Billing address"
-msgstr ""
+msgstr "Laskutusosoite"
 
-#, fuzzy
-#| msgid "Shipping Method"
 msgid "Shipping address"
-msgstr "Toimitustapa"
+msgstr "Toimitusosoite"
+
+msgid "A new customer will be created based on billing address."
+msgstr "Uusi asiakas luodaan laskutusosoitteen perusteella."
 
 msgid "Customer"
 msgstr "Asiakas"
 
 msgid "Select Existing Customer"
-msgstr ""
+msgstr "Valitse olemassa oleva asiakas"
 
-#, fuzzy
-#| msgid "Customer"
 msgid "New Customer"
-msgstr "Asiakas"
+msgstr "Uusi asiakas"
 
 msgid "Save customer details while creating order"
-msgstr ""
+msgstr "Tallenna asiakkaan tiedot tilauksen luonnin yhteydessä"
 
 msgid "Ship to billing address"
-msgstr ""
+msgstr "Toimita laskutusosoitteeseen"
 
 msgid "Order for company"
-msgstr ""
+msgstr "Tilaa yritykselle"
 
 msgid "Billing Address"
-msgstr ""
+msgstr "Laskutusosoite"
 
-#, fuzzy
-#| msgid "Shipping Method"
 msgid "Shipping Address"
-msgstr "Toimitustapa"
+msgstr "Toimitusosoite"
 
-msgid "Cancel"
-msgstr ""
+msgid "Back"
+msgstr "Takaisin"
 
 msgid "Confirm"
-msgstr ""
+msgstr "Hyväksy"
 
 msgid "Select Shop"
-msgstr ""
+msgstr "Valitse kauppa"
 
-#, fuzzy
-#| msgid "Order Notes"
 msgid "Order Contents"
-msgstr "Tilauksen huomiot"
+msgstr "Tilauksen sisältö"
 
-#, fuzzy
-#| msgid "Customer"
 msgid "Customer Details"
-msgstr "Asiakas"
+msgstr "Asiakkaan tiedot"
 
 msgid "Shipping Method"
 msgstr "Toimitustapa"
 
 msgid "Payment Method"
-msgstr ""
+msgstr "Maksutapa"
 
 msgid ""
 "Method rules, taxes and possible extra discounts are calculated after "
 "proceeding."
 msgstr ""
+"Tapojen säännöt, verot ja mahdolliset lisäalennukset lasketaan seuraavassa "
+"vaiheessa."
 
 msgid "Proceed"
-msgstr ""
+msgstr "Jatka"
 
 msgid "Select product"
-msgstr ""
+msgstr "Valitse tuote"
 
 msgid "Text/Comment"
 msgstr "Teksti/Kommentti"
 
 msgid "Qty"
-msgstr ""
+msgstr "Määrä"
 
 msgid "Total Price"
 msgstr "Kokonaishinta"
 
-#, fuzzy
-#| msgid "Unit Price"
 msgid "Base Unit Price"
-msgstr "Yksikköhinta"
+msgstr "Perusyksikköhinta"
 
-#, fuzzy
-#| msgid "Unit Price"
 msgid "Discounted Unit Price"
-msgstr "Yksikköhinta"
+msgstr "Alennettu yksikköhinta"
 
 msgid "Discount Percent"
-msgstr ""
+msgstr "Alennusprosentti"
 
 msgid "Total Discount Amount"
-msgstr ""
+msgstr "Kokonaisalennus"
 
 msgid "Line Total"
-msgstr ""
+msgstr "Rivin hinta"
 
-#, fuzzy
-#| msgid "Order Notes"
 msgid "Orderline type"
-msgstr "Tilauksen huomiot"
+msgstr "Tilausrivin tyyppi"
 
 msgid ""
 "If your product prices vary based on customers you might wan't to select "
 "customer first."
 msgstr ""
+"Jos tuotteidesi hinnat riippuvat asiakkaasta, kannattaa valita ensin asiakas."
 
 msgid "All prices is in "
-msgstr ""
+msgstr "Kaikki tuotteet valuutassa "
 
-#, fuzzy
-#| msgid "current"
 msgid " currency."
-msgstr "Nykyinen"
+msgstr "."
 
 msgid "All prices include taxes."
-msgstr ""
+msgstr "Kaikki hinnat ovat verollisia."
 
 msgid "Taxes is not included."
-msgstr ""
+msgstr "Kaikki hinnat ovat verottomia."
 
-#, fuzzy
-#| msgid "Add new line..."
 msgid "Add new line"
-msgstr "Lisää uusi rivi..."
+msgstr "Lisää uusi rivi"
 
-#, fuzzy
-#| msgid "Unit Price"
 msgid "Price"
-msgstr "Yksikköhinta"
+msgstr "Hinta"
 
 msgid "Waiver limit"
-msgstr ""
+msgstr "Luopumisraja"
 
 msgid "Minimum weight"
-msgstr ""
+msgstr "Minimipaino"
 
 msgid "Maximum weight"
-msgstr ""
+msgstr "Maksimipaino"
 
 msgid "No shipping method"
 msgstr "Ei toimitustapaa"
 
-#, fuzzy
-#| msgid "No shipping method"
 msgid "No payment method"
-msgstr "Ei toimitustapaa"
+msgstr "Ei maksutapaa"
 
 msgid "Shop"
 msgstr "Kauppa"
@@ -296,31 +277,31 @@ msgid "Other"
 msgstr "Muu"
 
 msgid "Tax number"
-msgstr ""
+msgstr "Veronumero"
 
 msgid "Phone"
-msgstr ""
+msgstr "Puhelin"
 
 msgid "Email"
-msgstr ""
+msgstr "Sähköposti"
 
 msgid "Street"
-msgstr ""
+msgstr "Katu"
 
 msgid "Street (2)"
-msgstr ""
+msgstr "Katu (2)"
 
 msgid "ZIP / Postal code"
-msgstr ""
+msgstr "Postinumero"
 
 msgid "City"
-msgstr ""
+msgstr "Kaupunki"
 
 msgid "Region"
-msgstr ""
+msgstr "Alue"
 
 msgid "Country"
-msgstr ""
+msgstr "Maa"
 
 msgid "Identifier"
 msgstr "Tunniste"
@@ -368,6 +349,15 @@ msgstr "Ei URL-osoitetta selaimessa tyypille:"
 msgid "Expand Editor"
 msgstr "Laajenna editori"
 
+msgid "Previous"
+msgstr "Edellinen"
+
+msgid "Next"
+msgstr "Seuraava"
+
+msgid "Filters"
+msgstr "Suodattimet"
+
 msgid "From"
 msgstr "Mistä"
 
@@ -394,15 +384,6 @@ msgstr "Laskeva"
 
 msgid "Default sorting"
 msgstr "Oletusjärjestys"
-
-msgid "Previous"
-msgstr "Edellinen"
-
-msgid "Next"
-msgstr "Seuraava"
-
-msgid "Filters"
-msgstr "Suodattimet"
 
 msgid "Are you sure you want to delete this media?"
 msgstr "Oletko varma, että haluat poistaa tämän median?"
@@ -433,3 +414,6 @@ msgstr "Editori"
 
 msgid "Done"
 msgstr "Valmis"
+
+msgid "en"
+msgstr "fi"

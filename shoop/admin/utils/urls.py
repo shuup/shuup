@@ -56,7 +56,7 @@ class AdminRegexURLPattern(RegexURLPattern):
             # a helpful link.
             raise (
                 Problem(_("Can't view this page. %(reason)s") % {"reason": reason})
-                .with_link(url=resp.url, title=_("Log in with different credentials…"))
+                .with_link(url=resp.url, title=_("Log in with different credentials..."))
             )
         return resp
 

@@ -44,7 +44,8 @@ def get_unfinalized_basket_block(currency, days=14):
         value=(data.get("sum") or 0),
         currency=currency,
         icon="fa fa-calculator",
-        subtitle=_("Based on {1} baskets over the last {2} days").format(data.get("count"), days)
+        subtitle=_("Based on {b} baskets over the last {d} days").format(
+            b=data.get("count"), d=days)
     )
 
 

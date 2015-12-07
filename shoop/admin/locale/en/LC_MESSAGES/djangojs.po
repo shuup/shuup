@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-30 23:37+0000\n"
+"POT-Creation-Date: 2015-12-03 16:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -132,6 +132,9 @@ msgstr ""
 msgid "Shipping address"
 msgstr ""
 
+msgid "A new customer will be created based on billing address."
+msgstr ""
+
 msgid "Customer"
 msgstr ""
 
@@ -156,7 +159,7 @@ msgstr ""
 msgid "Shipping Address"
 msgstr ""
 
-msgid "Cancel"
+msgid "Back"
 msgstr ""
 
 msgid "Confirm"
@@ -335,6 +338,15 @@ msgstr ""
 msgid "Expand Editor"
 msgstr ""
 
+msgid "Previous"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+msgid "Filters"
+msgstr ""
+
 msgid "From"
 msgstr ""
 
@@ -360,15 +372,6 @@ msgid "descending"
 msgstr ""
 
 msgid "Default sorting"
-msgstr ""
-
-msgid "Previous"
-msgstr ""
-
-msgid "Next"
-msgstr ""
-
-msgid "Filters"
 msgstr ""
 
 msgid "Are you sure you want to delete this media?"
@@ -399,4 +402,7 @@ msgid "Editor"
 msgstr ""
 
 msgid "Done"
+msgstr ""
+
+msgid "en"
 msgstr ""
