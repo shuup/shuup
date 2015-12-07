@@ -100,7 +100,7 @@ class Command(makemessages.Command):
 
         if self.no_pot_date:
             new_contents = _read_file(pofile)
-            if orig_contents != new_contents:
+            if orig_contents != new_contents and new_contents:
                 modified_contents = _update_pot_creation_date(new_contents)
                 with open(pofile, 'wb') as fp:
                     fp.write(modified_contents)
@@ -118,6 +118,8 @@ def _remove_pot_creation_date(filepath):
 
 
 def _read_file(filepath):
+    if not os.path.exists(filepath):
+        return None
     with open(filepath, 'rb') as fp:
         return fp.read()
 
