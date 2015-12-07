@@ -82,13 +82,11 @@ class ProductMedia(TranslatableModel):
 
     @property
     def url(self):
-        if not self.public:
-            raise ValueError("`get_effective_url()` may not be used on non-public media")
-
-        if self.file_id:
-            return self.file.url
-        else:
+        if self.external_url:
             return self.external_url
+        if self.file:
+            return self.file.url
+        return ""
 
     @property
     def easy_thumbnails_thumbnailer(self):
