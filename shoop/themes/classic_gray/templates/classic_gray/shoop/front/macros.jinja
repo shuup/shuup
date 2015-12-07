@@ -122,6 +122,25 @@
     </div>
 {% endmacro %}
 
+{% macro render_ordered_files(order) %}
+    {% set attachments = order.get_purchased_attachments() %}
+    {% if attachments %}
+        <h2>{% trans %}Files{% endtrans %}</h2>
+        <table class="table">
+            {% for attachment in attachments %}
+                <tr>
+                    <td><a href="{{ attachment.url }}" target="_blank">{{ attachment.title }}</a></td>
+                    <td>
+                        {% if attachment.description %}
+                            {{ attachment.description|linebreaksbr }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endmacro %}
+
 {% macro print_order_detail(order, show_attachments=False) %}
 
     <div class="panel panel-default">
@@ -144,22 +163,7 @@
     </div>
 
     {% if show_attachments %}
-        {% set attachments = order.get_purchased_attachments() %}
-        {% if attachments %}
-            <h2>{% trans %}Files{% endtrans %}</h2>
-            <table class="table">
-                {% for attachment in attachments %}
-                    <tr>
-                        <td><a href="{{ attachment.get_effective_url() }}">{{ attachment.title }}</a></td>
-                        <td>
-                            {% if attachment.description %}
-                                {{ attachment.description|linebreaksbr }}
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endfor %}
-            </table>
-        {% endif %}
+        {{ render_ordered_files(order) }}
     {% endif %}
 
     <div class="row">

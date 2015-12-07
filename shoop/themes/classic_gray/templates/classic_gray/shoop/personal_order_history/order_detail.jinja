@@ -1,4 +1,5 @@
 {% extends "shoop/front/base.jinja" %}
+{% from "shoop/front/macros.jinja" import render_ordered_files %}
 
 {% block title -%}
     {{ _("Order %(identifier)s", identifier=order.identifier) }}
@@ -32,6 +33,9 @@
         </div>
         <div class="col-sm-12">
             {{ _rows() }}
+        </div>
+        <div class="col-sm-12">
+            {{ render_ordered_files(order) }}
         </div>
     </div>
 {% endblock %}
