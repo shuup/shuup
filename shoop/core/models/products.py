@@ -535,6 +535,9 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
             ProductPackageLink.objects.filter(parent=self).values_list("child", flat=True)
         ))
 
+    def get_public_media(self):
+        return self.media.filter(enabled=True, public=True)
+
 
 ProductLogEntry = define_log_model(Product)
 
