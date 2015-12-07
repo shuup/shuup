@@ -11,6 +11,7 @@ Contents
    changes
    glossary
    basic_admin_tasks
+   prices_and_taxes
 
 Developer documentation
 -----------------------
@@ -23,9 +24,9 @@ Developer documentation
    data_model
    provides
    addons
-   templates
-   taxes
+   prices_and_taxes_implementation
    notify_specification
+   templates
    api/modules
    web_api
 
