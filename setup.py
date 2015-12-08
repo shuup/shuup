@@ -89,7 +89,7 @@ REQUIRES = [
     'jsonfield==1.0.3',
     'Markdown==2.6.2',
     'pytz==2015.4',
-    'requests==2.7.0',
+    'requests>=2.7.0,<3',
     'six==1.9.0',
     'Jinja2==2.8',
     'pytoml==0.1.4'
