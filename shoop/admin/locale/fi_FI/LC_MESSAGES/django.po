@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-30 23:37+0000\n"
-"PO-Revision-Date: 2015-11-26 18:44+0200\n"
+"POT-Creation-Date: 2015-12-03 16:54+0000\n"
+"PO-Revision-Date: 2015-12-03 18:13+0200\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@anders.fi>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: fi_FI\n"
@@ -122,7 +122,7 @@ msgstr "Uusi käyttäjä"
 msgid "Create an user for the contact."
 msgstr "Luo kontaktille käyttäjä."
 
-msgid "Edit…"
+msgid "Edit..."
 msgstr "Muokkaa..."
 
 msgid "Person"
@@ -278,10 +278,10 @@ msgstr "Määrä '%(quantity)s' (rivillä %(text)s) ei ole kelvollinen (%(error)
 msgid "The price '%(price)s' (for line %(text)s) is invalid (%(error)s)"
 msgstr "Hinta '%(price)s' (rivillä %(text)s) ei ole kelvollinen (%(error)s)"
 
-#, fuzzy, python-format
-#| msgid "The price '%(price)s' (for line %(text)s) is invalid (%(error)s)"
+#, python-format
 msgid "The discount '%(discount)s' (for line %(text)s is invalid (%(error)s)"
-msgstr "Hinta '%(price)s' (rivillä %(text)s) ei ole kelvollinen (%(error)s)"
+msgstr ""
+"Alennus '%(discount)s' (rivillä %(text)s) ei ole kelvollinen (%(error)s)"
 
 msgid "Product line does not have a product set."
 msgstr "Tuoterivillä ei ole asetettua tuotetta."
@@ -294,34 +294,35 @@ msgstr "Tuotetta %s ei ole olemassa"
 msgid "Product %(product)s is not available in the %(shop)s shop."
 msgstr "Tuotetta %(product)s ei ole saatavilla %(shop)s kaupassa."
 
+#, python-format
+msgid "Product %(product)s is not orderable: %(error)s"
+msgstr "Tuote %(product)s ei ole tilattavissa: %(error)s"
+
 msgid "Please add lines to the order."
 msgstr "Lisää rivejä tilaukseen"
 
 msgid "Name is required for customer"
-msgstr ""
+msgstr "Asiakkaan nimi on pakollinen tieto"
 
 msgid "Tax number is not set for company."
-msgstr ""
+msgstr "Yritykselle ei ole asetettu veronumeroa ."
 
 msgid "Please choose a valid shop."
 msgstr "Valitse kelvollinen kauppa"
 
 msgid "Please select shipping method."
-msgstr ""
+msgstr "Valitse toimitustapa."
 
 msgid "Please select payment method."
-msgstr ""
+msgstr "Valitse maksutapa."
 
 msgid "Create Order"
 msgstr "Luo tilaus"
 
-#, fuzzy, python-format
-#| msgid "Product %s does not exist."
+#, python-format
 msgid "Contact %s does not exist."
-msgstr "Tuotetta %s ei ole olemassa"
+msgstr "Yhteystietoa %s ei ole olemassa."
 
-#, fuzzy
-#| msgid "Could not create order:"
 msgid "Could not proceed with order:"
 msgstr "Ei voitu luoda tilausta:"
 
@@ -411,10 +412,8 @@ msgstr "Minimiostomäärä pyöristettiin yhteensopivaksi myyntikoon kanssa."
 msgid "Changes to shop instance for %s saved"
 msgstr "Muutokset kauppaan %s tallennettu"
 
-#, fuzzy
-#| msgid "This product is not yet a variation."
 msgid "Product is not available."
-msgstr "Tämä tuote ei ole vielä variaatio."
+msgstr "Tuote ei ole saatavilla."
 
 msgid "Product"
 msgstr "Tuote"
@@ -558,6 +557,7 @@ msgstr "Järjestelmä"
 msgid ""
 "This field cannot be changed since there are existing orders for this shop."
 msgstr ""
+"Tätä kenttää ei voi muuttaa, koska tälle kaupalle on olemassa tilauksia."
 
 msgid "Only one shop permitted."
 msgstr "Vain yksi kauppa sallittu"
@@ -841,13 +841,11 @@ msgstr "Laskutusosoite"
 msgid "No billing address defined."
 msgstr "Laskutusosoitetta ei ole asetettu."
 
-#, fuzzy
-#| msgid "Removed: %d"
 msgid "Remove block"
-msgstr "Poistettu: %d"
+msgstr "Poista lohko"
 
 msgid "Resize block"
-msgstr ""
+msgstr "Muuta lohkon kokoa"
 
 msgid "Welcome!"
 msgstr "Tervetuloa!"
@@ -1007,10 +1005,8 @@ msgstr "Tuotemedia"
 msgid "Add new image"
 msgstr "Lisää uusi kuva"
 
-#, fuzzy
-#| msgid "Add new image"
 msgid "Add new media"
-msgstr "Lisää uusi kuva"
+msgstr "Lisää uusi media"
 
 msgid "Purchasing"
 msgstr "Ostaminen"
@@ -1037,7 +1033,7 @@ msgid "Variable Children"
 msgstr "Variaatiolapsi"
 
 msgid "Combination"
-msgstr ""
+msgstr "Yhdistelmä"
 
 msgid "Variables"
 msgstr "Muuttujat"
@@ -1186,7 +1182,7 @@ msgstr "esineet"
 msgid "Can't view this page. %(reason)s"
 msgstr "Sivua ei voida näyttää. %(reason)s"
 
-msgid "Log in with different credentials…"
+msgid "Log in with different credentials..."
 msgstr "Kirjaudu sisään toisilla tunnuksilla..."
 
 msgid "You must be logged in."

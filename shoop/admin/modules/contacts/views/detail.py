@@ -62,7 +62,7 @@ class ContactDetailToolbar(Toolbar):
         self.append(URLActionButton(
             url=reverse("shoop_admin:contact.edit", kwargs={"pk": self.contact.pk}),
             icon="fa fa-pencil",
-            text=_(u"Edit\u2026"),
+            text=_(u"Edit..."),
             extra_css_class="btn-info",
         ))
         self.build_renew_password_button()

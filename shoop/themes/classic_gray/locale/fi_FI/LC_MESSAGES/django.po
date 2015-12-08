@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-30 23:37+0000\n"
-"PO-Revision-Date: 2015-11-26 18:44+0200\n"
+"PO-Revision-Date: 2015-12-03 18:42+0200\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@anders.fi>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
 "Language: fi_FI\n"
@@ -74,7 +74,7 @@ msgid "Cart"
 msgstr "Ostoskori"
 
 msgid "Items"
-msgstr ""
+msgstr "Tuotteet"
 
 msgid "Price"
 msgstr "Hinta"
@@ -138,12 +138,10 @@ msgid "Back to Products"
 msgstr "Takaisin tuotelistaukseen"
 
 msgid "There were errors on following items"
-msgstr ""
+msgstr "Seuraavissa kohdissa oli virheitä"
 
-#, fuzzy
-#| msgid "Proceed to checkout"
 msgid "You are unable to proceed to checkout!"
-msgstr "Jatka kassalle"
+msgstr "Et voi jatkaa kassalle!"
 
 msgid "Continue Shopping"
 msgstr "Jatka ostoksia"
@@ -206,7 +204,7 @@ msgid "Place Order"
 msgstr "Tilaa"
 
 msgid "There are errors"
-msgstr ""
+msgstr "Virhe"
 
 msgid "Shipping"
 msgstr "Toimitus"
@@ -289,7 +287,7 @@ msgid "New user? Register here!"
 msgstr "Uusi käyttäjä? Rekisteröidy täältä!"
 
 msgid "Menu"
-msgstr ""
+msgstr "Valikko"
 
 msgid "Products"
 msgstr "Tuotteet"
@@ -571,10 +569,8 @@ msgstr "%(n)s tulosta löydettiin haulle \"<strong>%(query)s</strong>\"."
 msgid "You have already been logged in as"
 msgstr "Olet jo kirjautunut sisään käyttäjänä"
 
-#, fuzzy
-#| msgid "Back to Homepage"
 msgid "Go to Homepage"
-msgstr "Takaisin etusivulle"
+msgstr "Etusivulle"
 
 msgid "Logged out"
 msgstr "Kirjaudu ulos"

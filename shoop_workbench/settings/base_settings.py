@@ -48,6 +48,7 @@ INSTALLED_APPS = add_enabled_addons(SHOOP_ENABLED_ADDONS_FILE, [
     'shoop.simple_pricing',
     'shoop.simple_supplier',
     'shoop.testing',
+    'shoop.utils',
     'shoop.xtheme',
     # external apps
     'bootstrap3',
@@ -114,6 +115,7 @@ LANGUAGES = [
     ('en', 'English'),
     ('fi', 'Finnish'),
     ('ja', 'Japanese'),
+    ('zh-Hans', 'Chinese (Simplified)'),
 ]
 
 PARLER_DEFAULT_LANGUAGE_CODE = "en"

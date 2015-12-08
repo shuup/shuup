@@ -1,0 +1,58 @@
+# Translations template for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+#
+# Translators:
+# Jessica Wang <jessica.wang@shoop.io>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: Shoop\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-12-07 12:26+0000\n"
+"PO-Revision-Date: 2015-12-07 08:33+0000\n"
+"Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
+"language/cmn/)\n"
+"Language: cmn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 1.3\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#, fuzzy
+#| msgid "Expand Editor"
+msgid "Exit Edit"
+msgstr "展开编辑器"
+
+#, fuzzy
+#| msgid "Edit"
+msgid "Edit Page"
+msgstr "编辑"
+
+#, javascript-format
+msgid "Error: Cannot add more than %s cells to one row."
+msgstr ""
+
+#, fuzzy
+#| msgid "Are you sure you wish to delete this step?"
+msgid "Are you sure you wish to delete this row?"
+msgstr "您确定要删除这一步吗？"
+
+#, fuzzy
+#| msgid "Are you sure you wish to delete this step?"
+msgid "Are you sure you wish to delete this cell?"
+msgstr "您确定要删除这一步吗？"
+
+#, fuzzy
+#| msgid "Are you sure you wish to delete this step?"
+msgid "Are you sure you wish to publish changes made to this view?"
+msgstr "您确定要删除这一步吗？"
+
+msgid ""
+"Are you sure you wish to revert all changes made since the last published "
+"version?"
+msgstr ""
+
+msgid "Changing plugins will cause other changes made on this form to be lost."
+msgstr ""
