@@ -81,13 +81,16 @@
     </div>
     <hr>
     <h3>{% trans %}Product Information{% endtrans %}</h3>
-
+    {% set media_files = product.get_public_media() %}
     <div class="product-tabs" role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">{% trans %}Description{% endtrans %}</a></li>
             <li role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">{% trans %}Details{% endtrans %}</a></li>
             {% if shoop.product.get_visible_attributes(product) %}
                 <li role="presentation"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">{% trans %}Attributes{% endtrans %}</a></li>
+            {% endif %}
+            {% if media_files %}
+                <li role="presentation"><a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab">{% trans %}Files{% endtrans %}</a></li>
             {% endif %}
         </ul>
         <div class="tab-content">
@@ -104,6 +107,23 @@
             {% if shoop.product.get_visible_attributes(product) %}
                 <div role="tabpanel" class="product-attributes tab-pane fade" id="tab3">
                     {% include "shoop/front/product/_detail_attributes_section.jinja" %}
+                </div>
+            {% endif %}
+            {% if media_files %}
+                <div role="tabpanel" class="product-files tab-pane fade" id="tab4">
+                    <table class="table">
+                        {% for file in media_files %}
+                            {{ file }}
+                            <tr>
+                                <td><a href="{{ file.url }}" target="_blank">{{ file.title }}</a></td>
+                                <td>
+                                    {% if file.description %}
+                                        {{ file.description|linebreaksbr }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
                 </div>
             {% endif %}
         </div>
