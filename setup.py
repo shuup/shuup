@@ -84,10 +84,15 @@ REQUIRES = [
     'django-jinja~=1.4',
     'django-mptt~=0.8.0',
     'django-parler~=1.5',
+    'django-parler-rest~=1.3a1',
     'django-polymorphic~=0.8.0',
     'django-registration-redux~=1.2',
     'django-timezone-field~=1.2',
-    'djangorestframework~=3.1',
+
+    # djangorestframework>=3.3.0 does not work with
+    # django-parler-rest 1.3a1 because compat.OrderedDict was dropped
+    'djangorestframework~=3.1,<3.3.0',
+
     'factory-boy~=2.5',
     'fake-factory~=0.5.0',
     'Jinja2~=2.8',
