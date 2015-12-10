@@ -7,13 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 from shoop.notify.actions.email import SendEmail
 from shoop.notify.admin_module.forms import ScriptItemEditForm
-from shoop_tests.notify.fixtures import TestEvent
+from shoop_tests.notify.fixtures import ATestEvent
 
 
 # TODO: Embetter the tests in this file
 
 def test_notify_item_admin_form():
-    event_class = TestEvent
+    event_class = ATestEvent
     script_item = SendEmail({
         "send_identifier": {"constant": "hello"},
         "recipient": {"constant": "hello@shoop.local"},

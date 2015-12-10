@@ -12,9 +12,9 @@ import pytest
 from shoop.notify import Context
 from shoop.notify.template import NoLanguageMatches
 from shoop_tests.notify.fixtures import (
+    ATestTemplateUsingAction, ATestUnilingualTemplateUsingAction,
     get_test_template, TEST_TEMPLATE_DATA, TEST_TEMPLATE_LANGUAGES,
-    TEST_UNI_TEMPLATE_DATA, TestTemplateUsingAction,
-    TestUnilingualTemplateUsingAction
+    TEST_UNI_TEMPLATE_DATA
 )
 
 
@@ -39,12 +39,12 @@ def test_no_language_matches():
 
 
 def test_template_in_action():
-    ac = TestTemplateUsingAction(data={"template_data": TEST_TEMPLATE_DATA})
+    ac = ATestTemplateUsingAction(data={"template_data": TEST_TEMPLATE_DATA})
     context = Context.from_variables(name=u"Sir Test")
     template = ac.get_template(context)
     test_template_render(template)
     japanese_render = ac.get_template_values(context, ("ja",))
     name = template.context.get("name")
     assert name.upper() in japanese_render["body"]
-    ac = TestUnilingualTemplateUsingAction(data={"template_data": TEST_UNI_TEMPLATE_DATA})
+    ac = ATestUnilingualTemplateUsingAction(data={"template_data": TEST_UNI_TEMPLATE_DATA})
     assert name in ac.get_template_values(context)["subject"]

@@ -75,7 +75,7 @@ TEST_UNI_TEMPLATE_DATA = {
 TEST_TEMPLATE_LANGUAGES = ("sw", "ja", "en")
 
 
-class TestEvent(Event):
+class ATestEvent(Event):
     identifier = "test_event"
     log_target_variable = "order"
 
@@ -84,7 +84,7 @@ class TestEvent(Event):
     order = Variable(name="Order", type=Model("shoop.Order"))
 
 
-class TestTemplateUsingAction(Action):
+class ATestTemplateUsingAction(Action):
     identifier = "test_template_action"
     template_use = TemplateUse.MULTILINGUAL
     template_fields = {
@@ -93,7 +93,7 @@ class TestTemplateUsingAction(Action):
     }
 
 
-class TestUnilingualTemplateUsingAction(Action):
+class ATestUnilingualTemplateUsingAction(Action):
     identifier = "test_unilingual_template_action"
     template_use = TemplateUse.UNILINGUAL
     template_fields = {
@@ -112,7 +112,7 @@ def get_initialized_test_event():
     get_default_product()
     customer = create_random_person()
     order = create_random_order(customer)
-    return TestEvent(
+    return ATestEvent(
         order_language=order.language,
         order=order,
         just_some_text=random_title()

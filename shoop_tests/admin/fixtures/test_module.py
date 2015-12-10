@@ -21,18 +21,26 @@ from shoop.admin.dashboard import (
 from shoop.admin.utils.urls import admin_url
 
 
-class TestAction(View):
+class OkAction(View):
     def dispatch(self, request, *args, **kwargs):
         return HttpResponse("OK")
 
-class TestModule(AdminModule):
+
+class ATestModule(AdminModule):
     name = _("Test")
 
     def get_urls(self):
         return [
-            admin_url("test/$", TestAction, name="test-auth", require_authentication=True),
-            admin_url("test2/$", "shoop_tests.admin.fixtures.test_module.TestAction", name="test-unauth", require_authentication=False),
-            admin_url("test3/$", "shoop_tests.admin.fixtures.test_module.TestAction", name="test-perm", require_authentication=True, permissions=("bogus-permission",)),
+            admin_url(
+                "test/$", OkAction,
+                name="test-auth", require_authentication=True),
+            admin_url(
+                "test2/$", "shoop_tests.admin.fixtures.test_module.OkAction",
+                name="test-unauth", require_authentication=False),
+            admin_url(
+                "test3/$", "shoop_tests.admin.fixtures.test_module.OkAction",
+                name="test-perm", require_authentication=True,
+                permissions=("bogus-permission",)),
         ]
 
     def get_menu_entries(self, request):
