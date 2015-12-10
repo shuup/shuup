@@ -35,7 +35,7 @@ class OrderListView(PicotableListView):
         Column(
             "taxful_total_price", _(u"Total"), sort_field="taxful_total_price_value",
             display="format_taxful_total_price", class_name="text-right",
-            filter_config=RangeFilter(field_type="number")
+            filter_config=RangeFilter(field_type="number", filter_field="taxful_total_price_value")
         ),
     ]
 
