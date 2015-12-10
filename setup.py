@@ -60,6 +60,10 @@ Topic :: Software Development :: Libraries :: Application Frameworks
 Topic :: Software Development :: Libraries :: Python Modules
 """.strip().splitlines()
 
+EXCLUDED_PACKAGES = [
+    'shoop_tests', 'shoop_tests.*',
+]
+
 utils.set_exclude_patters([
     '__pycache__', '*.py[cod]',
     'node_modules', 'bower_components',
@@ -135,7 +139,7 @@ if __name__ == '__main__':
         install_requires=REQUIRES,
         tests_require=EXTRAS_REQUIRE['testing'],
         extras_require=EXTRAS_REQUIRE,
-        packages=utils.find_packages(),
+        packages=utils.find_packages(exclude=EXCLUDED_PACKAGES),
         include_package_data=True,
         cmdclass=utils.COMMANDS,
     )
