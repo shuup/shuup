@@ -8,8 +8,7 @@
 
 from decimal import Decimal
 
-from shoop.core.pricing import TaxlessPrice
-from shoop.core.pricing.price_info import PriceInfo
+from shoop.core.pricing import PriceInfo, TaxlessPrice
 
 
 def price(value):

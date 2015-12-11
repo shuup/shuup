@@ -6,8 +6,8 @@
 # LICENSE file in the root directory of this source tree.
 import decimal
 
+from ._price import TaxfulPrice, TaxlessPrice
 from ._priceful_properties import TaxfulFrom, TaxlessFrom
-from .price import TaxfulPrice, TaxlessPrice
 
 
 class Priceful(object):
