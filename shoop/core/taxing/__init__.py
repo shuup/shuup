@@ -4,6 +4,8 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from shoop.utils import update_module_attributes
+
 from ._context import TaxingContext
 from ._line_tax import LineTax, SourceLineTax
 from ._module import get_tax_module, TaxModule
@@ -21,3 +23,5 @@ __all__ = [
     "TaxingContext",
     "get_tax_module",
 ]
+
+update_module_attributes(__all__, __name__)
