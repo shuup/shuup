@@ -5,21 +5,19 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-
 """
-Discount Pricing Module
+Discount Pricing Module.
 
-This module handles basic discounts for `ShopProduct`s
+This module handles basic discounts for products.
 
-If the discounted price is higher than `ShopProduct.default_price`
-the latter will be used as price.
+If the discounted price is higher than the
+`~shoop.core.models.ShopProduct.default_price`, the lower will be used.
 
 Example:
-If `ShopProduct.default_price` is set to 50 and discounted
-price of 20 is added the product will be sold for 20 from
-that point forward.
-"""
 
+  If ``default_price`` is 50 and discounted price is 20, the effective
+  product price will be 20.
+"""
 
 import six
 from django.utils.translation import ugettext_lazy as _

@@ -63,6 +63,8 @@ class PricingModule(six.with_metaclass(abc.ABCMeta)):
     @abc.abstractmethod
     def get_price_info(self, context, product, quantity=1):
         """
+        Get price info of product for given quantity.
+
         :param product: `Product` object or id of `Product`
         :type product: shoop.core.models.Product|int
         :rtype: PriceInfo
@@ -76,9 +78,9 @@ class PricingModule(six.with_metaclass(abc.ABCMeta)):
         Returns a list of PriceInfos ``[pi0, pi1, pi2, ...]`` where each
         PriceInfo object is at the border unit price change: unit price
         for ``0 <= quantity < pi1.quantity1`` is
-        ``pi0.discounted_unit_price``, and unit price for ``pi1.quantity
-        <= quantity < pi2.quantity`` is ``pi1.discounted_unit_price``,
-        and so on.
+        ``pi0.discounted_unit_price``, and unit price for
+        ``pi1.quantity <= quantity < pi2.quantity`` is
+        ``pi1.discounted_unit_price``, and so on.
 
         If there are "no steps", the return value will be a list of single
         PriceInfo object with the constant price, i.e. ``[price_info]``.
@@ -98,7 +100,7 @@ class PricingModule(six.with_metaclass(abc.ABCMeta)):
         May be faster than doing :func:`get_price_info` for each product
         separately, since inheriting class may override this.
 
-        :param products: a list of `Product`s or id's
+        :param products: List of product objects or id's
         :type products:  Iterable[shoop.core.models.Product|int]
         :rtype: dict[int,PriceInfo]
         """
@@ -118,7 +120,7 @@ class PricingModule(six.with_metaclass(abc.ABCMeta)):
         May be faster than doing :func:`get_pricing_steps` for each
         product separately, since inheriting class may override this.
 
-        :param products: a list of `Product`s or id's
+        :param products: List of product objects or id's
         :type products:  Iterable[shoop.core.models.Product|int]
         :rtype: dict[int,list[PriceInfo]]
         """

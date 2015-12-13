@@ -35,8 +35,10 @@ SHOOP_ALLOW_ANONYMOUS_ORDERS = True
 SHOOP_ORDER_IDENTIFIER_METHOD = "id"
 
 #: Which method is used to calculate order reference numbers.
+#:
 #: May be a spec string pointing to a callable that must return a string
-#: given an ``order``, or one of the following built-in generators.
+#: given an Order, or one of the following built-in generators.
+#:
 #: ``unique``
 #:    Unique reference number based on time and the order ID.
 #:    The reference number has the Finnish bank reference check digit

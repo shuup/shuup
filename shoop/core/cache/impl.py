@@ -82,10 +82,10 @@ class VersionedCache(object):
         """
         Get the cache version (or None) for the given cache key/namespace.
 
-        The cache version is stored in thread-local storage for
-        the current request, so unless bumped in-request,
-        all `get`s within a single request should get coherently versioned
-        data from the cache.
+        The cache version is stored in thread-local storage for the
+        current request, so unless bumped in-request, all gets within a
+        single request should get coherently versioned data from the
+        cache.
 
         :param cache_key: Cache key or namespace
         :type cache_key: str
@@ -104,10 +104,10 @@ class VersionedCache(object):
         """
         Set the value for key `key` in the cache.
 
-        Unlike `django.core.caches[using].set()`, this also derives
+        Unlike ``django.core.caches[using].set()``, this also derives
         timeout and versioning information from the key (and cached
         version data) if the key begins with a colon-separated namespace,
-        such as `foo:bar`.
+        such as ``foo:bar``.
 
         :param key: Cache key
         :type key: str

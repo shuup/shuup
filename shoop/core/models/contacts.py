@@ -180,7 +180,7 @@ def get_person_contact(user):
     :param user: User object (or None) to get contact for
     :type user: django.contrib.auth.models.User|None
     :return: PersonContact of the user or AnonymousContact
-    :rtype PersonContact|AnonymousContact
+    :rtype: PersonContact|AnonymousContact
     """
     if not user or user.is_anonymous():
         return AnonymousContact()
