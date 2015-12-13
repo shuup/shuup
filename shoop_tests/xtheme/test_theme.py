@@ -2,11 +2,11 @@
 import pytest
 
 from shoop.apps.provides import override_provides
-from shoop.xtheme.models import ThemeSettings
-from shoop.xtheme.theme import (
-    get_current_theme, get_theme_by_identifier, override_current_theme_class,
-    set_current_theme
+from shoop.xtheme import (
+    get_current_theme, get_theme_by_identifier, set_current_theme
 )
+from shoop.xtheme.models import ThemeSettings
+from shoop.xtheme.testing import override_current_theme_class
 from shoop_tests.utils import printable_gibberish
 from shoop_tests.xtheme.utils import FauxTheme, FauxTheme2
 

@@ -10,7 +10,7 @@ from shoop.utils.excs import Problem
 from shoop.xtheme.layout import Layout
 from shoop.xtheme.models import SavedViewConfig, SavedViewConfigStatus
 from shoop.xtheme.plugins.consts import FALLBACK_LANGUAGE_CODE
-from shoop.xtheme.theme import override_current_theme_class
+from shoop.xtheme.testing import override_current_theme_class
 from shoop.xtheme.views.editor import EditorView, ROW_CELL_LIMIT
 from shoop_tests.utils import printable_gibberish
 from shoop_tests.utils.faux_users import SuperUser

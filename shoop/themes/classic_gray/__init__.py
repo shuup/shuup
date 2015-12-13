@@ -11,7 +11,7 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.apps import AppConfig
-from shoop.xtheme.theme import Theme
+from shoop.xtheme import Theme
 
 
 class ClassicGrayTheme(Theme):

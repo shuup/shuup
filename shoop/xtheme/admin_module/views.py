@@ -15,10 +15,10 @@ from django.views.generic.edit import FormView
 
 from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.apps.provides import get_provide_objects
-from shoop.xtheme.models import ThemeSettings
-from shoop.xtheme.theme import (
+from shoop.xtheme._theme import (
     get_current_theme, get_theme_by_identifier, set_current_theme
 )
+from shoop.xtheme.models import ThemeSettings
 
 
 class ActivationForm(forms.Form):
@@ -70,7 +70,7 @@ class ThemeConfigDetailView(CreateOrUpdateView):
         Get the theme object to configure.
 
         :return: Theme object
-        :rtype: shoop.xtheme.theme.Theme
+        :rtype: shoop.xtheme.Theme
         """
         return get_theme_by_identifier(
             identifier=self.kwargs["theme_identifier"],

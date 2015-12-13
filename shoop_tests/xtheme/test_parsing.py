@@ -2,7 +2,7 @@
 import pytest
 
 from shoop.xtheme.parsing import NestingError, NonConstant
-from shoop.xtheme.theme import override_current_theme_class
+from shoop.xtheme.testing import override_current_theme_class
 from shoop_tests.xtheme.utils import get_jinja2_engine
 
 

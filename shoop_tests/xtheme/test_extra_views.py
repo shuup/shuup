@@ -4,7 +4,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.test.utils import override_settings
 from django.utils.encoding import force_text
 
-from shoop.xtheme.theme import override_current_theme_class
+from shoop.xtheme.testing import override_current_theme_class
 from shoop.xtheme.views.extra import extra_view_dispatch
 from shoop_tests.xtheme.utils import H2G2Theme
 

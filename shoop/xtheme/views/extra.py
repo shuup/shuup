@@ -9,7 +9,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.core.signals import setting_changed
 from django.http.response import HttpResponseNotFound
 
-from shoop.xtheme.theme import get_current_theme
+from shoop.xtheme._theme import get_current_theme
 
 _VIEW_CACHE = {}
 

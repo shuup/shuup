@@ -10,7 +10,7 @@ from django import forms
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 
-from shoop.xtheme.plugins.base import Plugin
+from shoop.xtheme.plugins._base import Plugin
 from shoop.xtheme.plugins.forms import TranslatableField
 
 

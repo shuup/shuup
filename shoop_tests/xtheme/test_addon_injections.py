@@ -3,7 +3,7 @@ import pytest
 
 from shoop.apps.provides import override_provides
 from shoop.xtheme.resources import add_resource, InlineScriptResource
-from shoop.xtheme.theme import override_current_theme_class
+from shoop.xtheme.testing import override_current_theme_class
 from shoop_tests.xtheme.utils import get_jinja2_engine, get_request
 
 

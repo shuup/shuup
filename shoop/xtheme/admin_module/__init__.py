@@ -13,8 +13,8 @@ from django_jinja.backend import Jinja2
 
 from shoop.admin.base import AdminModule, MenuEntry, Notification
 from shoop.admin.utils.urls import admin_url
+from shoop.xtheme._theme import get_current_theme
 from shoop.xtheme.engine import XthemeEnvironment
-from shoop.xtheme.theme import get_current_theme
 
 
 class XthemeAdminModule(AdminModule):

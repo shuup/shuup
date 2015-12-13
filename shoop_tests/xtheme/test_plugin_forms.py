@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.forms.fields import IntegerField
 
-from shoop.xtheme.plugins import Plugin
+from shoop.xtheme import Plugin
 
 
 class SomewhatConfigurablePlugin(Plugin):

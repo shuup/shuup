@@ -14,8 +14,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 
 from shoop.utils.excs import Problem
+from shoop.xtheme._theme import get_theme_by_identifier
 from shoop.xtheme.editing import could_edit
-from shoop.xtheme.theme import get_theme_by_identifier
 from shoop.xtheme.view_config import ViewConfig
 from shoop.xtheme.views.forms import LayoutCellFormGroup
 

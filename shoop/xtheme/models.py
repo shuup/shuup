@@ -29,7 +29,7 @@ class SavedViewConfigQuerySet(models.QuerySet):  # doccov: ignore
           SavedViewConfig.
 
         :param theme: Theme instance
-        :type theme: shoop.xtheme.theme.Theme
+        :type theme: shoop.xtheme.Theme
         :param view_name: View name string
         :type view_name: str
         :param draft: Draft mode flag

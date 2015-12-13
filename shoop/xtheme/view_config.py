@@ -26,7 +26,7 @@ class ViewConfig(object):
         Initialize a view configuration.
 
         :param theme: Theme object (could be None to not touch the database)
-        :type theme: shoop.xtheme.theme.Theme|None
+        :type theme: shoop.xtheme.Theme|None
         :param view_name: View name (the class name of the view)
         :type view_name: str
         :param draft: Load in draft mode?
