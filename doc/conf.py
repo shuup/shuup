@@ -41,6 +41,11 @@ shoop_workbench.settings.USE_I18N = False
 
 django.setup()
 
+# -- Monkey patch some property descriptors to allow introspection
+
+import shoop_introspection_helper
+shoop_introspection_helper.enable_patches()
+
 # -- General configuration ------------------------------------------------
 
 project = 'Shoop'
