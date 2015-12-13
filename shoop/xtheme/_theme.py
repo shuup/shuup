@@ -114,9 +114,10 @@ class Theme(object):
         """
         Set a number of settings for this theme.
 
-        The arguments (*args, **kwargs) are exactly the same as those to `dict`.
+        The arguments are exactly the same as those to `dict`.
 
-        Note: It's better to call this once than `set_setting` several times.
+        .. note:: It's better to call this once than `set_setting`
+                  several times.
         """
         self.settings_obj.update_settings(dict(*args, **kwargs))
     set_settings.alters_data = True

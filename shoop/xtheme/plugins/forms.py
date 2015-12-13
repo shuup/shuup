@@ -31,7 +31,8 @@ class PluginForm(forms.Form):
         """
         Get the new `config` dict for a plugin.
 
-        Called when the form is valid, akin to `.save()` for ModelForms.
+        Called when the form is valid, akin to
+        `django.forms.models.ModelForm.save`.
 
         The default implementation just augments the old config with the
         cleaned data for the form.
