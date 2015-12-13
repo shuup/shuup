@@ -12,8 +12,7 @@ from django.test import RequestFactory
 from shoop.core.models import (
     AnonymousContact, OrderLineType, ProductMode, Shop
 )
-from shoop.core.order_creator import OrderCreator
-from shoop.core.order_creator.source import SourceLine
+from shoop.core.order_creator import OrderCreator, SourceLine
 from shoop.testing.factories import (
     create_product, get_default_shop, get_default_supplier,
     get_initial_order_status

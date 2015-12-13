@@ -14,7 +14,7 @@ from django.test.utils import override_settings
 
 from shoop.apps.provides import override_provides
 from shoop.core.models import MutableAddress, OrderLineType
-from shoop.core.order_creator.source import OrderSource, SourceLine
+from shoop.core.order_creator import OrderSource, SourceLine
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
 from shoop.core.taxing import TaxModule
 from shoop.core.taxing.utils import stacked_value_added_taxes

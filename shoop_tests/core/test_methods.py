@@ -16,7 +16,7 @@ from shoop.core.methods.base import BaseShippingMethodModule
 from shoop.core.models.contacts import get_person_contact, PersonContact
 from shoop.core.models.methods import PaymentMethod, ShippingMethod
 from shoop.core.models.order_lines import OrderLineType
-from shoop.core.order_creator.source import SourceLine
+from shoop.core.order_creator import SourceLine
 from shoop.core.pricing import PriceInfo
 from shoop.testing.factories import (
     create_product, get_address, get_default_product, get_default_shop,

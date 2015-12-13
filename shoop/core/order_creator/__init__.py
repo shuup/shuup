@@ -6,7 +6,12 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from .creator import OrderCreator
-from .source import OrderSource, SourceLine, TaxesNotCalculated
+from ._creator import OrderCreator
+from ._source import OrderSource, SourceLine, TaxesNotCalculated
 
-__all__ = ["OrderCreator", "OrderSource", "SourceLine", "TaxesNotCalculated"]
+__all__ = [
+    "OrderCreator",
+    "OrderSource",
+    "SourceLine",
+    "TaxesNotCalculated"
+]

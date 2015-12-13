@@ -17,7 +17,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.core.models import OrderLineType, PaymentMethod, ShippingMethod
-from shoop.core.order_creator.source import OrderSource, SourceLine
+from shoop.core.order_creator import OrderSource, SourceLine
 from shoop.front.basket.storage import BasketCompatibilityError, get_storage
 from shoop.utils.numbers import parse_decimal_string
 from shoop.utils.objects import compare_partial_dicts
