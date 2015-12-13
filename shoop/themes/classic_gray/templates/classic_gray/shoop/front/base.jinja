@@ -14,6 +14,9 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
     {# Include Styles #}
     <link rel="stylesheet" href="{{ STATIC_URL }}classic_gray/css/style.css">
+    <style>
+    {{ xtheme.get("custom_css")|default("", True)|safe }}
+    </style>
 </head>
 <body>
     {% if request.shop.maintenance_mode %}
