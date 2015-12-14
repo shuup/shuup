@@ -68,4 +68,4 @@ def test_category_wont_be_deleted():
     category.save()
     img.delete()
 
-    Category.objects.get(pk=1)
+    Category.objects.get(pk=category.pk)
