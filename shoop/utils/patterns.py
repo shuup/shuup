@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+# This file is part of Shoop.
+#
+# Copyright (c) 2012-2015, Shoop Ltd. All rights reserved.
+#
+# This source code is licensed under the AGPLv3 license found in the
+# LICENSE file in the root directory of this source tree.
 from django.utils import lru_cache
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
