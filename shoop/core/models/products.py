@@ -6,7 +6,6 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals, with_statement
-from shoop.core.excs import ImpossibleProductModeException
 
 import six
 from django.core.exceptions import ObjectDoesNotExist
@@ -18,15 +17,17 @@ from enumfields import Enum, EnumIntegerField
 from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
 
+from shoop.core.excs import ImpossibleProductModeException
 from shoop.core.fields import InternalIdentifierField, MeasurementField
 from shoop.core.taxing import TaxableItem
 from shoop.core.utils.slugs import generate_multilanguage_slugs
-from shoop.utils.analog import LogEntryKind, define_log_model
+from shoop.utils.analog import define_log_model, LogEntryKind
 
 from .attributes import AppliedAttribute, AttributableMixin, Attribute
 from .product_packages import ProductPackageLink
 from .product_variation import (
-    ProductVariationResult, ProductVariationVariable, get_combination_hash_from_variable_mapping
+    get_combination_hash_from_variable_mapping, ProductVariationResult,
+    ProductVariationVariable
 )
 
 

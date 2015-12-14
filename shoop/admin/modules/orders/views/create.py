@@ -14,7 +14,7 @@ from babel.numbers import format_decimal
 from django.contrib import messages
 from django.contrib.auth.models import AnonymousUser
 from django.core import serializers
-from django.core.exceptions import ValidationError, ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.db.transaction import atomic
@@ -27,10 +27,11 @@ from django_countries import countries
 
 from shoop.admin.modules.orders.json_order_creator import JsonOrderCreator
 from shoop.core.models import (
-    Contact, CompanyContact, MethodStatus, Order, Product, ShippingMethod, PaymentMethod, Shop, ShopStatus
+    CompanyContact, Contact, MethodStatus, Order, PaymentMethod, Product,
+    ShippingMethod, Shop, ShopStatus
 )
 from shoop.core.pricing import get_pricing_module
-from shoop.utils.i18n import get_current_babel_locale, format_money, format_percent
+from shoop.utils.i18n import format_money, format_percent, get_current_babel_locale
 
 
 def create_order_from_state(state, **kwargs):

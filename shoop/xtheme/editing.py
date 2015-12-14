@@ -6,11 +6,11 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.contrib.auth.models import AnonymousUser
+from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.urlresolvers import reverse
 from django.middleware.csrf import get_token
-from shoop.xtheme.resources import add_resource, InlineScriptResource
 
-from django.contrib.staticfiles.storage import staticfiles_storage
+from shoop.xtheme.resources import add_resource, InlineScriptResource
 
 EDIT_FLAG_NAME = "shoop_xtheme_edit"
 

@@ -15,7 +15,7 @@ from django.conf.urls import patterns, url
 from django.contrib.auth import logout as do_logout
 
 from shoop.admin.module_registry import get_module_urls
-from shoop.admin.utils.urls import AdminRegexURLPattern, admin_url
+from shoop.admin.utils.urls import admin_url, AdminRegexURLPattern
 from shoop.admin.views.dashboard import DashboardView
 from shoop.admin.views.menu import MenuView
 from shoop.admin.views.search import SearchView

@@ -6,9 +6,10 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
-from shoop.front.template_helpers.general import get_newest_products, get_best_selling_products, get_random_products
-from shoop.xtheme.plugins import TemplatedPlugin
 from django.utils.translation import ugettext_lazy as _
+
+from shoop.front.template_helpers.general import get_best_selling_products, get_newest_products, get_random_products
+from shoop.xtheme.plugins import TemplatedPlugin
 
 
 class ProductHighlightPlugin(TemplatedPlugin):

@@ -5,13 +5,13 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from ast import parse, BinOp, Mod
+import re
+from ast import BinOp, Mod, parse
+
+from six import text_type
 
 import click
-
-import re
 from sanity_utils import find_files, XNodeVisitor
-from six import text_type
 
 encoding_comment_regexp = re.compile(r'^#.+coding[=:]\s*([-\w.]+).+$', re.MULTILINE | re.I)
 

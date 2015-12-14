@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.http.response import HttpResponseRedirect
+
 from shoop.utils.excs import Problem
 from shoop.xtheme.editing import set_edit_mode
 

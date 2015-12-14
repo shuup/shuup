@@ -20,7 +20,8 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.toolbar import (
-    DropdownActionButton, DropdownDivider, DropdownItem, PostActionButton, Toolbar, get_default_edit_toolbar
+    DropdownActionButton, DropdownDivider, DropdownItem,
+    get_default_edit_toolbar, PostActionButton, Toolbar
 )
 from shoop.admin.utils.urls import get_model_url
 from shoop.admin.utils.views import CreateOrUpdateView

@@ -11,9 +11,10 @@ from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from jsonfield import JSONField
 
-from ._base import ShoopModel
 from shoop.core.fields import InternalIdentifierField
 from shoop.core.modules import ModuleInterface
+
+from ._base import ShoopModel
 
 
 class SupplierType(Enum):

@@ -6,12 +6,12 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import print_function
-from ast import parse
+
 import sys
+from ast import parse
 
 import click
-
-from sanity_utils import XNodeVisitor, find_files, dotify_ast_name
+from sanity_utils import dotify_ast_name, find_files, XNodeVisitor
 
 
 class ForeignKeyVisitor(XNodeVisitor):

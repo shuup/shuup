@@ -15,8 +15,8 @@ from django.utils.text import camel_case_to_spaces
 from jinja2.exceptions import TemplateError
 
 from shoop.apps.provides import get_identifier_to_object_map
-from shoop.notify.enums import UNILINGUAL_TEMPLATE_LANGUAGE, ConstantUse, TemplateUse
-from shoop.notify.template import Template, render_in_context
+from shoop.notify.enums import ConstantUse, TemplateUse, UNILINGUAL_TEMPLATE_LANGUAGE
+from shoop.notify.template import render_in_context, Template
 from shoop.utils.text import snake_case, space_case
 
 from .typology import Type

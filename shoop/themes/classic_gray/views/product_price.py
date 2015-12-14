@@ -5,9 +5,10 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.utils.translation import ugettext as _
+
 from shoop.core.models import ProductVariationResult
 from shoop.front.views.product import ProductDetailView
-from django.utils.translation import ugettext as _
 
 
 class ProductPriceView(ProductDetailView):

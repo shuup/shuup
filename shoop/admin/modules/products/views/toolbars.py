@@ -11,7 +11,8 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
 from shoop.admin.toolbar import (
-    DropdownActionButton, DropdownDivider, DropdownHeader, DropdownItem, Toolbar, get_default_edit_toolbar
+    DropdownActionButton, DropdownDivider, DropdownHeader, DropdownItem,
+    get_default_edit_toolbar, Toolbar
 )
 from shoop.admin.utils.urls import get_model_url
 

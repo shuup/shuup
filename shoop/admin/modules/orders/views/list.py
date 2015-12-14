@@ -13,7 +13,8 @@ from django.utils.timezone import localtime
 from django.utils.translation import ugettext as _
 
 from shoop.admin.utils.picotable import (
-    ChoicesFilter, Column, DateRangeFilter, MultiFieldTextFilter, RangeFilter, TextFilter
+    ChoicesFilter, Column, DateRangeFilter, MultiFieldTextFilter, RangeFilter,
+    TextFilter
 )
 from shoop.admin.utils.views import PicotableListView
 from shoop.core.models import Order, OrderStatus, PaymentStatus, ShippingStatus

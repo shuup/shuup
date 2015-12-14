@@ -9,10 +9,10 @@ from __future__ import unicode_literals, with_statement
 
 import datetime
 
-from shoop.core import cache
 from django.db.models import Sum
 from django.utils.translation import get_language
 
+from shoop.core import cache
 from shoop.core.models import OrderLine, OrderLineType, Product
 
 

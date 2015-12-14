@@ -12,7 +12,7 @@ from django.views.generic import DetailView
 
 from shoop.core.models import Product, ProductMode
 from shoop.front.utils.views import cache_product_things
-from shoop.utils.excs import Problem, extract_messages
+from shoop.utils.excs import extract_messages, Problem
 from shoop.utils.numbers import get_string_sort_order
 
 

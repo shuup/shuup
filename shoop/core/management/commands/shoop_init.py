@@ -13,8 +13,8 @@ from six import print_
 
 from shoop.core.defaults.order_statuses import create_default_order_statuses
 from shoop.core.models import (
-    Category, CustomerTaxGroup, OrderStatus, PaymentMethod, ProductType, SalesUnit, ShippingMethod, Shop, ShopStatus,
-    Supplier, TaxClass
+    Category, CustomerTaxGroup, OrderStatus, PaymentMethod, ProductType,
+    SalesUnit, ShippingMethod, Shop, ShopStatus, Supplier, TaxClass
 )
 
 

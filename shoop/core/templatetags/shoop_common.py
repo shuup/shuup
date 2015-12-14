@@ -17,9 +17,7 @@ from django.utils.timezone import localtime
 from django_jinja import library
 from jinja2.runtime import Undefined
 
-from shoop.utils.i18n import (
-    format_money, get_current_babel_locale, format_percent
-)
+from shoop.utils.i18n import format_money, format_percent, get_current_babel_locale
 from shoop.utils.serialization import ExtendedJSONEncoder
 
 

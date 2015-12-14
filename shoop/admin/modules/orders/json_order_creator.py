@@ -13,8 +13,8 @@ from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.utils.translation import ugettext as _
 
 from shoop.core.models import (
-    Address, Contact, CompanyContact, PersonContact, OrderLineType,
-    OrderStatus, PaymentMethod, Product, ShippingMethod, Shop
+    Address, CompanyContact, Contact, OrderLineType, OrderStatus,
+    PaymentMethod, PersonContact, Product, ShippingMethod, Shop
 )
 from shoop.core.order_creator import OrderCreator, OrderSource
 from shoop.utils.analog import LogEntryKind

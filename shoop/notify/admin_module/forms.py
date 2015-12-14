@@ -8,14 +8,14 @@
 from __future__ import unicode_literals
 
 import copy
-from collections import OrderedDict, defaultdict
+from collections import defaultdict, OrderedDict
 
 from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.notify.admin_module.utils import get_name_map
-from shoop.notify.enums import UNILINGUAL_TEMPLATE_LANGUAGE, TemplateUse
+from shoop.notify.enums import TemplateUse, UNILINGUAL_TEMPLATE_LANGUAGE
 from shoop.notify.models import Script
 from shoop.utils.i18n import get_language_name
 

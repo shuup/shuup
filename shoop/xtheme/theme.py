@@ -5,9 +5,10 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from contextlib import contextmanager
-from shoop.apps.provides import get_provide_objects, get_identifier_to_object_map
 import logging
+from contextlib import contextmanager
+
+from shoop.apps.provides import get_identifier_to_object_map, get_provide_objects
 
 log = logging.getLogger(__name__)
 

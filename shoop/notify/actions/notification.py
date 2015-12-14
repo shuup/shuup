@@ -12,7 +12,7 @@ from django.conf import settings
 from shoop.notify.base import Action, Binding, ConstantUse, TemplatedBinding
 from shoop.notify.enums import Priority, RecipientType
 from shoop.notify.models import Notification
-from shoop.notify.typology import URL, Enum, Model, Text
+from shoop.notify.typology import Enum, Model, Text, URL
 
 
 class AddNotification(Action):

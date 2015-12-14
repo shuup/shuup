@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 import sys
 
 import six
@@ -14,7 +15,7 @@ from jinja2.utils import concat, internalcode
 
 from shoop.apps.provides import get_provide_objects
 from shoop.xtheme.editing import add_edit_resources
-from shoop.xtheme.resources import RESOURCE_CONTAINER_VAR_NAME, ResourceContainer, inject_resources
+from shoop.xtheme.resources import inject_resources, RESOURCE_CONTAINER_VAR_NAME, ResourceContainer
 from shoop.xtheme.theme import get_current_theme
 
 

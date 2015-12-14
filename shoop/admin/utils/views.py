@@ -15,10 +15,10 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView, UpdateView
 
-from shoop.admin.toolbar import NewActionButton, Toolbar, get_default_edit_toolbar
+from shoop.admin.toolbar import get_default_edit_toolbar, NewActionButton, Toolbar
 from shoop.admin.utils.forms import add_form_errors_as_messages
 from shoop.admin.utils.picotable import PicotableViewMixin
-from shoop.admin.utils.urls import NoModelUrl, get_model_front_url, get_model_url
+from shoop.admin.utils.urls import get_model_front_url, get_model_url, NoModelUrl
 from shoop.utils.multilanguage_model_form import MultiLanguageModelForm
 
 

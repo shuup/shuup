@@ -6,7 +6,9 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from copy import deepcopy
+
 from django import forms
+
 from shoop.xtheme.models import ThemeSettings
 
 

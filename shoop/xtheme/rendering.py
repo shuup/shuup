@@ -6,11 +6,12 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from markupsafe import Markup
-from shoop.core.fields.tagged_json import TaggedJSONEncoder
 
+from shoop.core.fields.tagged_json import TaggedJSONEncoder
 from shoop.xtheme.editing import is_edit_mode
 from shoop.xtheme.theme import get_current_theme
 from shoop.xtheme.utils import get_html_attrs

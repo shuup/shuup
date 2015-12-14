@@ -7,9 +7,10 @@
 
 from __future__ import unicode_literals
 
+import six
+
 import shoop.core.models
 import shoop.utils.money
-import six
 
 
 class LineTax(object):

@@ -7,10 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import six
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.utils import importlib
-import six
 
 _LOAD_CACHE = {}
 

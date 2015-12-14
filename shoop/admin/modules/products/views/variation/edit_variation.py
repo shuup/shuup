@@ -17,7 +17,7 @@ from django.views.generic import UpdateView
 
 from shoop.admin.base import MenuEntry
 from shoop.admin.form_part import FormPart, FormPartsViewMixin, TemplatedFormDef
-from shoop.admin.toolbar import PostActionButton, Toolbar, get_default_edit_toolbar
+from shoop.admin.toolbar import get_default_edit_toolbar, PostActionButton, Toolbar
 from shoop.admin.utils.urls import get_model_url
 from shoop.core.models import Product, ProductMode, ProductVariationVariable
 from shoop.core.models.product_variation import clear_variation, simplify_variation
