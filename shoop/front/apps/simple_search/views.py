@@ -16,9 +16,9 @@ from django.views.generic import ListView
 
 from shoop.core import cache
 from shoop.core.models.products import Product
+from shoop.front.template_helpers.product import is_visible
 from shoop.front.utils.product_sorting import PRODUCT_SORT_CHOICES, sort_products
 from shoop.front.utils.views import cache_product_things
-from shoop.front.template_helpers.product import is_visible
 
 
 def get_search_product_ids(request, query):

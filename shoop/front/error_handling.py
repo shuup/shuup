@@ -5,9 +5,10 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from importlib import import_module
+
 from django.conf import settings
 from django.shortcuts import render
-from importlib import import_module
 
 
 def make_error_view(status, template_name=None):

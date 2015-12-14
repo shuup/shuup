@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 import six
-
 from django.contrib import messages
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.forms.utils import flatatt

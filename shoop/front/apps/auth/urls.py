@@ -8,8 +8,8 @@
 from django.conf.urls import patterns, url
 
 from .views import (
-    LoginView, LogoutView, RecoverPasswordCompleteView, RecoverPasswordConfirmView, RecoverPasswordSentView,
-    RecoverPasswordView
+    LoginView, LogoutView, RecoverPasswordCompleteView,
+    RecoverPasswordConfirmView, RecoverPasswordSentView, RecoverPasswordView
 )
 
 urlpatterns = patterns(

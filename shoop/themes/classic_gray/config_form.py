@@ -1,10 +1,17 @@
 # -*- coding: utf-8 -*-
+# This file is part of Shoop.
+#
+# Copyright (c) 2012-2015, Shoop Ltd. All rights reserved.
+#
+# This source code is licensed under the AGPLv3 license found in the
+# LICENSE file in the root directory of this source tree.
 import itertools
+
 from django import forms
 from django.conf import settings
-
 from django.utils.encoding import force_text
-from django.utils.translation import ugettext_lazy as _, get_language
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import get_language
 
 from shoop.xtheme.forms import GenericThemeForm
 

@@ -7,7 +7,8 @@
 from __future__ import unicode_literals
 
 from django import forms
-from django.utils.translation import ugettext_lazy as _, string_concat
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import string_concat
 
 from shoop.admin.utils.picotable import Column
 from shoop.admin.utils.views import CreateOrUpdateView, PicotableListView

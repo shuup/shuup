@@ -4,8 +4,10 @@ License header updater.
 """
 from __future__ import unicode_literals
 
-import os
 import argparse
+import os
+import sys
+
 import sanity_utils
 
 HEADER = """
@@ -38,36 +40,53 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("root", nargs="+", help="Directory roots to recurse through")
     ap.add_argument("-w", "--write", help="Actually write changes", action="store_true")
+    ap.add_argument("-s", "--exit-status", help="Exit with error status when missing headers", action="store_true")
     ap.add_argument("-v", "--verbose", help="Log OK files too", action="store_true")
     args = ap.parse_args()
-    paths = set()
     adders = get_adders()
-    extensions = set(adders.keys())
-    for root in args.root:
-        paths |= set(find_files(root, extensions))
+    paths = find_files(roots=args.root, extensions=set(adders.keys()))
+    missing = process_files(paths, adders, verbose=args.verbose, write=args.write)
+    if args.exit_status and missing:
+        return 1
+    return 0
 
+
+def process_files(paths, adders, verbose, write):
     width = max(len(s) for s in paths)
-
+    missing = set()
     for path in sorted(paths):
         if os.stat(path).st_size == 0:
-            if args.verbose:
+            if verbose:
                 print('[+]:%-*s: File is empty' % (width, path))
         elif not has_header(path):
-            if args.write:
+            missing.add(path)
+
+            if write:
                 adder = adders[os.path.splitext(path)[1]]
                 adder(path)
                 print('[!]:%-*s: Modified' % (width, path))
             else:
                 print('[!]:%-*s: Requires license header' % (width, path))
         else:
-            if args.verbose:
+            if verbose:
                 print('[+]:%-*s: File has license header' % (width, path))
+    return missing
 
 
-def find_files(root, extensions):
-    for filepath in sanity_utils.find_files(root, allowed_extensions=extensions):
-        if not is_file_ignored(filepath):
-            yield filepath
+def find_files(roots, extensions):
+    paths = set()
+    generated_resources = set()
+    for root in roots:
+        for file in sanity_utils.find_files(
+            root,
+            generated_resources=generated_resources,
+            allowed_extensions=extensions,
+            ignored_dirs=sanity_utils.IGNORED_DIRS + ["migrations"]
+        ):
+            if not is_file_ignored(file):
+                paths.add(file)
+    paths -= generated_resources
+    return paths
 
 
 def is_file_ignored(filepath):
@@ -118,4 +137,4 @@ def write_lines(path, new_lines):
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())

@@ -17,7 +17,7 @@ from django.utils.text import camel_case_to_spaces
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView
 
-from shoop.admin.toolbar import JavaScriptActionButton, Toolbar, get_discard_button
+from shoop.admin.toolbar import get_discard_button, JavaScriptActionButton, Toolbar
 from shoop.admin.utils.urls import get_model_url
 from shoop.admin.utils.views import get_create_or_change_title
 from shoop.notify.admin_module.forms import ScriptItemEditForm

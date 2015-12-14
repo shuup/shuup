@@ -9,5 +9,10 @@ python:
 install:
   - pip install -U pip
   - pip install coveralls -e .[everything]
-script: py.test -vvv --cov shoop shoop_tests
+script:
+  - flake8
+  - isort -c -rc shoop
+  - python _misc/ensure_license_headers.py -s shoop
+  - python _misc/check_sanity.py shoop
+  - py.test -vvv --cov shoop shoop_tests
 after_success: coveralls

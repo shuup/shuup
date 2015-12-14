@@ -5,11 +5,12 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import markdown
 from django import forms
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
+
 from shoop.xtheme.plugins.base import Plugin
-import markdown
 
 
 class TextPlugin(Plugin):

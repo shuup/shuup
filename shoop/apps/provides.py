@@ -17,7 +17,7 @@ loading components, both first-party and third-party.
 
 from __future__ import unicode_literals
 
-from collections import OrderedDict, defaultdict
+from collections import defaultdict, OrderedDict
 from contextlib import contextmanager
 
 import six

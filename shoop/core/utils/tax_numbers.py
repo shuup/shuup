@@ -8,7 +8,7 @@
 
 from __future__ import unicode_literals
 
-from .vat import verify_vat, VatCannotIdentifyValidationError
+from .vat import VatCannotIdentifyValidationError, verify_vat
 
 
 def validate(tax_number):

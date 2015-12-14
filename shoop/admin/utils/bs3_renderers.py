@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from bootstrap3.renderers import FieldRenderer
 from bootstrap3.utils import add_css_class
-from django.forms import ModelMultipleChoiceField, DateField, DateTimeField
+from django.forms import DateField, DateTimeField, ModelMultipleChoiceField
 
 
 class AdminFieldRenderer(FieldRenderer):

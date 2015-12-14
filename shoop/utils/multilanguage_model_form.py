@@ -11,7 +11,7 @@ import copy
 from collections import defaultdict
 
 import six
-from django.forms.models import ModelForm, model_to_dict
+from django.forms.models import model_to_dict, ModelForm
 from django.utils.translation import get_language
 from parler.forms import TranslatableModelForm
 

@@ -6,7 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import re
-from decimal import ROUND_HALF_EVEN, Decimal
+from decimal import Decimal, ROUND_HALF_EVEN
 
 import six
 

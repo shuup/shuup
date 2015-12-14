@@ -11,7 +11,7 @@ import six
 from django import forms
 from django.contrib import messages
 from django.db.transaction import atomic
-from django.forms.formsets import DELETION_FIELD_NAME, BaseFormSet
+from django.forms.formsets import BaseFormSet, DELETION_FIELD_NAME
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.forms.widgets import ProductChoiceWidget

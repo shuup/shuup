@@ -6,10 +6,11 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum
 from enumfields.fields import EnumIntegerField
+
 from shoop.core.fields import TaggedJSONField
-from django.utils.translation import ugettext_lazy as _
 
 
 class SavedViewConfigQuerySet(models.QuerySet):  # doccov: ignore

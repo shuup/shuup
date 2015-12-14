@@ -10,7 +10,7 @@ from __future__ import unicode_literals, with_statement
 import six
 from django.utils.translation import ugettext_lazy as _
 
-from shoop.apps.provides import get_provide_specs_and_objects, get_provide_objects
+from shoop.apps.provides import get_provide_objects, get_provide_specs_and_objects
 from shoop.utils.importing import load
 from shoop.utils.text import force_ascii
 

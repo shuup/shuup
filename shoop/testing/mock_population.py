@@ -13,8 +13,9 @@ from django.utils import translation
 from shoop.core.models import Category, Product, ShopProduct
 
 from .factories import (
-    CategoryFactory, ProductFactory, create_default_order_statuses, get_default_customer_group,
-    get_default_payment_method, get_default_shipping_method, get_default_shop
+    CategoryFactory, create_default_order_statuses, get_default_customer_group,
+    get_default_payment_method, get_default_shipping_method, get_default_shop,
+    ProductFactory
 )
 
 

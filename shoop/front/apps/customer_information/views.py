@@ -10,7 +10,7 @@ from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
 
-from shoop.core.models import Address, PersonContact, get_person_contact
+from shoop.core.models import Address, get_person_contact, PersonContact
 from shoop.utils.form_group import FormGroup
 
 

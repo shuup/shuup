@@ -6,9 +6,10 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
+import random
 import threading
 import time
-import random
 
 from django.conf import settings
 from django.core.cache import caches

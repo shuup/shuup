@@ -11,14 +11,16 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.transaction import atomic
-from django.utils.translation import ugettext as _, get_language
+from django.utils.translation import ugettext as _
+from django.utils.translation import get_language
 
 from shoop.admin.form_part import FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
 from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.core.models import Product, ProductType, Shop, ShopProduct, ShopStatus, TaxClass
 
 from .forms import (
-    ProductAttributesForm, ProductBaseForm, ProductImageMediaFormSet, ProductMediaFormSet, ShopProductForm
+    ProductAttributesForm, ProductBaseForm, ProductImageMediaFormSet,
+    ProductMediaFormSet, ShopProductForm
 )
 from .toolbars import EditProductToolbar
 

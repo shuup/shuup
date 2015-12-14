@@ -1,9 +1,10 @@
-import sys
 import fnmatch
 import os
-import posixpath
 import re
-from ast import iter_fields, AST, Attribute, Name
+import sys
+from ast import AST, Attribute, iter_fields, Name
+
+import posixpath
 
 if sys.version_info[0] == 3:
     string_types = (str,)

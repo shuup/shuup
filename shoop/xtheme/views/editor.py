@@ -7,11 +7,12 @@
 # LICENSE file in the root directory of this source tree.
 import json
 
-from django.http.response import HttpResponseRedirect, HttpResponse
+from django.http.response import HttpResponse, HttpResponseRedirect
 from django.middleware.csrf import get_token
 from django.utils.http import urlencode
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
+
 from shoop.utils.excs import Problem
 from shoop.xtheme.editing import could_edit
 from shoop.xtheme.theme import get_theme_by_identifier

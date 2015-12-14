@@ -17,7 +17,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
 from shoop.admin.utils.forms import flatatt_filter
-from shoop.admin.utils.urls import NoModelUrl, get_model_url
+from shoop.admin.utils.urls import get_model_url, NoModelUrl
 
 
 class BaseActionButton(object):

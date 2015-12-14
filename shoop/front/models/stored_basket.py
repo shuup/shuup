@@ -13,9 +13,7 @@ from django.utils.crypto import get_random_string
 
 from shoop.core.fields import CurrencyField, MoneyValueField, TaggedJSONField
 from shoop.core.models import Contact, PersonContact, Product, Shop
-from shoop.utils.properties import (
-    MoneyPropped, TaxfulPriceProperty, TaxlessPriceProperty,
-)
+from shoop.utils.properties import MoneyPropped, TaxfulPriceProperty, TaxlessPriceProperty
 
 
 def generate_key():

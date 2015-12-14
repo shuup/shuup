@@ -15,7 +15,7 @@ from django.utils.translation import ugettext_lazy as _
 from filer.models import File
 
 from shoop.admin.utils.forms import flatatt_filter
-from shoop.admin.utils.urls import NoModelUrl, get_model_url
+from shoop.admin.utils.urls import get_model_url, NoModelUrl
 from shoop.core.models import Product
 
 

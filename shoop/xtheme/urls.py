@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.conf.urls import url
+
 from shoop.xtheme.views.command import command_dispatch
 from shoop.xtheme.views.editor import EditorView
 from shoop.xtheme.views.extra import extra_view_dispatch

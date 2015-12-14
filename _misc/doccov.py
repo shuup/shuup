@@ -6,16 +6,17 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import argparse
+import ast
 import linecache
 import logging
+import os
 import re
 import sys
-
 from collections import Counter
-from django.utils.text import slugify
+
 import jinja2
-import os
-import ast
+from django.utils.text import slugify
+
 from sanity_utils import find_files
 
 _paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
