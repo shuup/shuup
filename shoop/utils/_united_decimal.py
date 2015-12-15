@@ -18,9 +18,8 @@ class UnitedDecimal(decimal.Decimal):
 
         TaxfulPrice(1) + TaxlessPrice(2)
 
-    where :class:`~shoop.core.pricing.TaxfulPrice` and
-    :class:`~shoop.core.princing.TaxlessPrice` are subclasses of
-    :class:`UnitedDecimal`.
+    where `TaxfulPrice` and `TaxlessPrice` are subclasses of
+    `UnitedDecimal`.
     """
     @property
     def value(self):
