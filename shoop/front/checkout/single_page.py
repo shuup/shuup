@@ -14,7 +14,7 @@ from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
 
-from shoop.core.models import Address, CompanyContact, OrderStatus, PaymentMethod, ShippingMethod
+from shoop.core.models import CompanyContact, MutableAddress, OrderStatus, PaymentMethod, ShippingMethod
 from shoop.front.basket import get_basket_order_creator
 from shoop.front.basket.objects import BaseBasket
 from shoop.front.checkout import CheckoutPhaseViewMixin
@@ -26,7 +26,7 @@ from ._mixins import TaxNumberCleanMixin
 
 class AddressForm(forms.ModelForm):
     class Meta:
-        model = Address
+        model = MutableAddress
         fields = ("name", "phone", "email", "street", "street2", "postal_code", "city", "region", "country")
 
     def __init__(self, **kwargs):

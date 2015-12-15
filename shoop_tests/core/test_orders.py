@@ -5,13 +5,15 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import pytest
+import six
+
 from decimal import Decimal
 from django.core.exceptions import ValidationError
 from django.test import override_settings
 from django.utils.timezone import now
 
-import pytest
-from shoop.core.excs import ImmutabilityError, NoProductsToShipException, NoPaymentToCreateException
+from shoop.core.excs import NoPaymentToCreateException, NoProductsToShipException
 from shoop.core.models import Order, OrderStatus, OrderLine, OrderLineType
 from shoop.core.models.order_lines import OrderLineTax
 from shoop.core.models.orders import ShippingStatus
@@ -19,7 +21,6 @@ from shoop.core.pricing import TaxlessPrice, TaxfulPrice
 from shoop.utils.money import Money
 from shoop.testing.factories import (get_address, get_default_shop, get_default_product,
     get_default_supplier, create_order_with_product, create_empty_order, get_initial_order_status, get_default_tax)
-import six
 
 
 @pytest.mark.django_db
@@ -30,13 +31,13 @@ def test_order_address_immutability_unsaved_address(save):
         billing_address.save()
     order = Order(
         shop=get_default_shop(),
-        billing_address=billing_address,
+        billing_address=billing_address.to_immutable(),
         order_date=now(),
         status=get_initial_order_status()
     )
     order.save()
     order.billing_address.name = "Mute Doge"
-    with pytest.raises(ImmutabilityError):
+    with pytest.raises(ValidationError):
         order.billing_address.save()
 
 

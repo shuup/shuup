@@ -51,11 +51,11 @@ class Contact(NameMixin, PolymorphicModel):
     is_active = models.BooleanField(default=True, db_index=True)
     # TODO: parent contact?
     default_shipping_address = models.ForeignKey(
-        "Address", null=True, blank=True, related_name="+", verbose_name=_('shipping address'),
+        "MutableAddress", null=True, blank=True, related_name="+", verbose_name=_('shipping address'),
         on_delete=models.PROTECT
     )
     default_billing_address = models.ForeignKey(
-        "Address", null=True, blank=True, related_name="+", verbose_name=_('billing address'),
+        "MutableAddress", null=True, blank=True, related_name="+", verbose_name=_('billing address'),
         on_delete=models.PROTECT
     )
     default_shipping_method = models.ForeignKey(

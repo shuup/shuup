@@ -16,8 +16,8 @@ from django.contrib.auth.models import AnonymousUser
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.core.urlresolvers import reverse
+from django.db import transaction
 from django.db.models import Q
-from django.db.transaction import atomic
 from django.http.response import HttpResponse, JsonResponse
 from django.test.client import RequestFactory
 from django.utils.encoding import force_text
@@ -207,45 +207,45 @@ class OrderCreateView(TemplateView):
             "shippingAddress": encode_address(customer.default_shipping_address)
         }
 
-    @atomic
-    def handle_source_data(self, request):
-        try:
-            state = json.loads(request.body.decode("utf-8"))["state"]
-            source = create_source_from_state(state, creator=request.user)
-            # Calculate final lines for confirmation
-            source.calculate_taxes(force_recalculate=True)
-            return {
-                "customerId": source.customer.id,
-                "taxfulTotal": format_money(source.taxful_total_price.amount),
-                "taxlessTotal": format_money(source.taxless_total_price.amount),
-                "totalDiscountAmount": format_money(source.total_discount.amount),
-                "orderLines": [encode_line(line) for line in source.get_final_lines(with_taxes=True)],
-                "billingAddress": source.billing_address.as_string_list() if source.billing_address else None,
-                "shippingAddress": source.shipping_address.as_string_list() if source.shipping_address else None,
-            }
-        except Exception as exc:
-            message = _("Could not proceed with order:")
-            if isinstance(exc, ValidationError):  # pragma: no branch
-                message += "\n" + "\n".join(force_text(err) for err in exc.messages)
-            else:  # pragma: no branch
-                message += " " + str(exc)
-            return JsonResponse({"success": False, "errorMessage": message}, status=400)
+    @transaction.atomic
+    def _handle_source_data(self, request):
+        state = json.loads(request.body.decode("utf-8"))["state"]
+        source = create_source_from_state(state, creator=request.user)
+        # Calculate final lines for confirmation
+        source.calculate_taxes(force_recalculate=True)
+        return {
+            "taxfulTotal": format_money(source.taxful_total_price.amount),
+            "taxlessTotal": format_money(source.taxless_total_price.amount),
+            "totalDiscountAmount": format_money(source.total_discount.amount),
+            "orderLines": [encode_line(line) for line in source.get_final_lines(with_taxes=True)],
+            "billingAddress": source.billing_address.as_string_list() if source.billing_address else None,
+            "shippingAddress": source.shipping_address.as_string_list() if source.shipping_address else None,
+        }
 
-    @atomic
+    @transaction.atomic
+    def _handle_create(self, request):
+        state = json.loads(request.body.decode("utf-8"))["state"]
+        order = create_order_from_state(state, creator=request.user)
+        messages.success(request, _("Order %(identifier)s created.") % vars(order))
+        return JsonResponse({
+            "success": True,
+            "orderIdentifier": order.identifier,
+            "url": reverse("shoop_admin:order.list")
+        })
+
+    def handle_source_data(self, request):
+        return _handle_or_return_error(self._handle_source_data, request, _("Could not proceed with order:"))
+
     def handle_create(self, request):
-        try:
-            state = json.loads(request.body.decode("utf-8"))["state"]
-            order = create_order_from_state(state, creator=request.user)
-            messages.success(request, _("Order %(identifier)s created.") % vars(order))
-            return JsonResponse({
-                "success": True,
-                "orderIdentifier": order.identifier,
-                "url": reverse("shoop_admin:order.list")
-            })
-        except Exception as exc:
-            message = _("Could not create order:")
-            if isinstance(exc, ValidationError):  # pragma: no branch
-                message += "\n" + "\n".join(force_text(err) for err in exc.messages)
-            else:  # pragma: no branch
-                message += " " + str(exc)
-            return JsonResponse({"success": False, "errorMessage": message}, status=400)
+        return _handle_or_return_error(self._handle_create, request, _("Could not create order:"))
+
+
+def _handle_or_return_error(func, request, error_message):
+    try:
+        return func(request)
+    except Exception as exc:
+        if isinstance(exc, ValidationError):
+            error_message += "\n" + "\n".join(force_text(err) for err in exc.messages)
+        else:
+            error_message += " {}".format(exc)
+        return JsonResponse({"success": False, "errorMessage": error_message}, status=400)

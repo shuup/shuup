@@ -10,15 +10,16 @@ from __future__ import unicode_literals
 import six
 from django.conf import settings
 from django.db import models
-from django.utils.encoding import force_text, python_2_unicode_compatible
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
 from enumfields import Enum, EnumIntegerField
 
-from shoop.core.excs import ImmutabilityError
 from shoop.core.utils.name_mixin import NameMixin
 from shoop.utils.i18n import get_current_babel_locale
-from shoop.utils.models import copy_model_instance, get_data_dict
+from shoop.utils.models import get_data_dict
+
+from ._base import ChangeProtected, ShoopModel
 
 REGION_ISO3166 = {
     "europe": set((
@@ -54,51 +55,10 @@ class SavedAddressStatus(Enum):
         ENABLED = _('enabled')
 
 
-class AddressManager(models.Manager):
-    def try_get_exactly_like(self, object, ignore_fields=()):
-        """
-        Try to find an immutable Address that is data-wise exactly like the given object.
-
-        :param object: A model -- probably an Address
-        :type object: Address|models.Model
-        :param ignore_fields: Iterable of field names to ignore while comparing.
-        :type ignore_fields: Iterable[str]
-
-        :return: Address|None
-        """
-        data = get_data_dict(object)
-        for field_name in ignore_fields:
-            data.pop(field_name, None)
-        data["is_immutable"] = True
-        return self.get_queryset().filter(**data).first()
-
-    def from_address_form(self, address_form, company=None):
-        """
-        Get an address from an AddressForm (or similar-enough ModelForm).
-
-        May return an existing immutable address, or a new, unsaved address.
-
-        :param address_form: Address form.
-        :type address_form: django.forms.ModelForm
-        :param company: Optional CompanyContact object.
-                        If passed, the company information will be injected into the address.
-        :type company: shoop.shop.models.contacts.CompanyContact
-
-        :return: Address
-        """
-
-        address = address_form.save(commit=False)
-
-        if company:
-            address.company = company.name
-            address.tax_number = company.tax_number
-
-        return (self.try_get_exactly_like(address) or address)
-
-
-@python_2_unicode_compatible
-class Address(NameMixin, models.Model):
-    objects = AddressManager()
+class Address(NameMixin, ShoopModel):
+    """
+    Abstract base class of addresses.
+    """
     prefix = models.CharField(verbose_name=_('name prefix'), max_length=64, blank=True)
     name = models.CharField(verbose_name=_('name'), max_length=255)
     suffix = models.CharField(verbose_name=_('name suffix'), max_length=64, blank=True)
@@ -115,7 +75,11 @@ class Address(NameMixin, models.Model):
     region_code = models.CharField(verbose_name=_('region code'), max_length=16, blank=True)
     region = models.CharField(verbose_name=_('region'), max_length=64, blank=True)
     country = CountryField(verbose_name=_('country'))
-    is_immutable = models.BooleanField(default=False, db_index=True, editable=False, verbose_name=_('immutable'))
+
+    class Meta:
+        abstract = True
+        verbose_name = _('address')
+        verbose_name_plural = _('addresses')
 
     # Properties
     @property
@@ -128,28 +92,8 @@ class Address(NameMixin, models.Model):
     def is_european_union(self):
         return (self.country in REGION_ISO3166["european-union"])
 
-    class Meta:
-        verbose_name = _('address')
-        verbose_name_plural = _('addresses')
-
     def __str__(self):
         return " / ".join(self.as_string_list())
-
-    def save(self, *args, **kwargs):
-        if self.is_immutable and not kwargs.pop("__setting_immutability", None) and self.pk:
-            raise ImmutabilityError(
-                "This %r object is immutable. Use .copy() to get a pristine instance." % self.__class__
-            )
-        return super(Address, self).save(*args, **kwargs)
-
-    def copy(self):
-        copy = copy_model_instance(self)
-        copy.is_immutable = False
-        return copy
-
-    def set_immutable(self):
-        self.is_immutable = True
-        return self.save(__setting_immutability=True)
 
     def as_string_list(self, locale=None):
         locale = locale or get_current_babel_locale()
@@ -173,6 +117,82 @@ class Address(NameMixin, models.Model):
     def __iter__(self):
         return iter(self.as_string_list())
 
+    def to_immutable(self):
+        """
+        Get or create saved ImmutableAddress from self.
+
+        :rtype: ImmutableAddress
+        :return: Saved ImmutableAddress with same data as self.
+        """
+        data = get_data_dict(self)
+        return ImmutableAddress.from_data(data)
+
+    def to_mutable(self):
+        """
+        Get a new MutableAddress from self.
+
+        :rtype: MutableAddress
+        :return: Fresh unsaved MutableAddress with same data as self.
+        """
+        data = get_data_dict(self)
+        return MutableAddress.from_data(data)
+
+
+class MutableAddress(Address):
+    """
+    An address that can be changed.
+
+    Mutable addresses are used for e.g. contact's saved addresses.
+    They are saved as new immutable addresses when used in e.g. orders.
+
+    Mutable addresses can be created with `MutableAddress.from_data`
+    or with the `to_mutable` method of `Address` objects.
+    """
+    @classmethod
+    def from_data(cls, data):
+        """
+        Construct mutable address from a data dictionary.
+
+        :param data: data for address
+        :type data: dict[str,str]
+        :return: Unsaved mutable address
+        :rtype: MutableAddress
+        """
+        return cls(**data)
+
+
+class ImmutableAddress(ChangeProtected, Address):
+    """
+    An address that can not be changed.
+
+    Immutable addresses are used for orders, etc., where subsequent
+    edits to the original address (for example an user's default address)
+    must not affect past business data.
+
+    Immutable addresses can be created directly, with the `.from_data()`
+    method, or by creating an immutable copy of an existing `MutableAddress`
+    with the `Address.to_immutable()` method.
+    """
+    @classmethod
+    def from_data(cls, data):
+        """
+        Get or create immutable address with given data.
+
+        :param data: data for address
+        :type data: dict[str,str]
+        :return: Saved immutable address
+        :rtype: ImmutableAddress
+        """
+        # Populate all known address fields even if not originally in `data`
+        data_with_all_fields = get_data_dict(cls(**data))
+        address = cls.objects.filter(**data_with_all_fields).first()
+        return address if address else cls.objects.create(**data_with_all_fields)
+
+    def to_immutable(self):
+        if self.pk:
+            return self
+        return super(ImmutableAddress, self).to_immutable()
+
 
 class SavedAddressManager(models.Manager):
     """
@@ -189,14 +209,14 @@ class SavedAddressManager(models.Manager):
         return self.none()
 
 
-@python_2_unicode_compatible
-class SavedAddress(models.Model):
+class SavedAddress(ShoopModel):
     """
     Model for saving multiple addresses in an 'address book' of sorts.
     """
     owner = models.ForeignKey("Contact", on_delete=models.CASCADE)
     address = models.ForeignKey(
-        Address, verbose_name=_('address'), related_name="saved_addresses", on_delete=models.CASCADE)
+        MutableAddress, verbose_name=_('address'),
+        related_name="saved_addresses", on_delete=models.CASCADE)
     role = EnumIntegerField(SavedAddressRole, verbose_name=_('role'), default=SavedAddressRole.SHIPPING)
     status = EnumIntegerField(SavedAddressStatus, default=SavedAddressStatus.ENABLED, verbose_name=_('status'))
     title = models.CharField(max_length=255, blank=True, verbose_name=_('title'))

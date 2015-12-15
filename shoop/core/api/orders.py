@@ -9,7 +9,7 @@ from django.utils.timezone import now
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
 
-from shoop.core.models import Address, Order, OrderLine, OrderStatus
+from shoop.core.models import MutableAddress, Order, OrderLine, OrderStatus
 
 
 class OrderLineSerializer(ModelSerializer):
@@ -19,7 +19,7 @@ class OrderLineSerializer(ModelSerializer):
 
 class AddressSerializer(ModelSerializer):
     class Meta:
-        model = Address
+        model = MutableAddress
 
 
 class OrderSerializer(ModelSerializer):

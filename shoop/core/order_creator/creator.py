@@ -170,13 +170,6 @@ class OrderCreator(object):
         #     billing_address=order_provision.billing_address,
         #     shipping_address=order_provision.shipping_address
         # )
-
-        if order_source.billing_address and not order_source.billing_address.pk:
-            order_source.billing_address.save()
-
-        if order_source.shipping_address and not order_source.shipping_address.pk:
-            order_source.shipping_address.save()
-
         order = Order(
             shop=order_source.shop,
             currency=order_source.currency,
@@ -189,8 +182,8 @@ class OrderCreator(object):
             creator=real_user_or_none(order_source.creator),
             orderer=(order_source.orderer or None),
             customer=(order_source.customer or None),
-            billing_address=order_source.billing_address,
-            shipping_address=order_source.shipping_address,
+            billing_address=(order_source.billing_address.to_immutable() if order_source.billing_address else None),
+            shipping_address=(order_source.shipping_address.to_immutable() if order_source.shipping_address else None),
             order_date=order_source.order_date,
             status=order_source.status,
             payment_data=order_source.payment_data,

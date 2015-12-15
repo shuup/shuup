@@ -13,7 +13,7 @@ from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.utils.translation import ugettext as _
 
 from shoop.core.models import (
-    Address, CompanyContact, Contact, OrderLineType, OrderStatus,
+    CompanyContact, Contact, MutableAddress, OrderLineType, OrderStatus,
     PaymentMethod, PersonContact, Product, ShippingMethod, Shop
 )
 from shoop.core.order_creator import OrderCreator, OrderSource
@@ -170,26 +170,12 @@ class JsonOrderCreator(object):
                 return
 
             fields.update({"tax_number": tax_number})
-            customer = CompanyContact.objects.create(**fields)
+            customer = CompanyContact(**fields)
         else:
-            customer = PersonContact.objects.create(**fields)
+            customer = PersonContact(**fields)
         return customer
 
-    def _create_address(self, address):
-        address_fields = [
-            "name", "tax_number", "phone", "email", "street", "street2", "postal_code", "city", "region", "country"
-        ]
-        fields = {"is_immutable": True}
-        for field in address_fields:
-            fields[field] = address.get(field, "")
-
-        address = Address.objects.filter(**fields).first()
-        if not address:
-            address = Address.objects.create(**fields)
-
-        return address
-
-    def _initialize_source_from_state(self, state, creator):
+    def _initialize_source_from_state(self, state, creator, save):
         shop_data = state.pop("shop", None).get("selected", {})
         shop = self.safe_get_first(Shop, pk=shop_data.pop("id", None))
         if not shop:
@@ -199,21 +185,28 @@ class JsonOrderCreator(object):
         source = OrderSource(shop=shop)
 
         customer_data = state.pop("customer", None)
-        billing_address = customer_data.pop("billingAddress", {})
-        shipping_address = customer_data.pop("shippingAddress", {})
-        ship_to_billing_address = customer_data.pop("shipToBillingAddress", False)
+        billing_address_data = customer_data.pop("billingAddress", {})
+        shipping_address_data = (
+            billing_address_data
+            if customer_data.pop("shipToBillingAddress", False)
+            else customer_data.pop("shippingAddress", {}))
         is_company = customer_data.pop("isCompany", False)
         save_address = customer_data.pop("saveAddress", False)
         customer = self.safe_get_first(Contact, pk=customer_data.get("id")) if customer_data else None
         if not customer:
-            customer = self._create_contact_from_address(billing_address, is_company)
+            customer = self._create_contact_from_address(billing_address_data, is_company)
             if not customer:
                 return
+            if save:
+                customer.save()
 
-        billing_address = self._create_address(billing_address)
-        shipping_address = billing_address if ship_to_billing_address else self._create_address(shipping_address)
+        billing_address = MutableAddress.from_data(billing_address_data)
+        shipping_address = MutableAddress.from_data(shipping_address_data)
+        if save:
+            billing_address.save()
+            shipping_address.save()
 
-        if save_address:
+        if save and save_address:
             customer.default_billing_address = billing_address
             customer.default_shipping_address = shipping_address
             customer.save()
@@ -246,7 +239,7 @@ class JsonOrderCreator(object):
         if comment:
             order.add_log_entry(comment, kind=LogEntryKind.NOTE, user=order.creator)
 
-    def create_source_from_state(self, state, creator=None):
+    def create_source_from_state(self, state, creator=None, save=False):
         """
         Create an order source from a state dict unserialized from JSON.
 
@@ -254,6 +247,8 @@ class JsonOrderCreator(object):
         :type state: dict
         :param creator: Creator user
         :type creator: django.contrib.auth.models.User|None
+        :param save: Flag whether order customer and addresses is saved to database
+        :type save: boolean
         :return: The created order source, or None if something failed along the way
         :rtype: OrderSource|None
         """
@@ -264,7 +259,7 @@ class JsonOrderCreator(object):
         state = deepcopy(state)
 
         # First, initialize an OrderSource.
-        source = self._initialize_source_from_state(state, creator)
+        source = self._initialize_source_from_state(state, creator, save)
         if not source:
             return None
 
@@ -286,7 +281,7 @@ class JsonOrderCreator(object):
         :return: The created order, or None if something failed along the way
         :rtype: Order|None
         """
-        source = self.create_source_from_state(state, creator)
+        source = self.create_source_from_state(state, creator, save=True)
 
         # Then create an OrderCreator and try to get things done!
         creator = OrderCreator(request=None)
