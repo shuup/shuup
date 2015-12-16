@@ -6,16 +6,17 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 import babel
 from django.core.exceptions import ImproperlyConfigured
-from django.db.models import BLANK_CHOICE_DASH
-from django.utils.translation import ugettext_lazy as _
 from django.core.validators import RegexValidator
 from django.db import models
+from django.db.models import BLANK_CHOICE_DASH
+from django.utils.translation import ugettext_lazy as _
 from jsonfield.fields import JSONField
-from shoop.core.fields.tagged_json import TaggedJSONEncoder, tag_registry
-from shoop.utils.i18n import get_current_babel_locale
 
+from shoop.core.fields.tagged_json import tag_registry, TaggedJSONEncoder
+from shoop.utils.i18n import get_current_babel_locale
 
 IdentifierValidator = RegexValidator("[a-z][a-z_]+")
 

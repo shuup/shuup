@@ -6,9 +6,9 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
+from .create import OrderCreateView
 from .detail import OrderDetailView, OrderSetStatusView
 from .list import OrderListView
 from .shipment import OrderCreateShipmentView
-from .create import OrderCreateView
 
 __all__ = ["OrderDetailView", "OrderListView", "OrderCreateShipmentView", "OrderSetStatusView", "OrderCreateView"]

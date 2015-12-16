@@ -6,15 +6,18 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.http.response import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from shoop.admin.base import AdminModule, Notification, MenuEntry
 from django.utils.translation import ugettext_lazy as _
+from django.views.decorators.csrf import csrf_exempt
+
+from shoop.admin.base import AdminModule, MenuEntry, Notification
 from shoop.admin.utils.urls import admin_url, derive_model_url, get_edit_and_list_urls
 from shoop.notify.enums import Priority
-from shoop.notify.models import Notification as NotificationModel, Script
+from shoop.notify.models import Notification as NotificationModel
+from shoop.notify.models import Script
 
 
 class NotifyAdminModule(AdminModule):

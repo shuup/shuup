@@ -5,8 +5,9 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from shoop.apps import AppConfig
-from .theme import Theme
+
 from .plugins.base import Plugin, templated_plugin_factory
+from .theme import Theme
 
 __all__ = ["Theme", "Plugin", "templated_plugin_factory"]
 

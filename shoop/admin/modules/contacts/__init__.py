@@ -5,13 +5,15 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.db.models import Q
-from shoop.admin.base import AdminModule, MenuEntry, SearchResult
-from django.utils.translation import ugettext_lazy as _
-from .dashboard import get_active_customers_block
-from shoop.admin.utils.urls import admin_url, get_model_url, derive_model_url
-from shoop.core.models import Contact
 import six
+from django.db.models import Q
+from django.utils.translation import ugettext_lazy as _
+
+from shoop.admin.base import AdminModule, MenuEntry, SearchResult
+from shoop.admin.utils.urls import admin_url, derive_model_url, get_model_url
+from shoop.core.models import Contact
+
+from .dashboard import get_active_customers_block
 
 
 class ContactModule(AdminModule):

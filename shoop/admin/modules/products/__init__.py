@@ -6,15 +6,19 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from collections import Counter
+
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
+
 from shoop.admin.base import AdminModule, MenuEntry, SearchResult
 from shoop.admin.utils.search import split_query
 from shoop.admin.utils.urls import (
-    admin_url, get_model_url, manipulate_query_string, derive_model_url, get_edit_and_list_urls
+    admin_url, derive_model_url, get_edit_and_list_urls, get_model_url,
+    manipulate_query_string
 )
 from shoop.core.models import Product
 

@@ -7,9 +7,9 @@
 # LICENSE file in the root directory of this source tree.
 
 from .debug import SetDebugFlag
-from .order import AddOrderLogEntry
 from .email import SendEmail
 from .notification import AddNotification
+from .order import AddOrderLogEntry
 
 __all__ = (
     "AddNotification",

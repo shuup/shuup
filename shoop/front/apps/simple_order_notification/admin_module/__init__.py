@@ -5,10 +5,11 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.template.utils import InvalidTemplateEngineError
-from shoop.admin.base import AdminModule, Notification
-from django.utils.translation import ugettext_lazy as _
 from django.template import engines
+from django.template.utils import InvalidTemplateEngineError
+from django.utils.translation import ugettext_lazy as _
+
+from shoop.admin.base import AdminModule, Notification
 
 
 class SimpleOrderNotificationModule(AdminModule):

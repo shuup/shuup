@@ -5,32 +5,33 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from .addresses import Address, SavedAddress, SavedAddressRole, SavedAddressStatus
-from .taxes import CustomerTaxGroup, Tax, TaxClass
 from .attributes import Attribute, AttributeType, AttributeVisibility
-from .categories import Category, CategoryVisibility, CategoryStatus
+from .categories import Category, CategoryStatus, CategoryVisibility
 from .configurations import ConfigurationItem
+from .contacts import AnonymousContact, CompanyContact, Contact, ContactGroup, Gender, get_person_contact, PersonContact
 from .counters import Counter, CounterType
-from .contacts import Contact, ContactGroup, CompanyContact, PersonContact, AnonymousContact, Gender, get_person_contact
-from .methods import ShippingMethod, PaymentMethod, MethodType, MethodStatus
 from .manufacturers import Manufacturer
-from .orders import Order, OrderStatus, OrderStatusRole, OrderLogEntry, PaymentStatus, ShippingStatus
+from .methods import MethodStatus, MethodType, PaymentMethod, ShippingMethod
 from .order_lines import OrderLine, OrderLineTax, OrderLineType
+from .orders import Order, OrderLogEntry, OrderStatus, OrderStatusRole, PaymentStatus, ShippingStatus
 from .payments import Payment
 from .persistent_cache import PersistentCacheEntry
-from .products import (
-    Product, ProductMode, StockBehavior, ProductCrossSellType, ShippingMode,
-    ProductType, ProductCrossSell, ProductAttribute
-)
 from .product_media import ProductMedia, ProductMediaKind
-from .product_shops import ShopProduct, ProductVisibility
-from .product_variation import (
-    ProductVariationLinkStatus, ProductVariationVariable, ProductVariationVariableValue, ProductVariationResult
-)
 from .product_packages import ProductPackageLink
-from .shops import Shop, ShopStatus
+from .product_shops import ProductVisibility, ShopProduct
+from .product_variation import (
+    ProductVariationLinkStatus, ProductVariationResult,
+    ProductVariationVariable, ProductVariationVariableValue
+)
+from .products import (
+    Product, ProductAttribute, ProductCrossSell, ProductCrossSellType,
+    ProductMode, ProductType, ShippingMode, StockBehavior
+)
 from .shipments import Shipment, ShipmentProduct
-from .suppliers import Supplier, SupplierType
+from .shops import Shop, ShopStatus
 from .supplied_products import SuppliedProduct
+from .suppliers import Supplier, SupplierType
+from .taxes import CustomerTaxGroup, Tax, TaxClass
 from .units import SalesUnit
 
 __all__ = [

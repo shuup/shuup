@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import django.conf
+
 from shoop.apps import AppConfig
 from shoop.apps.settings import validate_templates_configuration
 

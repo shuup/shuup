@@ -6,7 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from .simple import BooleanEqual, IntegerEqual, LanguageEqual, TextEqual, Empty, NonEmpty
+from .simple import BooleanEqual, Empty, IntegerEqual, LanguageEqual, NonEmpty, TextEqual
 
 __all__ = (
     "BooleanEqual",

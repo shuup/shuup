@@ -6,12 +6,12 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
+from .delete import ProductDeleteView
 from .edit import ProductEditView
 from .edit_cross_sell import ProductCrossSellEditView
 from .edit_media import ProductMediaEditView
-from .variation import ProductVariationView
 from .list import ProductListView
-from .delete import ProductDeleteView
+from .variation import ProductVariationView
 
 __all__ = [
     "ProductCrossSellEditView",

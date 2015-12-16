@@ -6,11 +6,14 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from itertools import chain
+
 from django.utils.translation import ugettext_lazy as _
+
 from shoop.admin.base import AdminModule, MenuEntry
 from shoop.admin.utils.urls import admin_url, derive_model_url
-from shoop.core.models import ShippingMethod, PaymentMethod
+from shoop.core.models import PaymentMethod, ShippingMethod
 
 
 class MethodModule(AdminModule):

@@ -6,8 +6,8 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from .editor import script_item_editor, EditScriptContentView
 from .edit import ScriptEditView
+from .editor import EditScriptContentView, script_item_editor
 from .list import ScriptListView
 
 __all__ = (

@@ -7,14 +7,15 @@
 # LICENSE file in the root directory of this source tree.
 from datetime import timedelta
 
+import six
 from django.db.models import Q
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
-from shoop.admin.base import AdminModule, MenuEntry, SearchResult, Notification
+
+from shoop.admin.base import AdminModule, MenuEntry, Notification, SearchResult
 from shoop.admin.currencybound import CurrencyBound
-from shoop.admin.utils.urls import admin_url, get_model_url, derive_model_url
+from shoop.admin.utils.urls import admin_url, derive_model_url, get_model_url
 from shoop.core.models import Order, OrderStatusRole
-import six
 
 
 class OrderModule(CurrencyBound, AdminModule):

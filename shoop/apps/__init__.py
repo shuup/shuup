@@ -82,13 +82,14 @@ rules for naming their settings.
    :file:`your_app/settings.py`.
 """
 from __future__ import unicode_literals
+
 import importlib
 
 import django.apps
 import django.conf
 from django.core.exceptions import ImproperlyConfigured
 
-from .settings import get_known_settings, collect_settings_from_app
+from .settings import collect_settings_from_app, get_known_settings
 
 __all__ = ["AppConfig", "get_known_settings"]
 

@@ -5,9 +5,8 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from .list import AddonListView
-from .upload import AddonUploadView, AddonUploadConfirmView
 from .reload import ReloadView
-
+from .upload import AddonUploadConfirmView, AddonUploadView
 
 __all__ = [
     "AddonListView",

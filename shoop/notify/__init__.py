@@ -7,7 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 
 from shoop.apps import AppConfig
-from .base import Condition, Action, Event, Variable, Binding
+
+from .base import Action, Binding, Condition, Event, Variable
 from .enums import ConstantUse, TemplateUse
 from .script import Context
 
