@@ -12,6 +12,8 @@ from functools import reduce
 from django.db import models
 from django_countries.fields import Country
 
+from shoop.utils.iterables import batch
+
 __all__ = [
     "copy_model_instance",
     "get_data_dict"
@@ -49,3 +51,38 @@ def build_or_query(over_fields, term, operator=""):
     def add_term(query_q, field):
         return (query_q | models.Q(**{("%s%s" % (field, operator)): term}))
     return reduce(add_term, over_fields, models.Q())
+
+
+def get_in_id_order(queryset, id_order, count):
+    """
+    Return the first `count` objects of the given queryset in the given ID order.
+
+    If not all of the objects are available in the queryset, though, less than `count`
+    objects may be returned.
+
+    :param queryset: Source queryset
+    :type queryset: django.db.models.QuerySet
+    :param id_order: List of object IDs
+    :type id_order: list[int]
+    :param count: Count of items to return.
+    :type count: int
+    :return: List of model entities
+    :rtype: list[object]
+    """
+    if count <= 0:
+        return []
+
+    # Optimistically query a little more than required for each batch;
+    # with any luck this means only one query is needed.
+    # The limit 950 works around SQLite limiting host variables to 999; see
+    # commit 2576caba9614da5008b1b23754722b8c547da65f.
+    batch_size = min(count * 2, 950)
+
+    objects = []
+    for id_batch in batch(id_order, batch_size):
+        objects.extend(queryset.filter(id__in=id_batch))
+        if len(objects) >= count:
+            break
+
+    objects.sort(key=lambda instance: id_order.index(instance.pk))
+    return objects[:count]
