@@ -10,6 +10,7 @@ import os
 from django.core.exceptions import ImproperlyConfigured
 
 from shoop.utils.setup import Setup
+
 from . import base_settings
 
 

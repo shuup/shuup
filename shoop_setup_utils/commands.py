@@ -12,8 +12,7 @@ from distutils.command.build import build as du_build
 
 from setuptools.command.build_py import build_py as st_build_py
 
-from . import excludes
-from . import resource_building
+from . import excludes, resource_building
 
 
 class BuildCommand(du_build):

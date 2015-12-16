@@ -10,7 +10,6 @@ import setuptools
 
 from . import excludes
 
-
 if hasattr(setuptools, "PackageFinder"):
     # This only exists in setuptools in versions >= 2014-03-22
     # https://bitbucket.org/pypa/setuptools/commits/09e0ab6bb31c3055a19c856e328ba99e225ab8d7

@@ -10,7 +10,6 @@ import os
 import subprocess
 import sys
 
-
 APIDOC_EXCLUDES = [
 ]
 
