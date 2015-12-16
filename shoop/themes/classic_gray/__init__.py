@@ -5,8 +5,8 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from django import forms
 import django.conf
+from django import forms
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 

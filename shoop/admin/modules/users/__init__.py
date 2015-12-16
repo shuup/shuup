@@ -5,12 +5,13 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import six
 from django.contrib.auth import get_user_model
 from django.db.models import Q
-from shoop.admin.base import AdminModule, MenuEntry, SearchResult
 from django.utils.translation import ugettext_lazy as _
-from shoop.admin.utils.urls import admin_url, get_model_url, derive_model_url
-import six
+
+from shoop.admin.base import AdminModule, MenuEntry, SearchResult
+from shoop.admin.utils.urls import admin_url, derive_model_url, get_model_url
 
 
 class UserModule(AdminModule):

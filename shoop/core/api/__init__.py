@@ -8,7 +8,7 @@
 from shoop.api.factories import viewset_factory
 from shoop.core.api.orders import OrderViewSet
 from shoop.core.api.products import ProductViewSet, ShopProductViewSet
-from shoop.core.models import Contact, Shop, Category
+from shoop.core.models import Category, Contact, Shop
 
 
 def populate_core_api(router):

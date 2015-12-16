@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.template import engines
 from django.utils.translation import ugettext_lazy as _
 from django_jinja.backend import Jinja2
+
 from shoop.admin.base import AdminModule, MenuEntry, Notification
 from shoop.admin.utils.urls import admin_url
 from shoop.xtheme.engine import XthemeEnvironment

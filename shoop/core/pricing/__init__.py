@@ -43,18 +43,20 @@ TODO: caching.
 """
 
 from __future__ import unicode_literals
-import abc
-import six
 
+import abc
 import hashlib
-from shoop.apps.provides import load_module
+
+import six
 from django.http import HttpRequest
 from django.utils.encoding import force_bytes
 from django.utils.timezone import now
 
+from shoop.apps.provides import load_module
+
 from .price import Price, TaxfulPrice, TaxlessPrice
-from .priceful import Priceful
 from .price_info import PriceInfo
+from .priceful import Priceful
 
 __all__ = [
     "Price",

@@ -7,15 +7,11 @@
 # LICENSE file in the root directory of this source tree.
 
 from .blocks import (
-    DashboardBlock,
-    DashboardChartBlock,
-    DashboardContentBlock,
-    DashboardMoneyBlock,
-    DashboardNumberBlock,
-    DashboardValueBlock,
+    DashboardBlock, DashboardChartBlock, DashboardContentBlock,
+    DashboardMoneyBlock, DashboardNumberBlock, DashboardValueBlock
 )
-from .utils import get_activity
 from .charts import BarChart
+from .utils import get_activity
 
 __all__ = [
     "BarChart",

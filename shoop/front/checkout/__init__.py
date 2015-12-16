@@ -6,11 +6,14 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from collections import OrderedDict
+
 from django.core.exceptions import ImproperlyConfigured
-from django.http.response import Http404
-from shoop.utils.importing import load
 from django.core.urlresolvers import reverse
+from django.http.response import Http404
+
+from shoop.utils.importing import load
 
 __all__ = ["CheckoutPhaseViewMixin", "CheckoutProcess"]
 

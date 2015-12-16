@@ -5,6 +5,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from shoop.apps import AppConfig
+
 from .manager import add_enabled_addons
 
 __all__ = ["add_enabled_addons"]

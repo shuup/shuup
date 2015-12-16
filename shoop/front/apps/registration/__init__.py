@@ -29,7 +29,8 @@ URL names
 """
 
 import django.conf
-from registration.signals import user_activated, login_user
+from registration.signals import login_user, user_activated
+
 from shoop.apps import AppConfig
 
 

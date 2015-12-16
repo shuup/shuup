@@ -6,14 +6,17 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
+import random
+
 from babel.dates import format_date
 from django.conf.urls import url
 from django.http.response import HttpResponse
 from django.utils.timezone import now
-import random
-from shoop.admin.base import AdminModule, MenuEntry, SearchResult, Notification, Activity
 from django.utils.translation import ugettext_lazy as _
-from shoop.admin.dashboard import DashboardValueBlock, DashboardMoneyBlock, DashboardNumberBlock
+
+from shoop.admin.base import Activity, AdminModule, MenuEntry, Notification, SearchResult
+from shoop.admin.dashboard import DashboardMoneyBlock, DashboardNumberBlock, DashboardValueBlock
 from shoop.testing.text_data import random_title
 from shoop.utils.i18n import get_current_babel_locale
 

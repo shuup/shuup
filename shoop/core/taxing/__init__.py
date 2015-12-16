@@ -6,7 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 from ._context import TaxingContext
 from ._line_tax import LineTax, SourceLineTax
-from ._module import TaxModule, get_tax_module
+from ._module import get_tax_module, TaxModule
 from ._price import TaxedPrice
 from ._tax_summary import TaxSummary
 from ._taxable import TaxableItem
