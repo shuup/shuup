@@ -20,4 +20,4 @@ def test_shop_wont_be_deleted():
     shop.save()
     img.delete()
 
-    Shop.objects.get(pk=1)
+    Shop.objects.get(pk=shop.pk)

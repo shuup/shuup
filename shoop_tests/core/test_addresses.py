@@ -5,27 +5,28 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import pytest
+import six
+
 from django.core.exceptions import ValidationError
-from django.forms.models import modelform_factory
 from django.test import override_settings
 from django.utils.translation import override
-import pytest
-from shoop.core.excs import ImmutabilityError
-from shoop.core.models import Address, SavedAddress, CompanyContact
+
+from shoop.core.models import ImmutableAddress, MutableAddress, SavedAddress
 from shoop.core.models.contacts import get_person_contact
-from shoop.testing.factories import get_address, DEFAULT_ADDRESS_DATA
+from shoop.testing.factories import get_address
 from shoop.utils.models import get_data_dict
-import six
 
 
 def test_partial_address_fails():
-    address = Address(
+    address = MutableAddress(
         name=u"Dog Hello"
     )
     with pytest.raises(ValidationError):
         address.full_clean()
 
 
+@pytest.mark.django_db
 def test_basic_address():
     address = get_address()
     address.full_clean()
@@ -52,27 +53,19 @@ def test_address_saving_retrieving_and_immutability():
     # mutate it...
     address.name = u"Dog Hi"
     # Then set it as immutable...
-    address.set_immutable()
-
-    # We can find the immutable copy...
-    found_address = Address.objects.try_get_exactly_like(address)
-    assert found_address and found_address.pk == address.pk, "Can't find the address we just saved :("
+    immutable_address = address.to_immutable()
+    immutable_address.save()
 
     # And when we try to save it again, it fails...
-    address.name = u"Dog Yo"
-    with pytest.raises(ImmutabilityError):
-        address.save()
-
-    # We can find the immutable copy, even if we've now changed a field...
-    found_address = Address.objects.try_get_exactly_like(address, ignore_fields=("name",))
-    assert found_address and found_address.pk == address.pk, "Can't find the address we just saved :("
+    immutable_address.name = u"Dog Yo"
+    with pytest.raises(ValidationError):
+        immutable_address.save()
 
     # But to mutate the address, we can copy it...
-    address_copy = address.copy()
+    address_copy = address.to_mutable()
     assert not address_copy.pk
     address_copy.save()
     assert address_copy.pk != address.pk, "new address was saved as another entity"
-    assert not address_copy.is_immutable, "new address is still mutable"
 
 
 @pytest.mark.django_db
@@ -92,19 +85,53 @@ def test_address_ownership(admin_user):
     assert SavedAddress.objects.for_owner(None).count() == 0, "Ownerless saved addresses aren't a real thing"
 
 
-@pytest.mark.django_db
-def test_address_form():
-    form = modelform_factory(Address, exclude=())(data=DEFAULT_ADDRESS_DATA)
-    company = CompanyContact(name=u"Doge Ltd", tax_number="1000-1000")
-    address = Address.objects.from_address_form(form, company=company)
-    assert address.company == company.name, "Company name was copied correctly"
-    assert address.tax_number == company.tax_number, "Tax number was copied correctly"
-
-
 def test_home_country_in_address():
     with override("fi"):
-        finnish_address = Address(country="FI")
+        finnish_address = MutableAddress(country="FI")
         with override_settings(SHOOP_ADDRESS_HOME_COUNTRY="US"):
             assert "Suomi" in str(finnish_address), "When home is not Finland, Finland appears in address string"
         with override_settings(SHOOP_ADDRESS_HOME_COUNTRY="FI"):
             assert "Suomi" not in str(finnish_address), "When home is Finland, Finland does not appear in address string"
+
+
+@pytest.mark.django_db
+def test_immutable_addresses_from_data():
+    test_data = {
+        "name": "Test name",
+        "street": "Test street",
+        "postal_code": "1234567",
+        "city": "Test city",
+        "country": "US"
+    }
+    immutable_address = ImmutableAddress.from_data(test_data)
+    test_data.pop("postal_code")
+    # Since test_data does not include postal code from_data should not return same ImmutableAddress as before
+    new_immutable_address = ImmutableAddress.from_data(test_data)
+    assert immutable_address != new_immutable_address
+
+
+@pytest.mark.django_db
+def test_immutable_address():
+    address = get_address()
+    new_immutable = address.to_immutable()
+
+    # New address should be saved
+    assert new_immutable.pk != None
+    assert isinstance(new_immutable, ImmutableAddress)
+    assert get_data_dict(address).items() == get_data_dict(new_immutable).items()
+
+    # Taking immutable for same address should return same object
+    assert new_immutable == address.to_immutable()
+
+    # Taking immutable from new_immutable should return same item
+    assert new_immutable == new_immutable.to_immutable()
+
+
+def test_new_mutable_address():
+    address = get_address()
+    new_mutable = address.to_mutable()
+
+    # New address should be unsaved
+    assert new_mutable.pk == None
+    assert isinstance(new_mutable, MutableAddress)
+    assert get_data_dict(address).items() == get_data_dict(new_mutable).items()

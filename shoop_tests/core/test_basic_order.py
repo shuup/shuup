@@ -5,9 +5,10 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import pytest
+
 from django.utils.timezone import now
 
-import pytest
 from shoop.core.models import Order, OrderLine, OrderLineType, get_person_contact
 from shoop.core.models.order_lines import OrderLineTax
 from shoop.core.shortcuts import update_order_line_from_product
@@ -17,8 +18,8 @@ from shoop.testing.factories import get_address, get_default_payment_method, get
 
 
 def create_order(request, creator, customer, product):
-    billing_address = get_address()
-    shipping_address = get_address(name="Shippy Doge")
+    billing_address = get_address().to_immutable()
+    shipping_address = get_address(name="Shippy Doge").to_immutable()
     shipping_address.save()
     shop = request.shop
     order = Order(

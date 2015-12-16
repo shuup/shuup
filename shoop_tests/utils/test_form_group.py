@@ -8,7 +8,7 @@
 from django import forms
 from django.forms.models import modelform_factory
 from django.utils.encoding import force_text
-from shoop.core.models import Address
+from shoop.core.models import MutableAddress
 from shoop.utils.form_group import FormGroup
 
 class GeneralForm(forms.Form):
@@ -16,7 +16,7 @@ class GeneralForm(forms.Form):
 
 
 def make_form_group(**kwargs):
-    AddressForm = modelform_factory(Address, fields=("name", ))
+    AddressForm = modelform_factory(MutableAddress, fields=("name", ))
     fg = FormGroup(**kwargs)
     fg.add_form_def("address1", AddressForm, required=True)
     fg.add_form_def("address2", AddressForm, required=False)

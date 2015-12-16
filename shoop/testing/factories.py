@@ -30,8 +30,8 @@ from six import BytesIO
 
 from shoop.core.defaults.order_statuses import create_default_order_statuses
 from shoop.core.models import (
-    Address, Attribute, AttributeType, Category, CategoryStatus,
-    CompanyContact, Contact, ContactGroup, Order, OrderLine, OrderLineTax,
+    Attribute, AttributeType, Category, CategoryStatus, CompanyContact,
+    Contact, ContactGroup, MutableAddress, Order, OrderLine, OrderLineTax,
     OrderLineType, OrderStatus, PaymentMethod, PersonContact, Product,
     ProductMedia, ProductMediaKind, ProductType, SalesUnit, ShippingMethod,
     Shop, ShopProduct, ShopStatus, StockBehavior, Supplier, SupplierType, Tax,
@@ -208,7 +208,7 @@ class ProductFactory(DjangoModelFactory):
 
 def get_address(**overrides):
     data = dict(DEFAULT_ADDRESS_DATA, **overrides)
-    return Address(**data)
+    return MutableAddress.from_data(data)
 
 
 ATTR_SPECS = [
@@ -449,8 +449,8 @@ def create_empty_order(prices_include_tax=False, shop=None):
         shop=(shop or get_shop(prices_include_tax=prices_include_tax)),
         payment_method=get_default_payment_method(),
         shipping_method=get_default_shipping_method(),
-        billing_address=get_address(name="Mony Doge"),
-        shipping_address=get_address(name="Shippy Doge"),
+        billing_address=get_address(name="Mony Doge").to_immutable(),
+        shipping_address=get_address(name="Shippy Doge").to_immutable(),
         order_date=now(),
         status=get_initial_order_status()
     )
@@ -517,7 +517,9 @@ def create_random_address(fake=None, **values):
     values.setdefault("region", getattr(fake, "state", empty)())
     values.setdefault("country", random.choice(COUNTRY_CODES))
     values.setdefault("postal_code", getattr(fake, "postalcode", empty)())
-    return Address.objects.create(**values)
+    address = MutableAddress.from_data(values)
+    address.save()
+    return address
 
 
 def create_random_person(locale=None, minimum_name_comp_len=0):

@@ -10,7 +10,7 @@ from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
 
-from shoop.core.models import Address, get_person_contact, PersonContact
+from shoop.core.models import get_person_contact, MutableAddress, PersonContact
 from shoop.utils.form_group import FormGroup
 
 
@@ -27,7 +27,7 @@ class PersonContactForm(forms.ModelForm):
 
 class AddressForm(forms.ModelForm):
     class Meta:
-        model = Address
+        model = MutableAddress
         fields = ("name", "phone", "email", "street", "street2", "postal_code", "city", "region", "country")
 
     def __init__(self, *args, **kwargs):

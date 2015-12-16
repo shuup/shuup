@@ -13,7 +13,7 @@ from django.forms.models import model_to_dict
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import FormView
 
-from shoop.core.models import Address, CompanyContact
+from shoop.core.models import CompanyContact, MutableAddress
 from shoop.front.checkout import CheckoutPhaseViewMixin
 from shoop.utils.form_group import FormGroup
 
@@ -22,7 +22,7 @@ from ._mixins import TaxNumberCleanMixin
 
 class AddressForm(forms.ModelForm):
     class Meta:
-        model = Address
+        model = MutableAddress
         fields = ("name", "phone", "email", "street", "street2", "postal_code", "city", "region", "country")
 
     def __init__(self, **kwargs):

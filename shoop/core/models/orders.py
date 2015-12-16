@@ -171,12 +171,14 @@ class Order(MoneyPropped, models.Model):
         "PersonContact", related_name='orderer_orders', blank=True, null=True,
         on_delete=models.PROTECT,
         verbose_name=_('orderer'))
-    billing_address = UnsavedForeignKey(
-        "Address", related_name="billing_orders", blank=True, null=True,
+    billing_address = models.ForeignKey(
+        "ImmutableAddress", related_name="billing_orders",
+        blank=True, null=True,
         on_delete=models.PROTECT,
         verbose_name=_('billing address'))
-    shipping_address = UnsavedForeignKey(
-        "Address", related_name='shipping_orders',  blank=True, null=True,
+    shipping_address = models.ForeignKey(
+        "ImmutableAddress", related_name='shipping_orders',
+        blank=True, null=True,
         on_delete=models.PROTECT,
         verbose_name=_('shipping address'))
     tax_number = models.CharField(max_length=20, blank=True, verbose_name=_('Tax number'))
@@ -325,17 +327,6 @@ class Order(MoneyPropped, models.Model):
         self._cache_values()
         return super(Order, self).full_clean(exclude, validate_unique)
 
-    def create_immutable_address_copies(self):
-        for field in ("billing_address", "shipping_address"):
-            address = getattr(self, field, None)
-            if address and not address.is_immutable:
-                if address.pk:
-                    address = address.copy()
-                    address.set_immutable()
-                else:
-                    address.set_immutable()
-                setattr(self, field, address)
-
     def save(self, *args, **kwargs):
         if not self.creator_id:
             if not settings.SHOOP_ALLOW_ANONYMOUS_ORDERS:
@@ -344,7 +335,6 @@ class Order(MoneyPropped, models.Model):
                     "when SHOOP_ALLOW_ANONYMOUS_ORDERS is not enabled.")
         self._cache_values()
         first_save = (not self.pk)
-        self.create_immutable_address_copies()
         super(Order, self).save(*args, **kwargs)
         if first_save:  # Have to do a double save the first time around to be able to save identifiers
             self._save_identifiers()

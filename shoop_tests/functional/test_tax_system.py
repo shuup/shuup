@@ -12,7 +12,7 @@ from decimal import Decimal
 from django.test.utils import override_settings
 import pytest
 from shoop.apps.provides import override_provides
-from shoop.core.models import Address, OrderLineType
+from shoop.core.models import MutableAddress, OrderLineType
 from shoop.core.order_creator.source import OrderSource, SourceLine
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
 from shoop.core.taxing import TaxModule
@@ -48,7 +48,7 @@ def test_stacked_tax_taxless_price():
     )
     with override_provides("tax_module", TAX_MODULE_SPEC):
         with override_settings(SHOOP_TAX_MODULE="irvine"):
-            source.shipping_address = Address(
+            source.shipping_address = MutableAddress(
                 street="16215 Alton Pkwy",
                 postal_code="92602",
             )
@@ -76,7 +76,7 @@ def test_stacked_tax_taxful_price():
     )
     with override_provides("tax_module", TAX_MODULE_SPEC):
         with override_settings(SHOOP_TAX_MODULE="irvine"):
-            source.shipping_address = Address(
+            source.shipping_address = MutableAddress(
                 street="16215 Alton Pkwy",
                 postal_code="92602",
             )

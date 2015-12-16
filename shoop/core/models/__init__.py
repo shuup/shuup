@@ -4,7 +4,7 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from .addresses import Address, SavedAddress, SavedAddressRole, SavedAddressStatus
+from .addresses import ImmutableAddress, MutableAddress, SavedAddress, SavedAddressRole, SavedAddressStatus
 from .attributes import Attribute, AttributeType, AttributeVisibility
 from .categories import Category, CategoryStatus, CategoryVisibility
 from .configurations import ConfigurationItem
@@ -35,7 +35,6 @@ from .taxes import CustomerTaxGroup, Tax, TaxClass
 from .units import SalesUnit
 
 __all__ = [
-    "Address",
     "AnonymousContact",
     "Attribute",
     "AttributeType",
@@ -52,9 +51,11 @@ __all__ = [
     "CustomerTaxGroup",
     "get_person_contact",
     "Gender",
+    "ImmutableAddress",
     "Manufacturer",
     "MethodStatus",
     "MethodType",
+    "MutableAddress",
     "Order",
     "OrderLine",
     "OrderLineTax",

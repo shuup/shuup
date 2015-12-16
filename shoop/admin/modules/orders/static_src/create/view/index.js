@@ -26,7 +26,6 @@ export default function view() {
                 m("button.btn.btn-danger.btn-lg" + (creating ? ".disabled" : ""), {
                     disabled: creating,
                     onclick: () => {
-                        store.dispatch(retrieveCustomerData({id: source.customerId}));
                         store.dispatch(clearOrderSourceData());
                     }
                 }, m("i.fa.fa-close"), " " + gettext("Back")),
