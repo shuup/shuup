@@ -10,8 +10,8 @@
 Shoop documentation build configuration file
 """
 
-import sys
 import os
+import sys
 
 import django
 
@@ -19,32 +19,31 @@ import django
 
 DOC_PATH = os.path.abspath(os.path.dirname(__file__))
 sys.path.insert(0, os.path.join(DOC_PATH, '_ext'))
+sys.path.insert(0, os.path.join(DOC_PATH, '..'))
 
-try:
-    import shoop_workbench
-except ImportError:
-    # Looks like we can't directly import the
-    # workbench project from wherever we are (such as the `doc` dir;
-    # see rtfd/readthedocs.org@1511716c/readthedocs/doc_builder/backends/sphinx.py#L122),
-    # so try adding the parent directory (where we expect it to be) to `sys.path` first.
-    sys.path.insert(0, os.path.abspath(os.path.join(DOC_PATH, '..')))
-    # Right! Importing oughta work now.
-
-import shoop_workbench.settings
 
 # -- Initialize Django ----------------------------------------------------
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'shoop_workbench.settings'
+def initialize_django():
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'shoop_workbench.settings'
+    from django.conf import settings
 
-# Set USE_I18N=False to avoid warnings from import-time ugettext calls
-shoop_workbench.settings.USE_I18N = False
+    # Set USE_I18N=False to avoid warnings from import-time ugettext calls
+    settings.USE_I18N = False
 
-django.setup()
+    django.setup()
+
+initialize_django()
+
 
 # -- Monkey patch some property descriptors to allow introspection
 
-import shoop_introspection_helper
-shoop_introspection_helper.enable_patches()
+def patch_for_introspection():
+    import shoop_introspection_helper
+    shoop_introspection_helper.enable_patches()
+
+
+patch_for_introspection()
 
 # -- General configuration ------------------------------------------------
 
