@@ -7,7 +7,9 @@
 # LICENSE file in the root directory of this source tree.
 
 from .edit import PaymentMethodEditView, ShippingMethodEditView
-from .edit_detail import PaymentMethodEditDetailView, ShippingMethodEditDetailView
+from .edit_detail import (
+    PaymentMethodEditDetailView, ShippingMethodEditDetailView
+)
 from .list import PaymentMethodListView, ShippingMethodListView
 
 __all__ = [

@@ -8,7 +8,9 @@
 import logging
 from contextlib import contextmanager
 
-from shoop.apps.provides import get_identifier_to_object_map, get_provide_objects
+from shoop.apps.provides import (
+    get_identifier_to_object_map, get_provide_objects
+)
 
 log = logging.getLogger(__name__)
 

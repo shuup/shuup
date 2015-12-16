@@ -7,7 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 from django.conf.urls import patterns, url
 
-from .views import activation_complete, ActivationView, registration_complete, RegistrationView
+from .views import (
+    activation_complete, ActivationView, registration_complete,
+    RegistrationView
+)
 
 urlpatterns = patterns(
     '',

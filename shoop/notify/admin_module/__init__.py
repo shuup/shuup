@@ -14,7 +14,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
 
 from shoop.admin.base import AdminModule, MenuEntry, Notification
-from shoop.admin.utils.urls import admin_url, derive_model_url, get_edit_and_list_urls
+from shoop.admin.utils.urls import (
+    admin_url, derive_model_url, get_edit_and_list_urls
+)
 from shoop.notify.enums import Priority
 from shoop.notify.models import Notification as NotificationModel
 from shoop.notify.models import Script

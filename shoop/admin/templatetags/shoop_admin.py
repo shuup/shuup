@@ -10,7 +10,8 @@ from bootstrap3.renderers import FormRenderer
 from django.utils.safestring import mark_safe
 from django_jinja import library
 
-from shoop.admin.template_helpers import shoop_admin as shoop_admin_template_helpers
+from shoop.admin.template_helpers import \
+    shoop_admin as shoop_admin_template_helpers
 from shoop.admin.utils.bs3_renderers import AdminFieldRenderer
 
 

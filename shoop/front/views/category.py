@@ -11,7 +11,9 @@ from django import forms
 from django.views.generic import DetailView
 
 from shoop.core.models import Category, Manufacturer, Product
-from shoop.front.utils.product_sorting import PRODUCT_SORT_CHOICES, sort_products
+from shoop.front.utils.product_sorting import (
+    PRODUCT_SORT_CHOICES, sort_products
+)
 from shoop.front.utils.views import cache_product_things
 
 

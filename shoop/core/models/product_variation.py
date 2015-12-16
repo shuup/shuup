@@ -14,7 +14,9 @@ from collections import defaultdict
 import six
 from django.db import models
 from django.forms import Form, IntegerField, Select
-from django.utils.encoding import force_bytes, force_text, python_2_unicode_compatible
+from django.utils.encoding import (
+    force_bytes, force_text, python_2_unicode_compatible
+)
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField

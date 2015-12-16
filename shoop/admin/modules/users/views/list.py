@@ -12,7 +12,9 @@ from django.contrib.auth import get_user_model
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
 
-from shoop.admin.utils.picotable import Column, TextFilter, true_or_false_filter
+from shoop.admin.utils.picotable import (
+    Column, TextFilter, true_or_false_filter
+)
 from shoop.admin.utils.views import PicotableListView
 
 

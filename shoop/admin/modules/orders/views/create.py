@@ -31,7 +31,9 @@ from shoop.core.models import (
     ShippingMethod, Shop, ShopStatus
 )
 from shoop.core.pricing import get_pricing_module
-from shoop.utils.i18n import format_money, format_percent, get_current_babel_locale
+from shoop.utils.i18n import (
+    format_money, format_percent, get_current_babel_locale
+)
 
 
 def create_order_from_state(state, **kwargs):

@@ -12,7 +12,9 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from parler.models import TranslatedFields
 
-from shoop.core.fields import CurrencyField, InternalIdentifierField, MoneyValueField
+from shoop.core.fields import (
+    CurrencyField, InternalIdentifierField, MoneyValueField
+)
 from shoop.utils.i18n import format_money, format_percent
 from shoop.utils.properties import MoneyProperty, MoneyPropped
 

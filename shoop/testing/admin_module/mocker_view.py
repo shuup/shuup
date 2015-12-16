@@ -13,7 +13,9 @@ from django.contrib import messages
 from django.utils.encoding import force_text
 from django.views.generic import FormView
 
-from shoop.testing.factories import create_random_company, create_random_order, create_random_person
+from shoop.testing.factories import (
+    create_random_company, create_random_order, create_random_person
+)
 
 
 class Mockers(object):

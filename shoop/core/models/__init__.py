@@ -4,16 +4,25 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from .addresses import ImmutableAddress, MutableAddress, SavedAddress, SavedAddressRole, SavedAddressStatus
+from .addresses import (
+    ImmutableAddress, MutableAddress, SavedAddress, SavedAddressRole,
+    SavedAddressStatus
+)
 from .attributes import Attribute, AttributeType, AttributeVisibility
 from .categories import Category, CategoryStatus, CategoryVisibility
 from .configurations import ConfigurationItem
-from .contacts import AnonymousContact, CompanyContact, Contact, ContactGroup, Gender, get_person_contact, PersonContact
+from .contacts import (
+    AnonymousContact, CompanyContact, Contact, ContactGroup, Gender,
+    get_person_contact, PersonContact
+)
 from .counters import Counter, CounterType
 from .manufacturers import Manufacturer
 from .methods import MethodStatus, MethodType, PaymentMethod, ShippingMethod
 from .order_lines import OrderLine, OrderLineTax, OrderLineType
-from .orders import Order, OrderLogEntry, OrderStatus, OrderStatusRole, PaymentStatus, ShippingStatus
+from .orders import (
+    Order, OrderLogEntry, OrderStatus, OrderStatusRole, PaymentStatus,
+    ShippingStatus
+)
 from .payments import Payment
 from .persistent_cache import PersistentCacheEntry
 from .product_media import ProductMedia, ProductMediaKind

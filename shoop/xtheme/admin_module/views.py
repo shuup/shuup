@@ -16,7 +16,9 @@ from django.views.generic.edit import FormView
 from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.apps.provides import get_provide_objects
 from shoop.xtheme.models import ThemeSettings
-from shoop.xtheme.theme import get_current_theme, get_theme_by_identifier, set_current_theme
+from shoop.xtheme.theme import (
+    get_current_theme, get_theme_by_identifier, set_current_theme
+)
 
 
 class ActivationForm(forms.Form):

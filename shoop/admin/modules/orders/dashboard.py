@@ -12,7 +12,9 @@ from babel.dates import format_date
 from django.db.models import Avg, Count, Sum
 from django.utils.translation import ugettext_lazy as _
 
-from shoop.admin.dashboard import BarChart, DashboardChartBlock, DashboardMoneyBlock
+from shoop.admin.dashboard import (
+    BarChart, DashboardChartBlock, DashboardMoneyBlock
+)
 from shoop.core.models import Order
 from shoop.core.pricing import TaxfulPrice
 from shoop.core.utils.query import group_by_period

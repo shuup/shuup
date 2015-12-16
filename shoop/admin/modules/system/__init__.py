@@ -11,7 +11,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.base import AdminModule, MenuEntry, Notification
 from shoop.admin.utils.urls import admin_url
-from shoop.core.telemetry import is_in_grace_period, is_opt_out, is_telemetry_enabled
+from shoop.core.telemetry import (
+    is_in_grace_period, is_opt_out, is_telemetry_enabled
+)
 
 
 class SystemModule(AdminModule):

@@ -11,7 +11,8 @@ from parler.models import TranslatableModel
 from rest_framework import permissions, serializers, viewsets
 
 from shoop.api._vendor.parler_rest.fields import TranslatedFieldsField
-from shoop.api._vendor.parler_rest.serializers import TranslatableModelSerializer
+from shoop.api._vendor.parler_rest.serializers import \
+    TranslatableModelSerializer
 
 
 # TODO: Unvendor bits once parler_rest>=1.2 is released

@@ -13,7 +13,9 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from enumfields import EnumIntegerField
 
-from shoop.core.excs import ProductNotOrderableProblem, ProductNotVisibleProblem
+from shoop.core.excs import (
+    ProductNotOrderableProblem, ProductNotVisibleProblem
+)
 from shoop.core.fields import MoneyValueField, QuantityField, UnsavedForeignKey
 from shoop.core.models.product_media import ProductMediaKind
 from shoop.core.models.products import ProductVisibility, StockBehavior
