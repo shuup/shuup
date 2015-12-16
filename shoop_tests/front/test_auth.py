@@ -7,10 +7,11 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.conf import settings
-from django.contrib.auth import get_user, REDIRECT_FIELD_NAME, get_user_model
+from django.contrib.auth import get_user, get_user_model, REDIRECT_FIELD_NAME
 from django.core.urlresolvers import reverse
+
 from shoop.testing.factories import get_default_shop
-from shoop_tests.utils.fixtures import REGULAR_USER_PASSWORD, regular_user
+from shoop_tests.utils.fixtures import regular_user, REGULAR_USER_PASSWORD
 
 regular_user = regular_user  # noqa
 

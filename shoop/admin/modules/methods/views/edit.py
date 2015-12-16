@@ -16,7 +16,9 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.base import MenuEntry
-from shoop.admin.toolbar import get_default_edit_toolbar, Toolbar, URLActionButton
+from shoop.admin.toolbar import (
+    get_default_edit_toolbar, Toolbar, URLActionButton
+)
 from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.core.models import PaymentMethod, ShippingMethod
 from shoop.core.modules.interface import ModuleNotFound

@@ -5,10 +5,13 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.contrib.auth import get_user_model
 import pytest
+from django.contrib.auth import get_user_model
+
 from shoop.admin.modules.contacts.views.edit import ContactBaseForm
-from shoop.core.models.contacts import PersonContact, Gender, get_person_contact
+from shoop.core.models.contacts import (
+    Gender, get_person_contact, PersonContact
+)
 from shoop_tests.utils import printable_gibberish
 
 

@@ -7,15 +7,20 @@
 # LICENSE file in the root directory of this source tree.
 import datetime
 from decimal import Decimal
+
+import pytest
 from django.core.exceptions import ObjectDoesNotExist
 from django.test import override_settings
-
 from django.utils.translation import get_language
-import pytest
+
 from shoop.core.models import Product
-from shoop.core.models.attributes import Attribute, AttributeType, AttributeVisibility, NoSuchAttributeHere
+from shoop.core.models.attributes import (
+    Attribute, AttributeType, AttributeVisibility, NoSuchAttributeHere
+)
 from shoop.core.models.products import ProductAttribute
-from shoop.testing.factories import ATTR_SPECS, get_default_attribute_set, get_default_product, create_product
+from shoop.testing.factories import (
+    ATTR_SPECS, create_product, get_default_attribute_set, get_default_product
+)
 
 
 def _populate_applied_attribute(aa):

@@ -12,7 +12,9 @@ from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.toolbar import Toolbar, URLActionButton
-from shoop.admin.utils.views import add_create_or_change_message, CreateOrUpdateView
+from shoop.admin.utils.views import (
+    add_create_or_change_message, CreateOrUpdateView
+)
 from shoop.notify.admin_module.forms import ScriptForm
 from shoop.notify.models.script import Script
 

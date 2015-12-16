@@ -1,6 +1,5 @@
-from fnmatch import fnmatch
 import os
-
+from fnmatch import fnmatch
 
 _EXCLUDE_PATTERNS = []
 

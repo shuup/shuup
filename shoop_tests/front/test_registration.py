@@ -5,12 +5,14 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-import uuid, re, pytest
+import re
+import uuid
 
-from django.contrib.auth import get_user_model
+import pytest
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.contrib.auth import get_user_model
 from django.core import mail
+from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
 
 from shoop.testing.factories import get_default_shop

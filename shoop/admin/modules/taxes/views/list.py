@@ -9,7 +9,9 @@ from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
 
-from shoop.admin.utils.picotable import Column, TextFilter, true_or_false_filter
+from shoop.admin.utils.picotable import (
+    Column, TextFilter, true_or_false_filter
+)
 from shoop.admin.utils.views import PicotableListView
 from shoop.core.models import CustomerTaxGroup, Tax, TaxClass
 from shoop.utils.i18n import format_percent

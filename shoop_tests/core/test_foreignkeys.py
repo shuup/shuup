@@ -1,10 +1,15 @@
-from django.db.models import ProtectedError
 import pytest
-from shoop.core.models import Manufacturer, Product, SalesUnit, TaxClass, ShippingMethod, PaymentMethod, \
-    CustomerTaxGroup, PersonContact, ShopProduct, Shop, Tax
+from django.db.models import ProtectedError
+
+from shoop.core.models import (
+    CustomerTaxGroup, Manufacturer, PaymentMethod, PersonContact, Product,
+    SalesUnit, ShippingMethod, Shop, ShopProduct, Tax, TaxClass
+)
 from shoop.default_tax.models import TaxRule
-from shoop.testing.factories import create_product, get_default_shop, DEFAULT_NAME, get_default_category, \
-    create_order_with_product, get_test_tax, get_default_supplier
+from shoop.testing.factories import (
+    create_order_with_product, create_product, DEFAULT_NAME,
+    get_default_category, get_default_shop, get_default_supplier, get_test_tax
+)
 
 
 def get_product():

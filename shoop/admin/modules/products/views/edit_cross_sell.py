@@ -18,7 +18,9 @@ from shoop.admin.base import MenuEntry
 from shoop.admin.forms.widgets import ProductChoiceWidget
 from shoop.admin.toolbar import PostActionButton, Toolbar
 from shoop.admin.utils.urls import get_model_url
-from shoop.core.models import Product, ProductCrossSell, ProductCrossSellType, ProductMedia
+from shoop.core.models import (
+    Product, ProductCrossSell, ProductCrossSellType, ProductMedia
+)
 
 
 class ProductCrossSellForm(ModelForm):

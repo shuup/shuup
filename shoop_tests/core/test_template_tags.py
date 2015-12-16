@@ -6,9 +6,12 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from decimal import Decimal
+
 from django.utils import translation
-from shoop.core.templatetags.shoop_common import percent, number, money
+
+from shoop.core.templatetags.shoop_common import money, number, percent
 from shoop.utils.money import Money
 
 

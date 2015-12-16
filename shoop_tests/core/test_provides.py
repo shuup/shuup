@@ -6,12 +6,15 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import uuid
+
+import pytest
 from django.core.exceptions import ImproperlyConfigured
 from django.test.utils import override_settings
-import pytest
+
 from shoop.apps.provides import (
-    override_provides, get_provide_objects, get_identifier_to_object_map,
-    get_provide_specs_and_objects, get_identifier_to_spec_map, load_module
+    get_identifier_to_object_map, get_identifier_to_spec_map,
+    get_provide_objects, get_provide_specs_and_objects, load_module,
+    override_provides
 )
 from shoop_tests.utils import empty_iterable
 

@@ -7,11 +7,12 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.conf import settings
+
+from shoop.core.pricing import get_pricing_module
 from shoop.core.pricing.price import TaxfulPrice, TaxlessPrice
 from shoop.discount_pricing.models import DiscountedProductPrice
 from shoop.discount_pricing.module import DiscountPricingModule
-from shoop.testing.factories import get_shop, create_product
-from shoop.core.pricing import get_pricing_module
+from shoop.testing.factories import create_product, get_shop
 
 pytestmark = pytest.mark.skipif("shoop.discount_pricing" not in settings.INSTALLED_APPS,
                                 reason="Discount pricing not installed")

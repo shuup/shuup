@@ -16,8 +16,12 @@ from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
 
-from shoop.addons.manager import get_addons_from_entry_points, get_enabled_addons, set_enabled_addons
-from shoop.admin.toolbar import NewActionButton, PostActionButton, Toolbar, URLActionButton
+from shoop.addons.manager import (
+    get_addons_from_entry_points, get_enabled_addons, set_enabled_addons
+)
+from shoop.admin.toolbar import (
+    NewActionButton, PostActionButton, Toolbar, URLActionButton
+)
 
 
 class AddonEnableDisableForm(forms.Form):

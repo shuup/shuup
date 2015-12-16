@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 import pytest
-from shoop.xtheme.theme import override_current_theme_class
 
-from shoop_tests.xtheme.utils import get_jinja2_engine, get_request, plugin_override, FauxView, FauxTheme
+from shoop.xtheme.theme import override_current_theme_class
+from shoop_tests.xtheme.utils import (
+    FauxTheme, FauxView, get_jinja2_engine, get_request, plugin_override
+)
 
 
 @pytest.mark.django_db

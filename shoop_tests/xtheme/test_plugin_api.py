@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
-from shoop.xtheme.plugins.base import Plugin, templated_plugin_factory, TemplatedPlugin
+from shoop.xtheme.plugins.base import (
+    Plugin, templated_plugin_factory, TemplatedPlugin
+)
 from shoop.xtheme.theme import override_current_theme_class
 from shoop_tests.utils import printable_gibberish
-from shoop_tests.xtheme.utils import plugin_override, get_jinja2_engine
+from shoop_tests.xtheme.utils import get_jinja2_engine, plugin_override
 
 
 def test_plugin_choices():

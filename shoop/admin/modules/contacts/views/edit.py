@@ -15,11 +15,16 @@ from django.db.transaction import atomic
 from django.forms import BaseModelForm
 from django.utils.translation import ugettext_lazy as _
 
-from shoop.admin.form_part import FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
+from shoop.admin.form_part import (
+    FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
+)
 from shoop.admin.toolbar import get_default_edit_toolbar
 from shoop.admin.utils.urls import get_model_url
 from shoop.admin.utils.views import CreateOrUpdateView
-from shoop.core.models import CompanyContact, Contact, ContactGroup, ImmutableAddress, MutableAddress, PersonContact
+from shoop.core.models import (
+    CompanyContact, Contact, ContactGroup, ImmutableAddress, MutableAddress,
+    PersonContact
+)
 from shoop.utils.excs import Problem
 from shoop.utils.form_group import FormDef
 

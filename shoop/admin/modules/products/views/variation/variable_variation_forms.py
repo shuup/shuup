@@ -20,7 +20,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.forms.widgets import ProductChoiceWidget
 from shoop.core.excs import ImpossibleProductModeException, Problem
-from shoop.core.models import Product, ProductVariationVariable, ProductVariationVariableValue
+from shoop.core.models import (
+    Product, ProductVariationVariable, ProductVariationVariableValue
+)
 from shoop.core.models.product_variation import get_all_available_combinations
 from shoop.utils.i18n import get_language_name
 from shoop.utils.multilanguage_model_form import to_language_codes

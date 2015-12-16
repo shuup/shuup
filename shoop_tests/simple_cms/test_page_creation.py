@@ -4,12 +4,13 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import pytest
 from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.db.utils import IntegrityError
-import pytest
-from shoop.simple_cms.admin_module.views import PageForm, PageEditView
-from shoop_tests.simple_cms.utils import create_page, create_multilanguage_page
+
+from shoop.simple_cms.admin_module.views import PageEditView, PageForm
+from shoop_tests.simple_cms.utils import create_multilanguage_page, create_page
 from shoop_tests.utils.forms import get_form_data
 
 
@@ -93,5 +94,3 @@ def test_page_form(rf):
     assert len(form.errors) == 1
     assert "url__fi" in form.errors
     assert form.errors["url__fi"].as_data()[0].code == "invalid_url"
-
-

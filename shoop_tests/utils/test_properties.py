@@ -9,13 +9,12 @@ from decimal import Decimal
 import pytest
 
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
-from shoop.utils.properties import (
-    MoneyPropped,
-    MoneyProperty, PriceProperty, TaxfulPriceProperty, TaxlessPriceProperty,
-    resolve,
-)
 from shoop.utils.money import Money
 from shoop.utils.numbers import UnitMixupError
+from shoop.utils.properties import (
+    MoneyProperty, MoneyPropped, PriceProperty, resolve, TaxfulPriceProperty,
+    TaxlessPriceProperty
+)
 
 
 def test_resolve():

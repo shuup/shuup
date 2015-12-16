@@ -6,15 +6,19 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from django.utils.timezone import now
 
-from shoop.core.models import Order, OrderLine, OrderLineType, get_person_contact
+from shoop.core.models import (
+    get_person_contact, Order, OrderLine, OrderLineType
+)
 from shoop.core.models.order_lines import OrderLineTax
 from shoop.core.shortcuts import update_order_line_from_product
 from shoop.default_tax.module import DefaultTaxModule
-from shoop.testing.factories import get_address, get_default_payment_method, get_default_shipping_method, \
-    get_default_supplier, get_default_product, get_shop, get_initial_order_status, get_default_tax
+from shoop.testing.factories import (
+    get_address, get_default_payment_method, get_default_product,
+    get_default_shipping_method, get_default_supplier, get_default_tax,
+    get_initial_order_status, get_shop
+)
 
 
 def create_order(request, creator, customer, product):

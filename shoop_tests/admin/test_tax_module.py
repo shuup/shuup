@@ -4,15 +4,15 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.utils.encoding import force_text
 import pytest
+from django.utils.encoding import force_text
 
 from shoop.admin.module_registry import replace_modules
 from shoop.admin.modules.taxes import TaxModule
 from shoop.admin.modules.taxes.views import TaxClassEditView
 from shoop.testing.factories import get_default_shop, get_default_tax_class
-from shoop_tests.admin.utils import admin_only_urls
 from shoop.testing.utils import apply_request_middleware
+from shoop_tests.admin.utils import admin_only_urls
 
 
 @pytest.mark.django_db

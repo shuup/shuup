@@ -10,7 +10,9 @@ from __future__ import unicode_literals
 from django.db.models import Count
 from django.utils.translation import ugettext as _
 
-from shoop.admin.utils.picotable import Column, RangeFilter, TextFilter, true_or_false_filter
+from shoop.admin.utils.picotable import (
+    Column, RangeFilter, TextFilter, true_or_false_filter
+)
 from shoop.admin.utils.views import PicotableListView
 from shoop.core.models import CompanyContact, Contact, PersonContact
 

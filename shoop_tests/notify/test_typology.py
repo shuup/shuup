@@ -7,10 +7,11 @@
 # LICENSE file in the root directory of this source tree.
 from shoop.notify.base import Binding
 from shoop.notify.enums import StepConditionOperator
-from shoop.notify.typology import Language, Text, Model, Enum
-from .fixtures import TestEvent
 from shoop.notify.script import Context
+from shoop.notify.typology import Enum, Language, Model, Text
 from shoop_tests.utils import empty_iterable
+
+from .fixtures import TestEvent
 
 
 def test_simple_type_matching():

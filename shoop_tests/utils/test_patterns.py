@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
-from shoop.utils.patterns import Pattern, _compile_pattern, pattern_matches
+
+from shoop.utils.patterns import _compile_pattern, Pattern, pattern_matches
 
 
 def ReconstitutedPattern(pat):

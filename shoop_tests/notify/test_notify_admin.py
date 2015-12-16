@@ -9,6 +9,7 @@ from shoop.notify.actions.email import SendEmail
 from shoop.notify.admin_module.forms import ScriptItemEditForm
 from shoop_tests.notify.fixtures import TestEvent
 
+
 # TODO: Embetter the tests in this file
 
 def test_notify_item_admin_form():

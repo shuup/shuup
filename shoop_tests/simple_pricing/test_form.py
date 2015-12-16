@@ -5,13 +5,16 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.conf import settings
 import pytest
+from django.conf import settings
+
 from shoop.core.models import Shop
 from shoop.core.models.contacts import ContactGroup
 from shoop.simple_pricing.admin_form_part import SimplePricingForm
-from shoop.testing.factories import get_default_shop, create_product, get_default_customer_group
 from shoop.simple_pricing.models import SimpleProductPrice
+from shoop.testing.factories import (
+    create_product, get_default_customer_group, get_default_shop
+)
 from shoop_tests.utils.forms import get_form_data
 
 pytestmark = pytest.mark.skipif("shoop.simple_pricing" not in settings.INSTALLED_APPS,

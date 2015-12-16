@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
-from django.forms import formset_factory
 import pytest
-from shoop.admin.modules.products.views.variation.simple_variation_forms import SimpleVariationChildForm, SimpleVariationChildFormSet
-from shoop.admin.modules.products.views.variation.variable_variation_forms import VariableVariationChildrenForm
+import six
+from django.forms import formset_factory
+
+from shoop.admin.modules.products.views.variation.simple_variation_forms import (
+    SimpleVariationChildForm, SimpleVariationChildFormSet
+)
+from shoop.admin.modules.products.views.variation.variable_variation_forms import \
+    VariableVariationChildrenForm
 from shoop.core.excs import ImpossibleProductModeException
 from shoop.testing.factories import create_product
 from shoop.utils.excs import Problem
 from shoop_tests.utils import printable_gibberish
 from shoop_tests.utils.forms import get_form_data
-import six
 
 
 @pytest.mark.django_db

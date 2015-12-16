@@ -14,7 +14,9 @@ import six
 from django.conf import settings
 from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import ImproperlyConfigured
-from django.core.urlresolvers import get_callable, NoReverseMatch, RegexURLPattern, reverse
+from django.core.urlresolvers import (
+    get_callable, NoReverseMatch, RegexURLPattern, reverse
+)
 from django.http.response import HttpResponseForbidden
 from django.utils.encoding import force_str, force_text
 from django.utils.http import urlencode

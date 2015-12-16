@@ -10,7 +10,9 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.base import AdminModule, MenuEntry, SearchResult
-from shoop.admin.utils.urls import derive_model_url, get_edit_and_list_urls, get_model_url
+from shoop.admin.utils.urls import (
+    derive_model_url, get_edit_and_list_urls, get_model_url
+)
 from shoop.core.models import Category
 
 

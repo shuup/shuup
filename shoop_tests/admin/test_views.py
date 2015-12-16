@@ -8,12 +8,13 @@
 import json
 
 import pytest
+
 from shoop.testing.factories import (
-    get_default_category, create_random_order, get_default_product,
-    create_random_person, get_default_shop
+    create_random_order, create_random_person, get_default_category,
+    get_default_product, get_default_shop
 )
-from shoop.utils.importing import load
 from shoop.testing.utils import apply_request_middleware
+from shoop.utils.importing import load
 
 
 @pytest.mark.parametrize("class_spec", [

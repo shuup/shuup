@@ -6,11 +6,13 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
+import pytest
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from django.shortcuts import resolve_url
-import pytest
+
 from shoop.testing.factories import get_default_shop
 from shoop.testing.soup_utils import extract_form_fields
 from shoop_tests.utils import SmartClient

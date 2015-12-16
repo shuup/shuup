@@ -7,10 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 
 import pytest
-from shoop.core.models import AnonymousContact, get_person_contact, ProductVisibility, Product
+
+from shoop.core.models import (
+    AnonymousContact, get_person_contact, Product, ProductVisibility
+)
 from shoop.testing.factories import get_default_shop_product
-from shoop_tests.utils.fixtures import regular_user
 from shoop_tests.core.utils import modify
+from shoop_tests.utils.fixtures import regular_user
 
 
 @pytest.mark.django_db

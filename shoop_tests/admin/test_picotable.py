@@ -6,9 +6,14 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import datetime
-from django.contrib.auth import get_user_model
+
 import pytest
-from shoop.admin.utils.picotable import Column, Picotable, Filter, ChoicesFilter, TextFilter, MultiFieldTextFilter, RangeFilter, DateRangeFilter
+from django.contrib.auth import get_user_model
+
+from shoop.admin.utils.picotable import (
+    ChoicesFilter, Column, DateRangeFilter, Filter, MultiFieldTextFilter,
+    Picotable, RangeFilter, TextFilter
+)
 from shoop_tests.utils import empty_iterable
 from shoop_tests.utils.fixtures import regular_user
 

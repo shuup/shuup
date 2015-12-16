@@ -4,9 +4,10 @@ from contextlib import contextmanager
 
 import pytest
 from django.template.base import TemplateDoesNotExist
-from shoop.apps.provides import override_provides, get_provide_objects
+
+from shoop.apps.provides import get_provide_objects, override_provides
 from shoop.xtheme.models import ThemeSettings
-from shoop.xtheme.theme import set_current_theme, override_current_theme_class
+from shoop.xtheme.theme import override_current_theme_class, set_current_theme
 from shoop_tests.xtheme.utils import get_jinja2_engine
 
 

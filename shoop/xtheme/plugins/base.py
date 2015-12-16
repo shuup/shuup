@@ -10,7 +10,9 @@ from __future__ import unicode_literals
 from django.template.loader import get_template
 from django.utils.translation import ugettext_lazy as _
 
-from shoop.apps.provides import get_identifier_to_object_map, get_provide_objects
+from shoop.apps.provides import (
+    get_identifier_to_object_map, get_provide_objects
+)
 from shoop.utils.text import space_case
 from shoop.xtheme.plugins.forms import GenericPluginForm
 

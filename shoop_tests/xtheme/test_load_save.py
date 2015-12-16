@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import pytest
+
 from shoop.xtheme.theme import Theme
 from shoop.xtheme.view_config import ViewConfig
 from shoop_tests.utils import printable_gibberish

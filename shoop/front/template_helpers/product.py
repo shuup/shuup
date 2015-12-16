@@ -7,7 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 from jinja2.utils import contextfunction
 
-from shoop.core.models import AttributeVisibility, Product, ProductAttribute, ProductCrossSell, ProductCrossSellType
+from shoop.core.models import (
+    AttributeVisibility, Product, ProductAttribute, ProductCrossSell,
+    ProductCrossSellType
+)
 
 
 def get_visible_attributes(product):

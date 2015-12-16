@@ -1,9 +1,13 @@
 import pytest
 from django.conf import settings
 from django.utils.translation import activate
+
 from shoop.admin.modules.shops.views.edit import ShopForm
 from shoop.core.models import Shop, ShopStatus
-from shoop.testing.factories import create_random_order, create_random_person, create_product, get_default_supplier
+from shoop.testing.factories import (
+    create_product, create_random_order, create_random_person,
+    get_default_supplier
+)
 from shoop_tests.utils import printable_gibberish
 from shoop_tests.utils.forms import get_form_data
 

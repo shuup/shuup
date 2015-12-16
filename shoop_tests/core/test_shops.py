@@ -1,7 +1,8 @@
 import pytest
 from filer.models import Folder, Image
+
 from shoop.core.models import Shop, ShopStatus
-from shoop.testing.factories import DEFAULT_NAME, DEFAULT_IDENTIFIER
+from shoop.testing.factories import DEFAULT_IDENTIFIER, DEFAULT_NAME
 
 
 @pytest.mark.django_db

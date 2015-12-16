@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
+
 from shoop.admin.modules.contacts import ContactModule
 from shoop.testing.factories import create_random_person
 from shoop_tests.utils import empty_iterable

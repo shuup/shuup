@@ -24,16 +24,25 @@ from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
 
 from shoop.core import taxing
-from shoop.core.excs import NoPaymentToCreateException, NoProductsToShipException
-from shoop.core.fields import CurrencyField, InternalIdentifierField, LanguageField, MoneyValueField, UnsavedForeignKey
+from shoop.core.excs import (
+    NoPaymentToCreateException, NoProductsToShipException
+)
+from shoop.core.fields import (
+    CurrencyField, InternalIdentifierField, LanguageField, MoneyValueField,
+    UnsavedForeignKey
+)
 from shoop.core.models.products import Product
 from shoop.core.models.suppliers import Supplier
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
-from shoop.core.utils.reference import get_order_identifier, get_reference_number
+from shoop.core.utils.reference import (
+    get_order_identifier, get_reference_number
+)
 from shoop.utils.analog import define_log_model, LogEntryKind
 from shoop.utils.money import Money
 from shoop.utils.numbers import bankers_round
-from shoop.utils.properties import MoneyPropped, TaxfulPriceProperty, TaxlessPriceProperty
+from shoop.utils.properties import (
+    MoneyPropped, TaxfulPriceProperty, TaxlessPriceProperty
+)
 
 from .order_lines import OrderLineType
 

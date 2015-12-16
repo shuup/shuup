@@ -14,9 +14,13 @@ from django.db.transaction import atomic
 from django.utils.translation import ugettext as _
 from django.utils.translation import get_language
 
-from shoop.admin.form_part import FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
+from shoop.admin.form_part import (
+    FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
+)
 from shoop.admin.utils.views import CreateOrUpdateView
-from shoop.core.models import Product, ProductType, Shop, ShopProduct, ShopStatus, TaxClass
+from shoop.core.models import (
+    Product, ProductType, Shop, ShopProduct, ShopStatus, TaxClass
+)
 
 from .forms import (
     ProductAttributesForm, ProductBaseForm, ProductImageMediaFormSet,

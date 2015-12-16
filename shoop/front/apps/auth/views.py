@@ -20,7 +20,9 @@ from django.utils.http import is_safe_url, urlsafe_base64_decode
 from django.utils.translation import ugettext as _
 from django.views.generic import FormView, TemplateView
 
-from shoop.front.apps.auth.forms import EmailAuthenticationForm, RecoverPasswordForm
+from shoop.front.apps.auth.forms import (
+    EmailAuthenticationForm, RecoverPasswordForm
+)
 from shoop.utils.excs import Problem
 
 

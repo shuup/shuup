@@ -14,11 +14,10 @@ import pytest
 from django.test.utils import override_settings
 
 from shoop.core.models import Tax
-from shoop.core.taxing import TaxingContext, get_tax_module
+from shoop.core.taxing import get_tax_module, TaxingContext
 from shoop.default_tax.models import TaxRule
 from shoop.default_tax.module import (
-    DefaultTaxModule,
-    get_taxes_of_effective_rules,
+    DefaultTaxModule, get_taxes_of_effective_rules
 )
 from shoop.testing.factories import create_product, get_shop
 from shoop.utils.money import Money

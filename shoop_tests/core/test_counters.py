@@ -5,9 +5,10 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.core.exceptions import ObjectDoesNotExist
 import pytest
-from shoop.core.models.counters import CounterType, Counter
+from django.core.exceptions import ObjectDoesNotExist
+
+from shoop.core.models.counters import Counter, CounterType
 
 
 @pytest.mark.django_db

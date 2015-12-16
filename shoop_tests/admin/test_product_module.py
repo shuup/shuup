@@ -6,16 +6,19 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
+
 from shoop.admin.module_registry import replace_modules
 from shoop.admin.modules.products import ProductModule
 from shoop.admin.modules.products.views.edit import ProductEditView
 from shoop.admin.utils.urls import get_model_url
 from shoop.admin.views.search import get_search_results
 from shoop.core.models import ProductVisibility
+from shoop.testing.factories import (
+    create_product, get_default_product, get_default_shop
+)
+from shoop.testing.utils import apply_request_middleware
 from shoop_tests.admin.utils import admin_only_urls
 from shoop_tests.utils import empty_iterable
-from shoop.testing.factories import get_default_product, get_default_shop, create_product
-from shoop.testing.utils import apply_request_middleware
 
 
 @pytest.mark.django_db

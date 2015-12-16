@@ -5,21 +5,23 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import datetime
+import json
+
+import pytest
+import requests
 from django.test.utils import override_settings
 from django.utils.timezone import now
 from mock import patch
 from requests.models import Response
-import datetime
-import json
-import pytest
-import requests
-from shoop.admin.modules.system import SystemModule
 
+from shoop.admin.modules.system import SystemModule
 from shoop.core.models import PersistentCacheEntry
 from shoop.core.telemetry import (
-    get_telemetry_data, set_opt_out, try_send_telemetry, is_opt_out,
-    get_installation_key, INSTALLATION_KEY_KWARGS, LAST_DATA_KWARGS,
-    TelemetryNotSent)
+    get_installation_key, get_telemetry_data, INSTALLATION_KEY_KWARGS,
+    is_opt_out, LAST_DATA_KWARGS, set_opt_out, TelemetryNotSent,
+    try_send_telemetry
+)
 
 
 def _backdate_installation_key():

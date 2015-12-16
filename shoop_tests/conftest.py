@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.core.signals import setting_changed
+
 from shoop.apps.provides import clear_provides_cache
 from shoop.utils.importing import clear_load_cache
 from shoop.xtheme.theme import override_current_theme_class

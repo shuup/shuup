@@ -6,8 +6,9 @@
 # LICENSE file in the root directory of this source tree.
 import datetime
 
-from django.utils.timezone import now
 import pytest
+from django.utils.timezone import now
+
 from shoop.simple_cms.models import Page
 from shoop_tests.simple_cms.utils import create_page
 
@@ -59,5 +60,3 @@ def test_page_without_visibility_end_is_visible():
 
     assert Page.objects.visible(today).filter(pk=page.pk).exists()
     assert page.is_visible(today)
-
-

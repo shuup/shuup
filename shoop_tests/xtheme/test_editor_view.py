@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from contextlib import contextmanager
 
+import pytest
 from django.contrib.auth.models import AnonymousUser
 from django.test.client import RequestFactory
-import pytest
+
 from shoop.apps.provides import override_provides
 from shoop.utils.excs import Problem
 from shoop.xtheme.layout import Layout

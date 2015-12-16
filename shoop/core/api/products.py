@@ -10,7 +10,8 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
 
 from shoop.api._vendor.parler_rest.fields import TranslatedFieldsField
-from shoop.api._vendor.parler_rest.serializers import TranslatableModelSerializer
+from shoop.api._vendor.parler_rest.serializers import \
+    TranslatableModelSerializer
 from shoop.core.models import Product, ShopProduct
 
 

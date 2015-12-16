@@ -9,21 +9,23 @@ from __future__ import unicode_literals
 
 import decimal
 import json
-import pytest
 
+import pytest
 from django.test import RequestFactory
 from django.utils import translation
-from shoop.core.models import Order, OrderLineType, TaxClass, Tax
+
+from shoop.admin.modules.orders.views.create import (
+    encode_address, encode_method, OrderCreateView
+)
+from shoop.core.models import Order, OrderLineType, Tax, TaxClass
 from shoop.default_tax.models import TaxRule
 from shoop.testing.factories import (
-    create_random_person, create_random_company, create_product,
-    get_default_supplier, get_default_shop,
-    get_default_shipping_method, get_default_payment_method,
-    get_initial_order_status
+    create_product, create_random_company, create_random_person,
+    get_default_payment_method, get_default_shipping_method, get_default_shop,
+    get_default_supplier, get_initial_order_status
 )
 from shoop.testing.utils import apply_request_middleware
-from shoop_tests.utils import printable_gibberish, assert_contains
-from shoop.admin.modules.orders.views.create import OrderCreateView, encode_method, encode_address
+from shoop_tests.utils import assert_contains, printable_gibberish
 
 TEST_COMMENT = "Hello. Is it me you're looking for?"
 

@@ -5,22 +5,27 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from decimal import Decimal
+
 import pytest
 import six
-
-from decimal import Decimal
 from django.core.exceptions import ValidationError
 from django.test import override_settings
 from django.utils.timezone import now
 
-from shoop.core.excs import NoPaymentToCreateException, NoProductsToShipException
-from shoop.core.models import Order, OrderStatus, OrderLine, OrderLineType
+from shoop.core.excs import (
+    NoPaymentToCreateException, NoProductsToShipException
+)
+from shoop.core.models import Order, OrderLine, OrderLineType, OrderStatus
 from shoop.core.models.order_lines import OrderLineTax
 from shoop.core.models.orders import ShippingStatus
-from shoop.core.pricing import TaxlessPrice, TaxfulPrice
+from shoop.core.pricing import TaxfulPrice, TaxlessPrice
+from shoop.testing.factories import (
+    create_empty_order, create_order_with_product, get_address,
+    get_default_product, get_default_shop, get_default_supplier,
+    get_default_tax, get_initial_order_status
+)
 from shoop.utils.money import Money
-from shoop.testing.factories import (get_address, get_default_shop, get_default_product,
-    get_default_supplier, create_order_with_product, create_empty_order, get_initial_order_status, get_default_tax)
 
 
 @pytest.mark.django_db

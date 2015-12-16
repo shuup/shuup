@@ -6,10 +6,12 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
+
 from shoop.notify.actions.debug import SetDebugFlag
 from shoop.notify.conditions.simple import NonEmpty
 from shoop.notify.enums import StepConditionOperator
 from shoop.notify.script import Context, Step
+
 from .fixtures import get_test_script
 
 

@@ -6,7 +6,10 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-from shoop.testing.factories import get_default_supplier, get_default_product, get_default_shop_product
+
+from shoop.testing.factories import (
+    get_default_product, get_default_shop_product, get_default_supplier
+)
 
 
 @pytest.mark.django_db

@@ -1,6 +1,9 @@
 import pytest
-from shoop.core.pricing import TaxlessPrice, TaxfulPrice
-from shoop.testing.factories import get_default_product, get_default_shop, create_product
+
+from shoop.core.pricing import TaxfulPrice, TaxlessPrice
+from shoop.testing.factories import (
+    create_product, get_default_product, get_default_shop
+)
 
 
 def init_test(request, shop, prices):

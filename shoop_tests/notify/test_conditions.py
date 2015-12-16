@@ -6,7 +6,10 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
-from shoop.notify.conditions.simple import IntegerEqual, NonEmpty, TextEqual, Empty
+
+from shoop.notify.conditions.simple import (
+    Empty, IntegerEqual, NonEmpty, TextEqual
+)
 from shoop.notify.script import Context
 
 

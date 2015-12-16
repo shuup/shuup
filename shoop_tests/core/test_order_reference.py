@@ -5,12 +5,15 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.test import override_settings
 import hashlib
 
 import pytest
+from django.test import override_settings
+
+from shoop.core.utils.reference import (
+    get_order_identifier, get_reference_number
+)
 from shoop.testing.factories import create_empty_order
-from shoop.core.utils.reference import get_reference_number, get_order_identifier
 
 
 def custom_refno_gen(order):

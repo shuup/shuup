@@ -6,12 +6,15 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 import pytest
+
 from shoop.notify import Context
 from shoop.notify.template import NoLanguageMatches
-from shoop_tests.notify.fixtures import (get_test_template, TEST_TEMPLATE_LANGUAGES,
-    TestTemplateUsingAction, TEST_TEMPLATE_DATA, TestUnilingualTemplateUsingAction,
-    TEST_UNI_TEMPLATE_DATA
+from shoop_tests.notify.fixtures import (
+    get_test_template, TEST_TEMPLATE_DATA, TEST_TEMPLATE_LANGUAGES,
+    TEST_UNI_TEMPLATE_DATA, TestTemplateUsingAction,
+    TestUnilingualTemplateUsingAction
 )
 
 

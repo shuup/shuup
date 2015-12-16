@@ -10,7 +10,10 @@ from __future__ import unicode_literals
 from django.utils.timezone import now
 
 from shoop.core import taxing
-from shoop.core.models import OrderStatus, PaymentMethod, Product, ShippingMethod, Shop, Supplier, TaxClass
+from shoop.core.models import (
+    OrderStatus, PaymentMethod, Product, ShippingMethod, Shop, Supplier,
+    TaxClass
+)
 from shoop.core.pricing import Price, Priceful, TaxfulPrice, TaxlessPrice
 from shoop.core.taxing import TaxableItem
 from shoop.utils.decorators import non_reentrant

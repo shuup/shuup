@@ -6,10 +6,13 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
+
 from shoop.admin.modules.orders.dashboard import OrderValueChartDashboardBlock
 from shoop.admin.modules.orders.views.detail import OrderSetStatusView
-from shoop.core.models.orders import OrderStatusRole, OrderStatus, Order
-from shoop.testing.factories import create_random_order, get_default_product, create_random_person
+from shoop.core.models.orders import Order, OrderStatus, OrderStatusRole
+from shoop.testing.factories import (
+    create_random_order, create_random_person, get_default_product
+)
 from shoop.testing.utils import apply_request_middleware
 
 

@@ -18,9 +18,14 @@ from django.utils.translation import ugettext_lazy as _
 from filer.models import Image
 
 from shoop.admin.forms.widgets import ImageChoiceWidget, MediaChoiceWidget
-from shoop.core.models import Attribute, AttributeType, Product, ProductMedia, ProductMediaKind, Shop, ShopProduct
+from shoop.core.models import (
+    Attribute, AttributeType, Product, ProductMedia, ProductMediaKind, Shop,
+    ShopProduct
+)
 from shoop.utils.i18n import get_language_name
-from shoop.utils.multilanguage_model_form import MultiLanguageModelForm, to_language_codes
+from shoop.utils.multilanguage_model_form import (
+    MultiLanguageModelForm, to_language_codes
+)
 
 
 class ProductBaseForm(MultiLanguageModelForm):

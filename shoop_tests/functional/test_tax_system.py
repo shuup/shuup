@@ -9,8 +9,9 @@ from __future__ import unicode_literals
 
 from decimal import Decimal
 
-from django.test.utils import override_settings
 import pytest
+from django.test.utils import override_settings
+
 from shoop.apps.provides import override_provides
 from shoop.core.models import MutableAddress, OrderLineType
 from shoop.core.order_creator.source import OrderSource, SourceLine
@@ -18,7 +19,6 @@ from shoop.core.pricing import TaxfulPrice, TaxlessPrice
 from shoop.core.taxing import TaxModule
 from shoop.core.taxing.utils import stacked_value_added_taxes
 from shoop.testing.factories import get_shop, get_tax
-
 
 TAX_MODULE_SPEC = [__name__ + ":IrvineCaliforniaTaxation"]
 

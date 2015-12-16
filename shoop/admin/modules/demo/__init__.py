@@ -15,8 +15,12 @@ from django.http.response import HttpResponse
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 
-from shoop.admin.base import Activity, AdminModule, MenuEntry, Notification, SearchResult
-from shoop.admin.dashboard import DashboardMoneyBlock, DashboardNumberBlock, DashboardValueBlock
+from shoop.admin.base import (
+    Activity, AdminModule, MenuEntry, Notification, SearchResult
+)
+from shoop.admin.dashboard import (
+    DashboardMoneyBlock, DashboardNumberBlock, DashboardValueBlock
+)
 from shoop.testing.text_data import random_title
 from shoop.utils.i18n import get_current_babel_locale
 

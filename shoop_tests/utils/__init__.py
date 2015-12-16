@@ -7,16 +7,15 @@
 # LICENSE file in the root directory of this source tree.
 import contextlib
 import logging
-import sys
 import string
-import uuid
+import sys
 import types
-
-from bs4 import BeautifulSoup
+import uuid
 
 import django.conf
-from django.core.urlresolvers import set_urlconf, clear_url_caches, get_urlconf
-from django.test import override_settings, Client, TestCase
+from bs4 import BeautifulSoup
+from django.core.urlresolvers import clear_url_caches, get_urlconf, set_urlconf
+from django.test import Client, override_settings, TestCase
 from django.utils.crypto import get_random_string
 from django.utils.timezone import now
 

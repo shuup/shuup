@@ -15,7 +15,9 @@ from enumfields import Enum, EnumIntegerField
 from filer.fields.image import FilerImageField
 from mptt.managers import TreeManager
 from mptt.models import MPTTModel, TreeForeignKey
-from parler.models import TranslatableManager, TranslatableModel, TranslatedFields
+from parler.models import (
+    TranslatableManager, TranslatableModel, TranslatedFields
+)
 
 from shoop.core.fields import InternalIdentifierField
 from shoop.core.utils.slugs import generate_multilanguage_slugs

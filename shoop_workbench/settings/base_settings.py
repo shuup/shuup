@@ -4,9 +4,9 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from shoop.addons import add_enabled_addons
 import os
 
+from shoop.addons import add_enabled_addons
 
 BASE_DIR = os.getenv("SHOOP_WORKBENCH_BASE_DIR") or (
     os.path.dirname(os.path.dirname(__file__)))

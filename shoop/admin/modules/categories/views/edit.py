@@ -9,7 +9,9 @@
 from django import forms
 from django.conf import settings
 
-from shoop.admin.form_part import FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
+from shoop.admin.form_part import (
+    FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
+)
 from shoop.admin.forms.widgets import MediaChoiceWidget
 from shoop.admin.utils.forms import filter_form_field_choices
 from shoop.admin.utils.views import CreateOrUpdateView

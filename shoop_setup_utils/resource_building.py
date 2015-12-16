@@ -13,7 +13,6 @@ import tempfile
 from . import excludes
 from .nodejs_verify import verify_nodejs
 
-
 CACHE_ROOT = (
     os.path.expanduser('~/.cache') if os.name == 'posix'
     else tempfile.gettempdir())

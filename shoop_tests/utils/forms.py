@@ -6,8 +6,10 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from itertools import chain
+
 from django.core.exceptions import ValidationError
 from django.forms import BaseFormSet
+
 from shoop.utils.form_group import FormGroup
 
 
@@ -56,4 +58,3 @@ def get_form_data(form, prepared=False):
                 continue
         data[prefixed_name] = value
     return data
-
