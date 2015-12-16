@@ -5,10 +5,14 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-import pytest
 import random
+
+import pytest
+
 from shoop.core.models.suppliers import Supplier
-from shoop.testing.factories import create_product, create_order_with_product, get_default_shop
+from shoop.testing.factories import (
+    create_order_with_product, create_product, get_default_shop
+)
 
 IDENTIFIER = "test_simple_supplier"
 

@@ -5,27 +5,33 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import os
 from copy import deepcopy
 from itertools import chain
-from django.conf import settings
 
+from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.test.utils import override_settings
 from django.utils.timezone import now
-import os
+
 from shoop.admin import ShoopAdminAppConfig
 from shoop.admin.base import AdminModule
 from shoop.admin.dashboard import DashboardContentBlock, get_activity
 from shoop.admin.menu import get_menu_entry_categories
-from shoop.admin.module_registry import replace_modules, get_module_urls, get_modules
+from shoop.admin.module_registry import (
+    get_module_urls, get_modules, replace_modules
+)
 from shoop.admin.views.search import get_search_results
 from shoop.testing.factories import get_default_shop
 from shoop.testing.utils import apply_request_middleware
 from shoop.utils.excs import Problem
 from shoop_tests.admin.fixtures.test_module import TestModule
 from shoop_tests.utils import empty_iterable
-from shoop_tests.utils.faux_users import AnonymousUser, StaffUser, SuperUser, AuthenticatedUser
-from shoop_tests.utils.templates import get_templates_setting_for_specific_directories
+from shoop_tests.utils.faux_users import (
+    AnonymousUser, AuthenticatedUser, StaffUser, SuperUser
+)
+from shoop_tests.utils.templates import \
+    get_templates_setting_for_specific_directories
 
 TEMPLATES_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), "templates"))
 

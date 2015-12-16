@@ -6,11 +6,13 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 import datetime
 from decimal import Decimal
 
-from django.utils.timezone import make_aware, utc
 import pytest
+from django.utils.timezone import make_aware, utc
+
 from shoop.admin.modules.products.views.forms import ProductAttributesForm
 from shoop.core.models.products import ProductAttribute
 from shoop.testing.factories import create_product, get_default_shop

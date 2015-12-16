@@ -6,11 +6,9 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from django.core.urlresolvers import reverse
 
-from shoop.testing.factories import get_default_shop
-from shoop.testing.factories import get_default_product
+from shoop.testing.factories import get_default_product, get_default_shop
 
 
 @pytest.mark.django_db

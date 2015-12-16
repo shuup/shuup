@@ -5,7 +5,9 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from shoop.utils.text import snake_case, kebab_case, camel_case, flatten, space_case, identifierify
+from shoop.utils.text import (
+    camel_case, flatten, identifierify, kebab_case, snake_case, space_case
+)
 
 
 def test_casers():

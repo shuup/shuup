@@ -7,8 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 
 import pytest
+
 from shoop.core.models.product_shops import ShopProduct
-from shoop.core.models.product_variation import ProductVariationResult, ProductVariationVariable, ProductVariationVariableValue, get_all_available_combinations, get_available_variation_results
+from shoop.core.models.product_variation import (
+    get_all_available_combinations, get_available_variation_results,
+    ProductVariationResult, ProductVariationVariable,
+    ProductVariationVariableValue
+)
 from shoop.core.models.products import ProductMode
 from shoop.testing.factories import create_product, get_default_shop
 

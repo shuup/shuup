@@ -5,9 +5,10 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.contrib.auth.models import AnonymousUser
-from django.core.urlresolvers import set_urlconf, reverse
 import pytest
+from django.contrib.auth.models import AnonymousUser
+from django.core.urlresolvers import reverse, set_urlconf
+
 from shoop.notify import Context
 from shoop.notify.actions.notification import AddNotification
 from shoop.notify.enums import Priority, RecipientType

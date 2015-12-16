@@ -7,9 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 
 import pytest
+
 from shoop.core.models import Product
 from shoop.core.utils.product_caching_object import ProductCachingObject
-from shoop.testing.factories import get_default_shop_product, create_product
+from shoop.testing.factories import create_product, get_default_shop_product
 
 
 def test_product_caching_object_nulling():

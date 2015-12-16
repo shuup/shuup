@@ -7,11 +7,14 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.conf import settings
-from shoop.core.pricing.price import TaxfulPrice, TaxlessPrice
-from shoop.testing.factories import get_shop, create_product, get_default_customer_group, create_random_person
-from shoop.simple_pricing.module import SimplePricingModule
-from shoop.simple_pricing.models import SimpleProductPrice
+
 from shoop.core.pricing import get_pricing_module
+from shoop.core.pricing.price import TaxfulPrice, TaxlessPrice
+from shoop.simple_pricing.models import SimpleProductPrice
+from shoop.simple_pricing.module import SimplePricingModule
+from shoop.testing.factories import (
+    create_product, create_random_person, get_default_customer_group, get_shop
+)
 
 pytestmark = pytest.mark.skipif("shoop.simple_pricing" not in settings.INSTALLED_APPS,
                                 reason="Simple pricing not installed")

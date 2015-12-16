@@ -1,10 +1,12 @@
 import os
+
 from django.conf.urls import url
 from django.core.handlers.base import BaseHandler
 from django.core.urlresolvers import get_resolver
 from django.http import HttpResponse
 from django.test.utils import override_settings
 from django.utils.encoding import force_text
+
 from shoop.front.error_handling import install_error_handlers
 from shoop_tests.utils import replace_urls
 

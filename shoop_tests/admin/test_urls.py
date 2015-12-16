@@ -6,9 +6,11 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from collections import Counter
-from django.core.exceptions import ImproperlyConfigured
+
 import pytest
-from shoop.admin.utils.urls import get_model_url, NoModelUrl, admin_url
+from django.core.exceptions import ImproperlyConfigured
+
+from shoop.admin.utils.urls import admin_url, get_model_url, NoModelUrl
 from shoop.core.models import Product
 from shoop_tests.admin.utils import admin_only_urls
 

@@ -5,9 +5,10 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import pytest
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import get_language
-import pytest
+
 from shoop.core.models import OrderStatus
 from shoop.core.models.orders import OrderStatusRole
 from shoop.testing.factories import create_default_order_statuses

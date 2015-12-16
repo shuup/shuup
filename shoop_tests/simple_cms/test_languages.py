@@ -4,8 +4,9 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.utils import translation
 import pytest
+from django.utils import translation
+
 from shoop.simple_cms.models import Page
 from shoop_tests.simple_cms.utils import create_multilanguage_page
 

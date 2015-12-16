@@ -6,14 +6,20 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 from django import forms
+
 from shoop.notify import Context
-from shoop.notify.base import Event, Variable, Action
-from shoop.notify.enums import StepConditionOperator, TemplateUse, UNILINGUAL_TEMPLATE_LANGUAGE
+from shoop.notify.base import Action, Event, Variable
+from shoop.notify.enums import (
+    StepConditionOperator, TemplateUse, UNILINGUAL_TEMPLATE_LANGUAGE
+)
 from shoop.notify.models import Script
 from shoop.notify.template import Template
-from shoop.notify.typology import Language, Text, Model
-from shoop.testing.factories import create_random_order, get_default_product, create_random_person
+from shoop.notify.typology import Language, Model, Text
+from shoop.testing.factories import (
+    create_random_order, create_random_person, get_default_product
+)
 from shoop.testing.text_data import random_title
 
 TEST_STEP_DATA = [

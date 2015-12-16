@@ -5,13 +5,17 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.core.urlresolvers import reverse
-import pytest
 import random
+
+import pytest
+from django.core.urlresolvers import reverse
+
 from shoop.core.models import Order
+from shoop.testing.factories import (
+    create_default_order_statuses, get_address, get_default_supplier
+)
 from shoop.testing.mock_population import populate_if_required
 from shoop.testing.soup_utils import extract_form_fields
-from shoop.testing.factories import get_address, get_default_supplier, create_default_order_statuses
 from shoop_tests.utils import SmartClient
 
 

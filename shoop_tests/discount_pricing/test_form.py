@@ -6,10 +6,11 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
+
 from shoop.core.models import Shop
 from shoop.discount_pricing.admin_form_part import DiscountPricingForm
 from shoop.discount_pricing.models import DiscountedProductPrice
-from shoop.testing.factories import get_default_shop, create_product
+from shoop.testing.factories import create_product, get_default_shop
 from shoop_tests.utils.forms import get_form_data
 
 

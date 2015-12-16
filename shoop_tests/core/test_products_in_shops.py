@@ -6,17 +6,25 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import uuid
+
+import pytest
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 
-import pytest
-from shoop.core.excs import ProductNotOrderableProblem, ProductNotVisibleProblem
+from shoop.core.excs import (
+    ProductNotOrderableProblem, ProductNotVisibleProblem
+)
 from shoop.core.models.contacts import AnonymousContact, get_person_contact
 from shoop.core.models.products import ProductVisibility
 from shoop.core.models.suppliers import Supplier
-from shoop.testing.factories import get_default_shop, get_default_product, get_default_supplier, get_default_customer_group, get_default_shop_product
+from shoop.testing.factories import (
+    get_default_customer_group, get_default_product, get_default_shop,
+    get_default_shop_product, get_default_supplier
+)
 from shoop_tests.core.utils import modify
-from shoop_tests.utils import error_exists, error_does_not_exist, printable_gibberish
+from shoop_tests.utils import (
+    error_does_not_exist, error_exists, printable_gibberish
+)
 from shoop_tests.utils.fixtures import regular_user
 
 

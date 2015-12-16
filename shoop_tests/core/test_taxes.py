@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.utils.translation import activate
+
 from shoop.core.models import CustomerTaxGroup
 
 

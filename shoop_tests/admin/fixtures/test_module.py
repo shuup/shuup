@@ -6,12 +6,20 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import datetime
+
 from django.http import HttpResponse
-from django.views.generic import View
-from shoop.admin.base import AdminModule, MenuEntry, SearchResult, Notification, Activity
 from django.utils.translation import ugettext_lazy as _
-from shoop.admin.dashboard import DashboardValueBlock, DashboardNumberBlock, DashboardMoneyBlock, DashboardContentBlock
+from django.views.generic import View
+
+from shoop.admin.base import (
+    Activity, AdminModule, MenuEntry, Notification, SearchResult
+)
+from shoop.admin.dashboard import (
+    DashboardContentBlock, DashboardMoneyBlock, DashboardNumberBlock,
+    DashboardValueBlock
+)
 from shoop.admin.utils.urls import admin_url
+
 
 class TestAction(View):
     def dispatch(self, request, *args, **kwargs):

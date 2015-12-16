@@ -6,11 +6,14 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 import pytest
 from django.contrib.auth.models import AnonymousUser
 from django.db.models import QuerySet
+
 from shoop.core.models import (
-    AnonymousContact, PersonContact, get_person_contact)
+    AnonymousContact, get_person_contact, PersonContact
+)
 from shoop_tests.utils.fixtures import regular_user
 
 

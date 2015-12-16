@@ -5,15 +5,17 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import datetime
-from django.http.response import Http404
+
 import pytest
+from django.core.cache import cache
+from django.http.response import Http404
+from django.utils import translation
+
 from shoop.simple_cms.models import Page
 from shoop.simple_cms.views import PageView
 from shoop.testing.factories import get_default_shop
-from django.utils import translation
-from shoop_tests.simple_cms.utils import create_page, create_multilanguage_page
 from shoop.testing.utils import apply_request_middleware
-from django.core.cache import cache
+from shoop_tests.simple_cms.utils import create_multilanguage_page, create_page
 
 
 @pytest.mark.django_db

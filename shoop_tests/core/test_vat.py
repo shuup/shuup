@@ -5,9 +5,10 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.core.exceptions import ValidationError
 import pytest
-from shoop.core.utils.vat import verify_vat, get_vat_prefix_for_country
+from django.core.exceptions import ValidationError
+
+from shoop.core.utils.vat import get_vat_prefix_for_country, verify_vat
 
 
 @pytest.mark.parametrize("input, expected", [

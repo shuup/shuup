@@ -1,21 +1,20 @@
 # -*- coding: utf-8 -*-
-from django.http.response import HttpResponse
-
 import os
 import re
 
 import six
 from django.contrib.auth.models import AnonymousUser
+from django.http.response import HttpResponse
 from django.test.client import RequestFactory
 from django.views.generic import View
 from django_jinja.backend import Jinja2
 from django_jinja.builtins import DEFAULT_EXTENSIONS
 
 from shoop.apps.provides import override_provides
-from shoop.xtheme.editing import is_edit_mode, set_edit_mode
-from shoop.xtheme.view_config import Layout
 from shoop.xtheme import parsing
+from shoop.xtheme.editing import is_edit_mode, set_edit_mode
 from shoop.xtheme.theme import Theme
+from shoop.xtheme.view_config import Layout
 from shoop_tests.utils import printable_gibberish
 from shoop_tests.utils.faux_users import SuperUser
 

@@ -7,7 +7,11 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from filer.models import Folder, Image
-from shoop.core.models import Category, CategoryVisibility, CategoryStatus, get_person_contact, AnonymousContact
+
+from shoop.core.models import (
+    AnonymousContact, Category, CategoryStatus, CategoryVisibility,
+    get_person_contact
+)
 from shoop.testing.factories import DEFAULT_NAME
 from shoop_tests.utils.fixtures import regular_user
 

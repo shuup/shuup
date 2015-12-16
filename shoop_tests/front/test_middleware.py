@@ -4,18 +4,20 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import pytest
+from django.conf import settings
 from django.contrib.auth import logout
 from django.contrib.auth.models import AnonymousUser
-import pytest
-import shoop.core.models
-from django.conf import settings
 from django.utils import timezone
+
+import shoop.core.models
 from shoop.admin.urls import login
 from shoop.front.middleware import ShoopFrontMiddleware
 from shoop.front.views.index import IndexView
 from shoop.testing.factories import get_default_shop
 from shoop.testing.utils import apply_request_middleware
 from shoop_tests.utils.fixtures import regular_user
+
 from .fixtures import get_request
 
 __all__ = ("regular_user",)  # noqa

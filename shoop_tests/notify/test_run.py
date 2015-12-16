@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
+
 from shoop.notify.actions.order import AddOrderLogEntry
 from shoop.notify.enums import StepNext
 from shoop.notify.models import Script

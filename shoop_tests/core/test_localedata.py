@@ -6,10 +6,11 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import datetime
-import pytest
 
 import babel
+import pytest
 from babel.dates import format_date
+
 from shoop.utils.dates import get_year_and_month_format
 
 

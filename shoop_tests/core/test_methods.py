@@ -6,20 +6,21 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from decimal import Decimal
+
+import pytest
 from django.core.exceptions import ValidationError
 from django.test.utils import override_settings
 
-import pytest
 from shoop.apps.provides import override_provides
 from shoop.core.methods.base import BaseShippingMethodModule
-from shoop.core.models.contacts import PersonContact, get_person_contact
-from shoop.core.models.methods import ShippingMethod, PaymentMethod
+from shoop.core.models.contacts import get_person_contact, PersonContact
+from shoop.core.models.methods import PaymentMethod, ShippingMethod
 from shoop.core.models.order_lines import OrderLineType
 from shoop.core.order_creator.source import SourceLine
 from shoop.core.pricing import PriceInfo
 from shoop.testing.factories import (
-    get_address, get_default_shop, get_default_product, get_default_supplier, get_default_tax_class,
-    create_product
+    create_product, get_address, get_default_product, get_default_shop,
+    get_default_supplier, get_default_tax_class
 )
 from shoop_tests.utils.basketish_order_source import BasketishOrderSource
 

@@ -6,7 +6,9 @@ from shoop.xtheme.plugins.text import TextPlugin
 from shoop.xtheme.rendering import get_view_config, render_placeholder
 from shoop.xtheme.theme import override_current_theme_class
 from shoop_tests.utils import printable_gibberish
-from shoop_tests.xtheme.utils import close_enough, get_request, get_test_template_bits, plugin_override
+from shoop_tests.xtheme.utils import (
+    close_enough, get_request, get_test_template_bits, plugin_override
+)
 
 
 def test_layout_serialization():

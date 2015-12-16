@@ -5,16 +5,21 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import pytest
+import six
 from django.test import RequestFactory
 
-import pytest
-from shoop.core.models import OrderLineType, AnonymousContact, ProductMode, Shop
+from shoop.core.models import (
+    AnonymousContact, OrderLineType, ProductMode, Shop
+)
 from shoop.core.order_creator import OrderCreator
 from shoop.core.order_creator.source import SourceLine
-from shoop.testing.factories import create_product, get_default_shop, get_default_supplier, get_initial_order_status
+from shoop.testing.factories import (
+    create_product, get_default_shop, get_default_supplier,
+    get_initial_order_status
+)
 from shoop.testing.utils import apply_request_middleware
 from shoop_tests.utils.basketish_order_source import BasketishOrderSource
-import six
 
 
 @pytest.mark.django_db

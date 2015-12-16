@@ -5,13 +5,14 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import pytest
 from bs4 import BeautifulSoup
 from django.contrib.auth import get_user_model
 from django.utils.encoding import force_text
-import pytest
+
 from shoop.admin.modules.users.views import UserDetailView
 from shoop.core.models.contacts import Contact
-from shoop.testing.factories import get_default_shop, create_random_person
+from shoop.testing.factories import create_random_person, get_default_shop
 from shoop.testing.soup_utils import extract_form_fields
 from shoop.testing.utils import apply_request_middleware
 from shoop.utils.excs import Problem

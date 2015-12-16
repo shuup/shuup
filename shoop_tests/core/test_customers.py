@@ -8,9 +8,12 @@
 import pytest
 
 from shoop.admin.modules.taxes.views import CustomerTaxGroupListView
-from shoop.core.models import CompanyContact, CustomerTaxGroup, PersonContact, get_person_contact
+from shoop.core.models import (
+    CompanyContact, CustomerTaxGroup, get_person_contact, PersonContact
+)
 from shoop.testing.factories import (
-    DEFAULT_IDENTIFIER, DEFAULT_NAME, create_random_company, get_default_customer_group, get_default_shop
+    create_random_company, DEFAULT_IDENTIFIER, DEFAULT_NAME,
+    get_default_customer_group, get_default_shop
 )
 from shoop.testing.utils import apply_request_middleware
 from shoop.utils.importing import load

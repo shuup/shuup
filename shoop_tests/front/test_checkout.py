@@ -8,7 +8,8 @@
 from django.test import override_settings
 
 from shoop.front.checkout.addresses import AddressForm
-from shoop.front.checkout.single_page import AddressForm as SinglePageAddressForm
+from shoop.front.checkout.single_page import \
+    AddressForm as SinglePageAddressForm
 
 
 def test_checkout_addresses_has_no_default_country():

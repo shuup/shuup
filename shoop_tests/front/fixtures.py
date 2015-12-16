@@ -9,6 +9,7 @@ from django.contrib.auth.models import AnonymousUser
 from django.test.client import RequestFactory
 from jinja2 import Environment
 from jinja2.runtime import Context
+
 from shoop.front.middleware import ShoopFrontMiddleware
 from shoop.testing.factories import get_default_shop
 

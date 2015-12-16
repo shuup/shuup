@@ -5,9 +5,10 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.core.exceptions import ImproperlyConfigured
-from shoop.core.fields import MeasurementField
 import pytest
+from django.core.exceptions import ImproperlyConfigured
+
+from shoop.core.fields import MeasurementField
 
 
 def test_measurement_field_doesnt_know_bananas():

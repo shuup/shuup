@@ -5,19 +5,23 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.core.exceptions import ValidationError
-from django.http.response import JsonResponse, HttpResponseRedirect
 import pytest
-from shoop.core.models import ProductVariationVariable, ProductVariationVariableValue, ProductVariationResult
-from shoop.core.models.product_variation import get_all_available_combinations
+from django.core.exceptions import ValidationError
+from django.http.response import HttpResponseRedirect, JsonResponse
 
-from shoop.front.basket import get_basket_command_dispatcher
+from shoop.core.models import (
+    ProductVariationResult, ProductVariationVariable,
+    ProductVariationVariableValue
+)
+from shoop.core.models.product_variation import get_all_available_combinations
 from shoop.front.basket import commands as basket_commands
+from shoop.front.basket import get_basket_command_dispatcher
 from shoop.front.basket.command_dispatcher import BasketCommandDispatcher
 from shoop.front.signals import get_basket_command_handler
-from shoop.testing.factories import get_default_shop, create_product
-from shoop.testing.factories import get_default_product
-from shoop.testing.factories import get_default_supplier
+from shoop.testing.factories import (
+    create_product, get_default_product, get_default_shop,
+    get_default_supplier
+)
 from shoop_tests.front.fixtures import get_request_with_basket
 
 

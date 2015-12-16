@@ -6,12 +6,16 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from django.utils import translation
 import pytest
-from shoop.front.apps.simple_search.views import get_search_product_ids, SearchView
-from shoop.testing.factories import get_default_product, get_default_shop, create_product
-from shoop.testing.utils import apply_request_middleware
+from django.utils import translation
 
+from shoop.front.apps.simple_search.views import (
+    get_search_product_ids, SearchView
+)
+from shoop.testing.factories import (
+    create_product, get_default_product, get_default_shop
+)
+from shoop.testing.utils import apply_request_middleware
 
 UNLIKELY_STRING = "TJiCrQWaGChYNathovfViXPWO"
 NO_RESULTS_FOUND_STRING = "No results found"

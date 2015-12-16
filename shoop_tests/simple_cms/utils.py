@@ -6,8 +6,10 @@
 # LICENSE file in the root directory of this source tree.
 import datetime
 import uuid
+
 from shoop.simple_cms.models import Page
 from shoop.utils.i18n import get_language_name
+
 
 CONTENT = """
 # Bacon ipsum dolor amet doner ham brisket

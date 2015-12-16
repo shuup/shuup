@@ -5,11 +5,12 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import pytest
 from django.contrib.auth import get_user_model
 from django.core import mail
-import pytest
+
 from shoop.admin.modules.contacts.views.reset import ContactResetPasswordView
-from shoop.testing.factories import get_default_shop, create_random_person
+from shoop.testing.factories import create_random_person, get_default_shop
 from shoop.testing.utils import apply_request_middleware
 
 

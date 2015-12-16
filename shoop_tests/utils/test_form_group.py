@@ -8,8 +8,10 @@
 from django import forms
 from django.forms.models import modelform_factory
 from django.utils.encoding import force_text
+
 from shoop.core.models import MutableAddress
 from shoop.utils.form_group import FormGroup
+
 
 class GeneralForm(forms.Form):
     field = forms.IntegerField(required=True)

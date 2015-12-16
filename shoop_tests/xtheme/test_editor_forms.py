@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from shoop.xtheme.layout import LayoutCell
-from shoop.xtheme.views.forms import LayoutCellFormGroup, LayoutCellGeneralInfoForm
+from shoop.xtheme.views.forms import (
+    LayoutCellFormGroup, LayoutCellGeneralInfoForm
+)
 from shoop_tests.xtheme.utils import plugin_override
 
 

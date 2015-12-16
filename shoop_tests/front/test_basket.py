@@ -6,12 +6,15 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-from shoop.front.basket import get_basket
-from shoop.front.models import StoredBasket
-from shoop.testing.factories import get_default_shop, create_product, get_default_supplier
-from shoop_tests.utils import printable_gibberish
 from django.db.models import Sum
 from django.test.utils import override_settings
+
+from shoop.front.basket import get_basket
+from shoop.front.models import StoredBasket
+from shoop.testing.factories import (
+    create_product, get_default_shop, get_default_supplier
+)
+from shoop_tests.utils import printable_gibberish
 
 
 @pytest.mark.django_db

@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
+
 from shoop.notify import Context
 from shoop_tests.notify.fixtures import get_initialized_test_event
 

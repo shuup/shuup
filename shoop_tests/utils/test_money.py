@@ -4,10 +4,9 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import pytest
 from django.conf import settings
 from mock import patch
-import pytest
-
 
 from shoop.utils.money import Money
 

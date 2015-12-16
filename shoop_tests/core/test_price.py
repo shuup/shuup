@@ -4,10 +4,10 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import pytest
+
 from shoop.core.pricing import Price, TaxfulPrice, TaxlessPrice
 from shoop.utils.money import Money
-
-import pytest
 
 
 def test_init():

@@ -5,13 +5,16 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.conf import settings
+import django.core.mail as mail
 import pytest
+from django.conf import settings
+
 from shoop.notify import Context
 from shoop.notify.actions.email import SendEmail
-from shoop_tests.notify.fixtures import get_initialized_test_event, TEST_TEMPLATE_DATA
-import django.core.mail as mail
-from shoop_tests.utils import printable_gibberish, prepare_logger_for_stdout
+from shoop_tests.notify.fixtures import (
+    get_initialized_test_event, TEST_TEMPLATE_DATA
+)
+from shoop_tests.utils import prepare_logger_for_stdout, printable_gibberish
 
 
 @pytest.mark.django_db

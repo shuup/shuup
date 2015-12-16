@@ -4,8 +4,8 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.test import override_settings
 import pytest
+from django.test import override_settings
 
 from shoop.admin.modules.shops.views.edit import ShopEditView
 from shoop.testing.factories import get_default_shop

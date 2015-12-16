@@ -5,13 +5,14 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import pytest
+import six
 from django.forms.models import ModelForm
 from django.utils import translation
-import pytest
+
 from shoop.core.models import Product
 from shoop.core.models.products import StockBehavior
 from shoop.utils.multilanguage_model_form import MultiLanguageModelForm
-import six
 
 
 class TestMultiProductForm(MultiLanguageModelForm):

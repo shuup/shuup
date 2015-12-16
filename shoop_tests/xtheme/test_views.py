@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import pytest
+
 from shoop.utils.excs import Problem
 from shoop.xtheme.editing import is_edit_mode
 from shoop.xtheme.views.command import command_dispatch

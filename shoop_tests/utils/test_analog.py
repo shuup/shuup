@@ -6,7 +6,8 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.db import models
-from shoop.utils.analog import define_log_model, BaseLogEntry
+
+from shoop.utils.analog import BaseLogEntry, define_log_model
 
 
 class FakeModel(models.Model):
