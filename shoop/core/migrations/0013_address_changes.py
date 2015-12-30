@@ -101,6 +101,10 @@ class Migration(migrations.Migration):
             model_name='order',
             name='mutable_shipping_address',
         ),
+        migrations.RenameModel(
+            old_name='Address',
+            new_name='MutableAddress'
+        ),
         migrations.AlterField(
             model_name='contact',
             name='default_billing_address',
@@ -116,8 +120,5 @@ class Migration(migrations.Migration):
             name='address',
             field=models.ForeignKey(related_name='saved_addresses', verbose_name='address', to='shoop.MutableAddress'),
         ),
-        migrations.RenameModel(
-            old_name='Address',
-            new_name='MutableAddress'
-        ),
+        
     ]
