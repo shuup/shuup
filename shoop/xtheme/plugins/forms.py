@@ -8,12 +8,16 @@
 from copy import deepcopy
 
 from django import forms
+from django.conf import settings
+
+from shoop.xtheme.plugins.widgets import TranslatableFieldWidget
 
 
 class PluginForm(forms.Form):
     """
     Base class for plugin configuration forms.
     """
+
     def __init__(self, **kwargs):
         self.plugin = kwargs.pop("plugin")
         super(PluginForm, self).__init__(**kwargs)
@@ -53,3 +57,17 @@ class GenericPluginForm(PluginForm):
         for name, field in fields:
             self.fields[name] = deepcopy(field)
         self.initial.update(self.plugin.config)
+
+
+class TranslatableField(forms.Field):
+    widget = TranslatableFieldWidget
+
+    def __init__(self, *args, **kwargs):
+        input_widget = kwargs.pop("widget", forms.TextInput)  # Only allow overriding the subwidget.
+        languages = kwargs.pop("languages", [l[0] for l in settings.LANGUAGES])  # TODO: Another language source?
+        kwargs["widget"] = self.widget(languages=languages, input_widget=input_widget)
+        super(TranslatableField, self).__init__(*args, **kwargs)
+
+    def clean(self, value):
+        assert isinstance(value, dict)
+        return value
