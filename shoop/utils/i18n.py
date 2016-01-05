@@ -101,7 +101,25 @@ def format_money(amount, digits=None, widen=0, locale=None):
 
 
 def get_language_name(language_code):
-    return get_current_babel_locale().languages.get(language_code, language_code)
+    """
+    Get a language's name in the currently active locale.
+
+    :param language_code: Language code (possibly with an added script suffix (zh_Hans, zh-Hans))
+    :type language_code: str
+    :return: The language name, or the code if the language couldn't be derived.
+    :rtype: str
+    """
+    try:
+        lang_dict = get_current_babel_locale().languages
+    except (AttributeError, ValueError):  # The locale lookup failed,
+        return language_code  # so return the code as-is.
+    for option in (
+        language_code,
+        str(language_code).replace("-", "_"),
+    ):
+        if option in lang_dict:
+            return lang_dict[option]
+    return language_code
 
 
 @cache_page(3600)
