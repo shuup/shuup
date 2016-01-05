@@ -9,6 +9,7 @@ from shoop.apps.provides import override_provides
 from shoop.utils.excs import Problem
 from shoop.xtheme.layout import Layout
 from shoop.xtheme.models import SavedViewConfig, SavedViewConfigStatus
+from shoop.xtheme.plugins.consts import FALLBACK_LANGUAGE_CODE
 from shoop.xtheme.theme import override_current_theme_class
 from shoop.xtheme.views.editor import EditorView, ROW_CELL_LIMIT
 from shoop_tests.utils import printable_gibberish
@@ -105,7 +106,7 @@ def test_editor_save(rf):
         form_data = get_form_data(view_obj.form, prepared=True)
 
     new_text = printable_gibberish()
-    form_data["plugin-text"] = new_text
+    form_data["plugin-text_%s" % FALLBACK_LANGUAGE_CODE] = new_text
     form_data["save"] = "1"
     request = rf.post("/pepe/", data=form_data)  # sort of rare pepe
     request.GET = dict(request.GET, x=0, y=0)
@@ -113,7 +114,7 @@ def test_editor_save(rf):
         view_obj.dispatch(request)
         assert view_obj.form
         assert not view_obj.form.errors
-        assert view_obj.current_cell.config["text"] == new_text
+        assert view_obj.current_cell.config["text"] == {FALLBACK_LANGUAGE_CODE: new_text}
 
 
 @pytest.mark.django_db
