@@ -166,3 +166,9 @@ def dotify_ast_name(name):
     if isinstance(name, Name):
         return name.id
     return "<%s>" % name.__class__.__name__
+
+def get_assign_first_target(assign):
+    for target in assign.targets:
+        id = getattr(target, "id", None)
+        if id:
+            return id
