@@ -28,11 +28,11 @@ class Supplier(ModuleInterface, ShoopModel):
     module_provides_key = "supplier_module"
 
     identifier = InternalIdentifierField(unique=True)
-    name = models.CharField(max_length=64)
-    type = EnumIntegerField(SupplierType, default=SupplierType.INTERNAL)
-    stock_managed = models.BooleanField(default=False)
+    name = models.CharField(verbose_name=_("name"), max_length=64)
+    type = EnumIntegerField(SupplierType, verbose_name=_("supplier type"), default=SupplierType.INTERNAL)
+    stock_managed = models.BooleanField(verbose_name=_("stock managed"), default=False)
     module_identifier = models.CharField(max_length=64, blank=True, verbose_name=_('module'))
-    module_data = JSONField(blank=True, null=True)
+    module_data = JSONField(blank=True, null=True, verbose_name=_("module data"))
 
     def __str__(self):
         return self.name

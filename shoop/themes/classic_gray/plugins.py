@@ -20,13 +20,13 @@ class ProductHighlightPlugin(TemplatedPlugin):
     name = _("Product Highlights")
     template_name = "classic_gray/highlight_plugin.jinja"
     fields = [
-        ("title", TranslatableField(required=False, initial="")),
-        ("type", forms.ChoiceField(choices=[
+        ("title", TranslatableField(label=_("Title"), required=False, initial="")),
+        ("type", forms.ChoiceField(label=_("Type"), choices=[
             ("newest", "Newest"),
             ("best_selling", "Best Selling"),
             ("random", "Random"),
         ], initial="newest")),
-        ("count", forms.IntegerField(min_value=1, initial=4))
+        ("count", forms.IntegerField(label=_("Count"), min_value=1, initial=4))
     ]
 
     def get_context_data(self, context):

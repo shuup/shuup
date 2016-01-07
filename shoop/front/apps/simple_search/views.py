@@ -12,6 +12,7 @@ import hashlib
 from django import forms
 from django.db.models import Q
 from django.utils.encoding import force_bytes
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView
 
 from shoop.core import cache
@@ -38,8 +39,12 @@ def get_search_product_ids(request, query):
 
 
 class SearchForm(forms.Form):
-    q = forms.CharField(label=u"Search")
-    sort = forms.CharField(required=False, widget=forms.Select(choices=PRODUCT_SORT_CHOICES))
+    q = forms.CharField(label=_("Search"))
+    sort = forms.CharField(
+        required=False,
+        widget=forms.Select(choices=PRODUCT_SORT_CHOICES),
+        label=_("Sort")
+    )
 
     def clean(self):
         self.cleaned_data["q"] = self.cleaned_data["q"].strip()

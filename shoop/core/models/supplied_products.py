@@ -12,8 +12,8 @@ from shoop.core.fields import QuantityField
 
 
 class SuppliedProduct(models.Model):
-    supplier = models.ForeignKey("Supplier", on_delete=models.CASCADE)
-    product = models.ForeignKey("Product", on_delete=models.CASCADE)
+    supplier = models.ForeignKey("Supplier", on_delete=models.CASCADE, verbose_name=_("supplier"))
+    product = models.ForeignKey("Product", on_delete=models.CASCADE, verbose_name=_("product"))
     sku = models.CharField(db_index=True, max_length=128, verbose_name=_('SKU'))
     alert_limit = models.IntegerField(default=0, verbose_name=_('alert limit'))
     physical_count = QuantityField(editable=False, verbose_name=_('physical stock count'))

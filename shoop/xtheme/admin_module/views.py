@@ -25,7 +25,7 @@ class ActivationForm(forms.Form):
     """
     A very simple form for activating a theme.
     """
-    activate = forms.CharField()
+    activate = forms.CharField(label=_("activate"))
 
 
 class ThemeConfigView(FormView):
