@@ -5,13 +5,15 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from __future__ import unicode_literals
 import datetime
 
 import babel
 import pytest
 from babel.dates import format_date
-
 from shoop.utils.dates import get_year_and_month_format
+from shoop.utils.i18n import format_money
+from shoop.utils.money import Money
 
 
 @pytest.mark.parametrize("locale_name,expected", [
@@ -27,3 +29,9 @@ def test_year_and_month(locale_name, expected):
         locale=locale
     )
     assert formatted == expected
+
+
+def test_format_money():
+    assert format_money(Money("3.6", "EUR"), locale="fi") == "3,60\xa0\u20ac"
+    assert format_money(Money("3.6", "EUR"), widen=2, locale="fi") == "3,6000\xa0\u20ac"
+    assert format_money(Money("3.6", "EUR"), digits=0, locale="fi") == "4\xa0\u20ac"

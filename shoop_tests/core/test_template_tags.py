@@ -106,10 +106,10 @@ def test_money_formatter_en():
         assert money(Money("29.99", "EUR")) == "€29.99"
         assert money(Money("29.99", "GBP")) == "£29.99"
         assert money(Money("29.99", "CAD")) == "CA$29.99"
-        assert money(Money("29.99", "JPY")) == "¥29.99"
+        assert money(Money("29.99", "JPY")) == "¥30"  # No such thing as a decimal yen!
         assert money(Money("29.99", "CNY")) == "CN¥29.99"
-        assert money(Money("29.99", "KRW")) == "₩29.99"
-        assert money(Money("29.99", "SEK")) == "SEK29.99"
+        assert money(Money("29.99", "KRW")) == "₩30"  # the 1/100 subunit "jeon" is theoretical and not in use
+        assert money(Money("29.99", "SEK")) == "kr29.99"
 
 
 def test_money_formatter_fi():
@@ -118,9 +118,9 @@ def test_money_formatter_fi():
         assert money(Money("29.99", "EUR")) == nbsp("29,99 €")
         assert money(Money("29.99", "GBP")) == nbsp("29,99 £")
         assert money(Money("29.99", "CAD")) == nbsp("29,99 CAD")
-        assert money(Money("29.99", "JPY")) == nbsp("29,99 ¥")
+        assert money(Money("29.99", "JPY")) == nbsp("30 ¥")  # No such thing as a decimal yen!
         assert money(Money("29.99", "CNY")) == nbsp("29,99 CNY")
-        assert money(Money("29.99", "KRW")) == nbsp("29,99 KRW")
+        assert money(Money("29.99", "KRW")) == nbsp("30 KRW")  # the 1/100 subunit "jeon" is theoretical and not in use
         assert money(Money("29.99", "SEK")) == nbsp("29,99 SEK")
 
 
@@ -147,7 +147,7 @@ def test_money_formatter_digit_grouping():
     with translation.override("fi-FI"):
         assert money(usd(12345678)) == nbsp("12 345 678,00 $")
     with translation.override("ar-QA"):
-        assert money(usd(12345678)) == nbsp("US$12345678.00")
+        assert money(usd(12345678)) == nbsp("US$ 12,345,678.00")
 
 
 def test_money_formatter_with_specified_digits():

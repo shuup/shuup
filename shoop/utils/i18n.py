@@ -62,9 +62,32 @@ def format_percent(value, digits=0):
 
 
 def format_money(amount, digits=None, widen=0, locale=None):
-    loc = babel.Locale.parse(locale or get_current_babel_locale())
+    """
+    Format a Money object in the given locale.
 
-    pattern = loc.currency_formats.get(None).pattern
+    If neither digits or widen is passed, the preferred number of digits for
+    the amount's currency is used.
+
+    :param amount: The Money object to format
+    :type amount: Money
+    :param digits: How many digits to format the currency with.
+    :type digits: int|None
+    :param widen: How many digits to widen any existing decimal width with.
+    :type widen: int|None
+    :param locale: Locale object or locale identifier
+    :type locale: Locale|str
+    :return: Formatted string
+    :rtype: str
+    """
+    if not locale:
+        loc = get_current_babel_locale()
+    else:
+        loc = get_babel_locale(locale)
+
+    if widen == 0 and digits is None:  # No special treatment required; format with the currency's digits.
+        return format_currency(amount.value, amount.currency, locale=loc, currency_digits=True)
+
+    pattern = loc.currency_formats["standard"].pattern
 
     # pattern is a formatting string.  Couple examples:
     # '¤#,##0.00', '#,##0.00\xa0¤', '\u200e¤#,##0.00', and '¤#0.00'
@@ -73,7 +96,8 @@ def format_money(amount, digits=None, widen=0, locale=None):
         pattern = pattern.replace(".00", "." + (digits * "0"))
     if widen:
         pattern = pattern.replace(".00", ".00" + (widen * "0"))
-    return format_currency(amount.value, amount.currency, pattern, loc)
+
+    return format_currency(amount.value, amount.currency, pattern, loc, currency_digits=False)
 
 
 def get_language_name(language_code):
