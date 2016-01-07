@@ -17,7 +17,7 @@ from shoop.utils.dates import get_year_and_month_format
 @pytest.mark.parametrize("locale_name,expected", [
     ("fi_FI", "maalis 1980"),
     ("en_US", "Mar 1980"),
-    ("sv", "mar 1980"),
+    ("sv", "mars 1980"),
 ])
 def test_year_and_month(locale_name, expected):
     locale = babel.Locale.parse(locale_name)
