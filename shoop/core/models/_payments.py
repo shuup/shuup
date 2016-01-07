@@ -17,19 +17,19 @@ __all__ = ("Payment",)
 
 class Payment(MoneyPropped, models.Model):
     # TODO: Revise!!!
-    order = models.ForeignKey("Order", related_name='payments', on_delete=models.PROTECT)
-    created_on = models.DateTimeField(auto_now_add=True)
-    gateway_id = models.CharField(max_length=32)  # TODO: do we need this?
-    payment_identifier = models.CharField(max_length=96, unique=True)
+    order = models.ForeignKey("Order", related_name='payments', on_delete=models.PROTECT, verbose_name=_('order'))
+    created_on = models.DateTimeField(auto_now_add=True, verbose_name=_('created on'))
+    gateway_id = models.CharField(max_length=32, verbose_name=_('gateway ID'))  # TODO: do we need this?
+    payment_identifier = models.CharField(max_length=96, unique=True, verbose_name=_('identifier'))
 
     amount = MoneyProperty('amount_value', 'order.currency')
     foreign_amount = MoneyProperty('foreign_amount_value', 'foreign_currency')
 
-    amount_value = MoneyValueField()
-    foreign_amount_value = MoneyValueField(default=None, blank=True, null=True)
-    foreign_currency = CurrencyField(default=None, blank=True, null=True)
+    amount_value = MoneyValueField(verbose_name=_('amount'))
+    foreign_amount_value = MoneyValueField(default=None, blank=True, null=True, verbose_name=_('foreign amount'))
+    foreign_currency = CurrencyField(default=None, blank=True, null=True, verbose_name=_('foreign amount currency'))
 
-    description = models.CharField(max_length=256, blank=True)
+    description = models.CharField(max_length=256, blank=True, verbose_name=_('description'))
 
     class Meta:
         verbose_name = _('payment')

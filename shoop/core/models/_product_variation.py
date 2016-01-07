@@ -35,7 +35,8 @@ class ProductVariationLinkStatus(Enum):
 
 @python_2_unicode_compatible
 class ProductVariationVariable(TranslatableModel):
-    product = models.ForeignKey("Product", related_name='variation_variables', on_delete=models.CASCADE)
+    product = models.ForeignKey(
+        "Product", related_name='variation_variables', on_delete=models.CASCADE, verbose_name=_("product"))
     identifier = InternalIdentifierField(unique=False)
     translations = TranslatedFields(
         name=models.CharField(max_length=128, verbose_name=_('name')),
@@ -52,7 +53,8 @@ class ProductVariationVariable(TranslatableModel):
 
 @python_2_unicode_compatible
 class ProductVariationVariableValue(TranslatableModel):
-    variable = models.ForeignKey(ProductVariationVariable, related_name='values', on_delete=models.CASCADE)
+    variable = models.ForeignKey(
+        ProductVariationVariable, related_name='values', on_delete=models.CASCADE, verbose_name=_("variation variable"))
     identifier = InternalIdentifierField(unique=False)
 
     translations = TranslatedFields(
@@ -69,10 +71,13 @@ class ProductVariationVariableValue(TranslatableModel):
 
 
 class ProductVariationResult(models.Model):
-    product = models.ForeignKey("Product", related_name='variation_result_supers', on_delete=models.CASCADE)
-    combination_hash = models.CharField(max_length=40, unique=True, db_index=True)
-    result = models.ForeignKey("Product", related_name='variation_result_subs', on_delete=models.CASCADE)
-    status = EnumIntegerField(ProductVariationLinkStatus, db_index=True, default=ProductVariationLinkStatus.VISIBLE)
+    product = models.ForeignKey(
+        "Product", related_name='variation_result_supers', on_delete=models.CASCADE, verbose_name=_("product"))
+    combination_hash = models.CharField(max_length=40, unique=True, db_index=True, verbose_name=_("combination hash"))
+    result = models.ForeignKey(
+        "Product", related_name='variation_result_subs', on_delete=models.CASCADE, verbose_name=_("result"))
+    status = EnumIntegerField(
+        ProductVariationLinkStatus, db_index=True, default=ProductVariationLinkStatus.VISIBLE, verbose_name=_("status"))
 
     @classmethod
     def resolve(cls, parent_product, combination):

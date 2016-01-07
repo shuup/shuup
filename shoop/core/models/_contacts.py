@@ -46,9 +46,9 @@ class Contact(NameMixin, PolymorphicModel):
     is_all_seeing = False
     default_tax_group_getter = None
 
-    created_on = models.DateTimeField(auto_now_add=True, editable=False)
+    created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_('created on'))
     identifier = InternalIdentifierField(unique=True, null=True, blank=True)
-    is_active = models.BooleanField(default=True, db_index=True)
+    is_active = models.BooleanField(default=True, db_index=True, verbose_name=_('active'))
     # TODO: parent contact?
     default_shipping_address = models.ForeignKey(
         "MutableAddress", null=True, blank=True, related_name="+", verbose_name=_('shipping address'),
@@ -69,14 +69,16 @@ class Contact(NameMixin, PolymorphicModel):
     marketing_permission = models.BooleanField(default=True, verbose_name=_('marketing permission'))
     phone = models.CharField(max_length=64, blank=True, verbose_name=_('phone'))
     www = models.URLField(max_length=128, blank=True, verbose_name=_('web address'))
-    timezone = TimeZoneField(blank=True, null=True)
+    timezone = TimeZoneField(blank=True, null=True, verbose_name=_('time zone'))
     prefix = models.CharField(verbose_name=_('name prefix'), max_length=64, blank=True)
     name = models.CharField(max_length=256, verbose_name=_('name'))
     suffix = models.CharField(verbose_name=_('name suffix'), max_length=64, blank=True)
     name_ext = models.CharField(max_length=256, blank=True, verbose_name=_('name extension'))
     email = models.EmailField(max_length=256, blank=True, verbose_name=_('email'))
 
-    tax_group = models.ForeignKey("CustomerTaxGroup", blank=True, null=True, on_delete=models.PROTECT)
+    tax_group = models.ForeignKey(
+        "CustomerTaxGroup", blank=True, null=True, on_delete=models.PROTECT, verbose_name=_('tax group')
+    )
 
     def __str__(self):
         return self.full_name
@@ -94,10 +96,13 @@ class Contact(NameMixin, PolymorphicModel):
 class CompanyContact(Contact):
     default_tax_group_getter = CustomerTaxGroup.get_default_company_group
 
-    members = models.ManyToManyField("Contact", related_name="company_memberships", blank=True)
+    members = models.ManyToManyField(
+        "Contact", related_name="company_memberships", blank=True,
+        verbose_name=_('members')
+    )
     tax_number = models.CharField(
         max_length=32, blank=True,
-        verbose_name=_("Tax number"),
+        verbose_name=_("tax number"),
         help_text=_("e.g. EIN in US or VAT code in Europe"))
 
     class Meta:
@@ -115,9 +120,12 @@ class Gender(Enum):
 class PersonContact(Contact):
     default_tax_group_getter = CustomerTaxGroup.get_default_person_group
 
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, blank=True, null=True, related_name="contact")
-    gender = EnumField(Gender, default=Gender.UNDISCLOSED, max_length=4)
-    birth_date = models.DateField(blank=True, null=True)
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, blank=True, null=True, related_name="contact",
+        verbose_name=_('user')
+    )
+    gender = EnumField(Gender, default=Gender.UNDISCLOSED, max_length=4, verbose_name=_('gender'))
+    birth_date = models.DateField(blank=True, null=True, verbose_name=_('birth date'))
     # TODO: Figure out how/when/if the name and email fields are updated from users
 
     class Meta:

@@ -101,12 +101,15 @@ class AttributeQuerySet(TranslatableQuerySet):
 @python_2_unicode_compatible
 class Attribute(TranslatableModel):
     identifier = InternalIdentifierField(unique=True, blank=False, null=False, editable=True)
-    searchable = models.BooleanField(default=True)
-    type = EnumIntegerField(AttributeType, default=AttributeType.TRANSLATED_STRING)
-    visibility_mode = EnumIntegerField(AttributeVisibility, default=AttributeVisibility.SHOW_ON_PRODUCT_PAGE)
+    searchable = models.BooleanField(default=True, verbose_name=_("searchable"))
+    type = EnumIntegerField(AttributeType, default=AttributeType.TRANSLATED_STRING, verbose_name=_("type"))
+    visibility_mode = EnumIntegerField(
+        AttributeVisibility,
+        default=AttributeVisibility.SHOW_ON_PRODUCT_PAGE,
+        verbose_name=_("visibility mode"))
 
     translations = TranslatedFields(
-        name=models.CharField(max_length=64),
+        name=models.CharField(max_length=64, verbose_name=_("name")),
     )
 
     objects = AttributeQuerySet.as_manager()
@@ -192,11 +195,13 @@ class Attribute(TranslatableModel):
 class AppliedAttribute(TranslatableModel):
     _applied_fk_field = None  # Used by the `repr` implementation
 
-    attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE)
+    attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE, verbose_name=_("attribute"))
 
-    numeric_value = models.DecimalField(null=True, blank=True, max_digits=36, decimal_places=9)
-    datetime_value = models.DateTimeField(auto_now_add=False, editable=True, null=True, blank=True)
-    untranslated_string_value = models.TextField(blank=True)
+    numeric_value = models.DecimalField(
+        null=True, blank=True, max_digits=36, decimal_places=9, verbose_name=_("numeric value"))
+    datetime_value = models.DateTimeField(
+        auto_now_add=False, editable=True, null=True, blank=True, verbose_name=_("datetime value"))
+    untranslated_string_value = models.TextField(blank=True, verbose_name=_("untranslated value"))
 
     # Concrete subclasses will require this TranslatedFields declaration:
     # translations = TranslatedFields(

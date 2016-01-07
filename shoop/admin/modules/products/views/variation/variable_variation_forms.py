@@ -41,7 +41,8 @@ class VariableVariationChildrenForm(forms.Form):
                 # TODO: Add a mode for ProductChoiceWidget to only allow eligible variation children to be selected
                 widget=ProductChoiceWidget(clearable=True),
                 required=False,
-                initial=combo["result_product_pk"]
+                initial=combo["result_product_pk"],
+                label=_("variable combination")
             )
             field.combo = combo
             self.fields["r_%s" % combo["hash"]] = field

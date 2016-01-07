@@ -35,14 +35,15 @@ class ShipmentStatus(Enum):
 
 
 class Shipment(models.Model):
-    order = models.ForeignKey("Order", related_name='shipments', on_delete=models.PROTECT)
-    supplier = models.ForeignKey("Supplier", related_name='shipments', on_delete=models.PROTECT)
-    created_on = models.DateTimeField(auto_now_add=True)
-    status = EnumIntegerField(ShipmentStatus, default=ShipmentStatus.NOT_SENT)
-    tracking_code = models.CharField(max_length=64, blank=True, verbose_name=_('tracking code'))
-    description = models.CharField(max_length=255, blank=True)
-    volume = MeasurementField(unit="m3")
-    weight = MeasurementField(unit="kg")
+    order = models.ForeignKey("Order", related_name='shipments', on_delete=models.PROTECT, verbose_name=_("order"))
+    supplier = models.ForeignKey(
+        "Supplier", related_name='shipments', on_delete=models.PROTECT, verbose_name=_("supplier"))
+    created_on = models.DateTimeField(auto_now_add=True, verbose_name=_("created on"))
+    status = EnumIntegerField(ShipmentStatus, default=ShipmentStatus.NOT_SENT, verbose_name=_("status"))
+    tracking_code = models.CharField(max_length=64, blank=True, verbose_name=_("tracking code"))
+    description = models.CharField(max_length=255, blank=True, verbose_name=_("description"))
+    volume = MeasurementField(unit="m3", verbose_name=_("volume"))
+    weight = MeasurementField(unit="kg", verbose_name=_("weight"))
     # TODO: documents = models.ManyToManyField(FilerFile)
 
     class Meta:
@@ -73,11 +74,17 @@ class Shipment(models.Model):
 
 @python_2_unicode_compatible
 class ShipmentProduct(models.Model):
-    shipment = models.ForeignKey(Shipment, related_name='products', on_delete=models.PROTECT)
-    product = models.ForeignKey("Product", related_name='shipments', on_delete=models.CASCADE)
-    quantity = QuantityField()
-    unit_volume = MeasurementField(unit="m3")  # volume is m^3, not mm^3, because mm^3 are tiny. like ants.
-    unit_weight = MeasurementField(unit="g")
+    shipment = models.ForeignKey(
+        Shipment, related_name='products', on_delete=models.PROTECT, verbose_name=_("shipment")
+    )
+    product = models.ForeignKey(
+        "Product", related_name='shipments', on_delete=models.CASCADE, verbose_name=_("product")
+    )
+    quantity = QuantityField(verbose_name=_("quantity"))
+
+    # volume is m^3, not mm^3, because mm^3 are tiny. like ants.
+    unit_volume = MeasurementField(unit="m3", verbose_name=_("unit volume"))
+    unit_weight = MeasurementField(unit="g", verbose_name=_("unit weight"))
 
     class Meta:
         verbose_name = _('sent product')

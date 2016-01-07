@@ -89,7 +89,7 @@ class Method(TaxableItem, ModuleInterface, TranslatableModel):
     status = EnumIntegerField(MethodStatus, db_index=True, default=MethodStatus.ENABLED, verbose_name=_('status'))
     identifier = InternalIdentifierField(unique=True)
     module_identifier = models.CharField(max_length=64, blank=True, verbose_name=_('module'))
-    module_data = JSONField(blank=True, null=True)
+    module_data = JSONField(blank=True, null=True, verbose_name=_('module data'))
 
     objects = MethodQuerySet.as_manager()
 

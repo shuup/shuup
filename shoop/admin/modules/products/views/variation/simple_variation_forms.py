@@ -21,7 +21,11 @@ from shoop.core.models import Product
 
 class SimpleVariationChildForm(forms.Form):
     # TODO: Add a mode for ProductChoiceWidget to only allow eligible variation children to be selected
-    child = forms.ModelChoiceField(queryset=Product.objects.all(), widget=ProductChoiceWidget())
+    child = forms.ModelChoiceField(
+        queryset=Product.objects.all(),
+        widget=ProductChoiceWidget(),
+        label=_('child')
+    )
 
 
 class SimpleVariationChildFormSet(BaseFormSet):

@@ -9,6 +9,7 @@ import markdown
 from django import forms
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
 
 from shoop.xtheme.plugins._base import Plugin
 from shoop.xtheme.plugins.forms import TranslatableField
@@ -21,7 +22,7 @@ class TextPlugin(Plugin):
     identifier = "text"
     name = "Text"
     fields = [
-        ("text", TranslatableField(required=False, widget=forms.Textarea))
+        ("text", TranslatableField(label=_("text"), required=False, widget=forms.Textarea))
     ]
 
     def render(self, context):  # doccov: ignore

@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.translation import ugettext_lazy as _
 from jsonfield.fields import JSONField
 
 from shoop.core.fields import InternalIdentifierField
@@ -18,11 +19,11 @@ from shoop.notify.enums import StepNext
 
 @python_2_unicode_compatible
 class Script(models.Model):
-    event_identifier = models.CharField(max_length=64, blank=False, db_index=True)
+    event_identifier = models.CharField(max_length=64, blank=False, db_index=True, verbose_name=_('event identifier'))
     identifier = InternalIdentifierField(unique=True)
-    created_on = models.DateTimeField(auto_now_add=True, editable=False)
-    name = models.CharField(max_length=64)
-    enabled = models.BooleanField(default=False, db_index=True)
+    created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_('created on'))
+    name = models.CharField(max_length=64, verbose_name=_('name'))
+    enabled = models.BooleanField(default=False, db_index=True, verbose_name=_('enabled'))
     _step_data = JSONField(default=[], db_column="step_data")
 
     def get_steps(self):

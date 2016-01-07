@@ -8,6 +8,7 @@
 from __future__ import with_statement
 
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 
 from shoop.core.models import Category, Manufacturer, Product
@@ -18,8 +19,14 @@ from shoop.front.utils.views import cache_product_things
 
 
 class ProductListForm(forms.Form):
-    sort = forms.CharField(required=False, widget=forms.Select(choices=PRODUCT_SORT_CHOICES))
-    manufacturers = forms.ModelMultipleChoiceField(queryset=Manufacturer.objects.all(), required=False)
+    sort = forms.CharField(
+        required=False, widget=forms.Select(choices=PRODUCT_SORT_CHOICES),
+        label=_('Sort')
+    )
+    manufacturers = forms.ModelMultipleChoiceField(
+        queryset=Manufacturer.objects.all(), required=False,
+        label=_('Manufacturer')
+    )
 
 
 class CategoryView(DetailView):

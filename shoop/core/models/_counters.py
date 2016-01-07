@@ -22,8 +22,8 @@ class CounterType(Enum):
 
 
 class Counter(models.Model):
-    id = EnumIntegerField(CounterType, primary_key=True)
-    value = models.IntegerField(default=0)
+    id = EnumIntegerField(CounterType, primary_key=True, verbose_name=_('identifier'))
+    value = models.IntegerField(default=0, verbose_name=_('value'))
 
     class Meta:
         verbose_name = _('counter')

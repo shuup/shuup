@@ -25,14 +25,16 @@ from ._products import ProductVisibility, StockBehavior
 
 
 class ShopProduct(MoneyPropped, models.Model):
-    shop = models.ForeignKey("Shop", related_name="shop_products", on_delete=models.CASCADE)
-    product = UnsavedForeignKey("Product", related_name="shop_products", on_delete=models.CASCADE)
-    suppliers = models.ManyToManyField("Supplier", related_name="shop_products", blank=True)
+    shop = models.ForeignKey("Shop", related_name="shop_products", on_delete=models.CASCADE, verbose_name=_("shop"))
+    product = UnsavedForeignKey(
+        "Product", related_name="shop_products", on_delete=models.CASCADE, verbose_name=_("product"))
+    suppliers = models.ManyToManyField(
+        "Supplier", related_name="shop_products", blank=True, verbose_name=_("suppliers"))
 
-    visible = models.BooleanField(default=True, db_index=True)
-    listed = models.BooleanField(default=True, db_index=True)
-    purchasable = models.BooleanField(default=True, db_index=True)
-    searchable = models.BooleanField(default=True, db_index=True)
+    visible = models.BooleanField(default=True, db_index=True, verbose_name=_("visible"))
+    listed = models.BooleanField(default=True, db_index=True, verbose_name=_("listed"))
+    purchasable = models.BooleanField(default=True, db_index=True, verbose_name=_("purchasable"))
+    searchable = models.BooleanField(default=True, db_index=True, verbose_name=_("searchable"))
     visibility_limit = EnumIntegerField(
         ProductVisibility, db_index=True, default=ProductVisibility.VISIBLE_TO_ALL,
         verbose_name=_('visibility limitations')
@@ -42,8 +44,8 @@ class ShopProduct(MoneyPropped, models.Model):
     )
     purchase_multiple = QuantityField(default=0, verbose_name=_('purchase multiple'))
     minimum_purchase_quantity = QuantityField(default=1, verbose_name=_('minimum purchase'))
-    limit_shipping_methods = models.BooleanField(default=False)
-    limit_payment_methods = models.BooleanField(default=False)
+    limit_shipping_methods = models.BooleanField(default=False, verbose_name=_("limited for shipping methods"))
+    limit_payment_methods = models.BooleanField(default=False, verbose_name=_("limited for payment methods"))
     shipping_methods = models.ManyToManyField(
         "ShippingMethod", related_name='shipping_products', verbose_name=_('shipping methods'), blank=True
     )
@@ -58,12 +60,14 @@ class ShopProduct(MoneyPropped, models.Model):
         "Category", related_name='shop_products', verbose_name=_('categories'), blank=True
     )
     shop_primary_image = models.ForeignKey(
-        "ProductMedia", null=True, blank=True, related_name="primary_image_for_shop_products", on_delete=models.SET_NULL
+        "ProductMedia", null=True, blank=True,
+        related_name="primary_image_for_shop_products", on_delete=models.SET_NULL,
+        verbose_name=_("primary image")
     )
 
     # the default price of this product in the shop
     default_price = PriceProperty('default_price_value', 'shop.currency', 'shop.prices_include_tax')
-    default_price_value = MoneyValueField(verbose_name=_("Default price"), null=True, blank=True)
+    default_price_value = MoneyValueField(verbose_name=_("default price"), null=True, blank=True)
 
     class Meta:
         unique_together = (("shop", "product",),)

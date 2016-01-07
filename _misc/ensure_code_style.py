@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shoop.
 #
-# Copyright (c) 2012-2015, Shoop Ltd. All rights reserved.
+# Copyright (c) 2012-2016, Shoop Ltd. All rights reserved.
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -78,7 +78,8 @@ class VerboseNameVisitor(XNodeVisitor):
             if isinstance(arg, ast.Str) and needle == "verbose_name":
                 if not arg.s[0].islower() and not any(arg.s.startswith(acronym) for acronym in KNOWN_ACRONYMS):
                     self.errors.append("%d: %s `%s` not lower-case (value: %r) (ctx: %s)" % (
-                    node.lineno, name, needle, arg.s, context))
+                        node.lineno, name, needle, arg.s, context)
+                    )
             return
 
         if isinstance(kw_value, ast.Name):  # It's a variable
@@ -130,7 +131,6 @@ def command(filenames, dirnames, checkers, group=False):
         for error in file_errors:
             print("%s:%s" % (filename, error), file=sys.stderr)
             error_count += 1
-
 
     print("###########################")
     print("Total errors to handle: %d" % error_count)

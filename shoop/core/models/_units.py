@@ -27,8 +27,8 @@ class SalesUnit(TranslatableModel):
     decimals = models.PositiveSmallIntegerField(default=0, verbose_name=_(u"allowed decimals"))
 
     translations = TranslatedFields(
-        name=models.CharField(max_length=128),
-        short_name=models.CharField(max_length=128),
+        name=models.CharField(max_length=128, verbose_name=_('name')),
+        short_name=models.CharField(max_length=128, verbose_name=_('short name')),
     )
 
     class Meta:

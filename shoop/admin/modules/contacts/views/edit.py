@@ -78,12 +78,13 @@ class ContactBaseForm(BaseModelForm):
         self.fields["type"] = forms.ChoiceField(choices=[
             ("PersonContact", _("Person")),
             ("CompanyContact", _("Company"))
-        ])
+        ], label=_("Type"))
         self.fields["groups"] = forms.ModelMultipleChoiceField(
             queryset=ContactGroup.objects.all(),
             initial=(self.instance.groups.all() if self.instance.pk else ()),
             required=False,
-            widget=forms.CheckboxSelectMultiple()
+            widget=forms.CheckboxSelectMultiple(),
+            label=_("Contact Groups")
         )
         self.fields_by_model = {}
 
