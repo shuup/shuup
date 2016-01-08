@@ -12,7 +12,7 @@ var concat = require("gulp-concat");
 var gulp = require("gulp");
 var gutil = require("gulp-util");
 var less = require("gulp-less");
-var mincss = require("gulp-minify-css");
+var cssnano = require("gulp-cssnano");
 var plumber = require("gulp-plumber");
 var settings = require("../settings");
 var size = require("gulp-size");
@@ -38,7 +38,7 @@ module.exports = function(spec, name) {
                 cascade: false
             }))
             .pipe(concat(name + ".css"))
-            .pipe((settings.PRODUCTION ? mincss() : gutil.noop()))
+            .pipe((settings.PRODUCTION ? cssnano() : gutil.noop()))
             .pipe(sourcemaps.write("."))
             .pipe(size({title: taskName}))
             .pipe(gulp.dest(destDir));
