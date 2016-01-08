@@ -13,7 +13,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumField
 from parler.models import TranslatableModel, TranslatedFields
-from polymorphic.polymorphic_model import PolymorphicModel
+from polymorphic.models import PolymorphicModel
 from timezone_field.fields import TimeZoneField
 
 from shoop.core.fields import InternalIdentifierField, LanguageField
