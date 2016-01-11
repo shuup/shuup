@@ -9,11 +9,13 @@ from __future__ import unicode_literals
 
 from django.template.loader import get_template
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import get_language
 
 from shoop.apps.provides import (
     get_identifier_to_object_map, get_provide_objects
 )
 from shoop.utils.text import space_case
+from shoop.xtheme.plugins.consts import FALLBACK_LANGUAGE_CODE
 from shoop.xtheme.plugins.forms import GenericPluginForm
 
 SENTINEL = object()
@@ -83,6 +85,37 @@ class Plugin(object):
         # Could be overridden in suitably special subclasses.
         if self.fields:
             return self.editor_form_class
+
+    def get_translated_value(self, key, default=None, language=None):
+        """
+        Get a translated value from the plugin's configuration.
+
+        It's assumed that translated values are stored in a ``{language: data, ...}`` dictionary
+        in the plugin configuration blob.
+        This is the protocol that `shoop.xtheme.plugins.forms.TranslatableField` uses.
+
+        If the configuration blob contains such a dictionary, but it does not contain
+        a translated value in the requested language does not exist, the fallback value, if any,
+        within that dictionary is tried next.  Failing that, the ``default`` value is returned.
+
+        :param key: Configuration key
+        :type key: str
+        :param default: Default value to return when all else fails.
+        :param language: Requested language. Defaults to the active language.
+        :type language: str|None
+        :return: A translated value.
+        """
+        value = self.config.get(key)
+        if not value:
+            return default
+        if isinstance(value, dict):  # It's a dict, so assume it's something from TranslatableField
+            language = (language or get_language())
+            if language in value:  # The language we requested exists, use that
+                return value[language]
+            if FALLBACK_LANGUAGE_CODE in value:  # An untranslated fallback exists, use that
+                return value[FALLBACK_LANGUAGE_CODE]
+            return default  # Fall back to the default, then
+        return value  # Return the value itself; it's probably just something untranslated.
 
     @classmethod
     def load(cls, identifier):

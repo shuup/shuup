@@ -11,6 +11,7 @@ from django.utils.html import escape
 from django.utils.safestring import mark_safe
 
 from shoop.xtheme.plugins.base import Plugin
+from shoop.xtheme.plugins.forms import TranslatableField
 
 
 class TextPlugin(Plugin):
@@ -20,11 +21,11 @@ class TextPlugin(Plugin):
     identifier = "text"
     name = "Text"
     fields = [
-        ("text", forms.CharField(required=False, widget=forms.Textarea))
+        ("text", TranslatableField(required=False, widget=forms.Textarea))
     ]
 
     def render(self, context):  # doccov: ignore
-        text = (self.config.get("text") or "")
+        text = self.get_translated_value("text")
         try:
             markup = markdown.markdown(text)
         except:  # Markdown parsing error? Well, just escape then...

@@ -12,6 +12,7 @@ from shoop.front.template_helpers.general import (
     get_best_selling_products, get_newest_products, get_random_products
 )
 from shoop.xtheme.plugins import TemplatedPlugin
+from shoop.xtheme.plugins.forms import TranslatableField
 
 
 class ProductHighlightPlugin(TemplatedPlugin):
@@ -19,7 +20,7 @@ class ProductHighlightPlugin(TemplatedPlugin):
     name = _("Product Highlights")
     template_name = "classic_gray/highlight_plugin.jinja"
     fields = [
-        ("title", forms.CharField(required=False, initial="")),
+        ("title", TranslatableField(required=False, initial="")),
         ("type", forms.ChoiceField(choices=[
             ("newest", "Newest"),
             ("best_selling", "Best Selling"),
@@ -42,6 +43,6 @@ class ProductHighlightPlugin(TemplatedPlugin):
 
         return {
             "request": context["request"],
-            "title": self.config.get("title"),
+            "title": self.get_translated_value("title"),
             "products": products
         }

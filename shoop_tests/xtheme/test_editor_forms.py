@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from shoop.xtheme.layout import LayoutCell
+from shoop.xtheme.plugins.consts import FALLBACK_LANGUAGE_CODE
 from shoop.xtheme.views.forms import (
     LayoutCellFormGroup, LayoutCellGeneralInfoForm
 )
@@ -41,4 +42,4 @@ def test_lcfg():
         assert lcfg.is_valid()  # Let's see now!
         lcfg.save()
         assert cell.sizes["md"] == two_thirds
-        assert cell.config["text"] == "Hello, world!"
+        assert cell.config["text"] == {FALLBACK_LANGUAGE_CODE: "Hello, world!"}
