@@ -28,7 +28,9 @@ from six import text_type
 from shoop.utils.importing import load
 from shoop.utils.iterables import first
 
-isoformat = lambda obj: obj.isoformat()
+
+def isoformat(obj):
+    return obj.isoformat()
 
 
 def encode_enum(enum_val):
