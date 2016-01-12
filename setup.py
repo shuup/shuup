@@ -71,46 +71,43 @@ utils.set_exclude_patters([
 ])
 
 REQUIRES = [
-    'Babel==2.2',
-    'Django>=1.8,<1.9',
-    'django-bootstrap3==6.1.0',
-    'django-countries==3.3',
+    'Babel~=2.2.0',
+    'Django~=1.8.0',
+    'django-bootstrap3~=6.2.2',
+    'django-countries~=3.4.1',
     'django-enumfields==0.7.4',
-    'django-filer==0.9.12',
-    'django-jinja==1.4.1',
-    'django-mptt==0.7.4',
-    'django-parler==1.5',
-    'django-polymorphic==0.7.1',
-    'django-registration-redux==1.2',
-    'django-timezone-field==1.2',
-    'djangorestframework==3.1.3',
-    'factory-boy==2.5.2',
-    'fake-factory==0.5.2',
-    'jsonfield==1.0.3',
-    'Markdown==2.6.2',
-    'pytz==2015.4',
+    'django-filer~=1.0.6',
+    'django-jinja~=1.4.2',  # django-jinja==2.x is buggy with Django 1.8; can't upgrade that far yet.
+    'django-mptt~=0.8.0',
+    'django-parler~=1.6.0',
+    'django-polymorphic==0.8.1',
+    'django-registration-redux~=1.2.0',
+    'django-timezone-field~=1.3.0',
+    'djangorestframework~=3.3.2',
+    'factory-boy~=2.6.0',
+    'fake-factory==0.5.3',
+    'jsonfield~=1.0.3',
+    'Markdown~=2.6.5',
+    'pytz>=2015.7',
     'requests>=2.7.0,<3',
-    'six==1.9.0',
-    'Jinja2==2.8',
-    'pytoml==0.1.4'
+    'six~=1.10.0',
+    'Jinja2~=2.8.0',
+    'pytoml~=0.1.7'
 ]
 
 REQUIRES_FOR_PYTHON2_ONLY = [
-    'enum34==1.0.4',
+    'enum34~=1.1.0',
 ]
 
 EXTRAS_REQUIRE = {
     ':python_version=="2.7"': REQUIRES_FOR_PYTHON2_ONLY,
     'docs': [
-        'Sphinx==1.3.1',
+        'Sphinx~=1.3.3',
     ],
     'testing': utils.get_test_requirements_from_tox_ini(TOPDIR),
     'coding-style': [
-        'flake8==2.4.1',
-        'mccabe==0.3.1',
-        'pep8==1.5.7',
-        'pep8-naming==0.2.2',
-        'pyflakes==0.8.1',
+        'flake8~=2.5.1',
+        'pep8~=1.6.2',  # required to avoid VersionConflict (pep8>=1.6.2)
     ],
 }
 EXTRAS_REQUIRE['everything'] = list(set(sum(EXTRAS_REQUIRE.values(), [])))
