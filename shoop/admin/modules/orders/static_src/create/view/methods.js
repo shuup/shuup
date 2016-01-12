@@ -22,13 +22,7 @@ function renderMethod(store, mode, title, selectedMethod, choices, emptyChoice) 
             ]
         ),
         m("div", [
-            (selectedMethod ? m("p.text-center", gettext("Price") + ": " + selectedMethod.price.toFixed(2)) : null),
-            (selectedMethod && selectedMethod.waiverMinimum != null ?
-                m("p.text-center", gettext("Waiver limit") + ": " + selectedMethod.waiverMinimum.toFixed(2)) : null),
-            (selectedMethod && selectedMethod.minWeight != null ?
-                m("p.text-center", gettext("Minimum weight") + ": " + selectedMethod.minWeight) : null),
-            (selectedMethod && selectedMethod.maxWeight != null ?
-                m("p.text-center", gettext("Maximum weight") + ": " + selectedMethod.maxWeight) : null),
+            (selectedMethod ? m("p.text-center", gettext("Price") + ": " + parseFloat(selectedMethod.price).toFixed(2)) : null)
         ])
     ];
 }

@@ -68,13 +68,10 @@ def encode_shop(shop):
 
 
 def encode_method_extras(method):
-    is_shipping = isinstance(method, ShippingMethod)
-    module_data = method.module_data
+    module_data = method.module_data or {}
+
     return {
-        "price": module_data.get("price") if module_data else decimal.Decimal("0.00"),
-        "waiverMinimum": module_data.get("price_waiver_product_minimum") if module_data else decimal.Decimal("0.00"),
-        "minWeight": module_data.get("min_weight") if module_data and is_shipping else None,
-        "maxWeight": module_data.get("max_weight") if module_data and is_shipping else None
+        "price": module_data.get("price", "0"),
     }
 
 
