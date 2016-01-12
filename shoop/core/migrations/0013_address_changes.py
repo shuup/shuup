@@ -33,6 +33,11 @@ def copy_order_addresses(apps, schema_editor):
             order.save()
 
 
+class FakeAlterField(migrations.AlterField):
+    def database_forwards(self, app_label, schema_editor, from_state, to_state):
+        pass
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -101,23 +106,23 @@ class Migration(migrations.Migration):
             model_name='order',
             name='mutable_shipping_address',
         ),
-        migrations.AlterField(
-            model_name='contact',
-            name='default_billing_address',
-            field=models.ForeignKey(related_name='+', on_delete=django.db.models.deletion.PROTECT, verbose_name='billing address', blank=True, to='shoop.MutableAddress', null=True),
-        ),
-        migrations.AlterField(
-            model_name='contact',
-            name='default_shipping_address',
-            field=models.ForeignKey(related_name='+', on_delete=django.db.models.deletion.PROTECT, verbose_name='shipping address', blank=True, to='shoop.MutableAddress', null=True),
-        ),
-        migrations.AlterField(
-            model_name='savedaddress',
-            name='address',
-            field=models.ForeignKey(related_name='saved_addresses', verbose_name='address', to='shoop.MutableAddress'),
-        ),
         migrations.RenameModel(
             old_name='Address',
             new_name='MutableAddress'
         ),
+        FakeAlterField(
+            model_name='contact',
+            name='default_billing_address',
+            field=models.ForeignKey(related_name='+', on_delete=django.db.models.deletion.PROTECT, verbose_name='billing address', blank=True, to='shoop.MutableAddress', null=True),
+        ),
+        FakeAlterField(
+            model_name='contact',
+            name='default_shipping_address',
+            field=models.ForeignKey(related_name='+', on_delete=django.db.models.deletion.PROTECT, verbose_name='shipping address', blank=True, to='shoop.MutableAddress', null=True),
+        ),
+        FakeAlterField(
+            model_name='savedaddress',
+            name='address',
+            field=models.ForeignKey(related_name='saved_addresses', verbose_name='address', to='shoop.MutableAddress'),
+        )
     ]
