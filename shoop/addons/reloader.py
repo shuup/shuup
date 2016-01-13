@@ -44,9 +44,9 @@ class DevServerReloadMethod(ReloadMethod):
 
     def is_viable(self):
         return (
-            ("runserver" in sys.argv or "devserver" in sys.argv)
-            and ("noreload" not in sys.argv)
-            and os.environ.get("RUN_MAIN")
+            ("runserver" in sys.argv or "devserver" in sys.argv) and
+            ("noreload" not in sys.argv) and
+            os.environ.get("RUN_MAIN")
         )
 
     def execute(self):

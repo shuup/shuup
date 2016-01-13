@@ -1,1 +1,0 @@
-git+https://github.com/akx/django-parler-rest.git@562f4eeeaaa7661560721fd58912771f3c6089c6#egg=django-parler-rest==1.3a1

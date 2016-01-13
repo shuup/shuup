@@ -18,7 +18,7 @@ from django.utils.translation import ugettext_lazy as _l
 from django.views.generic import TemplateView
 from filer.models import File, Folder
 from filer.models.imagemodels import Image
-from mptt.templatetags.mptt_tags import cache_tree_children
+from mptt.utils import get_cached_trees
 
 from shoop.admin.modules.media.utils import delete_folder
 from shoop.utils.excs import Problem
@@ -116,7 +116,7 @@ class MediaBrowserView(TemplateView):
             return JsonResponse({"error": "unknown action %s" % action})
 
     def handle_get_folders(self, data):
-        root_folders = cache_tree_children(Folder.objects.all())
+        root_folders = get_cached_trees(Folder._tree_manager.all())
         return JsonResponse({"rootFolder": _filer_folder_to_json_dict(None, root_folders)})
 
     def handle_post_new_folder(self, data):

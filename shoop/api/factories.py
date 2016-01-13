@@ -8,14 +8,10 @@
 from __future__ import unicode_literals
 
 from parler.models import TranslatableModel
+from parler_rest.fields import TranslatedFieldsField
+from parler_rest.serializers import TranslatableModelSerializer
 from rest_framework import permissions, serializers, viewsets
 
-from shoop.api._vendor.parler_rest.fields import TranslatedFieldsField
-from shoop.api._vendor.parler_rest.serializers import \
-    TranslatableModelSerializer
-
-
-# TODO: Unvendor bits once parler_rest>=1.2 is released
 
 def serializer_factory(model, serializer_class=None, attrs=None, meta=None):
     attrs = attrs or {}

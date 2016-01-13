@@ -60,6 +60,10 @@ Topic :: Software Development :: Libraries :: Application Frameworks
 Topic :: Software Development :: Libraries :: Python Modules
 """.strip().splitlines()
 
+EXCLUDED_PACKAGES = [
+    'shoop_tests', 'shoop_tests.*',
+]
+
 utils.set_exclude_patters([
     '__pycache__', '*.py[cod]',
     'node_modules', 'bower_components',
@@ -71,46 +75,50 @@ utils.set_exclude_patters([
 ])
 
 REQUIRES = [
-    'Babel==2.2',
-    'Django>=1.8,<1.9',
-    'django-bootstrap3==6.1.0',
-    'django-countries==3.3',
-    'django-enumfields==0.7.4',
-    'django-filer==0.9.12',
-    'django-jinja==1.4.1',
-    'django-mptt==0.7.4',
-    'django-parler==1.5',
-    'django-polymorphic==0.7.1',
-    'django-registration-redux==1.2',
-    'django-timezone-field==1.2',
-    'djangorestframework==3.1.3',
-    'factory-boy==2.5.2',
-    'fake-factory==0.5.2',
-    'jsonfield==1.0.3',
-    'Markdown==2.6.2',
-    'pytz==2015.4',
-    'requests>=2.7.0,<3',
-    'six==1.9.0',
-    'Jinja2==2.8',
-    'pytoml==0.1.4'
+    'Babel~=2.2',
+    'Django~=1.8.0',
+    'django-bootstrap3~=6.1',
+    'django-countries~=3.3',
+    'django-enumfields~=0.7.2',
+    'django-filer~=1.0',
+    'django-jinja~=1.4',
+    'django-mptt~=0.8.0',
+    'django-parler~=1.5',
+    'django-parler-rest~=1.3a1',
+    'django-polymorphic~=0.8.0',
+    'django-registration-redux~=1.2',
+    'django-timezone-field~=1.2',
+
+    # djangorestframework>=3.3.0 does not work with
+    # django-parler-rest 1.3a1 because compat.OrderedDict was dropped
+    'djangorestframework~=3.1,<3.3.0',
+
+    'factory-boy~=2.5',
+    'fake-factory~=0.5.0',
+    'Jinja2~=2.8',
+    'jsonfield~=1.0',
+    'Markdown~=2.6',
+    'pytoml~=0.1.0',
+    'pytz>=2015.4',
+    'requests~=2.7',
+    'six~=1.9',
 ]
 
 REQUIRES_FOR_PYTHON2_ONLY = [
-    'enum34==1.0.4',
+    # enum34 1.1 or newer does not currently work. See
+    # https://github.com/hzdg/django-enumfields/pull/44
+    'enum34~=1.0,<1.1',
 ]
 
 EXTRAS_REQUIRE = {
     ':python_version=="2.7"': REQUIRES_FOR_PYTHON2_ONLY,
     'docs': [
-        'Sphinx==1.3.1',
+        'Sphinx~=1.3',
     ],
     'testing': utils.get_test_requirements_from_tox_ini(TOPDIR),
     'coding-style': [
-        'flake8==2.4.1',
-        'mccabe==0.3.1',
-        'pep8==1.5.7',
-        'pep8-naming==0.2.2',
-        'pyflakes==0.8.1',
+        'flake8~=2.4',
+        'pep8-naming~=0.2',
     ],
 }
 EXTRAS_REQUIRE['everything'] = list(set(sum(EXTRAS_REQUIRE.values(), [])))
@@ -136,7 +144,7 @@ if __name__ == '__main__':
         install_requires=REQUIRES,
         tests_require=EXTRAS_REQUIRE['testing'],
         extras_require=EXTRAS_REQUIRE,
-        packages=utils.find_packages(),
+        packages=utils.find_packages(exclude=EXCLUDED_PACKAGES),
         include_package_data=True,
         cmdclass=utils.COMMANDS,
     )

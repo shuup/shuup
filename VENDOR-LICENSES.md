@@ -50,12 +50,3 @@ Font Awesome
 * shoop/admin/static/shoop_admin/fonts/fontawesome-webfont.woff
 * shoop/admin/static/shoop_admin/fonts/fontawesome-webfont.woff2
 * shoop/admin/static/shoop_admin/fonts/FontAwesome.otf
-
-django-parler-rest
-------------------
-
-* Copyright: 2014, 2015 Diederik van der Boor & contributors
-* License: Apache License, Version 2.0 <http://www.apache.org/licenses/LICENSE-2.0>
-* Repository: https://github.com/edoburu/django-parler-rest
-
-* shoop/api/_vendor/parler_rest/ (and files therein)
