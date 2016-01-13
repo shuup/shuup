@@ -25,6 +25,7 @@ IGNORED_DIRS = [
     'CVS',
     'htmlcov',
     'node_modules',
+    'var',
     'venv*',
 ]
 
@@ -61,6 +62,7 @@ IGNORED_PATTERNS = [
     '*.zip',
     '.coverage',
     '_version.py',
+    'coverage.xml',
     'Makefile',
     'vendor.js',
 ]
