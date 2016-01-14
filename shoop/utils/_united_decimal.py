@@ -14,9 +14,9 @@ class UnitedDecimal(decimal.Decimal):
     Decimal with unit.
 
     Allows creating decimal classes that cannot be mixed, e.g. to
-    prevent operations like
+    prevent operations like::
 
-    >>> TaxfulPrice(1) + TaxlessPrice(2)
+        TaxfulPrice(1) + TaxlessPrice(2)
 
     where :class:`~shoop.core.pricing.TaxfulPrice` and
     :class:`~shoop.core.princing.TaxlessPrice` are subclasses of
