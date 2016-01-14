@@ -23,8 +23,6 @@ from parler.models import TranslatableModel, TranslatedFields
 
 from shoop.core.fields import InternalIdentifierField
 
-__all__ = ("ProductVariationVariable", "ProductVariationVariableValue", "ProductVariationResult")
-
 
 class ProductVariationLinkStatus(Enum):
     INVISIBLE = 0
@@ -139,36 +137,8 @@ def get_combination_hash_from_variable_mapping(parent, variables):
     return hash_combination(mapping)
 
 
-def get_available_variation_results(product):
-    """
-    Get a dict of `combination_hash` to product ID of variable variation results.
-
-    :param product: Parent product
-    :type product: shoop.core.models.Product
-    :return: Mapping of combination hashes to product IDs
-    :rtype: dict[str, int]
-    """
-    return dict(
-        ProductVariationResult.objects.filter(product=product).filter(status=1)
-        .values_list("combination_hash", "result_id")
-    )
-
-
 def get_all_available_combinations(product):
-    """
-    Generate all available combinations of variation variables for the given product.
-
-    If the product is not a variable variation parent, the iterator is empty.
-
-    Because of possible combinatorial explosion this is a generator function.
-    (For example 6 variables with 5 options each explodes to 15,625 combinations.)
-
-    :param product: A variable variation parent product.
-    :type product: shoop.core.models.Product
-    :return: Iterable of combination information dicts.
-    :rtype: Iterable<dict>
-    """
-    results = get_available_variation_results(product)
+    results = product.get_available_variation_results()
     values_by_variable = defaultdict(list)
     values = (
         ProductVariationVariableValue.objects.filter(variable__product=product)
@@ -195,32 +165,3 @@ def get_all_available_combinations(product):
             "sku_part": sku_part,
             "result_product_pk": results.get(hash)
         }
-
-
-def clear_variation(product):
-    """
-    Fully remove variation information from the given variation parent.
-
-    :param product: Variation parent to not be a variation parent any longer.
-    :type product: shoop.core.models.Product
-    """
-    simplify_variation(product)
-    for child in product.variation_children.all():
-        if child.variation_parent_id == product.pk:
-            child.unlink_from_parent()
-    product.verify_mode()
-    product.save()
-
-
-def simplify_variation(product):
-    """
-    Remove variation variables from the given variation parent, turning it
-    into a simple variation (or a normal product, if it has no children).
-
-    :param product: Variation parent to not be variable any longer.
-    :type product: shoop.core.models.Product
-    """
-    ProductVariationVariable.objects.filter(product=product).delete()
-    ProductVariationResult.objects.filter(product=product).delete()
-    product.verify_mode()
-    product.save()

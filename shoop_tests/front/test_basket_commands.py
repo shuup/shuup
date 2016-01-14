@@ -13,7 +13,6 @@ from shoop.core.models import (
     ProductVariationResult, ProductVariationVariable,
     ProductVariationVariableValue
 )
-from shoop.core.models._product_variation import get_all_available_combinations
 from shoop.front.basket import commands as basket_commands
 from shoop.front.basket import get_basket_command_dispatcher
 from shoop.front.basket.command_dispatcher import BasketCommandDispatcher
@@ -119,7 +118,7 @@ def test_complex_variation():
     ProductVariationVariableValue.objects.create(variable=color_var, identifier="yellow")
     ProductVariationVariableValue.objects.create(variable=size_var, identifier="small")
 
-    combinations = list(get_all_available_combinations(parent))
+    combinations = list(parent.get_all_available_combinations())
     for combo in combinations:
         child = create_product("xyz-%s" % combo["sku_part"], shop=shop, supplier=supplier)
         child.link_to_parent(parent, combo["variable_to_value"])

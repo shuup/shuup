@@ -23,7 +23,6 @@ from shoop.core.excs import ImpossibleProductModeException, Problem
 from shoop.core.models import (
     Product, ProductVariationVariable, ProductVariationVariableValue
 )
-from shoop.core.models._product_variation import get_all_available_combinations
 from shoop.utils.i18n import get_language_name
 from shoop.utils.multilanguage_model_form import to_language_codes
 
@@ -36,7 +35,7 @@ class VariableVariationChildrenForm(forms.Form):
         self._build_fields()
 
     def _build_fields(self):
-        for combo in get_all_available_combinations(self.parent_product):
+        for combo in self.parent_product.get_all_available_combinations():
             field = forms.ModelChoiceField(
                 queryset=Product.objects.all(),
                 # TODO: Add a mode for ProductChoiceWidget to only allow eligible variation children to be selected
@@ -73,7 +72,7 @@ class VariableVariationChildrenForm(forms.Form):
         if not self.has_changed():  # See `SimplePricingForm.save()`.
             return
         with atomic():
-            for combo in get_all_available_combinations(self.parent_product):
+            for combo in self.parent_product.get_all_available_combinations():
                 self._save_combo(combo)
 
 

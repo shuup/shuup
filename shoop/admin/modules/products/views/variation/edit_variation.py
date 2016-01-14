@@ -24,9 +24,6 @@ from shoop.admin.toolbar import (
 )
 from shoop.admin.utils.urls import get_model_url
 from shoop.core.models import Product, ProductMode, ProductVariationVariable
-from shoop.core.models._product_variation import (
-    clear_variation, simplify_variation
-)
 from shoop.utils.excs import Problem
 
 from .simple_variation_forms import (
@@ -175,10 +172,10 @@ class ProductVariationView(FormPartsViewMixin, UpdateView):
     def dispatch_command(self, request, command):
         product = self.object
         if command == "unvariate":
-            clear_variation(product)
+            product.clear_variation()
             messages.success(self.request, _("Variation cleared."))
         elif command == "simplify":
-            simplify_variation(product)
+            product.simplify_variation()
             messages.success(self.request, _("Variation simplified."))
         else:
             raise Problem("Unknown command: %s" % command)

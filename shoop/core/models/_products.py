@@ -26,8 +26,8 @@ from shoop.utils.analog import define_log_model, LogEntryKind
 from ._attributes import AppliedAttribute, AttributableMixin, Attribute
 from ._product_packages import ProductPackageLink
 from ._product_variation import (
-    get_combination_hash_from_variable_mapping, ProductVariationResult,
-    ProductVariationVariable
+    get_all_available_combinations, get_combination_hash_from_variable_mapping,
+    ProductVariationResult, ProductVariationVariable
 )
 
 
@@ -347,6 +347,58 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
             return self.type.attributes.visible()
         else:
             return Attribute.objects.none()
+
+    def get_available_variation_results(self):
+        """
+        Get a dict of `combination_hash` to product ID of variable variation results.
+
+        :return: Mapping of combination hashes to product IDs
+        :rtype: dict[str, int]
+        """
+        return dict(
+            ProductVariationResult.objects.filter(product=self).filter(status=1)
+            .values_list("combination_hash", "result_id")
+        )
+
+    def get_all_available_combinations(self):
+        """
+        Generate all available combinations of variation variables.
+
+        If the product is not a variable variation parent, the iterator is empty.
+
+        Because of possible combinatorial explosion this is a generator function.
+        (For example 6 variables with 5 options each explodes to 15,625 combinations.)
+
+        :return: Iterable of combination information dicts.
+        :rtype: Iterable[dict]
+        """
+        return get_all_available_combinations(self)
+
+    def clear_variation(self):
+        """
+        Fully remove variation information.
+
+        Make this product a non-variation parent.
+        """
+        self.simplify_variation()
+        for child in self.variation_children.all():
+            if child.variation_parent_id == self.pk:
+                child.unlink_from_parent()
+        self.verify_mode()
+        self.save()
+
+    def simplify_variation(self):
+        """
+        Remove variation variables from the given variation parent, turning it
+        into a simple variation (or a normal product, if it has no children).
+
+        :param product: Variation parent to not be variable any longer.
+        :type product: shoop.core.models.Product
+        """
+        ProductVariationVariable.objects.filter(product=self).delete()
+        ProductVariationResult.objects.filter(product=self).delete()
+        self.verify_mode()
+        self.save()
 
     @staticmethod
     def _get_slug_name(self):
