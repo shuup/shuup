@@ -12,6 +12,7 @@ from django.core.urlresolvers import NoReverseMatch, reverse
 from django.db import models
 from django.db.models import Q
 from django.utils.timezone import now
+from django.utils.translation import ugettext_lazy as _
 from enumfields import EnumIntegerField
 from jsonfield.fields import JSONField
 
@@ -42,19 +43,23 @@ class Notification(models.Model):
     """
     A model for persistent notifications to be shown in the admin, etc.
     """
-    recipient_type = EnumIntegerField(RecipientType, default=RecipientType.ADMINS)
+    recipient_type = EnumIntegerField(RecipientType, default=RecipientType.ADMINS, verbose_name=_('recipient type'))
     recipient = models.ForeignKey(
-        settings.AUTH_USER_MODEL, blank=True, null=True, related_name="+", on_delete=models.SET_NULL)
-    created_on = models.DateTimeField(auto_now_add=True, editable=False)
-    message = models.CharField(max_length=140, editable=False, default="")
+        settings.AUTH_USER_MODEL, blank=True, null=True, related_name="+", on_delete=models.SET_NULL,
+        verbose_name=_('recipient')
+    )
+    created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_('created on'))
+    message = models.CharField(max_length=140, editable=False, default="", verbose_name=_('message'))
     identifier = InternalIdentifierField(unique=False)
-    priority = EnumIntegerField(Priority, default=Priority.NORMAL, db_index=True)
+    priority = EnumIntegerField(Priority, default=Priority.NORMAL, db_index=True, verbose_name=_('priority'))
     _data = JSONField(blank=True, null=True, editable=False, db_column="data")
 
-    marked_read = models.BooleanField(db_index=True, editable=False, default=False)
+    marked_read = models.BooleanField(db_index=True, editable=False, default=False, verbose_name=_('marked read'))
     marked_read_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, blank=True, null=True, editable=False, related_name="+", on_delete=models.SET_NULL)
-    marked_read_on = models.DateTimeField(null=True, blank=True)
+        settings.AUTH_USER_MODEL, blank=True, null=True, editable=False, related_name="+", on_delete=models.SET_NULL,
+        verbose_name=_('marked read by')
+    )
+    marked_read_on = models.DateTimeField(null=True, blank=True, verbose_name=_('marked read on'))
 
     objects = NotificationManager()
 

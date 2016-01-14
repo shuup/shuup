@@ -38,19 +38,19 @@ class Shop(ChangeProtected, TranslatableShoopModel):
     change_protect_message = _("The following fields cannot be changed since there are existing orders for this shop")
 
     identifier = InternalIdentifierField(unique=True)
-    domain = models.CharField(max_length=128, blank=True, null=True, unique=True)
-    status = EnumIntegerField(ShopStatus, default=ShopStatus.DISABLED)
-    owner = models.ForeignKey("Contact", blank=True, null=True, on_delete=models.SET_NULL)
-    options = JSONField(blank=True, null=True)
-    currency = CurrencyField(default=_get_default_currency)
-    prices_include_tax = models.BooleanField(default=True)
+    domain = models.CharField(max_length=128, blank=True, null=True, unique=True, verbose_name=_("domain"))
+    status = EnumIntegerField(ShopStatus, default=ShopStatus.DISABLED, verbose_name=_("status"))
+    owner = models.ForeignKey("Contact", blank=True, null=True, on_delete=models.SET_NULL, verbose_name=_("contact"))
+    options = JSONField(blank=True, null=True, verbose_name=_("options"))
+    currency = CurrencyField(default=_get_default_currency, verbose_name=_("currency"))
+    prices_include_tax = models.BooleanField(default=True, verbose_name=_("prices include tax"))
     logo = FilerImageField(verbose_name=_("logo"), blank=True, null=True, on_delete=models.SET_NULL)
     maintenance_mode = models.BooleanField(verbose_name=_("maintenance mode"), default=False)
 
     translations = TranslatedFields(
-        name=models.CharField(max_length=64),
-        public_name=models.CharField(max_length=64),
-        maintenance_message=models.CharField(max_length=300, blank=True)
+        name=models.CharField(max_length=64, verbose_name=_("name")),
+        public_name=models.CharField(max_length=64, verbose_name=_("public name")),
+        maintenance_message=models.CharField(max_length=300, blank=True, verbose_name=_("maintenance message"))
     )
 
     def __str__(self):

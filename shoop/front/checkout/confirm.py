@@ -19,7 +19,7 @@ from shoop.front.checkout import CheckoutPhaseViewMixin
 class ConfirmForm(forms.Form):
     accept_terms = forms.BooleanField(required=True, label=_(u"I accept the terms and conditions"))
     marketing = forms.BooleanField(required=False, label=_(u"I want to subscribe to your newsletter"), initial=True)
-    comment = forms.CharField(widget=forms.Textarea(), required=False)
+    comment = forms.CharField(widget=forms.Textarea(), required=False, label=_(u"Comment"))
 
 
 class ConfirmPhase(CheckoutPhaseViewMixin, FormView):

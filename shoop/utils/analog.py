@@ -37,12 +37,12 @@ class LogEntryKind(Enum):
 
 class BaseLogEntry(models.Model):
     target = None  # This will be overridden dynamically
-    created_on = models.DateTimeField(auto_now_add=True, editable=False)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.PROTECT)
-    message = models.CharField(max_length=256)
-    identifier = models.CharField(max_length=64, blank=True)
-    kind = EnumIntegerField(LogEntryKind, default=LogEntryKind.OTHER)
-    extra = JSONField(null=True, blank=True)
+    created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_("created on"))
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.PROTECT, verbose_name=_("user"))
+    message = models.CharField(max_length=256, verbose_name=_("message"))
+    identifier = models.CharField(max_length=64, blank=True, verbose_name=_("identifier"))
+    kind = EnumIntegerField(LogEntryKind, default=LogEntryKind.OTHER, verbose_name=_("log entry kind"))
+    extra = JSONField(null=True, blank=True, verbose_name=_("extra data"))
 
     class Meta:
         abstract = True
@@ -59,7 +59,8 @@ def define_log_model(model_class):
         abstract = False
 
     class_dict = {
-        "target": models.ForeignKey(model_class, related_name="log_entries", on_delete=models.CASCADE),
+        "target": models.ForeignKey(
+            model_class, related_name="log_entries", on_delete=models.CASCADE, verbose_name=_("target")),
         "__module__": model_class.__module__,
         "Meta": Meta,
         "logged_model": model_class,

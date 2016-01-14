@@ -119,7 +119,7 @@ class ScriptItemEditForm(forms.Form):
                 field_name = "b_%s_v" % binding_identifier
                 self.fields[field_name] = forms.ChoiceField(
                     choices=choices,
-                    label=u"Bind to Variable",
+                    label=_("Bind to Variable"),
                     required=(binding.required and not binding.allow_constant)
                 )
                 binding_field_info["variable"] = field_name

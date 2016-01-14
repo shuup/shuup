@@ -19,20 +19,20 @@ class TaxRule(models.Model):
     enabled = models.BooleanField(default=True, verbose_name=_('enabled'), db_index=True)
     tax_classes = models.ManyToManyField(
         TaxClass,
-        verbose_name=_("Tax classes"), help_text=_(
+        verbose_name=_("tax classes"), help_text=_(
             "Tax classes of the items to be taxed"))
     customer_tax_groups = models.ManyToManyField(
         CustomerTaxGroup, blank=True,
-        verbose_name=_("Customer tax groups"))
+        verbose_name=_("customer tax groups"))
     country_codes_pattern = models.CharField(
         max_length=300, blank=True,
-        verbose_name=_("Country codes pattern"))
+        verbose_name=_("country codes pattern"))
     region_codes_pattern = models.CharField(
         max_length=500, blank=True,
-        verbose_name=_("Region codes pattern"))
+        verbose_name=_("region codes pattern"))
     postal_codes_pattern = models.CharField(
         max_length=500, blank=True,
-        verbose_name=_("Postal codes pattern"))
+        verbose_name=_("postal codes pattern"))
     priority = models.IntegerField(
         default=0,
         verbose_name=_("priority"), help_text=_(
@@ -46,7 +46,7 @@ class TaxRule(models.Model):
             "override group number will be effective.  This can be "
             "used, for example, to implement tax exemption by adding "
             "a rule with very high override group that sets a zero tax."))
-    tax = models.ForeignKey(Tax, on_delete=models.PROTECT)
+    tax = models.ForeignKey(Tax, on_delete=models.PROTECT, verbose_name=_('tax'))
 
     def matches(self, taxing_context):
         """

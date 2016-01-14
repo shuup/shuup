@@ -293,7 +293,7 @@ class ProductMediaFormSet(BaseProductMediaFormSet):
 
 
 class ProductImageMediaForm(BaseProductMediaForm):
-    is_primary = forms.BooleanField(required=False)
+    is_primary = forms.BooleanField(required=False, label=_("Is primary"))
 
     def __init__(self, **kwargs):
         super(ProductImageMediaForm, self).__init__(**kwargs)

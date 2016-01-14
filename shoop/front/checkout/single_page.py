@@ -49,7 +49,7 @@ class OrderForm(TaxNumberCleanMixin, forms.Form):
     payment_method = RelaxedModelChoiceField(queryset=PaymentMethod.objects.none(), label=_(u"Payment method"))
     accept_terms = forms.BooleanField(required=True, label=_(u"I accept the terms and conditions"))
     marketing = forms.BooleanField(required=False, label=_(u"Please send me marketing correspondence"))
-    comment = forms.CharField(widget=forms.Textarea(), required=False)
+    comment = forms.CharField(widget=forms.Textarea(), required=False, label=_("Comment"))
 
     def __init__(self, *args, **kwargs):
         self.basket = kwargs.pop("basket")

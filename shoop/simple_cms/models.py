@@ -39,16 +39,20 @@ class PageQuerySet(TranslatableQuerySet):
 
 @python_2_unicode_compatible
 class Page(TranslatableModel):
-    available_from = models.DateTimeField(null=True, blank=True)
-    available_to = models.DateTimeField(null=True, blank=True)
+    available_from = models.DateTimeField(null=True, blank=True, verbose_name=_('available from'))
+    available_to = models.DateTimeField(null=True, blank=True, verbose_name=_('available to'))
 
     created_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, blank=True, null=True, related_name="+", on_delete=models.SET_NULL)
+        settings.AUTH_USER_MODEL, blank=True, null=True, related_name="+", on_delete=models.SET_NULL,
+        verbose_name=_('created by')
+    )
     modified_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, blank=True, null=True, related_name="+", on_delete=models.SET_NULL)
+        settings.AUTH_USER_MODEL, blank=True, null=True, related_name="+", on_delete=models.SET_NULL,
+        verbose_name=_('modified by')
+    )
 
-    created_on = models.DateTimeField(auto_now_add=True, editable=False)
-    modified_on = models.DateTimeField(auto_now=True, editable=False)
+    created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_('created on'))
+    modified_on = models.DateTimeField(auto_now=True, editable=False, verbose_name=_('modified on'))
 
     identifier = InternalIdentifierField(
         unique=True,
@@ -56,18 +60,18 @@ class Page(TranslatableModel):
         editable=True
     )
 
-    visible_in_menu = models.BooleanField(_("Visible in menu"), default=False)
+    visible_in_menu = models.BooleanField(verbose_name=_("visible in menu"), default=False)
 
     translations = TranslatedFields(
-        title=models.CharField(max_length=256, verbose_name=_('Page Title')),
+        title=models.CharField(max_length=256, verbose_name=_('title')),
         url=models.CharField(
-            max_length=100, verbose_name=_('Page URL'),
+            max_length=100, verbose_name=_('URL'),
             unique=True,
             default=None,
             blank=True,
             null=True
         ),
-        content=models.TextField(verbose_name=_('Content')),
+        content=models.TextField(verbose_name=_('content')),
     )
 
     objects = PageQuerySet.as_manager()
