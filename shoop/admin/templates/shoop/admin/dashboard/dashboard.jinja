@@ -96,6 +96,9 @@
                 {% if activity %}
                     {% call regular_block("medium") %}{{ activity_block_content(activity) }}{% endcall %}
                 {% endif %}
+                <div class="block width-large">
+                    <p>{{ _("Shoop %(version)s", version=version) }}</p>
+                </div>
             </div>
         {% endblock %}
     </main>
