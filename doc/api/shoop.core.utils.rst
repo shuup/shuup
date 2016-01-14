@@ -4,6 +4,14 @@ shoop.core.utils package
 Submodules
 ----------
 
+shoop.core.utils.form_mixins module
+-----------------------------------
+
+.. automodule:: shoop.core.utils.form_mixins
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.core.utils.maintenance module
 -----------------------------------
 
@@ -40,14 +48,6 @@ shoop.core.utils.query module
 -----------------------------
 
 .. automodule:: shoop.core.utils.query
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-shoop.core.utils.reference module
----------------------------------
-
-.. automodule:: shoop.core.utils.reference
     :members:
     :undoc-members:
     :show-inheritance:

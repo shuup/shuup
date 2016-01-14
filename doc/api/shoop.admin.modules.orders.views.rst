@@ -4,6 +4,14 @@ shoop.admin.modules.orders.views package
 Submodules
 ----------
 
+shoop.admin.modules.orders.views.create module
+----------------------------------------------
+
+.. automodule:: shoop.admin.modules.orders.views.create
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.admin.modules.orders.views.detail module
 ----------------------------------------------
 

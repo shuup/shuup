@@ -86,10 +86,10 @@ shoop.xtheme.template_ns module
     :undoc-members:
     :show-inheritance:
 
-shoop.xtheme.theme module
--------------------------
+shoop.xtheme.testing module
+---------------------------
 
-.. automodule:: shoop.xtheme.theme
+.. automodule:: shoop.xtheme.testing
     :members:
     :undoc-members:
     :show-inheritance:

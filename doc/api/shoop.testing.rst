@@ -60,6 +60,14 @@ shoop.testing.text_data module
     :undoc-members:
     :show-inheritance:
 
+shoop.testing.utils module
+--------------------------
+
+.. automodule:: shoop.testing.utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------
