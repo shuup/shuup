@@ -13,7 +13,6 @@ from collections import defaultdict
 
 import six
 from django.db import models
-from django.forms import Form, IntegerField, Select
 from django.utils.encoding import (
     force_bytes, force_text, python_2_unicode_compatible
 )
@@ -196,22 +195,6 @@ def get_all_available_combinations(product):
             "sku_part": sku_part,
             "result_product_pk": results.get(hash)
         }
-
-
-def get_variation_selection_form(request, product):  # pragma: no cover
-    # TODO: Does this belong here? Eliding from coverage meanwhile.
-    variables = ProductVariationVariable.objects.filter(product=product).order_by("name").values_list("id", "name")
-    values = defaultdict(list)
-    for var_id, val_id, val in (
-        ProductVariationVariableValue.objects.filter(variable__product=product)
-        .values_list("variable_id", "id", "value")
-    ):
-        values[var_id].append((val_id, val))
-    form = Form(data=request.POST if request.POST else None)
-    for variable_id, variable_name in variables:
-        var_values = sorted(values.get(variable_id, ()))
-        form.fields["var_%d" % variable_id] = IntegerField(label=variable_name, widget=Select(choices=var_values))
-    return form
 
 
 def clear_variation(product):
