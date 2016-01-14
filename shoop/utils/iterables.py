@@ -29,11 +29,8 @@ def batch(iterable, count):
     """
     Yield batches of `count` items from the given iterable.
 
-    >>> for x in batch([1, 2, 3, 4, 5, 6, 7], 3):
-    >>>   print(x)
-    [1, 2, 3]
-    [4, 5, 6]
-    [7]
+    >>> tuple(x for x in batch([1, 2, 3, 4, 5, 6, 7], 3))
+    ([1, 2, 3], [4, 5, 6], [7])
 
     :param iterable: An iterable
     :type iterable: Iterable

@@ -28,8 +28,8 @@ def flatten(str, whitespace="-"):
     Flatten the given text into lowercase ASCII, removing diacriticals etc.
     Replace runs of whitespace with the given whitespace replacement.
 
-    >>> flatten(u"hellö, wörld")
-    "hello,-world"
+    >>> print(flatten(u"hellö, wörld"))
+    hello,-world
 
     :param str: The string to massage
     :type str: str

@@ -25,9 +25,9 @@ class Problem(Exception):
         Append a link to this Problem and return itself.
 
         This API is designed after `Exception.with_traceback()`,
-        so you can fluently chain this in a `raise` statement:
+        so you can fluently chain this in a `raise` statement::
 
-        >>> raise Problem("Oops").with_link("...", "...")
+            raise Problem("Oops").with_link("...", "...")
 
         :param url: URL string
         :type url: str

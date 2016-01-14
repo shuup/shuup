@@ -70,9 +70,9 @@ class ModuleInterface(object):
         """
         Get a dict that maps module spec identifiers (short strings) into actual spec names.
 
-        As an example:
+        As an example::
 
-        >>> {"Eggs": "foo_package.bar_module:EggsClass"}
+            {"Eggs": "foo_package.bar_module:EggsClass"}
 
         :rtype: dict[str, str]
         """
