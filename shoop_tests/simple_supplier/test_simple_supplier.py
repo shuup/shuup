@@ -9,7 +9,7 @@ import random
 
 import pytest
 
-from shoop.core.models.suppliers import Supplier
+from shoop.core.models import Supplier
 from shoop.testing.factories import (
     create_order_with_product, create_product, get_default_shop
 )

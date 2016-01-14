@@ -24,7 +24,7 @@ from shoop.admin.toolbar import (
 )
 from shoop.admin.utils.urls import get_model_url
 from shoop.core.models import Product, ProductMode, ProductVariationVariable
-from shoop.core.models.product_variation import (
+from shoop.core.models._product_variation import (
     clear_variation, simplify_variation
 )
 from shoop.utils.excs import Problem

@@ -11,8 +11,9 @@ from django.core.exceptions import ValidationError
 from django.test import override_settings
 from django.utils.translation import override
 
-from shoop.core.models import ImmutableAddress, MutableAddress, SavedAddress
-from shoop.core.models.contacts import get_person_contact
+from shoop.core.models import (
+    get_person_contact, ImmutableAddress, MutableAddress, SavedAddress
+)
 from shoop.testing.factories import get_address
 from shoop.utils.models import get_data_dict
 

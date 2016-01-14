@@ -34,7 +34,7 @@ class BasketLine(SourceLine):
         """
         ShopProduct object of this line.
 
-        :rtype: shoop.core.models.product_shops.ShopProduct
+        :rtype: shoop.core.models.ShopProduct
         """
         return self.product.get_shop_instance(self.shop)
 

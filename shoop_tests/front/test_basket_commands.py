@@ -13,7 +13,7 @@ from shoop.core.models import (
     ProductVariationResult, ProductVariationVariable,
     ProductVariationVariableValue
 )
-from shoop.core.models.product_variation import get_all_available_combinations
+from shoop.core.models._product_variation import get_all_available_combinations
 from shoop.front.basket import commands as basket_commands
 from shoop.front.basket import get_basket_command_dispatcher
 from shoop.front.basket.command_dispatcher import BasketCommandDispatcher

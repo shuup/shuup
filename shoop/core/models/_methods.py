@@ -16,11 +16,12 @@ from parler.managers import TranslatableQuerySet
 from parler.models import TranslatableModel, TranslatedFields
 
 from shoop.core.fields import InternalIdentifierField
-from shoop.core.models.order_lines import OrderLineType
 from shoop.core.modules import ModuleInterface
 from shoop.core.taxing import TaxableItem
 from shoop.front.signals import get_method_validation_errors
 from shoop.utils.text import force_ascii
+
+from ._order_lines import OrderLineType
 
 __all__ = ("MethodType", "ShippingMethod", "PaymentMethod", "MethodStatus")
 
@@ -59,7 +60,7 @@ class MethodQuerySet(TranslatableQuerySet):
         :return: Set of method IDs
         :rtype: set[int]
         """
-        from .product_shops import ShopProduct
+        from ._product_shops import ShopProduct
         shop_product_m2m = self.model.shop_product_m2m
         shop_product_limiter_attr = "limit_%s" % self.model.shop_product_m2m
 

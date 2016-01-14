@@ -9,33 +9,33 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 import shoop.utils.analog
-import shoop.core.models.orders
-import shoop.core.models.product_variation
+import shoop.core.models._orders
+import shoop.core.models._product_variation
 import django_countries.fields
 import mptt.fields
-import shoop.core.models.suppliers
+import shoop.core.models._suppliers
 import shoop.core.pricing
 import enumfields.fields
 import filer.fields.file
-import shoop.core.models.attributes
+import shoop.core.models._attributes
 from django.conf import settings
-import shoop.core.models.order_lines
-import shoop.core.models.product_media
+import shoop.core.models._order_lines
+import shoop.core.models._product_media
 import shoop.core.taxing._line_tax
 import timezone_field.fields
-import shoop.core.models.products
-import shoop.core.models.shops
+import shoop.core.models._products
+import shoop.core.models._shops
 import django.db.models.deletion
 import jsonfield.fields
 import filer.fields.image
 import shoop.core.utils.name_mixin
-import shoop.core.models.categories
-import shoop.core.models.addresses
-import shoop.core.models.methods
-import shoop.core.models.contacts
+import shoop.core.models._categories
+import shoop.core.models._addresses
+import shoop.core.models._methods
+import shoop.core.models._contacts
 import shoop.core.fields
-import shoop.core.models.counters
-import shoop.core.models.shipments
+import shoop.core.models._counters
+import shoop.core.models._shipments
 import shoop.core.modules.interface
 
 
@@ -82,8 +82,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('identifier', shoop.core.fields.InternalIdentifierField(verbose_name='internal identifier', blank=True, unique=True, editable=False, help_text="Do not change this value if you are not sure what you're doing.", max_length=64, null=True)),
                 ('searchable', models.BooleanField(default=True)),
-                ('type', enumfields.fields.EnumIntegerField(default=20, enum=shoop.core.models.attributes.AttributeType)),
-                ('visibility_mode', enumfields.fields.EnumIntegerField(default=1, enum=shoop.core.models.attributes.AttributeVisibility)),
+                ('type', enumfields.fields.EnumIntegerField(default=20, enum=shoop.core.models._attributes.AttributeType)),
+                ('visibility_mode', enumfields.fields.EnumIntegerField(default=1, enum=shoop.core.models._attributes.AttributeVisibility)),
             ],
             options={
                 'verbose_name_plural': 'attributes',
@@ -111,9 +111,9 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('identifier', shoop.core.fields.InternalIdentifierField(verbose_name='internal identifier', blank=True, unique=True, editable=False, help_text="Do not change this value if you are not sure what you're doing.", max_length=64, null=True)),
-                ('status', enumfields.fields.EnumIntegerField(default=0, verbose_name='status', enum=shoop.core.models.categories.CategoryStatus, db_index=True)),
+                ('status', enumfields.fields.EnumIntegerField(default=0, verbose_name='status', enum=shoop.core.models._categories.CategoryStatus, db_index=True)),
                 ('ordering', models.IntegerField(default=0, verbose_name='ordering')),
-                ('visibility', enumfields.fields.EnumIntegerField(default=1, verbose_name='visibility limitations', enum=shoop.core.models.categories.CategoryVisibility, db_index=True)),
+                ('visibility', enumfields.fields.EnumIntegerField(default=1, verbose_name='visibility limitations', enum=shoop.core.models._categories.CategoryVisibility, db_index=True)),
                 ('lft', models.PositiveIntegerField(editable=False, db_index=True)),
                 ('rght', models.PositiveIntegerField(editable=False, db_index=True)),
                 ('tree_id', models.PositiveIntegerField(editable=False, db_index=True)),
@@ -215,7 +215,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Counter',
             fields=[
-                ('id', enumfields.fields.EnumIntegerField(primary_key=True, enum=shoop.core.models.counters.CounterType, serialize=False)),
+                ('id', enumfields.fields.EnumIntegerField(primary_key=True, enum=shoop.core.models._counters.CounterType, serialize=False)),
                 ('value', models.IntegerField(default=0)),
             ],
             options={
@@ -278,8 +278,8 @@ class Migration(migrations.Migration):
                 ('phone', models.CharField(verbose_name='phone', blank=True, max_length=32)),
                 ('email', models.EmailField(verbose_name='email address', blank=True, max_length=128)),
                 ('deleted', models.BooleanField(default=False, db_index=True)),
-                ('payment_status', enumfields.fields.EnumIntegerField(default=0, verbose_name='payment status', enum=shoop.core.models.orders.PaymentStatus, db_index=True)),
-                ('shipping_status', enumfields.fields.EnumIntegerField(default=0, verbose_name='shipping status', enum=shoop.core.models.orders.ShippingStatus, db_index=True)),
+                ('payment_status', enumfields.fields.EnumIntegerField(default=0, verbose_name='payment status', enum=shoop.core.models._orders.PaymentStatus, db_index=True)),
+                ('shipping_status', enumfields.fields.EnumIntegerField(default=0, verbose_name='shipping status', enum=shoop.core.models._orders.ShippingStatus, db_index=True)),
                 ('payment_method_name', models.CharField(default='', verbose_name='payment method name', blank=True, max_length=64)),
                 ('payment_data', jsonfield.fields.JSONField(blank=True, null=True)),
                 ('shipping_method_name', models.CharField(default='', verbose_name='shipping method name', blank=True, max_length=64)),
@@ -312,7 +312,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('ordering', models.IntegerField(default=0, verbose_name='ordering')),
-                ('type', enumfields.fields.EnumIntegerField(default=1, verbose_name='line type', enum=shoop.core.models.order_lines.OrderLineType)),
+                ('type', enumfields.fields.EnumIntegerField(default=1, verbose_name='line type', enum=shoop.core.models._order_lines.OrderLineType)),
                 ('sku', models.CharField(verbose_name='line SKU', blank=True, max_length=48)),
                 ('text', models.CharField(verbose_name='line text', max_length=256)),
                 ('accounting_identifier', models.CharField(verbose_name='accounting identifier', blank=True, max_length=32)),
@@ -369,7 +369,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('identifier', shoop.core.fields.InternalIdentifierField(verbose_name='internal identifier', blank=True, null=True, unique=True, editable=False, help_text="Do not change this value if you are not sure what you're doing.", max_length=64, db_index=True)),
                 ('ordering', models.IntegerField(default=0, db_index=True)),
-                ('role', enumfields.fields.EnumIntegerField(default=0, enum=shoop.core.models.orders.OrderStatusRole, db_index=True)),
+                ('role', enumfields.fields.EnumIntegerField(default=0, enum=shoop.core.models._orders.OrderStatusRole, db_index=True)),
                 ('default', models.BooleanField(default=False, db_index=True)),
             ],
             options={
@@ -412,7 +412,7 @@ class Migration(migrations.Migration):
             name='PaymentMethod',
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
-                ('status', enumfields.fields.EnumIntegerField(default=1, verbose_name='status', enum=shoop.core.models.methods.MethodStatus, db_index=True)),
+                ('status', enumfields.fields.EnumIntegerField(default=1, verbose_name='status', enum=shoop.core.models._methods.MethodStatus, db_index=True)),
                 ('identifier', shoop.core.fields.InternalIdentifierField(verbose_name='internal identifier', blank=True, unique=True, editable=False, help_text="Do not change this value if you are not sure what you're doing.", max_length=64, null=True)),
                 ('module_identifier', models.CharField(verbose_name='module', blank=True, max_length=64)),
                 ('module_data', jsonfield.fields.JSONField(blank=True, null=True)),
@@ -460,9 +460,9 @@ class Migration(migrations.Migration):
                 ('created_on', models.DateTimeField(auto_now_add=True)),
                 ('modified_on', models.DateTimeField(auto_now=True)),
                 ('deleted', models.BooleanField(default=False, editable=False, db_index=True)),
-                ('mode', enumfields.fields.EnumIntegerField(default=0, enum=shoop.core.models.products.ProductMode)),
-                ('stock_behavior', enumfields.fields.EnumIntegerField(default=0, verbose_name='stock', enum=shoop.core.models.products.StockBehavior)),
-                ('shipping_mode', enumfields.fields.EnumIntegerField(default=0, verbose_name='shipping mode', enum=shoop.core.models.products.ShippingMode)),
+                ('mode', enumfields.fields.EnumIntegerField(default=0, enum=shoop.core.models._products.ProductMode)),
+                ('stock_behavior', enumfields.fields.EnumIntegerField(default=0, verbose_name='stock', enum=shoop.core.models._products.StockBehavior)),
+                ('shipping_mode', enumfields.fields.EnumIntegerField(default=0, verbose_name='shipping mode', enum=shoop.core.models._products.ShippingMode)),
                 ('sku', models.CharField(verbose_name='SKU', max_length=128, db_index=True, unique=True)),
                 ('gtin', models.CharField(verbose_name='GTIN', blank=True, max_length=40, help_text='Global Trade Item Number')),
                 ('barcode', models.CharField(verbose_name='barcode', blank=True, max_length=40)),
@@ -484,7 +484,7 @@ class Migration(migrations.Migration):
                 'verbose_name': 'product',
                 'ordering': ('-id',),
             },
-            bases=(shoop.core.models.attributes.AttributableMixin, models.Model),
+            bases=(shoop.core.models._attributes.AttributableMixin, models.Model),
         ),
         migrations.CreateModel(
             name='ProductAttribute',
@@ -523,7 +523,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('weight', models.IntegerField(default=0)),
-                ('type', enumfields.fields.EnumIntegerField(enum=shoop.core.models.products.ProductCrossSellType)),
+                ('type', enumfields.fields.EnumIntegerField(enum=shoop.core.models._products.ProductCrossSellType)),
                 ('product1', models.ForeignKey(to='shoop.Product', related_name='cross_sell_1')),
                 ('product2', models.ForeignKey(to='shoop.Product', related_name='cross_sell_2')),
             ],
@@ -553,7 +553,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('identifier', shoop.core.fields.InternalIdentifierField(verbose_name='internal identifier', blank=True, unique=True, editable=False, help_text="Do not change this value if you are not sure what you're doing.", max_length=64, null=True)),
-                ('kind', enumfields.fields.EnumIntegerField(default=1, verbose_name='kind', enum=shoop.core.models.product_media.ProductMediaKind, db_index=True)),
+                ('kind', enumfields.fields.EnumIntegerField(default=1, verbose_name='kind', enum=shoop.core.models._product_media.ProductMediaKind, db_index=True)),
                 ('external_url', models.URLField(verbose_name='URL', blank=True, null=True)),
                 ('ordering', models.IntegerField(default=0)),
                 ('enabled', models.BooleanField(default=True, verbose_name='enabled', db_index=True)),
@@ -648,7 +648,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('combination_hash', models.CharField(max_length=40, db_index=True, unique=True)),
-                ('status', enumfields.fields.EnumIntegerField(default=1, enum=shoop.core.models.product_variation.ProductVariationLinkStatus, db_index=True)),
+                ('status', enumfields.fields.EnumIntegerField(default=1, enum=shoop.core.models._product_variation.ProductVariationLinkStatus, db_index=True)),
                 ('product', models.ForeignKey(to='shoop.Product', related_name='variation_result_supers')),
                 ('result', models.ForeignKey(to='shoop.Product', related_name='variation_result_subs')),
             ],
@@ -746,8 +746,8 @@ class Migration(migrations.Migration):
             name='SavedAddress',
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
-                ('role', enumfields.fields.EnumIntegerField(default=1, verbose_name='role', enum=shoop.core.models.addresses.SavedAddressRole)),
-                ('status', enumfields.fields.EnumIntegerField(default=1, verbose_name='status', enum=shoop.core.models.addresses.SavedAddressStatus)),
+                ('role', enumfields.fields.EnumIntegerField(default=1, verbose_name='role', enum=shoop.core.models._addresses.SavedAddressRole)),
+                ('status', enumfields.fields.EnumIntegerField(default=1, verbose_name='status', enum=shoop.core.models._addresses.SavedAddressStatus)),
                 ('title', models.CharField(verbose_name='title', blank=True, max_length=255)),
                 ('address', models.ForeignKey(verbose_name='address', to='shoop.Address', related_name='saved_addresses')),
             ],
@@ -762,7 +762,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('created_on', models.DateTimeField(auto_now_add=True)),
-                ('status', enumfields.fields.EnumIntegerField(default=0, enum=shoop.core.models.shipments.ShipmentStatus)),
+                ('status', enumfields.fields.EnumIntegerField(default=0, enum=shoop.core.models._shipments.ShipmentStatus)),
                 ('tracking_code', models.CharField(verbose_name='tracking code', blank=True, max_length=64)),
                 ('description', models.CharField(blank=True, max_length=255)),
                 ('volume', shoop.core.fields.MeasurementField(default=0, unit='m3', decimal_places=9, max_digits=36)),
@@ -793,7 +793,7 @@ class Migration(migrations.Migration):
             name='ShippingMethod',
             fields=[
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
-                ('status', enumfields.fields.EnumIntegerField(default=1, verbose_name='status', enum=shoop.core.models.methods.MethodStatus, db_index=True)),
+                ('status', enumfields.fields.EnumIntegerField(default=1, verbose_name='status', enum=shoop.core.models._methods.MethodStatus, db_index=True)),
                 ('identifier', shoop.core.fields.InternalIdentifierField(verbose_name='internal identifier', blank=True, unique=True, editable=False, help_text="Do not change this value if you are not sure what you're doing.", max_length=64, null=True)),
                 ('module_identifier', models.CharField(verbose_name='module', blank=True, max_length=64)),
                 ('module_data', jsonfield.fields.JSONField(blank=True, null=True)),
@@ -826,7 +826,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('identifier', shoop.core.fields.InternalIdentifierField(verbose_name='internal identifier', blank=True, unique=True, editable=False, help_text="Do not change this value if you are not sure what you're doing.", max_length=64, null=True)),
                 ('domain', models.CharField(blank=True, max_length=128, null=True, unique=True)),
-                ('status', enumfields.fields.EnumIntegerField(default=0, enum=shoop.core.models.shops.ShopStatus)),
+                ('status', enumfields.fields.EnumIntegerField(default=0, enum=shoop.core.models._shops.ShopStatus)),
                 ('options', jsonfield.fields.JSONField(blank=True, null=True)),
             ],
             options={
@@ -841,7 +841,7 @@ class Migration(migrations.Migration):
                 ('listed', models.BooleanField(default=True, db_index=True)),
                 ('purchasable', models.BooleanField(default=True, db_index=True)),
                 ('searchable', models.BooleanField(default=True, db_index=True)),
-                ('visibility_limit', enumfields.fields.EnumIntegerField(default=1, verbose_name='visibility limitations', enum=shoop.core.models.products.ProductVisibility, db_index=True)),
+                ('visibility_limit', enumfields.fields.EnumIntegerField(default=1, verbose_name='visibility limitations', enum=shoop.core.models._products.ProductVisibility, db_index=True)),
                 ('purchase_multiple', shoop.core.fields.QuantityField(default=0, verbose_name='purchase multiple', decimal_places=9, max_digits=36)),
                 ('minimum_purchase_quantity', shoop.core.fields.QuantityField(default=1, verbose_name='minimum purchase', decimal_places=9, max_digits=36)),
                 ('limit_shipping_methods', models.BooleanField(default=False)),
@@ -890,7 +890,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
                 ('identifier', shoop.core.fields.InternalIdentifierField(verbose_name='internal identifier', blank=True, unique=True, editable=False, help_text="Do not change this value if you are not sure what you're doing.", max_length=64, null=True)),
                 ('name', models.CharField(max_length=64)),
-                ('type', enumfields.fields.EnumIntegerField(default=1, enum=shoop.core.models.suppliers.SupplierType)),
+                ('type', enumfields.fields.EnumIntegerField(default=1, enum=shoop.core.models._suppliers.SupplierType)),
                 ('stock_managed', models.BooleanField(default=False)),
                 ('module_identifier', models.CharField(verbose_name='module', blank=True, max_length=64)),
                 ('module_data', jsonfield.fields.JSONField(blank=True, null=True)),
@@ -981,7 +981,7 @@ class Migration(migrations.Migration):
             name='PersonContact',
             fields=[
                 ('contact_ptr', models.OneToOneField(primary_key=True, to='shoop.Contact', serialize=False, parent_link=True, auto_created=True)),
-                ('gender', enumfields.fields.EnumField(default='u', enum=shoop.core.models.contacts.Gender, max_length=4)),
+                ('gender', enumfields.fields.EnumField(default='u', enum=shoop.core.models._contacts.Gender, max_length=4)),
                 ('birth_date', models.DateField(blank=True, null=True)),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL, blank=True, related_name='contact', null=True)),
             ],

@@ -27,11 +27,11 @@ for more advanced uses, when you do not have access to an HTTP request,
 After you have acquired the module and a context, you can calculate
 prices for a product with the module's
 :func:`~PricingModule.get_price_info` method.
-(:class:`~shoop.core.models.products.Product` objects contain the
+(:class:`~shoop.core.models.Product` objects contain the
 convenience methods
-:func:`~shoop.core.models.products.Product.get_price_info`,
-:func:`~shoop.core.models.products.Product.get_price`,
-and :func:`~shoop.core.models.products.Product.get_base_price`
+:func:`~shoop.core.models.Product.get_price_info`,
+:func:`~shoop.core.models.Product.get_price`,
+and :func:`~shoop.core.models.Product.get_base_price`
 which do these steps for you.)
 
 If you have multiple products, it will likely be more efficient --

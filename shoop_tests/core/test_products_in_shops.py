@@ -14,9 +14,9 @@ from django.contrib.auth.models import AnonymousUser
 from shoop.core.excs import (
     ProductNotOrderableProblem, ProductNotVisibleProblem
 )
-from shoop.core.models.contacts import AnonymousContact, get_person_contact
-from shoop.core.models.products import ProductVisibility
-from shoop.core.models.suppliers import Supplier
+from shoop.core.models import (
+    AnonymousContact, get_person_contact, ProductVisibility, Supplier
+)
 from shoop.testing.factories import (
     get_default_customer_group, get_default_product, get_default_shop,
     get_default_shop_product, get_default_supplier

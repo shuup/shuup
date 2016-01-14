@@ -20,7 +20,7 @@ from shoop.core.fields import CurrencyField, InternalIdentifierField
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
 
 from ._base import ChangeProtected, TranslatableShoopModel
-from .orders import Order
+from ._orders import Order
 
 
 def _get_default_currency():

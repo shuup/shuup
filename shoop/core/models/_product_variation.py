@@ -122,7 +122,7 @@ def get_combination_hash_from_variable_mapping(parent, variables):
     If variables and values with the given identifier do not exist, they are created on the go.
 
     :param parent: Parent product
-    :type parent: shoop.core.models.products.Product
+    :type parent: shoop.core.models.Product
     :param variables: Dict of {variable identifier: value identifier} for complex variable linkage
     :type variables: dict
     :return: Combination hash

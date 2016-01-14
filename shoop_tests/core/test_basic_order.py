@@ -9,9 +9,8 @@ import pytest
 from django.utils.timezone import now
 
 from shoop.core.models import (
-    get_person_contact, Order, OrderLine, OrderLineType
+    get_person_contact, Order, OrderLine, OrderLineTax, OrderLineType
 )
-from shoop.core.models.order_lines import OrderLineTax
 from shoop.core.shortcuts import update_order_line_from_product
 from shoop.default_tax.module import DefaultTaxModule
 from shoop.testing.factories import (

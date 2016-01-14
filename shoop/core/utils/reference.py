@@ -12,8 +12,8 @@ import datetime
 from django.conf import settings
 from django.utils.encoding import force_text
 
-# these must be directly imported; this module is imported by `models.orders`
-from shoop.core.models.counters import Counter, CounterType
+# these must be directly imported; this module is imported by `models._orders`
+from shoop.core.models._counters import Counter, CounterType
 from shoop.utils.importing import load
 
 

@@ -23,9 +23,9 @@ from shoop.core.taxing import TaxableItem
 from shoop.core.utils.slugs import generate_multilanguage_slugs
 from shoop.utils.analog import define_log_model, LogEntryKind
 
-from .attributes import AppliedAttribute, AttributableMixin, Attribute
-from .product_packages import ProductPackageLink
-from .product_variation import (
+from ._attributes import AppliedAttribute, AttributableMixin, Attribute
+from ._product_packages import ProductPackageLink
+from ._product_variation import (
     get_combination_hash_from_variable_mapping, ProductVariationResult,
     ProductVariationVariable
 )
@@ -239,8 +239,8 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
 
     def get_shop_instance(self, shop):
         """
-        :type shop: shoop.core.models.shops.Shop
-        :rtype: shoop.core.models.product_shops.ShopProduct
+        :type shop: shoop.core.models.Shop
+        :rtype: shoop.core.models.ShopProduct
         """
         shop_inst_cache = self.__dict__.setdefault("_shop_inst_cache", {})
         cached = shop_inst_cache.get(shop)

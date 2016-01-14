@@ -14,7 +14,7 @@ import pytest
 from django.utils.timezone import make_aware, utc
 
 from shoop.admin.modules.products.views.forms import ProductAttributesForm
-from shoop.core.models.products import ProductAttribute
+from shoop.core.models import ProductAttribute
 from shoop.testing.factories import create_product, get_default_shop
 from shoop.utils.objects import compare_partial_dicts
 from shoop_tests.utils.forms import get_form_data

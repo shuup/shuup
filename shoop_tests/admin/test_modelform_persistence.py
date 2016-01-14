@@ -10,8 +10,7 @@ import six
 from django.forms.models import ModelForm
 from django.utils import translation
 
-from shoop.core.models import Product
-from shoop.core.models.products import StockBehavior
+from shoop.core.models import Product, StockBehavior
 from shoop.utils.multilanguage_model_form import MultiLanguageModelForm
 
 

@@ -8,8 +8,7 @@
 import pytest
 from django.conf import settings
 
-from shoop.core.models import Shop
-from shoop.core.models.contacts import ContactGroup
+from shoop.core.models import ContactGroup, Shop
 from shoop.simple_pricing.admin_form_part import SimplePricingForm
 from shoop.simple_pricing.models import SimpleProductPrice
 from shoop.testing.factories import (

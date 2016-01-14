@@ -4,44 +4,46 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from .addresses import (
+from shoop.utils import update_module_attributes
+
+from ._addresses import (
     ImmutableAddress, MutableAddress, SavedAddress, SavedAddressRole,
     SavedAddressStatus
 )
-from .attributes import Attribute, AttributeType, AttributeVisibility
-from .categories import Category, CategoryStatus, CategoryVisibility
-from .configurations import ConfigurationItem
-from .contacts import (
+from ._attributes import Attribute, AttributeType, AttributeVisibility
+from ._categories import Category, CategoryStatus, CategoryVisibility
+from ._configurations import ConfigurationItem
+from ._contacts import (
     AnonymousContact, CompanyContact, Contact, ContactGroup, Gender,
     get_person_contact, PersonContact
 )
-from .counters import Counter, CounterType
-from .manufacturers import Manufacturer
-from .methods import MethodStatus, MethodType, PaymentMethod, ShippingMethod
-from .order_lines import OrderLine, OrderLineTax, OrderLineType
-from .orders import (
+from ._counters import Counter, CounterType
+from ._manufacturers import Manufacturer
+from ._methods import MethodStatus, MethodType, PaymentMethod, ShippingMethod
+from ._order_lines import OrderLine, OrderLineTax, OrderLineType
+from ._orders import (
     Order, OrderLogEntry, OrderStatus, OrderStatusRole, PaymentStatus,
     ShippingStatus
 )
-from .payments import Payment
-from .persistent_cache import PersistentCacheEntry
-from .product_media import ProductMedia, ProductMediaKind
-from .product_packages import ProductPackageLink
-from .product_shops import ProductVisibility, ShopProduct
-from .product_variation import (
+from ._payments import Payment
+from ._persistent_cache import PersistentCacheEntry
+from ._product_media import ProductMedia, ProductMediaKind
+from ._product_packages import ProductPackageLink
+from ._product_shops import ProductVisibility, ShopProduct
+from ._product_variation import (
     ProductVariationLinkStatus, ProductVariationResult,
     ProductVariationVariable, ProductVariationVariableValue
 )
-from .products import (
+from ._products import (
     Product, ProductAttribute, ProductCrossSell, ProductCrossSellType,
     ProductMode, ProductType, ShippingMode, StockBehavior
 )
-from .shipments import Shipment, ShipmentProduct
-from .shops import Shop, ShopStatus
-from .supplied_products import SuppliedProduct
-from .suppliers import Supplier, SupplierType
-from .taxes import CustomerTaxGroup, Tax, TaxClass
-from .units import SalesUnit
+from ._shipments import Shipment, ShipmentProduct
+from ._shops import Shop, ShopStatus
+from ._supplied_products import SuppliedProduct
+from ._suppliers import Supplier, SupplierType
+from ._taxes import CustomerTaxGroup, Tax, TaxClass
+from ._units import SalesUnit
 
 __all__ = [
     "AnonymousContact",
@@ -111,3 +113,5 @@ __all__ = [
     "Tax",
     "TaxClass",
 ]
+
+update_module_attributes(__all__, __name__)

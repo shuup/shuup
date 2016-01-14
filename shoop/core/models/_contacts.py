@@ -19,7 +19,7 @@ from timezone_field.fields import TimeZoneField
 from shoop.core.fields import InternalIdentifierField, LanguageField
 from shoop.core.utils.name_mixin import NameMixin
 
-from .taxes import CustomerTaxGroup
+from ._taxes import CustomerTaxGroup
 
 
 @python_2_unicode_compatible

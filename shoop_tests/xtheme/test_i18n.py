@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import forms
+
 from shoop.xtheme.plugins.forms import TranslatableField
 from shoop_tests.utils import printable_gibberish
 

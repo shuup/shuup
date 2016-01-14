@@ -41,7 +41,7 @@ class ContactListView(PicotableListView):
 
     def get_object_abstract(self, instance, item):
         """
-        :type instance: shoop.core.models.contacts.Contact
+        :type instance: shoop.core.models.Contact
         """
         bits = filter(None, [
             item["type"],

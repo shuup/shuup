@@ -11,7 +11,7 @@ from django.contrib.auth import get_user_model
 from django.utils.encoding import force_text
 
 from shoop.admin.modules.users.views import UserDetailView
-from shoop.core.models.contacts import Contact
+from shoop.core.models import Contact
 from shoop.testing.factories import create_random_person, get_default_shop
 from shoop.testing.soup_utils import extract_form_fields
 from shoop.testing.utils import apply_request_middleware

@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from decimal import Decimal
 
-from shoop.core.models.units import SalesUnit
+from shoop.core.models import SalesUnit
 
 
 def test_sales_unit_decimals():

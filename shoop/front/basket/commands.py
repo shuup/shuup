@@ -15,7 +15,7 @@ from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.core.models import Product, ProductVariationResult
-from shoop.core.models.product_variation import hash_combination
+from shoop.core.models._product_variation import hash_combination
 from shoop.utils.importing import cached_load
 from shoop.utils.numbers import parse_decimal_string
 

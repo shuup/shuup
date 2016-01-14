@@ -9,8 +9,7 @@ import pytest
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import get_language
 
-from shoop.core.models import OrderStatus
-from shoop.core.models.orders import OrderStatusRole
+from shoop.core.models import OrderStatus, OrderStatusRole
 from shoop.testing.factories import create_default_order_statuses
 
 

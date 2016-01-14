@@ -8,13 +8,14 @@
 
 import pytest
 
-from shoop.core.models.product_shops import ShopProduct
-from shoop.core.models.product_variation import (
-    get_all_available_combinations, get_available_variation_results,
+from shoop.core.models import (
     ProductVariationResult, ProductVariationVariable,
-    ProductVariationVariableValue
+    ProductVariationVariableValue, ShopProduct
 )
-from shoop.core.models.products import ProductMode
+from shoop.core.models._product_variation import (
+    get_all_available_combinations, get_available_variation_results
+)
+from shoop.core.models import ProductMode
 from shoop.testing.factories import create_product, get_default_shop
 
 
