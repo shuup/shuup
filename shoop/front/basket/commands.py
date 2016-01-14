@@ -15,7 +15,6 @@ from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.core.models import Product, ProductVariationResult
-from shoop.core.models._product_variation import hash_combination
 from shoop.utils.importing import cached_load
 from shoop.utils.numbers import parse_decimal_string
 
@@ -83,7 +82,7 @@ def handle_add(request, basket, product_id, quantity=1, supplier_id=None, **kwar
     }
 
 
-def handle_add_var(request, basket, quantity=1, **kwargs):
+def handle_add_var(request, basket, product_id, quantity=1, **kwargs):
     """
     Handle adding a complex variable product into the basket by resolving the combination variables.
     This actually uses `kwargs`, expecting `var_XXX=YYY` to exist there, where `XXX` is the PK
@@ -95,12 +94,11 @@ def handle_add_var(request, basket, quantity=1, **kwargs):
 
     # Resolve the combination...
     vars = dict((int(k.split("_")[-1]), int(v)) for (k, v) in six.iteritems(kwargs) if k.startswith("var_"))
-    try:
-        product_id = ProductVariationResult.objects.get(combination_hash=hash_combination(vars)).result_id
-    except ProductVariationResult.DoesNotExist:
+    var_product = ProductVariationResult.resolve(product_id, combination=vars)
+    if not var_product:
         raise ValidationError(_(u"This variation is not available."), code="invalid_variation_combination")
     # and hand it off to handle_add like we're used to
-    return handle_add(request=request, basket=basket, product_id=product_id, quantity=quantity)
+    return handle_add(request=request, basket=basket, product_id=var_product.pk, quantity=quantity)
 
 
 def handle_del(request, basket, line_id, **kwargs):
