@@ -15,7 +15,7 @@ script:
   - isort -c -rc shoop
   - _misc/ensure_license_headers.py -s shoop
   - _misc/check_sanity.py shoop
-  - py.test -ra -vvv --cov shoop shoop_tests
+  - py.test -ra -vvv --doctest-modules --cov shoop shoop_tests shoop
 after_success: coveralls
 notifications:
   slack:
