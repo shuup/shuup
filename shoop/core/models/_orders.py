@@ -32,9 +32,6 @@ from shoop.core.fields import (
     UnsavedForeignKey
 )
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
-from shoop.core.utils.reference import (
-    get_order_identifier, get_reference_number
-)
 from shoop.utils.analog import define_log_model, LogEntryKind
 from shoop.utils.money import Money
 from shoop.utils.numbers import bankers_round
@@ -43,6 +40,7 @@ from shoop.utils.properties import (
 )
 
 from ._order_lines import OrderLineType
+from ._order_utils import get_order_identifier, get_reference_number
 from ._products import Product
 from ._suppliers import Supplier
 

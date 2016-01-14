@@ -10,7 +10,7 @@ import hashlib
 import pytest
 from django.test import override_settings
 
-from shoop.core.utils.reference import (
+from shoop.core.models._order_utils import (
     get_order_identifier, get_reference_number
 )
 from shoop.testing.factories import create_empty_order
