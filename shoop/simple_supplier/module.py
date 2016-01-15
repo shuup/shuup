@@ -35,14 +35,16 @@ class SimpleSupplierModule(BaseSupplierModule):
         ) for product_id in product_ids]
         return dict((pss.product_id, pss) for pss in stati)
 
-    def adjust_stock(self, product_id, delta, created_by=None):
-        StockAdjustment.objects.create(
+    def adjust_stock(self, product_id, delta, purchase_price=0, created_by=None):
+        adjustment = StockAdjustment.objects.create(
             supplier=self.supplier,
             product_id=product_id,
             delta=delta,
+            purchase_price_value=purchase_price,
             created_by=created_by
         )
         self.update_stock(product_id)
+        return adjustment
 
     def update_stock(self, product_id):
         supplier_id = self.supplier.pk
@@ -51,4 +53,8 @@ class SimpleSupplierModule(BaseSupplierModule):
         sv, _ = StockCount.objects.get_or_create(supplier_id=supplier_id, product_id=product_id)
         sv.logical_count = values["logical_count"]
         sv.physical_count = values["physical_count"]
-        sv.save(update_fields=("logical_count", "physical_count"))
+        latest_event = StockAdjustment.objects.filter(
+            supplier=supplier_id, product=product_id).order_by("-created_on").first()
+        if latest_event:
+            sv.stock_value_value = latest_event.purchase_price_value * sv.logical_count
+        sv.save(update_fields=("logical_count", "physical_count", "stock_value_value"))

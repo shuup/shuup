@@ -9,7 +9,9 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from shoop.core.fields import QuantityField
+from shoop.core.fields import MoneyValueField, QuantityField
+from shoop.core.settings import SHOOP_HOME_CURRENCY
+from shoop.utils.properties import PriceProperty
 
 
 class StockAdjustment(models.Model):
@@ -19,9 +21,16 @@ class StockAdjustment(models.Model):
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.PROTECT, verbose_name=_("created by"))
     delta = QuantityField(default=0, verbose_name=_("delta"))
+    purchase_price_value = MoneyValueField(default=0)
+    purchase_price = PriceProperty("purchase_price_value", "currency", "includes_tax")
 
-    class Meta:
-        unique_together = [("product", "supplier")]
+    @property
+    def currency(self):
+        return SHOOP_HOME_CURRENCY
+
+    @property
+    def includes_tax(self):
+        return False
 
 
 class StockCount(models.Model):
@@ -31,6 +40,21 @@ class StockCount(models.Model):
         "shoop.Supplier", editable=False, on_delete=models.CASCADE, verbose_name=_("supplier"))
     logical_count = QuantityField(default=0, editable=False, verbose_name=_("logical count"))
     physical_count = QuantityField(default=0, editable=False, verbose_name=_("physical count"))
+    stock_value_value = MoneyValueField(default=0)
+    stock_value = PriceProperty("stock_value_value", "currency", "includes_tax")
+    stock_unit_price = PriceProperty("stock_unit_price_value", "currency", "includes_tax")
 
     class Meta:
         unique_together = [("product", "supplier")]
+
+    @property
+    def currency(self):
+        return SHOOP_HOME_CURRENCY
+
+    @property
+    def includes_tax(self):
+        return False
+
+    @property
+    def stock_unit_price_value(self):
+        return (self.stock_value_value / self.logical_count if self.logical_count else 0)
