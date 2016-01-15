@@ -10,7 +10,9 @@ from __future__ import unicode_literals
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from shoop.admin.utils.views import CreateOrUpdateView
+from shoop.admin.utils.views import (
+    check_and_raise_if_only_one_allowed, CreateOrUpdateView
+)
 from shoop.core.models import Supplier
 
 
@@ -28,6 +30,11 @@ class SupplierEditView(CreateOrUpdateView):
     form_class = SupplierForm
     template_name = "shoop/admin/suppliers/edit.jinja"
     context_object_name = "supplier"
+
+    def get_object(self, queryset=None):
+        obj = super(SupplierEditView, self).get_object(queryset)
+        check_and_raise_if_only_one_allowed("SHOOP_ENABLE_MULTIPLE_SUPPLIERS", obj)
+        return obj
 
     def get_form(self, form_class=None):
         form = super(SupplierEditView, self).get_form(form_class=form_class)

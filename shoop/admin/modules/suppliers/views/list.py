@@ -7,8 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
+from shoop.admin.toolbar import Toolbar
 from shoop.admin.utils.picotable import Column, TextFilter
 from shoop.admin.utils.views import PicotableListView
 from shoop.core.models import Supplier
@@ -33,3 +35,9 @@ class SupplierListView(PicotableListView):
 
     def get_module_display(self, instance):
         return instance.module.name or _("No %s module") % self.model._meta.verbose_name
+
+    def get_toolbar(self):
+        if settings.SHOOP_ENABLE_MULTIPLE_SUPPLIERS:
+            return super(SupplierListView, self).get_toolbar()
+        else:
+            return Toolbar([])
