@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.views.generic.base import TemplateView
 
+import shoop
 from shoop.admin.dashboard import get_activity
 from shoop.admin.module_registry import get_modules
 from shoop.core.telemetry import try_send_telemetry
@@ -17,6 +18,7 @@ class DashboardView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(DashboardView, self).get_context_data(**kwargs)
+        context["version"] = shoop.__version__
         context["notifications"] = notifications = []
         context["blocks"] = blocks = []
         for module in get_modules():
