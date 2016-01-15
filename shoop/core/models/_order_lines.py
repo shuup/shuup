@@ -118,7 +118,9 @@ class OrderLine(MoneyPropped, models.Model, Priceful):
         if self.product_id and not self.supplier_id:
             raise ValidationError("Order line has product but no supplier")
 
-        return super(OrderLine, self).save(*args, **kwargs)
+        super(OrderLine, self).save(*args, **kwargs)
+        if self.product_id:
+            self.supplier.module.update_stock(self.product_id)
 
 
 @python_2_unicode_compatible

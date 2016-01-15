@@ -55,6 +55,11 @@ class Shipment(models.Model):
             self.pk, self.order_id, self.tracking_code, self.created_on
         )
 
+    def save(self, *args, **kwargs):
+        super(Shipment, self).save(*args, **kwargs)
+        for product_id in self.products.values_list("id", flat=True):
+            self.supplier.module.update_stock(product_id=product_id)
+
     def cache_values(self):
         """
         (Re)cache `.volume` and `.weight` for this Shipment from the ShipmentProducts within.

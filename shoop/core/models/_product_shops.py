@@ -72,6 +72,11 @@ class ShopProduct(MoneyPropped, models.Model):
     class Meta:
         unique_together = (("shop", "product",),)
 
+    def save(self, *args, **kwargs):
+        super(ShopProduct, self).save(*args, **kwargs)
+        for supplier in self.suppliers.all():
+            supplier.module.update_stock(product_id=self.product.id)
+
     def is_list_visible(self):
         """
         Return True if this product should be visible in listings in general,
