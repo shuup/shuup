@@ -61,7 +61,7 @@ class BaseSupplierModule(object):
         if stock_status.error:
             yield ValidationError(stock_status.error, code="stock_error")
         if shop_product.product.stock_behavior == StockBehavior.STOCKED:
-            if quantity >= stock_status.logical_count:
+            if quantity > stock_status.logical_count:
                 yield ValidationError(stock_status.message or _(u"Insufficient stock"), code="stock_insufficient")
 
     def adjust_stock(self, product_id, delta, created_by=None):
