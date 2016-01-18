@@ -106,6 +106,17 @@ To run tests for all supported Python versions run:
    pip install tox  # To install tox, needed just once
    tox
 
+Collecting translatable messages
+--------------------------------
+
+To update the PO catalog files which contain translatable (and
+translated) messages, issue ``shoop_makemessages`` management command in
+the ``shoop`` directory:
+
+.. code-block:: shell
+
+   cd shoop && python -m shoop_workbench shoop_makemessages
+
 Docstring coverage
 ------------------
 
