@@ -11,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from shoop.front.template_helpers.general import (
     get_best_selling_products, get_newest_products, get_random_products
 )
-from shoop.xtheme.plugins import TemplatedPlugin
+from shoop.xtheme import TemplatedPlugin
 from shoop.xtheme.plugins.forms import TranslatableField
 
 

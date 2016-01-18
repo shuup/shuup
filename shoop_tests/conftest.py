@@ -9,7 +9,7 @@ from django.core.signals import setting_changed
 
 from shoop.apps.provides import clear_provides_cache
 from shoop.utils.importing import clear_load_cache
-from shoop.xtheme.theme import override_current_theme_class
+from shoop.xtheme.testing import override_current_theme_class
 
 
 def clear_caches(setting, **kwargs):

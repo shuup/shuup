@@ -9,9 +9,7 @@ import pytest
 from django.contrib.auth import get_user_model
 
 from shoop.admin.modules.contacts.views.edit import ContactBaseForm
-from shoop.core.models.contacts import (
-    Gender, get_person_contact, PersonContact
-)
+from shoop.core.models import Gender, get_person_contact, PersonContact
 from shoop_tests.utils import printable_gibberish
 
 

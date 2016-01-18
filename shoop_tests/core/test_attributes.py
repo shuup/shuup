@@ -13,11 +13,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.test import override_settings
 from django.utils.translation import get_language
 
-from shoop.core.models import Product
-from shoop.core.models.attributes import (
-    Attribute, AttributeType, AttributeVisibility, NoSuchAttributeHere
+from shoop.core.models import (
+    Attribute, AttributeType, AttributeVisibility, Product, ProductAttribute
 )
-from shoop.core.models.products import ProductAttribute
+from shoop.core.models._attributes import NoSuchAttributeHere
 from shoop.testing.factories import (
     ATTR_SPECS, create_product, get_default_attribute_set, get_default_product
 )

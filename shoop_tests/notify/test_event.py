@@ -8,7 +8,7 @@
 import pytest
 
 from shoop.notify import Event
-from shoop_tests.notify.fixtures import get_initialized_test_event, TestEvent
+from shoop_tests.notify.fixtures import ATestEvent, get_initialized_test_event
 
 
 @pytest.mark.django_db
@@ -18,12 +18,12 @@ def test_event_init():
 
 def test_extra_vars_fails():
     with pytest.raises(ValueError):
-        TestEvent(not_valid=True)
+        ATestEvent(not_valid=True)
 
 
 def test_missing_vars_fails():
     with pytest.raises(ValueError):
-        TestEvent(just_some_text="Hello")
+        ATestEvent(just_some_text="Hello")
 
 
 def test_init_empty_fails():
@@ -31,4 +31,4 @@ def test_init_empty_fails():
         Event()
 
 def test_auto_name():
-    assert TestEvent.name == "Test Event"
+    assert ATestEvent.name == "Test Event"

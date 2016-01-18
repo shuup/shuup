@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
 from django.utils.translation import override
+
 from shoop.utils.i18n import get_language_name
 
 

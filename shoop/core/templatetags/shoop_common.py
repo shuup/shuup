@@ -32,8 +32,9 @@ def money(amount, digits=None, widen=0):
     :type amount: shoop.utils.money.Money
     :param digits: Number of digits to use, by default use locale's default
     :type digits: int|None
-    :param widen: Number of extra digits to add; for formatting with
-      additional precision, e.g. `widen`=3 will use 5 digits instead of 2
+    :param widen:
+      Number of extra digits to add; for formatting with additional
+      precision, e.g. ``widen=3`` will use 5 digits instead of 2
     :type widen: int
     :return: Formatted string representing the given amount
     :rtype: str

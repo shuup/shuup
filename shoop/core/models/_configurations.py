@@ -13,7 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 from jsonfield import JSONField
 
 from ._base import ShoopModel
-from .shops import Shop
+from ._shops import Shop
 
 
 @python_2_unicode_compatible

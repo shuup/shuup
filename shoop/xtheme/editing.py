@@ -84,8 +84,8 @@ def add_edit_resources(context):
     request = context.get("request")
     if not (request and could_edit(request) and may_inject(context)):
         return
+    from ._theme import get_current_theme
     from .rendering import get_view_config  # avoid circular import
-    from .theme import get_current_theme
     view_config = get_view_config(context)
     theme = get_current_theme(request=request)
     if not theme:

@@ -36,14 +36,6 @@ shoop.simple_pricing.module module
     :undoc-members:
     :show-inheritance:
 
-shoop.simple_pricing.settings module
-------------------------------------
-
-.. automodule:: shoop.simple_pricing.settings
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 
 Module contents
 ---------------

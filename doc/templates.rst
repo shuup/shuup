@@ -187,6 +187,8 @@ Personal Order History, another sub-app, naturally has its templates in its own 
     Template for listing all the previous personal orders.
 
 
+.. _custom-template-helper-functions:
+
 Custom Template Helper Functions
 --------------------------------
 

@@ -14,8 +14,7 @@ from django.template import loader
 from django.utils import timezone
 
 from shoop.core.middleware import ExceptionMiddleware
-from shoop.core.models import Shop
-from shoop.core.models.contacts import get_person_contact
+from shoop.core.models import get_person_contact, Shop
 from shoop.front.basket import get_basket
 
 __all__ = ["ProblemMiddleware", "ShoopFrontMiddleware"]

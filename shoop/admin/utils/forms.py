@@ -15,11 +15,10 @@ from django.forms.utils import flatatt
 
 def filter_form_field_choices(field, predicate, invert=False):
     """
-    Filter the `choices` of a given form field (and its widget)
-    by the given predicate.
+    Filter choices of a form field and its widget by predicate.
 
-    The predicate may be a callable of the signature `(pair) -> bool`
-    or an iterable of allowable `value`s.
+    The predicate may be a callable of the signature ``(pair) -> bool``
+    or an iterable of allowable values.
 
     :param field: Form field.
     :type field: django.forms.Field

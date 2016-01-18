@@ -11,9 +11,8 @@ from django_jinja.backend import Jinja2
 from django_jinja.builtins import DEFAULT_EXTENSIONS
 
 from shoop.apps.provides import override_provides
-from shoop.xtheme import parsing
+from shoop.xtheme import parsing, Theme
 from shoop.xtheme.editing import is_edit_mode, set_edit_mode
-from shoop.xtheme.theme import Theme
 from shoop.xtheme.view_config import Layout
 from shoop_tests.utils import printable_gibberish
 from shoop_tests.utils.faux_users import SuperUser

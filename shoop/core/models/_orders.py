@@ -31,12 +31,7 @@ from shoop.core.fields import (
     CurrencyField, InternalIdentifierField, LanguageField, MoneyValueField,
     UnsavedForeignKey
 )
-from shoop.core.models.products import Product
-from shoop.core.models.suppliers import Supplier
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
-from shoop.core.utils.reference import (
-    get_order_identifier, get_reference_number
-)
 from shoop.utils.analog import define_log_model, LogEntryKind
 from shoop.utils.money import Money
 from shoop.utils.numbers import bankers_round
@@ -44,7 +39,10 @@ from shoop.utils.properties import (
     MoneyPropped, TaxfulPriceProperty, TaxlessPriceProperty
 )
 
-from .order_lines import OrderLineType
+from ._order_lines import OrderLineType
+from ._order_utils import get_order_identifier, get_reference_number
+from ._products import Product
+from ._suppliers import Supplier
 
 
 class PaymentStatus(Enum):
@@ -440,15 +438,15 @@ class Order(MoneyPropped, models.Model):
         :param supplier: The Supplier for this product. No validation is made
                          as to whether the given supplier supplies the products.
         :param product_quantities: a dict mapping Product instances to quantities to ship
-        :type product_quantities: dict[shoop.shop.models.products.Product, decimal.Decimal]
+        :type product_quantities: dict[shoop.shop.models.Product, decimal.Decimal]
         :raises: NoProductsToShipException
         :return: Saved, complete Shipment object
-        :rtype: shoop.core.models.shipments.Shipment
+        :rtype: shoop.core.models.Shipment
         """
         if not product_quantities or not any(quantity > 0 for quantity in product_quantities.values()):
             raise NoProductsToShipException("No products to ship (`quantities` is empty or has no quantity over 0).")
 
-        from .shipments import Shipment, ShipmentProduct
+        from ._shipments import Shipment, ShipmentProduct
 
         shipment = Shipment(order=self, supplier=supplier)
         shipment.save()
@@ -476,7 +474,7 @@ class Order(MoneyPropped, models.Model):
         :param supplier: The Supplier to use. If `None`, the first supplier in
                          the order is used. (If several are in the order, this fails.)
         :return: Saved, complete Shipment object
-        :rtype: shoop.shop.models.shipments.Shipment
+        :rtype: shoop.shop.models.Shipment
         """
         suppliers_to_product_quantities = defaultdict(lambda: defaultdict(lambda: 0))
         lines = (
@@ -514,7 +512,7 @@ class Order(MoneyPropped, models.Model):
         return self.all_verified
 
     def get_purchased_attachments(self):
-        from .product_media import ProductMedia
+        from ._product_media import ProductMedia
 
         if self.payment_status != PaymentStatus.FULLY_PAID:
             return ProductMedia.objects.none()
@@ -586,7 +584,7 @@ class Order(MoneyPropped, models.Model):
             products[product_id]['ordered'] += quantity
             products[product_id]['unshipped'] += quantity
 
-        from .shipments import ShipmentProduct
+        from ._shipments import ShipmentProduct
 
         shipment_prods = (
             ShipmentProduct.objects

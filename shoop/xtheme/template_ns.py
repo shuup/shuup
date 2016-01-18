@@ -7,9 +7,9 @@
 # LICENSE file in the root directory of this source tree.
 from jinja2.utils import contextfunction
 
+from shoop.xtheme._theme import get_current_theme
 from shoop.xtheme.editing import is_edit_mode
 from shoop.xtheme.rendering import get_view_config
-from shoop.xtheme.theme import get_current_theme
 
 
 class XthemeNamespace(object):

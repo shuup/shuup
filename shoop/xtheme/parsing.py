@@ -208,11 +208,20 @@ class PlaceholderExtension(_PlaceholderManagingExtension):
 
 class LayoutPartExtension(_PlaceholderManagingExtension):
     """
-    `LayoutPartExtension`: `{% row %}`..`{% endrow %}` and `{% column [SIZES] %}`..`{% endcolumn %}`
+    Parser for row and column tags.
 
-    * `row`s map to `LayoutRow` objects and `column`s map to `LayoutCell`s.
-    * For a single-cell layout, these are not necessary.  `{% plugin %}` invocations without preceding
-      `{% row %}`/`{% column %}` directives imply a single row and a single column.
+    Syntax for the row and column tags is::
+
+      {% row %}
+          {% column [SIZES] %}...{% endcolumn %}
+      {% endrow %}
+
+    * Rows map to `LayoutRow` objects and columns map to `LayoutCell`.
+
+    * For a single-cell layout, these are not necessary.
+      ``{% plugin %}`` invocations without preceding
+      ``{% row %}``/``{% column %}`` directives imply a single
+      row and a single column.
     """
 
     tags = set(['column', 'row'])
@@ -262,14 +271,22 @@ class LayoutPartExtension(_PlaceholderManagingExtension):
 
 class PluginExtension(_PlaceholderManagingExtension):
     """
-    `PluginExtension`: `{% plugin <NAME> %}`..`{% endplugin %}`
+    Parser for plugin tags.
 
-    * The (optional) body of the `plugin` block is expected to be a Jinja2 AST that can be folded
-      into a constant.  Generally this means a single block of text (`{% raw %}`/`{% endraw %}` is okay!).
-    * The contents of the body, if set, must be valid [TOML](https://github.com/toml-lang/toml) markup.
-      The TOML is parsed during Jinja2 parse time into a dict, which in turn is folded into the layout description
-      object.  This means only the initial parsing of the template incurs whatever performance hit there is in
-      parsing TOML; the Jinja2 bccache should take care of the rest.
+    Syntax for plugin tag is::
+
+      {% plugin <NAME> %}...{% endplugin %}
+
+    * The (optional) body of the plugin block is expected to be a Jinja2
+      AST that can be folded into a constant.  Generally this means a
+      single block of text (``{% raw }``/``{% endraw %}`` is okay!).
+
+    * The contents of the body, if set, must be valid `TOML markup
+      <https://github.com/toml-lang/toml>`_.  The TOML is parsed during
+      Jinja2 parse time into a dict, which in turn is folded into the
+      layout description object.  This means only the initial parsing of
+      the template incurs whatever performance hit there is in parsing
+      TOML; the Jinja2 bccache should take care of the rest.
     """
     tags = set(['plugin'])
 

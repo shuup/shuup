@@ -10,6 +10,8 @@ from decimal import Decimal, ROUND_HALF_EVEN
 
 import six
 
+from shoop.utils import update_module_attributes
+
 from ._united_decimal import UnitedDecimal, UnitMixupError
 
 __all__ = [
@@ -106,3 +108,6 @@ def get_string_sort_order(s):
         return (5, parse_decimal_string(s))
     except:  # Otherwise just sort as a string
         return (1, s)
+
+
+update_module_attributes(__all__, __name__)

@@ -106,7 +106,7 @@ class _MethodDependentCheckoutPhase(CheckoutPhaseViewMixin):
 
     def get_method(self):
         """
-        :rtype: shoop.core.models.methods.Method
+        :rtype: shoop.core.models.Method
         """
         raise NotImplementedError("Not implemented")
 

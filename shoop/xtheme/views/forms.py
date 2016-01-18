@@ -10,7 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shoop.utils.form_group import FormGroup
 from shoop.xtheme.layout import LayoutCell
-from shoop.xtheme.plugins.base import Plugin
+from shoop.xtheme.plugins._base import Plugin
 
 
 class LayoutCellGeneralInfoForm(forms.Form):

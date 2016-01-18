@@ -5,11 +5,10 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import pytest
 from django.conf import settings
 from django.core.management import call_command
 from six import StringIO
-
-import pytest
 
 
 @pytest.mark.django_db

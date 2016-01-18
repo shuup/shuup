@@ -8,8 +8,8 @@
 
 import numbers
 
-from .price import Price
-from .priceful import Priceful
+from ._price import Price
+from ._priceful import Priceful
 
 
 class PriceInfo(Priceful):

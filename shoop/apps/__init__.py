@@ -105,7 +105,7 @@ class AppConfig(django.apps.AppConfig):
     #: exception.
     required_installed_apps = ()
 
-    #: See :doc:`provides` for details about the ``provides`` variable.
+    #: See :doc:`/provides` for details about the ``provides`` variable.
     provides = {}
 
     def __init__(self, *args, **kwargs):

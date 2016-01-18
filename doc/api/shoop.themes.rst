@@ -7,7 +7,6 @@ Subpackages
 .. toctree::
 
     shoop.themes.classic_gray
-    shoop.themes.default_theme
 
 Module contents
 ---------------

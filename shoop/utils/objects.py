@@ -66,10 +66,15 @@ def compare_partial_dicts(source, comparee):
 
 def compact(in_obj, none_only=True, deep=True):
     """
-    Compact an iterable (either a mapping or a list) by removing falsy values,
-    or if `none_only` is set, by removing `None`s.
+    Compact iterable by removing falsy values.
 
-    By default, iterables within the iterable are also compacted.
+    Iterable may be a mapping or a list.
+
+    By default uses ``not value`` to test for falseness, but if
+    `none_only` is set, will use ``value is None``.
+
+    By default, iterables within the iterable are also compacted.  This
+    can be controlled by the `deep` argument.
 
     :param in_obj: The object to compact
     :type in_obj: Iterable

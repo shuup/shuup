@@ -17,10 +17,11 @@ from shoop.core.excs import (
     ProductNotOrderableProblem, ProductNotVisibleProblem
 )
 from shoop.core.fields import MoneyValueField, QuantityField, UnsavedForeignKey
-from shoop.core.models.product_media import ProductMediaKind
-from shoop.core.models.products import ProductVisibility, StockBehavior
 from shoop.core.signals import get_orderability_errors, get_visibility_errors
 from shoop.utils.properties import MoneyPropped, PriceProperty
+
+from ._product_media import ProductMediaKind
+from ._products import ProductVisibility, StockBehavior
 
 
 class ShopProduct(MoneyPropped, models.Model):
@@ -128,7 +129,7 @@ class ShopProduct(MoneyPropped, models.Model):
         Yield ValidationErrors that would cause this product to not be orderable.
 
         :param supplier: Supplier to order this product from. May be None.
-        :type supplier: shoop.core.models.suppliers.Supplier
+        :type supplier: shoop.core.models.Supplier
         :param quantity: Quantity to order.
         :type quantity: int|Decimal
         :param customer: Customer contact.

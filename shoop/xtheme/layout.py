@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
 
-from shoop.xtheme.plugins import Plugin
+from shoop.xtheme.plugins._base import Plugin
 
 
 class LayoutCell(object):

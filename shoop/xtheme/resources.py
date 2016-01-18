@@ -65,7 +65,7 @@ class ResourceContainer(object):
     ResourceContainers deal with storing and rendering injected resources.
 
     A ResourceContainer is injected into rendering contexts by
-    `shoop.xtheme.engine.XthemeTemplate` (akin to how `django-jinja`'s Template injects
+    `~shoop.xtheme.engine.XthemeTemplate` (akin to how `django-jinja`'s Template injects
     `request` and `csrf_token`).
     """
     def __init__(self):

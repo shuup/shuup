@@ -9,7 +9,7 @@ import pytest
 
 from shoop.admin.modules.orders.dashboard import OrderValueChartDashboardBlock
 from shoop.admin.modules.orders.views.detail import OrderSetStatusView
-from shoop.core.models.orders import Order, OrderStatus, OrderStatusRole
+from shoop.core.models import Order, OrderStatus, OrderStatusRole
 from shoop.testing.factories import (
     create_random_order, create_random_person, get_default_product
 )

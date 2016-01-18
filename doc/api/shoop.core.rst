@@ -26,14 +26,6 @@ Subpackages
 Submodules
 ----------
 
-shoop.core.contexts module
---------------------------
-
-.. automodule:: shoop.core.contexts
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 shoop.core.excs module
 ----------------------
 

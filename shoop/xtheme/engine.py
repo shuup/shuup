@@ -14,11 +14,11 @@ from jinja2.environment import Environment, Template
 from jinja2.utils import concat, internalcode
 
 from shoop.apps.provides import get_provide_objects
+from shoop.xtheme._theme import get_current_theme
 from shoop.xtheme.editing import add_edit_resources
 from shoop.xtheme.resources import (
     inject_resources, RESOURCE_CONTAINER_VAR_NAME, ResourceContainer
 )
-from shoop.xtheme.theme import get_current_theme
 
 
 class XthemeTemplate(Template):

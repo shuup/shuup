@@ -8,7 +8,7 @@
 import pytest
 from django.core.exceptions import ObjectDoesNotExist
 
-from shoop.core.models.counters import Counter, CounterType
+from shoop.core.models import Counter, CounterType
 
 
 @pytest.mark.django_db

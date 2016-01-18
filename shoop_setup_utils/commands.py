@@ -99,6 +99,10 @@ class BuildMessagesCommand(distutils.core.Command):
         appdirs = set()
         rootdir = os.getcwd()
         for (dirpath, dirnames, filenames) in os.walk(rootdir):
+            # Filter out hidden directories (.git, .svn, .tox, etc.)
+            for dirname in list(dirnames):
+                if dirname.startswith('.'):
+                    dirnames.remove(dirname)
             if 'LC_MESSAGES' in dirnames:
                 parent_dir = os.path.dirname(dirpath)
                 if os.path.basename(parent_dir) == 'locale':
@@ -113,11 +117,7 @@ class BuildMessagesCommand(distutils.core.Command):
         command = ['django-admin', 'compilemessages']
 
         for appdir in sorted(appdirs):
-            os.chdir(appdir)
-            try:
-                subprocess.check_call(command, env=env)
-            finally:
-                os.chdir(rootdir)
+            subprocess.check_call(command, env=env, cwd=appdir)
 
 
 COMMANDS = dict((x.command_name, x) for x in [

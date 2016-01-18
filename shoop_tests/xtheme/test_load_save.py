@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from shoop.xtheme.theme import Theme
+from shoop.xtheme import Theme
 from shoop.xtheme.view_config import ViewConfig
 from shoop_tests.utils import printable_gibberish
 
 
-class TestTheme(Theme):
+class ATestTheme(Theme):
     identifier = "test"
 
 
 @pytest.mark.django_db
 def test_load_save_default():
     view_name = printable_gibberish()
-    theme = TestTheme()
+    theme = ATestTheme()
     vc = ViewConfig(theme=theme, view_name=view_name, draft=True)
     placeholder_name = "test_ph"
     data = {"dummy": True}
@@ -32,7 +32,7 @@ def test_load_save_default():
 @pytest.mark.django_db
 def test_load_save_publish():
     view_name = printable_gibberish()
-    theme = TestTheme()
+    theme = ATestTheme()
     vc = ViewConfig(theme=theme, view_name=view_name, draft=True)
     placeholder_name = "test_ph"
     data = {"dummy": True}
@@ -51,7 +51,7 @@ def test_load_save_publish():
 @pytest.mark.django_db
 def test_draft_reversion():
     view_name = printable_gibberish()
-    theme = TestTheme()
+    theme = ATestTheme()
     placeholder_name = "test_ph"
     vc = ViewConfig(theme=theme, view_name=view_name, draft=True)
     def get_layout_data(draft):
@@ -95,5 +95,5 @@ def test_unthemebound_view_config_cant_do_much():
 
 @pytest.mark.django_db
 def test_unsaved_vc_reversion():
-    vc = ViewConfig(theme=TestTheme(), view_name=printable_gibberish(), draft=True)
+    vc = ViewConfig(theme=ATestTheme(), view_name=printable_gibberish(), draft=True)
     vc.revert()  # No-op, since this has never been saved (but shouldn't crash either)

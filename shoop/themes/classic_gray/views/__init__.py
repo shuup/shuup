@@ -5,9 +5,18 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from .basket import basket_partial  # noqa
-from .product_preview import product_preview  # noqa
-from .product_price import product_price  # noqa
-from .products_view import products  # noqa
+from shoop.utils import update_module_attributes
 
-__all__ = ["basket_partial", "product_preview", "products", "product_price"]
+from ._basket import basket_partial
+from ._product_preview import product_preview
+from ._product_price import product_price
+from ._products_view import products
+
+__all__ = [
+    "basket_partial",
+    "product_preview",
+    "products",
+    "product_price"
+]
+
+update_module_attributes(__all__, __name__)

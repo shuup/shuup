@@ -8,13 +8,11 @@
 
 import pytest
 
-from shoop.core.models.product_shops import ShopProduct
-from shoop.core.models.product_variation import (
-    get_all_available_combinations, get_available_variation_results,
+from shoop.core.models import (
     ProductVariationResult, ProductVariationVariable,
-    ProductVariationVariableValue
+    ProductVariationVariableValue, ShopProduct
 )
-from shoop.core.models.products import ProductMode
+from shoop.core.models import ProductMode
 from shoop.testing.factories import create_product, get_default_shop
 
 
@@ -30,7 +28,7 @@ def test_simple_variation():
         assert not sp.is_list_visible()  # Variation children are not list visible
 
     assert parent.mode == ProductMode.SIMPLE_VARIATION_PARENT
-    assert not list(get_all_available_combinations(parent))  # Simple variations can't have these.
+    assert not list(parent.get_all_available_combinations())  # Simple variations can't have these.
 
     # Validation tests
 
@@ -100,7 +98,7 @@ def test_multivariable_variation():
     for size in ("small", "medium", "large", "huge"):
         ProductVariationVariableValue.objects.create(variable=size_var, identifier=size)
 
-    combinations = list(get_all_available_combinations(parent))
+    combinations = list(parent.get_all_available_combinations())
     assert len(combinations) == (3 * 4)
     for combo in combinations:
         assert not combo["result_product_pk"]
@@ -122,4 +120,4 @@ def test_multivariable_variation():
     assert result1 and result2
     assert result1.pk == result2.pk
 
-    assert len(get_available_variation_results(parent)) == (3 * 4 - 1)
+    assert len(parent.get_available_variation_results()) == (3 * 4 - 1)

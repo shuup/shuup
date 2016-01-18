@@ -15,7 +15,7 @@ from django.utils.encoding import force_bytes
 from django.views.generic import ListView
 
 from shoop.core import cache
-from shoop.core.models.products import Product
+from shoop.core.models import Product
 from shoop.front.template_helpers.product import is_visible
 from shoop.front.utils.product_sorting import (
     PRODUCT_SORT_CHOICES, sort_products

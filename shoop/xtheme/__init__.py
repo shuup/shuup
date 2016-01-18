@@ -5,11 +5,22 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from shoop.apps import AppConfig
+from shoop.utils import update_module_attributes
 
-from .plugins.base import Plugin, templated_plugin_factory
-from .theme import Theme
+from ._theme import (
+    get_current_theme, get_theme_by_identifier, set_current_theme, Theme
+)
+from .plugins._base import Plugin, templated_plugin_factory, TemplatedPlugin
 
-__all__ = ["Theme", "Plugin", "templated_plugin_factory"]
+__all__ = [
+    "Plugin",
+    "TemplatedPlugin",
+    "Theme",
+    "get_current_theme",
+    "get_theme_by_identifier",
+    "set_current_theme",
+    "templated_plugin_factory"
+]
 
 
 class XThemeAppConfig(AppConfig):
@@ -29,3 +40,5 @@ class XThemeAppConfig(AppConfig):
 
 
 default_app_config = "shoop.xtheme.XThemeAppConfig"
+
+update_module_attributes(__all__, __name__)

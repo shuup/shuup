@@ -19,7 +19,7 @@ from timezone_field.fields import TimeZoneField
 from shoop.core.fields import InternalIdentifierField, LanguageField
 from shoop.core.utils.name_mixin import NameMixin
 
-from .taxes import CustomerTaxGroup
+from ._taxes import CustomerTaxGroup
 
 
 @python_2_unicode_compatible
@@ -180,7 +180,7 @@ def get_person_contact(user):
     :param user: User object (or None) to get contact for
     :type user: django.contrib.auth.models.User|None
     :return: PersonContact of the user or AnonymousContact
-    :rtype PersonContact|AnonymousContact
+    :rtype: PersonContact|AnonymousContact
     """
     if not user or user.is_anonymous():
         return AnonymousContact()

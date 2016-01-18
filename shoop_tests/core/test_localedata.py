@@ -6,11 +6,13 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 import datetime
 
 import babel
 import pytest
 from babel.dates import format_date
+
 from shoop.utils.dates import get_year_and_month_format
 from shoop.utils.i18n import format_money
 from shoop.utils.money import Money

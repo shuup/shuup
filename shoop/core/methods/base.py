@@ -145,7 +145,7 @@ class BaseMethodModule(object):
             return six.text_type(self)
 
     def get_source_lines(self, source):
-        from shoop.core.order_creator.source import SourceLine
+        from shoop.core.order_creator import SourceLine
 
         price_info = self.get_effective_price_info(source)
         assert price_info.quantity == 1

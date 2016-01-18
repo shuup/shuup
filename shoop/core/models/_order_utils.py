@@ -12,9 +12,9 @@ import datetime
 from django.conf import settings
 from django.utils.encoding import force_text
 
-# these must be directly imported; this module is imported by `models.orders`
-from shoop.core.models.counters import Counter, CounterType
 from shoop.utils.importing import load
+
+from ._counters import Counter, CounterType
 
 
 def calc_reference_number_checksum(rn):

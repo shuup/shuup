@@ -4,10 +4,10 @@ shoop.xtheme.plugins package
 Submodules
 ----------
 
-shoop.xtheme.plugins.base module
---------------------------------
+shoop.xtheme.plugins.consts module
+----------------------------------
 
-.. automodule:: shoop.xtheme.plugins.base
+.. automodule:: shoop.xtheme.plugins.consts
     :members:
     :undoc-members:
     :show-inheritance:
@@ -24,6 +24,14 @@ shoop.xtheme.plugins.text module
 --------------------------------
 
 .. automodule:: shoop.xtheme.plugins.text
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shoop.xtheme.plugins.widgets module
+-----------------------------------
+
+.. automodule:: shoop.xtheme.plugins.widgets
     :members:
     :undoc-members:
     :show-inheritance:

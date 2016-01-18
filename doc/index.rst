@@ -8,6 +8,7 @@ Contents
    :maxdepth: 2
 
    getting_started
+   glossary
    basic_admin_tasks
 
 Developer documentation
@@ -17,12 +18,13 @@ Developer documentation
    :maxdepth: 2
 
    getting_started_dev
-   glossary
+   dev_tools
    data_model
    provides
    addons
    templates
    taxes
+   notify_specification
    api/modules
    web_api
 

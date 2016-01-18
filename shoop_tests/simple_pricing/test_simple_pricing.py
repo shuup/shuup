@@ -8,8 +8,7 @@
 import pytest
 from django.conf import settings
 
-from shoop.core.pricing import get_pricing_module
-from shoop.core.pricing.price import TaxfulPrice, TaxlessPrice
+from shoop.core.pricing import get_pricing_module, TaxfulPrice, TaxlessPrice
 from shoop.simple_pricing.models import SimpleProductPrice
 from shoop.simple_pricing.module import SimplePricingModule
 from shoop.testing.factories import (

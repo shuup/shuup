@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import shoop.core.models.shops
+import shoop.core.models._shops
 import shoop.core.fields
 
 
@@ -106,7 +106,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='order',
             name='currency',
-            field=shoop.core.fields.CurrencyField(max_length=4, default=shoop.core.models.shops._get_default_currency),
+            field=shoop.core.fields.CurrencyField(max_length=4, default=shoop.core.models._shops._get_default_currency),
             preserve_default=False,
         ),
         migrations.AddField(
@@ -138,7 +138,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='shop',
             name='currency',
-            field=shoop.core.fields.CurrencyField(max_length=4, default=shoop.core.models.shops._get_default_currency),
+            field=shoop.core.fields.CurrencyField(max_length=4, default=shoop.core.models._shops._get_default_currency),
         ),
         migrations.AddField(
             model_name='tax',

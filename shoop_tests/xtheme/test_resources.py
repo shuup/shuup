@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from shoop.xtheme.plugins import Plugin
+from shoop.xtheme import Plugin
 from shoop.xtheme.resources import (
     add_resource, inject_resources, InlineMarkupResource, InlineScriptResource,
     RESOURCE_CONTAINER_VAR_NAME, ResourceContainer
 )
-from shoop.xtheme.theme import override_current_theme_class
+from shoop.xtheme.testing import override_current_theme_class
 from shoop_tests.xtheme.utils import (
     get_jinja2_engine, get_request, get_test_template_bits, plugin_override
 )

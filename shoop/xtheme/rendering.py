@@ -12,8 +12,8 @@ from django.utils.translation import ugettext_lazy as _
 from markupsafe import Markup
 
 from shoop.core.fields.tagged_json import TaggedJSONEncoder
+from shoop.xtheme._theme import get_current_theme
 from shoop.xtheme.editing import is_edit_mode
-from shoop.xtheme.theme import get_current_theme
 from shoop.xtheme.utils import get_html_attrs
 from shoop.xtheme.view_config import ViewConfig
 

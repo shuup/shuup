@@ -58,8 +58,9 @@ Provide Categories
     Admin module classes. Practically all of the functionality in the admin is built
     via admin modules.
 ``front_template_helper_namespace``
-    Additional namespaces to install in the ``shoop`` "package" within template contexts.
-    .. seealso:: :doc:`Custom Template Helper Functions`_
+    Additional namespaces to install in the ``shoop`` "package" within
+    template contexts.
+    .. seealso:: :ref:`custom-template-helper-functions`
 ``front_urls``
     Lists of frontend URLs to be appended to the usual frontend URLs.
 ``front_urls_post``

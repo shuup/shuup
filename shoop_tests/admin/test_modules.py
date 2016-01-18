@@ -25,7 +25,7 @@ from shoop.admin.views.search import get_search_results
 from shoop.testing.factories import get_default_shop
 from shoop.testing.utils import apply_request_middleware
 from shoop.utils.excs import Problem
-from shoop_tests.admin.fixtures.test_module import TestModule
+from shoop_tests.admin.fixtures.test_module import ATestModule
 from shoop_tests.utils import empty_iterable
 from shoop_tests.utils.faux_users import (
     AnonymousUser, AuthenticatedUser, StaffUser, SuperUser
@@ -49,8 +49,8 @@ def test_admin_module_base(rf):
 
 def test_module_loading_and_urls():
     with replace_modules([
-        TestModule,
-        "shoop_tests.admin.fixtures.test_module:TestModule"
+        ATestModule,
+        "shoop_tests.admin.fixtures.test_module:ATestModule"
     ]):
         assert all(u.name.startswith("test") for u in get_module_urls())
 
@@ -67,20 +67,20 @@ def test_modules_in_core_admin_work(rf, admin_user):
 
 def test_search(rf):
     request = rf.get("/")
-    with replace_modules([TestModule]):
+    with replace_modules([ATestModule]):
         assert any(sr.to_json()["text"] == "yes" for sr in get_search_results(request, "yes"))
         assert any(sr.url == "/OK" for sr in get_search_results(request, "spooky"))  # Test aliases
 
 
 def test_notifications(rf):
     request = rf.get("/")
-    with replace_modules([TestModule]):
+    with replace_modules([ATestModule]):
         assert any(n.text == "OK" for n in chain(*(m.get_notifications(request) for m in get_modules())))
 
 
 def test_dashboard_blocks(rf):
     request = rf.get("/")
-    with replace_modules([TestModule]):
+    with replace_modules([ATestModule]):
         block_ids = set()
         for block in chain(*(m.get_dashboard_blocks(request) for m in get_modules())):
             block_ids.add(block.id)
@@ -89,7 +89,7 @@ def test_dashboard_blocks(rf):
 
 def test_menu_entries(rf):
     request = rf.get("/")
-    with replace_modules([TestModule]):
+    with replace_modules([ATestModule]):
         test_category_menu_entries = get_menu_entry_categories(request).get("Test")
         assert any(me.text == "OK" for me in test_category_menu_entries)
 
@@ -105,7 +105,7 @@ def test_content_block_template(rf):
 
 
 def test_activity(rf):
-    with replace_modules([TestModule]):
+    with replace_modules([ATestModule]):
         request = rf.get("/")
         texts = [a.text for a in get_activity(request, 10)]
         # Check that activity is returned in newest-first order.
@@ -119,7 +119,7 @@ def test_url_auth(rf):
         except Problem as prob:
             return True  # Problems are fine here
 
-    with replace_modules([TestModule]):
+    with replace_modules([ATestModule]):
         urls = dict((u.name, u) for u in get_module_urls())
         request = rf.get("/")
 

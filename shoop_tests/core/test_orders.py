@@ -16,9 +16,9 @@ from django.utils.timezone import now
 from shoop.core.excs import (
     NoPaymentToCreateException, NoProductsToShipException
 )
-from shoop.core.models import Order, OrderLine, OrderLineType, OrderStatus
-from shoop.core.models.order_lines import OrderLineTax
-from shoop.core.models.orders import ShippingStatus
+from shoop.core.models import (
+    Order, OrderLine, OrderLineTax, OrderLineType, OrderStatus, ShippingStatus
+)
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
 from shoop.testing.factories import (
     create_empty_order, create_order_with_product, get_address,

@@ -10,12 +10,12 @@ from django.utils.encoding import force_text
 
 from shoop.notify.models import Script
 from shoop.notify.script import Step
-from shoop_tests.notify.fixtures import TEST_STEP_DATA, TestEvent
+from shoop_tests.notify.fixtures import ATestEvent, TEST_STEP_DATA
 
 
 @pytest.mark.django_db
 def test_load_save():
-    sc = Script(event_identifier=TestEvent.identifier, name="Test Script")
+    sc = Script(event_identifier=ATestEvent.identifier, name="Test Script")
     assert force_text(sc) == "Test Script"
     sc.set_serialized_steps(TEST_STEP_DATA)
     sc.save()
