@@ -58,16 +58,3 @@ It can also optionally add these statements itself.
    python _misc/ensure_unicode_literals.py shoop
    # or to write changes:
    python _misc/ensure_unicode_literals.py -w shoop
-
-
-I18n Catalog Extraction
------------------------
-
-Use the ``gather_i18n.py`` script to extract messages from the Shoop source
-into .pot files to be uploaded to an internationalization service (such as
-Transifex).
-
-.. code-block::  shell
-
-   python _misc/gather_i18n.py shoop
-
