@@ -19,85 +19,86 @@ Released on 2015-10-05 16:45 +0300.
 
 The highlights of this release (over 500 commits since 1.2!) are:
 
-- Revamp of the pricing and taxation systems for flexible international commerce
+- Revamp of the pricing and taxation systems for flexible international
+  commerce
 - A new pluggable frontend theming system called Xtheme
-- Usability improvements for the admin, including much better media management
+- Usability improvements for the admin, including much better media
+  management
 - A brand new, slick frontend theme "Classic Gray"
 - Lots and lots of other fixes and improvements!
 
 Admin
 ~~~~~
 
-- Add basic Manufacturer views (914d456)
-- Basic Supplier management (65787f3, 3953e24, b864e27)
-- Add image field for category (9157b26)
-- Fix issue with price not being saved (eb90ff5)
-- Optionally disable creating shops (f427f6a)
-- Add `Product Media` tab to product editing (279a26d)
-- Tabify translated fields (46b49c5)
-- Variation UI styles (bf5a9ba)
-- Media Browser Rehaul (9f4ff68, b7b3d39, 35e4354, 1d22009, 4c4345f)
-- Add `ImageChoiceWidget` (7548fb5)
-- Admin: Actually send `data-filter` to media browser from browse widgets (cca4a57)
-- Admin form error indicators (b13a4c3)
-- Add keyboard shortcuts to megasearch (d5c75dc)
-- Show first language tab with errors (a3c1fd0)
-- Update styles for admin form error indicators (00c644d)
-- Show errors more clearly (7a8620b)
-- Make folder clicks work at media browser (d66954b)
-- Fix paths of generated source maps (3a738ce)
-- Add styles for bootstrap input-group (f61a0b2)
-- Time interval attribute now renders as `DecimalField` (45e774f)
-- Notify: Add better error handling for "step edit"-popup (df76c12, 2366ff1)
-- Better variation error handling (a877781)
-- Fix issue where visibility errors caused an error (acda42f)
-- Update admin category view (a404fa0)
-- Admin datetimepicker (f1681e5)
+- Add basic Manufacturer views
+- Basic Supplier management
+- Add image field for category
+- Fix issue with price not being saved
+- Optionally disable creating shops
+- Add "Product Media" tab to product editing
+- Tabify translated fields
+- Variation UI styles
+- Media Browser Rehaul
+- Add ``ImageChoiceWidget``
+- Actually send ``data-filter`` to media browser from browse widgets
+- Admin form error indicators
+- Add keyboard shortcuts to megasearch
+- Show first language tab with errors
+- Update styles for admin form error indicators
+- Show errors more clearly
+- Make folder clicks work at media browser
+- Fix paths of generated source maps
+- Add styles for bootstrap input-group
+- Time interval attribute now renders as ``DecimalField``
+- Notify: Add better error handling for "step edit"-popup
+- Better variation error handling
+- Fix issue where visibility errors caused an error
+- Update admin category view
+- Admin datetimepicker
 
 Core
 ~~~~
 
-- Rework `SimplePricing` and pricing in general (eaf40f3, 5cbeb44)
-- Add non-ASCII support for supplier name (2c56b7e)
-- Fix checking of duplicate settings (685d393)
-- Add new fields to shop core (d56dd24)
-- Add `DiscountPricingModule` (SHOOP-1289) (f9f3789)
-- Fix PriceInfo usage with non-one quantities (SHOOP-1462) (1bb1c02)
-- Fix shoop.core.migrations.0006 (b605d04)
-- Tax clean-up and refactoring (SHOOP-975) (2cb5a50, 182daff)
-- Prevent `Shop` being deleted when image was deleted (c0edb08)
+- Rework ``SimplePricing`` and pricing in general
+- Add non-ASCII support for supplier name
+- Fix checking of duplicate settings
+- Add new fields to shop core
+- Add ``DiscountPricingModule``
+- Fix PriceInfo usage with non-one quantities
+- Fix shoop.core.migrations.0006
+- Tax clean-up and refactoring
+- Prevent ``Shop`` being deleted when image was deleted
 
 Front
 ~~~~~
 
-- An all-new dynamic theming system, Xtheme (49dfedb, a3d1c6d, 5930a96, d9b3b15,
-  ab46bb5, 4f5c3fc, 5ca3dad, c40c620, db86c9a, f430bd0, 8e3791f, d99c221, 03f2976)
-- Classic Gray: A new slick theme built on the Xtheme system (44 merges, not listed here)
-- Add ordering for cross sells template helper (48a5f41)
-- Fix `get_root_categories` performance (6d337fa)
-- Maintenance mode (SHOOP-1153) (273ed37, eb7dbdb, 609d397, 5e72de0, b2d2952)
-- template_helpers: Fix get_pagination_variables (a3770ea)
-- Ensure user is logged in after activating account (fb22268)
-- Customer URL now requires login (caf357c, bbcbbbf)
-- Add support for Complex variations  (f61dadc)
-- Add Default ErrorHandling (46152cd, 48ce0cc)
-- Fix issue with variation children being listed for admin user (a4833dd)
-- Front: Fix issue with variation children visible in search results (fc53234)
+- An all-new dynamic theming system, Xtheme
+- Classic Gray: A new slick theme built on the Xtheme system
+- Add ordering for cross sells template helper
+- Fix ``get_root_categories`` performance
+- Maintenance mode
+- template_helpers: Fix get_pagination_variables
+- Ensure user is logged in after activating account
+- Customer URL now requires login
+- Add support for Complex variations
+- Add Default ErrorHandling
+- Fix issue with variation children being listed for admin user
+- Front: Fix issue with variation children visible in search results
 
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
-- Run ESLint on all the things! (fa1c0e8)
-- Prunes, manifests (63b3969)
-- PEP8ify (5b575c4)
-- Various fixes (09e5c9f)
-- Tests: Make test_user_detail_contact_seed not fail randomly (53de20a)
-- Miscellaneous tiny fixes (faafb26)
-- Fixes (f02c10f)
-- Cms duplicate (91f1567)
-- Embetter patterns (4427755)
-- Saner sanity tools (3b4d003)
-- Workbench: Allow overriding couple settings from env (361c3d2)
+- Run ESLint on all the things!
+- Prunes, manifests
+- PEP8ify
+- Various fixes
+- Tests: Make test_user_detail_contact_seed not fail randomly
+- Miscellaneous tiny fixes
+- Fixes
+- Cms duplicate
+- Embetter patterns
+- Saner sanity tools
+- Workbench: Allow overriding couple settings from env
 
 
 Version 1.2.0
