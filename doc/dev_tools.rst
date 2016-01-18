@@ -4,8 +4,8 @@ Development Tools
 Sanity Checker
 --------------
 
-The ``check_sanity.py`` tool does basic code sanity checking on the codebase.
-This should be done before pushing.
+The ``check_sanity.py`` tool does basic text file sanity checking on the
+codebase.
 
 .. code-block::  shell
 
