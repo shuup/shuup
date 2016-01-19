@@ -9,8 +9,98 @@ Unreleased
   releasing next version, the "Unreleased" header will be replaced with
   appropriate version header and this help text will be removed.
 
-- Remove AddressManager
+Core
+~~~~
+
+- API and documentation clean-up
+- Remove ``AddressManager``
 - Split address into mutable and immutable address
+- Add Product.get_public_media helper function
+- Ensure ``TranslatabelShoopModel.__str__`` doesn't return lazy objects
+- Deny price unit changes of in-use ``Shop``
+- Assign created customers to ``CustomerTaxGroups`` on creation
+- Fix couple tax related terms
+- Remove ``PriceTaxContext``
+- Add ``PricingContextable`` interface and fix related docstrings
+- Remove ``Priceful.total_price``
+- Add dynamic configuration API: ``shoop.configuration``
+- Fix tax calculations and implement override groups
+- Add autoexpiring versioned cache API: ``shoop.core.cache``
+- Enable email login and password recovery with username
+
+Localization
+~~~~~~~~~~~~
+
+- Add translations for Finnish, Chinese and Japanese
+- Add translation extraction tools (``shoop_makemessages``)
+- Mark more messages for translation in templates
+- Enable JavaScript translations
+
+Admin
+~~~~~
+
+- Show Shoop version number in Admin
+- Fix order list sorting and filtering by total price
+- Fix CMS page list sorting by title
+- JavaScript compilation fixes: Turn our ES6 to ES5 with Babel
+- Fix URL encoding in ``redirect_to_login``
+- Add view for creating orders from the Admin
+- Enable markdown editor for product and category description
+- Fix SKU and name initialization when creating a product by search
+- Add new template macros
+- Refactor templates to use template macros
+- Admin form styling and UX updates
+
+Front
+~~~~~
+
+- Set default country in checkout address forms
+- Fix SHOOP_FRONT_INSTALL_ERROR_HANDLERS setting being not respected
+- Change password recover error message
+
+Xtheme
+~~~~~~
+
+- Make Xtheme plugins translatable
+- Allow addons to inject resources
+- Editor improvements
+- Fix a crash when trying to revert unsaved configuration
+
+Classic Gray Theme
+~~~~~~~~~~~~~~~~~~
+
+- Show product media at order history and product detail pages
+- Add language changer to navigation
+- Add possibility for other future brand colors
+- Add carousel styles for Bootstrap carousel
+- Unvendor fonts
+- Show maintenance mode for super user
+- Fix logo text line height
+- Add new placeholders
+- Footer CMS Pages field are no longer required
+- Update label for footer links to avoid confusion
+
+Default Theme
+~~~~~~~~~~~~~
+
+- Remove Default theme from Shoop Base. Moved to
+  https://github.com/shoopio/shoop-simple-theme
+
+General/miscellaneous
+~~~~~~~~~~~~~~~~~~~~~
+
+- Do unit testing from doctests too
+- Update Python package dependencies
+- Lock down JavaScript dependencies
+- Code style improvements
+- Add configuration for Travis CI
+- Include JS and CSS source maps to the Python package
+- Cleanup tax TODOs
+- Move apply_request_middleware to testing
+- Documentation: Tune Sphinx settings and ignore migrations in API docs
+- Fix Eslint complaints
+- Make sure that bower is ran non-interactively
+
 
 Version 2.0.0
 -------------
