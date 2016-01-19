@@ -35,14 +35,22 @@
 {% if front_url %}<a class="nav-btn shop-btn" href="{{ front_url }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}Visit shop{% endtrans %}"><i class="fa fa-shopping-cart"></i></a>{% endif %}
 
 <div class="dropdown">
-    <button class="dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-expanded="true" data-placement="bottom" title="{% trans %}User{% endtrans %}">
-        <i class="fa fa-user"></i>
+    <button class="dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-expanded="true" data-placement="bottom" title="{% trans %}Settings{% endtrans %}">
+        <i class="fa fa-cog"></i>
     </button>
     <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
         {% if request.user.is_authenticated() %}
         <div class="username">
             <span class="icon"><i class="fa fa-user"></i></span>{% trans %}Hello{% endtrans %}, <span class="user">{{ request.user }}</span>!
         </div>
+        {% if LANGUAGES|length > 1 %}
+        <ul class="languages">
+            {% for code, name in LANGUAGES %}
+            <li><a href="#" class="language{% if LANGUAGE_CODE|lower == code|lower %} active{% endif %}" data-value="{{ code }}">{{ _("%(language)s",language=name)}}</a></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div class="divider"></div>
         <div class="actions">
             <a href="{{ url("shoop_admin:logout") }}" class="btn btn-block btn-sm btn-info">
                 <i class="fa fa-sign-out"></i> {% trans %}Log out{% endtrans %}
