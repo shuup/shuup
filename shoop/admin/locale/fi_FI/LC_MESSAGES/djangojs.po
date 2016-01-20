@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-03 16:00+0000\n"
+"POT-Creation-Date: 2016-01-20 13:02+0000\n"
 "PO-Revision-Date: 2015-12-03 18:29+0200\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
@@ -251,15 +251,6 @@ msgstr "Lisää uusi rivi"
 
 msgid "Price"
 msgstr "Hinta"
-
-msgid "Waiver limit"
-msgstr "Luopumisraja"
-
-msgid "Minimum weight"
-msgstr "Minimipaino"
-
-msgid "Maximum weight"
-msgstr "Maksimipaino"
 
 msgid "No shipping method"
 msgstr "Ei toimitustapaa"

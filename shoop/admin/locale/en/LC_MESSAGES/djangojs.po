@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-03 16:00+0000\n"
+"POT-Creation-Date: 2016-01-20 13:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -239,15 +239,6 @@ msgid "Add new line"
 msgstr ""
 
 msgid "Price"
-msgstr ""
-
-msgid "Waiver limit"
-msgstr ""
-
-msgid "Minimum weight"
-msgstr ""
-
-msgid "Maximum weight"
 msgstr ""
 
 msgid "No shipping method"
