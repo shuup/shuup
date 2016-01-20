@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 13:02+0000\n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: 2015-11-26 08:48+0000\n"
 "Last-Translator: Yuki Miyagi <yuki.miyagi@anders.fi>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
@@ -34,8 +34,34 @@ msgstr ""
 msgid "Theming"
 msgstr ""
 
+#, fuzzy
+#| msgid "Theme activated."
+msgid "activate"
+msgstr "テーマはアクティブ化されました。"
+
 msgid "Theme activated."
 msgstr "テーマはアクティブ化されました。"
+
+msgid "theme identifier"
+msgstr ""
+
+msgid "view name"
+msgstr ""
+
+msgid "created on"
+msgstr ""
+
+msgid "status"
+msgstr ""
+
+msgid "internal data"
+msgstr ""
+
+msgid "active"
+msgstr ""
+
+msgid "data"
+msgstr ""
 
 #, python-format
 msgid "Theme configuration for %s"
@@ -43,6 +69,9 @@ msgstr ""
 
 msgid "Plugin"
 msgstr "プラグイン"
+
+msgid "text"
+msgstr ""
 
 msgid "(Untranslated)"
 msgstr ""

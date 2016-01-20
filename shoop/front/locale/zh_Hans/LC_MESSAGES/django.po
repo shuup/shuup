@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-07 13:02+0000\n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: 2015-12-07 11:12+0000\n"
 "Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
@@ -76,11 +76,24 @@ msgstr "我接受条款和条件"
 msgid "I want to subscribe to your newsletter"
 msgstr "我想要订阅你们的通讯"
 
+msgid "Comment"
+msgstr ""
+
 msgid "Confirmation"
 msgstr "确认"
 
 msgid "Empty Basket"
 msgstr "购物篮为空"
+
+#, fuzzy
+#| msgid "Shipping method"
+msgid "shipping method"
+msgstr "配送方式"
+
+#, fuzzy
+#| msgid "Payment method"
+msgid "payment method"
+msgstr "支付方式"
 
 msgid "Shipping & Payment"
 msgstr "配送 & 支付"
@@ -99,6 +112,62 @@ msgstr "支付方式"
 
 msgid "Please send me marketing correspondence"
 msgstr "请发送给我市场营销通信"
+
+msgid "key"
+msgstr ""
+
+#, fuzzy
+#| msgid "your shop"
+msgid "shop"
+msgstr "商城"
+
+msgid "customer"
+msgstr ""
+
+msgid "orderer"
+msgstr ""
+
+msgid "creator"
+msgstr ""
+
+msgid "created on"
+msgstr ""
+
+msgid "updated on"
+msgstr ""
+
+msgid "persistent"
+msgstr ""
+
+msgid "deleted"
+msgstr ""
+
+msgid "finished"
+msgstr ""
+
+msgid "title"
+msgstr ""
+
+msgid "data"
+msgstr ""
+
+msgid "taxless total price"
+msgstr ""
+
+msgid "taxful total price"
+msgstr ""
+
+msgid "currency"
+msgstr ""
+
+msgid "prices include tax"
+msgstr ""
+
+msgid "product_count"
+msgstr ""
+
+msgid "products"
+msgstr ""
 
 msgid "Bad Request"
 msgstr "错误请求"
@@ -167,6 +236,12 @@ msgstr "价格 - 由低到高"
 
 msgid "Price - High to Low"
 msgstr "价格 - 由高到低"
+
+msgid "Sort"
+msgstr ""
+
+msgid "Manufacturer"
+msgstr ""
 
 msgid "This product is not available in this shop."
 msgstr "该商城没有此产品。"

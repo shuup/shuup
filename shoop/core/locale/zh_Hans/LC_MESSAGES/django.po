@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 13:02+0000\n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: 2015-12-07 11:12+0000\n"
 "Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
@@ -88,7 +88,9 @@ msgstr "扩展名 "
 msgid "company name"
 msgstr "公司名称"
 
-msgid "Tax number"
+#, fuzzy
+#| msgid "Tax number"
+msgid "tax number"
 msgstr "税号"
 
 msgid "phone"
@@ -106,7 +108,9 @@ msgstr "街道 (2)"
 msgid "street (3)"
 msgstr "街道 (3)"
 
-msgid "ZIP / Postal code"
+#, fuzzy
+#| msgid "ZIP / Postal code"
+msgid "postal code"
 msgstr "邮政编码"
 
 msgid "city"
@@ -126,6 +130,9 @@ msgstr "地址"
 
 msgid "addresses"
 msgstr "地址"
+
+msgid "owner"
+msgstr ""
 
 msgid "role"
 msgstr "职位"
@@ -178,11 +185,39 @@ msgstr "已翻译的字符串"
 msgid "untranslated string"
 msgstr "未翻译的字符串"
 
+#, fuzzy
+#| msgid "searchable metadata"
+msgid "searchable"
+msgstr "可供搜索的元数据"
+
+#, fuzzy
+#| msgid "line type"
+msgid "type"
+msgstr "类型行"
+
+#, fuzzy
+#| msgid "visibility limitations"
+msgid "visibility mode"
+msgstr "可见限制"
+
 msgid "attribute"
 msgstr "属性"
 
 msgid "attributes"
 msgstr "属性"
+
+msgid "numeric value"
+msgstr ""
+
+#, fuzzy
+#| msgid "variation value"
+msgid "datetime value"
+msgstr "变体价值"
+
+#, fuzzy
+#| msgid "untranslated string"
+msgid "untranslated value"
+msgstr "未翻译的字符串"
 
 msgid "The following fields can not be changed"
 msgstr ""
@@ -208,6 +243,9 @@ msgstr "某些顾客群组可见"
 msgid "parent category"
 msgstr "父分类"
 
+msgid "shops"
+msgstr ""
+
 msgid "image"
 msgstr "图像"
 
@@ -231,6 +269,9 @@ msgstr "分类"
 
 msgid "categories"
 msgstr "分类"
+
+msgid "shop"
+msgstr ""
 
 msgid "key"
 msgstr "键"
@@ -264,6 +305,14 @@ msgstr "联系群组"
 msgid "contact groups"
 msgstr "联系群组"
 
+#, fuzzy
+#| msgid "related"
+msgid "created on"
+msgstr "相关"
+
+msgid "active"
+msgstr ""
+
 msgid "default shipping method"
 msgstr "默认配送方式"
 
@@ -278,6 +327,16 @@ msgstr "营销许可 "
 
 msgid "web address"
 msgstr "网址"
+
+#, fuzzy
+#| msgid "time interval"
+msgid "time zone"
+msgstr "时距"
+
+#, fuzzy
+#| msgid "contact group"
+msgid "tax group"
+msgstr "联系群组"
 
 msgid "contact"
 msgstr "联系"
@@ -294,6 +353,17 @@ msgstr "公司"
 msgid "companies"
 msgstr "公司"
 
+msgid "user"
+msgstr ""
+
+msgid "gender"
+msgstr ""
+
+#, fuzzy
+#| msgid "order date"
+msgid "birth date"
+msgstr "订单日期"
+
 msgid "person"
 msgstr "联系人"
 
@@ -302,6 +372,11 @@ msgstr "联系人"
 
 msgid "order reference"
 msgstr "订单参考"
+
+#, fuzzy
+#| msgid "order identifier"
+msgid "identifier"
+msgstr "订单标识符"
 
 msgid "counter"
 msgstr "柜台"
@@ -331,6 +406,11 @@ msgid "tax class"
 msgstr "税种"
 
 msgid "module"
+msgstr "模块"
+
+#, fuzzy
+#| msgid "module"
+msgid "module data"
 msgstr "模块"
 
 msgid "shipping method"
@@ -380,6 +460,11 @@ msgstr "验证要求"
 
 msgid "verified"
 msgstr "已验证"
+
+#, fuzzy
+#| msgid "order date"
+msgid "extra data"
+msgstr "订单日期"
 
 msgid "quantity"
 msgstr "数量"
@@ -444,8 +529,10 @@ msgstr "最初"
 msgid "complete"
 msgstr "完成"
 
-msgid "Name"
-msgstr "名称"
+#, fuzzy
+#| msgid "Default price"
+msgid "default"
+msgstr "默认价格"
 
 msgid "order identifier"
 msgstr "订单标识符"
@@ -477,14 +564,36 @@ msgstr "配送状态"
 msgid "payment method name"
 msgstr "支付方式名"
 
+#, fuzzy
+#| msgid "payment date"
+msgid "payment data"
+msgstr "支付日期"
+
 msgid "shipping method name"
 msgstr "配送方式名"
+
+#, fuzzy
+#| msgid "shipping status"
+msgid "shipping data"
+msgstr "配送状态"
 
 msgid "grand total"
 msgstr "共计"
 
 msgid "taxless total"
 msgstr "免税合计"
+
+msgid "currency"
+msgstr ""
+
+msgid "prices include tax"
+msgstr ""
+
+msgid "display currency"
+msgstr ""
+
+msgid "display currency rate"
+msgstr ""
 
 msgid "IP address"
 msgstr "IP地址"
@@ -523,8 +632,30 @@ msgstr "所有需要的验证行列已验证。"
 msgid "All products have been shipped. Fully Shipped status set."
 msgstr "所有产品已发货，全运状态。"
 
+msgid "gateway ID"
+msgstr ""
+
+#, fuzzy
+#| msgid "tax amount"
+msgid "amount"
+msgstr "税收合计"
+
+#, fuzzy
+#| msgid "base amount"
+msgid "foreign amount"
+msgstr "基本金额"
+
+msgid "foreign amount currency"
+msgstr ""
+
 msgid "payments"
 msgstr "支付"
+
+msgid "time"
+msgstr ""
+
+msgid "data"
+msgstr ""
 
 msgid "cache entry"
 msgstr "高速缓存条目"
@@ -564,16 +695,56 @@ msgstr "产品附件"
 msgid "attachment"
 msgstr "附件"
 
+#, fuzzy
+#| msgid "sent product"
+msgid "parent product"
+msgstr "发货"
+
+#, fuzzy
+#| msgid "product"
+msgid "child product"
+msgstr "产品"
+
+#, fuzzy
+#| msgid "supplier"
+msgid "suppliers"
+msgstr "供应商"
+
+msgid "listed"
+msgstr ""
+
+#, fuzzy
+#| msgid "purchase multiple"
+msgid "purchasable"
+msgstr "购买多个"
+
 msgid "purchase multiple"
 msgstr "购买多个"
 
 msgid "minimum purchase"
 msgstr "最低购买"
 
+#, fuzzy
+#| msgid "shipping methods"
+msgid "limited for shipping methods"
+msgstr "配送方式"
+
+#, fuzzy
+#| msgid "payment methods"
+msgid "limited for payment methods"
+msgstr "支付方式"
+
 msgid "primary category"
 msgstr "主分类"
 
-msgid "Default price"
+#, fuzzy
+#| msgid "primary category"
+msgid "primary image"
+msgstr "主分类"
+
+#, fuzzy
+#| msgid "Default price"
+msgid "default price"
 msgstr "默认价格"
 
 msgid "This product has been deleted."
@@ -624,6 +795,12 @@ msgstr "变体价值"
 
 msgid "variation values"
 msgstr "变体价值"
+
+msgid "combination hash"
+msgstr ""
+
+msgid "result"
+msgstr ""
 
 msgid "variation result"
 msgstr "变体结果"
@@ -684,6 +861,12 @@ msgstr "产品类型"
 
 msgid "product types"
 msgstr "产品类型"
+
+msgid "modified on"
+msgstr ""
+
+msgid "mode"
+msgstr ""
 
 msgid "variation parent"
 msgstr "父级变体"
@@ -783,11 +966,31 @@ msgstr "包不能嵌套"
 msgid "Quantity %s is invalid"
 msgstr "该数量%s 无效"
 
+#, fuzzy
+#| msgid "primary category"
+msgid "primary product"
+msgstr "主分类"
+
+#, fuzzy
+#| msgid "sent product"
+msgid "secondary product"
+msgstr "发货"
+
+#, fuzzy
+#| msgid "minimum weight"
+msgid "weight"
+msgstr "最低重量"
+
 msgid "cross sell link"
 msgstr "交叉销售链接"
 
 msgid "cross sell links"
 msgstr "交叉销售链接"
+
+#, fuzzy
+#| msgid "translated string"
+msgid "translated value"
+msgstr "已翻译的字符串"
 
 msgid "product attribute"
 msgstr "产品属性"
@@ -810,11 +1013,22 @@ msgstr "错误"
 msgid "tracking code"
 msgstr "追踪编号"
 
+msgid "volume"
+msgstr ""
+
 msgid "shipment"
 msgstr "装运"
 
 msgid "shipments"
 msgstr "装运"
+
+msgid "unit volume"
+msgstr ""
+
+#, fuzzy
+#| msgid "net weight (g)"
+msgid "unit weight"
+msgstr "净重 (克)"
 
 msgid "sent product"
 msgstr "发货"
@@ -827,10 +1041,24 @@ msgid ""
 "this shop"
 msgstr ""
 
+msgid "domain"
+msgstr ""
+
+msgid "options"
+msgstr ""
+
 msgid "logo"
 msgstr "商标"
 
 msgid "maintenance mode"
+msgstr "维修模式"
+
+msgid "public name"
+msgstr ""
+
+#, fuzzy
+#| msgid "maintenance mode"
+msgid "maintenance message"
 msgstr "维修模式"
 
 msgid "alert limit"
@@ -841,6 +1069,16 @@ msgstr "物理库存计数"
 
 msgid "logical stock count"
 msgstr "逻辑库存计数"
+
+#, fuzzy
+#| msgid "supplier"
+msgid "supplier type"
+msgstr "供应商"
+
+#, fuzzy
+#| msgid "stocked"
+msgid "stock managed"
+msgstr "有库存"
 
 msgid "Cannot change business critical fields of Tax that is in use"
 msgstr "无法改变使用中的税收业务关键字段"
@@ -896,6 +1134,11 @@ msgstr "公司名称"
 
 msgid "allowed decimals"
 msgstr "允许小数点"
+
+#, fuzzy
+#| msgid "tax name"
+msgid "short name"
+msgstr "税名"
 
 msgid "sales unit"
 msgstr "销售单位"

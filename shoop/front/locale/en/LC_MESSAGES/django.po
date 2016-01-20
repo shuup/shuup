@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-03 16:54+0000\n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -75,10 +75,19 @@ msgstr ""
 msgid "I want to subscribe to your newsletter"
 msgstr ""
 
+msgid "Comment"
+msgstr ""
+
 msgid "Confirmation"
 msgstr ""
 
 msgid "Empty Basket"
+msgstr ""
+
+msgid "shipping method"
+msgstr ""
+
+msgid "payment method"
 msgstr ""
 
 msgid "Shipping & Payment"
@@ -97,6 +106,60 @@ msgid "Payment method"
 msgstr ""
 
 msgid "Please send me marketing correspondence"
+msgstr ""
+
+msgid "key"
+msgstr ""
+
+msgid "shop"
+msgstr ""
+
+msgid "customer"
+msgstr ""
+
+msgid "orderer"
+msgstr ""
+
+msgid "creator"
+msgstr ""
+
+msgid "created on"
+msgstr ""
+
+msgid "updated on"
+msgstr ""
+
+msgid "persistent"
+msgstr ""
+
+msgid "deleted"
+msgstr ""
+
+msgid "finished"
+msgstr ""
+
+msgid "title"
+msgstr ""
+
+msgid "data"
+msgstr ""
+
+msgid "taxless total price"
+msgstr ""
+
+msgid "taxful total price"
+msgstr ""
+
+msgid "currency"
+msgstr ""
+
+msgid "prices include tax"
+msgstr ""
+
+msgid "product_count"
+msgstr ""
+
+msgid "products"
 msgstr ""
 
 msgid "Bad Request"
@@ -165,6 +228,12 @@ msgid "Price - Low to High"
 msgstr ""
 
 msgid "Price - High to Low"
+msgstr ""
+
+msgid "Sort"
+msgstr ""
+
+msgid "Manufacturer"
 msgstr ""
 
 msgid "This product is not available in this shop."

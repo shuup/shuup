@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-07 12:26+0000\n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: 2015-12-07 11:12+0000\n"
 "Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
@@ -80,6 +80,11 @@ msgstr "警告：更改现存的脚本事件有可能导致意外的效果。"
 msgid "Template"
 msgstr "模板"
 
+#, fuzzy
+#| msgid "Variables"
+msgid "Bind to Variable"
+msgstr "变量"
+
 msgid "Edit Script Contents..."
 msgstr "脚本内容编辑……"
 
@@ -122,6 +127,47 @@ msgstr "任何商城管理员"
 
 msgid "a specific user"
 msgstr "指定用户"
+
+#, fuzzy
+#| msgid "Recipient"
+msgid "recipient type"
+msgstr "收件人"
+
+#, fuzzy
+#| msgid "Recipient"
+msgid "recipient"
+msgstr "收件人"
+
+msgid "created on"
+msgstr ""
+
+msgid "message"
+msgstr ""
+
+msgid "priority"
+msgstr ""
+
+msgid "marked read"
+msgstr ""
+
+msgid "marked read by"
+msgstr ""
+
+msgid "marked read on"
+msgstr ""
+
+#, fuzzy
+#| msgid "Send Identifier"
+msgid "event identifier"
+msgstr "发送标识符"
+
+msgid "name"
+msgstr ""
+
+#, fuzzy
+#| msgid "Enabled"
+msgid "enabled"
+msgstr "已启用"
 
 msgid "Edit Script Information"
 msgstr "脚本信息编辑"

@@ -77,7 +77,7 @@ class Category(MPTTModel, TranslatableModel):
     parent = TreeForeignKey(
         'self', null=True, blank=True, related_name='children',
         verbose_name=_('parent category'), on_delete=models.CASCADE)
-    shops = models.ManyToManyField("Shop", blank=True, related_name="categories")
+    shops = models.ManyToManyField("Shop", blank=True, related_name="categories", verbose_name=_("shops"))
     identifier = InternalIdentifierField(unique=True)
     status = EnumIntegerField(CategoryStatus, db_index=True, verbose_name=_('status'), default=CategoryStatus.INVISIBLE)
     image = FilerImageField(verbose_name=_('image'), blank=True, null=True, on_delete=models.SET_NULL)

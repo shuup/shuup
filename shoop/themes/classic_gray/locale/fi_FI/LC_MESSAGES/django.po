@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-30 23:37+0000\n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: 2015-12-03 18:42+0200\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@anders.fi>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -63,6 +63,15 @@ msgstr "Alatunnisteen sisällönhallinan sivut"
 
 msgid "Product Highlights"
 msgstr "Tuotenostot"
+
+msgid "Title"
+msgstr "Otsikko"
+
+msgid "Type"
+msgstr ""
+
+msgid "Count"
+msgstr ""
 
 msgid "Product added to cart"
 msgstr "Tuote lisätty koriin"
@@ -336,9 +345,6 @@ msgstr "Jos haluat nähdä tilaushistoriasi, luo käyttäjätilillesi salasana:"
 
 msgid "Send"
 msgstr "Lähetä"
-
-msgid "Title"
-msgstr "Otsikko"
 
 msgid "Tax"
 msgstr "Vero"

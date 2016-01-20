@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 13:02+0000\n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -87,7 +87,7 @@ msgstr ""
 msgid "company name"
 msgstr ""
 
-msgid "Tax number"
+msgid "tax number"
 msgstr ""
 
 msgid "phone"
@@ -105,7 +105,7 @@ msgstr ""
 msgid "street (3)"
 msgstr ""
 
-msgid "ZIP / Postal code"
+msgid "postal code"
 msgstr ""
 
 msgid "city"
@@ -124,6 +124,9 @@ msgid "address"
 msgstr ""
 
 msgid "addresses"
+msgstr ""
+
+msgid "owner"
 msgstr ""
 
 msgid "role"
@@ -177,10 +180,28 @@ msgstr ""
 msgid "untranslated string"
 msgstr ""
 
+msgid "searchable"
+msgstr ""
+
+msgid "type"
+msgstr ""
+
+msgid "visibility mode"
+msgstr ""
+
 msgid "attribute"
 msgstr ""
 
 msgid "attributes"
+msgstr ""
+
+msgid "numeric value"
+msgstr ""
+
+msgid "datetime value"
+msgstr ""
+
+msgid "untranslated value"
 msgstr ""
 
 msgid "The following fields can not be changed"
@@ -207,6 +228,9 @@ msgstr ""
 msgid "parent category"
 msgstr ""
 
+msgid "shops"
+msgstr ""
+
 msgid "image"
 msgstr ""
 
@@ -229,6 +253,9 @@ msgid "category"
 msgstr ""
 
 msgid "categories"
+msgstr ""
+
+msgid "shop"
 msgstr ""
 
 msgid "key"
@@ -263,6 +290,12 @@ msgstr ""
 msgid "contact groups"
 msgstr ""
 
+msgid "created on"
+msgstr ""
+
+msgid "active"
+msgstr ""
+
 msgid "default shipping method"
 msgstr ""
 
@@ -276,6 +309,12 @@ msgid "marketing permission"
 msgstr ""
 
 msgid "web address"
+msgstr ""
+
+msgid "time zone"
+msgstr ""
+
+msgid "tax group"
 msgstr ""
 
 msgid "contact"
@@ -293,6 +332,15 @@ msgstr ""
 msgid "companies"
 msgstr ""
 
+msgid "user"
+msgstr ""
+
+msgid "gender"
+msgstr ""
+
+msgid "birth date"
+msgstr ""
+
 msgid "person"
 msgstr ""
 
@@ -300,6 +348,9 @@ msgid "persons"
 msgstr ""
 
 msgid "order reference"
+msgstr ""
+
+msgid "identifier"
 msgstr ""
 
 msgid "counter"
@@ -330,6 +381,9 @@ msgid "tax class"
 msgstr ""
 
 msgid "module"
+msgstr ""
+
+msgid "module data"
 msgstr ""
 
 msgid "shipping method"
@@ -378,6 +432,9 @@ msgid "require verification"
 msgstr ""
 
 msgid "verified"
+msgstr ""
+
+msgid "extra data"
 msgstr ""
 
 msgid "quantity"
@@ -443,7 +500,7 @@ msgstr ""
 msgid "complete"
 msgstr ""
 
-msgid "Name"
+msgid "default"
 msgstr ""
 
 msgid "order identifier"
@@ -476,13 +533,31 @@ msgstr ""
 msgid "payment method name"
 msgstr ""
 
+msgid "payment data"
+msgstr ""
+
 msgid "shipping method name"
+msgstr ""
+
+msgid "shipping data"
 msgstr ""
 
 msgid "grand total"
 msgstr ""
 
 msgid "taxless total"
+msgstr ""
+
+msgid "currency"
+msgstr ""
+
+msgid "prices include tax"
+msgstr ""
+
+msgid "display currency"
+msgstr ""
+
+msgid "display currency rate"
 msgstr ""
 
 msgid "IP address"
@@ -522,7 +597,25 @@ msgstr ""
 msgid "All products have been shipped. Fully Shipped status set."
 msgstr ""
 
+msgid "gateway ID"
+msgstr ""
+
+msgid "amount"
+msgstr ""
+
+msgid "foreign amount"
+msgstr ""
+
+msgid "foreign amount currency"
+msgstr ""
+
 msgid "payments"
+msgstr ""
+
+msgid "time"
+msgstr ""
+
+msgid "data"
 msgstr ""
 
 msgid "cache entry"
@@ -563,16 +656,40 @@ msgstr ""
 msgid "attachment"
 msgstr ""
 
+msgid "parent product"
+msgstr ""
+
+msgid "child product"
+msgstr ""
+
+msgid "suppliers"
+msgstr ""
+
+msgid "listed"
+msgstr ""
+
+msgid "purchasable"
+msgstr ""
+
 msgid "purchase multiple"
 msgstr ""
 
 msgid "minimum purchase"
 msgstr ""
 
+msgid "limited for shipping methods"
+msgstr ""
+
+msgid "limited for payment methods"
+msgstr ""
+
 msgid "primary category"
 msgstr ""
 
-msgid "Default price"
+msgid "primary image"
+msgstr ""
+
+msgid "default price"
 msgstr ""
 
 msgid "This product has been deleted."
@@ -620,6 +737,12 @@ msgid "variation value"
 msgstr ""
 
 msgid "variation values"
+msgstr ""
+
+msgid "combination hash"
+msgstr ""
+
+msgid "result"
 msgstr ""
 
 msgid "variation result"
@@ -680,6 +803,12 @@ msgid "product type"
 msgstr ""
 
 msgid "product types"
+msgstr ""
+
+msgid "modified on"
+msgstr ""
+
+msgid "mode"
 msgstr ""
 
 msgid "variation parent"
@@ -780,10 +909,22 @@ msgstr ""
 msgid "Quantity %s is invalid"
 msgstr ""
 
+msgid "primary product"
+msgstr ""
+
+msgid "secondary product"
+msgstr ""
+
+msgid "weight"
+msgstr ""
+
 msgid "cross sell link"
 msgstr ""
 
 msgid "cross sell links"
+msgstr ""
+
+msgid "translated value"
 msgstr ""
 
 msgid "product attribute"
@@ -807,10 +948,19 @@ msgstr ""
 msgid "tracking code"
 msgstr ""
 
+msgid "volume"
+msgstr ""
+
 msgid "shipment"
 msgstr ""
 
 msgid "shipments"
+msgstr ""
+
+msgid "unit volume"
+msgstr ""
+
+msgid "unit weight"
 msgstr ""
 
 msgid "sent product"
@@ -824,10 +974,22 @@ msgid ""
 "this shop"
 msgstr ""
 
+msgid "domain"
+msgstr ""
+
+msgid "options"
+msgstr ""
+
 msgid "logo"
 msgstr ""
 
 msgid "maintenance mode"
+msgstr ""
+
+msgid "public name"
+msgstr ""
+
+msgid "maintenance message"
 msgstr ""
 
 msgid "alert limit"
@@ -837,6 +999,12 @@ msgid "physical stock count"
 msgstr ""
 
 msgid "logical stock count"
+msgstr ""
+
+msgid "supplier type"
+msgstr ""
+
+msgid "stock managed"
 msgstr ""
 
 msgid "Cannot change business critical fields of Tax that is in use"
@@ -888,6 +1056,9 @@ msgid "Company Customers"
 msgstr ""
 
 msgid "allowed decimals"
+msgstr ""
+
+msgid "short name"
 msgstr ""
 
 msgid "sales unit"

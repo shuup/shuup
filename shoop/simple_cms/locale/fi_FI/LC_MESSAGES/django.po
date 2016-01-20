@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-30 23:37+0000\n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: 2015-11-26 18:44+0200\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@anders.fi>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -68,20 +68,52 @@ msgstr "Luontipvm"
 msgid "Page"
 msgstr "Sivu"
 
+#, fuzzy
+#| msgid "Available from"
+msgid "available from"
+msgstr "Saatavilla alkaen"
+
+#, fuzzy
+#| msgid "Available to"
+msgid "available to"
+msgstr "Saatavilla päättyen"
+
+#, fuzzy
+#| msgid "Created by"
+msgid "created by"
+msgstr "Luoja"
+
+msgid "modified by"
+msgstr ""
+
+#, fuzzy
+#| msgid "Created by"
+msgid "created on"
+msgstr "Luoja"
+
+msgid "modified on"
+msgstr ""
+
 msgid "This identifier can be used in templates to create URLs"
 msgstr ""
 "Tätä tunnistetta voidaan käyttää mallineissa URL-osoitteiden muodostamiseen"
 
-msgid "Visible in menu"
+#, fuzzy
+#| msgid "Visible in menu"
+msgid "visible in menu"
 msgstr "Näkyvissä valikossa"
 
-msgid "Page Title"
-msgstr "Sivun otsikko"
+#, fuzzy
+#| msgid "Title"
+msgid "title"
+msgstr "Otsikko"
 
-msgid "Page URL"
-msgstr "Sivun URL"
+msgid "URL"
+msgstr ""
 
-msgid "Content"
+#, fuzzy
+#| msgid "Content"
+msgid "content"
 msgstr "Sisältö"
 
 msgid "page"

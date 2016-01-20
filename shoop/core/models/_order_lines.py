@@ -79,7 +79,7 @@ class OrderLine(MoneyPropped, models.Model, Priceful):
     accounting_identifier = models.CharField(max_length=32, blank=True, verbose_name=_('accounting identifier'))
     require_verification = models.BooleanField(default=False, verbose_name=_('require verification'))
     verified = models.BooleanField(default=False, verbose_name=_('verified'))
-    extra_data = JSONField(blank=True, null=True)
+    extra_data = JSONField(blank=True, null=True, verbose_name=_('extra data'))
 
     # The following fields govern calculation of the prices
     quantity = QuantityField(verbose_name=_('quantity'), default=1)

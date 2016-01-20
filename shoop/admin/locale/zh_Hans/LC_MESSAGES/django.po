@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 13:02+0000\n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: 2015-12-07 11:12+0000\n"
 "Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
@@ -447,6 +447,11 @@ msgstr " %s的缩略图生成失败：%s"
 msgid "Use only URL or file, not both"
 msgstr "请只使用URL或文件其一"
 
+#, fuzzy
+#| msgid "Set as primary image"
+msgid "Is primary"
+msgstr "设置为主要图像"
+
 msgid "Only images allowed in this field"
 msgstr "此字段只允许图像"
 
@@ -525,6 +530,9 @@ msgstr "变体已清除。"
 msgid "Variation simplified."
 msgstr "简化变体。"
 
+msgid "child"
+msgstr ""
+
 msgid "Unlink"
 msgstr "断开链接"
 
@@ -539,6 +547,11 @@ msgstr "新：%d"
 #, python-format
 msgid "Removed: %d"
 msgstr "已删除：%d"
+
+#, fuzzy
+#| msgid "Confirmation"
+msgid "variable combination"
+msgstr "确认"
 
 msgid "Sales Units"
 msgstr "销售量"

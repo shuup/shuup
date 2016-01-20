@@ -18,7 +18,10 @@ from ._shops import Shop
 
 @python_2_unicode_compatible
 class ConfigurationItem(ShoopModel):
-    shop = models.ForeignKey(Shop, related_name="+", null=True, blank=True, on_delete=models.CASCADE)
+    shop = models.ForeignKey(
+        Shop, related_name="+", null=True, blank=True, on_delete=models.CASCADE,
+        verbose_name=_("shop")
+    )
     key = models.CharField(verbose_name=_("key"), max_length=100)
     value = JSONField(verbose_name=_("value"))
 

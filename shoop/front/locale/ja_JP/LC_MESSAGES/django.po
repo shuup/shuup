@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-07 13:02+0000\n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: 2015-11-26 08:48+0000\n"
 "Last-Translator: Yuki Miyagi <yuki.miyagi@anders.fi>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
@@ -76,10 +76,21 @@ msgstr ""
 msgid "I want to subscribe to your newsletter"
 msgstr ""
 
+msgid "Comment"
+msgstr ""
+
 msgid "Confirmation"
 msgstr ""
 
 msgid "Empty Basket"
+msgstr ""
+
+#, fuzzy
+#| msgid "Shipping & Payment"
+msgid "shipping method"
+msgstr "配送料と配送情報"
+
+msgid "payment method"
 msgstr ""
 
 msgid "Shipping & Payment"
@@ -98,6 +109,62 @@ msgid "Payment method"
 msgstr ""
 
 msgid "Please send me marketing correspondence"
+msgstr ""
+
+msgid "key"
+msgstr ""
+
+#, fuzzy
+#| msgid "your shop"
+msgid "shop"
+msgstr "あなたのショップ"
+
+msgid "customer"
+msgstr ""
+
+msgid "orderer"
+msgstr ""
+
+msgid "creator"
+msgstr ""
+
+msgid "created on"
+msgstr ""
+
+msgid "updated on"
+msgstr ""
+
+msgid "persistent"
+msgstr ""
+
+msgid "deleted"
+msgstr ""
+
+msgid "finished"
+msgstr ""
+
+msgid "title"
+msgstr ""
+
+msgid "data"
+msgstr ""
+
+msgid "taxless total price"
+msgstr ""
+
+msgid "taxful total price"
+msgstr ""
+
+msgid "currency"
+msgstr ""
+
+msgid "prices include tax"
+msgstr ""
+
+msgid "product_count"
+msgstr ""
+
+msgid "products"
 msgstr ""
 
 msgid "Bad Request"
@@ -166,6 +233,12 @@ msgid "Price - Low to High"
 msgstr ""
 
 msgid "Price - High to Low"
+msgstr ""
+
+msgid "Sort"
+msgstr ""
+
+msgid "Manufacturer"
 msgstr ""
 
 msgid "This product is not available in this shop."

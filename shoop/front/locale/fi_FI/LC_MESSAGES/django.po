@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-03 16:54+0000\n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: 2015-12-03 18:36+0200\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@anders.fi>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -86,11 +86,24 @@ msgstr "Hyväksyn ehdot"
 msgid "I want to subscribe to your newsletter"
 msgstr "Haluan tilata uutiskirjeen"
 
+msgid "Comment"
+msgstr ""
+
 msgid "Confirmation"
 msgstr "Vahvistus"
 
 msgid "Empty Basket"
 msgstr "Tyhjä ostoskori"
+
+#, fuzzy
+#| msgid "Shipping method"
+msgid "shipping method"
+msgstr "Toimitustapa"
+
+#, fuzzy
+#| msgid "Payment method"
+msgid "payment method"
+msgstr "Maksutapa"
 
 msgid "Shipping & Payment"
 msgstr "Toimitukset & Maksaminen"
@@ -109,6 +122,62 @@ msgstr "Maksutapa"
 
 msgid "Please send me marketing correspondence"
 msgstr "Lähettäkää minulle markkinointimateriaalia, kiitos"
+
+msgid "key"
+msgstr ""
+
+#, fuzzy
+#| msgid "your shop"
+msgid "shop"
+msgstr "kauppasi"
+
+msgid "customer"
+msgstr ""
+
+msgid "orderer"
+msgstr ""
+
+msgid "creator"
+msgstr ""
+
+msgid "created on"
+msgstr ""
+
+msgid "updated on"
+msgstr ""
+
+msgid "persistent"
+msgstr ""
+
+msgid "deleted"
+msgstr ""
+
+msgid "finished"
+msgstr ""
+
+msgid "title"
+msgstr ""
+
+msgid "data"
+msgstr ""
+
+msgid "taxless total price"
+msgstr ""
+
+msgid "taxful total price"
+msgstr ""
+
+msgid "currency"
+msgstr ""
+
+msgid "prices include tax"
+msgstr ""
+
+msgid "product_count"
+msgstr ""
+
+msgid "products"
+msgstr ""
 
 msgid "Bad Request"
 msgstr "Epäkelpo pyyntö"
@@ -179,6 +248,12 @@ msgstr "Hinta - Pienimmästä suurimpaan"
 
 msgid "Price - High to Low"
 msgstr "Hinta - Suurimmasta pienimpään"
+
+msgid "Sort"
+msgstr ""
+
+msgid "Manufacturer"
+msgstr ""
 
 msgid "This product is not available in this shop."
 msgstr "Tuote ei ole saatavilla tässä kaupassa."

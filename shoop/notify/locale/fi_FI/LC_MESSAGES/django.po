@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-30 23:37+0000\n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: 2015-12-03 18:36+0200\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@anders.fi>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -93,6 +93,11 @@ msgstr ""
 msgid "Template"
 msgstr "Malline"
 
+#, fuzzy
+#| msgid "Variables"
+msgid "Bind to Variable"
+msgstr "Muuttujat"
+
 msgid "Edit Script Contents..."
 msgstr "Muokkaa komentosarjan sisältöä..."
 
@@ -137,6 +142,47 @@ msgstr "kuka tahansa ylläpitäjä"
 
 msgid "a specific user"
 msgstr "tietty käyttäjä"
+
+#, fuzzy
+#| msgid "Recipient"
+msgid "recipient type"
+msgstr "Vastaanottaja"
+
+#, fuzzy
+#| msgid "Recipient"
+msgid "recipient"
+msgstr "Vastaanottaja"
+
+msgid "created on"
+msgstr ""
+
+msgid "message"
+msgstr ""
+
+msgid "priority"
+msgstr ""
+
+msgid "marked read"
+msgstr ""
+
+msgid "marked read by"
+msgstr ""
+
+msgid "marked read on"
+msgstr ""
+
+#, fuzzy
+#| msgid "Send Identifier"
+msgid "event identifier"
+msgstr "Lähetystunniste"
+
+msgid "name"
+msgstr ""
+
+#, fuzzy
+#| msgid "Enabled"
+msgid "enabled"
+msgstr "Käytössä"
 
 msgid "Edit Script Information"
 msgstr "Muokkaa komentosarjan tietoja"

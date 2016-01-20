@@ -21,15 +21,19 @@ The ``doccov.py`` tool checks for docstring coverage and docstring style.
    python _misc/doccov.py -o report.html shoop
 
 
-Ensure FK Style
----------------
+Ensure Code Style
+-----------------
 
-The ``ensure_fk_style.py`` tool checks that all ``ForeignKey``s are declared
-with ``on_delete`` clauses.
+The ``ensure_code_style.py`` tool has a couple checkers:
+
+* one that checks that all ``ForeignKey``s are declared with
+  ``on_delete`` clauses
+* one that checks that model and form fields have properly translatable
+  verbose names
 
 .. code-block::  shell
 
-   python _misc/ensure_fk_style.py shoop
+   python _misc/ensure_code_style.py shoop
 
 
 Ensure License Headers

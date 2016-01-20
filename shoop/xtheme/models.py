@@ -80,11 +80,11 @@ class SavedViewConfigStatus(Enum):
 
 
 class SavedViewConfig(models.Model):
-    theme_identifier = models.CharField(max_length=64, db_index=True)
-    view_name = models.CharField(max_length=64, db_index=True)
-    created_on = models.DateTimeField(auto_now_add=True)
-    status = EnumIntegerField(SavedViewConfigStatus, db_index=True)
-    _data = TaggedJSONField(db_column="data", default=dict)
+    theme_identifier = models.CharField(max_length=64, db_index=True, verbose_name=_("theme identifier"))
+    view_name = models.CharField(max_length=64, db_index=True, verbose_name=_("view name"))
+    created_on = models.DateTimeField(auto_now_add=True, verbose_name=_("created on"))
+    status = EnumIntegerField(SavedViewConfigStatus, db_index=True, verbose_name=_("status"))
+    _data = TaggedJSONField(db_column="data", default=dict, verbose_name=_("internal data"))
     objects = SavedViewConfigQuerySet.as_manager()
 
     @property
@@ -127,9 +127,9 @@ class SavedViewConfig(models.Model):
 
 
 class ThemeSettings(models.Model):
-    theme_identifier = models.CharField(max_length=64, db_index=True, unique=True)
-    active = models.BooleanField(db_index=True, default=False)
-    data = TaggedJSONField(db_column="data", default=dict)
+    theme_identifier = models.CharField(max_length=64, db_index=True, unique=True, verbose_name=_("theme identifier"))
+    active = models.BooleanField(db_index=True, default=False, verbose_name=_("active"))
+    data = TaggedJSONField(db_column="data", default=dict, verbose_name=_("data"))
 
     def activate(self):
         self.__class__.objects.all().update(active=False)

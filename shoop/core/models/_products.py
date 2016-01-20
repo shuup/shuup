@@ -158,12 +158,12 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
     COMMON_SELECT_RELATED = ("type", "primary_image", "tax_class")
 
     # Metadata
-    created_on = models.DateTimeField(auto_now_add=True, editable=False)
-    modified_on = models.DateTimeField(auto_now=True, editable=False)
-    deleted = models.BooleanField(default=False, editable=False, db_index=True)
+    created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_('created on'))
+    modified_on = models.DateTimeField(auto_now=True, editable=False, verbose_name=_('modified on'))
+    deleted = models.BooleanField(default=False, editable=False, db_index=True, verbose_name=_('deleted'))
 
     # Behavior
-    mode = EnumIntegerField(ProductMode, default=ProductMode.NORMAL)
+    mode = EnumIntegerField(ProductMode, default=ProductMode.NORMAL, verbose_name=_('mode'))
     variation_parent = models.ForeignKey(
         "self", null=True, blank=True, related_name='variation_children',
         on_delete=models.PROTECT,
@@ -206,7 +206,8 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
     primary_image = models.ForeignKey(
         "ProductMedia", null=True, blank=True,
         related_name="primary_image_for_products",
-        on_delete=models.SET_NULL)
+        on_delete=models.SET_NULL,
+        verbose_name=_("primary image"))
 
     translations = TranslatedFields(
         name=models.CharField(max_length=256, verbose_name=_('name')),
@@ -596,10 +597,12 @@ ProductLogEntry = define_log_model(Product)
 
 
 class ProductCrossSell(models.Model):
-    product1 = models.ForeignKey(Product, related_name="cross_sell_1", on_delete=models.CASCADE)
-    product2 = models.ForeignKey(Product, related_name="cross_sell_2", on_delete=models.CASCADE)
-    weight = models.IntegerField(default=0)
-    type = EnumIntegerField(ProductCrossSellType)
+    product1 = models.ForeignKey(
+        Product, related_name="cross_sell_1", on_delete=models.CASCADE, verbose_name=_("primary product"))
+    product2 = models.ForeignKey(
+        Product, related_name="cross_sell_2", on_delete=models.CASCADE, verbose_name=_("secondary product"))
+    weight = models.IntegerField(default=0, verbose_name=_("weight"))
+    type = EnumIntegerField(ProductCrossSellType, verbose_name=_("type"))
 
     class Meta:
         verbose_name = _('cross sell link')
@@ -608,10 +611,10 @@ class ProductCrossSell(models.Model):
 
 class ProductAttribute(AppliedAttribute):
     _applied_fk_field = "product"
-    product = models.ForeignKey(Product, related_name='attributes', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='attributes', on_delete=models.CASCADE, verbose_name=_("product"))
 
     translations = TranslatedFields(
-        translated_string_value=models.TextField(blank=True)
+        translated_string_value=models.TextField(blank=True, verbose_name=_("translated value"))
     )
 
     class Meta:

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-07 12:26+0000\n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: 2015-12-07 11:12+0000\n"
 "Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
@@ -57,19 +57,51 @@ msgstr "创建日期"
 msgid "Page"
 msgstr "页面"
 
+#, fuzzy
+#| msgid "Available from"
+msgid "available from"
+msgstr "可从"
+
+#, fuzzy
+#| msgid "Available to"
+msgid "available to"
+msgstr "可供"
+
+#, fuzzy
+#| msgid "Created by"
+msgid "created by"
+msgstr "创建于"
+
+msgid "modified by"
+msgstr ""
+
+#, fuzzy
+#| msgid "Created by"
+msgid "created on"
+msgstr "创建于"
+
+msgid "modified on"
+msgstr ""
+
 msgid "This identifier can be used in templates to create URLs"
 msgstr "该标识符可用于模板里创建URL"
 
-msgid "Visible in menu"
+#, fuzzy
+#| msgid "Visible in menu"
+msgid "visible in menu"
 msgstr "在菜单可见"
 
-msgid "Page Title"
-msgstr "页面名称"
+#, fuzzy
+#| msgid "Title"
+msgid "title"
+msgstr "名称"
 
-msgid "Page URL"
-msgstr "页面URL"
+msgid "URL"
+msgstr ""
 
-msgid "Content"
+#, fuzzy
+#| msgid "Content"
+msgid "content"
 msgstr "内容"
 
 msgid "page"

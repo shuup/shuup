@@ -15,11 +15,12 @@ from shoop.utils.properties import MoneyPropped, PriceProperty
 
 
 class SimpleProductPrice(MoneyPropped, models.Model):
-    product = models.ForeignKey("shoop.Product", related_name="+", on_delete=models.CASCADE)
-    shop = models.ForeignKey("shoop.Shop", db_index=True, on_delete=models.CASCADE)
-    group = models.ForeignKey("shoop.ContactGroup", db_index=True, on_delete=models.CASCADE)
+    product = models.ForeignKey("shoop.Product", related_name="+", on_delete=models.CASCADE, verbose_name=_("product"))
+    shop = models.ForeignKey("shoop.Shop", db_index=True, on_delete=models.CASCADE, verbose_name=_("shop"))
+    group = models.ForeignKey(
+        "shoop.ContactGroup", db_index=True, on_delete=models.CASCADE, verbose_name=_("contact group"))
     price = PriceProperty("price_value", "shop.currency", "shop.prices_include_tax")
-    price_value = MoneyValueField()
+    price_value = MoneyValueField(verbose_name=_("price"))
 
     class Meta:
         unique_together = (('product', 'shop', 'group'),)

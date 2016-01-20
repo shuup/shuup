@@ -90,6 +90,7 @@ Default Theme
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
+- Add verbose names to all model and form fields
 - Do unit testing from doctests too
 - Update Python package dependencies
 - Lock down JavaScript dependencies

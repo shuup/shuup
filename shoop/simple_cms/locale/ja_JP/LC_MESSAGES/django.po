@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-07 12:39+0000\n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: 2015-11-26 08:48+0000\n"
 "Last-Translator: Yuki Miyagi <yuki.miyagi@anders.fi>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
@@ -57,19 +57,39 @@ msgstr ""
 msgid "Page"
 msgstr "ページ"
 
+msgid "available from"
+msgstr ""
+
+msgid "available to"
+msgstr ""
+
+msgid "created by"
+msgstr ""
+
+msgid "modified by"
+msgstr ""
+
+msgid "created on"
+msgstr ""
+
+msgid "modified on"
+msgstr ""
+
 msgid "This identifier can be used in templates to create URLs"
 msgstr ""
 
-msgid "Visible in menu"
+msgid "visible in menu"
 msgstr ""
 
-msgid "Page Title"
+#, fuzzy
+#| msgid "Title"
+msgid "title"
+msgstr "タイトル"
+
+msgid "URL"
 msgstr ""
 
-msgid "Page URL"
-msgstr ""
-
-msgid "Content"
+msgid "content"
 msgstr ""
 
 msgid "page"

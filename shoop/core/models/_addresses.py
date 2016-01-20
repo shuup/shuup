@@ -64,13 +64,13 @@ class Address(NameMixin, ShoopModel):
     suffix = models.CharField(verbose_name=_('name suffix'), max_length=64, blank=True)
     name_ext = models.CharField(verbose_name=_('name extension'), max_length=255, blank=True)
     company_name = models.CharField(verbose_name=_('company name'), max_length=255, blank=True)
-    tax_number = models.CharField(verbose_name=_('Tax number'), max_length=64, blank=True)
+    tax_number = models.CharField(verbose_name=_('tax number'), max_length=64, blank=True)
     phone = models.CharField(verbose_name=_('phone'), max_length=64, blank=True)
     email = models.EmailField(verbose_name=_('email'), max_length=128, blank=True)
     street = models.CharField(verbose_name=_('street'), max_length=255)
     street2 = models.CharField(verbose_name=_('street (2)'), max_length=255, blank=True)
     street3 = models.CharField(verbose_name=_('street (3)'), max_length=255, blank=True)
-    postal_code = models.CharField(verbose_name=_('ZIP / Postal code'), max_length=64, blank=True)
+    postal_code = models.CharField(verbose_name=_('postal code'), max_length=64, blank=True)
     city = models.CharField(verbose_name=_('city'), max_length=255)
     region_code = models.CharField(verbose_name=_('region code'), max_length=16, blank=True)
     region = models.CharField(verbose_name=_('region'), max_length=64, blank=True)
@@ -213,7 +213,7 @@ class SavedAddress(ShoopModel):
     """
     Model for saving multiple addresses in an 'address book' of sorts.
     """
-    owner = models.ForeignKey("Contact", on_delete=models.CASCADE)
+    owner = models.ForeignKey("Contact", on_delete=models.CASCADE, verbose_name=_("owner"))
     address = models.ForeignKey(
         MutableAddress, verbose_name=_('address'),
         related_name="saved_addresses", on_delete=models.CASCADE)

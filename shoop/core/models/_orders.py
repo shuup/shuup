@@ -112,14 +112,14 @@ class OrderStatusQuerySet(TranslatableQuerySet):
 @python_2_unicode_compatible
 class OrderStatus(TranslatableModel):
     identifier = InternalIdentifierField(db_index=True, blank=False, unique=True)
-    ordering = models.IntegerField(db_index=True, default=0)
-    role = EnumIntegerField(OrderStatusRole, db_index=True, default=OrderStatusRole.NONE)
-    default = models.BooleanField(default=False, db_index=True)
+    ordering = models.IntegerField(db_index=True, default=0, verbose_name=_('ordering'))
+    role = EnumIntegerField(OrderStatusRole, db_index=True, default=OrderStatusRole.NONE, verbose_name=_('role'))
+    default = models.BooleanField(default=False, db_index=True, verbose_name=_('default'))
 
     objects = OrderStatusQuerySet.as_manager()
 
     translations = TranslatedFields(
-        name=models.CharField(verbose_name=_(u"Name"), max_length=64)
+        name=models.CharField(verbose_name=_("name"), max_length=64)
     )
 
     def __str__(self):
@@ -157,8 +157,8 @@ class OrderQuerySet(models.QuerySet):
 @python_2_unicode_compatible
 class Order(MoneyPropped, models.Model):
     # Identification
-    shop = UnsavedForeignKey("Shop", on_delete=models.PROTECT)
-    created_on = models.DateTimeField(auto_now_add=True, editable=False)
+    shop = UnsavedForeignKey("Shop", on_delete=models.PROTECT, verbose_name=_('shop'))
+    created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_('created on'))
     identifier = InternalIdentifierField(unique=True, db_index=True, verbose_name=_('order identifier'))
     # TODO: label is actually a choice field, need to check migrations/choice deconstruction
     label = models.CharField(max_length=32, db_index=True, verbose_name=_('label'))
@@ -188,7 +188,7 @@ class Order(MoneyPropped, models.Model):
         blank=True, null=True,
         on_delete=models.PROTECT,
         verbose_name=_('shipping address'))
-    tax_number = models.CharField(max_length=20, blank=True, verbose_name=_('Tax number'))
+    tax_number = models.CharField(max_length=20, blank=True, verbose_name=_('tax number'))
     phone = models.CharField(max_length=32, blank=True, verbose_name=_('phone'))
     email = models.EmailField(max_length=128, blank=True, verbose_name=_('email address'))
 
@@ -197,7 +197,7 @@ class Order(MoneyPropped, models.Model):
         settings.AUTH_USER_MODEL, related_name='orders_created', blank=True, null=True,
         on_delete=models.PROTECT,
         verbose_name=_('creating user'))
-    deleted = models.BooleanField(db_index=True, default=False)
+    deleted = models.BooleanField(db_index=True, default=False, verbose_name=_('deleted'))
     status = UnsavedForeignKey("OrderStatus", verbose_name=_('status'), on_delete=models.PROTECT)
     payment_status = EnumIntegerField(
         PaymentStatus, db_index=True, default=PaymentStatus.NOT_PAID,
@@ -214,7 +214,7 @@ class Order(MoneyPropped, models.Model):
     payment_method_name = models.CharField(
         max_length=64, blank=True, default="",
         verbose_name=_('payment method name'))
-    payment_data = JSONField(blank=True, null=True)
+    payment_data = JSONField(blank=True, null=True, verbose_name=_('payment data'))
 
     shipping_method = UnsavedForeignKey(
         "ShippingMethod", related_name='shipping_orders',  blank=True, null=True,
@@ -223,9 +223,9 @@ class Order(MoneyPropped, models.Model):
     shipping_method_name = models.CharField(
         max_length=64, blank=True, default="",
         verbose_name=_('shipping method name'))
-    shipping_data = JSONField(blank=True, null=True)
+    shipping_data = JSONField(blank=True, null=True, verbose_name=_('shipping data'))
 
-    extra_data = JSONField(blank=True, null=True)
+    extra_data = JSONField(blank=True, null=True, verbose_name=_('extra data'))
 
     # Money stuff
     taxful_total_price = TaxfulPriceProperty('taxful_total_price_value', 'currency')
@@ -233,11 +233,13 @@ class Order(MoneyPropped, models.Model):
 
     taxful_total_price_value = MoneyValueField(editable=False, verbose_name=_('grand total'), default=0)
     taxless_total_price_value = MoneyValueField(editable=False, verbose_name=_('taxless total'), default=0)
-    currency = CurrencyField()
-    prices_include_tax = models.BooleanField()
+    currency = CurrencyField(verbose_name=_('currency'))
+    prices_include_tax = models.BooleanField(verbose_name=_('prices include tax'))
 
-    display_currency = CurrencyField(blank=True)
-    display_currency_rate = models.DecimalField(max_digits=36, decimal_places=9, default=1)
+    display_currency = CurrencyField(blank=True, verbose_name=_('display currency'))
+    display_currency_rate = models.DecimalField(
+        max_digits=36, decimal_places=9, default=1, verbose_name=_('display currency rate')
+    )
 
     # Other
     ip_address = models.GenericIPAddressField(null=True, blank=True, verbose_name=_('IP address'))
