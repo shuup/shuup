@@ -427,9 +427,5 @@ class BaseBasket(OrderSource):
         return (sum(l.unit_weight * l.quantity for l in self.get_lines()) if self.get_lines() else 0)
 
     @property
-    def product_count(self):
-        return sum(l.quantity for l in self.get_lines() if l.product)
-
-    @property
     def is_empty(self):
         return not bool(self.get_lines())
