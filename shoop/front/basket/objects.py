@@ -171,6 +171,33 @@ class BaseBasket(OrderSource):
         self._data_lines = self._data_lines + [line.to_dict()]
         return line
 
+    @property
+    def _codes(self):
+        return self._load().setdefault("codes", [])
+
+    @_codes.setter
+    def _codes(self, value):
+        if hasattr(self, "_data"):  # Check that we're initialized
+            self._load()["codes"] = value
+
+    def add_code(self, code):
+        modified = super(BaseBasket, self).add_code(code)
+        self.dirty = bool(self.dirty or modified)
+        return modified
+
+    def clear_codes(self):
+        modified = super(BaseBasket, self).clear_codes()
+        self.dirty = bool(self.dirty or modified)
+        return modified
+
+    def remove_code(self, code):
+        modified = super(BaseBasket, self).remove_code(code)
+        self.dirty = bool(self.dirty or modified)
+        return modified
+
+    def create_line(self, **kwargs):
+        return BasketLine(source=self, **kwargs)
+
     def get_lines(self):
         return [BasketLine.from_dict(self, line) for line in self._data_lines]
 

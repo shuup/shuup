@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add "codes" API to OrderSource and BaseBasket
 
 Localization
 ~~~~~~~~~~~~

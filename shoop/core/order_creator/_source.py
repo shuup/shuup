@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django.utils.encoding import force_text
 from django.utils.timezone import now
 
 from shoop.core import taxing
@@ -116,6 +117,7 @@ class OrderSource(object):
         self.shipping_data = {}
         self.extra_data = {}
 
+        self._codes = []
         self._lines = []
 
         self.zero_price = shop.create_price(0)
@@ -206,6 +208,61 @@ class OrderSource(object):
     @status.setter
     def status(self, status):
         self.status_id = (status.id if status else None)
+
+    @property
+    def codes(self):
+        return list(self._codes)
+
+    def add_code(self, code):
+        """
+        Add code to this OrderSource.
+
+        At this point it is expected that the customers
+        permission to use the code has already been
+        checked by the caller.
+
+        The code will be converted to text.
+
+        :param code: The code to add
+        :type code: str
+        :return: True if code was added, False if it was already there
+        :rtype: bool
+        """
+        code_text = force_text(code)
+        if code_text not in self._codes:
+            self._codes.append(code_text)
+            self.uncache()
+            return True
+        return False
+
+    def clear_codes(self):
+        """
+        Remove all codes from this OrderSource.
+
+        :return: True iff there was codes before clearing
+        :rtype: bool
+        """
+        if self._codes:
+            self._codes = []
+            self.uncache()
+            return True
+        return False
+
+    def remove_code(self, code):
+        """
+        Remove given code from this OrderSource.
+
+        :param code: The code to remove
+        :type code: str
+        :return: True if code was removed, False if code was not there
+        :rtype: bool
+        """
+        code_text = force_text(code)
+        if code_text in self._codes:
+            self._codes.remove(code_text)
+            self.uncache()
+            return True
+        return False
 
     def add_line(self, **kwargs):
         line = SourceLine(source=self, **kwargs)
