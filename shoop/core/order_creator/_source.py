@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django.utils.encoding import force_text
 from django.utils.timezone import now
 
 from shoop.core import taxing
@@ -116,6 +117,7 @@ class OrderSource(object):
         self.shipping_data = {}
         self.extra_data = {}
 
+        self.dirty = False
         self._lines = []
 
         self.zero_price = shop.create_price(0)
@@ -206,6 +208,42 @@ class OrderSource(object):
     @status.setter
     def status(self, status):
         self.status_id = (status.id if status else None)
+
+    @property
+    def codes(self):
+        if not hasattr(self, "_codes"):
+            self._codes = set()
+        return self._codes
+
+    @codes.setter
+    def codes(self, codes):
+        self._codes = set(force_text(code) for code in codes)
+        self.uncache()
+
+    def add_code(self, code):
+        """
+        Add code to this OrderSource
+
+        At this point it is expected that the customers
+        permission to use the code has already been
+        checked by the adding instance.
+
+        :param code: Code being added
+        :type code: str
+        :rtype: True|False
+        """
+        if code not in self.codes:
+            self.codes = (self.codes | {code})
+            self.dirty = True
+            return True
+        return False
+
+    def remove_code(self, code):
+        if code in self.codes:
+            self.codes.remove(code)
+            self.dirty = True
+            return True
+        return False
 
     def add_line(self, **kwargs):
         line = SourceLine(source=self, **kwargs)
