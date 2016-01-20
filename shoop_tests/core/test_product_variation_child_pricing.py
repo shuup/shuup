@@ -4,9 +4,11 @@ from shoop.core.pricing import TaxfulPrice, TaxlessPrice
 from shoop.testing.factories import (
     create_product, get_default_product, get_default_shop
 )
+from shoop.testing.utils import apply_request_middleware
 
 
 def init_test(request, shop, prices):
+    apply_request_middleware(request)
     parent = create_product("parent_product", shop=shop)
     children = [create_product("child-%d" % price, shop=shop, default_price=price) for price in prices]
     for child in children:

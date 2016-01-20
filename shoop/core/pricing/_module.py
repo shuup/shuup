@@ -50,7 +50,10 @@ class PricingModule(six.with_metaclass(abc.ABCMeta)):
         :type request: HttpRequest
         :rtype: PricingContext
         """
-        return self.pricing_context_class()
+        return self.pricing_context_class(
+            customer=request.customer,
+            shop=request.shop
+        )
 
     def get_context_from_data(self, **context_data):
         """

@@ -8,28 +8,12 @@
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.core.models import ShopProduct
-from shoop.core.pricing import PriceInfo, PricingContext, PricingModule
-
-
-class DefaultPricingContext(PricingContext):
-    REQUIRED_VALUES = ["shop"]
-    shop = None
+from shoop.core.pricing import PriceInfo, PricingModule
 
 
 class DefaultPricingModule(PricingModule):
     identifier = "default_pricing"
     name = _("Default Pricing")
-
-    pricing_context_class = DefaultPricingContext
-
-    def get_context_from_request(self, request):
-        """
-        Inject shop into pricing context.
-
-        Shop information is used to find correct `ShopProduct`
-        in `self.get_price_info`
-        """
-        return self.pricing_context_class(shop=request.shop)
 
     def get_price_info(self, context, product, quantity=1):
         """

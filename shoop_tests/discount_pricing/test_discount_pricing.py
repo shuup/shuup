@@ -12,6 +12,7 @@ from shoop.core.pricing import get_pricing_module, TaxfulPrice, TaxlessPrice
 from shoop.discount_pricing.models import DiscountedProductPrice
 from shoop.discount_pricing.module import DiscountPricingModule
 from shoop.testing.factories import create_product, get_shop
+from shoop.testing.utils import apply_request_middleware
 
 pytestmark = pytest.mark.skipif("shoop.discount_pricing" not in settings.INSTALLED_APPS,
                                 reason="Discount pricing not installed")
@@ -38,6 +39,7 @@ def test_module_is_active():
 def initialize_test(rf, include_tax=False):
     request = rf.get("/")
     request.shop = get_shop(prices_include_tax=include_tax)
+    apply_request_middleware(request)
     return request
 
 # Tests for Discount Pricing
