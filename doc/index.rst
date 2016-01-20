@@ -8,6 +8,7 @@ Contents
    :maxdepth: 2
 
    getting_started
+   changes
    glossary
    basic_admin_tasks
 
