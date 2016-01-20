@@ -23,16 +23,18 @@ VERSION_FILE = os.path.join(TOPDIR, 'shoop', '_version.py')
 #        x.x.x here...")
 #      - Change the "Unreleased" header to appropriate version header.
 #        See header of the last release for example.
-#  2. Update VERSION variable here: Increase and drop .post0.dev suffix
-#  3. Update version and release variables in doc/conf.py
-#  4. Commit changes of steps 1--3
-#  5. Tag the commit (of step 4) with
+#  2. Create/update Release Notes (doc/release_notes/<VERSION>.rst) and
+#     add it to index (doc/release_notes/index.rst)
+#  3. Update VERSION variable here: Increase and drop .post0.dev suffix
+#  4. Update version and release variables in doc/conf.py
+#  5. Commit changes of steps 1--3
+#  6. Tag the commit (of step 4) with
 #        git tag -a -m "Shoop X.Y.Z" vX.Y.Z
 #     where X.Y.Z is the new version number (must be same as VERSION
 #     variable here)
-#  6. Check the tag is OK and push it with
+#  7. Check the tag is OK and push it with
 #        git push origin refs/tags/vX.Y.Z
-#  7. Do a post-release commit:
+#  8. Do a post-release commit:
 #      - Add new "Unreleased" header and instruction bullet point to
 #        Change Log
 #      - Add ".post0.dev" suffix to VERSION variable here
