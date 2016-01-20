@@ -316,11 +316,11 @@ msgstr ""
 msgid "Contact %s does not exist."
 msgstr ""
 
-msgid "Could not proceed with order:"
-msgstr ""
-
 #, python-format
 msgid "Order %(identifier)s created."
+msgstr ""
+
+msgid "Could not proceed with order:"
 msgstr ""
 
 msgid "Could not create order:"

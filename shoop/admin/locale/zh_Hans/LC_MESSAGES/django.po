@@ -322,14 +322,14 @@ msgstr "创建订单"
 msgid "Contact %s does not exist."
 msgstr "该产品 %s 不存在。"
 
+#, python-format
+msgid "Order %(identifier)s created."
+msgstr "订单 %(identifier)s 已形成"
+
 #, fuzzy
 #| msgid "Could not create order:"
 msgid "Could not proceed with order:"
 msgstr "无法形成订单："
-
-#, python-format
-msgid "Order %(identifier)s created."
-msgstr "订单 %(identifier)s 已形成"
 
 msgid "Could not create order:"
 msgstr "无法形成订单："

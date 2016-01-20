@@ -71,9 +71,6 @@ msgstr "Oletusmaksu"
 msgid "Error"
 msgstr "Virhe"
 
-msgid "The following fields can not be changed"
-msgstr "Seuraavia kenttiä ei voi muuttaa"
-
 msgid "shipping address"
 msgstr "toimitusosoite"
 
@@ -199,6 +196,9 @@ msgstr "attribuutti"
 
 msgid "attributes"
 msgstr "attribuutit"
+
+msgid "The following fields can not be changed"
+msgstr "Seuraavia kenttiä ei voi muuttaa"
 
 msgid "invisible"
 msgstr "näkymätö"

@@ -61,9 +61,6 @@ msgstr "默认支付方式"
 msgid "Error"
 msgstr "错误"
 
-msgid "The following fields can not be changed"
-msgstr ""
-
 msgid "shipping address"
 msgstr "收货地址"
 
@@ -189,6 +186,9 @@ msgstr "属性"
 
 msgid "attributes"
 msgstr "属性"
+
+msgid "The following fields can not be changed"
+msgstr ""
 
 msgid "invisible"
 msgstr "不可见"

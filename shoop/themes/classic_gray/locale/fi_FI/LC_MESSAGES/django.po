@@ -298,14 +298,14 @@ msgstr "Tervetuloa"
 msgid "Preview"
 msgstr "Esikatselu"
 
+msgid "Files"
+msgstr "Tiedostot"
+
 msgid "Products ordered"
 msgstr "Tilatut tuotteet"
 
 msgid "Tax breakdown"
 msgstr "Verojen erittely"
-
-msgid "Files"
-msgstr "Tiedostot"
 
 msgid "Company"
 msgstr "Yritys"

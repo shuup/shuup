@@ -60,9 +60,6 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-msgid "The following fields can not be changed"
-msgstr ""
-
 msgid "shipping address"
 msgstr ""
 
@@ -187,6 +184,9 @@ msgid "attribute"
 msgstr ""
 
 msgid "attributes"
+msgstr ""
+
+msgid "The following fields can not be changed"
 msgstr ""
 
 msgid "invisible"

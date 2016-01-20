@@ -323,12 +323,12 @@ msgstr "Luo tilaus"
 msgid "Contact %s does not exist."
 msgstr "Yhteystietoa %s ei ole olemassa."
 
-msgid "Could not proceed with order:"
-msgstr "Ei voitu luoda tilausta:"
-
 #, python-format
 msgid "Order %(identifier)s created."
 msgstr "Tilaus %(identifier)s luotu"
+
+msgid "Could not proceed with order:"
+msgstr "Ei voitu luoda tilausta:"
 
 msgid "Could not create order:"
 msgstr "Ei voitu luoda tilausta:"
