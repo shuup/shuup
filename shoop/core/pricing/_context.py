@@ -41,7 +41,7 @@ class PricingContext(PricingContextable):
     """
     Context for pricing.
     """
-    REQUIRED_VALUES = ()
+    REQUIRED_VALUES = ("shop", "customer")
 
     def __init__(self, **kwargs):
         kwargs.setdefault("time", now())
