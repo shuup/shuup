@@ -7,6 +7,7 @@
 
 from __future__ import unicode_literals
 
+from ._discounts import get_discount_modules
 from ._module import get_pricing_module
 
 
@@ -26,6 +27,8 @@ def get_price_info(context, product, quantity=1):
     """
     (mod, ctx) = _get_module_and_context(context)
     price_info = mod.get_price_info(ctx, product, quantity)
+    for module in get_discount_modules():
+        price_info = module.discount_price(ctx, product, price_info)
     return price_info
 
 
@@ -43,6 +46,8 @@ def get_pricing_steps(context, product):
     """
     (mod, ctx) = _get_module_and_context(context)
     steps = mod.get_pricing_steps(ctx, product)
+    for module in get_discount_modules():
+        steps = module.get_pricing_steps(ctx, product, steps)
     return steps
 
 
@@ -60,6 +65,8 @@ def get_price_infos(context, products, quantity=1):
     """
     (mod, ctx) = _get_module_and_context(context)
     prices = mod.get_price_infos(ctx, products, quantity)
+    for module in get_discount_modules():
+        prices = module.discount_prices(ctx, products, prices)
     return prices
 
 
@@ -79,6 +86,8 @@ def get_pricing_steps_for_products(context, products):
     """
     (mod, ctx) = _get_module_and_context(context)
     steps = mod.get_pricing_steps_for_products(ctx, products)
+    for module in get_discount_modules():
+        steps = module.get_pricing_steps_for_products(ctx, products, steps)
     return steps
 
 

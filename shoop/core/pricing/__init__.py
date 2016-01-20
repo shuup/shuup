@@ -47,6 +47,7 @@ from __future__ import unicode_literals
 from shoop.utils import update_module_attributes
 
 from ._context import PricingContext, PricingContextable
+from ._discounts import DiscountModule, get_discount_modules
 from ._module import get_pricing_module, PricingModule
 from ._price import Price, TaxfulPrice, TaxlessPrice
 from ._price_info import PriceInfo
@@ -57,6 +58,8 @@ from ._utils import (
 )
 
 __all__ = [
+    "DiscountModule",
+    "get_discount_modules",
     "get_price_info",
     "get_price_infos",
     "get_pricing_module",

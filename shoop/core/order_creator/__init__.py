@@ -6,12 +6,21 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
+from shoop.utils import update_module_attributes
+
 from ._creator import OrderCreator
 from ._source import OrderSource, SourceLine, TaxesNotCalculated
+from ._source_modifier import (
+    get_order_source_modifier_modules, OrderSourceModifierModule
+)
 
 __all__ = [
+    "get_order_source_modifier_modules",
     "OrderCreator",
     "OrderSource",
+    "OrderSourceModifierModule",
     "SourceLine",
     "TaxesNotCalculated"
 ]
+
+update_module_attributes(__all__, __name__)

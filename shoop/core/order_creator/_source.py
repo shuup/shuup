@@ -20,6 +20,7 @@ from shoop.core.taxing import TaxableItem
 from shoop.utils.decorators import non_reentrant
 from shoop.utils.money import Money
 
+from ._source_modifier import get_order_source_modifier_modules
 from .signals import post_compute_source_lines
 
 
@@ -350,6 +351,7 @@ class OrderSource(object):
 
         lines.extend(self._compute_payment_method_lines())
         lines.extend(self._compute_shipping_method_lines())
+        self._add_lines_from_modifiers(lines)
 
         lines.extend(_collect_lines_from_signal(
             post_compute_source_lines.send(
@@ -366,6 +368,15 @@ class OrderSource(object):
         if self.shipping_method:
             for line in self.shipping_method.get_source_lines(self):
                 yield line
+
+    def _add_lines_from_modifiers(self, lines):
+        """
+        Add lines from OrderSourceModifiers to given list of lines.
+        """
+        for module in get_order_source_modifier_modules():
+            new_lines = list(module.get_new_lines(self, list(lines)))
+            # Extend lines now to allow next module to see them
+            lines.extend(new_lines)
 
     def get_product_lines(self):
         """
