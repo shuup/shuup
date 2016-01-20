@@ -46,6 +46,10 @@ from __future__ import unicode_literals
 
 from shoop.utils import update_module_attributes
 
+from ._campaigns import (
+    BasketCampaignModule, CatalogCampaignModule, get_basket_campaign_modules,
+    get_catalog_campaign_modules
+)
 from ._context import PricingContext, PricingContextable
 from ._module import get_pricing_module, PricingModule
 from ._price import Price, TaxfulPrice, TaxlessPrice
@@ -53,6 +57,12 @@ from ._price_info import PriceInfo
 from ._priceful import Priceful
 
 __all__ = [
+    "BasketCampaignModule",
+    "CatalogCampaignModule",
+    "get_basket_campaign_modules",
+    "get_catalog_campaign_modules",
+    "get_price_info",
+    "get_pricing_module",
     "Price",
     "Priceful",
     "PriceInfo",
@@ -61,8 +71,6 @@ __all__ = [
     "PricingModule",
     "TaxfulPrice",
     "TaxlessPrice",
-    "get_pricing_module",
-    "get_price_info",
 ]
 
 
@@ -82,6 +90,10 @@ def get_price_info(product, context, quantity):
     pricing_module = get_pricing_module()
     pricing_context = pricing_module.get_context(context)
     price_info = pricing_module.get_price_info(pricing_context, product=product, quantity=quantity)
+
+    for campaign_module in get_catalog_campaign_modules():
+        price_info = campaign_module.discount_price(context, price_info, product)
+
     return price_info
 
 

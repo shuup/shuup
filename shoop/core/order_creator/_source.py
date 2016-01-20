@@ -15,7 +15,9 @@ from shoop.core.models import (
     OrderStatus, PaymentMethod, Product, ShippingMethod, Shop, Supplier,
     TaxClass
 )
-from shoop.core.pricing import Price, Priceful, TaxfulPrice, TaxlessPrice
+from shoop.core.pricing import (
+    get_basket_campaign_modules, Price, Priceful, TaxfulPrice, TaxlessPrice
+)
 from shoop.core.taxing import TaxableItem
 from shoop.utils.decorators import non_reentrant
 from shoop.utils.money import Money
@@ -311,6 +313,14 @@ class OrderSource(object):
                 raise TaxesNotCalculated('Taxes are not calculated')
             self.calculate_taxes()
 
+    def _get_basket_campaign_lines(self, lines):
+        """
+        Get basket campaign lines from available `CampaignModule`s
+        """
+        for module in get_basket_campaign_modules():
+            for line in module.get_basket_campaign_lines(self, lines):
+                yield line
+
     def uncache(self):
         """
         Uncache processed lines.
@@ -331,6 +341,7 @@ class OrderSource(object):
 
         lines.extend(self._compute_payment_method_lines())
         lines.extend(self._compute_shipping_method_lines())
+        lines.extend(self._get_basket_campaign_lines(lines))
 
         lines.extend(_collect_lines_from_signal(
             post_compute_source_lines.send(
