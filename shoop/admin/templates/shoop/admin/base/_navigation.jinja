@@ -45,8 +45,8 @@
         </div>
         {% if LANGUAGES|length > 1 %}
         <ul class="languages">
-            {% for code, name in LANGUAGES %}
-            <li><a href="#" class="language{% if LANGUAGE_CODE|lower == code|lower %} active{% endif %}" data-value="{{ code }}">{{ _("%(language)s",language=name)}}</a></li>
+            {% for (code, name, local_name) in get_language_choices() %}
+            <li><a href="#" class="language{% if LANGUAGE_CODE == code %} active{% endif %}" data-value="{{ code }}">{{ name }} ({{ local_name }})</a></li>
             {% endfor %}
         </ul>
         {% endif %}

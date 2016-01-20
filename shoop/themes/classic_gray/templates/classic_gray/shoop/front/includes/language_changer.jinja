@@ -5,8 +5,8 @@
         <i class="dropdown-icon fa fa-angle-down"></i>
     </a>
     <ul class="dropdown-menu languages" role="menu">
-        {% for code, name in LANGUAGES %}
-        <li><a href="#" class="language" data-value="{{ code }}">{{ name }}</a></li>
+        {% for (code, name, local_name) in get_language_choices() %}
+        <li><a href="#" class="language" data-value="{{ code }}">{{ name }} ({{ local_name }})</a></li>
         {% endfor %}
     </ul>
 </li>

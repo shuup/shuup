@@ -12,6 +12,8 @@ from json import dumps as json_dump
 
 from babel.dates import format_date, format_datetime, format_time
 from babel.numbers import format_decimal
+from django.conf import settings
+from django.utils import translation
 from django.utils.safestring import mark_safe
 from django.utils.timezone import localtime
 from django_jinja import library
@@ -21,6 +23,24 @@ from shoop.utils.i18n import (
     format_money, format_percent, get_current_babel_locale
 )
 from shoop.utils.serialization import ExtendedJSONEncoder
+
+
+@library.global_function
+def get_language_choices():
+    """
+    Get language choices as code and text in two languages.
+
+    :return:
+      Available language codes as tuples (code, name, local_name)
+      where name is in the currently active language, and local_name
+      is in the language of the item.
+    :rtype: Iterable[tuple[str,str,str]]
+    """
+    for (code, name) in settings.LANGUAGES:
+        lang_info = translation.get_language_info(code)
+        name_in_current_lang = translation.ugettext(name)
+        local_name = lang_info["name_local"]
+        yield (code, name_in_current_lang, local_name)
 
 
 @library.filter
