@@ -46,6 +46,8 @@ class Shop(ChangeProtected, TranslatableShoopModel):
     prices_include_tax = models.BooleanField(default=True, verbose_name=_("prices include tax"))
     logo = FilerImageField(verbose_name=_("logo"), blank=True, null=True, on_delete=models.SET_NULL)
     maintenance_mode = models.BooleanField(verbose_name=_("maintenance mode"), default=False)
+    contact_address = models.ForeignKey(
+        "MutableAddress", verbose_name=_("contact address"), blank=True, null=True, on_delete=models.SET_NULL)
 
     translations = TranslatedFields(
         name=models.CharField(max_length=64, verbose_name=_("name")),
