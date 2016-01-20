@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-07 12:39+0000\n"
+"POT-Creation-Date: 2016-01-20 13:02+0000\n"
 "PO-Revision-Date: 2015-11-26 08:48+0000\n"
 "Last-Translator: Yuki Miyagi <yuki.miyagi@anders.fi>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
@@ -43,6 +43,9 @@ msgstr ""
 
 msgid "Plugin"
 msgstr "プラグイン"
+
+msgid "(Untranslated)"
+msgstr ""
 
 #, python-format
 msgid "Click to edit placeholder: %s"

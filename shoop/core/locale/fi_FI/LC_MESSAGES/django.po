@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-30 23:37+0000\n"
+"POT-Creation-Date: 2016-01-20 13:02+0000\n"
 "PO-Revision-Date: 2015-12-03 18:31+0200\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@anders.fi>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -70,9 +70,6 @@ msgstr "Oletusmaksu"
 
 msgid "Error"
 msgstr "Virhe"
-
-msgid "The following fields can not be changed"
-msgstr "Seuraavia kenttiä ei voi muuttaa"
 
 msgid "shipping address"
 msgstr "toimitusosoite"
@@ -133,9 +130,6 @@ msgstr "alue"
 
 msgid "country"
 msgstr "maa"
-
-msgid "immutable"
-msgstr "muuttumato"
 
 msgid "address"
 msgstr "osoite"
@@ -199,6 +193,9 @@ msgstr "attribuutti"
 
 msgid "attributes"
 msgstr "attribuutit"
+
+msgid "The following fields can not be changed"
+msgstr "Seuraavia kenttiä ei voi muuttaa"
 
 msgid "invisible"
 msgstr "näkymätö"

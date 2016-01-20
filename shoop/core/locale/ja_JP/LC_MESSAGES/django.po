@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-07 12:39+0000\n"
+"POT-Creation-Date: 2016-01-20 13:02+0000\n"
 "PO-Revision-Date: 2015-11-26 08:48+0000\n"
 "Last-Translator: Yuki Miyagi <yuki.miyagi@anders.fi>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
@@ -60,9 +60,6 @@ msgstr ""
 
 msgid "Error"
 msgstr "エラー"
-
-msgid "The following fields can not be changed"
-msgstr ""
 
 msgid "shipping address"
 msgstr "届け先住所"
@@ -123,9 +120,6 @@ msgstr "地域"
 
 msgid "country"
 msgstr "国"
-
-msgid "immutable"
-msgstr ""
 
 msgid "address"
 msgstr "住所"
@@ -189,6 +183,9 @@ msgstr "アトリビュート"
 
 msgid "attributes"
 msgstr "アトリビュート"
+
+msgid "The following fields can not be changed"
+msgstr ""
 
 msgid "invisible"
 msgstr ""

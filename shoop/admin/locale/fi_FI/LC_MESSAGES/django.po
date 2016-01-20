@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-03 16:54+0000\n"
+"POT-Creation-Date: 2016-01-20 13:02+0000\n"
 "PO-Revision-Date: 2015-12-03 18:13+0200\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@anders.fi>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -323,12 +323,12 @@ msgstr "Luo tilaus"
 msgid "Contact %s does not exist."
 msgstr "Yhteystietoa %s ei ole olemassa."
 
-msgid "Could not proceed with order:"
-msgstr "Ei voitu luoda tilausta:"
-
 #, python-format
 msgid "Order %(identifier)s created."
 msgstr "Tilaus %(identifier)s luotu"
+
+msgid "Could not proceed with order:"
+msgstr "Ei voitu luoda tilausta:"
 
 msgid "Could not create order:"
 msgstr "Ei voitu luoda tilausta:"
@@ -858,6 +858,10 @@ msgstr "Merkitse luetuksi"
 
 msgid "Activity Feed"
 msgstr "Syöte"
+
+#, python-format
+msgid "Shoop %(version)s"
+msgstr ""
 
 msgid "Date"
 msgstr "Päivämäärä"

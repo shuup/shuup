@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-30 23:37+0000\n"
+"POT-Creation-Date: 2016-01-20 13:02+0000\n"
 "PO-Revision-Date: 2015-12-03 18:42+0200\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@anders.fi>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -51,6 +51,9 @@ msgstr "Teeman %s asetukset"
 
 msgid "Plugin"
 msgstr "Lisäosa"
+
+msgid "(Untranslated)"
+msgstr ""
 
 #, python-format
 msgid "Click to edit placeholder: %s"

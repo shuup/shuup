@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-07 13:02+0000\n"
+"POT-Creation-Date: 2016-01-20 13:02+0000\n"
 "PO-Revision-Date: 2015-12-07 11:12+0000\n"
 "Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
@@ -322,14 +322,14 @@ msgstr "创建订单"
 msgid "Contact %s does not exist."
 msgstr "该产品 %s 不存在。"
 
+#, python-format
+msgid "Order %(identifier)s created."
+msgstr "订单 %(identifier)s 已形成"
+
 #, fuzzy
 #| msgid "Could not create order:"
 msgid "Could not proceed with order:"
 msgstr "无法形成订单："
-
-#, python-format
-msgid "Order %(identifier)s created."
-msgstr "订单 %(identifier)s 已形成"
 
 msgid "Could not create order:"
 msgstr "无法形成订单："
@@ -856,6 +856,10 @@ msgstr "标记为已读"
 
 msgid "Activity Feed"
 msgstr "动态消息"
+
+#, python-format
+msgid "Shoop %(version)s"
+msgstr ""
 
 msgid "Date"
 msgstr "日期"

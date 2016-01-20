@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-30 23:37+0000\n"
+"POT-Creation-Date: 2016-01-20 13:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -58,9 +58,6 @@ msgid "Default Payment"
 msgstr ""
 
 msgid "Error"
-msgstr ""
-
-msgid "The following fields can not be changed"
 msgstr ""
 
 msgid "shipping address"
@@ -121,9 +118,6 @@ msgid "region"
 msgstr ""
 
 msgid "country"
-msgstr ""
-
-msgid "immutable"
 msgstr ""
 
 msgid "address"
@@ -187,6 +181,9 @@ msgid "attribute"
 msgstr ""
 
 msgid "attributes"
+msgstr ""
+
+msgid "The following fields can not be changed"
 msgstr ""
 
 msgid "invisible"

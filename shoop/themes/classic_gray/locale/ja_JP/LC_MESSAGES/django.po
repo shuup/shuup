@@ -288,14 +288,14 @@ msgstr "ようこそ"
 msgid "Preview"
 msgstr "プレビュー"
 
+msgid "Files"
+msgstr "ファイル"
+
 msgid "Products ordered"
 msgstr "商品は注文されました"
 
 msgid "Tax breakdown"
 msgstr ""
-
-msgid "Files"
-msgstr "ファイル"
 
 msgid "Company"
 msgstr "会社"

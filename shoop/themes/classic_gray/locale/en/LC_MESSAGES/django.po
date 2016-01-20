@@ -281,13 +281,13 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
+msgid "Files"
+msgstr ""
+
 msgid "Products ordered"
 msgstr ""
 
 msgid "Tax breakdown"
-msgstr ""
-
-msgid "Files"
 msgstr ""
 
 msgid "Company"

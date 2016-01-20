@@ -288,14 +288,14 @@ msgstr "欢迎来到"
 msgid "Preview"
 msgstr "预览"
 
+msgid "Files"
+msgstr "文件"
+
 msgid "Products ordered"
 msgstr "产品已订购。"
 
 msgid "Tax breakdown"
 msgstr "税收明细"
-
-msgid "Files"
-msgstr "文件"
 
 msgid "Company"
 msgstr "公司"
