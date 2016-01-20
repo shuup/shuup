@@ -62,6 +62,27 @@ __all__ = [
     "TaxfulPrice",
     "TaxlessPrice",
     "get_pricing_module",
+    "get_price_info",
 ]
+
+
+def get_price_info(product, context, quantity):
+    """
+    Get `PriceInfo` object for the given product in given context.
+
+    Returned `PriceInfo` object contains calculated `price` and
+    `base_price`.  The calculation of prices is handled in the
+    current pricing module and possible campaign modules.
+
+    :type product: shoop.core.models.Product
+    :type context: shoop.core.pricing.PricingContextable
+    :type quantity: int
+    :rtype: shoop.core.pricing.PriceInfo
+    """
+    pricing_module = get_pricing_module()
+    pricing_context = pricing_module.get_context(context)
+    price_info = pricing_module.get_price_info(pricing_context, product=product, quantity=quantity)
+    return price_info
+
 
 update_module_attributes(__all__, __name__)
