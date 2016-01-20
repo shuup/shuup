@@ -69,6 +69,9 @@ class ShopProduct(MoneyPropped, models.Model):
     default_price = PriceProperty('default_price_value', 'shop.currency', 'shop.prices_include_tax')
     default_price_value = MoneyValueField(verbose_name=_("default price"), null=True, blank=True)
 
+    minimum_price = PriceProperty('minimum_price_value', 'shop.currency', 'shop.prices_include_tax')
+    minimum_price_value = MoneyValueField(verbose_name=_("minimum price"), null=True, blank=True)
+
     class Meta:
         unique_together = (("shop", "product",),)
 
