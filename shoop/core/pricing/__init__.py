@@ -51,8 +51,17 @@ from ._module import get_pricing_module, PricingModule
 from ._price import Price, TaxfulPrice, TaxlessPrice
 from ._price_info import PriceInfo
 from ._priceful import Priceful
+from ._utils import (
+    get_price_info, get_price_infos, get_pricing_steps,
+    get_pricing_steps_for_products
+)
 
 __all__ = [
+    "get_price_info",
+    "get_price_infos",
+    "get_pricing_module",
+    "get_pricing_steps",
+    "get_pricing_steps_for_products",
     "Price",
     "Priceful",
     "PriceInfo",
@@ -61,7 +70,6 @@ __all__ = [
     "PricingModule",
     "TaxfulPrice",
     "TaxlessPrice",
-    "get_pricing_module",
 ]
 
 update_module_attributes(__all__, __name__)

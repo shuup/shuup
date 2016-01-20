@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add ``get_price_info`` etc. functions to ``shoop.core.pricing``
 - Add "codes" API to OrderSource and BaseBasket
 
 Localization

@@ -104,10 +104,10 @@ class PricingModule(six.with_metaclass(abc.ABCMeta)):
         :type products:  Iterable[shoop.core.models.Product|int]
         :rtype: dict[int,PriceInfo]
         """
-        product_ids = [getattr(x, "pk", x) for x in products]
+        product_map = {getattr(x, "pk", x): x for x in products}
         return {
-            product_id: self.get_price_info(context=context, product=product_id, quantity=quantity)
-            for product_id in product_ids
+            product_id: self.get_price_info(context, product, quantity)
+            for (product_id, product) in six.iteritems(product_map)
         }
 
     def get_pricing_steps_for_products(self, context, products):
@@ -124,8 +124,8 @@ class PricingModule(six.with_metaclass(abc.ABCMeta)):
         :type products:  Iterable[shoop.core.models.Product|int]
         :rtype: dict[int,list[PriceInfo]]
         """
-        product_ids = [getattr(x, "pk", x) for x in products]
+        product_map = {getattr(x, "pk", x): x for x in products}
         return {
-            product_id: self.get_pricing_steps(context, product_id=product_id)
-            for product_id in product_ids
+            product_id: self.get_pricing_steps(context, product)
+            for (product_id, product) in six.iteritems(product_map)
         }
