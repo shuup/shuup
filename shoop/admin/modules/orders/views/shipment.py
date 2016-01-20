@@ -61,12 +61,14 @@ class OrderCreateShipmentView(UpdateView):
         )
         for product_id, info in sorted(six.iteritems(form.product_summary)):
             product_name = form.product_names.get(product_id, "Product %s" % product_id)
-            attrs = {"data-max": info["unshipped"], "class": "form-control text-right", }
-            if info["unshipped"] == 0:
+            unshipped_count = info["unshipped"]
+            attrs = {"data-max": unshipped_count, "class": "form-control text-right", }
+            if unshipped_count == 0:
                 attrs["disabled"] = "disabled"
             field = forms.DecimalField(
+                required=bool(unshipped_count != 0),
                 min_value=0,
-                max_value=info["unshipped"],
+                max_value=unshipped_count,
                 initial=0,
                 label=product_name,
                 widget=forms.TextInput(attrs=attrs)
