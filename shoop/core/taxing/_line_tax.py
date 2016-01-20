@@ -20,14 +20,25 @@ class LineTax(object):
     This is an interface for specifying taxes of an `OrderLine` or
     `SourceLine`.
 
-    :ivar tax: The tax that this line is about.
-    :type tax: shoop.core.models.Tax
-    :ivar name: Name of the tax.
-    :type name: six.text_type
-    :ivar amount: Tax amount.
-    :type amount: shoop.utils.money.Money
-    :ivar base_amount: Amount that this tax is calculated from.
-    :type base_amount: shoop.utils.money.Money
+    .. attribute:: tax
+
+       (`~shoop.core.models.Tax`)
+       The tax that this line is about.
+
+    .. attribute:: name
+
+       (`str`)
+       Name of the tax.
+
+    .. attribute:: amount
+
+       (`~shoop.utils.money.Money`)
+       Tax amount.
+
+    .. attribute:: base_amount
+
+       (`~shoop.utils.money.Money`)
+       Amount that this tax is calculated from.
     """
 
     @property

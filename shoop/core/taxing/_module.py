@@ -62,10 +62,13 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
         Add taxes to given OrderSource lines.
 
         Given lines are modified in-place, also new lines may be added
-        (with ``lines.extend`` for example).
+        (with ``lines.extend`` for example).  If there is any existing
+        taxes for the `lines`, they are simply replaced.
 
         :type source: shoop.core.order_creator.OrderSource
+        :param source: OrderSource of the lines
         :type lines: list[shoop.core.order_creator.SourceLine]
+        :param lines: List of lines to add taxes for
         """
         context = self.get_context_from_order_source(source)
         for line in lines:

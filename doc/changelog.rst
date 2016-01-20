@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Document Shoop tax system
 - API and documentation clean-up
 - Remove ``AddressManager``
 - Split address into mutable and immutable address

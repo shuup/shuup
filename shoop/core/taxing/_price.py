@@ -8,16 +8,38 @@ from shoop.core.pricing import TaxfulPrice, TaxlessPrice
 
 
 class TaxedPrice(object):
+    """
+    Price with calculated taxes.
+
+    .. attribute:: taxful
+
+       (`~shoop.core.pricing.TaxfulPrice`)
+       Price including taxes.
+
+    .. attribute:: taxless
+
+       (`~shoop.core.pricing.TaxlessPrice`)
+       Pretax price.
+
+    .. attribute:: taxes
+
+       (`list[shoop.core.taxing.LineTax]`)
+       List of taxes applied to the price.
+    """
     def __init__(self, taxful, taxless, taxes=None):
         """
         Initialize from given prices and taxes.
 
         :type taxful: shoop.core.pricing.TaxfulPrice
+        :param taxful: Price including taxes.
         :type taxless: shoop.core.pricing.TaxlessPrice
-        :type taxes: list[LineTax]|None
+        :param taxless: Pretax price.
+        :type taxes: list[shoop.core.taxing.LineTax]|None
+        :param taxes: List of taxes applied to the price.
         """
         assert isinstance(taxful, TaxfulPrice)
         assert isinstance(taxless, TaxlessPrice)
+
         self.taxful = taxful
         self.taxless = taxless
         self.taxes = taxes or []
@@ -28,9 +50,15 @@ class TaxedPrice(object):
 
     @property
     def tax_amount(self):
+        """
+        Total amount of applied taxes.
+        """
         zero = self.taxful.new(0).amount
         return sum((x.amount for x in self.taxes), zero)
 
     @property
     def tax_rate(self):
+        """
+        Tax rate calculated from taxful and taxless amounts.
+        """
         return (self.taxful.amount / self.taxless.amount) - 1

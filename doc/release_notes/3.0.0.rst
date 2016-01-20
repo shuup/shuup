@@ -37,6 +37,7 @@ Improvements
 
 * Tax system improvements
 
+  - Document the tax system (see :doc:`../prices_and_taxes`)
   - Implement override groups for Default Tax
   - Clean-up internal tax/price related APIs
 
