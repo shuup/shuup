@@ -1,7 +1,6 @@
 include README.rst
 include LICENSE
 include VENDOR-LICENSES.md
-include ChangeLog.rst
 
 include tox.ini
 
@@ -24,3 +23,5 @@ prune shoop/*/*/*/*/node_modules
 prune shoop/*/*/*/node_modules
 prune shoop/*/*/node_modules
 prune shoop/*/node_modules
+
+recursive-include doc *.rst *.py *.LICENSE Makefile make.bat

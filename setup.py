@@ -17,7 +17,7 @@ VERSION_FILE = os.path.join(TOPDIR, 'shoop', '_version.py')
 
 # Release instructions
 #
-#  1. Update the Change Log (ChangeLog.rst)
+#  1. Update the Change Log (doc/changelog.rst)
 #      - Make sure all relevant changes since last release are listed
 #      - Remove the instruction bullet point ("List all changes after
 #        x.x.x here...")
