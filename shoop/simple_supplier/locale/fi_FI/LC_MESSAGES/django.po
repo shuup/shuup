@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
@@ -11,38 +11,29 @@ msgstr ""
 "POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: en <LL@li.org>\n"
-"Language: en\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"Generated-By: Babel 2.1.1\n"
-
-#, python-format
-msgid "Price (%s)"
-msgstr ""
 
 msgid "product"
 msgstr ""
 
-msgid "shop"
+msgid "supplier"
 msgstr ""
 
-msgid "price"
+msgid "created on"
 msgstr ""
 
-msgid "product price"
+msgid "created by"
 msgstr ""
 
-msgid "product prices"
+msgid "delta"
 msgstr ""
 
-msgid "Discount Pricing"
+msgid "logical count"
 msgstr ""
 
-msgid "Discounted Price"
-msgstr ""
-
-msgid "Discounted Price for Shop"
+msgid "physical count"
 msgstr ""

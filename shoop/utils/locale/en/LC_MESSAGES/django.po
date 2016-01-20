@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-07 21:37+0000\n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -44,6 +44,27 @@ msgid "warning"
 msgstr ""
 
 msgid "error"
+msgstr ""
+
+msgid "created on"
+msgstr ""
+
+msgid "user"
+msgstr ""
+
+msgid "message"
+msgstr ""
+
+msgid "identifier"
+msgstr ""
+
+msgid "log entry kind"
+msgstr ""
+
+msgid "extra data"
+msgstr ""
+
+msgid "target"
 msgstr ""
 
 msgid ""

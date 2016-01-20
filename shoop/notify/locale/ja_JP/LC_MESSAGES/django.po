@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-07 12:39+0000\n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: 2015-11-26 08:48+0000\n"
 "Last-Translator: Yuki Miyagi <yuki.miyagi@anders.fi>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
@@ -78,6 +78,11 @@ msgstr ""
 msgid "Template"
 msgstr "テンプレート"
 
+#, fuzzy
+#| msgid "Variables"
+msgid "Bind to Variable"
+msgstr "変数"
+
 msgid "Edit Script Contents..."
 msgstr "スクリプトの内容を編集する..."
 
@@ -119,6 +124,39 @@ msgid "any shop administrator"
 msgstr ""
 
 msgid "a specific user"
+msgstr ""
+
+msgid "recipient type"
+msgstr ""
+
+msgid "recipient"
+msgstr ""
+
+msgid "created on"
+msgstr ""
+
+msgid "message"
+msgstr ""
+
+msgid "priority"
+msgstr ""
+
+msgid "marked read"
+msgstr ""
+
+msgid "marked read by"
+msgstr ""
+
+msgid "marked read on"
+msgstr ""
+
+msgid "event identifier"
+msgstr ""
+
+msgid "name"
+msgstr ""
+
+msgid "enabled"
 msgstr ""
 
 msgid "Edit Script Information"

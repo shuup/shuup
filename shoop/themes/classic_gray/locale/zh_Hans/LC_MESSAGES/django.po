@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-07 12:26+0000\n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: 2015-12-07 11:12+0000\n"
 "Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
@@ -52,6 +52,15 @@ msgstr "脚注内容管理系统CMS页面"
 
 msgid "Product Highlights"
 msgstr "产品特点"
+
+msgid "Title"
+msgstr "名称"
+
+msgid "Type"
+msgstr ""
+
+msgid "Count"
+msgstr ""
 
 msgid "Product added to cart"
 msgstr "已添加该产品到购物车"
@@ -326,9 +335,6 @@ msgstr "如果您想查看您的订单历史纪录，请为您的账号创建密
 
 msgid "Send"
 msgstr "发送"
-
-msgid "Title"
-msgstr "名称"
 
 msgid "Tax"
 msgstr "税"

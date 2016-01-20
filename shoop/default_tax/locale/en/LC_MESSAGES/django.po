@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 13:02+0000\n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -70,22 +70,22 @@ msgstr ""
 msgid "enabled"
 msgstr ""
 
-msgid "Tax classes"
+msgid "tax classes"
 msgstr ""
 
 msgid "Tax classes of the items to be taxed"
 msgstr ""
 
-msgid "Customer tax groups"
+msgid "customer tax groups"
 msgstr ""
 
-msgid "Country codes pattern"
+msgid "country codes pattern"
 msgstr ""
 
-msgid "Region codes pattern"
+msgid "region codes pattern"
 msgstr ""
 
-msgid "Postal codes pattern"
+msgid "postal codes pattern"
 msgstr ""
 
 msgid "priority"
@@ -104,6 +104,9 @@ msgid ""
 "number will be effective.  This can be used, for example, to implement tax "
 "exemption by adding a rule with very high override group that sets a zero "
 "tax."
+msgstr ""
+
+msgid "tax"
 msgstr ""
 
 msgid "Tax rule {} ({})"

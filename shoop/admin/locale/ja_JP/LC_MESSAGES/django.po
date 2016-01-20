@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 13:02+0000\n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: 2015-11-26 08:48+0000\n"
 "Last-Translator: Yuki Miyagi <yuki.miyagi@anders.fi>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
@@ -438,6 +438,11 @@ msgstr ""
 msgid "Use only URL or file, not both"
 msgstr ""
 
+#, fuzzy
+#| msgid "Set as primary image"
+msgid "Is primary"
+msgstr "主要画像に設定"
+
 msgid "Only images allowed in this field"
 msgstr "このフィールドでは画像のみが許可されております"
 
@@ -516,6 +521,9 @@ msgstr "バリエーションはクリアされました。"
 msgid "Variation simplified."
 msgstr "バリエーションは単純化されました。"
 
+msgid "child"
+msgstr ""
+
 msgid "Unlink"
 msgstr "リンク解除"
 
@@ -530,6 +538,11 @@ msgstr "新しい: %d"
 #, python-format
 msgid "Removed: %d"
 msgstr ""
+
+#, fuzzy
+#| msgid "documentation"
+msgid "variable combination"
+msgstr "ドキュメンテーション"
 
 msgid "Sales Units"
 msgstr "販売単位"

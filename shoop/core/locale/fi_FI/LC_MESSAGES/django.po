@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 13:02+0000\n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: 2015-12-03 18:31+0200\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@anders.fi>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -98,7 +98,9 @@ msgstr "nimen laajenne"
 msgid "company name"
 msgstr "yrityksen nimi"
 
-msgid "Tax number"
+#, fuzzy
+#| msgid "Tax number"
+msgid "tax number"
 msgstr "veronumero"
 
 msgid "phone"
@@ -116,7 +118,9 @@ msgstr "katuosoite (2)"
 msgid "street (3)"
 msgstr "katuosoite (3)"
 
-msgid "ZIP / Postal code"
+#, fuzzy
+#| msgid "ZIP / Postal code"
+msgid "postal code"
 msgstr "Postinumero"
 
 msgid "city"
@@ -136,6 +140,9 @@ msgstr "osoite"
 
 msgid "addresses"
 msgstr "osoitteet"
+
+msgid "owner"
+msgstr ""
 
 msgid "role"
 msgstr "rooli"
@@ -188,11 +195,39 @@ msgstr "käännösteksti"
 msgid "untranslated string"
 msgstr "teksti"
 
+#, fuzzy
+#| msgid "searchable metadata"
+msgid "searchable"
+msgstr "haettava metadata"
+
+#, fuzzy
+#| msgid "line type"
+msgid "type"
+msgstr "rivityyppi"
+
+#, fuzzy
+#| msgid "visibility limitations"
+msgid "visibility mode"
+msgstr "näkyvyysrajoitukset"
+
 msgid "attribute"
 msgstr "attribuutti"
 
 msgid "attributes"
 msgstr "attribuutit"
+
+msgid "numeric value"
+msgstr ""
+
+#, fuzzy
+#| msgid "variation value"
+msgid "datetime value"
+msgstr "variaatioarvo"
+
+#, fuzzy
+#| msgid "untranslated string"
+msgid "untranslated value"
+msgstr "teksti"
 
 msgid "The following fields can not be changed"
 msgstr "Seuraavia kenttiä ei voi muuttaa"
@@ -218,6 +253,9 @@ msgstr "näkyvillä tietyille asiakasryhmille"
 msgid "parent category"
 msgstr "yläkategoria"
 
+msgid "shops"
+msgstr ""
+
 msgid "image"
 msgstr "kuva"
 
@@ -241,6 +279,9 @@ msgstr "kategoria"
 
 msgid "categories"
 msgstr "kategoriat"
+
+msgid "shop"
+msgstr ""
 
 msgid "key"
 msgstr "avain"
@@ -274,6 +315,14 @@ msgstr "kontaktiryhmä"
 msgid "contact groups"
 msgstr "kontaktiryhmät"
 
+#, fuzzy
+#| msgid "related"
+msgid "created on"
+msgstr "liittyvä"
+
+msgid "active"
+msgstr ""
+
 msgid "default shipping method"
 msgstr "oletustoimitustapa"
 
@@ -288,6 +337,16 @@ msgstr "markkinointilupa"
 
 msgid "web address"
 msgstr "web-osoite"
+
+#, fuzzy
+#| msgid "time interval"
+msgid "time zone"
+msgstr "aikaväli"
+
+#, fuzzy
+#| msgid "contact group"
+msgid "tax group"
+msgstr "kontaktiryhmä"
 
 msgid "contact"
 msgstr "kontakti"
@@ -304,6 +363,17 @@ msgstr "yritys"
 msgid "companies"
 msgstr "yritykset"
 
+msgid "user"
+msgstr ""
+
+msgid "gender"
+msgstr ""
+
+#, fuzzy
+#| msgid "order date"
+msgid "birth date"
+msgstr "tilauspäivämäärä"
+
 msgid "person"
 msgstr "henkilö"
 
@@ -312,6 +382,11 @@ msgstr "henkilöt"
 
 msgid "order reference"
 msgstr "tilausviite"
+
+#, fuzzy
+#| msgid "order identifier"
+msgid "identifier"
+msgstr "tilaustunniste"
 
 msgid "counter"
 msgstr "laskur"
@@ -341,6 +416,11 @@ msgid "tax class"
 msgstr "veroluokka"
 
 msgid "module"
+msgstr "moduuli"
+
+#, fuzzy
+#| msgid "module"
+msgid "module data"
 msgstr "moduuli"
 
 msgid "shipping method"
@@ -390,6 +470,11 @@ msgstr "vaadi hyväksyntä"
 
 msgid "verified"
 msgstr "hyväksytty"
+
+#, fuzzy
+#| msgid "order date"
+msgid "extra data"
+msgstr "tilauspäivämäärä"
 
 msgid "quantity"
 msgstr "lukumäärä"
@@ -454,8 +539,10 @@ msgstr "alk"
 msgid "complete"
 msgstr "valmis"
 
-msgid "Name"
-msgstr "Nimi"
+#, fuzzy
+#| msgid "Default price"
+msgid "default"
+msgstr "oletushinta"
 
 msgid "order identifier"
 msgstr "tilaustunniste"
@@ -487,14 +574,36 @@ msgstr "toimitustila"
 msgid "payment method name"
 msgstr "maksutavan nimi"
 
+#, fuzzy
+#| msgid "payment date"
+msgid "payment data"
+msgstr "maksupäivämäärä"
+
 msgid "shipping method name"
 msgstr "toimitustavan nimi"
+
+#, fuzzy
+#| msgid "shipping status"
+msgid "shipping data"
+msgstr "toimitustila"
 
 msgid "grand total"
 msgstr "loppusumma"
 
 msgid "taxless total"
 msgstr "veroton summa"
+
+msgid "currency"
+msgstr ""
+
+msgid "prices include tax"
+msgstr ""
+
+msgid "display currency"
+msgstr ""
+
+msgid "display currency rate"
+msgstr ""
 
 msgid "IP address"
 msgstr "IP-osoite"
@@ -533,8 +642,30 @@ msgstr "Kaikki hyväksyntää vaativat rivit merkitty hyväksytyksi."
 msgid "All products have been shipped. Fully Shipped status set."
 msgstr "Kaikki tuotteet toimitettu. Tila asetettu täysin toimitetuksi."
 
+msgid "gateway ID"
+msgstr ""
+
+#, fuzzy
+#| msgid "tax amount"
+msgid "amount"
+msgstr "veron määrä"
+
+#, fuzzy
+#| msgid "base amount"
+msgid "foreign amount"
+msgstr "perusmäärä"
+
+msgid "foreign amount currency"
+msgstr ""
+
 msgid "payments"
 msgstr "maksut"
+
+msgid "time"
+msgstr ""
+
+msgid "data"
+msgstr ""
 
 msgid "cache entry"
 msgstr "välimuistimerkintä"
@@ -576,16 +707,56 @@ msgstr "tuoteliitteet"
 msgid "attachment"
 msgstr "liite"
 
+#, fuzzy
+#| msgid "sent product"
+msgid "parent product"
+msgstr "lähetetty tuote"
+
+#, fuzzy
+#| msgid "product"
+msgid "child product"
+msgstr "tuote"
+
+#, fuzzy
+#| msgid "supplier"
+msgid "suppliers"
+msgstr "toimittaja"
+
+msgid "listed"
+msgstr ""
+
+#, fuzzy
+#| msgid "purchase multiple"
+msgid "purchasable"
+msgstr "tilausmonikerta"
+
 msgid "purchase multiple"
 msgstr "tilausmonikerta"
 
 msgid "minimum purchase"
 msgstr "vähimmäistilaus"
 
+#, fuzzy
+#| msgid "shipping methods"
+msgid "limited for shipping methods"
+msgstr "toimitustavat"
+
+#, fuzzy
+#| msgid "payment methods"
+msgid "limited for payment methods"
+msgstr "maksutavat"
+
 msgid "primary category"
 msgstr "pääkategoria"
 
-msgid "Default price"
+#, fuzzy
+#| msgid "primary category"
+msgid "primary image"
+msgstr "pääkategoria"
+
+#, fuzzy
+#| msgid "Default price"
+msgid "default price"
 msgstr "oletushinta"
 
 msgid "This product has been deleted."
@@ -638,6 +809,12 @@ msgstr "variaatioarvo"
 
 msgid "variation values"
 msgstr "variaatioarvot"
+
+msgid "combination hash"
+msgstr ""
+
+msgid "result"
+msgstr ""
 
 msgid "variation result"
 msgstr "variaation tulos"
@@ -698,6 +875,12 @@ msgstr "tuotetyyppi"
 
 msgid "product types"
 msgstr "tuotetyypit"
+
+msgid "modified on"
+msgstr ""
+
+msgid "mode"
+msgstr ""
 
 msgid "variation parent"
 msgstr "variaatioisäntä"
@@ -804,11 +987,31 @@ msgstr "Paketteja ei voi luoda sisäkkäin"
 msgid "Quantity %s is invalid"
 msgstr "Määrä %s ei kelpaa"
 
+#, fuzzy
+#| msgid "primary category"
+msgid "primary product"
+msgstr "pääkategoria"
+
+#, fuzzy
+#| msgid "sent product"
+msgid "secondary product"
+msgstr "lähetetty tuote"
+
+#, fuzzy
+#| msgid "minimum weight"
+msgid "weight"
+msgstr "minimipaino"
+
 msgid "cross sell link"
 msgstr "ristiinmyyntilinkitys"
 
 msgid "cross sell links"
 msgstr "ristiinmyyntilinkitykset"
+
+#, fuzzy
+#| msgid "translated string"
+msgid "translated value"
+msgstr "käännösteksti"
 
 msgid "product attribute"
 msgstr "tuoteattribuutti"
@@ -831,11 +1034,22 @@ msgstr "virhe"
 msgid "tracking code"
 msgstr "seurantakoodi"
 
+msgid "volume"
+msgstr ""
+
 msgid "shipment"
 msgstr "lähetys"
 
 msgid "shipments"
 msgstr "lähetykset"
+
+msgid "unit volume"
+msgstr ""
+
+#, fuzzy
+#| msgid "net weight (g)"
+msgid "unit weight"
+msgstr "nettopaino (g)"
 
 msgid "sent product"
 msgstr "lähetetty tuote"
@@ -848,10 +1062,24 @@ msgid ""
 "this shop"
 msgstr "Seuraavia kenttiä ei voi muuttaa, sillä tälle kaupalle on tilauksia"
 
+msgid "domain"
+msgstr ""
+
+msgid "options"
+msgstr ""
+
 msgid "logo"
 msgstr "logo"
 
 msgid "maintenance mode"
+msgstr "huoltotila"
+
+msgid "public name"
+msgstr ""
+
+#, fuzzy
+#| msgid "maintenance mode"
+msgid "maintenance message"
 msgstr "huoltotila"
 
 msgid "alert limit"
@@ -862,6 +1090,16 @@ msgstr "fyysinen varastomäärä"
 
 msgid "logical stock count"
 msgstr "looginen varastomäärä"
+
+#, fuzzy
+#| msgid "supplier"
+msgid "supplier type"
+msgstr "toimittaja"
+
+#, fuzzy
+#| msgid "stocked"
+msgid "stock managed"
+msgstr "varastoitu"
 
 msgid "Cannot change business critical fields of Tax that is in use"
 msgstr "Käytössäolevan veron liiketoimintakriittisiä kenttiä ei voi muokata"
@@ -913,6 +1151,11 @@ msgstr "Yritysasiakkaat"
 
 msgid "allowed decimals"
 msgstr "sallitut desimaalit"
+
+#, fuzzy
+#| msgid "tax name"
+msgid "short name"
+msgstr "veron nimi"
 
 msgid "sales unit"
 msgstr "myyntiyksikkö"

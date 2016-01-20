@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 13:02+0000\n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: 2015-11-26 08:48+0000\n"
 "Last-Translator: Yuki Miyagi <yuki.miyagi@anders.fi>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
@@ -88,7 +88,9 @@ msgstr ""
 msgid "company name"
 msgstr "会社名"
 
-msgid "Tax number"
+#, fuzzy
+#| msgid "Tax number"
+msgid "tax number"
 msgstr "税番号"
 
 msgid "phone"
@@ -106,7 +108,9 @@ msgstr "通り (2)"
 msgid "street (3)"
 msgstr "通り (3)"
 
-msgid "ZIP / Postal code"
+#, fuzzy
+#| msgid "ZIP / Postal code"
+msgid "postal code"
 msgstr "郵便番号"
 
 msgid "city"
@@ -126,6 +130,9 @@ msgstr "住所"
 
 msgid "addresses"
 msgstr "住所"
+
+msgid "owner"
+msgstr ""
 
 msgid "role"
 msgstr ""
@@ -178,11 +185,35 @@ msgstr "翻訳された文字列"
 msgid "untranslated string"
 msgstr "翻訳されていない文字列"
 
+#, fuzzy
+#| msgid "searchable metadata"
+msgid "searchable"
+msgstr "検索可能なメタデータ"
+
+msgid "type"
+msgstr ""
+
+msgid "visibility mode"
+msgstr ""
+
 msgid "attribute"
 msgstr "アトリビュート"
 
 msgid "attributes"
 msgstr "アトリビュート"
+
+msgid "numeric value"
+msgstr ""
+
+#, fuzzy
+#| msgid "variation value"
+msgid "datetime value"
+msgstr "変動値"
+
+#, fuzzy
+#| msgid "untranslated string"
+msgid "untranslated value"
+msgstr "翻訳されていない文字列"
 
 msgid "The following fields can not be changed"
 msgstr ""
@@ -208,6 +239,9 @@ msgstr "特定のカスタマーグループに見える"
 msgid "parent category"
 msgstr ""
 
+msgid "shops"
+msgstr ""
+
 msgid "image"
 msgstr "画像"
 
@@ -231,6 +265,9 @@ msgstr "カテゴリー"
 
 msgid "categories"
 msgstr "カテゴリー"
+
+msgid "shop"
+msgstr ""
 
 msgid "key"
 msgstr "キー"
@@ -264,6 +301,12 @@ msgstr "コンタクトグループ"
 msgid "contact groups"
 msgstr "コンタクトグループ"
 
+msgid "created on"
+msgstr ""
+
+msgid "active"
+msgstr ""
+
 msgid "default shipping method"
 msgstr "通常配送方法"
 
@@ -278,6 +321,14 @@ msgstr "販売許可"
 
 msgid "web address"
 msgstr "ウェブアドレス"
+
+msgid "time zone"
+msgstr ""
+
+#, fuzzy
+#| msgid "contact group"
+msgid "tax group"
+msgstr "コンタクトグループ"
 
 msgid "contact"
 msgstr "コンタクト"
@@ -294,6 +345,17 @@ msgstr "会社"
 msgid "companies"
 msgstr "会社"
 
+msgid "user"
+msgstr ""
+
+msgid "gender"
+msgstr ""
+
+#, fuzzy
+#| msgid "order date"
+msgid "birth date"
+msgstr "注文日"
+
 msgid "person"
 msgstr "人物"
 
@@ -302,6 +364,11 @@ msgstr "人物"
 
 msgid "order reference"
 msgstr "オーダー参照"
+
+#, fuzzy
+#| msgid "order identifier"
+msgid "identifier"
+msgstr "オーダー識別子"
 
 msgid "counter"
 msgstr "カウンター"
@@ -331,6 +398,11 @@ msgid "tax class"
 msgstr "税クラス"
 
 msgid "module"
+msgstr "モジュール"
+
+#, fuzzy
+#| msgid "module"
+msgid "module data"
 msgstr "モジュール"
 
 msgid "shipping method"
@@ -380,6 +452,11 @@ msgstr ""
 
 msgid "verified"
 msgstr "検証済み"
+
+#, fuzzy
+#| msgid "order date"
+msgid "extra data"
+msgstr "注文日"
 
 msgid "quantity"
 msgstr "数量"
@@ -444,8 +521,8 @@ msgstr ""
 msgid "complete"
 msgstr "完成"
 
-msgid "Name"
-msgstr "名前"
+msgid "default"
+msgstr ""
 
 msgid "order identifier"
 msgstr "オーダー識別子"
@@ -477,14 +554,36 @@ msgstr ""
 msgid "payment method name"
 msgstr "お支払い方法名"
 
+#, fuzzy
+#| msgid "payment date"
+msgid "payment data"
+msgstr "支払期日"
+
 msgid "shipping method name"
 msgstr "配送方法名"
+
+#, fuzzy
+#| msgid "shipping mode"
+msgid "shipping data"
+msgstr "配送モード"
 
 msgid "grand total"
 msgstr "総計"
 
 msgid "taxless total"
 msgstr "税抜き合計"
+
+msgid "currency"
+msgstr ""
+
+msgid "prices include tax"
+msgstr ""
+
+msgid "display currency"
+msgstr ""
+
+msgid "display currency rate"
+msgstr ""
 
 msgid "IP address"
 msgstr "IPアドレス"
@@ -523,8 +622,30 @@ msgstr ""
 msgid "All products have been shipped. Fully Shipped status set."
 msgstr ""
 
+msgid "gateway ID"
+msgstr ""
+
+#, fuzzy
+#| msgid "tax amount"
+msgid "amount"
+msgstr "課税額"
+
+#, fuzzy
+#| msgid "base amount"
+msgid "foreign amount"
+msgstr "基準額"
+
+msgid "foreign amount currency"
+msgstr ""
+
 msgid "payments"
 msgstr "支払い"
+
+msgid "time"
+msgstr ""
+
+msgid "data"
+msgstr ""
 
 msgid "cache entry"
 msgstr "キャッシュエントリ"
@@ -564,17 +685,51 @@ msgstr ""
 msgid "attachment"
 msgstr ""
 
+#, fuzzy
+#| msgid "product"
+msgid "parent product"
+msgstr "商品"
+
+#, fuzzy
+#| msgid "product"
+msgid "child product"
+msgstr "商品"
+
+msgid "suppliers"
+msgstr ""
+
+msgid "listed"
+msgstr ""
+
+msgid "purchasable"
+msgstr ""
+
 msgid "purchase multiple"
 msgstr ""
 
 msgid "minimum purchase"
 msgstr "最低購入"
 
+#, fuzzy
+#| msgid "shipping methods"
+msgid "limited for shipping methods"
+msgstr "配送方法"
+
+#, fuzzy
+#| msgid "payment methods"
+msgid "limited for payment methods"
+msgstr "お支払い方法"
+
 msgid "primary category"
 msgstr ""
 
-msgid "Default price"
+msgid "primary image"
 msgstr ""
+
+#, fuzzy
+#| msgid "Default Shipping"
+msgid "default price"
+msgstr "通常配送"
 
 msgid "This product has been deleted."
 msgstr "この商品は削除されました。"
@@ -622,6 +777,12 @@ msgstr "変動値"
 
 msgid "variation values"
 msgstr "変動値"
+
+msgid "combination hash"
+msgstr ""
+
+msgid "result"
+msgstr ""
 
 msgid "variation result"
 msgstr ""
@@ -682,6 +843,12 @@ msgstr "商品タイプ"
 
 msgid "product types"
 msgstr "商品タイプ"
+
+msgid "modified on"
+msgstr ""
+
+msgid "mode"
+msgstr ""
 
 msgid "variation parent"
 msgstr ""
@@ -781,11 +948,29 @@ msgstr ""
 msgid "Quantity %s is invalid"
 msgstr ""
 
+#, fuzzy
+#| msgid "product"
+msgid "primary product"
+msgstr "商品"
+
+msgid "secondary product"
+msgstr ""
+
+#, fuzzy
+#| msgid "minimum weight"
+msgid "weight"
+msgstr "最小重量"
+
 msgid "cross sell link"
 msgstr ""
 
 msgid "cross sell links"
 msgstr ""
+
+#, fuzzy
+#| msgid "translated string"
+msgid "translated value"
+msgstr "翻訳された文字列"
 
 msgid "product attribute"
 msgstr ""
@@ -808,11 +993,22 @@ msgstr "エラー"
 msgid "tracking code"
 msgstr ""
 
+msgid "volume"
+msgstr ""
+
 msgid "shipment"
 msgstr ""
 
 msgid "shipments"
 msgstr ""
+
+msgid "unit volume"
+msgstr ""
+
+#, fuzzy
+#| msgid "minimum weight"
+msgid "unit weight"
+msgstr "最小重量"
 
 msgid "sent product"
 msgstr ""
@@ -825,10 +1021,24 @@ msgid ""
 "this shop"
 msgstr ""
 
+msgid "domain"
+msgstr ""
+
+msgid "options"
+msgstr ""
+
 msgid "logo"
 msgstr "ロゴ"
 
 msgid "maintenance mode"
+msgstr "メンテナンスモード"
+
+msgid "public name"
+msgstr ""
+
+#, fuzzy
+#| msgid "maintenance mode"
+msgid "maintenance message"
 msgstr "メンテナンスモード"
 
 msgid "alert limit"
@@ -839,6 +1049,14 @@ msgstr ""
 
 msgid "logical stock count"
 msgstr ""
+
+msgid "supplier type"
+msgstr ""
+
+#, fuzzy
+#| msgid "stocked"
+msgid "stock managed"
+msgstr "在庫あり"
 
 msgid "Cannot change business critical fields of Tax that is in use"
 msgstr ""
@@ -894,6 +1112,11 @@ msgstr "会社名"
 
 msgid "allowed decimals"
 msgstr ""
+
+#, fuzzy
+#| msgid "tax name"
+msgid "short name"
+msgstr "税名"
 
 msgid "sales unit"
 msgstr ""

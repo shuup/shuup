@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 13:02+0000\n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: 2015-12-07 11:12+0000\n"
 "Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
@@ -71,22 +71,32 @@ msgstr "已启用"
 msgid "enabled"
 msgstr "已启用"
 
-msgid "Tax classes"
+#, fuzzy
+#| msgid "Tax classes"
+msgid "tax classes"
 msgstr "税种"
 
 msgid "Tax classes of the items to be taxed"
 msgstr "物品的税种需交税"
 
-msgid "Customer tax groups"
+#, fuzzy
+#| msgid "Customer tax groups"
+msgid "customer tax groups"
 msgstr "顾客税组"
 
-msgid "Country codes pattern"
+#, fuzzy
+#| msgid "Country codes pattern"
+msgid "country codes pattern"
 msgstr "国家代码区号模式"
 
-msgid "Region codes pattern"
+#, fuzzy
+#| msgid "Region codes pattern"
+msgid "region codes pattern"
 msgstr "区域码模式"
 
-msgid "Postal codes pattern"
+#, fuzzy
+#| msgid "Postal codes pattern"
+msgid "postal codes pattern"
 msgstr "邮编号码模式"
 
 msgid "priority"
@@ -120,6 +130,11 @@ msgid ""
 msgstr ""
 "如果多个规则匹配，只有最高的覆写组号规则有效。此规则比如可添加新的免税规则并"
 "带有极高优先级零税收设置。"
+
+#, fuzzy
+#| msgid "Tax"
+msgid "tax"
+msgstr "税"
 
 msgid "Tax rule {} ({})"
 msgstr "税收规则{} ({})"

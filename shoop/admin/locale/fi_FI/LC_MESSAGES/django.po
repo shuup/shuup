@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 13:02+0000\n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: 2015-12-03 18:13+0200\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@anders.fi>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -442,6 +442,11 @@ msgstr "Pikkukuvan muodostus %s:lle epäonnistui: %s"
 msgid "Use only URL or file, not both"
 msgstr "Vain URL-osoite tai tiedosto, ei molempia"
 
+#, fuzzy
+#| msgid "Set as primary image"
+msgid "Is primary"
+msgstr "Aseta pääkuvaksi"
+
 msgid "Only images allowed in this field"
 msgstr "Voit liittää tähän vain kuvatiedostoja"
 
@@ -524,6 +529,9 @@ msgstr "Variaatio tyhjennetty."
 msgid "Variation simplified."
 msgstr "Variaatio yksinkertaistettu."
 
+msgid "child"
+msgstr ""
+
 msgid "Unlink"
 msgstr "Poista linkki"
 
@@ -538,6 +546,11 @@ msgstr "Uusi: %d"
 #, python-format
 msgid "Removed: %d"
 msgstr "Poistettu: %d"
+
+#, fuzzy
+#| msgid "Combination"
+msgid "variable combination"
+msgstr "Yhdistelmä"
 
 msgid "Sales Units"
 msgstr "Myyntiyksiköt"

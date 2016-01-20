@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-07 12:39+0000\n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
 "PO-Revision-Date: 2015-11-26 08:48+0000\n"
 "Last-Translator: Yuki Miyagi <yuki.miyagi@anders.fi>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
@@ -51,6 +51,15 @@ msgid "Footer CMS pages"
 msgstr "フッターCMSページ"
 
 msgid "Product Highlights"
+msgstr ""
+
+msgid "Title"
+msgstr "タイトル"
+
+msgid "Type"
+msgstr ""
+
+msgid "Count"
 msgstr ""
 
 msgid "Product added to cart"
@@ -326,9 +335,6 @@ msgstr ""
 
 msgid "Send"
 msgstr "送る"
-
-msgid "Title"
-msgstr "タイトル"
 
 msgid "Tax"
 msgstr "税"
