@@ -180,7 +180,7 @@ class OrderSource(object):
     taxful_total_discount_or_none = taxful_total_discount.or_none
     taxless_total_discount_or_none = taxless_total_discount.or_none
 
-    total_price_of_products = _PriceSum("price", "_get_product_lines")
+    total_price_of_products = _PriceSum("price", "get_product_lines")
 
     @property
     def shipping_method(self):
@@ -258,6 +258,15 @@ class OrderSource(object):
         See also `get_final_lines`.
         """
         return self._lines
+
+    @property
+    def product_count(self):
+        """
+        Get the total number of products in this OrderSource.
+
+        :rtype: decimal.Decimal|int
+        """
+        return sum([line.quantity for line in self.get_product_lines()])
 
     def get_final_lines(self, with_taxes=False):
         """
@@ -339,7 +348,7 @@ class OrderSource(object):
             for line in self.shipping_method.get_source_lines(self):
                 yield line
 
-    def _get_product_lines(self):
+    def get_product_lines(self):
         """
         Get lines with a product.
 
