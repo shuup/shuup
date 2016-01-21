@@ -1,0 +1,118 @@
+[main]
+host = https://www.transifex.com
+lang_map = cmn:zh_Hans
+
+[shoop.addons]
+file_filter = shoop/addons/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[shoop.admin]
+file_filter = shoop/admin/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[shoop.admin-javascript]
+file_filter = shoop/admin/locale/<lang>/LC_MESSAGES/djangojs.po
+source_lang = en
+type = PO
+
+[shoop.core]
+file_filter = shoop/core/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[shoop.default-tax]
+file_filter = shoop/default_tax/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[shoop.discount-pricing]
+file_filter = shoop/discount_pricing/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[shoop.front-apps-auth]
+file_filter = shoop/front/apps/auth/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[shoop.front-apps-customer-information]
+file_filter = shoop/front/apps/customer_information/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[shoop.front-apps-personal-order-history]
+file_filter = shoop/front/apps/personal_order_history/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[shoop.front-apps-registration]
+file_filter = shoop/front/apps/registration/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[shoop.front-apps-simple-order-notification]
+file_filter = shoop/front/apps/simple_order_notification/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[shoop.front-apps-simple-search]
+file_filter = shoop/front/apps/simple_search/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[shoop.front]
+file_filter = shoop/front/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[shoop.notify]
+file_filter = shoop/notify/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[shoop.notify-javascript]
+file_filter = shoop/notify/locale/<lang>/LC_MESSAGES/djangojs.po
+source_lang = en
+type = PO
+
+[shoop.simple-cms]
+file_filter = shoop/simple_cms/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[shoop.simple-pricing]
+file_filter = shoop/simple_pricing/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[shoop.simple-supplier]
+file_filter = shoop/simple_supplier/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[shoop.testing]
+file_filter = shoop/testing/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[shoop.themes-classic-gray]
+file_filter = shoop/themes/classic_gray/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[shoop.utils]
+file_filter = shoop/utils/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[shoop.xtheme]
+file_filter = shoop/xtheme/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[shoop.xtheme-javascript]
+file_filter = shoop/xtheme/locale/<lang>/LC_MESSAGES/djangojs.po
+source_lang = en
+type = PO
