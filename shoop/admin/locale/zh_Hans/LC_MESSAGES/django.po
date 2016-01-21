@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 13:16+0000\n"
-"PO-Revision-Date: 2015-12-07 11:12+0000\n"
+"POT-Creation-Date: 2016-01-21 07:22+0000\n"
+"PO-Revision-Date: 2015-12-17 10:37+0000\n"
 "Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
 "language/cmn/)\n"
@@ -17,7 +17,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 1.3\n"
+"Generated-By: Babel 2.1.1\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "Home"
@@ -51,7 +51,7 @@ msgid "Visibility Mode"
 msgstr "可见性模式"
 
 msgid "Searchable"
-msgstr "可搜索"
+msgstr "可检索"
 
 msgid "Used in # Product Types"
 msgstr "使用在# 产品类型"
@@ -72,7 +72,7 @@ msgid "Parent"
 msgstr "父类"
 
 msgid "Contact Groups"
-msgstr "联系人组"
+msgstr "联系群组"
 
 msgid "Contacts"
 msgstr "通讯录"
@@ -87,10 +87,10 @@ msgid "Based on orders within 30 days"
 msgstr "根据30天内的订单"
 
 msgid "The Shoop frontend is not enabled."
-msgstr "Shoop前段未启用。"
+msgstr "Shoop前端未启用。"
 
 msgid "Contact has no associated user."
-msgstr "此联系方式没有相对应的用户。"
+msgstr "该联系方式没有相对应的用户。"
 
 msgid "User has no associated email."
 msgstr "该用户没有相关联的邮箱。"
@@ -115,7 +115,7 @@ msgid "Edit..."
 msgstr "编辑……"
 
 msgid "Person"
-msgstr "联系人"
+msgstr "人"
 
 msgid "Company"
 msgstr "公司"
@@ -133,14 +133,14 @@ msgid "# Orders"
 msgstr "# 订单"
 
 msgid "Contact"
-msgstr "联系方式"
+msgstr "联系"
 
 msgid "Inactive"
 msgstr "不活跃"
 
 #, python-format
 msgid "Email: %s"
-msgstr "电子邮件：%s"
+msgstr "电子邮箱：%s"
 
 #, python-format
 msgid "Phone: %s"
@@ -151,7 +151,7 @@ msgid "%d orders"
 msgstr "%d 订单"
 
 msgid "The contact does not have an associated user."
-msgstr "联系方式没有相关联的用户。"
+msgstr "该联系方式没有相关联的用户。"
 
 msgid "Demo"
 msgstr "展示"
@@ -170,7 +170,7 @@ msgstr "根"
 
 #, python-format
 msgid "%d subfolders moved to %s."
-msgstr "%d 子文件夹已转移到 %s。"
+msgstr "%d 子文件夹已转移至 %s。"
 
 #, python-format
 msgid "%d files moved to %s."
@@ -185,7 +185,7 @@ msgid "%(file)s uploaded to %(folder)s"
 msgstr "%(file)s 已上传至 %(folder)s"
 
 msgid "Folder renamed."
-msgstr "文件夹已重命名"
+msgstr "文件夹已重命名。"
 
 msgid "File renamed."
 msgstr "文件已重命名。"
@@ -207,13 +207,13 @@ msgid "Payment Methods"
 msgstr "支付方式"
 
 msgid "The selected module has no details to configure"
-msgstr "选中模块没有配置详情"
+msgstr "选中的模块没有配置详情"
 
 msgid "The selected module is not currently available"
-msgstr "选中模块目前不可用"
+msgstr "选中的模块目前不可用"
 
 msgid "Edit Details"
-msgstr "详细信息编辑"
+msgstr "编辑详细信息"
 
 #, python-format
 msgid "Edit %(model)s"
@@ -237,7 +237,7 @@ msgid "%d outstanding orders"
 msgstr "%d 未处理订单"
 
 msgid "Sales per Month (last year)"
-msgstr "每月销售 (去年)"
+msgstr "每月销售 ( 去年 )"
 
 #, python-format
 msgid "Sales (%(currency)s)"
@@ -251,29 +251,28 @@ msgid "Today's Sales"
 msgstr "今日销售"
 
 msgid "Lifetime Sales"
-msgstr "全寿命营销"
+msgstr "全部销售"
 
 msgid "Average Purchase"
 msgstr "平均购买"
 
 msgid "Open Orders Value"
-msgstr "打开订单价值"
+msgstr "未结订单价值"
 
 #, python-format
 msgid "The quantity '%(quantity)s' (for line %(text)s) is invalid (%(error)s)"
-msgstr "该数量 '%(quantity)s' (系列 %(text)s)无效(%(error)s)"
+msgstr "该数量 '%(quantity)s' (行 %(text)s)无效(%(error)s)"
 
 #, python-format
 msgid "The price '%(price)s' (for line %(text)s) is invalid (%(error)s)"
-msgstr "该价格 '%(price)s' (系列 %(text)s) 无效 (%(error)s)"
+msgstr "该价格 '%(price)s' (行 %(text)s) 无效 (%(error)s)"
 
-#, fuzzy, python-format
-#| msgid "The price '%(price)s' (for line %(text)s) is invalid (%(error)s)"
+#, python-format
 msgid "The discount '%(discount)s' (for line %(text)s is invalid (%(error)s)"
-msgstr "该价格 '%(price)s' (系列 %(text)s) 无效 (%(error)s)"
+msgstr "该折扣 '%(discount)s' (行 %(text)s 无效(%(error)s)"
 
 msgid "Product line does not have a product set."
-msgstr "该产品系列没有产品套装。"
+msgstr "该产品线没有产品组合。"
 
 #, python-format
 msgid "Product %s does not exist."
@@ -283,53 +282,41 @@ msgstr "该产品 %s 不存在。"
 msgid "Product %(product)s is not available in the %(shop)s shop."
 msgstr "该产品 %(product)s 在此店铺 %(shop)s 无法找到。"
 
-#, fuzzy, python-format
-#| msgid "Product %(product)s is not available in the %(shop)s shop."
+#, python-format
 msgid "Product %(product)s is not orderable: %(error)s"
-msgstr "该产品 %(product)s 在此店铺 %(shop)s 无法找到。"
+msgstr "该产品 %(product)s 不可订购： %(error)s"
 
 msgid "Please add lines to the order."
-msgstr "请添加行数至订单。"
+msgstr "请添加行至订单。"
 
-#, fuzzy
-#| msgid "Tax number required for companies"
 msgid "Name is required for customer"
-msgstr "所有公司要求提供税号"
+msgstr "顾客需提供姓名"
 
-#, fuzzy
-#| msgid "Tax number required for companies"
 msgid "Tax number is not set for company."
-msgstr "所有公司要求提供税号"
+msgstr "公司税号未设置。"
 
 msgid "Please choose a valid shop."
 msgstr "请选择有效的店铺。"
 
-#, fuzzy
-#| msgid "default shipping method"
 msgid "Please select shipping method."
-msgstr "默认配送方式"
+msgstr "请选择配送方式。"
 
-#, fuzzy
-#| msgid "default payment method"
 msgid "Please select payment method."
-msgstr "默认支付方式"
+msgstr "请选择支付方式。"
 
 msgid "Create Order"
 msgstr "创建订单"
 
-#, fuzzy, python-format
-#| msgid "Product %s does not exist."
+#, python-format
 msgid "Contact %s does not exist."
-msgstr "该产品 %s 不存在。"
+msgstr "该联系人%s不存在。"
 
 #, python-format
 msgid "Order %(identifier)s created."
-msgstr "订单 %(identifier)s 已形成"
+msgstr "订单 %(identifier)s 已形成。"
 
-#, fuzzy
-#| msgid "Could not create order:"
 msgid "Could not proceed with order:"
-msgstr "无法形成订单："
+msgstr "无法处理订单："
 
 msgid "Could not create order:"
 msgstr "无法形成订单："
@@ -349,10 +336,9 @@ msgstr "该订单无法在此阶段设为完成"
 msgid "Unable to set order as completed at this point"
 msgstr "无法在该阶段设置订单为完成"
 
-#, fuzzy, python-format
-#| msgid "Order status changed: %s → %s"
+#, python-format
 msgid "Order status changed: %s to %s"
-msgstr "订单状态已改变：%s → %s"
+msgstr "订单状态已改变：%s 至 %s"
 
 msgid "Order"
 msgstr "订单"
@@ -370,12 +356,11 @@ msgid "Shipping Status"
 msgstr "配送状态"
 
 msgid "Total"
-msgstr "总"
+msgstr "总共"
 
-#, fuzzy, python-format
-#| msgid "Create Shipment — %s"
+#, python-format
 msgid "Create Shipment -- %s"
-msgstr "创建配送— %s"
+msgstr "创建配送 -- %s"
 
 msgid "Supplier"
 msgstr "供应商"
@@ -385,7 +370,7 @@ msgstr "无发货产品。"
 
 #, python-format
 msgid "Shipment %s created."
-msgstr "%s 已发货。"
+msgstr "配送 %s 已创建。"
 
 msgid "Product Types"
 msgstr "产品类型"
@@ -402,7 +387,7 @@ msgstr "创建产品名为\"%s\""
 
 #, python-format
 msgid "Create Product with SKU \"%s\""
-msgstr "创建带有SKU的产品\"%s\""
+msgstr "创建带有SKU\"%s\"的产品"
 
 #, python-format
 msgid "%s has been marked deleted."
@@ -415,10 +400,8 @@ msgstr "最小购买量已经舍入与销售单位匹配。"
 msgid "Changes to shop instance for %s saved"
 msgstr "保存 %s 店铺实例更改"
 
-#, fuzzy
-#| msgid "Product is not orderable."
 msgid "Product is not available."
-msgstr "该产品不可订购。"
+msgstr "没有该产品。"
 
 msgid "Product"
 msgstr "产品"
@@ -438,7 +421,7 @@ msgid "Edit Media: %s"
 msgstr "媒体编辑：%s"
 
 msgid "Minimum Purchase Quantity must be greater than 0."
-msgstr "最小购买量必须大于0。"
+msgstr "最小购买数量必须大于0。"
 
 #, python-format
 msgid "Thumbnail generation of %s failed: %s"
@@ -453,7 +436,7 @@ msgid "Is primary"
 msgstr "设置为主要图像"
 
 msgid "Only images allowed in this field"
-msgstr "此字段只允许图像"
+msgstr "该字段只允许图像"
 
 msgid "SKU"
 msgstr "SKU"
@@ -488,7 +471,7 @@ msgstr "子：%s"
 
 #, python-format
 msgid "Parent: %s"
-msgstr "父类：%s"
+msgstr "父：%s"
 
 #, python-format
 msgid "Sibling: %s"
@@ -507,7 +490,7 @@ msgstr "转换为父级变体"
 msgid ""
 "Are you sure? This will unlink all children and remove all variation "
 "variables."
-msgstr "您确定吗？该操作将取消所有的子级产品链接和删除所有的变体变量。 "
+msgstr "您确定吗？该操作将取消所有的子级链接和删除所有的变体变量。 "
 
 msgid "Clear variation"
 msgstr "清除变体"
@@ -518,7 +501,7 @@ msgid ""
 msgstr "您确定吗？该操作将删除所有的变体变量，转换子级产品为直接链接形式。"
 
 msgid "Convert to simple variation"
-msgstr "转换为单纯的变体"
+msgstr "转换为简单变体"
 
 #, python-format
 msgid "Edit Variation: %s"
@@ -549,9 +532,9 @@ msgid "Removed: %d"
 msgstr "已删除：%d"
 
 #, fuzzy
-#| msgid "Confirmation"
+#| msgid "Combination"
 msgid "variable combination"
-msgstr "确认"
+msgstr "结合"
 
 msgid "Sales Units"
 msgstr "销售量"
@@ -560,23 +543,23 @@ msgid "Short Name"
 msgstr "简称"
 
 msgid "Allowed decimals"
-msgstr "允许小数点"
+msgstr "允许小数"
 
 msgid "Shops"
-msgstr "商城"
+msgstr "店铺"
 
 msgid "System"
 msgstr "系统"
 
 msgid ""
 "This field cannot be changed since there are existing orders for this shop."
-msgstr ""
+msgstr "因为有该店铺的现有订单，此字段无法更改。"
 
 msgid "Only one shop permitted."
 msgstr "只准许一家店铺。"
 
 msgid "Domain"
-msgstr "域"
+msgstr "域名"
 
 msgid "Suppliers"
 msgstr "供应商"
@@ -589,7 +572,7 @@ msgid "Module"
 msgstr "模块"
 
 msgid "Telemetry"
-msgstr "遥测系统"
+msgstr "遥测"
 
 msgid ""
 "Statistics will be periodically sent to Shoop.io after 24 hours. Click here "
@@ -612,7 +595,7 @@ msgid "Rate"
 msgstr "费率"
 
 msgid "Enabled"
-msgstr "已启用"
+msgstr "启用"
 
 msgid "Users"
 msgstr "用户"
@@ -651,20 +634,20 @@ msgid "Contact Details"
 msgstr "联系信息"
 
 msgid "New Contact"
-msgstr "新联系人"
+msgstr "新联系"
 
 msgid "Create a new contact and associate it with this user"
-msgstr "为该用户创建新的联系方式"
+msgstr "创建新联系并与该用户关联"
 
 msgid "Activate User"
 msgstr "激活用户"
 
 msgid "Deactivate User"
-msgstr "不活跃用户"
+msgstr "撤销用户"
 
 #, python-format
 msgid "User bound to contact %(contact)s."
-msgstr "该用户与该联系%(contact)s绑定。"
+msgstr "该用户与联系%(contact)s绑定。"
 
 msgid "You can not deactivate a superuser."
 msgstr "无法撤销超级用户。"
@@ -740,7 +723,7 @@ msgid "Reset User Password"
 msgstr "重置用户密码"
 
 msgid "The `shoop.front.apps.auth` app needs to be enabled for password reset."
-msgstr " `shoop.front.apps.auth` 应用需要启用密码重置。"
+msgstr " 该`shoop.front.apps.auth` 应用需启用来进行密码重置。"
 
 #, python-format
 msgid "Password recovery email sent to %(email)s"
@@ -779,7 +762,7 @@ msgid "Log in again"
 msgstr "重新登录"
 
 msgid "Visit shop"
-msgstr "访问商城"
+msgstr "访问店铺"
 
 msgid "Menu"
 msgstr "菜单"
@@ -809,7 +792,7 @@ msgid "Members"
 msgstr "成员"
 
 msgid "No members."
-msgstr "没有成员"
+msgstr "没有成员。"
 
 msgid "Addresses"
 msgstr "地址"
@@ -850,13 +833,11 @@ msgstr "账单地址"
 msgid "No billing address defined."
 msgstr "没有账单地址被定义。"
 
-#, fuzzy
-#| msgid "Removed: %d"
 msgid "Remove block"
-msgstr "已删除：%d"
+msgstr "清除区块"
 
 msgid "Resize block"
-msgstr ""
+msgstr "调整区块大小"
 
 msgid "Welcome!"
 msgstr "欢迎！"
@@ -893,7 +874,7 @@ msgid "Amount"
 msgstr "合计"
 
 msgid "To Ship"
-msgstr "发货"
+msgstr "需发货"
 
 msgid "Ordered"
 msgstr "已订购"
@@ -911,7 +892,7 @@ msgid "Ship All"
 msgstr "全部发货"
 
 msgid "Details & Status"
-msgstr "详情 & 状态"
+msgstr "详情 &状态"
 
 msgid "Order Number"
 msgstr "订单号"
@@ -944,7 +925,7 @@ msgid "Text"
 msgstr "文本"
 
 msgid "Taxless Unit Price"
-msgstr "免税单价"
+msgstr "无税单价"
 
 msgid "Quantity"
 msgstr "数量"
@@ -953,7 +934,7 @@ msgid "Taxless Discount"
 msgstr "免税优惠"
 
 msgid "Tax"
-msgstr "税"
+msgstr "税收"
 
 msgid "Taxless Total"
 msgstr "免税合计"
@@ -988,15 +969,13 @@ msgstr "物理性能"
 msgid "Manufacturer"
 msgstr "厂商"
 
-#, fuzzy, python-format
-#| msgid "Product Images"
+#, python-format
 msgid "Product image %(index)s"
-msgstr "产品图片"
+msgstr "产品图像 %(index)s"
 
-#, fuzzy, python-format
-#| msgid "Product Media"
+#, python-format
 msgid "Product media %(index)s"
-msgstr "产品媒体"
+msgstr "产品媒体%(index)s"
 
 msgid "Primary image"
 msgstr "主要图像"
@@ -1014,7 +993,7 @@ msgid "Advanced options"
 msgstr "高级选项"
 
 msgid "Product Images"
-msgstr "产品图片"
+msgstr "产品图像"
 
 msgid "Product Media"
 msgstr "产品媒体"
@@ -1022,13 +1001,11 @@ msgstr "产品媒体"
 msgid "Add new image"
 msgstr "添加新图像"
 
-#, fuzzy
-#| msgid "Add new image"
 msgid "Add new media"
-msgstr "添加新图像"
+msgstr "添加新媒体"
 
 msgid "Purchasing"
-msgstr "购买"
+msgstr "采购"
 
 msgid "Shipping & Payment"
 msgstr "配送 & 支付"
@@ -1046,15 +1023,13 @@ msgid "File "
 msgstr "文件"
 
 msgid "Simple Variation Children"
-msgstr "单纯变体子级"
+msgstr "简单变体子级"
 
 msgid "Variable Children"
 msgstr "子变量"
 
-#, fuzzy
-#| msgid "Confirmation"
 msgid "Combination"
-msgstr "确认"
+msgstr "结合"
 
 msgid "Variables"
 msgstr "变量"
@@ -1063,21 +1038,21 @@ msgid "This product is not yet a variation."
 msgstr "该产品还不是变体。"
 
 msgid "To create a simple variation, choose products below."
-msgstr "请选择下列产品来创建单纯变体。"
+msgstr "请选择下列产品来创建简单变体。"
 
 msgid ""
 "To create a variation with multiple variables, create the variables on the "
 "Variables tab and then link them to products here."
-msgstr "创建一个带有多个变量的变体，在变量栏创建变量，然后连结他们至产品。"
+msgstr "创建一个带有多个变量的变体，在变量栏创建变量，然后在这连结他们至产品。"
 
 msgid "Shop Logo"
-msgstr "商城商标"
+msgstr "店铺商标"
 
 msgid "Maintenance Mode"
 msgstr "维护模式"
 
 msgid "About Shoop Telemetry"
-msgstr "关于Shoop的遥测系统"
+msgstr "关于Shoop的遥测"
 
 msgid "Shoop will occasionally send telemetry data to a Shoop.io server."
 msgstr "Shoop会偶尔发送遥测数据至Shoop.io服务器。"
@@ -1092,8 +1067,8 @@ msgid ""
 "uses the telemetry data for statistical purposes and for insights about the "
 "software's installation base."
 msgstr ""
-"业务数据和其他顾客信息是不会发送的。Shoop.io使用遥测数据是只为了统计和关于软"
-"件安装基础的洞察力。"
+"不会发送业务数据和其他顾客信息。Shoop.io使用遥测数据是只为了统计和关于软件安"
+"装基础的洞察。"
 
 msgid "Opt-in / opt-out"
 msgstr "选择加入/选择退出"
@@ -1117,22 +1092,23 @@ msgid "opted out"
 msgstr "选择退出"
 
 msgid "of Shoop telemetry."
-msgstr "之Shoop遥测系统。"
+msgstr "之Shoop遥测。"
 
 msgid "Opt in"
 msgstr "选择加入"
 
 msgid "Last Telemetry"
-msgstr "前遥测系统"
+msgstr "前一次遥测"
 
 msgid ""
 "Telemetry submission is currently suspended; data will only be sent 24 hours "
 "after installation if still opted in at that point."
 msgstr ""
-"遥测数据提交目前已被暂停；如果在那阶段仍然选择，数据会只发送在安装24小时后。"
+"遥测数据的提交目前已被暂停；如果在那阶段仍然选择加入，数据只会在安装24小时后"
+"发送。"
 
 msgid "Telemetry data was last submitted at"
-msgstr "遥测系统前一次提交在"
+msgstr "遥测数据前一次提交在"
 
 msgid "ago"
 msgstr "前"
@@ -1141,7 +1117,7 @@ msgid "See the data that was submitted."
 msgstr "查看已提交的数据。"
 
 msgid "Telemetry data has not yet been submitted."
-msgstr "为提交遥测数据。"
+msgstr "未提交遥测数据。"
 
 msgid "Telemetry Data"
 msgstr "遥测数据"
@@ -1160,7 +1136,7 @@ msgid "Send Reset Email"
 msgstr "发送重置邮件"
 
 msgid "Create new"
-msgstr "创建新的工具栏"
+msgstr "创建新群组"
 
 #, python-format
 msgid "New %(model)s"
@@ -1180,7 +1156,7 @@ msgid "Are you sure you wish to delete %s?"
 msgstr "您确定删除 %s？"
 
 msgid "no"
-msgstr "不"
+msgstr "否"
 
 msgid "yes"
 msgstr "是"
@@ -1194,10 +1170,10 @@ msgstr "对象"
 
 #, python-format
 msgid "Can't view this page. %(reason)s"
-msgstr "无法显示此页面。%(reason)s"
+msgstr "无法显示该页面。%(reason)s"
 
 msgid "Log in with different credentials..."
-msgstr "其他登录方式……"
+msgstr "其他方式登录……"
 
 msgid "You must be logged in."
 msgstr "您必须登录。"
@@ -1207,7 +1183,7 @@ msgstr "您必须是工作人员。"
 
 #, python-format
 msgid "You do not have the required permissions: %r"
-msgstr "您没有所需求的许可：%r"
+msgstr "您没有许可：%r"
 
 #, python-format
 msgid "New %s created."

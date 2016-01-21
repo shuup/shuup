@@ -8,16 +8,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 13:16+0000\n"
-"PO-Revision-Date: 2015-11-26 08:48+0000\n"
-"Last-Translator: Yuki Miyagi <yuki.miyagi@anders.fi>\n"
+"POT-Creation-Date: 2016-01-21 07:22+0000\n"
+"PO-Revision-Date: 2015-12-08 08:41+0000\n"
+"Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
 "language/ja_JP/)\n"
 "Language: ja_JP\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 1.3\n"
+"Generated-By: Babel 2.1.1\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "Show Frontpage Welcome Text"
@@ -136,10 +136,8 @@ msgstr "商品に戻る"
 msgid "There were errors on following items"
 msgstr ""
 
-#, fuzzy
-#| msgid "Proceed to checkout"
 msgid "You are unable to proceed to checkout!"
-msgstr "レジに進む"
+msgstr ""
 
 msgid "Continue Shopping"
 msgstr "買い物を続ける"
@@ -189,10 +187,8 @@ msgstr ""
 msgid "Delivery method"
 msgstr ""
 
-#, fuzzy
-#| msgid "Billing Address"
 msgid "Billing"
-msgstr "請求先住所"
+msgstr ""
 
 msgid "Payment method"
 msgstr ""
@@ -203,10 +199,8 @@ msgstr "コメントを追加する"
 msgid "Place Order"
 msgstr "注文する"
 
-#, fuzzy
-#| msgid "Server Error"
 msgid "There are errors"
-msgstr "サーバエラー"
+msgstr ""
 
 msgid "Shipping"
 msgstr ""
@@ -565,10 +559,8 @@ msgstr ""
 msgid "You have already been logged in as"
 msgstr "お客様は既にログインされています"
 
-#, fuzzy
-#| msgid "Back to Homepage"
 msgid "Go to Homepage"
-msgstr "ホームページに戻る"
+msgstr ""
 
 msgid "Logged out"
 msgstr "ログアウト"

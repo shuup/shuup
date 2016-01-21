@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 13:16+0000\n"
-"PO-Revision-Date: 2015-12-07 11:12+0000\n"
+"POT-Creation-Date: 2016-01-21 07:22+0000\n"
+"PO-Revision-Date: 2015-12-17 15:11+0000\n"
 "Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
 "language/cmn/)\n"
@@ -17,11 +17,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 1.3\n"
+"Generated-By: Babel 2.1.1\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "Abandoned Basket Value"
-msgstr "已放弃购物篮价值"
+msgstr "已放弃的购物篮价值"
 
 #, python-brace-format
 msgid "Based on {b} baskets over the last {d} days"
@@ -47,11 +47,11 @@ msgid "Basket loading failed: Incompatible basket (%s)"
 msgstr "购物篮加载失败：不可兼容的购物篮 (%s)"
 
 msgid "Try to remove some products from the basket and order them separately."
-msgstr ""
+msgstr "请尝试清除购物篮里的一些产品，接着单独订购这些产品。"
 
 #, python-format
 msgid "Products in basket cannot be shipped together. %s"
-msgstr "购物篮里的产品不能一起发货。%s"
+msgstr "购物篮里的产品不能一起配送。%s"
 
 #, python-format
 msgid "Products in basket have no common payment method. %s"
@@ -74,7 +74,7 @@ msgid "I accept the terms and conditions"
 msgstr "我接受条款和条件"
 
 msgid "I want to subscribe to your newsletter"
-msgstr "我想要订阅你们的通讯"
+msgstr "我想要订阅你们的时事通讯"
 
 msgid "Comment"
 msgstr ""
@@ -111,7 +111,7 @@ msgid "Payment method"
 msgstr "支付方式"
 
 msgid "Please send me marketing correspondence"
-msgstr "请发送给我市场营销通信"
+msgstr "请发送给我营销通信"
 
 msgid "key"
 msgstr ""
@@ -119,7 +119,7 @@ msgstr ""
 #, fuzzy
 #| msgid "your shop"
 msgid "shop"
-msgstr "商城"
+msgstr "您的店铺"
 
 msgid "customer"
 msgstr ""
@@ -195,18 +195,18 @@ msgid "Welcome to %(name)s!"
 msgstr "欢迎来到%(name)s！"
 
 msgid "your shop"
-msgstr "商城"
+msgstr "您的店铺"
 
 msgid ""
 "You are seeing this page because there is no theme selected for the default "
 "frontend."
-msgstr "您看到该页面是因为前端默认模式里没有选中任何主题。"
+msgstr "您看到该页面是因为前端默认模式里未选中任何主题。"
 
 msgid "Log in to the administration interface"
 msgstr "登录进入管理界面"
 
 msgid "to choose a theme and set up your shop."
-msgstr "选择主题并建立您的商场。"
+msgstr "选择主题并建立您的店铺。"
 
 msgid ""
 "The administration interface does not seem to be available. Use other means "
@@ -223,7 +223,7 @@ msgid "Maintenance mode"
 msgstr "维护模式"
 
 msgid "Shop is currently down for maintenance."
-msgstr "商城目前在维修中。"
+msgstr "店铺目前在维修中。"
 
 msgid "Name - A-Z"
 msgstr "名称 - A-Z"
@@ -244,4 +244,4 @@ msgid "Manufacturer"
 msgstr ""
 
 msgid "This product is not available in this shop."
-msgstr "该商城没有此产品。"
+msgstr "该店铺没有此产品。"

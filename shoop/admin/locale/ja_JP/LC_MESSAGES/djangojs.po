@@ -1,21 +1,22 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# English translations for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
 #
-#, fuzzy
+# Translators:
 msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 13:02+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-01-21 07:22+0000\n"
+"PO-Revision-Date: 2015-12-09 09:08+0000\n"
+"Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
 "language/ja_JP/)\n"
 "Language: ja_JP\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "Unexpected error while uploading files."
@@ -102,7 +103,7 @@ msgid "An unspecified error occurred.\n"
 msgstr ""
 
 msgid "SKU"
-msgstr ""
+msgstr "最小管理単位"
 
 msgid "Text"
 msgstr ""
@@ -123,13 +124,13 @@ msgid "Tax percent"
 msgstr ""
 
 msgid "Total"
-msgstr ""
+msgstr "合計"
 
 msgid "Billing address"
-msgstr ""
+msgstr " 請求先住所"
 
 msgid "Shipping address"
-msgstr ""
+msgstr "お届け先住所"
 
 msgid "A new customer will be created based on billing address."
 msgstr ""
@@ -153,10 +154,10 @@ msgid "Order for company"
 msgstr ""
 
 msgid "Billing Address"
-msgstr ""
+msgstr "請求先住所"
 
 msgid "Shipping Address"
-msgstr ""
+msgstr "お届け先住所"
 
 msgid "Back"
 msgstr ""
@@ -188,7 +189,7 @@ msgid "Proceed"
 msgstr ""
 
 msgid "Select product"
-msgstr ""
+msgstr "商品を選ぶ"
 
 msgid "Text/Comment"
 msgstr ""
@@ -238,7 +239,7 @@ msgid "Add new line"
 msgstr ""
 
 msgid "Price"
-msgstr ""
+msgstr "価格"
 
 msgid "No shipping method"
 msgstr ""
@@ -256,13 +257,13 @@ msgid "Other"
 msgstr ""
 
 msgid "Tax number"
-msgstr ""
+msgstr "税番号"
 
 msgid "Phone"
-msgstr ""
+msgstr "電話"
 
 msgid "Email"
-msgstr ""
+msgstr "Eメール"
 
 msgid "Street"
 msgstr ""
@@ -271,7 +272,7 @@ msgid "Street (2)"
 msgstr ""
 
 msgid "ZIP / Postal code"
-msgstr ""
+msgstr "郵便番号"
 
 msgid "City"
 msgstr ""
