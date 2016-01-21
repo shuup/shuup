@@ -1,33 +1,33 @@
-# Translations template for PROJECT.
+# English translations for PROJECT.
 # Copyright (C) 2015 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 #
 # Translators:
 # Aarni Koskela, 2015
-# Juha Kujala <juha.kujala@shoop.io>, 2015
+# Juha Kujala <juha.kujala@shoop.io>, 2015-2016
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # Tuomas Suutari <tuomas.suutari@shoop.io>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 13:02+0000\n"
-"PO-Revision-Date: 2015-12-03 18:29+0200\n"
-"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
+"POT-Creation-Date: 2016-01-21 07:22+0000\n"
+"PO-Revision-Date: 2016-01-05 07:38+0000\n"
+"Last-Translator: Juha Kujala <juha.kujala@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
 "language/fi_FI/)\n"
 "Language: fi_FI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 1.3\n"
+"Generated-By: Babel 2.1.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Unexpected error while uploading files."
 msgstr "Odottamaton virhe ladattaessa tiedostoja palvelimelle."
 
 msgid "Error:"
-msgstr "Virhe"
+msgstr "Virhe:"
 
 msgid "Uploaded:"
 msgstr "Ladattu:"
@@ -40,7 +40,7 @@ msgid "Are you sure you want to delete the file %s?"
 msgstr "Oletko varma, että haluat poistaa tiedoston %s?"
 
 msgid "New folder name?"
-msgstr "Uusi kansion nimi?"
+msgstr "Uuden kansion nimi?"
 
 #, javascript-format
 msgid "Are you sure you want to delete the %s folder?"
@@ -50,7 +50,7 @@ msgid "New folder"
 msgstr "Uusi kansio"
 
 msgid "current"
-msgstr "Nykyinen"
+msgstr "nykyinen"
 
 msgid "Oldest first"
 msgstr "Vanhin ensin"
@@ -117,7 +117,7 @@ msgid "Text"
 msgstr "Teksti"
 
 msgid "Quantity"
-msgstr "Määrä"
+msgstr "Lukumäärä"
 
 msgid "Unit Price"
 msgstr "Yksikköhinta"
@@ -238,7 +238,7 @@ msgid "All prices is in "
 msgstr "Kaikki tuotteet valuutassa "
 
 msgid " currency."
-msgstr "."
+msgstr "valuutta."
 
 msgid "All prices include taxes."
 msgstr "Kaikki hinnat ovat verollisia."
@@ -368,10 +368,10 @@ msgid "Sort by"
 msgstr "Järjestä"
 
 msgid "ascending"
-msgstr "Nouseva"
+msgstr "nouseva"
 
 msgid "descending"
-msgstr "Laskeva"
+msgstr "laskeva"
 
 msgid "Default sorting"
 msgstr "Oletusjärjestys"
@@ -407,4 +407,4 @@ msgid "Done"
 msgstr "Valmis"
 
 msgid "en"
-msgstr "fi"
+msgstr "en"

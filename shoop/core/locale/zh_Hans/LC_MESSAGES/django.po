@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 13:16+0000\n"
-"PO-Revision-Date: 2015-12-07 11:12+0000\n"
+"POT-Creation-Date: 2016-01-21 07:22+0000\n"
+"PO-Revision-Date: 2015-12-10 12:47+0000\n"
 "Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
 "language/cmn/)\n"
@@ -17,7 +17,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 1.3\n"
+"Generated-By: Babel 2.1.1\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "internal identifier"
@@ -30,15 +30,15 @@ msgid "Price"
 msgstr "价格"
 
 msgid "Waiver minimum"
-msgstr "最低放弃值"
+msgstr "最低减免"
 
 msgid ""
 "Waive the price when the total price of products in the order reaches this "
 "amount"
-msgstr "当订单产品总价达到这个数额时，放弃该价格"
+msgstr "当订单产品总价达到这个数额时，减免该价格"
 
 msgid "0 or below: no lower limit"
-msgstr "0 或者以下：没有下限"
+msgstr "0 或以下：没有下限"
 
 msgid "minimum weight"
 msgstr "最低重量"
@@ -50,13 +50,13 @@ msgid "Minimum weight not met."
 msgstr "没有达到最低重量。"
 
 msgid "Maximum weight exceeded."
-msgstr "最大重量超过。"
+msgstr "最大重量已超过。"
 
 msgid "Default Shipping"
-msgstr "默认配送方式"
+msgstr "默认配送"
 
 msgid "Default Payment"
-msgstr "默认支付方式"
+msgstr "默认支付"
 
 msgid "Error"
 msgstr "错误"
@@ -71,7 +71,7 @@ msgid "disabled"
 msgstr "关闭"
 
 msgid "enabled"
-msgstr "已启用"
+msgstr "启用"
 
 msgid "name prefix"
 msgstr "名称前缀"
@@ -117,7 +117,7 @@ msgid "city"
 msgstr "城市"
 
 msgid "region code"
-msgstr "区域编码"
+msgstr "区域代码"
 
 msgid "region"
 msgstr "区域"
@@ -156,16 +156,16 @@ msgid "shown on product page"
 msgstr "在产品页面显示"
 
 msgid "searchable metadata"
-msgstr "可供搜索的元数据"
+msgstr "可检索的元数据"
 
 msgid "private metadata"
 msgstr "私有元数据 "
 
 msgid "integer"
-msgstr "integer"
+msgstr "整数型"
 
 msgid "decimal"
-msgstr "小数"
+msgstr "十进制小数"
 
 msgid "boolean"
 msgstr "布尔"
@@ -180,20 +180,20 @@ msgid "date only"
 msgstr "仅日期"
 
 msgid "translated string"
-msgstr "已翻译的字符串"
+msgstr "已译字符串"
 
 msgid "untranslated string"
-msgstr "未翻译的字符串"
+msgstr "未译字符串"
 
 #, fuzzy
 #| msgid "searchable metadata"
 msgid "searchable"
-msgstr "可供搜索的元数据"
+msgstr "可检索的元数据"
 
 #, fuzzy
 #| msgid "line type"
 msgid "type"
-msgstr "类型行"
+msgstr "行类型"
 
 #, fuzzy
 #| msgid "visibility limitations"
@@ -212,15 +212,15 @@ msgstr ""
 #, fuzzy
 #| msgid "variation value"
 msgid "datetime value"
-msgstr "变体价值"
+msgstr "变体值"
 
 #, fuzzy
 #| msgid "untranslated string"
 msgid "untranslated value"
-msgstr "未翻译的字符串"
+msgstr "未译字符串"
 
 msgid "The following fields can not be changed"
-msgstr ""
+msgstr "以下字段无法改变"
 
 msgid "invisible"
 msgstr "不可见"
@@ -238,7 +238,7 @@ msgid "visible to logged in customers"
 msgstr "登录用户可见"
 
 msgid "visible to certain customer groups"
-msgstr "某些顾客群组可见"
+msgstr "某顾客群组可见"
 
 msgid "parent category"
 msgstr "父分类"
@@ -287,7 +287,7 @@ msgstr "配置项目"
 
 #, python-format
 msgid "%(key)s for shop %(shop)s"
-msgstr "%(key)s 商城 %(shop)s"
+msgstr "%(key)s 店铺 %(shop)s"
 
 #, python-format
 msgid "%(key)s (global)"
@@ -365,10 +365,10 @@ msgid "birth date"
 msgstr "订单日期"
 
 msgid "person"
-msgstr "联系人"
+msgstr "人"
 
 msgid "persons"
-msgstr "联系人"
+msgstr "人"
 
 msgid "order reference"
 msgstr "订单参考"
@@ -444,7 +444,7 @@ msgid "parent line"
 msgstr "父行"
 
 msgid "line type"
-msgstr "类型行"
+msgstr "行类型"
 
 msgid "line SKU"
 msgstr "SKU行"
@@ -509,16 +509,16 @@ msgid "canceled"
 msgstr "已取消"
 
 msgid "deferred"
-msgstr "延迟的"
+msgstr "已延迟"
 
 msgid "not shipped"
 msgstr "未发货"
 
 msgid "partially shipped"
-msgstr "部分出货"
+msgstr "部分发货"
 
 msgid "fully shipped"
-msgstr "全出货"
+msgstr "全发货"
 
 msgid "none"
 msgstr "无"
@@ -614,7 +614,7 @@ msgid "requires verification"
 msgstr "验证要求"
 
 msgid "all lines verified"
-msgstr "所有订单行已验证"
+msgstr "所有行已验证"
 
 msgid "orders"
 msgstr "订单"
@@ -627,7 +627,7 @@ msgid "Shipment #%d created."
 msgstr "#%d 已发货。"
 
 msgid "All rows requiring verification have been verified."
-msgstr "所有需要的验证行列已验证。"
+msgstr "所有需要验证的行列已验证。"
 
 msgid "All products have been shipped. Fully Shipped status set."
 msgstr "所有产品已发货，全运状态。"
@@ -678,10 +678,10 @@ msgstr "类"
 msgid ""
 "Enter URL to external file. If this field is filled, the selected media "
 "doesn't apply."
-msgstr "请输入URL网址至外部文件。如果该字段已填，则不适用于被选中的媒体。"
+msgstr "请输入URL至外部文件。如果该字段已填，则不适用于被选中的媒体。"
 
 msgid "public (shown on product page)"
-msgstr "发布 (在产品页面显示)"
+msgstr "公开 (在产品页面显示)"
 
 msgid "purchased (shown for finished purchases)"
 msgstr "已购买 (显示已完成的订购)"
@@ -698,7 +698,7 @@ msgstr "附件"
 #, fuzzy
 #| msgid "sent product"
 msgid "parent product"
-msgstr "发货"
+msgstr "发送产品"
 
 #, fuzzy
 #| msgid "product"
@@ -791,10 +791,10 @@ msgid "variation variables"
 msgstr "变体变量"
 
 msgid "variation value"
-msgstr "变体价值"
+msgstr "变体值"
 
 msgid "variation values"
-msgstr "变体价值"
+msgstr "变体值"
 
 msgid "combination hash"
 msgstr ""
@@ -815,7 +815,7 @@ msgid "package parent"
 msgstr "父包"
 
 msgid "variation parent (simple)"
-msgstr "父级变体 (单纯)"
+msgstr "父级变体 (简单)"
 
 msgid "variation parent (variable)"
 msgstr "父级变体 (变量)"
@@ -931,7 +931,7 @@ msgid ""
 msgstr "该文本将会在产品旁边显示。(例如 \"一个月后可供\")"
 
 msgid "variation name"
-msgstr "变体产品名称"
+msgstr "变体名称"
 
 msgid "products"
 msgstr "产品"
@@ -941,12 +941,12 @@ msgid ""
 msgstr "不支持多级父子级操作 (父级已经是子级)"
 
 msgid "Parent is a variable variation parent, yet variables were not passed"
-msgstr "父级产品是一个变量变体父产品，但是变量不能被传递。"
+msgstr "父级是一个变量变体父级，但是变量不能被传递。"
 
 msgid ""
 "Multilevel parentage hierarchies aren't supported (this product is a simple "
 "variation parent)"
-msgstr "不支持多级父子级操作 (该产品为单纯变体父产品)"
+msgstr "不支持多级父子级操作 (该产品为简单变体父级)"
 
 msgid ""
 "Multilevel parentage hierarchies aren't supported (this product is a "
@@ -957,7 +957,7 @@ msgid "Product is currently not a normal product, can't turn into package"
 msgstr "该产品目前不是一般产品，不能成为套装"
 
 msgid "Variation parents can not belong into a package"
-msgstr "父级变体产品不能归属到套装。"
+msgstr "父级变体不能归属到包。"
 
 msgid "Packages can't be nested"
 msgstr "包不能嵌套"
@@ -974,7 +974,7 @@ msgstr "主分类"
 #, fuzzy
 #| msgid "sent product"
 msgid "secondary product"
-msgstr "发货"
+msgstr "发送产品"
 
 #, fuzzy
 #| msgid "minimum weight"
@@ -990,7 +990,7 @@ msgstr "交叉销售链接"
 #, fuzzy
 #| msgid "translated string"
 msgid "translated value"
-msgstr "已翻译的字符串"
+msgstr "已译字符串"
 
 msgid "product attribute"
 msgstr "产品属性"
@@ -1031,15 +1031,15 @@ msgid "unit weight"
 msgstr "净重 (克)"
 
 msgid "sent product"
-msgstr "发货"
+msgstr "发送产品"
 
 msgid "sent products"
-msgstr "发货"
+msgstr "发送产品"
 
 msgid ""
 "The following fields cannot be changed since there are existing orders for "
 "this shop"
-msgstr ""
+msgstr "因为有该店铺的现有订单，以下字段无法改变。"
 
 msgid "domain"
 msgstr ""
@@ -1090,25 +1090,25 @@ msgid "tax rate"
 msgstr "税率"
 
 msgid "The percentage rate of the tax."
-msgstr "税率"
+msgstr "税率百分比"
 
 msgid "tax amount value"
 msgstr "税额价值"
 
 msgid "The flat amount of the tax. Mutually exclusive with percentage rates."
-msgstr ""
+msgstr "税收固定金额。互斥于百分率。"
 
 msgid "currency of tax amount"
 msgstr "税额货币"
 
 msgid "Either rate or amount is required"
-msgstr "费率或金额选其一"
+msgstr "只需费率或金额"
 
 msgid "Cannot have both rate and amount"
 msgstr "无法同时获取费率和金额"
 
 msgid "Currency is required if amount is specified"
-msgstr "指定金额要求货币选择"
+msgstr "特定的金额要求货币选择"
 
 msgid "taxes"
 msgstr "税收"
@@ -1122,18 +1122,14 @@ msgstr "顾客税组"
 msgid "customer tax groups"
 msgstr "顾客税组"
 
-#, fuzzy
-#| msgid "Active customers"
 msgid "Retail Customers"
-msgstr "活跃客户"
+msgstr "零售客户"
 
-#, fuzzy
-#| msgid "Company name"
 msgid "Company Customers"
-msgstr "公司名称"
+msgstr "公司客户"
 
 msgid "allowed decimals"
-msgstr "允许小数点"
+msgstr "允许小数"
 
 #, fuzzy
 #| msgid "tax name"
@@ -1153,15 +1149,13 @@ msgid "Default Pricing"
 msgstr "默认定价"
 
 msgid "Insufficient stock"
-msgstr "储存量不足"
+msgstr "库存不足"
 
 msgid "Untaxed"
 msgstr "未上税"
 
-#, fuzzy
-#| msgid "This order can not be set as complete at this point"
 msgid "This field cannot be changed since it is protected."
-msgstr "该订单无法在此阶段设为完成"
+msgstr "该字段为保护状态，无法改变。"
 
 msgid "First Last"
-msgstr "名姓"
+msgstr "第一最后"
