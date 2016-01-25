@@ -18,7 +18,6 @@ class AdminFieldRenderer(FieldRenderer):
         self.widget_class = kwargs.pop("widget_class", None)
         default_show_help_block = True
         if isinstance(field.field, ModelMultipleChoiceField):
-            default_show_help_block = False
             if not self.widget_class:
                 self.widget_class = "multiselect"
         if isinstance(field.field, DateTimeField):
