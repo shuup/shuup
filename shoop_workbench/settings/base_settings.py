@@ -46,6 +46,7 @@ INSTALLED_APPS = add_enabled_addons(SHOOP_ENABLED_ADDONS_FILE, [
     'shoop.notify',
     'shoop.simple_cms',
     'shoop.simple_pricing',
+    'shoop.campaigns',
     'shoop.simple_supplier',
     'shoop.order_printouts',
     'shoop.testing',
@@ -58,7 +59,6 @@ INSTALLED_APPS = add_enabled_addons(SHOOP_ENABLED_ADDONS_FILE, [
     'filer',
     'registration',
     'rest_framework',
-
     'shoop.discount_pricing'
 ])
 
