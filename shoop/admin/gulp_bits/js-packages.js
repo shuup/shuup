@@ -28,7 +28,8 @@ module.exports = {
             "js/remarkable-field.js",
             "js/form-utils.js",
             "js/jquery.form-submission-attributes.polyfill.js",
-            "js/datetimepicker.js"
+            "js/datetimepicker.js",
+            "js/language-changer.js"
         ]
     },
     "dashboard": {

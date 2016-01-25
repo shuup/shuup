@@ -13,6 +13,8 @@ import warnings
 import django.contrib.auth.views as auth_views
 from django.conf.urls import patterns, url
 from django.contrib.auth import logout as do_logout
+from django.views.decorators.csrf import csrf_exempt
+from django.views.i18n import set_language
 
 from shoop.admin.module_registry import get_module_urls
 from shoop.admin.utils.urls import admin_url, AdminRegexURLPattern
@@ -50,6 +52,11 @@ def get_urls():
             kwargs={"template_name": "shoop/admin/auth/logout.jinja"},
             name='logout',
             require_authentication=False
+        ),
+        admin_url(
+            r'^set-language/$',
+            csrf_exempt(set_language),
+            name="set-language"
         ),
     ])
 

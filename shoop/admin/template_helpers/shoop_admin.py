@@ -55,6 +55,7 @@ BROWSER_URL_NAMES = {
     "media": "shoop_admin:media.browse",
     "product": "shoop_admin:product.list",
     "contact": "shoop_admin:contact.list",
+    "setLanguage": "shoop_admin:set-language",
 }
 
 
