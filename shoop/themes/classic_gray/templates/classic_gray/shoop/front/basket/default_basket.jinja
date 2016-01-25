@@ -41,6 +41,37 @@
         $("#update_basket_form .quantity :input").change(function() {
             $("#update_basket_form").submit();
         });
+
+        $("#submit-code").click(function(e){
+            e.preventDefault();
+            const coupon = $("#discount-code").val();
+
+            if (coupon.length) {
+                // ajax request to command
+                const data = {
+                    "command": "add_campaign_code",
+                    "code": coupon
+                };
+
+                $.ajax({
+                    url: "",
+                    method: "POST",
+                    data: data,
+                    success: function(response) {
+                        if (response.ok) {
+                            location.reload();
+                        }
+                        else {
+                            alert("{% trans %}Coupon is not available.{% endtrans %}")
+                        }
+                    },
+                    error: function() {
+                        alert("{% trans %}Error when adding coupon.{% endtrans %}")
+                    }
+                });
+            }
+        });
     })
+
 </script>
 {% endblock %}
