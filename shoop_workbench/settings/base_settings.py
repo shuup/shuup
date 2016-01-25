@@ -167,7 +167,7 @@ LOGIN_URL = "/login"
 
 SESSION_SERIALIZER = "django.contrib.sessions.serializers.PickleSerializer"
 
-SHOOP_PRICING_MODULE = "discount_pricing"
+SHOOP_PRICING_MODULE = "simple_pricing"
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
