@@ -18,6 +18,8 @@ from shoop.core.utils.users import real_user_or_none
 from shoop.front.signals import order_creator_finished
 from shoop.utils.numbers import bankers_round
 
+from ._source_modifier import get_order_source_modifier_modules
+
 
 class OrderCreator(object):
 
@@ -205,6 +207,8 @@ class OrderCreator(object):
         order.cache_prices()
         order.save()
 
+        self._assign_code_usages(order_source, order)
+
         order_creator_finished.send(OrderCreator, order=order, source=order_source, request=self.request)
 
         order.save()
@@ -214,6 +218,16 @@ class OrderCreator(object):
         order.cache_prices()
         order.save()
         return order
+
+    def _assign_code_usages(self, order_source, order):
+        for code in order_source.codes:
+            self._assign_code_usage(order_source, order, code)
+
+    def _assign_code_usage(self, order_source, order, code):
+        for module in get_order_source_modifier_modules():
+            if module.can_use_code(order_source, code):
+                module.use_code(order, code)
+                break
 
     def process_order_before_lines(self, source, order):
         # Subclass hook
