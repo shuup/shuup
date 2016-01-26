@@ -3,10 +3,10 @@
     <div class="container">
         <div class="panel panel-danger">
             <div class="panel-heading">
-                <h3 class="panel-title">{{ title|default("Error!") }}</h3>
+                <h3 class="panel-title">{{ title|default(_("Error!")) }}</h3>
             </div>
             <div class="panel-body">
-                <h1>{{ title|default("Error!") }}</h1>
+                <h1>{{ title|default(_("Error!")) }}</h1>
                 <hr>
                 {{ message }}
                 {% if exception.links %}

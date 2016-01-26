@@ -132,11 +132,11 @@ export function renderOrderLines(store, shop, lines) {
 export function orderLinesView(store, isCreating) {
     const {lines, shop} = store.getState();
     return m("div", [
-        m("p", gettext("If your product prices vary based on customers you might wan't to select customer first.")),
-        m("p", gettext(gettext("All prices is in ") + shop.selected.currency + " currency.")),
+        m("p", gettext("If your product prices vary based on customer, you might want to select customer first.")),
+        m("p", interpolate(gettext("All prices are in %s currency."), [shop.selected.currency]),
         m(
             "p",
-            shop.selected.pricesIncludeTaxes ? gettext("All prices include taxes.") : gettext("Taxes is not included.")
+            shop.selected.pricesIncludeTaxes ? gettext("All prices include taxes.") : gettext("Taxes not included.")
         ),
         m("div.list-group", renderOrderLines(store, shop.selected, lines)),
         m("hr"),

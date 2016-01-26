@@ -276,7 +276,7 @@ const Picotable = (function(m, storage) {
         var input = m("input.form-control", {
             type: col.filter.text.type || "text",
             value: Util.stringValue(value),
-            placeholder: col.filter.placeholder || "Filter by " + col.title,
+            placeholder: col.filter.placeholder || interpolate(gettext("Filter by %s"), [col.title]),
             onchange: setFilterValueFromInput,
             config: debounceChangeConfig(500)
         });
