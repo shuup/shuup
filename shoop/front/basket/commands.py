@@ -118,37 +118,6 @@ def handle_clear(request, basket, **kwargs):
 
     basket.clear_all()
     return {'ok': True}
-#
-# def handle_add_campaign_code(code, **kwargs):
-#     """
-#     Handle applying the campaigns activated by a given campaign code in the basket.
-#
-#     :param code: The campaign code (string) to (try to) use for campaign addition
-#     """
-#     if code:
-#         from shoop.shop.models.campaigns import get_applicable_campaigns_for_code
-#
-#         pairs = list(get_applicable_campaigns_for_code(code_str=code, user=basket.user))
-#         if not pairs:
-#             raise Problem(_(u"Annettu koodi %s ei täsmää mihinkään käynnissä olevaan kampanjaan") % code)
-#         for campaign_code, campaign in pairs:
-#             basket.add_campaign(campaign, campaign_code)
-#     return {'ok': True}
-#
-# def handle_remove_campaign(campaign_id, **kwargs):
-#     """
-#     Handle removing a campaign activation from the basket given the campaign's PK.
-#
-#     :param campaign_id: Campaign object PK.
-#     """
-#     from shoop.shop.models import Campaign
-#
-#     try:
-#         campaign = Campaign.objects.get(pk=campaign_id)
-#         basket.remove_campaign(campaign)
-# except ObjectDoesNotExist:  # This is actually fine
-#         pass
-#     return {'ok': True}
 
 
 def handle_update(request, basket, **kwargs):
