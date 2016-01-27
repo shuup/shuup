@@ -16,7 +16,7 @@ function adjustStock(button) {
         url: url,
         data: data,
         success: function(msg) {
-            $(msg.stockInformationDiv).replaceWith(msg.updatedStockInformation);
+            $(msg.stockInformationDiv).html(msg.updatedStockInformation);
             window.Messages.enqueue({tags: "info", text: msg.message});
         },
         error: function(response) {
