@@ -8,12 +8,14 @@
 import pytest
 from django.conf import settings
 
+from shoop.core.models import AnonymousContact
 from shoop.core.pricing import get_pricing_module, TaxfulPrice, TaxlessPrice
 from shoop.simple_pricing.models import SimpleProductPrice
 from shoop.simple_pricing.module import SimplePricingModule
 from shoop.testing.factories import (
     create_product, create_random_person, get_default_customer_group, get_shop
 )
+from shoop.testing.utils import apply_request_middleware
 
 pytestmark = pytest.mark.skipif("shoop.simple_pricing" not in settings.INSTALLED_APPS,
                                 reason="Simple pricing not installed")
@@ -37,7 +39,7 @@ def initialize_test(rf, include_tax=False):
     customer.groups.add(group)
     customer.save()
 
-    request = rf.get("/")
+    request = apply_request_middleware(rf.get("/"))
     request.shop = shop
     request.customer = customer
     return request, shop, group
@@ -146,7 +148,7 @@ def test_price_infos(rf):
 
 
 @pytest.mark.django_db
-def test_no_customer(rf):
+def test_customer_is_anonymous(rf):
     request, shop, group = initialize_test(rf, True)
     price = shop.create_price
 
@@ -154,7 +156,7 @@ def test_no_customer(rf):
 
     SimpleProductPrice.objects.create(product=product, group=group, shop=shop, price_value=50)
 
-    request.customer = None
+    request.customer = AnonymousContact()
 
     price_info = product.get_price_info(request)
 
@@ -162,9 +164,11 @@ def test_no_customer(rf):
 
 
 @pytest.mark.django_db
-def test_zero_default_price(rf):
+def test_zero_default_price(rf, admin_user):
     request, shop, group = initialize_test(rf, True)
+
     price = shop.create_price
+
 
     # create a product with zero price
     product = create_product("random-1", shop=shop, default_price=0)

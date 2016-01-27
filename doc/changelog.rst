@@ -9,6 +9,40 @@ Unreleased
   releasing next version, the "Unreleased" header will be replaced with
   appropriate version header and this help text will be removed.
 
+Core
+~~~~
+
+- Rename ``CAMPAIGN`` in ``OrderLineType`` enum to ``DISCOUNT``
+- Add ``OrderSourceModifierModule`` interface for modifying order source
+- Add ``DiscountModule`` interface for pricing
+- Simplify ``PricingContext`` and require shop and customer for it
+- Add ``get_price_info`` etc. functions to ``shoop.core.pricing``
+- Add "codes" API to OrderSource and BaseBasket
+
+Localization
+~~~~~~~~~~~~
+
+
+Admin
+~~~~~
+
+
+Front
+~~~~~
+
+
+Xtheme
+~~~~~~
+
+
+Classic Gray Theme
+~~~~~~~~~~~~~~~~~~
+
+
+General/miscellaneous
+~~~~~~~~~~~~~~~~~~~~~
+
+
 
 Version 3.0.0
 -------------

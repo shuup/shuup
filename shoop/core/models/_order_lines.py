@@ -27,14 +27,14 @@ class OrderLineType(Enum):
     PRODUCT = 1
     SHIPPING = 2
     PAYMENT = 3
-    CAMPAIGN = 4
+    DISCOUNT = 4
     OTHER = 5
 
     class Labels:
         PRODUCT = _('product')
         SHIPPING = _('shipping')
         PAYMENT = _('payment')
-        CAMPAIGN = _('campaign')
+        DISCOUNT = _('discount')
         OTHER = _('other')
 
 
@@ -49,8 +49,8 @@ class OrderLineManager(models.Manager):
     def payment(self):  # pragma: no cover
         return self.filter(type=OrderLineType.PAYMENT)
 
-    def campaigns(self):  # pragma: no cover
-        return self.filter(type=OrderLineType.CAMPAIGN)
+    def discounts(self):
+        return self.filter(type=OrderLineType.DISCOUNT)
 
     def other(self):  # pragma: no cover
         return self.filter(type=OrderLineType.OTHER)

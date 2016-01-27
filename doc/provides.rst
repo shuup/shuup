@@ -57,6 +57,8 @@ Provide Categories
 ``admin_module``
     Admin module classes. Practically all of the functionality in the admin is built
     via admin modules.
+``discount_module``
+    `~shoop.core.pricing.DiscountModule` for pricing system.
 ``front_template_helper_namespace``
     Additional namespaces to install in the ``shoop`` "package" within
     template contexts.
@@ -75,6 +77,10 @@ Provide Categories
     Notification framework :py:class:`~shoop.notify.Condition` classes.
 ``notify_event``
     Notification framework :py:class:`~shoop.notify.Event` classes.
+``order_source_modifier_module``
+    `~shoop.core.order_creator.OrderSourceModifierModule` for modifying
+    order source, e.g. in its
+    `~shoop.core.order_creator.OrderSource.get_final_lines`.
 ``payment_method_module``
     Payment method module classes (deriving from :py:class:`shoop.core.methods.base.BasePaymentMethodModule`),
     as used by :py:class:`shoop.core.models.PaymentMethod`.

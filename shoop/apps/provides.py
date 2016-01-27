@@ -169,19 +169,60 @@ def load_module(setting_name, provide_category):
     """
     Load a module from a module setting.
 
-    The value of the setting must be a module identifier for the given provide category.
+    The value of the setting must be a module
+    identifier for the given provide category.
 
     :param setting_name: The setting name for the identifier
     :type setting_name: str
-    :param provide_category: The provide category for the identifier lookup (e.g. `tax_module`)
+    :param provide_category:
+      The provide category for the identifier lookup (e.g. ``tax_module``)
     :type provide_category: str
     :return: An object.
-    :rtype: object
+    :rtype: Any
     """
-    setting_value = getattr(settings, setting_name, None)
-    if not setting_value:
-        raise ImproperlyConfigured("The setting `%s` MUST be set." % setting_name)
+    setting_value = _get_settings_value(setting_name)
+    return _load_module(provide_category, setting_name, setting_value)
 
+
+def load_modules(setting_name, provide_category):
+    """
+    Load a list of modules from a module setting.
+
+    The value of the setting must be a list of module
+    identifiers for the given provide category.
+
+    The modules are returned in the same order they
+    are declared in the settings.
+
+    :param setting_name: The setting name for the identifier list
+    :type setting_name: str
+    :param provide_category:
+      The provide category for the identifier lookup (e.g. ``tax_module``)
+    :type provide_category: str
+    :return: A list of objects
+    :rtype: list[Any]
+    """
+    setting_value = _get_settings_value(setting_name)
+    return [_load_module(provide_category, setting_name, x) for x in setting_value]
+
+
+def load_module_instances(setting_name, provide_category):
+    """
+    Load a list of initialized modules from a module setting.
+
+    Basically does the same as `load_modules`, but also initializes the
+    loaded modules by calling them.
+    """
+    return [x() for x in load_modules(setting_name, provide_category)]
+
+
+def _get_settings_value(setting_name):
+    if not hasattr(settings, setting_name):
+        raise ImproperlyConfigured("The setting `%s` MUST be set." % setting_name)
+    return getattr(settings, setting_name, None)
+
+
+def _load_module(provide_category, setting_name, setting_value):
     object = get_identifier_to_object_map(provide_category).get(setting_value)
     if not object:
         raise ImproperlyConfigured(

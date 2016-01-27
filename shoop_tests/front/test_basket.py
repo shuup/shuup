@@ -14,6 +14,7 @@ from shoop.front.models import StoredBasket
 from shoop.testing.factories import (
     create_product, get_default_shop, get_default_supplier
 )
+from shoop.testing.utils import apply_request_middleware
 from shoop_tests.utils import printable_gibberish
 
 
@@ -38,12 +39,15 @@ def test_basket(rf, storage):
             request = rf.get("/")
             request.session = {}
             request.shop = shop
+            apply_request_middleware(request)
             basket = get_basket(request)
             assert basket == request.basket
+            assert basket.product_count == 0
             line = basket.add_product(supplier=supplier, shop=shop, product=product, quantity=q)
             assert line.quantity == q
             assert basket.get_lines()
             assert basket.get_product_ids_and_quantities().get(product.pk) == q
+            assert basket.product_count == q
             basket.save()
             delattr(request, "basket")
             basket = get_basket(request)

@@ -214,16 +214,6 @@ class OrderCreator(object):
         order.cache_prices()
         order.save()
         return order
-    #
-    # def assign_campaign_usages(self, order, campaign_to_code):
-    #     from shoop.shop.models.campaigns import OrderCampaignUsage
-    #
-    #     for campaign, campaign_code in campaign_to_code.iteritems():
-    #         OrderCampaignUsage.objects.create(
-    #             order=order,
-    #             campaign=campaign,
-    #             code=campaign_code
-    #         )
 
     def process_order_before_lines(self, source, order):
         # Subclass hook

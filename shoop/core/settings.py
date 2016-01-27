@@ -65,6 +65,17 @@ SHOOP_REFERENCE_NUMBER_PREFIX = ""
 #: :obj:`shoop.core.pricing` for details.
 SHOOP_PRICING_MODULE = "simple_pricing"
 
+#: List of identifiers of discount modules to use.
+#:
+#: Each discount module may change the price of a product.  See
+#: `shoop.core.pricing.DiscountModule` for details.
+SHOOP_DISCOUNT_MODULES = []
+
+#: List of identifiers of order source modifier modules.
+#:
+#: See `shoop.core.order_creator.OrderSourceModifierModule` for details.
+SHOOP_ORDER_SOURCE_MODIFIER_MODULES = []
+
 #: The identifier of the tax module to use for determining taxes of products and order lines.
 #:
 #: Determines taxing rules for products, shipping/payment methods and

@@ -23,26 +23,14 @@ import six
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.core.models import ShopProduct
-from shoop.core.pricing import PriceInfo, PricingContext, PricingModule
+from shoop.core.pricing import PriceInfo, PricingModule
 
 from .models import DiscountedProductPrice
-
-
-class DiscountPricingContext(PricingContext):
-    REQUIRED_VALUES = ["shop"]
-    shop = None
 
 
 class DiscountPricingModule(PricingModule):
     identifier = "discount_pricing"
     name = _("Discount Pricing")
-
-    pricing_context_class = DiscountPricingContext
-
-    def get_context_from_request(self, request):
-        return self.pricing_context_class(
-            shop=request.shop,
-        )
 
     def get_price_info(self, context, product, quantity=1):
         shop = context.shop
