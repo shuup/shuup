@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Rename ``CAMPAIGN`` in ``OrderLineType`` enum to ``DISCOUNT``
 - Add ``OrderSourceModifierModule`` interface for modifying order source
 - Add ``DiscountModule`` interface for pricing
 - Simplify ``PricingContext`` and require shop and customer for it
