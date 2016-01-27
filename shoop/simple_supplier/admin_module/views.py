@@ -27,8 +27,8 @@ class StocksListView(PicotableListView):
     model = Product
     columns = [
         Column(
-            "sku", _("SKU"), display="product__sku", linked=True,
-            filter_config=TextFilter(filter_field="sku", placeholder=_("Filter by SKU..."))
+            "sku", _("SKU"), sort_field="product__sku", display="product__sku", linked=True,
+            filter_config=TextFilter(filter_field="product__sku", placeholder=_("Filter by SKU..."))
         ),
         Column(
             "name", _("Name"), sort_field="product__translations__name", display="product__name", linked=True,
