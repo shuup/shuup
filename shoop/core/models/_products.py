@@ -310,10 +310,8 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         :type context: shoop.core.pricing.PricingContextable
         :rtype: shoop.core.pricing.PriceInfo
         """
-        from shoop.core.pricing import get_pricing_module
-        module = get_pricing_module()
-        pricing_context = module.get_context(context)
-        return module.get_price_info(pricing_context, product=self, quantity=quantity)
+        from shoop.core.pricing import get_price_info
+        return get_price_info(product=self, context=context, quantity=quantity)
 
     def get_price(self, context, quantity=1):
         """

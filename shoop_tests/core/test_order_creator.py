@@ -31,6 +31,16 @@ def test_invalid_source_line_updating():
         SourceLine(source).update({"update": True})
 
 
+def test_codes_type_conversion():
+    source = OrderSource(Shop())
+    source.codes = "test"
+    assert source.codes == {"t", "e", "s"}
+    source.codes = ["test", 1, "1"]
+    assert source.codes == {"test", "1"}
+    source.codes = ["12", "23"]
+    assert source.codes == {"12", "23"}
+
+
 def seed_source(user):
     source = BasketishOrderSource(get_default_shop())
     billing_address = get_address()
@@ -44,6 +54,7 @@ def seed_source(user):
     assert source.payment_method_id == get_default_payment_method().id
     assert source.shipping_method_id == get_default_shipping_method().id
     return source
+
 
 @pytest.mark.django_db
 def test_order_creator(rf, admin_user):

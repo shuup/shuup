@@ -14,6 +14,7 @@ from decimal import Decimal
 import six
 from django.contrib import messages
 from django.core.exceptions import ValidationError
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.core.models import OrderLineType, PaymentMethod, ShippingMethod
@@ -90,7 +91,6 @@ class BaseBasket(OrderSource):
         self.request = request
         self.storage = get_storage()
         self._data = None
-        self.dirty = False
         self.customer = getattr(request, "customer", None)
         self.orderer = getattr(request, "person", None)
         self.creator = getattr(request, "user", None)
@@ -170,6 +170,19 @@ class BaseBasket(OrderSource):
         line = BasketLine(source=self, **kwargs)
         self._data_lines = self._data_lines + [line.to_dict()]
         return line
+
+    @property
+    def codes(self):
+        return set(self._load().get("codes", ()))
+
+    @codes.setter
+    def codes(self, codes):
+        self._load()
+        self._data["codes"] = list(set(force_text(code) for code in codes))
+        self.uncache()
+
+    def create_line(self, **kwargs):
+        return BasketLine(source=self, **kwargs)
 
     def get_lines(self):
         return [BasketLine.from_dict(self, line) for line in self._data_lines]

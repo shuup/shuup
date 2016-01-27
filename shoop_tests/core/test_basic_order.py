@@ -18,6 +18,7 @@ from shoop.testing.factories import (
     get_default_shipping_method, get_default_supplier, get_default_tax,
     get_initial_order_status, get_shop
 )
+from shoop.testing.utils import apply_request_middleware
 
 
 def create_order(request, creator, customer, product):
@@ -112,6 +113,7 @@ def test_basic_order(rf, admin_user, mode):
 
     request = rf.get('/')
     request.shop = shop
+    apply_request_middleware(request)
     product = get_default_product()
     customer = get_person_contact(admin_user)
     for x in range(10):

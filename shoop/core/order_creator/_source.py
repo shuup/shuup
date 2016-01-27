@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django.utils.encoding import force_text
 from django.utils.timezone import now
 
 from shoop.core import taxing
@@ -14,7 +15,9 @@ from shoop.core.models import (
     OrderStatus, PaymentMethod, Product, ShippingMethod, Shop, Supplier,
     TaxClass
 )
-from shoop.core.pricing import Price, Priceful, TaxfulPrice, TaxlessPrice
+from shoop.core.pricing import (
+    get_basket_campaign_modules, Price, Priceful, TaxfulPrice, TaxlessPrice
+)
 from shoop.core.taxing import TaxableItem
 from shoop.utils.decorators import non_reentrant
 from shoop.utils.money import Money
@@ -116,6 +119,7 @@ class OrderSource(object):
         self.shipping_data = {}
         self.extra_data = {}
 
+        self.dirty = False
         self._lines = []
 
         self.zero_price = shop.create_price(0)
@@ -178,7 +182,7 @@ class OrderSource(object):
     taxful_total_discount_or_none = taxful_total_discount.or_none
     taxless_total_discount_or_none = taxless_total_discount.or_none
 
-    total_price_of_products = _PriceSum("price", "_get_product_lines")
+    total_price_of_products = _PriceSum("price", "get_product_lines")
 
     @property
     def shipping_method(self):
@@ -207,6 +211,42 @@ class OrderSource(object):
     def status(self, status):
         self.status_id = (status.id if status else None)
 
+    @property
+    def codes(self):
+        if not hasattr(self, "_codes"):
+            self._codes = set()
+        return self._codes
+
+    @codes.setter
+    def codes(self, codes):
+        self._codes = set(force_text(code) for code in codes)
+        self.uncache()
+
+    def add_code(self, code):
+        """
+        Add code to this OrderSource
+
+        At this point it is expected that the customers
+        permission to use the code has already been
+        checked by the adding instance.
+
+        :param code: Code being added
+        :type code: str
+        :rtype: True|False
+        """
+        if code not in self.codes:
+            self.codes = (self.codes | {code})
+            self.dirty = True
+            return True
+        return False
+
+    def remove_code(self, code):
+        if code in self.codes:
+            self.codes.remove(code)
+            self.dirty = True
+            return True
+        return False
+
     def add_line(self, **kwargs):
         line = SourceLine(source=self, **kwargs)
         self._lines.append(line)
@@ -220,6 +260,15 @@ class OrderSource(object):
         See also `get_final_lines`.
         """
         return self._lines
+
+    @property
+    def product_count(self):
+        """
+        Get the total number of products in this OrderSource.
+
+        :rtype: decimal.Decimal|int
+        """
+        return sum([line.quantity for line in self.get_product_lines()])
 
     def get_final_lines(self, with_taxes=False):
         """
@@ -264,6 +313,14 @@ class OrderSource(object):
                 raise TaxesNotCalculated('Taxes are not calculated')
             self.calculate_taxes()
 
+    def _get_basket_campaign_lines(self, lines):
+        """
+        Get basket campaign lines from available `CampaignModule`s
+        """
+        for module in get_basket_campaign_modules():
+            for line in module.get_basket_campaign_lines(self, lines):
+                yield line
+
     def uncache(self):
         """
         Uncache processed lines.
@@ -284,6 +341,7 @@ class OrderSource(object):
 
         lines.extend(self._compute_payment_method_lines())
         lines.extend(self._compute_shipping_method_lines())
+        lines.extend(self._get_basket_campaign_lines(lines))
 
         lines.extend(_collect_lines_from_signal(
             post_compute_source_lines.send(
@@ -301,7 +359,7 @@ class OrderSource(object):
             for line in self.shipping_method.get_source_lines(self):
                 yield line
 
-    def _get_product_lines(self):
+    def get_product_lines(self):
         """
         Get lines with a product.
 
