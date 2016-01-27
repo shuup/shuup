@@ -1,0 +1,10 @@
+<div id="{{ div_id }}">
+    {% if stock %}
+        <p>{% trans %}Physical count{% endtrans %}: {{ stock.physical_count|floatformat(sales_decimals) }} {{ sales_unit }}</p>
+        <p>{% trans %}Logical count{% endtrans %}: {{ stock.logical_count|floatformat(sales_decimals) }} {{ sales_unit }}</p>
+        <p>{% trans %}Value per unit{% endtrans %}: {{ stock.stock_unit_price|money }}</p>
+        <p>{% trans %}Total value{% endtrans %}: {{ stock.stock_value|money }}</p>
+    {% else %}
+        {% trans %}No stock information available.{% endtrans %}
+    {% endif %}
+</div>

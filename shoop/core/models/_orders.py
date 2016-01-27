@@ -347,6 +347,8 @@ class Order(MoneyPropped, models.Model):
         super(Order, self).save(*args, **kwargs)
         if first_save:  # Have to do a double save the first time around to be able to save identifiers
             self._save_identifiers()
+        for line in self.lines.exclude(product_id=None):
+            line.supplier.module.update_stock(line.product_id)
 
     def delete(self, using=None):
         if not self.deleted:

@@ -486,7 +486,8 @@ const Picotable = (function(m, storage) {
                 linkAttrs.onclick = Util.boundPartial(ctrl, ctrl.pickObject, item);
                 linkAttrs.href = "#";
             }
-            return m("div.list-element", m("a.inner", linkAttrs, content));
+            var element = (item._linked_in_mobile ? m("a.inner", linkAttrs, content) : m("span.inner", content));
+            return m("div.list-element", element);
         });
         return m("div.mobile", [
             m("div.row.mobile-header", [

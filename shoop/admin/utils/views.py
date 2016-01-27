@@ -23,6 +23,7 @@ from shoop.admin.utils.picotable import PicotableViewMixin
 from shoop.admin.utils.urls import (
     get_model_front_url, get_model_url, NoModelUrl
 )
+from shoop.utils.excs import Problem
 from shoop.utils.multilanguage_model_form import MultiLanguageModelForm
 
 
@@ -135,6 +136,13 @@ def get_create_or_change_title(request, instance, name_field=None):
         return force_text(name)
 
     return _("Unnamed %s") % instance._meta.verbose_name
+
+
+def check_and_raise_if_only_one_allowed(setting_name, obj):
+    if getattr(settings, setting_name, True):
+        return
+    if not obj.pk and obj.__class__.objects.count() >= 1:
+        raise Problem(_("Only one %(model)s permitted.") % {"model": obj._meta.verbose_name})
 
 
 class PicotableListView(PicotableViewMixin, ListView):

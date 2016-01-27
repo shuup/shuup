@@ -72,6 +72,11 @@ class ShopProduct(MoneyPropped, models.Model):
     class Meta:
         unique_together = (("shop", "product",),)
 
+    def save(self, *args, **kwargs):
+        super(ShopProduct, self).save(*args, **kwargs)
+        for supplier in self.suppliers.all():
+            supplier.module.update_stock(product_id=self.product.id)
+
     def is_list_visible(self):
         """
         Return True if this product should be visible in listings in general,
@@ -223,6 +228,8 @@ class ShopProduct(MoneyPropped, models.Model):
             raise ProductNotVisibleProblem(message.args[0])
 
     def is_orderable(self, supplier, customer, quantity):
+        if not supplier:
+            supplier = self.suppliers.first()  # TODO: Allow multiple suppliers
         for message in self.get_orderability_errors(supplier=supplier, quantity=quantity, customer=customer):
             return False
         return True

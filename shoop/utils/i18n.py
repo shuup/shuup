@@ -129,3 +129,8 @@ def javascript_catalog_all(request, domain='djangojs'):
     """
     all_apps = [x.name for x in apps.get_app_configs()]
     return javascript_catalog(request, domain, all_apps)
+
+
+def get_currency_name(currency):
+    locale = get_current_babel_locale()
+    return babel.numbers.get_currency_name(currency, locale=locale)

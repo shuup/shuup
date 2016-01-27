@@ -219,6 +219,7 @@ class Column(object):
         self.filter_config = kwargs.pop("filter_config", None)
         self.sortable = bool(kwargs.pop("sortable", True))
         self.linked = bool(kwargs.pop("linked", True))
+        self.raw = bool(kwargs.pop("raw", False))
         if kwargs and type(self) is Column:  # If we're not derived, validate that client code doesn't fail
             raise NameError("Unexpected kwarg(s): %s" % kwargs.keys())
 
@@ -230,6 +231,7 @@ class Column(object):
             "filter": self.filter_config.to_json(context=context) if self.filter_config else None,
             "sortable": bool(self.sortable),
             "linked": bool(self.linked),
+            "raw": bool(self.raw),
         }
         return dict((key, value) for (key, value) in six.iteritems(out) if value is not None)
 
@@ -319,6 +321,7 @@ class Picotable(object):
         out = {
             "_id": object.id,
             "_url": (self.get_object_url(object) if callable(self.get_object_url) else None),
+            "_linked_in_mobile": True
         }
         for column in self.columns:
             out[column.id] = column.get_display_value(context=self.context, object=object)

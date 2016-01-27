@@ -12,10 +12,11 @@ from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.forms.widgets import MediaChoiceWidget
 from shoop.admin.toolbar import get_default_edit_toolbar
-from shoop.admin.utils.views import CreateOrUpdateView
+from shoop.admin.utils.views import (
+    check_and_raise_if_only_one_allowed, CreateOrUpdateView
+)
 from shoop.core.models import Shop
 from shoop.core.utils.form_mixins import ProtectedFieldsMixin
-from shoop.utils.excs import Problem
 from shoop.utils.multilanguage_model_form import MultiLanguageModelForm
 
 
@@ -40,10 +41,7 @@ class ShopEditView(CreateOrUpdateView):
 
     def get_object(self, queryset=None):
         obj = super(ShopEditView, self).get_object(queryset)
-        if not settings.SHOOP_ENABLE_MULTIPLE_SHOPS:
-            if not obj.pk and Shop.objects.count() >= 1:
-                # This seems like a new object, but there already is (at least) one shop...
-                raise Problem(_(u"Only one shop permitted."))
+        check_and_raise_if_only_one_allowed("SHOOP_ENABLE_MULTIPLE_SHOPS", obj)
 
         return obj
 

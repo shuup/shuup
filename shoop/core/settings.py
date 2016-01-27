@@ -80,6 +80,10 @@ SHOOP_ENABLE_ATTRIBUTES = True
 #: but having it disabled may confer a small performance increase.
 SHOOP_ENABLE_MULTIPLE_SHOPS = False
 
+#: Whether multiple suppliers are enabled in this installation.
+#: Enabling this flag prevents supplier creation from admin.
+SHOOP_ENABLE_MULTIPLE_SUPPLIERS = False
+
 #: A list of order labels (2-tuples of internal identifier / visible name).
 #:
 #: Order labels serve as a simple taxonomy layer for easy "tagging" of orders even within

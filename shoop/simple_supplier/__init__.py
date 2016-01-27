@@ -15,8 +15,13 @@ class ShoopSimpleSupplierAppConfig(AppConfig):
     provides = {
         "supplier_module": [
             "shoop.simple_supplier.module:SimpleSupplierModule"
+        ],
+        "admin_product_form_part": [
+            "shoop.simple_supplier.admin_module.forms:SimpleSupplierFormPart"
+        ],
+        "admin_module": [
+            "shoop.simple_supplier.admin_module:StocksAdminModule"
         ]
     }
-
 
 default_app_config = "shoop.simple_supplier.ShoopSimpleSupplierAppConfig"

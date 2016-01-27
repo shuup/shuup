@@ -1,0 +1,27 @@
+{% from "shoop/admin/macros/general.jinja" import content_block with context %}
+{% set ss_form = form["simple_supplier"] %}
+{% set product_qty = ss_form.products|length %}
+{% if product_qty %}
+    {% call content_block(_("Stock management"), "fa-cubes") %}
+        {% set product_qty = ss_form.products|length %}
+        {% for product in ss_form.products %}
+            {% set suppliers = ss_form.get_suppliers(product) %}
+            {% if suppliers and product_qty > 1 %}<h2>{{ product.name }}</h2>{% endif %}
+            {% for supplier in suppliers %}
+                <h3>{{ supplier.name }}</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ ss_form.get_stock_information(supplier, product)|safe }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ ss_form.get_stock_adjustment_form(supplier, product)|safe }}
+                    </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endcall %}
+{% endif %}
+
+{% block extra_js %}
+    <script src="{{ static("simple_supplier/js/extra.js") }}"></script>
+{% endblock %}
