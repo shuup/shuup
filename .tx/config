@@ -92,6 +92,11 @@ file_filter = shoop/simple_supplier/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
+[shoop.simple-supplier-javascript]
+file_filter = shoop/simple_supplier/locale/<lang>/LC_MESSAGES/djangojs.po
+source_lang = en
+type = PO
+
 [shoop.testing]
 file_filter = shoop/testing/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
