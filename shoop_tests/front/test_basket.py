@@ -67,3 +67,24 @@ def test_basket(rf, storage):
                 assert stats["tfs"] == sum(quantities) * 50
             else:
                 assert stats["tls"] == sum(quantities) * 50
+
+
+@pytest.mark.django_db
+def test_basket_dirtying_with_fnl(rf):
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=50)
+    request = rf.get("/")
+    request.session = {}
+    request.shop = shop
+    apply_request_middleware(request)
+    basket = get_basket(request)
+    line = basket.add_product(
+        supplier=supplier,
+        shop=shop,
+        product=product,
+        quantity=1,
+        force_new_line=True,
+        extra={"foo": "foo"}
+    )
+    assert basket.dirty  # The change should have dirtied the basket

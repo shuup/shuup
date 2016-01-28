@@ -158,10 +158,30 @@ class BaseBasket(OrderSource):
 
     @property
     def _data_lines(self):
+        """
+        Get the line data (list of dicts).
+
+        If the list is edited, it must be re-assigned
+        to ``self._data_lines`` to ensure the `dirty`
+        flag gets set.
+
+        :return: List of data dicts
+        :rtype: list[dict]
+        """
         return self._load().setdefault("lines", [])
 
     @_data_lines.setter
     def _data_lines(self, new_lines):
+        """
+        Set the line data (list of dicts).
+
+        Note that this assignment must be made instead
+        of editing `_data_lines` in-place to ensure
+        the `dirty` bit gets set.
+
+        :param new_lines: New list of lines.
+        :type new_lines: list[dict]
+        """
         self._load()["lines"] = new_lines
         self.dirty = True
         self.uncache()
@@ -270,7 +290,7 @@ class BaseBasket(OrderSource):
             index = len(line_ids)
         self.delete_line(data_line["line_id"])
         self._data_lines.insert(index, data_line)
-        self.uncache()
+        self._data_lines = list(self._data_lines)  # This will set the dirty bit and call uncache.
 
     def add_product(self, supplier, shop, product, quantity, force_new_line=False, extra=None, parent_line=None):
         if not extra:
