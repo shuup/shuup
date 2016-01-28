@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-30 23:37+0000\n"
+"POT-Creation-Date: 2016-01-29 18:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -46,13 +46,24 @@ msgstr ""
 msgid "Reload application"
 msgstr ""
 
+msgid ""
+"There are no viable reload methods available. Please contact your system "
+"administrator."
+msgstr ""
+
 msgid "Reload Method"
+msgstr ""
+
+msgid "Reloading."
 msgstr ""
 
 msgid "Addon file (ZIP)"
 msgstr ""
 
 msgid "Only upload addon files you trust."
+msgstr ""
+
+msgid "Only ZIP files are supported"
 msgstr ""
 
 msgid "Upload"
@@ -87,6 +98,15 @@ msgid ""
 "yourself (or have a system administrator handy)."
 msgstr ""
 
+msgid "Reload initiated"
+msgstr ""
+
+msgid "Your Shoop seems to be back up!"
+msgstr ""
+
+msgid "Your Shoop is not up yet. Trying again soon."
+msgstr ""
+
 msgid "Select file"
 msgstr ""
 
@@ -99,16 +119,11 @@ msgstr ""
 msgid "Success"
 msgstr ""
 
-msgid "Next"
-msgstr ""
-
-msgid "activate the newly installed addon"
-msgstr ""
-
-msgid "and"
-msgstr ""
-
-msgid "reload your application server"
+#, python-format
+msgid ""
+"Next, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activate "
+"the newly installed addon</strong></a> and <a href=\"%(addon_reload_url)s\" "
+"class=\"text-success\"><strong>reload your application server</strong></a>."
 msgstr ""
 
 msgid "Error"

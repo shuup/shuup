@@ -41,7 +41,7 @@
     function beginCheckReload() {
         stopCheckReload();
         reloadCheckTimer = setInterval(checkReload, 2000);
-        Messages.enqueue({tags: "info", text: "Reload initiated."});
+        Messages.enqueue({tags: "info", text: "{% trans %}Reload initiated{% endtrans %}."});
     }
 
     function checkReload() {
@@ -51,14 +51,14 @@
             success: function() {
                 Messages.enqueue({
                     tags: "success",
-                    text: "Your Shoop seems to be back up!"
+                    text: "{% trans %}Your Shoop seems to be back up!{% endtrans %}"
                 });
                 stopCheckReload();
             },
             error: function() {
                 Messages.enqueue({
                     tags: "info",
-                    text: "Your Shoop is not up yet. Trying again soon."
+                    text: "{% trans %}Your Shoop is not up yet. Trying again soon.{% endtrans %}"
                 });
             }
         })
