@@ -17,9 +17,9 @@ Finland.
 CLA
 ---
 
-Notice: At the release of Shoop Marketplace we will be adding
-Contributor License Agreement for Shoop to allow the best possible
-experience for users to sell add-ons through Shoop Marketplace.
+Contributor License Agreement is required for any contribution to
+this project. Agreement is signed as a part of pull request process.
+See the CLA.md file distributed with Shoop.
 
 License
 -------
