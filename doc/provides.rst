@@ -63,6 +63,9 @@ Provide Categories
     Additional namespaces to install in the ``shoop`` "package" within
     template contexts.
     .. seealso:: :ref:`custom-template-helper-functions`
+``admin_order_toolbar_button``
+    Additional ``BaseActionButton`` subclasses for Order detail.
+    Subclass init should take current order as a parameter.
 ``front_urls``
     Lists of frontend URLs to be appended to the usual frontend URLs.
 ``front_urls_post``

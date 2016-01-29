@@ -77,6 +77,11 @@ file_filter = shoop/notify/locale/<lang>/LC_MESSAGES/djangojs.po
 source_lang = en
 type = PO
 
+[shoop.order-printouts]
+file_filter = shoop/order_printouts/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
 [shoop.simple-cms]
 file_filter = shoop/simple_cms/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en

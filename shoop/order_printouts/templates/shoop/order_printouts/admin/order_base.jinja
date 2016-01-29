@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    {% set styles_url = STATIC_URL + "printouts/css/extra.css" %}
+    <link rel="stylesheet" href="{{ request.build_absolute_uri(styles_url) }}">
+    <style>
+        @page {
+            @top-center {
+                content: "{{ header }}";
+                font-size: 0.7em;
+                font-weight: normal;
+            }
+            @top-right {
+                content: counter(page) "/" counter(pages);
+                font-size: 0.7em;
+                font-weight: normal;
+            }
+            @bottom-center {
+                content: "{{ footer }}";
+                font-size: 0.7em;
+                font-weight: normal;
+            }
+        }
+    </style>
+</head>
+<body>
+{%- import "shoop/order_printouts/admin/macros.jinja" as macros with context -%}
+<table>
+    <thead>
+        <tr>
+            {% set cropped_logo = order.shop.logo|thumbnail(size=(240, 80), upscale=True) %}
+            <td colspan="45"><img src="{{ request.build_absolute_uri(cropped_logo) }}"></td>
+            <td colspan="10"></td>
+            <td colspan="45" class="align-right">
+                <strong>{% trans %}Order{% endtrans %} #{{ order.id }}</strong><br>
+                {{ today.strftime('%d.%m.%Y') }}
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="45">
+                {{ macros.print_address(order.shipping_address) }}
+                {% if order.shipping_address_id != order.billing_address_id %}
+                    <h3>{% trans %}Billing address{% endtrans %}</h3>
+                    {{ macros.print_address(order.billing_address) }}
+                {% endif %}
+            </td>
+            <td colspan="10"></td>
+            <td colspan="45">
+                {% block information %}{% endblock %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% block content %}{% endblock %}
+</body>
+</html>
