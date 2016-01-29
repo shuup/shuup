@@ -6,12 +6,12 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
+from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.http.response import HttpResponseRedirect, JsonResponse
 
 from shoop.core.models import (
-    ProductVariationResult, ProductVariationVariable,
-    ProductVariationVariableValue
+    ProductVariationVariable, ProductVariationVariableValue
 )
 from shoop.front.basket import commands as basket_commands
 from shoop.front.basket import get_basket_command_dispatcher
@@ -150,6 +150,36 @@ def test_basket_update():
     assert basket.product_count == 2
     basket_commands.handle_update(request, basket, **{"delete_%s" % line_id: "1"})
     assert basket.product_count == 0
+
+
+@pytest.mark.django_db
+def test_basket_update_errors():
+    request = get_request_with_basket()
+    basket = request.basket
+    product = get_default_product()
+    basket_commands.handle_add(request, basket, product_id=product.pk, quantity=1)
+
+    # Hide product and now updating quantity should give errors
+    shop_product = product.get_shop_instance(request.shop)
+    shop_product.suppliers.clear()
+
+    line_id = basket.get_lines()[0].line_id
+    basket_commands.handle_update(request, basket, **{"q_%s" % line_id: "2"})
+    error_messages = messages.get_messages(request)
+    # One warning is added to messages
+    assert len(error_messages) == 1
+    assert any("not supplied" in msg.message for msg in error_messages)
+
+    shop_product.visible = False
+    shop_product.save()
+
+    basket_commands.handle_update(request, basket, **{"q_%s" % line_id: "2"})
+
+    error_messages = messages.get_messages(request)
+    # Two warnings is added to messages
+    assert len(error_messages) == 3
+    assert any("not visible" in msg.message for msg in error_messages)
+    assert all("[" not in msg.message for msg in error_messages)
 
 
 @pytest.mark.django_db
