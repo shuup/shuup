@@ -35,7 +35,7 @@ class SimpleSupplierForm(forms.Form):
         return  # No need to save anything since all stock adjustments are made by AJAX.
 
     def get_suppliers(self, product):
-        return Supplier.objects.filter(shop_products__product=product)
+        return Supplier.objects.filter(shop_products__product=product, module_identifier="simple_supplier")
 
     def get_stock_information(self, supplier, product):
         return get_stock_information_html(supplier, product)
