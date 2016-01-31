@@ -2,6 +2,7 @@
 <html>
 <head>
     {% set styles_url = STATIC_URL + "printouts/css/extra.css" %}
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' type='text/css'>
     <link rel="stylesheet" href="{{ request.build_absolute_uri(styles_url) }}">
     <style>
         @page {
@@ -29,9 +30,9 @@
     <thead>
         <tr>
             {% set cropped_logo = order.shop.logo|thumbnail(size=(240, 80), upscale=True) %}
-            <td colspan="45"><img src="{{ request.build_absolute_uri(cropped_logo) }}"></td>
-            <td colspan="10"></td>
-            <td colspan="45" class="align-right">
+            <td width="45"><img src="{{ request.build_absolute_uri(cropped_logo) }}"></td>
+            <td width="10"></td>
+            <td width="45" class="align-right">
                 <strong>{% trans %}Order{% endtrans %} #{{ order.id }}</strong><br>
                 {{ today.strftime('%d.%m.%Y') }}
             </td>
@@ -39,15 +40,15 @@
     </thead>
     <tbody>
         <tr>
-            <td colspan="45">
+            <td width="45">
                 {{ macros.print_address(order.shipping_address) }}
                 {% if order.shipping_address_id != order.billing_address_id %}
                     <h3>{% trans %}Billing address{% endtrans %}</h3>
                     {{ macros.print_address(order.billing_address) }}
                 {% endif %}
             </td>
-            <td colspan="10"></td>
-            <td colspan="45">
+            <td width="10"></td>
+            <td width="45">
                 {% block information %}{% endblock %}
             </td>
         </tr>

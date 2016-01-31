@@ -78,24 +78,24 @@
     <table>
         <thead>
             <tr>
-                {% if show_sku %}<th colspan="10">{% trans %}SKU{% endtrans %}</th>{% endif %}
-                <th colspan="60">{% trans %}Text{% endtrans %}</th>
-                <th colspan="10" class="align-right">{% trans %}Quantity{% endtrans %}</th>
-                <th colspan="10" class="align-right">{% trans %}Tax{% endtrans %}</th>
-                <th colspan="10" class="align-right">{% trans %}Total price{% endtrans %}</th>
+                {% if show_sku %}<th width="10">{% trans %}SKU{% endtrans %}</th>{% endif %}
+                <th width="60">{% trans %}Text{% endtrans %}</th>
+                <th width="10" class="align-right">{% trans %}Quantity{% endtrans %}</th>
+                <th width="10" class="align-right">{% trans %}Tax{% endtrans %}</th>
+                <th width="10" class="align-right">{% trans %}Total price{% endtrans %}</th>
             </tr>
             </thead>
             <tbody>
             {% for ol in order_lines %}
                 <tr>
-                    {% if show_sku %}<td colspan="10">{{ ol.sku }}</td>{% endif %}
-                    <td colspan="60">{{ ol.text }}</td>
+                    {% if show_sku %}<td width="10">{{ ol.sku }}</td>{% endif %}
+                    <td width="60">{{ ol.text }}</td>
                     {% if ol.quantity != 0 %}
-                        <td colspan="10" class="align-right">{{ ol.quantity|floatformat(2) }}</td>
-                        <td colspan="10" class="align-right">{{ ol.tax_rate }}%</td>
-                        <td colspan="10" class="align-right">{{ ol.taxful_price|money }}</td>
+                        <td width="10" class="align-right">{{ ol.quantity|floatformat(2) }}</td>
+                        <td width="10" class="align-right">{{ ol.tax_rate }}%</td>
+                        <td width="10" class="align-right">{{ ol.taxful_price|money }}</td>
                     {% else %}
-                        <td colspan="30"></td>
+                        <td width="30"></td>
                     {% endif %}
                 </tr>
             {% endfor %}
@@ -103,14 +103,18 @@
         {% if show_totals %}
             <tfoot>
                 <tr class="totals-row">
-                    <td colspan="70"></td>
-                    <td colspan="20" class="align-right">{% trans %}Taxful total{% endtrans %}</td>
-                    <td colspan="10" class="align-right">{{ order.taxful_total_price|money }}</td>
+                    <td width="10"></td>
+                    <td width="60"></td>
+                    <td width="10"></td>
+                    <td width="10" class="align-right">{% trans %}Taxful total{% endtrans %}</td>
+                    <td width="10" class="align-right">{{ order.taxful_total_price|money }}</td>
                 </tr>
                 <tr class="totals-row">
-                    <td colspan="70"></td>
-                    <td colspan="20" class="align-right">{% trans %}Taxless total{% endtrans %}</td>
-                    <td colspan="10" class="align-right">{{ order.taxless_total_price|money }}</td>
+                    <td width="10"></td>
+                    <td width="60"></td>
+                    <td width="10"></td>
+                    <td width="10" class="align-right">{% trans %}Taxless total{% endtrans %}</td>
+                    <td width="10" class="align-right">{{ order.taxless_total_price|money }}</td>
                 </tr>
             </tfoot>
         {% endif %}
