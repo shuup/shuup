@@ -42,7 +42,7 @@ def get_delivery_pdf(request, shipment_pk):
         "footer": get_footer_information(order.shop)
     }
     html = render_to_string("shoop/order_printouts/admin/delivery_pdf.jinja", context=context, request=request)
-    return pdf_export.render_html_to_pdf(html)
+    return pdf_export.render_html_to_pdf(html, stylesheet_paths=["order_printouts/css/extra.css"])
 
 
 def get_confirmation_pdf(request, order_pk):
@@ -54,4 +54,4 @@ def get_confirmation_pdf(request, order_pk):
         "footer": get_footer_information(order.shop)
     }
     html = render_to_string("shoop/order_printouts/admin/confirmation_pdf.jinja", context=context, request=request)
-    return pdf_export.render_html_to_pdf(html)
+    return pdf_export.render_html_to_pdf(html, stylesheet_paths=["order_printouts/css/extra.css"])
