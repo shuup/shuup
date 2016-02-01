@@ -35,6 +35,7 @@ class PackageInstaller(object):
         cmd = [
             get_pip_path(),
             "install",
+            "--upgrade",
             "--verbose",
             "--require-venv",
             package_path
