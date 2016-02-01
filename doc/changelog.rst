@@ -71,6 +71,11 @@ General/miscellaneous
 
 - Add campaigns module
 
+Addons
+~~~~~~
+
+- Enable upgrade, migrations and collectstatic from admin
+
 
 Version 3.0.0
 -------------

@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="container-fluid">
-        <form method="post" id="addon_reload_form" target="reload-target" onsubmit="beginCheckReload()">
+        <form method="post" id="addon_reload_form" target="reload-target" onsubmit="beginReload()">
             {% csrf_token %}
             {% call content_block(_("Reload Application Server"), "fa-refresh") %}
                 {{ bs3.field(form.reload_method) }}
@@ -14,14 +14,20 @@
                             <p><strong>{% trans %}When you reload the application server, it may take some time for the new instance of your application to properly initialize.{% endtrans %}</strong></p>
                             <p><strong>{% trans %}In addition, there is always a chance for the server to not properly initialize at all, in which case you may need to troubleshoot the problem yourself (or have a system administrator handy).{% endtrans %}</strong></p>
                         </div>
+                        <h3>{% trans %}Reload steps{% endtrans %}</h3>
+                        <ol>
+                            <li>{% trans %}Finalize installations for newly installed addons (migrate and collect static resources){% endtrans %}</li>
+                            <li>{% trans %}Reload application server{% endtrans %}</li>
+                        </ol>
                         <hr>
-                        <button type="submit" class="btn btn-warning">
+                        <button id="reload-button" type="submit" class="btn btn-warning">
                             <i class="fa fa-refresh"></i>
                             {% trans %}Reload Application Server{% endtrans %}
                         </button>
                         <iframe name="reload-target" src="about:blank" frameborder="0" style="display: none"></iframe>
                     </div>
                 </div>
+                <div id="reload-log"></div>
             {% endcall %}
         </form>
     </div>
@@ -30,7 +36,10 @@
 {% block extra_js %}
 <script>
     var reloadCheckTimer = null;
+    var started_migrating = false;
+    var reloadUrl = {{ request.path|json }};
     var reloadCheckUrl = {{ (request.path + "?ping=1")|json }};
+    var finalizeUrl = {{ (request.path + "?finalize=1")|json }};
 
     function stopCheckReload() {
         if(reloadCheckTimer) {
@@ -38,10 +47,39 @@
             reloadCheckTimer = null;
         }
     }
-    function beginCheckReload() {
+
+    function reloadApplication() {
         stopCheckReload();
         reloadCheckTimer = setInterval(checkReload, 2000);
-        Messages.enqueue({tags: "info", text: "{% trans %}Reload initiated{% endtrans %}."});
+        Messages.enqueue({tags: "info", text: "{% trans %}Reload initiated.{% endtrans %}"});
+        $.ajax({type: "POST", url: reloadUrl, data: $("#addon_reload_form").serialize()});
+    }
+
+    function beginReload() {
+        event.preventDefault();
+        $("#reload-button").attr("disabled", true);
+        finalizeInstallations();
+    }
+
+    function sendCommand(url, next) {
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (data) {
+                $("#reload-log").append("<pre><code>" + data.message + "</code></pre>");
+                next();
+            },
+            error: function (response) {
+                Messages.enqueue({tags: "error", text: "{% trans %}Error while reloading application.{% endtrans %}"});
+                $("#reload-log").append("<pre><code>" + response.responseJSON.message + "</code></pre>");
+            }
+        });
+    }
+
+    function finalizeInstallations() {
+        started_migrating = true;
+        Messages.enqueue({tags: "info", text: "{% trans %}Finalizing installations.{% endtrans %}"});
+        sendCommand(finalizeUrl, reloadApplication);
     }
 
     function checkReload() {
