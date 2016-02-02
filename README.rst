@@ -17,9 +17,9 @@ Finland.
 CLA
 ---
 
-Contributor License Agreement is required for any contribution to
-this project. Agreement is signed as a part of pull request process.
-See the CLA.md file distributed with Shoop.
+Contributor License Agreement is required for any contribution to this
+project.  Agreement is signed as a part of pull request process.  See
+the CLA.rst file distributed with Shoop.
 
 License
 -------
