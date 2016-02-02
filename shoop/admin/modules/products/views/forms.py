@@ -71,6 +71,7 @@ class ShopProductForm(forms.ModelForm):
         model = ShopProduct
         fields = (
             "default_price_value",
+            "minimum_price_value",
             "suppliers",
             "visible",
             "listed",

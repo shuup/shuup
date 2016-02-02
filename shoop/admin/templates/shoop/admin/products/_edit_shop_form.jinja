@@ -15,6 +15,7 @@
 
 {% call content_block(shop_name_prefix ~ _("Purchasing"), "fa-shopping-cart") %}
     {{ bs3.field(shop_product_form.default_price_value) }}
+    {{ bs3.field(shop_product_form.minimum_price_value) }}
     {{ bs3.field(shop_product_form.suppliers) }}
     {{ bs3.field(shop_product_form.purchase_multiple) }}
     {{ bs3.field(shop_product_form.minimum_purchase_quantity) }}

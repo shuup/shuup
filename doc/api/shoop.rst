@@ -10,6 +10,7 @@ Subpackages
     shoop.admin
     shoop.api
     shoop.apps
+    shoop.campaigns
     shoop.core
     shoop.default_tax
     shoop.discount_pricing

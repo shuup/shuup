@@ -69,12 +69,12 @@ SHOOP_PRICING_MODULE = "simple_pricing"
 #:
 #: Each discount module may change the price of a product.  See
 #: `shoop.core.pricing.DiscountModule` for details.
-SHOOP_DISCOUNT_MODULES = []
+SHOOP_DISCOUNT_MODULES = ["catalog_campaigns"]
 
 #: List of identifiers of order source modifier modules.
 #:
 #: See `shoop.core.order_creator.OrderSourceModifierModule` for details.
-SHOOP_ORDER_SOURCE_MODIFIER_MODULES = []
+SHOOP_ORDER_SOURCE_MODIFIER_MODULES = ["basket_campaigns"]
 
 #: The identifier of the tax module to use for determining taxes of products and order lines.
 #:

@@ -288,6 +288,9 @@ class OrderSource(object):
         """
         return sum([line.quantity for line in self.get_product_lines()])
 
+    def create_line(self, **kwargs):
+        return SourceLine(source=self, **kwargs)
+
     def get_final_lines(self, with_taxes=False):
         """
         Get lines with processed lines added.

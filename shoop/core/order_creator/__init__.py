@@ -11,11 +11,13 @@ from shoop.utils import update_module_attributes
 from ._creator import OrderCreator
 from ._source import OrderSource, SourceLine, TaxesNotCalculated
 from ._source_modifier import (
-    get_order_source_modifier_modules, OrderSourceModifierModule
+    get_order_source_modifier_modules, is_code_usable,
+    OrderSourceModifierModule
 )
 
 __all__ = [
     "get_order_source_modifier_modules",
+    "is_code_usable",
     "OrderCreator",
     "OrderSource",
     "OrderSourceModifierModule",
