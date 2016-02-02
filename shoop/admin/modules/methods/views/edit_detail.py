@@ -25,7 +25,7 @@ class _BaseMethodDetailView(DetailView):
         object = self.get_object()
         module = object.module
         if not module.admin_detail_view_class:
-            raise Problem("Module %s has no admin detail view" % module.name)
+            raise Problem(_("Module %(name)s has no admin detail view", name=module.name))
         if isinstance(module.admin_detail_view_class, six.text_type):
             view_class = load(module.admin_detail_view_class)
         else:

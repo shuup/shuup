@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 13:16+0000\n"
+"POT-Creation-Date: 2016-01-29 18:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -119,6 +119,10 @@ msgstr ""
 msgid "Company"
 msgstr ""
 
+#, python-format
+msgid "User %(bind_user)s already has a contact"
+msgstr ""
+
 msgid "Email"
 msgstr ""
 
@@ -220,6 +224,10 @@ msgstr ""
 
 #, python-format
 msgid "Default %s module"
+msgstr ""
+
+#, python-format
+msgid "Module %(name)s has no admin detail view"
 msgstr ""
 
 msgid "Orders"
@@ -550,9 +558,6 @@ msgid ""
 "This field cannot be changed since there are existing orders for this shop."
 msgstr ""
 
-msgid "Only one shop permitted."
-msgstr ""
-
 msgid "Domain"
 msgstr ""
 
@@ -768,6 +773,9 @@ msgstr ""
 msgid "Search for"
 msgstr ""
 
+msgid "Settings"
+msgstr ""
+
 msgid "Hello"
 msgstr ""
 
@@ -946,13 +954,10 @@ msgstr ""
 msgid "Payments"
 msgstr ""
 
+msgid "Error!"
+msgstr ""
+
 msgid "Additional Details"
-msgstr ""
-
-msgid "Stock"
-msgstr ""
-
-msgid "Unstocked"
 msgstr ""
 
 msgid "Accounting"
@@ -1052,9 +1057,11 @@ msgstr ""
 msgid "Shoop will occasionally send telemetry data to a Shoop.io server."
 msgstr ""
 
+#, python-format
 msgid ""
 "The data contains an unique installation key, as well as the hostname of the "
-"installation (as sent by the visiting browser; currently"
+"installation (as sent by the visiting browser; currently <code>%(host)s</"
+"code>)."
 msgstr ""
 
 msgid ""
@@ -1066,13 +1073,9 @@ msgstr ""
 msgid "Opt-in / opt-out"
 msgstr ""
 
-msgid "You are currently"
-msgstr ""
-
-msgid "opted in"
-msgstr ""
-
-msgid "to send telemetry data to Shoop.io."
+msgid ""
+"You are currently <span class=\"lead label label-success\">opted in</span> "
+"to send telemetry data to Shoop.io."
 msgstr ""
 
 msgid "Thank you for your valuable contribution."
@@ -1081,10 +1084,9 @@ msgstr ""
 msgid "Opt out"
 msgstr ""
 
-msgid "opted out"
-msgstr ""
-
-msgid "of Shoop telemetry."
+msgid ""
+"You are currently <span class=\"label label-warning\">opted out</span> of "
+"Shoop telemetry."
 msgstr ""
 
 msgid "Opt in"
@@ -1098,10 +1100,10 @@ msgid ""
 "after installation if still opted in at that point."
 msgstr ""
 
-msgid "Telemetry data was last submitted at"
-msgstr ""
-
-msgid "ago"
+#, python-format
+msgid ""
+"Telemetry data was last submitted at %(submission_datetime)s - "
+"(%(submission_timesince)s) ago"
 msgstr ""
 
 msgid "See the data that was submitted."
@@ -1190,4 +1192,8 @@ msgstr ""
 
 #, python-format
 msgid "Unnamed %s"
+msgstr ""
+
+#, python-format
+msgid "Only one %(model)s permitted."
 msgstr ""

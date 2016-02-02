@@ -12,7 +12,7 @@
         <div class="content-block">
             {% if success %}
                 <h2><i class="fa fa-check text-success"></i> {% trans %}Success{% endtrans %}</h2>
-                <p>{% trans %}Next{% endtrans %}, <a href="{{ url("shoop_admin:addon.list") }}" class="text-success"><strong>{% trans %}activate the newly installed addon{% endtrans %}</strong></a> {% trans %}and{% endtrans %} <a href="{{ url("shoop_admin:addon.reload") }}" class="text-success"><strong>{% trans %}reload your application server{% endtrans %}</strong></a>.</p>
+                <p>{% trans addon_list_url=url("shoop_admin:addon.list"), addon_reload_url=("shoop_admin:addon.reload") %}Next, <a href="{{ addon_list_url }}" class="text-success"><strong>activate the newly installed addon</strong></a> and <a href="{{ addon_reload_url }}" class="text-success"><strong>reload your application server</strong></a>.{% endtrans %}</p>
             {% endif %}
             {% if error %}
                 <h2><i class="fa fa-exclamation-circle text-danger"></i> {% trans %}Error{% endtrans %}</h2>

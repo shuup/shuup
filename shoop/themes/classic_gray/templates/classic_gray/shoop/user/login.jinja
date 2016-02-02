@@ -11,7 +11,7 @@
             {% trans %}Log in{% endtrans %}
         </h1>
         <p class="lead">
-            {% trans %}You have already been logged in as{% endtrans %} <strong>{% if user.first_name or user.last_name %}{{ user.get_full_name() }}{% else %}{{ user }}{% endif %}</strong>
+            {% trans username = user.get_full_name() if (user.first_name or user.last_name) else user %}You have already logged in as <strong>{{ username }}</strong>{% endtrans %}
         </p>
         <a href="/" class="btn btn-primary"><i class="fa fa-angle-double-left"></i> {% trans %}Go to Homepage{% endtrans %}</a>
     {% else %}

@@ -42,7 +42,7 @@ class AddonUploadView(FormView):
     def form_valid(self, form):
         file = form.cleaned_data["file"]
         if not file.name.endswith(".zip"):
-            raise Problem("Only ZIP files are supported")
+            raise Problem(_("Only ZIP files are supported"))
         # TODO: Maybe verify the file before saving?
         filename = "shoop-addon-%s-%s" % (uuid.uuid4(), os.path.basename(file.name))
         with open(os.path.join(tempfile.gettempdir(), filename), "wb") as outf:

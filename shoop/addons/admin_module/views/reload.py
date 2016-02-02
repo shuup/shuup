@@ -31,7 +31,7 @@ class ReloadMethodForm(forms.Form):
         self.reload_methods = list(self.get_viable_reload_methods())
 
         if not self.reload_methods:
-            raise Problem("There are no viable reload methods available. Please contact your system administrator.")
+            raise Problem(_("There are no viable reload methods available. Please contact your system administrator."))
 
         self.fields["reload_method"] = forms.ChoiceField(
             choices=[(rm.identifier, rm.title) for rm in self.reload_methods],
@@ -51,7 +51,7 @@ class ReloadView(FormView):
     def form_valid(self, form):
         reloader = form.get_selected_reload_method()
         reloader.execute()
-        return HttpResponse("Reloading.")  # This might not reach the user...
+        return HttpResponse(_("Reloading."))  # This might not reach the user...
 
     def get(self, request, *args, **kwargs):
         if request.GET.get("ping"):
