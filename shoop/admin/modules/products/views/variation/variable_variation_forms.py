@@ -70,7 +70,7 @@ class VariableVariationChildrenForm(forms.Form):
                 six.raise_from(Problem(_("Unable to link %s: %s") % (new_product, ipme)), ipme)
 
     def save(self):
-        if not self.has_changed():  # See `SimplePricingForm.save()`.
+        if not self.has_changed():  # See `CustomerGroupPricingForm.save()`.
             return
         with atomic():
             for combo in self.parent_product.get_all_available_combinations():

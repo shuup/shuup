@@ -27,6 +27,11 @@ file_filter = shoop/core/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
+[shoop.customer-group-pricing]
+file_filter = shoop/customer_group_pricing/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
 [shoop.default-tax]
 file_filter = shoop/default_tax/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
@@ -89,11 +94,6 @@ type = PO
 
 [shoop.simple-cms]
 file_filter = shoop/simple_cms/locale/<lang>/LC_MESSAGES/django.po
-source_lang = en
-type = PO
-
-[shoop.simple-pricing]
-file_filter = shoop/simple_pricing/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 

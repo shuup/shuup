@@ -1,8 +1,23 @@
 shoop.simple_supplier package
 =============================
 
+Subpackages
+-----------
+
+.. toctree::
+
+    shoop.simple_supplier.admin_module
+
 Submodules
 ----------
+
+shoop.simple_supplier.forms module
+----------------------------------
+
+.. automodule:: shoop.simple_supplier.forms
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
 shoop.simple_supplier.models module
 -----------------------------------

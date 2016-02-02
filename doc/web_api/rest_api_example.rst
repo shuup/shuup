@@ -58,7 +58,7 @@ This sketch of a script illustrates how to use the Shoop REST API.
 
 
    def create_product_price(product):
-       price = send("shoop/simple_product_price/", {
+       price = send("shoop/cgp_price/", {
            "product": product["id"],
            "shop": None,
            "group": None,
