@@ -12,6 +12,8 @@ Unreleased
 Core
 ~~~~
 
+- Add contact address for ``Shop``
+- Add update_stock calls for ``SimpleSupplierModule``
 - Rename ``simple_pricing`` to ``customer_group_pricing``
 - Rename ``CAMPAIGN`` in ``OrderLineType`` enum to ``DISCOUNT``
 - Add ``OrderSourceModifierModule`` interface for modifying order source
@@ -28,6 +30,7 @@ Localization
 Admin
 ~~~~~
 
+- Add option to add action buttons to Order edit view
 - Add Campaigns management
 - Add Coupon management
 
@@ -45,6 +48,18 @@ Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 
 - Add Coupon use possibility to basket page
+
+Simple Supplier
+~~~~~~~~~~~~~~~
+
+- Add admin modules for updating stock
+- Add support for stock counts and values
+
+Order Printouts
+~~~~~~~~~~~~~~~
+
+- Add basic support to create PDF printouts
+- Add admin module to print order shipments and confirmation
 
 
 General/miscellaneous
