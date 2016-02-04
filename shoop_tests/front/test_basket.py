@@ -71,6 +71,8 @@ def test_basket(rf, storage):
             else:
                 assert stats["tls"] == sum(quantities) * 50
 
+        basket.finalize()
+
 
 @pytest.mark.django_db
 def test_basket_dirtying_with_fnl(rf):
