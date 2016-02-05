@@ -50,7 +50,7 @@
                 <div class="product-sum">
                     <h4 class="price text-right">
                         <small>{% trans %}Total{% endtrans %}: </small>{{ line.price|money }}
-                        {% if line.is_discounted %}
+                        {% if line.is_discounted and line.base_price.value > 0 %}
                             <br><small><s class="text-muted">{{ line.base_price|money }}</s></small>
                         {% endif %}
                     </h4>

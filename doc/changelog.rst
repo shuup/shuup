@@ -134,6 +134,7 @@ Xtheme
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 
+- Basket: Hide line base price when it's not positive
 - Show product media at order history and product detail pages
 - Add language changer to navigation
 - Add possibility for other future brand colors
