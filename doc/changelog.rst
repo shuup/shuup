@@ -151,6 +151,11 @@ Default Theme
 - Remove Default theme from Shoop Base. Moved to
   https://github.com/shoopio/shoop-simple-theme
 
+Campaigns
+~~~~~~~~~
+
+- Fix admin list view sorting
+
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
