@@ -37,11 +37,6 @@ file_filter = shoop/default_tax/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
-[shoop.discount-pricing]
-file_filter = shoop/discount_pricing/locale/<lang>/LC_MESSAGES/django.po
-source_lang = en
-type = PO
-
 [shoop.front-apps-auth]
 file_filter = shoop/front/apps/auth/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en

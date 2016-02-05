@@ -61,6 +61,10 @@ Order Printouts
 - Add basic support to create PDF printouts
 - Add admin module to print order shipments and confirmation
 
+Discount Pricing
+~~~~~~~~~~~~~~~~
+
+- Removed
 
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
