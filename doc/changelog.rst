@@ -104,6 +104,7 @@ Localization
 Admin
 ~~~~~
 
+- Bump bootstrap-datetimepicker version to 2.3.8
 - Show Shoop version number in Admin
 - Fix order list sorting and filtering by total price
 - Fix CMS page list sorting by title
