@@ -341,7 +341,7 @@ def get_default_edit_toolbar(
     :rtype: Toolbar
     """
     request = view_object.request
-    object = view_object.object
+    object = getattr(view_object, "object", None)
     discard_url = (discard_url or request.path)
     toolbar = (Toolbar() if toolbar is None else toolbar)
 
@@ -361,7 +361,7 @@ def get_default_edit_toolbar(
     else:
         toolbar.append(default_save_button)
 
-    if object.pk:
+    if object and object.pk:
         if discard_url:
             toolbar.append(get_discard_button(try_reverse(discard_url, pk=object.pk)))
         if delete_url:
