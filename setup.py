@@ -123,7 +123,10 @@ EXTRAS_REQUIRE = {
         'pep8-naming~=0.2',
     ],
 }
-EXTRAS_REQUIRE['everything'] = list(set(sum(EXTRAS_REQUIRE.values(), [])))
+EXTRAS_REQUIRE['everything'] = list(
+    set(sum(EXTRAS_REQUIRE.values(), [])) -  # All extras, but not...
+    set(REQUIRES_FOR_PYTHON2_ONLY)  # the Python 2 compatibility things
+)
 
 
 if __name__ == '__main__':
