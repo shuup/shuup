@@ -59,7 +59,6 @@ INSTALLED_APPS = add_enabled_addons(SHOOP_ENABLED_ADDONS_FILE, [
     'filer',
     'registration',
     'rest_framework',
-    'shoop.discount_pricing'
 ])
 
 MIDDLEWARE_CLASSES = [
