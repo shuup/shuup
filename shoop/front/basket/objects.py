@@ -16,7 +16,9 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
-from shoop.core.models import OrderLineType, PaymentMethod, ShippingMethod
+from shoop.core.models import (
+    OrderLineType, PaymentMethod, ShippingMethod, ShippingMode
+)
 from shoop.core.order_creator import OrderSource, SourceLine
 from shoop.front.basket.storage import BasketCompatibilityError, get_storage
 from shoop.utils.numbers import parse_decimal_string
@@ -379,7 +381,7 @@ class BaseBasket(OrderSource):
             "Try to remove some products from the basket "
             "and order them separately.")
 
-        if not shipping_methods:
+        if self.has_shippable_lines() and not shipping_methods:
             msg = _("Products in basket cannot be shipped together. %s")
             yield ValidationError(msg % advice, code="no_common_shipping")
 
@@ -437,6 +439,12 @@ class BaseBasket(OrderSource):
             in PaymentMethod.objects.available(shop=self.shop, products=self.product_ids)
             if m.is_valid_for_source(source=self)
         ]
+
+    def has_shippable_lines(self):
+        for line in self.get_lines():
+            if line.product:
+                if line.product.shipping_mode == ShippingMode.SHIPPED:
+                    return True
 
     @property
     def product_ids(self):

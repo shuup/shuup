@@ -416,11 +416,11 @@ def get_completed_order_status():
     return OrderStatus.objects.get_default_complete()
 
 
-def create_product(sku, shop=None, supplier=None, default_price=None):
+def create_product(sku, shop=None, supplier=None, default_price=None, **attrs):
     if default_price is not None:
         default_price = shop.create_price(default_price)
 
-    product = Product(
+    product_attrs = dict(
         type=get_default_product_type(),
         tax_class=get_default_tax_class(),
         sku=sku,
@@ -433,6 +433,8 @@ def create_product(sku, shop=None, supplier=None, default_price=None):
         sales_unit=get_default_sales_unit(),
         stock_behavior=StockBehavior.UNSTOCKED
     )
+    product_attrs.update(attrs)
+    product = Product(**product_attrs)
     product.full_clean()
     product.save()
     if shop:
