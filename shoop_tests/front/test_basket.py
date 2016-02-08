@@ -9,6 +9,7 @@ import pytest
 from django.db.models import Sum
 from django.test.utils import override_settings
 
+from shoop.core.models import ShippingMode
 from shoop.front.basket import get_basket
 from shoop.front.models import StoredBasket
 from shoop.testing.factories import (
@@ -88,3 +89,33 @@ def test_basket_dirtying_with_fnl(rf):
         extra={"foo": "foo"}
     )
     assert basket.dirty  # The change should have dirtied the basket
+
+
+@pytest.mark.django_db
+def test_basket_shipping_error(rf):
+    StoredBasket.objects.all().delete()
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    shipped_product = create_product(
+        printable_gibberish(), shop=shop, supplier=supplier, default_price=50,
+        shipping_mode=ShippingMode.SHIPPED
+    )
+    unshipped_product = create_product(
+        printable_gibberish(), shop=shop, supplier=supplier, default_price=50,
+        shipping_mode=ShippingMode.NOT_SHIPPED
+    )
+
+    request = rf.get("/")
+    request.session = {}
+    request.shop = shop
+    apply_request_middleware(request)
+    basket = get_basket(request)
+
+    # With a shipped product but no shipping methods, we oughta get an error
+    basket.add_product(supplier=supplier, shop=shop, product=shipped_product, quantity=1)
+    assert any(ve.code == "no_common_shipping" for ve in basket.get_validation_errors())
+    basket.clear_all()
+
+    # But with an unshipped product, we should not
+    basket.add_product(supplier=supplier, shop=shop, product=unshipped_product, quantity=1)
+    assert not any(ve.code == "no_common_shipping" for ve in basket.get_validation_errors())
