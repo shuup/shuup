@@ -7,7 +7,9 @@
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.shortcuts import redirect
+from django.utils.http import is_safe_url
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 from registration.backends.default import views as default_views
@@ -33,6 +35,9 @@ class RegistrationViewMixin(object):
     template_name = "shoop/registration/register.jinja"
 
     def get_success_url(self, request, user):
+        url = self.request.REQUEST.get(REDIRECT_FIELD_NAME)
+        if url and is_safe_url(url, request.get_host()):
+            return url
         return ('shoop:registration_complete', (), {})
 
 

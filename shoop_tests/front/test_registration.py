@@ -44,6 +44,28 @@ def test_registration(django_user_model, client, requiring_activation):
         else:
             assert user.is_active
 
+@pytest.mark.django_db
+@pytest.mark.parametrize("requiring_activation", (False, True))
+def test_registration_2(django_user_model, client, requiring_activation):
+    if "shoop.front.apps.registration" not in settings.INSTALLED_APPS:
+        pytest.skip("shoop.front.apps.registration required in installed apps")
+
+    get_default_shop()
+
+    with override_settings(
+        SHOOP_REGISTRATION_REQUIRES_ACTIVATION=requiring_activation,
+    ):
+        response = client.post(reverse("shoop:registration_register"), data={
+            "username": username,
+            "email": email,
+            "password1": "password",
+            "password2": "password",
+            "next": reverse('shoop:checkout')
+        })
+        user = django_user_model.objects.get(username=username)
+        assert response.status_code == 302 #redirect
+        assert response.url.endswith(reverse('shoop:checkout'))
+
 
 def test_settings_has_account_activation_days():
     assert hasattr(settings, 'ACCOUNT_ACTIVATION_DAYS')
