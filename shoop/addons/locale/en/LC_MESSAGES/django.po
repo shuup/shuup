@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-29 18:55+0000\n"
+"POT-Creation-Date: 2016-02-02 01:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
-"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
@@ -98,7 +98,31 @@ msgid ""
 "yourself (or have a system administrator handy)."
 msgstr ""
 
-msgid "Reload initiated"
+msgid "Reload steps"
+msgstr ""
+
+msgid "First reload to enable new addons"
+msgstr ""
+
+msgid "Running database migrations for new addons"
+msgstr ""
+
+msgid "Enabling static resources for new addons"
+msgstr ""
+
+msgid "Second reload for new resources"
+msgstr ""
+
+msgid "Reload initiated."
+msgstr ""
+
+msgid "Error while reloading application."
+msgstr ""
+
+msgid "Starting to collect static files."
+msgstr ""
+
+msgid "Starting database migrations."
 msgstr ""
 
 msgid "Your Shoop seems to be back up!"

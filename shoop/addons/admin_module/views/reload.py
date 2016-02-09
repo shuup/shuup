@@ -10,9 +10,11 @@ from __future__ import unicode_literals
 import time
 
 from django import forms
+from django.core.management import call_command
 from django.http.response import HttpResponse, JsonResponse
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
+from six import StringIO
 
 from shoop.addons.reloader import get_reload_method_classes
 from shoop.utils.excs import Problem
@@ -44,6 +46,12 @@ class ReloadMethodForm(forms.Form):
         return first(rm for rm in self.reload_methods if rm.identifier == self.cleaned_data["reload_method"])
 
 
+def run_command(name):
+    out = StringIO()
+    call_command(name, "--noinput", stdout=out)
+    return out.getvalue()
+
+
 class ReloadView(FormView):
     template_name = "shoop/admin/addons/reload.jinja"
     form_class = ReloadMethodForm
@@ -56,4 +64,8 @@ class ReloadView(FormView):
     def get(self, request, *args, **kwargs):
         if request.GET.get("ping"):
             return JsonResponse({"pong": time.time()})
+        elif request.GET.get("migrate"):
+            return JsonResponse({"message": run_command("migrate")})
+        elif request.GET.get("collectstatic"):
+            return JsonResponse({"message": run_command("collectstatic")})
         return super(ReloadView, self).get(request, *args, **kwargs)
