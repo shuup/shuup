@@ -590,6 +590,9 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
     def get_public_media(self):
         return self.media.filter(enabled=True, public=True)
 
+    def is_stocked(self):
+        return (self.stock_behavior == StockBehavior.STOCKED)
+
 
 ProductLogEntry = define_log_model(Product)
 
