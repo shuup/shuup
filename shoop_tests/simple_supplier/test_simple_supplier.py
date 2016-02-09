@@ -109,8 +109,9 @@ def test_admin_form(rf, admin_user):
     request = rf.get("/")
     request.user = admin_user
     frm = SimpleSupplierForm(product=product, request=request)
-    # Form contains 0 products since created product is not stocked
-    assert len(frm.products) == 0
+    # Form contains 1 product even if the product is not stocked
+    assert len(frm.products) == 1
+    assert not frm.products[0].is_stocked()
 
     product.stock_behavior = StockBehavior.STOCKED  # Make product stocked
     product.save()
