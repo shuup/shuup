@@ -16,7 +16,7 @@ from filer.models import File
 
 from shoop.admin.utils.forms import flatatt_filter
 from shoop.admin.utils.urls import get_model_url, NoModelUrl
-from shoop.core.models import Product
+from shoop.core.models import Contact, Product
 
 
 class BasePopupChoiceWidget(Widget):
@@ -103,3 +103,17 @@ class ProductChoiceWidget(BasePopupChoiceWidget):
 
     def get_object(self, value):
         return Product.objects.get(pk=value)
+
+
+class ContactChoiceWidget(BasePopupChoiceWidget):
+    browse_kind = "contact"
+
+    def get_object(self, value):
+        return Contact.objects.get(pk=value)
+
+    def get_browse_markup(self):
+        icon = "<i class='fa fa-user'></i>"
+        return "<button class='browse-btn btn btn-info btn-sm' type='button'>%(icon)s %(text)s</button>" % {
+            "icon": icon,
+            "text": _("Select")
+        }

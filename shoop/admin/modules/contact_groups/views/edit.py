@@ -8,9 +8,14 @@
 
 from __future__ import unicode_literals
 
+from django.db.transaction import atomic
+
+from shoop.admin.form_part import FormPartsViewMixin, SaveFormPartsMixin
 from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.core.models import ContactGroup
 from shoop.utils.multilanguage_model_form import MultiLanguageModelForm
+
+from .forms import ContactGroupBaseFormPart, ContactGroupMembersFormPart
 
 
 class ContactGroupForm(MultiLanguageModelForm):
@@ -19,8 +24,12 @@ class ContactGroupForm(MultiLanguageModelForm):
         fields = ("name",)
 
 
-class ContactGroupEditView(CreateOrUpdateView):
+class ContactGroupEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):
     model = ContactGroup
-    form_class = ContactGroupForm
     template_name = "shoop/admin/contact_groups/edit.jinja"
     context_object_name = "contact_group"
+    base_form_part_classes = [ContactGroupBaseFormPart, ContactGroupMembersFormPart]
+
+    @atomic
+    def form_valid(self, form):
+        return self.save_form_parts(form)
