@@ -48,6 +48,7 @@ Xtheme
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 
+- Show error messages while adding products to basket
 - Add Coupon use possibility to basket page
 
 Simple Supplier
