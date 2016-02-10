@@ -32,6 +32,7 @@ Localization
 Admin
 ~~~~~
 
+- Check product quantities in order creation
 - Add option to add action buttons to Order edit view
 - Add Campaigns management
 - Add Coupon management
