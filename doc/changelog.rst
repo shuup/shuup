@@ -38,6 +38,7 @@ Admin
 Front
 ~~~~~
 
+- Check product quantity already in basket while adding
 - Process given coupon codes in basket
 - Process discounts from new campaign engine
 
