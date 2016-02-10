@@ -7,8 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from collections import Counter
+
+from django.core.exceptions import ValidationError
 from django.utils.encoding import force_text
 from django.utils.timezone import now
+from django.utils.translation import ugettext_lazy as _
+from six import iteritems
 
 from shoop.core import taxing
 from shoop.core.models import (
@@ -316,6 +321,8 @@ class OrderSource(object):
             tax_module = taxing.get_tax_module()
             if with_taxes or tax_module.calculate_taxes_automatically:
                 self._calculate_taxes(lines, tax_module)
+        for error_message in self.get_validation_errors():
+            raise ValidationError(error_message.args[0], code="invalid_order_source")
         return lines
 
     def calculate_taxes(self, force_recalculate=False):
@@ -403,6 +410,35 @@ class OrderSource(object):
         if payment_method:
             for error in payment_method.get_validation_errors(source=self):
                 yield error
+
+        for supplier in self._get_suppliers():
+            for product, quantity in iteritems(self._get_products_and_quantities(supplier)):
+                shop_product = product.get_shop_instance(shop=self.shop)
+                if not shop_product:
+                    yield ValidationError(
+                        _("%s not available in this shop") % product.name,
+                        code="product_not_available_in_shop"
+                    )
+                for error in shop_product.get_orderability_errors(
+                        supplier=supplier, quantity=quantity, customer=self.customer):
+                    error.message = "%s: %s" % (product.name, error.message)
+                    yield error
+
+    def _get_suppliers(self):
+            return set([l.supplier for l in self.get_lines() if l.supplier])
+
+    def _get_products_and_quantities(self, supplier=None):
+        q_counter = Counter()
+        for line in self.get_lines():
+            if not line.product:
+                continue
+
+            if supplier and line.supplier != supplier:
+                continue
+            product = line.product
+            q_counter[product] += line.quantity
+
+        return dict(q_counter)
 
 
 def _collect_lines_from_signal(signal_results):

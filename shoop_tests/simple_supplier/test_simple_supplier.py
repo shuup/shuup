@@ -16,19 +16,7 @@ from shoop.simple_supplier.admin_module.views import process_stock_adjustment
 from shoop.testing.factories import (
     create_order_with_product, create_product, get_default_shop
 )
-
-IDENTIFIER = "test_simple_supplier"
-
-
-def get_simple_supplier():
-    supplier = Supplier.objects.filter(identifier=IDENTIFIER).first()
-    if not supplier:
-        supplier = Supplier.objects.create(
-            identifier=IDENTIFIER,
-            name="Simple Supplier",
-            module_identifier="simple_supplier",
-        )
-    return supplier
+from shoop_tests.simple_supplier.utils import get_simple_supplier
 
 
 @pytest.mark.django_db

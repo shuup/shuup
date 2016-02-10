@@ -389,24 +389,6 @@ class BaseBasket(OrderSource):
             msg = _("Products in basket have no common payment method. %s")
             yield ValidationError(msg % advice, code="no_common_payment")
 
-        for line in self.get_final_lines():
-            product = line.product
-            if not product:
-                continue
-            shop_product = product.get_shop_instance(shop=self.shop)
-            if not shop_product:
-                yield ValidationError(
-                    _("%s not available in this shop") % product.name,
-                    code="product_not_available_in_shop")
-            else:
-                orderability_errors = shop_product.get_orderability_errors(
-                    supplier=line.supplier,
-                    quantity=line.quantity,
-                    customer=self.customer)
-                for error in orderability_errors:
-                    error.message = "%s: %s" % (product.name, error.message)
-                    yield error
-
     def get_product_ids_and_quantities(self):
         q_counter = Counter()
         for line in self.get_lines():
