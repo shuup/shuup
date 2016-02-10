@@ -8,3 +8,4 @@ from django.core.signals import Signal
 
 post_compute_source_lines = Signal(
     providing_args=["source", "lines"], use_caching=True)
+order_creator_finished = Signal(providing_args=["order", "source", "request"], use_caching=True)
