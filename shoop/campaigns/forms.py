@@ -6,7 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.core.exceptions import ValidationError
-from django.db.models import OneToOneField
+from django.db.models import OneToOneField, Q
 from django.forms import ChoiceField, ModelForm
 from django.utils.translation import ugettext_lazy as _
 
@@ -182,8 +182,12 @@ class BasketCampaignForm(CampaignFormMixin, MultiLanguageModelForm):
     def __init__(self, *args, **kwargs):
         super(BasketCampaignForm, self).__init__(*args, **kwargs)
 
-        # TODO (campaigns): add only those that are not being used
-        coupon_code_choices = [('', '')] + list(Coupon.objects.filter(active=True).values_list("pk", "code"))
+        coupon_code_choices = [('', '')] + list(
+            Coupon.objects.filter(
+                Q(active=True),
+                Q(campaign=None) | Q(campaign=self.instance)
+            ).values_list("pk", "code")
+        )
         field_kwargs = dict(choices=coupon_code_choices, required=False)
         field_kwargs["help_text"] = _("Define the required coupon for this campaign.")
         if self.instance.pk and self.instance.coupon:
