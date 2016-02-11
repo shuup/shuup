@@ -108,6 +108,7 @@ Localization
 Admin
 ~~~~~
 
+- Bump bootstrap-datetimepicker version to 2.3.8
 - Show Shoop version number in Admin
 - Fix order list sorting and filtering by total price
 - Fix CMS page list sorting by title
@@ -138,6 +139,7 @@ Xtheme
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 
+- Basket: Hide line base price when it's not positive
 - Show product media at order history and product detail pages
 - Add language changer to navigation
 - Add possibility for other future brand colors
@@ -154,6 +156,11 @@ Default Theme
 
 - Remove Default theme from Shoop Base. Moved to
   https://github.com/shoopio/shoop-simple-theme
+
+Campaigns
+~~~~~~~~~
+
+- Fix admin list view sorting
 
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~

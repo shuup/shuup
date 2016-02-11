@@ -29,11 +29,11 @@ class _Breadcrumbed(object):
 class CampaignListView(PicotableListView):
     columns = [
         Column(
-            "name", _(u"Title"), sort_field="translations__name", display="name", linked=True,
+            "name", _(u"Title"), sort_field="name", display="name", linked=True,
             filter_config=TextFilter(operator="startswith")
         ),
         Column("discount_percentage", _("Discount percentage"), display="format_percentage"),
-        Column("discount_amount", _("Discount amount")),
+        Column("discount_amount", _("Discount amount"), sort_field="discount_amount_value"),
         Column("start_datetime", _("Starts")),
         Column("end_datetime", _("Ends")),
         Column("active", _("Active"), filter_config=ChoicesFilter(choices=[(0, _("No")), (1, _("Yes"))])),
