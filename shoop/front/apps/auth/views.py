@@ -30,6 +30,11 @@ class LoginView(FormView):
     template_name = 'shoop/user/login.jinja'
     form_class = EmailAuthenticationForm
 
+    def get_context_data(self, **kwargs):
+        context = super(LoginView, self).get_context_data(**kwargs)
+        context[REDIRECT_FIELD_NAME] = self.request.REQUEST.get(REDIRECT_FIELD_NAME)
+        return context
+
     def get_form(self, form_class=None):
         form = super(LoginView, self).get_form(form_class)
         form.fields[REDIRECT_FIELD_NAME] = forms.CharField(

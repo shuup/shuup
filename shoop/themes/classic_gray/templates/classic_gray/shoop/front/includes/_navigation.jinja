@@ -84,7 +84,7 @@
                         {% endif %}
                         {% if shoop.urls.has_url("shoop:registration_register") %}
                         <li>
-                            <a href="{{ url("shoop:registration_register") }}">
+                            <a href="{{ url("shoop:registration_register") }}{% if next %}?next={{next}}{% endif %}">
                                 <i class="fa fa-edit fa-fw"></i> {% trans %}New user? Register here!{% endtrans %}
                             </a>
                         </li>

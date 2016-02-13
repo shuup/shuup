@@ -41,7 +41,7 @@
                     </form>
                 </div>
                 {% if shoop.urls.has_url("shoop:registration_register") %}
-                    <a class="col-sm-12 text-center text-muted" href="{{ url("shoop:registration_register") }}">
+                    <a class="col-sm-12 text-center text-muted" href="{{ url("shoop:registration_register") }}{% if next %}?next={{next}}{% endif %}">
                         {% trans %}New user? Register here!{% endtrans %}
                     </a>
                 {% endif %}
