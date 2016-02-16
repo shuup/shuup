@@ -32,6 +32,13 @@ module.exports = {
             "js/language-changer.js"
         ]
     },
+    "contact-group": {
+        "es6": true,
+        "base": "./static_src/contact_group",
+        "files": [
+            "edit-members.js"
+        ]
+    },
     "dashboard": {
         "es6": true,
         "files": bowerFiles("./static_src/dashboard")
