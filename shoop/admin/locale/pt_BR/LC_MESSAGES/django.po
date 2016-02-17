@@ -1,0 +1,1200 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Jonathan Hess <jhess666@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shoop\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-29 18:45+0000\n"
+"PO-Revision-Date: 2016-02-16 15:56+0000\n"
+"Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/shoop/shoop/language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Home"
+msgstr "Início"
+
+msgid "Browse"
+msgstr "Navegar"
+
+msgid "Clear"
+msgstr "Limpar"
+
+msgid "Attributes"
+msgstr "Atributos"
+
+msgid "Identifier"
+msgstr "Identificador"
+
+msgid "Filter by identifier..."
+msgstr "Filtrar por identificador..."
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "Filter by name..."
+msgstr "Filtrar por nome..."
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Visibility Mode"
+msgstr "Modo de Visibilidade"
+
+msgid "Searchable"
+msgstr "Pesquisável"
+
+msgid "Used in # Product Types"
+msgstr "Utilizado em # Tipos de Produto"
+
+msgid "Categories"
+msgstr "Categorias"
+
+msgid "Products"
+msgstr "Produtos"
+
+msgid "Status"
+msgstr "Situação"
+
+msgid "Visibility"
+msgstr "Visibilidade"
+
+msgid "Parent"
+msgstr "Pai"
+
+msgid "Contact Groups"
+msgstr "Grupos de Contatos"
+
+msgid "Contacts"
+msgstr "Contatos"
+
+msgid "Number of Members"
+msgstr "Número de Membros"
+
+msgid "Active customers"
+msgstr "Clientes ativos"
+
+msgid "Based on orders within 30 days"
+msgstr "Baseado nos pedidos dos últimos 30 dias"
+
+msgid "The Shoop frontend is not enabled."
+msgstr "O frontend do Shoop não está habilitado."
+
+msgid "Contact has no associated user."
+msgstr "Contato não tem nenhum usuário associado."
+
+msgid "User has no associated email."
+msgstr "Usuário não tem nenhum e-mail associado."
+
+msgid "Reset password"
+msgstr "Redefinir senha"
+
+msgid "Send a password renewal email."
+msgstr "Enviar um e-mail de renovação de senha."
+
+#, python-format
+msgid "Are you sure you wish to send a password recovery email to %s?"
+msgstr "Tem certeza que deseja enviar um e-mail de recuperação de senha para %s?"
+
+msgid "New User"
+msgstr "Novo Usuário"
+
+msgid "Create an user for the contact."
+msgstr "Criar um usuário para o contato."
+
+msgid "Edit..."
+msgstr "Editar..."
+
+msgid "Person"
+msgstr "Pessoa"
+
+msgid "Company"
+msgstr "Empresa"
+
+#, python-format
+msgid "User %(bind_user)s already has a contact"
+msgstr "Usuário %(bind_user)s já possui um contato"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Phone"
+msgstr "Telefone"
+
+msgid "Active"
+msgstr "Ativo"
+
+msgid "# Orders"
+msgstr "# Pedidos"
+
+msgid "Contact"
+msgstr "Contato"
+
+msgid "Inactive"
+msgstr "Inativo"
+
+#, python-format
+msgid "Email: %s"
+msgstr "E-mail: %s"
+
+#, python-format
+msgid "Phone: %s"
+msgstr "Telefone: %s"
+
+#, python-format
+msgid "%d orders"
+msgstr "%d pedidos"
+
+msgid "The contact does not have an associated user."
+msgstr "O contato não tem um usuário associado."
+
+msgid "Demo"
+msgstr "Demonstração"
+
+msgid "Manufacturers"
+msgstr "Fabricantes"
+
+msgid "Media"
+msgstr "Mídia"
+
+msgid "Media browser"
+msgstr "Navegador de mídias"
+
+msgid "Root"
+msgstr "Raiz"
+
+#, python-format
+msgid "%d subfolders moved to %s."
+msgstr "%d subdiretórios movidos para %s."
+
+#, python-format
+msgid "%d files moved to %s."
+msgstr "%d arquivos movidos para %s."
+
+#, python-format
+msgid "Folder %s deleted."
+msgstr "Diretório %s excluído."
+
+#, python-format
+msgid "%(file)s uploaded to %(folder)s"
+msgstr "%(file)s foi enviado para %(folder)s"
+
+msgid "Folder renamed."
+msgstr "Diretório renomeado."
+
+msgid "File renamed."
+msgstr "Arquivo renomeado."
+
+msgid "File deleted."
+msgstr "Arquivo excluído."
+
+#, python-format
+msgid "%(file)s moved from %(old)s to %(new)s."
+msgstr "%(file)s movido de %(old)s para %(new)s."
+
+msgid "Methods"
+msgstr "Métodos"
+
+msgid "Shipping Methods"
+msgstr "Formas de Entrega"
+
+msgid "Payment Methods"
+msgstr "Formas de Pagamento"
+
+msgid "The selected module has no details to configure"
+msgstr "O módulo selecionado não possui nenhum detalhe a ser configurado"
+
+msgid "The selected module is not currently available"
+msgstr "O módulo selecionado não está disponível no momento"
+
+msgid "Edit Details"
+msgstr "Editar Detalhes"
+
+#, python-format
+msgid "Edit %(model)s"
+msgstr "Editar %(model)s"
+
+#, python-format
+msgid "Default %s module"
+msgstr "Módulo %s padrão"
+
+#, python-format
+msgid "Module %(name)s has no admin detail view"
+msgstr "Módulo %(name)s não possui nenhuma view de detalhes do administrador"
+
+msgid "Orders"
+msgstr "Pedidos"
+
+msgid "Show orders"
+msgstr "Mostrar pedidos"
+
+msgid "Outstanding Orders"
+msgstr "Pedidos Pendentes"
+
+#, python-format
+msgid "%d outstanding orders"
+msgstr "%d pedidos pendentes"
+
+msgid "Sales per Month (last year)"
+msgstr "Vendas por Mês (último ano)"
+
+#, python-format
+msgid "Sales (%(currency)s)"
+msgstr "Vendas (%(currency)s)"
+
+#, python-format
+msgid "Based on %d orders"
+msgstr "Baseado em %d pedidos"
+
+msgid "Today's Sales"
+msgstr "Vendas do Dia"
+
+msgid "Lifetime Sales"
+msgstr "Vendas até Hoje"
+
+msgid "Average Purchase"
+msgstr "Ticket Médio"
+
+msgid "Open Orders Value"
+msgstr "Valor de Pedidos Abertos"
+
+#, python-format
+msgid "The quantity '%(quantity)s' (for line %(text)s) is invalid (%(error)s)"
+msgstr "A quantidade '%(quantity)s' (para o item %(text)s) é inválida (%(error)s)"
+
+#, python-format
+msgid "The price '%(price)s' (for line %(text)s) is invalid (%(error)s)"
+msgstr "O preço '%(price)s' (para o item %(text)s) é inválido (%(error)s)"
+
+#, python-format
+msgid "The discount '%(discount)s' (for line %(text)s is invalid (%(error)s)"
+msgstr "O desconto '%(discount)s' (para o item %(text)s) é inválido (%(error)s)"
+
+msgid "Product line does not have a product set."
+msgstr "O item não tem um produto definido."
+
+#, python-format
+msgid "Product %s does not exist."
+msgstr "Produto %s não existe."
+
+#, python-format
+msgid "Product %(product)s is not available in the %(shop)s shop."
+msgstr "Produto %(product)s não está disponível na loja %(shop)s."
+
+#, python-format
+msgid "Product %(product)s is not orderable: %(error)s"
+msgstr "Produto %(product)s não pode ser comprado: %(error)s"
+
+msgid "Please add lines to the order."
+msgstr "Por favor, adicione itens ao pedido."
+
+msgid "Name is required for customer"
+msgstr "Nome é obrigatório para o cliente"
+
+msgid "Tax number is not set for company."
+msgstr "O CNPJ não está definido para a empresa."
+
+msgid "Please choose a valid shop."
+msgstr "Por favor, escolha uma loja válida."
+
+msgid "Please select shipping method."
+msgstr "Por favor, selecione a forma de entrega."
+
+msgid "Please select payment method."
+msgstr "Por favor, selecione a forma de pagamento."
+
+msgid "Create Order"
+msgstr "Criar Pedido"
+
+#, python-format
+msgid "Contact %s does not exist."
+msgstr "Contato %s não existe."
+
+#, python-format
+msgid "Order %(identifier)s created."
+msgstr "Pedido %(identifier)s criado."
+
+msgid "Could not proceed with order:"
+msgstr "Não foi possível efetuar o pedido:"
+
+msgid "Could not create order:"
+msgstr "Não foi possível criar o pedido:"
+
+msgid "Create Shipment"
+msgstr "Criar Remessa"
+
+msgid "There are no products to ship"
+msgstr "Não existem produtos a serem enviados"
+
+msgid "Set Complete"
+msgstr "Definir como Concluído"
+
+msgid "This order can not be set as complete at this point"
+msgstr "Este pedido não pode ser definido como concluído a esta altura"
+
+msgid "Unable to set order as completed at this point"
+msgstr "Não é possível definir o pedido como concluído a esta altura"
+
+#, python-format
+msgid "Order status changed: %s to %s"
+msgstr "Situação do pedido mudou: %s para %s"
+
+msgid "Order"
+msgstr "Pedido"
+
+msgid "Order Date"
+msgstr "Data do Pedido"
+
+msgid "Customer"
+msgstr "Cliente"
+
+msgid "Payment Status"
+msgstr "Situação do Pagamento"
+
+msgid "Shipping Status"
+msgstr "Situação da Entrega"
+
+msgid "Total"
+msgstr "Total"
+
+#, python-format
+msgid "Create Shipment -- %s"
+msgstr "Criar Remessa -- %s"
+
+msgid "Supplier"
+msgstr "Fornecedor"
+
+msgid "No products to ship."
+msgstr "Nenhum produto a ser enviado."
+
+#, python-format
+msgid "Shipment %s created."
+msgstr "Remessa %s criada."
+
+msgid "Product Types"
+msgstr "Tipos de Produto"
+
+msgid "Product types"
+msgstr "Tipos de produto"
+
+msgid "Number of Attributes"
+msgstr "Número de Atributos"
+
+#, python-format
+msgid "Create Product Called \"%s\""
+msgstr "Criar Produto Chamado \"%s\""
+
+#, python-format
+msgid "Create Product with SKU \"%s\""
+msgstr "Criar Produto com SKU \"%s\""
+
+#, python-format
+msgid "%s has been marked deleted."
+msgstr "%s foi marcado como excluído."
+
+msgid "Minimum Purchase Quantity has been rounded to match Sales Unit."
+msgstr "Quantidade Mínima de Compra foi arredondado para parear com a Unidade de Venda."
+
+#, python-format
+msgid "Changes to shop instance for %s saved"
+msgstr "Alterações à instância da loja %s foram salvas"
+
+msgid "Product is not available."
+msgstr "Produto não está disponível."
+
+msgid "Product"
+msgstr "Produto"
+
+#, python-format
+msgid "Edit Cross-Sell: %s"
+msgstr "Editar Venda Cruzada: %s"
+
+msgid "Save"
+msgstr "Salvar"
+
+msgid "Changes saved."
+msgstr "Alterações salvas."
+
+#, python-format
+msgid "Edit Media: %s"
+msgstr "Editar Mídia: %s"
+
+msgid "Minimum Purchase Quantity must be greater than 0."
+msgstr "Quantidade Mínima de Compra deve ser maior do que 0."
+
+#, python-format
+msgid "Thumbnail generation of %s failed: %s"
+msgstr "A geração de miniaturas do produto %s falhou: %s"
+
+msgid "Use only URL or file, not both"
+msgstr "Utilize apenas URL ou arquivo, não ambos"
+
+msgid "Is primary"
+msgstr "É principal"
+
+msgid "Only images allowed in this field"
+msgstr "Apenas imagens são permitidas neste campo"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Filter by SKU..."
+msgstr "Filtrar por SKU..."
+
+msgid "Mode"
+msgstr "Modo"
+
+msgid "Primary Category"
+msgstr "Categoria Principal"
+
+msgid "Manage Cross-Selling"
+msgstr "Gerenciar Vendas Cruzadas"
+
+msgid "Cross-Selling"
+msgstr "Vendas Cruzadas"
+
+msgid "Actions"
+msgstr "Ações"
+
+msgid "Variations"
+msgstr "Variações"
+
+msgid "Manage Variations"
+msgstr "Gerenciar Variações"
+
+#, python-format
+msgid "Child: %s"
+msgstr "Filho: %s"
+
+#, python-format
+msgid "Parent: %s"
+msgstr "Pai: %s"
+
+#, python-format
+msgid "Sibling: %s"
+msgstr "Irmão: %s"
+
+msgid "Manage Package"
+msgstr "Gerenciar Pacote"
+
+#, python-format
+msgid "Package Parent: %s"
+msgstr "Pacote Pai: %s"
+
+msgid "Convert to Variation Parent"
+msgstr "Converter para Variação Pai"
+
+msgid ""
+"Are you sure? This will unlink all children and remove all variation "
+"variables."
+msgstr "Você tem certeza? Esta ação irá desvincular todos os filhos e remover todas as variáveis de variação."
+
+msgid "Clear variation"
+msgstr "Limpar variação"
+
+msgid ""
+"Are you sure? This will remove all variation variables, converting children "
+"to direct links."
+msgstr "Você tem certeza? Esta ação irá remover todas as variáveis de variação, convertendo os filhos em links diretos."
+
+msgid "Convert to simple variation"
+msgstr "Converter para variação simples"
+
+#, python-format
+msgid "Edit Variation: %s"
+msgstr "Editar Variação: %s"
+
+msgid "Variation cleared."
+msgstr "Variação apagada."
+
+msgid "Variation simplified."
+msgstr "Variação simplificada."
+
+msgid "child"
+msgstr "filho"
+
+msgid "Unlink"
+msgstr "Desvincular"
+
+#, python-format
+msgid "Unable to link %s: %s"
+msgstr "Não foi possível vincular %s: %s"
+
+#, python-format
+msgid "New: %d"
+msgstr "Novo: %d"
+
+#, python-format
+msgid "Removed: %d"
+msgstr "Removido: %d"
+
+msgid "variable combination"
+msgstr "combinação variável"
+
+msgid "Sales Units"
+msgstr "Unidades de Venda"
+
+msgid "Short Name"
+msgstr "Nome Abreviado"
+
+msgid "Allowed decimals"
+msgstr "Decimais permitidos"
+
+msgid "Shops"
+msgstr "Lojas"
+
+msgid "System"
+msgstr "Sistema"
+
+msgid ""
+"This field cannot be changed since there are existing orders for this shop."
+msgstr "Este campo não pode ser alterado uma vez que existem pedidos para esta loja."
+
+msgid "Domain"
+msgstr "Domínio"
+
+msgid "Suppliers"
+msgstr "Fornecedores"
+
+#, python-format
+msgid "No %s module"
+msgstr "Nenhum módulo %s"
+
+msgid "Module"
+msgstr "Módulo"
+
+msgid "Telemetry"
+msgstr "Telemetria"
+
+msgid ""
+"Statistics will be periodically sent to Shoop.io after 24 hours. Click here "
+"for more information."
+msgstr "As estatísticas serão enviadas periodicamente ao Shoop.io após 24 horas. Clique aqui para obter mais informações."
+
+msgid "Taxes"
+msgstr "Impostos"
+
+msgid "Customer Tax Groups"
+msgstr "Grupos de Impostos do Cliente"
+
+msgid "Tax Classes"
+msgstr "Classes Fiscais"
+
+msgid "Code"
+msgstr "Código"
+
+msgid "Rate"
+msgstr "Taxa"
+
+msgid "Enabled"
+msgstr "Habilitado"
+
+msgid "Users"
+msgstr "Usuários"
+
+msgid "Password"
+msgstr "Senha"
+
+msgid "Permissions"
+msgstr "Permissões"
+
+msgid "See the permissions view to change these."
+msgstr "Veja a view de permissões para alterá-las."
+
+msgid "staff"
+msgstr "equipe"
+
+msgid "superuser"
+msgstr "superusuário"
+
+msgid "No special permissions"
+msgstr "Nenhuma permissão especial"
+
+msgid "Change Password"
+msgstr "Alterar Senha"
+
+msgid "User has no email address"
+msgstr "Usuário não tem endereço de e-mail"
+
+msgid "Send Password Reset Email"
+msgstr "Enviar E-mail de Redefinição de Senha"
+
+msgid "Edit Permissions"
+msgstr "Editar Permissões"
+
+msgid "Contact Details"
+msgstr "Detalhes do Contato"
+
+msgid "New Contact"
+msgstr "Novo Contato"
+
+msgid "Create a new contact and associate it with this user"
+msgstr "Criar um novo contato e associar com este usuário"
+
+msgid "Activate User"
+msgstr "Ativar Usuário"
+
+msgid "Deactivate User"
+msgstr "Desativar Usuário"
+
+#, python-format
+msgid "User bound to contact %(contact)s."
+msgstr "Usuário vinculado ao contato %(contact)s."
+
+msgid "You can not deactivate a superuser."
+msgstr "Você não pode desativar um superusuário."
+
+msgid "You can not deactivate yourself."
+msgstr "Você não pode desativar-se."
+
+#, python-format
+msgid "%(user)s is now %(state)s."
+msgstr "%(user)s está %(state)s agora."
+
+msgid "active"
+msgstr "ativar"
+
+msgid "inactive"
+msgstr "inativo"
+
+msgid "Username"
+msgstr "Nome de Usuário"
+
+msgid "First Name"
+msgstr "Primeiro Nome"
+
+msgid "Last Name"
+msgstr "Sobrenome"
+
+msgid "Staff"
+msgstr "Equipe"
+
+msgid "Superuser"
+msgstr "Superusuário"
+
+#, python-format
+msgid "First Name: %s"
+msgstr "Primeiro Nome: %s"
+
+#, python-format
+msgid "Last Name: %s"
+msgstr "Sobrenome: %s"
+
+msgid "User"
+msgstr "Usuário"
+
+msgid "The two password fields didn't match."
+msgstr "Os dois campos de senha não conferem."
+
+msgid "Your old password was entered incorrectly. Please enter it again."
+msgstr "Sua senha antiga foi digitada incorretamente. Por favor, insira-a novamente."
+
+msgid "Your Password"
+msgstr "Sua Senha"
+
+msgid "For security purposes, we need your current password."
+msgstr "Por motivos de segurança, precisamos da sua senha atual."
+
+msgid "New Password"
+msgstr "Nova Senha"
+
+msgid "New Password (again)"
+msgstr "Nova Senha (novamente)"
+
+msgid "You can not change the password of a superuser."
+msgstr "Você não pode alterar a senha de um superusuário."
+
+msgid "Change User Password"
+msgstr "Alterar Senha do Usuário"
+
+#, python-format
+msgid "Password changed for %s."
+msgstr "Senha alterada para %s."
+
+msgid "Reset User Password"
+msgstr "Redefinir Senha do Usuário"
+
+msgid ""
+"The `shoop.front.apps.auth` app needs to be enabled for password reset."
+msgstr "O aplicativo `shoop.front.apps.auth` precisa ser habilitado para redefinição de senha."
+
+#, python-format
+msgid "Password recovery email sent to %(email)s"
+msgstr "E-mail de recuperação de senha enviado para %(email)s"
+
+msgid "Sending the password recovery email failed."
+msgstr "Falha ao enviar o e-mail de recuperação de senha."
+
+msgid "You can't unset this status for yourself."
+msgstr "Você não pode desatribuir esta situação para sua própria conta."
+
+msgid "Change User Permissions"
+msgstr "Alterar Permissões do Usuário"
+
+#, python-format
+msgid "Change Permissions: %s"
+msgstr "Alterar Permissões: %s"
+
+#, python-format
+msgid "Permissions changed for %s."
+msgstr "Permissões alteradas para %s."
+
+msgid "New Attribute"
+msgstr "Novo Atributo"
+
+msgid "Login"
+msgstr "Fazer login"
+
+msgid "Logged out"
+msgstr "Desconectado"
+
+msgid "You have been logged out. Good bye!"
+msgstr "Você foi desconectado. Até logo!"
+
+msgid "Log in again"
+msgstr "Fazer login novamente"
+
+msgid "Visit shop"
+msgstr "Visitar loja"
+
+msgid "Menu"
+msgstr "Menu"
+
+msgid "Dashboard"
+msgstr "Painel de Controle"
+
+msgid "Search for"
+msgstr "Procurar por"
+
+msgid "Settings"
+msgstr "Configurações"
+
+msgid "Hello"
+msgstr "Olá"
+
+msgid "Log out"
+msgstr "Sair"
+
+msgid "General Information"
+msgstr "Informações Gerais"
+
+msgid "Category Image"
+msgstr "Categoria da Imagem"
+
+msgid "General information"
+msgstr "Informações Gerais"
+
+msgid "Members"
+msgstr "Membros"
+
+msgid "No members."
+msgstr "Nenhum membro."
+
+msgid "Addresses"
+msgstr "Endereços"
+
+msgid "Billing Address"
+msgstr "Endereço de Cobrança"
+
+msgid "Shipping Address"
+msgstr "Endereço de Entrega"
+
+msgid "Basic details"
+msgstr "Detalhes básicos"
+
+msgid "Basic Information"
+msgstr "Informações Básicas"
+
+msgid "Full Name"
+msgstr "Nome Completo"
+
+msgid "Groups"
+msgstr "Grupos"
+
+msgid "No groups"
+msgstr "Nenhum grupo"
+
+msgid "Bound User"
+msgstr "Usuário Vinculado"
+
+msgid "Shipping address"
+msgstr "Endereço de entrega"
+
+msgid "No shipping address defined."
+msgstr "Nenhum endereço de entrega definido."
+
+msgid "Billing address"
+msgstr "Endereço de cobrança"
+
+msgid "No billing address defined."
+msgstr "Nenhum endereço de cobrança definido."
+
+msgid "Remove block"
+msgstr "Remover bloco"
+
+msgid "Resize block"
+msgstr "Redimensionar bloco"
+
+msgid "Welcome!"
+msgstr "Bem-vindo!"
+
+msgid "Notifications"
+msgstr "Notificações"
+
+msgid "Mark as read"
+msgstr "Marcar como lido"
+
+msgid "Activity Feed"
+msgstr "Feed de Atividades"
+
+#, python-format
+msgid "Shoop %(version)s"
+msgstr "Shoop %(version)s"
+
+msgid "Date"
+msgstr "Data"
+
+msgid "Order Status"
+msgstr "Situação do Pedido"
+
+msgid "Edit"
+msgstr "Editar"
+
+msgid "Upload"
+msgstr "Enviar"
+
+msgid "Description"
+msgstr "Descrição"
+
+msgid "Amount"
+msgstr "Valor"
+
+msgid "To Ship"
+msgstr "Para Enviar"
+
+msgid "Ordered"
+msgstr "Comprado"
+
+msgid "Shipped"
+msgstr "Enviado"
+
+msgid "Unshipped"
+msgstr "Não Enviado"
+
+msgid "Set All Products To Ship"
+msgstr "Colocar Todos os Produtos para Entrega"
+
+msgid "Ship All"
+msgstr "Enviar Tudo"
+
+msgid "Details & Status"
+msgstr "Detalhes & Situação"
+
+msgid "Order Number"
+msgstr "Número do Pedido"
+
+msgid "Reference"
+msgstr "Referência"
+
+msgid "Label"
+msgstr "Rótulo"
+
+msgid "Ordered by"
+msgstr "Comprado por"
+
+msgid "Creator"
+msgstr "Criador"
+
+msgid "Tax number"
+msgstr "CPF/CNPJ"
+
+msgid "Total Price (taxless)"
+msgstr "Preço Total (não tributado)"
+
+msgid "Total Price"
+msgstr "Preço Total"
+
+msgid "Order Contents"
+msgstr "Conteúdo do Pedido"
+
+msgid "Text"
+msgstr "Texto"
+
+msgid "Taxless Unit Price"
+msgstr "Preço Unitário não Tributado"
+
+msgid "Quantity"
+msgstr "Quantidade"
+
+msgid "Taxless Discount"
+msgstr "Desconto não Tributado"
+
+msgid "Tax"
+msgstr "Imposto"
+
+msgid "Taxless Total"
+msgstr "Total não Tributado"
+
+msgid "Total incl. Tax"
+msgstr "Total incluindo Imposto"
+
+msgid "Discount"
+msgstr "Desconto"
+
+msgid "Taxless"
+msgstr "Não Tributado"
+
+msgid "Payments"
+msgstr "Pagamentos"
+
+msgid "Error!"
+msgstr "Erro!"
+
+msgid "Additional Details"
+msgstr "Detalhes Adicionais"
+
+msgid "Accounting"
+msgstr "Contabilidade"
+
+msgid "Physical Properties"
+msgstr "Propriedades Físicas"
+
+msgid "Manufacturer"
+msgstr "Fabricante"
+
+#, python-format
+msgid "Product image %(index)s"
+msgstr "Imagem do produto %(index)s"
+
+#, python-format
+msgid "Product media %(index)s"
+msgstr "Mídia do produto %(index)s"
+
+msgid "Primary image"
+msgstr "Imagem principal"
+
+msgid "Set as primary image"
+msgstr "Definir como imagem principal"
+
+msgid "No image"
+msgstr "Nenhuma imagem"
+
+msgid "Delete"
+msgstr "Excluir"
+
+msgid "Advanced options"
+msgstr "Opções avançadas"
+
+msgid "Product Images"
+msgstr "Imagens do Produto"
+
+msgid "Product Media"
+msgstr "Mídia do Produto"
+
+msgid "Add new image"
+msgstr "Adicionar nova imagem"
+
+msgid "Add new media"
+msgstr "Adicionar nova mídia"
+
+msgid "Purchasing"
+msgstr "Compra"
+
+msgid "Shipping & Payment"
+msgstr "Envio & Pagamento"
+
+msgid "This product is currently not orderable."
+msgstr "Este produto está indisponível para compra no momento."
+
+msgid "Cross-sells"
+msgstr "Vendas Cruzadas"
+
+msgid "Cross-sell"
+msgstr "Venda Cruzada"
+
+msgid "File "
+msgstr "Arquivo"
+
+msgid "Simple Variation Children"
+msgstr "Variação Simples Filhos"
+
+msgid "Variable Children"
+msgstr "Variáveis Filhos"
+
+msgid "Combination"
+msgstr "Combinação"
+
+msgid "Variables"
+msgstr "Variáveis"
+
+msgid "This product is not yet a variation."
+msgstr "Este produto ainda não é uma variação."
+
+msgid "To create a simple variation, choose products below."
+msgstr "Para criar uma variação simples, escolha os produtos abaixo."
+
+msgid ""
+"To create a variation with multiple variables, create the variables on the "
+"Variables tab and then link them to products here."
+msgstr "Para criar uma variação com múltiplas variáveis, crie as variáveis na guia Variáveis e, em seguida, vincule-as aos produtos aqui."
+
+msgid "Shop Logo"
+msgstr "Logotipo da Loja"
+
+msgid "Maintenance Mode"
+msgstr "Modo de Manutenção"
+
+msgid "About Shoop Telemetry"
+msgstr "Sobre a Telemetria do Shoop"
+
+msgid "Shoop will occasionally send telemetry data to a Shoop.io server."
+msgstr "O Shoop eventualmente enviará dados de telemetria para um servidor Shoop.io."
+
+#, python-format
+msgid ""
+"The data contains an unique installation key, as well as the hostname of the"
+" installation (as sent by the visiting browser; currently "
+"<code>%(host)s</code>)."
+msgstr "Os dados contém uma chave de instalação única, além do hostname da instalação (do jeito como é enviado pelo navegador visitante; no caso <code>%(host)s</code>)."
+
+msgid ""
+"No business data or other customer information is ever sent. Shoop.io only "
+"uses the telemetry data for statistical purposes and for insights about the "
+"software's installation base."
+msgstr "Nenhum dado de negócio ou qualquer outra informação sobre clientes jamais será enviado. O Shoop.io utiliza os dados de telemetria apenas para fins estatísticos e para melhorar a compreensão sobre a base de instalação do software."
+
+msgid "Opt-in / opt-out"
+msgstr "Optar por / não optar"
+
+msgid ""
+"You are currently <span class=\"lead label label-success\">opted in</span> "
+"to send telemetry data to Shoop.io."
+msgstr "Você está atualmente <span class=\"lead label label-success\">optando por</span> enviar dados de telemetria ao Shoop.io."
+
+msgid "Thank you for your valuable contribution."
+msgstr "Obrigado por sua valiosa contribuição."
+
+msgid "Opt out"
+msgstr "Não optar"
+
+msgid ""
+"You are currently <span class=\"label label-warning\">opted out</span> of "
+"Shoop telemetry."
+msgstr "Você está atualmente <span class=\"label label-warning\">não optando</span> pela telemetria do Shoop."
+
+msgid "Opt in"
+msgstr "Optar por"
+
+msgid "Last Telemetry"
+msgstr "Última Telemetria"
+
+msgid ""
+"Telemetry submission is currently suspended; data will only be sent 24 hours"
+" after installation if still opted in at that point."
+msgstr "O envio da telemetria está suspenso atualmente; os dados só serão enviados 24 horas após a instalação se ainda optar por enviá-los na ocasião."
+
+#, python-format
+msgid ""
+"Telemetry data was last submitted at %(submission_datetime)s - "
+"(%(submission_timesince)s) ago"
+msgstr "Os dados de telemetria foram enviados pela última vez em %(submission_datetime)s - (%(submission_timesince)s) atrás"
+
+msgid "See the data that was submitted."
+msgstr "Ver os dados que foram enviados."
+
+msgid "Telemetry data has not yet been submitted."
+msgstr "Os dados de telemetria ainda não foram enviados."
+
+msgid "Telemetry Data"
+msgstr "Dados de Telemetria"
+
+msgid "Here is an example of the data that would be submitted right now."
+msgstr "Aqui está um exemplo dos dados que seriam enviados agora mesmo."
+
+msgid "User Information"
+msgstr "Informações do Usuário"
+
+#, python-format
+msgid "Send a password reset email to %(email)s?"
+msgstr "Enviar um e-mail de redefinição de senha para %(email)s?"
+
+msgid "Send Reset Email"
+msgstr "Enviar E-mail de Redefinição"
+
+msgid "Create new"
+msgstr "Criar novo"
+
+#, python-format
+msgid "New %(model)s"
+msgstr "Novo %(model)s"
+
+msgid "Discard Changes"
+msgstr "Descartar Alterações"
+
+msgid "Save and Exit"
+msgstr "Salvar e Sair"
+
+msgid "Save and Create New"
+msgstr "Salvar e Criar Novo"
+
+#, python-format
+msgid "Are you sure you wish to delete %s?"
+msgstr "Tem certeza que deseja excluir %s?"
+
+msgid "no"
+msgstr "não"
+
+msgid "yes"
+msgstr "sim"
+
+#, python-format
+msgid "Showing %(per_page)s of %(n_items)s %(verbose_name_plural)s"
+msgstr "Mostrando %(per_page)s de %(n_items)s %(verbose_name_plural)s"
+
+msgid "objects"
+msgstr "objetos"
+
+#, python-format
+msgid "Can't view this page. %(reason)s"
+msgstr "Não pôde exibir esta página. %(reason)s"
+
+msgid "Log in with different credentials..."
+msgstr "Fazer login com outras credenciais..."
+
+msgid "You must be logged in."
+msgstr "Você deve estar autenticado."
+
+msgid "You must be a staff member."
+msgstr "Você deve ser um membro do quadro."
+
+#, python-format
+msgid "You do not have the required permissions: %r"
+msgstr "Você não tem as permissões necessárias: %r"
+
+#, python-format
+msgid "New %s created."
+msgstr "Novo %s criado."
+
+#, python-format
+msgid "%s edited."
+msgstr "%s editado."
+
+#, python-format
+msgid "New %s"
+msgstr "Novo %s"
+
+#, python-format
+msgid "Unnamed %s"
+msgstr "%s sem nome"
+
+#, python-format
+msgid "Only one %(model)s permitted."
+msgstr "Apenas um %(model)s é permitido."

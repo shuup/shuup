@@ -116,6 +116,7 @@ LANGUAGES = [
     ('fi', 'Finnish'),
     ('ja', 'Japanese'),
     ('zh-hans', 'Simplified Chinese'),
+    ('pt-br', 'Portuguese (Brazil)'),
 ]
 
 PARLER_DEFAULT_LANGUAGE_CODE = "en"
