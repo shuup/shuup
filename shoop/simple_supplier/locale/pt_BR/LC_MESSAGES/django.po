@@ -1,0 +1,117 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Jonathan Hess <jhess666@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shoop\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-20 20:37+0000\n"
+"PO-Revision-Date: 2016-02-12 22:01+0000\n"
+"Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/shoop/shoop/language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Stock management"
+msgstr "Gerenciamento de estoque"
+
+msgid "Products"
+msgstr "Produtos"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Filter by SKU..."
+msgstr "Filtrar por SKU..."
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "Filter by name..."
+msgstr "Filtrar por nome..."
+
+msgid "Supplier"
+msgstr "Fornecedor"
+
+msgid "Stock information"
+msgstr "Informações do estoque"
+
+msgid "Adjust stock"
+msgstr "Ajustar estoque"
+
+#, python-format
+msgid ""
+"Added %(delta)s %(unit_short_name)s for product %(product_name)s stock "
+"(%(supplier_name)s)"
+msgstr "Adicionado %(delta)s %(unit_short_name)s do produto %(product_name)s ao estoque (%(supplier_name)s)"
+
+#, python-format
+msgid ""
+"Removed %(delta)s %(unit_short_name)s from product %(product_name)s stock "
+"(%(supplier_name)s)"
+msgstr "Removido %(delta)s %(unit_short_name)s do produto %(product_name)s do estoque (%(supplier_name)s)"
+
+msgid "Not allowed"
+msgstr "Não permitido"
+
+msgid "Error, please check submitted values and try again."
+msgstr "Erro, por favor, verifique os valores enviados e tente novamente."
+
+#, python-format
+msgid "Error, please check submitted values and try again (%(error)s)."
+msgstr "Erro, por favor, verifique os valores enviados e tente novamente (%(error)s)."
+
+#, python-format
+msgid "Purchase price per unit (%(currency_name)s)"
+msgstr "Preço de compra por unidade (%(currency_name)s)"
+
+msgid "Quantity"
+msgstr "Quantidade"
+
+msgid "Only non-zero values can be added to stock."
+msgstr "Apenas valores acima de zero podem ser adicionados ao estoque."
+
+msgid "product"
+msgstr "produto"
+
+msgid "supplier"
+msgstr "fornecedor"
+
+msgid "created on"
+msgstr "criado em"
+
+msgid "created by"
+msgstr "criado por"
+
+msgid "delta"
+msgstr "delta"
+
+msgid "logical count"
+msgstr "estoque lógico"
+
+msgid "physical count"
+msgstr "estoque físico"
+
+msgid "Add stock"
+msgstr "Adicionar estoque"
+
+msgid "Physical count"
+msgstr "Estoque físico"
+
+msgid "Logical count"
+msgstr "Estoque lógico"
+
+msgid "Value per unit"
+msgstr "Valor por unidade"
+
+msgid "Total value"
+msgstr "Valor total"
+
+msgid "No stock information available."
+msgstr "Nenhuma informação do estoque disponível."
