@@ -7,6 +7,7 @@
 import abc
 
 import six
+from django.conf import settings
 
 from shoop.apps.provides import load_module
 
@@ -30,6 +31,10 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
     name = None
 
     taxing_context_class = TaxingContext
+
+    @property
+    def calculate_taxes_automatically(self):
+        return settings.SHOOP_CALCULATE_TAXES_AUTOMATICALLY
 
     def get_context_from_request(self, request):
         customer = getattr(request, "customer", None)
