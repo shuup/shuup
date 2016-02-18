@@ -12,18 +12,20 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumField
-from parler.models import TranslatableModel, TranslatedFields
+from parler.models import TranslatedFields
 from polymorphic.models import PolymorphicModel
 from timezone_field.fields import TimeZoneField
 
 from shoop.core.fields import InternalIdentifierField, LanguageField
 from shoop.core.utils.name_mixin import NameMixin
+from shoop.utils.text import force_text
 
+from ._base import TranslatableShoopModel
 from ._taxes import CustomerTaxGroup
 
 
 @python_2_unicode_compatible
-class ContactGroup(TranslatableModel):
+class ContactGroup(TranslatableShoopModel):
     identifier = InternalIdentifierField(unique=True)
     members = models.ManyToManyField("Contact", related_name="groups", verbose_name=_('members'), blank=True)
     show_pricing = models.BooleanField(verbose_name=_('show as pricing option'), default=True)
@@ -37,7 +39,7 @@ class ContactGroup(TranslatableModel):
         verbose_name_plural = _('contact groups')
 
     def __str__(self):
-        return self.safe_translation_getter("name", default="Group<%s>" % (self.identifier or self.id))
+        return force_text(self.safe_translation_getter("name", default="Group<%s>" % (self.identifier or self.id)))
 
 
 @python_2_unicode_compatible
@@ -45,6 +47,8 @@ class Contact(NameMixin, PolymorphicModel):
     is_anonymous = False
     is_all_seeing = False
     default_tax_group_getter = None
+    default_contact_group_identifier = None
+    default_contact_group_name = None
 
     created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_('created on'))
     identifier = InternalIdentifierField(unique=True, null=True, blank=True)
@@ -92,9 +96,35 @@ class Contact(NameMixin, PolymorphicModel):
             kwargs.setdefault("tax_group", self.default_tax_group_getter())
         super(Contact, self).__init__(*args, **kwargs)
 
+    def save(self, *args, **kwargs):
+        add_to_default_group = bool(self.pk is None and self.default_contact_group_identifier)
+        super(Contact, self).save(*args, **kwargs)
+        if add_to_default_group:
+            self.groups.add(self.get_default_contact_group())
+
+    def get_default_contact_group(self):
+        """
+        Get or create default ``ContactGroup`` based on
+        `self.default_contact_group_identifier`.
+
+        Name for new groups is set based on
+        `self.default_contact_group_name`.
+
+        :rtype: core.models.ContactGroup
+        """
+        obj, created = ContactGroup.objects.get_or_create(
+            identifier=self.default_contact_group_identifier,
+            defaults={
+                "name": self.default_contact_group_name
+            }
+        )
+        return obj
+
 
 class CompanyContact(Contact):
     default_tax_group_getter = CustomerTaxGroup.get_default_company_group
+    default_contact_group_identifier = "default_company_group"
+    default_contact_group_name = _("Company Contacts")
 
     members = models.ManyToManyField(
         "Contact", related_name="company_memberships", blank=True,
@@ -119,6 +149,8 @@ class Gender(Enum):
 
 class PersonContact(Contact):
     default_tax_group_getter = CustomerTaxGroup.get_default_person_group
+    default_contact_group_identifier = "default_person_group"
+    default_contact_group_name = _("Person Contacts")
 
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, blank=True, null=True, related_name="contact",
@@ -150,9 +182,14 @@ class PersonContact(Contact):
 class AnonymousContact(Contact):
     pk = id = None
     is_anonymous = True
+    default_contact_group_identifier = "default_anonymous_group"
+    default_contact_group_name = _("Anonymous Contacts")
 
     class Meta:
         managed = False  # This isn't something that should actually exist in the database
+
+    def __init__(self, *args, **kwargs):
+        super(AnonymousContact, self).__init__(*args, **kwargs)
 
     def __nonzero__(self):
         return False
@@ -170,7 +207,24 @@ class AnonymousContact(Contact):
 
     @property
     def groups(self):
-        return ContactGroup.objects.none()
+        """
+        Contact groups accessor for anonymous contact.
+
+        The base class already has a `groups` property via `ContactGroup`
+        related_name, but this overrides it for `AnonymousContact` so that
+        it will return a queryset containing just the anonymous contact
+        group rather than returning the original related manager, which
+        cannot work since `AnonymousContact` is not in the database.
+
+        This allows to use statements like this for all kinds of contacts,
+        even `AnonymousContact`::
+
+            some_contact.groups.all()
+
+        :rtype: django.db.QuerySet
+        """
+        self.get_default_contact_group()  # Make sure default anonymous contact group is created
+        return ContactGroup.objects.filter(identifier=self.default_contact_group_identifier)
 
 
 def get_person_contact(user):
