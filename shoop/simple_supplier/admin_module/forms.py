@@ -8,7 +8,8 @@
 from django import forms
 
 from shoop.admin.form_part import FormPart, TemplatedFormDef
-from shoop.core.models import Product, StockBehavior, Supplier
+from shoop.core.models import Product, Supplier
+from shoop.simple_supplier.module import SimpleSupplierModule
 from shoop.simple_supplier.utils import (
     get_stock_adjustment_div, get_stock_information_html
 )
@@ -20,22 +21,25 @@ class SimpleSupplierForm(forms.Form):
         self.request = kwargs.pop("request")
         super(SimpleSupplierForm, self).__init__(**kwargs)
         self.products = []
+        self.module_name = SimpleSupplierModule.name
+        self.supplier_model = Supplier
         if self.product:
             self._build_fields()
 
     def _build_fields(self):
         if self.product.is_variation_parent():
-            self.products = Product.objects.filter(
-                variation_parent=self.product, stock_behavior=StockBehavior.STOCKED)
+            self.products = Product.objects.filter(variation_parent=self.product)
         else:
-            if self.product.stock_behavior == StockBehavior.STOCKED:
-                self.products = [self.product]
+            self.products = [self.product]
 
     def save(self):
         return  # No need to save anything since all stock adjustments are made by AJAX.
 
     def get_suppliers(self, product):
-        return Supplier.objects.filter(shop_products__product=product, module_identifier="simple_supplier")
+        return Supplier.objects.filter(shop_products__product=product, module_identifier="simple_supplier").distinct()
+
+    def can_manage_stock(self):
+        return Supplier.objects.filter(module_identifier="simple_supplier").exists()
 
     def get_stock_information(self, supplier, product):
         return get_stock_information_html(supplier, product)
