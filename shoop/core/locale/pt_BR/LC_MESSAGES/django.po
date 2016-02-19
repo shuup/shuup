@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-27 04:56+0000\n"
-"PO-Revision-Date: 2016-02-17 00:02+0000\n"
+"PO-Revision-Date: 2016-02-18 13:13+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shoop/shoop/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -498,7 +498,7 @@ msgid "initial"
 msgstr "inicial"
 
 msgid "complete"
-msgstr "concluído"
+msgstr "completo"
 
 msgid "default"
 msgstr "padrão"
@@ -555,10 +555,10 @@ msgid "prices include tax"
 msgstr "preços incluindo impostos"
 
 msgid "display currency"
-msgstr "moeda de exibição"
+msgstr "moeda exibida"
 
 msgid "display currency rate"
-msgstr "taxa de câmbio de exibição"
+msgstr "taxa de câmbio exibida"
 
 msgid "IP address"
 msgstr "Endereço IP"
@@ -595,7 +595,7 @@ msgid "All rows requiring verification have been verified."
 msgstr "Todas as linhas que necessitam de verificação foram verificadas."
 
 msgid "All products have been shipped. Fully Shipped status set."
-msgstr "Todos os produtos foram enviados. Situação foi definida para Totalmente Enviado."
+msgstr "Todos os produtos foram enviados. Situação foi definida como Totalmente Enviado."
 
 msgid "gateway ID"
 msgstr "ID do gateway"
@@ -639,13 +639,13 @@ msgstr "tipo"
 msgid ""
 "Enter URL to external file. If this field is filled, the selected media "
 "doesn't apply."
-msgstr "Digite a URL para um arquivo externo. Se este campo for preenchido, a mídia selecionada não se aplicará."
+msgstr "Digite a URL de um arquivo externo. Se este campo for preenchido, a mídia selecionada não se aplicará."
 
 msgid "public (shown on product page)"
-msgstr "público (mostrado na página do produto)"
+msgstr "público (visível na página do produto)"
 
 msgid "purchased (shown for finished purchases)"
-msgstr "comprado (mostrado para compras realizadas)"
+msgstr "comprado (visível para compras realizadas)"
 
 msgid "product attachment"
 msgstr "anexo do produto"
@@ -712,7 +712,7 @@ msgstr "O produto não tem nenhum fornecedor."
 
 #, python-format
 msgid "The purchase quantity needs to be at least %d for this product."
-msgstr "A quantidade de compra tem de ser, pelo menos, %d para este produto."
+msgstr "A quantidade de compra tem que ser, pelo menos, %d para este produto."
 
 #, python-format
 msgid "The product is not supplied by %s."
@@ -731,10 +731,10 @@ msgid ""
 msgstr "O produto só pode ser comprado em múltiplos de %(package_size)s, por exemplo %(smaller_p)s ou %(larger_p)s %(unit)s."
 
 msgid "variation variable"
-msgstr "variável de variação"
+msgstr "variável da variação"
 
 msgid "variation variables"
-msgstr "variáveis de variação"
+msgstr "variáveis da variação"
 
 msgid "variation value"
 msgstr "valor da variação"

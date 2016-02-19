@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-20 13:16+0000\n"
-"PO-Revision-Date: 2016-02-16 22:45+0000\n"
+"PO-Revision-Date: 2016-02-17 23:59+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shoop/shoop/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -50,18 +50,18 @@ msgstr "Tente remover alguns produtos do carrinho e comprá-los separadamente."
 
 #, python-format
 msgid "Products in basket cannot be shipped together. %s"
-msgstr "Os produtos no carrinho não podem ser enviados juntos. %s"
+msgstr "Produtos no carrinho não podem ser enviados juntos. %s"
 
 #, python-format
 msgid "Products in basket have no common payment method. %s"
-msgstr "Os produtos no carrinho não têm formas de pagamento em comum. %s"
+msgstr "Produtos no carrinho não têm formas de pagamento em comum. %s"
 
 #, python-format
 msgid "%s not available in this shop"
 msgstr "%s não está disponível nesta loja"
 
 msgid "Tax number required for companies"
-msgstr "O CNPJ é obrigatório para pessoas jurídicas"
+msgstr "CNPJ é obrigatório para pessoas jurídicas"
 
 msgid "Cannot use tax number without company name"
 msgstr "Não é possível utilizar o CNPJ sem a razão social da empresa"
@@ -136,7 +136,7 @@ msgid "deleted"
 msgstr "excluído"
 
 msgid "finished"
-msgstr "concluído"
+msgstr "finalizado"
 
 msgid "title"
 msgstr "título"
