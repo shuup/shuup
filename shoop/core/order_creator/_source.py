@@ -124,7 +124,6 @@ class OrderSource(object):
         self.zero_price = shop.create_price(0)
         self.create_price = self.zero_price.new
 
-        self.calculate_taxes_automatically = False
         """
         Calculate taxes automatically when lines are added or processed.
 
@@ -314,8 +313,9 @@ class OrderSource(object):
             lines = self.__compute_lines()
             self._processed_lines_cache = lines
         if not self._taxes_calculated:
-            if with_taxes or self.calculate_taxes_automatically:
-                self._calculate_taxes(lines)
+            tax_module = taxing.get_tax_module()
+            if with_taxes or tax_module.calculate_taxes_automatically:
+                self._calculate_taxes(lines, tax_module)
         return lines
 
     def calculate_taxes(self, force_recalculate=False):
@@ -323,14 +323,14 @@ class OrderSource(object):
             self._taxes_calculated = False
         self.get_final_lines(with_taxes=True)
 
-    def _calculate_taxes(self, lines):
-        tax_module = taxing.get_tax_module()
+    def _calculate_taxes(self, lines, tax_module):
         tax_module.add_taxes(self, lines)
         self._taxes_calculated = True
 
     def calculate_taxes_or_raise(self):
         if not self._taxes_calculated:
-            if not self.calculate_taxes_automatically:
+            tax_module = taxing.get_tax_module()
+            if not tax_module.calculate_taxes_automatically:
                 raise TaxesNotCalculated('Taxes are not calculated')
             self.calculate_taxes()
 

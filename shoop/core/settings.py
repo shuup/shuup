@@ -150,3 +150,6 @@ SHOOP_DEFAULT_CACHE_DURATION = 60 * 30
 #: Overrides for default cache durations by key namespace.
 #: These override possible defaults in `shoop.core.cache.impl.DEFAULT_CACHE_DURATIONS`.
 SHOOP_CACHE_DURATIONS = {}
+
+#: Whether taxes is calculated automatically in TaxModule
+SHOOP_CALCULATE_TAXES_AUTOMATICALLY = True
