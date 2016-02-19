@@ -13,6 +13,7 @@ Core
 ~~~~
 
 - Move calculate_taxes_automatically from ``OrderSource`` to ``TaxModule``
+- Add shop product validation for OrderSource
 - Add contact address for ``Shop``
 - Add update_stock calls for ``SimpleSupplierModule``
 - Rename ``simple_pricing`` to ``customer_group_pricing``
@@ -31,6 +32,7 @@ Localization
 Admin
 ~~~~~
 
+- Check product quantities in order creation
 - Add option to add action buttons to Order edit view
 - Add Campaigns management
 - Add Coupon management
@@ -38,6 +40,7 @@ Admin
 Front
 ~~~~~
 
+- Check product quantity already in basket while adding
 - Process given coupon codes in basket
 - Process discounts from new campaign engine
 
@@ -48,6 +51,7 @@ Xtheme
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 
+- Show error messages while adding products to basket
 - Add Coupon use possibility to basket page
 
 Simple Supplier

@@ -167,11 +167,6 @@ class OrderCreator(object):
         return lines
 
     def create_order(self, order_source):
-        # order_provision.target_user = self._maybe_create_user(
-        #     user=order_provision.target_user,
-        #     billing_address=order_provision.billing_address,
-        #     shipping_address=order_provision.shipping_address
-        # )
         order = Order(
             shop=order_source.shop,
             currency=order_source.currency,

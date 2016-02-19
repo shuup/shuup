@@ -146,6 +146,7 @@ class OrderCreateView(TemplateView):
         shop_id = request.GET["shop_id"]
         customer_id = request.GET.get("customer_id")
         quantity = decimal.Decimal(request.GET.get("quantity", 1))
+        already_in_lines_qty = decimal.Decimal(request.GET.get("already_in_lines_qty", 0))
         product = Product.objects.filter(pk=product_id).first()
         if not product:
             return {"errorText": _("Product %s does not exist.") % product_id}
@@ -166,7 +167,7 @@ class OrderCreateView(TemplateView):
         supplier = shop_product.suppliers.first()  # TODO: Allow setting a supplier?
         errors = " ".join(
             [str(message.args[0]) for message in shop_product.get_orderability_errors(
-                supplier=supplier, quantity=quantity, customer=customer, ignore_minimum=True)])
+                supplier=supplier, quantity=(quantity + already_in_lines_qty), customer=customer, ignore_minimum=True)])
         return {
             "id": product.id,
             "sku": product.sku,

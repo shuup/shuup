@@ -13,7 +13,8 @@ from shoop.core.models import ShippingMode
 from shoop.front.basket import get_basket
 from shoop.front.models import StoredBasket
 from shoop.testing.factories import (
-    create_product, get_default_shop, get_default_supplier
+    create_product, get_default_shop, get_default_payment_method,
+    get_default_supplier
 )
 from shoop.testing.utils import apply_request_middleware
 from shoop_tests.utils import printable_gibberish
@@ -28,6 +29,7 @@ def test_basket(rf, storage):
     StoredBasket.objects.all().delete()
     quantities = [3, 12, 44, 23, 65]
     shop = get_default_shop()
+    get_default_payment_method()  # Can't create baskets without payment methods
     supplier = get_default_supplier()
     products_and_quantities = []
     for quantity in quantities:

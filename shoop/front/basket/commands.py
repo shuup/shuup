@@ -59,7 +59,13 @@ def handle_add(request, basket, product_id, quantity=1, supplier_id=None, **kwar
     if quantity <= 0:
         raise ValidationError(_(u"The quantity %s is not valid.") % quantity, code="invalid_quantity")
 
-    shop_product.raise_if_not_orderable(supplier=supplier, quantity=quantity, customer=basket.customer)
+    product_ids_and_quantities = basket.get_product_ids_and_quantities()
+    already_in_basket_qty = product_ids_and_quantities.get(product.id, 0)
+    shop_product.raise_if_not_orderable(
+        supplier=supplier,
+        quantity=(already_in_basket_qty + quantity),
+        customer=basket.customer
+    )
 
     # TODO: Hook/extension point
     # if product.form:

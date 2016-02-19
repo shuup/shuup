@@ -268,6 +268,12 @@ class JsonOrderCreator(object):
         if not self.is_valid:  # If we encountered any errors thus far, don't bother going forward
             return None
 
+        for error in source.get_validation_errors():
+            self.add_error(error)
+
+        if not self.is_valid:
+            return None
+
         return source
 
     def create_order_from_state(self, state, creator=None):

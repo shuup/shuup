@@ -119,7 +119,7 @@ def test_campaign_with_coupons(rf):
     supplier = get_default_supplier()
 
     for x in range(2):
-        product = create_product(printable_gibberish(), shop, default_price="50")
+        product = create_product(printable_gibberish(), shop, supplier=supplier, default_price="50")
         basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
 
     dc = Coupon.objects.create(code="TEST", active=True)
