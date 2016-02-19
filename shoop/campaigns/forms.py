@@ -6,7 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.core.exceptions import ValidationError
-from django.db.models import OneToOneField
+from django.db.models import OneToOneField, Q
 from django.forms import ChoiceField, ModelForm
 from django.utils.translation import ugettext_lazy as _
 
@@ -86,14 +86,18 @@ class CampaignFormMixin(object):
                     self.fields[obj.identifier] = field.formfield(**kwargs)
 
     def clean(self):
-        """ Ensure atleast one rule is set """
+        """ Ensure at least one rule is set """
         data = super(CampaignFormMixin, self).clean()
-
         if data.get("discount_percentage") and data.get("discount_amount_value"):
             raise ValidationError(_("You should only define either discount percentage or amount."))
 
         if not any([data.get("discount_percentage"), data.get("discount_amount_value")]):
             raise ValidationError(_("You must define discount percentage or amount."))
+
+        start_datetime = data.get("start_datetime")
+        end_datetime = data.get("end_datetime")
+        if start_datetime and end_datetime and end_datetime < start_datetime:
+            raise ValidationError(_("Campaign end date can't be before start date."), code="end_is_before_start")
 
         return data
 
@@ -108,11 +112,6 @@ class CampaignFormMixin(object):
         if amount and amount < 0:
             raise ValidationError(_("Discount amount cannot be negative."))
         return amount
-
-    def clean_end_datetime(self):
-        end_datetime = self.cleaned_data.get("end_datetime")
-        # TODO: allow only end dates that are after start date
-        return end_datetime
 
     def save(self, commit=True):
         instance = super(CampaignFormMixin, self).save(commit)
@@ -183,8 +182,12 @@ class BasketCampaignForm(CampaignFormMixin, MultiLanguageModelForm):
     def __init__(self, *args, **kwargs):
         super(BasketCampaignForm, self).__init__(*args, **kwargs)
 
-        # TODO (campaigns): add only those that are not being used
-        coupon_code_choices = [('', '')] + list(Coupon.objects.filter(active=True).values_list("pk", "code"))
+        coupon_code_choices = [('', '')] + list(
+            Coupon.objects.filter(
+                Q(active=True),
+                Q(campaign=None) | Q(campaign=self.instance)
+            ).values_list("pk", "code")
+        )
         field_kwargs = dict(choices=coupon_code_choices, required=False)
         field_kwargs["help_text"] = _("Define the required coupon for this campaign.")
         if self.instance.pk and self.instance.coupon:

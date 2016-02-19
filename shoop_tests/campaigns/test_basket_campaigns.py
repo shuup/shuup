@@ -7,13 +7,22 @@
 from decimal import Decimal
 
 import pytest
-from shoop.campaigns.models.basket_conditions import BasketTotalProductAmountCondition, BasketTotalAmountCondition
+
+from django.db import IntegrityError
+
+from shoop.campaigns.forms import BasketCampaignForm
+from shoop.campaigns.models.basket_conditions import (
+    BasketTotalProductAmountCondition, BasketTotalAmountCondition
+)
 from shoop.campaigns.models.campaigns import BasketCampaign, Coupon, CouponUsage
 from shoop.core.models import ShippingMethod, OrderLineType
 from shoop.core.order_creator import OrderCreator
 from shoop.front.basket import get_basket
 from shoop.front.basket.commands import handle_add_campaign_code
-from shoop.testing.factories import create_product, get_default_supplier, get_default_tax_class, get_default_product
+from shoop.testing.factories import (
+    create_product, get_default_supplier, get_default_tax_class,
+    get_default_product
+)
 from shoop.testing.utils import apply_request_middleware
 from shoop_tests.campaigns import initialize_test
 from shoop_tests.core.test_order_creator import seed_source
@@ -21,8 +30,10 @@ from shoop_tests.utils import printable_gibberish
 
 """
 These tests provides proof for following requirements:
-case 1: Define if this discount is available only if customer has X amount of products in their basket
-case 2: Define if this discount is available if customer has products in their basket for certain amount of money (shipping excluded)
+case 1: Define if this discount is available only if customer has X
+    amount of products in their basket
+case 2: Define if this discount is available if customer has products in
+    their basket for certain amount of money (shipping excluded)
 """
 
 @pytest.mark.django_db
@@ -41,12 +52,13 @@ def test_basket_campaign_module_case1(rf):
 
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=single_product_price)
 
-    line = basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
+    basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
     basket.save()
 
     assert basket.product_count == 1
 
-    campaign = BasketCampaign.objects.create(shop=shop, public_name="test", name="test", discount_amount_value=discount_amount_value, active=True)
+    campaign = BasketCampaign.objects.create(
+        shop=shop, public_name="test", name="test", discount_amount_value=discount_amount_value, active=True)
     campaign.conditions.add(basket_rule1)
     campaign.save()
 
@@ -64,13 +76,12 @@ def test_basket_campaign_module_case1(rf):
 
 @pytest.mark.django_db
 def test_basket_campaign_case2(rf):
-
     request, shop, group = initialize_test(rf, False)
     price = shop.create_price
 
     basket = get_basket(request)
     supplier = get_default_supplier()
-     # create a basket rule that requires atleast value of 200
+     # create a basket rule that requires at least value of 200
     rule = BasketTotalAmountCondition.objects.create(value="200")
 
     single_product_price = "50"
@@ -80,12 +91,14 @@ def test_basket_campaign_case2(rf):
     unique_shipping_method.save()
 
     for x in range(3):
-        product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=single_product_price)
+        product = create_product(
+            printable_gibberish(), shop=shop, supplier=supplier, default_price=single_product_price)
         basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
 
     assert basket.product_count == 3
 
-    campaign = BasketCampaign.objects.create(shop=shop, public_name="test", name="test", discount_amount_value=discount_amount_value, active=True)
+    campaign = BasketCampaign.objects.create(
+        shop=shop, public_name="test", name="test", discount_amount_value=discount_amount_value, active=True)
     campaign.conditions.add(rule)
     campaign.save()
 
@@ -125,11 +138,13 @@ def test_only_cheapest_price_is_selected(rf):
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=product_price)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
 
-    campaign = BasketCampaign.objects.create(shop=shop, public_name="test", name="test", discount_amount_value=discount1, active=True)
+    campaign = BasketCampaign.objects.create(
+        shop=shop, public_name="test", name="test", discount_amount_value=discount1, active=True)
     campaign.conditions.add(rule)
     campaign.save()
 
-    campaign = BasketCampaign.objects.create(shop=shop, public_name="test", name="test", discount_amount_value=discount2, active=True)
+    campaign = BasketCampaign.objects.create(
+        shop=shop, public_name="test", name="test", discount_amount_value=discount2, active=True)
     campaign.conditions.add(rule)
     campaign.save()
 
@@ -164,7 +179,7 @@ def test_multiple_campaigns_match_with_coupon(rf):
     campaign.save()
 
     dc = Coupon.objects.create(code="TEST", active=True)
-    campaign2 = BasketCampaign.objects.create(
+    BasketCampaign.objects.create(
             shop=shop, public_name="test",
             name="test",
             coupon=dc,
@@ -190,7 +205,7 @@ def test_percentage_campaign(rf):
 
     basket = get_basket(request)
     supplier = get_default_supplier()
-     # create a basket rule that requires atleast value of 200
+    # create a basket rule that requires at least value of 200
     rule = BasketTotalAmountCondition.objects.create(value="200")
 
     product_price = "200"
@@ -202,10 +217,10 @@ def test_percentage_campaign(rf):
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=product_price)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
 
-    campaign = BasketCampaign.objects.create(shop=shop, public_name="test", name="test", discount_percentage=discount_percentage, active=True)
+    campaign = BasketCampaign.objects.create(
+        shop=shop, public_name="test", name="test", discount_percentage=discount_percentage, active=True)
     campaign.conditions.add(rule)
     campaign.save()
-
 
     assert len(basket.get_final_lines()) == 2
     assert basket.product_count == 1
@@ -234,7 +249,7 @@ def test_order_creation_adds_usage(rf, admin_user):
     # add coupon
     coupon = Coupon.objects.create(active=True, code="asdf")
 
-    campaign = BasketCampaign.objects.create(
+    BasketCampaign.objects.create(
         active=True,
         shop=shop,
         name="test",
@@ -246,6 +261,41 @@ def test_order_creation_adds_usage(rf, admin_user):
 
     request = apply_request_middleware(rf.get("/"))
     creator = OrderCreator(request)
-    order = creator.create_order(source)
+    creator.create_order(source)
 
     assert CouponUsage.objects.count() == 1
+
+
+@pytest.mark.django_db
+def test_coupon_uniqueness(rf):
+    request, shop, group = initialize_test(rf, False)
+    first_campaign = BasketCampaign.objects.create(
+        active=True,
+        shop=shop,
+        name="test",
+        public_name="test",
+        discount_percentage="0.1",
+        coupon=None)
+
+    second_campaign = BasketCampaign.objects.create(
+        active=True,
+        shop=shop,
+        name="test1",
+        public_name="test1",
+        discount_percentage="0.1",
+        coupon=None)
+
+    coupon = Coupon.objects.create(active=True, code="test_code")
+    first_campaign.coupon = coupon
+    first_campaign.save()
+
+    first_form = BasketCampaignForm(instance=first_campaign, request=request)
+    assert len(first_form.fields["coupon"].choices) == 2  # coupon + empty
+
+    second_form = BasketCampaignForm(instance=second_campaign, request=request)
+    assert len(second_form.fields["coupon"].choices) == 1  # only empty
+
+    # Can't set coupon for second campaign since coupon is unique
+    with pytest.raises(IntegrityError):
+        second_campaign.coupon = coupon
+        second_campaign.save()

@@ -5,8 +5,11 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 # test that admin actually saves catalog
+import datetime
 import pytest
+
 from django.utils.translation import activate
+
 from shoop.campaigns.admin_module.views import CatalogCampaignEditView, BasketCampaignEditView
 from shoop.campaigns.models.campaigns import CatalogCampaign, Coupon
 from shoop.testing.factories import get_default_shop, get_default_supplier, create_product
@@ -52,13 +55,29 @@ def test_admin_catalog_campaign_edit_view(rf, admin_user):
     form = form_class(**dict(form_kwargs, data=data))
     form.full_clean()
 
-    # atleast 1 rule is required
+    # at least 1 rule is required
     assert "You must set at least one rule for this campaign" in form.errors["__all__"][0]
 
     supplier = get_default_supplier()
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price="20")
-    data.update({"product_filter": [1]})
+    data.update({"product_filter": [product.id]})
 
+    form = form_class(**dict(form_kwargs, data=data))
+    form.full_clean()
+    assert not form.errors
+
+    data.update({
+        "start_datetime": datetime.datetime.now() + datetime.timedelta(days=1),
+        "end_datetime": datetime.datetime.now()
+    })
+    form = form_class(**dict(form_kwargs, data=data))
+    form.full_clean()
+
+    assert "Campaign end date can't be before start date" in form.errors["__all__"][0]
+
+    data.update({
+        "start_datetime": None
+    })
     form = form_class(**dict(form_kwargs, data=data))
     form.full_clean()
     assert not form.errors
