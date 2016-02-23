@@ -40,6 +40,7 @@ Admin
 Front
 ~~~~~
 
+- Fix bug: BasketStorage.finalize() never called delete() correctly
 - Check product quantity already in basket while adding
 - Process given coupon codes in basket
 - Process discounts from new campaign engine
