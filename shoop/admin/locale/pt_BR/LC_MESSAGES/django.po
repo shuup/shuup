@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-29 18:45+0000\n"
-"PO-Revision-Date: 2016-02-16 15:56+0000\n"
+"PO-Revision-Date: 2016-02-18 00:01+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shoop/shoop/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -98,7 +98,7 @@ msgid "Reset password"
 msgstr "Redefinir senha"
 
 msgid "Send a password renewal email."
-msgstr "Enviar um e-mail de renovação de senha."
+msgstr "Enviar e-mail de renovação de senha."
 
 #, python-format
 msgid "Are you sure you wish to send a password recovery email to %s?"
@@ -228,7 +228,7 @@ msgstr "Módulo %s padrão"
 
 #, python-format
 msgid "Module %(name)s has no admin detail view"
-msgstr "Módulo %(name)s não possui nenhuma view de detalhes do administrador"
+msgstr "Módulo %(name)s não possui nenhuma view de detalhamento do administrador"
 
 msgid "Orders"
 msgstr "Pedidos"
@@ -287,7 +287,7 @@ msgstr "Produto %s não existe."
 
 #, python-format
 msgid "Product %(product)s is not available in the %(shop)s shop."
-msgstr "Produto %(product)s não está disponível na loja %(shop)s."
+msgstr "Produto %(product)s não está disponível para a loja %(shop)s."
 
 #, python-format
 msgid "Product %(product)s is not orderable: %(error)s"
@@ -300,7 +300,7 @@ msgid "Name is required for customer"
 msgstr "Nome é obrigatório para o cliente"
 
 msgid "Tax number is not set for company."
-msgstr "O CNPJ não está definido para a empresa."
+msgstr "CNPJ não está definido para a empresa."
 
 msgid "Please choose a valid shop."
 msgstr "Por favor, escolha uma loja válida."
@@ -335,13 +335,13 @@ msgid "There are no products to ship"
 msgstr "Não existem produtos a serem enviados"
 
 msgid "Set Complete"
-msgstr "Definir como Concluído"
+msgstr "Definir como Completo"
 
 msgid "This order can not be set as complete at this point"
-msgstr "Este pedido não pode ser definido como concluído a esta altura"
+msgstr "Este pedido não pode ser definido como completo a esta altura"
 
 msgid "Unable to set order as completed at this point"
-msgstr "Não é possível definir o pedido como concluído a esta altura"
+msgstr "Não é possível definir o pedido como completo a esta altura"
 
 #, python-format
 msgid "Order status changed: %s to %s"
@@ -401,7 +401,7 @@ msgid "%s has been marked deleted."
 msgstr "%s foi marcado como excluído."
 
 msgid "Minimum Purchase Quantity has been rounded to match Sales Unit."
-msgstr "Quantidade Mínima de Compra foi arredondado para parear com a Unidade de Venda."
+msgstr "Quantidade Mínima de Compra foi arredondado para compatibilizar com a Unidade de Venda."
 
 #, python-format
 msgid "Changes to shop instance for %s saved"
@@ -432,10 +432,10 @@ msgstr "Quantidade Mínima de Compra deve ser maior do que 0."
 
 #, python-format
 msgid "Thumbnail generation of %s failed: %s"
-msgstr "A geração de miniaturas do produto %s falhou: %s"
+msgstr "A geração de miniaturas para o produto %s falhou: %s"
 
 msgid "Use only URL or file, not both"
-msgstr "Utilize apenas URL ou arquivo, não ambos"
+msgstr "Utilize apenas URL ou arquivo, nunca ambos"
 
 msgid "Is primary"
 msgstr "É principal"
@@ -495,7 +495,7 @@ msgstr "Converter para Variação Pai"
 msgid ""
 "Are you sure? This will unlink all children and remove all variation "
 "variables."
-msgstr "Você tem certeza? Esta ação irá desvincular todos os filhos e remover todas as variáveis de variação."
+msgstr "Você tem certeza? Esta ação irá desvincular todos os filhos e remover todas as variáveis da variação."
 
 msgid "Clear variation"
 msgstr "Limpar variação"
@@ -503,7 +503,7 @@ msgstr "Limpar variação"
 msgid ""
 "Are you sure? This will remove all variation variables, converting children "
 "to direct links."
-msgstr "Você tem certeza? Esta ação irá remover todas as variáveis de variação, convertendo os filhos em links diretos."
+msgstr "Você tem certeza? Esta ação irá remover todas as variáveis da variação, convertendo os filhos em links diretos."
 
 msgid "Convert to simple variation"
 msgstr "Converter para variação simples"
@@ -692,7 +692,7 @@ msgid "User"
 msgstr "Usuário"
 
 msgid "The two password fields didn't match."
-msgstr "Os dois campos de senha não conferem."
+msgstr "Os dois campos da senha não conferem."
 
 msgid "Your old password was entered incorrectly. Please enter it again."
 msgstr "Sua senha antiga foi digitada incorretamente. Por favor, insira-a novamente."
@@ -734,7 +734,7 @@ msgid "Sending the password recovery email failed."
 msgstr "Falha ao enviar o e-mail de recuperação de senha."
 
 msgid "You can't unset this status for yourself."
-msgstr "Você não pode desatribuir esta situação para sua própria conta."
+msgstr "Você não pode desatribuir esta situação para si mesmo."
 
 msgid "Change User Permissions"
 msgstr "Alterar Permissões do Usuário"
@@ -751,7 +751,7 @@ msgid "New Attribute"
 msgstr "Novo Atributo"
 
 msgid "Login"
-msgstr "Fazer login"
+msgstr "Fazer Login"
 
 msgid "Logged out"
 msgstr "Desconectado"
@@ -1170,10 +1170,10 @@ msgid "Log in with different credentials..."
 msgstr "Fazer login com outras credenciais..."
 
 msgid "You must be logged in."
-msgstr "Você deve estar autenticado."
+msgstr "Você precisa estar conectado."
 
 msgid "You must be a staff member."
-msgstr "Você deve ser um membro do quadro."
+msgstr "Você precisa ser um membro do quadro."
 
 #, python-format
 msgid "You do not have the required permissions: %r"
