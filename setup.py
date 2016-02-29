@@ -88,7 +88,9 @@ REQUIRES = [
     'django-parler~=1.5',
     'django-parler-rest~=1.3a1',
     'django-polymorphic~=0.8.0',
-    'django-registration-redux~=1.2',
+    # django-registration-redux>=1.4 does not work with
+    # our custom get_success_url
+    'django-registration-redux~=1.2,<1.4',
     'django-timezone-field~=1.2',
 
     # djangorestframework>=3.3.0 does not work with
