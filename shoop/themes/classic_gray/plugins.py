@@ -26,18 +26,22 @@ class ProductHighlightPlugin(TemplatedPlugin):
             ("best_selling", "Best Selling"),
             ("random", "Random"),
         ], initial="newest")),
-        ("count", forms.IntegerField(label=_("Count"), min_value=1, initial=4))
+        ("count", forms.IntegerField(label=_("Count"), min_value=1, initial=4)),
+        ("orderable_only", forms.BooleanField(label=_("Only show in-stock and orderable items"),
+                                              initial=True,
+                                              required=False))
     ]
 
     def get_context_data(self, context):
         type = self.config.get("type", "newest")
         count = self.config.get("count", 4)
+        orderable_only = self.config.get("orderable_only", True)
         if type == "newest":
-            products = get_newest_products(context, count)
+            products = get_newest_products(context, count, orderable_only)
         elif type == "best_selling":
-            products = get_best_selling_products(context, count)
+            products = get_best_selling_products(context, count, orderable_only)
         elif type == "random":
-            products = get_random_products(context, count)
+            products = get_random_products(context, count, orderable_only)
         else:
             products = []
 
