@@ -98,7 +98,7 @@ REQUIRES = [
     'djangorestframework~=3.1,<3.3.0',
 
     'factory-boy~=2.5',
-    'fake-factory~=0.5.0',
+    'fake-factory~=0.5.0,<0.5.4',
     'Jinja2~=2.8',
     'jsonfield~=1.0',
     'Markdown~=2.6',
