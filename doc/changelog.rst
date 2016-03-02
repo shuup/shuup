@@ -14,6 +14,7 @@ Core
 
 - Move calculate_taxes_automatically from ``OrderSource`` to ``TaxModule``
 - Add shop product validation for OrderSource
+- Add option to create payments with REST API
 - Add contact address for ``Shop``
 - Add update_stock calls for ``SimpleSupplierModule``
 - Rename ``simple_pricing`` to ``customer_group_pricing``
