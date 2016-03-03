@@ -21,7 +21,7 @@ from shoop.core.models import (
     TaxClass
 )
 from shoop.core.pricing import Price, Priceful, TaxfulPrice, TaxlessPrice
-from shoop.core.taxing import TaxableItem
+from shoop.core.taxing import should_calculate_taxes_automatically, TaxableItem
 from shoop.utils.decorators import non_reentrant
 from shoop.utils.money import Money
 
@@ -318,9 +318,8 @@ class OrderSource(object):
             lines = self.__compute_lines()
             self._processed_lines_cache = lines
         if not self._taxes_calculated:
-            tax_module = taxing.get_tax_module()
-            if with_taxes or tax_module.calculate_taxes_automatically:
-                self._calculate_taxes(lines, tax_module)
+            if with_taxes or should_calculate_taxes_automatically():
+                self._calculate_taxes(lines)
         for error_message in self.get_validation_errors():
             raise ValidationError(error_message.args[0], code="invalid_order_source")
         return lines
@@ -330,14 +329,14 @@ class OrderSource(object):
             self._taxes_calculated = False
         self.get_final_lines(with_taxes=True)
 
-    def _calculate_taxes(self, lines, tax_module):
+    def _calculate_taxes(self, lines):
+        tax_module = taxing.get_tax_module()
         tax_module.add_taxes(self, lines)
         self._taxes_calculated = True
 
     def calculate_taxes_or_raise(self):
         if not self._taxes_calculated:
-            tax_module = taxing.get_tax_module()
-            if not tax_module.calculate_taxes_automatically:
+            if not should_calculate_taxes_automatically():
                 raise TaxesNotCalculated('Taxes are not calculated')
             self.calculate_taxes()
 
