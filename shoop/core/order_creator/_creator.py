@@ -158,7 +158,7 @@ class OrderCreator(object):
             for (index, line_tax) in enumerate(line.source_line.taxes, 1):
                 line.taxes.create(
                     tax=line_tax.tax,
-                    name=line_tax.tax.name,
+                    name=line_tax.name,
                     amount_value=line_tax.amount.value,
                     base_amount_value=line_tax.base_amount.value,
                     ordering=index,
