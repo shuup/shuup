@@ -23,18 +23,29 @@ def get_tax_module():
     return load_module("SHOOP_TAX_MODULE", "tax_module")()
 
 
+def should_calculate_taxes_automatically():
+    """
+    If ``settings.SHOOP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE``
+    is False taxes shouldn't be calculated automatically otherwise
+    use current tax module value ``TaxModule.calculating_is_cheap``
+    to determine whether taxes should be calculated automatically.
+
+    :rtype: bool
+    """
+    if not settings.SHOOP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE:
+        return False
+    return get_tax_module().calculating_is_cheap
+
+
 class TaxModule(six.with_metaclass(abc.ABCMeta)):
     """
     Module for calculating taxes.
     """
+    calculating_is_cheap = True
     identifier = None
     name = None
 
     taxing_context_class = TaxingContext
-
-    @property
-    def calculate_taxes_automatically(self):
-        return settings.SHOOP_CALCULATE_TAXES_AUTOMATICALLY
 
     def get_context_from_request(self, request):
         customer = getattr(request, "customer", None)

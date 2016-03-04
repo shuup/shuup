@@ -52,7 +52,7 @@ def get_source():
 
 @pytest.mark.django_db
 def test_calculate_taxes_automatically_setting():
-    with override_settings(SHOOP_CALCULATE_TAXES_AUTOMATICALLY=True):
+    with override_settings(SHOOP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE=True):
         source = get_source()
         source.get_final_lines()
         assert source._taxes_calculated == True
@@ -63,7 +63,7 @@ def test_calculate_taxes_automatically_setting():
         assert source._taxes_calculated == True
 
 
-    with override_settings(SHOOP_CALCULATE_TAXES_AUTOMATICALLY=False):
+    with override_settings(SHOOP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE=False):
         source = get_source()
         source.get_final_lines()
         assert source._taxes_calculated == False
