@@ -50,3 +50,37 @@ class ProductHighlightPlugin(TemplatedPlugin):
             "title": self.get_translated_value("title"),
             "products": products
         }
+
+
+class ProductCrossSellsPlugin(TemplatedPlugin):
+    identifier = "classic_gray.product_cross_sells"
+    name = _("Product Cross Sells")
+    template_name = "classic_gray/cross_sells_plugin.jinja"
+    required_context_variables = ["product"]
+    fields = [
+        ("title", TranslatableField(label=_("Title"), required=False, initial="")),
+        ("type", forms.ChoiceField(label=_("Type"), choices=[
+            ("related", "Related"),
+            ("recommended", "Recommended"),
+            ("computed", "Computed"),
+        ], initial="related")),
+        ("count", forms.IntegerField(label=_("Count"), min_value=1, initial=4)),
+        ("orderable_only", forms.BooleanField(label=_("Only show in-stock and orderable items"),
+                                              initial=True,
+                                              required=False))
+    ]
+
+    def get_context_data(self, context):
+        count = self.config.get("count", 4)
+        product = context.get("product", None)
+        orderable_only = self.config.get("orderable_only", True)
+        type = self.config.get("type", "related")
+
+        return {
+            "request": context["request"],
+            "title": self.get_translated_value("title"),
+            "product": product,
+            "type": type,
+            "count": count,
+            "orderable_only": orderable_only,
+        }
