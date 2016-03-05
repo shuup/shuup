@@ -4,6 +4,8 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.utils.translation import ugettext
+
 from shoop.utils.money import Money
 
 
@@ -57,8 +59,10 @@ class Price(Money):
             return TaxlessPrice(value, currency)
 
     def __str__(self):
-        incl = 'incl.' if self.includes_tax else 'excl.'
-        return '%s (%s tax)' % (super(Price, self).__str__(), incl)
+        incl = ugettext('incl.') if self.includes_tax else ugettext('excl.')
+        return "{price} ({incl} {tax})".format(
+            price=super(Price, self).__str__(), incl=incl, tax=ugettext("tax")
+        )
 
 
 class TaxfulPrice(Price):
