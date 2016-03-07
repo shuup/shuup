@@ -13,9 +13,9 @@ import six
 from django.utils.encoding import force_text
 
 from shoop.core.models import Order, OrderLine, OrderLineType
+from shoop.core.order_creator.signals import order_creator_finished
 from shoop.core.shortcuts import update_order_line_from_product
 from shoop.core.utils.users import real_user_or_none
-from shoop.front.signals import order_creator_finished
 from shoop.utils.numbers import bankers_round
 
 from ._source_modifier import get_order_source_modifier_modules
