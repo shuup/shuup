@@ -109,9 +109,11 @@ def validate_templates_configuration():
 
 def reload_apps():
     import django
+    # Clear cache for any AppDirectoriesFinder instance.
+    # This should be done before Django apps is reloaded.
+    django.contrib.staticfiles.finders.get_finder.cache_clear()
+
     _KNOWN_SETTINGS.clear()
     django.apps.apps.app_configs.clear()
     django.apps.apps.ready = False
     django.setup()
-    # Rebuild any AppDirectoriesFinder instance.
-    django.contrib.staticfiles.finders.get_finder.cache_clear()
