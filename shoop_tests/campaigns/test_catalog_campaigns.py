@@ -7,11 +7,12 @@
 from decimal import Decimal
 
 import datetime
-
 import pytest
+
 from django.core.exceptions import ValidationError
 from django.utils.timezone import now
 from django.utils.translation import activate
+
 from shoop.campaigns.models.campaigns import CatalogCampaign
 from shoop.campaigns.models.catalog_filters import CategoryFilter
 from shoop.campaigns.models.context_conditions import ContactGroupCondition
@@ -212,7 +213,7 @@ def test_only_best_price_affects(rf):
     shop_product = product.get_shop_instance(shop)
     shop_product.categories.add(cat)
     shop_product.save()
-    # now the category is set, so both rules match, disconut should be given
+    # now the category is set, so both rules match, discount should be given
     assert product.get_price_info(request, quantity=1).price == (price(original_price) - price(best_discount_amount))
 
 
@@ -346,4 +347,3 @@ def test_availability(rf):
     campaign.save()
 
     assert not campaign.is_available()
-

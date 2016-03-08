@@ -4,12 +4,14 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from decimal import Decimal
-
 import pytest
+
 from django.utils.encoding import force_text
-from shoop.campaigns.models.basket_conditions import ProductsInBasketCondition, BasketTotalAmountCondition, \
-    BasketTotalProductAmountCondition
+
+from shoop.campaigns.models.basket_conditions import (
+    BasketTotalAmountCondition, BasketTotalProductAmountCondition,
+    ProductsInBasketCondition
+)
 from shoop.front.basket import get_basket
 from shoop.testing.factories import get_default_supplier, create_product
 from shoop_tests.campaigns import initialize_test
@@ -18,7 +20,6 @@ from shoop_tests.campaigns import initialize_test
 @pytest.mark.django_db
 def test_product_in_basket_condition(rf):
     request, shop, group = initialize_test(rf, False)
-    price = shop.create_price
 
     basket = get_basket(request)
     supplier = get_default_supplier()
@@ -38,7 +39,6 @@ def test_product_in_basket_condition(rf):
 @pytest.mark.django_db
 def test_basket_total_amount_condition(rf):
     request, shop, group = initialize_test(rf, False)
-    price = shop.create_price
 
     basket = get_basket(request)
     supplier = get_default_supplier()
@@ -56,7 +56,6 @@ def test_basket_total_amount_condition(rf):
 @pytest.mark.django_db
 def test_basket_total_value_condition(rf):
     request, shop, group = initialize_test(rf, False)
-    price = shop.create_price
 
     basket = get_basket(request)
     supplier = get_default_supplier()
@@ -69,4 +68,4 @@ def test_basket_total_value_condition(rf):
     condition.save()
     assert condition.value == 1
     assert condition.matches(basket, [])
-    assert "basket has atleast the product count entered here" in force_text(condition.description)
+    assert "basket has at least the product count entered here" in force_text(condition.description)

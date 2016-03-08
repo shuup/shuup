@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-01 18:04+0000\n"
+"POT-Creation-Date: 2016-03-08 23:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -115,6 +115,9 @@ msgstr ""
 msgid "You must define discount percentage or amount."
 msgstr ""
 
+msgid "Campaign end date can't be before start date."
+msgstr ""
+
 msgid "Discount percentage cannot be negative."
 msgstr ""
 
@@ -146,8 +149,8 @@ msgid "product count in basket"
 msgstr ""
 
 msgid ""
-"Limit the campaign to match when it has atleast the product count entered "
-"here."
+"Limit the campaign to match when basket has at least the product count "
+"entered here."
 msgstr ""
 
 msgid "Basket total value"
@@ -168,6 +171,24 @@ msgid "products"
 msgstr ""
 
 msgid "Limit the campaign to have the selected products in basket."
+msgstr ""
+
+msgid "Contact Group"
+msgstr ""
+
+msgid "contact groups"
+msgstr ""
+
+msgid "Limit the campaign to members of the selected contact groups."
+msgstr ""
+
+msgid "Contact"
+msgstr ""
+
+msgid "contacts"
+msgstr ""
+
+msgid "Limit the campaign to selected contacts."
 msgstr ""
 
 msgid "shop"
@@ -283,18 +304,6 @@ msgid "Limit the campaign to products in selected categories."
 msgstr ""
 
 msgid "Context Condition"
-msgstr ""
-
-msgid "Contact Group"
-msgstr ""
-
-msgid "Contact group"
-msgstr ""
-
-msgid "contact groups"
-msgstr ""
-
-msgid "Limit the campaign to members of the selected contact groups."
 msgstr ""
 
 msgid "Campaign Basket Discounts"

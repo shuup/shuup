@@ -29,10 +29,13 @@ class CampaignAppConfig(AppConfig):
         ],
         "campaign_context_condition": [
             "shoop.campaigns.models.context_conditions:ContactGroupCondition",
+            "shoop.campaigns.models.context_conditions:ContactCondition",
         ],
         "campaign_basket_condition": [
             "shoop.campaigns.models.basket_conditions:BasketTotalProductAmountCondition",
             "shoop.campaigns.models.basket_conditions:BasketTotalAmountCondition",
-            "shoop.campaigns.models.basket_conditions:ProductsInBasketCondition"
+            "shoop.campaigns.models.basket_conditions:ProductsInBasketCondition",
+            "shoop.campaigns.models.basket_conditions:ContactGroupBasketCondition",
+            "shoop.campaigns.models.basket_conditions:ContactBasketCondition",
         ]
     }
