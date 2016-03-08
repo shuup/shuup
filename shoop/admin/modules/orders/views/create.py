@@ -202,7 +202,11 @@ class OrderCreateView(TemplateView):
     @transaction.atomic
     def _handle_source_data(self, request):
         state = json.loads(request.body.decode("utf-8"))["state"]
-        source = create_source_from_state(state, creator=request.user)
+        source = create_source_from_state(
+            state,
+            creator=request.user,
+            ip_address=request.META.get("REMOTE_ADDR"),
+        )
         # Calculate final lines for confirmation
         source.calculate_taxes(force_recalculate=True)
         return {
@@ -217,7 +221,11 @@ class OrderCreateView(TemplateView):
     @transaction.atomic
     def _handle_create(self, request):
         state = json.loads(request.body.decode("utf-8"))["state"]
-        order = create_order_from_state(state, creator=request.user)
+        order = create_order_from_state(
+            state,
+            creator=request.user,
+            ip_address=request.META.get("REMOTE_ADDR"),
+        )
         messages.success(request, _("Order %(identifier)s created.") % vars(order))
         return JsonResponse({
             "success": True,
