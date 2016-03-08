@@ -130,14 +130,6 @@ class OrderSource(object):
         self.zero_price = shop.create_price(0)
         self.create_price = self.zero_price.new
 
-        """
-        Calculate taxes automatically when lines are added or processed.
-
-        Set to False to minimize costs and latency, since it is possible
-        that the current TaxModule implemements tax calculations with an
-        integration to a remote system which charges per transaction.
-        """
-
         self._taxes_calculated = False
         self._processed_lines_cache = None
 
