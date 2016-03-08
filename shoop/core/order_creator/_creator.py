@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import warnings
 from decimal import Decimal
 
 import six
@@ -23,8 +24,19 @@ from ._source_modifier import get_order_source_modifier_modules
 
 class OrderCreator(object):
 
-    def __init__(self, request):
-        self.request = request  # TODO: Get rid of `request`?
+    def __init__(self, request=None):
+        """
+        Initialize order creator.
+
+        :type request: django.http.HttpRequest|None
+        :param request:
+          Optional request object for backward compatibility.  Passing
+          non-None value is DEPRECATED.
+        """
+        if request is not None:
+            warnings.warn(
+                "Initializing OrderCreator with a request is deprecated",
+                DeprecationWarning, stacklevel=2)
 
     def source_line_to_order_lines(self, order, source_line):
         """
@@ -78,7 +90,7 @@ class OrderCreator(object):
         for child_product, child_quantity in six.iteritems(parent_product.get_package_child_to_quantity_map()):
             child_order_line = OrderLine(order=order, parent_line=order_line)
             update_order_line_from_product(
-                pricing_context=self.request,
+                pricing_context=None,
                 order_line=child_order_line,
                 product=child_product,
                 quantity=(order_line.quantity * child_quantity),
@@ -175,7 +187,7 @@ class OrderCreator(object):
             payment_method=order_source.payment_method,
             customer_comment=order_source.customer_comment,
             marketing_permission=bool(order_source.marketing_permission),
-            ip_address=(self.request.META.get("REMOTE_ADDR") if self.request else None),
+            ip_address=order_source.ip_address,
             creator=real_user_or_none(order_source.creator),
             orderer=(order_source.orderer or None),
             customer=(order_source.customer or None),
@@ -204,7 +216,8 @@ class OrderCreator(object):
 
         self._assign_code_usages(order_source, order)
 
-        order_creator_finished.send(OrderCreator, order=order, source=order_source, request=self.request)
+        order_creator_finished.send(
+            sender=type(self), order=order, source=order_source)
 
         order.save()
         self.process_order_after_lines(source=order_source, order=order)

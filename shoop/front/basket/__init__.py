@@ -8,7 +8,7 @@
 from shoop.utils.importing import cached_load
 
 
-def get_basket_order_creator(request):
+def get_basket_order_creator(request=None):
     return cached_load("SHOOP_BASKET_ORDER_CREATOR_SPEC")(request=request)
 
 

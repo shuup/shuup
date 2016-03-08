@@ -15,7 +15,10 @@ def update_order_line_from_product(
 
     This is a convenience method for simple applications.
 
-    :type pricing_context: shoop.core.pricing.PricingContextable
+    :type pricing_context: shoop.core.pricing.PricingContextable|None
+    :param pricing_context:
+      Pricing context to use for pricing the line.  If None is given,
+      the line will get zero price and zero discount amount.
     :type order_line: shoop.core.models.OrderLine
     :type product: shoop.core.models.Product
     :type quantity: int|decimal.Decimal
@@ -28,7 +31,6 @@ def update_order_line_from_product(
     if not product:  # pragma: no cover
         raise Exception("set_from_product may not be used without product")
 
-    price_info = product.get_price_info(pricing_context, quantity=quantity)
     order_line.supplier = supplier
     order_line.type = OrderLineType.PRODUCT
     order_line.product = product
@@ -38,6 +40,11 @@ def update_order_line_from_product(
     order_line.accounting_identifier = product.accounting_identifier
     order_line.require_verification = bool(getattr(product, "require_verification", False))
     order_line.verified = False
-    order_line.base_unit_price = price_info.base_unit_price
-    order_line.discount_amount = price_info.discount_amount
-    assert order_line.price == price_info.price
+    if pricing_context:
+        price_info = product.get_price_info(pricing_context, quantity=quantity)
+        order_line.base_unit_price = price_info.base_unit_price
+        order_line.discount_amount = price_info.discount_amount
+        assert order_line.price == price_info.price
+    else:
+        order_line.base_unit_price_value = 0
+        order_line.discount_amount_value = 0

@@ -117,6 +117,7 @@ class OrderSource(object):
         self.customer_comment = u""
         self.marketing_permission = False
         self.language = None
+        self.ip_address = None  # type: str
         self.order_date = now()
         self.status_id = None
         self.payment_data = {}
@@ -166,6 +167,7 @@ class OrderSource(object):
             language=order.language,
             display_currency=order.display_currency,
             display_currency_rate=order.display_currency_rate,
+            ip_address=order.ip_address,
             order_date=order.order_date,
             status_id=order.status_id,
             payment_data=order.payment_data,
