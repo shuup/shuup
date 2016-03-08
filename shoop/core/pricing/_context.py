@@ -47,6 +47,10 @@ class PricingContext(PricingContextable):
         :type customer: shoop.core.models.Contact
         :type time: datetime.datetime|None
         """
+        assert shop is not None, "shop is required"
+        assert customer is not None, (
+            "customer is required (may be AnonymousContact though)")
+
         self.shop = shop
         self.customer = customer
         self.time = (time if time is not None else now())

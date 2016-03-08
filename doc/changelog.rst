@@ -12,6 +12,8 @@ Unreleased
 Core
 ~~~~
 
+- ``OrderCreator`` no longer requires a request
+- Add ``order_creator_finished`` signal under ``order_creator``
 - Move calculate_taxes_automatically from ``OrderSource`` to ``TaxModule``
 - Add shop product validation for OrderSource
 - Add option to create payments with REST API
@@ -33,6 +35,7 @@ Localization
 Admin
 ~~~~~
 
+- Make all enabled shipping and payment methods available in order creator
 - Check product quantities in order creation
 - Add option to add action buttons to Order edit view
 - Add Campaigns management
@@ -43,6 +46,7 @@ Front
 
 - Fix bug: BasketStorage.finalize() never called delete() correctly
 - Check product quantity already in basket while adding
+- Move ``order_creator_finished`` signal under core
 - Process given coupon codes in basket
 - Process discounts from new campaign engine
 

@@ -90,6 +90,8 @@ class BaseBasket(OrderSource):
         super(BaseBasket, self).__init__(request.shop)
         self.basket_name = basket_name
         self.request = request
+        if request:
+            self.ip_address = request.META.get("REMOTE_ADDR")
         self.storage = get_storage()
         self._data = None
         self.dirty = False

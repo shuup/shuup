@@ -7,7 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 import six
-from django.test import RequestFactory
 
 from shoop.core.models import (
     AnonymousContact, OrderLineType, ProductMode, Shop
@@ -17,7 +16,6 @@ from shoop.testing.factories import (
     create_product, get_default_shop, get_default_supplier,
     get_initial_order_status
 )
-from shoop.testing.utils import apply_request_middleware
 from shoop_tests.utils.basketish_order_source import BasketishOrderSource
 
 
@@ -51,9 +49,7 @@ def test_package():
 
     source.status = get_initial_order_status()
 
-    request = apply_request_middleware(RequestFactory().get("/"))
-
-    creator = OrderCreator(request)
+    creator = OrderCreator()
     order = creator.create_order(source)
     pids_to_quantities = order.get_product_ids_and_quantities()
     for child, quantity in six.iteritems(package_def):

@@ -16,7 +16,6 @@ from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.core.urlresolvers import reverse
 from django.db import transaction
-from django.db.models import Q
 from django.http.response import HttpResponse, JsonResponse
 from django.test.client import RequestFactory
 from django.utils.encoding import force_text
@@ -114,12 +113,8 @@ class OrderCreateView(TemplateView):
 
     def get_config(self):
         shops = [encode_shop(shop) for shop in Shop.objects.filter(status=ShopStatus.ENABLED)]
-        shipping_methods = ShippingMethod.objects.filter(
-            Q(status=MethodStatus.ENABLED), Q(module_identifier="default_shipping") | Q(module_identifier="")
-        )
-        payment_methods = PaymentMethod.objects.filter(
-            Q(status=MethodStatus.ENABLED), Q(module_identifier="default_payment") | Q(module_identifier="")
-        )
+        shipping_methods = ShippingMethod.objects.filter(status=MethodStatus.ENABLED)
+        payment_methods = PaymentMethod.objects.filter(status=MethodStatus.ENABLED)
         return {
             "shops": shops,
             "countries": [{"id": code, "name": name} for code, name in list(countries)],
@@ -207,7 +202,11 @@ class OrderCreateView(TemplateView):
     @transaction.atomic
     def _handle_source_data(self, request):
         state = json.loads(request.body.decode("utf-8"))["state"]
-        source = create_source_from_state(state, creator=request.user)
+        source = create_source_from_state(
+            state,
+            creator=request.user,
+            ip_address=request.META.get("REMOTE_ADDR"),
+        )
         # Calculate final lines for confirmation
         source.calculate_taxes(force_recalculate=True)
         return {
@@ -222,7 +221,11 @@ class OrderCreateView(TemplateView):
     @transaction.atomic
     def _handle_create(self, request):
         state = json.loads(request.body.decode("utf-8"))["state"]
-        order = create_order_from_state(state, creator=request.user)
+        order = create_order_from_state(
+            state,
+            creator=request.user,
+            ip_address=request.META.get("REMOTE_ADDR"),
+        )
         messages.success(request, _("Order %(identifier)s created.") % vars(order))
         return JsonResponse({
             "success": True,

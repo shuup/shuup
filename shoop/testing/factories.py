@@ -20,7 +20,6 @@ from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.validators import validate_email, ValidationError
 from django.db.transaction import atomic
-from django.test import RequestFactory
 from django.utils.timezone import now
 from django_countries.data import COUNTRIES
 from factory.django import DjangoModelFactory
@@ -30,14 +29,15 @@ from six import BytesIO
 
 from shoop.core.defaults.order_statuses import create_default_order_statuses
 from shoop.core.models import (
-    Attribute, AttributeType, Category, CategoryStatus, CompanyContact,
-    Contact, ContactGroup, MutableAddress, Order, OrderLine, OrderLineTax,
-    OrderLineType, OrderStatus, PaymentMethod, PersonContact, Product,
-    ProductMedia, ProductMediaKind, ProductType, SalesUnit, ShippingMethod,
-    Shop, ShopProduct, ShopStatus, StockBehavior, Supplier, SupplierType, Tax,
-    TaxClass
+    AnonymousContact, Attribute, AttributeType, Category, CategoryStatus,
+    CompanyContact, Contact, ContactGroup, MutableAddress, Order, OrderLine,
+    OrderLineTax, OrderLineType, OrderStatus, PaymentMethod, PersonContact,
+    Product, ProductMedia, ProductMediaKind, ProductType, SalesUnit,
+    ShippingMethod, Shop, ShopProduct, ShopStatus, StockBehavior, Supplier,
+    SupplierType, Tax, TaxClass
 )
 from shoop.core.order_creator import OrderCreator, OrderSource
+from shoop.core.pricing import get_pricing_module
 from shoop.core.shortcuts import update_order_line_from_product
 from shoop.default_tax.models import TaxRule
 from shoop.testing.text_data import random_title
@@ -45,7 +45,6 @@ from shoop.utils.filer import filer_image_from_data
 from shoop.utils.money import Money
 
 from .image_generator import generate_image
-from .utils import apply_request_middleware
 
 DEFAULT_IDENTIFIER = "default"
 DEFAULT_NAME = "Default"
@@ -466,12 +465,11 @@ def create_order_with_product(
     order.full_clean()
     order.save()
 
-    request = apply_request_middleware(RequestFactory().get("/"))
-    request.shop = order.shop
+    pricing_context = _get_pricing_context(order.shop, order.customer)
 
     for x in range(n_lines):
         product_order_line = OrderLine(order=order)
-        update_order_line_from_product(pricing_context=request,
+        update_order_line_from_product(pricing_context,
                                        order_line=product_order_line,
                                        product=product, quantity=quantity,
                                        supplier=supplier)
@@ -610,8 +608,7 @@ def create_random_order(customer=None, products=(), completion_probability=0, sh
     if shop is None:
         shop = get_default_shop()
 
-    request = apply_request_middleware(RequestFactory().get("/"),
-                                       customer=customer)
+    pricing_context = _get_pricing_context(shop, customer)
 
     source = OrderSource(shop)
     source.customer = customer
@@ -634,7 +631,7 @@ def create_random_order(customer=None, products=(), completion_probability=0, sh
     for i in range(random.randint(3, 10)):
         product = random.choice(products)
         quantity = random.randint(1, 5)
-        price_info = product.get_price_info(request, quantity=quantity)
+        price_info = product.get_price_info(pricing_context, quantity=quantity)
         shop_product = product.get_shop_instance(source.shop)
         supplier = shop_product.suppliers.first()
         line = source.add_line(
@@ -649,7 +646,7 @@ def create_random_order(customer=None, products=(), completion_probability=0, sh
         )
         assert line.price == price_info.price
     with atomic():
-        oc = OrderCreator(request)
+        oc = OrderCreator()
         order = oc.create_order(source)
         if random.random() < completion_probability:
             order.create_shipment_of_all_products()
@@ -657,3 +654,10 @@ def create_random_order(customer=None, products=(), completion_probability=0, sh
             order.status = OrderStatus.objects.get_default_complete()
             order.save(update_fields=("status",))
         return order
+
+
+def _get_pricing_context(shop, customer=None):
+    return get_pricing_module().get_context_from_data(
+        shop=shop,
+        customer=(customer or AnonymousContact()),
+    )

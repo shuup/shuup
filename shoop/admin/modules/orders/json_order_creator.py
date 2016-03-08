@@ -175,7 +175,7 @@ class JsonOrderCreator(object):
             customer = PersonContact(**fields)
         return customer
 
-    def _initialize_source_from_state(self, state, creator, save):
+    def _initialize_source_from_state(self, state, creator, ip_address, save):
         shop_data = state.pop("shop", None).get("selected", {})
         shop = self.safe_get_first(Shop, pk=shop_data.pop("id", None))
         if not shop:
@@ -225,6 +225,7 @@ class JsonOrderCreator(object):
 
         source.update(
             creator=creator,
+            ip_address=ip_address,
             customer=customer,
             billing_address=billing_address,
             shipping_address=shipping_address,
@@ -239,7 +240,8 @@ class JsonOrderCreator(object):
         if comment:
             order.add_log_entry(comment, kind=LogEntryKind.NOTE, user=order.creator)
 
-    def create_source_from_state(self, state, creator=None, save=False):
+    def create_source_from_state(self, state, creator=None, ip_address=None,
+                                 save=False):
         """
         Create an order source from a state dict unserialized from JSON.
 
@@ -259,7 +261,8 @@ class JsonOrderCreator(object):
         state = deepcopy(state)
 
         # First, initialize an OrderSource.
-        source = self._initialize_source_from_state(state, creator, save)
+        source = self._initialize_source_from_state(
+            state, creator=creator, ip_address=ip_address, save=save)
         if not source:
             return None
 
@@ -276,7 +279,7 @@ class JsonOrderCreator(object):
 
         return source
 
-    def create_order_from_state(self, state, creator=None):
+    def create_order_from_state(self, state, creator=None, ip_address=None):
         """
         Create an order from a state dict unserialized from JSON.
 
@@ -284,13 +287,16 @@ class JsonOrderCreator(object):
         :type state: dict
         :param creator: Creator user
         :type creator: django.contrib.auth.models.User|None
+        :param ip_address: Remote IP address (IPv4 or IPv6)
+        :type ip_address: str
         :return: The created order, or None if something failed along the way
         :rtype: Order|None
         """
-        source = self.create_source_from_state(state, creator, save=True)
+        source = self.create_source_from_state(
+            state, creator=creator, ip_address=ip_address, save=True)
 
         # Then create an OrderCreator and try to get things done!
-        creator = OrderCreator(request=None)
+        creator = OrderCreator()
         try:
             order = creator.create_order(order_source=source)
             self._postprocess_order(order, state)

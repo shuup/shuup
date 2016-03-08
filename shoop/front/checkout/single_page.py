@@ -123,7 +123,7 @@ class SingleCheckoutPhase(CheckoutPhaseViewMixin, FormView):
         if order_data:  # pragma: no cover
             raise ValueError("`order_data` should be empty by now")
 
-        order_creator = get_basket_order_creator(request=self.request)
+        order_creator = get_basket_order_creator()
         order = order_creator.create_order(basket)
         basket.finalize()
         self.checkout_process.complete()

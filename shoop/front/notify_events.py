@@ -7,10 +7,9 @@
 # LICENSE file in the root directory of this source tree.
 from django.dispatch import receiver
 
+from shoop.core.order_creator.signals import order_creator_finished
 from shoop.notify import Event, Variable
 from shoop.notify.typology import Email, Language, Model, Phone
-
-from .signals import order_creator_finished
 
 
 class OrderReceived(Event):

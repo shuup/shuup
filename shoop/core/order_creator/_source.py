@@ -117,6 +117,7 @@ class OrderSource(object):
         self.customer_comment = u""
         self.marketing_permission = False
         self.language = None
+        self.ip_address = None  # type: str
         self.order_date = now()
         self.status_id = None
         self.payment_data = {}
@@ -128,14 +129,6 @@ class OrderSource(object):
 
         self.zero_price = shop.create_price(0)
         self.create_price = self.zero_price.new
-
-        """
-        Calculate taxes automatically when lines are added or processed.
-
-        Set to False to minimize costs and latency, since it is possible
-        that the current TaxModule implemements tax calculations with an
-        integration to a remote system which charges per transaction.
-        """
 
         self._taxes_calculated = False
         self._processed_lines_cache = None
@@ -166,6 +159,7 @@ class OrderSource(object):
             language=order.language,
             display_currency=order.display_currency,
             display_currency_rate=order.display_currency_rate,
+            ip_address=order.ip_address,
             order_date=order.order_date,
             status_id=order.status_id,
             payment_data=order.payment_data,
