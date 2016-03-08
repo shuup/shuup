@@ -55,13 +55,17 @@ class PricingModule(six.with_metaclass(abc.ABCMeta)):
             shop=request.shop
         )
 
-    def get_context_from_data(self, **context_data):
+    def get_context_from_data(self, shop, customer, time=None, **kwargs):
         """
-        Create pricing context from keyword arguments.
+        Create pricing context from given arguments.
 
+        :type shop: shoop.core.models.Shop
+        :type customer: shoop.core.models.Contact
+        :type time: datetime.datetime|None
         :rtype: PricingContext
         """
-        return self.pricing_context_class(**context_data)
+        return self.pricing_context_class(
+            shop=shop, customer=customer, time=time, **kwargs)
 
     @abc.abstractmethod
     def get_price_info(self, context, product, quantity=1):
