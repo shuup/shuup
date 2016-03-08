@@ -649,7 +649,7 @@ def create_random_order(customer=None, products=(), completion_probability=0, sh
         )
         assert line.price == price_info.price
     with atomic():
-        oc = OrderCreator(request)
+        oc = OrderCreator()
         order = oc.create_order(source)
         if random.random() < completion_probability:
             order.create_shipment_of_all_products()

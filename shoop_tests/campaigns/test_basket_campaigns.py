@@ -23,7 +23,6 @@ from shoop.testing.factories import (
     create_product, get_default_supplier, get_default_tax_class,
     get_default_product
 )
-from shoop.testing.utils import apply_request_middleware
 from shoop_tests.campaigns import initialize_test
 from shoop_tests.core.test_order_creator import seed_source
 from shoop_tests.utils import printable_gibberish
@@ -259,8 +258,7 @@ def test_order_creation_adds_usage(rf, admin_user):
 
     source.add_code(coupon.code)
 
-    request = apply_request_middleware(rf.get("/"))
-    creator = OrderCreator(request)
+    creator = OrderCreator()
     creator.create_order(source)
 
     assert CouponUsage.objects.count() == 1

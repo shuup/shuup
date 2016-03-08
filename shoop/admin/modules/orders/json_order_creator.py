@@ -290,7 +290,7 @@ class JsonOrderCreator(object):
         source = self.create_source_from_state(state, creator, save=True)
 
         # Then create an OrderCreator and try to get things done!
-        creator = OrderCreator(request=None)
+        creator = OrderCreator()
         try:
             order = creator.create_order(order_source=source)
             self._postprocess_order(order, state)

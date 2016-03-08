@@ -15,7 +15,6 @@ from shoop.testing.factories import (
     get_default_shipping_method, get_default_shop, get_default_supplier,
     get_initial_order_status
 )
-from shoop.testing.utils import apply_request_middleware
 from shoop.utils.models import get_data_dict
 from shoop_tests.utils.basketish_order_source import BasketishOrderSource
 
@@ -93,9 +92,7 @@ def test_order_creator(rf, admin_user):
         require_verification=True,
     )
 
-    request = apply_request_middleware(rf.get("/"))
-
-    creator = OrderCreator(request)
+    creator = OrderCreator()
     order = creator.create_order(source)
     assert get_data_dict(source.billing_address) == get_data_dict(order.billing_address)
     assert get_data_dict(source.shipping_address) == get_data_dict(order.shipping_address)
@@ -115,9 +112,7 @@ def test_order_creator_supplierless_product_line_conversion_should_fail(rf, admi
         base_unit_price=source.create_price(10),
     )
 
-    request = apply_request_middleware(rf.get("/"))
-
-    creator = OrderCreator(request)
+    creator = OrderCreator()
     with pytest.raises(ValueError):
         order = creator.create_order(source)
 
@@ -142,9 +137,8 @@ def test_order_source_parentage(rf, admin_user):
         base_unit_price=source.create_price(5),
         parent_line_id="parent"
     )
-    request = apply_request_middleware(rf.get("/"))
 
-    creator = OrderCreator(request)
+    creator = OrderCreator()
     order = Order.objects.get(pk=creator.create_order(source).pk)
     kid_line = order.lines.filter(sku="KIDKIDKID").first()
     assert kid_line
