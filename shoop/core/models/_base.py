@@ -40,7 +40,8 @@ class TranslatableShoopModel(ShoopModel, parler.models.TranslatableModel):
     def __str__(self):
         name = self.safe_translation_getter(self.name_attr, any_language=True)
         if name is None:
-            return '{}:{}'.format(type(self).__name__, self.pk)
+            identifier = getattr(self, self.identifier_attr, None)
+            return '{}:{}'.format(type(self).__name__, identifier)
         return force_text(name)  # ensure no lazy objects are returned
 
     class Meta:
