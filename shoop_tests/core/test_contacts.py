@@ -35,6 +35,7 @@ def test_anonymity(admin_user, regular_user):
     assert AnonymousContact().is_anonymous
 
 
+@pytest.mark.django_db
 def test_anonymous_contact():
     a1 = AnonymousContact()
     a2 = AnonymousContact()
@@ -73,9 +74,9 @@ def test_anonymous_contact():
         a1.delete()
 
     assert isinstance(a1.groups, QuerySet)
-    assert a1.groups.count() == 0
-    assert len(a1.groups) == 0
-    assert not a1.groups
+    assert a1.groups.first().identifier == AnonymousContact.default_contact_group_identifier
+    assert a1.groups.count() == 1
+    assert len(a1.groups.all()) == 1
 
 
 @pytest.mark.django_db

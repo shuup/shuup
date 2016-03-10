@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add contacts automatically to type specific default groups
 - ``OrderCreator`` no longer requires a request
 - Add ``order_creator_finished`` signal under ``order_creator``
 - Move calculate_taxes_automatically from ``OrderSource`` to ``TaxModule``

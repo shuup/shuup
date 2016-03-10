@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-27 04:56+0000\n"
+"POT-Creation-Date: 2016-02-18 17:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -323,6 +323,9 @@ msgstr ""
 msgid "contacts"
 msgstr ""
 
+msgid "Company Contacts"
+msgstr ""
+
 msgid "e.g. EIN in US or VAT code in Europe"
 msgstr ""
 
@@ -330,6 +333,9 @@ msgid "company"
 msgstr ""
 
 msgid "companies"
+msgstr ""
+
+msgid "Person Contacts"
 msgstr ""
 
 msgid "user"
@@ -345,6 +351,9 @@ msgid "person"
 msgstr ""
 
 msgid "persons"
+msgstr ""
+
+msgid "Anonymous Contacts"
 msgstr ""
 
 msgid "order reference"
