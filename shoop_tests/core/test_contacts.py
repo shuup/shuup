@@ -12,7 +12,8 @@ from django.contrib.auth.models import AnonymousUser
 from django.db.models import QuerySet
 
 from shoop.core.models import (
-    AnonymousContact, get_person_contact, PersonContact
+    AnonymousContact, CompanyContact, ContactGroup, get_person_contact,
+    PersonContact
 )
 from shoop_tests.utils.fixtures import regular_user
 
@@ -102,3 +103,48 @@ def test_person_contact_creating_from_user(regular_user):
     assert person.is_active == user.is_active
     assert person.name == user.get_full_name()
     assert person.email == user.email
+
+
+def test_contact_group_repr_and_str_no_identifier_no_name():
+    cg = ContactGroup()
+    assert repr(cg) == '<ContactGroup:None>'
+    assert str(cg) == 'ContactGroup:None'
+
+
+def test_contact_group_repr_and_str_has_identifier_no_name():
+    cg = ContactGroup(identifier='hello')
+    assert repr(cg) == '<ContactGroup:None-hello>'
+    assert str(cg) == 'ContactGroup:hello'
+
+
+def test_contact_group_repr_and_str_no_identifier_has_name():
+    cg = ContactGroup(name='world')
+    assert repr(cg) == '<ContactGroup:None>'
+    assert str(cg) == 'world'
+
+
+def test_contact_group_repr_and_str_has_identifier_has_name():
+    cg = ContactGroup(identifier='hello', name='world')
+    assert repr(cg) == '<ContactGroup:None-hello>'
+    assert str(cg) == 'world'
+
+
+@pytest.mark.django_db
+def test_default_anonymous_contact_group_repr_and_str():
+    adg = AnonymousContact.get_default_group()
+    assert repr(adg) == '<ContactGroup:%d-default_anonymous_group>' % adg.pk
+    assert str(adg) == 'Anonymous Contacts'
+
+
+@pytest.mark.django_db
+def test_default_company_contact_group_repr_and_str():
+    cdg = CompanyContact.get_default_group()
+    assert repr(cdg) == '<ContactGroup:%d-default_company_group>' % cdg.pk
+    assert str(cdg) == 'Company Contacts'
+
+
+@pytest.mark.django_db
+def test_default_person_contact_group_repr_and_str():
+    pdg = PersonContact.get_default_group()
+    assert repr(pdg) == '<ContactGroup:%d-default_person_group>' % pdg.pk
+    assert str(pdg) == 'Person Contacts'
