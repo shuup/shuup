@@ -73,7 +73,7 @@ def test_default_groups(contact_cls, create_contact):
     assert new_contact.groups.count() == 1
     default_group = new_contact.groups.first()
     assert type(CustomerTaxGroup.get_default_company_group().__str__()) == str
-    assert default_group == new_contact.get_default_contact_group()
+    assert default_group == new_contact.get_default_group()
     assert default_group.identifier == contact_cls.default_contact_group_identifier
 
     some_other_contact = create_contact()

@@ -100,22 +100,25 @@ class Contact(NameMixin, PolymorphicModel):
         add_to_default_group = bool(self.pk is None and self.default_contact_group_identifier)
         super(Contact, self).save(*args, **kwargs)
         if add_to_default_group:
-            self.groups.add(self.get_default_contact_group())
+            self.groups.add(self.get_default_group())
 
-    def get_default_contact_group(self):
+    @classmethod
+    def get_default_group(cls):
         """
-        Get or create default ``ContactGroup`` based on
-        `self.default_contact_group_identifier`.
+        Get or create default contact group for the class.
 
-        Name for new groups is set based on
-        `self.default_contact_group_name`.
+        Identifier of the group is specified by the class property
+        `default_contact_group_identifier`.
+
+        If new group is created, its name is set to value of
+        `default_contact_group_name` class property.
 
         :rtype: core.models.ContactGroup
         """
         obj, created = ContactGroup.objects.get_or_create(
-            identifier=self.default_contact_group_identifier,
+            identifier=cls.default_contact_group_identifier,
             defaults={
-                "name": self.default_contact_group_name
+                "name": cls.default_contact_group_name
             }
         )
         return obj
@@ -223,7 +226,7 @@ class AnonymousContact(Contact):
 
         :rtype: django.db.QuerySet
         """
-        self.get_default_contact_group()  # Make sure default anonymous contact group is created
+        self.get_default_group()  # Make sure group exists
         return ContactGroup.objects.filter(identifier=self.default_contact_group_identifier)
 
 
