@@ -65,6 +65,9 @@ Core
     Additional ``FormPart`` classes for Product editing.
     (This is used by pricing modules, for instance.)
 
+``admin_shop_form_part``
+    Additional ``FormPart`` classes for Shop editing.
+
 ``admin_module``
     Admin module classes. Practically all of the functionality in the admin is built
     via admin modules.
