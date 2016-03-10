@@ -22,8 +22,8 @@ class ShoopModel(models.Model):
     identifier_attr = 'identifier'
 
     def __repr__(self):
-        if hasattr(self, self.identifier_attr):
-            identifier = getattr(self, self.identifier_attr) or ''
+        identifier = getattr(self, self.identifier_attr, None)
+        if identifier:
             identifier_suf = '-{}'.format(text.force_ascii(identifier))
         else:
             identifier_suf = ''
