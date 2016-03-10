@@ -18,13 +18,11 @@ from timezone_field.fields import TimeZoneField
 
 from shoop.core.fields import InternalIdentifierField, LanguageField
 from shoop.core.utils.name_mixin import NameMixin
-from shoop.utils.text import force_text
 
 from ._base import TranslatableShoopModel
 from ._taxes import CustomerTaxGroup
 
 
-@python_2_unicode_compatible
 class ContactGroup(TranslatableShoopModel):
     identifier = InternalIdentifierField(unique=True)
     members = models.ManyToManyField("Contact", related_name="groups", verbose_name=_('members'), blank=True)
@@ -37,9 +35,6 @@ class ContactGroup(TranslatableShoopModel):
     class Meta:
         verbose_name = _('contact group')
         verbose_name_plural = _('contact groups')
-
-    def __str__(self):
-        return force_text(self.safe_translation_getter("name", default="Group<%s>" % (self.identifier or self.id)))
 
 
 @python_2_unicode_compatible

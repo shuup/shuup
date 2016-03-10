@@ -108,13 +108,13 @@ def test_person_contact_creating_from_user(regular_user):
 def test_contact_group_repr_and_str_no_identifier_no_name():
     cg = ContactGroup()
     assert repr(cg) == '<ContactGroup:None>'
-    assert str(cg) == 'Group<None>'
+    assert str(cg) == 'ContactGroup:None'
 
 
 def test_contact_group_repr_and_str_has_identifier_no_name():
     cg = ContactGroup(identifier='hello')
     assert repr(cg) == '<ContactGroup:None-hello>'
-    assert str(cg) == 'Group<hello>'
+    assert str(cg) == 'ContactGroup:hello'
 
 
 def test_contact_group_repr_and_str_no_identifier_has_name():
