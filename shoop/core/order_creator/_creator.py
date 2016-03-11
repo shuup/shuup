@@ -214,6 +214,10 @@ class OrderCreator(object):
         order.cache_prices()
         order.save()
 
+        if order.customer and order.customer.marketing_permission != order.marketing_permission:
+            order.customer.marketing_permission = order.marketing_permission
+            order.customer.save(update_fields=["marketing_permission"])
+
         self._assign_code_usages(order_source, order)
 
         order_creator_finished.send(
