@@ -1,0 +1,13 @@
+{% if social_media_links %}
+<section class="social-media-links">
+    <div class="row{% if alignment %} text-{{ alignment }}{% endif %}">
+        {% if topic %}<h2>{{ topic }}</h2>{% endif %}
+        {% if text %}<p>{{ text }}</p>{% endif %}
+        <ul>
+            {% for social_media_link in social_media_links %}
+                    <li><a href="{{ social_media_link.url }}"><i class="fa fa-{{ social_media_link.icon_class_name }}{% if icon_size %} fa-{{ icon_size }}{% endif %}"></i></a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+{% endif %}
