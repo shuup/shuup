@@ -17,14 +17,15 @@ from django.views.generic import View
 from django.views.generic.edit import FormView
 
 from shoop.core.models import PaymentMethod, ShippingMethod
+from shoop.core.utils.price_display import render_price_property
 from shoop.front.checkout import CheckoutPhaseViewMixin
-from shoop.utils.i18n import format_money
 
 LOG = logging.getLogger(__name__)
 
 
 class MethodModelChoiceField(forms.ModelChoiceField):
     def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request", None)
         self.basket = kwargs.pop("basket", None)
         self.show_prices = bool(kwargs.pop("show_prices", True))
         super(MethodModelChoiceField, self).__init__(*args, **kwargs)
@@ -35,11 +36,12 @@ class MethodModelChoiceField(forms.ModelChoiceField):
         price_info = (
             obj.get_effective_price_info(self.basket)
             if self.basket and self.show_prices else None)
-        price_text = (
-            format_money(price_info.price)
-            if price_info and price_info.price else None)
 
-        return ("{} ({})".format(label, price_text) if price_text else label)
+        if price_info and price_info.price:
+            price_text = render_price_property(self.request, obj, price_info)
+            return _("{name} ({price})").format(name=label, price=price_text)
+        else:
+            return label
 
 
 class MethodsForm(forms.Form):
@@ -53,6 +55,7 @@ class MethodsForm(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request")
         self.basket = kwargs.pop("basket")
         self.shop = kwargs.pop("shop")
         super(MethodsForm, self).__init__(*args, **kwargs)
@@ -65,6 +68,7 @@ class MethodsForm(forms.Form):
                 ("payment_method", basket.get_available_payment_methods()),
         ):
             field = self.fields[field_name]
+            field.request = self.request
             field.basket = self.basket
             mci = ModelChoiceIterator(field)
             field.choices = [mci.choice(obj) for obj in methods]
@@ -87,6 +91,7 @@ class MethodsPhase(CheckoutPhaseViewMixin, FormView):
 
     def get_form_kwargs(self):
         kwargs = super(MethodsPhase, self).get_form_kwargs()
+        kwargs["request"] = self.request
         kwargs["basket"] = self.request.basket
         kwargs["shop"] = self.request.shop
         return kwargs

@@ -11,6 +11,9 @@ Contents:
 
   * Class `PriceDisplayOptions` for storing the display options.
 
+  * Helper function `render_price_property` for rendering prices
+    correctly from Python code.
+
   * Various filter classes for implementing Jinja2 filters.
 """
 
@@ -21,6 +24,25 @@ from shoop.core.pricing import PriceDisplayOptions, Priceful
 from shoop.core.templatetags.shoop_common import money, percent
 
 from .prices import convert_taxness
+
+
+def render_price_property(request, item, priceful, property_name='price'):
+    """
+    Render price property of a Priceful object.
+
+    :type request: django.http.HttpRequest
+    :type item: shoop.core.taxing.TaxableItem
+    :type priceful: shoop.core.pricing.Priceful
+    :type propert_name: str
+    :rtype: str
+    """
+    options = PriceDisplayOptions.from_context({'request': request})
+    if options.hide_prices:
+        return ""
+    new_priceful = convert_taxness(
+        request, item, priceful, options.include_taxes)
+    price_value = getattr(new_priceful, property_name)
+    return money(price_value)
 
 
 class _ContextObject(object):
