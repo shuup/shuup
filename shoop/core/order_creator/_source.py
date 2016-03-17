@@ -264,10 +264,13 @@ class OrderSource(object):
         return False
 
     def add_line(self, **kwargs):
-        line = SourceLine(source=self, **kwargs)
+        line = self.create_line(**kwargs)
         self._lines.append(line)
         self.uncache()
         return line
+
+    def create_line(self, **kwargs):
+        return SourceLine(source=self, **kwargs)
 
     def get_lines(self):
         """
@@ -285,9 +288,6 @@ class OrderSource(object):
         :rtype: decimal.Decimal|int
         """
         return sum([line.quantity for line in self.get_product_lines()])
-
-    def create_line(self, **kwargs):
-        return SourceLine(source=self, **kwargs)
 
     def get_final_lines(self, with_taxes=False):
         """
