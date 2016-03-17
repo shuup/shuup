@@ -73,6 +73,8 @@ class ClassicGrayThemeAppConfig(AppConfig):
         "xtheme": "shoop.themes.classic_gray:ClassicGrayTheme",
         "xtheme_plugin": [
             "shoop.themes.classic_gray.plugins:ProductHighlightPlugin",
+            "shoop.themes.classic_gray.plugins:SocialMediaLinksPlugin",
+            "shoop.themes.classic_gray.plugins:SnippetsPlugin",
         ]
     }
 

@@ -42,6 +42,7 @@ Admin
 - Add option to add action buttons to Order edit view
 - Add Campaigns management
 - Add Coupon management
+- Add Social Media management
 
 Front
 ~~~~~
@@ -56,6 +57,7 @@ Front
 Xtheme
 ~~~~~~
 
+- Add generic snippets plugin for doing simple integrations
 
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
@@ -63,12 +65,18 @@ Classic Gray Theme
 - Show error messages while adding products to basket
 - Add Coupon use possibility to basket page
 - Add option to only show orderable products to highlights plugin
+- Add Xtheme plugin to display social media links on shop front
 
 Simple Supplier
 ~~~~~~~~~~~~~~~
 
 - Add admin modules for updating stock
 - Add support for stock counts and values
+
+Social Media
+~~~~~~~~~~~~~~
+
+- Add module for front end display of social media links
 
 Order Printouts
 ~~~~~~~~~~~~~~~

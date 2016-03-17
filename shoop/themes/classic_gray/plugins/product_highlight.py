@@ -18,7 +18,7 @@ from shoop.xtheme.plugins.forms import TranslatableField
 class ProductHighlightPlugin(TemplatedPlugin):
     identifier = "classic_gray.product_highlight"
     name = _("Product Highlights")
-    template_name = "classic_gray/highlight_plugin.jinja"
+    template_name = "classic_gray/plugins/product_highlight.jinja"
     fields = [
         ("title", TranslatableField(label=_("Title"), required=False, initial="")),
         ("type", forms.ChoiceField(label=_("Type"), choices=[

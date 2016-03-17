@@ -1,0 +1,16 @@
+{% extends "shoop/admin/base.jinja" %}
+{% from "shoop/admin/macros/general.jinja" import content_with_sidebar %}
+
+{% block title %}
+    {% if social_media_link.pk %}{{ social_media_link.type }}{% else %}{{ _("New Social Media Link") }}{% endif %}
+{% endblock %}
+{% block content %}
+    {% call content_with_sidebar(content_id="social_media_link_form") %}
+        <form method="post" id="social_media_link_form">
+            {% csrf_token %}
+            {% for form_def in form.form_defs.values() %}
+                {% include form_def.template_name with context %}
+            {% endfor %}
+        </form>
+    {% endcall %}
+{% endblock %}

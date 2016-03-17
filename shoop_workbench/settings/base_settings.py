@@ -48,6 +48,7 @@ INSTALLED_APPS = add_enabled_addons(SHOOP_ENABLED_ADDONS_FILE, [
     'shoop.customer_group_pricing',
     'shoop.campaigns',
     'shoop.simple_supplier',
+    'shoop.social_media',
     'shoop.order_printouts',
     'shoop.testing',
     'shoop.utils',
