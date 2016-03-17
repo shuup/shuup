@@ -41,10 +41,10 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
     """
     Module for calculating taxes.
     """
-    calculating_is_cheap = True
     identifier = None
     name = None
 
+    calculating_is_cheap = True
     taxing_context_class = TaxingContext
 
     def get_context_from_request(self, request):
