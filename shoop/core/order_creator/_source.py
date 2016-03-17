@@ -350,7 +350,7 @@ class OrderSource(object):
 
     def _compute_processed_lines(self):
         # This function would be a good candidate for subclass extension.
-        lines = self.get_lines()
+        lines = list(self.get_lines())
 
         lines.extend(self._compute_payment_method_lines())
         lines.extend(self._compute_shipping_method_lines())
