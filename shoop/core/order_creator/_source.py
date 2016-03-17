@@ -502,14 +502,7 @@ class SourceLine(TaxableItem, Priceful):
         self.require_verification = kwargs.pop("require_verification", False)
         self.accounting_identifier = kwargs.pop("accounting_identifier", "")
 
-        self.taxes = []
-        """
-        Taxes of this line.
-
-        Determined by a TaxModule in :func:`OrderSource.calculate_taxes`.
-
-        :type: list[shoop.core.taxing.LineTax]
-        """
+        self._taxes = None
 
         self._data = kwargs.copy()
 
@@ -581,13 +574,37 @@ class SourceLine(TaxableItem, Priceful):
         self._tax_class = value
 
     @property
+    def taxes(self):
+        """
+        Taxes of this line.
+
+        Determined by a TaxModule in :func:`OrderSource.calculate_taxes`.
+
+        :rtype: list[shoop.core.taxing.LineTax]
+        """
+        return self._taxes or []
+
+    @taxes.setter
+    def taxes(self, value):
+        assert isinstance(value, list)
+        assert all(isinstance(x, taxing.LineTax) for x in value)
+        self._taxes = value
+
+    @property
     def tax_amount(self):
         """
         :rtype: shoop.utils.money.Money
         """
         self.source.calculate_taxes_or_raise()
         zero = self.source.zero_price.amount
-        return sum((x.amount for x in self.taxes), zero)
+        taxes = self._taxes
+        if taxes is None:
+            # Taxes were calculated to a different line instance.  Get
+            # taxes from there.
+            for line in self.source.get_final_lines():
+                if line.line_id == self.line_id and line.price == self.price:
+                    taxes = line.taxes
+        return sum((x.amount for x in taxes), zero)
 
     def _serialize_field(self, key):
         value = getattr(self, key)

@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Fix bug: ``OrderSource.tax_amount`` always returned zero price
 - Add contacts automatically to type specific default groups
 - ``OrderCreator`` no longer requires a request
 - Add ``order_creator_finished`` signal under ``order_creator``
