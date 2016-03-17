@@ -17,24 +17,46 @@ from polymorphic.models import PolymorphicModel
 from timezone_field.fields import TimeZoneField
 
 from shoop.core.fields import InternalIdentifierField, LanguageField
+from shoop.core.pricing import PriceDisplayOptions
 from shoop.core.utils.name_mixin import NameMixin
 
 from ._base import TranslatableShoopModel
 from ._taxes import CustomerTaxGroup
 
 
+class ContactGroupQuerySet(models.QuerySet):
+    def with_price_display_options(self):
+        return self.filter(
+            models.Q(show_prices_including_taxes__isnull=False) |
+            models.Q(hide_prices__isnull=False))
+
+
 class ContactGroup(TranslatableShoopModel):
     identifier = InternalIdentifierField(unique=True)
     members = models.ManyToManyField("Contact", related_name="groups", verbose_name=_('members'), blank=True)
     show_pricing = models.BooleanField(verbose_name=_('show as pricing option'), default=True)
+    show_prices_including_taxes = models.NullBooleanField(
+        default=None, null=True, blank=True,
+        verbose_name=_("show prices including taxes"))
+    hide_prices = models.NullBooleanField(
+        default=None, null=True, blank=True,
+        verbose_name=_("hide prices"))
 
     translations = TranslatedFields(
         name=models.CharField(max_length=64, verbose_name=_('name')),
     )
 
+    objects = ContactGroupQuerySet.as_manager()
+
     class Meta:
         verbose_name = _('contact group')
         verbose_name_plural = _('contact groups')
+
+    def get_price_display_options(self):
+        return PriceDisplayOptions(
+            include_taxes=self.show_prices_including_taxes,
+            show_prices=(not self.hide_prices),
+        )
 
 
 @python_2_unicode_compatible
@@ -90,6 +112,37 @@ class Contact(NameMixin, PolymorphicModel):
         if self.default_tax_group_getter:
             kwargs.setdefault("tax_group", self.default_tax_group_getter())
         super(Contact, self).__init__(*args, **kwargs)
+
+    def get_price_display_options(self):
+        """
+        Get price display options of the contact.
+
+        If the default group (`get_default_group`) defines price display
+        options and the contact is member of it, return it.
+
+        If contact is not (anymore) member of the default group or the
+        default group does not define options, return one of the groups
+        which defines options.  If there is more than one such groups,
+        it is undefined which options will be used.
+
+        If contact is not a member of any group that defines price
+        display options, return default constructed
+        `PriceDisplayOptions`.
+
+        Subclasses may still override this default behavior.
+
+        :rtype: PriceDisplayOptions
+        """
+        groups_with_options = self.groups.with_price_display_options()
+        if groups_with_options:
+            default_group = self.get_default_group()
+            if groups_with_options.filter(pk=default_group).exists():
+                group_with_options = default_group
+            else:
+                # Contact was removed from the default group.
+                group_with_options = groups_with_options.first()
+            return group_with_options.get_price_display_options()
+        return PriceDisplayOptions()
 
     def save(self, *args, **kwargs):
         add_to_default_group = bool(self.pk is None and self.default_contact_group_identifier)

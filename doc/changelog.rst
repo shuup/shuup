@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Allow storing price display options to contact groups
 - Add template tags for rendering prices with context specific price
   display options (pretax or with taxes, or hide prices totally)
 - Fix bug: ``OrderSource.tax_amount`` always returned zero price
