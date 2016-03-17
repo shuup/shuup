@@ -50,6 +50,7 @@ from ._context import PricingContext, PricingContextable
 from ._discounts import DiscountModule, get_discount_modules
 from ._module import get_pricing_module, PricingModule
 from ._price import Price, TaxfulPrice, TaxlessPrice
+from ._price_display_options import PriceDisplayOptions
 from ._price_info import PriceInfo
 from ._priceful import Priceful
 from ._utils import (
@@ -66,6 +67,7 @@ __all__ = [
     "get_pricing_steps",
     "get_pricing_steps_for_products",
     "Price",
+    "PriceDisplayOptions",
     "Priceful",
     "PriceInfo",
     "PricingContext",

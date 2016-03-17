@@ -12,6 +12,8 @@ Unreleased
 Core
 ~~~~
 
+- Add template tags for rendering prices with context specific price
+  display options (pretax or with taxes, or hide prices totally)
 - Fix bug: ``OrderSource.tax_amount`` always returned zero price
 - Add contacts automatically to type specific default groups
 - ``OrderCreator`` no longer requires a request

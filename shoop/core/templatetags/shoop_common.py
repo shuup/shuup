@@ -5,6 +5,15 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+"""
+Common helpers for Shoop templates.
+
+.. note::
+
+   In addition to these, also the price rendering tags from
+   `shoop.core.templatetags.prices` module are available.
+"""
+
 from __future__ import unicode_literals
 
 from datetime import date
