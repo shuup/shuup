@@ -6,9 +6,11 @@
 # LICENSE file in the root directory of this source tree.
 
 from .product_highlight import ProductHighlightPlugin
+from .snippets import SnippetsPlugin
 from .social_media_links import SocialMediaLinksPlugin
 
 __all__ = [
     "ProductHighlightPlugin",
+    "SnippetsPlugin",
     "SocialMediaLinksPlugin",
 ]
