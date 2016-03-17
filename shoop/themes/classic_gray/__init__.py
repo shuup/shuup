@@ -14,6 +14,12 @@ from shoop.apps import AppConfig
 from shoop.xtheme import Theme
 
 
+CUSTOM_CSS_HELP = _("""This field can be used to customize your theme to match your branding.
+The contents of this field will be rendered inside 'style'
+tag in the template header so use only plain CSS here.""")
+FOOTER_LINKS_HELP = _("One line per link in format 'http://example.com Example Link'")
+
+
 class ClassicGrayTheme(Theme):
     identifier = "shoop.themes.classic_gray"
     name = "Shoop Classic Gray Theme"
@@ -22,9 +28,11 @@ class ClassicGrayTheme(Theme):
 
     fields = [
         ("show_welcome_text", forms.BooleanField(required=False, initial=True, label=_("Show Frontpage Welcome Text"))),
+        ("custom_css", forms.CharField(required=False, label=_("Custom CSS"), widget=forms.Textarea,
+                                       help_text=CUSTOM_CSS_HELP)),
         ("footer_html", forms.CharField(required=False, label=_("Footer custom HTML"), widget=forms.Textarea)),
         ("footer_links", forms.CharField(required=False, label=_("Footer links"), widget=forms.Textarea,
-                                         help_text=_("One line per link in format 'http://example.com Example Link'"))),
+                                         help_text=FOOTER_LINKS_HELP)),
         ("footer_column_order", forms.ChoiceField(required=False, initial="", label=_("Footer column order"))),
     ]
 
