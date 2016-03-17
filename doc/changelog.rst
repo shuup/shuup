@@ -50,6 +50,7 @@ Admin
 Front
 ~~~~~
 
+- Set template price display options from the customer
 - Fix bug: BasketStorage.finalize() never called delete() correctly
 - Check product quantity already in basket while adding
 - Move ``order_creator_finished`` signal under core

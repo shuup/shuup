@@ -14,7 +14,7 @@ from django.template import loader
 from django.utils import timezone
 
 from shoop.core.middleware import ExceptionMiddleware
-from shoop.core.models import get_person_contact, Shop
+from shoop.core.models import Contact, get_person_contact, Shop
 from shoop.front.basket import get_basket
 
 __all__ = ["ProblemMiddleware", "ShoopFrontMiddleware"]
@@ -65,6 +65,7 @@ class ShoopFrontMiddleware(object):
         self._set_customer(request)
         self._set_basket(request)
         self._set_timezone(request)
+        self._set_price_display_options(request)
 
     def _set_shop(self, request):
         # TODO: Not the best logic :)
@@ -85,6 +86,11 @@ class ShoopFrontMiddleware(object):
         if request.person.timezone:
             timezone.activate(request.person.timezone)
             # TODO: Fallback to request.shop.timezone (and add such field)
+
+    def _set_price_display_options(self, request):
+        customer = request.customer
+        assert isinstance(customer, Contact)
+        customer.get_price_display_options().set_for_request(request)
 
     def process_response(self, request, response):
         if hasattr(request, "basket") and request.basket.dirty:
