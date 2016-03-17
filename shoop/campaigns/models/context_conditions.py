@@ -8,7 +8,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from polymorphic.models import PolymorphicModel
 
-from shoop.core.models import ContactGroup
+from shoop.core.models import AnonymousContact, Contact, ContactGroup
 
 
 class ContextCondition(PolymorphicModel):
@@ -27,19 +27,17 @@ class ContactGroupCondition(ContextCondition):
     model = ContactGroup
     identifier = "contact_group_condition"
     name = _("Contact Group")
-    description = _("Contact group")
 
     contact_groups = models.ManyToManyField(ContactGroup, verbose_name=_("contact groups"))
+
+    def matches(self, context):
+        customer = (context.customer if context.customer is not None else AnonymousContact())
+        customers_groups = customer.groups.all()
+        return self.contact_groups.filter(pk__in=customers_groups).exists()
 
     @property
     def description(self):
         return _("Limit the campaign to members of the selected contact groups.")
-
-    def matches(self, context):
-        if context.customer:
-            contact_groups = context.customer.groups.all().values_list("pk", flat=True)
-            return self.contact_groups.filter(pk__in=contact_groups).exists()
-        return False
 
     @property
     def values(self):
@@ -48,3 +46,27 @@ class ContactGroupCondition(ContextCondition):
     @values.setter
     def values(self, values):
         self.contact_groups = values
+
+
+class ContactCondition(ContextCondition):
+    model = Contact
+    identifier = "contact_condition"
+    name = _("Contact")
+
+    contacts = models.ManyToManyField(Contact, verbose_name=_("contacts"))
+
+    def matches(self, context):
+        customer = context.customer
+        return bool(customer and self.contacts.filter(pk=customer.pk).exists())
+
+    @property
+    def description(self):
+        return _("Limit the campaign to selected contacts.")
+
+    @property
+    def values(self):
+        return self.contacts
+
+    @values.setter
+    def values(self, values):
+        self.contacts = values

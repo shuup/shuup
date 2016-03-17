@@ -10,7 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 from polymorphic.models import PolymorphicModel
 
 from shoop.core.fields import MoneyValueField
-from shoop.core.models import Product
+from shoop.core.models import Contact, ContactGroup, Product
 from shoop.utils.properties import MoneyPropped, PriceProperty
 
 
@@ -38,7 +38,7 @@ class BasketTotalProductAmountCondition(BasketCondition):
 
     @property
     def description(self):
-        return _("Limit the campaign to match when basket has atleast the product count entered here.")
+        return _("Limit the campaign to match when basket has at least the product count entered here.")
 
     @property
     def value(self):
@@ -94,3 +94,51 @@ class ProductsInBasketCondition(BasketCondition):
     @values.setter
     def values(self, value):
         self.products = value
+
+
+class ContactGroupBasketCondition(BasketCondition):
+    model = ContactGroup
+    identifier = "basket_contact_group_condition"
+    name = _("Contact Group")
+
+    contact_groups = models.ManyToManyField(ContactGroup, verbose_name=_("contact groups"))
+
+    def matches(self, basket, lines=[]):
+        customers_groups = basket.customer.groups.all()
+        return self.contact_groups.filter(pk__in=customers_groups).exists()
+
+    @property
+    def description(self):
+        return _("Limit the campaign to members of the selected contact groups.")
+
+    @property
+    def values(self):
+        return self.contact_groups
+
+    @values.setter
+    def values(self, values):
+        self.contact_groups = values
+
+
+class ContactBasketCondition(BasketCondition):
+    model = Contact
+    identifier = "basket_contact_condition"
+    name = _("Contact")
+
+    contacts = models.ManyToManyField(Contact, verbose_name=_("contacts"))
+
+    def matches(self, basket, lines=[]):
+        customer = basket.customer
+        return bool(customer and self.contacts.filter(pk=customer.pk).exists())
+
+    @property
+    def description(self):
+        return _("Limit the campaign to selected contacts.")
+
+    @property
+    def values(self):
+        return self.contacts
+
+    @values.setter
+    def values(self, values):
+        self.contacts = values
