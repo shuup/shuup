@@ -15,7 +15,9 @@
                 <thead>
                     <tr>
                         <th>{% trans %}Items{% endtrans %}</th>
+                        {% if show_prices() %}
                         <th class="text-right">{% trans %}Price{% endtrans %}</th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tfoot>
@@ -23,16 +25,28 @@
                         <th>
                             {% trans %}Total{% endtrans %}
                         </th>
+                        {% if show_prices() %}
                         <th class="text-right">
-                            {{ request.basket.total_price|money }}
+                            {{ request.basket|total_price }}
                         </th>
+                        {% endif %}
                     </tr>
                 </tfoot>
                 <tbody>
                     {% for line in request.basket.get_lines() %}
                         <tr>
-                            <td>{{ line.quantity|number }} &times; <a href="{{ shoop.urls.model_url(line.product) }}">{{ line.text }}</a></td>
-                            <td class="text-right">{{ line.price|money }}</td>
+                            <td>
+                                {% set line_url = shoop.urls.get_url(line.product) %}
+                                {{ line.quantity|number }} &times;
+                                {% if line_url %}
+                                    <a href="{{ line_url }}">{{ line.text }}</a>
+                                {% else %}
+                                    {{ line.text }}
+                                {% endif %}
+                            </td>
+                            {% if show_prices() %}
+                            <td class="text-right">{{ line|price }}</td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                 </tbody>

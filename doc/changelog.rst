@@ -65,6 +65,7 @@ Xtheme
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 
+- Render prices with the new price rendering template tags
 - Show error messages while adding products to basket
 - Add Coupon use possibility to basket page
 - Add option to only show orderable products to highlights plugin
