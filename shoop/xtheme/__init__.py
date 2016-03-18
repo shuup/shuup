@@ -33,6 +33,7 @@ class XThemeAppConfig(AppConfig):
         "xtheme_plugin": [
             "shoop.xtheme.plugins.text:TextPlugin",
             "shoop.xtheme.plugins.snippets:SnippetsPlugin",
+            "shoop.xtheme.plugins.social_media_links:SocialMediaLinksPlugin",
         ],
         "admin_module": [
             "shoop.xtheme.admin_module:XthemeAdminModule"

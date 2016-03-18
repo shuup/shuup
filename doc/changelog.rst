@@ -72,6 +72,7 @@ Classic Gray Theme
 - Show error messages while adding products to basket
 - Add Coupon use possibility to basket page
 - Add option to only show orderable products to highlights plugin
+- Add Xtheme plugin to display social media links on shop front
 
 Simple Supplier
 ~~~~~~~~~~~~~~~

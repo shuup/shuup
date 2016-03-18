@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-22 17:46+0000\n"
+"POT-Creation-Date: 2016-03-22 22:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -78,6 +78,21 @@ msgid "Resource snippet for beginning of body"
 msgstr ""
 
 msgid "Resource for end of body"
+msgstr ""
+
+msgid "Social Media Links"
+msgstr ""
+
+msgid "Topic"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Icon Size"
+msgstr ""
+
+msgid "Alignment"
 msgstr ""
 
 msgid "text"
