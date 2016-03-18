@@ -128,8 +128,27 @@
             {% endif %}
         </div>
     </div>
-
-    {% placeholder "product_extra_bottom" %}{% endplaceholder %}
+    
+    {% placeholder "product_bottom" %}
+        {% row %}
+            {% plugin "classic_gray.product_cross_sells" %}
+                type = "related"
+                title = "Related Products"
+            {% endplugin %}
+        {% endrow %}
+        {% row %}
+            {% plugin "classic_gray.product_cross_sells" %}
+                type = "recommended"
+                title = "We recommend these products"
+            {% endplugin %}
+        {% endrow %}
+        {% row %}
+            {% plugin "classic_gray.product_cross_sells" %}
+                type = "computed"
+                title = "Users who bought this product also bought"
+            {% endplugin %}
+        {% endrow %}
+    {% endplaceholder %}
 
     {% if package_children %}
         <hr>
@@ -153,18 +172,6 @@
             {% endfor %}
         </div>
     {% endif %}
-
-    {{ macros.render_cross_sell_products(
-        product, relation_type="related", title=_("Related products")
-    ) }}
-
-    {{ macros.render_cross_sell_products(
-        product, relation_type="recommended", title=_("We recommend these products")
-    ) }}
-
-    {{ macros.render_cross_sell_products(
-        product, relation_type="computed", title=_("Users who bought this product also bought")
-    ) }}
 
 {% endblock %}
 

@@ -34,21 +34,6 @@
     </div>
 {% endmacro %}
 
-{% macro render_cross_sell_products(product, relation_type="", title="") %}
-    {%- set cross_sell_products = shoop.product.get_product_cross_sells(product, relation_type) %}
-    {% if cross_sell_products %}
-        <hr>
-        {% if title %}<h3>{{ title }}</h3>{% endif %}
-        <div class="row">
-            {% for product in cross_sell_products %}
-                <div class="col-md-3">
-                    {{ product_box(product) }}
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-{% endmacro %}
-
 {% macro render_field(field, classes="") %}
     {% if field.field.widget.is_hidden %}
         {{ field.as_widget()|safe }}
