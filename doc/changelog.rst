@@ -56,6 +56,7 @@ Front
 Xtheme
 ~~~~~~
 
+- Add generic snippets plugin for doing simple integrations
 
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
