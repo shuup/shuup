@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Disable delete for default contact groups
 - Allow storing price display options to contact groups
 - Add template tags for rendering prices with context specific price
   display options (pretax or with taxes, or hide prices totally)
