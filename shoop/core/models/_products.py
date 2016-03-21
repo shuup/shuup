@@ -255,6 +255,20 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
 
         return shop_inst
 
+    def get_priced_children(self, context, quantity=1):
+        """
+        Get child products with price infos sorted by price.
+
+        :rtype: list[(Product,PriceInfo)]
+        :return:
+          List of products and their price infos sorted from cheapest to
+          most expensive.
+        """
+        priced_children = (
+            (child, child.get_price_info(context, quantity=quantity))
+            for child in self.variation_children.all())
+        return sorted(priced_children, key=(lambda x: x[1].price))
+
     def get_cheapest_child_price(self, context, quantity=1):
         price_info = self.get_cheapest_child_price_info(context, quantity)
         if price_info:

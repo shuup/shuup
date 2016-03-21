@@ -12,6 +12,10 @@ Unreleased
 Core
 ~~~~
 
+- Allow storing price display options to contact groups
+- Add template tags for rendering prices with context specific price
+  display options (pretax or with taxes, or hide prices totally)
+- Fix bug: ``OrderSource.tax_amount`` always returned zero price
 - Add contacts automatically to type specific default groups
 - ``OrderCreator`` no longer requires a request
 - Add ``order_creator_finished`` signal under ``order_creator``
@@ -46,6 +50,7 @@ Admin
 Front
 ~~~~~
 
+- Set template price display options from the customer
 - Fix bug: BasketStorage.finalize() never called delete() correctly
 - Check product quantity already in basket while adding
 - Move ``order_creator_finished`` signal under core
@@ -60,6 +65,7 @@ Xtheme
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 
+- Render prices with the new price rendering template tags
 - Show error messages while adding products to basket
 - Add Coupon use possibility to basket page
 - Add option to only show orderable products to highlights plugin

@@ -17,7 +17,6 @@ from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.http.response import HttpResponse, JsonResponse
-from django.test.client import RequestFactory
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView
@@ -93,11 +92,20 @@ def encode_line(line):
 
 
 def get_price_info(shop, customer, product, quantity):
-    ctx_request = RequestFactory().get("/")
-    ctx_request.shop = shop
-    ctx_request.customer = (customer or AnonymousContact())
-    context = get_pricing_module().get_context_from_request(ctx_request)
-    return product.get_price_info(context, quantity=quantity)
+    """
+    Get price info of given product for given context parameters.
+
+    :type shop: shoop.core.models.Shop
+    :type customer: shoop.core.models.Contact
+    :type product: shoop.core.models.Product
+    :type quantity: numbers.Number
+    """
+    pricing_mod = get_pricing_module()
+    pricing_ctx = pricing_mod.get_context_from_data(
+        shop=shop,
+        customer=(customer or AnonymousContact()),
+    )
+    return pricing_mod.get_price_info(pricing_ctx, product, quantity=quantity)
 
 
 class OrderCreateView(TemplateView):

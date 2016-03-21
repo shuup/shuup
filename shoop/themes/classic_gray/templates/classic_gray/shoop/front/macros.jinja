@@ -1,15 +1,10 @@
 {% macro product_box(product, show_image=True, show_description=True, class="product-box", thumbnail_size=(500,500)) %}
     {% set u = url("shoop:product", pk=product.pk, slug=product.slug) %}
-    {% if product.is_variation_parent()  %}
-        {% set price_info = product.get_cheapest_child_price_info(request) %}
-    {% else %}
-        {% set price_info = product.get_price_info(request) %}
-    {% endif %}
     <div class="product-card {{ class }}" id="product-{{ product.id }}">
         <a href="{{ u }}" rel="product-detail" title="{{ product.name }}">
-            {% if price_info.is_discounted %}
+            {% if product|is_discounted %}
                 <div class="labels">
-                    <span class="label label-sale">{{ -price_info.discount_rate|percent }}</span>
+                    <span class="label label-sale">{{ -(product|discount_rate)|percent }}</span>
                 </div>
             {% endif %}
             {% if show_image %}
@@ -23,9 +18,11 @@
                 {% if show_description and product.description %}
                     <p class="description">{{ product.description|striptags|truncate(180)|safe }}</p>
                 {% endif %}
-                <div class="price">
-                    {{ render_product_price(product, price_info, show_units=False) }}
-                </div>
+                {% if show_prices() %}
+                    <div class="price">
+                        {{ render_product_price(product, show_units=False) }}
+                    </div>
+                {% endif %}
             </div>
         </a>
         <div class="actions clearfix">
@@ -261,25 +258,29 @@
 {% endmacro %}
 
 
-{% macro render_product_price(product, price_info, show_units=True) %}
+{% macro render_product_price(product, show_units=True) %}
+{% if show_prices() %}
 <div class="price-line">
     <span class="lead">
-    {% if product.is_variation_parent() %}
-        {% set min_price, max_price = product.get_child_price_range(request) %}
-        {% if min_price == max_price %}
-            <strong>{{ min_price|money if min_price else "" }}</strong>
-        {% else %}
-            <strong>{{ min_price|money }} - {{ max_price|money }}</strong>
-        {% endif %}
-    {% else %}
-        {% if price_info.is_discounted %}
-            <small class="text-muted original-price original"><s>{{ price_info.base_price|money }}</s></small>
-        {% endif %}
-        <strong>{{ price_info.price|money }}</strong>
-    {% endif %}
-    {% if show_units %}
-    <small> / {{ product.sales_unit.short_name }}</small>
-    {% endif %}
+        {%- if product.is_variation_parent() -%}
+            {% set (min_price, max_price) = product|price_range %}
+            {% if min_price == max_price %}
+                <strong>{{ min_price }}</strong>
+            {% else %}
+                <strong>{{ min_price }} &ndash; {{ max_price }}</strong>
+            {% endif %}
+        {%- else -%}
+            {% if product|is_discounted -%}
+                <small class="text-muted original-price original"><s>
+                    {{- product|base_price -}}
+                </s></small>
+            {%- endif %}
+            <strong>{{ product|price }}</strong>
+        {%- endif -%}
+        {%- if show_units -%}
+            <small> / {{ product.sales_unit.short_name }}</small>
+        {%- endif -%}
     </span>
 </div>
+{% endif %}
 {% endmacro %}

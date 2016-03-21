@@ -55,16 +55,26 @@ source.
 When Taxes Are Determined
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Shoop calculates taxes for a basket in the confirmation phase of the
-checkout process or in the confirmation phase of the order creating UI
-in the Shop Admin.  This means that taxes are not known for items in the
-basket, product listings or on the detail page of a product.  The reason
-for not calculating taxes before the confirm phase is that the active
-tax module might query tax information from an external source which
-might be prohibitively slow or cost a transaction fee.
+There are two modes of operation for calculating the taxes: on-demand
+and on-checkout.  If current tax module declares that tax calculation is
+"cheap" (does not cost a transaction fee and is fast to compute) and
+`~shoop.core.settings.SHOOP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE`
+setting is true, then on-demand calculation will be used.  Otherwise
+on-checkout calculation will be used.
 
-.. TODO:: Update this documentation after SHOOP-1911 (Automatically
-          calculating taxes if cheap) is implemented.
+With on-checkout tax calculation mode Shoop calculates taxes for a
+basket in the confirmation phase of the checkout process or in the
+confirmation phase of the order creating UI in the Shop Admin.  This
+means that taxes are not known for items in the basket, product listings
+or on the detail page of a product.  The reason for not calculating
+taxes before the confirm phase is that the active tax module might query
+tax information from an external source which might be prohibitively
+slow or cost a transaction fee.
+
+With on-demand tax calculation mode calculation happens when showing
+prices in the shop, if prices returned by the current pricing module are
+pretax and current price display options demand prices including taxes
+or the other way around.
 
 Taxes in Orders
 ---------------

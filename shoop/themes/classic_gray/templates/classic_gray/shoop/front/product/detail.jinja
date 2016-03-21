@@ -1,11 +1,5 @@
 {% extends "shoop/front/base.jinja" %}
 
-{% if product.is_variation_parent()  %}
-    {% set priceinfo = product.get_cheapest_child_price_info(request) %}
-{% else %}
-    {% set priceinfo = product.get_price_info(request) %}
-{% endif %}
-
 {% block extrameta %}
     <meta property="og:site_name" content="{{ request.shop }}">
     <meta property="og:type" content="product">
@@ -43,17 +37,19 @@
                 {% if product.description %}
                     <p class="product-short-description">{{ product.description|safe|truncate(150, False) }}</p>
                 {% endif %}
+                {% if show_prices() %}
                 <div class="product-price">
-                    {{ macros.render_product_price(product, priceinfo) }}
+                    {{ macros.render_product_price(product) }}
                 </div>
+                {% endif %}
                 <hr>
             </div>
         </div>
         <div class="product-image col-sm-6 col-md-5">
-            {% if priceinfo.is_discounted %}
+            {% if product|is_discounted %}
                 <div class="discount">
                   <span class="label label-danger">
-                    {% set discount_percent = priceinfo.discount_rate|percent %}
+                    {% set discount_percent = product|discount_percent %}
                     {{- _("Save %(discount_percent)s", discount_percent=discount_percent) -}}
                   </span>
                 </div>
@@ -67,9 +63,11 @@
                 {% if product.description %}
                     <p class="product-short-description">{{ product.description|safe|truncate(150, False) }}</p>
                 {% endif %}
+                {% if show_prices() %}
                 <div class="product-price">
-                    {{ macros.render_product_price(product, priceinfo) }}
+                    {{ macros.render_product_price(product) }}
                 </div>
+                {% endif %}
             </div>
             {% placeholder "product_extra_1" %}{% endplaceholder %}
             <hr>

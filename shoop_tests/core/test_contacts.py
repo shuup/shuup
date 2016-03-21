@@ -15,6 +15,7 @@ from shoop.core.models import (
     AnonymousContact, CompanyContact, ContactGroup, get_person_contact,
     PersonContact
 )
+from shoop.core.pricing import PriceDisplayOptions
 from shoop_tests.utils.fixtures import regular_user
 
 
@@ -148,3 +149,40 @@ def test_default_person_contact_group_repr_and_str():
     pdg = PersonContact.get_default_group()
     assert repr(pdg) == '<ContactGroup:%d-default_person_group>' % pdg.pk
     assert str(pdg) == 'Person Contacts'
+
+
+@pytest.mark.django_db
+def test_contact_group_price_display_options_filtering():
+    cg0 = ContactGroup.objects.create()
+    cg1 = ContactGroup.objects.create(hide_prices=True)
+    cg2 = ContactGroup.objects.create(hide_prices=False)
+    cg3 = ContactGroup.objects.create(show_prices_including_taxes=True)
+    cg4 = ContactGroup.objects.create(show_prices_including_taxes=False)
+    groups_qs = ContactGroup.objects.with_price_display_options()
+    assert isinstance(groups_qs, QuerySet)
+    groups = list(groups_qs)
+    assert cg0 not in groups
+    assert cg1 in groups
+    assert cg2 in groups
+    assert cg3 in groups
+    assert cg4 in groups
+
+
+def test_contact_group_price_display_options_defaults():
+    options = ContactGroup().get_price_display_options()
+    assert isinstance(options, PriceDisplayOptions)
+    assert options.include_taxes is None
+    assert options.show_prices is True
+
+
+@pytest.mark.parametrize("taxes", [True, False, None])
+@pytest.mark.parametrize("hide_prices", [True, False, None])
+def test_contact_group_price_display_options_defined(taxes, hide_prices):
+    options = ContactGroup(
+        show_prices_including_taxes=taxes,
+        hide_prices=hide_prices,
+    ).get_price_display_options()
+    assert isinstance(options, PriceDisplayOptions)
+    assert options.include_taxes is taxes
+    assert options.hide_prices is bool(hide_prices)
+    assert options.show_prices is bool(not hide_prices)

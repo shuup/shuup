@@ -63,10 +63,10 @@ def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_
     )
     product_ids = [d[0] for d in data][:n_products]
     products = get_visible_products(
-            context,
-            n_products,
-            filter_dict={"id__in": product_ids},
-            orderable_only=orderable_only,
+        context,
+        n_products,
+        filter_dict={"id__in": product_ids},
+        orderable_only=orderable_only,
     )
     products = cache_product_things(request, products)
     products = sorted(products, key=lambda p: product_ids.index(p.id))  # pragma: no branch
@@ -78,10 +78,10 @@ def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_
 def get_newest_products(context, n_products=6, orderable_only=True):
     request = context["request"]
     products = get_visible_products(
-            context,
-            n_products,
-            ordering="-pk",
-            orderable_only=orderable_only,
+        context,
+        n_products,
+        ordering="-pk",
+        orderable_only=orderable_only,
     )
     products = cache_product_things(request, products)
     return products
@@ -91,10 +91,10 @@ def get_newest_products(context, n_products=6, orderable_only=True):
 def get_random_products(context, n_products=6, orderable_only=True):
     request = context["request"]
     products = get_visible_products(
-            context,
-            n_products,
-            ordering="?",
-            orderable_only=orderable_only,
+        context,
+        n_products,
+        ordering="?",
+        orderable_only=orderable_only,
     )
     products = cache_product_things(request, products)
     return products

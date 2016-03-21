@@ -191,9 +191,12 @@ class BaseBasket(OrderSource):
         self.uncache()
 
     def add_line(self, **kwargs):
-        line = BasketLine(source=self, **kwargs)
+        line = self.create_line(**kwargs)
         self._data_lines = self._data_lines + [line.to_dict()]
         return line
+
+    def create_line(self, **kwargs):
+        return BasketLine(source=self, **kwargs)
 
     @property
     def _codes(self):
@@ -218,9 +221,6 @@ class BaseBasket(OrderSource):
         modified = super(BaseBasket, self).remove_code(code)
         self.dirty = bool(self.dirty or modified)
         return modified
-
-    def create_line(self, **kwargs):
-        return BasketLine(source=self, **kwargs)
 
     def get_lines(self):
         return [BasketLine.from_dict(self, line) for line in self._data_lines]

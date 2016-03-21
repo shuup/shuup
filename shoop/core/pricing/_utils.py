@@ -96,7 +96,7 @@ def _get_module_and_context(context):
     Get current pricing module and context converted to pricing context.
 
     :type context: shoop.core.pricing.PricingContextable
-    :rtype: tuple[PricingModule,PricingContext]
+    :rtype: (PricingModule,PricingContext)
     """
     pricing_mod = get_pricing_module()
     pricing_ctx = pricing_mod.get_context(context)

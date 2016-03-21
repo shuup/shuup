@@ -16,6 +16,7 @@ Subpackages
     shoop.default_tax
     shoop.front
     shoop.notify
+    shoop.order_printouts
     shoop.simple_cms
     shoop.simple_supplier
     shoop.testing

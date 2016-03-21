@@ -47,14 +47,16 @@
                         {% endif %}
                     </div>
                 </div>
+                {% if show_prices() %}
                 <div class="product-sum">
                     <h4 class="price text-right">
-                        <small>{% trans %}Total{% endtrans %}: </small>{{ line.price|money }}
+                        <small>{% trans %}Total{% endtrans %}: </small>{{ line|price }}
                         {% if line.is_discounted and line.base_price.value > 0 %}
-                            <br><small><s class="text-muted">{{ line.base_price|money }}</s></small>
+                            <br><small><s class="text-muted">{{ line|base_price }}</s></small>
                         {% endif %}
                     </h4>
                 </div>
+                {% endif %}
                 <div class="delete">
                     {% if line.can_delete %}
                     <button type="submit" class="btn btn-sm" name="delete_{{ line.line_id }}" title="{% trans %}Remove product from basket{% endtrans %}">
@@ -79,14 +81,16 @@
                     <hr>
                 </div>
             </div>
+            {% if show_prices() %}
             <div class="row">
                 <div class="col-sm-6 pull-right">
                     <div class="row">
                         <div class="col-xs-6"><h4><strong>{% trans %}Total{% endtrans %}</strong></h4></div>
-                        <div class="total-price text-right col-xs-6"><h2>{{ basket.total_price|money }}</h2></div>
+                        <div class="total-price text-right col-xs-6"><h2>{{ basket|total_price }}</h2></div>
                     </div>
                 </div>
             </div>
+            {% endif %}
         </div>
     </form>
 </div>

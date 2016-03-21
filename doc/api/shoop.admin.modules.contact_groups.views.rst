@@ -12,6 +12,14 @@ shoop.admin.modules.contact_groups.views.edit module
     :undoc-members:
     :show-inheritance:
 
+shoop.admin.modules.contact_groups.views.forms module
+-----------------------------------------------------
+
+.. automodule:: shoop.admin.modules.contact_groups.views.forms
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.admin.modules.contact_groups.views.list module
 ----------------------------------------------------
 
