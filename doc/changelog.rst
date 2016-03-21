@@ -81,6 +81,12 @@ Discount Pricing
 
 - Removed
 
+Simple CMS
+~~~~~~~~~~
+
+- Add option to list children on page
+- Add possibility to set parent on page
+
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
