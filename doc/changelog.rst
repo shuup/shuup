@@ -42,6 +42,7 @@ Localization
 Admin
 ~~~~~
 
+- Enable delete for contact groups
 - Make all enabled shipping and payment methods available in order creator
 - Check product quantities in order creation
 - Add option to add action buttons to Order edit view

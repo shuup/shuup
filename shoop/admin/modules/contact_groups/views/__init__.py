@@ -6,7 +6,12 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
+from .delete import ContactGroupDeleteView
 from .edit import ContactGroupEditView
 from .list import ContactGroupListView
 
-__all__ = ["ContactGroupEditView", "ContactGroupListView"]
+__all__ = [
+    "ContactGroupDeleteView",
+    "ContactGroupEditView",
+    "ContactGroupListView"
+]
