@@ -93,6 +93,11 @@ Simple CMS
 - Add option to list children on page
 - Add possibility to set parent on page
 
+Customer Group Pricing
+~~~~~~~~~~~~~~~~~~~~~~
+
+- Fix pricing for ``AnonymousContact``
+
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
