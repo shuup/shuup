@@ -13,15 +13,8 @@ from django.db.transaction import atomic
 from shoop.admin.form_part import FormPartsViewMixin, SaveFormPartsMixin
 from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.core.models import ContactGroup
-from shoop.utils.multilanguage_model_form import MultiLanguageModelForm
 
 from .forms import ContactGroupBaseFormPart, ContactGroupMembersFormPart
-
-
-class ContactGroupForm(MultiLanguageModelForm):
-    class Meta:
-        model = ContactGroup
-        fields = ("name",)
 
 
 class ContactGroupEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):
