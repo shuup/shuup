@@ -70,6 +70,7 @@ Xtheme
 
 - Enhance default text plugin editor to remarkable markdown editor
 - Add generic snippets plugin for doing simple integrations
+- Add a plugin for displaying category links on shop front
 
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
