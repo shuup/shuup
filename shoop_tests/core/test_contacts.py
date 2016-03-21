@@ -186,3 +186,23 @@ def test_contact_group_price_display_options_defined(taxes, hide_prices):
     assert options.include_taxes is taxes
     assert options.hide_prices is bool(hide_prices)
     assert options.show_prices is bool(not hide_prices)
+
+
+@pytest.mark.django_db
+def test_contact_group_price_display_for_contact(regular_user):
+    group = ContactGroup.objects.create(hide_prices=True)
+    person = get_person_contact(regular_user)
+    person.groups.add(group)
+
+    options = person.get_price_display_options()
+    assert options.hide_prices
+    assert options.include_taxes is None
+
+    default_group_for_person = person.get_default_group()
+    default_group_for_person.show_prices_including_taxes = True
+    default_group_for_person.save()
+
+    # Now since default group has pricing options set these should be returned
+    default_options = person.get_price_display_options()
+    assert default_options.include_taxes
+    assert not default_options.hide_prices

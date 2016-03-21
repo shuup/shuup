@@ -136,7 +136,7 @@ class Contact(NameMixin, PolymorphicModel):
         groups_with_options = self.groups.with_price_display_options()
         if groups_with_options:
             default_group = self.get_default_group()
-            if groups_with_options.filter(pk=default_group).exists():
+            if groups_with_options.filter(pk=default_group.pk).exists():
                 group_with_options = default_group
             else:
                 # Contact was removed from the default group.
