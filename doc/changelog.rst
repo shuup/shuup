@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Disable delete for default contact groups
 - Allow storing price display options to contact groups
 - Add template tags for rendering prices with context specific price
   display options (pretax or with taxes, or hide prices totally)
@@ -41,6 +42,7 @@ Localization
 Admin
 ~~~~~
 
+- Enable delete for contact groups
 - Make all enabled shipping and payment methods available in order creator
 - Check product quantities in order creation
 - Add option to add action buttons to Order edit view

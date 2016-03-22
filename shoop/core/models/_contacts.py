@@ -23,6 +23,16 @@ from shoop.core.utils.name_mixin import NameMixin
 from ._base import TranslatableShoopModel
 from ._taxes import CustomerTaxGroup
 
+DEFAULT_COMPANY_GROUP_IDENTIFIER = "default_company_group"
+DEFAULT_PERSON_GROUP_IDENTIFIER = "default_person_group"
+DEFAULT_ANONYMOUS_GROUP_IDENTIFIER = "default_anonymous_group"
+
+PROTECTED_CONTACT_GROUP_IDENTIFIERS = [
+    DEFAULT_COMPANY_GROUP_IDENTIFIER,
+    DEFAULT_PERSON_GROUP_IDENTIFIER,
+    DEFAULT_ANONYMOUS_GROUP_IDENTIFIER
+]
+
 
 class ContactGroupQuerySet(models.QuerySet):
     def with_price_display_options(self):
@@ -57,6 +67,14 @@ class ContactGroup(TranslatableShoopModel):
             include_taxes=self.show_prices_including_taxes,
             show_prices=(not self.hide_prices),
         )
+
+    def can_delete(self):
+        return bool(self.identifier not in PROTECTED_CONTACT_GROUP_IDENTIFIERS)
+
+    def delete(self, *args, **kwargs):
+        if not self.can_delete():
+            raise models.ProtectedError(_("Can't delete. This object is protected."), [self])
+        super(ContactGroup, self).delete(*args, **kwargs)
 
 
 @python_2_unicode_compatible
@@ -174,7 +192,7 @@ class Contact(NameMixin, PolymorphicModel):
 
 class CompanyContact(Contact):
     default_tax_group_getter = CustomerTaxGroup.get_default_company_group
-    default_contact_group_identifier = "default_company_group"
+    default_contact_group_identifier = DEFAULT_COMPANY_GROUP_IDENTIFIER
     default_contact_group_name = _("Company Contacts")
 
     members = models.ManyToManyField(
@@ -200,7 +218,7 @@ class Gender(Enum):
 
 class PersonContact(Contact):
     default_tax_group_getter = CustomerTaxGroup.get_default_person_group
-    default_contact_group_identifier = "default_person_group"
+    default_contact_group_identifier = DEFAULT_PERSON_GROUP_IDENTIFIER
     default_contact_group_name = _("Person Contacts")
 
     user = models.OneToOneField(
@@ -233,7 +251,7 @@ class PersonContact(Contact):
 class AnonymousContact(Contact):
     pk = id = None
     is_anonymous = True
-    default_contact_group_identifier = "default_anonymous_group"
+    default_contact_group_identifier = DEFAULT_ANONYMOUS_GROUP_IDENTIFIER
     default_contact_group_name = _("Anonymous Contacts")
 
     class Meta:
