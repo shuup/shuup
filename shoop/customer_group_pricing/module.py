@@ -15,13 +15,6 @@ from shoop.core.pricing import PriceInfo, PricingModule
 from .models import CgpPrice
 
 
-def _get_customer_group_ids(customer):
-    # TODO: add caching of some sort
-    if customer.is_anonymous:
-        return set()
-    return set(customer.groups.all().values_list("id", flat=True))
-
-
 class CustomerGroupPricingModule(PricingModule):
     identifier = "customer_group_pricing"
     name = _("Customer Group Pricing")
@@ -38,19 +31,15 @@ class CustomerGroupPricingModule(PricingModule):
 
         default_price = (shop_product.default_price_value or 0)
 
-        customer_group_ids = _get_customer_group_ids(context.customer)
-
-        if customer_group_ids:
-            filter = Q(
-                price_value__gt=0, product=product_id, shop=shop,
-                group__in=customer_group_ids)
-            result = (
-                CgpPrice.objects.filter(filter)
-                .order_by("price_value")[:1]
-                .values_list("price_value", flat=True)
-            )
-        else:
-            result = None
+        filter = Q(
+            product=product_id, shop=shop,
+            price_value__gt=0,
+            group__in=context.customer.groups.all())
+        result = (
+            CgpPrice.objects.filter(filter)
+            .order_by("price_value")[:1]
+            .values_list("price_value", flat=True)
+        )
 
         if result:
             price = result[0]

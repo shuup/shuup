@@ -164,6 +164,21 @@ def test_customer_is_anonymous(rf):
 
 
 @pytest.mark.django_db
+def test_anonymous_customers_default_group(rf):
+    request, shop, group = initialize_test(rf, True)
+    discount_value = 49
+    product = create_product("random-52", shop=shop, default_price=121)
+    request.customer = AnonymousContact()
+    CgpPrice.objects.create(
+        product=product,
+        group=request.customer.get_default_group(),
+        shop=shop,
+        price_value=discount_value)
+    price_info = product.get_price_info(request)
+    assert price_info.price == shop.create_price(discount_value)
+
+
+@pytest.mark.django_db
 def test_zero_default_price(rf, admin_user):
     request, shop, group = initialize_test(rf, True)
 
