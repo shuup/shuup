@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 13:16+0000\n"
+"POT-Creation-Date: 2016-03-25 01:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -80,6 +80,12 @@ msgstr ""
 msgid "visible in menu"
 msgstr ""
 
+msgid "parent"
+msgstr ""
+
+msgid "list children on page"
+msgstr ""
+
 msgid "title"
 msgstr ""
 
@@ -96,6 +102,18 @@ msgid "pages"
 msgstr ""
 
 msgid "Untitled"
+msgstr ""
+
+msgid "CMS Page Links"
+msgstr ""
+
+msgid "Show all pages"
+msgstr ""
+
+msgid "All pages are shown, even if not selected"
+msgstr ""
+
+msgid "Hide expired pages"
 msgstr ""
 
 msgid "New Page"
