@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-28 00:12+0000\n"
+"POT-Creation-Date: 2016-03-22 17:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -63,6 +63,21 @@ msgid "Theme configuration for %s"
 msgstr ""
 
 msgid "Plugin"
+msgstr ""
+
+msgid "Snippets"
+msgstr ""
+
+msgid "In-Place Snippet"
+msgstr ""
+
+msgid "Resource snippet for end of head"
+msgstr ""
+
+msgid "Resource snippet for beginning of body"
+msgstr ""
+
+msgid "Resource for end of body"
 msgstr ""
 
 msgid "text"

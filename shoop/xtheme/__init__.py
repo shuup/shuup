@@ -31,7 +31,8 @@ class XThemeAppConfig(AppConfig):
     provides = {
         "front_urls_pre": [__name__ + ".urls:urlpatterns"],
         "xtheme_plugin": [
-            "shoop.xtheme.plugins.text:TextPlugin"
+            "shoop.xtheme.plugins.text:TextPlugin",
+            "shoop.xtheme.plugins.snippets:SnippetsPlugin",
         ],
         "admin_module": [
             "shoop.xtheme.admin_module:XthemeAdminModule"
