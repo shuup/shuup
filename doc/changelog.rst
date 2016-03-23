@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Set customer marketing permission while creating order
 - Disable delete for default contact groups
 - Allow storing price display options to contact groups
 - Add template tags for rendering prices with context specific price
@@ -42,6 +43,7 @@ Localization
 Admin
 ~~~~~
 
+- Add option to add extra form parts to Shop edit view
 - Enable delete for contact groups
 - Make all enabled shipping and payment methods available in order creator
 - Check product quantities in order creation

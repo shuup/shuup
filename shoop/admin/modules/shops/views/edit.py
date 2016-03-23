@@ -92,6 +92,7 @@ class ShopEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):
     template_name = "shoop/admin/shops/edit.jinja"
     context_object_name = "shop"
     base_form_part_classes = [ShopBaseFormPart, ContactAddressFormPart]
+    form_part_class_provide_key = "admin_shop_form_part"
 
     def get_object(self, queryset=None):
         obj = super(ShopEditView, self).get_object(queryset)
