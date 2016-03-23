@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 from collections import Counter
 
+from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ValidationError
 from django.utils.encoding import force_text
 from django.utils.timezone import now
@@ -17,8 +18,8 @@ from six import iteritems
 
 from shoop.core import taxing
 from shoop.core.models import (
-    OrderStatus, PaymentMethod, Product, ShippingMethod, Shop, Supplier,
-    TaxClass
+    AnonymousContact, OrderStatus, PaymentMethod, Product, ShippingMethod,
+    Shop, Supplier, TaxClass
 )
 from shoop.core.pricing import Price, Priceful, TaxfulPrice, TaxlessPrice
 from shoop.core.taxing import should_calculate_taxes_automatically, TaxableItem
@@ -109,9 +110,9 @@ class OrderSource(object):
         self.display_currency_rate = 1
         self.shipping_address = None
         self.billing_address = None
-        self.customer = None
-        self.orderer = None
-        self.creator = None
+        self._customer = None
+        self._orderer = None
+        self._creator = None
         self.shipping_method_id = None
         self.payment_method_id = None
         self.customer_comment = u""
@@ -180,6 +181,30 @@ class OrderSource(object):
     taxless_total_discount_or_none = taxless_total_discount.or_none
 
     total_price_of_products = _PriceSum("price", "get_product_lines")
+
+    @property
+    def customer(self):
+        return (self._customer or AnonymousContact())
+
+    @customer.setter
+    def customer(self, value):
+        self._customer = value
+
+    @property
+    def orderer(self):
+        return (self._orderer or AnonymousContact())
+
+    @orderer.setter
+    def orderer(self, value):
+        self._orderer = value
+
+    @property
+    def creator(self):
+        return (self._creator or AnonymousUser())
+
+    @creator.setter
+    def creator(self, value):
+        self._creator = value
 
     @property
     def shipping_method(self):

@@ -12,7 +12,7 @@ from shoop.campaigns.models.campaigns import BasketCampaign
 from shoop.campaigns.models.basket_conditions import (
     ContactBasketCondition, ContactGroupBasketCondition
 )
-from shoop.core.models import AnonymousContact
+from shoop.core.models import AnonymousContact, Shop
 from shoop.front.basket import get_basket
 from shoop.testing.factories import (
     create_product, create_random_person, get_default_customer_group,
@@ -99,6 +99,16 @@ def test_group_basket_condition_with_anonymous_contact(rf):
 
     assert isinstance(basket.customer, AnonymousContact)
     assert_discounted_basket(basket, original_line_count, original_price, campaign_discount_value)
+
+
+@pytest.mark.django_db
+def test_contact_group_basket_condition_with_none(rf):
+    request = rf.get("/")
+    request.shop = Shop()
+    basket = get_basket(request)
+    condition = ContactGroupBasketCondition.objects.create()
+    result = condition.matches(basket)  # Should not raise any errors
+    assert result is False
 
 
 @pytest.mark.django_db
