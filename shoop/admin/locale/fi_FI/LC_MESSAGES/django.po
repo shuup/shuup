@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
+"POT-Creation-Date: 2016-03-24 10:45+0000\n"
 "PO-Revision-Date: 2016-01-05 06:44+0000\n"
 "Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
@@ -39,6 +39,9 @@ msgstr "Selaa"
 
 msgid "Clear"
 msgstr "Tyhjennä"
+
+msgid "Select"
+msgstr ""
 
 msgid "Attributes"
 msgstr "Attribuutit"
@@ -88,6 +91,43 @@ msgstr "Kontaktiryhmät"
 msgid "Contacts"
 msgstr "Kontaktit"
 
+msgid "Price display mode"
+msgstr "Hintojen näyttämistapa"
+
+msgid "unspecified"
+msgstr "määrittelemätön"
+
+msgid "show prices with taxes included"
+msgstr "näytä verolliset hinnat"
+
+msgid "show pre-tax prices"
+msgstr "näytä verottomat hinnat"
+
+msgid "hide prices"
+msgstr "piilota hinnat"
+
+#, fuzzy
+#| msgid "Members"
+msgid "member"
+msgstr "Jäsenet"
+
+#, fuzzy
+#| msgid "Removed: %d"
+msgid "Remove"
+msgstr "Poistettu: %d"
+
+#, python-format
+msgid "%(count)s member added"
+msgid_plural "%(count)s members added"
+msgstr[0] ""
+msgstr[1] ""
+
+#, python-format
+msgid "%(count)s member removed"
+msgid_plural "%(count)s members removed"
+msgstr[0] ""
+msgstr[1] ""
+
 msgid "Number of Members"
 msgstr "Jäsenien määrä"
 
@@ -131,6 +171,10 @@ msgstr "Henkilö"
 
 msgid "Company"
 msgstr "Yritys"
+
+#, python-format
+msgid "User %(bind_user)s already has a contact"
+msgstr ""
 
 msgid "Email"
 msgstr "Sähköposti"
@@ -234,6 +278,10 @@ msgstr "Muokkaa %(model)s"
 #, python-format
 msgid "Default %s module"
 msgstr "Oletus%smoduuli"
+
+#, python-format
+msgid "Module %(name)s has no admin detail view"
+msgstr ""
 
 msgid "Orders"
 msgstr "Tilaukset"
@@ -573,9 +621,6 @@ msgid ""
 msgstr ""
 "Tätä kenttää ei voi muuttaa, koska tälle kaupalle on olemassa tilauksia."
 
-msgid "Only one shop permitted."
-msgstr "Vain yksi kauppa sallittu"
-
 msgid "Domain"
 msgstr "Verkkotunnus"
 
@@ -795,6 +840,9 @@ msgstr "Kojelauta"
 msgid "Search for"
 msgstr "Etsi"
 
+msgid "Settings"
+msgstr ""
+
 msgid "Hello"
 msgstr "Hei"
 
@@ -813,8 +861,8 @@ msgstr "Yleiset tiedot"
 msgid "Members"
 msgstr "Jäsenet"
 
-msgid "No members."
-msgstr "Ei jäseniä."
+msgid "Add more"
+msgstr ""
 
 msgid "Addresses"
 msgstr "Osoitteet"
@@ -973,14 +1021,11 @@ msgstr "Veroton"
 msgid "Payments"
 msgstr "Maksut"
 
+msgid "Error!"
+msgstr ""
+
 msgid "Additional Details"
 msgstr "Lisätietoja"
-
-msgid "Stock"
-msgstr "Varasto"
-
-msgid "Unstocked"
-msgstr "Varastoimaton"
 
 msgid "Accounting"
 msgstr "Kirjanpito"
@@ -1075,15 +1120,25 @@ msgstr "Kaupan logo"
 msgid "Maintenance Mode"
 msgstr "Huoltotila"
 
+#, fuzzy
+#| msgid "Contacts"
+msgid "Contact Address"
+msgstr "Kontaktit"
+
 msgid "About Shoop Telemetry"
 msgstr "Tietoja Shoopin telemetriasta"
 
 msgid "Shoop will occasionally send telemetry data to a Shoop.io server."
 msgstr "Shoop lähettää aina välillä telemetriadataa shoop.io palvelimelle."
 
+#, fuzzy, python-format
+#| msgid ""
+#| "The data contains an unique installation key, as well as the hostname of "
+#| "the installation (as sent by the visiting browser; currently"
 msgid ""
 "The data contains an unique installation key, as well as the hostname of the "
-"installation (as sent by the visiting browser; currently"
+"installation (as sent by the visiting browser; currently <code>%(host)s</"
+"code>)."
 msgstr ""
 "Tiedot sisältävät uniikin asennusavaimen sekä asennuksen osoitteen (selaimen "
 "lähettämänä; nyt "
@@ -1100,14 +1155,10 @@ msgstr ""
 msgid "Opt-in / opt-out"
 msgstr "Mukanaolo"
 
-msgid "You are currently"
-msgstr "Olet tällä hetkellä"
-
-msgid "opted in"
-msgstr "olet mukana"
-
-msgid "to send telemetry data to Shoop.io."
-msgstr "lähettämässä telemetriadataa Shoop.io-palvelimelle."
+msgid ""
+"You are currently <span class=\"lead label label-success\">opted in</span> "
+"to send telemetry data to Shoop.io."
+msgstr ""
 
 msgid "Thank you for your valuable contribution."
 msgstr "Kiitos arvokkaasta panostuksestasi."
@@ -1115,11 +1166,10 @@ msgstr "Kiitos arvokkaasta panostuksestasi."
 msgid "Opt out"
 msgstr "Jättäydy syrjään"
 
-msgid "opted out"
-msgstr "Jättäydytty syrjään"
-
-msgid "of Shoop telemetry."
-msgstr "Shoopin telemetriasta."
+msgid ""
+"You are currently <span class=\"label label-warning\">opted out</span> of "
+"Shoop telemetry."
+msgstr ""
 
 msgid "Opt in"
 msgstr "Tule mukaan"
@@ -1135,11 +1185,11 @@ msgstr ""
 "vasta 24 tunnin kuluessa asennuksesta jollei lähetystä ole siihen mennessä "
 "kytketty pois päältä."
 
-msgid "Telemetry data was last submitted at"
-msgstr "Telemetriadata on viimeksi toimitettu"
-
-msgid "ago"
-msgstr "sitten"
+#, python-format
+msgid ""
+"Telemetry data was last submitted at %(submission_datetime)s - "
+"(%(submission_timesince)s) ago"
+msgstr ""
 
 msgid "See the data that was submitted."
 msgstr "Katso data, joka toimitettiin."
@@ -1228,3 +1278,8 @@ msgstr "Uusi %s"
 #, python-format
 msgid "Unnamed %s"
 msgstr "Nimeämätön %s"
+
+#, fuzzy, python-format
+#| msgid "Only one shop permitted."
+msgid "Only one %(model)s permitted."
+msgstr "Vain yksi kauppa sallittu"

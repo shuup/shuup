@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-29 18:45+0000\n"
+"POT-Creation-Date: 2016-03-24 10:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -26,6 +26,9 @@ msgid "Browse"
 msgstr ""
 
 msgid "Clear"
+msgstr ""
+
+msgid "Select"
 msgstr ""
 
 msgid "Attributes"
@@ -75,6 +78,39 @@ msgstr ""
 
 msgid "Contacts"
 msgstr ""
+
+msgid "Price display mode"
+msgstr ""
+
+msgid "unspecified"
+msgstr ""
+
+msgid "show prices with taxes included"
+msgstr ""
+
+msgid "show pre-tax prices"
+msgstr ""
+
+msgid "hide prices"
+msgstr ""
+
+msgid "member"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+#, python-format
+msgid "%(count)s member added"
+msgid_plural "%(count)s members added"
+msgstr[0] ""
+msgstr[1] ""
+
+#, python-format
+msgid "%(count)s member removed"
+msgid_plural "%(count)s members removed"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "Number of Members"
 msgstr ""
@@ -794,7 +830,7 @@ msgstr ""
 msgid "Members"
 msgstr ""
 
-msgid "No members."
+msgid "Add more"
 msgstr ""
 
 msgid "Addresses"
@@ -1049,6 +1085,9 @@ msgid "Shop Logo"
 msgstr ""
 
 msgid "Maintenance Mode"
+msgstr ""
+
+msgid "Contact Address"
 msgstr ""
 
 msgid "About Shoop Telemetry"
