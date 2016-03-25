@@ -64,7 +64,7 @@ window.BrowseAPI = (function() {
         const popup = window.open(
             browserUrl + (browserUrl.indexOf("?") > -1 ? "&" : "?") + qs,
             "browser_popup_" + id,
-            "resizable,menubar=no,location=no"
+            "resizable,menubar=no,location=no,scrollbars=yes"
         );
         return browseData[id] = _.extend(
             {popup, $container: null, onSelect: null},
