@@ -5,6 +5,7 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ static("xtheme/editor.css") }}">
+    <script src="{{ static("shoop_admin/js/vendor.js") }}"></script>
     <script>var CSRF_TOKEN = "{{ csrf_token_str }}";</script>
     <script type="text/javascript" src="{{ url("shoop_admin:js-catalog") }}"></script>
     <script src="{{ static("xtheme/editor.js") }}"></script>
@@ -21,5 +22,33 @@
 {% if changed %}
     <script>refreshPlaceholderInParent({{ layout.placeholder_name|json }});</script>
 {% endif %}
+<script>
+$(function() {
+    var EXPAND_EDITOR_MARKUP = (
+        "<button class='btn btn-info btn-sm' type='button'>" +
+        "<i class='fa fa-expand'></i> " + gettext("Expand Editor") +
+        "</button>"
+    );
+    const remarkable = window.Remarkable;
+    if (!remarkable) {
+        return;
+    }
+    $(".remarkable-field").each(function() {
+        const textArea = this;
+        const $container = $("<div class='remarkable-toggle'></div>");
+        const $link = $(EXPAND_EDITOR_MARKUP);
+        $container.append($link);
+        $link.click(function() {
+            if ($("#remarkable-overlay").length) {
+                return;
+            }
+            remarkable(textArea).open();
+        });
+        $(textArea).after($container);
+    });
+});
+
+</script>
+<script src="{{ static("shoop_admin/js/remarkable.js") }}"></script>
 </body>
 </html>

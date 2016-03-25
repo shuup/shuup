@@ -68,6 +68,7 @@ Front
 Xtheme
 ~~~~~~
 
+- Enhance default text plugin editor to remarkable markdown editor
 - Add generic snippets plugin for doing simple integrations
 
 Classic Gray Theme

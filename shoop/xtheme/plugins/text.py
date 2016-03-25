@@ -22,7 +22,12 @@ class TextPlugin(Plugin):
     identifier = "text"
     name = "Text"
     fields = [
-        ("text", TranslatableField(label=_("text"), required=False, widget=forms.Textarea))
+        ("text", TranslatableField(
+            label=_("text"),
+            required=False,
+            widget=forms.Textarea,
+            attrs={"class": "remarkable-field"}
+        ))
     ]
 
     def render(self, context):  # doccov: ignore
