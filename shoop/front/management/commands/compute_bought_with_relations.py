@@ -1,0 +1,28 @@
+# This file is part of Shoop.
+#
+# Copyright (c) 2012-2016, Shoop Ltd. All rights reserved.
+#
+# This source code is licensed under the AGPLv3 license found in the
+# LICENSE file in the root directory of this source tree.
+
+from django.core.management.base import BaseCommand
+from django.db.transaction import atomic
+
+from shoop.core.models import (
+    OrderLine, OrderLineType, ProductCrossSell, ProductCrossSellType
+)
+from shoop.front.utils.product_relations import \
+    add_bought_with_relations_for_product
+
+
+class Command(BaseCommand):
+
+    @atomic
+    def handle(self, *args, **options):
+        # Clear all existing ProductCrossSell objects
+        ProductCrossSell.objects.filter(type=ProductCrossSellType.BOUGHT_WITH).delete()
+
+        # Handle all ordered products
+        ordered_product_ids = OrderLine.objects.filter(type=OrderLineType.PRODUCT).values_list("pk", flat=True)
+        for product_id in ordered_product_ids:
+            add_bought_with_relations_for_product(product_id)

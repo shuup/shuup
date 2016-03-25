@@ -55,6 +55,7 @@ Admin
 Front
 ~~~~~
 
+- Add management command to generate bought with relations
 - Fix bug at ``get_visible_products`` filter when orderable_only is False
 - Set template price display options from the customer
 - Fix bug: BasketStorage.finalize() never called delete() correctly
