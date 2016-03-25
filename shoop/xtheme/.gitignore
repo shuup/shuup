@@ -1,3 +1,4 @@
 static/xtheme/*js*
 static/xtheme/*css
 !static_src/lib
+bower_components
