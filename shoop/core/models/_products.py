@@ -70,11 +70,13 @@ class ProductCrossSellType(Enum):
     RECOMMENDED = 1
     RELATED = 2
     COMPUTED = 3
+    BOUGHT_WITH = 4
 
     class Labels:
         RECOMMENDED = _('recommended')
         RELATED = _('related')
         COMPUTED = _('computed')
+        BOUGHT_WITH = _('bought with')
 
 
 class ShippingMode(Enum):

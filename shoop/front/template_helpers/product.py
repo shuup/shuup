@@ -49,16 +49,10 @@ def is_visible(context, product):
 
 
 @contextfunction
-def get_product_cross_sells(context, product, relation_type="related", count=4, orderable_only=True):
-    rtype = ProductCrossSellType.RELATED
-    if relation_type == "computed":
-        rtype = ProductCrossSellType.COMPUTED
-    elif relation_type == "recommended":
-        rtype = ProductCrossSellType.RECOMMENDED
-
+def get_product_cross_sells(context, product, relation_type=ProductCrossSellType.RELATED, count=4, orderable_only=True):
     related_product_ids = list((
         ProductCrossSell.objects
-        .filter(product1=product, type=rtype)
+        .filter(product1=product, type=relation_type)
         .order_by("weight")[:(count * 4)]).values_list("product2_id", flat=True)
     )
 

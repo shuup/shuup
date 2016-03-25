@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add bought with relation to ``ProductCrossSellType``
 - Set customer marketing permission while creating order
 - Disable delete for default contact groups
 - Allow storing price display options to contact groups
@@ -54,6 +55,8 @@ Admin
 Front
 ~~~~~
 
+- Add management command to generate bought with relations
+- Fix bug at ``get_visible_products`` filter when orderable_only is False
 - Set template price display options from the customer
 - Fix bug: BasketStorage.finalize() never called delete() correctly
 - Check product quantity already in basket while adding
@@ -70,6 +73,8 @@ Xtheme
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 
+- Remove ``ProductCrossSellType.COMPUTED`` from cross-sells plugin
+- Update cross-sells plugin to use ``ProductCrossSellType.BOUGHT_WITH``
 - Render prices with the new price rendering template tags
 - Show error messages while adding products to basket
 - Add Coupon use possibility to basket page

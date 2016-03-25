@@ -77,6 +77,11 @@ def test_get_visible_products_filter():
     assert product_1 in product_list
     assert product_2 not in product_list
 
+    # Test also with orderable_only False
+    product_list = general.get_visible_products(context, n_products=2, filter_dict=filter_dict, orderable_only=False)
+    assert product_1 in product_list
+    assert product_2 not in product_list
+
 
 @pytest.mark.django_db
 def test_get_best_selling_products():

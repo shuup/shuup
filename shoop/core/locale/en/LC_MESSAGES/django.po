@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-18 17:24+0000\n"
+"POT-Creation-Date: 2016-03-25 19:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -284,10 +284,19 @@ msgstr ""
 msgid "show as pricing option"
 msgstr ""
 
+msgid "show prices including taxes"
+msgstr ""
+
+msgid "hide prices"
+msgstr ""
+
 msgid "contact group"
 msgstr ""
 
 msgid "contact groups"
+msgstr ""
+
+msgid "Can't delete. This object is protected."
 msgstr ""
 
 msgid "created on"
@@ -799,6 +808,9 @@ msgstr ""
 msgid "computed"
 msgstr ""
 
+msgid "bought with"
+msgstr ""
+
 msgid "shipped"
 msgstr ""
 
@@ -1083,6 +1095,10 @@ msgid "sales units"
 msgstr ""
 
 msgid "No Choice"
+msgstr ""
+
+#, python-format
+msgid "%s not available in this shop"
 msgstr ""
 
 msgid "Default Pricing"

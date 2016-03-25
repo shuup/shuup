@@ -7,11 +7,11 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from shoop.core.models import ProductCrossSell, StockBehavior
-from shoop.front.template_helpers import product as product_helpers
-from shoop.testing.factories import (
-    create_product, get_default_shop, get_default_supplier
+from shoop.core.models import (
+    ProductCrossSell, ProductCrossSellType, StockBehavior
 )
+from shoop.front.template_helpers import product as product_helpers
+from shoop.testing.factories import create_product, get_default_shop
 from shoop_tests.front.fixtures import get_jinja_context
 
 
@@ -34,9 +34,9 @@ def test_cross_sell_plugin_type():
     shop = get_default_shop()
     product = create_product("test-sku", shop=shop, stock_behavior=StockBehavior.UNSTOCKED)
     context = get_jinja_context(product=product)
-    type_counts = (("related", 1),
-                   ("recommended", 2),
-                   ("computed", 3))
+    type_counts = ((ProductCrossSellType.RELATED, 1),
+                   (ProductCrossSellType.RECOMMENDED, 2),
+                   (ProductCrossSellType.BOUGHT_WITH, 3))
 
     # Create cross sell products and relations in different quantities
     for type, count in type_counts:
@@ -56,7 +56,8 @@ def test_cross_sell_plugin_count():
     total_count = 5
     trim_count = 3
 
-    _create_cross_sell_products(product, shop, "related", total_count)
-    assert ProductCrossSell.objects.filter(product1=product, type="related").count() == total_count
+    type = ProductCrossSellType.RELATED
+    _create_cross_sell_products(product, shop, type, total_count)
+    assert ProductCrossSell.objects.filter(product1=product, type=type).count() == total_count
 
     assert len(list(product_helpers.get_product_cross_sells(context, product, type, trim_count))) == trim_count

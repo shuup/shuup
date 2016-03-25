@@ -458,6 +458,23 @@ def create_empty_order(prices_include_tax=False, shop=None):
     return order
 
 
+def add_product_to_order(order, supplier, product, quantity, taxless_base_unit_price, tax_rate=0, pricing_context=None):
+    if not pricing_context:
+        pricing_context = _get_pricing_context(order.shop, order.customer)
+    product_order_line = OrderLine(order=order)
+    update_order_line_from_product(pricing_context,
+                                   order_line=product_order_line,
+                                   product=product, quantity=quantity,
+                                   supplier=supplier)
+    product_order_line.base_unit_price = order.shop.create_price(taxless_base_unit_price)
+    product_order_line.save()
+    product_order_line.taxes.add(OrderLineTax.from_tax(
+        get_test_tax(tax_rate),
+        product_order_line.taxless_price.amount,
+        order_line=product_order_line,
+    ))
+
+
 def create_order_with_product(
         product, supplier, quantity, taxless_base_unit_price, tax_rate=0, n_lines=1,
         shop=None):
@@ -466,20 +483,9 @@ def create_order_with_product(
     order.save()
 
     pricing_context = _get_pricing_context(order.shop, order.customer)
-
     for x in range(n_lines):
-        product_order_line = OrderLine(order=order)
-        update_order_line_from_product(pricing_context,
-                                       order_line=product_order_line,
-                                       product=product, quantity=quantity,
-                                       supplier=supplier)
-        product_order_line.base_unit_price = order.shop.create_price(taxless_base_unit_price)
-        product_order_line.save()
-        product_order_line.taxes.add(OrderLineTax.from_tax(
-            get_test_tax(tax_rate),
-            product_order_line.taxless_price.amount,
-            order_line=product_order_line,
-        ))
+        add_product_to_order(order, supplier, product, quantity, taxless_base_unit_price, tax_rate, pricing_context)
+
     assert order.get_product_ids_and_quantities()[product.pk] == (quantity * n_lines), "Things got added"
     return order
 
