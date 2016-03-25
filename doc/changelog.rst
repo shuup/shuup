@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add bought with relation to ``ProductCrossSellType``
 - Set customer marketing permission while creating order
 - Disable delete for default contact groups
 - Allow storing price display options to contact groups
