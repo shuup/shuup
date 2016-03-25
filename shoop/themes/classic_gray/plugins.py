@@ -8,6 +8,7 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
+from shoop.core.models import ProductCrossSellType
 from shoop.front.template_helpers.general import (
     get_best_selling_products, get_newest_products, get_random_products
 )
@@ -60,9 +61,9 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
     fields = [
         ("title", TranslatableField(label=_("Title"), required=False, initial="")),
         ("type", forms.ChoiceField(label=_("Type"), choices=[
-            ("related", "Related"),
-            ("recommended", "Recommended"),
-            ("computed", "Computed"),
+            (ProductCrossSellType.RELATED, "Related"),
+            (ProductCrossSellType.RECOMMENDED, "Recommended"),
+            (ProductCrossSellType.BOUGHT_WITH, "Bought With"),
         ], initial="related")),
         ("count", forms.IntegerField(label=_("Count"), min_value=1, initial=4)),
         ("orderable_only", forms.BooleanField(label=_("Only show in-stock and orderable items"),
