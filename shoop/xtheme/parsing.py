@@ -184,7 +184,14 @@ class PlaceholderExtension(_PlaceholderManagingExtension):
         :rtype: jinja2.nodes.Output
         """
         lineno = next(parser.stream).lineno
-        placeholder_name = six.text_type(parse_constantlike(self.environment, parser))
+        global_type = bool(parser.stream.look().value == "global")
+        if global_type:
+            # Do some special-case parsing for global placeholders
+            placeholder_name = six.text_type(parser.stream.current.value)
+            next(parser.stream)
+            next(parser.stream)
+        else:
+            placeholder_name = six.text_type(parse_constantlike(self.environment, parser))
         self._new_layout(parser, placeholder_name)
         parser.parse_statements(['name:endplaceholder'], drop_needle=True)
         # Body parsing will have, as a side effect, populated the current layout
@@ -192,17 +199,19 @@ class PlaceholderExtension(_PlaceholderManagingExtension):
         args = [
             Const(placeholder_name),
             Const(layout),
-            Const(parser.name)
+            Const(parser.name),
+            Const(global_type),
         ]
         return Output([self.call_method('_render_placeholder', args)]).set_lineno(lineno)
 
     @contextfunction
-    def _render_placeholder(self, context, placeholder_name, layout, template_name):
+    def _render_placeholder(self, context, placeholder_name, layout, template_name, global_type):
         return render_placeholder(
             context,
             placeholder_name=placeholder_name,
             default_layout=layout,
-            template_name=template_name
+            template_name=template_name,
+            global_type=global_type,
         )
 
 

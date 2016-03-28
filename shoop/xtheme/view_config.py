@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.utils.encoding import force_text
 
+from shoop.xtheme import XTHEME_GLOBAL_VIEW_NAME
 from shoop.xtheme.layout import Layout
 from shoop.xtheme.models import SavedViewConfig
 
@@ -21,7 +22,7 @@ class ViewConfig(object):
     container for `SavedViewConfig` objects, and wraps the `SavedViewConfig` API.
     """
 
-    def __init__(self, theme, view_name, draft):
+    def __init__(self, theme, view_name, draft, global_type=False):
         """
         Initialize a view configuration.
 
@@ -31,9 +32,11 @@ class ViewConfig(object):
         :type view_name: str
         :param draft: Load in draft mode?
         :type draft: bool
+        :param global_type: Boolean indicating whether this is a global config
+        :type global_type: bool|False
         """
         self.theme = theme
-        self.view_name = force_text(view_name)
+        self.view_name = (XTHEME_GLOBAL_VIEW_NAME if global_type else force_text(view_name))
         self.draft = bool(draft)
         self._saved_view_config = None
 

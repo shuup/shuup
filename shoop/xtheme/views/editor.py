@@ -14,6 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 
 from shoop.utils.excs import Problem
+from shoop.xtheme import XTHEME_GLOBAL_VIEW_NAME
 from shoop.xtheme._theme import get_theme_by_identifier
 from shoop.xtheme.editing import could_edit
 from shoop.xtheme.view_config import ViewConfig
@@ -56,6 +57,10 @@ class EditorView(TemplateView):
             # We saved the default layout, so get rid of the humongous GET arg and try again
             get_args = dict(self.request.GET.items())
             get_args.pop("default_config", None)
+            global_type = get_args.pop("global_type", None)
+            if global_type:
+                get_args["view"] = XTHEME_GLOBAL_VIEW_NAME
+            # We are overriding the view with XTHEME_GLOBAL_VIEW_NAME if this is a global placeholder
             return HttpResponseRedirect("%s?%s" % (self.request.path, urlencode(get_args)))
         return super(EditorView, self).dispatch(request, *args, **kwargs)
 
@@ -83,10 +88,13 @@ class EditorView(TemplateView):
         theme = get_theme_by_identifier(self.request.GET["theme"])
         if not theme:
             raise Problem(_("Unable to determine current theme."))
+        view_name = self.request.GET["view"]
+        global_type = self.request.GET.get("global_type", None)
         self.view_config = ViewConfig(
             theme=theme,
-            view_name=self.request.GET["view"],
-            draft=True
+            view_name=view_name,
+            draft=True,
+            global_type=global_type,
         )
         self.placeholder_name = self.request.GET["ph"]
         self.default_layout = self._get_default_layout()

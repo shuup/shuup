@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import pytest
+from jinja2 import TemplateSyntaxError
 
 from shoop.xtheme.parsing import NestingError, NonConstant
 from shoop.xtheme.testing import override_current_theme_class
@@ -83,3 +84,37 @@ def test_nonstring_but_constant_plugin_content_fails():
             {% endplugin %}
         {% endplaceholder %}
         """)
+
+
+@pytest.mark.django_db
+def test_placeholder_invalid_parameter():
+    with pytest.raises(TemplateSyntaxError):
+        get_jinja2_engine().from_string("""
+        {% placeholder stuff some_invalid_parameter %}
+            {% plugin "text" %}
+            text = "Some stuff"
+            {% endplugin %}
+        {% endplaceholder %}
+        """)
+
+
+def test_placeholder_accepts_valid_global_parameter():
+    get_jinja2_engine().from_string("""
+    {% placeholder "stuff" global %}
+        {% plugin "text" %}
+        text = "More stuff"
+        {% endplugin %}
+    {% endplaceholder %}
+    """)
+
+
+def test_placeholder_parameter_quotes_or_no_quotes_okay():
+    parameter_markup = """
+    {%% placeholder stuff %s %%}
+        {%% plugin "text" %%}
+        text = "More stuff"
+        {%% endplugin %%}
+    {%% endplaceholder %%}
+    """
+    get_jinja2_engine().from_string(parameter_markup % "global")
+    get_jinja2_engine().from_string(parameter_markup % "\"global\"")

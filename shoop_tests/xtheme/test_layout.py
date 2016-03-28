@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 import six
 
+from shoop.xtheme import XTHEME_GLOBAL_VIEW_NAME
 from shoop.xtheme.layout import Layout, LayoutCell
 from shoop.xtheme.plugins.text import TextPlugin
 from shoop.xtheme.rendering import get_view_config, render_placeholder
 from shoop.xtheme.testing import override_current_theme_class
 from shoop_tests.utils import printable_gibberish
 from shoop_tests.xtheme.utils import (
-    close_enough, get_request, get_test_template_bits, plugin_override
+    close_enough, FauxView, get_jinja2_engine, get_request,
+    get_test_template_bits, plugin_override
 )
 
 
@@ -46,6 +48,23 @@ def test_layout_rendering(rf):
             </div>
             """ % gibberish
             assert close_enough(result, expect)
+
+
+def test_layout_rendering_with_global_type(rf):
+    request = get_request(edit=False)
+    with override_current_theme_class(None):
+        with plugin_override():
+            jeng = get_jinja2_engine()
+            template = jeng.from_string("")
+
+            (template, layout, gibberish, ctx) = get_test_template_bits(request)
+
+            global_class = "xt-global-ph"
+            result = six.text_type(render_placeholder(ctx, "test", layout, template.template.name, global_type=True))
+            assert global_class in result
+
+            result = six.text_type(render_placeholder(ctx, "test", layout, template.template.name, global_type=False))
+            assert global_class not in result
 
 
 def test_layout_edit_render():
