@@ -64,7 +64,7 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
             (ProductCrossSellType.RELATED, "Related"),
             (ProductCrossSellType.RECOMMENDED, "Recommended"),
             (ProductCrossSellType.BOUGHT_WITH, "Bought With"),
-        ], initial="related")),
+        ], initial=ProductCrossSellType.RELATED)),
         ("count", forms.IntegerField(label=_("Count"), min_value=1, initial=4)),
         ("orderable_only", forms.BooleanField(label=_("Only show in-stock and orderable items"),
                                               initial=True,
@@ -75,8 +75,7 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
         count = self.config.get("count", 4)
         product = context.get("product", None)
         orderable_only = self.config.get("orderable_only", True)
-        type = self.config.get("type", "related")
-
+        type = self.config.get("type", ProductCrossSellType.RELATED)
         return {
             "request": context["request"],
             "title": self.get_translated_value("title"),
