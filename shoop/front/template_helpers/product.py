@@ -50,6 +50,7 @@ def is_visible(context, product):
 
 @contextfunction
 def get_product_cross_sells(context, product, relation_type=ProductCrossSellType.RELATED, count=4, orderable_only=True):
+    relation_type = _relation_type_str_to_enum(relation_type)
     related_product_ids = list((
         ProductCrossSell.objects
         .filter(product1=product, type=relation_type)
@@ -68,3 +69,15 @@ def get_product_cross_sells(context, product, relation_type=ProductCrossSellType
     related_products.sort(key=lambda prod: list(related_product_ids).index(prod.id))
 
     return related_products[:count]
+
+
+def _relation_type_str_to_enum(relation_type):
+    if relation_type == "related":
+        return ProductCrossSellType.RELATED
+    elif relation_type == "recommended":
+        return ProductCrossSellType.RECOMMENDED
+    elif relation_type == "computed":
+        return ProductCrossSellType.COMPUTED
+    elif relation_type == "bought_with":
+        return ProductCrossSellType.BOUGHT_WITH
+    return relation_type
