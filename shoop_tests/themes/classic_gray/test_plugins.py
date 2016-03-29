@@ -21,7 +21,7 @@ def test_cross_sell_plugin_renders():
     shop = get_default_shop()
     product = create_product("test-sku", shop=shop, stock_behavior=StockBehavior.UNSTOCKED)
     computed = create_product("test-computed-sku", shop=shop, stock_behavior=StockBehavior.UNSTOCKED)
-    type ="computed"
+    type = ProductCrossSell.type.field.enum.COMPUTED
 
     ProductCrossSell.objects.create(product1=product, product2=computed, type=type)
     assert ProductCrossSell.objects.filter(product1=product, type=type).count() == 1

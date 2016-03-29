@@ -8,7 +8,7 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from shoop.core.models import ProductCrossSellType
+from shoop.core.models import ProductCrossSell, ProductCrossSellType
 from shoop.front.template_helpers.general import (
     get_best_selling_products, get_newest_products, get_random_products
 )
@@ -60,11 +60,7 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
     required_context_variables = ["product"]
     fields = [
         ("title", TranslatableField(label=_("Title"), required=False, initial="")),
-        ("type", forms.ChoiceField(label=_("Type"), choices=[
-            (ProductCrossSellType.RELATED, "Related"),
-            (ProductCrossSellType.RECOMMENDED, "Recommended"),
-            (ProductCrossSellType.BOUGHT_WITH, "Bought With"),
-        ], initial=ProductCrossSellType.RELATED)),
+        ("type", ProductCrossSell.type.field.formfield()),
         ("count", forms.IntegerField(label=_("Count"), min_value=1, initial=4)),
         ("orderable_only", forms.BooleanField(label=_("Only show in-stock and orderable items"),
                                               initial=True,
@@ -75,7 +71,9 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
         count = self.config.get("count", 4)
         product = context.get("product", None)
         orderable_only = self.config.get("orderable_only", True)
-        type = self.config.get("type", ProductCrossSellType.RELATED)
+        type = self.config.get("type")
+        if not isinstance(type, ProductCrossSellType):
+            type = ProductCrossSellType.RELATED
         return {
             "request": context["request"],
             "title": self.get_translated_value("title"),
