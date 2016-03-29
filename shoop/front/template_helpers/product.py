@@ -11,6 +11,7 @@ from shoop.core.models import (
     AttributeVisibility, ProductAttribute, ProductCrossSell,
     ProductCrossSellType
 )
+from shoop.utils.text import force_ascii
 
 from . import general
 
@@ -49,11 +50,13 @@ def is_visible(context, product):
 
 
 @contextfunction
-def get_product_cross_sells(context, product, relation_type=ProductCrossSellType.RELATED, count=4, orderable_only=True):
-    relation_type = _relation_type_str_to_enum(relation_type)
+def get_product_cross_sells(
+        context, product, relation_type=ProductCrossSellType.RELATED,
+        count=4, orderable_only=True):
+    rtype = _map_relation_type(relation_type)
     related_product_ids = list((
         ProductCrossSell.objects
-        .filter(product1=product, type=relation_type)
+        .filter(product1=product, type=rtype)
         .order_by("weight")[:(count * 4)]).values_list("product2_id", flat=True)
     )
 
@@ -71,13 +74,18 @@ def get_product_cross_sells(context, product, relation_type=ProductCrossSellType
     return related_products[:count]
 
 
-def _relation_type_str_to_enum(relation_type):
-    if relation_type == "related":
-        return ProductCrossSellType.RELATED
-    elif relation_type == "recommended":
-        return ProductCrossSellType.RECOMMENDED
-    elif relation_type == "computed":
-        return ProductCrossSellType.COMPUTED
-    elif relation_type == "bought_with":
-        return ProductCrossSellType.BOUGHT_WITH
-    return relation_type
+def _map_relation_type(relation_type):
+    """
+    Map relation type to enum value.
+
+    :type relation_type: ProductCrossSellType|str
+    :rtype: ProductCrossSellType
+    :raises: `LookupError` if unknown string is given
+    """
+    if isinstance(relation_type, ProductCrossSellType):
+        return relation_type
+    attr_name = force_ascii(relation_type).upper()
+    try:
+        return getattr(ProductCrossSellType, attr_name)
+    except AttributeError:
+        raise LookupError('Unknown ProductCrossSellType %r' % (relation_type,))
