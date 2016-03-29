@@ -577,6 +577,8 @@ def create_random_person(locale=None, minimum_name_comp_len=0):
         email=email,
         phone=phone,
         name=name,
+        first_name=first_name,
+        last_name=last_name,
         prefix=prefix,
         suffix=suffix,
         default_shipping_address=address,
