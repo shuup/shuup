@@ -1,40 +1,21 @@
-{% macro link_list(link_infos) %}
-    <ul>
-    {% for link_info in link_infos %}
-        <li>
-            <a href="{{ link_info.url }}">{{ link_info.text or link_info.url }}</a>
-        </li>
-    {% endfor %}
-    </ul>
-{% endmacro %}
-
-{% macro cms_column() %}
-    {{ link_list(xtheme.get_cms_footer_links()) }}
-{% endmacro %}
-
-{% macro html_column() %}
-    {{ xtheme.get("footer_html")|default("", True)|safe }}
-{% endmacro %}
-
-{% macro links_column() %}
-    {{ link_list(xtheme.get_footer_links()) }}
-{% endmacro %}
-
 <footer>
-    {% set col_order = xtheme.get("footer_column_order", "").split(",") %}
-    {% set col_width = (12 / col_order|length)|int %}
-    {% set col_macros = {"cms": cms_column, "html": html_column, "links": links_column} %}
     <div class="container">
-        {% if col_order|length %}
-        <hr>
-        {% endif %}
-        <div class="row">
-            {% for col in col_order %}
-                <div class="col-md-{{ col_width }}">
-                    {% set col_macro = col_macros.get(col) %}
-                    {% if col_macro %}{{ col_macro() }}{% endif %}
-                </div>
-            {% endfor %}
-        </div>
+        {% placeholder "footer" %}
+            {% column {"sm": 4} %}
+                {% plugin "simple_cms.page_links" %}
+                    title = "Pages"
+                {% endplugin %}
+            {% endcolumn %}
+            {% column {"sm": 3} %}
+                {% plugin "category_links" %}
+                    title = "Categories"
+                {% endplugin %}
+            {% endcolumn %}
+            {% column {"sm": 3} %}
+                {% plugin "text" %}
+                    text = "## Custom Footer Content"
+                {% endplugin %}
+            {% endcolumn %}
+        {% endplaceholder %}
     </div>
 </footer>

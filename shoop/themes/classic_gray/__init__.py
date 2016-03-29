@@ -22,33 +22,15 @@ class ClassicGrayTheme(Theme):
 
     fields = [
         ("show_welcome_text", forms.BooleanField(required=False, initial=True, label=_("Show Frontpage Welcome Text"))),
-        ("footer_html", forms.CharField(required=False, label=_("Footer custom HTML"), widget=forms.Textarea)),
-        ("footer_links", forms.CharField(required=False, label=_("Footer links"), widget=forms.Textarea,
-                                         help_text=_("One line per link in format 'http://example.com Example Link'"))),
-        ("footer_column_order", forms.ChoiceField(required=False, initial="", label=_("Footer column order"))),
     ]
 
     def get_configuration_form(self, form_kwargs):
-        from .config_form import ClassicGrayConfigForm
-        return ClassicGrayConfigForm(theme=self, **form_kwargs)
+        from shoop.xtheme.forms import GenericThemeForm
+        return GenericThemeForm(theme=self, **form_kwargs)
 
     def get_view(self, view_name):
         import shoop.themes.classic_gray.views as views
         return getattr(views, view_name, None)
-
-    def get_footer_links(self):
-        for line in (self.get_setting("footer_links") or "").splitlines():
-            line = line.strip()
-            if not line:
-                continue
-            line = line.split(None, 1)
-            url = line[0]
-            if "//" not in url and not url.startswith("/"):  # "Fix up" relative URLs and CMS page identifiers
-                url = "/%s" % url
-            if len(line) == 2:
-                yield {"url": url, "text": line[1]}
-            else:
-                yield {"url": url}
 
     def _format_cms_links(self, **query_kwargs):
         if "shoop.simple_cms" not in django.conf.settings.INSTALLED_APPS:
@@ -59,10 +41,6 @@ class ClassicGrayTheme(Theme):
 
     def get_cms_navigation_links(self):
         return self._format_cms_links(visible_in_menu=True)
-
-    def get_cms_footer_links(self):
-        page_ids = self.get_setting("footer_cms_pages") or []
-        return self._format_cms_links(id__in=page_ids)
 
 
 class ClassicGrayThemeAppConfig(AppConfig):
