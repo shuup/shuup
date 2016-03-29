@@ -37,8 +37,10 @@ def test_new_user_information_edit():
     # make sure all information matches in form
     customer_edit_url = reverse("shoop:customer_edit")
     soup = client.soup(customer_edit_url)
+
     assert soup.find(attrs={"name": "contact-email"})["value"] == user.email
-    assert soup.find(attrs={"name": "contact-name"})["value"] == user.get_full_name()
+    assert soup.find(attrs={"name": "contact-first_name"})["value"] == user.first_name
+    assert soup.find(attrs={"name": "contact-last_name"})["value"] == user.last_name
 
     # Test POSTing
     form = extract_form_fields(soup)
