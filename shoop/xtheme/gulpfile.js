@@ -14,6 +14,7 @@ var less = require("gulp-less");
 var nano = require("gulp-cssnano");
 var path = require("path");
 var ren = require("gulp-rename");
+var webpack = require("webpack");
 
 var PRODUCTION = gtools.PRODUCTION;  // --production works in place of the environment variable
 
@@ -22,10 +23,15 @@ gtools.webpackTasks("injection", gtools.buildWebpackConfig(
     "editor-injection.js"
 ));
 
+
 gtools.webpackTasks("editor-js", gtools.buildWebpackConfig(
-    "./editor/index.js",
+    [
+        "./editor/index.js",
+        "../../admin/static_src/base/js/browse-widget.js",
+    ],
     "editor.js"
 ));
+
 
 gulp.task("editor-style", function() {
     return gulp.src(["static_src/editor/style.less"])

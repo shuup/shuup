@@ -887,6 +887,11 @@
         }
       }
     },
+    "bower": {
+      "version": "1.7.7",
+      "from": "bower@latest",
+      "resolved": "https://registry.npmjs.org/bower/-/bower-1.7.7.tgz"
+    },
     "css-loader": {
       "version": "0.23.1",
       "from": "css-loader@>=0.23.1 <0.24.0",

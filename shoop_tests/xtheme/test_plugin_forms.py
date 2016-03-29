@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.forms.fields import IntegerField
 
+from shoop.xtheme.plugins.forms import TranslatableField
 from shoop.xtheme import Plugin
 
 
@@ -30,3 +31,11 @@ def test_generated_plugin_form_field_order():
     form_class = plugin.get_editor_form_class()
     form = form_class(plugin=plugin)
     assert list(form.fields.keys()) == ["one", "two", "three"]
+
+
+def test_translatable_field_attrs():
+    """
+    Make sure attributes are passed to widgets
+    """
+    field = TranslatableField(attrs={"class": "passable"})
+    assert field.widget.attrs.get("class") == "passable"

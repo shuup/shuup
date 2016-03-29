@@ -23,7 +23,10 @@ class AppConfig(shoop.apps.AppConfig):
         ],
         "front_template_helper_namespace": [
             "shoop.simple_cms.template_helpers:SimpleCMSTemplateHelpers"
-        ]
+        ],
+        "xtheme_plugin": [
+            "shoop.simple_cms.plugins:PageLinksPlugin"
+        ],
     }
 
 

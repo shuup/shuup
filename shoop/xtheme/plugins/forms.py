@@ -65,8 +65,9 @@ class TranslatableField(forms.Field):
 
     def __init__(self, *args, **kwargs):
         input_widget = kwargs.pop("widget", forms.TextInput)  # Only allow overriding the subwidget.
+        attrs = kwargs.pop("attrs", None)
         languages = kwargs.pop("languages", [l[0] for l in settings.LANGUAGES])  # TODO: Another language source?
-        kwargs["widget"] = self.widget(languages=languages, input_widget=input_widget)
+        kwargs["widget"] = self.widget(languages=languages, input_widget=input_widget, attrs=attrs)
         super(TranslatableField, self).__init__(*args, **kwargs)
 
     def clean(self, value):
