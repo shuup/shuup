@@ -46,6 +46,7 @@ Localization
 Admin
 ~~~~~
 
+- Enable ```merchant_notes`` editing for ``Contact``
 - Add option to add extra form parts to Shop edit view
 - Enable delete for contact groups
 - Make all enabled shipping and payment methods available in order creator
