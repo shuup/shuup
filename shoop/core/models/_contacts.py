@@ -18,7 +18,6 @@ from timezone_field.fields import TimeZoneField
 
 from shoop.core.fields import InternalIdentifierField, LanguageField
 from shoop.core.pricing import PriceDisplayOptions
-from shoop.core.utils.name_mixin import NameMixin
 
 from ._base import TranslatableShoopModel
 from ._taxes import CustomerTaxGroup
@@ -78,7 +77,7 @@ class ContactGroup(TranslatableShoopModel):
 
 
 @python_2_unicode_compatible
-class Contact(NameMixin, PolymorphicModel):
+class Contact(PolymorphicModel):
     is_anonymous = False
     is_all_seeing = False
     default_tax_group_getter = None
@@ -130,6 +129,10 @@ class Contact(NameMixin, PolymorphicModel):
         if self.default_tax_group_getter:
             kwargs.setdefault("tax_group", self.default_tax_group_getter())
         super(Contact, self).__init__(*args, **kwargs)
+
+    @property
+    def full_name(self):
+        return (" ".join([self.prefix, self.name, self.suffix])).strip()
 
     def get_price_display_options(self):
         """
@@ -227,6 +230,8 @@ class PersonContact(Contact):
     )
     gender = EnumField(Gender, default=Gender.UNDISCLOSED, max_length=4, verbose_name=_('gender'))
     birth_date = models.DateField(blank=True, null=True, verbose_name=_('birth date'))
+    first_name = models.CharField(max_length=30, blank=True, verbose_name=_('first name'))
+    last_name = models.CharField(max_length=50, blank=True, verbose_name=_('last name'))
     # TODO: Figure out how/when/if the name and email fields are updated from users
 
     class Meta:
@@ -234,12 +239,18 @@ class PersonContact(Contact):
         verbose_name_plural = _('persons')
 
     def save(self, *args, **kwargs):
+        if self.first_name or self.last_name:
+            self.name = (" ".join([self.first_name, self.last_name])).strip()
         if self.user_id and not self.pk:  # Copy things
             user = self.user
             if not self.name:
                 self.name = user.get_full_name()
             if not self.email:
                 self.email = user.email
+            if not self.first_name and not self.last_name:
+                self.first_name = user.first_name
+                self.last_name = user.last_name
+
         return super(PersonContact, self).save(*args, **kwargs)
 
     @property
