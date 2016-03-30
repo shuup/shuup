@@ -32,7 +32,7 @@ class PageLinksConfigForm(GenericPluginForm):
         self.fields["pages"] = forms.ModelMultipleChoiceField(
             queryset=Page.objects.filter(visible_in_menu=True),
             required=False,
-            initial=self.plugin.config.get("categories", None),
+            initial=self.plugin.config.get("pages", None),
         )
 
     def clean(self):
