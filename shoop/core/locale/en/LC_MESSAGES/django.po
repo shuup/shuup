@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-25 19:50+0000\n"
+"POT-Creation-Date: 2016-03-30 18:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -326,6 +326,9 @@ msgstr ""
 msgid "tax group"
 msgstr ""
 
+msgid "merchant notes"
+msgstr ""
+
 msgid "contact"
 msgstr ""
 
@@ -354,6 +357,12 @@ msgid "gender"
 msgstr ""
 
 msgid "birth date"
+msgstr ""
+
+msgid "first name"
+msgstr ""
+
+msgid "last name"
 msgstr ""
 
 msgid "person"

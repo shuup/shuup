@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add ``merchant_notes`` text-field to ``Contact``
 - Add ``first_name`` and ``last_name`` fields to ``PersonContact``
 - Add bought with relation to ``ProductCrossSellType``
 - Set customer marketing permission while creating order

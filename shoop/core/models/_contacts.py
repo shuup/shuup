@@ -117,6 +117,7 @@ class Contact(PolymorphicModel):
     tax_group = models.ForeignKey(
         "CustomerTaxGroup", blank=True, null=True, on_delete=models.PROTECT, verbose_name=_('tax group')
     )
+    merchant_notes = models.TextField(blank=True, verbose_name=_('merchant notes'))
 
     def __str__(self):
         return self.full_name
