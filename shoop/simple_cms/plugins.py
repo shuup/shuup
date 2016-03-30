@@ -77,14 +77,14 @@ class PageLinksPlugin(TemplatedPlugin):
         selected_pages = self.config.get("pages", [])
         show_all_pages = self.config.get("show_all_pages", True)
         hide_expired = self.config.get("hide_expired", False)
+
         pages_qs = Page.objects.filter(visible_in_menu=True)
-        if not show_all_pages:
-            if selected_pages:
-                pages_qs = pages_qs.filter(id__in=selected_pages),
-            else:
-                pages_qs = pages_qs.none()
         if hide_expired:
             pages_qs = pages_qs.visible()
+
+        if not show_all_pages:
+            pages_qs = pages_qs.filter(id__in=selected_pages)
+
         return {
             "title": self.get_translated_value("title"),
             "pages": pages_qs,
