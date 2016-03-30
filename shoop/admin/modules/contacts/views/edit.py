@@ -47,11 +47,14 @@ class ContactBaseForm(BaseModelForm):
     FIELDS_BY_MODEL_NAME = {
         "Contact": (
             "is_active", "language", "marketing_permission", "phone", "www",
-            "timezone", "prefix", "name", "suffix", "name_ext", "email",
-            "tax_group",
+            "timezone", "prefix", "suffix", "name_ext", "email", "tax_group",
         ),
-        "PersonContact": ("gender", "birth_date"),
-        "CompanyContact": ("tax_number",)
+        "PersonContact": (
+            "gender", "birth_date", "first_name", "last_name"
+        ),
+        "CompanyContact": (
+            "name", "tax_number",
+        )
     }
 
     def __init__(self, bind_user=None, *args, **kwargs):
@@ -125,9 +128,9 @@ class ContactBaseForm(BaseModelForm):
         obj = super(ContactBaseForm, self).save(commit)
         if self.bind_user and not getattr(obj, "user", None):  # Allow binding only once
             obj.user = self.bind_user
-        obj.groups = self.cleaned_data["groups"]
-        obj.save()
+            obj.save()
 
+        obj.groups = self.cleaned_data["groups"]
         return obj
 
 

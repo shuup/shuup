@@ -106,6 +106,44 @@ def test_person_contact_creating_from_user(regular_user):
     assert person.email == user.email
 
 
+@pytest.mark.django_db
+def test_person_name_init_by_name():
+    john = PersonContact(name="John Smith")
+    assert john.name == "John Smith"
+    assert john.first_name == "John"
+    assert john.last_name == "Smith"
+
+
+@pytest.mark.django_db
+def test_person_name_create_with_name():
+    john = PersonContact.objects.create(name="John Smith")
+    assert PersonContact.objects.get(pk=john.pk).name == "John Smith"
+    assert john.name == "John Smith"
+    assert john.first_name == "John"
+    assert john.last_name == "Smith"
+
+
+@pytest.mark.django_db
+def test_person_name_init_by_first_and_last_name():
+    john = PersonContact(first_name="John", last_name="Smith")
+    assert john.name == "John Smith"
+    assert john.first_name == "John"
+    assert john.last_name == "Smith"
+
+
+@pytest.mark.django_db
+def test_person_name_gets_saved():
+    john = PersonContact.objects.create(first_name="John", last_name="Smith")
+    assert john.name == "John Smith"
+    assert john in set(PersonContact.objects.filter(name="John Smith"))
+    john.last_name = "Doe"
+    assert john.name == "John Doe"
+    john.save()
+    assert john.name == "John Doe"
+    assert john in set(PersonContact.objects.filter(name="John Doe"))
+    assert john not in set(PersonContact.objects.filter(name="John Smith"))
+
+
 def test_contact_group_repr_and_str_no_identifier_no_name():
     cg = ContactGroup()
     assert repr(cg) == '<ContactGroup:None>'

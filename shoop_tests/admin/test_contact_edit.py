@@ -20,8 +20,11 @@ def test_contact_edit_form():
         first_name=printable_gibberish(),
         last_name=printable_gibberish(),
     )
+    test_first_name = printable_gibberish()
+    test_last_name = printable_gibberish()
     contact_base_form = ContactBaseForm(bind_user=user, data={
-        "name": "herf durr",
+        "first_name": test_first_name,
+        "last_name": test_last_name,
         "gender": Gender.UNDISCLOSED.value
     })
     assert contact_base_form.bind_user == user
@@ -31,3 +34,4 @@ def test_contact_edit_form():
     assert isinstance(contact, PersonContact)
     assert contact.user == user
     assert get_person_contact(user) == contact
+    assert contact.name == "%s %s" % (test_first_name, test_last_name)

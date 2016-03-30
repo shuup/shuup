@@ -182,7 +182,6 @@ class Migration(migrations.Migration):
                 'verbose_name_plural': 'contacts',
                 'verbose_name': 'contact',
             },
-            bases=(shoop.core.utils.name_mixin.NameMixin, models.Model),
         ),
         migrations.CreateModel(
             name='ContactGroup',

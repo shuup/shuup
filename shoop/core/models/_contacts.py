@@ -18,7 +18,6 @@ from timezone_field.fields import TimeZoneField
 
 from shoop.core.fields import InternalIdentifierField, LanguageField
 from shoop.core.pricing import PriceDisplayOptions
-from shoop.core.utils.name_mixin import NameMixin
 
 from ._base import TranslatableShoopModel
 from ._taxes import CustomerTaxGroup
@@ -78,7 +77,7 @@ class ContactGroup(TranslatableShoopModel):
 
 
 @python_2_unicode_compatible
-class Contact(NameMixin, PolymorphicModel):
+class Contact(PolymorphicModel):
     is_anonymous = False
     is_all_seeing = False
     default_tax_group_getter = None
@@ -130,6 +129,10 @@ class Contact(NameMixin, PolymorphicModel):
         if self.default_tax_group_getter:
             kwargs.setdefault("tax_group", self.default_tax_group_getter())
         super(Contact, self).__init__(*args, **kwargs)
+
+    @property
+    def full_name(self):
+        return (" ".join([self.prefix, self.name, self.suffix])).strip()
 
     def get_price_display_options(self):
         """
@@ -227,11 +230,30 @@ class PersonContact(Contact):
     )
     gender = EnumField(Gender, default=Gender.UNDISCLOSED, max_length=4, verbose_name=_('gender'))
     birth_date = models.DateField(blank=True, null=True, verbose_name=_('birth date'))
+    first_name = models.CharField(max_length=30, blank=True, verbose_name=_('first name'))
+    last_name = models.CharField(max_length=50, blank=True, verbose_name=_('last name'))
     # TODO: Figure out how/when/if the name and email fields are updated from users
 
     class Meta:
         verbose_name = _('person')
         verbose_name_plural = _('persons')
+
+    def __init__(self, *args, **kwargs):
+        name = kwargs.get('name')
+        if name:
+            (first_name, last_name) = _split_name(name)
+            kwargs['first_name'] = first_name
+            kwargs['last_name'] = last_name
+        super(PersonContact, self).__init__(*args, **kwargs)
+
+    @property
+    def name(self):
+        names = (self.first_name, self.last_name)
+        return " ".join(x for x in names if x)
+
+    @name.setter
+    def name(self, value):
+        (self.first_name, self.last_name) = _split_name(value)
 
     def save(self, *args, **kwargs):
         if self.user_id and not self.pk:  # Copy things
@@ -240,6 +262,10 @@ class PersonContact(Contact):
                 self.name = user.get_full_name()
             if not self.email:
                 self.email = user.email
+            if not self.first_name and not self.last_name:
+                self.first_name = user.first_name
+                self.last_name = user.last_name
+
         return super(PersonContact, self).save(*args, **kwargs)
 
     @property
@@ -296,6 +322,11 @@ class AnonymousContact(Contact):
         return ContactGroup.objects.filter(identifier=self.default_contact_group_identifier)
 
 
+def _split_name(full_name):
+    names = full_name.rsplit(" ", 1)
+    return (names if len(names) == 2 else [full_name, ""])
+
+
 def get_person_contact(user):
     """
     Get PersonContact of given user.
@@ -317,7 +348,8 @@ def get_person_contact(user):
         return AnonymousContact()
     defaults = {
         'is_active': user.is_active,
-        'name': user.get_full_name(),
+        'first_name': user.first_name,
+        'last_name': user.last_name,
         'email': user.email,
     }
     return PersonContact.objects.get_or_create(user=user, defaults=defaults)[0]
