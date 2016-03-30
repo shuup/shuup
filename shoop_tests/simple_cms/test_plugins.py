@@ -29,14 +29,16 @@ def test_page_links_plugin_visible_in_menu():
 
 
 @pytest.mark.django_db
-def test_page_links_plugin_hide_expired():
+@pytest.mark.parametrize("show_all_pages", [True, False])
+def test_page_links_plugin_hide_expired(show_all_pages):
     """
     Make sure plugin correctly filters out expired pages based on plugin
     configuration
     """
     context = get_jinja_context()
     page = create_page(eternal=True, visible_in_menu=True)
-    plugin = PageLinksPlugin({"pages": [page.pk]})
+    another_page = create_page(eternal=True, visible_in_menu=True)
+    plugin = PageLinksPlugin({"pages": [page.pk, another_page.pk], "show_all_pages": show_all_pages})
     assert page in plugin.get_context_data(context)["pages"]
 
     page.available_from = None
@@ -45,7 +47,9 @@ def test_page_links_plugin_hide_expired():
     assert page in plugin.get_context_data(context)["pages"]
 
     plugin.config["hide_expired"] = True
-    assert page not in plugin.get_context_data(context)["pages"]
+    pages_in_context = plugin.get_context_data(context)["pages"]
+    assert page not in pages_in_context
+    assert another_page in pages_in_context
 
 
 @pytest.mark.django_db
