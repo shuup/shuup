@@ -48,6 +48,7 @@ class ContactBaseForm(BaseModelForm):
         "Contact": (
             "is_active", "language", "marketing_permission", "phone", "www",
             "timezone", "prefix", "suffix", "name_ext", "email", "tax_group",
+            "merchant_notes"
         ),
         "PersonContact": (
             "gender", "birth_date", "first_name", "last_name"

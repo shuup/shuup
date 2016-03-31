@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add ``merchant_notes`` text-field to ``Contact``
 - Add ``first_name`` and ``last_name`` fields to ``PersonContact``
 - Add bought with relation to ``ProductCrossSellType``
 - Set customer marketing permission while creating order
@@ -45,6 +46,7 @@ Localization
 Admin
 ~~~~~
 
+- Enable ```merchant_notes`` editing for ``Contact``
 - Add option to add extra form parts to Shop edit view
 - Enable delete for contact groups
 - Make all enabled shipping and payment methods available in order creator
