@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="container-fluid">
-        <form method="post" id="addon_reload_form" target="reload-target" onsubmit="beginReload()">
+        <form method="post" id="addon_reload_form" target="reload-target" onsubmit="beginReload(event)">
             {% csrf_token %}
             {% call content_block(_("Reload Application Server"), "fa-refresh") %}
                 {{ bs3.field(form.reload_method) }}
@@ -55,7 +55,7 @@
         $.ajax({type: "POST", url: reloadUrl, data: $("#addon_reload_form").serialize()});
     }
 
-    function beginReload() {
+    function beginReload(event) {
         event.preventDefault();
         $("#reload-button").attr("disabled", true);
         finalizeInstallations();
