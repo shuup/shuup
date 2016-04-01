@@ -9,8 +9,12 @@ import pytest
 from django.core.exceptions import ValidationError
 from filer.models import File
 
-from shoop.core.models import CategoryStatus
-from shoop.testing.factories import get_default_category
+from shoop.core.models import CategoryStatus, CategoryVisibility
+from shoop.testing.factories import (
+    create_random_person, get_default_category, get_default_customer_group,
+    get_default_shop
+)
+from shoop.testing.utils import apply_request_middleware
 from shoop.xtheme import resources
 from shoop.xtheme.plugins.category_links import CategoryLinksPlugin
 from shoop.xtheme.plugins.image import ImageIDField, ImagePluginChoiceWidget
@@ -71,31 +75,89 @@ def test_social_media_plugin_ordering():
     assert plugin.get_links()[0][2] == link_2["url"]
 
 
+def get_context(rf, customer=None):
+    request = rf.get("/")
+    request.shop = get_default_shop()
+    apply_request_middleware(request)
+    if customer:
+        request.customer = customer
+    vars = {"request": request}
+    return get_jinja_context(**vars)
+
+
 @pytest.mark.django_db
-def test_category_links_plugin():
+def test_category_links_plugin(rf):
     """
     Test that the plugin only displays visible categories
+    with shop (since we can't have a request without shop
+    or customer)
     """
     category = get_default_category()
-    context = get_jinja_context()
-    plugin = CategoryLinksPlugin({"categories": [category.pk]})
+    context = get_context(rf)
+    plugin = CategoryLinksPlugin({"show_all_categories": True})
+    assert context["request"].customer.is_anonymous
     assert category not in plugin.get_context_data(context)["categories"]
 
     category.status = CategoryStatus.VISIBLE
+    category.shops.add(get_default_shop())
     category.save()
+    assert context["request"].customer.is_anonymous
+    assert context["request"].shop in category.shops.all()
     assert category in plugin.get_context_data(context)["categories"]
 
 
 @pytest.mark.django_db
-def test_category_links_plugin_show_all():
+@pytest.mark.parametrize("show_all_categories", [True, False])
+def test_category_links_plugin_with_customer(rf, show_all_categories):
+    """
+    Test plugin for categories that is visible for certain group
+    """
+    shop = get_default_shop()
+    group = get_default_customer_group()
+    customer = create_random_person()
+    customer.groups.add(group)
+    customer.save()
+
+    request = rf.get("/")
+    request.shop = get_default_shop()
+    apply_request_middleware(request)
+    request.customer = customer
+
+    category = get_default_category()
+    category.status = CategoryStatus.VISIBLE
+    category.visibility = CategoryVisibility.VISIBLE_TO_GROUPS
+    category.visibility_groups.add(group)
+    category.shops.add(shop)
+    category.save()
+
+    vars = {"request": request}
+    context = get_jinja_context(**vars)
+    plugin = CategoryLinksPlugin({"categories": [category.pk], "show_all_categories": show_all_categories})
+    assert category.is_visible(customer)
+    assert category in plugin.get_context_data(context)["categories"]
+
+    customer_without_groups = create_random_person()
+    customer_without_groups.groups.clear()
+
+    assert not category.is_visible(customer_without_groups)
+    request.customer = customer_without_groups
+    context = get_jinja_context(**vars)
+    assert category not in plugin.get_context_data(context)["categories"]
+
+
+@pytest.mark.django_db
+def test_category_links_plugin_show_all(rf):
     """
     Test that show_all_categories forces plugin to return all visible categories
     """
     category = get_default_category()
     category.status = CategoryStatus.VISIBLE
+    category.shops.add(get_default_shop())
     category.save()
-    context = get_jinja_context()
+    context = get_context(rf)
     plugin = CategoryLinksPlugin({"show_all_categories": False})
+    assert context["request"].customer.is_anonymous
+    assert context["request"].shop in category.shops.all()
     assert not plugin.get_context_data(context)["categories"]
 
     plugin = CategoryLinksPlugin({"show_all_categories": True})
