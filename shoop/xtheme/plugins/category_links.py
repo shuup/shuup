@@ -64,10 +64,15 @@ class CategoryLinksPlugin(TemplatedPlugin):
     def get_context_data(self, context):
         """
         A custom get_context_data method to return only visible categories
+        for request customer.
         """
         selected_categories = self.config.get("categories", [])
         show_all_categories = self.config.get("show_all_categories", True)
-        categories = Category.objects.all_visible(customer=None)
+        request = context.get("request")
+        categories = Category.objects.all_visible(
+            customer=getattr(request, "customer"),
+            shop=getattr(request, "shop")
+        )
         if not show_all_categories:
             categories = categories.filter(id__in=selected_categories)
         return {
