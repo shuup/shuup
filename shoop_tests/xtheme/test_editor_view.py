@@ -7,6 +7,7 @@ from django.test.client import RequestFactory
 
 from shoop.apps.provides import override_provides
 from shoop.utils.excs import Problem
+from shoop.xtheme import XTHEME_GLOBAL_VIEW_NAME
 from shoop.xtheme.layout import Layout
 from shoop.xtheme.models import SavedViewConfig, SavedViewConfigStatus
 from shoop.xtheme.plugins.consts import FALLBACK_LANGUAGE_CODE
@@ -151,3 +152,15 @@ def test_editor_cell_limits():
 
         with pytest.raises(ValueError):
             view_obj.dispatch_add_cell(y=0)
+
+
+@pytest.mark.django_db
+def test_get_global_placeholder():
+    request = RequestFactory().get("/")
+    layout, svc = get_test_layout_and_svc()
+    with initialize_editor_view(svc.view_name, layout.placeholder_name, request=request) as view_obj:
+        view_name_1 = view_obj.dispatch(view_obj.request).context_data["view"].view_config.view_name
+        view_obj.request.GET.update({"x": 0, "y": 0, "global_type": True})
+        view_name_2 = view_obj.dispatch(view_obj.request).context_data["view"].view_config.view_name
+        assert view_name_1 != view_name_2
+        assert view_name_2 == XTHEME_GLOBAL_VIEW_NAME

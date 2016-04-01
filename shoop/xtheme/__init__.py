@@ -22,6 +22,8 @@ __all__ = [
     "templated_plugin_factory"
 ]
 
+XTHEME_GLOBAL_VIEW_NAME = "_XthemeGlobalView"
+
 
 class XThemeAppConfig(AppConfig):
     name = "shoop.xtheme"
