@@ -31,7 +31,8 @@ class NonConstant(ValueError):
 
 class NestingError(ValueError):
     """
-    Exception raised when a template's placeholder/column/row/plugin hierarchy is out of whack.
+    Exception raised when a template's placeholder/column/row/plugin
+    hierarchy is out of whack.
     """
 
 
@@ -45,7 +46,8 @@ def flatten_const_node_list(environment, node_list):
     :type node_list: list[jinja2.nodes.Node]
     :return: String of content
     :rtype: str
-    :raise Unflattenable: Raised when the node list can't be flattened into a constant
+    :raise Unflattenable: Raised when the node list can't be flattened into
+                          a constant
     """
     output = []
     eval_ctx = EvalContext(environment)
@@ -90,8 +92,8 @@ def parse_constantlike(environment, parser):
 
 class _PlaceholderManagingExtension(Extension):
     """
-    Superclass (could be mixin) with helpers for getting the currently active layout object
-    from a parser.
+    Superclass (could be mixin) with helpers for getting the currently
+    active layout object from a parser.
     """
     def _get_layout(self, parser, accept_none=False):
         """
@@ -99,12 +101,14 @@ class _PlaceholderManagingExtension(Extension):
 
         :param parser: Template parser
         :type parser: jinja2.parser.Parser
-        :param accept_none: Whether or not to accept the eventuality that there's no current layout.
-                            If False (the default), a `NestingError` is raised.
+        :param accept_none: Whether or not to accept the eventuality that
+                            there's no current layout. If False (the
+                            default), a `NestingError` is raised.
         :type accept_none: bool
         :return: The current layout
         :rtype: shoop.xtheme.view_config.Layout
-        :raises NestingError: Raised if there's no current layout and that's not okay.
+        :raises NestingError: Raised if there's no current layout and
+                              that's not okay.
         """
         cfg = getattr(parser, "_xtheme_placeholder_layout", None)
         if not accept_none and cfg is None:
@@ -163,14 +167,24 @@ def noop_node(lineno):
 
 class PlaceholderExtension(_PlaceholderManagingExtension):
     """
-    `PlaceholderExtension` manages `{% placeholder <NAME> %}` ... `{% endplaceholder %}`.
+    `PlaceholderExtension` manages `{% placeholder <NAME> [global] %}` ...
+      `{% endplaceholder %}`.
 
-    * The `name` can be any Jinja2 expression that can be folded into a constant, with the addition
-      of bare variable names such as `name` meaning the same as `"name"`. This makes it slightly
-      easier to write templates.
-    * The body of this block is actually discarded; only the inner `column`, `row` and `plugin`
-      directives have any meaning.  (A parser-time `Layout` object is created and populated during parsing
+    * The `name` can be any Jinja2 expression that can be folded into a
+      constant, with the addition of bare variable names such as `name`
+      meaning the same as `"name"`. This makes it slightly easier to write
+      templates.
+    * The body of this block is actually discarded; only the inner
+      `column`, `row` and `plugin` directives have any meaning.  (A
+      parser-time `Layout` object is created and populated during parsing
       of this block.)
+    * An optional ``global`` parameter can be used to specify that the
+      configuration for this placeholder should be "global" across
+      different views (although currently that only applies to placeholders
+      within the same template, i.e, if you defined the same global
+      placeholder in different templates they will not share configuration,
+      but an included or base template that is rendered by different views
+      will).
     """
     tags = set(['placeholder'])
 
