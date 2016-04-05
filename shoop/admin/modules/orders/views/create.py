@@ -64,17 +64,8 @@ def encode_shop(shop):
     }
 
 
-def encode_method_extras(method):
-    module_data = method.module_data or {}
-
-    return {
-        "price": module_data.get("price", "0"),
-    }
-
-
 def encode_method(method):
     basic_data = {"id": method.pk, "name": force_text(method)}
-    basic_data.update(encode_method_extras(method))
     return basic_data
 
 
