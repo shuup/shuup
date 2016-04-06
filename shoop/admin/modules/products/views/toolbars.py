@@ -53,78 +53,89 @@ class EditProductToolbar(Toolbar):
             text=_(u"Actions"),
             extra_css_class="btn-info",
         ))
-        # TODO: Add extensibility
+
+    def _get_header_item(self, header):
+        yield DropdownDivider()
+        yield DropdownHeader(text=header)
+
+    def _get_package_url(self, product):
+        return reverse("shoop_admin:product.edit_package", kwargs={"pk": product.pk})
+
+    def _get_variation_url(self, product):
+        return reverse("shoop_admin:product.edit_variation", kwargs={"pk": product.pk})
+
+    def _get_children_items(self, children):
+        for child in children:
+            yield DropdownItem(
+                text=_("Child: %s") % child,
+                icon="fa fa-eye",
+                url=get_model_url(child),
+            )
+
+    def _get_parent_and_sibling_items(self, parent, siblings):
+        yield DropdownItem(
+            text=_("Parent: %s") % parent,
+            icon="fa fa-eye",
+            url=get_model_url(parent),
+        )
+        for sib in siblings:
+            yield DropdownItem(
+                text=_("Sibling: %s") % sib,
+                icon="fa fa-eye",
+                url=get_model_url(sib),
+            )
+
+    def _get_variation_menu_items(self, product):
+        for item in self._get_header_item(_("Variations")):
+            yield item
+        yield DropdownItem(
+            text=_("Manage Variations"),
+            icon="fa fa-sitemap",
+            url=self._get_variation_url(product),
+        )
+        if product.is_variation_parent():
+            for child in self._get_children_items(product.variation_children.all()):
+                yield child
+        elif product.is_variation_child():
+            for item in self._get_parent_and_sibling_items(product.variation_parent, product.get_variation_siblings()):
+                yield item
+
+    def _get_package_menu_items(self, product):
+        for item in self._get_header_item(_("Packages")):
+            yield item
+        yield DropdownItem(
+            text=_("Manage Package"),
+            icon="fa fa-cube",
+            url=self._get_package_url(product),
+        )
+        if product.is_package_parent():
+            for child in self._get_children_items(product.get_all_package_children()):
+                yield child
+        elif product.is_package_child():
+            for parent in product.get_all_package_parents():
+                for item in self._get_parent_and_sibling_items(
+                        parent, [sib for sib in parent.get_all_package_children() if sib != product]):
+                    yield item
 
     def _get_variation_and_package_menu_items(self, product):
-        variation_parent = product.is_variation_parent()
-        variation_child = product.is_variation_child()
-        package_parent = product.is_package_parent()
-        variation_url = reverse("shoop_admin:product.edit_variation", kwargs={"pk": product.pk})
-        if variation_parent:
-            yield DropdownDivider()
-            yield DropdownHeader(text=_("Variations"))
+        if (product.is_variation_parent() or product.is_variation_child()):
+            for item in self._get_variation_menu_items(product):
+                yield item
+        elif (product.is_package_parent() or product.is_package_child()):
+            for item in self._get_package_menu_items(product):
+                yield item
+        else:
+            for item in self._get_header_item(_("Packages")):
+                yield item
             yield DropdownItem(
-                text=_("Manage Variations"),
-                icon="fa fa-sitemap",
-                url=variation_url,
+                text=_("Convert to Package Parent"),
+                icon="fa fa-retweet",
+                url=self._get_package_url(product),
             )
-            for child in product.variation_children.all():
-                yield DropdownItem(
-                    text=_("Child: %s") % child,
-                    icon="fa fa-eye",
-                    url=get_model_url(child),
-                )
-        elif variation_child:
-            yield DropdownDivider()
-            yield DropdownHeader(text=_("Variations"))
-            parent = product.variation_parent
-            yield DropdownItem(
-                text=_("Manage Variations"),
-                icon="fa fa-sitemap",
-                url=variation_url,
-            )
-            yield DropdownItem(
-                text=_("Parent: %s") % parent,
-                icon="fa fa-eye",
-                url=get_model_url(parent),
-            )
-            for sib in product.get_variation_siblings():
-                yield DropdownItem(
-                    text=_("Sibling: %s") % sib,
-                    icon="fa fa-eye",
-                    url=get_model_url(sib),
-                )
-        elif package_parent:
-            yield DropdownDivider()
-            yield DropdownHeader(text=_("Variations"))
-            yield DropdownItem(
-                text=_("Manage Package"),
-                icon="fa fa-cube",
-                url="#",  # TODO: Implement manage packages
-            )
-            for child in product.get_all_package_children():
-                yield DropdownItem(
-                    text=_("Child: %s") % child,
-                    icon="fa fa-eye",
-                    url=get_model_url(child),
-                )
-
-        package_parents = list(product.get_all_package_parents())
-        if package_parents:
-            yield DropdownDivider()
-            yield DropdownHeader(text=_("Variations"))
-            for parent in package_parents:
-                yield DropdownItem(
-                    text=_("Package Parent: %s") % parent,
-                    icon="fa fa-eye",
-                    url=get_model_url(parent),
-                )
-
-        if not (variation_parent or variation_child or package_parent):
-            yield DropdownDivider()
-            yield DropdownHeader(text=_("Variations"))
+            for item in self._get_header_item(_("Variations")):
+                yield item
             yield DropdownItem(
                 text=_("Convert to Variation Parent"),
                 icon="fa fa-retweet",
-                url=variation_url,
+                url=self._get_variation_url(product),
             )

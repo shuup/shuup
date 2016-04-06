@@ -8,7 +8,7 @@
 import pytest
 from django.core.urlresolvers import reverse
 
-from shoop.testing.factories import get_default_product, get_default_shop
+from shoop.testing.factories import create_product, get_default_product, get_default_shop
 
 
 @pytest.mark.django_db
@@ -24,3 +24,21 @@ def test_product_page(client):
     )
     assert b'no such element' not in response.content, 'All items are not rendered correctly'
     # TODO test purchase_multiple and  sales_unit.allow_fractions
+
+
+@pytest.mark.django_db
+def test_package_product_page(client):
+    shop = get_default_shop()
+    parent = create_product("test-sku-1", shop=shop)
+    child = create_product("test-sku-2", shop=shop)
+    parent.make_package({child: 2})
+    assert parent.is_package_parent()
+
+    response = client.get(
+        reverse('shoop:product', kwargs={
+            'pk': parent.pk,
+            'slug': parent.slug
+            }
+        )
+    )
+    assert b'no such element' not in response.content, 'All items are not rendered correctly'

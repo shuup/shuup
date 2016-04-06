@@ -56,7 +56,7 @@ class ProductDetailView(DetailView):
             context["variation_variables"] = product.variation_variables.all().prefetch_related("values")
         elif product.mode == ProductMode.PACKAGE_PARENT:
             children = (
-                product.package_children
+                product.get_all_package_children()
                 .language(language)
                 .order_by("translations__name")
                 .all())

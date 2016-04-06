@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-11 12:32+0000\n"
+"POT-Creation-Date: 2016-04-12 00:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -432,6 +432,51 @@ msgstr ""
 msgid "Create Product with SKU \"%s\""
 msgstr ""
 
+msgid "Minimum Purchase Quantity must be greater than 0."
+msgstr ""
+
+#, python-format
+msgid "Thumbnail generation of %(media)s failed: %(error)s"
+msgstr ""
+
+msgid "Use only URL or file, not both"
+msgstr ""
+
+msgid "Is primary"
+msgstr ""
+
+msgid "Only images allowed in this field"
+msgstr ""
+
+#, python-format
+msgid "Unable to make package %(product)s: %(error)s"
+msgstr ""
+
+#, python-format
+msgid "New: %d"
+msgstr ""
+
+#, python-format
+msgid "Removed: %d"
+msgstr ""
+
+#, python-format
+msgid "Couldn't add product %s to own package"
+msgstr ""
+
+msgid "child"
+msgstr ""
+
+msgid "Unlink"
+msgstr ""
+
+#, python-format
+msgid "Unable to link %(product)s: %(error)s"
+msgstr ""
+
+msgid "variable combination"
+msgstr ""
+
 #, python-format
 msgid "%s has been marked deleted."
 msgstr ""
@@ -463,69 +508,17 @@ msgstr ""
 msgid "Edit Media: %s"
 msgstr ""
 
-msgid "Minimum Purchase Quantity must be greater than 0."
+msgid "Are you sure? This will remove all products from package."
+msgstr ""
+
+msgid "Clear package"
 msgstr ""
 
 #, python-format
-msgid "Thumbnail generation of %s failed: %s"
+msgid "Edit Package: %s"
 msgstr ""
 
-msgid "Use only URL or file, not both"
-msgstr ""
-
-msgid "Is primary"
-msgstr ""
-
-msgid "Only images allowed in this field"
-msgstr ""
-
-msgid "SKU"
-msgstr ""
-
-msgid "Filter by SKU..."
-msgstr ""
-
-msgid "Mode"
-msgstr ""
-
-msgid "Primary Category"
-msgstr ""
-
-msgid "Manage Cross-Selling"
-msgstr ""
-
-msgid "Cross-Selling"
-msgstr ""
-
-msgid "Actions"
-msgstr ""
-
-msgid "Variations"
-msgstr ""
-
-msgid "Manage Variations"
-msgstr ""
-
-#, python-format
-msgid "Child: %s"
-msgstr ""
-
-#, python-format
-msgid "Parent: %s"
-msgstr ""
-
-#, python-format
-msgid "Sibling: %s"
-msgstr ""
-
-msgid "Manage Package"
-msgstr ""
-
-#, python-format
-msgid "Package Parent: %s"
-msgstr ""
-
-msgid "Convert to Variation Parent"
+msgid "Package cleared."
 msgstr ""
 
 msgid ""
@@ -554,25 +547,55 @@ msgstr ""
 msgid "Variation simplified."
 msgstr ""
 
-msgid "child"
+msgid "SKU"
 msgstr ""
 
-msgid "Unlink"
+msgid "Filter by SKU..."
+msgstr ""
+
+msgid "Mode"
+msgstr ""
+
+msgid "Primary Category"
+msgstr ""
+
+msgid "Manage Cross-Selling"
+msgstr ""
+
+msgid "Cross-Selling"
+msgstr ""
+
+msgid "Actions"
 msgstr ""
 
 #, python-format
-msgid "Unable to link %s: %s"
+msgid "Child: %s"
 msgstr ""
 
 #, python-format
-msgid "New: %d"
+msgid "Parent: %s"
 msgstr ""
 
 #, python-format
-msgid "Removed: %d"
+msgid "Sibling: %s"
 msgstr ""
 
-msgid "variable combination"
+msgid "Variations"
+msgstr ""
+
+msgid "Manage Variations"
+msgstr ""
+
+msgid "Packages"
+msgstr ""
+
+msgid "Manage Package"
+msgstr ""
+
+msgid "Convert to Package Parent"
+msgstr ""
+
+msgid "Convert to Variation Parent"
 msgstr ""
 
 msgid "Sales Units"
@@ -1059,6 +1082,15 @@ msgid "Cross-sell"
 msgstr ""
 
 msgid "File "
+msgstr ""
+
+msgid "Package Products"
+msgstr ""
+
+msgid "This product is not yet a package."
+msgstr ""
+
+msgid "To create a package, choose products below."
 msgstr ""
 
 msgid "Simple Variation Children"

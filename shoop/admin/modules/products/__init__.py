@@ -45,6 +45,10 @@ class ProductModule(AdminModule):
                 "^products/(?P<pk>\d+)/variation/$", "shoop.admin.modules.products.views.ProductVariationView",
                 name="product.edit_variation"
             ),
+            admin_url(
+                "^products/(?P<pk>\d+)/package/$", "shoop.admin.modules.products.views.ProductPackageView",
+                name="product.edit_package"
+            ),
         ] + get_edit_and_list_urls(
             url_prefix="^products",
             view_template="shoop.admin.modules.products.views.Product%sView",
