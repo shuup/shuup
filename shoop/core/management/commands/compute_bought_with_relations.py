@@ -11,7 +11,7 @@ from django.db.transaction import atomic
 from shoop.core.models import (
     OrderLine, OrderLineType, ProductCrossSell, ProductCrossSellType
 )
-from shoop.front.utils.product_relations import \
+from shoop.core.utils.product_bought_with_relations import \
     add_bought_with_relations_for_product
 
 
@@ -24,9 +24,9 @@ class Command(BaseCommand):
 
         # Handle all ordered products
         ordered_product_ids = OrderLine.objects.filter(type=OrderLineType.PRODUCT).values_list("product_id", flat=True)
-        seen_product_ids = []
+        seen_product_ids = set()
         for product_id in ordered_product_ids:
             if product_id in seen_product_ids:
                 continue
-            seen_product_ids.append(product_id)
+            seen_product_ids.add(product_id)
             add_bought_with_relations_for_product(product_id)
