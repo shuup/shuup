@@ -9,7 +9,7 @@
 import pytest
 
 from shoop.core.models import ProductCrossSell
-from shoop.front.utils.product_relations import (
+from shoop.core.utils.product_bought_with_relations import (
     add_bought_with_relations_for_product
 )
 from shoop.testing.factories import (
