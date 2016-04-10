@@ -17,11 +17,21 @@ class TemplateUse(Enum):
     UNILINGUAL = 1
     MULTILINGUAL = 2
 
+    class Labels:
+        NONE = _('none')
+        UNILINGUAL = _('unilingual')
+        MULTILINGUAL = _('multilingual')
+
 
 class ConstantUse(Enum):
     VARIABLE_ONLY = 1
     CONSTANT_ONLY = 2
     VARIABLE_OR_CONSTANT = 3
+
+    class Labels:
+        VARIABLE_ONLY = _('variable only')
+        CONSTANT_ONLY = _('constant only')
+        VARIABLE_OR_CONSTANT = _('variable or constant')
 
 
 class StepNext(Enum):
@@ -58,3 +68,9 @@ class Priority(Enum):
     NORMAL = 2
     HIGH = 3
     CRITICAL = 4
+
+    class Labels:
+        LOW = _('low')
+        NORMAL = _('normal')
+        HIGH = _('high')
+        CRITICAL = _('critical')

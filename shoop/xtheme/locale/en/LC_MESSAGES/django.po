@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-28 21:46+0000\n"
+"POT-Creation-Date: 2016-04-10 16:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -35,6 +35,15 @@ msgid "activate"
 msgstr ""
 
 msgid "Theme activated."
+msgstr ""
+
+msgid "current draft"
+msgstr ""
+
+msgid "old version"
+msgstr ""
+
+msgid "public"
 msgstr ""
 
 msgid "theme identifier"

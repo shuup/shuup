@@ -78,6 +78,11 @@ class SavedViewConfigStatus(Enum):
     OLD_VERSION = 2
     PUBLIC = 3
 
+    class Labels:
+        CURRENT_DRAFT = _('current draft')
+        OLD_VERSION = _('old version')
+        PUBLIC = _('public')
+
 
 class SavedViewConfig(models.Model):
     theme_identifier = models.CharField(max_length=64, db_index=True, verbose_name=_("theme identifier"))
