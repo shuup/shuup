@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-30 18:38+0000\n"
+"POT-Creation-Date: 2016-04-10 16:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
@@ -347,6 +347,18 @@ msgstr ""
 msgid "companies"
 msgstr ""
 
+msgid "undisclosed"
+msgstr ""
+
+msgid "male"
+msgstr ""
+
+msgid "female"
+msgstr ""
+
+msgid "other"
+msgstr ""
+
 msgid "Person Contacts"
 msgstr ""
 
@@ -429,9 +441,6 @@ msgid "product"
 msgstr ""
 
 msgid "discount"
-msgstr ""
-
-msgid "other"
 msgstr ""
 
 msgid "order"
@@ -1035,6 +1044,12 @@ msgid "physical stock count"
 msgstr ""
 
 msgid "logical stock count"
+msgstr ""
+
+msgid "internal"
+msgstr ""
+
+msgid "external"
 msgstr ""
 
 msgid "supplier type"

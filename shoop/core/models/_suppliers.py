@@ -21,6 +21,10 @@ class SupplierType(Enum):
     INTERNAL = 1
     EXTERNAL = 2
 
+    class Labels:
+        INTERNAL = _('internal')
+        EXTERNAL = _('external')
+
 
 @python_2_unicode_compatible
 class Supplier(ModuleInterface, ShoopModel):
