@@ -219,6 +219,11 @@ class Gender(Enum):
     FEMALE = "f"
     OTHER = "o"
 
+    class Labels:
+        UNDISCLOSED = _('undisclosed')
+        MALE = _('male')
+        FEMALE = _('female')
+        OTHER = _('other')
 
 class PersonContact(Contact):
     default_tax_group_getter = CustomerTaxGroup.get_default_person_group
