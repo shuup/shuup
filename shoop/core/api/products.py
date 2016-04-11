@@ -39,7 +39,7 @@ class ProductViewSet(ModelViewSet):
     serializer_class = ProductSerializer
 
     def get_queryset(self):
-        if self.request.user.is_superuser:
+        if getattr(self.request.user, 'is_superuser', False):
             return Product.objects.all_except_deleted()
         return Product.objects.list_visible(
             customer=self.request.customer,
@@ -52,7 +52,7 @@ class ShopProductViewSet(ModelViewSet):
     serializer_class = ShopProductSerializer
 
     def get_queryset(self):
-        if self.request.user.is_superuser:
+        if getattr(self.request.user, 'is_superuser', False):
             products = Product.objects.all_except_deleted()
         else:
             products = Product.objects.list_visible(

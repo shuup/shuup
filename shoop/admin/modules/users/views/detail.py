@@ -45,8 +45,8 @@ class BaseUserForm(forms.ModelForm):
             # Changing the password for an existing user requires more confirmation
             self.fields.pop("password")
             self.initial["permission_info"] = ", ".join(force_text(perm) for perm in [
-                _("staff") if self.instance.is_staff else "",
-                _("superuser") if self.instance.is_superuser else "",
+                _("staff") if getattr(self.instance, 'is_staff', None) else "",
+                _("superuser") if getattr(self.instance, 'is_superuser', None) else "",
             ] if perm) or _("No special permissions")
         else:
             self.fields.pop("permission_info")
@@ -81,7 +81,7 @@ class UserDetailToolbar(Toolbar):
         )
         reset_password_button = DropdownItem(
             url=reverse("shoop_admin:user.reset-password", kwargs={"pk": user.pk}),
-            disable_reason=(_("User has no email address") if not user.email else None),
+            disable_reason=(_("User has no email address") if not getattr(user, 'email', '') else None),
             text=_(u"Send Password Reset Email"), icon="fa fa-envelope"
         )
         permissions_button = DropdownItem(
@@ -189,7 +189,7 @@ class UserDetailView(CreateOrUpdateView):
     def _handle_set_is_active(self):
         state = bool(int(self.request.POST["set_is_active"]))
         if not state:
-            if (self.object.is_superuser and not self.request.user.is_superuser):
+            if (getattr(self.object, 'is_superuser', False) and not getattr(self.request.user, 'is_superuser', False)):
                 raise Problem(_("You can not deactivate a superuser."))
             if self.object == self.request.user:
                 raise Problem(_("You can not deactivate yourself."))

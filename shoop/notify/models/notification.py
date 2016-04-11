@@ -30,7 +30,7 @@ class NotificationManager(models.Manager):
 
         q = (Q(recipient_type=RecipientType.SPECIFIC_USER) & Q(recipient=user))
 
-        if user.is_superuser:
+        if getattr(user, 'is_superuser', False):
             q |= Q(recipient_type=RecipientType.ADMINS)
 
         return self.filter(q)

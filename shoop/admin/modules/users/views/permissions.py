@@ -30,12 +30,12 @@ class PermissionChangeFormBase(forms.ModelForm):
     def __init__(self, changing_user, *args, **kwargs):
         super(PermissionChangeFormBase, self).__init__(*args, **kwargs)
         self.changing_user = changing_user
-        if self.instance.is_superuser and not self.changing_user.is_superuser:
+        if getattr(self.instance, 'is_superuser', False) and not getattr(self.changing_user, 'is_superuser', False):
             self.fields.pop("is_superuser")
 
         if not (
             self.changing_user == self.instance or
-            self.instance.is_superuser
+            getattr(self.instance, 'is_superuser', False)
         ):
             # Only require old password when editing
             self.fields.pop("old_password")
