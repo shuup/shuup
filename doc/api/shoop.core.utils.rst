@@ -52,6 +52,14 @@ shoop.core.utils.prices module
     :undoc-members:
     :show-inheritance:
 
+shoop.core.utils.product_bought_with_relations module
+-----------------------------------------------------
+
+.. automodule:: shoop.core.utils.product_bought_with_relations
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.core.utils.product_caching_object module
 ----------------------------------------------
 

@@ -19,6 +19,14 @@ shoop.simple_cms.models module
     :undoc-members:
     :show-inheritance:
 
+shoop.simple_cms.plugins module
+-------------------------------
+
+.. automodule:: shoop.simple_cms.plugins
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.simple_cms.template_helpers module
 ----------------------------------------
 

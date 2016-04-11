@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-29 18:59+0000\n"
+"POT-Creation-Date: 2016-04-11 12:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -22,33 +22,6 @@ msgstr ""
 msgid "Show Frontpage Welcome Text"
 msgstr ""
 
-msgid "Footer custom HTML"
-msgstr ""
-
-msgid "Footer links"
-msgstr ""
-
-msgid "One line per link in format 'http://example.com Example Link'"
-msgstr ""
-
-msgid "Footer column order"
-msgstr ""
-
-msgid "CMS Page Links"
-msgstr ""
-
-msgid "Custom HTML"
-msgstr ""
-
-msgid "Footer Links"
-msgstr ""
-
-msgid "None"
-msgstr ""
-
-msgid "Footer CMS pages"
-msgstr ""
-
 msgid "Product Highlights"
 msgstr ""
 
@@ -59,6 +32,12 @@ msgid "Type"
 msgstr ""
 
 msgid "Count"
+msgstr ""
+
+msgid "Only show in-stock and orderable items"
+msgstr ""
+
+msgid "Product Cross Sells"
 msgstr ""
 
 msgid "Product added to cart"
@@ -144,10 +123,25 @@ msgstr ""
 msgid "Proceed to checkout"
 msgstr ""
 
+msgid "Coupon is not available."
+msgstr ""
+
+msgid "Error when adding coupon."
+msgstr ""
+
 msgid "Qty"
 msgstr ""
 
 msgid "Remove product from basket"
+msgstr ""
+
+msgid "Have a coupon code? Enter it here"
+msgstr ""
+
+msgid "Coupon Code"
+msgstr ""
+
+msgid "Submit Code"
 msgstr ""
 
 msgid "Checkout"
@@ -418,15 +412,6 @@ msgid "Includes these products"
 msgstr ""
 
 msgid "Also available in"
-msgstr ""
-
-msgid "Related products"
-msgstr ""
-
-msgid "We recommend these products"
-msgstr ""
-
-msgid "Users who bought this product also bought"
 msgstr ""
 
 #, python-format

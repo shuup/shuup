@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 13:16+0000\n"
+"POT-Creation-Date: 2016-04-11 12:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -56,10 +56,6 @@ msgstr ""
 msgid "Products in basket have no common payment method. %s"
 msgstr ""
 
-#, python-format
-msgid "%s not available in this shop"
-msgstr ""
-
 msgid "Tax number required for companies"
 msgstr ""
 
@@ -82,6 +78,10 @@ msgid "Confirmation"
 msgstr ""
 
 msgid "Empty Basket"
+msgstr ""
+
+#, python-brace-format
+msgid "{name} ({price})"
 msgstr ""
 
 msgid "shipping method"

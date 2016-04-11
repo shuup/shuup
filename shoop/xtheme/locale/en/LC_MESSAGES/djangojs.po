@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-25 01:21+0000\n"
+"POT-Creation-Date: 2016-04-11 12:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -23,6 +23,9 @@ msgid "Exit Edit"
 msgstr ""
 
 msgid "Edit Page"
+msgstr ""
+
+msgid "No browser URL for kind:"
 msgstr ""
 
 #, javascript-format
@@ -44,7 +47,4 @@ msgid ""
 msgstr ""
 
 msgid "Changing plugins will cause other changes made on this form to be lost."
-msgstr ""
-
-msgid "No browser URL for kind:"
 msgstr ""

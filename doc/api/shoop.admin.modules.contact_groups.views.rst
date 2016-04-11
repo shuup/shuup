@@ -4,6 +4,14 @@ shoop.admin.modules.contact_groups.views package
 Submodules
 ----------
 
+shoop.admin.modules.contact_groups.views.delete module
+------------------------------------------------------
+
+.. automodule:: shoop.admin.modules.contact_groups.views.delete
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.admin.modules.contact_groups.views.edit module
 ----------------------------------------------------
 
