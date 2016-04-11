@@ -4,6 +4,14 @@ shoop.core.management.commands package
 Submodules
 ----------
 
+shoop.core.management.commands.compute_bought_with_relations module
+-------------------------------------------------------------------
+
+.. automodule:: shoop.core.management.commands.compute_bought_with_relations
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.core.management.commands.makemessages module
 --------------------------------------------------
 
