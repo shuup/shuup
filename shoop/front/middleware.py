@@ -143,7 +143,7 @@ class ShoopFrontMiddleware(object):
         if resolver_match and resolver_match.app_name == "shoop_admin":
             return None
 
-        if request.shop.maintenance_mode and not request.user.is_superuser:
+        if request.shop.maintenance_mode and not getattr(request.user, 'is_superuser', False):
             return HttpResponse(loader.render_to_string("shoop/front/maintenance.jinja", request=request), status=503)
 
 if (

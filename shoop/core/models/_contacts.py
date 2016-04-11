@@ -262,17 +262,17 @@ class PersonContact(Contact):
             if not self.name:
                 self.name = user.get_full_name()
             if not self.email:
-                self.email = user.email
+                self.email = getattr(user, 'email', '')
             if not self.first_name and not self.last_name:
-                self.first_name = user.first_name
-                self.last_name = user.last_name
+                self.first_name = getattr(user, 'first_name', '')
+                self.last_name = getattr(user, 'last_name', '')
 
         return super(PersonContact, self).save(*args, **kwargs)
 
     @property
     def is_all_seeing(self):
         if self.user_id:
-            return self.user.is_superuser
+            return getattr(self.user, 'is_superuser', False)
 
 
 class AnonymousContact(Contact):
@@ -349,8 +349,8 @@ def get_person_contact(user):
         return AnonymousContact()
     defaults = {
         'is_active': user.is_active,
-        'first_name': user.first_name,
-        'last_name': user.last_name,
-        'email': user.email,
+        'first_name': getattr(user, 'first_name', ''),
+        'last_name': getattr(user, 'last_name', ''),
+        'email': getattr(user, 'email', ''),
     }
     return PersonContact.objects.get_or_create(user=user, defaults=defaults)[0]

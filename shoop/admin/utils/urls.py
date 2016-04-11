@@ -74,10 +74,15 @@ class AdminRegexURLPattern(RegexURLPattern):
         if self.require_authentication:
             if not request.user.is_authenticated():
                 return _("You must be logged in.")
-            elif not request.user.is_staff:
+            elif not getattr(request.user, 'is_staff', False):
                 return _("You must be a staff member.")
 
-        missing_permissions = set(p for p in set(self.permissions) if not request.user.has_perm(p))
+        # If user model has a `has_perm` method and it is callable, then check the permissions,
+        # otherwise, all permissions are missing because we have no way to check them
+        if callable(getattr(request.user, 'has_perm', None)):
+            missing_permissions = set(p for p in set(self.permissions) if not request.user.has_perm(p))
+        else:
+            missing_permissions = set(self.permissions)
         if missing_permissions:
             return _("You do not have the required permissions: %r") % missing_permissions
 

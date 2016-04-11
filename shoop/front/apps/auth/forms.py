@@ -90,7 +90,7 @@ class RecoverPasswordForm(forms.Form):
             self.process_user(user)
 
     def process_user(self, user_to_recover):
-        if not user_to_recover.has_usable_password():
+        if not user_to_recover.has_usable_password() or not hasattr(user_to_recover, 'email'):
             return False
 
         context = {

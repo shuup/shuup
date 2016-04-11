@@ -43,14 +43,14 @@ class UserListView(PicotableListView):
 
     def get_object_abstract(self, instance, item):
         bits = filter(None, [
-            _("First Name: %s") % (instance.first_name or "\u2014"),
-            _("Last Name: %s") % (instance.last_name or "\u2014"),
+            _("First Name: %s") % (getattr(instance, 'first_name', None) or "\u2014"),
+            _("Last Name: %s") % (getattr(instance, 'last_name', None) or "\u2014"),
             _("Active") if instance.is_active else _(u"Inactive"),
-            _("Email: %s") % (instance.email or "\u2014"),
-            _("Staff") if instance.is_staff else None,
-            _("Superuser") if instance.is_superuser else None
+            _("Email: %s") % (getattr(instance, 'email', None) or "\u2014"),
+            _("Staff") if getattr(instance, 'is_staff', None) else None,
+            _("Superuser") if getattr(instance, 'is_superuser', None) else None
         ])
         return [
-            {"text": instance.username or _("User"), "class": "header"},
+            {"text": instance.get_username() or _("User"), "class": "header"},
             {"text": ", ".join(bits)}
         ]

@@ -26,7 +26,7 @@ def could_edit(request):
     """
     # TODO: Possibly other conditions?
     user = getattr(request, "user", AnonymousUser())
-    return (user.is_superuser or user.is_staff)
+    return (getattr(user, 'is_superuser', False) or getattr(user, 'is_staff', False))
 
 
 def is_edit_mode(request):
