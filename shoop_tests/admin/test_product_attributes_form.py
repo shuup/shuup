@@ -13,7 +13,7 @@ from decimal import Decimal
 import pytest
 from django.utils.timezone import make_aware, utc
 
-from shoop.admin.modules.products.views.forms import ProductAttributesForm
+from shoop.admin.modules.products.forms import ProductAttributesForm
 from shoop.core.models import ProductAttribute
 from shoop.testing.factories import create_product, get_default_shop
 from shoop.utils.objects import compare_partial_dicts

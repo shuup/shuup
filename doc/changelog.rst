@@ -47,6 +47,7 @@ Localization
 Admin
 ~~~~~
 
+- Add package mode for products
 - Enable ```merchant_notes`` editing for ``Contact``
 - Add option to add extra form parts to Shop edit view
 - Enable delete for contact groups

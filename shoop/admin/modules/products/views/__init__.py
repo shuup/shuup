@@ -10,14 +10,16 @@ from .delete import ProductDeleteView
 from .edit import ProductEditView
 from .edit_cross_sell import ProductCrossSellEditView
 from .edit_media import ProductMediaEditView
+from .edit_package import ProductPackageView
+from .edit_variation import ProductVariationView
 from .list import ProductListView
-from .variation import ProductVariationView
 
 __all__ = [
     "ProductCrossSellEditView",
     "ProductDeleteView",
     "ProductEditView",
     "ProductListView",
+    "ProductPackageView",
     "ProductVariationView",
     "ProductMediaEditView",
 ]

@@ -67,7 +67,9 @@ class VariableVariationChildrenForm(forms.Form):
             try:
                 new_product.link_to_parent(parent=self.parent_product, combination_hash=combo["hash"])
             except ImpossibleProductModeException as ipme:
-                six.raise_from(Problem(_("Unable to link %s: %s") % (new_product, ipme)), ipme)
+                six.raise_from(
+                    Problem(_("Unable to link %(product)s: %(error)s") % {"product": new_product, "error": ipme}), ipme
+                )
 
     def save(self):
         if not self.has_changed():  # See `CustomerGroupPricingForm.save()`.

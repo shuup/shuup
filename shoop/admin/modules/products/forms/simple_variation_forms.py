@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # This file is part of Shoop.
 #
 # Copyright (c) 2012-2016, Shoop Ltd. All rights reserved.
@@ -11,12 +10,13 @@ import six
 from django import forms
 from django.contrib import messages
 from django.db.transaction import atomic
-from django.forms.formsets import BaseFormSet, DELETION_FIELD_NAME
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.forms.widgets import ProductChoiceWidget
 from shoop.core.excs import ImpossibleProductModeException, Problem
 from shoop.core.models import Product
+
+from .parent_forms import ProductChildBaseFormSet
 
 
 class SimpleVariationChildForm(forms.Form):
@@ -28,10 +28,10 @@ class SimpleVariationChildForm(forms.Form):
     )
 
 
-class SimpleVariationChildFormSet(BaseFormSet):
+class SimpleVariationChildFormSet(ProductChildBaseFormSet):
+    deletion_label = _("Unlink")
+
     def __init__(self, **kwargs):
-        kwargs.pop("empty_permitted", None)
-        self.request = kwargs.pop("request", None)
         self.parent_product = kwargs.pop("parent_product")
         kwargs["initial"] = [
             {"child": product}
@@ -39,11 +39,6 @@ class SimpleVariationChildFormSet(BaseFormSet):
             in self.parent_product.variation_children.all_except_deleted()
             ]
         super(SimpleVariationChildFormSet, self).__init__(**kwargs)
-
-    def _construct_form(self, i, **kwargs):
-        form = super(SimpleVariationChildFormSet, self)._construct_form(i, **kwargs)
-        form.fields[DELETION_FIELD_NAME].label = _("Unlink")
-        return form
 
     def save(self):
         parent_product = self.parent_product
@@ -59,7 +54,12 @@ class SimpleVariationChildFormSet(BaseFormSet):
                 try:
                     child_product.link_to_parent(parent_product)
                 except ImpossibleProductModeException as ipme:
-                    six.raise_from(Problem(_("Unable to link %s: %s") % (child_product, ipme)), ipme)
+                    six.raise_from(
+                        Problem(
+                            _("Unable to link %(product)s: %(error)s") %
+                            {"product": child_product, "error": ipme}
+                        ), ipme
+                    )
 
         message_parts = []
         if products_to_add:

@@ -229,7 +229,7 @@ class BaseProductMediaForm(MultiLanguageModelForm):
         try:
             thumbnail = self.instance.get_thumbnail()
         except Exception as error:
-            msg = _("Thumbnail generation of %s failed: %s") % (self.instance, error)
+            msg = _("Thumbnail generation of %(media)s failed: %(error)s") % {"media": self.instance, "error": error}
             messages.error(request, msg)
             thumbnail = None
         return thumbnail

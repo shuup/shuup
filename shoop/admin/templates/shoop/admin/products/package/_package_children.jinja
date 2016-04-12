@@ -1,0 +1,31 @@
+{% from "shoop/admin/macros/general.jinja" import content_block %}
+{% set children_formset = form["children"] %}
+
+{% call content_block(_("Package Products"), "fa-sitemap") %}
+    {% for mf in children_formset.management_form %}{{ mf|safe }}{% endfor %}
+    <table class="table table-striped package-form-table">
+        <thead>
+        <tr>
+            <th>{% trans %}Product{% endtrans %}</th>
+            <th>{% trans %}Quantity{% endtrans %}</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for f in children_formset %}
+            <tr>
+                <td>
+                    {% for fld in f.hidden_fields() %}{{ fld|safe }}{% endfor %}
+                    {{ bs3.field(f.child) }}
+                </td>
+                <td>
+                    {{ bs3.field(f.quantity) }}
+                </td>
+                <td>
+                    {% if f.DELETE and f.initial.child %}{{ bs3.field(f.DELETE) }}{% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endcall %}
