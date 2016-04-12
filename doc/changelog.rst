@@ -49,6 +49,7 @@ Localization
 Admin
 ~~~~~
 
+- Add ``admin_contact_group_form_part`` provider for ``ContactGroup`` admin
 - Remove shipping and payment method management
 - Add package mode for products
 - Enable ```merchant_notes`` editing for ``Contact``

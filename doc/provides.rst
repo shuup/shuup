@@ -61,6 +61,9 @@ Core
 ``admin_contact_form_part``
     Additional ``FormPart`` classes for Contact editing.
 
+``admin_contact_group_form_part``
+    Additional ``FormPart`` classes for ContactGroup editing
+
 ``admin_product_form_part``
     Additional ``FormPart`` classes for Product editing.
     (This is used by pricing modules, for instance.)
