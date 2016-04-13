@@ -230,3 +230,79 @@ def test_limited_methods():
     ]:
         product_ids = set(product_ids)
         assert ShippingMethod.objects.available_ids(shop=shop, products=product_ids) == set(method_ids)
+
+
+def get_total_price_value(lines):
+    return sum([line.price.value for line in lines])
+
+
+@pytest.mark.django_db
+def test_source_lines_with_multiple_fixed_costs():
+    """
+    Costs with description creates new line always and costs without
+    description is combined into one line.
+    """
+    translation.activate("en")
+    starting_price_value = 5
+    sm = get_shipping_method(name="Multiple costs", price=starting_price_value)
+    sm.behavior_components.clear()
+
+    source = BasketishOrderSource(get_default_shop())
+    source.shipping_method = sm
+
+    lines = list(sm.get_lines(source))
+    assert len(lines) == 1
+    assert get_total_price_value(lines) == Decimal("0")
+
+    sm.behavior_components.add(FixedCostBehaviorComponent.objects.create(price_value=10))
+    lines = list(sm.get_lines(source))
+    assert len(lines) == 1
+    assert get_total_price_value(lines) == Decimal("10")
+
+    sm.behavior_components.add(FixedCostBehaviorComponent.objects.create(price_value=15, description="extra"))
+    lines = list(sm.get_lines(source))
+    assert len(lines) == 2
+    assert get_total_price_value(lines) == Decimal("25")
+
+    sm.behavior_components.add(FixedCostBehaviorComponent.objects.create(price_value=1))
+    lines = list(sm.get_lines(source))
+    assert len(lines) == 2
+    assert get_total_price_value(lines) == Decimal("26")
+
+
+@pytest.mark.django_db
+def test_process_payment_return_request(rf):
+    """
+    Order payment with default payment method with ``CustomPaymentProcessor``
+    should be deferred.
+
+    Payment can't be processed if method doesn't have provider or provider
+    is not enabled or payment method is not enabled.
+    """
+    pm = PaymentMethod.objects.create(
+        shop=get_default_shop(), name="Test method", enabled=False, tax_class=get_default_tax_class())
+    order = create_empty_order()
+    order.payment_method = pm
+    order.save()
+    assert order.payment_status == PaymentStatus.NOT_PAID
+    with pytest.raises(ValueError):  # Can't process payment with unusable method
+        order.payment_method.process_payment_return_request(order, rf.get("/"))
+    assert order.payment_status == PaymentStatus.NOT_PAID
+    pm.payment_processor = get_custom_payment_processor()
+    pm.payment_processor.enabled = False
+    pm.save()
+
+    with pytest.raises(ValueError):  # Can't process payment with unusable method
+        order.payment_method.process_payment_return_request(order, rf.get("/"))
+    assert order.payment_status == PaymentStatus.NOT_PAID
+    pm.payment_processor.enabled = True
+    pm.save()
+
+    with pytest.raises(ValueError):  # Can't process payment with unusable method
+        order.payment_method.process_payment_return_request(order, rf.get("/"))
+    assert order.payment_status == PaymentStatus.NOT_PAID
+    pm.enabled = True
+    pm.save()
+
+    order.payment_method.process_payment_return_request(order, rf.get("/"))
+    assert order.payment_status == PaymentStatus.DEFERRED
