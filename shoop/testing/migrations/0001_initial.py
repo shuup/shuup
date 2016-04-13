@@ -22,6 +22,16 @@ class Migration(migrations.Migration):
             bases=('shoop.servicebehaviorcomponent',),
         ),
         migrations.CreateModel(
+            name='PaymentWithCheckoutPhase',
+            fields=[
+                ('custompaymentprocessor_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='shoop.CustomPaymentProcessor')),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=('shoop.custompaymentprocessor',),
+        ),
+        migrations.CreateModel(
             name='PseudoPaymentProcessor',
             fields=[
                 ('paymentprocessor_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='shoop.PaymentProcessor')),

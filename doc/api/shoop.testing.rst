@@ -37,6 +37,22 @@ shoop.testing.mock_population module
     :undoc-members:
     :show-inheritance:
 
+shoop.testing.payment_forms module
+----------------------------------
+
+.. automodule:: shoop.testing.payment_forms
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shoop.testing.simple_checkout_phase module
+------------------------------------------
+
+.. automodule:: shoop.testing.simple_checkout_phase
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.testing.soup_utils module
 -------------------------------
 

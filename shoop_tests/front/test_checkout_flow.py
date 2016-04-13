@@ -10,11 +10,13 @@ import random
 import pytest
 from django.core.urlresolvers import reverse
 
-from shoop.core.models import Order
+from shoop.core.models import Order, PaymentMethod, PaymentStatus
 from shoop.testing.factories import (
-    create_default_order_statuses, get_address, get_default_supplier
+    create_default_order_statuses, get_address, get_default_shipping_method,
+    get_default_shop, get_default_supplier, get_default_tax_class
 )
 from shoop.testing.mock_population import populate_if_required
+from shoop.testing.models import PaymentWithCheckoutPhase
 from shoop.testing.soup_utils import extract_form_fields
 from shoop_tests.utils import SmartClient
 
@@ -90,3 +92,103 @@ def test_basic_order_flow(with_company):
 
     n_orders_post = Order.objects.count()
     assert n_orders_post > n_orders_pre, "order was created"
+
+
+@pytest.mark.django_db
+def test_order_flow_with_payment_phase():
+    create_default_order_statuses()
+    n_orders_pre = Order.objects.count()
+    populate_if_required()
+    c = SmartClient()
+    _populate_client_basket(c)
+
+    # Create methods
+    shipping_method = get_default_shipping_method()
+    processor = PaymentWithCheckoutPhase.objects.create(
+        identifier="processor_with_phase", enabled=True)
+    assert isinstance(processor, PaymentWithCheckoutPhase)
+    payment_method = processor.create_service(
+        None,
+        identifier="payment_with_phase",
+        shop=get_default_shop(),
+        name="Test method with phase",
+        enabled=True,
+        tax_class=get_default_tax_class())
+
+    # Resolve paths
+    addresses_path = reverse("shoop:checkout", kwargs={"phase": "addresses"})
+    methods_path = reverse("shoop:checkout", kwargs={"phase": "methods"})
+    payment_path = reverse("shoop:checkout", kwargs={"phase": "payment"})
+    confirm_path = reverse("shoop:checkout", kwargs={"phase": "confirm"})
+
+    # Phase: Addresses
+    addresses_soup = c.soup(addresses_path)
+    inputs = fill_address_inputs(addresses_soup, with_company=False)
+    response = c.post(addresses_path, data=inputs)
+    assert response.status_code == 302, "Address phase should redirect forth"
+    assert response.url.endswith(methods_path)
+
+    # Phase: Methods
+    assert Order.objects.filter(payment_method=payment_method).count() == 0
+    response = c.post(
+        methods_path,
+        data={
+            "payment_method": payment_method.pk,
+            "shipping_method": shipping_method.pk
+        }
+    )
+    assert response.status_code == 302, "Methods phase should redirect forth"
+    assert response.url.endswith(confirm_path)
+    response = c.get(confirm_path)
+    assert response.status_code == 302, "Confirm should first redirect forth"
+    assert response.url.endswith(payment_path)
+
+    # Phase: Payment
+    c.soup(payment_path)
+    response = c.post(payment_path, data={"will_pay": False})
+    assert response.status_code == 200, "Invalid payment form should return error"
+    response = c.post(payment_path, data={"will_pay": True})
+    assert response.status_code == 302, "Valid payment form should redirect forth"
+    assert response.url.endswith(confirm_path)
+
+    # Phase: Confirm
+    confirm_soup = c.soup(confirm_path)
+    response = c.post(confirm_path, data=extract_form_fields(confirm_soup))
+    assert response.status_code == 302, "Confirm should redirect forth"
+    # response.url should point to payment, checked below
+
+    # Check resulting order and its contents
+    n_orders_post = Order.objects.count()
+    assert n_orders_post > n_orders_pre, "order was created"
+    order = Order.objects.filter(payment_method=payment_method).first()
+    assert order.payment_data.get("promised_to_pay")
+    assert order.payment_status == PaymentStatus.NOT_PAID
+
+    # Resolve order specific paths (payment and complete)
+    process_payment_path = reverse(
+        "shoop:order_process_payment",
+        kwargs={"pk": order.pk, "key": order.key})
+    process_payment_return_path = reverse(
+        "shoop:order_process_payment_return",
+        kwargs={"pk": order.pk, "key": order.key})
+    order_complete_path = reverse(
+        "shoop:order_complete",
+        kwargs={"pk": order.pk, "key": order.key})
+
+    # Check confirm redirection to payment page
+    assert response.url.endswith(process_payment_path), (
+        "Confirm should have redirected to payment page")
+
+    # Visit payment page
+    response = c.get(process_payment_path)
+    assert response.status_code == 302, "Payment page should redirect forth"
+    assert response.url.endswith(process_payment_return_path)
+
+    # Check payment return
+    response = c.get(process_payment_return_path)
+    assert response.status_code == 302, "Payment return should redirect forth"
+    assert response.url.endswith(order_complete_path)
+
+    # Check payment status has changed to DEFERRED
+    order = Order.objects.get(pk=order.pk)  # reload
+    assert order.payment_status == PaymentStatus.DEFERRED
