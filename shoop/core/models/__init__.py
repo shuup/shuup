@@ -11,6 +11,10 @@ from ._addresses import (
     SavedAddressStatus
 )
 from ._attributes import Attribute, AttributeType, AttributeVisibility
+from ._base import (
+    PolymorphicShoopModel, PolymorphicTranslatableShoopModel, ShoopModel,
+    TranslatableShoopModel
+)
 from ._categories import Category, CategoryStatus, CategoryVisibility
 from ._configurations import ConfigurationItem
 from ._contacts import (
@@ -79,6 +83,8 @@ __all__ = [
     "PaymentStatus",
     "PersistentCacheEntry",
     "PersonContact",
+    "PolymorphicShoopModel",
+    "PolymorphicTranslatableShoopModel",
     "Product",
     "Product",
     "ProductAttribute",
@@ -103,6 +109,7 @@ __all__ = [
     "ShippingMethod",
     "ShippingMode",
     "ShippingStatus",
+    "ShoopModel",
     "Shop",
     "ShopProduct",
     "ShopStatus",
@@ -112,6 +119,7 @@ __all__ = [
     "SupplierType",
     "Tax",
     "TaxClass",
+    "TranslatableShoopModel",
 ]
 
 update_module_attributes(__all__, __name__)

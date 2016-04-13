@@ -7,10 +7,15 @@
 from __future__ import unicode_literals
 
 import parler.models
+import six
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.encoding import force_text, python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
+from parler.managers import TranslatableManager, TranslatableQuerySet
+from polymorphic.base import PolymorphicModelBase
+from polymorphic.managers import PolymorphicManager, PolymorphicQuerySet
+from polymorphic.models import PolymorphicModel
 
 from shoop.utils import text
 
@@ -43,6 +48,45 @@ class TranslatableShoopModel(ShoopModel, parler.models.TranslatableModel):
             identifier = getattr(self, self.identifier_attr, None)
             return '{}:{}'.format(type(self).__name__, identifier)
         return force_text(name)  # ensure no lazy objects are returned
+
+    class Meta:
+        abstract = True
+
+
+class PolymorphicShoopModel(PolymorphicModel, ShoopModel):
+    class Meta:
+        abstract = True
+
+
+class _PolyTransQuerySet(TranslatableQuerySet, PolymorphicQuerySet):
+    pass
+
+
+class _PolyTransManager(PolymorphicManager, TranslatableManager):
+    queryset_class = _PolyTransQuerySet
+
+
+class PolyTransModelBase(PolymorphicModelBase):
+    def get_inherited_managers(self, attrs):
+        parent = super(PolyTransModelBase, self)
+        result = []
+        for (base_name, key, manager) in parent.get_inherited_managers(attrs):
+            if base_name == 'PolymorphicModel':
+                model = manager.model
+                if key == 'objects':
+                    manager = _PolyTransManager()
+                    manager.model = model
+                elif key == 'base_objects':
+                    manager = parler.models.TranslatableManager()
+                    manager.model = model
+            result.append((base_name, key, manager))
+        return result
+
+
+class PolymorphicTranslatableShoopModel(six.with_metaclass(
+        PolyTransModelBase,
+        PolymorphicShoopModel, TranslatableShoopModel)):
+    _default_manager = _PolyTransManager()
 
     class Meta:
         abstract = True
