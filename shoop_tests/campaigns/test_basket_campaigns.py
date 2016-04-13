@@ -15,13 +15,13 @@ from shoop.campaigns.models.basket_conditions import (
     BasketTotalProductAmountCondition, BasketTotalAmountCondition
 )
 from shoop.campaigns.models.campaigns import BasketCampaign, Coupon, CouponUsage
-from shoop.core.models import ShippingMethod, OrderLineType
+from shoop.core.models import OrderLineType
 from shoop.core.order_creator import OrderCreator
 from shoop.front.basket import get_basket
 from shoop.front.basket.commands import handle_add_campaign_code
 from shoop.testing.factories import (
     create_product, get_default_supplier, get_default_tax_class,
-    get_default_product
+    get_default_product, get_shipping_method
 )
 from shoop_tests.campaigns import initialize_test
 from shoop_tests.core.test_order_creator import seed_source
@@ -86,8 +86,7 @@ def test_basket_campaign_case2(rf):
     single_product_price = "50"
     discount_amount_value = "10"
 
-    unique_shipping_method = ShippingMethod(tax_class=get_default_tax_class(), module_data={"price": 50})
-    unique_shipping_method.save()
+    unique_shipping_method = get_shipping_method(shop, price=50)
 
     for x in range(3):
         product = create_product(

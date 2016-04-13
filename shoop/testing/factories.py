@@ -30,11 +30,12 @@ from six import BytesIO
 from shoop.core.defaults.order_statuses import create_default_order_statuses
 from shoop.core.models import (
     AnonymousContact, Attribute, AttributeType, Category, CategoryStatus,
-    CompanyContact, Contact, ContactGroup, MutableAddress, Order, OrderLine,
-    OrderLineTax, OrderLineType, OrderStatus, PaymentMethod, PersonContact,
-    Product, ProductMedia, ProductMediaKind, ProductType, SalesUnit,
-    ShippingMethod, Shop, ShopProduct, ShopStatus, StockBehavior, Supplier,
-    SupplierType, Tax, TaxClass
+    CompanyContact, Contact, ContactGroup, CustomCarrier,
+    CustomPaymentProcessor, FixedCostBehaviorComponent, MutableAddress, Order,
+    OrderLine, OrderLineTax, OrderLineType, OrderStatus, PaymentMethod,
+    PersonContact, Product, ProductMedia, ProductMediaKind, ProductType,
+    SalesUnit, ShippingMethod, Shop, ShopProduct, ShopStatus, StockBehavior,
+    Supplier, SupplierType, Tax, TaxClass, WaivingCostBehaviorComponent
 )
 from shoop.core.order_creator import OrderCreator, OrderSource
 from shoop.core.pricing import get_pricing_module
@@ -294,26 +295,74 @@ def get_default_tax_class():
     return tax_class
 
 
-def get_default_payment_method():
-    payment_method = default_by_identifier(PaymentMethod)
-    if not payment_method:
-        payment_method = PaymentMethod.objects.create(
-            identifier=DEFAULT_IDENTIFIER, name=DEFAULT_NAME,
-            tax_class=get_default_tax_class(),
+def get_custom_payment_processor():
+    return _get_service_provider(CustomPaymentProcessor)
+
+
+def get_custom_carrier():
+    return _get_service_provider(CustomCarrier)
+
+
+def _get_service_provider(model):
+    identifier = model.__name__
+    service_provider = model.objects.filter(identifier=identifier).first()
+    if not service_provider:
+        service_provider = model.objects.create(
+            identifier=identifier,
+            name=model.__name__,
         )
-        assert payment_method.pk and payment_method.identifier == DEFAULT_IDENTIFIER
-    return payment_method
+        assert service_provider.pk and service_provider.identifier == identifier
+    return service_provider
+
+
+def get_default_payment_method():
+    return get_payment_method()
+
+
+def get_payment_method(shop=None, price=None, waive_at=None, name=None):
+    return _get_service(
+        PaymentMethod, CustomPaymentProcessor, name=name,
+        shop=shop, price=price, waive_at=waive_at)
 
 
 def get_default_shipping_method():
-    shipping_method = default_by_identifier(ShippingMethod)
-    if not shipping_method:
-        shipping_method = ShippingMethod.objects.create(
-            identifier=DEFAULT_IDENTIFIER, name=DEFAULT_NAME,
+    return get_shipping_method()
+
+
+def get_shipping_method(shop=None, price=None, waive_at=None, name=None):
+    return _get_service(
+        ShippingMethod, CustomCarrier, name=name,
+        shop=shop, price=price, waive_at=waive_at)
+
+
+def _get_service(
+        service_model, provider_model, name,
+        shop=None, price=None, waive_at=None):
+    default_shop = get_default_shop()
+    if shop is None:
+        shop = default_shop
+    if shop == default_shop and not price and not waive_at and not name:
+        identifier = DEFAULT_IDENTIFIER
+    else:
+        identifier = "%s-%d-%r-%r" % (name, shop.pk, price, waive_at)
+    service = service_model.objects.filter(identifier=identifier).first()
+    if not service:
+        provider = _get_service_provider(provider_model)
+        service = provider.create_service(
+            None, identifier=identifier, shop=shop, enabled=True,
+            name=(name or service_model.__name__),
             tax_class=get_default_tax_class(),
         )
-        assert shipping_method.pk and shipping_method.identifier == DEFAULT_IDENTIFIER
-    return shipping_method
+        if price and waive_at is None:
+            service.behavior_components.add(
+                FixedCostBehaviorComponent.objects.create(price_value=price))
+        elif price:
+            service.behavior_components.add(
+                WaivingCostBehaviorComponent.objects.create(
+                    price_value=price, waive_limit_value=waive_at))
+    assert service.pk and service.identifier == identifier
+    assert service.shop == shop
+    return service
 
 
 def get_default_customer_group():

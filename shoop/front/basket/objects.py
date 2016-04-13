@@ -409,7 +409,7 @@ class BaseBasket(OrderSource):
         return [
             m for m
             in ShippingMethod.objects.available(shop=self.shop, products=self.product_ids)
-            if m.is_valid_for_source(source=self)
+            if m.is_available_for(self)
         ]
 
     def get_available_payment_methods(self):
@@ -421,7 +421,7 @@ class BaseBasket(OrderSource):
         return [
             m for m
             in PaymentMethod.objects.available(shop=self.shop, products=self.product_ids)
-            if m.is_valid_for_source(source=self)
+            if m.is_available_for(self)
         ]
 
     def has_shippable_lines(self):

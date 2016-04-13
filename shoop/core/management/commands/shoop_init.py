@@ -13,8 +13,9 @@ from six import print_
 
 from shoop.core.defaults.order_statuses import create_default_order_statuses
 from shoop.core.models import (
-    Category, CustomerTaxGroup, OrderStatus, PaymentMethod, ProductType,
-    SalesUnit, ShippingMethod, Shop, ShopStatus, Supplier, TaxClass
+    Category, CustomCarrier, CustomerTaxGroup, CustomPaymentProcessor,
+    OrderStatus, PaymentMethod, ProductType, SalesUnit, ShippingMethod, Shop,
+    ShopStatus, Supplier, TaxClass
 )
 
 
@@ -28,8 +29,16 @@ class Initializer(object):
         schema(ProductType, "default", name="Standard Product"),
         schema(ProductType, "download", name="Download Product"),
         schema(TaxClass, "default", name="Default Tax Class"),
-        schema(PaymentMethod, "default", name="Default Payment Method", tax_class=TaxClass),
-        schema(ShippingMethod, "default", name="Default Shipping Method", tax_class=TaxClass),
+        schema(
+            CustomPaymentProcessor, CustomPaymentProcessor.__name__,
+            name="Manual payment processing"),
+        schema(
+            PaymentMethod, identifier="default_payment_method", name="Default Payment Method",
+            payment_processor=CustomPaymentProcessor, shop=Shop, tax_class=TaxClass),
+        schema(CustomCarrier, CustomCarrier.__name__, name="Carrier"),
+        schema(
+            ShippingMethod, identifier="default_shipping_method", name="Default Shipping Method",
+            carrier=CustomCarrier, shop=Shop, tax_class=TaxClass),
         schema(Supplier, "default", name="Default Supplier"),
         schema(SalesUnit, "pcs", name="Pieces"),
         schema(Category, "default", name="Default Category"),

@@ -23,7 +23,6 @@ from ._contacts import (
 )
 from ._counters import Counter, CounterType
 from ._manufacturers import Manufacturer
-from ._methods import MethodStatus, MethodType, PaymentMethod, ShippingMethod
 from ._order_lines import OrderLine, OrderLineTax, OrderLineType
 from ._orders import (
     Order, OrderLogEntry, OrderStatus, OrderStatusRole, PaymentStatus,
@@ -42,6 +41,18 @@ from ._products import (
     Product, ProductAttribute, ProductCrossSell, ProductCrossSellType,
     ProductMode, ProductType, ShippingMode, StockBehavior
 )
+from ._service_base import (
+    Service, ServiceBehaviorComponent, ServiceChoice, ServiceCost,
+    ServiceProvider
+)
+from ._service_behavior import (
+    FixedCostBehaviorComponent, WaivingCostBehaviorComponent,
+    WeightLimitsBehaviorComponent
+)
+from ._service_payment import (
+    CustomPaymentProcessor, PaymentMethod, PaymentProcessor, PaymentUrls
+)
+from ._service_shipping import Carrier, CustomCarrier, ShippingMethod
 from ._shipments import Shipment, ShipmentProduct
 from ._shops import Shop, ShopStatus
 from ._supplied_products import SuppliedProduct
@@ -54,6 +65,7 @@ __all__ = [
     "Attribute",
     "AttributeType",
     "AttributeVisibility",
+    "Carrier",
     "Category",
     "CategoryStatus",
     "CategoryVisibility",
@@ -63,13 +75,14 @@ __all__ = [
     "ContactGroup",
     "Counter",
     "CounterType",
+    "CustomCarrier",
     "CustomerTaxGroup",
+    "CustomPaymentProcessor",
+    "FixedCostBehaviorComponent",
     "get_person_contact",
     "Gender",
     "ImmutableAddress",
     "Manufacturer",
-    "MethodStatus",
-    "MethodType",
     "MutableAddress",
     "Order",
     "OrderLine",
@@ -80,7 +93,9 @@ __all__ = [
     "OrderStatusRole",
     "Payment",
     "PaymentMethod",
+    "PaymentProcessor",
     "PaymentStatus",
+    "PaymentUrls",
     "PersistentCacheEntry",
     "PersonContact",
     "PolymorphicShoopModel",
@@ -104,6 +119,11 @@ __all__ = [
     "SavedAddress",
     "SavedAddressRole",
     "SavedAddressStatus",
+    "Service",
+    "ServiceBehaviorComponent",
+    "ServiceChoice",
+    "ServiceCost",
+    "ServiceProvider",
     "Shipment",
     "ShipmentProduct",
     "ShippingMethod",
@@ -120,6 +140,8 @@ __all__ = [
     "Tax",
     "TaxClass",
     "TranslatableShoopModel",
+    "WaivingCostBehaviorComponent",
+    "WeightLimitsBehaviorComponent",
 ]
 
 update_module_attributes(__all__, __name__)

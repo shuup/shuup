@@ -66,7 +66,8 @@ def test_category_removal():
 @pytest.mark.django_db
 def test_shipping_method_removal():
     tax_class = TaxClass.objects.create(name="test")
-    sm = ShippingMethod.objects.create(name="sm", tax_class=tax_class)
+    shop = get_default_shop()
+    sm = ShippingMethod.objects.create(name="sm", shop=shop, tax_class=tax_class)
     contact = PersonContact.objects.create(name="test", default_shipping_method=sm)
     sm.delete()
     assert PersonContact.objects.filter(pk=contact.pk).exists()
@@ -75,7 +76,8 @@ def test_shipping_method_removal():
 @pytest.mark.django_db
 def test_payment_method_removal():
     tax_class = TaxClass.objects.create(name="test")
-    pm = PaymentMethod.objects.create(name="sm", tax_class=tax_class)
+    shop = get_default_shop()
+    pm = PaymentMethod.objects.create(name="sm", shop=shop, tax_class=tax_class)
     contact = PersonContact.objects.create(name="test", default_payment_method=pm)
     pm.delete()
     assert PersonContact.objects.filter(pk=contact.pk).exists()
@@ -94,7 +96,8 @@ def test_customer_tax_group_removal():
 @pytest.mark.django_db
 def test_method_taxclass_removal():
     tax_class = TaxClass.objects.create(name="test")
-    pm = PaymentMethod.objects.create(name="test", tax_class=tax_class)
+    shop = get_default_shop()
+    pm = PaymentMethod.objects.create(name="test", shop=shop, tax_class=tax_class)
     with pytest.raises(ProtectedError):
         tax_class.delete()
     assert PaymentMethod.objects.filter(pk=pm.id).exists()

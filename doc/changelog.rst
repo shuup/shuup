@@ -12,6 +12,8 @@ Unreleased
 Core
 ~~~~
 
+- Add new Service API and implement shipping and payments with it
+- Remove BaseMethodModule based API (``shoop.core.methods``)
 - Add management command to generate bought with relations
 - Add ``merchant_notes`` text-field to ``Contact``
 - Add ``first_name`` and ``last_name`` fields to ``PersonContact``
@@ -61,6 +63,7 @@ Admin
 Front
 ~~~~~
 
+- Remove ``get_method_validation_errors`` signal
 - Fix bug at ``get_visible_products`` filter when orderable_only is False
 - Set template price display options from the customer
 - Fix bug: BasketStorage.finalize() never called delete() correctly

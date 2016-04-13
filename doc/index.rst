@@ -25,6 +25,7 @@ Developer documentation
    provides
    addons
    prices_and_taxes_implementation
+   services
    notify_specification
    templates
    api/modules

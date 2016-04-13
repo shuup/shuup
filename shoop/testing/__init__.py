@@ -16,9 +16,6 @@ class ShoopTestingAppConfig(AppConfig):
         "admin_module": [
             "shoop.testing.admin_module:TestingAdminModule"
         ],
-        "payment_method_module": [
-            "shoop.testing.pseudo_payment:PseudoPaymentMethodModule",
-        ]
     }
 
 
