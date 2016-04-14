@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-12 00:55+0000\n"
+"POT-Creation-Date: 2016-04-12 14:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -234,36 +234,6 @@ msgstr ""
 
 #, python-format
 msgid "%(file)s moved from %(old)s to %(new)s."
-msgstr ""
-
-msgid "Methods"
-msgstr ""
-
-msgid "Shipping Methods"
-msgstr ""
-
-msgid "Payment Methods"
-msgstr ""
-
-msgid "The selected module has no details to configure"
-msgstr ""
-
-msgid "The selected module is not currently available"
-msgstr ""
-
-msgid "Edit Details"
-msgstr ""
-
-#, python-format
-msgid "Edit %(model)s"
-msgstr ""
-
-#, python-format
-msgid "Default %s module"
-msgstr ""
-
-#, python-format
-msgid "Module %(name)s has no admin detail view"
 msgstr ""
 
 msgid "Orders"
@@ -607,6 +577,34 @@ msgstr ""
 msgid "Allowed decimals"
 msgstr ""
 
+msgid "Service Providers"
+msgstr ""
+
+msgid "Payment and Shipping"
+msgstr ""
+
+#, python-format
+msgid "Edit %(model)s"
+msgstr ""
+
+msgid "Shipping Methods"
+msgstr ""
+
+msgid "Payment Methods"
+msgstr ""
+
+msgid "Enabled"
+msgstr ""
+
+msgid "Shop"
+msgstr ""
+
+msgid "Carrier"
+msgstr ""
+
+msgid "Payment Processor"
+msgstr ""
+
 msgid "Shops"
 msgstr ""
 
@@ -651,9 +649,6 @@ msgid "Code"
 msgstr ""
 
 msgid "Rate"
-msgstr ""
-
-msgid "Enabled"
 msgstr ""
 
 msgid "Users"
@@ -1114,6 +1109,9 @@ msgstr ""
 msgid ""
 "To create a variation with multiple variables, create the variables on the "
 "Variables tab and then link them to products here."
+msgstr ""
+
+msgid "Behavior"
 msgstr ""
 
 msgid "Shop Logo"
