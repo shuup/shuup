@@ -11,7 +11,9 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.base import AdminModule, MenuEntry
-from shoop.admin.utils.urls import derive_model_url, get_edit_and_list_urls
+from shoop.admin.utils.urls import (
+    admin_url, derive_model_url, get_edit_and_list_urls
+)
 from shoop.core.models import ServiceProvider
 
 
@@ -20,7 +22,13 @@ class ServiceProviderModule(AdminModule):
     category = _("Payment and Shipping")
 
     def get_urls(self):
-        return get_edit_and_list_urls(
+        return [
+            admin_url(
+                "^service_provider/(?P<pk>\d+)/delete/$",
+                "shoop.admin.modules.service_providers.views.ServiceProviderDeleteView",
+                name="service_provider.delete"
+            )
+        ] + get_edit_and_list_urls(
             url_prefix="^service_provider",
             view_template="shoop.admin.modules.service_providers.views.ServiceProvider%sView",
             name_template="service_provider.%s"

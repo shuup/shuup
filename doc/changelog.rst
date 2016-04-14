@@ -49,6 +49,7 @@ Localization
 Admin
 ~~~~~
 
+- Add delete for service providers admin module
 - Remove shipping and payment method management
 - Add package mode for products
 - Enable ```merchant_notes`` editing for ``Contact``

@@ -10,11 +10,12 @@ from __future__ import unicode_literals
 from collections import OrderedDict
 
 from django import forms
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.base import MenuEntry
+from shoop.admin.toolbar import get_default_edit_toolbar
 from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.apps.provides import get_provide_objects
 from shoop.core.models import ServiceProvider
@@ -78,6 +79,12 @@ class ServiceProviderEditView(CreateOrUpdateView):
 
     def get_success_url(self):
         return reverse("shoop_admin:service_provider.edit", kwargs={"pk": self.object.pk})
+
+    def get_toolbar(self):
+        save_form_id = self.get_save_form_id()
+        object = self.get_object()
+        delete_url = reverse_lazy("shoop_admin:service_provider.delete", kwargs={"pk": object.pk})
+        return get_default_edit_toolbar(self, save_form_id, delete_url=delete_url)
 
 
 class _FormInfoMap(OrderedDict):

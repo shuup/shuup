@@ -14,7 +14,9 @@ from django.test import override_settings
 from shoop.admin.modules.service_providers.views import ServiceProviderEditView
 from shoop.apps.provides import override_provides
 from shoop.core.models import CustomCarrier, CustomPaymentProcessor
-from shoop.testing.factories import get_default_shop
+from shoop.testing.factories import (
+    get_default_payment_method, get_default_shipping_method, get_default_shop
+)
 from shoop.testing.models import PseudoPaymentProcessor
 from shoop.testing.utils import apply_request_middleware
 
@@ -157,3 +159,26 @@ def test_service_provide_edit_view(rf, admin_user, sp_model, extra_inputs):
 
         assert rendered_fields == (base_inputs + extra_inputs)
         assert provider_form.find("input", attrs={"name": "name__en"})["value"] == provider_name
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("get_object,service_provider_attr", [
+    (get_default_shipping_method, "carrier"),
+    (get_default_payment_method, "payment_processor")
+])
+def test_delete(get_object, service_provider_attr):
+    method = get_object()
+    method_cls = method.__class__
+    method_pk = method.pk
+    assert method.enabled
+    service_provider = getattr(method, service_provider_attr)
+    assert service_provider
+    service_provider_cls = service_provider.__class__
+    service_provider_pk = service_provider.pk
+
+    service_provider.delete()
+    # Re fetch method to check it's new field
+    method = method_cls.objects.get(pk=method_pk)
+    assert getattr(method, service_provider_attr) is None
+    assert method.enabled == False
+    assert not service_provider_cls.objects.filter(pk=service_provider_pk).exists()
