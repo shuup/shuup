@@ -18,6 +18,9 @@ class CampaignAppConfig(AppConfig):
     verbose_name = "Shoop Campaigns"
     label = "campaigns"
     provides = {
+        "admin_contact_group_form_part": [
+            "shoop.campaigns.admin_module.form_parts:SalesRangesFormPart"
+        ],
         "discount_module": [
             "shoop.campaigns.modules:CatalogCampaignModule"
         ],
