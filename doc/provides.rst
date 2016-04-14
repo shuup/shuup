@@ -112,6 +112,13 @@ Core
 ``pricing_module``
     Pricing module classes; the pricing module in use is set with the ``SHOOP_PRICING_MODULE`` setting.
 
+``service_provider_admin_form``
+    Forms for creating service providers in Shop Admin.  When creating a
+    custom `service provider <shoop.core.models.ServiceProvider>`
+    (e.g. `carrier <shoop.core.models.Carrier>` or `payment processor
+    <shoop.core.models.PaymentProcessor>`), provide a form for it via
+    this provide.
+
 ``supplier_module``
     Supplier module classes (deriving from `~shoop.core.suppliers.base.BaseSupplierModule`),
     as used by `~shoop.core.models.Supplier`.

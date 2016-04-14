@@ -16,6 +16,10 @@ class ShoopTestingAppConfig(AppConfig):
         "admin_module": [
             "shoop.testing.admin_module:TestingAdminModule"
         ],
+        "service_provider_admin_form": [
+            "shoop.testing.payment_forms:PseudoPaymentProcessorForm",
+            "shoop.testing.payment_forms:PaymentWithCheckoutPhaseForm",
+        ],
     }
 
 
