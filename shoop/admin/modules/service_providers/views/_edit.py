@@ -15,7 +15,8 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.base import MenuEntry
-from shoop.admin.toolbar import get_default_edit_toolbar
+from shoop.admin.toolbar import get_default_edit_toolbar, URLActionButton
+from shoop.admin.utils.urls import get_model_url
 from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.apps.provides import get_provide_objects
 from shoop.core.models import ServiceProvider
@@ -84,7 +85,19 @@ class ServiceProviderEditView(CreateOrUpdateView):
         save_form_id = self.get_save_form_id()
         object = self.get_object()
         delete_url = reverse_lazy("shoop_admin:service_provider.delete", kwargs={"pk": object.pk})
-        return get_default_edit_toolbar(self, save_form_id, delete_url=delete_url)
+        toolbar = get_default_edit_toolbar(self, save_form_id, delete_url=delete_url)
+        if self.object.pk:
+            toolbar.append(URLActionButton(
+                text=_("Create {service_name}").format(
+                    service_name=self.object.service_model._meta.verbose_name),
+                icon="fa fa-plus",
+                url="{model_url}?provider={id}".format(
+                    model_url=get_model_url(self.object.service_model, "new"),
+                    id=self.object.id),
+                extra_css_class="btn-info"
+            ))
+
+        return toolbar
 
 
 class _FormInfoMap(OrderedDict):
