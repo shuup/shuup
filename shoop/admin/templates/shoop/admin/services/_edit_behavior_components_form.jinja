@@ -1,0 +1,31 @@
+{% from "shoop/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
+
+{% macro render_form(form, form_prefix, idx) %}
+    {% if idx == 1 %}
+        <div class="panel-heading" role="tab" id="heading-{{ form_prefix }}">
+            <h3 class="text-center">{{ form.instance.name }}</h3>
+            <p class="text-center">{{ form.instance.help_text }}</p>
+        </div>
+    {% else %}
+        <div class="form-divider"></div>
+    {% endif %}
+    <div class="component-form">
+        {% if form.translated_field_names %}
+            {{ language_dependent_content_tabs(form, tab_id_prefix=form_prefix) }}
+            <div class="form-divider"></div>
+        {% endif %}
+        {{ render_monolingual_fields(form) }}
+    </div>
+{% endmacro %}
+
+{{ component_formset.management_form }}
+
+<div class="panel panel-default panel-{{component_form_prefix}}">
+    <div class="hide" id="{{ component_form_prefix }}-placeholder">
+        {{ render_form(component_formset.empty_form, component_form_prefix, "__prefix__") }}
+    </div>
+    {%  for f in component_formset %}
+        {{ render_form(f, component_form_prefix, loop.index) }}
+    {% endfor %}
+    <a class="btn btn-lg btn-text add-new-component" href="#" data-target-id="id_{{ component_form_prefix }}" data-target-component="{{ component_form_prefix }}">+ {% trans %}Add more{% endtrans %}</a>
+</div>

@@ -1,0 +1,44 @@
+{% extends "shoop/admin/base.jinja" %}
+{% from "shoop/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
+{% from "shoop/admin/macros/general.jinja" import content_block, content_with_sidebar %}
+
+{% block content %}
+    {% call content_with_sidebar(content_id="shipping_method_form") %}
+        <form method="post" id="shipping_method_form">
+            {% csrf_token %}
+            {% set form_defs = form.form_defs %}
+            {% include form_defs["base"].template_name with context %}
+            {% if form_defs|length > 1 %}
+            {% call content_block(_("Behavior"), ("fa-cubes")) %}
+                {% for form_def in form_defs %}
+                    {% if form_def != "base" %}
+                        {% set component_form_prefix = form_def %}
+                        {% set component_formset = form[form_def] %}
+                        {% include "shoop/admin/services/_edit_behavior_components_form.jinja" with context %}
+                    {% endif %}
+                {% endfor %}
+            {% endcall %}
+            {% endif %}
+        </form>
+    {% endcall %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(function () {
+        $(".add-new-component").on("click", function (e) {
+            e.preventDefault();
+            var target = $(this).data("target-component");
+            var componentSelector = ".panel-" + target + " .component-form";
+            var componentCount = $(componentSelector).length;
+            var $source = $("#" + target + "-placeholder");
+            var html = $source.html().replace(/__prefix__/g, componentCount-1).replace(/__prefix_name__/g, componentCount);
+            var $lastComponent = $(componentSelector).last();
+            $(html).insertAfter($lastComponent);
+            var targetID = $(this).data("target-id");
+            var $totalFormsField = $("#" + targetID + "-TOTAL_FORMS");
+            $totalFormsField.val(parseInt($totalFormsField.val()) + 1);
+        });
+    });
+</script>
+{% endblock %}

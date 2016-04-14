@@ -27,6 +27,8 @@ class ShoopAdminAppConfig(AppConfig):
             "shoop.admin.modules.contact_groups:ContactGroupModule",
             "shoop.admin.modules.users:UserModule",
             "shoop.admin.modules.service_providers:ServiceProviderModule",
+            "shoop.admin.modules.services:PaymentMethodModule",
+            "shoop.admin.modules.services:ShippingMethodModule",
             "shoop.admin.modules.attributes:AttributeModule",
             "shoop.admin.modules.sales_units:SalesUnitModule",
             "shoop.admin.modules.shops:ShopModule",
@@ -37,6 +39,11 @@ class ShoopAdminAppConfig(AppConfig):
         "service_provider_admin_form": [
             "shoop.admin.modules.service_providers.forms:CustomCarrierForm",
             "shoop.admin.modules.service_providers.forms:CustomPaymentProcessorForm"
+        ],
+        "service_behavior_component_form": [
+            "shoop.admin.modules.services.forms:FixedCostBehaviorComponentForm",
+            "shoop.admin.modules.services.forms:WaivingCostBehaviorComponentForm",
+            "shoop.admin.modules.services.forms:WeightLimitsBehaviorComponentForm",
         ],
     }
 
