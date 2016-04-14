@@ -5,8 +5,12 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from ._base import ShoopAdminForm
+from .edit import PaymentMethodEditView, ShippingMethodEditView
+from .list import PaymentMethodListView, ShippingMethodListView
 
 __all__ = [
-    "ShoopAdminForm",
+    "PaymentMethodEditView",
+    "PaymentMethodListView",
+    "ShippingMethodEditView",
+    "ShippingMethodListView"
 ]
