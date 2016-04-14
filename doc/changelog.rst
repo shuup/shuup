@@ -132,6 +132,10 @@ Addons
 
 - Enable upgrade, migrations and collectstatic from admin
 
+Campaigns
+~~~~~~~~~
+
+- Add contact group sales ranges
 
 Version 3.0.0
 -------------
