@@ -13,13 +13,12 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumField
 from parler.models import TranslatedFields
-from polymorphic.models import PolymorphicModel
 from timezone_field.fields import TimeZoneField
 
 from shoop.core.fields import InternalIdentifierField, LanguageField
 from shoop.core.pricing import PriceDisplayOptions
 
-from ._base import TranslatableShoopModel
+from ._base import PolymorphicShoopModel, TranslatableShoopModel
 from ._taxes import CustomerTaxGroup
 
 DEFAULT_COMPANY_GROUP_IDENTIFIER = "default_company_group"
@@ -77,7 +76,7 @@ class ContactGroup(TranslatableShoopModel):
 
 
 @python_2_unicode_compatible
-class Contact(PolymorphicModel):
+class Contact(PolymorphicShoopModel):
     is_anonymous = False
     is_all_seeing = False
     default_tax_group_getter = None

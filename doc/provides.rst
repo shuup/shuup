@@ -15,7 +15,7 @@ can also define your own categories as you wish.
 .. TODO:: Document the various ways better.
 
 Provides are grouped under different categories, such as ``admin_module``,
-``shipping_method_module``, ``front_urls``, etc.
+``xtheme_plugin``, ``front_urls``, etc.
 
 Declaring Provides
 ------------------
@@ -30,9 +30,9 @@ the keys and lists of loading specs as values for new provides to be discovered.
    class PigeonAppConfig(AppConfig):
 
        provides = {
-           "shipping_method_module": [
-               "pigeon.module:PigeonShippingModule"
-           ]
+           'service_provider_admin_form': [
+               'pigeon.admin_forms:PigeonShippingAdminForm',
+           ],
        }
 
 .. note:: Some provides also require the class named by the spec string to include
@@ -109,16 +109,8 @@ Core
     order source, e.g. in its
     `~shoop.core.order_creator.OrderSource.get_final_lines`.
 
-``payment_method_module``
-    Payment method module classes (deriving from `~shoop.core.methods.base.BasePaymentMethodModule`),
-    as used by `~shoop.core.models.PaymentMethod`.
-
 ``pricing_module``
     Pricing module classes; the pricing module in use is set with the ``SHOOP_PRICING_MODULE`` setting.
-
-``shipping_method_module``
-    Shipping method module classes (deriving from `~shoop.core.methods.base.BaseShippingMethodModule`),
-    as used by `~shoop.core.models.ShippingMethod`.
 
 ``supplier_module``
     Supplier module classes (deriving from `~shoop.core.suppliers.base.BaseSupplierModule`),

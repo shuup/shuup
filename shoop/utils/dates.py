@@ -10,6 +10,8 @@ from __future__ import unicode_literals
 import datetime
 
 import six
+from django.utils.translation import ugettext as _
+from django.utils.translation import ungettext
 
 __all__ = ("parse_date", "parse_time", "try_parse_date", "try_parse_time")
 
@@ -177,3 +179,31 @@ def get_year_and_month_format(locale):
     :rtype: str
     """
     return locale_year_and_month_formats.get(locale.language.lower(), "MMM y")
+
+
+class DurationRange(object):
+    """
+    Present duration range, min days to max days.
+    """
+    def __init__(self, min_duration, max_duration=None):
+        assert isinstance(min_duration, datetime.timedelta)
+        assert max_duration is None or (
+            isinstance(max_duration, datetime.timedelta))
+        assert max_duration is None or max_duration >= min_duration
+        self.min_duration = min_duration
+        self.max_duration = (max_duration if max_duration is not None
+                             else min_duration)
+
+    @classmethod
+    def from_days(cls, min_days, max_days=None):
+        return cls(
+            datetime.timedelta(days=min_days),
+            (datetime.timedelta(days=max_days)
+             if max_days is not None else None))
+
+    def __str__(self):
+        if self.min_duration == self.max_duration:
+            days = self.max_duration.days
+            return ungettext("%s day", "%s days", days) % (days,)
+        return _("%(min)s--%(max)s days") % {
+            "min": self.min_duration.days, "max": self.max_duration.days}

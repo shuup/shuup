@@ -13,7 +13,6 @@ Subpackages
     shoop.admin.modules.demo
     shoop.admin.modules.manufacturers
     shoop.admin.modules.media
-    shoop.admin.modules.methods
     shoop.admin.modules.orders
     shoop.admin.modules.product_types
     shoop.admin.modules.products

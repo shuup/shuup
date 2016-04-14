@@ -24,8 +24,8 @@ from django_countries import countries
 
 from shoop.admin.modules.orders.json_order_creator import JsonOrderCreator
 from shoop.core.models import (
-    AnonymousContact, CompanyContact, Contact, MethodStatus, Order,
-    PaymentMethod, Product, ShippingMethod, Shop, ShopStatus
+    AnonymousContact, CompanyContact, Contact, Order, PaymentMethod, Product,
+    ShippingMethod, Shop, ShopStatus
 )
 from shoop.core.pricing import get_pricing_module
 from shoop.utils.i18n import (
@@ -112,8 +112,8 @@ class OrderCreateView(TemplateView):
 
     def get_config(self):
         shops = [encode_shop(shop) for shop in Shop.objects.filter(status=ShopStatus.ENABLED)]
-        shipping_methods = ShippingMethod.objects.filter(status=MethodStatus.ENABLED)
-        payment_methods = PaymentMethod.objects.filter(status=MethodStatus.ENABLED)
+        shipping_methods = ShippingMethod.objects.enabled()
+        payment_methods = PaymentMethod.objects.enabled()
         return {
             "shops": shops,
             "countries": [{"id": code, "name": name} for code, name in list(countries)],

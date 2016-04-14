@@ -389,12 +389,12 @@ class OrderSource(object):
 
     def _compute_payment_method_lines(self):
         if self.payment_method:
-            for line in self.payment_method.get_source_lines(self):
+            for line in self.payment_method.get_lines(self):
                 yield line
 
     def _compute_shipping_method_lines(self):
         if self.shipping_method:
-            for line in self.shipping_method.get_source_lines(self):
+            for line in self.shipping_method.get_lines(self):
                 yield line
 
     def _add_lines_from_modifiers(self, lines):
@@ -422,11 +422,11 @@ class OrderSource(object):
         payment_method = self.payment_method
 
         if shipping_method:
-            for error in shipping_method.get_validation_errors(source=self):
+            for error in shipping_method.get_unavailability_reasons(source=self):
                 yield error
 
         if payment_method:
-            for error in payment_method.get_validation_errors(source=self):
+            for error in payment_method.get_unavailability_reasons(source=self):
                 yield error
 
         for supplier in self._get_suppliers():

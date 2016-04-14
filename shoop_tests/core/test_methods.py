@@ -8,66 +8,36 @@
 from decimal import Decimal
 
 import pytest
-from django.core.exceptions import ValidationError
-from django.test.utils import override_settings
+from django.utils import translation
 
-from shoop.apps.provides import override_provides
-from shoop.core.methods.base import BaseShippingMethodModule
 from shoop.core.models import (
-    get_person_contact, OrderLineType, PaymentMethod, ShippingMethod
+    CustomCarrier, FixedCostBehaviorComponent, get_person_contact,
+    OrderLineType, PaymentMethod, PaymentStatus, ShippingMethod,
+    WaivingCostBehaviorComponent, WeightLimitsBehaviorComponent
 )
-from shoop.core.order_creator import SourceLine
-from shoop.core.pricing import PriceInfo
 from shoop.testing.factories import (
-    create_product, get_address, get_default_product, get_default_shop,
-    get_default_supplier, get_default_tax_class
+    create_empty_order, create_product, get_address,
+    get_custom_payment_processor, get_default_product, get_default_shop,
+    get_default_supplier, get_default_tax_class, get_payment_method,
+    get_shipping_method
 )
+from shoop.testing.models import ExpensiveSwedenBehaviorComponent
 from shoop_tests.utils.basketish_order_source import BasketishOrderSource
 
 
-class ExpensiveSwedenShippingModule(BaseShippingMethodModule):
-    identifier = "expensive_sweden"
-    name = "Expensive Sweden Shipping"
-
-    def get_effective_name(self, source, **kwargs):
-        return u"Expenseefe-a Svedee Sheepping"
-
-    def get_effective_price_info(self, source, **kwargs):
-        four = source.shop.create_price('4.00')
-        five = source.shop.create_price('5.00')
-        if source.shipping_address and source.shipping_address.country == "SE":
-            return PriceInfo(five, four, 1)
-        return PriceInfo(four, four, 1)
-
-    def get_validation_errors(self, source, **kwargs):
-        for error in super(ExpensiveSwedenShippingModule, self).get_validation_errors(source, **kwargs):
-            # The following line is no cover because the parent class doesn't necessarily error out
-            yield error  # pragma: no cover
-
-
-        if source.shipping_address and source.shipping_address.country == "FI":
-            yield ValidationError("Veell nut sheep unytheeng tu Feenlund!", code="we_no_speak_finnish")
-
-
-SHIPPING_METHOD_SPEC = "%s:%s" % (__name__, ExpensiveSwedenShippingModule.__name__)
-
-
 def get_expensive_sweden_shipping_method():
-    sm = ShippingMethod(
-        identifier=ExpensiveSwedenShippingModule.identifier,
-        module_identifier=ExpensiveSwedenShippingModule.identifier,
-        tax_class=get_default_tax_class()
+    carrier = CustomCarrier.objects.create(name="Sveede Sheep")
+    sm = carrier.create_service(
+        None, shop=get_default_shop(), enabled=True,
+        tax_class=get_default_tax_class(),
+        name="Expenseefe-a Svedee Sheepping")
+    sm.behavior_components.add(
+        ExpensiveSwedenBehaviorComponent.objects.create(),
+        WeightLimitsBehaviorComponent.objects.create(
+            min_weight="0.11", max_weight="3"),
     )
-    sm.module_data = {
-        "min_weight": "0.11000000",
-        "max_weight": "3.00000000",
-        "price_waiver_product_minimum": "370"
-    }
-    sm.save()
     return sm
 
-def override_provides_for_expensive_sweden_shipping_method():
-    return override_provides("shipping_method_module", [SHIPPING_METHOD_SPEC])
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("country", ["FI", "SE", "NL", "NO"])
@@ -88,69 +58,150 @@ def test_methods(admin_user, country):
     source.shipping_address = shipping_address
     source.customer = contact
 
-    with override_provides_for_expensive_sweden_shipping_method():
-        source.shipping_method = get_expensive_sweden_shipping_method()
-        source.payment_method = PaymentMethod.objects.create(identifier="neat",
-                                                             module_data={"price": 4},
-                                                             tax_class=get_default_tax_class())
-        assert source.shipping_method_id
-        assert source.payment_method_id
+    source.shipping_method = get_expensive_sweden_shipping_method()
+    source.payment_method = get_payment_method(name="neat", price=4)
+    assert source.shipping_method_id
+    assert source.payment_method_id
 
-        errors = list(source.get_validation_errors())
+    errors = list(source.get_validation_errors())
 
-        if country == "FI":  # "Expenseefe-a Svedee Sheepping" will not allow shipping to Finland, let's see if that holds true
-            assert any([ve.code == "we_no_speak_finnish" for ve in errors])
-            return  # Shouldn't try the rest if we got an error here
-        else:
-            assert not errors
+    if country == "FI":
+        # "Expenseefe-a Svedee Sheepping" will not allow shipping to
+        # Finland, let's see if that holds true
+        assert any([ve.code == "we_no_speak_finnish" for ve in errors])
+        assert [x.code for x in errors] == ["we_no_speak_finnish"]
+        return  # Shouldn't try the rest if we got an error here
+    else:
+        assert not errors
 
-        final_lines = list(source.get_final_lines())
+    final_lines = list(source.get_final_lines())
 
-        assert any(line.type == OrderLineType.SHIPPING for line in final_lines)
+    assert any(line.type == OrderLineType.SHIPPING for line in final_lines)
 
-        for line in final_lines:
-            if line.type == OrderLineType.SHIPPING:
-                if country == "SE":  # We _are_ using Expenseefe-a Svedee Sheepping after all.
-                    assert line.price == source.shop.create_price("5.00")
-                else:
-                    assert line.price == source.shop.create_price("4.00")
-                assert line.text == u"Expenseefe-a Svedee Sheepping"
-            if line.type == OrderLineType.PAYMENT:
-                assert line.price == source.shop.create_price(4)
+    for line in final_lines:
+        if line.type == OrderLineType.SHIPPING:
+            if country == "SE":  # We _are_ using Expenseefe-a Svedee Sheepping after all.
+                assert line.price == source.create_price("5.00")
+            else:
+                assert line.price == source.create_price("4.00")
+            assert line.text == u"Expenseefe-a Svedee Sheepping"
+        if line.type == OrderLineType.PAYMENT:
+            assert line.price == source.create_price(4)
 
-
-@pytest.mark.django_db
-def test_method_list(admin_user):
-    with override_provides_for_expensive_sweden_shipping_method():
-        assert any(name == "Expensive Sweden Shipping" for (spec, name) in ShippingMethod.get_module_choices())
 
 @pytest.mark.django_db
 def test_waiver():
-    sm = ShippingMethod(name="Waivey", tax_class=get_default_tax_class(),
-                        module_data={
-                            "price_waiver_product_minimum": "370",
-                            "price": "100"
-                        })
+    sm = get_shipping_method(name="Waivey", price=100, waive_at=370)
     source = BasketishOrderSource(get_default_shop())
     assert sm.get_effective_name(source) == u"Waivey"
-    assert sm.get_effective_price_info(source).price == source.shop.create_price(100)
+    assert sm.get_total_cost(source).price == source.create_price(100)
     source.add_line(
         type=OrderLineType.PRODUCT,
         product=get_default_product(),
-        base_unit_price=source.shop.create_price(400),
+        base_unit_price=source.create_price(400),
         quantity=1
     )
-    assert sm.get_effective_price_info(source).price == source.shop.create_price(0)
+    assert sm.get_total_cost(source).price == source.create_price(0)
+
+
+@pytest.mark.django_db
+def test_fixed_cost_with_waiving_costs():
+    sm = get_shipping_method(name="Fixed and waiving", price=5)
+
+    sm.behavior_components.add(
+        *[WaivingCostBehaviorComponent.objects.create(
+            price_value=p, waive_limit_value=w)
+          for (p, w) in [(3, 5), (7, 10), (10, 30)]])
+
+    source = BasketishOrderSource(get_default_shop())
+    source.shipping_method = sm
+
+    def pricestr(pi):
+        assert pi.price.unit_matches_with(source.create_price(0))
+        return "%.0f EUR (%.0f EUR)" % (pi.price.value, pi.base_price.value)
+
+    assert pricestr(sm.get_total_cost(source)) == "25 EUR (25 EUR)"
+    assert source.total_price.value == 25
+
+    source.add_line(
+        type=OrderLineType.PRODUCT, product=get_default_product(),
+        base_unit_price=source.create_price(2), quantity=1)
+    assert pricestr(sm.get_total_cost(source)) == "25 EUR (25 EUR)"
+    assert source.total_price.value == 27
+
+    source.add_line(
+        type=OrderLineType.PRODUCT, product=get_default_product(),
+        base_unit_price=source.create_price(3), quantity=1)
+    assert pricestr(sm.get_total_cost(source)) == "22 EUR (25 EUR)"
+    assert source.total_price.value == 27
+
+    source.add_line(
+        type=OrderLineType.PRODUCT, product=get_default_product(),
+        base_unit_price=source.create_price(10), quantity=1)
+    assert pricestr(sm.get_total_cost(source)) == "15 EUR (25 EUR)"
+    assert source.total_price.value == 30
+
+    source.add_line(
+        type=OrderLineType.PRODUCT, product=get_default_product(),
+        base_unit_price=source.create_price(10), quantity=1)
+    assert pricestr(sm.get_total_cost(source)) == "15 EUR (25 EUR)"
+    assert source.total_price.value == 40
+
+    source.add_line(
+        type=OrderLineType.PRODUCT, product=get_default_product(),
+        base_unit_price=source.create_price(10), quantity=1)
+    assert pricestr(sm.get_total_cost(source)) == "5 EUR (25 EUR)"
+    assert source.total_price.value == 40
+
+
+@pytest.mark.django_db
+def test_translations_of_method_and_component():
+    sm = get_shipping_method(name="Unique shipping")
+    sm.set_current_language('en')
+    sm.name = "Shipping"
+    sm.set_current_language('fi')
+    sm.name = "Toimitus"
+    sm.save()
+
+    cost = FixedCostBehaviorComponent.objects.language('fi').create(
+        price_value=10, description="kymppi")
+    cost.set_current_language('en')
+    cost.description = "ten bucks"
+    cost.save()
+    sm.behavior_components.add(cost)
+
+    source = BasketishOrderSource(get_default_shop())
+    source.shipping_method = sm
+
+    translation.activate('fi')
+    shipping_lines = [
+        line for line in source.get_final_lines()
+        if line.type == OrderLineType.SHIPPING]
+    assert len(shipping_lines) == 1
+    assert shipping_lines[0].text == 'Toimitus: kymppi'
+
+    translation.activate('en')
+    source.uncache()
+    shipping_lines = [
+        line for line in source.get_final_lines()
+        if line.type == OrderLineType.SHIPPING]
+    assert len(shipping_lines) == 1
+    assert shipping_lines[0].text == 'Shipping: ten bucks'
 
 
 @pytest.mark.django_db
 def test_weight_limits():
-    sm = ShippingMethod(tax_class=get_default_tax_class())
-    sm.module_data = {"min_weight": "100", "max_weight": "500"}
+    carrier = CustomCarrier.objects.create()
+    sm = carrier.create_service(
+        None, shop=get_default_shop(), enabled=True,
+        tax_class=get_default_tax_class())
+    sm.behavior_components.add(
+        WeightLimitsBehaviorComponent.objects.create(
+            min_weight=100, max_weight=500))
     source = BasketishOrderSource(get_default_shop())
-    assert any(ve.code == "min_weight" for ve in sm.get_validation_errors(source))
+    assert any(ve.code == "min_weight" for ve in sm.get_unavailability_reasons(source))
     source.add_line(type=OrderLineType.PRODUCT, weight=600)
-    assert any(ve.code == "max_weight" for ve in sm.get_validation_errors(source))
+    assert any(ve.code == "max_weight" for ve in sm.get_unavailability_reasons(source))
 
 
 @pytest.mark.django_db
@@ -158,8 +209,7 @@ def test_limited_methods():
     """
     Test that products can declare that they limit available shipping methods.
     """
-    unique_shipping_method = ShippingMethod(tax_class=get_default_tax_class(), module_data={"price": 0})
-    unique_shipping_method.save()
+    unique_shipping_method = get_shipping_method(name="unique", price=0)
     shop = get_default_shop()
     common_product = create_product(sku="SH_COMMON", shop=shop)  # A product that does not limit shipping methods
     unique_product = create_product(sku="SH_UNIQUE", shop=shop)  # A product that only supports unique_shipping_method
@@ -180,3 +230,79 @@ def test_limited_methods():
     ]:
         product_ids = set(product_ids)
         assert ShippingMethod.objects.available_ids(shop=shop, products=product_ids) == set(method_ids)
+
+
+def get_total_price_value(lines):
+    return sum([line.price.value for line in lines])
+
+
+@pytest.mark.django_db
+def test_source_lines_with_multiple_fixed_costs():
+    """
+    Costs with description creates new line always and costs without
+    description is combined into one line.
+    """
+    translation.activate("en")
+    starting_price_value = 5
+    sm = get_shipping_method(name="Multiple costs", price=starting_price_value)
+    sm.behavior_components.clear()
+
+    source = BasketishOrderSource(get_default_shop())
+    source.shipping_method = sm
+
+    lines = list(sm.get_lines(source))
+    assert len(lines) == 1
+    assert get_total_price_value(lines) == Decimal("0")
+
+    sm.behavior_components.add(FixedCostBehaviorComponent.objects.create(price_value=10))
+    lines = list(sm.get_lines(source))
+    assert len(lines) == 1
+    assert get_total_price_value(lines) == Decimal("10")
+
+    sm.behavior_components.add(FixedCostBehaviorComponent.objects.create(price_value=15, description="extra"))
+    lines = list(sm.get_lines(source))
+    assert len(lines) == 2
+    assert get_total_price_value(lines) == Decimal("25")
+
+    sm.behavior_components.add(FixedCostBehaviorComponent.objects.create(price_value=1))
+    lines = list(sm.get_lines(source))
+    assert len(lines) == 2
+    assert get_total_price_value(lines) == Decimal("26")
+
+
+@pytest.mark.django_db
+def test_process_payment_return_request(rf):
+    """
+    Order payment with default payment method with ``CustomPaymentProcessor``
+    should be deferred.
+
+    Payment can't be processed if method doesn't have provider or provider
+    is not enabled or payment method is not enabled.
+    """
+    pm = PaymentMethod.objects.create(
+        shop=get_default_shop(), name="Test method", enabled=False, tax_class=get_default_tax_class())
+    order = create_empty_order()
+    order.payment_method = pm
+    order.save()
+    assert order.payment_status == PaymentStatus.NOT_PAID
+    with pytest.raises(ValueError):  # Can't process payment with unusable method
+        order.payment_method.process_payment_return_request(order, rf.get("/"))
+    assert order.payment_status == PaymentStatus.NOT_PAID
+    pm.payment_processor = get_custom_payment_processor()
+    pm.payment_processor.enabled = False
+    pm.save()
+
+    with pytest.raises(ValueError):  # Can't process payment with unusable method
+        order.payment_method.process_payment_return_request(order, rf.get("/"))
+    assert order.payment_status == PaymentStatus.NOT_PAID
+    pm.payment_processor.enabled = True
+    pm.save()
+
+    with pytest.raises(ValueError):  # Can't process payment with unusable method
+        order.payment_method.process_payment_return_request(order, rf.get("/"))
+    assert order.payment_status == PaymentStatus.NOT_PAID
+    pm.enabled = True
+    pm.save()
+
+    order.payment_method.process_payment_return_request(order, rf.get("/"))
+    assert order.payment_status == PaymentStatus.DEFERRED

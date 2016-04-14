@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-11 12:32+0000\n"
+"POT-Creation-Date: 2016-04-11 12:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -20,6 +20,9 @@ msgstr ""
 "Generated-By: Babel 2.1.1\n"
 
 msgid "Shoop Utilities"
+msgstr ""
+
+msgid "target"
 msgstr ""
 
 msgid "other"
@@ -64,7 +67,14 @@ msgstr ""
 msgid "extra data"
 msgstr ""
 
-msgid "target"
+#, python-format
+msgid "%s day"
+msgid_plural "%s days"
+msgstr[0] ""
+msgstr[1] ""
+
+#, python-format
+msgid "%(min)s--%(max)s days"
 msgstr ""
 
 msgid ""

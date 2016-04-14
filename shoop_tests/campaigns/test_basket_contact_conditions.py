@@ -16,7 +16,7 @@ from shoop.core.models import AnonymousContact, Shop
 from shoop.front.basket import get_basket
 from shoop.testing.factories import (
     create_product, create_random_person, get_default_customer_group,
-    get_default_payment_method, get_default_supplier, get_shop,
+    get_default_supplier, get_payment_method, get_shop,
 )
 from shoop.testing.utils import apply_request_middleware
 
@@ -25,7 +25,7 @@ def get_request_for_contact_tests(rf):
     activate("en")
     request = rf.get("/")
     request.shop = get_shop(prices_include_tax=True)
-    get_default_payment_method()
+    get_payment_method(request.shop)
     apply_request_middleware(request)
     return request
 
