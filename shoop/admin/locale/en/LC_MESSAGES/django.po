@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-14 06:59+0000\n"
+"POT-Creation-Date: 2016-04-14 23:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -587,6 +587,39 @@ msgstr ""
 msgid "Edit %(model)s"
 msgstr ""
 
+msgid "Shipping Methods"
+msgstr ""
+
+msgid "Payment Methods"
+msgstr ""
+
+msgid "Service"
+msgstr ""
+
+msgid "Select carrier before filling other fields."
+msgstr ""
+
+msgid "Select payment processor before filling other fields."
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
+msgid "Waive limit"
+msgstr ""
+
+msgid "Enabled"
+msgstr ""
+
+msgid "Shop"
+msgstr ""
+
+msgid "Carrier"
+msgstr ""
+
+msgid "Payment Processor"
+msgstr ""
+
 msgid "Shops"
 msgstr ""
 
@@ -631,9 +664,6 @@ msgid "Code"
 msgstr ""
 
 msgid "Rate"
-msgstr ""
-
-msgid "Enabled"
 msgstr ""
 
 msgid "Users"
@@ -1094,6 +1124,15 @@ msgstr ""
 msgid ""
 "To create a variation with multiple variables, create the variables on the "
 "Variables tab and then link them to products here."
+msgstr ""
+
+msgid "Behavior"
+msgstr ""
+
+msgid "Behavior component type"
+msgstr ""
+
+msgid "Add component"
 msgstr ""
 
 msgid "Shop Logo"
