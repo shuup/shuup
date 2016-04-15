@@ -120,3 +120,15 @@ def test_picotable_range_filter(rf, regular_user):
 def test_column_is_user_friendly():
     with pytest.raises(NameError):
         Column(id="foo", title="bar", asdf=True)
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("regular_user")
+def test_picotable_no_mobile_link_for_missing_object_url(rf, admin_user, regular_user):
+    pico = get_pico(rf)
+    pico.get_object_url = lambda object: "http://www.fakeurl.com"
+    data = pico.get_data({"perPage": 100, "page": 1})
+    assert data["items"][0]["_linked_in_mobile"]
+
+    pico.get_object_url = None
+    data = pico.get_data({"perPage": 100, "page": 1})
+    assert not data["items"][0]["_linked_in_mobile"]

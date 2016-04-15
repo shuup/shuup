@@ -13,13 +13,14 @@ from django.db.models import Count, Sum
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 
-from shoop.admin.base import AdminModule
+from shoop.admin.base import AdminModule, MenuEntry
 from shoop.admin.currencybound import CurrencyBound
 from shoop.admin.dashboard import DashboardMoneyBlock
+from shoop.admin.utils.urls import admin_url
 from shoop.front.models.stored_basket import StoredBasket
 
 
-def get_unfinalized_basket_block(currency, days=14):
+def get_unfinalized_cart_block(currency, days=14):
     days = int(days)
 
     early_cutoff = now() - datetime.timedelta(days=days)
@@ -38,21 +39,45 @@ def get_unfinalized_basket_block(currency, days=14):
         return
 
     return DashboardMoneyBlock(
-        id="abandoned_baskets_%d" % days,
+        id="abandoned_carts_%d" % days,
         color="red",
-        title=_("Abandoned Basket Value"),
+        title=_("Abandoned Cart Value"),
         value=(data.get("sum") or 0),
         currency=currency,
         icon="fa fa-calculator",
-        subtitle=_("Based on {b} baskets over the last {d} days").format(
+        subtitle=_("Based on {b} carts over the last {d} days").format(
             b=data.get("count"), d=days)
     )
 
 
-class BasketAdminModule(CurrencyBound, AdminModule):
+class CartAdminModule(CurrencyBound, AdminModule):
     def get_dashboard_blocks(self, request):
         if not self.currency:
             return
-        unfinalized_block = get_unfinalized_basket_block(self.currency, days=14)
+        unfinalized_block = get_unfinalized_cart_block(self.currency, days=14)
         if unfinalized_block:
             yield unfinalized_block
+
+    def get_urls(self):
+        return [
+            admin_url(
+                "^carts/$",
+                "shoop.front.admin_module.carts.views.CartListView",
+                name="cart.list",
+            ),
+        ]
+
+    def get_menu_category_icons(self):
+        return {self.name: "fa fa-cart"}
+
+    def get_menu_entries(self, request):
+        category = _("Carts")
+        return [
+            MenuEntry(
+                text=_("Carts"),
+                icon="fa fa-shopping-cart",
+                url="shoop_admin:cart.list",
+                category=category,
+                aliases=[_("Show carts")]
+            ),
+        ]
