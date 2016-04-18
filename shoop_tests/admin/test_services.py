@@ -10,18 +10,22 @@ import pytest
 
 from django import forms
 from django.conf import settings
+from django.db.models import ProtectedError
 from django.test import override_settings
+from django.utils.text import force_text
 
 from shoop.admin.modules.services.base_form_part import ServiceBaseFormPart
 from shoop.admin.modules.services.forms import PaymentMethodForm, ShippingMethodForm
 from shoop.admin.modules.services.views import (
     PaymentMethodEditView, ShippingMethodEditView
 )
+from shoop.admin.utils.urls import get_model_url
 from shoop.apps.provides import override_provides
 from shoop.core.models import PaymentMethod, ShippingMethod
 from shoop.testing.factories import (
-    get_custom_carrier, get_custom_payment_processor, get_default_payment_method,
-    get_default_shipping_method, get_default_shop, get_default_tax_class
+    create_empty_order, get_custom_carrier, get_custom_payment_processor,
+    get_default_payment_method, get_default_shipping_method, get_default_shop,
+    get_default_tax_class
 )
 from shoop.testing.utils import apply_request_middleware
 
@@ -154,3 +158,37 @@ def test_method_edit_save(rf, admin_user, view, model, get_object, service_provi
 
         assert model.objects.count() == methods_before
         assert model.objects.get(pk=object.pk).choice_identifier == "manual"
+
+
+def check_for_delete(view, request, object):
+    can_delete = object.can_delete()
+    delete_url = get_model_url(object, "delete")
+    response = view(request, pk=object.pk)
+    if hasattr(response, "render"):
+        response.render()
+    assert response.status_code in [200, 302]
+    assert bool(delete_url in force_text(response.content)) == can_delete
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("view_cls,get_method,method_attr", [
+    (PaymentMethodEditView, get_default_payment_method, "payment_method"),
+    (ShippingMethodEditView, get_default_shipping_method, "shipping_method")
+])
+def test_delete_toolbar_button(rf, admin_user, view_cls, get_method, method_attr):
+    method = get_method()
+    assert method.can_delete()
+    view = view_cls.as_view()
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
+    check_for_delete(view, request, method)
+
+    # Create order for method and test the can_delete and edit view
+    order = create_empty_order()
+    setattr(order, method_attr, method)
+    order.save()
+    assert not method.can_delete()
+    check_for_delete(view, request, method)
+
+    # Make sure that the actual delete is also blocked
+    with pytest.raises(ProtectedError):
+        method.delete()

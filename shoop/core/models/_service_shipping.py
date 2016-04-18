@@ -14,6 +14,7 @@ from parler.models import TranslatedFields
 from shoop.utils.dates import DurationRange
 
 from ._order_lines import OrderLineType
+from ._orders import Order
 from ._service_base import Service, ServiceChoice, ServiceProvider
 
 
@@ -35,6 +36,9 @@ class ShippingMethod(Service):
     class Meta:
         verbose_name = _("shipping method")
         verbose_name_plural = _("shipping methods")
+
+    def can_delete(self):
+        return not Order.objects.filter(shipping_method=self).exists()
 
     def get_shipping_time(self, source):
         """

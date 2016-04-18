@@ -15,6 +15,8 @@ from shoop.admin.modules.services.base_form_part import (
 )
 from shoop.admin.modules.services.behavior_form_part import \
     BehaviorComponentFormPart
+from shoop.admin.toolbar import get_default_edit_toolbar
+from shoop.admin.utils.urls import get_model_url
 from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.apps.provides import get_provide_objects
 from shoop.core.models import PaymentMethod, ShippingMethod
@@ -41,6 +43,12 @@ class ServiceEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
 
     def _get_behavior_form_part(self, form, object):
         return BehaviorComponentFormPart(self.request, form, form._meta.model.__name__.lower(), object)
+
+    def get_toolbar(self):
+        save_form_id = self.get_save_form_id()
+        object = self.get_object()
+        delete_url = get_model_url(object, "delete")
+        return get_default_edit_toolbar(self, save_form_id, delete_url=(delete_url if object.can_delete() else None))
 
 
 class ShippingMethodEditView(ServiceEditView):
