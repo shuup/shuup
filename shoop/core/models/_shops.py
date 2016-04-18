@@ -31,6 +31,10 @@ class ShopStatus(Enum):
     DISABLED = 0
     ENABLED = 1
 
+    class Labels:
+        DISABLED = _('disabled')
+        ENABLED = _('enabled')
+
 
 @python_2_unicode_compatible
 class Shop(ChangeProtected, TranslatableShoopModel):

@@ -315,6 +315,18 @@ msgstr ""
 msgid "companies"
 msgstr ""
 
+msgid "undisclosed"
+msgstr ""
+
+msgid "male"
+msgstr ""
+
+msgid "female"
+msgstr ""
+
+msgid "other"
+msgstr ""
+
 msgid "Person Contacts"
 msgstr ""
 
@@ -376,9 +388,6 @@ msgid "payment"
 msgstr ""
 
 msgid "discount"
-msgstr ""
-
-msgid "other"
 msgstr ""
 
 msgid "order"
@@ -1074,6 +1083,12 @@ msgid "physical stock count"
 msgstr ""
 
 msgid "logical stock count"
+msgstr ""
+
+msgid "internal"
+msgstr ""
+
+msgid "external"
 msgstr ""
 
 msgid "supplier type"

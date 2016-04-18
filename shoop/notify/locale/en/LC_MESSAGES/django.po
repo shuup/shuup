@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 13:16+0000\n"
+"POT-Creation-Date: 2016-04-10 16:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -102,6 +102,24 @@ msgstr ""
 msgid "Empty"
 msgstr ""
 
+msgid "none"
+msgstr ""
+
+msgid "unilingual"
+msgstr ""
+
+msgid "multilingual"
+msgstr ""
+
+msgid "variable only"
+msgstr ""
+
+msgid "constant only"
+msgstr ""
+
+msgid "variable or constant"
+msgstr ""
+
 msgid "continue to the next step"
 msgstr ""
 
@@ -114,13 +132,22 @@ msgstr ""
 msgid "any"
 msgstr ""
 
-msgid "none"
-msgstr ""
-
 msgid "any shop administrator"
 msgstr ""
 
 msgid "a specific user"
+msgstr ""
+
+msgid "low"
+msgstr ""
+
+msgid "normal"
+msgstr ""
+
+msgid "high"
+msgstr ""
+
+msgid "critical"
 msgstr ""
 
 msgid "recipient type"
