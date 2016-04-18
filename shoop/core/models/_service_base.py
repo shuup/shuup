@@ -36,6 +36,10 @@ class ServiceProvider(PolymorphicTranslatableShoopModel):
 
     Good examples of service providers are `Carrier` and
     `PaymentProcessor`.
+
+    When subclassing `ServiceProvider`, set value for `service_model`
+    class attribute.  It should be a model class which is subclass of
+    `Service`.
     """
     identifier = InternalIdentifierField(unique=True)
     enabled = models.BooleanField(default=True, verbose_name=_("enabled"))
@@ -47,6 +51,9 @@ class ServiceProvider(PolymorphicTranslatableShoopModel):
     base_translations = TranslatedFields(
         name=models.CharField(max_length=100, verbose_name=_("name")),
     )
+
+    #: Model class of the provided services (subclass of `Service`)
+    service_model = None
 
     checkout_phase_class = None
 

@@ -63,6 +63,9 @@ class PaymentProcessor(ServiceProvider):
     Note: `PaymentProcessor` objects should never be created on their
     own but rather through a concrete subclass.
     """
+
+    service_model = PaymentMethod
+
     def delete(self, *args, **kwargs):
         PaymentMethod.objects.filter(payment_processor=self).update(**{"enabled": False})
         super(PaymentProcessor, self).delete(*args, **kwargs)

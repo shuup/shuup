@@ -70,6 +70,9 @@ class Carrier(ServiceProvider):
     Note: `Carrier` objects should never be created on their own but
     rather through a concrete subclass.
     """
+
+    service_model = ShippingMethod
+
     def delete(self, *args, **kwargs):
         ShippingMethod.objects.filter(carrier=self).update(**{"enabled": False})
         super(Carrier, self).delete(*args, **kwargs)
