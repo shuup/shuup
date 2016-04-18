@@ -1,0 +1,40 @@
+<div id="id_{{ field_name }}">
+{% for service_provider, services in grouped_methods.items() %}
+    <div class="service-provider">
+        {% if service_provider.logo %}
+            {% set service_provider_logo = service_provider.logo|thumbnail(size=(0,100)) %}
+            <img class="image" src="{{ service_provider_logo }}" alt="{{ service_provider.name }}">
+        {% else %}
+            <h3>{{ service_provider.name }}</h3>
+        {% endif %}
+    </div>
+    <div class="radio method-radio">
+    {% for service in services %}
+        <label for="id_{{ field_name }}_{{ service.id }}">
+            <input
+                {% if current_value == service.id %}checked=checked{% endif %}
+                name="{{ field_name }}"
+                id="id_{{ field_name }}_{{ service.id }}"
+                type="radio" value="{{ service.id }}">
+            {% if service.logo %}
+                {% set service_logo = service.logo|thumbnail(size=(0,100)) %}
+                <img class="image" src="{{ service_logo }}" alt="{{ service.name }}">
+            {% endif %}
+            <span class="label-text">
+                <span class="title">
+                    <span class="name">{{ service.name }}</span>
+                    {% if show_prices() %}
+                        {% set price_info = service.get_total_cost(basket) %}
+                        <span class="price">{{ price_info.price|money }}</span>
+                    {% endif %}
+                </span>
+                <small class="description">
+                    {{ service.description }}
+                </small>
+            </span>
+        </label>
+    {% endfor %}
+    </div>
+    <hr>
+{% endfor %}
+</div>
