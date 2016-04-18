@@ -7,6 +7,7 @@
 from .basket_conditions import BasketCondition
 from .campaigns import BasketCampaign, Campaign, CatalogCampaign, Coupon
 from .catalog_filters import CatalogFilter
+from .contact_group_sales_ranges import ContactGroupSalesRange
 from .context_conditions import ContextCondition
 
 __all__ = [
@@ -15,6 +16,7 @@ __all__ = [
     'Campaign',
     'CatalogCampaign',
     'CatalogFilter',
+    'ContactGroupSalesRange',
     'ContextCondition',
     'Coupon',
 ]

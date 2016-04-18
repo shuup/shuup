@@ -24,6 +24,7 @@ class ContactGroupEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdat
     template_name = "shoop/admin/contact_groups/edit.jinja"
     context_object_name = "contact_group"
     base_form_part_classes = [ContactGroupBaseFormPart, ContactGroupMembersFormPart]
+    form_part_class_provide_key = "admin_contact_group_form_part"
 
     @atomic
     def form_valid(self, form):

@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-11 12:32+0000\n"
+"POT-Creation-Date: 2016-04-14 03:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 
 msgid "Campaigns"
 msgstr ""
@@ -36,6 +36,15 @@ msgid "Coupons"
 msgstr ""
 
 msgid "Show Coupons"
+msgstr ""
+
+msgid "Minimum value"
+msgstr ""
+
+msgid "Maximum value"
+msgstr ""
+
+msgid "Leave empty for no maximum"
 msgstr ""
 
 msgid "Title"
@@ -304,6 +313,18 @@ msgstr ""
 msgid "Limit the campaign to products in selected categories."
 msgstr ""
 
+msgid "group"
+msgstr ""
+
+msgid "min amount"
+msgstr ""
+
+msgid "max amount"
+msgstr ""
+
+msgid "Can not add sales limits for default contact groups"
+msgstr ""
+
 msgid "Context Condition"
 msgstr ""
 
@@ -338,4 +359,10 @@ msgstr ""
 
 #, python-format
 msgid "%(coupons)s used"
+msgstr ""
+
+msgid "Sales Ranges"
+msgstr ""
+
+msgid "Customers within this sales range are assigned to this contact group."
 msgstr ""
