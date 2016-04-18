@@ -23,7 +23,7 @@ class ServiceListView(PicotableListView):
     base_columns = [
         Column(
             "name", _("Name"), sort_field="translations__name",
-            filter_config=TextFilter(filter_field="name", placeholder=_("Filter by name..."))
+            filter_config=TextFilter(filter_field="translations__name", placeholder=_("Filter by name..."))
         ),
         Column("enabled", _(u"Enabled"), filter_config=true_or_false_filter),
         Column("shop", _(u"Shop"))
