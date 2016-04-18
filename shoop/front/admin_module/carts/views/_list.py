@@ -9,9 +9,8 @@ from __future__ import unicode_literals
 
 import datetime
 
-from babel.dates import format_datetime
 from django.utils.html import escape
-from django.utils.timezone import localtime, now
+from django.utils.timezone import now
 from django.utils.translation import ugettext as _
 
 from shoop.admin.utils.picotable import (
@@ -20,7 +19,7 @@ from shoop.admin.utils.picotable import (
 from shoop.admin.utils.views import PicotableListView
 from shoop.core.models import Shop
 from shoop.front.models import StoredBasket
-from shoop.utils.i18n import format_money, get_current_babel_locale
+from shoop.utils.i18n import format_money, get_locally_formatted_datetime
 
 
 class CartListView(PicotableListView):
@@ -62,10 +61,10 @@ class CartListView(PicotableListView):
         return "yes" if not instance.finished else "no"
 
     def format_created_date(self, instance, *args, **kwargs):
-        return format_datetime(localtime(instance.created_on), locale=get_current_babel_locale())
+        return get_locally_formatted_datetime(instance.created_on)
 
     def format_updated_date(self, instance, *args, **kwargs):
-        return format_datetime(localtime(instance.updated_on), locale=get_current_babel_locale())
+        return get_locally_formatted_datetime(instance.updated_on)
 
     def format_taxful_total_price(self, instance, *args, **kwargs):
         return escape(format_money(instance.taxful_total_price))
