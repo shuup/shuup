@@ -142,3 +142,12 @@ class MultiLanguageModelForm(TranslatableModelForm):
     def pre_master_save(self, instance):
         # Subclass hook
         pass
+
+    def _get_cleaned_data_without_translations(self):
+        """
+        Get cleaned data without translated fields.
+        """
+        translated_field_names = set(self.translated_field_names)
+        return dict(
+            (k, v) for (k, v) in six.iteritems(self.cleaned_data)
+            if k not in translated_field_names)
