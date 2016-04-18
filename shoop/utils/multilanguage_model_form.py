@@ -125,8 +125,8 @@ class MultiLanguageModelForm(TranslatableModelForm):
     def save(self, commit=True):
         self._set_fields_for_language(self.default_language)
         self.pre_master_save(self.instance)
-        instance = self.instance = super(ModelForm, self).save(True)  # We skip TranslatableModelForm on purpose!
-        self._save_translations(instance, data)
+        self.instance = self._save_master(commit)
+        self._save_translations(self.instance, self.cleaned_data)
         return self.instance
 
     def _set_fields_for_language(self, language):
@@ -134,6 +134,10 @@ class MultiLanguageModelForm(TranslatableModelForm):
         for field in self.translation_fields:
             value = self.cleaned_data["%s__%s" % (field.name, language)]
             field.save_form_data(self.instance, value)
+
+    def _save_master(self, commit=True):
+        # We skip TranslatableModelForm on purpose!
+        return super(ModelForm, self).save(True)
 
     def pre_master_save(self, instance):
         # Subclass hook
