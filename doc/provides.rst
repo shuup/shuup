@@ -115,6 +115,12 @@ Core
 ``pricing_module``
     Pricing module classes; the pricing module in use is set with the ``SHOOP_PRICING_MODULE`` setting.
 
+``service_behavior_component_form``
+    Forms for creating service behavior components in Shop Admin.  When
+    creating a custom `service behavior component
+    <shoop.core.models.ServiceBehaviorComponent>`, provide a form for it
+    via this provide.
+
 ``service_provider_admin_form``
     Forms for creating service providers in Shop Admin.  When creating a
     custom `service provider <shoop.core.models.ServiceProvider>`

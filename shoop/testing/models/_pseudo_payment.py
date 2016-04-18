@@ -14,7 +14,10 @@ from django.db import models
 from django.http.response import HttpResponse
 from django.utils.timezone import now
 
-from shoop.core.models import PaymentProcessor, ServiceChoice
+from shoop.core.models import (
+    FixedCostBehaviorComponent, PaymentProcessor, ServiceChoice,
+    WaivingCostBehaviorComponent
+)
 from shoop.utils.excs import Problem
 
 
@@ -48,6 +51,18 @@ class PseudoPaymentProcessor(PaymentProcessor):
             ServiceChoice('normal', "Pseudo payment"),
             ServiceChoice('caps', "Pseudo payment CAPS"),
         ]
+
+    def _create_service(self, choice_identifier, **kwargs):
+        service = super(PseudoPaymentProcessor, self)._create_service(
+            choice_identifier, **kwargs)
+        service.behavior_components.add(
+            WaivingCostBehaviorComponent.objects.create(
+                price_value=10, waive_limit_value=1000))
+        if choice_identifier == 'caps':
+            service.behavior_components.add(
+                FixedCostBehaviorComponent.objects.create(
+                    price_value=50, description="UPPERCASING EXTRA FEE"))
+        return service
 
     def compute_pseudo_mac(self, order):
         return hmac.new(key=b"PseudoPayment", msg=order.key.encode("utf-8")).hexdigest()

@@ -18,6 +18,7 @@ Subpackages
     shoop.admin.modules.products
     shoop.admin.modules.sales_units
     shoop.admin.modules.service_providers
+    shoop.admin.modules.services
     shoop.admin.modules.shops
     shoop.admin.modules.suppliers
     shoop.admin.modules.system

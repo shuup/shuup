@@ -123,16 +123,31 @@ class MultiLanguageModelForm(TranslatableModelForm):
         translation.save()
 
     def save(self, commit=True):
-        self.instance.set_current_language(self.default_language)
-        data = self.cleaned_data
-        for field in self.translation_fields:
-            field.save_form_data(self.instance, data["%s__%s" % (field.name, self.default_language)])
-
+        self._set_fields_for_language(self.default_language)
         self.pre_master_save(self.instance)
-        instance = self.instance = super(ModelForm, self).save(True)  # We skip TranslatableModelForm on purpose!
-        self._save_translations(instance, data)
+        self.instance = self._save_master(commit)
+        self._save_translations(self.instance, self.cleaned_data)
         return self.instance
+
+    def _set_fields_for_language(self, language):
+        self.instance.set_current_language(language)
+        for field in self.translation_fields:
+            value = self.cleaned_data["%s__%s" % (field.name, language)]
+            field.save_form_data(self.instance, value)
+
+    def _save_master(self, commit=True):
+        # We skip TranslatableModelForm on purpose!
+        return super(ModelForm, self).save(True)
 
     def pre_master_save(self, instance):
         # Subclass hook
         pass
+
+    def _get_cleaned_data_without_translations(self):
+        """
+        Get cleaned data without translated fields.
+        """
+        translated_field_names = set(self.translated_field_names)
+        return dict(
+            (k, v) for (k, v) in six.iteritems(self.cleaned_data)
+            if k not in translated_field_names)
