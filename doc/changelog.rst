@@ -50,7 +50,7 @@ Admin
 ~~~~~
 
 - Add ``admin_contact_group_form_part`` provider for ``ContactGroup`` admin
-- Remove shipping and payment method management
+- Add service provider management
 - Add package mode for products
 - Enable ```merchant_notes`` editing for ``Contact``
 - Add option to add extra form parts to Shop edit view

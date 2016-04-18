@@ -63,6 +63,10 @@ class PaymentProcessor(ServiceProvider):
     Note: `PaymentProcessor` objects should never be created on their
     own but rather through a concrete subclass.
     """
+    def delete(self, *args, **kwargs):
+        PaymentMethod.objects.filter(payment_processor=self).update(**{"enabled": False})
+        super(PaymentProcessor, self).delete(*args, **kwargs)
+
     def get_payment_process_response(self, service, order, urls):
         """
         Get payment process response for given order.
