@@ -32,7 +32,6 @@ Core
 - Add option to create payments with REST API
 - Add contact address for ``Shop``
 - Add update_stock calls for ``SimpleSupplierModule``
-- Rename ``simple_pricing`` to ``customer_group_pricing``
 - Rename ``CAMPAIGN`` in ``OrderLineType`` enum to ``DISCOUNT``
 - Add ``OrderSourceModifierModule`` interface for modifying order source
 - Add ``DiscountModule`` interface for pricing
@@ -118,6 +117,12 @@ Campaigns
   - Coupon management
   - Contact group sales ranges
 
+Customer Group Pricing
+~~~~~~~~~~~~~~~~~~~~~~
+
+- Rename Simple Pricing to Customer Group Pricing
+- Fix pricing for ``AnonymousContact``
+
 Discount Pricing
 ~~~~~~~~~~~~~~~~
 
@@ -128,11 +133,6 @@ Simple CMS
 
 - Add option to list children on page
 - Add possibility to set parent on page
-
-Customer Group Pricing
-~~~~~~~~~~~~~~~~~~~~~~
-
-- Fix pricing for ``AnonymousContact``
 
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
