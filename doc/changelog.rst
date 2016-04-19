@@ -37,6 +37,7 @@ Admin
 Front
 ~~~~~
 
+- Add "next" parameter support for registration
 - Process given coupon codes in basket
 - Process discounts from new campaign engine
 
@@ -47,6 +48,7 @@ Xtheme
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 
+- Add "next" parameter to register links
 - Add Coupon use possibility to basket page
 
 Simple Supplier
