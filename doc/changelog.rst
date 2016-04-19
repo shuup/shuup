@@ -74,6 +74,7 @@ Front
 - Fix bug: BasketStorage.finalize() never called delete() correctly
 - Check product quantity already in basket while adding
 - Move ``order_creator_finished`` signal under core
+- Add "next" parameter support for registration
 - Process given coupon codes in basket
 - Add ``get_visible_products`` template helper
 
@@ -93,6 +94,7 @@ Classic Gray Theme
 - Update cross-sells plugin to use ``ProductCrossSellType.BOUGHT_WITH``
 - Render prices with the new price rendering template tags
 - Show error messages while adding products to basket
+- Add "next" parameter to register links
 - Add Coupon use possibility to basket page
 - Add option to only show orderable products to highlights plugin
 - Add Xtheme plugin to display social media links on shop front
