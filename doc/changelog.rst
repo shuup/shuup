@@ -34,6 +34,11 @@ Admin
 - Add Campaigns management
 - Add Coupon management
 
+Addons
+~~~~~~
+
+- Enable upgrade, migrations and collectstatic from admin
+
 Front
 ~~~~~
 
@@ -70,11 +75,6 @@ General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
 - Add campaigns module
-
-Addons
-~~~~~~
-
-- Enable upgrade, migrations and collectstatic from admin
 
 
 Version 3.0.0
