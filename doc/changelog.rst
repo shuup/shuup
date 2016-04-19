@@ -43,6 +43,7 @@ Core
 Localization
 ~~~~~~~~~~~~
 
+- Add Brazilian Portuguese translations (pt_BR)
 
 Admin
 ~~~~~
