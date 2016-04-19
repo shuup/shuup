@@ -47,7 +47,7 @@ class ServiceEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
     def get_toolbar(self):
         save_form_id = self.get_save_form_id()
         object = self.get_object()
-        delete_url = get_model_url(object, "delete")
+        delete_url = get_model_url(object, "delete") if object.pk else None
         return get_default_edit_toolbar(self, save_form_id, delete_url=(delete_url if object.can_delete() else None))
 
 
