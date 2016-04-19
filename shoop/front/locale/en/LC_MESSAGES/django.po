@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-11 12:32+0000\n"
+"POT-Creation-Date: 2016-04-18 22:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -19,11 +19,50 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
-msgid "Abandoned Basket Value"
+msgid "Abandoned Cart Value"
 msgstr ""
 
 #, python-brace-format
-msgid "Based on {b} baskets over the last {d} days"
+msgid "Based on {b} carts over the last {d} days"
+msgstr ""
+
+msgid "Carts"
+msgstr ""
+
+msgid "Show carts"
+msgstr ""
+
+msgid "yes"
+msgstr ""
+
+msgid "no"
+msgstr ""
+
+msgid "Created on"
+msgstr ""
+
+msgid "Last updated on"
+msgstr ""
+
+msgid "Abandoned"
+msgstr ""
+
+msgid "Shop"
+msgstr ""
+
+msgid "Product count"
+msgstr ""
+
+msgid "Customer"
+msgstr ""
+
+msgid "Orderer"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Ordered"
 msgstr ""
 
 #, python-format

@@ -7,9 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from babel.dates import format_datetime
 from django.utils.html import escape
-from django.utils.timezone import localtime
 from django.utils.translation import ugettext as _
 
 from shoop.admin.utils.picotable import (
@@ -18,7 +16,7 @@ from shoop.admin.utils.picotable import (
 )
 from shoop.admin.utils.views import PicotableListView
 from shoop.core.models import Order, OrderStatus, PaymentStatus, ShippingStatus
-from shoop.utils.i18n import format_money, get_current_babel_locale
+from shoop.utils.i18n import format_money, get_locally_formatted_datetime
 
 
 class OrderListView(PicotableListView):
@@ -44,7 +42,7 @@ class OrderListView(PicotableListView):
         return super(OrderListView, self).get_queryset().exclude(deleted=True)
 
     def format_order_date(self, instance, *args, **kwargs):
-        return format_datetime(localtime(instance.order_date), locale=get_current_babel_locale())
+        return get_locally_formatted_datetime(instance.order_date)
 
     def format_taxful_total_price(self, instance, *args, **kwargs):
         return escape(format_money(instance.taxful_total_price))

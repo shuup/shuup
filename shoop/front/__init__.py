@@ -18,7 +18,7 @@ class ShoopFrontAppConfig(AppConfig):
 
     provides = {
         "admin_module": [
-            "shoop.front.admin_module.BasketAdminModule",
+            "shoop.front.admin_module.CartAdminModule",
         ],
         "notify_event": [
             "shoop.front.notify_events:OrderReceived"

@@ -321,10 +321,11 @@ class Picotable(object):
         return out
 
     def process_item(self, object):
+        object_url = self.get_object_url(object) if callable(self.get_object_url) else None
         out = {
             "_id": object.id,
-            "_url": (self.get_object_url(object) if callable(self.get_object_url) else None),
-            "_linked_in_mobile": True
+            "_url": object_url,
+            "_linked_in_mobile": True if object_url else False
         }
         for column in self.columns:
             out[column.id] = column.get_display_value(context=self.context, object=object)

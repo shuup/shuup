@@ -65,6 +65,7 @@ Admin
 Front
 ~~~~~
 
+- Add admin view for monitoring customer carts
 - Remove ``get_method_validation_errors`` signal
 - Fix bug at ``get_visible_products`` filter when orderable_only is False
 - Set template price display options from the customer
