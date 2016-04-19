@@ -13,7 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 from parler.models import TranslatedFields
 
 from ._order_lines import OrderLineType
-from ._orders import PaymentStatus
+from ._orders import Order, PaymentStatus
 from ._service_base import Service, ServiceChoice, ServiceProvider
 
 
@@ -35,6 +35,9 @@ class PaymentMethod(Service):
     class Meta:
         verbose_name = _("payment method")
         verbose_name_plural = _("payment methods")
+
+    def can_delete(self):
+        return not Order.objects.filter(payment_method=self).exists()
 
     def get_payment_process_response(self, order, urls):
         self._make_sure_is_usable()
