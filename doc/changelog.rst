@@ -53,7 +53,7 @@ Admin
 - Redo shipping and payment method management
 - Add service provider management
 - Add package mode for products
-- Enable ```merchant_notes`` editing for ``Contact``
+- Enable merchant notes editing for contacts
 - Add option to add extra form parts to Shop edit view
 - Enable delete for contact groups
 - Make all enabled shipping and payment methods available in order creator
