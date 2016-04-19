@@ -17,7 +17,8 @@ from shoop.campaigns.models import ContactGroupSalesRange
 from shoop.core.models import AnonymousContact, ContactGroup, Payment
 from shoop.testing.factories import (
     create_order_with_product, create_product, create_random_company,
-    create_random_person, get_default_shop, get_default_supplier
+    create_random_person, get_default_customer_group, get_default_shop,
+    get_default_supplier
 )
 
 
@@ -45,7 +46,7 @@ def create_fully_paid_order(shop, customer, supplier, product_sku, price_value):
     return order.create_payment(order.taxful_total_price)
 
 
-def create_sales_level(group, shop, minimum, maximum):
+def create_sales_range(group, shop, minimum, maximum):
     contact_group, _ = ContactGroup.objects.get_or_create(identifier=group)
     return ContactGroupSalesRange.objects.create(
         group=contact_group, shop=shop, min_value=minimum, max_value=maximum)
@@ -55,7 +56,11 @@ def create_sales_level(group, shop, minimum, maximum):
 def test_sales_ranges_basic():
     shop = get_default_shop()
     supplier = get_default_supplier()
+    default_group = get_default_customer_group()
+    # Create non active range for default group
+    ContactGroupSalesRange.objects.create(group=default_group, shop=shop, min_value=0, max_value=0)
     person = create_random_person()
+    default_group.members.add(person)
     initial_group_count = person.groups.count()
     sales_ranges = [
         ("silver", 0, 50),
@@ -63,25 +68,31 @@ def test_sales_ranges_basic():
         ("diamond", 100, 1000)
     ]
     for identifier, min, max in sales_ranges:
-        create_sales_level(identifier, shop, min, max)
+        create_sales_range(identifier, shop, min, max)
 
     payment = create_fully_paid_order(shop, person, supplier, "sku1", 10)
     assert _get_total_sales(shop, person) == 10
     update_customers_groups(Payment, payment)
     assert person.groups.count() == (initial_group_count + 1)
     assert bool([group for group in person.groups.all() if group.identifier == "silver"])
+    # Since group has inactive range person shouldn't be removed from it
+    assert bool([group for group in person.groups.all() if group == default_group])
 
     payment = create_fully_paid_order(shop, person, supplier, "sku2", 50)
     assert _get_total_sales(shop, person) == 60
     update_customers_groups(Payment, payment)
     assert person.groups.count() == (initial_group_count + 1)
     assert bool([group for group in person.groups.all() if group.identifier == "gold"])
+    # Since group has inactive range person shouldn't be removed from it
+    assert bool([group for group in person.groups.all() if group == default_group])
 
     payment = create_fully_paid_order(shop, person, supplier, "sku3", 200)
     assert _get_total_sales(shop, person) == 260
     update_customers_groups(Payment, payment)
     assert person.groups.count() == (initial_group_count + 1)
     assert bool([group for group in person.groups.all() if group.identifier == "diamond"])
+    # Since group has inactive range person shouldn't be removed from it
+    assert bool([group for group in person.groups.all() if group == default_group])
 
 
 @pytest.mark.django_db
@@ -96,7 +107,7 @@ def test_max_amount_none():
         ("diamond", 100, None)
     ]
     for identifier, min, max in sales_ranges:
-        create_sales_level(identifier, shop, min, max)
+        create_sales_range(identifier, shop, min, max)
 
     payment = create_fully_paid_order(shop, person, supplier, "sku3", 200)
     assert _get_total_sales(shop, person) == 200
@@ -113,17 +124,19 @@ def test_sales_between_ranges():
     person = create_random_person()
     initial_group_count = person.groups.count()
     sales_ranges = [
+        ("wood", 15, 0),
         ("silver", 0, 50),
         ("diamond", 100, None)
     ]
     for identifier, min, max in sales_ranges:
-        create_sales_level(identifier, shop, min, max)
+        create_sales_range(identifier, shop, min, max)
 
     payment = create_fully_paid_order(shop, person, supplier, "sku1", 10)
     assert _get_total_sales(shop, person) == 10
     update_customers_groups(Payment, payment)
     assert person.groups.count() == (initial_group_count + 1)
     assert bool([group for group in person.groups.all() if group.identifier == "silver"])
+    assert not bool([group for group in person.groups.all() if group.identifier == "wood"])
 
     payment = create_fully_paid_order(shop, person, supplier, "sku2", 50)
     assert _get_total_sales(shop, person) == 60
@@ -147,10 +160,11 @@ def test_min_amount_is_not_included():
     sales_ranges = [
         ("silver", 0, 50),
         ("gold", 50, 100),
-        ("diamond", 100, 1000)
+        ("diamond", 100, 1000),
+        ("reverse_diamond", 1000, 100)
     ]
     for identifier, min, max in sales_ranges:
-        create_sales_level(identifier, shop, min, max)
+        create_sales_range(identifier, shop, min, max)
 
     payment = create_fully_paid_order(shop, person, supplier, "sku1", 50)
     assert _get_total_sales(shop, person) == 50
@@ -164,6 +178,7 @@ def test_min_amount_is_not_included():
     update_customers_groups(Payment, payment)
     assert person.groups.count() == (initial_group_count + 1)
     assert bool([group for group in person.groups.all() if group.identifier == "diamond"])
+    assert not bool([group for group in person.groups.all() if group.identifier == "reverse_diamond"])
     assert not bool([group for group in person.groups.all() if group.identifier in ["silver", "gold"]])
 
 
@@ -178,9 +193,26 @@ def test_sales_ranges_around_zero():
         ("diamond", None, 0)
     ]
     for identifier, min, max in sales_ranges:
-        create_sales_level(identifier, shop, min, max)
+        create_sales_range(identifier, shop, min, max)
 
     assert _get_total_sales(shop, person) == 0
     _assign_to_group_based_on_sales(shop, person)
     assert person.groups.count() == (initial_group_count + 1)
     assert bool([group for group in person.groups.all() if group.identifier == "gold"])
+
+
+@pytest.mark.django_db
+def test_active_ranges():
+    shop = get_default_shop()
+    sales_ranges = [
+        ("wood", None, None),
+        ("silver", 0, 0),
+        ("gold", None, 23),
+        ("diamond", None, 0),
+        ("active", 0, None)
+    ]
+    for identifier, min, max in sales_ranges:
+        create_sales_range(identifier, shop, min, max)
+
+    assert ContactGroupSalesRange.objects.active(shop).count() == 1
+    assert ContactGroupSalesRange.objects.active(shop).first().group.identifier == "active"
