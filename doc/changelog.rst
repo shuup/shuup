@@ -18,7 +18,6 @@ Core
 - Simplify ``PricingContext`` and require shop and customer for it
 - Add ``get_price_info`` etc. functions to ``shoop.core.pricing``
 - Add "codes" API to OrderSource and BaseBasket
-- Reword doc/provides.rst
 
 Localization
 ~~~~~~~~~~~~
@@ -27,14 +26,11 @@ Localization
 Admin
 ~~~~~
 
-- Add Campaigns management
-- Add Coupon management
 
 Front
 ~~~~~
 
 - Process given coupon codes in basket
-- Process discounts from new campaign engine
 
 Xtheme
 ~~~~~~
@@ -45,11 +41,19 @@ Classic Gray Theme
 
 - Add Coupon use possibility to basket page
 
+Campaigns
+~~~~~~~~~
+
+- Add campaigns app with following features:
+
+  - Campaigns management
+  - Coupon management
+
 
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
-- Add campaigns module
+- Reword doc/provides.rst
 
 
 Version 3.0.0
