@@ -40,7 +40,6 @@ Core
 - Add ``get_price_info`` etc. functions to ``shoop.core.pricing``
 - Add ``get_suppliable_products`` to ``shoop.core.models.Supplier``
 - Add "codes" API to OrderSource and BaseBasket
-- Reword doc/provides.rst
 
 Localization
 ~~~~~~~~~~~~
@@ -59,8 +58,6 @@ Admin
 - Make all enabled shipping and payment methods available in order creator
 - Check product quantities in order creation
 - Add option to add action buttons to Order edit view
-- Add Campaigns management
-- Add Coupon management
 
 Front
 ~~~~~
@@ -73,7 +70,6 @@ Front
 - Check product quantity already in basket while adding
 - Move ``order_creator_finished`` signal under core
 - Process given coupon codes in basket
-- Process discounts from new campaign engine
 - Add ``get_visible_products`` template helper
 
 Xtheme
@@ -108,6 +104,15 @@ Order Printouts
 - Add basic support to create PDF printouts
 - Add admin module to print order shipments and confirmation
 
+Campaigns
+~~~~~~~~~
+
+- Add campaigns app with following features:
+
+  - Campaigns management
+  - Coupon management
+  - Contact group sales ranges
+
 Discount Pricing
 ~~~~~~~~~~~~~~~~
 
@@ -127,17 +132,13 @@ Customer Group Pricing
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
-- Add campaigns module
+- Reword doc/provides.rst
 
 Addons
 ~~~~~~
 
 - Enable upgrade, migrations and collectstatic from admin
 
-Campaigns
-~~~~~~~~~
-
-- Add contact group sales ranges
 
 Version 3.0.0
 -------------
