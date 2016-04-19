@@ -28,6 +28,14 @@ shoop.campaigns.models.catalog_filters module
     :undoc-members:
     :show-inheritance:
 
+shoop.campaigns.models.contact_group_sales_ranges module
+--------------------------------------------------------
+
+.. automodule:: shoop.campaigns.models.contact_group_sales_ranges
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.campaigns.models.context_conditions module
 ------------------------------------------------
 
