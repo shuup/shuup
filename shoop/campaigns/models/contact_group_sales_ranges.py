@@ -8,6 +8,7 @@
 
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.core.fields import MoneyValueField
@@ -15,11 +16,23 @@ from shoop.core.models import ContactGroup, Shop
 from shoop.core.models._contacts import PROTECTED_CONTACT_GROUP_IDENTIFIERS
 
 
+class SalesRangeQuerySet(models.QuerySet):
+    def active(self, shop):
+        query = Q(shop=shop)
+        # Min value needs to be set
+        query &= Q(min_value__isnull=False)
+        # If max value is not null it can't be zero
+        query &= ~Q(Q(max_value__isnull=False) & Q(max_value=0))
+        return self.filter(query)
+
+
 class ContactGroupSalesRange(models.Model):
     group = models.ForeignKey(ContactGroup, related_name="+", on_delete=models.CASCADE, verbose_name=_("group"))
     shop = models.ForeignKey(Shop, related_name="+", verbose_name=_("shop"))
     min_value = MoneyValueField(verbose_name=_("min amount"), blank=True, null=True)
     max_value = MoneyValueField(verbose_name=_("max amount"), blank=True, null=True)
+
+    objects = SalesRangeQuerySet.as_manager()
 
     class Meta:
         unique_together = ("group", "shop")

@@ -23,22 +23,17 @@ def _get_total_sales(shop, customer):
 def _assign_to_group_based_on_sales(shop, customer):
     total_sales = _get_total_sales(shop, customer)
 
-    # Only ranges with given shop
-    query = Q(shop=shop)
-    # Both min and max can't be zero for enabled range
-    query &= ~Q(Q(min_value=0) & Q(max_value=0))
-    # Min can't be null
-    query &= Q(min_value__isnull=False)
     # Only ranges with sales bigger than min_value
-    query &= Q(min_value__lte=total_sales)
+    query = Q(min_value__lte=total_sales)
     # Ranges with max lower than sales or None
     query &= Q(Q(max_value__gt=total_sales) | Q(max_value__isnull=True))
 
-    matching_pks = set(ContactGroupSalesRange.objects.filter(query).values_list("pk", flat=True))
-    for sales_level in ContactGroupSalesRange.objects.filter(pk__in=matching_pks):
-        sales_level.group.members.add(customer)
-    for sales_level in ContactGroupSalesRange.objects.exclude(pk__in=matching_pks):
-        sales_level.group.members.remove(customer)
+    matching_pks = set(ContactGroupSalesRange.objects.active(shop).filter(query).values_list("pk", flat=True))
+    for sales_range in ContactGroupSalesRange.objects.filter(pk__in=matching_pks):
+        sales_range.group.members.add(customer)
+
+    for sales_range in ContactGroupSalesRange.objects.active(shop).exclude(pk__in=matching_pks):
+        sales_range.group.members.remove(customer)
 
 
 def update_customers_groups(sender, instance, **kwargs):
