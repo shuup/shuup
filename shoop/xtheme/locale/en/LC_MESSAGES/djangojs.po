@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-11 12:32+0000\n"
+"POT-Creation-Date: 2016-04-19 08:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -18,15 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
-
-msgid "Exit Edit"
-msgstr ""
-
-msgid "Edit Page"
-msgstr ""
-
-msgid "No browser URL for kind:"
-msgstr ""
 
 #, javascript-format
 msgid "Error: Cannot add more than %s cells to one row."
@@ -47,4 +38,10 @@ msgid ""
 msgstr ""
 
 msgid "Changing plugins will cause other changes made on this form to be lost."
+msgstr ""
+
+msgid "Exit Edit"
+msgstr ""
+
+msgid "Edit Page"
 msgstr ""
