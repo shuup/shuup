@@ -59,6 +59,11 @@ Admin
 - Check product quantities in order creation
 - Add option to add action buttons to Order edit view
 
+Addons
+~~~~~~
+
+- Enable upgrade, migrations and collectstatic from admin
+
 Front
 ~~~~~
 
@@ -133,11 +138,6 @@ General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
 - Reword doc/provides.rst
-
-Addons
-~~~~~~
-
-- Enable upgrade, migrations and collectstatic from admin
 
 
 Version 3.0.0
