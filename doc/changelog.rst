@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Fix bug: Order line text is not set for package products
 - Add new Service API and implement shipping and payments with it
 - Remove BaseMethodModule based API (``shoop.core.methods``)
 - Add management command to generate bought with relations

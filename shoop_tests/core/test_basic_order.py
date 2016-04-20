@@ -49,6 +49,8 @@ def create_order(request, creator, customer, product):
         product=product,
         quantity=5,
         supplier=supplier)
+
+    assert product_order_line.text == product.safe_translation_getter("name")
     product_order_line.base_unit_price = shop.create_price(100)
     assert product_order_line.price.value > 0
     product_order_line.save()
