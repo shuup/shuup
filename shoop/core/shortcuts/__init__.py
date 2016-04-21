@@ -36,7 +36,7 @@ def update_order_line_from_product(
     order_line.product = product
     order_line.quantity = quantity
     order_line.sku = product.sku
-    order_line.name = product.safe_translation_getter("name") or product.sku
+    order_line.text = product.safe_translation_getter("name") or product.sku
     order_line.accounting_identifier = product.accounting_identifier
     order_line.require_verification = bool(getattr(product, "require_verification", False))
     order_line.verified = False
