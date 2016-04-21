@@ -87,7 +87,7 @@ REQUIRES = [
     'django-mptt>=0.8.0,<0.9',
     'django-parler>=1.5,<2',
     'django-parler-rest>=1.3a1,<2',
-    'django-polymorphic>=0.8.0,<0.9',
+    'django-polymorphic>=0.8.0,<0.10',
     # django-registration-redux>=1.4 does not work with
     # our custom get_success_url
     'django-registration-redux>=1.2,<1.4',
