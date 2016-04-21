@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add support for custom user model (``AUTH_USER_MODEL``)
 - Add management command to generate bought with relations
 - Add ``merchant_notes`` text-field to ``Contact``
 - Add ``first_name`` and ``last_name`` fields to ``PersonContact``
