@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 20:37+0000\n"
-"PO-Revision-Date: 2016-02-12 22:01+0000\n"
+"POT-Creation-Date: 2016-04-11 12:32+0000\n"
+"PO-Revision-Date: 2016-04-21 19:39+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shoop/shoop/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgid "Stock management"
-msgstr "Gerenciamento de estoque"
+msgstr "Gerenciamento do estoque"
 
 msgid "Products"
 msgstr "Produtos"
@@ -93,19 +93,47 @@ msgid "delta"
 msgstr "delta"
 
 msgid "logical count"
-msgstr "estoque lógico"
+msgstr "contagem lógica"
 
 msgid "physical count"
-msgstr "estoque físico"
+msgstr "contagem física"
 
 msgid "Add stock"
 msgstr "Adicionar estoque"
 
+#, python-format
+msgid ""
+"Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
+"does not have suppliers with %(module_name)s module."
+msgstr "Produto <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> não tem fornecedores com o módulo %(module_name)s."
+
+msgid "Please set suppliers at Purchasing section."
+msgstr "Por favor, defina os fornecedores na seção Compras."
+
+#, python-format
+msgid ""
+"Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
+"is not stocked."
+msgstr "Produto <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> não é estocado."
+
+msgid "Please set product stock behavior at Additional Details section."
+msgstr "Por favor, defina o comportamento do estoque do produto na seção Detalhes Adicionais."
+
+#, python-format
+msgid "No suppliers with %(module_name)s available."
+msgstr "Não há fornecedores com o módulo %(module_name)s disponível."
+
+#, python-format
+msgid ""
+"Please set %(module_name)s module for at least one of the <a "
+"href=\"%(supplier_url)s\" target=\"_blank\">Suppliers</a>."
+msgstr "Por favor, defina o módulo %(module_name)s para pelo menos um dos seus <a href=\"%(supplier_url)s\" target=\"_blank\">Fornecedores</a>."
+
 msgid "Physical count"
-msgstr "Estoque físico"
+msgstr "Contagem física"
 
 msgid "Logical count"
-msgstr "Estoque lógico"
+msgstr "Contagem lógica"
 
 msgid "Value per unit"
 msgstr "Valor por unidade"

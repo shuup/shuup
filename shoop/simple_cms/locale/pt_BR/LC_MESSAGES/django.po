@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 13:16+0000\n"
-"PO-Revision-Date: 2016-02-06 20:42+0000\n"
+"POT-Creation-Date: 2016-03-25 01:12+0000\n"
+"PO-Revision-Date: 2016-04-21 18:46+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shoop/shoop/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -39,7 +39,7 @@ msgstr "URL já existe."
 
 #, python-format
 msgid "%(label)s is required when any %(language)s field is filled."
-msgstr "%(label)s é obrigatório quando qualquer campo em %(language)s é preenchido."
+msgstr "%(label)s é obrigatório quando qualquer campo em %(language)s for preenchido."
 
 msgid "Please fill at least one language fully."
 msgstr "Por favor, preencha pelo menos um idioma por completo."
@@ -80,6 +80,12 @@ msgstr "Este identificador pode ser utilizado em templates para criar URLs"
 msgid "visible in menu"
 msgstr "visível no menu"
 
+msgid "parent"
+msgstr "pai"
+
+msgid "list children on page"
+msgstr "listar filhos na página"
+
 msgid "title"
 msgstr "título"
 
@@ -96,7 +102,19 @@ msgid "pages"
 msgstr "páginas"
 
 msgid "Untitled"
-msgstr "Sem Título"
+msgstr "Sem título"
+
+msgid "CMS Page Links"
+msgstr "Links de Páginas CMS"
+
+msgid "Show all pages"
+msgstr "Mostrar todas as páginas"
+
+msgid "All pages are shown, even if not selected"
+msgstr "Todas as páginas são mostradas, mesmo se não estiverem selecionadas"
+
+msgid "Hide expired pages"
+msgstr "Ocultar páginas expiradas"
 
 msgid "New Page"
 msgstr "Nova Página"

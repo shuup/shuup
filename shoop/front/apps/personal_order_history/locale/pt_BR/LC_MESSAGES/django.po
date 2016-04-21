@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-30 23:37+0000\n"
-"PO-Revision-Date: 2016-02-13 00:15+0000\n"
+"PO-Revision-Date: 2016-04-20 17:52+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shoop/shoop/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -61,7 +61,7 @@ msgid "Email"
 msgstr "E-mail"
 
 msgid "Tax number"
-msgstr "CPF/CNPJ"
+msgstr "Número de contribuinte (CNPJ)"
 
 msgid "Total Price"
 msgstr "Preço Total"
@@ -70,16 +70,16 @@ msgid "Total Price (taxless)"
 msgstr "Preço Total (não tributado)"
 
 msgid "Status"
-msgstr "Situação"
+msgstr "Status"
 
 msgid "Order Status"
-msgstr "Situação do Pedido"
+msgstr "Status do Pedido"
 
 msgid "Payment Status"
-msgstr "Situação do Pagamento"
+msgstr "Status do Pagamento"
 
 msgid "Shipping Status"
-msgstr "Situação da Entrega"
+msgstr "Status da Entrega"
 
 msgid "Shipping Address"
 msgstr "Endereço de Entrega"
@@ -112,16 +112,16 @@ msgid "Taxless Total"
 msgstr "Total não Tributado"
 
 msgid "Total incl. Tax"
-msgstr "Total incluindo Imposto"
+msgstr "Total incl. Imposto"
 
 msgid "Total"
 msgstr "Total"
 
 msgid "Order History"
-msgstr "Histórico do Pedido"
+msgstr "Histórico de Pedidos"
 
 msgid "Order history"
-msgstr "Histórico do pedido"
+msgstr "Histórico de pedidos"
 
 msgid "Identifier"
 msgstr "Identificador"

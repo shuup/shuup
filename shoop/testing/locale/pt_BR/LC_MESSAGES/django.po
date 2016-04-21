@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Christian Hess <christianhess.rlz@gmail.com>, 2016
+# christianhess <christianhess.rlz@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"

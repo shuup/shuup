@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-30 23:37+0000\n"
-"PO-Revision-Date: 2016-02-16 22:47+0000\n"
+"POT-Creation-Date: 2016-04-19 08:57+0000\n"
+"PO-Revision-Date: 2016-04-21 19:35+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shoop/shoop/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -18,12 +18,6 @@ msgstr ""
 "Generated-By: Babel 2.1.1\n"
 "Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-
-msgid "Exit Edit"
-msgstr "Sair da Edição"
-
-msgid "Edit Page"
-msgstr "Editar Página"
 
 #, javascript-format
 msgid "Error: Cannot add more than %s cells to one row."
@@ -36,13 +30,19 @@ msgid "Are you sure you wish to delete this cell?"
 msgstr "Tem certeza que deseja excluir esta célula?"
 
 msgid "Are you sure you wish to publish changes made to this view?"
-msgstr "Tem certeza que deseja publicar as alterações feitas nesta view?"
+msgstr "Tem certeza que deseja publicar as alterações realizadas nesta view?"
 
 msgid ""
 "Are you sure you wish to revert all changes made since the last published "
 "version?"
-msgstr "Tem certeza de que deseja reverter todas as alterações feitas desde a última versão publicada?"
+msgstr "Tem certeza que deseja reverter todas as alterações realizadas desde a última versão publicada?"
 
 msgid ""
 "Changing plugins will cause other changes made on this form to be lost."
-msgstr "Alterações nos plugins farão com que outras modificações feitas neste formulário sejam perdidas."
+msgstr "Alterações nos plugins farão com que outras modificações realizadas neste formulário sejam perdidas."
+
+msgid "Exit Edit"
+msgstr "Sair da Edição"
+
+msgid "Edit Page"
+msgstr "Editar Página"
