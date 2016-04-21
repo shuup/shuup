@@ -38,12 +38,12 @@ class PasswordChangeForm(forms.Form):
         super(PasswordChangeForm, self).__init__(*args, **kwargs)
         self.changing_user = changing_user
         self.target_user = target_user
-        if self.target_user.is_superuser and not self.changing_user.is_superuser:
+        if getattr(self.target_user, 'is_superuser', False) and not getattr(self.changing_user, 'is_superuser', False):
             raise Problem(_("You can not change the password of a superuser."))
 
         if not (
             self.changing_user == self.target_user or
-            self.target_user.is_superuser
+            getattr(self.target_user, 'is_superuser', False)
         ):
             # Only require old password when changing your own or a superuser's password.
             self.fields.pop("old_password")
@@ -131,7 +131,8 @@ class UserResetPasswordView(DetailView):
         r = RecoverPasswordForm()
         r.request = self.request
         if r.process_user(user):
-            messages.success(self.request, _(u"Password recovery email sent to %(email)s") % {"email": user.email})
+            messages.success(self.request, _(u"Password recovery email sent to %(email)s") %
+                             {"email": getattr(user, 'email', '')})
         else:
             raise Problem(_(u"Sending the password recovery email failed."))
 
