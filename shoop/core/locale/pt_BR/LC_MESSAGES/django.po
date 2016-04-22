@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-04-12 14:10+0000\n"
-"PO-Revision-Date: 2016-04-21 16:01+0000\n"
+"PO-Revision-Date: 2016-04-22 11:17+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shoop/shoop/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -487,7 +487,7 @@ msgid "default"
 msgstr "padrão"
 
 msgid "order identifier"
-msgstr "identificador de pedido"
+msgstr "identificador do pedido"
 
 msgid "label"
 msgstr "rótulo"
@@ -637,7 +637,7 @@ msgid "public (shown on product page)"
 msgstr "público (mostrado na página do produto)"
 
 msgid "purchased (shown for finished purchases)"
-msgstr "comprado (mostrado para compras realizadas)"
+msgstr "comprado (mostrado para as compras realizadas)"
 
 msgid "product attachment"
 msgstr "anexo do produto"
@@ -703,14 +703,14 @@ msgid "The Product is invisible to users not logged in."
 msgstr "O Produto está invisível para usuários não autenticados."
 
 msgid "This product is not visible to your group."
-msgstr "Este produto não está visível para o seu grupo."
+msgstr "Este produto não está visível para o seu grupo."
 
 msgid "The product has no supplier."
 msgstr "O produto não tem nenhum fornecedor."
 
 #, python-format
 msgid "The purchase quantity needs to be at least %d for this product."
-msgstr "A quantidade de compra tem de ser, pelo menos, %d para este produto."
+msgstr "A quantidade de compra tem que ser, pelo menos, %d para este produto."
 
 #, python-format
 msgid "The product is not supplied by %s."
@@ -747,10 +747,10 @@ msgid "result"
 msgstr "resultado"
 
 msgid "variation result"
-msgstr "resultado de variação"
+msgstr "resultado da variação"
 
 msgid "variation results"
-msgstr "resultados de variação"
+msgstr "resultados da variação"
 
 msgid "normal"
 msgstr "comum"

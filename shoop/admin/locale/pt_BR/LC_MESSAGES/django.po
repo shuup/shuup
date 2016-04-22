@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-04-18 12:12+0000\n"
-"PO-Revision-Date: 2016-04-21 17:41+0000\n"
+"PO-Revision-Date: 2016-04-22 11:18+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shoop/shoop/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -119,7 +119,7 @@ msgid "Active customers"
 msgstr "Clientes ativos"
 
 msgid "Based on orders within 30 days"
-msgstr "Baseado em pedidos nos últimos 30 dias"
+msgstr "Baseado em pedidos dos últimos 30 dias"
 
 msgid "The Shoop frontend is not enabled."
 msgstr "O frontend do Shoop não está habilitado."
@@ -157,7 +157,7 @@ msgstr "Empresa"
 
 #, python-format
 msgid "User %(bind_user)s already has a contact"
-msgstr "O usuário %(bind_user)s já tem um contato"
+msgstr "O usuário %(bind_user)s já tem um contato"
 
 msgid "Email"
 msgstr "E-mail"
@@ -297,7 +297,7 @@ msgstr "Produto %(product)s não está disponível na loja %(shop)s."
 
 #, python-format
 msgid "Product %(product)s is not orderable: %(error)s"
-msgstr "Produto %(product)s não pode ser comprado: %(error)s"
+msgstr "Produto %(product)s não está disponível para compra: %(error)s"
 
 msgid "Please add lines to the order."
 msgstr "Por favor, adicione itens ao pedido."
@@ -420,7 +420,7 @@ msgstr "Apenas imagens são permitidas neste campo"
 
 #, python-format
 msgid "Unable to make package %(product)s: %(error)s"
-msgstr "Não é possível fazer o pacote %(product)s: %(error)s"
+msgstr "Não foi possível criar o pacote %(product)s: %(error)s"
 
 #, python-format
 msgid "New: %d"
@@ -452,7 +452,7 @@ msgid "%s has been marked deleted."
 msgstr "%s foi marcado como excluído."
 
 msgid "Minimum Purchase Quantity has been rounded to match Sales Unit."
-msgstr "Quantidade Mínima de Compra foi arredondada para casar com a Unidade de Venda."
+msgstr "Quantidade Mínima de Compra foi arredondada para coincidir com a Unidade de Venda."
 
 #, python-format
 msgid "Changes to shop instance for %s saved"
@@ -601,10 +601,10 @@ msgid "Service"
 msgstr "Serviço"
 
 msgid "Select carrier before filling other fields."
-msgstr "Selecione a transportadora antes de preencher demais campos."
+msgstr "Selecione a transportadora antes de preencher os demais campos."
 
 msgid "Select payment processor before filling other fields."
-msgstr "Selecione o processador de pagamentos antes de preencher demais campos."
+msgstr "Selecione o processador de pagamentos antes de preencher os demais campos."
 
 msgid "Price"
 msgstr "Preço"
@@ -1088,7 +1088,7 @@ msgid "Shipping & Payment"
 msgstr "Entrega & Pagamento"
 
 msgid "This product is currently not orderable."
-msgstr "Este produto não pode ser comprado atualmente."
+msgstr "Este produto não está disponível para compra no momento."
 
 msgid "Cross-sells"
 msgstr "Vendas-cruzadas"
@@ -1112,7 +1112,7 @@ msgid "Simple Variation Children"
 msgstr "Filhos da Variação Simples"
 
 msgid "Variable Children"
-msgstr "Filhos das Variáveis"
+msgstr "Variáveis Filhos"
 
 msgid "Combination"
 msgstr "Combinação"
@@ -1160,7 +1160,7 @@ msgid ""
 "The data contains an unique installation key, as well as the hostname of the"
 " installation (as sent by the visiting browser; currently "
 "<code>%(host)s</code>)."
-msgstr "Os dados contém uma chave única de instalação, assim como o hostname da instalação (como enviado pelo navegador visitante; no caso <code>%(host)s</code>)."
+msgstr "Os dados contém uma chave única de instalação, bem como o hostname da instalação (como enviado pelo navegador visitante; atualmente <code>%(host)s</code>)."
 
 msgid ""
 "No business data or other customer information is ever sent. Shoop.io only "
