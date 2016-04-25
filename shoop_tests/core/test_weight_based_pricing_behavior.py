@@ -1,0 +1,153 @@
+# -*- coding: utf-8 -*-
+# This file is part of Shoop.
+#
+# Copyright (c) 2012-2016, Shoop Ltd. All rights reserved.
+#
+# This source code is licensed under the AGPLv3 license found in the
+# LICENSE file in the root directory of this source tree.
+
+import decimal
+import pytest
+
+from shoop.core.models import (
+    OrderLineType, WeightBasedPriceRange, WeightBasedPricingBehaviorComponent
+)
+from shoop.core.models._service_behavior import _is_in_range
+from shoop.testing.factories import (
+    create_product, get_default_payment_method, get_default_shipping_method, get_default_supplier
+)
+
+from .test_order_creator import seed_source
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("get_service,service_attr", [
+    (get_default_payment_method, "payment_method"),
+    (get_default_shipping_method, "shipping_method")
+])
+def test_with_one_matching_range(admin_user, get_service, service_attr):
+    ranges_data = [
+        (None, "10.32", decimal.Decimal("0.0001"), "Low range"),
+        ("10.32", "32.45678", decimal.Decimal("10.000000"), "Mid range"),
+        ("32.45678", None, decimal.Decimal("23.567"), "High range")
+    ]
+    service = get_service()
+    _assign_component_for_service(service, ranges_data)
+    source = _get_source_for_weight(admin_user, service, service_attr, decimal.Decimal("0"), "low")
+    _test_service_ranges_against_source(source, service, decimal.Decimal("0.0001"), "Low range")
+
+    source = _get_source_for_weight(admin_user, service, service_attr, decimal.Decimal("32.45678"), "mid")
+    _test_service_ranges_against_source(source, service, decimal.Decimal("10.000000"), "Mid range")
+
+    source = _get_source_for_weight(admin_user, service, service_attr, decimal.Decimal("32.4567800001"), "high")
+    _test_service_ranges_against_source(source, service, decimal.Decimal("23.567"), "High range")
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("get_service,service_attr", [
+    (get_default_payment_method, "payment_method"),
+    (get_default_shipping_method, "shipping_method")
+])
+def test_with_multiple_matching_ranges(admin_user, get_service, service_attr):
+    ranges_data = [
+        (None, "10.32", decimal.Decimal("0.0001"), "Low range"),
+        ("10.00", "50.00", decimal.Decimal("10.000000"), "Mid range"),
+        ("32.45678", None, decimal.Decimal("23.567"), "High range"),
+        (None, None, decimal.Decimal("1000000"), "Expensive range")
+    ]
+    service = get_service()
+    _assign_component_for_service(service, ranges_data)
+
+    # Low, mid and expensive ranges match but the lowest price is selected
+    source = _get_source_for_weight(admin_user, service, service_attr, decimal.Decimal("10.01"), "low")
+    _test_service_ranges_against_source(source, service, decimal.Decimal("0.0001"), "Low range")
+
+    # Mid, high and expensive ranges matches but the mid range is selected
+    source = _get_source_for_weight(admin_user, service, service_attr, decimal.Decimal("40"), "mid")
+    _test_service_ranges_against_source(source, service, decimal.Decimal("10.000000"), "Mid range")
+
+    # High and expensive ranges match but the mid range is selected
+    source = _get_source_for_weight(admin_user, service, service_attr, decimal.Decimal("100"), "high")
+    _test_service_ranges_against_source(source, service, decimal.Decimal("23.567"), "High range")
+
+
+def _assign_component_for_service(service, ranges_data):
+    assert service.behavior_components.count() == 0
+    component = WeightBasedPricingBehaviorComponent.objects.create()
+    for min, max, price, description in ranges_data:
+        WeightBasedPriceRange.objects.create(
+            description=description, min_value=min, max_value=max, price_value=price, component=component)
+    service.behavior_components.add(component)
+
+
+def _test_service_ranges_against_source(source, service, target_price, target_description):
+    assert service.behavior_components.count() == 1
+    costs = list(service.get_costs(source))
+    assert len(costs) == 1
+    assert costs[0].price.value == target_price
+    assert costs[0].description == target_description
+
+
+def _get_source_for_weight(user, service, service_attr, total_gross_weight, sku):
+    source = seed_source(user)
+    supplier = get_default_supplier()
+    product = create_product(
+        sku=sku,
+        shop=source.shop,
+        supplier=supplier,
+        default_price=3.33,
+        **{"net_weight": decimal.Decimal("0"), "gross_weight": total_gross_weight}
+    )
+    source.add_line(
+        type=OrderLineType.PRODUCT,
+        product=product,
+        supplier=supplier,
+        quantity=1,
+        base_unit_price=source.create_price(1),
+    )
+    setattr(source, service_attr, service)
+    assert source.total_gross_weight == total_gross_weight
+    assert getattr(source, service_attr) == service
+    return source
+
+
+def test_is_in_range():
+    # value, min, max and whether the value should match withing the range
+    test_data = [
+        ("0", None, None, True),
+        ("0", "0", None, True),
+        ("0", None, "10.32", True),
+        ("0", "0", "10.32", True),
+        ("32.00", None, None, True),
+        ("32.00", "0", None, True),
+        ("32.00", None,  "64", True),
+        ("32.00", "0", "31.9999", False),
+        ("32.00", "0", "32", True),
+        ("32.00", "0", "64", True),
+        ("32.00", "31.999", None, True),
+        ("32.00", "31.999", "32.000", True),
+        ("32.00", "31.999", "32.0001", True),
+        ("32.00", "32.00", "32.00", True),
+        ("32.00", "32.00", "66", False),
+        ("32.00", "32.00", None, False),
+        ("43.00", "32.00", "100.00", True),
+        ("11.00", "32.00", "100.00", False),
+        ("121.00", "32.00", "100.00", False),
+    ]
+
+    for value, min, max, result in test_data:
+        assert _is_in_range(
+            decimal.Decimal(value),
+            decimal.Decimal(min) if min else None,
+            decimal.Decimal(max) if max else None) == result
+        # Any range with None value should be False
+        assert not _is_in_range(
+            None,
+            decimal.Decimal(min) if min else None,
+            decimal.Decimal(max) if max else None)
+        # In case when both limits is given range shouldn't work in reverse order.
+        if min and max and min != max:
+            assert not _is_in_range(
+                decimal.Decimal(value),
+                decimal.Decimal(max) if max else None,
+                decimal.Decimal(min) if min else None)
