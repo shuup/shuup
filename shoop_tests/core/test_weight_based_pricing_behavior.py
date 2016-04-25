@@ -9,6 +9,8 @@
 import decimal
 import pytest
 
+from django.core.exceptions import ValidationError
+
 from shoop.core.models import (
     OrderLineType, WeightBasedPriceRange, WeightBasedPricingBehaviorComponent
 )
@@ -83,9 +85,12 @@ def _assign_component_for_service(service, ranges_data):
 def _test_service_ranges_against_source(source, service, target_price, target_description):
     assert service.behavior_components.count() == 1
     costs = list(service.get_costs(source))
-    assert len(costs) == 1
-    assert costs[0].price.value == target_price
-    assert costs[0].description == target_description
+    unavailability_reasons = list(service.get_unavailability_reasons(source))
+    assert (unavailability_reasons or costs) and not (unavailability_reasons and costs)
+    if costs:  # We have costs so let's test prices
+        assert len(costs) == 1
+        assert costs[0].price.value == target_price
+        assert costs[0].description == target_description
 
 
 def _get_source_for_weight(user, service, service_attr, total_gross_weight, sku):
@@ -151,3 +156,24 @@ def test_is_in_range():
                 decimal.Decimal(value),
                 decimal.Decimal(max) if max else None,
                 decimal.Decimal(min) if min else None)
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("get_service,service_attr", [
+    (get_default_payment_method, "payment_method"),
+    (get_default_shipping_method, "shipping_method")
+])
+def test_out_of_range(admin_user, get_service, service_attr):
+    ranges_data = [
+        (None, "10.32", decimal.Decimal("0.0001"), "Low range"),
+    ]
+    service = get_service()
+    _assign_component_for_service(service, ranges_data)
+
+    # Low, mid and expensive ranges match but the lowest price is selected
+    source = _get_source_for_weight(admin_user, service, service_attr, decimal.Decimal("10.01"), "low")
+    _test_service_ranges_against_source(source, service, decimal.Decimal("0.0001"), "Low range")
+
+    # Mid, high and expensive ranges matches but the mid range is selected
+    source = _get_source_for_weight(admin_user, service, service_attr, decimal.Decimal("40"), "mid")
+    _test_service_ranges_against_source(source, service, decimal.Decimal("10.000000"), "Mid range")

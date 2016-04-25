@@ -146,3 +146,8 @@ class WeightBasedPricingBehaviorComponent(ServiceBehaviorComponent):
             price = source.create_price(range.price_value)
             description = range.safe_translation_getter('description')
             yield ServiceCost(price, description)
+
+    def get_unavailability_reasons(self, service, source):
+        range = self._get_matching_range_with_lowest_price(source)
+        if not range:
+            yield ValidationError(_("Weight does not match with any range."), code="out_of_range")
