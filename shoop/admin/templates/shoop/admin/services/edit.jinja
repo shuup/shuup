@@ -11,7 +11,7 @@
             {% if form_defs|length > 1 %}
             {% call content_block(_("Behavior"), ("fa-cubes")) %}
                 <div class="form-group">
-                    <label class="control-label" for"id_component-select">{% trans %}Behavior component type{% endtrans %}</label>
+                    <label class="control-label" for="id_component-select">{% trans %}Behavior component type{% endtrans %}</label>
                     <select class="form-control" id="component-select">
                         {% for form_def in form_defs %}
                             {% if form_def != "base" %}
@@ -22,14 +22,15 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="form-group text-center">
-                    <a class="btn btn-lg btn-text" id="component-button" href="#">+ {% trans %}Add component{% endtrans %}</a>
+                <div class="form-group text-center" id="component-button">
+                    <a class="btn btn-lg btn-text" href="#">+ {% trans %}Add component{% endtrans %}</a>
                 </div>
                 {% for form_def in form_defs %}
                     {% if form_def != "base" %}
                         {% set form_prefix = form_def %}
                         {% set formset = form[form_def] %}
-                        {% include "shoop/admin/services/_edit_behavior_components_form.jinja" with context %}
+                        {% set template_name = form_defs[form_def].template_name %}
+                        {% include template_name with context %}
                     {% endif %}
                 {% endfor %}
                 <div class="hide" id="insert-placeholder"></div>
@@ -43,8 +44,8 @@
 {{ super() }}
 <script>
     $(function () {
-        $("#component-button").on("click", function (e) {
-            e.preventDefault();
+        $("#component-button .btn").on("click", function (event) {
+            event.preventDefault();
             var $selection = $("#component-select").find("option:selected");
             var component = $selection.val();
             var $source = $("#" + component+ "-placeholder");
@@ -52,8 +53,8 @@
             var $totalFormsField = $("#" + targetID + "-TOTAL_FORMS");
             var componentCount = parseInt($totalFormsField.val());
             var html = $source.html().replace(/__prefix__/g, componentCount);
-            var $lastComponent = $("#insert-placeholder");
-            $(html).insertBefore($lastComponent);
+            var $componentsPlaceholder = $("#insert-placeholder");
+            $(html).insertAfter($componentsPlaceholder);
             $totalFormsField.val(componentCount + 1);
         });
         $("#id_base-payment_processor,#id_base-carrier").on("change", function() {

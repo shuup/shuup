@@ -10,9 +10,8 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.forms import BaseModelFormSet
 
-from shoop.admin.form_part import FormPart
+from shoop.admin.form_part import FormPart, TemplatedFormDef
 from shoop.core.models import ServiceBehaviorComponent
-from shoop.utils.form_group import FormDef
 from shoop.utils.multilanguage_model_form import TranslatableModelForm
 
 
@@ -53,6 +52,7 @@ class BehaviorFormSet(BaseModelFormSet):
 
 class BehaviorComponentFormPart(FormPart):
     formset = BehaviorFormSet
+    template_name = "shoop/admin/services/_edit_behavior_components_form.jinja"
 
     def __init__(self, request, form, name, owner):
         self.name = name
@@ -60,9 +60,10 @@ class BehaviorComponentFormPart(FormPart):
         super(BehaviorComponentFormPart, self).__init__(request, object=owner)
 
     def get_form_defs(self):
-        yield FormDef(
+        yield TemplatedFormDef(
             self.name,
             self.formset,
+            self.template_name,
             required=False,
             kwargs={"form": self.form, "owner": self.object},
         )

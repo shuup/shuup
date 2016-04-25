@@ -27,7 +27,8 @@ class ServiceEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
     template_name = "shoop/admin/services/edit.jinja"
     context_object_name = "service"
     base_form_part_classes = []  # Override in subclass
-    provide_key = "service_behavior_component_form"
+    form_provide_key = "service_behavior_component_form"
+    form_part_provide_key = "service_behavior_component_form_part"
 
     @atomic
     def form_valid(self, form):
@@ -37,8 +38,10 @@ class ServiceEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
         form_parts = super(ServiceEditView, self).get_form_parts(object)
         if not object.pk:
             return form_parts
-        for form in get_provide_objects(self.provide_key):
+        for form in get_provide_objects(self.form_provide_key):
             form_parts.append(self._get_behavior_form_part(form, object))
+        for form_class in get_provide_objects(self.form_part_provide_key):
+            form_parts.append(form_class(self.request, object))
         return form_parts
 
     def _get_behavior_form_part(self, form, object):
