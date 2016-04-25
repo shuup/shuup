@@ -52,6 +52,7 @@ Localization
 Admin
 ~~~~~
 
+- Enable add/edit for weight based behavior component through service admin
 - Add ``admin_contact_group_form_part`` provider for ``ContactGroup`` admin
 - Redo shipping and payment method management
 - Add service provider management
