@@ -128,6 +128,7 @@
     text-transform: uppercase;
     font-size: 1.2rem;
 }
+
 .btn-checkout {
     text-transform: uppercase;
     padding: 10px 15px;
@@ -139,5 +140,108 @@
     }
     .fa-angle-double-right {
         margin-left: 6px;
+    }
+}
+
+.checkout-provider-wrap {
+    position: relative;
+    min-height: 80px;
+    padding: 15px 0;
+
+    & + .checkout-provider-wrap {
+        border-top: 1px solid @border-color;
+        padding-top: 30px;
+        margin-top: 15px;
+
+        @media (min-width: @screen-sm-min) {
+            .checkout-service-provider {
+                top: 30px;
+            }
+        }
+    }
+}
+
+.checkout-service-provider {
+    margin-bottom: 25px;
+
+    @media (min-width: @screen-sm-min) {
+        position: absolute;
+        left: 15px;
+        top: 15px;
+        width: 200px;
+        margin: 0;
+    }
+
+    h3 {
+        margin: 0;
+        font-size: @font-size-base;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: @text-muted;
+    }
+
+    img {
+        max-height: 50px;
+        max-width: 200px;
+        width: auto;
+        height: auto;
+    }
+}
+
+.checkout-method-radio {
+    margin: 0;
+
+    @media (min-width: @screen-sm-min) {
+        padding-left: 250px;
+    }
+
+    & + .checkout-method-radio {
+        margin-top: 20px;
+    }
+
+    label {
+        padding-left: 30px;
+        display: table;
+        width: 100%;
+
+        input {
+            margin-left: -30px !important;
+        }
+
+        .logo {
+            display: table-cell;
+            padding-right: 15px;
+            vertical-align: top;
+            width: 75px;
+
+            img {
+                max-height: 30px;
+                max-width: 60px;
+                height: auto;
+                width: auto;
+            }
+        }
+
+        .label-text {
+            display: table-cell;
+            vertical-align: top;
+            font-size: 1.6rem;
+
+            .price {
+                font-weight: bold;
+                color: @brand-primary;
+
+                &:before {
+                    content: " - ";
+                    color: @text-color;
+                    font-weight: normal;
+                }
+            }
+
+            .description {
+                font-size: 1.3rem;
+                color: @text-muted;
+            }
+        }
     }
 }
