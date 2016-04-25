@@ -121,6 +121,12 @@ Core
     <shoop.core.models.ServiceBehaviorComponent>`, provide a form for it
     via this provide.
 
+``service_behavior_component_form_part``
+    Form parts for creating service behavior components in Shop Admin.
+    When creating a custom `service behavior component
+    <shoop.core.models.ServiceBehaviorComponent>` and custom template
+    for form part is needed then provide custom form part via this provide.
+
 ``service_provider_admin_form``
     Forms for creating service providers in Shop Admin.  When creating a
     custom `service provider <shoop.core.models.ServiceProvider>`

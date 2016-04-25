@@ -36,11 +36,16 @@ DEFAULT_BEHAVIOR_FORMS = [
     "shoop.admin.modules.services.forms.WeightLimitsBehaviorComponentForm"
 ]
 
+DEFAULT_BEHAVIOR_FORM_PARTS = [
+    "shoop.admin.modules.services.weight_based_pricing.WeightBasedPricingFormPart"
+]
+
 
 def get_form_parts(request, view, object):
     with override_provides("service_behavior_component_form", DEFAULT_BEHAVIOR_FORMS):
-        initialized_view = view(request=request, kwargs={"pk": object.pk})
-        return initialized_view.get_form_parts(object)
+        with override_provides("service_behavior_component_form_part", DEFAULT_BEHAVIOR_FORM_PARTS):
+            initialized_view = view(request=request, kwargs={"pk": object.pk})
+            return initialized_view.get_form_parts(object)
 
 
 @pytest.mark.django_db
@@ -53,7 +58,8 @@ def test_services_edit_view_formsets(rf, admin_user, view, get_object):
     object = get_object()
     request = apply_request_middleware(rf.get("/"), user=admin_user)
     form_parts = get_form_parts(request, view, object)
-    assert len(form_parts) == (len(DEFAULT_BEHAVIOR_FORMS) + 1)  # plus one since the base form
+    # form parts should include forms, form parts and plus one for the base form
+    assert len(form_parts) == (len(DEFAULT_BEHAVIOR_FORMS) + len(DEFAULT_BEHAVIOR_FORM_PARTS) + 1)
 
 
 @pytest.mark.django_db
@@ -150,11 +156,12 @@ def test_method_edit_save(rf, admin_user, view, model, get_object, service_provi
         methods_before = model.objects.count()
         # Behavior components is tested at shoop.tests.admin.test_service_behavior_components
         with override_provides("service_behavior_component_form", []):
-            request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
-            response = view(request, pk=object.pk)
-            if hasattr(response, "render"):
-                response.render()
-            assert response.status_code in [200, 302]
+            with override_provides("service_behavior_component_form_part", []):
+                request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
+                response = view(request, pk=object.pk)
+                if hasattr(response, "render"):
+                    response.render()
+                assert response.status_code in [200, 302]
 
         assert model.objects.count() == methods_before
         assert model.objects.get(pk=object.pk).choice_identifier == "manual"

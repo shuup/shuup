@@ -5,12 +5,14 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
+from __future__ import unicode_literals
+
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from parler.models import TranslatedField, TranslatedFields
+from parler.models import TranslatableModel, TranslatedField, TranslatedFields
 
-from shoop.core.fields import MoneyValueField
+from shoop.core.fields import MeasurementField, MoneyValueField
 
 from ._service_base import (
     ServiceBehaviorComponent, ServiceCost,
@@ -82,3 +84,65 @@ class WeightLimitsBehaviorComponent(ServiceBehaviorComponent):
         if self.max_weight:
             if weight > self.max_weight:
                 yield ValidationError(_("Maximum weight exceeded."), code="max_weight")
+
+
+class WeightBasedPriceRange(TranslatableModel):
+    component = models.ForeignKey(
+        "WeightBasedPricingBehaviorComponent",
+        related_name="ranges",
+        on_delete=models.CASCADE
+    )
+    min_value = MeasurementField(unit="g", verbose_name=_("min weight"), blank=True, null=True)
+    max_value = MeasurementField(unit="g", verbose_name=_("max weight"), blank=True, null=True)
+    price_value = MoneyValueField()
+    description = TranslatedField(any_language=True)
+
+    translations = TranslatedFields(
+        description=models.CharField(max_length=100, blank=True, verbose_name=_("description")),
+    )
+
+    def matches_to_value(self, value):
+        return _is_in_range(value, self.min_value, self.max_value)
+
+
+def _is_in_range(value, min_value, max_value):
+    """
+    Help function to check if the ``WeightBasedPriceRange`` matches
+
+    If min_value is None the max_value determines if the range matches.
+    None as a max_value represents infinity. Min value is counted in
+    range only when it's zero. Max value is always part of the range.
+
+    :type value: decimal.Decimal
+    :type min_value: MeasurementField
+    :type max_value: MeasurementField
+    :rtype: bool
+    """
+    if value is None:
+        return False
+    if (not (min_value or max_value)) or (min_value == max_value == value):
+        return True
+    if (not min_value or value > min_value) and (max_value is None or value <= max_value):
+        return True
+    return False
+
+
+class WeightBasedPricingBehaviorComponent(ServiceBehaviorComponent):
+    name = _("Weight-based pricing")
+    help_text = _(
+        "Define price based on basket weight. "
+        "Range minimums is counted in range only as zero.")
+
+    def _get_matching_range_with_lowest_price(self, source):
+        total_gross_weight = source.total_gross_weight
+        matching_ranges = [range for range in self.ranges.all() if range.matches_to_value(total_gross_weight)]
+        if not matching_ranges:
+            return
+        return min(matching_ranges, key=lambda x: x.price_value)
+
+    def get_costs(self, service, source):
+        range = self._get_matching_range_with_lowest_price(source)
+        if range:
+            price = source.create_price(range.price_value)
+            description = range.safe_translation_getter('description')
+            yield ServiceCost(price, description)
