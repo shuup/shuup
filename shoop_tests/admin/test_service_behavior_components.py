@@ -14,7 +14,8 @@ from shoop.admin.modules.services.views import (
 )
 from shoop.core.models import (
     FixedCostBehaviorComponent, PaymentMethod, ShippingMethod,
-    WaivingCostBehaviorComponent, WeightLimitsBehaviorComponent
+    WaivingCostBehaviorComponent, WeightBasedPricingBehaviorComponent,
+    WeightLimitsBehaviorComponent
 )
 from shoop.testing.factories import (
     get_default_payment_method, get_default_shipping_method, get_default_shop
@@ -23,18 +24,25 @@ from shoop.testing.utils import apply_request_middleware
 
 
 DEFAULT_BEHAVIOR_SETTINGS = {
-    FixedCostBehaviorComponent: {
+    FixedCostBehaviorComponent.__name__.lower(): {
         "description__en": "Fixed cost test",
         "price_value": 1,
         "id": "",
     },
-    WaivingCostBehaviorComponent: {
+    WaivingCostBehaviorComponent.__name__.lower(): {
         "description__en": "Waiving cost test",
         "price_value": 1,
         "waive_limit_value": 1,
         "id": "",
     },
-    WeightLimitsBehaviorComponent: {
+    "weight_based_price_ranges": {
+        "description__en": "Weight based pricing test",
+        "price_value": 1,
+        "min_value": 1,
+        "max_value": 2,
+        "id": "",
+    },
+    WeightLimitsBehaviorComponent.__name__.lower(): {
         "min_weight": 0,
         "max_weight": 1,
         "id": "",
@@ -60,8 +68,7 @@ def get_default_component_form_data(delete=False):
     data = {}
     behavior_settings = DEFAULT_BEHAVIOR_SETTINGS
 
-    for component, component_dict in behavior_settings.items():
-        component_name = component.__name__.lower()
+    for component_name, component_dict in behavior_settings.items():
         data.update({
             "%s-MAX_NUM_FORMS" % component_name: 20,
             "%s-MIN_NUM_FORMS" % component_name: 0,

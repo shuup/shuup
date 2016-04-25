@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-18 12:12+0000\n"
+"POT-Creation-Date: 2016-04-25 17:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
-"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
@@ -587,7 +587,6 @@ msgstr ""
 msgid "Edit %(model)s"
 msgstr ""
 
-#, python-brace-format
 msgid "Create {service_name}"
 msgstr ""
 
@@ -622,6 +621,9 @@ msgid "Carrier"
 msgstr ""
 
 msgid "Payment Processor"
+msgstr ""
+
+msgid "Weight-based pricing range"
 msgstr ""
 
 msgid "Shops"
@@ -1130,6 +1132,11 @@ msgid ""
 "Variables tab and then link them to products here."
 msgstr ""
 
+msgid ""
+"Define price based basket weight range. Range minimum is counted in range "
+"only as zero."
+msgstr ""
+
 msgid "Behavior"
 msgstr ""
 
@@ -1199,8 +1206,8 @@ msgstr ""
 
 #, python-format
 msgid ""
-"Telemetry data was last submitted at %(submission_datetime)s - "
-"(%(submission_timesince)s) ago"
+"Telemetry data was last submitted at %(submission_datetime)s - (%"
+"(submission_timesince)s) ago"
 msgstr ""
 
 msgid "See the data that was submitted."
