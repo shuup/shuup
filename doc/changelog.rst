@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add ``total_gross_weight`` property for ``Source``
 - Fix bug: Order line text is not set for package products
 - Add new Service API and implement shipping and payments with it
 - Remove BaseMethodModule based API (``shoop.core.methods``)
