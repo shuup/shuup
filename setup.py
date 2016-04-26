@@ -77,35 +77,35 @@ utils.set_exclude_patters([
 ])
 
 REQUIRES = [
-    'Babel~=2.2',
-    'Django~=1.8.0',
-    'django-bootstrap3~=6.1',
-    'django-countries~=3.3',
-    'django-enumfields~=0.7.2',
-    'django-filer~=1.0',
-    'django-jinja~=1.4',
-    'django-mptt~=0.8.0',
-    'django-parler~=1.5',
-    'django-parler-rest~=1.3a1',
-    'django-polymorphic~=0.8.0',
+    'Babel>=2.2,<3',
+    'Django>=1.8.0,<1.9',
+    'django-bootstrap3>=6.1,<7',
+    'django-countries>=3.3,<4',
+    'django-enumfields>=0.7.2,<0.8',
+    'django-filer>=1.0,<2',
+    'django-jinja>=1.4,<2',
+    'django-mptt>=0.8.0,<0.9',
+    'django-parler>=1.5,<2',
+    'django-parler-rest>=1.3a1,<2',
+    'django-polymorphic>=0.8.0,<0.10',
     # django-registration-redux>=1.4 does not work with
     # our custom get_success_url
-    'django-registration-redux~=1.2,<1.4',
-    'django-timezone-field~=1.2',
+    'django-registration-redux>=1.2,<1.4',
+    'django-timezone-field>=1.2,<2',
 
     # djangorestframework>=3.3.0 does not work with
     # django-parler-rest 1.3a1 because compat.OrderedDict was dropped
-    'djangorestframework~=3.1,<3.3.0',
+    'djangorestframework>=3.1,<3.3.0',
 
-    'factory-boy~=2.5',
-    'fake-factory~=0.5.0,<0.5.4',
-    'Jinja2~=2.8',
-    'jsonfield~=1.0',
-    'Markdown~=2.6',
-    'pytoml~=0.1.0',
+    'factory-boy>=2.5,<3',
+    'fake-factory>=0.5.0,<0.5.4',
+    'Jinja2>=2.8,<3',
+    'jsonfield>=1.0,<2',
+    'Markdown>=2.6,<3',
+    'pytoml>=0.1.0,<0.2',
     'pytz>=2015.4',
-    'requests~=2.7',
-    'six~=1.9',
+    'requests>=2.7,<3',
+    'six>=1.9,<2',
 ]
 
 REQUIRES_FOR_PYTHON2_ONLY = [
