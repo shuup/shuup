@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-29 18:55+0000\n"
-"PO-Revision-Date: 2016-02-15 00:55+0000\n"
+"POT-Creation-Date: 2016-04-11 12:32+0000\n"
+"PO-Revision-Date: 2016-04-21 18:48+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shoop/shoop/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -44,30 +44,30 @@ msgid "Upload new addon"
 msgstr "Enviar nova extensão"
 
 msgid "Reload application"
-msgstr "Recarregar aplicação"
+msgstr "Reinicializar aplicação"
 
 msgid ""
 "There are no viable reload methods available. Please contact your system "
 "administrator."
-msgstr "Não há métodos de reinicialização viáveis disponíveis. Por favor, entre em contato com o administrador do sistema."
+msgstr "Não há métodos de reinicialização viáveis disponíveis. Entre em contato com o administrador do sistema."
 
 msgid "Reload Method"
 msgstr "Método de Reinicialização"
 
 msgid "Reloading."
-msgstr "Recarregando."
+msgstr "Reinicializando."
 
 msgid "Addon file (ZIP)"
 msgstr "Arquivo de extensão (ZIP)"
 
 msgid "Only upload addon files you trust."
-msgstr "Envie apenas arquivos de extensões que você confia."
+msgstr "Só faça o upload de arquivos de extensão que você confia."
 
 msgid "Only ZIP files are supported"
 msgstr "Somente arquivos ZIP são suportados"
 
 msgid "Upload"
-msgstr "Enviar"
+msgstr "Fazer upload"
 
 msgid "Install Addon"
 msgstr "Instalar Extensão"
@@ -85,27 +85,44 @@ msgid "You don't have any installed addons"
 msgstr "Você não tem nenhuma extensão instalada"
 
 msgid "Reload Application Server"
-msgstr "Recarregar Servidor de Aplicações"
+msgstr "Reinicializar Servidor de Aplicações"
 
 msgid ""
 "When you reload the application server, it may take some time for the new "
 "instance of your application to properly initialize."
-msgstr "Quando você recarrega o servidor de aplicações, pode demorar algum tempo para que a nova instância do seu aplicativo inicialize corretamente."
+msgstr "Quando você reinicializar o servidor de aplicações, pode demorar algum tempo até que a nova instância do seu aplicativo inicialize corretamente."
 
 msgid ""
 "In addition, there is always a chance for the server to not properly "
 "initialize at all, in which case you may need to troubleshoot the problem "
 "yourself (or have a system administrator handy)."
-msgstr "Além disso, há sempre a chance de o servidor não inicializar corretamente, neste caso, você terá de corrigir o problema por conta própria (ou solicitar a ajuda de um administrador do sistema)."
+msgstr "Além disso, há sempre a chance de o servidor não inicializar corretamente, neste caso, pode ser necessário tentar solucionar o problema por conta própria (ou contar com um administrador do sistema por perto)."
 
-msgid "Reload initiated"
-msgstr "Reinicialização iniciada"
+msgid "Reload steps"
+msgstr "Etapas da reinicialização"
+
+msgid ""
+"Finalize installations for newly installed addons (migrate and collect "
+"static resources)"
+msgstr "Finalizar instalações das extensões recém-instaladas (migração e coleta de recursos estáticos)"
+
+msgid "Reload application server"
+msgstr "Reinicializar o servidor de aplicações"
+
+msgid "Reload initiated."
+msgstr "Reinicialização iniciada."
+
+msgid "Error while reloading application."
+msgstr "Erro ao reinicializar aplicação."
+
+msgid "Finalizing installations."
+msgstr "Finalizando instalações."
 
 msgid "Your Shoop seems to be back up!"
 msgstr "Seu Shoop parece estar de volta!"
 
 msgid "Your Shoop is not up yet. Trying again soon."
-msgstr "Seu Shoop não está de pé ainda. Tentando novamente em instantes."
+msgstr "Seu Shoop ainda não está de pé. Tentando novamente em instantes."
 
 msgid "Select file"
 msgstr "Selecionar arquivo"
@@ -124,16 +141,16 @@ msgid ""
 "Next, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activate"
 " the newly installed addon</strong></a> and <a href=\"%(addon_reload_url)s\""
 " class=\"text-success\"><strong>reload your application server</strong></a>."
-msgstr "Por fim, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>ative a nova extensão instalada</strong></a> e <a href=\"%(addon_reload_url)s\" class=\"text-success\"><strong>recarregue o seu servidor de aplicações</strong></a>."
+msgstr "Em seguida, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>ative a extensão recém-instalada</strong></a> e <a href=\"%(addon_reload_url)s\" class=\"text-success\"><strong>recarregue o seu servidor de aplicações</strong></a>."
 
 msgid "Error"
 msgstr "Erro"
 
 msgid "Installer Log"
-msgstr "Log de Instalação"
+msgstr "Log do Instalador"
 
 msgid "Upload Addon - Install"
-msgstr "Enviar Extensão - Instalar"
+msgstr "Upload de Extensão - Instalar"
 
 msgid "Package Information"
 msgstr "Informações do Pacote"

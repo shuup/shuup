@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Christian Hess <christianhess.rlz@gmail.com>, 2016
+# christianhess <christianhess.rlz@gmail.com>, 2016
 # Jonathan Hess <jhess666@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-30 23:37+0000\n"
-"PO-Revision-Date: 2016-02-18 00:28+0000\n"
+"PO-Revision-Date: 2016-04-21 19:12+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shoop/shoop/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgid ""
 "Please enter a correct %(username)s and password. Note that both fields may "
 "be case-sensitive. In case of multiple accounts with same email only "
 "username can be used to login."
-msgstr "Por favor, digite o %(username)s e a senha corretamente. Note que ambos os campos podem ser sensíveis a maiúsculas e minúsculas. No caso de múltiplas contas com o mesmo e-mail apenas o nome de usuário poderá ser utilizado para fazer o login."
+msgstr "Por favor, digite o %(username)s e a senha corretamente. Note que ambos os campos podem ser sensíveis a letras maiúsculas e minúsculas. Em caso de múltiplas contas com o mesmo e-mail, somente o nome de usuário poderá ser usado para autenticar."
 
 msgid "This account is inactive."
 msgstr "Esta conta está inativa."
@@ -40,7 +40,7 @@ msgid "Email"
 msgstr "E-mail"
 
 msgid "Please provide either username or email, not both."
-msgstr "Por favor, forneça o nome de usuário ou e-mail, nunca ambos."
+msgstr "Por favor, forneça o nome de usuário ou e-mail, não ambos."
 
 msgid "Please provide either username or email."
 msgstr "Por favor, forneça o nome de usuário ou e-mail."
@@ -49,22 +49,22 @@ msgid "shop"
 msgstr "loja"
 
 msgid "Log in"
-msgstr "Fazer login"
+msgstr "Entrar"
 
 msgid "Forgot your password?"
 msgstr "Esqueceu sua senha?"
 
 msgid "Logged out"
-msgstr "Desconectado"
+msgstr "Saiu"
 
 msgid "You have been logged out."
 msgstr "Você foi desconectado."
 
 msgid "Recover your password"
-msgstr "Recuperar sua senha"
+msgstr "Recupere sua senha"
 
 msgid "Send password recovery instructions"
-msgstr "Enviar instruções para recuperação de senha"
+msgstr "Enviar instruções de recuperação da senha"
 
 msgid "Password Changed"
 msgstr "Senha Alterada"
@@ -84,13 +84,13 @@ msgstr "Oi %(fullname)s"
 
 #, python-format
 msgid "In case you've forgotten, your username is %(username)s."
-msgstr "No caso de ter esquecido, seu nome de usuário é %(username)s."
+msgstr "Caso você tenha esquecido, seu nome de usuário é %(username)s."
 
 #, python-format
 msgid ""
 "You're receiving this email because you requested a password reset for your "
 "user account at %(site_name)s."
-msgstr "Você está recebendo este e-mail porque solicitou a redefinição de senha para sua conta de usuário na loja %(site_name)s."
+msgstr "Você está recebendo este e-mail porque solicitou a redefinição de senha para sua conta de usuário em %(site_name)s."
 
 msgid "Please go to the following page and choose a new password:"
 msgstr "Por favor, vá para a seguinte página e escolha uma nova senha:"
@@ -100,7 +100,7 @@ msgid ""
 "    If an user account is associated with the information you entered,\n"
 "    you should receive instructions on how to reset your password shortly.\n"
 "    "
-msgstr "\nSe uma conta de usuário estiver associada às informações digitadas,\nlogo deverá receber instruções sobre como redefinir sua senha.\n "
+msgstr "\nSe uma conta de usuário estiver associada às informações digitadas,\nvocê deverá receber instruções sobre como redefinir a sua senha logo em breve.\n "
 
 msgid "This recovery link is invalid."
 msgstr "Este link de recuperação é inválido."

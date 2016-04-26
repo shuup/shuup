@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-27 21:20+0000\n"
-"PO-Revision-Date: 2016-02-17 23:30+0000\n"
+"POT-Creation-Date: 2016-04-19 08:57+0000\n"
+"PO-Revision-Date: 2016-04-21 23:58+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shoop/shoop/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -29,21 +29,21 @@ msgid "Uploaded:"
 msgstr "Enviado:"
 
 msgid "New file name?"
-msgstr "Qual é o novo nome do arquivo?"
+msgstr "Novo nome do arquivo?"
 
 #, javascript-format
 msgid "Are you sure you want to delete the file %s?"
 msgstr "Tem certeza que deseja excluir o arquivo %s?"
 
 msgid "New folder name?"
-msgstr "Qual é o novo nome do diretório?"
+msgstr "Novo nome da pasta?"
 
 #, javascript-format
 msgid "Are you sure you want to delete the %s folder?"
-msgstr "Tem certeza que deseja excluir o diretório %s?"
+msgstr "Tem certeza que deseja excluir a pasta %s?"
 
 msgid "New folder"
-msgstr "Novo diretório"
+msgstr "Nova pasta"
 
 msgid "current"
 msgstr "atual"
@@ -76,12 +76,12 @@ msgid "Edit"
 msgstr "Editar"
 
 msgid "Click the <strong>Upload</strong> button to upload files."
-msgstr "Clique no botão <strong>Enviar</strong> para fazer o upload dos arquivos."
+msgstr "Clique no botão <strong>Fazer upload</strong> para fazer o upload dos arquivos."
 
 msgid ""
 "<span>Drag and drop</span> files here<br> or click the <span>Upload</span> "
 "button."
-msgstr "<span>Arraste e solte</span> os arquivos aqui<br> ou clique no botão <span>Enviar</span>."
+msgstr "<span>Arraste e solte</span> os arquivos aqui<br> ou clique no botão <span>Fazer upload</ span>."
 
 msgid "Rename file"
 msgstr "Renomear arquivo"
@@ -90,17 +90,17 @@ msgid "Delete file"
 msgstr "Excluir arquivo"
 
 msgid "Rename folder"
-msgstr "Renomear diretório"
+msgstr "Renomear pasta"
 
 msgid "Delete folder"
-msgstr "Excluir diretório"
+msgstr "Excluir pasta"
 
 #, javascript-format
 msgid "Order %s created."
 msgstr "Pedido %s criado."
 
 msgid "An unspecified error occurred.\n"
-msgstr "Um erro não especificado ocorreu.\n"
+msgstr "Ocorreu um erro não especificado.\n"
 
 msgid "SKU"
 msgstr "SKU"
@@ -115,10 +115,10 @@ msgid "Unit Price"
 msgstr "Preço Unitário"
 
 msgid "Discount amount"
-msgstr "Valor de desconto"
+msgstr "Valor do desconto"
 
 msgid "Total (excluding taxes)"
-msgstr "Total (sem impostos)"
+msgstr "Total (excluindo impostos)"
 
 msgid "Tax percent"
 msgstr "Alíquota de imposto"
@@ -145,13 +145,13 @@ msgid "New Customer"
 msgstr "Novo Cliente"
 
 msgid "Save customer details while creating order"
-msgstr "Salvar detalhes do cliente enquanto cria o pedido"
+msgstr "Salvar detalhes do cliente durante a criação do pedido"
 
 msgid "Ship to billing address"
-msgstr "Entregar no endereço de cobrança"
+msgstr "Enviar para o endereço de cobrança"
 
 msgid "Order for company"
-msgstr "Comprar para pessoa jurídica"
+msgstr "Comprar para empresa"
 
 msgid "Billing Address"
 msgstr "Endereço de Cobrança"
@@ -183,7 +183,7 @@ msgstr "Forma de Pagamento"
 msgid ""
 "Method rules, taxes and possible extra discounts are calculated after "
 "proceeding."
-msgstr "Regras das formas de entrega e pagamento, impostos e possíveis descontos extras serão calculados após dar prosseguimento."
+msgstr "Formas de entrega e pagamento, impostos e possíveis descontos extras serão todos calculados após prosseguir."
 
 msgid "Proceed"
 msgstr "Prosseguir"
@@ -207,7 +207,7 @@ msgid "Discounted Unit Price"
 msgstr "Preço Unitário com Desconto"
 
 msgid "Discount Percent"
-msgstr "Percentual de Desconto"
+msgstr "% de Desconto"
 
 msgid "Total Discount Amount"
 msgstr "Valor Total de Desconto"
@@ -216,12 +216,12 @@ msgid "Line Total"
 msgstr "Total do Item"
 
 msgid "Orderline type"
-msgstr "Tipo do item de pedido"
+msgstr "Tipo de item do pedido"
 
 msgid ""
 "If your product prices vary based on customer, you might want to select "
 "customer first."
-msgstr "Se os preços dos seus produtos variarem de acordo com o cliente, você pode querer selecioná-lo primeiro."
+msgstr "Se os preços dos produtos variarem de acordo com o cliente, você pode querer selecioná-lo primeiro."
 
 #, javascript-format
 msgid "All prices are in %s currency."
@@ -235,9 +235,6 @@ msgstr "Impostos não inclusos."
 
 msgid "Add new line"
 msgstr "Adicionar novo item"
-
-msgid "Price"
-msgstr "Preço"
 
 msgid "No shipping method"
 msgstr "Nenhuma forma de entrega"
@@ -255,7 +252,7 @@ msgid "Other"
 msgstr "Outro"
 
 msgid "Tax number"
-msgstr "CPF/CNPJ"
+msgstr "Número de contribuinte (CNPJ)"
 
 msgid "Phone"
 msgstr "Telefone"
@@ -313,13 +310,10 @@ msgid "Show identifier fields (for advanced users)"
 msgstr "Mostrar campos identificadores (para usuários avançados)"
 
 msgid "There are no variables defined."
-msgstr "Não existem variáveis definidas."
+msgstr "Não há variáveis definidas."
 
 msgid "Add new variable"
 msgstr "Adicionar nova variável"
-
-msgid "No results."
-msgstr "Nenhum resultado."
 
 msgid "No browser URL for kind:"
 msgstr "Nenhuma URL do navegador para o tipo:"
@@ -327,11 +321,14 @@ msgstr "Nenhuma URL do navegador para o tipo:"
 msgid "Expand Editor"
 msgstr "Expandir Editor"
 
+msgid "No results."
+msgstr "Nenhum resultado."
+
 msgid "From"
 msgstr "De"
 
 msgid "To"
-msgstr "Para"
+msgstr "Até"
 
 msgid "Items per page"
 msgstr "Itens por página"
@@ -395,4 +392,4 @@ msgid "Editor"
 msgstr "Editor"
 
 msgid "Done"
-msgstr "Pronto"
+msgstr "Concluído"

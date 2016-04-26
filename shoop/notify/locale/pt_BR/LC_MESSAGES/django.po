@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 13:16+0000\n"
-"PO-Revision-Date: 2016-02-18 00:51+0000\n"
+"POT-Creation-Date: 2016-04-10 16:38+0000\n"
+"PO-Revision-Date: 2016-04-22 00:42+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shoop/shoop/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -40,7 +40,7 @@ msgstr "Protocolo de Envio"
 msgid ""
 "If set, this identifier will be logged into the event's log target. If the "
 "identifier has already been logged, the e-mail won't be sent again."
-msgstr "Se definido, este identificador será registrado no log de eventos. Se o identificador já estiver registrado, o e-mail não será enviado novamente."
+msgstr "Se definido, este identificador será registrado no log de eventos de destino. Se o identificador já estiver registrado, o e-mail não será enviado novamente."
 
 msgid "Notifications"
 msgstr "Notificações"
@@ -61,18 +61,18 @@ msgid "Script Name"
 msgstr "Nome do Script"
 
 msgid "Type in a descriptive name for your new script."
-msgstr "Digite um nome adequado para o novo script."
+msgstr "Digite um nome adequado para o seu novo script."
 
 msgid "Enable Script"
 msgstr "Habilitar Script"
 
 msgid "Choose whether this script should be activated when its event fires."
-msgstr "Decida se este script deve ser ativado quando seus eventos forem disparados."
+msgstr "Escolha se este script deve ser ativado quando seu evento for disparado."
 
 msgid ""
 "Warning: Changing the event for an existing script may have unexpected "
 "effects."
-msgstr "Aviso: Alterar o evento de um script existente pode provocar efeitos indesejados."
+msgstr "Aviso: Alterar o evento de um script existente pode ocasionar efeitos inesperados."
 
 msgid "Template"
 msgstr "Template"
@@ -91,19 +91,37 @@ msgstr "Habilitado"
 
 msgid ""
 "Check whether the bound value `value` exists and is non-empty and non-zero."
-msgstr "Verifique se o valor vinculado `valor` existe, não está vazio e não é zero."
+msgstr "Verifica se o valor vinculado 'valor' existe e é não-vazio e não-zero."
 
 msgid "Non-Empty"
-msgstr "Não Vazio"
+msgstr "Não-Vazio"
 
 msgid "Check whether the bound value `value` is empty or zero."
-msgstr "Verifique se o valor vinculado `valor` está vazio ou é zero."
+msgstr "Verifica se o valor vinculado 'valor' é vazio ou zero."
 
 msgid "Empty"
 msgstr "Vazio"
 
+msgid "none"
+msgstr "nenhum"
+
+msgid "unilingual"
+msgstr "unilíngue"
+
+msgid "multilingual"
+msgstr "multilíngue"
+
+msgid "variable only"
+msgstr "somente variável"
+
+msgid "constant only"
+msgstr "somente constante"
+
+msgid "variable or constant"
+msgstr "variável ou constante"
+
 msgid "continue to the next step"
-msgstr "ir para a próxima etapa"
+msgstr "seguir para a próxima etapa"
 
 msgid "stop processing"
 msgstr "parar processamento"
@@ -114,17 +132,26 @@ msgstr "todos"
 msgid "any"
 msgstr "qualquer"
 
-msgid "none"
-msgstr "nenhum"
-
 msgid "any shop administrator"
 msgstr "qualquer administrador da loja"
 
 msgid "a specific user"
 msgstr "um usuário específico"
 
+msgid "low"
+msgstr "baixo"
+
+msgid "normal"
+msgstr "normal"
+
+msgid "high"
+msgstr "alto"
+
+msgid "critical"
+msgstr "crítico"
+
 msgid "recipient type"
-msgstr "tipo do destinatário"
+msgstr "tipo de destinatário"
 
 msgid "recipient"
 msgstr "destinatário"
@@ -145,7 +172,7 @@ msgid "marked read by"
 msgstr "marcado como lido por"
 
 msgid "marked read on"
-msgstr "marcado para leitura"
+msgstr "marcado como lido em"
 
 msgid "event identifier"
 msgstr "identificador do evento"
@@ -175,7 +202,7 @@ msgid "Edit Step"
 msgstr "Editar Etapa"
 
 msgid "Done"
-msgstr "Pronto"
+msgstr "Concluído"
 
 msgid "Please correct the errors below."
 msgstr "Por favor, corrija os erros abaixo."
@@ -184,7 +211,7 @@ msgid "Variables"
 msgstr "Variáveis"
 
 msgid "Save changes"
-msgstr "Salvar as alterações"
+msgstr "Salvar alterações"
 
 msgid "Boolean"
 msgstr "Verdadeiro/Falso"

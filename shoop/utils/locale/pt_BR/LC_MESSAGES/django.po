@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Christian Hess <christianhess.rlz@gmail.com>, 2016
+# christianhess <christianhess.rlz@gmail.com>, 2016
 # Jonathan Hess <jhess666@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 17:28+0000\n"
-"PO-Revision-Date: 2016-02-18 01:02+0000\n"
+"POT-Creation-Date: 2016-04-19 08:56+0000\n"
+"PO-Revision-Date: 2016-04-21 17:34+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shoop/shoop/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -27,10 +27,10 @@ msgid "other"
 msgstr "outro"
 
 msgid "audit"
-msgstr "auditar"
+msgstr "auditoria"
 
 msgid "edit"
-msgstr "editar"
+msgstr "edição"
 
 msgid "deletion"
 msgstr "exclusão"
@@ -66,14 +66,19 @@ msgid "extra data"
 msgstr "dados adicionais"
 
 msgid "target"
-msgstr "alvo"
+msgstr "destino"
+
+#, python-format
+msgid "%s day"
+msgid_plural "%s days"
+msgstr[0] "%s dia"
+msgstr[1] "%s dias"
+
+#, python-format
+msgid "%(min)s--%(max)s days"
+msgstr "%(min)s--%(max)s dias"
 
 msgid ""
 "Comma-separated values or ranges, e.g. A-Z,10000-19000. Use exclamation "
 "marks to negate (A-Z,!G will not match G)."
-msgstr "Valores separados por vírgula ou intervalos, p. ex. A-Z,10000-19000. Utilize ponto de exclamação para negar (A-Z,!G não irá casar com G)."
-
-msgid ""
-"Could not create PDF since Weasyprint is not available. Please contact "
-"support."
-msgstr "Não foi possível gerar PDF pois a biblioteca Weasyprint não está disponível. Por favor, entre em contato com o suporte."
+msgstr "Valores separados por vírgula ou intervalos, p. ex. A-Z,10000-19000. Use pontos de exclamação para negar (A-Z,!G não irá casar com G)."

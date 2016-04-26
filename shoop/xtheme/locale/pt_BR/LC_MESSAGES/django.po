@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-28 00:12+0000\n"
-"PO-Revision-Date: 2016-02-10 23:35+0000\n"
+"POT-Creation-Date: 2016-04-10 16:38+0000\n"
+"PO-Revision-Date: 2016-04-21 19:39+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shoop/shoop/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -37,6 +37,15 @@ msgstr "ativar"
 msgid "Theme activated."
 msgstr "Tema ativado."
 
+msgid "current draft"
+msgstr "rascunho atual"
+
+msgid "old version"
+msgstr "versão antiga"
+
+msgid "public"
+msgstr "público"
+
 msgid "theme identifier"
 msgstr "identificador do tema"
 
@@ -47,13 +56,13 @@ msgid "created on"
 msgstr "criado em"
 
 msgid "status"
-msgstr "situação"
+msgstr "status"
 
 msgid "internal data"
 msgstr "dados internos"
 
 msgid "active"
-msgstr "ativar"
+msgstr "ativo"
 
 msgid "data"
 msgstr "dados"
@@ -64,6 +73,66 @@ msgstr "Configurações do tema para %s"
 
 msgid "Plugin"
 msgstr "Plugin"
+
+msgid "Category Links"
+msgstr "Links de Categorias"
+
+msgid "Title"
+msgstr "Título"
+
+msgid "Show all categories"
+msgstr "Mostrar todas as categorias"
+
+msgid "All categories are shown, even if not selected"
+msgstr "Todas as categorias são mostradas, mesmo se não estiverem selecionadas"
+
+msgid "Image"
+msgstr "Imagem"
+
+msgid "Image Link URL"
+msgstr "URL do Link da Imagem"
+
+msgid "Full width"
+msgstr "Largura total"
+
+msgid "Set image to full width of cell"
+msgstr "Definir imagem na largura total da célula"
+
+msgid "Width (px)"
+msgstr "Largura (px)"
+
+msgid "Leave blank for default width"
+msgstr "Deixe em branco para largura padrão"
+
+msgid "Height (px)"
+msgstr "Altura (px)"
+
+msgid "Snippets"
+msgstr "Snippets"
+
+msgid "In-Place Snippet"
+msgstr "Snippet In-Place"
+
+msgid "Resource snippet for end of head"
+msgstr "Trecho de recurso para o fim do cabeçalho"
+
+msgid "Resource snippet for beginning of body"
+msgstr "Trecho de recurso para o início de <body>"
+
+msgid "Resource for end of body"
+msgstr "Recurso para o final de <body>"
+
+msgid "Social Media Links"
+msgstr "Links de Mídias Sociais"
+
+msgid "Topic"
+msgstr "Tópico"
+
+msgid "Icon Size"
+msgstr "Tamanho do Ícone"
+
+msgid "Alignment"
+msgstr "Alinhamento"
 
 msgid "text"
 msgstr "texto"
@@ -97,10 +166,10 @@ msgid "Add new row"
 msgstr "Adicionar nova linha"
 
 msgid "Theme Configuration"
-msgstr "Configurações do Tema"
+msgstr "Configuração de Tema"
 
 msgid "No themes are installed."
-msgstr "Nenhum tema está instalado."
+msgstr "Não há temas instalados."
 
 msgid "Theme"
 msgstr "Tema"
@@ -145,7 +214,7 @@ msgstr "Não foi possível determinar o tema atual."
 
 #, python-format
 msgid "Cannot add more than %d cells in one row."
-msgstr "Não é possível adicionar mais de %d células em uma linha."
+msgstr "Não é possível adicionar mais do que %d células em uma linha."
 
 msgid "Full Width"
 msgstr "Largura Total"
