@@ -458,6 +458,11 @@ class OrderSource(object):
 
         return dict(q_counter)
 
+    @property
+    def total_gross_weight(self):
+        product_lines = self.get_product_lines()
+        return ((sum(l.product.gross_weight * l.quantity for l in product_lines)) if product_lines else 0)
+
 
 def _collect_lines_from_signal(signal_results):
     for (receiver, response) in signal_results:
@@ -483,8 +488,6 @@ class SourceLine(TaxableItem, Priceful):
         "quantity", "base_unit_price", "discount_amount",
         "sku", "text",
         "require_verification", "accounting_identifier",
-        # TODO: Maybe add following attrs to SourceLine?
-        # "weight"
     ]
     _FIELDSET = set(_FIELDS)
     _OBJECT_FIELDS = {

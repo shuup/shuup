@@ -12,6 +12,8 @@ Unreleased
 Core
 ~~~~
 
+- Add weight based pricing behavior component
+- Add ``total_gross_weight`` property for ``Source``
 - Fix bug: Order line text is not set for package products
 - Add new Service API and implement shipping and payments with it
 - Remove BaseMethodModule based API (``shoop.core.methods``)
@@ -50,6 +52,7 @@ Localization
 Admin
 ~~~~~
 
+- Enable add/edit for weight based behavior component through service admin
 - Add ``admin_contact_group_form_part`` provider for ``ContactGroup`` admin
 - Redo shipping and payment method management
 - Add service provider management
