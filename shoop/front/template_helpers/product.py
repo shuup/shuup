@@ -53,7 +53,7 @@ def is_visible(context, product):
 def get_product_cross_sells(
         context, product, relation_type=ProductCrossSellType.RELATED,
         count=4, orderable_only=True):
-    rtype = _map_relation_type(relation_type)
+    rtype = map_relation_type(relation_type)
     related_product_ids = list((
         ProductCrossSell.objects
         .filter(product1=product, type=rtype)
@@ -74,7 +74,7 @@ def get_product_cross_sells(
     return related_products[:count]
 
 
-def _map_relation_type(relation_type):
+def map_relation_type(relation_type):
     """
     Map relation type to enum value.
 

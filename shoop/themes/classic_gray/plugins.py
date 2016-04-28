@@ -12,6 +12,7 @@ from shoop.core.models import ProductCrossSell, ProductCrossSellType
 from shoop.front.template_helpers.general import (
     get_best_selling_products, get_newest_products, get_random_products
 )
+from shoop.front.template_helpers.product import map_relation_type
 from shoop.xtheme import TemplatedPlugin
 from shoop.xtheme.plugins.forms import TranslatableField
 
@@ -67,12 +68,25 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
                                               required=False))
     ]
 
+    def __init__(self, config):
+        relation_type = config.get("type", None)
+        if relation_type:
+            # Map initial config string to enum type
+            try:
+                type = map_relation_type(relation_type)
+            except AttributeError:
+                type = ProductCrossSellType.RELATED
+            config["type"] = type
+        super(ProductCrossSellsPlugin, self).__init__(config)
+
     def get_context_data(self, context):
         count = self.config.get("count", 4)
         product = context.get("product", None)
         orderable_only = self.config.get("orderable_only", True)
-        type = self.config.get("type")
-        if not isinstance(type, ProductCrossSellType):
+        relation_type = self.config.get("type")
+        try:
+            type = map_relation_type(relation_type)
+        except AttributeError:
             type = ProductCrossSellType.RELATED
         return {
             "request": context["request"],

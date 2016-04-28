@@ -7,7 +7,9 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from shoop.core.models import Product, ProductCrossSell, StockBehavior
+from shoop.core.models import (
+    Product, ProductCrossSell, ProductCrossSellType, StockBehavior
+)
 from shoop.testing.factories import create_product, get_default_shop
 from shoop.themes.classic_gray.plugins import ProductCrossSellsPlugin
 from shoop_tests.front.fixtures import get_jinja_context
@@ -21,7 +23,7 @@ def test_cross_sell_plugin_renders():
     shop = get_default_shop()
     product = create_product("test-sku", shop=shop, stock_behavior=StockBehavior.UNSTOCKED)
     computed = create_product("test-computed-sku", shop=shop, stock_behavior=StockBehavior.UNSTOCKED)
-    type = ProductCrossSell.type.field.enum.COMPUTED
+    type = ProductCrossSellType.COMPUTED
 
     ProductCrossSell.objects.create(product1=product, product2=computed, type=type)
     assert ProductCrossSell.objects.filter(product1=product, type=type).count() == 1
@@ -29,3 +31,11 @@ def test_cross_sell_plugin_renders():
     context = get_jinja_context(product=product)
     rendered  = ProductCrossSellsPlugin({"type": type}).render(context)
     assert computed.sku in rendered
+
+
+def test_cross_sell_plugin_accepts_initial_config_as_string_or_enum():
+    plugin = ProductCrossSellsPlugin({"type": "computed"})
+    assert plugin.config["type"] == ProductCrossSellType.COMPUTED
+
+    plugin = ProductCrossSellsPlugin({"type": ProductCrossSellType.RECOMMENDED})
+    assert plugin.config["type"] == ProductCrossSellType.RECOMMENDED
