@@ -92,11 +92,7 @@ REQUIRES = [
     # our custom get_success_url
     'django-registration-redux>=1.2,<1.4',
     'django-timezone-field>=1.2,<2',
-
-    # djangorestframework>=3.3.0 does not work with
-    # django-parler-rest 1.3a1 because compat.OrderedDict was dropped
-    'djangorestframework>=3.1,<3.3.0',
-
+    'djangorestframework>=3.1,<4',
     'factory-boy>=2.5,<3',
     'fake-factory>=0.5.0,<0.5.4',
     'Jinja2>=2.8,<3',
