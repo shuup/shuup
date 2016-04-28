@@ -53,6 +53,7 @@ Localization
 Admin
 ~~~~~
 
+- Show tracking codes in order detail
 - Fix bug: Show package siblings for variation children
 - Fix bug: Detail page of contact with multiple groups fails on Python 3
 - Enable add/edit for weight based behavior component through service admin
