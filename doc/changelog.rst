@@ -72,6 +72,7 @@ Addons
 Front
 ~~~~~
 
+- Support also django-registration-redux 1.4
 - Enable description and logo for methods in checkout
 - Add admin view for monitoring customer carts
 - Remove ``get_method_validation_errors`` signal

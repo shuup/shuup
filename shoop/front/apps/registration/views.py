@@ -34,9 +34,9 @@ def registration_complete(request):
 class RegistrationViewMixin(object):
     template_name = "shoop/registration/register.jinja"
 
-    def get_success_url(self, request, user):
+    def get_success_url(self, *args, **kwargs):
         url = self.request.REQUEST.get(REDIRECT_FIELD_NAME)
-        if url and is_safe_url(url, request.get_host()):
+        if url and is_safe_url(url, self.request.get_host()):
             return url
         return ('shoop:registration_complete', (), {})
 
@@ -62,5 +62,5 @@ class RegistrationView(View):
 class ActivationView(default_views.ActivationView):
     template_name = "shoop/registration/activation_failed.jinja"
 
-    def get_success_url(self, request, user):
+    def get_success_url(self, *args, **kwargs):
         return ('shoop:registration_activation_complete', (), {})
