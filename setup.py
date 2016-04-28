@@ -107,18 +107,18 @@ REQUIRES = [
 REQUIRES_FOR_PYTHON2_ONLY = [
     # enum34 1.1 or newer does not currently work. See
     # https://github.com/hzdg/django-enumfields/pull/44
-    'enum34~=1.0,<1.1',
+    'enum34>=1.0,<1.1',
 ]
 
 EXTRAS_REQUIRE = {
     ':python_version=="2.7"': REQUIRES_FOR_PYTHON2_ONLY,
     'docs': [
-        'Sphinx~=1.3',
+        'Sphinx>=1.3,<2',
     ],
     'testing': utils.get_test_requirements_from_tox_ini(TOPDIR),
     'coding-style': [
-        'flake8~=2.4',
-        'pep8-naming~=0.2',
+        'flake8>=2.4,<3',
+        'pep8-naming>=0.2,<1',
     ],
 }
 EXTRAS_REQUIRE['everything'] = list(
