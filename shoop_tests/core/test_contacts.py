@@ -147,13 +147,13 @@ def test_person_name_gets_saved():
 def test_contact_group_repr_and_str_no_identifier_no_name():
     cg = ContactGroup()
     assert repr(cg) == '<ContactGroup:None>'
-    assert str(cg) == 'ContactGroup:None'
+    assert str(cg) == 'contact group'
 
 
 def test_contact_group_repr_and_str_has_identifier_no_name():
     cg = ContactGroup(identifier='hello')
     assert repr(cg) == '<ContactGroup:None-hello>'
-    assert str(cg) == 'ContactGroup:hello'
+    assert str(cg) == 'contact group "hello"'
 
 
 def test_contact_group_repr_and_str_no_identifier_has_name():
