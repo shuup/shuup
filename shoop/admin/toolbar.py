@@ -195,6 +195,8 @@ class DropdownActionButton(BaseActionButton):
         yield '</ul>'
 
     def render(self, request):
+        if not self.items:
+            return
         yield '<div class="btn-group" role="group">'
 
         if self.split_button:
