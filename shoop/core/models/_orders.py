@@ -610,6 +610,9 @@ class Order(MoneyPropped, models.Model):
     def get_status_display(self):
         return force_text(self.status)
 
+    def get_tracking_codes(self):
+        return [shipment.tracking_code for shipment in self.shipments.all() if shipment.tracking_code]
+
 
 OrderLogEntry = define_log_model(Order)
 
