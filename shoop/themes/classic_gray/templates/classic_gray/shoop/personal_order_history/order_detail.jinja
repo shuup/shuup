@@ -55,6 +55,10 @@
             {{ info_row(_("Tax Number"), order.tax_number) }}
             {{ price_row(_("Total Price"), order.taxful_total_price) }}
             {{ price_row(_("Total Price (taxless)"), order.taxless_total_price) }}
+            {% set tracking_codes = order.get_tracking_codes() %}
+            {% if tracking_codes %}
+                {{ info_row(_("Tracking codes"), render_objects(tracking_codes)) }}
+            {% endif %}
         </table>
     {% endcall %}
 {% endmacro %}
@@ -176,3 +180,11 @@
         {{ number_cell("", elem) }}
     {%- endif -%}
 {% endmacro %}
+
+{%- macro render_objects(objs) -%}
+    {%- for obj in objs -%}
+        {{- obj -}}
+        {%- if not loop.last %}, {% endif -%}
+    {%- endfor -%}
+{%- endmacro -%}
+
