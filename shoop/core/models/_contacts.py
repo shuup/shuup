@@ -12,6 +12,7 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumField
+from parler.managers import TranslatableQuerySet
 from parler.models import TranslatedFields
 from timezone_field.fields import TimeZoneField
 
@@ -32,7 +33,7 @@ PROTECTED_CONTACT_GROUP_IDENTIFIERS = [
 ]
 
 
-class ContactGroupQuerySet(models.QuerySet):
+class ContactGroupQuerySet(TranslatableQuerySet):
     def with_price_display_options(self):
         return self.filter(
             models.Q(show_prices_including_taxes__isnull=False) |

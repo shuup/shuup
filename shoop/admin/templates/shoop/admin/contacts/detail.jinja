@@ -9,7 +9,8 @@
                     {{ info_row(_("Full Name"), contact.full_name) }}
                     {{ info_row(_("Phone"), contact.phone, "tel:" ~ contact.phone) }}
                     {{ info_row(_("Email"), contact.email, "mailto:" ~ contact.email) }}
-                    {{ info_row(_("Groups"), contact.groups.all()|sort|join(", ")|default(_("No groups"), True)) }}
+                    {% set groups = render_objects(contact_groups) %}
+                    {{ info_row(_("Groups"), groups|default(_("No groups"), True)) }}
                     {{ info_row(_("Bound User"), contact.user, shoop_admin.model_url(contact.user) if contact.user else None) }}
                     {{ info_row(_("Merchant Notes"), contact.merchant_notes) }}
                     </tbody>
@@ -46,3 +47,16 @@
         </div>
     {% endcall %}
 {% endblock %}
+
+{%- macro render_objects(objs) -%}
+    {%- for obj in objs -%}
+        {{- render_object(obj) -}}
+        {%- if not loop.last %}, {% endif -%}
+    {%- endfor -%}
+{%- endmacro -%}
+
+{%- macro render_object(obj) -%}
+    <a href="{{ shoop_admin.model_url(obj) }}">
+        {{- obj -}}
+    </a>
+{%- endmacro -%}

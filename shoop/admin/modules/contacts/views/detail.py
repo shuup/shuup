@@ -83,6 +83,8 @@ class ContactDetailView(DetailView):
         user = getattr(self.object, "user", None)
         if user:
             order_q |= Q(creator=user)
+        context["contact_groups"] = sorted(
+            self.object.groups.all(), key=(lambda x: force_text(x)))
         context["orders"] = Order.objects.filter(order_q).order_by("-id")
         context["toolbar"] = ContactDetailToolbar(contact=self.object)
         context["title"] = "%s: %s" % (
