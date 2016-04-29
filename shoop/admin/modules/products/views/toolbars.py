@@ -118,13 +118,17 @@ class EditProductToolbar(Toolbar):
                     yield item
 
     def _get_variation_and_package_menu_items(self, product):
-        if (product.is_variation_parent() or product.is_variation_child()):
+        is_variation_product = (product.is_variation_parent() or product.is_variation_child())
+        if is_variation_product:
             for item in self._get_variation_menu_items(product):
                 yield item
-        if (product.is_package_parent() or product.is_package_child()):
+
+        is_package_product = (product.is_package_parent() or product.is_package_child())
+        if is_package_product:
             for item in self._get_package_menu_items(product):
                 yield item
-        else:
+
+        if not (is_variation_product or is_package_product):
             for item in self._get_header_item(_("Packages")):
                 yield item
             yield DropdownItem(

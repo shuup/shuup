@@ -53,6 +53,7 @@ Localization
 Admin
 ~~~~~
 
+- Fix bug: Fix convert to parent menu items in ``EditProductToolbar``
 - Show tracking codes in order detail
 - Fix bug: Show package siblings for variation children
 - Fix bug: Detail page of contact with multiple groups fails on Python 3
