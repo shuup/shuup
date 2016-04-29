@@ -52,6 +52,7 @@ Localization
 Admin
 ~~~~~
 
+- Fix bug: Show package siblings for variation children
 - Fix bug: Detail page of contact with multiple groups fails on Python 3
 - Enable add/edit for weight based behavior component through service admin
 - Add ``admin_contact_group_form_part`` provider for ``ContactGroup`` admin
