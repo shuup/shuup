@@ -24,6 +24,10 @@
                     {{ info_row(_("Order Status"), order.get_status_display()) }}
                     {{ info_row(_("Payment Status"), order.get_payment_status_display()) }}
                     {{ info_row(_("Shipping Status"), order.get_shipping_status_display()) }}
+                    {% set tracking_codes = order.get_tracking_codes() %}
+                    {% if tracking_codes %}
+                        {{ info_row(_("Tracking codes"), render_objects(tracking_codes)) }}
+                    {% endif %}
                 </dl>
             {% endcall %}
 
@@ -134,3 +138,10 @@
         </div>
     {% endcall %}
 {% endblock %}
+
+{%- macro render_objects(objs) -%}
+    {%- for obj in objs -%}
+        {{- obj -}}
+        {%- if not loop.last %}, {% endif -%}
+    {%- endfor -%}
+{%- endmacro -%}

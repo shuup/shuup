@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add ``get_tracking_codes`` to ``shoop.core.models.Order``
 - Add weight based pricing behavior component
 - Add ``total_gross_weight`` property for ``Source``
 - Fix bug: Order line text is not set for package products
@@ -52,6 +53,7 @@ Localization
 Admin
 ~~~~~
 
+- Show tracking codes in order detail
 - Fix bug: Show package siblings for variation children
 - Fix bug: Detail page of contact with multiple groups fails on Python 3
 - Enable add/edit for weight based behavior component through service admin
@@ -99,6 +101,7 @@ Xtheme
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 
+- Show tracking codes in order detail
 - Remove ``ProductCrossSellType.COMPUTED`` from cross-sells plugin
 - Update cross-sells plugin to use ``ProductCrossSellType.BOUGHT_WITH``
 - Render prices with the new price rendering template tags
