@@ -14,6 +14,8 @@ from shoop.admin.utils.picotable import (
     ChoicesFilter, Column, DateRangeFilter, Filter, MultiFieldTextFilter,
     Picotable, RangeFilter, TextFilter
 )
+from shoop.core.models import Product
+from shoop.testing.mock_population import populate_if_required
 from shoop_tests.utils import empty_iterable
 from shoop_tests.utils.fixtures import regular_user
 
@@ -28,18 +30,21 @@ def instance_id(instance):  # Test direct `display` callable
 def false_and_true():
     return [(False, "False"), (True, "True")]
 
-def get_pico(rf):
+def get_pico(rf, model=None, columns=None):
+    model = model or get_user_model()
+    columns = columns or [
+        Column("id", "Id", filter_config=Filter(), display=instance_id),
+        Column("username", "Username", sortable=False, filter_config=MultiFieldTextFilter(filter_fields=("username", "email"), operator="iregex")),
+        Column("email", "Email", sortable=False, filter_config=TextFilter()),
+        Column("is_superuser", "Is Superuser", display="superuser_display", filter_config=ChoicesFilter(choices=false_and_true())),
+        Column("is_active", "Is Active", filter_config=ChoicesFilter(choices=false_and_true)),  # `choices` callable
+        Column("date_joined", "Date Joined", filter_config=DateRangeFilter())
+    ]
+
     return Picotable(
         request=rf.get("/"),
-        columns=[
-            Column("id", "Id", filter_config=Filter(), display=instance_id),
-            Column("username", "Username", sortable=False, filter_config=MultiFieldTextFilter(filter_fields=("username", "email"), operator="iregex")),
-            Column("email", "Email", sortable=False, filter_config=TextFilter()),
-            Column("is_superuser", "Is Superuser", display="superuser_display", filter_config=ChoicesFilter(choices=false_and_true())),
-            Column("is_active", "Is Active", filter_config=ChoicesFilter(choices=false_and_true)),  # `choices` callable
-            Column("date_joined", "Date Joined", filter_config=DateRangeFilter())
-        ],
-        queryset=get_user_model().objects.all(),
+        columns=columns,
+        queryset=model.objects.all(),
         context=PicoContext()
     )
 
@@ -132,3 +137,31 @@ def test_picotable_no_mobile_link_for_missing_object_url(rf, admin_user, regular
     pico.get_object_url = None
     data = pico.get_data({"perPage": 100, "page": 1})
     assert not data["items"][0]["_linked_in_mobile"]
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("regular_user")
+def test_picotable_correctly_sorts_translated_fields(rf, admin_user, regular_user):
+    """
+    Make sure that translated fields, such as product names, are correctly sorted
+    """
+    populate_if_required()
+
+    columns = [
+        Column("id", "Id", filter_config=Filter(), display=instance_id),
+        Column(
+            "name", "Name", sort_field="translations__name",
+            filter_config=TextFilter(filter_field="translations__name")),
+    ]
+
+    pico = get_pico(rf, model=Product, columns=columns)
+
+    # Verify ascending sort
+    sorted_products = pico.get_data({"perPage": 100, "page": 1, "sort": "+name"})
+    sorted_names = [p["name"] for p in sorted_products["items"]]
+    assert sorted_names == sorted(sorted_names)
+
+    # Verify descending sort
+    sorted_products = pico.get_data({"perPage": 100, "page": 1, "sort": "-name"})
+    sorted_names = [p["name"] for p in sorted_products["items"]]
+    assert sorted_names == sorted(sorted_names, reverse=True)
