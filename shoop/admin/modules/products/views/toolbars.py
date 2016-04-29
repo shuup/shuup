@@ -121,7 +121,7 @@ class EditProductToolbar(Toolbar):
         if (product.is_variation_parent() or product.is_variation_child()):
             for item in self._get_variation_menu_items(product):
                 yield item
-        elif (product.is_package_parent() or product.is_package_child()):
+        if (product.is_package_parent() or product.is_package_child()):
             for item in self._get_package_menu_items(product):
                 yield item
         else:
