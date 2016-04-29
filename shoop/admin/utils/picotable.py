@@ -11,11 +11,12 @@ import json
 
 import six
 from django.core.paginator import EmptyPage, Paginator
-from django.db.models import Count, Manager, Q, QuerySet
+from django.db.models import Manager, Q, QuerySet
 from django.http.response import JsonResponse
 from django.template.defaultfilters import yesno
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import get_language
 
 from shoop.admin.utils.urls import get_model_url, NoModelUrl
 from shoop.utils.dates import try_parse_date
@@ -237,11 +238,9 @@ class Column(object):
 
     def sort_queryset(self, queryset, desc=False):
         order_by = ("-" if desc else "") + self.sort_field
-        queryset = queryset.order_by(order_by)
-        if self.sort_field.startswith("translations__"):
-            # Ref http://archlinux.me/dusty/2010/12/07/django-dont-use-distinct-and-order_by-across-relations/
-            queryset = queryset.annotate(_dummy_=Count(self.sort_field))
-        return queryset
+        if "translations__" in self.sort_field:
+            queryset = queryset.translated(get_language())
+        return queryset.order_by(order_by)
 
     def filter_queryset(self, queryset, value):
         if self.filter_config:
