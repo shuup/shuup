@@ -14,6 +14,7 @@ from decimal import Decimal
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db import models
+from django.db.transaction import atomic
 from django.utils.crypto import get_random_string
 from django.utils.encoding import force_text, python_2_unicode_compatible
 from django.utils.timezone import now
@@ -432,6 +433,7 @@ class Order(MoneyPropped, models.Model):
 
         return payment
 
+    @atomic
     def create_shipment(self, supplier, product_quantities):
         """
         Create a shipment for this order from `product_quantities`.
