@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add ``shipment_created`` signal
 - Add ``get_tracking_codes`` to ``shoop.core.models.Order``
 - Add weight based pricing behavior component
 - Add ``total_gross_weight`` property for ``Source``

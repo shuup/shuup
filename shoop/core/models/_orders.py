@@ -32,6 +32,7 @@ from shoop.core.fields import (
     UnsavedForeignKey
 )
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
+from shoop.core.signals import shipment_created
 from shoop.utils.analog import define_log_model, LogEntryKind
 from shoop.utils.money import Money
 from shoop.utils.numbers import bankers_round
@@ -466,6 +467,7 @@ class Order(MoneyPropped, models.Model):
 
         self.add_log_entry(_(u"Shipment #%d created.") % shipment.id)
         self.check_and_set_fully_shipped()
+        shipment_created.send(sender=type(self), order=self, shipment=shipment)
         return shipment
 
     def create_shipment_of_all_products(self, supplier=None):
