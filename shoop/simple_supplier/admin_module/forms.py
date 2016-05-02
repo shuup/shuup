@@ -39,7 +39,7 @@ class SimpleSupplierForm(forms.Form):
         return Supplier.objects.filter(shop_products__product=product, module_identifier="simple_supplier").distinct()
 
     def can_manage_stock(self):
-        return Supplier.objects.filter(module_identifier="simple_supplier").exists()
+        return Supplier.objects.filter(module_identifier="simple_supplier", stock_managed=True).exists()
 
     def get_stock_information(self, supplier, product):
         return get_stock_information_html(supplier, product)
@@ -54,13 +54,14 @@ class SimpleSupplierFormPart(FormPart):
     form = SimpleSupplierForm
 
     def get_form_defs(self):
-        yield TemplatedFormDef(
-            name=self.name,
-            form_class=self.form,
-            template_name="shoop/simple_supplier/admin/product_form_part.jinja",
-            required=False,
-            kwargs={"product": self.object, "request": self.request}
-        )
+        if self.object.pk:  # Don't yield form if product is in new mode
+            yield TemplatedFormDef(
+                name=self.name,
+                form_class=self.form,
+                template_name="shoop/simple_supplier/admin/product_form_part.jinja",
+                required=False,
+                kwargs={"product": self.object, "request": self.request}
+            )
 
     def form_valid(self, form):
         return  # No need to save anything since all stock adjustments are made by AJAX
