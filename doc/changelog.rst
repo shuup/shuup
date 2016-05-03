@@ -117,6 +117,7 @@ Classic Gray Theme
 Simple Supplier
 ~~~~~~~~~~~~~~~
 
+- Fix bug: Cannot create products from Admin if SimpleSupplier is active
 - Add admin modules for updating stock
 - Add support for stock counts and values
 

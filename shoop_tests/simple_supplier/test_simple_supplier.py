@@ -9,6 +9,7 @@ import decimal
 import pytest
 import random
 
+from shoop.admin.modules.products.views.edit import ProductEditView
 from shoop.core.models import StockBehavior, Supplier
 from shoop.simple_supplier.admin_module.forms import SimpleSupplierForm
 from shoop.simple_supplier.admin_module.views import process_stock_adjustment
@@ -118,3 +119,28 @@ def test_admin_form(rf, admin_user):
     frm = SimpleSupplierForm(product=product, request=request)
     assert len(frm.products) == 1
     assert frm.products[0] == child_product
+
+
+@pytest.mark.django_db
+def test_new_product_admin_form_renders(rf, client, admin_user):
+    """
+    Make sure that no exceptions are raised when creating a new product
+    with simple supplier enabled
+    """
+    request = rf.get("/")
+    request.user = admin_user
+    request.session = client.session
+    view = ProductEditView.as_view()
+    shop = get_default_shop()
+    supplier = get_simple_supplier()
+    supplier.stock_managed = True
+    supplier.save()
+
+    # This should not raise an exception
+    view(request).render()
+
+    supplier.stock_managed = False
+    supplier.save()
+
+    # Nor should this
+    view(request).render()
