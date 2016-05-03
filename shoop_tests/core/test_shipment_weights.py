@@ -22,7 +22,7 @@ def test_shipment_weights_separate_shipments():
     product_lines = order.lines.exclude(product_id=None)
     for line in product_lines:
         shipment = order.create_shipment(supplier, {line.product: line.quantity})
-        assert shipment.weight == (line.quantity * line.product.gross_weight)
+        assert shipment.weight == (line.quantity * line.product.gross_weight / 1000)
 
 
 @pytest.mark.django_db
@@ -32,8 +32,12 @@ def test_shipment_weights_ship_all():
     order = _get_order(shop, supplier)
     shipment = order.create_shipment_of_all_products(supplier=supplier)
     assert shipment.weight == sum(
-        [(product_data["quantity"] * product_data["gross_weight"]) for product_data in _get_product_data()]
+        [_get_weight_from_product_data(product_data) for product_data in _get_product_data()]
     )
+
+
+def _get_weight_from_product_data(product_data):
+    return (product_data["quantity"] * product_data["gross_weight"] / 1000)
 
 
 def _get_order(shop, supplier):

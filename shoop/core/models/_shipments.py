@@ -19,6 +19,7 @@ from shoop.core.fields import MeasurementField, QuantityField
 __all__ = ("Shipment", "ShipmentProduct")
 
 CUBIC_MM_TO_CUBIC_METERS_DIVISOR = Decimal("1000000000")
+GRAMS_TO_KILOGRAMS_DIVISOR = 1000
 
 
 class ShipmentStatus(Enum):
@@ -70,7 +71,7 @@ class Shipment(models.Model):
             total_volume += quantity * volume
             total_weight += quantity * weight
         self.volume = total_volume
-        self.weight = total_weight
+        self.weight = total_weight / GRAMS_TO_KILOGRAMS_DIVISOR
 
     @property
     def total_products(self):
