@@ -66,12 +66,8 @@ EXCLUDED_PACKAGES = [
     'shoop_tests', 'shoop_tests.*',
 ]
 
-utils.set_exclude_patters([
-    '__pycache__', '*.py[cod]',
-    'node_modules', 'bower_components',
+utils.add_exclude_patters([
     'build', 'doc', 'var',
-    '.tox', '.cache', 'venv*',
-    '.git', '.gitignore',
     'LC_MESSAGES',
     'local_settings.py',
 ])
