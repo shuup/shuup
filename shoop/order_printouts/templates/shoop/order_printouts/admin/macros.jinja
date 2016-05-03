@@ -92,7 +92,7 @@
                     <td width="60">{{ ol.text }}</td>
                     {% if ol.quantity != 0 %}
                         <td width="10" class="align-right">{{ ol.quantity|floatformat(2) }}</td>
-                        <td width="10" class="align-right">{{ ol.tax_rate }}%</td>
+                        <td width="10" class="align-right">{{ ol.tax_rate|percent(ndigits=3) }}</td>
                         <td width="10" class="align-right">{{ ol.taxful_price|money }}</td>
                     {% else %}
                         <td width="30"></td>
