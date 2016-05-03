@@ -25,6 +25,10 @@ class ServiceListView(PicotableListView):
             "name", _("Name"), sort_field="translations__name",
             filter_config=TextFilter(filter_field="translations__name", placeholder=_("Filter by name..."))
         ),
+        Column(
+            "choice_identifier", _(u"Service choice"), display="format_service_choice",
+            sortable=False,
+        ),
         Column("enabled", _(u"Enabled"), filter_config=true_or_false_filter),
         Column("shop", _(u"Shop"))
     ]
@@ -33,6 +37,11 @@ class ServiceListView(PicotableListView):
         return [
             {"text": "%s" % instance, "class": "header"},
         ]
+
+    def format_service_choice(self, instance, *args, **kwargs):
+        for choice in instance.provider.get_service_choices():
+            if choice.identifier == instance.choice_identifier:
+                return str(choice.name)
 
 
 class ShippingMethodListView(ServiceListView):
