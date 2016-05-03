@@ -70,7 +70,7 @@ class Builder(object):
         items = excludes.walk_excl(self.root_directory)
         for (dirpath, dirnames, filenames) in items:
             if 'package.json' in filenames:
-                if dirpath != '.':  # Ignore the root package json
+                if 'generated_resources.txt' in filenames:
                     yield dirpath
 
     def build_dirs(self, directories):
