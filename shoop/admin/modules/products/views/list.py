@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.utils.picotable import ChoicesFilter, Column, TextFilter
@@ -28,8 +29,13 @@ class ProductListView(PicotableListView):
     ]
 
     def get_queryset(self):
-        shop_id = self.get_filter().get("shop")
+        filter = self.get_filter()
+        shop_id = filter.get("shop")
         qs = Product.objects.all_except_deleted()
+        q = Q()
+        for mode in filter.get("modes", []):
+            q = q | Q(mode=mode)
+        qs = qs.filter(q)
         if shop_id:
             qs = qs.filter(shop_products__shop_id=int(shop_id))
         return qs

@@ -13,7 +13,7 @@ from django.contrib import messages
 from django.db.transaction import atomic
 from django.utils.translation import ugettext_lazy as _
 
-from shoop.admin.forms.widgets import ProductChoiceWidget
+from shoop.admin.forms.widgets import PackageProductChoiceWidget
 from shoop.admin.modules.products.utils import clear_existing_package
 from shoop.core.excs import ImpossibleProductModeException, Problem
 from shoop.core.models import Product
@@ -24,7 +24,7 @@ from .parent_forms import ProductChildBaseFormSet
 class PackageChildForm(forms.Form):
     child = forms.ModelChoiceField(
         queryset=Product.objects.all(),
-        widget=ProductChoiceWidget(),
+        widget=PackageProductChoiceWidget(),
         label="",
         required=True,
     )
