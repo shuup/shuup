@@ -85,7 +85,7 @@ def create_order(request, creator, customer, product):
 
     shipment = order.create_shipment_of_all_products(supplier=supplier)
     assert shipment.total_products == 5, "All products were shipped"
-    assert shipment.weight == product.net_weight * 5, "Gravity works"
+    assert shipment.weight == product.gross_weight * 5, "Gravity works"
     assert not order.get_unshipped_products(), "Nothing was left in the warehouse"
 
     order.create_payment(order.taxful_total_price)

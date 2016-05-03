@@ -43,7 +43,7 @@ class Shipment(models.Model):
     tracking_code = models.CharField(max_length=64, blank=True, verbose_name=_("tracking code"))
     description = models.CharField(max_length=255, blank=True, verbose_name=_("description"))
     volume = MeasurementField(unit="m3", verbose_name=_("volume"))
-    weight = MeasurementField(unit="kg", verbose_name=_("weight"))
+    weight = MeasurementField(unit="g", verbose_name=_("weight"))
     # TODO: documents = models.ManyToManyField(FilerFile)
 
     class Meta:
