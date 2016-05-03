@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Fix bug: Convert ``Shipment`` weight to kilograms
 - Make ``create_shipment`` for order atomic
 - Add ``shipment_created`` signal
 - Add ``get_tracking_codes`` to ``shoop.core.models.Order``
