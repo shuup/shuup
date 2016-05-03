@@ -14,6 +14,7 @@ from decimal import Decimal
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db import models
+from django.db.transaction import atomic
 from django.utils.crypto import get_random_string
 from django.utils.encoding import force_text, python_2_unicode_compatible
 from django.utils.timezone import now
@@ -32,6 +33,7 @@ from shoop.core.fields import (
     UnsavedForeignKey
 )
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
+from shoop.core.signals import shipment_created
 from shoop.utils.analog import define_log_model, LogEntryKind
 from shoop.utils.money import Money
 from shoop.utils.numbers import bankers_round
@@ -431,6 +433,7 @@ class Order(MoneyPropped, models.Model):
 
         return payment
 
+    @atomic
     def create_shipment(self, supplier, product_quantities):
         """
         Create a shipment for this order from `product_quantities`.
@@ -466,6 +469,7 @@ class Order(MoneyPropped, models.Model):
 
         self.add_log_entry(_(u"Shipment #%d created.") % shipment.id)
         self.check_and_set_fully_shipped()
+        shipment_created.send(sender=type(self), order=self, shipment=shipment)
         return shipment
 
     def create_shipment_of_all_products(self, supplier=None):
