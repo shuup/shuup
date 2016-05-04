@@ -39,9 +39,10 @@ class ServiceListView(PicotableListView):
         ]
 
     def format_service_choice(self, instance, *args, **kwargs):
-        for choice in instance.provider.get_service_choices():
-            if choice.identifier == instance.choice_identifier:
-                return str(choice.name)
+        if instance.provider:
+            for choice in instance.provider.get_service_choices():
+                if choice.identifier == instance.choice_identifier:
+                    return str(choice.name)
 
 
 class ShippingMethodListView(ServiceListView):
