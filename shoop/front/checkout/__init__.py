@@ -10,11 +10,16 @@ from __future__ import unicode_literals
 from shoop.utils import update_module_attributes
 
 from ._process import CheckoutProcess
+from ._services import (
+    BasicServiceCheckoutPhaseProvider, ServiceCheckoutPhaseProvider
+)
 from ._view_mixin import CheckoutPhaseViewMixin
 
 __all__ = [
+    "BasicServiceCheckoutPhaseProvider",
     "CheckoutPhaseViewMixin",
     "CheckoutProcess",
+    "ServiceCheckoutPhaseProvider",
 ]
 
 update_module_attributes(__all__, __name__)

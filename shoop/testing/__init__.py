@@ -20,6 +20,9 @@ class ShoopTestingAppConfig(AppConfig):
             "shoop.testing.payment_forms:PseudoPaymentProcessorForm",
             "shoop.testing.payment_forms:PaymentWithCheckoutPhaseForm",
         ],
+        "front_service_checkout_phase_provider": [
+            "shoop.testing.simple_checkout_phase.PhaseProvider",
+        ],
     }
 
 
