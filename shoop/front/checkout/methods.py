@@ -19,6 +19,9 @@ from django.views.generic.edit import FormView
 
 from shoop.core.models import PaymentMethod, ShippingMethod
 from shoop.front.checkout import CheckoutPhaseViewMixin
+from shoop.utils.iterables import first
+
+from ._services import get_checkout_phases_for_service
 
 LOG = logging.getLogger(__name__)
 
@@ -143,7 +146,8 @@ class _MethodDependentCheckoutPhase(CheckoutPhaseViewMixin):
         meth = self.get_method()
         if not meth:
             return None
-        phase = meth.get_checkout_phase(**self.checkout_process.phase_kwargs)
+        phases = get_checkout_phases_for_service(self.checkout_process, meth)
+        phase = first(phases)
         if not phase:
             return None
         phase = self.checkout_process.add_phase_attributes(phase, self)

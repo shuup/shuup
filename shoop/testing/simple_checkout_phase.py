@@ -9,7 +9,11 @@
 from django import forms
 from django.views.generic.edit import FormView
 
-from shoop.front.checkout import CheckoutPhaseViewMixin
+from shoop.front.checkout import (
+    BasicServiceCheckoutPhaseProvider, CheckoutPhaseViewMixin
+)
+
+from .models import PaymentWithCheckoutPhase
 
 
 class TestCheckoutPhaseForm(forms.Form):
@@ -35,3 +39,8 @@ class TestCheckoutPhase(CheckoutPhaseViewMixin, FormView):
     def process(self):
         data = self.storage.get('payment_with_checkout_phase', {})
         self.request.basket.payment_data["promised_to_pay"] = data.get('will_pay')
+
+
+class PhaseProvider(BasicServiceCheckoutPhaseProvider):
+    phase_class = TestCheckoutPhase
+    service_provider_class = PaymentWithCheckoutPhase

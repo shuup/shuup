@@ -78,6 +78,11 @@ Core
 ``discount_module``
     `~shoop.core.pricing.DiscountModule` for pricing system.
 
+``front_service_checkout_phase_provider``
+    Allows providing a custom checkout phase for a service (e.g. payment
+    method or shipping method).  Should implement the
+    `~shoop.front.checkout.ServiceCheckoutPhaseProvider` interface.
+
 ``front_template_helper_namespace``
     Additional namespaces to install in the ``shoop`` "package" within
     template contexts.

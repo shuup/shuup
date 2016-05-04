@@ -55,8 +55,6 @@ class ServiceProvider(PolymorphicTranslatableShoopModel):
     #: Model class of the provided services (subclass of `Service`)
     service_model = None
 
-    checkout_phase_class = None
-
     def get_service_choices(self):
         """
         Get all service choices of this provider.
@@ -109,20 +107,6 @@ class ServiceProvider(PolymorphicTranslatableShoopModel):
         :rtype: str
         """
         return service.name
-
-    def get_checkout_phase(self, service, **kwargs):
-        """
-        Get checkout phase of given service.
-
-        :type service: shoop.core.models.Service
-        :rtype: shoop.front.checkout.CheckoutPhaseViewMixin|None
-        """
-        phase_class = self.checkout_phase_class
-        if not phase_class:
-            return None
-        from shoop.front.checkout import CheckoutPhaseViewMixin
-        assert issubclass(phase_class, CheckoutPhaseViewMixin)
-        return phase_class(service=service, **kwargs)
 
 
 class ServiceChoice(object):
@@ -236,12 +220,6 @@ class Service(TranslatableShoopModel):
         :rtype: shoop.core.models.ServiceProvider
         """
         return getattr(self, self.provider_attr)
-
-    def get_checkout_phase(self, **kwargs):
-        """
-        :rtype: shoop.core.front.checkout.CheckoutPhaseViewMixin|None
-        """
-        return self.provider.get_checkout_phase(service=self, **kwargs)
 
     def get_effective_name(self, source):
         """

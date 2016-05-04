@@ -7,12 +7,9 @@
 # LICENSE file in the root directory of this source tree.
 
 from shoop.core.models import CustomPaymentProcessor, PaymentStatus
-from shoop.testing.simple_checkout_phase import TestCheckoutPhase
 
 
 class PaymentWithCheckoutPhase(CustomPaymentProcessor):
-    checkout_phase_class = TestCheckoutPhase
-
     def process_payment_return_request(self, service, order, request):
         if order.payment_status == PaymentStatus.NOT_PAID and order.payment_data.get("promised_to_pay"):
             order.payment_status = PaymentStatus.DEFERRED
