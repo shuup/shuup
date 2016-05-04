@@ -124,6 +124,7 @@ Simple Supplier
 Order Printouts
 ~~~~~~~~~~~~~~~
 
+- Output tax rates as percentages
 - Add basic support to create PDF printouts
 - Add admin module to print order shipments and confirmation
 
