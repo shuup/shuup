@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-28 18:05+0000\n"
+"POT-Creation-Date: 2016-05-04 20:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
@@ -346,6 +346,12 @@ msgstr ""
 msgid "This order can not be set as complete at this point"
 msgstr ""
 
+msgid "Cancel Order"
+msgstr ""
+
+msgid "Paid, shipped, or canceled orders cannot be canceled"
+msgstr ""
+
 msgid "Unable to set order as completed at this point"
 msgstr ""
 
@@ -609,6 +615,9 @@ msgid "Price"
 msgstr ""
 
 msgid "Waive limit"
+msgstr ""
+
+msgid "Service choice"
 msgstr ""
 
 msgid "Enabled"

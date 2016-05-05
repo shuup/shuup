@@ -9,7 +9,7 @@ import pytest
 
 from shoop.admin.modules.orders.dashboard import OrderValueChartDashboardBlock
 from shoop.admin.modules.orders.views.detail import OrderSetStatusView
-from shoop.core.models import Order, OrderStatus, OrderStatusRole
+from shoop.core.models import Order, OrderStatus, OrderStatusRole, ShippingStatus
 from shoop.testing.factories import (
     create_random_order, create_random_person, get_default_product
 )
@@ -17,7 +17,7 @@ from shoop.testing.utils import apply_request_middleware
 
 
 @pytest.mark.django_db
-def test_order_set_status_works(admin_user, rf):
+def test_order_set_status_completed_works(admin_user, rf):
     order = create_random_order(customer=create_random_person(), products=(get_default_product(),))
     order.create_shipment_of_all_products()  # Need to be shipped to set complete
     assert order.status.role == OrderStatusRole.INITIAL
@@ -28,6 +28,21 @@ def test_order_set_status_works(admin_user, rf):
     assert response.status_code < 400
     order = Order.objects.get(pk=order.pk)
     assert order.status_id == complete_status.id
+    assert order.log_entries.filter(identifier="status_change").exists()
+
+
+@pytest.mark.django_db
+def test_order_set_status_canceled_works(admin_user, rf):
+    order = create_random_order(customer=create_random_person(), products=(get_default_product(),))
+    assert order.shipping_status == ShippingStatus.NOT_SHIPPED
+    assert order.status.role == OrderStatusRole.INITIAL
+    canceled_status = OrderStatus.objects.get_default_canceled()
+    view = OrderSetStatusView.as_view()
+    request = apply_request_middleware(rf.post("/", {"status": canceled_status.pk}), user=admin_user)
+    response = view(request, pk=order.pk)
+    assert response.status_code < 400
+    order = Order.objects.get(pk=order.pk)
+    assert order.status_id == canceled_status.id
     assert order.log_entries.filter(identifier="status_change").exists()
 
 
