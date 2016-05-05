@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add payment methods to ``Order``
 - Add ``is_canceled`` and ``can_set_canceled`` to ``Order``
 - Fix bug: Convert ``Shipment`` weight to kilograms
 - Make ``create_shipment`` for order atomic
