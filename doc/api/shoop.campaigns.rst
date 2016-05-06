@@ -45,6 +45,14 @@ shoop.campaigns.signal_handlers module
     :undoc-members:
     :show-inheritance:
 
+shoop.campaigns.utils module
+----------------------------
+
+.. automodule:: shoop.campaigns.utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

@@ -11,8 +11,9 @@ from django.db import models
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
+from shoop.campaigns.utils import assign_to_group_based_on_sales
 from shoop.core.fields import MoneyValueField
-from shoop.core.models import ContactGroup, Shop
+from shoop.core.models import Contact, ContactGroup, Shop
 from shoop.core.models._contacts import PROTECTED_CONTACT_GROUP_IDENTIFIERS
 
 
@@ -40,6 +41,8 @@ class ContactGroupSalesRange(models.Model):
     def save(self, *args, **kwargs):
         self.clean()
         super(ContactGroupSalesRange, self).save(*args, **kwargs)
+        for customer in Contact.objects.all():
+            assign_to_group_based_on_sales(ContactGroupSalesRange, self.shop, customer, sales_range=self)
 
     def clean(self):
         super(ContactGroupSalesRange, self).clean()

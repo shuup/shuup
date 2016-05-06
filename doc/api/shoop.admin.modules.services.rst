@@ -7,6 +7,7 @@ Subpackages
 .. toctree::
 
     shoop.admin.modules.services.views
+    shoop.admin.modules.services.weight_based_pricing
 
 Submodules
 ----------
