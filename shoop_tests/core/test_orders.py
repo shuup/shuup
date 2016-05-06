@@ -17,11 +17,12 @@ from shoop.core.excs import (
     NoPaymentToCreateException, NoProductsToShipException
 )
 from shoop.core.models import (
-    Order, OrderLine, OrderLineTax, OrderLineType, OrderStatus, ShippingStatus
+    Order, OrderLine, OrderLineTax, OrderLineType, OrderStatus,
+    OrderStatusRole, PaymentStatus, ShippingStatus
 )
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
 from shoop.testing.factories import (
-    create_empty_order, create_order_with_product, get_address,
+    create_empty_order, create_order_with_product, create_product, get_address,
     get_default_product, get_default_shop, get_default_supplier,
     get_default_tax, get_initial_order_status
 )
@@ -215,3 +216,25 @@ def test_anon_disabling():
         with pytest.raises(ValidationError):
             order = create_empty_order()
             order.save()
+
+
+@pytest.mark.django_db
+def test_payments(admin_user, rf):
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product = create_product("test-sku", shop=get_default_shop(), default_price=10)
+    order = create_order_with_product(product, supplier, 1, 200, shop=shop)
+    order.cache_prices()
+
+    assert order.get_total_paid_amount().value == 0
+    assert order.get_total_unpaid_amount().value == order.taxful_total_price.value
+
+    assert order.payment_status == PaymentStatus.NOT_PAID
+
+    partial_payment_amount = order.taxful_total_price / 2
+    remaining_amount = order.taxful_total_price - partial_payment_amount
+    order.create_payment(partial_payment_amount)
+    assert order.payment_status == PaymentStatus.PARTIALLY_PAID
+
+    order.create_payment(remaining_amount)
+    assert order.payment_status == PaymentStatus.FULLY_PAID

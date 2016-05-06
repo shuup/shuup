@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add payment methods to ``Order``
 - Add ``is_canceled`` and ``can_set_canceled`` to ``Order``
 - Fix bug: Convert ``Shipment`` weight to kilograms
 - Make ``create_shipment`` for order atomic
@@ -57,6 +58,7 @@ Localization
 Admin
 ~~~~~
 
+- Add payment creation view to ``Order`` admin
 - Enable order cancelation in Order edit view
 - Hide invalid choices for package products
 - Fix bug: Fix convert to parent menu items in ``EditProductToolbar``

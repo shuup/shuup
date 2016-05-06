@@ -32,6 +32,14 @@ class OrderDetailView(DetailView):
             return
         toolbar = Toolbar()
         toolbar.append(URLActionButton(
+            text=_("Create Payment"),
+            icon="fa fa-money",
+            disable_reason=_("This order cannot be paid at this point") if order.is_paid() else None,
+            url=reverse("shoop_admin:order.create-payment", kwargs={"pk": order.pk}),
+            extra_css_class="btn-info"
+        ))
+
+        toolbar.append(URLActionButton(
             text=_("Create Shipment"),
             icon="fa fa-truck",
             disable_reason=_("There are no products to ship") if not order.get_unshipped_products() else None,

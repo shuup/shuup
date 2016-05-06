@@ -30,6 +30,11 @@ class OrderModule(CurrencyBound, AdminModule):
                 name="order.create-shipment"
             ),
             admin_url(
+                "^orders/(?P<pk>\d+)/create-payment/$",
+                "shoop.admin.modules.orders.views.OrderCreatePaymentView",
+                name="order.create-payment"
+            ),
+            admin_url(
                 "^orders/(?P<pk>\d+)/set-status/$",
                 "shoop.admin.modules.orders.views.OrderSetStatusView",
                 name="order.set-status"

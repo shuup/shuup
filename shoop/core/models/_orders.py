@@ -371,12 +371,22 @@ class Order(MoneyPropped, models.Model):
             self.payment_date = now()
             self.save()
 
+    def _set_partially_paid(self):
+        if self.payment_status != PaymentStatus.PARTIALLY_PAID:
+            self.add_log_entry(_('Order marked as partially paid.'))
+            self.payment_status = PaymentStatus.PARTIALLY_PAID
+            self.save()
+
     def is_paid(self):
         return (self.payment_status == PaymentStatus.FULLY_PAID)
 
     def get_total_paid_amount(self):
         amounts = self.payments.values_list('amount_value', flat=True)
         return Money(sum(amounts, Decimal(0)), self.currency)
+
+    def get_total_unpaid_amount(self):
+        difference = self.taxful_total_price.amount - self.get_total_paid_amount()
+        return max(difference, Money(0, self.currency))
 
     def create_payment(self, amount, payment_identifier=None, description=''):
         """
@@ -430,6 +440,8 @@ class Order(MoneyPropped, models.Model):
 
         if self.get_total_paid_amount() >= self.taxful_total_price.amount:
             self._set_paid()  # also calls save
+        else:
+            self._set_partially_paid()
 
         return payment
 
