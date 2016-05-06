@@ -554,6 +554,15 @@ class Order(MoneyPropped, models.Model):
         canceled = (self.status.role == OrderStatusRole.CANCELED)
         return (not self.is_complete()) and fully_shipped and (not canceled)
 
+    def is_canceled(self):
+        return (self.status.role == OrderStatusRole.CANCELED)
+
+    def can_set_canceled(self):
+        canceled = (self.status.role == OrderStatusRole.CANCELED)
+        paid = self.is_paid()
+        shipped = (self.shipping_status != ShippingStatus.NOT_SHIPPED)
+        return not (canceled or paid or shipped)
+
     def check_and_set_fully_shipped(self):
         if self.shipping_status != ShippingStatus.FULLY_SHIPPED:
             if not self.get_unshipped_products():

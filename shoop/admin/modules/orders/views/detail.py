@@ -28,6 +28,8 @@ class OrderDetailView(DetailView):
 
     def get_toolbar(self):
         order = self.object
+        if order.is_canceled():
+            return
         toolbar = Toolbar()
         toolbar.append(URLActionButton(
             text=_("Create Shipment"),
@@ -51,6 +53,20 @@ class OrderDetailView(DetailView):
             extra_css_class="btn-success"
         ))
 
+        toolbar.append(PostActionButton(
+            post_url=reverse("shoop_admin:order.set-status", kwargs={"pk": order.pk}),
+            name="status",
+            value=OrderStatus.objects.get_default_canceled().pk,
+            text=_("Cancel Order"),
+            icon="fa fa-trash",
+            disable_reason=(
+                _("Paid, shipped, or canceled orders cannot be canceled")
+                if not order.can_set_canceled()
+                else None
+            ),
+            extra_css_class="btn-danger btn-inverse"
+        ))
+
         for button in get_provide_objects("admin_order_toolbar_button"):
             toolbar.append(button(order))
 
@@ -72,9 +88,13 @@ class OrderSetStatusView(DetailView):
     def post(self, request, *args, **kwargs):
         order = self.object = self.get_object()
         new_status = OrderStatus.objects.get(pk=int(request.POST["status"]))
+        old_status = order.status
         if new_status.role == OrderStatusRole.COMPLETE and not order.can_set_complete():
             raise Problem(_("Unable to set order as completed at this point"))
-        old_status = order.status
+        if new_status.role == OrderStatusRole.CANCELED and not order.can_set_canceled():
+            raise Problem(_("Paid, shipped, or canceled orders cannot be canceled"))
+        else:
+            order.set_canceled()
         order.status = new_status
         order.save(update_fields=("status",))
         message = _("Order status changed: %s to %s") % (old_status, new_status)

@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add ``is_canceled`` and ``can_set_canceled`` to ``Order``
 - Fix bug: Convert ``Shipment`` weight to kilograms
 - Make ``create_shipment`` for order atomic
 - Add ``shipment_created`` signal
@@ -56,6 +57,7 @@ Localization
 Admin
 ~~~~~
 
+- Enable order cancelation in Order edit view
 - Hide invalid choices for package products
 - Fix bug: Fix convert to parent menu items in ``EditProductToolbar``
 - Show tracking codes in order detail
