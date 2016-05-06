@@ -63,3 +63,16 @@ SHOOP_CHECKOUT_VIEW_SPEC = (
 #:
 #: Handled error cases are: 400, 403, 404, and 500
 SHOOP_FRONT_INSTALL_ERROR_HANDLERS = True
+
+#: A dictionary defining properties to override the default field properties of the
+#: checkout address form. Should map the field name (as a string) to a dictionary
+#: containing the overridding Django form field properties, as in the following
+#: example which makes the postal code a required field:
+#:
+#: SHOOP_FRONT_ADDRESS_FIELD_PROPERTIES = {
+#:    "postal_code": {"required": True}
+#: }
+#:
+#: It should be noted, however, that overriding some settings (such as making a
+#: required field non-required) could create other validation issues.
+SHOOP_FRONT_ADDRESS_FIELD_PROPERTIES = {}

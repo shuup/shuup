@@ -31,6 +31,11 @@ class AddressForm(forms.ModelForm):
             # Set default country
             self.fields["country"].initial = settings.SHOOP_ADDRESS_HOME_COUNTRY
 
+        field_properties = settings.SHOOP_FRONT_ADDRESS_FIELD_PROPERTIES
+        for field, properties in field_properties.items():
+            for prop in properties:
+                setattr(self.fields[field], prop, properties[prop])
+
 
 class CompanyForm(TaxNumberCleanMixin, forms.ModelForm):
     company_name_field = "name"
