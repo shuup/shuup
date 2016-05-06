@@ -1,4 +1,4 @@
-gitshoop.admin.modules.services.weight_based_pricing package
+shoop.admin.modules.services.weight_based_pricing package
 =========================================================
 
 Module contents
