@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-04 20:38+0000\n"
+"POT-Creation-Date: 2016-05-06 21:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -334,6 +334,12 @@ msgstr ""
 msgid "Could not create order:"
 msgstr ""
 
+msgid "Create Payment"
+msgstr ""
+
+msgid "This order cannot be paid at this point"
+msgstr ""
+
 msgid "Create Shipment"
 msgstr ""
 
@@ -375,6 +381,23 @@ msgid "Shipping Status"
 msgstr ""
 
 msgid "Total"
+msgstr ""
+
+#, python-format
+msgid "Create Payment -- %s"
+msgstr ""
+
+msgid "Payment amount"
+msgstr ""
+
+msgid "Payment amount cannot be 0"
+msgstr ""
+
+#, python-format
+msgid "Payment %s created."
+msgstr ""
+
+msgid "Order has already been paid"
 msgstr ""
 
 #, python-format
@@ -593,6 +616,7 @@ msgstr ""
 msgid "Edit %(model)s"
 msgstr ""
 
+#, python-brace-format
 msgid "Create {service_name}"
 msgstr ""
 
@@ -963,6 +987,39 @@ msgstr ""
 msgid "Amount"
 msgstr ""
 
+msgid "Text"
+msgstr ""
+
+msgid "Taxless Unit Price"
+msgstr ""
+
+msgid "Quantity"
+msgstr ""
+
+msgid "Taxless Discount"
+msgstr ""
+
+msgid "Tax"
+msgstr ""
+
+msgid "Taxless Total"
+msgstr ""
+
+msgid "Total incl. Tax"
+msgstr ""
+
+msgid "Discount"
+msgstr ""
+
+msgid "Taxless"
+msgstr ""
+
+msgid "Paid"
+msgstr ""
+
+msgid "Remaining"
+msgstr ""
+
 msgid "To Ship"
 msgstr ""
 
@@ -1012,33 +1069,6 @@ msgid "Tracking codes"
 msgstr ""
 
 msgid "Order Contents"
-msgstr ""
-
-msgid "Text"
-msgstr ""
-
-msgid "Taxless Unit Price"
-msgstr ""
-
-msgid "Quantity"
-msgstr ""
-
-msgid "Taxless Discount"
-msgstr ""
-
-msgid "Tax"
-msgstr ""
-
-msgid "Taxless Total"
-msgstr ""
-
-msgid "Total incl. Tax"
-msgstr ""
-
-msgid "Discount"
-msgstr ""
-
-msgid "Taxless"
 msgstr ""
 
 msgid "Payments"
@@ -1218,8 +1248,8 @@ msgstr ""
 
 #, python-format
 msgid ""
-"Telemetry data was last submitted at %(submission_datetime)s - (%"
-"(submission_timesince)s) ago"
+"Telemetry data was last submitted at %(submission_datetime)s - "
+"(%(submission_timesince)s) ago"
 msgstr ""
 
 msgid "See the data that was submitted."

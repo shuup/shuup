@@ -58,6 +58,7 @@ Localization
 Admin
 ~~~~~
 
+- Add payment creation view to ``Order`` admin
 - Enable order cancelation in Order edit view
 - Hide invalid choices for package products
 - Fix bug: Fix convert to parent menu items in ``EditProductToolbar``
