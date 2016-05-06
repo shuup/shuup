@@ -7,6 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import json
+
 from django.forms import HiddenInput, Widget
 from django.utils.encoding import force_text
 from django.utils.html import escape
@@ -16,7 +18,7 @@ from filer.models import File
 
 from shoop.admin.utils.forms import flatatt_filter
 from shoop.admin.utils.urls import get_model_url, NoModelUrl
-from shoop.core.models import Contact, Product
+from shoop.core.models import Contact, Product, ProductMode
 
 
 class BasePopupChoiceWidget(Widget):
@@ -117,3 +119,7 @@ class ContactChoiceWidget(BasePopupChoiceWidget):
             "icon": icon,
             "text": _("Select")
         }
+
+
+class PackageProductChoiceWidget(ProductChoiceWidget):
+    filter = json.dumps({"modes": [ProductMode.NORMAL.value, ProductMode.VARIATION_CHILD.value]})

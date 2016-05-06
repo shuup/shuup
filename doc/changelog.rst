@@ -56,6 +56,7 @@ Localization
 Admin
 ~~~~~
 
+- Hide invalid choices for package products
 - Fix bug: Fix convert to parent menu items in ``EditProductToolbar``
 - Show tracking codes in order detail
 - Fix bug: Show package siblings for variation children
