@@ -101,8 +101,6 @@ class OrderSetStatusView(DetailView):
             raise Problem(_("Unable to set order as completed at this point"))
         if new_status.role == OrderStatusRole.CANCELED and not order.can_set_canceled():
             raise Problem(_("Paid, shipped, or canceled orders cannot be canceled"))
-        else:
-            order.set_canceled()
         order.status = new_status
         order.save(update_fields=("status",))
         message = _("Order status changed: %s to %s") % (old_status, new_status)
