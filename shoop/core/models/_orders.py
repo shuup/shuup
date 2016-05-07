@@ -214,7 +214,7 @@ class Order(MoneyPropped, models.Model):
         default=None, on_delete=models.PROTECT,
         verbose_name=_('payment method'))
     payment_method_name = models.CharField(
-        max_length=64, blank=True, default="",
+        max_length=100, blank=True, default="",
         verbose_name=_('payment method name'))
     payment_data = JSONField(blank=True, null=True, verbose_name=_('payment data'))
 
@@ -223,7 +223,7 @@ class Order(MoneyPropped, models.Model):
         default=None, on_delete=models.PROTECT,
         verbose_name=_('shipping method'))
     shipping_method_name = models.CharField(
-        max_length=64, blank=True, default="",
+        max_length=100, blank=True, default="",
         verbose_name=_('shipping method name'))
     shipping_data = JSONField(blank=True, null=True, verbose_name=_('shipping data'))
 

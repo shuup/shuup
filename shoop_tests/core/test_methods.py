@@ -306,3 +306,24 @@ def test_process_payment_return_request(rf):
 
     order.payment_method.process_payment_return_request(order, rf.get("/"))
     assert order.payment_status == PaymentStatus.DEFERRED
+
+
+@pytest.mark.django_db
+def test_service_methods_with_long_name(rf):
+    """
+    Make sure that service methods with long names (up to the max length of
+    shipping or payment method names) don't cause exceptions when creating
+    an order.
+    """
+    MAX_LENGTH = 100
+    long_name = "X" * MAX_LENGTH
+    assert len(long_name) == MAX_LENGTH
+    sm = ShippingMethod.objects.language("en").create(
+        shop=get_default_shop(), name=long_name, enabled=True, tax_class=get_default_tax_class())
+    pm = PaymentMethod.objects.language("en").create(
+        shop=get_default_shop(), name=long_name, enabled=True, tax_class=get_default_tax_class())
+    order = create_empty_order()
+    order.shipping_method = sm
+    order.payment_method = pm
+    order.full_clean()
+    order.save()
