@@ -32,3 +32,22 @@ def test_checkout_singlepage_addresses_has_no_default_country():
 def test_checkout_singlepage_addresses_has_default_country():
     form = SinglePageAddressForm()
     assert form.fields["country"].initial == "FI"
+
+
+def test_required_address_fields():
+    with override_settings(SHOOP_FRONT_ADDRESS_FIELD_PROPERTIES={}):
+        form = SinglePageAddressForm()
+        assert form.fields["email"].required == False
+        assert form.fields["email"].help_text != "Enter email"
+        assert form.fields["phone"].help_text != "Enter phone"
+
+    with override_settings(
+        SHOOP_FRONT_ADDRESS_FIELD_PROPERTIES={
+            "email": {"required": True, "help_text": "Enter email"},
+            "phone": {"help_text": "Enter phone"}
+        }
+    ):
+        form = SinglePageAddressForm()
+        assert form.fields["email"].required == True
+        assert form.fields["email"].help_text == "Enter email"
+        assert form.fields["phone"].help_text == "Enter phone"

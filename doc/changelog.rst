@@ -86,6 +86,7 @@ Addons
 Front
 ~~~~~
 
+- Add SHOOP_FRONT_ADDRESS_FIELD_PROPERTIES setting
 - Support also django-registration-redux 1.4
 - Enable description and logo for methods in checkout
 - Add admin view for monitoring customer carts
