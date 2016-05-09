@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add identifier for ``Shipment``
 - Fix bug: Fix max length for service method names for ``Order``
 - Add payment methods to ``Order``
 - Add ``is_canceled`` and ``can_set_canceled`` to ``Order``
