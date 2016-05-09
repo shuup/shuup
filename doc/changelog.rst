@@ -61,6 +61,7 @@ Localization
 Admin
 ~~~~~
 
+- Allow shipment creation form extensions
 - Add payment creation view to ``Order`` admin
 - Enable order cancelation in Order edit view
 - Hide invalid choices for package products

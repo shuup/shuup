@@ -7,6 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import abc
+
 import six
 from django import forms
 from django.contrib import messages
@@ -17,15 +19,70 @@ from django.views.generic import UpdateView
 from shoop.admin.toolbar import PostActionButton, Toolbar
 from shoop.admin.utils.forms import add_form_errors_as_messages
 from shoop.admin.utils.urls import get_model_url
+from shoop.apps.provides import get_provide_objects
 from shoop.core.excs import NoProductsToShipException
-from shoop.core.models import Order, Product, Supplier
+from shoop.core.models import Order, Product, Shipment, Supplier
+
+FORM_MODIFIER_PROVIDER_KEY = "admin_extend_create_shipment_form"
+
+
+class ShipmentFormModifier(six.with_metaclass(abc.ABCMeta)):
+    def get_extra_fields(self, order):
+        """
+        Extra fields for shipment creation view.
+
+        :param order: Order linked to form
+        :type order: shoop.core.models.Order
+        :return: List of extra fields that should be added to form.
+        Tuple should contain field name and Django form field.
+        :rtype: list[(str,django.forms.Field)]
+        """
+        pass
+
+    def clean_hook(self, form):
+        """
+        Extra clean for shipment creation form.
+
+        This hook will be called in `~Django.forms.Form.clean` method of
+        the form, after calling parent clean.  Implementor of this hook
+        may call `~Django.forms.Form.add_error` to add errors to form or
+        modify the ``form.cleaned_data`` dictionary.
+
+        :param form: Form that is currently cleaned
+        :type form: ShipmentForm
+        :rtype: None
+        """
+        pass
+
+    def form_valid_hook(self, form, shipment):
+        """
+        Extra form valid handler for shipment creation view.
+
+        This is called from ``OrderCreateShipmentView`` just
+        before the ``Order.create_shipment``
+
+        :param form: Form that is currently handled
+        :type form: ShipmentForm
+        :param shipment: Unsaved shipment
+        :type shipment: shoop.core.models.Shipment
+        :rtype: None
+        """
+        pass
+
+
+class ShipmentForm(forms.Form):
+    def clean(self):
+        cleaned_data = super(ShipmentForm, self).clean()
+        for extend_class in get_provide_objects(FORM_MODIFIER_PROVIDER_KEY):
+            extend_class().clean_hook(self)
+        return cleaned_data
 
 
 class OrderCreateShipmentView(UpdateView):
     model = Order
     template_name = "shoop/admin/orders/create_shipment.jinja"
     context_object_name = "order"
-    form_class = forms.Form  # Augmented manually
+    form_class = ShipmentForm  # Augmented manually
 
     def get_context_data(self, **kwargs):
         context = super(OrderCreateShipmentView, self).get_context_data(**kwargs)
@@ -46,6 +103,7 @@ class OrderCreateShipmentView(UpdateView):
         return kwargs
 
     def get_form(self, form_class):
+        default_field_keys = set()
         form = super(OrderCreateShipmentView, self).get_form(form_class)
         order = self.object
         form.fields["supplier"] = forms.ModelChoiceField(
@@ -53,6 +111,7 @@ class OrderCreateShipmentView(UpdateView):
             initial=Supplier.objects.first(),
             label=_("Supplier")
         )
+        default_field_keys.add("supplier")
         form.product_summary = order.get_product_summary()
         form.product_names = dict(
             (product_id, text)
@@ -73,8 +132,15 @@ class OrderCreateShipmentView(UpdateView):
                 label=product_name,
                 widget=forms.TextInput(attrs=attrs)
             )
-            form.fields["q_%s" % product_id] = field
+            field_key = "q_%s" % product_id
+            form.fields[field_key] = field
+            default_field_keys.add(field_key)
 
+        for extend_class in get_provide_objects(FORM_MODIFIER_PROVIDER_KEY):
+            for field_key, field in extend_class().get_extra_fields(order) or []:
+                form.fields[field_key] = field
+
+        form.default_field_keys = default_field_keys
         return form
 
     def form_invalid(self, form):
@@ -95,10 +161,14 @@ class OrderCreateShipmentView(UpdateView):
             for (product_id, quantity)
             in six.iteritems(product_ids_to_quantities)
         )
+
+        unsaved_shipment = Shipment(order=order, supplier=form.cleaned_data["supplier"])
+        for extend_class in get_provide_objects(FORM_MODIFIER_PROVIDER_KEY):
+            extend_class().form_valid_hook(form, unsaved_shipment)
         try:
             shipment = order.create_shipment(
-                supplier=form.cleaned_data["supplier"],
-                product_quantities=products_to_quantities
+                product_quantities=products_to_quantities,
+                shipment=unsaved_shipment
             )
         except NoProductsToShipException:
             messages.error(self.request, _("No products to ship."))

@@ -64,6 +64,12 @@ Core
 ``admin_contact_group_form_part``
     Additional ``FormPart`` classes for ContactGroup editing
 
+``admin_extend_create_shipment_form``
+    Allows providing extension for shipment creation in admin.
+    Should implement the
+    `~shoop.admin.modules.orders.views.shipment.ShipmentFormModifier`
+    interface.
+
 ``admin_product_form_part``
     Additional ``FormPart`` classes for Product editing.
     (This is used by pricing modules, for instance.)

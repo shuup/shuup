@@ -1,5 +1,6 @@
 {% extends "shoop/admin/base.jinja" %}
 {% from "shoop/admin/macros/general.jinja" import content_block %}
+{% from "shoop/admin/macros/multilanguage.jinja" import render_monolingual_fields %}
 {% block content %}
     <div class="container-fluid">
         <div class="content-block">
@@ -61,6 +62,7 @@
                 </table>
                 <hr>
                 {{ bs3.field(form.supplier) }}
+                {{ render_monolingual_fields(form, exclude=form.default_field_keys) }}
             </form>
         </div>
     </div>
