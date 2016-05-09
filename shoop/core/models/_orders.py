@@ -446,7 +446,7 @@ class Order(MoneyPropped, models.Model):
         return payment
 
     @atomic
-    def create_shipment(self, supplier, product_quantities):
+    def create_shipment(self, product_quantities, supplier=None, shipment=None):
         """
         Create a shipment for this order from `product_quantities`.
         `product_quantities` is expected to be a dict mapping Product instances to quantities.
@@ -454,10 +454,12 @@ class Order(MoneyPropped, models.Model):
         Only quantities over 0 are taken into account, and if the mapping is empty or has no quantity value
         over 0, `NoProductsToShipException` will be raised.
 
-        :param supplier: The Supplier for this product. No validation is made
-                         as to whether the given supplier supplies the products.
         :param product_quantities: a dict mapping Product instances to quantities to ship
         :type product_quantities: dict[shoop.shop.models.Product, decimal.Decimal]
+        :param supplier: Optional Supplier for this product. No validation is made
+                         as to whether the given supplier supplies the products.
+        :param shipment: Optional unsaved Shipment for ShipmentProduct's. If not given
+                         Shipment is created based on supplier parameter.
         :raises: NoProductsToShipException
         :return: Saved, complete Shipment object
         :rtype: shoop.core.models.Shipment
@@ -465,9 +467,14 @@ class Order(MoneyPropped, models.Model):
         if not product_quantities or not any(quantity > 0 for quantity in product_quantities.values()):
             raise NoProductsToShipException("No products to ship (`quantities` is empty or has no quantity over 0).")
 
-        from ._shipments import Shipment, ShipmentProduct
+        assert (supplier or shipment)
+        if shipment:
+            assert shipment.order == self
 
-        shipment = Shipment(order=self, supplier=supplier)
+        from ._shipments import ShipmentProduct
+        if not shipment:
+            from ._shipments import Shipment
+            shipment = Shipment(order=self, supplier=supplier)
         shipment.save()
 
         for product, quantity in product_quantities.items():
@@ -518,7 +525,7 @@ class Order(MoneyPropped, models.Model):
 
         products = dict((product.pk, product) for product in Product.objects.filter(pk__in=quantities.keys()))
         quantities = dict((products[product_id], quantity) for (product_id, quantity) in quantities.items())
-        return self.create_shipment(supplier, quantities)
+        return self.create_shipment(quantities, supplier=supplier)
 
     def check_all_verified(self):
         if not self.all_verified:

@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add option use ``Order.create_shipment`` with unsaved ``Shipment``
 - Add identifier for ``Shipment``
 - Fix bug: Fix max length for service method names for ``Order``
 - Add payment methods to ``Order``
