@@ -37,7 +37,7 @@ def test_tracking_codes():
     product_lines = order.lines.exclude(product_id=None)
     assert len(product_lines) == 3
     for line in product_lines:
-        shipment = order.create_shipment(supplier, {line.product: line.quantity})
+        shipment = order.create_shipment({line.product: line.quantity}, supplier=supplier)
         if line.quantity != 3:
             shipment.tracking_code = "123FI"
             shipment.save()

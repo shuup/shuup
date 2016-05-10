@@ -21,7 +21,7 @@ def test_shipment_weights_separate_shipments():
     order = _get_order(shop, supplier)
     product_lines = order.lines.exclude(product_id=None)
     for line in product_lines:
-        shipment = order.create_shipment(supplier, {line.product: line.quantity})
+        shipment = order.create_shipment({line.product: line.quantity}, supplier=supplier)
         assert shipment.weight == (line.quantity * line.product.gross_weight / 1000)
 
 

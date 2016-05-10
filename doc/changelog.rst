@@ -12,6 +12,8 @@ Unreleased
 Core
 ~~~~
 
+- Add option use ``Order.create_shipment`` with unsaved ``Shipment``
+- Add identifier for ``Shipment``
 - Fix bug: Fix max length for service method names for ``Order``
 - Add payment methods to ``Order``
 - Add ``is_canceled`` and ``can_set_canceled`` to ``Order``
@@ -59,6 +61,7 @@ Localization
 Admin
 ~~~~~
 
+- Allow shipment creation form extensions
 - Add payment creation view to ``Order`` admin
 - Enable order cancelation in Order edit view
 - Hide invalid choices for package products

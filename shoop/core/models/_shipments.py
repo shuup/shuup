@@ -10,11 +10,14 @@ from __future__ import unicode_literals
 from decimal import Decimal
 
 from django.db import models
+from django.utils.crypto import get_random_string
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 
-from shoop.core.fields import MeasurementField, QuantityField
+from shoop.core.fields import (
+    InternalIdentifierField, MeasurementField, QuantityField
+)
 
 __all__ = ("Shipment", "ShipmentProduct")
 
@@ -45,11 +48,21 @@ class Shipment(models.Model):
     description = models.CharField(max_length=255, blank=True, verbose_name=_("description"))
     volume = MeasurementField(unit="m3", verbose_name=_("volume"))
     weight = MeasurementField(unit="kg", verbose_name=_("weight"))
+    identifier = InternalIdentifierField(unique=True)
     # TODO: documents = models.ManyToManyField(FilerFile)
 
     class Meta:
         verbose_name = _('shipment')
         verbose_name_plural = _('shipments')
+
+    def __init__(self, *args, **kwargs):
+        super(Shipment, self).__init__(*args, **kwargs)
+        if not self.identifier:
+            if self.order and self.order.pk:
+                prefix = '%s/%s/' % (self.order.pk, self.order.shipments.count())
+            else:
+                prefix = ''
+            self.identifier = prefix + get_random_string(32)
 
     def __repr__(self):  # pragma: no cover
         return "<Shipment %s for order %s (tracking %r, created %s)>" % (
