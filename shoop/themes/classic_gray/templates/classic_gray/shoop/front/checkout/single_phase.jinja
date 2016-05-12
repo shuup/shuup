@@ -9,7 +9,7 @@
             {% trans %}Your shopping cart is empty.{% endtrans %}
         </div>
     {% else %}
-        {% include "shoop/front/basket/partials/table.jinja" %}
+        {% include "shoop/front/basket/partials/_basket_content.jinja" %}
 
         {% if errors %}
             <div class="alert alert-danger">
