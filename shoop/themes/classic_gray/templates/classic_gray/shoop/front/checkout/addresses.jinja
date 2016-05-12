@@ -1,6 +1,7 @@
 {% extends "shoop/front/checkout/_base.jinja" %}
+{% from "shoop/front/checkout/_buttons.jinja" import default_buttons %}
 
-{% block content %}
+{% block checkout_phase_content %}
 <form role="form" method="post" action="" id="addresses">
     {% set forms = form.forms %}
     {% csrf_token %}
@@ -50,11 +51,7 @@
             </div>
         </fieldset>
     </div>
-    <div class="clearfix">
-        <button type="submit" class="btn btn-primary btn-lg pull-right">
-            <i class="fa fa-check"></i> {% trans %}Continue{% endtrans %}
-        </button>
-    </div>
+    {{ default_buttons() }}
 </form>
 {% endblock %}
 
