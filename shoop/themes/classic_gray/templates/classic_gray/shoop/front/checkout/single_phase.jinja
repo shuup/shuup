@@ -1,15 +1,15 @@
-{% extends "shoop/front/base.jinja" %}
+{% extends "shoop/front/checkout/_base.jinja" %}
 
 {% block title %}{% trans %}Shopping cart{% endtrans %}{% endblock %}
 {% block content_title %}{% trans %}Shopping cart{% endtrans %}{% endblock %}
 
-{% block content %}
+{% block checkout_phase_content %}
     {% if basket.is_empty %}
         <div class="alert alert-danger">
             {% trans %}Your shopping cart is empty.{% endtrans %}
         </div>
     {% else %}
-        {% include "shoop/front/basket/partials/table.jinja" %}
+        {% include "shoop/front/basket/partials/_basket_content.jinja" %}
 
         {% if errors %}
             <div class="alert alert-danger">
