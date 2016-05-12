@@ -1,0 +1,3 @@
+-e .
+Sphinx>=1.3,<2
+django-mptt!=0.8.3
