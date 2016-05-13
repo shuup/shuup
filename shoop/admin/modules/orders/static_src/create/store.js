@@ -6,7 +6,8 @@
  * This source code is licensed under the AGPLv3 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import {createStore, applyMiddleware} from "redux";
+import {compose, createStore, applyMiddleware} from "redux";
+import {autoRehydrate} from "redux-persist";
 import reducer from "./reducers";
 
 const logger = ({ getState }) => (next) => (action) => {
@@ -27,7 +28,7 @@ const thunk = function ({ dispatch, getState }) {
             next(action);
 };
 
-const createLoggedStore = applyMiddleware(thunk, logger)(createStore);
+const createLoggedStore = compose(autoRehydrate(), applyMiddleware(thunk, logger))(createStore);
 const store = createLoggedStore(reducer);
 
 export default store;

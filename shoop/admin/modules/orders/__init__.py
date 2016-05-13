@@ -46,8 +46,13 @@ class OrderModule(CurrencyBound, AdminModule):
             ),
             admin_url(
                 "^orders/new/$",
-                "shoop.admin.modules.orders.views.OrderCreateView",
+                "shoop.admin.modules.orders.views.OrderEditView",
                 name="order.new"
+            ),
+            admin_url(
+                "^orders/(?P<pk>\d+)/edit/$",
+                "shoop.admin.modules.orders.views.OrderEditView",
+                name="order.edit"
             ),
             admin_url(
                 "^orders/$",

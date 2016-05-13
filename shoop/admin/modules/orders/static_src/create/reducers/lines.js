@@ -170,9 +170,26 @@ function setLineProperty(state, {payload}) {
     return setLineProperties(state, id, updates);
 }
 
+function setLines(state, {payload}) {
+    var lines = [];
+    _.map(payload, (line) => {
+        _.merge(
+            line,
+            getDiscountsAndTotal(
+                ensureNumericValue(line.quantity),
+                ensureNumericValue(line.baseUnitPrice),
+                ensureNumericValue(line.unitPrice)
+            )
+        );
+        lines.push(line);
+    });
+    return _.assign([], state, lines);
+}
+
 export default handleActions({
     addLine: ((state) => [].concat(state, newLine())),
     deleteLine: ((state, {payload}) => _.reject(state, (line) => line.id === payload)),
     updateLineFromProduct,
-    setLineProperty
+    setLineProperty,
+    setLines
 }, []);
