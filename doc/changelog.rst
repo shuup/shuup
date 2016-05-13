@@ -64,6 +64,7 @@ Localization
 Admin
 ~~~~~
 
+- Enable order editing
 - Allow shipment creation form extensions
 - Add payment creation view to ``Order`` admin
 - Enable order cancelation in Order edit view

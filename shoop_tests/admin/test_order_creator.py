@@ -14,13 +14,13 @@ import pytest
 from django.test import RequestFactory
 from django.utils import translation
 
-from shoop.admin.modules.orders.views.create import (
-    encode_address, encode_method, OrderCreateView
+from shoop.admin.modules.orders.views.edit import (
+    encode_address, encode_method,OrderEditView
 )
 from shoop.core.models import Order, OrderLineType, Tax, TaxClass
 from shoop.default_tax.models import TaxRule
 from shoop.testing.factories import (
-    create_product, create_random_company, create_random_person,
+    create_empty_order, create_product, create_random_company, create_random_person,
     get_default_payment_method, get_default_shipping_method, get_default_shop,
     get_default_supplier, get_initial_order_status
 )
@@ -103,8 +103,8 @@ def get_frontend_request_for_command(state, command, user):
 
 
 def get_order_from_state(state, admin_user):
-    request = get_frontend_request_for_command(state, "create", admin_user)
-    response = OrderCreateView.as_view()(request)
+    request = get_frontend_request_for_command(state, "finalize", admin_user)
+    response =OrderEditView.as_view()(request)
     assert_contains(response, "orderIdentifier")  # this checks for status codes as a side effect
     data = json.loads(response.content.decode("utf8"))
     return Order.objects.get(identifier=data["orderIdentifier"])
@@ -131,8 +131,8 @@ def test_order_creator_invalid_base_data(rf, admin_user):
     # Remove some critical data...
     state["customer"]["id"] = None
     state["shop"]["selected"]["id"] = None
-    request = get_frontend_request_for_command(state, "create", admin_user)
-    response = OrderCreateView.as_view()(request)
+    request = get_frontend_request_for_command(state, "finalize", admin_user)
+    response =OrderEditView.as_view()(request)
     assert_contains(response, "errorMessage", status_code=400)
 
 
@@ -140,8 +140,8 @@ def test_order_creator_invalid_line_data(rf, admin_user):
     get_initial_order_status()  # Needed for the API
     contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
     state = get_frontend_order_state(contact=contact, valid_lines=False)
-    request = get_frontend_request_for_command(state, "create", admin_user)
-    response = OrderCreateView.as_view()(request)
+    request = get_frontend_request_for_command(state, "finalize", admin_user)
+    response =OrderEditView.as_view()(request)
     # Let's see that we get a cornucopia of trouble:
     assert_contains(response, "does not exist", status_code=400)
     assert_contains(response, "does not have a product", status_code=400)
@@ -154,7 +154,7 @@ def test_order_creator_invalid_line_data(rf, admin_user):
 def test_order_creator_view_GET(rf, admin_user):
     get_default_shop()
     request = apply_request_middleware(rf.get("/"), user=admin_user)
-    response = OrderCreateView.as_view()(request)
+    response =OrderEditView.as_view()(request)
     assert_contains(response, "shippingMethods")  # in the config
     assert_contains(response, "shops")  # in the config
 
@@ -162,7 +162,7 @@ def test_order_creator_view_GET(rf, admin_user):
 def test_order_creator_view_invalid_command(rf, admin_user):
     get_default_shop()
     request = apply_request_middleware(rf.get("/", {"command": printable_gibberish()}), user=admin_user)
-    response = OrderCreateView.as_view()(request)
+    response =OrderEditView.as_view()(request)
     assert_contains(response, "unknown command", status_code=400)
 
 
@@ -175,7 +175,7 @@ def test_order_creator_product_data(rf, admin_user):
         "id": product.id,
         "quantity": 42
     }), user=admin_user)
-    response = OrderCreateView.as_view()(request)
+    response =OrderEditView.as_view()(request)
     assert_contains(response, "taxClass")
     assert_contains(response, "sku")
     assert_contains(response, product.sku)
@@ -188,7 +188,7 @@ def test_order_creator_customer_data(rf, admin_user):
         "command": "customer_data",
         "id": contact.id
     }), user=admin_user)
-    response = OrderCreateView.as_view()(request)
+    response =OrderEditView.as_view()(request)
     assert_contains(response, "name")
     assert_contains(response, contact.name)
 
@@ -197,7 +197,7 @@ def test_order_creator_source_data(rf, admin_user):
     get_initial_order_status()  # Needed for the API
     contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
     request = get_frontend_request_for_command(get_frontend_order_state(contact), "source_data", admin_user)
-    response = OrderCreateView.as_view()(request)
+    response =OrderEditView.as_view()(request)
     data = json.loads(response.content.decode("utf8"))
     assert len(data.get("orderLines")) == 5
 
@@ -256,3 +256,34 @@ def test_company_contact_creation(rf, admin_user):
     assert order.billing_address.tax_number == contact.default_billing_address.tax_number
     assert order.billing_address.street == contact.default_billing_address.street
     assert order.billing_address.street == order.shipping_address.street
+
+
+def test_editing_existing_order(rf, admin_user):
+    get_initial_order_status()  # Needed for the API
+    contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
+    state = get_frontend_order_state(contact=contact)
+    shop = get_default_shop()
+    order = create_empty_order(shop)
+    order.save()
+    assert order.lines.count() == 0
+    assert order.pk is not None
+    request = get_frontend_request_for_command(state, "finalize", admin_user)
+    response = OrderEditView.as_view()(request, pk=order.pk)
+    assert_contains(response, "orderIdentifier")  # this checks for status codes as a side effect
+    data = json.loads(response.content.decode("utf8"))
+    edited_order = Order.objects.get(pk=order.pk)  # Re fetch the initial order
+
+    # Check that identifiers has not changed
+    assert edited_order.identifier == data["orderIdentifier"] == order.identifier
+    assert edited_order.pk == order.pk
+
+    # Check that the product content is updated based on state
+    assert edited_order.lines.count() == 5
+    assert edited_order.creator == admin_user
+    assert edited_order.customer == contact
+
+    # Check that product line have right taxes
+    for line in edited_order.lines.all():
+        if line.type == OrderLineType.PRODUCT:
+            assert [line_tax.tax.code for line_tax in line.taxes.all()] == ["test_code"]
+            assert line.taxful_price.amount > line.taxless_price.amount

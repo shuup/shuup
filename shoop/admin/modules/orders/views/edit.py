@@ -19,13 +19,14 @@ from django.db import transaction
 from django.http.response import HttpResponse, JsonResponse
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
-from django.views.generic import TemplateView
 from django_countries import countries
 
 from shoop.admin.modules.orders.json_order_creator import JsonOrderCreator
+from shoop.admin.toolbar import Toolbar
+from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.core.models import (
-    AnonymousContact, CompanyContact, Contact, Order, PaymentMethod, Product,
-    ShippingMethod, Shop, ShopStatus
+    AnonymousContact, CompanyContact, Contact, Order, OrderLineType,
+    PaymentMethod, Product, ShippingMethod, Shop, ShopStatus
 )
 from shoop.core.pricing import get_pricing_module
 from shoop.utils.i18n import (
@@ -36,6 +37,14 @@ from shoop.utils.i18n import (
 def create_order_from_state(state, **kwargs):
     joc = JsonOrderCreator()
     order = joc.create_order_from_state(state, **kwargs)
+    if not order:
+        raise ValidationError(list(joc.errors))
+    return order
+
+
+def update_order_from_state(state, order_to_update, **kwargs):
+    joc = JsonOrderCreator()
+    order = joc.update_order_from_state(state, order_to_update, **kwargs)
     if not order:
         raise ValidationError(list(joc.errors))
     return order
@@ -82,6 +91,32 @@ def encode_line(line):
     }
 
 
+def get_line_data_for_edit(shop, line):
+    base_data = {
+        "id": line.id,
+        "type": "other" if line.quantity else "text",
+        "text": line.text,
+        "quantity": line.quantity,
+        "sku": line.sku,
+        "baseUnitPrice": line.base_unit_price.value,
+        "unitPrice": line.taxless_price.value / line.quantity if line.quantity else 0,
+        "unitPriceIncludesTax": line.price.includes_tax,
+        "errors": "",
+        "step": ""
+    }
+    if line.product:
+        shop_product = line.product.get_shop_instance(shop)
+        base_data.update({
+            "type": "product",
+            "product": {
+                "id": line.product.pk,
+                "text": line.product.name
+            },
+            "step": shop_product.purchase_multiple,
+        })
+    return base_data
+
+
 def get_price_info(shop, customer, product, quantity):
     """
     Get price info of given product for given context parameters.
@@ -99,18 +134,23 @@ def get_price_info(shop, customer, product, quantity):
     return pricing_mod.get_price_info(pricing_ctx, product, quantity=quantity)
 
 
-class OrderCreateView(TemplateView):
+class OrderEditView(CreateOrUpdateView):
     model = Order
     template_name = "shoop/admin/orders/create.jinja"
     context_object_name = "order"
     title = _("Create Order")
+    fields = []
 
     def get_context_data(self, **kwargs):
-        context = super(OrderCreateView, self).get_context_data(**kwargs)
+        context = super(OrderEditView, self).get_context_data(**kwargs)
         context["config"] = self.get_config()
         return context
 
+    def get_toolbar(self):
+        return Toolbar([])
+
     def get_config(self):
+        order = self.object
         shops = [encode_shop(shop) for shop in Shop.objects.filter(status=ShopStatus.ENABLED)]
         shipping_methods = ShippingMethod.objects.enabled()
         payment_methods = PaymentMethod.objects.enabled()
@@ -118,13 +158,37 @@ class OrderCreateView(TemplateView):
             "shops": shops,
             "countries": [{"id": code, "name": name} for code, name in list(countries)],
             "shippingMethods": [encode_method(sm) for sm in shipping_methods],
-            "paymentMethods": [encode_method(pm) for pm in payment_methods]
+            "paymentMethods": [encode_method(pm) for pm in payment_methods],
+            "orderId": order.pk,
+            "orderData": self.get_initial_order_data()
+        }
+
+    def get_initial_order_data(self):
+        order = self.object
+        if not order.pk:
+            return {}
+        return {
+            "shop": encode_shop(order.shop),
+            "lines": [
+                get_line_data_for_edit(order.shop, line) for line in order.lines.filter(
+                    type__in=[OrderLineType.PRODUCT, OrderLineType.OTHER]
+                )
+            ],
+            "shippingMethodId": (encode_method(order.shipping_method) if order.shipping_method else None),
+            "paymentMethodId": (encode_method(order.payment_method) if order.payment_method else None),
+            "customer": {
+                "id": order.customer.id,
+                "name": order.customer.name,
+                "isCompany": bool(isinstance(order.customer, CompanyContact)),
+                "billingAddress": encode_address(order.billing_address),
+                "shippingAddress": encode_address(order.shipping_address)
+            }
         }
 
     def dispatch(self, request, *args, **kwargs):
         if request.GET.get("command"):
             return self.dispatch_command(request)
-        return super(OrderCreateView, self).dispatch(request, *args, **kwargs)
+        return super(OrderEditView, self).dispatch(request, *args, **kwargs)
 
     def dispatch_command(self, request):
         handler = getattr(self, "handle_%s" % request.GET.get("command"), None)
@@ -218,14 +282,25 @@ class OrderCreateView(TemplateView):
         }
 
     @transaction.atomic
-    def _handle_create(self, request):
+    def _handle_finalize(self, request):
         state = json.loads(request.body.decode("utf-8"))["state"]
-        order = create_order_from_state(
-            state,
-            creator=request.user,
-            ip_address=request.META.get("REMOTE_ADDR"),
-        )
-        messages.success(request, _("Order %(identifier)s created.") % vars(order))
+        self.object = self.get_object()
+        if self.object.pk:  # Edit
+            order = update_order_from_state(
+                state,
+                self.object,
+                creator=request.user,
+                ip_address=request.META.get("REMOTE_ADDR"),
+            )
+            assert self.object.pk == order.pk
+            messages.success(request, _("Order %(identifier)s updated.") % vars(order))
+        else:  # Create
+            order = create_order_from_state(
+                state,
+                creator=request.user,
+                ip_address=request.META.get("REMOTE_ADDR"),
+            )
+            messages.success(request, _("Order %(identifier)s created.") % vars(order))
         return JsonResponse({
             "success": True,
             "orderIdentifier": order.identifier,
@@ -235,8 +310,8 @@ class OrderCreateView(TemplateView):
     def handle_source_data(self, request):
         return _handle_or_return_error(self._handle_source_data, request, _("Could not proceed with order:"))
 
-    def handle_create(self, request):
-        return _handle_or_return_error(self._handle_create, request, _("Could not create order:"))
+    def handle_finalize(self, request):
+        return _handle_or_return_error(self._handle_finalize, request, _("Could not finalize order:"))
 
 
 def _handle_or_return_error(func, request, error_message):
