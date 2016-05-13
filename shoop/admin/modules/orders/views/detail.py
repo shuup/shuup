@@ -74,6 +74,13 @@ class OrderDetailView(DetailView):
             ),
             extra_css_class="btn-danger btn-inverse"
         ))
+        toolbar.append(URLActionButton(
+            text=_("Edit order"),
+            icon="fa fa-money",
+            disable_reason=_("This order cannot modified at this point") if not order.can_edit() else None,
+            url=reverse("shoop_admin:order.edit", kwargs={"pk": order.pk}),
+            extra_css_class="btn-info"
+        ))
 
         for button in get_provide_objects("admin_order_toolbar_button"):
             toolbar.append(button(order))

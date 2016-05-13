@@ -16,7 +16,7 @@ from shoop.core.models import (
     CompanyContact, Contact, MutableAddress, OrderLineType, OrderStatus,
     PaymentMethod, PersonContact, Product, ShippingMethod, Shop
 )
-from shoop.core.order_creator import OrderCreator, OrderSource
+from shoop.core.order_creator import OrderCreator, OrderModifier, OrderSource
 from shoop.utils.analog import LogEntryKind
 from shoop.utils.numbers import parse_decimal_string
 
@@ -302,5 +302,32 @@ class JsonOrderCreator(object):
             self._postprocess_order(order, state)
             return order
         except Exception as exc:  # pragma: no cover
+            self.add_error(exc)
+            return
+
+    def update_order_from_state(self, state, order_to_update, creator=None, ip_address=None):
+        """
+        Update an order from a state dict unserialized from JSON.
+
+        :param state: State dictionary
+        :type state: dict
+        :param order_to_update: Order object to edit
+        :type order_to_update: shoop.core.models.Order
+        :param creator: Creator user
+        :type creator: django.contrib.auth.models.User|None
+        :param ip_address: Remote IP address (IPv4 or IPv6)
+        :type ip_address: str
+        :return: The created order, or None if something failed along the way
+        :rtype: Order|None
+        """
+        source = self.create_source_from_state(
+            state, creator=creator, ip_address=ip_address, save=True)
+
+        modifier = OrderModifier()
+        try:
+            order = modifier.update_order_from_source(order_source=source, order=order_to_update)
+            self._postprocess_order(order, state)
+            return order
+        except Exception as exc:
             self.add_error(exc)
             return

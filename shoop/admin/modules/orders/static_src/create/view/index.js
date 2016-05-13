@@ -13,7 +13,7 @@ import {customerSelectView} from "./customers";
 import {shipmentMethodSelectView, paymentMethodSelectView} from "./methods";
 import {confirmView} from "./confirm";
 import {contentBlock} from "./utils";
-import {beginCreatingOrder, clearOrderSourceData, retrieveCustomerData, retrieveOrderSourceData} from "../actions";
+import {beginFinalizingOrder, clearOrderSourceData, retrieveOrderSourceData} from "../actions";
 import store from "../store";
 
 export default function view() {
@@ -32,35 +32,45 @@ export default function view() {
                 m("button.btn.btn-success.btn-lg.pull-right" + (creating ? ".disabled" : ""), {
                     disabled: creating,
                     onclick: () => {
-                        store.dispatch(beginCreatingOrder());
+                        store.dispatch(beginFinalizingOrder());
                     }
                 }, m("i.fa.fa-check"), " " + gettext("Confirm"))
             ])
         );
     } else {
-        return m("div.container-fluid",
-            (choices.length > 1 ? contentBlock("i.fa.fa-building", gettext("Select Shop"), shopSelectView(store)) : null),
-            contentBlock("i.fa.fa-cubes", gettext("Order Contents"), orderLinesView(store, creating)),
-            contentBlock("i.fa.fa-user", gettext("Customer Details"), customerSelectView(store)),
-            contentBlock("i.fa.fa-truck", gettext("Shipping Method"), shipmentMethodSelectView(store)),
-            contentBlock("i.fa.fa-credit-card", gettext("Payment Method"), paymentMethodSelectView(store)),
-            m("div.order-footer",
-                m("div.text", m(
-                    "small",
-                    gettext("Method rules, taxes and possible extra discounts are calculated after proceeding."))
-                ),
-                m("div.text", m("h2", m("small", gettext("Total") + ": "), total + " " + selected.currency)),
-                m("div.proceed-button", [
-                    m("button.btn.btn-success.btn-block" + (creating ? ".disabled" : ""), {
-                        disabled: creating,
-                        onclick: () => {
-                            if(!source) {
-                                store.dispatch(retrieveOrderSourceData());
+        return [
+            m("div.container-fluid",
+                m("button.btn.btn-gray.btn-inverse.pull-right", {
+                    onclick: () => {
+                        window.localStorage.setItem("resetSavedOrder", "true");
+                        window.location.reload();
+                    }
+                }, m("i.fa.fa-undo"), " " + gettext("Discard Changes"))
+            ),
+            m("div.container-fluid",
+                (choices.length > 1 ? contentBlock("i.fa.fa-building", gettext("Select Shop"), shopSelectView(store)) : null),
+                contentBlock("i.fa.fa-cubes", gettext("Order Contents"), orderLinesView(store, creating)),
+                contentBlock("i.fa.fa-user", gettext("Customer Details"), customerSelectView(store)),
+                contentBlock("i.fa.fa-truck", gettext("Shipping Method"), shipmentMethodSelectView(store)),
+                contentBlock("i.fa.fa-credit-card", gettext("Payment Method"), paymentMethodSelectView(store)),
+                m("div.order-footer",
+                    m("div.text", m(
+                        "small",
+                        gettext("Method rules, taxes and possible extra discounts are calculated after proceeding."))
+                    ),
+                    m("div.text", m("h2", m("small", gettext("Total") + ": "), total + " " + selected.currency)),
+                    m("div.proceed-button", [
+                        m("button.btn.btn-success.btn-block" + (creating ? ".disabled" : ""), {
+                            disabled: creating,
+                            onclick: () => {
+                                if(!source) {
+                                    store.dispatch(retrieveOrderSourceData());
+                                }
                             }
-                        }
-                    }, m("i.fa.fa-check"), " " + gettext("Proceed"))
-                ])
+                        }, m("i.fa.fa-check"), " " + gettext("Proceed"))
+                    ])
+                )
             )
-        );
+        ]
     }
 }

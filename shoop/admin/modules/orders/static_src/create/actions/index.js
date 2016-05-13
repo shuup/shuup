@@ -19,6 +19,7 @@ export const addLine = createAction("addLine");
 export const deleteLine = createAction("deleteLine");
 export const updateLineFromProduct = createAction("updateLineFromProduct");
 export const setLineProperty = createAction("setLineProperty", (id, property, value) => ({id, property, value}));
+export const setLines = createAction("setLines");
 // Customers actions
 export const clearExistingCustomer = createAction("clearExistingCustomer");
 export const setAddressProperty = createAction("setAddressProperty", (type, field, value) => ({type, field, value}));
@@ -35,6 +36,7 @@ export const setPaymentMethod = createAction("setPaymentMethod");
 export const updateTotals = createAction("updateTotals");
 export const setOrderSource = createAction("setOrderSource");
 export const clearOrderSourceData = createAction("clearOrderSourceData");
+export const setOrderId = createAction("setOrderId");
 // Comment action
 export const setComment = createAction("setComment");
 
@@ -112,9 +114,9 @@ export const updateLines = () => {
 export const receiveProductData = createAction("receiveProductData");
 export const receiveCustomerData = createAction("receiveCustomerData");
 export const receiveOrderSourceData = createAction("receiveOrderSourceData");
-export const endCreatingOrder = createAction("endCreatingOrder");
+export const endFinalizingOrder = createAction("endFinalizingOrder");
 
-function handleCreateResponse(dispatch, data) {
+function handleFinalizeResponse(dispatch, data) {
     const {success, errorMessage, orderIdentifier, url} = data;
     if (success) {
         if (url) {
@@ -125,7 +127,7 @@ function handleCreateResponse(dispatch, data) {
         }
         return;
     }
-    dispatch(endCreatingOrder());  // Only flag end if something went awry
+    dispatch(endFinalizingOrder());  // Only flag end if something went awry
     if (errorMessage) {
         const {Messages} = window;
         if (Messages) {
@@ -138,14 +140,14 @@ function handleCreateResponse(dispatch, data) {
     alert(gettext("An unspecified error occurred.\n") + data);
 }
 
-export const beginCreatingOrder = function () {
+export const beginFinalizingOrder = function () {
     return (dispatch, getState) => {
         const state = _.assign({}, getState(), {productData: null, order: null}); // We don't care about that substate
-        post("create", {state}).then((data) => {
-            handleCreateResponse(dispatch, data);
+        post("finalize", {state}).then((data) => {
+            handleFinalizeResponse(dispatch, data);
         }, (data) => {  // error handler
-            handleCreateResponse(dispatch, data);
+            handleFinalizeResponse(dispatch, data);
         });
-        dispatch(createAction("beginCreatingOrder")());
+        dispatch(createAction("beginFinalizingOrder")());
     };
 };
