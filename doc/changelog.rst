@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Update shipping status correctly in ``Order.create_shipment``
 - Add ``OrderModifier`` for basic ``Order`` modifying from ``OrderSource``
 - Add option use ``Order.create_shipment`` with unsaved ``Shipment``
 - Add identifier for ``Shipment``
