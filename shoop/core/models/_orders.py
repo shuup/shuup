@@ -487,7 +487,7 @@ class Order(MoneyPropped, models.Model):
         shipment.save()
 
         self.add_log_entry(_(u"Shipment #%d created.") % shipment.id)
-        self.check_and_set_fully_shipped()
+        self.update_shipping_status()
         shipment_created.send(sender=type(self), order=self, shipment=shipment)
         return shipment
 
@@ -582,13 +582,17 @@ class Order(MoneyPropped, models.Model):
         shipped = (self.shipping_status != ShippingStatus.NOT_SHIPPED)
         return not (canceled or paid or shipped)
 
-    def check_and_set_fully_shipped(self):
-        if self.shipping_status != ShippingStatus.FULLY_SHIPPED:
-            if not self.get_unshipped_products():
-                self.shipping_status = ShippingStatus.FULLY_SHIPPED
-                self.add_log_entry(_(u"All products have been shipped. Fully Shipped status set."))
-                self.save(update_fields=("shipping_status",))
-                return True
+    def update_shipping_status(self):
+        if self.shipping_status == ShippingStatus.FULLY_SHIPPED:
+            return
+
+        if not self.get_unshipped_products():
+            self.shipping_status = ShippingStatus.FULLY_SHIPPED
+            self.add_log_entry(_(u"All products have been shipped. Fully Shipped status set."))
+            self.save(update_fields=("shipping_status",))
+        elif self.shipments.count():
+            self.shipping_status = ShippingStatus.PARTIALLY_SHIPPED
+            self.save(update_fields=("shipping_status",))
 
     def get_known_additional_data(self):
         """
