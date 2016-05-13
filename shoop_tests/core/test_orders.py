@@ -184,7 +184,9 @@ def test_empty_order():
         order.create_shipment_of_all_products()
     with pytest.raises(NoProductsToShipException):
         order.create_shipment(supplier=None, product_quantities={1: 0})
+    assert order.can_edit()
     order.set_canceled()
+    assert not order.can_edit(), "Can't edit canceled order"
     assert not order.can_set_complete(), "Can't process canceled order"
     order.set_canceled()  # Again! (This should be a no-op)
     order.delete()
@@ -230,11 +232,14 @@ def test_payments(admin_user, rf):
     assert order.get_total_unpaid_amount().value == order.taxful_total_price.value
 
     assert order.payment_status == PaymentStatus.NOT_PAID
+    assert order.can_edit()
 
     partial_payment_amount = order.taxful_total_price / 2
     remaining_amount = order.taxful_total_price - partial_payment_amount
     order.create_payment(partial_payment_amount)
     assert order.payment_status == PaymentStatus.PARTIALLY_PAID
+    assert not order.can_edit()
 
     order.create_payment(remaining_amount)
     assert order.payment_status == PaymentStatus.FULLY_PAID
+    assert not order.can_edit()
