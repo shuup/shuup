@@ -649,6 +649,14 @@ class Order(MoneyPropped, models.Model):
     def get_tracking_codes(self):
         return [shipment.tracking_code for shipment in self.shipments.all() if shipment.tracking_code]
 
+    def can_edit(self):
+        return (
+            not self.is_canceled() and
+            not self.is_complete() and
+            self.shipping_status == ShippingStatus.NOT_SHIPPED and
+            self.payment_status == PaymentStatus.NOT_PAID
+        )
+
 
 OrderLogEntry = define_log_model(Order)
 
