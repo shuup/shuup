@@ -22,21 +22,7 @@ from shoop.utils.numbers import bankers_round
 from ._source_modifier import get_order_source_modifier_modules
 
 
-class OrderCreator(object):
-
-    def __init__(self, request=None):
-        """
-        Initialize order creator.
-
-        :type request: django.http.HttpRequest|None
-        :param request:
-          Optional request object for backward compatibility.  Passing
-          non-None value is DEPRECATED.
-        """
-        if request is not None:
-            warnings.warn(
-                "Initializing OrderCreator with a request is deprecated",
-                DeprecationWarning, stacklevel=2)
+class OrderProcessor(object):
 
     def source_line_to_order_lines(self, order, source_line):
         """
@@ -178,8 +164,11 @@ class OrderCreator(object):
             lines.extend(self.source_line_to_order_lines(order, line))
         return lines
 
-    def create_order(self, order_source):
-        order = Order(
+    def get_source_base_data(self, order_source):
+        """
+        :type order_source: shoop.core.order_creator.OrderSource
+        """
+        return dict(
             shop=order_source.shop,
             currency=order_source.currency,
             prices_include_tax=order_source.prices_include_tax,
@@ -199,8 +188,8 @@ class OrderCreator(object):
             shipping_data=order_source.shipping_data,
             extra_data=order_source.extra_data
         )
-        order.save()
 
+    def finalize_creation(self, order, order_source):
         self.process_order_before_lines(source=order_source, order=order)
         lines = self.get_source_order_lines(source=order_source, order=order)
         self.add_lines_into_order(order, lines)
@@ -219,9 +208,6 @@ class OrderCreator(object):
             order.customer.save(update_fields=["marketing_permission"])
 
         self._assign_code_usages(order_source, order)
-
-        order_creator_finished.send(
-            sender=type(self), order=order, source=order_source)
 
         order.save()
         self.process_order_after_lines(source=order_source, order=order)
@@ -248,3 +234,28 @@ class OrderCreator(object):
     def process_order_after_lines(self, source, order):
         # Subclass hook
         pass
+
+
+class OrderCreator(OrderProcessor):
+
+    def __init__(self, request=None):
+        """
+        Initialize order creator.
+
+        :type request: django.http.HttpRequest|None
+        :param request:
+          Optional request object for backward compatibility.  Passing
+          non-None value is DEPRECATED.
+        """
+        if request is not None:
+            warnings.warn(
+                "Initializing OrderCreator with a request is deprecated",
+                DeprecationWarning, stacklevel=2)
+
+    def create_order(self, order_source):
+        data = self.get_source_base_data(order_source)
+        order = Order(**data)
+        order.save()
+        order = self.finalize_creation(order, order_source)
+        order_creator_finished.send(sender=type(self), order=order, source=order_source)
+        return order
