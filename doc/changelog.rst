@@ -12,6 +12,8 @@ Unreleased
 Core
 ~~~~
 
+- Add ``Order.can_edit``
+- Update shipping status correctly in ``Order.create_shipment``
 - Add ``OrderModifier`` for basic ``Order`` modifying from ``OrderSource``
 - Add option use ``Order.create_shipment`` with unsaved ``Shipment``
 - Add identifier for ``Shipment``
@@ -62,6 +64,7 @@ Localization
 Admin
 ~~~~~
 
+- Enable order editing
 - Allow shipment creation form extensions
 - Add payment creation view to ``Order`` admin
 - Enable order cancelation in Order edit view

@@ -10,8 +10,22 @@
 import _ from "lodash";
 import m from "mithril";
 import view from "./view";
+import {persistStore} from "redux-persist";
 import store from "./store";
-import {setShopChoices, setCountries, setShop, setShippingMethodChoices, setPaymentMethodChoices} from "./actions";
+import {
+    setShopChoices,
+    setCountries,
+    setShop,
+    setShippingMethodChoices,
+    setPaymentMethodChoices,
+    setCustomer,
+    setShippingMethod,
+    setPaymentMethod,
+    setLines,
+    setOrderId,
+    updateTotals,
+    clearOrderSourceData
+} from "./actions";
 
 var controller = null;
 
@@ -20,10 +34,45 @@ export function init(config = {}) {
         return;
     }
     store.dispatch(setShopChoices(config.shops || []));
-    store.dispatch(setCountries(config.countries || []));
     store.dispatch(setShop(config.shops[0] || []));
+    store.dispatch(setCountries(config.countries || []));
     store.dispatch(setShippingMethodChoices(config.shippingMethods || []));
     store.dispatch(setPaymentMethodChoices(config.paymentMethods || []));
+    const orderId = config.orderId;
+    store.dispatch(setOrderId(orderId));
+
+    const persistor = persistStore(store);
+    const resetOrder = window.localStorage.getItem("resetSavedOrder") || "false";
+    var savedOrder = {id: null};
+    if (resetOrder === "true") {
+        persistor.purgeAll();
+        window.localStorage.setItem("resetSavedOrder", "false");
+    } else {
+        const savedOrderStr = window.localStorage.getItem("reduxPersist:order");
+        if (savedOrderStr) {
+            savedOrder = JSON.parse(savedOrderStr);
+        }
+    }
+
+    if (orderId) { // Edit mode
+        if (!savedOrder.id || savedOrder.id !== orderId) {
+            // Saved order id does not match with current order
+            // Purge the wrong saved state and initialize from orderData
+            persistor.purgeAll();
+            store.dispatch(setShop(config.orderData.shop));
+            store.dispatch(setCustomer(config.orderData.customer));
+            store.dispatch(setShippingMethod(config.orderData.shippingMethodId));
+            store.dispatch(setPaymentMethod(config.orderData.paymentMethodId));
+            store.dispatch(setLines(config.orderData.lines));
+            store.dispatch(updateTotals(store.getState));
+        }
+    } else {  // New mode
+        if (savedOrder.id) {
+            // Purge the old saved state for existing order
+            persistor.purgeAll();
+        }
+    }
+
     controller = m.mount(document.getElementById("order-tool-container"), {
         view,
         controller: _.noop

@@ -8,7 +8,7 @@
 import decimal
 import pytest
 
-from shoop.core.models import Shipment
+from shoop.core.models import Shipment, ShippingStatus
 from shoop.testing.factories import (
     add_product_to_order, create_empty_order, create_product,
     get_default_shop, get_default_supplier
@@ -27,7 +27,8 @@ def test_shipment_identifier():
             expected_key_start = "%s/%s" % (order.pk, i)
             assert shipment.identifier.startswith(expected_key_start)
         assert order.shipments.count() == int(line.quantity)
-
+    assert order.shipping_status == ShippingStatus.FULLY_SHIPPED  # Check that order is now fully shipped
+    assert not order.can_edit()
 
 @pytest.mark.django_db
 def test_shipment_creation_from_unsaved_shipment():
@@ -72,6 +73,19 @@ def test_shipment_creation_with_invalid_unsaved_shipment():
                 unsaved_shipment = Shipment(supplier=supplier, order=second_order)
                 order.create_shipment({line.product: 1}, shipment=unsaved_shipment)
     assert order.shipments.count() == 0
+
+
+@pytest.mark.django_db
+def test_partially_shipped_order_status():
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    order = _get_order(shop, supplier)
+    assert order.can_edit()
+    first_product_line = order.lines.exclude(product_id=None).first()
+    assert first_product_line.quantity > 1
+    order.create_shipment({first_product_line.product: 1}, supplier=supplier)
+    assert order.shipping_status == ShippingStatus.PARTIALLY_SHIPPED
+    assert not order.can_edit()
 
 
 def _get_order(shop, supplier):
