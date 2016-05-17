@@ -65,6 +65,7 @@ Localization
 Admin
 ~~~~~
 
+- Enable archiving of products
 - Enable order editing
 - Allow shipment creation form extensions
 - Add payment creation view to ``Order`` admin

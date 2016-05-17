@@ -40,6 +40,13 @@ class EditProductToolbar(Toolbar):
             url=reverse("shoop_admin:product.edit_cross_sell", kwargs={"pk": product.pk}),
         )
         menu_items = [
+            DropdownHeader(text=_("Management")),
+            DropdownItem(
+                text=_("Archive Product"),
+                icon="fa fa-archive",
+                url=reverse("shoop_admin:product.archive", kwargs={"pk": product.pk})
+            ),
+            DropdownDivider(),
             DropdownHeader(text=_("Cross-Selling")),
             cross_sell_button
         ]

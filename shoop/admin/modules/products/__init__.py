@@ -30,6 +30,10 @@ class ProductModule(AdminModule):
     def get_urls(self):
         return [
             admin_url(
+                "^products/(?P<pk>\d+)/archive/$", "shoop.admin.modules.products.views.ProductArchiveView",
+                name="product.archive"
+            ),
+            admin_url(
                 "^products/(?P<pk>\d+)/delete/$", "shoop.admin.modules.products.views.ProductDeleteView",
                 name="product.delete"
             ),
