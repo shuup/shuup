@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add ``Product.archive``
 - Add ``Order.can_edit``
 - Update shipping status correctly in ``Order.create_shipment``
 - Add ``OrderModifier`` for basic ``Order`` modifying from ``OrderSource``
