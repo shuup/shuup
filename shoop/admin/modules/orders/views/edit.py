@@ -92,6 +92,7 @@ def encode_line(line):
 
 
 def get_line_data_for_edit(shop, line):
+    total_price = line.taxful_price.value if shop.prices_include_tax else line.taxless_price.value
     base_data = {
         "id": line.id,
         "type": "other" if line.quantity else "text",
@@ -99,8 +100,8 @@ def get_line_data_for_edit(shop, line):
         "quantity": line.quantity,
         "sku": line.sku,
         "baseUnitPrice": line.base_unit_price.value,
-        "unitPrice": line.taxless_price.value / line.quantity if line.quantity else 0,
-        "unitPriceIncludesTax": line.price.includes_tax,
+        "unitPrice": total_price / line.quantity if line.quantity else 0,
+        "unitPriceIncludesTax": shop.prices_include_tax,
         "errors": "",
         "step": ""
     }
