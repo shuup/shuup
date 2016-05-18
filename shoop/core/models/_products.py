@@ -122,10 +122,10 @@ class ProductQuerySet(TranslatableQuerySet):
         root = (self.language(language) if language else self)
 
         if customer and customer.is_all_seeing:
-            exclude_q = Q(deleted=True) | Q(mode=ProductMode.VARIATION_CHILD)
+            exclude_q = Q(deleted=True) | Q(archived=True) | Q(mode=ProductMode.VARIATION_CHILD)
             qs = root.all().exclude(exclude_q).filter(shop_products__shop=shop)
         else:
-            qs = root.all().exclude(deleted=True).filter(
+            qs = root.all().exclude(deleted=True, archived=True).filter(
                 shop_products__shop=shop,
                 shop_products__visible=True,
                 shop_products__listed=True,
@@ -150,7 +150,8 @@ class ProductQuerySet(TranslatableQuerySet):
         return qs
 
     def all_except_deleted(self, language=None):
-        qs = (self.language(language) if language else self).exclude(deleted=True)
+        exclude_q = Q(deleted=True) | Q(archived=True)
+        qs = (self.language(language) if language else self).exclude(exclude_q)
         qs = qs.select_related(*Product.COMMON_SELECT_RELATED)
         return qs
 
@@ -163,6 +164,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
     created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_('created on'))
     modified_on = models.DateTimeField(auto_now=True, editable=False, verbose_name=_('modified on'))
     deleted = models.BooleanField(default=False, editable=False, db_index=True, verbose_name=_('deleted'))
+    archived = models.BooleanField(default=False, editable=False, db_index=True, verbose_name=_('archived'))
 
     # Behavior
     mode = EnumIntegerField(ProductMode, default=ProductMode.NORMAL, verbose_name=_('mode'))
@@ -437,6 +439,13 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
             self.add_log_entry("Deleted.", kind=LogEntryKind.DELETION, user=user)
             # Bypassing local `save()` on purpose.
             super(Product, self).save(update_fields=("deleted",))
+
+    def archive(self, user=None):
+        if not self.archived:
+            self.archived = True
+            self.add_log_entry("Archived.", kind=LogEntryKind.EDIT, user=user)
+            # Bypassing local `save()` on purpose.
+            super(Product, self).save(update_fields=("archived",))
 
     def verify_mode(self):
         if ProductPackageLink.objects.filter(parent=self).exists():

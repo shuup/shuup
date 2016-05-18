@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add ``Product.archive``
 - Add ``Order.can_edit``
 - Update shipping status correctly in ``Order.create_shipment``
 - Add ``OrderModifier`` for basic ``Order`` modifying from ``OrderSource``
@@ -64,6 +65,7 @@ Localization
 Admin
 ~~~~~
 
+- Enable archiving of products
 - Enable order editing
 - Allow shipment creation form extensions
 - Add payment creation view to ``Order`` admin

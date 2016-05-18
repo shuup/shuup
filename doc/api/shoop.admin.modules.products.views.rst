@@ -4,6 +4,14 @@ shoop.admin.modules.products.views package
 Submodules
 ----------
 
+shoop.admin.modules.products.views.archive module
+-------------------------------------------------
+
+.. automodule:: shoop.admin.modules.products.views.archive
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.admin.modules.products.views.delete module
 ------------------------------------------------
 

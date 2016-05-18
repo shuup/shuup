@@ -53,3 +53,16 @@ def test_product_query(admin_user, regular_user):
 
     product.soft_delete()
     assert not Product.objects.all_except_deleted().filter(pk=product.pk).exists()
+
+
+@pytest.mark.django_db
+def test_product_archive():
+    shop_product = get_default_shop_product()
+    shop = shop_product.shop
+    product = shop_product.product
+
+    assert Product.objects.all_except_deleted().filter(pk=product.pk).exists()
+
+    product.archive()
+
+    assert not Product.objects.all_except_deleted().filter(pk=product.pk).exists()
