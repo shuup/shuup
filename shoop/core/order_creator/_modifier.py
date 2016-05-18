@@ -22,6 +22,7 @@ class OrderModifier(OrderProcessor):
         order = Order.objects.get(pk=order.pk)
 
         for line in order.lines.all():
+            line.taxes.all().delete()  # Delete all tax lines before OrderLine's
             line.delete()
 
         return self.finalize_creation(order, order_source)
