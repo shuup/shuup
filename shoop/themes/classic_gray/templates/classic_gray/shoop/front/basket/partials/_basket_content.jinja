@@ -1,3 +1,4 @@
+{%- import "shoop/front/macros.jinja" as macros with context -%}
 <div class="basket-items">
     <form method="post" action="{{ url("shoop:basket") }}" id="update_basket_form">
         <input name="command" type="hidden" value="update">
@@ -28,6 +29,9 @@
                             {{ line.text }}
                         {% endif %}
                     </h4>
+                    {% if product and product.is_package_parent() %}
+                        {{ macros.render_package_children(product) }}
+                    {% endif %}
                     <div class="quantity">
                         {% if product and line.can_change_quantity %}
                         <div class="input-group">

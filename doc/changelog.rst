@@ -93,6 +93,7 @@ Addons
 Front
 ~~~~~
 
+- Update UI for package products
 - Add SHOOP_FRONT_ADDRESS_FIELD_PROPERTIES setting
 - Support also django-registration-redux 1.4
 - Enable description and logo for methods in checkout

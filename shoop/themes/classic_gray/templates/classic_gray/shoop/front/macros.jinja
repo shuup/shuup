@@ -31,6 +31,21 @@
     </div>
 {% endmacro %}
 
+{% macro product_line(product, quantity) %}
+    {% set u = url("shoop:product", pk=product.pk, slug=product.slug) %}
+        <a href="{{ u }}">{{ product.name }}</a> &times; {{ quantity|int }}
+{% endmacro %}
+
+{% macro render_package_children(product) %}
+    {% set package_children = product.get_all_package_children().translated().order_by("translations__name") %}
+    {% set quantity_map = product.get_package_child_to_quantity_map() %}
+    <ul class="package-children">
+        {% for child in package_children %}
+            <li><small><em>{{ quantity_map[child]|int }} &times; {{ child }}</em></small></li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
 {% macro render_field(field, classes="") %}
     {% if field.field.widget.is_hidden %}
         {{ field.as_widget()|safe }}

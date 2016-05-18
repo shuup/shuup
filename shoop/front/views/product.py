@@ -57,9 +57,9 @@ class ProductDetailView(DetailView):
         elif product.mode == ProductMode.PACKAGE_PARENT:
             children = (
                 product.get_all_package_children()
-                .language(language)
+                .translated()
                 .order_by("translations__name")
-                .all())
+            )
             context["package_children"] = cache_product_things(self.request, children)
 
         context["shop_product"] = self.shop_product
