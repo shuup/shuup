@@ -21,6 +21,7 @@ from shoop.admin.utils.urls import admin_url, AdminRegexURLPattern
 from shoop.admin.views.dashboard import DashboardView
 from shoop.admin.views.menu import MenuView
 from shoop.admin.views.search import SearchView
+from shoop.admin.views.select import MultiselectAjaxView
 from shoop.utils.i18n import javascript_catalog_all
 
 
@@ -38,6 +39,7 @@ def get_urls():
     urls.extend([
         admin_url(r'^$', DashboardView.as_view(), name='dashboard'),
         admin_url(r'^search/$', SearchView.as_view(), name='search'),
+        admin_url(r'^select/$', MultiselectAjaxView.as_view(), name='select'),
         admin_url(r'^menu/$', MenuView.as_view(), name='menu'),
         admin_url(
             r'^login/$',

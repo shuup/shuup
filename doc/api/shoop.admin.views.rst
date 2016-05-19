@@ -28,6 +28,14 @@ shoop.admin.views.search module
     :undoc-members:
     :show-inheritance:
 
+shoop.admin.views.select module
+-------------------------------
+
+.. automodule:: shoop.admin.views.select
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------
