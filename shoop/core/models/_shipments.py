@@ -71,7 +71,7 @@ class Shipment(models.Model):
 
     def save(self, *args, **kwargs):
         super(Shipment, self).save(*args, **kwargs)
-        for product_id in self.products.values_list("id", flat=True):
+        for product_id in self.products.values_list("product_id", flat=True):
             self.supplier.module.update_stock(product_id=product_id)
 
     def cache_values(self):
