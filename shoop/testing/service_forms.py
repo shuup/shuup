@@ -7,7 +7,9 @@
 
 from shoop.admin.forms import ShoopAdminForm
 
-from .models import PaymentWithCheckoutPhase, PseudoPaymentProcessor
+from .models import (
+    CarrierWithCheckoutPhase, PaymentWithCheckoutPhase, PseudoPaymentProcessor
+)
 
 
 class PseudoPaymentProcessorForm(ShoopAdminForm):
@@ -19,4 +21,10 @@ class PseudoPaymentProcessorForm(ShoopAdminForm):
 class PaymentWithCheckoutPhaseForm(ShoopAdminForm):
     class Meta:
         model = PaymentWithCheckoutPhase
+        exclude = ["identifier"]
+
+
+class CarrierWithCheckoutPhaseForm(ShoopAdminForm):
+    class Meta:
+        model = CarrierWithCheckoutPhase
         exclude = ["identifier"]
