@@ -48,7 +48,7 @@ def get_visible_products(context, n_products, ordering=None, filter_dict=None, o
     supplier_filter = Q()
     if orderable_only:
         for supplier in Supplier.objects.all():
-            supplier_filter |= Q(pk__in=supplier.get_suppliable_products(shop, customer))
+            supplier_filter |= Q(shop_products__pk__in=supplier.get_suppliable_products(shop, customer))
         products_qs = products_qs.filter(supplier_filter)
 
     return products_qs.filter(**filter_dict)[:n_products]
