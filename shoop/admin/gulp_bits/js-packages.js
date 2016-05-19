@@ -29,7 +29,8 @@ module.exports = {
             "js/form-utils.js",
             "js/jquery.form-submission-attributes.polyfill.js",
             "js/datetimepicker.js",
-            "js/language-changer.js"
+            "js/language-changer.js",
+            "js/select.js"
         ]
     },
     "contact-group": {

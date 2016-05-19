@@ -64,6 +64,7 @@ Localization
 Admin
 ~~~~~
 
+- Enable multiselect dropdown with Select2
 - Enable adding log entries to orders
 - Enable order editing
 - Allow shipment creation form extensions

@@ -28,5 +28,9 @@ module.exports = {
     "media-browser": {
         "base": "./modules/media/static_src/media/browser",
         "entrypoint": "media-browser.less"
-    }
+    },
+    "select2": {
+         "base": "./static_src/vendor/css",
+         "entrypoint": "select2.css"
+     }
 };
