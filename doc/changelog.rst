@@ -64,6 +64,7 @@ Localization
 Admin
 ~~~~~
 
+- Remove support for select pickers
 - Enable multiselect dropdown with Select2
 - Enable adding log entries to orders
 - Enable order editing
