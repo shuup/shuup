@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-28 18:16+0000\n"
+"POT-Creation-Date: 2016-05-20 01:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
@@ -147,6 +147,9 @@ msgstr ""
 msgid "Checkout"
 msgstr ""
 
+msgid "Continue"
+msgstr ""
+
 msgid "Product"
 msgstr ""
 
@@ -169,9 +172,6 @@ msgid "Shipping address"
 msgstr ""
 
 msgid "Ship to my billing address"
-msgstr ""
-
-msgid "Continue"
 msgstr ""
 
 msgid "Delivery"
@@ -408,10 +408,10 @@ msgstr ""
 msgid "Attributes"
 msgstr ""
 
-msgid "No product description available"
+msgid "Includes these products"
 msgstr ""
 
-msgid "Includes these products"
+msgid "No product description available"
 msgstr ""
 
 msgid "Also available in"
