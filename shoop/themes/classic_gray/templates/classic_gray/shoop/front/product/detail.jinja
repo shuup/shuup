@@ -93,8 +93,19 @@
         </ul>
         <div class="tab-content">
             <div role="tabpanel" class="product-description tab-pane fade in active" id="tab1">
-                {% if product.description %}
+                {% if product.description or package_children %}
                     {{ product.description|markdown|safe }}
+                    {% if package_children %}
+                        {% set quantity_map = product.get_package_child_to_quantity_map() %}
+                        <p><strong>{% trans %}Includes these products{% endtrans %}</strong></p>
+                        <ul>
+                            {% for child in package_children %}
+                                <li>
+                                    {{ macros.product_line(child, quantity_map[child]) }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                 {% else %}
                     {% trans %}No product description available{% endtrans %}
                 {% endif %}
@@ -148,18 +159,7 @@
         {% endrow %}
     {% endplaceholder %}
 
-    {% if package_children %}
-        <hr>
-        <h3>{% trans %}Includes these products{% endtrans %}</h3>
-        <div class="row">
-            {% for child in package_children %}
-                <div class="col-md-3">
-                    {{ macros.product_box(child) }}
-                </div>
-            {% endfor %}
-        </div>
-
-    {% elif package_parents %}
+    {% if package_parents %}
         <hr>
         <h3>{% trans %}Also available in{% endtrans %}</h3>
         <div class="row">

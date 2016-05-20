@@ -35,6 +35,7 @@
             <tr>
                 <td>
                     {% if product %}
+
                         {% set image = product.primary_image %}
                         {% if image %}
                             <img src="{{ image|thumbnail(size=(70, 70)) }}" alt="{{ line.text }}">
@@ -45,6 +46,9 @@
                 </td>
                 <td>
                     {{ line.text }}
+                    {% if product and product.is_package_parent() %}
+                        {{ macros.render_package_children(product) }}
+                    {% endif %}
                 </td>
                 <td class="text-right">
                     {{ line.taxful_discounted_unit_price|money }}
