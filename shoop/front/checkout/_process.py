@@ -59,22 +59,26 @@ class CheckoutProcess(object):
                 return phase
         raise Http404("Phase with identifier %s not found" % requested_phase_identifier)  # pragma: no cover
 
-    def _get_next_phase(self, phases, current_phase):
+    def _get_next_phase(self, phases, current_phase, target_phase):
         found = False
         for phase in phases:
             if phase.identifier == current_phase.identifier:
                 # Found the current one, so any valid phase from here on out is the next one
                 found = True
                 continue
+
+            if found and current_phase.identifier != target_phase.identifier:
+                return phase
+
             if found and not phase.should_skip():
                 # Yep, that's the one
                 return phase
 
-    def get_next_phase(self, current_phase):
-        return self._get_next_phase(self.phases, current_phase)
+    def get_next_phase(self, current_phase, target_phase):
+        return self._get_next_phase(self.phases, current_phase, target_phase)
 
-    def get_previous_phase(self, current_phase):
-        return self._get_next_phase(reversed(self.phases), current_phase)
+    def get_previous_phase(self, current_phase, target_phase):
+        return self._get_next_phase(reversed(self.phases), current_phase, target_phase)
 
     def prepare_current_phase(self, phase_identifier):
         current_phase = self.get_current_phase(phase_identifier)
@@ -91,8 +95,8 @@ class CheckoutProcess(object):
         initialization and dispatching, such as method phases.
         """
         current_phase = (current_phase or target_phase)
-        target_phase.previous_phase = self.get_previous_phase(current_phase)
-        target_phase.next_phase = self.get_next_phase(current_phase)
+        target_phase.previous_phase = self.get_previous_phase(current_phase, target_phase)
+        target_phase.next_phase = self.get_next_phase(current_phase, target_phase)
         target_phase.phases = self.phases
         if current_phase in self.phases:
             current_phase_index = self.phases.index(current_phase)

@@ -127,6 +127,7 @@ def test_basic_order_flow(with_company):
 @pytest.mark.parametrize("get_shipping_method,shipping_data,get_payment_method,payment_data", [
     (get_default_shipping_method, None, _get_payment_method_with_phase, {"input_field": True}),
     (_get_shipping_method_with_phase, {"input_field": "20540"}, get_default_payment_method, None),
+    (_get_shipping_method_with_phase, {"input_field": "20540"}, _get_payment_method_with_phase, {"input_field": True}),
 ])
 def test_order_flow_with_phases(get_shipping_method, shipping_data, get_payment_method, payment_data):
     create_default_order_statuses()
