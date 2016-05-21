@@ -64,6 +64,7 @@ def test_add_and_remove_and_clear():
     basket_commands.handle_clear(request, basket)
     assert basket.product_count == 0
 
+
 @pytest.mark.django_db
 def test_ajax():
     product = get_default_product()
@@ -73,6 +74,7 @@ def test_ajax():
     assert isinstance(rv, JsonResponse)
     assert commands.basket.product_count == 0
 
+
 @pytest.mark.django_db
 def test_nonajax():
     product = get_default_product()
@@ -81,11 +83,13 @@ def test_nonajax():
     with pytest.raises(Exception):
         commands.handle("add", kwargs=dict(product_id=product.pk, quantity=-3))
 
+
 @pytest.mark.django_db
 def test_redirect():
     commands = ReturnUrlBasketCommandDispatcher(request=get_request_with_basket())
     commands.ajax = False
     assert isinstance(commands.handle("clear"), HttpResponseRedirect)
+
 
 @pytest.mark.django_db
 def test_variation():
@@ -93,15 +97,17 @@ def test_variation():
     basket = request.basket
     shop = get_default_shop()
     supplier = get_default_supplier()
+
     parent = create_product("BuVarParent", shop=shop, supplier=supplier)
     child = create_product("BuVarChild", shop=shop, supplier=supplier)
     child.link_to_parent(parent, variables={"test": "very"})
     attr = parent.variation_variables.get(identifier="test")
     val = attr.values.get(identifier="very")
-    basket_commands.handle_add_var(request, basket, 1, **{"var_%s" % attr.id: val.id})
+    basket_commands.handle_add_var(request, basket, parent.id, **{"var_%s" % attr.id: val.id})
     assert basket.get_product_ids_and_quantities()[child.pk] == 1
+
     with pytest.raises(ValidationError):
-        basket_commands.handle_add_var(request, basket, 1, **{"var_%s" % attr.id: (val.id + 1)})
+        basket_commands.handle_add_var(request, basket, parent.id, **{"var_%s" % attr.id: (val.id + 1)})
 
 
 @pytest.mark.django_db
@@ -126,17 +132,14 @@ def test_complex_variation():
     # Elided product should not yield a result
     yellow_color_value = ProductVariationVariableValue.objects.get(variable=color_var, identifier="yellow")
     small_size_value = ProductVariationVariableValue.objects.get(variable=size_var, identifier="small")
-
     # add to basket yellow + small
     kwargs = {"var_%d" % color_var.pk: yellow_color_value.pk, "var_%d" % size_var.pk: small_size_value.pk}
-
-    basket_commands.handle_add_var(request, basket, 1, **kwargs)
+    basket_commands.handle_add_var(request, basket, parent.id, **kwargs)
     assert basket.get_product_ids_and_quantities()[child.pk] == 1
 
     with pytest.raises(ValidationError):
         kwargs = {"var_%d" % color_var.pk: yellow_color_value.pk, "var_%d" % size_var.pk: small_size_value.pk + 1}
-        basket_commands.handle_add_var(request, basket, 1, **kwargs)
-
+        basket_commands.handle_add_var(request, basket, parent.id, **kwargs)
 
 @pytest.mark.django_db
 def test_basket_update():
