@@ -8,8 +8,12 @@
 import pytest
 
 from shoop.admin.modules.orders.dashboard import OrderValueChartDashboardBlock
-from shoop.admin.modules.orders.views.detail import OrderSetStatusView
-from shoop.core.models import Order, OrderStatus, OrderStatusRole, ShippingStatus
+from shoop.admin.modules.orders.views import (
+    NewLogEntryView, OrderSetStatusView
+)
+from shoop.core.models import (
+    Order, OrderLogEntry, OrderStatus, OrderStatusRole, ShippingStatus
+)
 from shoop.testing.factories import (
     create_random_order, create_random_person, get_default_product
 )
@@ -44,6 +48,19 @@ def test_order_set_status_canceled_works(admin_user, rf):
     order = Order.objects.get(pk=order.pk)
     assert order.status_id == canceled_status.id
     assert order.log_entries.filter(identifier="status_change").exists()
+
+
+@pytest.mark.django_db
+def test_add_order_log_entry(admin_user, rf):
+    order = create_random_order(customer=create_random_person(), products=(get_default_product(),))
+    assert not OrderLogEntry.objects.filter(target=order).exists()
+    view = NewLogEntryView.as_view()
+    test_message = "test_order"
+    request = apply_request_middleware(rf.post("/", {"message": test_message}), user=admin_user)
+    response = view(request, pk=order.pk)
+    assert response.status_code < 400
+    assert OrderLogEntry.objects.filter(target=order).exists()
+    assert OrderLogEntry.objects.filter(target=order).first().message == test_message
 
 
 @pytest.mark.django_db

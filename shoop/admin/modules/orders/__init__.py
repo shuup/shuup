@@ -40,6 +40,11 @@ class OrderModule(CurrencyBound, AdminModule):
                 name="order.set-status"
             ),
             admin_url(
+                "^orders/(?P<pk>\d+)/new-log-entry/$",
+                "shoop.admin.modules.orders.views.NewLogEntryView",
+                name="order.new-log-entry"
+            ),
+            admin_url(
                 "^orders/(?P<pk>\d+)/$",
                 "shoop.admin.modules.orders.views.OrderDetailView",
                 name="order.detail"
