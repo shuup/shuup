@@ -18,6 +18,7 @@
     "_": false, // Lodash
     "moment": false, // Moment
     "gettext": false,
+    "ngettext": false,
     "interpolate": false
   },
   "extends": "eslint:recommended",

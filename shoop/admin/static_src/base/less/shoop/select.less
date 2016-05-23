@@ -1,0 +1,48 @@
+span.select2.select2-container {
+    .make-sm-column(8);
+    .make-lg-column(6);
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    float: none !important;
+    width: 100% !important;
+
+    span {
+        border-color: #D9D9D9;
+    }
+
+    &.select2-container--open, &.select2-container--focus {
+        span {
+            box-shadow: none;
+            border-color: @brand-primary !important;
+        }
+    }
+
+    span.selection span.select2-selection {
+        min-height: 38px;
+        padding: 5px 0 5px 0;
+        border-width: 2px;
+        background: #F3F3F3;
+        font-weight: normal;
+        font-size: 1.3rem;
+
+        span.select2-selection__rendered {
+            color: #555555;
+        }
+
+        span.select2-selection__arrow {
+            height: 38px;
+        }
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1200px) {
+    span.select2.select2-container {
+      width: 66.66666667% !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    span.select2.select2-container {
+        width: 50% !important;
+    }
+}

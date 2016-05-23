@@ -25,23 +25,6 @@ window.setNextActionAndSubmit = function(formId, nextAction) {
 };
 
 $(function() {
-    const isMobile = !!(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent));
-    $(".multiselect").selectpicker({
-        mobile: isMobile,
-        style: "btn btn-select",
-        title: "",
-        selectedTextFormat: "count > 3",
-        countSelectedText: "{0}/{1} selected"
-    });
-    const $dropdowns = $(".dropdown");
-
-    // Add slideUp/slideDown animations to all bootstrap dropdowns
-    $dropdowns.on("show.bs.dropdown", function() {
-        $(this).find(".dropdown-menu").first().stop(true, true).slideDown(200, "easeInSine");
-    }).on("hide.bs.dropdown", function() {
-        $(this).find(".dropdown-menu").first().stop(true, true).slideUp(300, "easeOutSine");
-    });
-
     $(".language-dependent-content").each(function() {
         const $ctr = $(this);
         var firstTabWithErrorsOpened = false;

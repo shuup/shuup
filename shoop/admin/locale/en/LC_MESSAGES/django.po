@@ -1371,3 +1371,7 @@ msgstr ""
 #, python-format
 msgid "Only one %(model)s permitted."
 msgstr ""
+
+#, python-format
+msgid "Couldn't get selections for %s."
+msgstr ""

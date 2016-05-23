@@ -333,6 +333,34 @@ msgstr ""
 msgid "Log items:"
 msgstr ""
 
+msgid "The results could not be loaded"
+msgstr ""
+
+#, c-format
+msgid "Please delete %s character"
+msgid_plural "Please delete %s characters"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Please enter %s or more characters"
+msgstr ""
+
+msgid "Loading more results..."
+msgstr ""
+
+#, c-format
+msgid "You can only select %s item"
+msgid_plural "You can only select %s items"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "No results found"
+msgstr ""
+
+msgid "Searching..."
+msgstr ""
+
 msgid "From"
 msgstr ""
 

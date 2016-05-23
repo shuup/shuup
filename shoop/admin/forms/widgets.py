@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 
 import json
 
-from django.forms import HiddenInput, Widget
+from django.forms import HiddenInput, SelectMultiple, Widget
 from django.utils.encoding import force_text
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
@@ -123,3 +123,13 @@ class ContactChoiceWidget(BasePopupChoiceWidget):
 
 class PackageProductChoiceWidget(ProductChoiceWidget):
     filter = json.dumps({"modes": [ProductMode.NORMAL.value, ProductMode.VARIATION_CHILD.value]})
+
+
+class Select2Multiple(SelectMultiple):
+
+    def __init__(self, model, attrs=None, choices=()):
+        if not attrs:
+            attrs = {}
+        model_name = "%s.%s" % (model._meta.app_label, model._meta.model_name)
+        attrs.update({"data-model": model_name})
+        super(Select2Multiple, self).__init__(attrs, choices)

@@ -4,13 +4,18 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+
+import ast
+
 from django import forms
 from django.core.exceptions import ValidationError
-from django.db.models import OneToOneField, Q
+from django.db.models import ManyToManyField, OneToOneField, Q, QuerySet
 from django.forms import ChoiceField, ModelForm
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.forms.fields import PercentageField
+from shoop.admin.forms.widgets import Select2Multiple
 from shoop.apps.provides import get_provide_objects
 from shoop.campaigns.models.campaigns import (
     BasketCampaign, CatalogCampaign, Coupon
@@ -77,13 +82,33 @@ class CampaignFormMixin(object):
                     if isinstance(field, OneToOneField):
                         continue
 
+                    self.rule_ids.add(obj.identifier)
                     kwargs = {
-                        "initial": self.get_initial_value(obj.identifier),
+                        "initial": self._get_initial_value(obj),
                         "required": False,  # rules are not required by default, validation is made later on
                         "help_text": obj.description
                     }
-                    self.rule_ids.add(obj.identifier)
-                    self.fields[obj.identifier] = field.formfield(**kwargs)
+                    if isinstance(field, ManyToManyField):
+                        kwargs.update({
+                            "widget": Select2Multiple(model=obj.model)
+                        })
+                        formfield = forms.CharField(**kwargs)
+                        value = kwargs.get("initial")
+                        if value:
+                            formfield.widget.choices = [
+                                (object.pk, force_text(object)) for object in obj.model.objects.filter(pk__in=value)]
+                    else:
+                        formfield = field.formfield(**kwargs)
+                    self.fields[obj.identifier] = formfield
+
+    def _get_initial_value(self, obj):
+        initial_value = self.get_initial_value(obj.identifier)
+        if initial_value is None:
+            return None
+        elif isinstance(initial_value, QuerySet):
+            return [x.pk for x in initial_value]
+        else:
+            return [initial_value]
 
     def clean(self):
         """ Ensure at least one rule is set """
@@ -134,7 +159,7 @@ class CampaignFormMixin(object):
                 field_value = self.cleaned_data[cls.identifier]
                 rule = cls.objects.create()
                 if rule.model:
-                    rule.values = rule.model.objects.filter(pk__in=field_value)
+                    rule.values = rule.model.objects.filter(pk__in=ast.literal_eval(field_value))
                 else:
                     rule.value = field_value
                 rule.save()
