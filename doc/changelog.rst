@@ -12,7 +12,6 @@ Unreleased
 Core
 ~~~~
 
-- Enable adding log entries to orders
 - Add ``Order.can_edit``
 - Update shipping status correctly in ``Order.create_shipment``
 - Add ``OrderModifier`` for basic ``Order`` modifying from ``OrderSource``
@@ -65,6 +64,7 @@ Localization
 Admin
 ~~~~~
 
+- Enable adding log entries to orders
 - Enable order editing
 - Allow shipment creation form extensions
 - Add payment creation view to ``Order`` admin
