@@ -17,11 +17,13 @@ class ShoopTestingAppConfig(AppConfig):
             "shoop.testing.admin_module:TestingAdminModule"
         ],
         "service_provider_admin_form": [
-            "shoop.testing.payment_forms:PseudoPaymentProcessorForm",
-            "shoop.testing.payment_forms:PaymentWithCheckoutPhaseForm",
+            "shoop.testing.service_forms:PseudoPaymentProcessorForm",
+            "shoop.testing.service_forms:PaymentWithCheckoutPhaseForm",
+            "shoop.testing.service_forms:CarrierWithCheckoutPhaseForm",
         ],
         "front_service_checkout_phase_provider": [
-            "shoop.testing.simple_checkout_phase.PhaseProvider",
+            "shoop.testing.simple_checkout_phase.PaymentPhaseProvider",
+            "shoop.testing.simple_checkout_phase.ShipmentPhaseProvider",
         ],
     }
 

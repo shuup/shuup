@@ -143,10 +143,10 @@ class _MethodDependentCheckoutPhase(CheckoutPhaseViewMixin):
         if hasattr(self, "_checkout_phase_object"):
             return self._checkout_phase_object
 
-        meth = self.get_method()
-        if not meth:
+        method = self.get_method()
+        if not method:
             return None
-        phases = get_checkout_phases_for_service(self.checkout_process, meth)
+        phases = get_checkout_phases_for_service(self.checkout_process, method)
         phase = first(phases)
         if not phase:
             return None

@@ -30,7 +30,7 @@ def get_bs_object_for_view(request, view, user, object=None):
     ``PseudoPaymentProcessor``
     """
     with override_provides("service_provider_admin_form", [
-        "shoop.testing.payment_forms.PseudoPaymentProcessorForm",
+        "shoop.testing.service_forms.PseudoPaymentProcessorForm",
         "shoop.admin.modules.service_providers.forms:CustomCarrierForm",
         "shoop.admin.modules.service_providers.forms:CustomPaymentProcessorForm"
     ]):

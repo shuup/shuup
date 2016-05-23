@@ -4,7 +4,7 @@
 {% block checkout_phase_content %}
 <form role="form" method="post" action="">
     {% csrf_token %}
-    {{ bs3.field(form.will_pay) }}
+    {{ bs3.field(form.input_field) }}
     {{ default_buttons() }}
 </form>
 {% endblock %}

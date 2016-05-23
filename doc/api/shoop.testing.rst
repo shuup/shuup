@@ -37,10 +37,10 @@ shoop.testing.mock_population module
     :undoc-members:
     :show-inheritance:
 
-shoop.testing.payment_forms module
+shoop.testing.service_forms module
 ----------------------------------
 
-.. automodule:: shoop.testing.payment_forms
+.. automodule:: shoop.testing.service_forms
     :members:
     :undoc-members:
     :show-inheritance:
