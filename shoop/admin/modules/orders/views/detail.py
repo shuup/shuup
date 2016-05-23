@@ -17,7 +17,9 @@ from django.views.generic import DetailView
 from shoop.admin.toolbar import PostActionButton, Toolbar, URLActionButton
 from shoop.admin.utils.urls import get_model_url
 from shoop.apps.provides import get_provide_objects
-from shoop.core.models import Order, OrderStatus, OrderStatusRole
+from shoop.core.models import (
+    Order, OrderLogEntry, OrderStatus, OrderStatusRole
+)
 from shoop.utils.excs import Problem
 
 
@@ -91,6 +93,10 @@ class OrderDetailView(DetailView):
         context = super(OrderDetailView, self).get_context_data(**kwargs)
         context["toolbar"] = self.get_toolbar()
         context["title"] = force_text(self.object)
+        context["log_entries"] = (
+            OrderLogEntry.objects.filter(target=self.object).order_by("-created_on").all()[:12]
+            # TODO: We're currently trimming to 12 entries, probably need pagination
+        )
         return context
 
 

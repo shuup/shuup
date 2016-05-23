@@ -28,6 +28,14 @@ shoop.admin.modules.orders.views.list module
     :undoc-members:
     :show-inheritance:
 
+shoop.admin.modules.orders.views.log module
+-------------------------------------------
+
+.. automodule:: shoop.admin.modules.orders.views.log
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.admin.modules.orders.views.payment module
 -----------------------------------------------
 

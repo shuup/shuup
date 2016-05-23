@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-13 01:21+0000\n"
+"POT-Creation-Date: 2016-05-21 05:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
@@ -626,6 +626,7 @@ msgstr ""
 msgid "Edit %(model)s"
 msgstr ""
 
+#, python-brace-format
 msgid "Create {service_name}"
 msgstr ""
 
@@ -1023,6 +1024,18 @@ msgstr ""
 msgid "Taxless"
 msgstr ""
 
+msgid "Message"
+msgstr ""
+
+msgid "No log entries have been added yet."
+msgstr ""
+
+msgid "Use the input below to add new log entries."
+msgstr ""
+
+msgid "Add to Log"
+msgstr ""
+
 msgid "Paid"
 msgstr ""
 
@@ -1081,6 +1094,12 @@ msgid "Order Contents"
 msgstr ""
 
 msgid "Payments"
+msgstr ""
+
+msgid "Log Entries"
+msgstr ""
+
+msgid "There was an error adding the log entry."
 msgstr ""
 
 msgid "Error!"
@@ -1257,8 +1276,8 @@ msgstr ""
 
 #, python-format
 msgid ""
-"Telemetry data was last submitted at %(submission_datetime)s - (%"
-"(submission_timesince)s) ago"
+"Telemetry data was last submitted at %(submission_datetime)s - "
+"(%(submission_timesince)s) ago"
 msgstr ""
 
 msgid "See the data that was submitted."
