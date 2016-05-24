@@ -8,9 +8,11 @@
 import pytest
 
 from shoop.core.models import (
-    Product, ProductCrossSell, ProductCrossSellType, StockBehavior
+    ProductCrossSell, ProductCrossSellType, StockBehavior
 )
-from shoop.testing.factories import create_product, get_default_shop
+from shoop.testing.factories import (
+    create_product, get_default_shop, get_default_supplier
+)
 from shoop.themes.classic_gray.plugins import ProductCrossSellsPlugin
 from shoop_tests.front.fixtures import get_jinja_context
 
@@ -21,8 +23,9 @@ def test_cross_sell_plugin_renders():
     Test that the plugin renders a product
     """
     shop = get_default_shop()
-    product = create_product("test-sku", shop=shop, stock_behavior=StockBehavior.UNSTOCKED)
-    computed = create_product("test-computed-sku", shop=shop, stock_behavior=StockBehavior.UNSTOCKED)
+    supplier = get_default_supplier()
+    product = create_product("test-sku", shop=shop, supplier=supplier, stock_behavior=StockBehavior.UNSTOCKED)
+    computed = create_product("test-computed-sku", shop=shop, supplier=supplier, stock_behavior=StockBehavior.UNSTOCKED)
     type = ProductCrossSellType.COMPUTED
 
     ProductCrossSell.objects.create(product1=product, product2=computed, type=type)

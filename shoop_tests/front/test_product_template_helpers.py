@@ -11,15 +11,18 @@ from shoop.core.models import (
     ProductCrossSell, ProductCrossSellType, StockBehavior
 )
 from shoop.front.template_helpers import product as product_helpers
-from shoop.testing.factories import create_product, get_default_shop
+from shoop.testing.factories import (
+    create_product, get_default_shop, get_default_supplier
+)
 from shoop_tests.front.fixtures import get_jinja_context
 
 
-def _create_cross_sell_products(product, shop, type, product_count):
+def _create_cross_sell_products(product, shop, supplier, type, product_count):
     for count in range(product_count):
         related_product = create_product(
             "{}-test-sku-{}".format(type, count),
             shop=shop,
+            supplier=supplier,
             stock_behavior=StockBehavior.UNSTOCKED
         )
         ProductCrossSell.objects.create(product1=product, product2=related_product, type=type)
@@ -32,7 +35,8 @@ def test_cross_sell_plugin_type():
     relation types
     """
     shop = get_default_shop()
-    product = create_product("test-sku", shop=shop, stock_behavior=StockBehavior.UNSTOCKED)
+    supplier = get_default_supplier()
+    product = create_product("test-sku", shop=shop, supplier=supplier, stock_behavior=StockBehavior.UNSTOCKED)
     context = get_jinja_context(product=product)
     type_counts = ((ProductCrossSellType.RELATED, 1),
                    (ProductCrossSellType.RECOMMENDED, 2),
@@ -40,10 +44,10 @@ def test_cross_sell_plugin_type():
 
     # Create cross sell products and relations in different quantities
     for type, count in type_counts:
-        _create_cross_sell_products(product, shop, type, count)
+        _create_cross_sell_products(product, shop, supplier, type, count)
         assert ProductCrossSell.objects.filter(product1=product, type=type).count() == count
 
-    # Make sure quantites returned by plugin match
+    # Make sure quantities returned by plugin match
     for type, count in type_counts:
         assert len(list(product_helpers.get_product_cross_sells(context, product, type, count))) == count
 
@@ -51,13 +55,14 @@ def test_cross_sell_plugin_type():
 @pytest.mark.django_db
 def test_cross_sell_plugin_count():
     shop = get_default_shop()
-    product = create_product("test-sku", shop=shop, stock_behavior=StockBehavior.UNSTOCKED)
+    supplier = get_default_supplier()
+    product = create_product("test-sku", shop=shop, supplier=supplier, stock_behavior=StockBehavior.UNSTOCKED)
     context = get_jinja_context(product=product)
     total_count = 5
     trim_count = 3
 
     type = ProductCrossSellType.RELATED
-    _create_cross_sell_products(product, shop, type, total_count)
+    _create_cross_sell_products(product, shop, supplier, type, total_count)
     assert ProductCrossSell.objects.filter(product1=product, type=type).count() == total_count
 
     assert len(list(product_helpers.get_product_cross_sells(context, product, type, trim_count))) == trim_count
