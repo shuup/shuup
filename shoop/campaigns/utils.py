@@ -37,3 +37,21 @@ def assign_to_group_based_on_sales(cls, shop, customer, sales_range=None):
 
     for sales_range in cls.objects.active(shop).exclude(pk__in=matching_pks):
         sales_range.group.members.remove(customer)
+
+
+def get_contacts_in_sales_range(shop, min_value, max_value):
+    total_sales = Payment.objects.filter(
+        order__shop=shop,
+    ).values(
+        "order__customer_id"
+    ).annotate(
+        total_sales=Sum("amount_value")
+    )
+    # Since https://github.com/django/django/commit/3bbaf84d6533fb61ac0038f2bbe52ee0d7b4fd10
+    # is introduced in Django 1.9a1 we can't filter total sales with min and max value
+    results = set()
+    for result in total_sales:
+        total_sales = result.get("total_sales")
+        if min_value <= total_sales and (max_value is None or max_value > total_sales):
+            results.add(result.get("order__customer_id"))
+    return results
