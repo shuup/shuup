@@ -95,6 +95,7 @@ Addons
 Front
 ~~~~~
 
+- Make ``get_best_selling_products`` faster
 - Make ``get_visible_products`` faster
 - Fix bug with multiple service checkout phases
 - Update UI for package products

@@ -66,15 +66,19 @@ def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_
         cutoff_days=cutoff_days
     )
     product_ids = [d[0] for d in data][:n_products]
-    products = get_visible_products(
-        context,
-        n_products,
-        filter_dict={"id__in": product_ids},
-        orderable_only=orderable_only,
-    )
+
+    products = []
+    for product in Product.objects.filter(id__in=product_ids):
+        shop_product = product.get_shop_instance(request.shop)
+        if orderable_only:
+            for supplier in Supplier.objects.all():
+                if shop_product.is_orderable(supplier, request.customer, shop_product.minimum_purchase_quantity):
+                    products.append(product)
+                    break
+        elif shop_product.is_visible(request.customer):
+            products.append(product)
     products = cache_product_things(request, products)
     products = sorted(products, key=lambda p: product_ids.index(p.id))  # pragma: no branch
-    products = products[:n_products]
     return products
 
 
