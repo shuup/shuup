@@ -8,12 +8,10 @@
 from jinja2.utils import contextfunction
 
 from shoop.core.models import (
-    AttributeVisibility, ProductAttribute, ProductCrossSell,
-    ProductCrossSellType
+    AttributeVisibility, Product, ProductAttribute, ProductCrossSell,
+    ProductCrossSellType, Supplier
 )
 from shoop.utils.text import force_ascii
-
-from . import general
 
 
 def get_visible_attributes(product):
@@ -53,6 +51,7 @@ def is_visible(context, product):
 def get_product_cross_sells(
         context, product, relation_type=ProductCrossSellType.RELATED,
         count=4, orderable_only=True):
+    request = context["request"]
     rtype = map_relation_type(relation_type)
     related_product_ids = list((
         ProductCrossSell.objects
@@ -60,12 +59,16 @@ def get_product_cross_sells(
         .order_by("weight")[:(count * 4)]).values_list("product2_id", flat=True)
     )
 
-    related_products = list(general.get_visible_products(
-        context,
-        count,
-        filter_dict={"id__in": related_product_ids},
-        orderable_only=orderable_only,
-    ))
+    related_products = []
+    for product in Product.objects.filter(id__in=related_product_ids):
+        shop_product = product.get_shop_instance(request.shop)
+        if orderable_only:
+            for supplier in Supplier.objects.all():
+                if shop_product.is_orderable(supplier, request.customer, shop_product.minimum_purchase_quantity):
+                    related_products.append(product)
+                    break
+        elif shop_product.is_visible(request.customer):
+            related_products.append(product)
 
     # Order related products by weight. Related product ids is in weight order.
     # If same related product is linked twice to product then lowest weight stands.

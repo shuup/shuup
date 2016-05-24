@@ -95,6 +95,7 @@ Addons
 Front
 ~~~~~
 
+- Make ``get_product_cross_sells`` faster
 - Make ``get_best_selling_products`` faster
 - Make ``get_visible_products`` faster
 - Fix bug with multiple service checkout phases
