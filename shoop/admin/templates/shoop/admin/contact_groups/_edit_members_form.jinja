@@ -1,7 +1,7 @@
 {% from "shoop/admin/macros/general.jinja" import content_block %}
 {% set members_formset = form["members"] %}
 
-{% call content_block(_("Members"), "fa-users") %}
+{% call content_block(_("Add Members"), "fa-users") %}
     {% for mf in members_formset.management_form %}{{ mf|safe }}{% endfor %}
     <table class="table table-striped">
         <tbody>
@@ -19,6 +19,8 @@
         </tbody>
     </table>
     {% if members_formset.extra %}
-        <a href="#" type="button" class="btn btn-lg btn-text" id="add-more"><i class="fa fa-plus"></i> {% trans %}Add more{% endtrans %}</a>
+        <a href="#" type="button" class="btn btn-lg btn-text" id="add-more">
+            <i class="fa fa-plus"></i> {% trans %}Add more{% endtrans %}
+        </a>
     {% endif %}
 {% endcall %}

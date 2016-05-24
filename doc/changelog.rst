@@ -64,6 +64,7 @@ Localization
 Admin
 ~~~~~
 
+- Hide group members from contact group edit view
 - Remove support for select pickers
 - Enable multiselect dropdown with Select2
 - Enable adding log entries to orders
