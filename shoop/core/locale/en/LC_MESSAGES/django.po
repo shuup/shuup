@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-25 22:35+0000\n"
+"POT-Creation-Date: 2016-05-25 21:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -486,6 +486,9 @@ msgstr ""
 msgid "default"
 msgstr ""
 
+msgid "modified on"
+msgstr ""
+
 msgid "order identifier"
 msgstr ""
 
@@ -505,6 +508,9 @@ msgid "email address"
 msgstr ""
 
 msgid "creating user"
+msgstr ""
+
+msgid "modifier user"
 msgstr ""
 
 msgid "payment status"
@@ -574,6 +580,9 @@ msgid "orders"
 msgstr ""
 
 msgid "Order marked as paid."
+msgstr ""
+
+msgid "Order marked as partially paid."
 msgstr ""
 
 #, python-format
@@ -807,9 +816,6 @@ msgid "product type"
 msgstr ""
 
 msgid "product types"
-msgstr ""
-
-msgid "modified on"
 msgstr ""
 
 msgid "mode"

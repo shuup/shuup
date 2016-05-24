@@ -113,6 +113,7 @@ class OrderSource(object):
         self._customer = None
         self._orderer = None
         self._creator = None
+        self._modified_by = None
         self.shipping_method_id = None
         self.payment_method_id = None
         self.customer_comment = u""
@@ -153,6 +154,7 @@ class OrderSource(object):
             customer=order.customer,
             orderer=order.orderer,
             creator=order.creator,
+            modified_by=order.modified_by,
             payment_method_id=order.payment_method_id,
             shipping_method_id=order.shipping_method_id,
             customer_comment=order.customer_comment,
@@ -205,6 +207,14 @@ class OrderSource(object):
     @creator.setter
     def creator(self, value):
         self._creator = value
+
+    @property
+    def modified_by(self):
+        return (self._modified_by or self.creator)
+
+    @modified_by.setter
+    def modified_by(self, value):
+        self._modified_by = value
 
     @property
     def shipping_method(self):

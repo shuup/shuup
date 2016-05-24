@@ -305,7 +305,7 @@ class JsonOrderCreator(object):
             self.add_error(exc)
             return
 
-    def update_order_from_state(self, state, order_to_update, creator=None, ip_address=None):
+    def update_order_from_state(self, state, order_to_update, modified_by=None):
         """
         Update an order from a state dict unserialized from JSON.
 
@@ -313,16 +313,12 @@ class JsonOrderCreator(object):
         :type state: dict
         :param order_to_update: Order object to edit
         :type order_to_update: shoop.core.models.Order
-        :param creator: Creator user
-        :type creator: django.contrib.auth.models.User|None
-        :param ip_address: Remote IP address (IPv4 or IPv6)
-        :type ip_address: str
         :return: The created order, or None if something failed along the way
         :rtype: Order|None
         """
-        source = self.create_source_from_state(
-            state, creator=creator, ip_address=ip_address, save=True)
-
+        source = self.create_source_from_state(state, save=True)
+        if source:
+            source.modified_by = modified_by
         modifier = OrderModifier()
         try:
             order = modifier.update_order_from_source(order_source=source, order=order_to_update)

@@ -290,8 +290,7 @@ class OrderEditView(CreateOrUpdateView):
             order = update_order_from_state(
                 state,
                 self.object,
-                creator=request.user,
-                ip_address=request.META.get("REMOTE_ADDR"),
+                modified_by=request.user
             )
             assert self.object.pk == order.pk
             messages.success(request, _("Order %(identifier)s updated.") % vars(order))

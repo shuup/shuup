@@ -22,7 +22,7 @@ from shoop.default_tax.models import TaxRule
 from shoop.testing.factories import (
     create_empty_order, create_product, create_random_company, create_random_person,
     get_default_payment_method, get_default_shipping_method, get_default_shop,
-    get_default_supplier, get_initial_order_status
+    get_default_supplier, get_initial_order_status, UserFactory
 )
 from shoop.testing.utils import apply_request_middleware
 from shoop_tests.utils import assert_contains, printable_gibberish
@@ -259,15 +259,17 @@ def test_company_contact_creation(rf, admin_user):
 
 
 def test_editing_existing_order(rf, admin_user):
+    modifier = UserFactory()
     get_initial_order_status()  # Needed for the API
     contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
     state = get_frontend_order_state(contact=contact)
     shop = get_default_shop()
-    order = create_empty_order(shop)
+    order = create_empty_order(shop=shop)
     order.save()
     assert order.lines.count() == 0
     assert order.pk is not None
-    request = get_frontend_request_for_command(state, "finalize", admin_user)
+    assert order.modified_by == order.creator
+    request = get_frontend_request_for_command(state, "finalize", modifier)
     response = OrderEditView.as_view()(request, pk=order.pk)
     assert_contains(response, "orderIdentifier")  # this checks for status codes as a side effect
     data = json.loads(response.content.decode("utf8"))
@@ -279,7 +281,6 @@ def test_editing_existing_order(rf, admin_user):
 
     # Check that the product content is updated based on state
     assert edited_order.lines.count() == 5
-    assert edited_order.creator == admin_user
     assert edited_order.customer == contact
 
     # Check that product line have right taxes
@@ -287,3 +288,8 @@ def test_editing_existing_order(rf, admin_user):
         if line.type == OrderLineType.PRODUCT:
             assert [line_tax.tax.code for line_tax in line.taxes.all()] == ["test_code"]
             assert line.taxful_price.amount > line.taxless_price.amount
+
+    # Make sure order modification information is correct
+    assert edited_order.modified_by != order.modified_by
+    assert edited_order.modified_by == modifier
+    assert edited_order.modified_on > order.modified_on
