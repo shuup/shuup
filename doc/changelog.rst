@@ -64,6 +64,7 @@ Localization
 Admin
 ~~~~~
 
+- Filter contacts with group in contact list view
 - Hide group members from contact group edit view
 - Remove support for select pickers
 - Enable multiselect dropdown with Select2
