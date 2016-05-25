@@ -135,7 +135,7 @@ class SearchResult(Resolvable):
         self.icon = icon
         self.category = category
         self.is_action = bool(is_action)
-        self.relevance = 0
+        self.relevance = relevance
 
     def to_json(self):
         return {
