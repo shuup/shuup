@@ -16,9 +16,21 @@ from ._creator import OrderProcessor
 
 class OrderModifier(OrderProcessor):
 
+    _PROTECTED_ATTRIBUTES = [
+        "shop",
+        "currency,"
+        "prices_include_tax",
+        "creator",
+        "created_on",
+        "ip_address"
+    ]
+
     @atomic
     def update_order_from_source(self, order_source, order):
         data = self.get_source_base_data(order_source)
+        for key in self._PROTECTED_ATTRIBUTES:
+            if key in data:
+                data.pop(key)
         data.update({
             "modified_by": real_user_or_none(order_source.modified_by),
             "modified_on": now()

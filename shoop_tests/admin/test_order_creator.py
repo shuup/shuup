@@ -265,6 +265,9 @@ def test_editing_existing_order(rf, admin_user):
     state = get_frontend_order_state(contact=contact)
     shop = get_default_shop()
     order = create_empty_order(shop=shop)
+    order.payment_data = {"payment_data": True}
+    order.shipping_data = {"shipping_data": True}
+    order.extra_data = {"external_id": "123"}
     order.save()
     assert order.lines.count() == 0
     assert order.pk is not None
@@ -293,3 +296,15 @@ def test_editing_existing_order(rf, admin_user):
     assert edited_order.modified_by != order.modified_by
     assert edited_order.modified_by == modifier
     assert edited_order.modified_on > order.modified_on
+
+    # Make sure all non handled attributes is preserved from original order
+    assert edited_order.creator == order.creator
+    assert edited_order.ip_address == order.ip_address
+    assert edited_order.orderer == order.orderer
+    assert edited_order.customer_comment == order.customer_comment
+    assert edited_order.marketing_permission == order.marketing_permission
+    assert edited_order.order_date == order.order_date
+    assert edited_order.status == order.status
+    assert edited_order.payment_data == order.payment_data
+    assert edited_order.shipping_data == order.shipping_data
+    assert edited_order.extra_data == order.extra_data

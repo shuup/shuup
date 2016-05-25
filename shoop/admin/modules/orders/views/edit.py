@@ -265,11 +265,13 @@ class OrderEditView(CreateOrUpdateView):
 
     @transaction.atomic
     def _handle_source_data(self, request):
+        self.object = self.get_object()
         state = json.loads(request.body.decode("utf-8"))["state"]
         source = create_source_from_state(
             state,
             creator=request.user,
             ip_address=request.META.get("REMOTE_ADDR"),
+            order_to_update=self.object if self.object.pk else None
         )
         # Calculate final lines for confirmation
         source.calculate_taxes(force_recalculate=True)

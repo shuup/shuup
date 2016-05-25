@@ -175,7 +175,7 @@ class JsonOrderCreator(object):
             customer = PersonContact(**fields)
         return customer
 
-    def _initialize_source_from_state(self, state, creator, ip_address, save):
+    def _initialize_source_from_state(self, state, creator, ip_address, save, order_to_update=None):
         shop_data = state.pop("shop", None).get("selected", {})
         shop = self.safe_get_first(Shop, pk=shop_data.pop("id", None))
         if not shop:
@@ -183,6 +183,8 @@ class JsonOrderCreator(object):
             return None
 
         source = OrderSource(shop=shop)
+        if order_to_update:
+            source.update_from_order(order_to_update)
 
         customer_data = state.pop("customer", None)
         billing_address_data = customer_data.pop("billingAddress", {})
@@ -192,13 +194,9 @@ class JsonOrderCreator(object):
             else customer_data.pop("shippingAddress", {}))
         is_company = customer_data.pop("isCompany", False)
         save_address = customer_data.pop("saveAddress", False)
-        customer = self.safe_get_first(Contact, pk=customer_data.get("id")) if customer_data else None
+        customer = self._get_customer(customer_data, billing_address_data, is_company, save)
         if not customer:
-            customer = self._create_contact_from_address(billing_address_data, is_company)
-            if not customer:
-                return
-            if save:
-                customer.save()
+            return
 
         billing_address = MutableAddress.from_data(billing_address_data)
         shipping_address = MutableAddress.from_data(shipping_address_data)
@@ -235,13 +233,22 @@ class JsonOrderCreator(object):
         )
         return source
 
+    def _get_customer(self, customer_data, billing_address_data, is_company, save):
+        customer = self.safe_get_first(Contact, pk=customer_data.get("id")) if customer_data else None
+        if not customer:
+            customer = self._create_contact_from_address(billing_address_data, is_company)
+            if not customer:
+                return
+            if save:
+                customer.save()
+        return customer
+
     def _postprocess_order(self, order, state):
         comment = (state.pop("comment", None) or "")
         if comment:
             order.add_log_entry(comment, kind=LogEntryKind.NOTE, user=order.creator)
 
-    def create_source_from_state(self, state, creator=None, ip_address=None,
-                                 save=False):
+    def create_source_from_state(self, state, creator=None, ip_address=None, save=False, order_to_update=None):
         """
         Create an order source from a state dict unserialized from JSON.
 
@@ -251,6 +258,8 @@ class JsonOrderCreator(object):
         :type creator: django.contrib.auth.models.User|None
         :param save: Flag whether order customer and addresses is saved to database
         :type save: boolean
+        :param order_to_update: Order object to edit
+        :type order_to_update: shoop.core.models.Order|None
         :return: The created order source, or None if something failed along the way
         :rtype: OrderSource|None
         """
@@ -262,7 +271,7 @@ class JsonOrderCreator(object):
 
         # First, initialize an OrderSource.
         source = self._initialize_source_from_state(
-            state, creator=creator, ip_address=ip_address, save=save)
+            state, creator=creator, ip_address=ip_address, save=save, order_to_update=order_to_update)
         if not source:
             return None
 
@@ -316,7 +325,7 @@ class JsonOrderCreator(object):
         :return: The created order, or None if something failed along the way
         :rtype: Order|None
         """
-        source = self.create_source_from_state(state, save=True)
+        source = self.create_source_from_state(state, order_to_update=order_to_update, save=True)
         if source:
             source.modified_by = modified_by
         modifier = OrderModifier()
