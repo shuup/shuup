@@ -38,6 +38,10 @@ class IrvineCaliforniaTaxation(TaxModule):
             ]
         return stacked_value_added_taxes(price, taxes)
 
+    def _add_proportional_taxes(self, context, tax_class_proportions, lines):
+        for line in lines:
+            line.taxes = self.get_taxed_price(context, line.price, None).taxes
+
 
 @pytest.mark.django_db
 def test_stacked_tax_taxless_price():

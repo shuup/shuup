@@ -5,6 +5,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import abc
+from itertools import chain
 
 import six
 from django.conf import settings
@@ -12,6 +13,7 @@ from django.conf import settings
 from shoop.apps.provides import load_module
 
 from ._context import TaxingContext
+from .utils import get_tax_class_proportions
 
 
 def get_tax_module():
@@ -87,10 +89,31 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
         :param lines: List of lines to add taxes for
         """
         context = self.get_context_from_order_source(source)
-        for line in lines:
+        lines_without_tax_class = []
+        taxed_lines = []
+        for (idx, line) in enumerate(lines):
             assert line.source == source
             if not line.parent_line_id:
-                line.taxes = self._get_line_taxes(context, line)
+                if line.tax_class is None:
+                    lines_without_tax_class.append(line)
+                else:
+                    line.taxes = self._get_line_taxes(context, line)
+                    taxed_lines.append(line)
+
+        if lines_without_tax_class:
+            tax_class_proportions = get_tax_class_proportions(taxed_lines)
+            self._add_proportional_taxes(
+                context, tax_class_proportions, lines_without_tax_class)
+
+    def _add_proportional_taxes(self, context, tax_class_proportions, lines):
+        if not tax_class_proportions:
+            return
+
+        for line in lines:
+            price = line.price
+            line.taxes = list(chain.from_iterable(
+                self.get_taxed_price(context, price * factor, tax_class).taxes
+                for (tax_class, factor) in tax_class_proportions))
 
     def _get_line_taxes(self, context, line):
         """
