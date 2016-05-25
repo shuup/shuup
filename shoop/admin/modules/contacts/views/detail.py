@@ -15,7 +15,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 
 from shoop.admin.toolbar import PostActionButton, Toolbar, URLActionButton
-from shoop.core.models import Contact, Order, PersonContact
+from shoop.core.models import CompanyContact, Contact, Order, PersonContact
 
 
 class ContactDetailToolbar(Toolbar):
@@ -48,7 +48,7 @@ class ContactDetailToolbar(Toolbar):
         ))
 
     def build_new_user_button(self):
-        if self.user:
+        if self.user or isinstance(self.contact, CompanyContact):
             return
         self.append(URLActionButton(
             url=reverse("shoop_admin:user.new") + "?contact_id=%s" % self.contact.pk,
