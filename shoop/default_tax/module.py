@@ -20,8 +20,8 @@ class DefaultTaxModule(taxing.TaxModule):
     identifier = "default_tax"
     name = _("Default Taxation")
 
-    def get_taxed_price_for(self, context, item, price):
-        return _calculate_taxes(price, context, item.tax_class)
+    def get_taxed_price(self, context, price, tax_class):
+        return _calculate_taxes(price, context, tax_class)
 
 
 def _calculate_taxes(price, taxing_context, tax_class):

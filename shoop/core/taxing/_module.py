@@ -103,14 +103,13 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
         taxed_price = self.get_taxed_price_for(context, line, line.price)
         return taxed_price.taxes
 
-    @abc.abstractmethod
     def get_taxed_price_for(self, context, item, price):
         """
         Get TaxedPrice for taxable item.
 
         Taxable items could be products (`~shoop.core.models.Product`),
-        shipping and payment methods (`~shoop.core.models.Method`), and
-        lines (`~shoop.core.order_creator.SourceLine`).
+        services (`~shoop.core.models.Service`), or lines
+        (`~shoop.core.order_creator.SourceLine`).
 
         :param context: Taxing context to calculate in
         :type context: TaxingContext
@@ -118,6 +117,22 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
         :type item: shoop.core.taxing.TaxableItem
         :param price: Price (taxful or taxless) to calculate taxes for
         :type price: shoop.core.pricing.Price
+
+        :rtype: shoop.core.taxing.TaxedPrice
+        """
+        return self.get_taxed_price(context, price, item.tax_class)
+
+    @abc.abstractmethod
+    def get_taxed_price(self, context, price, tax_class):
+        """
+        Get TaxedPrice for price and tax class.
+
+        :param context: Taxing context to calculate in
+        :type context: TaxingContext
+        :param price: Price (taxful or taxless) to calculate taxes for
+        :type price: shoop.core.pricing.Price
+        :param tax_class: Tax class of the item to get taxes for
+        :type tax_class: shoop.core.models.TaxClass
 
         :rtype: shoop.core.taxing.TaxedPrice
         """

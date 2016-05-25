@@ -26,7 +26,7 @@ TAX_MODULE_SPEC = [__name__ + ":IrvineCaliforniaTaxation"]
 class IrvineCaliforniaTaxation(TaxModule):
     identifier = "irvine"
 
-    def get_taxed_price_for(self, context, item, price):
+    def get_taxed_price(self, context, price, tax_class):
         taxes = []
         if context.postal_code == "92602":
             taxes = [
