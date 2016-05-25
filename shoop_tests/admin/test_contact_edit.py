@@ -8,8 +8,12 @@
 import pytest
 from django.contrib.auth import get_user_model
 
+from shoop.admin.forms.widgets import Select2Multiple
 from shoop.admin.modules.contacts.views.edit import ContactBaseForm
-from shoop.core.models import Gender, get_person_contact, PersonContact
+from shoop.core.models import (
+    CompanyContact, Gender, get_person_contact, PersonContact
+)
+from shoop.testing.factories import create_random_company
 from shoop_tests.utils import printable_gibberish
 
 
@@ -35,3 +39,17 @@ def test_contact_edit_form():
     assert contact.user == user
     assert get_person_contact(user) == contact
     assert contact.name == "%s %s" % (test_first_name, test_last_name)
+
+
+@pytest.mark.django_db
+def test_company_contact_edit_form():
+    company = create_random_company()
+    contact_base_form = ContactBaseForm(instance=company, data={
+        "name": company.name,
+    })
+    assert not contact_base_form.bind_user
+    assert contact_base_form.contact_class == CompanyContact
+    assert contact_base_form.is_valid(), contact_base_form.errors
+    contact = contact_base_form.save()
+    assert isinstance(contact, CompanyContact)
+    assert isinstance(contact_base_form.fields["members"].widget, Select2Multiple)

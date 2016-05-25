@@ -46,6 +46,31 @@
                 {% from "shoop/admin/macros/order_view.jinja" import order_view with context %}
                 {{ order_view(orders) }}
             {% endcall %}
+            {% if contact.members %}
+                {% call content_block(_("Members"), "fa-user") %}
+                    {% if not contact.members.count() %}
+                        {{ _("No members.") }}
+
+                    {% else %}
+                    <table class="table table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th>{{ _("Name") }}</th>
+                            <th>{{ _("Email") }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for member in contact.members.all() %}
+                            <tr>
+                                <td><a href="{{ shoop_admin.model_url(member) }}">{{ member.name }}</a></td>
+                                <td>{{ member.email }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    </table>
+                    {% endif %}
+                {% endcall %}
+            {% endif %}
         </div>
     {% endcall %}
 {% endblock %}

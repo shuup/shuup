@@ -68,6 +68,7 @@ Localization
 Admin
 ~~~~~
 
+- Allow contact adding and removing for company
 - Show companies in person contact edit page
 - Add target option to ``SearchResult``
 - Filter contacts with group in contact list view
