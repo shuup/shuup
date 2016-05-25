@@ -43,6 +43,8 @@ class LineTax(object):
 
     @property
     def rate(self):
+        if not self.base_amount:
+            return self.tax.rate
         return (self.amount / self.base_amount)
 
     @classmethod
