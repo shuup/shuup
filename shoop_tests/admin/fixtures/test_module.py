@@ -47,7 +47,7 @@ class ATestModule(AdminModule):
         return [MenuEntry(text="OK", url="/OK", category="Test", aliases=("spooky",))]
 
     def get_search_results(self, request, query):
-        return [SearchResult(text=query, url="/OK")]
+        return [SearchResult(text=query, url="/OK", target="_blank")]
 
     def get_notifications(self, request):
         return [Notification(text="OK")]

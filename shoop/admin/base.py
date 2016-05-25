@@ -129,13 +129,14 @@ class MenuEntry(Resolvable):
 
 
 class SearchResult(Resolvable):
-    def __init__(self, text, url, icon=None, category=None, is_action=False, relevance=100):
+    def __init__(self, text, url, icon=None, category=None, is_action=False, relevance=100, target=None):
         self.text = text
         self._url = url
         self.icon = icon
         self.category = category
         self.is_action = bool(is_action)
         self.relevance = relevance
+        self.target = target
 
     def to_json(self):
         return {
@@ -145,6 +146,7 @@ class SearchResult(Resolvable):
             "category": force_text(self.category),
             "isAction": self.is_action,
             "relevance": self.relevance,
+            "target": self.target,
         }
 
 
