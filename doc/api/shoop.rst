@@ -15,6 +15,7 @@ Subpackages
     shoop.customer_group_pricing
     shoop.default_tax
     shoop.front
+    shoop.guide
     shoop.notify
     shoop.order_printouts
     shoop.simple_cms

@@ -174,6 +174,12 @@ Customer Group Pricing
 - Rename Simple Pricing to Customer Group Pricing
 - Fix pricing for ``AnonymousContact``
 
+
+Guide
+~~~~~
+
+- Add guide app that integrates help documentation into admin search
+
 Discount Pricing
 ~~~~~~~~~~~~~~~~
 
