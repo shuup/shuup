@@ -82,6 +82,9 @@ class Priceful(object):
         """
         Amount of discount for the total quantity.
 
+        Normally positive or zero, but might also be negative if product
+        is being sold with higher price than its normal price.
+
         :rtype: shoop.core.pricing.Price
         """
         return (self.base_price - self.price)
