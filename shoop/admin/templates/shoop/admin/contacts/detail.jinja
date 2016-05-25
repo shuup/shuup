@@ -10,8 +10,10 @@
                     {{ info_row(_("Phone"), contact.phone, "tel:" ~ contact.phone) }}
                     {{ info_row(_("Email"), contact.email, "mailto:" ~ contact.email) }}
                     {% set groups = render_objects(contact_groups) %}
+                    {% set companies = render_objects(companies) %}
                     {{ info_row(_("Groups"), groups|default(_("No groups"), True)) }}
                     {{ info_row(_("Bound User"), contact.user, shoop_admin.model_url(contact.user) if contact.user else None) }}
+                    {{ info_row(_("Companies"), companies|default(_("No companies"), True)) }}
                     {{ info_row(_("Merchant Notes"), contact.merchant_notes) }}
                     </tbody>
                 </dl>

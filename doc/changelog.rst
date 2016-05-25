@@ -68,6 +68,7 @@ Localization
 Admin
 ~~~~~
 
+- Show companies in person contact edit page
 - Add target option to ``SearchResult``
 - Filter contacts with group in contact list view
 - Hide group members from contact group edit view
