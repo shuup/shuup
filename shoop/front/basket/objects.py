@@ -16,9 +16,7 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
-from shoop.core.models import (
-    OrderLineType, PaymentMethod, ShippingMethod, ShippingMode
-)
+from shoop.core.models import OrderLineType, PaymentMethod, ShippingMethod
 from shoop.core.order_creator import OrderSource, SourceLine
 from shoop.front.basket.storage import BasketCompatibilityError, get_storage
 from shoop.utils.numbers import parse_decimal_string
@@ -423,17 +421,3 @@ class BaseBasket(OrderSource):
             in PaymentMethod.objects.available(shop=self.shop, products=self.product_ids)
             if m.is_available_for(self)
         ]
-
-    def has_shippable_lines(self):
-        for line in self.get_lines():
-            if line.product:
-                if line.product.shipping_mode == ShippingMode.SHIPPED:
-                    return True
-
-    @property
-    def product_ids(self):
-        return set(l.product.id for l in self.get_lines() if l.product)
-
-    @property
-    def is_empty(self):
-        return not bool(self.get_lines())

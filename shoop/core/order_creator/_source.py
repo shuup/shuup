@@ -19,7 +19,7 @@ from six import iteritems
 from shoop.core import taxing
 from shoop.core.models import (
     AnonymousContact, OrderStatus, PaymentMethod, Product, ShippingMethod,
-    Shop, Supplier, TaxClass
+    ShippingMode, Shop, Supplier, TaxClass
 )
 from shoop.core.pricing import Price, Priceful, TaxfulPrice, TaxlessPrice
 from shoop.core.taxing import should_calculate_taxes_automatically, TaxableItem
@@ -232,6 +232,20 @@ class OrderSource(object):
     @status.setter
     def status(self, status):
         self.status_id = (status.id if status else None)
+
+    @property
+    def is_empty(self):
+        return not bool(self.get_lines())
+
+    @property
+    def product_ids(self):
+        return set(x.product.id for x in self.get_lines() if x.product)
+
+    def has_shippable_lines(self):
+        for line in self.get_lines():
+            if line.product:
+                if line.product.shipping_mode == ShippingMode.SHIPPED:
+                    return True
 
     @property
     def codes(self):
