@@ -13,11 +13,14 @@
 import pytest
 from django.core.exceptions import ValidationError
 from shoop.campaigns.models.basket_conditions import BasketTotalProductAmountCondition
-from shoop.campaigns.models.campaigns import Coupon, BasketCampaign
+from shoop.campaigns.models.campaigns import Coupon, CouponUsage, BasketCampaign
 from shoop.core.models import OrderLineType
+from shoop.core.order_creator import OrderCreator
 from shoop.front.basket import get_basket
-from shoop.testing.factories import create_random_person, get_default_shop, create_product, get_default_supplier, \
-    create_random_order
+from shoop.testing.factories import (
+    create_random_person, create_product, get_default_supplier,
+    create_random_order, get_initial_order_status, get_default_shop
+)
 from shoop_tests.campaigns import initialize_test
 from shoop_tests.utils import printable_gibberish
 
@@ -114,6 +117,7 @@ def test_no_two_same_codes_active():
 
 @pytest.mark.django_db
 def test_campaign_with_coupons(rf):
+    status = get_initial_order_status()
     request, shop, group = initialize_test(rf, False)
     basket = get_basket(request)
     supplier = get_default_supplier()
@@ -151,3 +155,8 @@ def test_campaign_with_coupons(rf):
     assert len(basket.get_final_lines()) == 3  # now basket has codes so they will be applied too
     assert OrderLineType.DISCOUNT in [l.type for l in basket.get_final_lines()]
 
+    basket.status = status
+    creator = OrderCreator(request)
+    order = creator.create_order(basket)
+    assert CouponUsage.objects.filter(order=order).count() == 1
+    assert CouponUsage.objects.filter(order=order, coupon__code=dc.code).count() == 1
