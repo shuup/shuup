@@ -12,6 +12,8 @@ Unreleased
 Core
 ~~~~
 
+- Fix bug: Taxes of child order lines are filled incorrectly
+- Fix bug: Order line parent lines are not linked
 - Add modified on for ``Order``
 - Add modified by for ``Order`` and ``OrderSource``
 - Add ``get_company_contact`` to ``shoop.core.models``
