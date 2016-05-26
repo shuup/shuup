@@ -70,6 +70,7 @@ def test_search(rf):
     with replace_modules([ATestModule]):
         assert any(sr.to_json()["text"] == "yes" for sr in get_search_results(request, "yes"))
         assert any(sr.url == "/OK" for sr in get_search_results(request, "spooky"))  # Test aliases
+        assert any(sr.target == "_blank" for sr in get_search_results(request, "yes"))
 
 
 def test_notifications(rf):

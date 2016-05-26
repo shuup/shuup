@@ -39,8 +39,12 @@ $(function() {
 
         const singleResultLi = function(result, linkClass) {
             const key = (showShortcuts ? getShortcut(result.text) : null);
+            var attrs = {href: result.url, accesskey: key}
+            if(result.target){
+                attrs["target"] = result.target;
+            }
             return m("li", {key: result.url},
-                m(linkClass, {href: result.url, accesskey: key}, [
+                m(linkClass, attrs, [
                     (result.icon ? m("i." + result.icon) : null),
                     result.text,
                     (key ? m("span.key", key.toUpperCase()) : null)
