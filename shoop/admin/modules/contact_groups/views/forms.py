@@ -108,14 +108,6 @@ class ContactGroupMembersFormSet(BaseFormSet):
         kwargs.pop("empty_permitted", None)
         self.request = kwargs.pop("request", None)
         self.contact_group = kwargs.pop("contact_group")
-        if not self.contact_group.pk:
-            kwargs["initial"] = {}
-        else:
-            kwargs["initial"] = [
-                {"member": member}
-                for member
-                in self.contact_group.members.all()
-                ]
         super(ContactGroupMembersFormSet, self).__init__(**kwargs)
 
     def _construct_form(self, i, **kwargs):

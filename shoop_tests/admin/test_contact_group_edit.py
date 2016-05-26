@@ -41,14 +41,6 @@ def test_contact_group_members_formset(rf):
     formset.save()
     assert contact_group.members.filter(pk=person.pk).exists()
 
-    # Remove a member
-    formset = FormSet(contact_group=contact_group)
-    assert formset.initial_form_count() == 1
-    data = dict(get_form_data(formset, True), **{"form-0-DELETE": "1"})
-    formset = FormSet(contact_group=contact_group, data=data)
-    formset.save()
-    assert not contact_group.members.exists()
-
 
 def check_for_delete(request, contact_group, can_delete):
     delete_url = reverse("shoop_admin:contact-group.delete", kwargs={"pk": contact_group.pk})
