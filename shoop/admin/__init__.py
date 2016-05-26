@@ -47,6 +47,11 @@ class ShoopAdminAppConfig(AppConfig):
         ],
         "service_behavior_component_form_part": [
             "shoop.admin.modules.services.weight_based_pricing.WeightBasedPricingFormPart"
+        ],
+        "admin_order_section": [
+            "shoop.admin.modules.orders.sections:ContentsOrderSection",
+            "shoop.admin.modules.orders.sections:PaymentOrderSection",
+            "shoop.admin.modules.orders.sections:LogEntriesOrderSection",
         ]
     }
 

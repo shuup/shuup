@@ -185,3 +185,47 @@ class Activity(Resolvable):
         self.datetime = datetime
         self.text = text
         self._url = url
+
+
+class OrderSection(object):
+    """
+    Subclass this and add the class to the `admin_order_section` provide list
+    to show a custom section on the order detail on admin.
+
+    `identifier` must be unique
+    `name` the section caption
+    `icon` the section icon
+    `template` the section template file
+    `extra_js` the section extra javascript template file,
+               set a file which contains js code inside a <script> tag
+    `order` the order
+    """
+    identifier = ""
+    name = ""
+    icon = ""
+    template = ""
+    extra_js = ""
+    order = 0
+
+    @staticmethod
+    def visible_for_order(order):
+        """
+        Returns whether this sections must be visible while editing the `order`
+        :type order: shoop.core.models.Order
+        :return whether this section must be shown in order section list
+        :rtype: bool
+        """
+        raise False
+
+    @staticmethod
+    def get_context_data(order):
+        """
+        Returns additional information to be used in the template
+
+        To fetch this data in the template, just access it through `OrderSection_identifier.data`
+
+        :type order: shoop.core.models.Order
+        :return additional context data
+        :rtype: object|None
+        """
+        return None

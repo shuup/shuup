@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.contrib.auth import get_user_model
 from django.http.response import JsonResponse
 from django.utils.encoding import force_text
 from django.views.generic import View
@@ -32,5 +33,5 @@ class NewLogEntryView(View):
             "message": entry.message,
             "kind": force_text(entry.kind.label),
             "created_on": get_locally_formatted_datetime(entry.created_on),
-            "user": force_text(entry.user.username),
+            "user": force_text(getattr(entry.user, get_user_model().USERNAME_FIELD)),
         })
