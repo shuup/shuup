@@ -58,7 +58,8 @@ class SalesRangesFormPart(FormPart):
             )
 
     def form_valid(self, form):
-        for shop in self.shops:
-            name = self._get_form_name(shop)
-            if name in form.forms:
-                form.forms[name].save()
+        form_names = [self._get_form_name(shop) for shop in self.shops]
+        forms = [form.forms[name] for name in form_names if name in form.forms]
+        for form in forms:
+            if form.changed_data:
+                form.save()

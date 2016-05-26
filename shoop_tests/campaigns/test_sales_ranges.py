@@ -222,18 +222,29 @@ def test_sales_ranges_update_after_range_update():
     shop = get_default_shop()
     supplier = get_default_supplier()
     person = create_random_person()
-    initial_group_count = person.groups.count()
-
-    payment = create_fully_paid_order(shop, person, supplier, "sku1", 50)
+    company = create_random_company()
+    create_fully_paid_order(shop, person, supplier, "sku1", 50)
+    create_fully_paid_order(shop, company, supplier, "sku2", 100)
     assert get_total_sales(shop, person) == 50
+    assert get_total_sales(shop, company) == 100
 
-    sales_range = create_sales_range("gold", shop, 10, 100)
-
-    assert person.groups.count() == initial_group_count + 1
+    sales_range = create_sales_range("gold", shop, 10, 90)
     assert sales_range.group in person.groups.all()
+    assert sales_range.group not in company.groups.all()
 
-    sales_range.max_value = 40
+    sales_range.max_value = None
     sales_range.save()
+    assert sales_range.group in person.groups.all()
+    assert sales_range.group in company.groups.all()
 
-    assert person.groups.count() == initial_group_count
-    assert sales_range.group not in person.groups.all()
+    # Make sure customers is actually removed when range changes
+    sales_range.max_value = 60
+    sales_range.save()
+    assert sales_range.group in person.groups.all()
+    assert sales_range.group not in company.groups.all()
+
+    # Inactive ranges shouldn't update group members
+    sales_range.min_value = None
+    sales_range.save()
+    assert sales_range.group in person.groups.all()
+    assert sales_range.group not in company.groups.all()

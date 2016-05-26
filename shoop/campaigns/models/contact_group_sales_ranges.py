@@ -11,9 +11,9 @@ from django.db import models
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
-from shoop.campaigns.utils import assign_to_group_based_on_sales
+from shoop.campaigns.utils import get_contacts_in_sales_range
 from shoop.core.fields import MoneyValueField
-from shoop.core.models import Contact, ContactGroup, Shop
+from shoop.core.models import ContactGroup, Shop
 from shoop.core.models._contacts import PROTECTED_CONTACT_GROUP_IDENTIFIERS
 
 
@@ -41,10 +41,14 @@ class ContactGroupSalesRange(models.Model):
     def save(self, *args, **kwargs):
         self.clean()
         super(ContactGroupSalesRange, self).save(*args, **kwargs)
-        for customer in Contact.objects.all():
-            assign_to_group_based_on_sales(ContactGroupSalesRange, self.shop, customer, sales_range=self)
+        if self.is_active():  # Update group members only if the range is still active
+            contact_ids = get_contacts_in_sales_range(self.shop, self.min_value, self.max_value)
+            self.group.members = contact_ids
 
     def clean(self):
         super(ContactGroupSalesRange, self).clean()
         if self.group.identifier in PROTECTED_CONTACT_GROUP_IDENTIFIERS:
             raise ValidationError(_("Can not add sales limits for default contact groups"))
+
+    def is_active(self):
+        return bool(self.min_value is not None and (self.max_value is None or self.max_value > 0))
