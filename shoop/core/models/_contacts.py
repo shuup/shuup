@@ -360,3 +360,20 @@ def get_person_contact(user):
         'email': getattr(user, 'email', ''),
     }
     return PersonContact.objects.get_or_create(user=user, defaults=defaults)[0]
+
+
+def get_company_contact(user):
+    """
+    If user has associated PersonContact which is member of
+    CompanyContact, return CompanyContact. Otherwise, return None.
+
+    :param user: User object (or None) to get contact for
+    :type user: django.contrib.auth.models.User|None
+    :return: CompanyContact (or none) of which user's PersonContact
+        is a member
+    :rtype: CompanyContact|None
+    """
+    if not user or user.is_anonymous():
+        return None
+    contact = get_person_contact(user)
+    return contact.company_memberships.first()

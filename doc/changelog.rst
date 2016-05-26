@@ -196,6 +196,7 @@ Released on 2016-01-21 11:15 +0200.
 Core
 ~~~~
 
+- Add ``get_company_contact`` to ``shoop.core.models``
 - Document Shoop tax system
 - API and documentation clean-up
 - Remove ``AddressManager``

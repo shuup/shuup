@@ -12,10 +12,11 @@ from django.contrib.auth.models import AnonymousUser
 from django.db.models import QuerySet
 
 from shoop.core.models import (
-    AnonymousContact, CompanyContact, ContactGroup, get_person_contact,
-    PersonContact
+    AnonymousContact, CompanyContact, ContactGroup, get_company_contact,
+    get_person_contact, PersonContact
 )
 from shoop.core.pricing import PriceDisplayOptions
+from shoop.testing.factories import create_random_company
 from shoop_tests.utils.fixtures import regular_user
 
 
@@ -244,3 +245,14 @@ def test_contact_group_price_display_for_contact(regular_user):
     default_options = person.get_price_display_options()
     assert default_options.include_taxes
     assert not default_options.hide_prices
+
+
+@pytest.mark.django_db
+def test_get_company_contact(regular_user):
+    person_contact = get_person_contact(regular_user)
+    assert person_contact != AnonymousContact()
+    assert not get_company_contact(regular_user)
+
+    company_contact = create_random_company()
+    company_contact.members.add(person_contact)
+    assert get_company_contact(regular_user) == company_contact
