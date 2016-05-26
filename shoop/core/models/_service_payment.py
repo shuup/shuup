@@ -39,9 +39,9 @@ class PaymentMethod(Service):
     def can_delete(self):
         return not Order.objects.filter(payment_method=self).exists()
 
-    def get_payment_process_response(self, order, urls):
+    def get_payment_process_response(self, order, urls, request):
         self._make_sure_is_usable()
-        return self.provider.get_payment_process_response(self, order, urls)
+        return self.provider.get_payment_process_response(self, order, urls, request)
 
     def process_payment_return_request(self, order, request):
         self._make_sure_is_usable()
@@ -73,13 +73,14 @@ class PaymentProcessor(ServiceProvider):
         PaymentMethod.objects.filter(payment_processor=self).update(**{"enabled": False})
         super(PaymentProcessor, self).delete(*args, **kwargs)
 
-    def get_payment_process_response(self, service, order, urls):
+    def get_payment_process_response(self, service, order, urls, request):
         """
         Get payment process response for given order.
 
         :type service: shoop.core.models.PaymentMethod
         :type order: shoop.core.models.Order
         :type urls: PaymentUrls
+        :type request: django.http.HttpRequest
         :rtype: django.http.HttpResponse|None
         """
         return HttpResponseRedirect(urls.return_url)

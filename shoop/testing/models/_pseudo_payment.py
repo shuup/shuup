@@ -67,7 +67,7 @@ class PseudoPaymentProcessor(PaymentProcessor):
     def compute_pseudo_mac(self, order):
         return hmac.new(key=b"PseudoPayment", msg=order.key.encode("utf-8")).hexdigest()
 
-    def get_payment_process_response(self, service, order, urls):
+    def get_payment_process_response(self, service, order, urls, request):
         transform = self._get_text_transformer(service)
         mac = self.compute_pseudo_mac(order)
         url_list = [
