@@ -12,9 +12,13 @@ from django.utils import timezone
 
 import shoop.core.models
 from shoop.admin.urls import login
+from shoop.core.models import (
+    AnonymousContact, CompanyContact, Contact, get_company_contact,
+    get_person_contact, PersonContact, Shop
+)
 from shoop.front.middleware import ShoopFrontMiddleware
 from shoop.front.views.index import IndexView
-from shoop.testing.factories import get_default_shop
+from shoop.testing.factories import create_random_company, get_default_shop
 from shoop.testing.utils import apply_request_middleware
 from shoop_tests.utils.fixtures import regular_user
 
@@ -30,9 +34,9 @@ def get_unprocessed_request():
 
 
 def check_request_attribute_basics(request):
-    assert isinstance(request.shop, shoop.core.models.Shop)
-    assert isinstance(request.person, shoop.core.models.Contact)
-    assert isinstance(request.customer, shoop.core.models.Contact)
+    assert isinstance(request.shop, Shop)
+    assert isinstance(request.person, Contact)
+    assert isinstance(request.customer, Contact)
     assert isinstance(request.basket, shoop.front.basket.objects.BaseBasket)
 
 
@@ -50,8 +54,8 @@ def test_with_anonymous_user():
 
     check_request_attribute_basics(request)
 
-    assert isinstance(request.person, shoop.core.models.AnonymousContact)
-    assert isinstance(request.customer, shoop.core.models.AnonymousContact)
+    assert isinstance(request.person, AnonymousContact)
+    assert isinstance(request.customer, AnonymousContact)
     assert request.person == request.customer
 
 
@@ -67,9 +71,33 @@ def test_with_logged_in_user(regular_user):
 
     check_request_attribute_basics(request)
 
-    assert isinstance(request.person, shoop.core.models.PersonContact)
-    assert isinstance(request.customer, shoop.core.models.PersonContact)
+    assert isinstance(request.person, PersonContact)
+    assert isinstance(request.customer, PersonContact)
     assert request.person == request.customer
+
+
+@pytest.mark.django_db
+def test_customer_company_member(regular_user):
+    get_default_shop()  # Create a shop
+
+    mw = ShoopFrontMiddleware()
+    request = get_unprocessed_request()
+    request.user = regular_user
+    person = get_person_contact(regular_user)
+    company = create_random_company()
+    company.members.add(person)
+
+    assert get_company_contact(regular_user) == company
+
+    mw.process_request(request)
+
+    check_request_attribute_basics(request)
+
+    assert isinstance(request.person, PersonContact)
+    assert isinstance(request.customer, CompanyContact)
+
+    company = get_company_contact(request.user)
+    assert company and (company == request.customer)
 
 
 @pytest.mark.django_db
@@ -82,7 +110,7 @@ def test_timezone_setting(regular_user):
 
     some_tz = ('US/Hawaii' if settings.TIME_ZONE == 'UTC' else 'UTC')
 
-    person = shoop.core.models.get_person_contact(regular_user)
+    person = get_person_contact(regular_user)
     person.timezone = some_tz
     person.save()
 
@@ -99,11 +127,11 @@ def test_intra_request_user_changing(rf, regular_user):
     mw = ShoopFrontMiddleware()
     request = apply_request_middleware(rf.get("/"), user=regular_user)
     mw.process_request(request)
-    assert request.person == shoop.core.models.get_person_contact(regular_user)
+    assert request.person == get_person_contact(regular_user)
     logout(request)
     assert request.user == AnonymousUser()
-    assert request.person == shoop.core.models.AnonymousContact()
-    assert request.customer == shoop.core.models.AnonymousContact()
+    assert request.person == AnonymousContact()
+    assert request.customer == AnonymousContact()
 
 
 @pytest.mark.django_db

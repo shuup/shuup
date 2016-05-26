@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add ``get_company_contact`` to ``shoop.core.models``
 - Implement taxing of lines without tax class
 - Add new abstract method ``get_taxed_price`` to ``TaxModule``
 - Add ``ShopProduct.is_visible``
@@ -101,6 +102,7 @@ Addons
 Front
 ~~~~~
 
+- Log-in as company if user is a member of a company
 - Make ``get_product_cross_sells`` faster
 - Make ``get_best_selling_products`` faster
 - Make ``get_visible_products`` faster
