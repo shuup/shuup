@@ -237,6 +237,11 @@ class ShopProduct(MoneyPropped, models.Model):
             return False
         return True
 
+    def is_visible(self, customer):
+        for message in self.get_visibility_errors(customer=customer):
+            return False
+        return True
+
     @property
     def quantity_step(self):
         """

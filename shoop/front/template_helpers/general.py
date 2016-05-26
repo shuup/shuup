@@ -6,7 +6,6 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.core.paginator import Paginator
-from django.db.models import Q
 from django.utils.translation import get_language
 from jinja2.utils import contextfunction
 from mptt.templatetags.mptt_tags import cache_tree_children
@@ -30,28 +29,33 @@ def get_visible_products(context, n_products, ordering=None, filter_dict=None, o
     :type filter_dict: dict[str, object]
     :param orderable_only: Boolean limiting results to orderable products
     :type orderable_only: bool
-    :rtype: shoop.core.models._products.ProductQuerySet
+    :rtype: list[shoop.core.models.Product]
     """
     request = context["request"]
     customer = request.customer
     shop = request.shop
+    if not filter_dict:
+        filter_dict = {}
     products_qs = Product.objects.list_visible(
         shop=shop,
         customer=customer,
         language=get_language(),
-    )
-
+    ).filter(**filter_dict)
     if ordering:
         products_qs = products_qs.order_by(ordering)
-    if not filter_dict:
-        filter_dict = {}
-    supplier_filter = Q()
-    if orderable_only:
-        for supplier in Supplier.objects.all():
-            supplier_filter |= Q(shop_products__pk__in=supplier.get_suppliable_products(shop, customer))
-        products_qs = products_qs.filter(supplier_filter)
 
-    return products_qs.filter(**filter_dict)[:n_products]
+    if orderable_only:
+        products = []
+        for product in products_qs[:(n_products * 4)]:
+            if len(products) == n_products:
+                break
+            shop_product = product.get_shop_instance(shop)
+            for supplier in Supplier.objects.all():
+                if shop_product.is_orderable(supplier, customer, shop_product.minimum_purchase_quantity):
+                    products.append(product)
+                    break
+        return products
+    return products_qs[:n_products]
 
 
 @contextfunction
@@ -62,15 +66,19 @@ def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_
         cutoff_days=cutoff_days
     )
     product_ids = [d[0] for d in data][:n_products]
-    products = get_visible_products(
-        context,
-        n_products,
-        filter_dict={"id__in": product_ids},
-        orderable_only=orderable_only,
-    )
+
+    products = []
+    for product in Product.objects.filter(id__in=product_ids):
+        shop_product = product.get_shop_instance(request.shop)
+        if orderable_only:
+            for supplier in Supplier.objects.all():
+                if shop_product.is_orderable(supplier, request.customer, shop_product.minimum_purchase_quantity):
+                    products.append(product)
+                    break
+        elif shop_product.is_visible(request.customer):
+            products.append(product)
     products = cache_product_things(request, products)
     products = sorted(products, key=lambda p: product_ids.index(p.id))  # pragma: no branch
-    products = products[:n_products]
     return products
 
 

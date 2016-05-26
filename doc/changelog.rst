@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add ``ShopProduct.is_visible``
 - Add ``Order.can_edit``
 - Update shipping status correctly in ``Order.create_shipment``
 - Add ``OrderModifier`` for basic ``Order`` modifying from ``OrderSource``
@@ -96,6 +97,9 @@ Addons
 Front
 ~~~~~
 
+- Make ``get_product_cross_sells`` faster
+- Make ``get_best_selling_products`` faster
+- Make ``get_visible_products`` faster
 - Fix bug with multiple service checkout phases
 - Update UI for package products
 - Add SHOOP_FRONT_ADDRESS_FIELD_PROPERTIES setting
