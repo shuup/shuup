@@ -168,6 +168,7 @@ class OrderSource(object):
             payment_data=order.payment_data,
             shipping_data=order.shipping_data,
             extra_data=order.extra_data,
+            codes=order.codes
         )
 
     total_price = _PriceSum("price")
@@ -260,6 +261,11 @@ class OrderSource(object):
     @property
     def codes(self):
         return list(self._codes)
+
+    @codes.setter
+    def codes(self, value):
+        for code in value:
+            self.add_code(code)
 
     def add_code(self, code):
         """

@@ -286,6 +286,9 @@ class JsonOrderCreator(object):
         if not self.is_valid:
             return None
 
+        if order_to_update:
+            for code in order_to_update.codes:
+                source.add_code(code)
         return source
 
     def create_order_from_state(self, state, creator=None, ip_address=None):

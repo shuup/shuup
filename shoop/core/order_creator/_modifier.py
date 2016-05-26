@@ -12,6 +12,7 @@ from shoop.core.models import Order
 from shoop.core.utils.users import real_user_or_none
 
 from ._creator import OrderProcessor
+from ._source_modifier import get_order_source_modifier_modules
 
 
 class OrderModifier(OrderProcessor):
@@ -38,6 +39,8 @@ class OrderModifier(OrderProcessor):
         Order.objects.filter(pk=order.pk).update(**data)
 
         order = Order.objects.get(pk=order.pk)
+        for module in get_order_source_modifier_modules():
+            module.clear_codes(order)
 
         for line in order.lines.all():
             line.taxes.all().delete()  # Delete all tax lines before OrderLine's

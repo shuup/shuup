@@ -9,7 +9,9 @@ import random
 
 from django.utils.translation import ugettext_lazy as _
 
-from shoop.campaigns.models.campaigns import BasketCampaign, CatalogCampaign
+from shoop.campaigns.models.campaigns import (
+    BasketCampaign, CatalogCampaign, CouponUsage
+)
 from shoop.core.models import OrderLineType
 from shoop.core.order_creator import OrderSourceModifierModule
 from shoop.core.pricing import DiscountModule
@@ -111,3 +113,6 @@ class BasketCampaignModule(OrderSourceModifierModule):
         campaigns = BasketCampaign.objects.filter(active=True, coupon__code=code, coupon__active=True)
         for campaign in campaigns:
             campaign.coupon.use(order)
+
+    def clear_codes(self, order):
+        CouponUsage.objects.filter(order=order).delete()

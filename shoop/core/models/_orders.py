@@ -11,6 +11,7 @@ import datetime
 from collections import defaultdict
 from decimal import Decimal
 
+import six
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db import models
@@ -260,6 +261,7 @@ class Order(MoneyPropped, models.Model):
     require_verification = models.BooleanField(default=False, verbose_name=_('requires verification'))
     all_verified = models.BooleanField(default=False, verbose_name=_('all lines verified'))
     marketing_permission = models.BooleanField(default=True, verbose_name=_('marketing permission'))
+    _codes = JSONField(blank=True, null=True, verbose_name=_('codes'))
 
     common_select_related = ("billing_address",)
     objects = OrderQuerySet.as_manager()
@@ -278,6 +280,19 @@ class Order(MoneyPropped, models.Model):
             return "Order %s (%s, %s)" % (self.identifier, self.shop.name, name)
         else:
             return "Order %s (%s)" % (self.identifier, name)
+
+    @property
+    def codes(self):
+        return list(self._codes or [])
+
+    @codes.setter
+    def codes(self, value):
+        codes = []
+        for code in value:
+            if not isinstance(code, six.text_type):
+                raise TypeError('codes must be a list of strings')
+            codes.append(code)
+        self._codes = codes
 
     def cache_prices(self):
         taxful_total = TaxfulPrice(0, self.currency)
