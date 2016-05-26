@@ -5,6 +5,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import abc
+from itertools import chain
 
 import six
 from django.conf import settings
@@ -12,6 +13,7 @@ from django.conf import settings
 from shoop.apps.provides import load_module
 
 from ._context import TaxingContext
+from .utils import get_tax_class_proportions
 
 
 def get_tax_module():
@@ -87,10 +89,31 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
         :param lines: List of lines to add taxes for
         """
         context = self.get_context_from_order_source(source)
-        for line in lines:
+        lines_without_tax_class = []
+        taxed_lines = []
+        for (idx, line) in enumerate(lines):
             assert line.source == source
             if not line.parent_line_id:
-                line.taxes = self._get_line_taxes(context, line)
+                if line.tax_class is None:
+                    lines_without_tax_class.append(line)
+                else:
+                    line.taxes = self._get_line_taxes(context, line)
+                    taxed_lines.append(line)
+
+        if lines_without_tax_class:
+            tax_class_proportions = get_tax_class_proportions(taxed_lines)
+            self._add_proportional_taxes(
+                context, tax_class_proportions, lines_without_tax_class)
+
+    def _add_proportional_taxes(self, context, tax_class_proportions, lines):
+        if not tax_class_proportions:
+            return
+
+        for line in lines:
+            price = line.price
+            line.taxes = list(chain.from_iterable(
+                self.get_taxed_price(context, price * factor, tax_class).taxes
+                for (tax_class, factor) in tax_class_proportions))
 
     def _get_line_taxes(self, context, line):
         """
@@ -103,14 +126,13 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
         taxed_price = self.get_taxed_price_for(context, line, line.price)
         return taxed_price.taxes
 
-    @abc.abstractmethod
     def get_taxed_price_for(self, context, item, price):
         """
         Get TaxedPrice for taxable item.
 
         Taxable items could be products (`~shoop.core.models.Product`),
-        shipping and payment methods (`~shoop.core.models.Method`), and
-        lines (`~shoop.core.order_creator.SourceLine`).
+        services (`~shoop.core.models.Service`), or lines
+        (`~shoop.core.order_creator.SourceLine`).
 
         :param context: Taxing context to calculate in
         :type context: TaxingContext
@@ -118,6 +140,22 @@ class TaxModule(six.with_metaclass(abc.ABCMeta)):
         :type item: shoop.core.taxing.TaxableItem
         :param price: Price (taxful or taxless) to calculate taxes for
         :type price: shoop.core.pricing.Price
+
+        :rtype: shoop.core.taxing.TaxedPrice
+        """
+        return self.get_taxed_price(context, price, item.tax_class)
+
+    @abc.abstractmethod
+    def get_taxed_price(self, context, price, tax_class):
+        """
+        Get TaxedPrice for price and tax class.
+
+        :param context: Taxing context to calculate in
+        :type context: TaxingContext
+        :param price: Price (taxful or taxless) to calculate taxes for
+        :type price: shoop.core.pricing.Price
+        :param tax_class: Tax class of the item to get taxes for
+        :type tax_class: shoop.core.models.TaxClass
 
         :rtype: shoop.core.taxing.TaxedPrice
         """

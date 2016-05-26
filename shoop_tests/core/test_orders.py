@@ -151,14 +151,14 @@ def test_basic_order():
 
     summary = order.get_tax_summary()
     assert len(summary) == 2
-    assert summary[0].tax_id is None
-    assert summary[0].tax_code == ''
-    assert summary[0].tax_amount == Money(0, currency)
-    assert summary[0].tax_rate == 0
-    assert summary[1].tax_rate * 100 == 50
-    assert summary[1].based_on == Money(100, currency)
-    assert summary[1].tax_amount == Money(50, currency)
-    assert summary[1].taxful == summary[1].based_on + summary[1].tax_amount
+    assert summary[0].tax_rate * 100 == 50
+    assert summary[0].based_on == Money(100, currency)
+    assert summary[0].tax_amount == Money(50, currency)
+    assert summary[0].taxful == summary[0].based_on + summary[0].tax_amount
+    assert summary[1].tax_id is None
+    assert summary[1].tax_code == ''
+    assert summary[1].tax_amount == Money(0, currency)
+    assert summary[1].tax_rate == 0
 
 
 @pytest.mark.django_db

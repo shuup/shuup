@@ -37,7 +37,7 @@ class DummyTaxModule(TaxModule):
     calculations_done = 0
 
     identifier = "dummy_tax_module"
-    def get_taxed_price_for(self, context, item, price):
+    def get_taxed_price(self, context, price, tax_class):
         if price.includes_tax:
             taxful = price
             taxless = TaxlessPrice(price.amount / Decimal('1.2'))

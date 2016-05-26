@@ -45,7 +45,7 @@ class TaxSummary(list):
                     tax_id=None, tax_code='', tax_name=_("Untaxed"),
                     tax_rate=Decimal(0), based_on=untaxed.amount,
                     tax_amount=zero_amount))
-        return cls(sorted(lines, key=(lambda x: (x.tax_rate or 0))))
+        return cls(sorted(lines, key=TaxSummaryLine.get_sort_key))
 
     def __repr__(self):
         super_repr = super(TaxSummary, self).__repr__()
@@ -68,6 +68,9 @@ class TaxSummaryLine(object):
         self.based_on = based_on
         self.tax_amount = tax_amount
         self.taxful = based_on + tax_amount
+
+    def get_sort_key(self):
+        return (-self.tax_rate or 0, self.tax_name)
 
     def __repr__(self):
         return '<{} {}/{}/{:.3%} based_on={} tax_amount={})>'.format(

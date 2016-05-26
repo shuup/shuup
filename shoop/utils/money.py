@@ -45,6 +45,9 @@ class Money(numbers.UnitedDecimal):
         cls_name = type(self).__name__
         return "%s('%s', %r)" % (cls_name, self.value, self.currency)
 
+    def __reduce_ex__(self, protocol):
+        return (type(self), (self.value, self.currency))
+
     def __str__(self):
         return "%s %s" % (self.value, self.currency)
 

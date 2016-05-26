@@ -12,6 +12,8 @@ Unreleased
 Core
 ~~~~
 
+- Implement taxing of lines without tax class
+- Add new abstract method ``get_taxed_price`` to ``TaxModule``
 - Add ``ShopProduct.is_visible``
 - Add ``Order.can_edit``
 - Update shipping status correctly in ``Order.create_shipment``
