@@ -14,4 +14,6 @@ urlpatterns = patterns(
     '',
     url(r'^customer/$', login_required(views.CustomerEditView.as_view()),
         name='customer_edit'),
+    url(r'^company/$', login_required(views.CompanyEditView.as_view()),
+        name='company_edit'),
 )

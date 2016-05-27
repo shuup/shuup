@@ -79,7 +79,9 @@ class ShoopFrontMiddleware(object):
         request.person = get_person_contact(request.user)
 
     def _set_customer(self, request):
-        request.customer = (get_company_contact(request.user) or request.person)
+        company = get_company_contact(request.user)
+        request.customer = (company or request.person)
+        request.is_company_member = bool(company)
 
     def _set_basket(self, request):
         request.basket = get_basket(request)

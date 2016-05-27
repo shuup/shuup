@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-19 08:57+0000\n"
+"POT-Creation-Date: 2016-05-27 23:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -117,10 +117,6 @@ msgid "Confirmation"
 msgstr ""
 
 msgid "Empty Basket"
-msgstr ""
-
-#, python-brace-format
-msgid "{name} ({price})"
 msgstr ""
 
 msgid "shipping method"
