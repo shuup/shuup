@@ -35,10 +35,6 @@ def test_codes_type_conversion():
 
     assert source.codes == []
 
-    with pytest.raises(AttributeError):
-        source.codes = "test"
-    assert source.codes == []
-
     source.add_code("t")
     source.add_code("e")
     source.add_code("s")

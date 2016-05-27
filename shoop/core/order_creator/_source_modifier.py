@@ -42,3 +42,6 @@ class OrderSourceModifierModule(object):
 
     def use_code(self, order, code):
         pass
+
+    def clear_codes(self, order):
+        pass

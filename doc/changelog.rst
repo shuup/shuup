@@ -12,6 +12,8 @@ Unreleased
 Core
 ~~~~
 
+- Add modified on for ``Order``
+- Add modified by for ``Order`` and ``OrderSource``
 - Add ``get_company_contact`` to ``shoop.core.models``
 - Implement taxing of lines without tax class
 - Add new abstract method ``get_taxed_price`` to ``TaxModule``

@@ -98,9 +98,10 @@ def test_shop_change(rf, admin_user):
     source.shop = shop
 
     modifier = OrderModifier()
-
-    with pytest.raises(ValidationError):
-        modifier.update_order_from_source(source, order)
+    assert order.shop != source.shop
+    # Changing shop should be blocked. Source shop is just ignored.
+    edited_order = modifier.update_order_from_source(source, order)
+    assert edited_order.shop == order.shop
 
 
 def test_order_cannot_be_created():

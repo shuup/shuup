@@ -218,6 +218,7 @@ class OrderProcessor(object):
         return order
 
     def _assign_code_usages(self, order_source, order):
+        order.codes = order_source.codes
         for code in order_source.codes:
             self._assign_code_usage(order_source, order, code)
 
