@@ -962,6 +962,9 @@ msgstr ""
 msgid "No billing address defined."
 msgstr ""
 
+msgid "No members."
+msgstr ""
+
 msgid "Remove block"
 msgstr ""
 

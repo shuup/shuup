@@ -8,16 +8,20 @@
 
 from __future__ import unicode_literals
 
+import ast
+
 from django import forms
 from django.contrib.auth import get_user_model
 from django.db.models.loading import get_model
 from django.db.transaction import atomic
 from django.forms import BaseModelForm
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.form_part import (
     FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
 )
+from shoop.admin.forms.widgets import Select2Multiple
 from shoop.admin.toolbar import get_default_edit_toolbar
 from shoop.admin.utils.urls import get_model_url
 from shoop.admin.utils.views import CreateOrUpdateView
@@ -54,7 +58,7 @@ class ContactBaseForm(BaseModelForm):
             "gender", "birth_date", "first_name", "last_name"
         ),
         "CompanyContact": (
-            "name", "tax_number",
+            "name", "tax_number", "members"
         )
     }
 
@@ -78,6 +82,19 @@ class ContactBaseForm(BaseModelForm):
 
         self.generate_fields()
 
+    def formfield_callback(self, f, **kwargs):
+        if str(f) == "shoop.CompanyContact.members":
+            k = {
+                "initial": self.instance.members.all(),
+                "required": False,
+                "help_text": f.help_text,
+                "widget": Select2Multiple(model=PersonContact)
+            }
+            formfield = forms.CharField(**k)
+            formfield.widget.choices = [(object.pk, force_text(object)) for object in self.instance.members.all()]
+            return formfield
+        return f.formfield(**kwargs)
+
     def generate_fields(self):
         self.fields["type"] = forms.ChoiceField(choices=[
             ("PersonContact", _("Person")),
@@ -99,7 +116,8 @@ class ContactBaseForm(BaseModelForm):
 
         for model_cls in classes:
             model_name = str(model_cls.__name__)
-            model_fields = forms.fields_for_model(model_cls, fields=self.FIELDS_BY_MODEL_NAME[model_name])
+            model_fields = forms.fields_for_model(
+                model_cls, fields=self.FIELDS_BY_MODEL_NAME[model_name], formfield_callback=self.formfield_callback)
             self.fields_by_model[model_name] = model_fields
             self.fields.update(model_fields.items())
 
@@ -124,6 +142,12 @@ class ContactBaseForm(BaseModelForm):
     def _clean_fields(self):
         super(ContactBaseForm, self)._clean_fields()
         self.set_model_from_cleaned_data()
+
+    def clean_members(self):
+        members = self.cleaned_data.get("members", [])
+        if members:
+            members = ast.literal_eval(members)
+        return members
 
     def save(self, commit=True):
         obj = super(ContactBaseForm, self).save(commit)
