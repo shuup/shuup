@@ -4,18 +4,14 @@
     form {
         position: relative;
     }
-    .submit-button-up {
-        margin-bottom: 20px;
-        @media (min-width: @screen-sm-min) {
-            margin-bottom: 0;
-            position: absolute;
-            right: 0px;
-            top: -60px;
-        }
-    }
-    .submit-button {
-        @media (min-width: @screen-sm-min) {
-            float: right;
+    .btn-toolbar {
+        margin-bottom: 15px;
+        text-align: right;
+        .btn-group {
+            margin-bottom: 5px;
+            @media (min-width: @screen-sm-min) {
+                margin-bottom: 0;
+            }
         }
     }
     .well {

@@ -4,6 +4,14 @@ shoop.front.apps.customer_information package
 Submodules
 ----------
 
+shoop.front.apps.customer_information.forms module
+--------------------------------------------------
+
+.. automodule:: shoop.front.apps.customer_information.forms
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.front.apps.customer_information.urls module
 -------------------------------------------------
 

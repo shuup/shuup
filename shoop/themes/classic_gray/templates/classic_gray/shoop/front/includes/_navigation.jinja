@@ -28,6 +28,13 @@
                                 <i class="fa fa-user fa-fw"></i> {% trans %}Edit account details{% endtrans %}
                             </a>
                         </li>
+                        {% if request.is_company_member %}
+                        <li>
+                            <a href="{{ url("shoop:company_edit") }}">
+                                <i class="fa fa-users fa-fw"></i> {% trans %}Edit company details{% endtrans %}
+                            </a>
+                        </li>
+                        {% endif %}
                         {% if shoop.urls.has_url("shoop:personal-orders") %}
                         <li>
                             <a href="{{ url("shoop:personal-orders") }}">

@@ -107,6 +107,7 @@ Addons
 Front
 ~~~~~
 
+- Allow user to link company contact from account page
 - Log-in as company if user is a member of a company
 - Make ``get_product_cross_sells`` faster
 - Make ``get_best_selling_products`` faster
