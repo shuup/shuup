@@ -11,7 +11,7 @@ from django.contrib.auth import get_user_model
 from shoop.admin.forms.widgets import Select2Multiple
 from shoop.admin.modules.contacts.views.edit import ContactBaseForm
 from shoop.core.models import (
-    CompanyContact, Gender, get_person_contact, PersonContact
+    Contact, CompanyContact, Gender, get_person_contact, PersonContact
 )
 from shoop.testing.factories import create_random_company
 from shoop_tests.utils import printable_gibberish
@@ -53,3 +53,18 @@ def test_company_contact_edit_form():
     contact = contact_base_form.save()
     assert isinstance(contact, CompanyContact)
     assert isinstance(contact_base_form.fields["members"].widget, Select2Multiple)
+
+
+@pytest.mark.django_db
+def test_creating_contact():
+    persons_count = PersonContact.objects.count()
+    contact_base_form = ContactBaseForm(data={
+        "type": "PersonContact",
+        "name": printable_gibberish(),
+        "gender": Gender.UNDISCLOSED.value
+    })
+    assert contact_base_form.is_valid(), contact_base_form.errors
+    contact = contact_base_form.save()
+    assert isinstance(contact, PersonContact)
+    assert contact.pk is not None
+    assert PersonContact.objects.count() == (persons_count + 1)

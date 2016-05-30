@@ -84,14 +84,17 @@ class ContactBaseForm(BaseModelForm):
 
     def formfield_callback(self, f, **kwargs):
         if str(f) == "shoop.CompanyContact.members":
+            initial = PersonContact.objects.none()
+            if hasattr(self.instance, "members"):
+                initial = self.instance.members.all()
             k = {
-                "initial": self.instance.members.all(),
+                "initial": initial,
                 "required": False,
                 "help_text": f.help_text,
                 "widget": Select2Multiple(model=PersonContact)
             }
             formfield = forms.CharField(**k)
-            formfield.widget.choices = [(object.pk, force_text(object)) for object in self.instance.members.all()]
+            formfield.widget.choices = [(object.pk, force_text(object)) for object in initial]
             return formfield
         return f.formfield(**kwargs)
 
