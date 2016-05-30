@@ -45,5 +45,6 @@ class GuideAdminModule(AdminModule):
                 text=_("Search guide for: \"%s\"") % query,
                 url=url,
                 is_action=True,
-                relevance=0
+                relevance=0,
+                target="_blank"
             )
