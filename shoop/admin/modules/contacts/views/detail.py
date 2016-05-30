@@ -76,8 +76,12 @@ class ContactDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ContactDetailView, self).get_context_data(**kwargs)
+        context["companies"] = []
         if isinstance(self.object, PersonContact):
             order_q = Q(orderer=self.object) | Q(customer=self.object)
+            context["companies"] = sorted(
+                self.object.company_memberships.all(), key=(lambda x: force_text(x))
+            )
         else:
             order_q = Q(customer=self.object)
         user = getattr(self.object, "user", None)
@@ -85,9 +89,6 @@ class ContactDetailView(DetailView):
             order_q |= Q(creator=user)
         context["contact_groups"] = sorted(
             self.object.groups.all(), key=(lambda x: force_text(x)))
-        context["companies"] = sorted(
-            self.object.company_memberships.all(), key=(lambda x: force_text(x))
-        )
         context["orders"] = Order.objects.filter(order_q).order_by("-id")
         context["toolbar"] = ContactDetailToolbar(contact=self.object)
         context["title"] = "%s: %s" % (
