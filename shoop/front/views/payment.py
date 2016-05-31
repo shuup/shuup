@@ -51,7 +51,7 @@ class ProcessPaymentView(DetailView):
             if not order.is_paid():
                 if payment_method:
                     return payment_method.get_payment_process_response(
-                        order=order, urls=get_payment_urls(request, order))
+                        order=order, urls=get_payment_urls(request, order), request=request)
         elif mode == "return":
             if payment_method:
                 payment_method.process_payment_return_request(order=order, request=request)
