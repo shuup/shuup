@@ -98,6 +98,9 @@ Core
     Additional ``BaseActionButton`` subclasses for Order detail.
     Subclass init should take current order as a parameter.
 
+``admin_order_section``
+    Additional ``OrderSection`` subclasses for Order detail sections.
+
 ``front_urls``
     Lists of frontend URLs to be appended to the usual frontend URLs.
 

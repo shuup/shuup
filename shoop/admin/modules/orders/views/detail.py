@@ -17,9 +17,7 @@ from django.views.generic import DetailView
 from shoop.admin.toolbar import PostActionButton, Toolbar, URLActionButton
 from shoop.admin.utils.urls import get_model_url
 from shoop.apps.provides import get_provide_objects
-from shoop.core.models import (
-    Order, OrderLogEntry, OrderStatus, OrderStatusRole
-)
+from shoop.core.models import Order, OrderStatus, OrderStatusRole
 from shoop.utils.excs import Problem
 
 
@@ -93,10 +91,16 @@ class OrderDetailView(DetailView):
         context = super(OrderDetailView, self).get_context_data(**kwargs)
         context["toolbar"] = self.get_toolbar()
         context["title"] = force_text(self.object)
-        context["log_entries"] = (
-            OrderLogEntry.objects.filter(target=self.object).order_by("-created_on").all()[:12]
-            # TODO: We're currently trimming to 12 entries, probably need pagination
-        )
+        context["order_sections"] = []
+
+        order_sections_provides = sorted(get_provide_objects("admin_order_section"), key=lambda x: x.order)
+        for admin_order_section in order_sections_provides:
+            # Check whether the OrderSection should be visible for the current object
+            if admin_order_section.visible_for_order(self.object):
+                context["order_sections"].append(admin_order_section)
+                # add additional context data where the key is the order_section identifier
+                context[admin_order_section.identifier] = admin_order_section.get_context_data(self.object)
+
         return context
 
 
