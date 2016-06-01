@@ -8,19 +8,23 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.db.models import Q
+from django.http.response import HttpResponseRedirect
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 
 from shoop.admin.toolbar import PostActionButton, Toolbar, URLActionButton
 from shoop.core.models import CompanyContact, Contact, Order, PersonContact
+from shoop.utils.excs import Problem
 
 
 class ContactDetailToolbar(Toolbar):
-    def __init__(self, contact):
+    def __init__(self, contact, request):
         self.contact = contact
+        self.request = request
         self.user = getattr(self.contact, "user", None)
         super(ContactDetailToolbar, self).__init__()
         self.build()
@@ -58,6 +62,16 @@ class ContactDetailToolbar(Toolbar):
             extra_css_class="btn-gray btn-inverse",
         ))
 
+    def build_deactivate_button(self):
+        self.append(PostActionButton(
+            post_url=self.request.path,
+            name="set_is_active",
+            value="0" if self.contact.is_active else "1",
+            icon="fa fa-times-circle",
+            text=_(u"Deactivate Contact") if self.contact.is_active else _(u"Activate Contact"),
+            extra_css_class="btn-gray",
+        ))
+
     def build(self):
         self.append(URLActionButton(
             url=reverse("shoop_admin:contact.edit", kwargs={"pk": self.contact.pk}),
@@ -67,6 +81,7 @@ class ContactDetailToolbar(Toolbar):
         ))
         self.build_renew_password_button()
         self.build_new_user_button()
+        self.build_deactivate_button()
 
 
 class ContactDetailView(DetailView):
@@ -90,9 +105,32 @@ class ContactDetailView(DetailView):
         context["contact_groups"] = sorted(
             self.object.groups.all(), key=(lambda x: force_text(x)))
         context["orders"] = Order.objects.filter(order_q).order_by("-id")
-        context["toolbar"] = ContactDetailToolbar(contact=self.object)
+        context["toolbar"] = ContactDetailToolbar(contact=self.object, request=self.request)
         context["title"] = "%s: %s" % (
             self.object._meta.verbose_name.title(),
             force_text(self.object)
         )
         return context
+
+    def _handle_set_is_active(self):
+        state = bool(int(self.request.POST["set_is_active"]))
+        if not state and hasattr(self.object, "user"):
+            if (getattr(self.object.user, 'is_superuser', False) and
+                    not getattr(self.request.user, 'is_superuser', False)):
+                raise Problem(_("You can not deactivate a superuser."))
+            if self.object.user == self.request.user:
+                raise Problem(_("You can not deactivate yourself."))
+
+        self.object.is_active = state
+        self.object.save(update_fields=("is_active",))
+        messages.success(self.request, _("%(contact)s is now %(state)s.") % {
+            "contact": self.object,
+            "state": _("active") if state else _("inactive")
+        })
+        return HttpResponseRedirect(self.request.path)
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if "set_is_active" in request.POST:
+            return self._handle_set_is_active()
+        return super(ContactDetailView, self).post(request, *args, **kwargs)
