@@ -28,11 +28,15 @@ def delete_folder(folder):
         for subfolder in subfolders:
             subfolder.move_to(parent_folder, "last-child")
             subfolder.save()
-        message_bits.append(_("%d subfolders moved to %s.") % (len(subfolders), parent_name))
+        message_bits.append(
+            _("{num} subfolders moved to {folder}.").format(
+                num=len(subfolders), folder=parent_name))
     n_files = folder.files.count()
     if n_files:
         folder.files.update(folder=parent_folder)
-        message_bits.append(_("%d files moved to %s.") % (n_files, parent_name))
+        message_bits.append(
+            _("{num} files moved to {folder}.").format(
+                num=n_files, folder=parent_name))
     folder.delete()
     if subfolders:  # We had some subfolders to mangle, best rebuild now
         Folder._tree_manager.rebuild()

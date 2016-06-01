@@ -14,7 +14,7 @@ from __future__ import unicode_literals
 
 from . import makemessages
 
-IGNORES = ["node_modules", "bower_components", "*tests"]
+IGNORES = ["node_modules", "bower_components", "static", "*tests"]
 EXTENSIONS = ["py", "jinja"]
 
 

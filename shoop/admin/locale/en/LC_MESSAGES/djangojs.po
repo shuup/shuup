@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-21 05:42+0000\n"
+"POT-Creation-Date: 2016-06-01 12:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -318,38 +318,32 @@ msgstr ""
 msgid "Add new variable"
 msgstr ""
 
-msgid "No results."
-msgstr ""
-
 msgid "No browser URL for kind:"
 msgstr ""
 
 msgid "Expand Editor"
 msgstr ""
 
-msgid "Order Log"
-msgstr ""
-
-msgid "Log items:"
+msgid "No results."
 msgstr ""
 
 msgid "The results could not be loaded"
 msgstr ""
 
-#, c-format
+#, javascript-format
 msgid "Please delete %s character"
 msgid_plural "Please delete %s characters"
 msgstr[0] ""
 msgstr[1] ""
 
-#, c-format
+#, javascript-format
 msgid "Please enter %s or more characters"
 msgstr ""
 
 msgid "Loading more results..."
 msgstr ""
 
-#, c-format
+#, javascript-format
 msgid "You can only select %s item"
 msgid_plural "You can only select %s items"
 msgstr[0] ""

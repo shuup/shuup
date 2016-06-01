@@ -37,6 +37,11 @@ file_filter = shoop/default_tax/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
+[shoop.front]
+file_filter = shoop/front/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
 [shoop.front-apps-auth]
 file_filter = shoop/front/apps/auth/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
@@ -67,8 +72,8 @@ file_filter = shoop/front/apps/simple_search/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
-[shoop.front]
-file_filter = shoop/front/locale/<lang>/LC_MESSAGES/django.po
+[shoop.guide]
+file_filter = shoop/guide/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
