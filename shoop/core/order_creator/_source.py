@@ -620,6 +620,15 @@ class SourceLine(TaxableItem, Priceful):
         return self._data.get(key, default)
 
     @property
+    def parent_line(self):
+        if not self.parent_line_id:
+            return None
+        for line in self.source.get_lines():
+            if line.line_id == self.parent_line_id:
+                return line
+        raise ValueError('Invalid parent_line_id: %r' % (self.parent_line_id,))
+
+    @property
     def tax_class(self):
         return self.product.tax_class if self.product else self._tax_class
 

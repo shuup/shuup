@@ -10,7 +10,6 @@ from __future__ import unicode_literals
 import warnings
 from decimal import Decimal
 
-import six
 from django.utils.encoding import force_text
 
 from shoop.core.models import Order, OrderLine, OrderLineType
@@ -26,9 +25,16 @@ class OrderProcessor(object):
 
     def source_line_to_order_lines(self, order, source_line):
         """
-        Convert a SourceLine into one or more OrderLines (yield them)
+        Convert a source line into one or more order lines.
+
+        Normally each source line will yield just one order line, but
+        package products will yield a parent line and its child lines.
+
+        :type order: shoop.core.models.Order
         :param order: The order
+        :type source_line: shoop.core.order_creator.SourceLine
         :param source_line: The SourceLine
+        :rtype: Iterable[OrderLine]
         """
         order_line = OrderLine(order=order)
         product = source_line.product
@@ -57,8 +63,9 @@ class OrderProcessor(object):
                            else OrderLineType.OTHER)
         order_line.accounting_identifier = text(source_line.accounting_identifier)
         order_line.require_verification = bool(source_line.require_verification)
-        order_line.verified = False
+        order_line.verified = (not order_line.require_verification)
         order_line.source_line = source_line
+        order_line.parent_source_line = source_line.parent_line
         self._check_orderability(order_line)
 
         yield order_line
@@ -73,17 +80,19 @@ class OrderProcessor(object):
         if not (parent_product and parent_product.is_package_parent()):
             return
 
-        for child_product, child_quantity in six.iteritems(parent_product.get_package_child_to_quantity_map()):
+        child_to_quantity = parent_product.get_package_child_to_quantity_map()
+        for (child_product, child_quantity) in child_to_quantity.items():
             child_order_line = OrderLine(order=order, parent_line=order_line)
             update_order_line_from_product(
-                pricing_context=None,
+                pricing_context=None,  # Will use zero price
                 order_line=child_order_line,
                 product=child_product,
                 quantity=(order_line.quantity * child_quantity),
             )
             # Package children are free
             assert child_order_line.base_unit_price.value == 0
-            child_order_line.source_line = order_line.source_line
+            child_order_line.source_line = None
+            child_order_line.parent_source_line = order_line.source_line
             child_order_line.supplier = order_line.supplier
             self._check_orderability(child_order_line)
             yield child_order_line
@@ -110,28 +119,24 @@ class OrderProcessor(object):
         pass
 
     def add_lines_into_order(self, order, lines):
-        source_line_id_to_order_line_map = {}
+        # Map source lines to order lines for parentage linking
+        order_line_by_source = {
+            id(order_line.source_line): order_line
+            for order_line in lines
+        }
+
+        # Set line ordering, parentage and save the lines
         for index, order_line in enumerate(lines):
             order_line.order = order
             order_line.ordering = index
-            if not order_line.require_verification:
-                order_line.verified = True
-            order_line.save()
-            source_line = getattr(order_line, "source_line", None)
-            if source_line:  # Stash which source line corresponds to which order line for the parentage pass below.
-                line_id = source_line.line_id
-                if line_id:
-                    source_line_id_to_order_line_map[line_id] = order_line
 
-        # One more pass to save parent relations from the source lines
-        for order_line in lines:
-            source_line = getattr(order_line, "source_line", None)
-            if source_line:
-                parent_source_line_id = source_line.parent_line_id
-                parent_order_line = source_line_id_to_order_line_map.get(parent_source_line_id)
-                if parent_order_line:
-                    order_line.parent_line = parent_order_line
-                    order_line.save()
+            parent_src_line = order_line.parent_source_line
+            if parent_src_line:
+                parent_order_line = order_line_by_source[id(parent_src_line)]
+                assert parent_order_line.pk, "Parent line should be saved"
+                order_line.parent_line = parent_order_line
+
+            order_line.save()
 
         self.add_line_taxes(lines)
 
@@ -141,6 +146,8 @@ class OrderProcessor(object):
 
     def add_line_taxes(self, lines):
         for line in lines:
+            if not line.source_line:
+                continue  # Cannot have taxes, since not in source
             for (index, line_tax) in enumerate(line.source_line.taxes, 1):
                 line.taxes.create(
                     tax=line_tax.tax,
@@ -154,6 +161,7 @@ class OrderProcessor(object):
         """
         :type source: shoop.core.order_creator.OrderSource
         :type order: shoop.core.models.Order
+        :rtype: list[OrderLine]
         """
         lines = []
         source.update_from_order(order)
