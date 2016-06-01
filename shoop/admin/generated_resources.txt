@@ -4,6 +4,8 @@ static/shoop_admin/css/dashboard.css
 static/shoop_admin/css/dashboard.css.map
 static/shoop_admin/css/media-browser.css
 static/shoop_admin/css/media-browser.css.map
+static/shoop_admin/css/select2.css
+static/shoop_admin/css/select2.css.map
 static/shoop_admin/js/base.js
 static/shoop_admin/js/base.js.map
 static/shoop_admin/js/contact-group.js
