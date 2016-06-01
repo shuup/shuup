@@ -120,7 +120,8 @@ class OrderSetStatusView(DetailView):
             raise Problem(_("Paid, shipped, or canceled orders cannot be canceled"))
         order.status = new_status
         order.save(update_fields=("status",))
-        message = _("Order status changed: %s to %s") % (old_status, new_status)
+        message = _("Order status changed: {old_status} to {new_status}").format(
+            old_status=old_status, new_status=new_status)
         order.add_log_entry(message, user=request.user, identifier="status_change")
         messages.success(self.request, message)
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-01 12:18+0000\n"
+"POT-Creation-Date: 2016-06-01 12:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -210,12 +210,12 @@ msgstr ""
 msgid "Root"
 msgstr ""
 
-#, python-format
-msgid "%d subfolders moved to %s."
+#, python-brace-format
+msgid "{num} subfolders moved to {folder}."
 msgstr ""
 
-#, python-format
-msgid "%d files moved to %s."
+#, python-brace-format
+msgid "{num} files moved to {folder}."
 msgstr ""
 
 #, python-format
@@ -362,8 +362,8 @@ msgstr ""
 msgid "Unable to set order as completed at this point"
 msgstr ""
 
-#, python-format
-msgid "Order status changed: %s to %s"
+#, python-brace-format
+msgid "Order status changed: {old_status} to {new_status}"
 msgstr ""
 
 msgid "Create Order"
