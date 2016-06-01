@@ -25,9 +25,16 @@ class OrderProcessor(object):
 
     def source_line_to_order_lines(self, order, source_line):
         """
-        Convert a SourceLine into one or more OrderLines (yield them)
+        Convert a source line into one or more order lines.
+
+        Normally each source line will yield just one order line, but
+        package products will yield a parent line and its child lines.
+
+        :type order: shoop.core.models.Order
         :param order: The order
+        :type source_line: shoop.core.order_creator.SourceLine
         :param source_line: The SourceLine
+        :rtype: Iterable[OrderLine]
         """
         order_line = OrderLine(order=order)
         product = source_line.product
@@ -73,10 +80,11 @@ class OrderProcessor(object):
         if not (parent_product and parent_product.is_package_parent()):
             return
 
-        for child_product, child_quantity in six.iteritems(parent_product.get_package_child_to_quantity_map()):
+        child_to_quantity = parent_product.get_package_child_to_quantity_map()
+        for (child_product, child_quantity) in child_to_quantity.items():
             child_order_line = OrderLine(order=order, parent_line=order_line)
             update_order_line_from_product(
-                pricing_context=None,
+                pricing_context=None,  # Will use zero price
                 order_line=child_order_line,
                 product=child_product,
                 quantity=(order_line.quantity * child_quantity),
@@ -153,6 +161,7 @@ class OrderProcessor(object):
         """
         :type source: shoop.core.order_creator.OrderSource
         :type order: shoop.core.models.Order
+        :rtype: list[OrderLine]
         """
         lines = []
         source.update_from_order(order)
