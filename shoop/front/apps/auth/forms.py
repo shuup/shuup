@@ -51,6 +51,18 @@ class EmailAuthenticationForm(AuthenticationForm):
 
         return username
 
+    def confirm_login_allowed(self, user):
+        """
+        If a user has a contact that has been disabled by admin, do not let
+        user login.
+        """
+        if hasattr(user, "contact") and not user.contact.is_active:
+            raise forms.ValidationError(
+                self.error_messages['inactive'],
+                code='inactive',
+            )
+        super(EmailAuthenticationForm, self).confirm_login_allowed(user)
+
 
 class RecoverPasswordForm(forms.Form):
     username = forms.CharField(label=_("Username"), max_length=254, required=False)

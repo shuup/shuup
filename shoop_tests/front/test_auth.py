@@ -7,9 +7,12 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.conf import settings
-from django.contrib.auth import get_user, get_user_model, REDIRECT_FIELD_NAME
+from django.contrib.auth import (
+    get_user, get_user_model, logout, REDIRECT_FIELD_NAME
+)
 from django.core.urlresolvers import reverse
 
+from shoop.core.models import PersonContact
 from shoop.testing.factories import get_default_shop
 from shoop_tests.utils.fixtures import regular_user, REGULAR_USER_PASSWORD
 
@@ -166,3 +169,41 @@ def test_login_with_email_3(client, regular_user, rf):
     request = rf.get("/")
     request.session = client.session
     assert get_user(request) == new_user, "User is logged in"
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("regular_user")
+def test_login_inactive_user_fails(client, regular_user, rf):
+    if "shoop.front.apps.auth" not in settings.INSTALLED_APPS:
+        pytest.skip("Need shoop.front.apps.auth in INSTALLED_APPS")
+
+    get_default_shop()
+    prepare_user(regular_user)
+
+    response = client.post(reverse("shoop:login"), data={
+        "username": regular_user.username,
+        "password": REGULAR_USER_PASSWORD,
+    })
+
+    request = rf.get("/")
+    request.session = client.session
+    assert get_user(request) == regular_user, "User is logged in"
+
+    request = rf.get("/")
+    request.session = client.session
+    logout(request)
+
+    user_contact = regular_user.contact
+    assert user_contact.is_active
+
+    user_contact.is_active = False
+    user_contact.save()
+
+    client.post(reverse("shoop:login"), data={
+        "username": regular_user.username,
+        "password": REGULAR_USER_PASSWORD,
+    })
+
+    request = rf.get("/")
+    request.session = client.session
+    assert get_user(request).is_anonymous(), "User is still anonymous"
