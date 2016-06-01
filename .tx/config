@@ -72,6 +72,11 @@ file_filter = shoop/front/apps/simple_search/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
+[shoop.guide]
+file_filter = shoop/guide/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
 [shoop.notify]
 file_filter = shoop/notify/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
