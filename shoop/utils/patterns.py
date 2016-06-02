@@ -48,9 +48,13 @@ class Pattern(object):
                 piece = piece[1:].strip()
             else:
                 negate = False
+
             if "-" in piece:
                 (min, max) = piece.split("-", 1)
                 piece = (min.strip(), max.strip())
+            else:
+                piece = (piece.strip(), piece.strip())
+
             if negate:
                 self.negative_pieces.add(piece)
             else:
@@ -75,6 +79,17 @@ class Pattern(object):
 
         return any(self._test_piece(piece, target) for piece in self.positive_pieces)
 
+    def get_alphabetical_limits(self):
+        if self.negative_pieces:
+            return (None, None)
+        all_values = set()
+        for min_value, max_value in self.positive_pieces:
+            all_values.add(min_value)
+            all_values.add(max_value)
+        if not all_values:
+            return (None, None)
+        return (min(all_values), max(all_values))
+
     def as_normalized(self):
         """
         Return the pattern's source text in a "normalized" form.
@@ -87,28 +102,36 @@ class Pattern(object):
             ("!", self.negative_pieces),
         ]:
             str_bits = []
-            for bit in in_bits:
-                if isinstance(bit, tuple):
-                    str_bits.append("%s%s-%s" % (prefix, bit[0], bit[1]))
+            for min_value, max_value in in_bits:
+                if min_value != max_value:
+                    str_bits.append("%s%s-%s" % (prefix, min_value, max_value))
                 else:
-                    str_bits.append("%s%s" % (prefix, bit))
+                    str_bits.append("%s%s" % (prefix, min_value))
             bits.extend(sorted(str_bits))
 
         return ",".join(bits)
 
     def _test_piece(self, piece, target):
-        if target == piece:
+        """
+        Test if piece matches the target value.
+
+        :param piece: Tuple of min and max values
+        :type target: str
+        :rtype: bool
+        """
+
+        min_value, max_value = piece[:2]
+        if min_value <= target <= max_value:
             return True
-        elif isinstance(piece, tuple):
-            min, max = piece[:2]
-            if min <= target <= max:
+
+        if min_value.isdigit() and max_value.isdigit() and target.isdigit():
+            if int(min_value) <= int(target) <= int(max_value):
                 return True
-            if min.isdigit() and max.isdigit() and target.isdigit():
-                if int(min) <= int(target) <= int(max):
+
+        for value in piece[:2]:
+            if "*" in value or "?" in value:
+                if fnmatch.fnmatch(target, value):
                     return True
-        elif "*" in piece or "?" in piece:
-            if fnmatch.fnmatch(target, piece):
-                return True
 
 
 @lru_cache.lru_cache()

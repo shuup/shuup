@@ -201,6 +201,7 @@ Simple CMS
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
+- Add a way to find out min and max values from pattern
 - Reword doc/provides.rst
 
 
