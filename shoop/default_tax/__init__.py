@@ -20,6 +20,7 @@ class AppConfig(shoop.apps.AppConfig):
         "tax_module": ["shoop.default_tax.module:DefaultTaxModule"],
         "admin_module": ["shoop.default_tax.admin_module:TaxRulesAdminModule"],
     }
-
+    def ready(self):
+        import shoop.default_tax.signals
 
 default_app_config = __name__ + ".AppConfig"
