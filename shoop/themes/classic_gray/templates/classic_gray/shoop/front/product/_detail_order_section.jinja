@@ -46,6 +46,7 @@
 {% endmacro %}
 
 {% macro product_order_section(product, quantity, is_orderable) %}
+    {% if show_prices() %}
     <div class="row">
         <div class="col-sm-6">
             {{ quantity_box() }}
@@ -55,11 +56,11 @@
         </div>
     </div>
     {{ add_to_cart_btn(is_orderable) }}
+    {% endif %}
 {% endmacro %}
 
 {% macro product_price_div(product, quantity) %}
     <div class="price text-right" id="product-price-div">
-        {% if show_prices() %}
         <h2>
             <small class="text-muted">{% trans %}Total{% endtrans %}:</small>
             <span id="product-price"><strong>{{ product|price(quantity) }}</strong></span>
@@ -70,7 +71,6 @@
             {% endif %}
             {{ product|discounted_unit_price(quantity) }}/{{ product.sales_unit.short_name }}
         </span>
-        {% endif %}
     </div>
 {% endmacro %}
 
