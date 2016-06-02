@@ -198,6 +198,11 @@ Simple CMS
 - Add option to list children on page
 - Add possibility to set parent on page
 
+Default Tax
+~~~~~~~~~~~
+
+- Add minimum and maximum postal code values to `TaxRule`
+
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 

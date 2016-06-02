@@ -7,11 +7,21 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.db.models import Q
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.core.models import CustomerTaxGroup, Tax, TaxClass
-from shoop.utils.patterns import pattern_matches
+from shoop.utils.patterns import Pattern, pattern_matches
+
+
+class TaxRuleQuerySet(models.QuerySet):
+    def may_match_postal_code(self, postalcode):
+        null = Q(_postal_codes_min__isnull=True)
+        in_range = Q()
+        if postalcode:
+            in_range = Q(_postal_codes_min__lte=postalcode, _postal_codes_max__gte=postalcode)
+        return self.filter(null | in_range)
 
 
 @python_2_unicode_compatible
@@ -33,6 +43,10 @@ class TaxRule(models.Model):
     postal_codes_pattern = models.CharField(
         max_length=500, blank=True,
         verbose_name=_("postal codes pattern"))
+
+    _postal_codes_min = models.CharField(max_length=100, blank=True, null=True)
+    _postal_codes_max = models.CharField(max_length=100, blank=True, null=True)
+
     priority = models.IntegerField(
         default=0,
         verbose_name=_("priority"), help_text=_(
@@ -47,6 +61,8 @@ class TaxRule(models.Model):
             "used, for example, to implement tax exemption by adding "
             "a rule with very high override group that sets a zero tax."))
     tax = models.ForeignKey(Tax, on_delete=models.PROTECT, verbose_name=_('tax'))
+
+    objects = TaxRuleQuerySet.as_manager()
 
     def matches(self, taxing_context):
         """
@@ -69,6 +85,13 @@ class TaxRule(models.Model):
             if not pattern_matches(self.postal_codes_pattern, taxing_context.postal_code):
                 return False
         return True
+
+    def save(self, *args, **kwargs):
+        if self.postal_codes_pattern:
+            min_value, max_value = Pattern(self.postal_codes_pattern).get_alphabetical_limits()
+            self._postal_codes_min = min_value
+            self._postal_codes_max = max_value
+        return super(TaxRule, self).save(*args, **kwargs)
 
     def __str__(self):
         return _("Tax rule {} ({})").format(self.pk, self.tax)
