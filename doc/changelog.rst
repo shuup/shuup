@@ -201,6 +201,7 @@ Simple CMS
 Default Tax
 ~~~~~~~~~~~
 
+- Filter `TaxRule`s by postal codes to gain better performance
 - Add minimum and maximum postal code values to `TaxRule`
 
 General/miscellaneous

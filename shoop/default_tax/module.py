@@ -40,7 +40,9 @@ def _get_enabled_tax_rules(taxing_context, tax_class):
     :type taxing_context: shoop.core.taxing.TaxingContext
     :type tax_class: shoop.core.models.TaxClass
     """
-    tax_rules = TaxRule.objects.filter(enabled=True, tax_classes=tax_class)
+
+    tax_rules = TaxRule.objects.may_match_postal_code(
+        taxing_context.postal_code).filter(enabled=True, tax_classes=tax_class)
     if taxing_context.customer_tax_group:
         tax_rules = tax_rules.filter(
             Q(customer_tax_groups=taxing_context.customer_tax_group) |
