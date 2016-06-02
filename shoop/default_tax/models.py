@@ -14,6 +14,13 @@ from shoop.core.models import CustomerTaxGroup, Tax, TaxClass
 from shoop.utils.patterns import pattern_matches
 
 
+class TaxRuleQuerySet(models.QuerySet):
+    def in_postalcode_range(self, postalcode):
+        if not postalcode:
+            return self
+        return self.filter(postal_codes_min__lte=postalcode, postal_codes_max__gte=postalcode)
+
+
 @python_2_unicode_compatible
 class TaxRule(models.Model):
     enabled = models.BooleanField(default=True, verbose_name=_('enabled'), db_index=True)
@@ -33,6 +40,10 @@ class TaxRule(models.Model):
     postal_codes_pattern = models.CharField(
         max_length=500, blank=True,
         verbose_name=_("postal codes pattern"))
+
+    postal_codes_min = models.CharField(max_length=100, blank=True)
+    postal_codes_max = models.CharField(max_length=100, blank=True)
+
     priority = models.IntegerField(
         default=0,
         verbose_name=_("priority"), help_text=_(
@@ -47,6 +58,8 @@ class TaxRule(models.Model):
             "used, for example, to implement tax exemption by adding "
             "a rule with very high override group that sets a zero tax."))
     tax = models.ForeignKey(Tax, on_delete=models.PROTECT, verbose_name=_('tax'))
+
+    objects = TaxRuleQuerySet.as_manager()
 
     def matches(self, taxing_context):
         """
