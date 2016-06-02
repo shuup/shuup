@@ -97,6 +97,13 @@ def test_num_match(ctor):
     assert not num_pat.matches(930)
 
 
+@pytest.mark.parametrize("ctor", (Pattern, ReconstitutedPattern))
+def test_num_and_alphabetic_matches(ctor):
+    num_pat = ctor("100-2000")
+    assert num_pat.matches(19), "Matches alphabetically"
+    assert num_pat.matches(300), "Matches numerically"
+
+
 def test_pattern_cache():
     convoluted_pat_text = ",".join([str(x) for x in range(0, 1000, 2)])
     _compile_pattern.cache_clear()
