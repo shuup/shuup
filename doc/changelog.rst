@@ -198,9 +198,16 @@ Simple CMS
 - Add option to list children on page
 - Add possibility to set parent on page
 
+Default Tax
+~~~~~~~~~~~
+
+- Filter `TaxRule`s by postal codes to gain better performance
+- Add minimum and maximum postal code values to `TaxRule`
+
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
+- Add a way to find out min and max values from pattern
 - Reword doc/provides.rst
 
 

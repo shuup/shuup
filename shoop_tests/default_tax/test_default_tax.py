@@ -13,14 +13,17 @@ from decimal import Decimal
 import pytest
 from django.test.utils import override_settings
 
-from shoop.core.models import Tax
+from shoop.core.models import Tax, TaxClass
 from shoop.core.taxing import get_tax_module, TaxingContext
+from shoop.default_tax.admin_module.views import TaxRuleEditView
 from shoop.default_tax.models import TaxRule
 from shoop.default_tax.module import (
     DefaultTaxModule, get_taxes_of_effective_rules
 )
-from shoop.testing.factories import create_product, get_shop
+from shoop.testing.factories import create_product, get_default_shop, get_shop
+from shoop.testing.utils import apply_request_middleware
 from shoop.utils.money import Money
+from shoop_tests.utils.forms import get_form_data
 
 
 class RuleDef(object):
@@ -149,6 +152,74 @@ def test_module(address, expected_taxes):
 
     # Clean-up the rules
     TaxRule.objects.all().delete()
+
+
+@pytest.mark.django_db
+def test_rule_min_max():
+    tax = create_tax("test-1", rate=Decimal("0.12"))
+    tax.save()
+    postals = "99501-99511,99513-99524,99529-99530,99540,99590,99550,99558,99567,99573,99577,99586-99588"
+
+    rule = TaxRule.objects.create(postal_codes_pattern=postals, tax=tax)
+    # rule.save()
+    assert rule._postal_codes_min == "99501"
+    assert rule._postal_codes_max == "99590"
+
+    TaxRule.objects.create(postal_codes_pattern="12345,45600,80008,99999,10011", tax=tax)
+    TaxRule.objects.create(postal_codes_pattern="10000-99999", tax=tax)
+    TaxRule.objects.create(postal_codes_pattern="99506-99999", tax=tax)
+    TaxRule.objects.create(postal_codes_pattern="99000-99001", tax=tax)
+
+    postal_code = "99510"
+    assert TaxRule.objects.may_match_postal_code(postal_code).count() == 4
+
+    rule.postal_codes_pattern = "20320,!20100"
+    rule.save()
+    assert not rule._postal_codes_min
+    assert not rule._postal_codes_max
+    assert TaxRule.objects.may_match_postal_code(postal_code).count() == 4 # it still may match
+
+    postal_code = None
+    assert TaxRule.objects.may_match_postal_code(postal_code).count() == 1
+
+
+@pytest.mark.django_db
+def test_rule_admin(rf, admin_user):
+    shop = get_default_shop()
+
+    tax = create_tax("test-1", rate=Decimal("0.12"))
+    tax.save()
+
+    tax_class = TaxClass.objects.create(name="test")
+
+    view = TaxRuleEditView(request=apply_request_middleware(rf.get("/"), user=admin_user))
+    form_class = view.get_form_class()
+    form_kwargs = view.get_form_kwargs()
+    form = form_class(**form_kwargs)
+    data = get_form_data(form)
+    data.update({
+        "shop": shop.pk,
+        "postal_codes_pattern": "99501-99511,99513-99524,99529-99530,99540,99590,99550,99567,99573,99577,99586-99588",
+        "country_codes_pattern": "FI,CA,US,SE",
+        "region_codes_pattern": "CA,AR,IA,AK,WY,TN",
+        "tax": tax.id,
+        "tax_classes": [tax_class.id]
+    })
+    form = form_class(**dict(form_kwargs, data=data))
+    form.full_clean()
+
+    assert not form.errors
+
+    rule = form.save()
+
+    assert rule._postal_codes_min == "99501"
+    assert rule._postal_codes_max == "99590"
+
+    postal_code = "99510"
+    assert TaxRule.objects.may_match_postal_code(postal_code).count() == 1
+
+    postal_code = "99500"
+    assert not TaxRule.objects.may_match_postal_code(postal_code).count()
 
 
 def create_tax_from_string(string):
