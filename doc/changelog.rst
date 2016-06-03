@@ -72,6 +72,8 @@ Localization
 Admin
 ~~~~~
 
+- Add default ``is_active`` filter to User admin
+- Enable default values for ``ChoiceFilter``
 - Allow contact adding and removing for company
 - Show companies in person contact edit page
 - Add target option to ``SearchResult``
