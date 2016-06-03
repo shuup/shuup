@@ -65,9 +65,10 @@ class Filter(object):
 class ChoicesFilter(Filter):
     type = "choices"
 
-    def __init__(self, choices=None, filter_field=None):
+    def __init__(self, choices=None, filter_field=None, default=None):
         self.filter_field = filter_field
         self.choices = choices
+        self.default = default
 
     def _flatten_choices(self, context):
         if not self.choices:
@@ -75,7 +76,7 @@ class ChoicesFilter(Filter):
         choices = maybe_call(self.choices, context=context)
         if isinstance(choices, QuerySet):
             choices = [(c.pk, c) for c in choices]
-        return [(None, "")] + [
+        return [("_all", "")] + [
             (force_text(value, strings_only=True), force_text(display))
             for (value, display)
             in choices
@@ -83,10 +84,13 @@ class ChoicesFilter(Filter):
 
     def to_json(self, context):
         return {
-            "choices": self._flatten_choices(context)
+            "choices": self._flatten_choices(context),
+            "defaultChoice": self.default
         }
 
     def filter_queryset(self, queryset, column, value):
+        if value == "_all":
+            return queryset
         return queryset.filter(**{(self.filter_field or column.id): value})
 
 
@@ -276,11 +280,28 @@ class Picotable(object):
         self.columns_by_id = dict((c.id, c) for c in self.columns)
         self.get_object_url = maybe_callable("get_object_url", context=self.context)
         self.get_object_abstract = maybe_callable("get_object_abstract", context=self.context)
+        self.default_filters = self._get_default_filters()
+
+    def _get_default_filter(self, column):
+        filter_config = getattr(column, "filter_config")
+        if(filter_config and hasattr(filter_config, "default") and filter_config.default is not None):
+            field = filter_config.filter_field or column.id
+            return (field, filter_config.default)
+        else:
+            return None
+
+    def _get_default_filters(self):
+        filters = {}
+        for column in self.columns:
+            default_filter = self._get_default_filter(column)
+            if default_filter:
+                filters[default_filter[0]] = default_filter[1]
+        return filters
 
     def process_queryset(self, query):
         queryset = self.queryset
 
-        filters = (query.get("filters") or {})
+        filters = (query.get("filters") or self._get_default_filters())
         for column, value in six.iteritems(filters):
             column = self.columns_by_id.get(column)
             if column:
