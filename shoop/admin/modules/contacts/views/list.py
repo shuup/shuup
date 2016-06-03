@@ -11,7 +11,7 @@ from django.db.models import Count
 from django.utils.translation import ugettext as _
 
 from shoop.admin.utils.picotable import (
-    ChoicesFilter, Column, RangeFilter, TextFilter, true_or_false_filter
+    ChoicesFilter, Column, RangeFilter, TextFilter
 )
 from shoop.admin.utils.views import PicotableListView
 from shoop.core.models import (
@@ -26,7 +26,11 @@ class ContactListView(PicotableListView):
         Column("type", _(u"Type"), display="get_type_display", sortable=False),  # TODO: Add a filter
         Column("email", _(u"Email"), filter_config=TextFilter()),
         Column("phone", _(u"Phone"), filter_config=TextFilter()),
-        Column("is_active", _(u"Active"), filter_config=true_or_false_filter),
+        Column(
+            "is_active",
+            _(u"Active"),
+            filter_config=ChoicesFilter([(False, _("no")), (True, _("yes"))], default=True)
+        ),
         Column("n_orders", _(u"# Orders"), class_name="text-right", filter_config=RangeFilter(step=1)),
         Column("groups", _("Groups"), filter_config=ChoicesFilter(ContactGroup.objects.all(), "groups"))
     ]
