@@ -4,7 +4,7 @@
         {{ bs3.field(field, form_group_class=False ) }}
     {% endfor %}
     <br>
-    <button class="btn btn-primary btn-block" onclick="adjustStock($(this))">
+    <button class="btn btn-primary btn-block" onclick="adjustStock(event, $(this))">
         <i class="fa fa-arrow-circle-up"></i> {% trans %}Add stock{% endtrans %}
     </button>
 </div>

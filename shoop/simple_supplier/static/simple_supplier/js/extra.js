@@ -6,7 +6,7 @@
  * This source code is licensed under the AGPLv3 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-function adjustStock(button) {
+function adjustStock(event, button) {
     event.preventDefault();
     var stockAdjustDiv = button.parent("div.form");
     var url = stockAdjustDiv.data("url");
