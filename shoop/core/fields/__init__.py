@@ -7,6 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import decimal
+
 import babel
 from django.core.exceptions import ImproperlyConfigured
 from django.core.validators import RegexValidator
@@ -60,15 +62,37 @@ class CurrencyField(models.CharField):
         super(CurrencyField, self).__init__(**kwargs)
 
 
-class MoneyValueField(models.DecimalField):
+class FormattedDecimalField(models.DecimalField):
+    """
+    DecimalField subclass to display decimal values in non-scientific
+    format.
+    """
+    def value_from_object(self, obj):
+        value = super(FormattedDecimalField, self).value_from_object(obj)
+        if isinstance(value, decimal.Decimal):
+            return self.format_decimal(value)
+
+    def format_decimal(self, value, max_digits=100, exponent_limit=100):
+        assert isinstance(value, decimal.Decimal)
+        val = value.normalize()
+        (sign, digits, exponent) = val.as_tuple()
+        if exponent > exponent_limit:
+            raise ValueError('Exponent too large for formatting: %r' % value)
+        elif exponent < -exponent_limit:
+            raise ValueError('Exponent too small for formatting: %r' % value)
+        if len(digits) > max_digits:
+            raise ValueError('Too many digits for formatting: %r' % value)
+        return format(val, 'f')
+
+
+class MoneyValueField(FormattedDecimalField):
     def __init__(self, **kwargs):
         kwargs.setdefault("decimal_places", 9)
         kwargs.setdefault("max_digits", 36)
         super(MoneyValueField, self).__init__(**kwargs)
 
 
-class QuantityField(models.DecimalField):
-
+class QuantityField(FormattedDecimalField):
     def __init__(self, **kwargs):
         kwargs.setdefault("decimal_places", 9)
         kwargs.setdefault("max_digits", 36)
@@ -76,7 +100,7 @@ class QuantityField(models.DecimalField):
         super(QuantityField, self).__init__(**kwargs)
 
 
-class MeasurementField(models.DecimalField):
+class MeasurementField(FormattedDecimalField):
     KNOWN_UNITS = ("mm", "m", "kg", "g", "m3")
 
     def __init__(self, unit, **kwargs):

@@ -5,12 +5,48 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import re
+from decimal import Decimal
+
 import pytest
 from django.core.exceptions import ImproperlyConfigured
+from django.forms import ModelForm
+from django.utils.encoding import force_text
 
 from shoop.core.fields import MeasurementField
+from shoop.core.models import Product
 
 
 def test_measurement_field_doesnt_know_bananas():
     with pytest.raises(ImproperlyConfigured):
         scale = MeasurementField(unit="banana")
+
+
+def test_formatted_decimal_field():
+    """
+    Test that FormattedDecimalField doesn't return value in scientific
+    notation.
+    """
+
+    class TestModelForm(ModelForm):
+        class Meta:
+            model = Product
+            fields = ["width"]
+
+    values = [
+        "0E-9", "0E-30", "1E-9", "123E-10", "-123E-10", "1.12345666666666E20"
+    ]
+
+    for value in values:
+        product = Product(width=Decimal(value))
+        form = TestModelForm(instance=product)
+        rendered_form = force_text(form)
+        rendered_value = re.search('value="(.*)"', rendered_form).group(1)
+        assert rendered_value and "E" not in rendered_value
+
+    # Extremely large exponents should raise an exception so as not to
+    # produce excessively large files
+    large_value = "1.23E-10000"
+    product = Product(width=Decimal(large_value))
+    with pytest.raises(ValueError):
+        form = TestModelForm(instance=product)
