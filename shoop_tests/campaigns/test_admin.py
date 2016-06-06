@@ -6,13 +6,25 @@
 # LICENSE file in the root directory of this source tree.
 # test that admin actually saves catalog
 import datetime
-import pytest
 
+import pytest
 from django.utils.translation import activate
 
-from shoop.campaigns.admin_module.views import CatalogCampaignEditView, BasketCampaignEditView
-from shoop.campaigns.models.campaigns import CatalogCampaign, Coupon
-from shoop.testing.factories import get_default_shop, get_default_supplier, create_product
+from shoop.campaigns.admin_module.views import (
+    BasketCampaignEditView, CatalogCampaignEditView
+)
+from shoop.campaigns.forms import BasketCampaignForm
+from shoop.campaigns.models.basket_conditions import (
+    BasketTotalProductAmountCondition, ProductsInBasketCondition
+)
+from shoop.campaigns.models.campaigns import (
+    BasketCampaign, CatalogCampaign, Coupon
+)
+from shoop.core.models import Product
+from shoop.testing.factories import (
+    create_product, get_default_shop, get_default_supplier
+)
+from shoop.testing.mock_population import populate_if_required
 from shoop.testing.utils import apply_request_middleware
 from shoop_tests.utils import printable_gibberish
 from shoop_tests.utils.forms import get_form_data
@@ -126,3 +138,37 @@ def test_admin_basket_campaign_edit_view(rf, admin_user):
 
     campaign = form.save()
     assert campaign.coupon.pk == coupon.pk
+
+
+@pytest.mark.django_db
+def test_form_populate_initial_data(rf, admin_user):
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+
+    campaign = BasketCampaign(discount_percentage=0.1, shop=shop)
+    campaign.save()
+
+    # Test that correct initial value is returned for non-many-to-many field
+    product_amount_initial = 10
+    product_amount_condition = BasketTotalProductAmountCondition(product_count=product_amount_initial)
+    product_amount_condition.save()
+    campaign.conditions.add(product_amount_condition)
+
+    products_count_initial = 5
+    for i in range(products_count_initial):
+        create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price="20")
+    products_initial = Product.objects.all()[:products_count_initial]
+    assert len(products_initial) == products_count_initial
+
+    # Test that correct initial value is returned for many-to-many field
+    products_in_basket_condition = ProductsInBasketCondition.objects.create()
+    products_in_basket_condition.values = products_initial
+    products_in_basket_condition.save()
+    campaign.conditions.add(products_in_basket_condition)
+
+    assert len(campaign.conditions.all()) == 2
+
+    request=apply_request_middleware(rf.get("/"), user=admin_user)
+    form = BasketCampaignForm(request=request, instance=campaign)
+    assert form.fields["basket_product_condition"].initial == product_amount_initial
+    assert set(form.fields["basket_products_condition"].initial) == set([p.pk for p in products_initial])
