@@ -142,6 +142,8 @@ Xtheme
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 
+- Hide product order section when prices are hidden
+- Hide cart when prices are hidden
 - Show tracking codes in order detail
 - Remove ``ProductCrossSellType.COMPUTED`` from cross-sells plugin
 - Update cross-sells plugin to use ``ProductCrossSellType.BOUGHT_WITH``
