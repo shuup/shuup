@@ -32,7 +32,8 @@ def get_view_config(context, global_type=False):
     # This uses the Jinja context's technically-immutable vars dict
     # to cache the view configuration. This is fine in our case, I'd say.
     request = context.get("request")
-    config = context.vars.get("_xtheme_view_config")
+    config_key = "_xtheme_global_view_config" if global_type else "_xtheme_view_config"
+    config = context.vars.get(config_key)
     if (config is None):
         view_object = context.get("view")
         if view_object:
@@ -46,7 +47,7 @@ def get_view_config(context, global_type=False):
             draft=is_edit_mode(request),
             global_type=global_type,
         )
-        context.vars["_xtheme_view_config"] = config
+        context.vars[config_key] = config
     return config
 
 
