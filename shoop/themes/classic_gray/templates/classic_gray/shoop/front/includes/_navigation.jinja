@@ -101,9 +101,11 @@
             {% endif %}
             {% include "shoop/front/includes/language_changer.jinja" %}
         </ul>
+        {% if show_prices() %}
         <ul class="pull-right" id="navigation-basket-partial">
             {% include "classic_gray/navigation_basket_partial.jinja" with context %}
         </ul>
+        {% endif %}
     </div>
 </div>
 <div class="bottom-nav">
