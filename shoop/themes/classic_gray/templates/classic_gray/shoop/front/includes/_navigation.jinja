@@ -43,6 +43,14 @@
                             </a>
                         </li>
                         {% endif %}
+                        {% if shoop.urls.has_url("shoop:personal_wishlists") %}
+                        <li>
+                            <a href="{{ url("shoop:personal_wishlists") }}">
+                                <i class="fa fa-star fa-fw"></i>
+                                {% trans %}My wishlists{% endtrans %}
+                            </a>
+                        </li>
+                        {% endif %}
                         {% if user.is_superuser %}
                             <li><a href="{{ url("shoop_admin:dashboard") }}"><i class="fa fa-dashboard fa-fw"></i> {% trans %}Admin panel{% endtrans %}</a></li>
                         {% endif %}
