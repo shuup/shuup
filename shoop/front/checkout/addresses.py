@@ -60,7 +60,7 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
         fg = FormGroup(**self.get_form_kwargs())
         for kind in self.address_kinds:
             fg.add_form_def(kind, form_class=self.address_form_classes.get(kind, self.address_form_class))
-        if self.company_form_class:
+        if self.company_form_class and not self.request.customer:
             fg.add_form_def("company", self.company_form_class, required=False)
         return fg
 
