@@ -73,6 +73,7 @@ Localization
 Admin
 ~~~~~
 
+- Enable contact activation/deactivation
 - Allow contact adding and removing for company
 - Show companies in person contact edit page
 - Add target option to ``SearchResult``
@@ -110,6 +111,7 @@ Addons
 Front
 ~~~~~
 
+- Add login check for inactive contacts
 - Remove "Ordering for company" from checkout if logged in
 - Allow user to link company contact from account page
 - Log-in as company if user is a member of a company

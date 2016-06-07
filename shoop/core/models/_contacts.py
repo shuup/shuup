@@ -359,7 +359,7 @@ def get_person_contact(user):
         'last_name': getattr(user, 'last_name', ''),
         'email': getattr(user, 'email', ''),
     }
-    return PersonContact.objects.get_or_create(user=user, defaults=defaults)[0]
+    return PersonContact.objects.filter(is_active=True).get_or_create(user=user, defaults=defaults)[0]
 
 
 def get_company_contact(user):
@@ -378,4 +378,4 @@ def get_company_contact(user):
     contact = get_person_contact(user)
     if not contact:
         return None
-    return contact.company_memberships.first()
+    return contact.company_memberships.filter(is_active=True).first()

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-01 12:26+0000\n"
+"POT-Creation-Date: 2016-06-03 18:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -146,7 +146,29 @@ msgstr ""
 msgid "Create an user for the contact."
 msgstr ""
 
+msgid "Activate Contact"
+msgstr ""
+
+msgid "Deactivate Contact"
+msgstr ""
+
 msgid "Edit..."
+msgstr ""
+
+msgid "You can not deactivate a superuser."
+msgstr ""
+
+msgid "You can not deactivate yourself."
+msgstr ""
+
+#, python-format
+msgid "%(contact)s is now %(state)s."
+msgstr ""
+
+msgid "active"
+msgstr ""
+
+msgid "inactive"
 msgstr ""
 
 msgid "Person"
@@ -779,20 +801,8 @@ msgstr ""
 msgid "User bound to contact %(contact)s."
 msgstr ""
 
-msgid "You can not deactivate a superuser."
-msgstr ""
-
-msgid "You can not deactivate yourself."
-msgstr ""
-
 #, python-format
 msgid "%(user)s is now %(state)s."
-msgstr ""
-
-msgid "active"
-msgstr ""
-
-msgid "inactive"
 msgstr ""
 
 msgid "Username"
