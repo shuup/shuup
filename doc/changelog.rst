@@ -143,6 +143,7 @@ Xtheme
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 
+- Add Shoop Wishlist addon support for logged in users
 - Hide product order section when prices are hidden
 - Hide cart when prices are hidden
 - Show tracking codes in order detail
