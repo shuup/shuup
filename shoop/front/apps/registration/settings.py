@@ -9,3 +9,5 @@
 #: This corresponds to using the `default` or `simple`
 #: `django-registration` backends.
 SHOOP_REGISTRATION_REQUIRES_ACTIVATION = True
+
+REGISTRATION_FORM = 'registration.forms.RegistrationFormUniqueEmail'
