@@ -110,6 +110,7 @@ Addons
 Front
 ~~~~~
 
+- Ensure email is unique on new user registration
 - Remove "Ordering for company" from checkout if logged in
 - Allow user to link company contact from account page
 - Log-in as company if user is a member of a company
