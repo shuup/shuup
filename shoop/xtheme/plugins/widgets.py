@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
+from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
@@ -90,3 +91,21 @@ class TranslatableFieldWidget(forms.Widget):
         else:
             out_dict[FALLBACK_LANGUAGE_CODE] = value
         return out_dict
+
+
+class XThemeModelChoiceWidget(forms.Select):
+    def render(self, name, value, attrs=None, choices=()):
+        return mark_safe(
+            render_to_string("shoop/xtheme/_model_widget.jinja", {
+                "name": name,
+                "selected_value": value,
+                "objects": self.choices,
+            })
+        )
+
+
+class XThemeModelChoiceField(forms.ModelChoiceField):
+    widget = XThemeModelChoiceWidget
+
+    def label_from_instance(self, obj):
+        return obj

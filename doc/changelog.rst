@@ -135,6 +135,7 @@ Front
 Xtheme
 ~~~~~~
 
+- Add custom XThemeModelChoiceField to show admin URLs
 - Enhance default text plugin editor to remarkable markdown editor
 - Add support for global/multi-view placeholders
 - Add generic snippets plugin for doing simple integrations

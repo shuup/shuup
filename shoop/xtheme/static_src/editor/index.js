@@ -27,6 +27,14 @@ function post(args) {
     form.submit();
 }
 
+function updateModelChoiceWidgetURL(select) {
+    const selectedObject = select.options[select.selectedIndex];
+    const url = selectedObject.dataset.adminUrl;
+    const widgetExtraDiv = document.getElementById("extra_for_" + select.id);
+    const linkText = interpolate(gettext("Edit %s"), [selectedObject.text]);
+    widgetExtraDiv.innerHTML = url ? el("a", {"target": "_blank", "href": url}, [linkText]).outerHTML : "";
+}
+
 domready(() => {
     $(".layout-cell").on("click", function() {
         const {x, y} = this.dataset;
@@ -85,6 +93,12 @@ domready(() => {
             }
         }
         post({command: "change_plugin", plugin: this.value});
+    });
+    $(".xtheme-model-choice-widget").each(function(element) {
+        updateModelChoiceWidgetURL(element);
+        element.addEventListener("change", function() {
+            updateModelChoiceWidgetURL(document.getElementById(this.id));
+        });
     });
 });
 
