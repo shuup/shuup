@@ -110,6 +110,7 @@ Addons
 Front
 ~~~~~
 
+- Remove "Ordering for company" from checkout if logged in
 - Allow user to link company contact from account page
 - Log-in as company if user is a member of a company
 - Make ``get_product_cross_sells`` faster
