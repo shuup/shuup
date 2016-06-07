@@ -5,18 +5,12 @@
     {% call auth_block("subtle-slide-in") %}
         <h4 class="text-center">{% trans %}You have been logged out. Good bye!{% endtrans %}</h4>
         <div class="actions">
-            <div class="row">
-                <div class="col-md-6">
-                    <a class="btn btn-primary btn-lg btn-block" href="{{ url("shoop_admin:login") }}?next={{ url("shoop_admin:dashboard") }}">
-                        <i class="fa fa-sign-in"></i> {% trans %}Log in again{% endtrans %}
-                    </a>
-                </div>
-                <div class="col-md-6">
-                    <a class="btn btn-lg btn-block btn-gray" href="/">
-                        <i class="fa fa-shopping-cart"></i> {% trans %}Visit shop{% endtrans %}
-                    </a>
-                </div>
-            </div>
+            <a class="btn btn-primary btn-lg btn-block" href="{{ url("shoop_admin:login") }}?next={{ url("shoop_admin:dashboard") }}">
+                <i class="fa fa-sign-in"></i> {% trans %}Log in again{% endtrans %}
+            </a>
+            <a class="btn btn-lg btn-block btn-gray" href="/">
+                <i class="fa fa-shopping-cart"></i> {% trans %}Visit shop{% endtrans %}
+            </a>
         </div>
     {% endcall %}
 {% endblock %}
