@@ -84,12 +84,12 @@ class CampaignFormMixin(object):
 
                     self.rule_ids.add(obj.identifier)
                     kwargs = {
-                        "initial": self._get_initial_value(obj),
                         "required": False,  # rules are not required by default, validation is made later on
                         "help_text": obj.description
                     }
                     if isinstance(field, ManyToManyField):
                         kwargs.update({
+                            "initial": self._get_many_to_many_initial_values(obj),
                             "widget": Select2Multiple(model=obj.model)
                         })
                         formfield = forms.CharField(**kwargs)
@@ -98,10 +98,13 @@ class CampaignFormMixin(object):
                             formfield.widget.choices = [
                                 (object.pk, force_text(object)) for object in obj.model.objects.filter(pk__in=value)]
                     else:
+                        kwargs.update({
+                            "initial": self.get_initial_value(obj.identifier)
+                        })
                         formfield = field.formfield(**kwargs)
                     self.fields[obj.identifier] = formfield
 
-    def _get_initial_value(self, obj):
+    def _get_many_to_many_initial_values(self, obj):
         initial_value = self.get_initial_value(obj.identifier)
         if initial_value is None:
             return None
