@@ -73,6 +73,7 @@ Localization
 Admin
 ~~~~~
 
+- Add product price rounding in order edit
 - Add default ``is_active`` filter to Contact and User admins
 - Enable default values for ``ChoiceFilter``
 - Enable contact activation/deactivation
