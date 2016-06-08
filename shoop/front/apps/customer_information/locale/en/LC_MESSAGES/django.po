@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-28 22:49+0000\n"
+"POT-Creation-Date: 2016-06-08 18:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -23,6 +23,12 @@ msgid "Shoop Frontend - Customer Information Editing"
 msgstr ""
 
 msgid "Will become default user email when linked"
+msgstr ""
+
+msgid "Change Password"
+msgstr ""
+
+msgid "Save password"
 msgstr ""
 
 msgid "Company account information"
@@ -44,6 +50,9 @@ msgid "User account information"
 msgstr ""
 
 msgid "User information"
+msgstr ""
+
+msgid "Password successfully changed."
 msgstr ""
 
 msgid "Account information saved successfully."

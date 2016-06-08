@@ -111,6 +111,7 @@ Addons
 Front
 ~~~~~
 
+- Allow user to change password from account settings
 - Add login check for inactive contacts
 - Remove "Ordering for company" from checkout if logged in
 - Allow user to link company contact from account page

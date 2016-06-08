@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 import pytest
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.auth.hashers import check_password
 from django.core.urlresolvers import reverse
 from django.shortcuts import resolve_url
 
@@ -17,7 +18,7 @@ from shoop.core.models import (
     CompanyContact, get_company_contact, get_person_contact
 )
 from shoop.front.apps.customer_information.views import (
-    CompanyEditView, CustomerEditView
+    change_password, CompanyEditView, CustomerEditView
 )
 from shoop.testing.factories import get_default_shop
 from shoop.testing.soup_utils import extract_form_fields
@@ -155,3 +156,32 @@ def test_company_still_linked_if_customer_contact_edited(regular_user):
 
     assert response.status_code == 302
     assert get_company_contact(regular_user)
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("password_value,new_password_2,expected", [
+    (REGULAR_USER_PASSWORD, "12345", True),
+    ("some_other_password", "12345", False),
+    (REGULAR_USER_PASSWORD, "12345678", False),
+])
+def test_user_change_password(regular_user, password_value, new_password_2, expected):
+    get_default_shop()
+    assert check_password(REGULAR_USER_PASSWORD, regular_user.password)
+
+    client = SmartClient()
+    client.login(username=REGULAR_USER_USERNAME, password=REGULAR_USER_PASSWORD)
+    change_password_url = reverse("shoop:change_password")
+
+    new_password = "12345"
+    data = {
+        "old_password": password_value,
+        "new_password1": new_password,
+        "new_password2": new_password_2,
+    }
+
+    response, soup = client.response_and_soup(change_password_url, data, "post")
+    user = get_user_model().objects.get(pk=regular_user.pk)
+    assert regular_user == user
+
+    assert check_password(REGULAR_USER_PASSWORD, user.password) != expected
+    assert check_password(new_password, user.password) == expected

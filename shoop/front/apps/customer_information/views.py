@@ -5,6 +5,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.contrib import messages
+from django.contrib.auth.views import password_change
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
@@ -13,6 +14,19 @@ from shoop.core.models import get_company_contact, get_person_contact
 from shoop.utils.form_group import FormGroup
 
 from .forms import AddressForm, CompanyContactForm, PersonContactForm
+
+
+def change_password(request):
+    template_name = "shoop/customer_information/change_password.jinja"
+
+    response = password_change(
+        request,
+        post_change_redirect="shoop:customer_edit",
+        template_name=template_name
+    )
+    if response.status_code == 302:
+        messages.success(request, _("Password successfully changed."))
+    return response
 
 
 class CustomerEditView(FormView):
