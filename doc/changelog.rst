@@ -73,6 +73,8 @@ Localization
 Admin
 ~~~~~
 
+- Add default ``is_active`` filter to Contact and User admins
+- Enable default values for ``ChoiceFilter``
 - Enable contact activation/deactivation
 - Allow contact adding and removing for company
 - Show companies in person contact edit page

@@ -228,6 +228,21 @@ const Picotable = (function(m, storage) {
 
     }
 
+    function getDefaultValues(ctrl) {
+        const data = ctrl.vm.data();
+        const filters = {};
+        for (var i = 0; i < data.columns.length; i++) {
+            if (data.columns[i].filter){
+                var value = data.columns[i].filter.defaultChoice;
+                if (value) {
+                    filters[data.columns[i].id] = value;
+                }
+            }
+        }
+
+        return filters;
+    }
+
     function buildColumnRangeFilter(ctrl, col, value) {
         var setFilterValueFromInput = function(which) {
             const filterObj = Util.extend({}, ctrl.getFilterValue(col.id) || {}); // Copy current filter object
@@ -335,6 +350,10 @@ const Picotable = (function(m, storage) {
         if (data === null) {  // Not loaded, don't return anything
             return;
         }
+
+        // Set default filter values
+        var defaultValues = Util.extend(getDefaultValues(ctrl), ctrl.vm.filterValues());
+        ctrl.vm.filterValues(defaultValues);
 
         // Build header
         var columnHeaderCells = Util.map(data.columns, function(col) {

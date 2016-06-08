@@ -13,7 +13,7 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
 
 from shoop.admin.utils.picotable import (
-    Column, TextFilter, true_or_false_filter
+    ChoicesFilter, Column, TextFilter, true_or_false_filter
 )
 from shoop.admin.utils.views import PicotableListView
 
@@ -25,7 +25,11 @@ class UserListView(PicotableListView):
         Column("email", _(u"Email"), filter_config=TextFilter()),
         Column("first_name", _(u"First Name"), filter_config=TextFilter()),
         Column("last_name", _(u"Last Name"), filter_config=TextFilter()),
-        Column("is_active", _(u"Active"), filter_config=true_or_false_filter),
+        Column(
+            "is_active",
+            _(u"Active"),
+            filter_config=ChoicesFilter([(False, _("no")), (True, _("yes"))], default=True)
+        ),
         Column("is_staff", _(u"Staff"), filter_config=true_or_false_filter),
         Column("is_superuser", _(u"Superuser"), filter_config=true_or_false_filter),
     ]

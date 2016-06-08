@@ -141,6 +141,48 @@ def test_picotable_no_mobile_link_for_missing_object_url(rf, admin_user, regular
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("regular_user")
+def test_choice_filter_with_default(rf, admin_user, regular_user):
+    columns = [
+        Column("id", "Id", filter_config=Filter(), display=instance_id),
+        Column("username", "Username", sortable=False, filter_config=MultiFieldTextFilter(filter_fields=("username", "email"), operator="iregex")),
+        Column("email", "Email", sortable=False, filter_config=TextFilter()),
+        Column("is_superuser", "Is Superuser", display="superuser_display", filter_config=ChoicesFilter(choices=false_and_true())),
+        Column("date_joined", "Date Joined", filter_config=DateRangeFilter())
+    ]
+
+    is_active = [Column("is_active", "Is Active", filter_config=ChoicesFilter(choices=false_and_true))]
+    is_active_with_default = [Column("is_active", "Is Active", filter_config=ChoicesFilter(choices=false_and_true, default=True))]
+
+    query = {"perPage": 100, "page": 1, "sort": "+id"}
+
+    pico_no_defaults = get_pico(rf, columns=(columns + is_active))
+    data = pico_no_defaults.get_data(query)
+    user_data = data["items"][0]
+    user = get_user_model().objects.get(id=user_data["id"])
+    assert user.is_active
+
+    pico_with_defaults = get_pico(rf, columns=(columns + is_active_with_default))
+    data = pico_with_defaults.get_data(query)
+    user_data = data["items"][0]
+    user_with_defaults = get_user_model().objects.get(id=user_data["id"])
+    assert user_with_defaults == user
+
+    user.is_active = False
+    user.save()
+
+    data = pico_no_defaults.get_data(query)
+    user_data = data["items"][0]
+    new_user = get_user_model().objects.get(id=user_data["id"])
+    assert new_user == user
+
+    data = pico_with_defaults.get_data(query)
+    user_data = data["items"][0]
+    new_user_with_defaults = get_user_model().objects.get(id=user_data["id"])
+    assert new_user_with_defaults != user_with_defaults
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("regular_user")
 def test_picotable_correctly_sorts_translated_fields(rf, admin_user, regular_user):
     """
     Make sure that translated fields, such as product names, are correctly sorted
