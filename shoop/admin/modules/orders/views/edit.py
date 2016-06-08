@@ -99,8 +99,8 @@ def get_line_data_for_edit(shop, line):
         "text": line.text,
         "quantity": line.quantity,
         "sku": line.sku,
-        "baseUnitPrice": "{:.2f}".format(line.base_unit_price.value),
-        "unitPrice": "{:.2f}".format((total_price / line.quantity) if line.quantity else 0),
+        "baseUnitPrice": line.base_unit_price.value,
+        "unitPrice": total_price / line.quantity if line.quantity else 0,
         "unitPriceIncludesTax": shop.prices_include_tax,
         "errors": "",
         "step": ""
@@ -239,11 +239,11 @@ class OrderEditView(CreateOrUpdateView):
                 "name": force_text(product.tax_class),
             },
             "baseUnitPrice": {
-                "value": "{:.2f}".format(price_info.base_price.value),
+                "value": price_info.base_price.value,
                 "includesTax": price_info.base_price.includes_tax
             },
             "unitPrice": {
-                "value": "{:.2f}".format(price_info.price.value),
+                "value": price_info.price.value,
                 "includesTax": price_info.price.includes_tax
             }
         }
