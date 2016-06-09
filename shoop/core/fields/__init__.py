@@ -10,10 +10,12 @@ from __future__ import unicode_literals
 import decimal
 
 import babel
+from django import forms
 from django.core.exceptions import ImproperlyConfigured
 from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models import BLANK_CHOICE_DASH
+from django.forms.widgets import NumberInput
 from django.utils.translation import ugettext_lazy as _
 from jsonfield.fields import JSONField
 
@@ -62,6 +64,21 @@ class CurrencyField(models.CharField):
         super(CurrencyField, self).__init__(**kwargs)
 
 
+class FormattedDecimalFormField(forms.DecimalField):
+    # Chrome automatically converts a step with more than 5 decimals places to scientific notation
+    MAX_DECIMAL_PLACES_FOR_STEP = 5
+
+    def widget_attrs(self, widget):
+        # be more lenient when setting step than the default django widget_attrs
+        if isinstance(widget, NumberInput) and 'step' not in widget.attrs:
+            if self.decimal_places <= self.MAX_DECIMAL_PLACES_FOR_STEP:
+                step = format(decimal.Decimal('1') / 10 ** self.decimal_places, 'f')
+            else:
+                step = 'any'
+            widget.attrs.setdefault('step', step)
+        return super(FormattedDecimalFormField, self).widget_attrs(widget)
+
+
 class FormattedDecimalField(models.DecimalField):
     """
     DecimalField subclass to display decimal values in non-scientific
@@ -83,6 +100,10 @@ class FormattedDecimalField(models.DecimalField):
         if len(digits) > max_digits:
             raise ValueError('Too many digits for formatting: %r' % value)
         return format(val, 'f')
+
+    def formfield(self, **kwargs):
+        kwargs.setdefault("form_class", FormattedDecimalFormField)
+        return super(FormattedDecimalField, self).formfield(**kwargs)
 
 
 class MoneyValueField(FormattedDecimalField):
