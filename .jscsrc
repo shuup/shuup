@@ -14,7 +14,7 @@
     '**/node_modules/**',
     '**/bower_components/**',
     '**/vendor/**',
-    'shoop/xtheme/static/**',
-    'shoop/themes/**/static/**'
+    'shuup/xtheme/static/**',
+    'shuup/themes/**/static/**'
   ]
 }

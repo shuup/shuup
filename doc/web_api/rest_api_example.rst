@@ -1,7 +1,7 @@
 REST API Usage Example
 ======================
 
-This sketch of a script illustrates how to use the Shoop REST API.
+This sketch of a script illustrates how to use the Shuup REST API.
 
 .. code-block:: python
 
@@ -27,7 +27,7 @@ This sketch of a script illustrates how to use the Shoop REST API.
 
 
    def create_product():
-       product = send("shoop/product/", {
+       product = send("shuup/product/", {
            "tax_class": 1,
            "sku": str(uuid.uuid4()),
            "type": 1,
@@ -43,13 +43,13 @@ This sketch of a script illustrates how to use the Shoop REST API.
    def create_shop_product(product):
        product_id = product["id"]
 
-       shop_product = send("shoop/shop_product/", {
+       shop_product = send("shuup/shop_product/", {
            "product": product_id,
            "shop": 1,
        })
        assert not shop_product.get("primary_category")
 
-       shop_product = send("shoop/shop_product/%d/" % shop_product["id"], {
+       shop_product = send("shuup/shop_product/%d/" % shop_product["id"], {
            "primary_category": 1,
            "purchase_multiple": 38
        }, "patch")
@@ -58,7 +58,7 @@ This sketch of a script illustrates how to use the Shoop REST API.
 
 
    def create_product_price(product):
-       price = send("shoop/cgp_price/", {
+       price = send("shuup/cgp_price/", {
            "product": product["id"],
            "shop": None,
            "group": None,

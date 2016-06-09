@@ -1,0 +1,28 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="content-block">
+            <form method="post" id="create_payment">
+                {% csrf_token %}
+                {% include "shuup/admin/orders/_order_contents.jinja" with context %}
+                <div class="text-right">
+                    <h3>{% trans %}Paid{% endtrans %}: {{ order.get_total_paid_amount()|money }}</h3>
+                    <h3>{% trans %}Remaining{% endtrans %}: {{ order.get_total_unpaid_amount()|money }}</h3>
+                    <div class="text-center"><button id="total-unpaid" class="btn btn-info" value="{{ order.get_total_unpaid_amount().value }}" type="button">Get Remaining Total</button></div>
+                </div>
+                <hr>
+                {{ bs3.field(form.amount) }}
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block extra_js %}
+    <script>
+        $("#total-unpaid").click(function(event) {
+            event.preventDefault();
+            var total = $(this).val();
+            $("#id_amount").val(total);
+        })
+    </script>
+{% endblock %}

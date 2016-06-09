@@ -1,0 +1,34 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% block title %}{% trans %}Addons{% endtrans %}{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        {% if form.addons %}
+            <form method="post" id="addon_list">
+                {% csrf_token %}
+                {% call content_block(_("Installed addons"), "fa-puzzle-piece") %}
+                    <table class="table table-striped table-shuup">
+                        <thead>
+                            <tr>
+                                <th>{% trans %}Addon name{% endtrans %}</th>
+                                <th>{% trans %}Is enabled{% endtrans %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for addon in form.addons %}
+                            <tr>
+                                <td>{{ addon|title }}</td>
+                                <td>{{ form[addon]|safe }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endcall %}
+            </form>
+        {% else %}
+            <hr class="separator-line dark">
+            <div class="text-muted text-center lead"><i class="fa fa-exclamation-circle"></i> {% trans %}You don't have any installed addons{% endtrans %}</div>
+        {% endif %}
+    </div>
+{% endblock %}

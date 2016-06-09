@@ -1,15 +1,15 @@
-Shoop API Documentation
+Shuup API Documentation
 =======================
 
-Shoop Application API
+Shuup Application API
 ---------------------
 
-See :obj:`shoop.apps`.
+See :obj:`shuup.apps`.
 
-Shoop Packages and Modules
+Shuup Packages and Modules
 --------------------------
 
 .. toctree::
    :maxdepth: 3
 
-   shoop
+   shuup

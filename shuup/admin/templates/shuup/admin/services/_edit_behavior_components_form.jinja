@@ -1,0 +1,29 @@
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
+
+{% macro render_form(form, form_prefix, idx) %}
+{% set full_prefix = form_prefix + idx|string if idx == "__prefix__" else form_prefix %}
+<div class="panel panel-default panel-behavior-component panel-{{ full_prefix }}" id="panel-{{ full_prefix }}">
+    <div class="panel-heading" role="tab" id="heading-{{ full_prefix }}">
+        <h4><a role="button" data-toggle="collapse" href="#collapse{{ full_prefix }}" aria-expanded="true" aria-controls="collapse{{ full_prefix }}">{{ form.instance.name }}</a></h4>
+        <p>{{ form.instance.help_text }}</p>
+    </div>
+    <div id="collapse{{ full_prefix }}" class="component-form panel-collapse collapse{% if  idx == "__prefix__" or form.errors %} in{% endif %}" role="tabpanel">
+        {% if form.translated_field_names %}
+            {{ language_dependent_content_tabs(form, tab_id_prefix=full_prefix) }}
+            <div class="form-divider"></div>
+        {% else %}
+            <div class="language-tabs"></div>
+        {% endif %}
+        {{ render_monolingual_fields(form) }}
+    </div>
+</div>
+{% endmacro %}
+
+{{ formset.management_form }}
+<div class="hide" id="{{ form_prefix }}-placeholder">
+    {{ render_form(formset.empty_form, form_prefix, "__prefix__") }}
+</div>
+{%  for f in formset %}
+    {% set form_prefix = form_prefix + "-" + (loop.index - 1)|string %}
+    {{ render_form(f, form_prefix, loop.index) }}
+{% endfor %}

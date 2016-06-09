@@ -18,7 +18,7 @@ The ``doccov.py`` tool checks for docstring coverage and docstring style.
 
 .. code-block::  shell
 
-   python _misc/doccov.py -o report.html shoop
+   python _misc/doccov.py -o report.html shuup
 
 
 Ensure Code Style
@@ -33,7 +33,7 @@ The ``ensure_code_style.py`` tool has a couple checkers:
 
 .. code-block::  shell
 
-   python _misc/ensure_code_style.py shoop
+   python _misc/ensure_code_style.py shuup
 
 
 Ensure License Headers
@@ -44,9 +44,9 @@ license header.  It can also optionally write the headers to the files by itself
 
 .. code-block::  shell
 
-   python _misc/ensure_license_headers.py shoop
+   python _misc/ensure_license_headers.py shuup
    # or to write changes:
-   python _misc/ensure_license_headers.py -w shoop
+   python _misc/ensure_license_headers.py -w shuup
 
 
 Ensure Unicode Literals
@@ -59,6 +59,6 @@ It can also optionally add these statements itself.
 
 .. code-block::  shell
 
-   python _misc/ensure_unicode_literals.py shoop
+   python _misc/ensure_unicode_literals.py shuup
    # or to write changes:
-   python _misc/ensure_unicode_literals.py -w shoop
+   python _misc/ensure_unicode_literals.py -w shuup

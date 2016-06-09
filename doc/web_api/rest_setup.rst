@@ -1,8 +1,8 @@
-Setting up the Shoop REST API
+Setting up the Shuup REST API
 =============================
 
 
-First, add ``rest_framework`` and ``shoop.api`` to your ``INSTALLED_APPS``.
+First, add ``rest_framework`` and ``shuup.api`` to your ``INSTALLED_APPS``.
 
 Then -- and this differs from Django REST Framework's defaults -- you *must* add
 the ``REST_FRAMEWORK`` configuration dict to your settings.  Django REST Framework
@@ -27,7 +27,7 @@ Now just add the API to your root urlconf.
 
    urlpatterns = patterns(
        # *snip*
-       url(r'^api/', include('shoop.api.urls')),
+       url(r'^api/', include('shuup.api.urls')),
        # *snip*
    )
 

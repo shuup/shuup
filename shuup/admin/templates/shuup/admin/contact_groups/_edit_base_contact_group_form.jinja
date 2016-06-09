@@ -1,0 +1,9 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
+
+{% set base_formset = form["base"] %}
+
+{% call content_block(_("General information"), "fa-info-circle") %}
+    {{ language_dependent_content_tabs(base_formset) }}
+    {{ render_monolingual_fields(base_formset) }}
+{% endcall %}

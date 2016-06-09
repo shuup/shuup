@@ -1,0 +1,9 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% from "shuup/admin/macros/multilanguage.jinja" import render_monolingual_fields %}
+{% set sales_range_form = form[form_def.name] %}
+{% set shop_name_prefix = sales_range_form.instance.shop.name ~ " - " %}
+
+{% call content_block(shop_name_prefix ~_("Sales Ranges"), "fa-money") %}
+    <p>{% trans %}Customers within this sales range are assigned to this contact group.{% endtrans %}</p>
+    {{ render_monolingual_fields(sales_range_form) }}
+{% endcall %}
