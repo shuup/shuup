@@ -466,6 +466,11 @@ const Picotable = (function(m, storage) {
     function renderMobileTable(ctrl) {
         var data = ctrl.vm.data();
         if (data === null) return; // Not loaded, don't return anything
+
+        // Set default filter values
+        var defaultValues = Util.extend(getDefaultValues(ctrl), ctrl.vm.filterValues());
+        ctrl.vm.filterValues(defaultValues);
+
         var isPick = !!ctrl.vm.pickId();
         var listItems = Util.map(data.items, function(item) {
             var content = null;
