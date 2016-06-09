@@ -3,7 +3,7 @@
         {% set url = (shoop_admin.model_url(object, "detail") if pk else "") %}
         <option
             value="{{ pk }}"
-            {% if pk == selected_value %}selected{% endif %}
+            {% if pk|string == selected_value|string %}selected{% endif %}
             data-admin-url="{{ url }}"
          >{{ object }}</option>
     {% endfor %}
