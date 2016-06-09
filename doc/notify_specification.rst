@@ -20,7 +20,7 @@ SMS, phone or even instant messages, as delivery channels are also
 pluggable.
 
 It is known that the notification framework partially overlaps the
-Django signal system as used in Shoop in scope. However Django signals
+Django signal system as used in Shuup in scope. However Django signals
 are not user-configurable and their purpose is different.
 
 Glossary
@@ -52,7 +52,7 @@ Events
 
 An Event represents a single event that may occur in the system.
 
-Events are registered through the Shoop Apps' ``provides`` mechanism and
+Events are registered through the Shuup Apps' ``provides`` mechanism and
 must have unique identifiers ("event identifier").
 
 Events provide typed variables that may be utilized in script items, in

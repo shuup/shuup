@@ -1,0 +1,12 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% block content %}
+    <div class="container-fluid">
+        <form method="post" enctype="multipart/form-data" id="upload_form">
+            {% csrf_token %}
+            {% call content_block(_("Select file"), "fa-file-zip-o") %}
+                {{ bs3.field(form.file) }}
+            {% endcall %}
+        </form>
+    </div>
+{% endblock %}

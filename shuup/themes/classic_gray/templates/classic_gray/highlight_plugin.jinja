@@ -1,0 +1,11 @@
+{%- import "shuup/front/macros.jinja" as macros with context -%}
+<section class="product-highlight-plugin">
+    {% if title %}<h2>{{ title }}</h2>{% endif %}
+    <div class="row">
+    {% for product in products if shuup.product.is_visible(product) %}
+        <div class="col-sm-4 col-md-3 single-product">
+            {{ macros.product_box(product) }}
+        </div>
+    {% endfor %}
+    </div>
+</section>

@@ -1,20 +1,20 @@
-Getting Started with Shoop Development
+Getting Started with Shuup Development
 ======================================
 
 .. note::
 
-   If you are planning on using Shoop for developing your own shop,
+   If you are planning on using Shuup for developing your own shop,
    read the :doc:`other Getting Started guide <getting_started>` instead.
 
-Installation for Shoop Development
+Installation for Shuup Development
 ----------------------------------
 
-To start developing Shoop, you'll need a Git checkout of Shoop and a
-Github fork of Shoop for creating pull requests.  Github pull requests
-are used to get your changes into Shoop Base.
+To start developing Shuup, you'll need a Git checkout of Shuup and a
+Github fork of Shuup for creating pull requests.  Github pull requests
+are used to get your changes into Shuup Base.
 
- 1. If you haven't done so already, create a fork of Shoop in Github by
-    clicking the "Fork" button at https://github.com/shoopio/shoop and
+ 1. If you haven't done so already, create a fork of Shuup in Github by
+    clicking the "Fork" button at https://github.com/shuupio/shuup and
     clone the fork to your computer as usual. See `Github Help about
     forking repos <https://help.github.com/articles/fork-a-repo/>`__ for
     details.
@@ -28,10 +28,10 @@ are used to get your changes into Shoop Base.
 
     .. code-block:: shell
 
-       virtualenv shoop-venv
-       . shoop-venv/bin/activate
+       virtualenv shuup-venv
+       . shuup-venv/bin/activate
 
- 3. Finally, you'll need to install Shoop in the activated virtualenv in
+ 3. Finally, you'll need to install Shuup in the activated virtualenv in
     development mode.  To do that, run the following commands in the
     root of the checkout (within the activated virtualenv):
 
@@ -48,21 +48,21 @@ project set up to use an SQLite database. It is used by the test suite
 and is also useful for development on its own.
 
 Practically the only difference to a normal Django project is that instead
-of ``python manage.py``, one uses ``python -m shoop_workbench``.
+of ``python manage.py``, one uses ``python -m shuup_workbench``.
 
-To get started with Workbench, invoke the following in the Shoop working copy
+To get started with Workbench, invoke the following in the Shuup working copy
 root.
 
 .. code-block:: shell
 
    # Migrate database.
-   python -m shoop_workbench migrate
+   python -m shuup_workbench migrate
 
    # Import some basic data.
-   python -m shoop_workbench shoop_populate_mock --with-superuser=admin
+   python -m shuup_workbench shuup_populate_mock --with-superuser=admin
 
    # Run the Django development server (on port 8000 by default).
-   python -m shoop_workbench runserver
+   python -m shuup_workbench runserver
 
 You can use the credentials ``admin``/``admin``, that is username ``admin``
 and password ``admin`` to log in as a superuser on http://127.0.0.1:8000/ .
@@ -70,10 +70,10 @@ and password ``admin`` to log in as a superuser on http://127.0.0.1:8000/ .
 Building resources
 ------------------
 
-Shoop uses JavaScript and CSS resources that are compiled using various
+Shuup uses JavaScript and CSS resources that are compiled using various
 Node.js packages.  These resources are compiled automatically by
-``setup.py`` when installing Shoop with pip, but if you make changes to
-the source files (e.g. under ``shoop/admin/static_src``), the resources
+``setup.py`` when installing Shuup with pip, but if you make changes to
+the source files (e.g. under ``shuup/admin/static_src``), the resources
 have to be rebuilt.
 
 This can be done with
@@ -95,9 +95,9 @@ To run tests in the active virtualenv:
 
 .. code-block:: shell
 
-   py.test -v shoop_tests
+   py.test -v shuup_tests
    # Or with coverage
-   py.test -vvv --cov shoop --cov-report html shoop_tests
+   py.test -vvv --cov shuup --cov-report html shuup_tests
 
 To run tests for all supported Python versions run:
 
@@ -110,12 +110,12 @@ Collecting translatable messages
 --------------------------------
 
 To update the PO catalog files which contain translatable (and
-translated) messages, issue ``shoop_makemessages`` management command in
-the ``shoop`` directory:
+translated) messages, issue ``shuup_makemessages`` management command in
+the ``shuup`` directory:
 
 .. code-block:: shell
 
-   cd shoop && python -m shoop_workbench shoop_makemessages
+   cd shuup && python -m shuup_workbench shuup_makemessages
 
 Docstring coverage
 ------------------
@@ -124,4 +124,4 @@ The DocCov script is included for calculating some documentation coverage metric
 
 .. code-block:: shell
 
-   python _misc/doccov.py shoop/core -o doccov.html
+   python _misc/doccov.py shuup/core -o doccov.html

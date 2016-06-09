@@ -1,0 +1,83 @@
+{% extends "shuup/front/checkout/_base.jinja" %}
+
+{% macro format_address(address) %}
+<address>
+    {% for line in address.as_string_list() %}
+        {% if loop.first %}
+            <strong>{{ line }}</strong>
+        {% else %}
+            {{ line }}
+        {% endif %}
+        {% if not loop.last %}<br>{% endif %}
+    {% endfor %}
+</address>
+{% endmacro %}
+
+{% macro method_panel(panel_title, method_title, address_title, method, address) %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">{{ panel_title }}</h2>
+        </div>
+        <div class="panel-body">
+            <dl class="dl-horizontal">
+                <dt>{{ method_title }}</dt>
+                <dd>{{ method.name }}</dd>
+                <dt>{{ address_title }}:</dt>
+                <dd>
+                    {{ format_address(address) }}
+                </dd>
+            </dl>
+        </div>
+    </div>
+{% endmacro %}
+
+{% block checkout_phase_content %}
+    <div class="well">
+        {% include "shuup/front/checkout/_confirm_table.jinja" %}
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            {{ method_panel(
+                _("Delivery"), _("Delivery method"), _("Shipping address"),
+                basket.shipping_method,
+                basket.shipping_address
+            ) }}
+        </div>
+        <div class="col-sm-6">
+            {{ method_panel(
+                _("Billing"), _("Payment method"), _("Billing address"),
+                basket.payment_method,
+                basket.billing_address
+            ) }}
+        </div>
+    </div>
+    {% if orderable %}
+        <form role="form" method="post">
+            {% csrf_token %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        {% trans %}Add comment{% endtrans %}
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    {{ bs3.field(form.comment) }}
+                </div>
+            </div>
+            <hr>
+            {{ macros.render_field(form.marketing) }}
+            {{ macros.render_field(form.accept_terms) }}
+            <hr>
+            <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fa fa-check"></i> {% trans %}Place Order{% endtrans %}
+            </button>
+        </form>
+    {% else %}
+        <h2>{% trans %}There are errors{% endtrans %}</h2>
+        <ul>
+        {% for error in errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block, content_with_sidebar %}
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs %}
+
+{% block content %}
+    {% call content_with_sidebar(content_id="product_type_form") %}
+        <form method="post" id="product_type_form">
+            {% csrf_token %}
+            {% call content_block(_("General information"), "fa-info-circle") %}
+                {% call(form, language, map) language_dependent_content_tabs(form) %}
+                    {{ bs3.field(form[map.name]) }}
+                {% endcall %}
+            {% endcall %}
+            {% call content_block(_("Attributes"), "fa-tags") %}
+                {{ bs3.field(form.attributes) }}
+            {% endcall %}
+        </form>
+    {% endcall %}
+{% endblock %}

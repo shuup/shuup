@@ -1,4 +1,4 @@
-Shoop documentation
+Shuup documentation
 ===================
 
 Contents

@@ -13,10 +13,10 @@ install:
   - pip install -e .[everything]
 script:
   - flake8
-  - isort -c -rc shoop
-  - _misc/ensure_license_headers.py -s shoop
-  - _misc/check_sanity.py shoop
-  - py.test -ra -vvv --doctest-modules --cov shoop shoop_tests shoop
+  - isort -c -rc shuup
+  - _misc/ensure_license_headers.py -s shuup
+  - _misc/check_sanity.py shuup
+  - py.test -ra -vvv --doctest-modules --cov shuup shuup_tests shuup
 after_success: coveralls
 notifications:
   slack:

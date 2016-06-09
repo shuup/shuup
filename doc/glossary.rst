@@ -6,15 +6,15 @@ Software Components
 
 .. glossary::
 
-    Shoop
-        Shoop is a framework for building web shops or ordering portals.
+    Shuup
+        Shuup is a framework for building web shops or ordering portals.
 
-    Shoop Core
-        Shoop Core is the kernel of the Shoop. It is part of every Shoop
+    Shuup Core
+        Shuup Core is the kernel of the Shuup. It is part of every Shuup
         installation.
 
-    Shoop Base
-        Shoop Base contains Shoop Core and optional :term:`modules
+    Shuup Base
+        Shuup Base contains Shuup Core and optional :term:`modules
         <Module>`.
 
     Module

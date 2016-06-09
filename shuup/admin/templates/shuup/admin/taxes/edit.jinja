@@ -1,0 +1,6 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import single_section_form with context %}
+
+{% block content %}
+    {{ single_section_form("tax_class_form", form) }}
+{% endblock %}

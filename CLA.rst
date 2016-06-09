@@ -1,12 +1,12 @@
-Shoop Contributor License Agreement
+Shuup Contributor License Agreement
 ===================================
 
-Thank you for your interest in contributing to Shoop ("We" or "Us").
+Thank you for your interest in contributing to Shuup ("We" or "Us").
 
 This contributor agreement ("Agreement") documents the rights granted by
 contributors to Us. To make this document effective, please sign it and
 send it to Us by electronic submission, following the instructions at
-https://shoop.io/contributions. This is a legally binding document, so
+https://shuup.com/contributions. This is a legally binding document, so
 please read it carefully before agreeing to it. The Agreement may cover
 more than one software project managed by Us.
 
@@ -29,7 +29,7 @@ beneficial ownership of such entity.
 "Contribution" means any work of authorship that is Submitted by You to
 Us in which You own or assert ownership of the Copyright. If You do not
 own the Copyright in the entire work of authorship, please follow the
-instructions in https://shoop.io/contributions.
+instructions in https://shuup.com/contributions.
 
 "Copyright" means all rights protecting works of authorship owned or
 controlled by You, including copyright, moral and neighboring rights, as
@@ -127,7 +127,7 @@ You confirm that:
     guardian sign the Agreement.
 
 (d) You have followed the instructions in
-    https://shoop.io/contributions, if You do not own the Copyright in
+    https://shuup.com/contributions, if You do not own the Copyright in
     the entire work of authorship Submitted.
 
 4. Disclaimer

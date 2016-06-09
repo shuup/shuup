@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-# This file is part of Shoop.
+# This file is part of Shuup.
 #
-# Copyright (c) 2012-2016, Shoop Ltd. All rights reserved.
+# Copyright (c) 2012-2016, Shuup Ltd. All rights reserved.
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -83,8 +83,8 @@ class VariantProcessor:
 
 
 input_files = [
-    {"input": "shoop_logo_only.svg", "width": 1200},
-    {"input": "shoop_logo_with_text.svg", "width": 1800},
+    {"input": "shuup_logo_only.svg", "width": 1200},
+    {"input": "shuup_logo_with_text.svg", "width": 1800},
 ]
 
 formats = [

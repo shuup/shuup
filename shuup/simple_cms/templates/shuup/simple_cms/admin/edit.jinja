@@ -1,0 +1,36 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block, content_with_sidebar %}
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs %}
+
+{% block title %}{{ page.title or _("New Page") }}{% endblock %}
+
+{% block content %}
+    {% call content_with_sidebar(content_id="page_form") %}
+        <form method="post" id="page_form">
+            {% csrf_token %}
+            {% call content_block(_("General Information"), "fa-info-circle") %}
+                {% call(form, language, map) language_dependent_content_tabs(form, tab_id_prefix="additional-language") %}
+                    {{ bs3.field(form[map.title]) }}
+                    {{ bs3.field(form[map.url]) }}
+                    {{ bs3.field(form[map.content], widget_class="remarkable-field") }}
+                {% endcall %}
+            {% endcall %}
+
+            {% call content_block(_("Availability"), "fa-clock-o") %}
+                {{ bs3.field(form.visible_in_menu) }}
+                {{ bs3.field(form.available_from) }}
+                {{ bs3.field(form.available_to) }}
+            {% endcall %}
+
+            {% call content_block(_("Extras"), "fa-plus-circle") %}
+                {{ bs3.field(form.parent) }}
+                {{ bs3.field(form.list_children_on_page) }}
+                {{ bs3.field(form.identifier) }}
+            {% endcall %}
+        </form>
+    {% endcall %}
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{{ static("shuup_admin/js/remarkable.js") }}"></script>
+{% endblock %}

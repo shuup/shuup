@@ -1,23 +1,23 @@
 Addons
 ======
 
-Shoop contains facilities for installing, detecting, loading and configuring
+Shuup contains facilities for installing, detecting, loading and configuring
 additional functionality with little or no system administration knowledge
 needed.  Packages that can be loaded in this way are called Addons.  Addons
 aren't very special, though: under the surface they are nothing more than
 standard Django applications that are discovered using the `Setuptools Entry
 Points mechanism <entrypoints_>`_.  Functionality registration after this
-occurs via the Shoop :doc:`Provides <provides>` subsystem.
+occurs via the Shuup :doc:`Provides <provides>` subsystem.
 
 Configuring your project to load addons
 ---------------------------------------
 
-The Shoop addon manager handles adding addons into Django's ``INSTALLED_APPS``
+The Shuup addon manager handles adding addons into Django's ``INSTALLED_APPS``
 list during project initialization time.
 
 It's easy to convert a standard Django configuration to be addons enabled.
 
-For instance, take a bare-bones Shoop core installation.
+For instance, take a bare-bones Shuup core installation.
 
 .. code-block:: python
 
@@ -28,18 +28,18 @@ For instance, take a bare-bones Shoop core installation.
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
-        'shoop.core',
-        'shoop.customer_group_pricing',
-        'shoop.simple_supplier',
-        'shoop.default_tax',
-        'shoop.admin',
+        'shuup.core',
+        'shuup.customer_group_pricing',
+        'shuup.simple_supplier',
+        'shuup.default_tax',
+        'shuup.admin',
     )
 
 The management interface for the addon loader requires one additional
-configuration key, ``SHOOP_ENABLED_ADDONS_FILE``, to name a path to a
+configuration key, ``SHUUP_ENABLED_ADDONS_FILE``, to name a path to a
 configuration file that is writable by the application server.
 
-The ``shoop.addons.add_enabled_addons()`` method manages reading this file,
+The ``shuup.addons.add_enabled_addons()`` method manages reading this file,
 cross-referencing them with the entry points published by Setuptools and
 adding them into the installed apps list.
 
@@ -47,36 +47,36 @@ Putting this all together,
 
 .. code-block:: python
 
-    from shoop.addons import add_enabled_addons
+    from shuup.addons import add_enabled_addons
 
     # *snip*
 
     # This varies depending on how your particular project arranges writable files.
-    SHOOP_ENABLED_ADDONS_FILE = os.path.join(BASE_DIR, "enabled_addons")
+    SHUUP_ENABLED_ADDONS_FILE = os.path.join(BASE_DIR, "enabled_addons")
 
-    INSTALLED_APPS = add_enabled_addons(SHOOP_ENABLED_ADDONS_FILE, (
+    INSTALLED_APPS = add_enabled_addons(SHUUP_ENABLED_ADDONS_FILE, (
         'django.contrib.admin',
         'django.contrib.auth',
         'django.contrib.contenttypes',
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
-        'shoop.core',
-        'shoop.customer_group_pricing',
-        'shoop.simple_supplier',
-        'shoop.default_tax',
-        'shoop.admin',
-        'shoop.addons',
+        'shuup.core',
+        'shuup.customer_group_pricing',
+        'shuup.simple_supplier',
+        'shuup.default_tax',
+        'shuup.admin',
+        'shuup.addons',
     ))
 
     # *snip*
 
-will enable your project to load Shoop addons.
+will enable your project to load Shuup addons.
 
 Installing and configuring addons
 ---------------------------------
 
-Once ``shoop.addons`` is in your ``INSTALLED_APPS`` list, a section for
+Once ``shuup.addons`` is in your ``INSTALLED_APPS`` list, a section for
 managing addons appears in the administration panel.
 
 Developing addons
@@ -94,15 +94,15 @@ Preparing addons for distribution
 
 When the time comes to actually distribute your new addon, `configure your
 package according to the PyPUG guidelines <pypug-dist_>`_ and within the
-``entry_points`` section add a ``shoop.addon`` entry point stanza, such as
-this (example taken from the `shoop-pugme <https://github.com/akx/shoop-
+``entry_points`` section add a ``shuup.addon`` entry point stanza, such as
+this (example taken from the `shuup-pugme <https://github.com/akx/shuup-
 pugme>`_ addon):
 
 .. code-block:: python
 
     setuptools.setup(
         # ...
-        entry_points={"shoop.addon": "shoop_pugme=shoop_pugme"}
+        entry_points={"shuup.addon": "shuup_pugme=shuup_pugme"}
     )
 
 

@@ -1,0 +1,34 @@
+{% extends "shuup/front/base.jinja" %}
+
+{% block title -%}
+    {{ _("Order History") }}
+{%- endblock %}
+
+{% block content %}
+    <h1 class="page-header">
+        {{ _("Order history") }}
+    </h1>
+
+    {% if orders %}
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th>{{ _('Identifier') }}</th>
+                <th>{{ _('Order date') }}</th>
+                <th>{{ _('Status') }}</th>
+                <th>{{ _('Total price') }}</th>
+            </tr>
+            {% for order in orders %}
+                <tr>
+                    <td><a href="{{ url("shuup:show-order", pk=order.pk) }}">
+                            {{- order.identifier -}}
+                    </a></td>
+                    <td>{{ order.order_date|datetime }}</td>
+                    <td>{{ order.get_status_display() }}</td>
+                    <td>{{ order.taxful_total_price|money }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>{{ _("No orders") }}</p>
+    {% endif %}
+{% endblock %}

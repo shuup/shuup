@@ -30,11 +30,11 @@ Fira Sans
 * License: SIL Open Font License, 1.1 <http://scripts.sil.org/OFL>
 * Repository: https://github.com/mozilla/Fira
 
-* shoop/admin/static/shoop_admin/fonts/fira/FiraSans-Bold.woff
-* shoop/admin/static/shoop_admin/fonts/fira/FiraSans-BoldItalic.woff
-* shoop/admin/static/shoop_admin/fonts/fira/FiraSans-Italic.woff
-* shoop/admin/static/shoop_admin/fonts/fira/FiraSans-Light.woff
-* shoop/admin/static/shoop_admin/fonts/fira/FiraSans-Regular.woff
+* shuup/admin/static/shuup_admin/fonts/fira/FiraSans-Bold.woff
+* shuup/admin/static/shuup_admin/fonts/fira/FiraSans-BoldItalic.woff
+* shuup/admin/static/shuup_admin/fonts/fira/FiraSans-Italic.woff
+* shuup/admin/static/shuup_admin/fonts/fira/FiraSans-Light.woff
+* shuup/admin/static/shuup_admin/fonts/fira/FiraSans-Regular.woff
 
 Font Awesome
 ------------
@@ -44,9 +44,9 @@ Font Awesome
 * License Details: http://fontawesome.io/license/
 * Repository: https://github.com/FortAwesome/Font-Awesome
 
-* shoop/admin/static/shoop_admin/fonts/fontawesome-webfont.eot
-* shoop/admin/static/shoop_admin/fonts/fontawesome-webfont.svg
-* shoop/admin/static/shoop_admin/fonts/fontawesome-webfont.ttf
-* shoop/admin/static/shoop_admin/fonts/fontawesome-webfont.woff
-* shoop/admin/static/shoop_admin/fonts/fontawesome-webfont.woff2
-* shoop/admin/static/shoop_admin/fonts/FontAwesome.otf
+* shuup/admin/static/shuup_admin/fonts/fontawesome-webfont.eot
+* shuup/admin/static/shuup_admin/fonts/fontawesome-webfont.svg
+* shuup/admin/static/shuup_admin/fonts/fontawesome-webfont.ttf
+* shuup/admin/static/shuup_admin/fonts/fontawesome-webfont.woff
+* shuup/admin/static/shuup_admin/fonts/fontawesome-webfont.woff2
+* shuup/admin/static/shuup_admin/fonts/FontAwesome.otf
