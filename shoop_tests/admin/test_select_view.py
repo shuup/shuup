@@ -9,11 +9,23 @@
 import json
 import pytest
 
+from django.contrib.auth import get_user_model
 from django.utils.translation import activate
 
 from shoop.admin.views.select import MultiselectAjaxView
-from shoop.core.models import CompanyContact, PersonContact
+from shoop.core.models import CompanyContact, get_person_contact, PersonContact
 from shoop.testing.factories import create_product
+from shoop_tests.utils.fixtures import regular_user
+
+
+def _get_search_results(rf, view, model_name, search_str):
+    request = rf.get("sa/search", {
+        "model": model_name,
+        "search": search_str
+    })
+    response = view(request)
+    assert response.status_code == 200
+    return json.loads(response.content.decode("utf-8")).get("results")
 
 
 @pytest.mark.django_db
@@ -78,11 +90,30 @@ def test_ajax_select_view_with_contacts(rf, contact_cls):
     assert len(results) == 0
 
 
-def _get_search_results(rf, view, model_name, search_str):
-    request = rf.get("sa/search", {
-        "model": model_name,
-        "search": search_str
-    })
-    response = view(request)
-    assert response.status_code == 200
-    return json.loads(response.content.decode("utf-8")).get("results")
+@pytest.mark.django_db
+def test_multiselect_inactive_users_and_contacts(rf, regular_user):
+    """
+    Make sure inactive users and contacts are filtered from search results.
+    """
+    view = MultiselectAjaxView.as_view()
+    assert "joe" in regular_user.username
+
+    results = _get_search_results(rf, view, "auth.User", "joe")
+    assert len(results) == 1
+    assert results[0].get("id") == regular_user.id
+    assert results[0].get("name") == regular_user.username
+
+    contact = PersonContact.objects.create(first_name="Joe", last_name="Somebody")
+
+    results = _get_search_results(rf, view, "shoop.PersonContact", "joe")
+
+    assert len(results) == 1
+    assert results[0].get("id") == contact.id
+    assert results[0].get("name") == contact.name
+
+    contact.is_active = False
+    contact.save()
+
+    results = _get_search_results(rf, view, "shoop.PersonContact", "joe")
+
+    assert len(results) == 0
