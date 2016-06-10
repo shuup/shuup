@@ -132,7 +132,7 @@ def get_price_info(shop, customer, product, quantity):
         shop=shop,
         customer=(customer or AnonymousContact()),
     )
-    return pricing_mod.get_price_info(pricing_ctx, product, quantity=quantity)
+    return product.get_price_info(pricing_ctx, quantity=quantity)
 
 
 class OrderEditView(CreateOrUpdateView):

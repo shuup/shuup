@@ -4,20 +4,23 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import datetime
+import decimal
+import json
 from decimal import Decimal
 
-import datetime
 import pytest
-
 from django.core.exceptions import ValidationError
 from django.utils.timezone import now
 from django.utils.translation import activate
 
+from shoop.admin.modules.orders.views.edit import OrderEditView
 from shoop.campaigns.models.campaigns import CatalogCampaign
 from shoop.campaigns.models.catalog_filters import CategoryFilter
 from shoop.campaigns.models.context_conditions import ContactGroupCondition
 from shoop.core.models import Category
 from shoop.testing.factories import create_product, get_default_customer_group
+from shoop.testing.utils import apply_request_middleware
 from shoop_tests.campaigns import initialize_test
 
 
@@ -347,3 +350,27 @@ def test_availability(rf):
     campaign.save()
 
     assert not campaign.is_available()
+
+
+@pytest.mark.django_db
+def test_admin_order_with_campaign(rf, admin_user):
+    request, shop, group = initialize_test(rf, False)
+    customer = request.customer
+    cat = Category.objects.create(name="test")
+    rule1, rule2 = create_condition_and_filter(cat, request)
+    campaign = CatalogCampaign.objects.create(shop=shop, name="test", discount_amount_value="10", active=True)
+    campaign.conditions.add(rule1)
+    product = create_product("Just-A-Product-Too", shop, default_price=20)
+    shop_product = product.get_shop_instance(shop)
+    shop_product.categories.add(cat)
+
+    request = apply_request_middleware(rf.get("/", {
+        "command": "product_data",
+        "shop_id": shop.id,
+        "customer_id": customer.id,
+        "id": product.id,
+        "quantity": 1
+    }), user=admin_user)
+    response = OrderEditView.as_view()(request)
+    data = json.loads(response.content.decode("utf8"))
+    assert decimal.Decimal(data['unitPrice']['value']) == shop.create_price(10).value

@@ -80,6 +80,7 @@ export const retrieveCustomerData = function({id}) {
             }
             dispatch(receiveCustomerData({id, data}));
             dispatch(setCustomer(data));
+            dispatch(updateLines());
         });
     };
 };
