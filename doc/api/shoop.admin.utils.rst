@@ -20,6 +20,14 @@ shoop.admin.utils.forms module
     :undoc-members:
     :show-inheritance:
 
+shoop.admin.utils.permissions module
+------------------------------------
+
+.. automodule:: shoop.admin.utils.permissions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.admin.utils.picotable module
 ----------------------------------
 

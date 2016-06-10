@@ -74,6 +74,8 @@ Localization
 Admin
 ~~~~~
 
+- Add `get_required_permission` to ``AdminModule``
+- Add support for module-level permissions
 - Remove Select2Multiple-widget as unused
 - Use Select2MultipleField for handling contact members
 - Add Select2MultipleField

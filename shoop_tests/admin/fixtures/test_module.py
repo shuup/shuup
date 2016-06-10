@@ -67,3 +67,13 @@ class ATestModule(AdminModule):
         yield Activity(datetime=t + datetime.timedelta(minutes=3), text="Earlier")
         yield Activity(datetime=t + datetime.timedelta(minutes=10), text="Latest")
         yield Activity(datetime=t + datetime.timedelta(minutes=5), text="Later")
+
+
+class ARestrictedTestModule(ATestModule):
+    name = _("RestrictedTest")
+
+    def get_menu_entries(self, request):
+        return [MenuEntry(text="OK", url="/OK", category="RestrictedTest", aliases=("spooky",))]
+
+    def get_required_permissions(self):
+        return set(["shoop.add_product", "shoop.delete_product", "shoop.change_product"])

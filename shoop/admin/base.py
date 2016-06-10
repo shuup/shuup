@@ -50,6 +50,12 @@ class AdminModule(object):
         """
         return ()
 
+    def get_required_permissions(self):
+        """
+        :rtype: list[str]
+        """
+        return ()
+
     def get_notifications(self, request):
         """
         :rtype: list[shoop.admin.base.Notification]

@@ -9,6 +9,7 @@ from django.utils.datastructures import SortedDict
 from django.utils.encoding import force_text
 
 from shoop.admin.module_registry import get_modules
+from shoop.admin.utils.permissions import get_missing_permissions
 
 
 class _MenuCategory(object):
@@ -36,14 +37,15 @@ def get_menu_entry_categories(request):
         )
 
     for module in modules:
-        for entry in (module.get_menu_entries(request=request) or ()):
-            category_name = force_text(entry.category or module.name)
-            category = menu_categories.get(category_name)
-            if not category:
-                menu_categories[category_name] = category = _MenuCategory(
-                    name=category_name,
-                    icon=menu_category_icons.get(category_name, "fa fa-circle")
-                )
-            category.entries.append(entry)
+        if not get_missing_permissions(request.user, module.get_required_permissions()):
+            for entry in (module.get_menu_entries(request=request) or ()):
+                category_name = force_text(entry.category or module.name)
+                category = menu_categories.get(category_name)
+                if not category:
+                    menu_categories[category_name] = category = _MenuCategory(
+                        name=category_name,
+                        icon=menu_category_icons.get(category_name, "fa fa-circle")
+                    )
+                category.entries.append(entry)
 
     return SortedDict(sorted((c.name, c) for c in sorted(menu_categories.values(), key=lambda c: c.name)))
