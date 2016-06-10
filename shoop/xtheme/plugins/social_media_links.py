@@ -61,7 +61,7 @@ class SocialMediaLinksPluginForm(GenericPluginForm):
                 links_dict[link_name]["url"] = precleaned_data[link_info]
             else:
                 links_dict[link_name]["ordering"] = precleaned_data[link_info]
-        cleaned_data["links"] = {k: v for (k, v) in links_dict.items() if v["url"]}
+        cleaned_data["links"] = {k: v for (k, v) in links_dict.items() if v.get("url", None)}
         return cleaned_data
 
 
