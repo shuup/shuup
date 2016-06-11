@@ -162,7 +162,7 @@ def test_order_creator_view_GET(rf, admin_user):
 def test_order_creator_view_invalid_command(rf, admin_user):
     get_default_shop()
     request = apply_request_middleware(rf.get("/", {"command": printable_gibberish()}), user=admin_user)
-    response =OrderEditView.as_view()(request)
+    response = OrderEditView.as_view()(request)
     assert_contains(response, "unknown command", status_code=400)
 
 
@@ -308,3 +308,12 @@ def test_editing_existing_order(rf, admin_user):
     assert edited_order.payment_data == order.payment_data
     assert edited_order.shipping_data == order.shipping_data
     assert edited_order.extra_data == order.extra_data
+
+
+def test_order_creator_view_for_customer(rf, admin_user):
+    get_default_shop()
+    contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
+    request = apply_request_middleware(rf.get("/", {"contact_id": contact.id}), user=admin_user)
+    response = OrderEditView.as_view()(request)
+    assert_contains(response, "customerData")  # in the config
+    assert_contains(response, "isCompany")  # in the config

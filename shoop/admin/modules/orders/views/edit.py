@@ -153,6 +153,7 @@ class OrderEditView(CreateOrUpdateView):
     def get_config(self):
         order = self.object
         shops = [encode_shop(shop) for shop in Shop.objects.filter(status=ShopStatus.ENABLED)]
+        customer_id = self.request.GET.get("contact_id")
         shipping_methods = ShippingMethod.objects.enabled()
         payment_methods = PaymentMethod.objects.enabled()
         return {
@@ -161,7 +162,8 @@ class OrderEditView(CreateOrUpdateView):
             "shippingMethods": [encode_method(sm) for sm in shipping_methods],
             "paymentMethods": [encode_method(pm) for pm in payment_methods],
             "orderId": order.pk,
-            "orderData": self.get_initial_order_data()
+            "orderData": self.get_initial_order_data(),
+            "customerData": self.get_customer_data(customer_id) if customer_id else None
         }
 
     def get_initial_order_data(self):
@@ -184,6 +186,20 @@ class OrderEditView(CreateOrUpdateView):
                 "billingAddress": encode_address(order.billing_address),
                 "shippingAddress": encode_address(order.shipping_address)
             }
+        }
+
+    def get_customer_data(self, customer_id):
+        customer = Contact.objects.filter(pk=customer_id).first()
+        if not customer:
+            return JsonResponse(
+                {"success": False, "errorMessage": _("Contact %s does not exist.") % customer_id}, status=400
+            )
+        return {
+            "id": customer.id,
+            "name": customer.name,
+            "isCompany": bool(isinstance(customer, CompanyContact)),
+            "billingAddress": encode_address(customer.default_billing_address),
+            "shippingAddress": encode_address(customer.default_shipping_address)
         }
 
     def dispatch(self, request, *args, **kwargs):
@@ -250,18 +266,7 @@ class OrderEditView(CreateOrUpdateView):
 
     def handle_customer_data(self, request):
         customer_id = request.GET["id"]
-        customer = Contact.objects.filter(pk=customer_id).first()
-        if not customer:
-            return JsonResponse(
-                {"success": False, "errorMessage": _("Contact %s does not exist.") % customer_id}, status=400
-            )
-        return {
-            "id": customer.id,
-            "name": customer.name,
-            "isCompany": bool(isinstance(customer, CompanyContact)),
-            "billingAddress": encode_address(customer.default_billing_address),
-            "shippingAddress": encode_address(customer.default_shipping_address)
-        }
+        return self.get_customer_data(customer_id)
 
     @transaction.atomic
     def _handle_source_data(self, request):

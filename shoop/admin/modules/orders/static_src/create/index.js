@@ -40,6 +40,7 @@ export function init(config = {}) {
     store.dispatch(setPaymentMethodChoices(config.paymentMethods || []));
     const orderId = config.orderId;
     store.dispatch(setOrderId(orderId));
+    const customerData = config.customerData;
 
     const persistor = persistStore(store);
     const resetOrder = window.localStorage.getItem("resetSavedOrder") || "false";
@@ -52,6 +53,11 @@ export function init(config = {}) {
         if (savedOrderStr) {
             savedOrder = JSON.parse(savedOrderStr);
         }
+    }
+
+    if (customerData) { // contact -> New Order
+        persistor.purgeAll();
+        store.dispatch(setCustomer(customerData));
     }
 
     if (orderId) { // Edit mode

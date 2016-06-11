@@ -62,6 +62,15 @@ class ContactDetailToolbar(Toolbar):
             extra_css_class="btn-gray btn-inverse",
         ))
 
+    def build_new_order_button(self):
+        self.append(URLActionButton(
+            url=reverse("shoop_admin:order.new") + "?contact_id=%s" % self.contact.pk,
+            text=_(u"New Order"),
+            tooltip=_(u"Create an order for the contact."),
+            icon="fa fa-plus",
+            extra_css_class="btn-success"
+        ))
+
     def build_deactivate_button(self):
         self.append(PostActionButton(
             post_url=self.request.path,
@@ -82,6 +91,7 @@ class ContactDetailToolbar(Toolbar):
         self.build_renew_password_button()
         self.build_new_user_button()
         self.build_deactivate_button()
+        self.build_new_order_button()
 
 
 class ContactDetailView(DetailView):
