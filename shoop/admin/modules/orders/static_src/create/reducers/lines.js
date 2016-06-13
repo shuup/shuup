@@ -75,12 +75,10 @@ function updateLineFromProduct(state, {payload}) {
         updates.errors = product.errors;
         return setLineProperties(state, id, updates);
     }
-    if (line.unitPrice === 0) {
-        updates = getDiscountsAndTotal(product.quantity, product.baseUnitPrice.value, product.unitPrice.value);
-        updates.baseUnitPrice = product.baseUnitPrice.value;
-        updates.unitPrice = product.unitPrice.value;
-        updates.unitPriceIncludesTax = product.unitPrice.includesTax;
-    }
+    updates = getDiscountsAndTotal(product.quantity, product.baseUnitPrice.value, product.unitPrice.value);
+    updates.baseUnitPrice = product.baseUnitPrice.value;
+    updates.unitPrice = product.unitPrice.value;
+    updates.unitPriceIncludesTax = product.unitPrice.includesTax;
     updates.sku = product.sku;
     updates.text = product.name;
     updates.quantity = product.quantity;

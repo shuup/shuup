@@ -73,6 +73,7 @@ Localization
 Admin
 ~~~~~
 
+- Fix bug: Refresh order lines when customer is changed during order creation
 - Add default ``is_active`` filter to Contact and User admins
 - Enable default values for ``ChoiceFilter``
 - Enable contact activation/deactivation
