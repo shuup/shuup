@@ -38,6 +38,16 @@ function setLineProperties(linesState, lineId, props) {
     });
 }
 
+function getFormattedStockCounts(line) {
+    const physicalCount = ensureNumericValue(line.physicalCount);
+    const logicalCount = ensureNumericValue(line.logicalCount);
+
+    return {
+        physicalCount: physicalCount.toFixed(line.salesDecimals) + ' ' + line.salesUnit,
+        logicalCount: logicalCount.toFixed(line.salesDecimals) + ' ' + line.salesUnit
+    }
+}
+
 function getDiscountsAndTotal(quantity, baseUnitPrice, unitPrice, updateUnitPrice=false) {
     const updates = {};
 
@@ -88,6 +98,7 @@ function updateLineFromProduct(state, {payload}) {
     updates.quantity = product.quantity;
     updates.step = product.purchaseMultiple;
     updates.errors = product.errors;
+    updates = _.merge(updates, getFormattedStockCounts(product));
     return setLineProperties(state, id, updates);
 }
 
@@ -177,6 +188,7 @@ function setLines(state, {payload}) {
     _.map(payload, (line) => {
         _.merge(
             line,
+            getFormattedStockCounts(line),
             getDiscountsAndTotal(
                 ensureNumericValue(line.quantity),
                 ensureNumericValue(line.baseUnitPrice),

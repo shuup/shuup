@@ -73,6 +73,7 @@ Localization
 Admin
 ~~~~~
 
+- Show stock in order creator
 - Fix bug: Fix decimal precision issues on order creation
 - Enable order creation for contact from contact detail view
 - Fix bug: Refresh order lines when customer is changed during order creation

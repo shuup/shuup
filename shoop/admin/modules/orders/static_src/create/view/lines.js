@@ -48,8 +48,12 @@ export function renderOrderLines(store, shop, lines) {
                             }
                         });
                     }
-                }, (line.product ?
-                    [line.product.text, m("br"), m("small", "(" + line.sku + ")")] : gettext("Select product"))
+                }, (line.product ? [
+                    line.product.text, m("br"),
+                    m("small", "(" + line.sku + ")"), m("br"),
+                    m("small", gettext("Logical Count") + ": " + line.logicalCount), m("br"),
+                    m("small", gettext("Physical Count") + ": " + line.physicalCount)
+                ] : gettext("Select product"))
             );
             canEditPrice = (line.product && line.product.id);
         } else {

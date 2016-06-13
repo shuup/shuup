@@ -107,6 +107,8 @@ def get_line_data_for_edit(shop, line):
     }
     if line.product:
         shop_product = line.product.get_shop_instance(shop)
+        supplier = shop_product.suppliers.first()
+        stock_status = supplier.get_stock_status(line.product.pk) if supplier else None
         base_data.update({
             "type": "product",
             "product": {
@@ -114,6 +116,10 @@ def get_line_data_for_edit(shop, line):
                 "text": line.product.name
             },
             "step": shop_product.purchase_multiple,
+            "logicalCount": stock_status.logical_count if stock_status else 0,
+            "physicalCount": stock_status.physical_count if stock_status else 0,
+            "salesDecimals": line.product.sales_unit.decimals if line.product.sales_unit else 0,
+            "salesUnit": line.product.sales_unit.short_name if line.product.sales_unit else ""
         })
     return base_data
 
@@ -240,6 +246,7 @@ class OrderEditView(CreateOrUpdateView):
         customer = Contact.objects.filter(pk=customer_id).first() if customer_id else None
         price_info = get_price_info(shop, customer, product, quantity)
         supplier = shop_product.suppliers.first()  # TODO: Allow setting a supplier?
+        stock_status = supplier.get_stock_status(product.pk) if supplier else None
         errors = " ".join(
             [str(message.args[0]) for message in shop_product.get_orderability_errors(
                 supplier=supplier, quantity=(quantity + already_in_lines_qty), customer=customer, ignore_minimum=True)])
@@ -248,6 +255,10 @@ class OrderEditView(CreateOrUpdateView):
             "sku": product.sku,
             "name": product.name,
             "quantity": quantity,
+            "logicalCount": stock_status.logical_count if stock_status else 0,
+            "physicalCount": stock_status.physical_count if stock_status else 0,
+            "salesDecimals": product.sales_unit.decimals if product.sales_unit else 0,
+            "salesUnit": product.sales_unit.short_name if product.sales_unit else "",
             "purchaseMultiple": shop_product.purchase_multiple,
             "errors": errors,
             "taxClass": {

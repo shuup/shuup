@@ -179,6 +179,10 @@ def test_order_creator_product_data(rf, admin_user):
     assert_contains(response, "taxClass")
     assert_contains(response, "sku")
     assert_contains(response, product.sku)
+    assert_contains(response, "logicalCount")
+    assert_contains(response, "physicalCount")
+    assert_contains(response, "salesDecimals")
+    assert_contains(response, "salesUnit")
 
 
 def test_order_creator_customer_data(rf, admin_user):
