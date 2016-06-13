@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-01 12:18+0000\n"
+"POT-Creation-Date: 2016-06-13 20:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -171,10 +171,10 @@ msgstr ""
 msgid "Select Shop"
 msgstr ""
 
-msgid "Order Contents"
+msgid "Customer Details"
 msgstr ""
 
-msgid "Customer Details"
+msgid "Order Contents"
 msgstr ""
 
 msgid "Shipping Method"
@@ -189,6 +189,12 @@ msgid ""
 msgstr ""
 
 msgid "Proceed"
+msgstr ""
+
+msgid "Logical Count"
+msgstr ""
+
+msgid "Physical Count"
 msgstr ""
 
 msgid "Select product"
