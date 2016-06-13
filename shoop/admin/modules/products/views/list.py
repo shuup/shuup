@@ -23,6 +23,7 @@ class ProductListView(PicotableListView):
             filter_field="translations__name",
             placeholder=_("Filter by name...")
         )),
+        Column("barcode", _(u"Barcode"), display="barcode", filter_config=TextFilter(_("Filter by barcode..."))),
         Column("type", _(u"Type")),
         Column("mode", _(u"Mode"), filter_config=ChoicesFilter(ProductMode.choices)),
         Column("category", _(u"Primary Category")),
@@ -43,6 +44,7 @@ class ProductListView(PicotableListView):
     def get_object_abstract(self, instance, item):
         return [
             {"text": "%s" % instance, "class": "header"},
+            {"title": _(u"Barcode"), "text": item["barcode"]},
             {"title": _(u"SKU"), "text": item["sku"]},
             {"title": _(u"Type"), "text": item["type"]},
             {"title": _(u"Primary Category"), "text": item["category"]}
