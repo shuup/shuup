@@ -114,6 +114,7 @@ Addons
 Front
 ~~~~~
 
+- Logout users linked to inactive contact
 - Allow user to change password from account settings
 - Add login check for inactive contacts
 - Remove "Ordering for company" from checkout if logged in

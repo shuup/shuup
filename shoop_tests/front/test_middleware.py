@@ -157,3 +157,21 @@ def test_maintenance_mode(rf, regular_user, admin_user):
 
     shop.maintenance_mode = False
     shop.save()
+
+
+@pytest.mark.django_db
+def test_with_inactive_contact(rf, regular_user, admin_user):
+    get_default_shop()  # Create a shop
+    # Get or create contact for regular user
+    contact = get_person_contact(regular_user)
+    assert contact.is_active
+    contact.is_active = False
+    contact.save()
+
+    request = apply_request_middleware(rf.get("/"), user=regular_user)
+    mw = ShoopFrontMiddleware()
+    mw.process_request(request)
+
+    assert request.user == AnonymousUser()
+    assert request.person == AnonymousContact()
+    assert request.customer == AnonymousContact()
