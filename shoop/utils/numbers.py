@@ -61,7 +61,7 @@ def parse_decimal_string(s):
         return Decimal(s)
 
     if isinstance(s, float):
-        s = str(s)
+        return Decimal(str(s))
 
     s = s.strip().replace(" ", "")  # Also 500 000.0 would be.. well, 500 :D
 

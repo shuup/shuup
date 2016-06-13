@@ -47,7 +47,6 @@ function getDiscountsAndTotal(quantity, baseUnitPrice, unitPrice, updateUnitPric
     var totalBeforeDiscount = baseUnitPrice * quantity;
     var total = +(unitPrice * quantity).toFixed(2);
     updates.total = total;
-
     if (baseUnitPrice < unitPrice || unitPrice < 0) {
         updates.discountPercent = 0;
         updates.discountAmount = 0;
@@ -75,9 +74,14 @@ function updateLineFromProduct(state, {payload}) {
         updates.errors = product.errors;
         return setLineProperties(state, id, updates);
     }
-    updates = getDiscountsAndTotal(product.quantity, product.baseUnitPrice.value, product.unitPrice.value);
-    updates.baseUnitPrice = product.baseUnitPrice.value;
-    updates.unitPrice = product.unitPrice.value;
+
+    updates = getDiscountsAndTotal(
+        ensureNumericValue(product.quantity),
+        ensureNumericValue(product.baseUnitPrice.value),
+        ensureNumericValue(product.unitPrice.value)
+    );
+    updates.baseUnitPrice = ensureNumericValue(product.baseUnitPrice.value);
+    updates.unitPrice = ensureNumericValue(product.unitPrice.value);
     updates.unitPriceIncludesTax = product.unitPrice.includesTax;
     updates.sku = product.sku;
     updates.text = product.name;
