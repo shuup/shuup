@@ -16,6 +16,10 @@
                         {% set rendered_companies = render_objects(companies) %}
                         {{ info_row(_("Companies"), rendered_companies) }}
                     {% endif %}
+                    {{ info_row(
+                        _("Account Manager"),
+                        contact.account_manager,
+                        shoop_admin.model_url(contact.account_manager) if contact.account_manager else None) }}
                     {{ info_row(_("Merchant Notes"), contact.merchant_notes) }}
                     </tbody>
                 </dl>

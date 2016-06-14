@@ -118,6 +118,7 @@ class Contact(PolymorphicShoopModel):
         "CustomerTaxGroup", blank=True, null=True, on_delete=models.PROTECT, verbose_name=_('tax group')
     )
     merchant_notes = models.TextField(blank=True, verbose_name=_('merchant notes'))
+    account_manager = models.ForeignKey("PersonContact", blank=True, null=True, verbose_name=_('account manager'))
 
     def __str__(self):
         return self.full_name

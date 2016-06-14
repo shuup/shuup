@@ -73,6 +73,7 @@ Localization
 Admin
 ~~~~~
 
+- Add account manager for contact
 - Add PersonContact choice widget
 - Add barcode filter to product list view
 - Show stock in order creator

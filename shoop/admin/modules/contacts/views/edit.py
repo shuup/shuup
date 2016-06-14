@@ -21,7 +21,9 @@ from django.utils.translation import ugettext_lazy as _
 from shoop.admin.form_part import (
     FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
 )
-from shoop.admin.forms.widgets import Select2Multiple
+from shoop.admin.forms.widgets import (
+    PersonContactChoiceWidget, Select2Multiple
+)
 from shoop.admin.toolbar import get_default_edit_toolbar
 from shoop.admin.utils.urls import get_model_url
 from shoop.admin.utils.views import CreateOrUpdateView
@@ -52,7 +54,7 @@ class ContactBaseForm(BaseModelForm):
         "Contact": (
             "is_active", "language", "marketing_permission", "phone", "www",
             "timezone", "prefix", "suffix", "name_ext", "email", "tax_group",
-            "merchant_notes"
+            "merchant_notes", "account_manager"
         ),
         "PersonContact": (
             "gender", "birth_date", "first_name", "last_name"
@@ -129,6 +131,8 @@ class ContactBaseForm(BaseModelForm):
 
         if not self.instance.pk:
             self.fields.pop("is_active")
+
+        self.fields["account_manager"].widget = PersonContactChoiceWidget(clearable=True)
 
     def set_model_from_cleaned_data(self):
         if "type" in self.fields:
