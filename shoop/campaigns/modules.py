@@ -34,11 +34,9 @@ class CatalogCampaignModule(DiscountModule):
         best_discount = None
         for campaign in CatalogCampaign.get_matching(context, shop_product):
             price = price_info.price
-            if campaign.discount_amount_value:
-                price -= create_price(campaign.discount_amount_value)
-            else:
-                price -= (price * campaign.discount_percentage)
-
+            # get first matching effect
+            effect = campaign.effects.first()
+            price -= effect.apply_for_product(context=context, product=product, price_info=price_info)
             if best_discount is None:
                 best_discount = price
 
@@ -62,37 +60,16 @@ class BasketCampaignModule(OrderSourceModifierModule):
     name = _("Campaign Basket Discounts")
 
     def get_new_lines(self, order_source, lines):
-        price_so_far = sum((x.price for x in lines), order_source.zero_price)
-
-        def get_discount_line(campaign, amount, price_so_far):
-            new_amount = min(amount, price_so_far)
-            price_so_far -= new_amount
-            return self._get_campaign_line(campaign, new_amount, order_source)
-
-        best_discount = None
-        best_discount_campaign = None
-        for campaign in BasketCampaign.get_matching(order_source, lines):
-            if campaign.discount_amount:
-                discount_amount = campaign.discount_amount
-            else:
-                discount_amount = order_source.total_price_of_products * campaign.discount_percentage
-
-            # if campaign has coupon, match it to order_source.codes
-            if campaign.coupon:
-                # campaign was found because discount code matched. This line is always added
-                yield get_discount_line(campaign, discount_amount, price_so_far)
-            elif best_discount is None or discount_amount > best_discount:
-                best_discount = discount_amount
-                best_discount_campaign = campaign
-
-        if best_discount is not None:
-            yield get_discount_line(best_discount_campaign, best_discount, price_so_far)
+        matching_campaigns = BasketCampaign.get_matching(order_source, lines)
+        for line in self._handle_total_discount_campaigns(matching_campaigns, order_source, lines):
+            yield line
 
     def _get_campaign_line(self, campaign, highest_discount, order_source):
         text = campaign.public_name
 
         if campaign.coupon:
             text += " (%s %s)" % (_("Coupon Code:"), campaign.coupon.code)
+
         return order_source.create_line(
             line_id="discount_%s" % str(random.randint(0, 0x7FFFFFFF)),
             type=OrderLineType.DISCOUNT,
@@ -116,3 +93,32 @@ class BasketCampaignModule(OrderSourceModifierModule):
 
     def clear_codes(self, order):
         CouponUsage.objects.filter(order=order).delete()
+
+    def _handle_total_discount_campaigns(self, matching_campaigns, order_source, lines):
+        price_so_far = sum((x.price for x in lines), order_source.zero_price)
+
+        def get_discount_line(campaign, amount, price_so_far):
+            new_amount = min(amount, price_so_far)
+            price_so_far -= new_amount
+            return self._get_campaign_line(campaign, new_amount, order_source)
+
+        best_discount = None
+        best_discount_campaign = None
+        lines = []
+        for campaign in matching_campaigns:
+            effect = campaign.effects.first()
+            if not effect:
+                continue
+
+            discount_amount = effect.apply_for_basket(order_source=order_source)
+            # if campaign has coupon, match it to order_source.codes
+            if campaign.coupon:
+                # campaign was found because discount code matched. This line is always added
+                lines.append(get_discount_line(campaign, discount_amount, price_so_far))
+            elif best_discount is None or discount_amount > best_discount:
+                best_discount = discount_amount
+                best_discount_campaign = campaign
+
+        if best_discount is not None:
+            lines.append(get_discount_line(best_discount_campaign, best_discount, price_so_far))
+        return lines

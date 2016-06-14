@@ -7,6 +7,7 @@
 import pytest
 
 from shoop.campaigns.models.campaigns import CatalogCampaign
+from shoop.campaigns.models.product_effects import ProductDiscountAmount
 from shoop.campaigns.models.context_conditions import (
     ContactCondition, ContactGroupCondition,
 )
@@ -27,8 +28,8 @@ def get_request_for_contact_tests(rf):
 
 def create_random_product_and_campaign(shop, conditions, original_price_value, discount_value):
     campaign = CatalogCampaign.objects.create(
-        shop=shop, name="test", discount_amount_value=discount_value, active=True)
-
+        shop=shop, name="test", active=True)
+    ProductDiscountAmount.objects.create(discount_amount=discount_value, campaign=campaign)
     for condition in conditions:
         campaign.conditions.add(condition)
     assert campaign.is_available()

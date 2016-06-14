@@ -13,6 +13,7 @@
 import pytest
 from django.core.exceptions import ValidationError
 from shoop.campaigns.models.basket_conditions import BasketTotalProductAmountCondition
+from shoop.campaigns.models.basket_effects import BasketDiscountAmount
 from shoop.campaigns.models.campaigns import Coupon, CouponUsage, BasketCampaign
 from shoop.core.models import OrderLineType
 from shoop.core.order_creator import OrderCreator
@@ -27,12 +28,12 @@ from shoop_tests.utils import printable_gibberish
 
 def get_default_campaign(coupon=None):
     shop = get_default_shop()
-    return BasketCampaign.objects.create(
-            shop=shop, public_name="test",
-            name="test", discount_amount_value=shop.create_price("20"),
+    campaign = BasketCampaign.objects.create(
+            shop=shop, public_name="test", name="test",
             coupon=coupon, active=True
     )
-
+    BasketDiscountAmount.objects.create(discount_amount=shop.create_price("20"), campaign=campaign)
+    return campaign
 
 @pytest.mark.django_db
 def test_coupon_generation():
@@ -131,9 +132,9 @@ def test_campaign_with_coupons(rf):
             shop=shop,
             name="test", public_name="test",
             coupon=dc,
-            discount_amount_value=shop.create_price("20"),
             active=True
     )
+    BasketDiscountAmount.objects.create(discount_amount=shop.create_price("20"), campaign=campaign)
     rule = BasketTotalProductAmountCondition.objects.create(value=2)
     campaign.conditions.add(rule)
     campaign.save()

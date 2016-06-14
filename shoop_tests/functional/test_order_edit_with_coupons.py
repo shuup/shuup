@@ -14,6 +14,7 @@ import pytest
 from shoop.admin.modules.orders.views.edit import OrderEditView
 from shoop.campaigns.models import Coupon, BasketCampaign
 from shoop.campaigns.models.basket_conditions import BasketTotalProductAmountCondition
+from shoop.campaigns.models.basket_effects import BasketDiscountAmount
 from shoop.core.order_creator import OrderCreator
 from shoop.core.models import Order, OrderLineType, Tax, TaxClass
 from shoop.default_tax.models import TaxRule
@@ -92,9 +93,11 @@ def _get_order_with_coupon(request, initial_status, condition_product_count=1):
         name="test",
         public_name="test",
         coupon=dc,
-        discount_amount_value=shop.create_price("20"),
         active=True
     )
+
+    BasketDiscountAmount.objects.create(discount_amount=shop.create_price("20"), campaign=campaign)
+
     rule = BasketTotalProductAmountCondition.objects.create(value=1)
     campaign.conditions.add(rule)
     campaign.save()

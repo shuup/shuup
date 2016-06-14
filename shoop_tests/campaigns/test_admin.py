@@ -17,9 +17,11 @@ from shoop.campaigns.forms import BasketCampaignForm
 from shoop.campaigns.models.basket_conditions import (
     BasketTotalProductAmountCondition, ProductsInBasketCondition
 )
+from shoop.campaigns.models.basket_effects import BasketDiscountAmount
 from shoop.campaigns.models.campaigns import (
     BasketCampaign, CatalogCampaign, Coupon
 )
+from shoop.campaigns.models.product_effects import ProductDiscountAmount
 from shoop.core.models import Product
 from shoop.testing.factories import (
     create_product, get_default_shop, get_default_supplier
@@ -35,7 +37,9 @@ def test_admin_campaign_edit_view_works(rf, admin_user):
     shop = get_default_shop()
     view_func = CatalogCampaignEditView.as_view()
     request = apply_request_middleware(rf.get("/"), user=admin_user)
-    campaign = CatalogCampaign.objects.create(name="test campaign", discount_amount_value="20", active=True, shop=shop)
+    campaign = CatalogCampaign.objects.create(name="test campaign", active=True, shop=shop)
+
+    ProductDiscountAmount.objects.create(campaign=campaign, discount_amount="20")
 
     response = view_func(request, pk=campaign.pk)
     assert campaign.name in response.rendered_content
@@ -61,9 +65,9 @@ def test_admin_catalog_campaign_edit_view(rf, admin_user):
     })
     form = form_class(**dict(form_kwargs, data=data))
     form.full_clean()
-    assert "You must define discount percentage or amount" in form.errors["__all__"][0]
+    assert "At least one effect must be defined." in form.errors["__all__"][0]
 
-    data.update({"discount_amount_value": "20"})
+    data.update({"discount_amount_effect": "20"})
     form = form_class(**dict(form_kwargs, data=data))
     form.full_clean()
 
@@ -117,9 +121,9 @@ def test_admin_basket_campaign_edit_view(rf, admin_user):
     })
     form = form_class(**dict(form_kwargs, data=data))
     form.full_clean()
-    assert "You must define discount percentage or amount" in form.errors["__all__"][0]
+    assert "At least one effect must be defined." in form.errors["__all__"][0]
 
-    data.update({"discount_amount_value": "20"})
+    data.update({"discount_amount_effect": "20"})
     form = form_class(**dict(form_kwargs, data=data))
     form.full_clean()
 
@@ -144,9 +148,9 @@ def test_admin_basket_campaign_edit_view(rf, admin_user):
 def test_form_populate_initial_data(rf, admin_user):
     shop = get_default_shop()
     supplier = get_default_supplier()
-
-    campaign = BasketCampaign(discount_percentage=0.1, shop=shop)
-    campaign.save()
+    initial_discount_amount = 20
+    campaign = BasketCampaign.objects.create(shop=shop)
+    BasketDiscountAmount.objects.create(campaign=campaign, discount_amount=initial_discount_amount)
 
     # Test that correct initial value is returned for non-many-to-many field
     product_amount_initial = 10
@@ -167,8 +171,10 @@ def test_form_populate_initial_data(rf, admin_user):
     campaign.conditions.add(products_in_basket_condition)
 
     assert len(campaign.conditions.all()) == 2
+    assert campaign.effects.count() == 1
 
     request=apply_request_middleware(rf.get("/"), user=admin_user)
     form = BasketCampaignForm(request=request, instance=campaign)
     assert form.fields["basket_product_condition"].initial == product_amount_initial
     assert set(form.fields["basket_products_condition"].initial) == set([p.pk for p in products_initial])
+    assert form.fields["discount_amount_effect"].initial == initial_discount_amount

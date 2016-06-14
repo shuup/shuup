@@ -13,11 +13,17 @@ from django.db import models
 from django.utils.encoding import force_text
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
+from enumfields import Enum
 from parler.models import TranslatableModel, TranslatedFields
 
-from shoop.core.fields import InternalIdentifierField, MoneyValueField
+from shoop.core.fields import InternalIdentifierField
 from shoop.core.models import Order, Shop, ShopProduct
-from shoop.utils.properties import MoneyPropped, PriceProperty
+from shoop.utils.properties import MoneyPropped
+
+
+class CampaignType(Enum):
+    CATALOG = 1
+    BASKET = 2
 
 
 class Campaign(MoneyPropped, TranslatableModel):
@@ -27,17 +33,8 @@ class Campaign(MoneyPropped, TranslatableModel):
     name = models.CharField(max_length=120, verbose_name=_("name"), help_text=_("The name for this campaign."))
 
     # translations in subclass
-
     identifier = InternalIdentifierField(unique=True)
-    discount_percentage = models.DecimalField(
-        max_digits=6, decimal_places=5, blank=True, null=True,
-        verbose_name=_("discount percentage"),
-        help_text=_("The discount percentage for this campaign."))
-    discount_amount = PriceProperty("discount_amount_value", "shop.currency", "shop.prices_include_tax")
-    discount_amount_value = MoneyValueField(
-        default=None, blank=True, null=True,
-        verbose_name=_("discount amount value"),
-        help_text=_("Flat amount of discount. Mutually exclusive with percentage."))
+
     active = models.BooleanField(default=False, verbose_name=_("active"))
     start_datetime = models.DateTimeField(null=True, blank=True, verbose_name=_("start date and time"))
     end_datetime = models.DateTimeField(null=True, blank=True, verbose_name=_("end date and time"))
@@ -51,8 +48,6 @@ class Campaign(MoneyPropped, TranslatableModel):
         verbose_name=_("modified by"))
     created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_("created on"))
     modified_on = models.DateTimeField(auto_now=True, editable=False, verbose_name=_("modified on"))
-
-    # objects = CampaignManager()
 
     class Meta:
         abstract = True
@@ -74,14 +69,9 @@ class Campaign(MoneyPropped, TranslatableModel):
                 return False
         return True
 
-    def save(self, **kwargs):
-        if self.discount_percentage and self.discount_amount_value:
-            raise ValidationError(_("You should only define either discount percentage or amount."))
-
-        if not (self.discount_percentage or self.discount_amount_value):
-            raise ValidationError(_("You must define discount percentage or amount."))
-
-        super(Campaign, self).save(**kwargs)
+    @property
+    def type(self):
+        return CampaignType.BASKET if isinstance(self, BasketCampaign) else CampaignType.CATALOG
 
 
 class CatalogCampaign(Campaign):

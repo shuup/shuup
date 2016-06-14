@@ -35,6 +35,14 @@ class CampaignAppConfig(AppConfig):
             "shoop.campaigns.models.catalog_filters:ProductFilter",
             "shoop.campaigns.models.catalog_filters:CategoryFilter"
         ],
+        "catalog_campaign_effect": [
+            "shoop.campaigns.models.product_effects:ProductDiscountAmount",
+            "shoop.campaigns.models.product_effects:ProductDiscountPercentage",
+        ],
+        "basket_campaign_effect": [
+            "shoop.campaigns.models.basket_effects:BasketDiscountAmount",
+            "shoop.campaigns.models.basket_effects:BasketDiscountPercentage",
+        ],
         "campaign_context_condition": [
             "shoop.campaigns.models.context_conditions:ContactGroupCondition",
             "shoop.campaigns.models.context_conditions:ContactCondition",
@@ -45,7 +53,7 @@ class CampaignAppConfig(AppConfig):
             "shoop.campaigns.models.basket_conditions:ProductsInBasketCondition",
             "shoop.campaigns.models.basket_conditions:ContactGroupBasketCondition",
             "shoop.campaigns.models.basket_conditions:ContactBasketCondition",
-        ]
+        ],
     }
 
     def ready(self):
