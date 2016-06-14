@@ -18,6 +18,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shoop.core.models import OrderLineType, PaymentMethod, ShippingMethod
 from shoop.core.order_creator import OrderSource, SourceLine
+from shoop.core.order_creator._source import LineSource
 from shoop.front.basket.storage import BasketCompatibilityError, get_storage
 from shoop.utils.numbers import parse_decimal_string
 from shoop.utils.objects import compare_partial_dicts
@@ -76,11 +77,11 @@ class BasketLine(SourceLine):
 
     @property
     def can_delete(self):
-        return (self.type == OrderLineType.PRODUCT)
+        return (self.type == OrderLineType.PRODUCT and self.line_source != LineSource.DISCOUNT_MODULE)
 
     @property
     def can_change_quantity(self):
-        return (self.type == OrderLineType.PRODUCT)
+        return (self.type == OrderLineType.PRODUCT and self.line_source != LineSource.DISCOUNT_MODULE)
 
 
 class BaseBasket(OrderSource):
