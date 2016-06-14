@@ -359,7 +359,7 @@ def get_person_contact(user):
         'last_name': getattr(user, 'last_name', ''),
         'email': getattr(user, 'email', ''),
     }
-    return PersonContact.objects.filter(is_active=True).get_or_create(user=user, defaults=defaults)[0]
+    return PersonContact.objects.get_or_create(user=user, defaults=defaults)[0]
 
 
 def get_company_contact(user):

@@ -6,12 +6,15 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth import logout
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponse
 from django.template import loader
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 
 from shoop.core.middleware import ExceptionMiddleware
 from shoop.core.models import (
@@ -77,6 +80,9 @@ class ShoopFrontMiddleware(object):
 
     def _set_person(self, request):
         request.person = get_person_contact(request.user)
+        if not request.person.is_active:
+            messages.add_message(request, messages.INFO, _("Logged out since this account is inactive."))
+            logout(request)
 
     def _set_customer(self, request):
         company = get_company_contact(request.user)
