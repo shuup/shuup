@@ -42,6 +42,7 @@ class CampaignAppConfig(AppConfig):
         "basket_campaign_effect": [
             "shoop.campaigns.models.basket_effects:BasketDiscountAmount",
             "shoop.campaigns.models.basket_effects:BasketDiscountPercentage",
+            "shoop.campaigns.models.basket_line_effects:FreeProductLine",
         ],
         "campaign_context_condition": [
             "shoop.campaigns.models.context_conditions:ContactGroupCondition",

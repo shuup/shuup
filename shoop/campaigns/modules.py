@@ -14,6 +14,7 @@ from shoop.campaigns.models.campaigns import (
 )
 from shoop.core.models import OrderLineType
 from shoop.core.order_creator import OrderSourceModifierModule
+from shoop.core.order_creator._source import LineSource
 from shoop.core.pricing import DiscountModule
 
 
@@ -61,7 +62,10 @@ class BasketCampaignModule(OrderSourceModifierModule):
 
     def get_new_lines(self, order_source, lines):
         matching_campaigns = BasketCampaign.get_matching(order_source, lines)
-        for line in self._handle_total_discount_campaigns(matching_campaigns, order_source, lines):
+        for line in self._handle_total_discount_effects(matching_campaigns, order_source, lines):
+            yield line
+
+        for line in self._handle_line_effects(matching_campaigns, order_source, lines):
             yield line
 
     def _get_campaign_line(self, campaign, highest_discount, order_source):
@@ -75,7 +79,8 @@ class BasketCampaignModule(OrderSourceModifierModule):
             type=OrderLineType.DISCOUNT,
             quantity=1,
             discount_amount=campaign.shop.create_price(highest_discount),
-            text=text
+            text=text,
+            line_source=LineSource.DISCOUNT_MODULE
         )
 
     def can_use_code(self, order_source, code):
@@ -94,8 +99,8 @@ class BasketCampaignModule(OrderSourceModifierModule):
     def clear_codes(self, order):
         CouponUsage.objects.filter(order=order).delete()
 
-    def _handle_total_discount_campaigns(self, matching_campaigns, order_source, lines):
-        price_so_far = sum((x.price for x in lines), order_source.zero_price)
+    def _handle_total_discount_effects(self, matching_campaigns, order_source, original_lines):
+        price_so_far = sum((x.price for x in original_lines), order_source.zero_price)
 
         def get_discount_line(campaign, amount, price_so_far):
             new_amount = min(amount, price_so_far)
@@ -110,6 +115,9 @@ class BasketCampaignModule(OrderSourceModifierModule):
             if not effect:
                 continue
 
+            if hasattr(effect, "get_discount_lines"):
+                continue
+
             discount_amount = effect.apply_for_basket(order_source=order_source)
             # if campaign has coupon, match it to order_source.codes
             if campaign.coupon:
@@ -121,4 +129,17 @@ class BasketCampaignModule(OrderSourceModifierModule):
 
         if best_discount is not None:
             lines.append(get_discount_line(best_discount_campaign, best_discount, price_so_far))
+        return lines
+
+    def _handle_line_effects(self, matching_campaigns, order_source, original_lines):
+        lines = []
+        for campaign in matching_campaigns:
+            effect = campaign.effects.first()
+            if not effect:
+                continue
+
+            if not hasattr(effect, "get_discount_lines"):
+                continue
+
+            lines += effect.get_discount_lines(order_source=order_source, original_lines=original_lines)
         return lines
