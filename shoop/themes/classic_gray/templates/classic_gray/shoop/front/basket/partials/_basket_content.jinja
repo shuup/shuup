@@ -32,24 +32,27 @@
                     {% if product and product.is_package_parent() %}
                         {{ macros.render_package_children(product) }}
                     {% endif %}
-                    <div class="quantity">
-                        {% if product and line.can_change_quantity %}
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                {% trans %}Qty{% endtrans %}
+
+                    {% if not line.line_id.startswith("free_") %}
+                        <div class="quantity">
+                            {% if product and line.can_change_quantity %}
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    {% trans %}Qty{% endtrans %}
+                                </div>
+                                <input
+                                    id="qty_{{ line.line_id }}"
+                                    type="number"
+                                    name="q_{{ line.line_id }}"
+                                    size="2"
+                                    class="line_quantity form-control"
+                                    step="{{ shop_product.quantity_step }}"
+                                    value="{{ line.quantity }}"
+                                    min="{{ shop_product.rounded_minimum_purchase_quantity }}">
                             </div>
-                            <input
-                                id="qty_{{ line.line_id }}"
-                                type="number"
-                                name="q_{{ line.line_id }}"
-                                size="2"
-                                class="line_quantity form-control"
-                                step="{{ shop_product.quantity_step }}"
-                                value="{{ line.quantity }}"
-                                min="{{ shop_product.rounded_minimum_purchase_quantity }}">
+                            {% endif %}
                         </div>
-                        {% endif %}
-                    </div>
+                    {% endif %}
                 </div>
                 {% if show_prices() %}
                 <div class="product-sum">
@@ -61,13 +64,16 @@
                     </h4>
                 </div>
                 {% endif %}
-                <div class="delete">
-                    {% if line.can_delete %}
-                    <button type="submit" class="btn btn-sm" name="delete_{{ line.line_id }}" title="{% trans %}Remove product from basket{% endtrans %}">
-                        <i class="fa fa-times"></i>
-                    </button>
-                    {% endif %}
-                </div>
+
+                {% if not line.line_id.startswith("free_") %}
+                    <div class="delete">
+                        {% if line.can_delete %}
+                        <button type="submit" class="btn btn-sm" name="delete_{{ line.line_id }}" title="{% trans %}Remove product from basket{% endtrans %}">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        {% endif %}
+                    </div>
+                {% endif %}
             </div>
         {% endfor %}
         <div class="basket-summary">
