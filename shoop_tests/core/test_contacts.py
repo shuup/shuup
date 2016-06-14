@@ -44,18 +44,20 @@ def test_anonymous_contact():
     a2 = AnonymousContact()
 
     # Basic Contact stuff
+    assert a1.is_anonymous, "AnonymousContact is anonymous"
+    assert not a1.is_all_seeing, "AnonymousContact is not all seeing"
     assert a1.identifier is None
-    assert a1.is_active
+    assert a1.is_active, "AnonymousContact is active"
     assert a1.language == ''
     assert a1.marketing_permission
     assert a1.phone == ''
     assert a1.www == ''
     assert a1.timezone is None
     assert a1.prefix == ''
-    assert a1.name == ''
+    assert a1.name == '', "AnonymousContact has no name"
     assert a1.suffix == ''
     assert a1.name_ext == ''
-    assert a1.email == ''
+    assert a1.email == '', "AnonymousContact has no email"
     assert str(a1) == ''
 
     # Primary key / id

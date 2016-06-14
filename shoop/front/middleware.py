@@ -83,6 +83,10 @@ class ShoopFrontMiddleware(object):
         if not request.person.is_active:
             messages.add_message(request, messages.INFO, _("Logged out since this account is inactive."))
             logout(request)
+            # Usually logout is connected to the `refresh_on_logout`
+            # method via a signal and that already sets request.person
+            # to anonymous, but set it explicitly too, just to be sure
+            request.person = get_person_contact(None)
 
     def _set_customer(self, request):
         company = get_company_contact(request.user)

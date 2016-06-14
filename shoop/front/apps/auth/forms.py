@@ -17,6 +17,8 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import ugettext as _
 
+from shoop.core.models import get_person_contact
+
 
 class EmailAuthenticationForm(AuthenticationForm):
 
@@ -53,10 +55,9 @@ class EmailAuthenticationForm(AuthenticationForm):
 
     def confirm_login_allowed(self, user):
         """
-        If a user has a contact that has been disabled by admin, do not let
-        user login.
+        Do not let user with inactive person contact to login.
         """
-        if hasattr(user, "contact") and not user.contact.is_active:
+        if not get_person_contact(user).is_active:
             raise forms.ValidationError(
                 self.error_messages['inactive'],
                 code='inactive',
