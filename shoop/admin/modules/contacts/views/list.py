@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.utils.translation import ugettext as _
 
 from shoop.admin.utils.picotable import (
@@ -36,7 +36,9 @@ class ContactListView(PicotableListView):
     ]
 
     def get_queryset(self):
-        return super(ContactListView, self).get_queryset().annotate(n_orders=Count("customer_orders"))
+        groups = self.get_filter().get("groups")
+        query = Q(groups__in=groups) if groups else Q()
+        return super(ContactListView, self).get_queryset().filter(query).annotate(n_orders=Count("customer_orders"))
 
     def get_type_display(self, instance):
         if isinstance(instance, PersonContact):

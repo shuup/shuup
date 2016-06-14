@@ -18,7 +18,7 @@ from filer.models import File
 
 from shoop.admin.utils.forms import flatatt_filter
 from shoop.admin.utils.urls import get_model_url, NoModelUrl
-from shoop.core.models import Contact, Product, ProductMode
+from shoop.core.models import Contact, PersonContact, Product, ProductMode
 
 
 class BasePopupChoiceWidget(Widget):
@@ -119,6 +119,13 @@ class ContactChoiceWidget(BasePopupChoiceWidget):
             "icon": icon,
             "text": _("Select")
         }
+
+
+class PersonContactChoiceWidget(ContactChoiceWidget):
+
+    @property
+    def filter(self):
+        return json.dumps({"groups": [PersonContact.get_default_group().pk]})
 
 
 class PackageProductChoiceWidget(ProductChoiceWidget):
