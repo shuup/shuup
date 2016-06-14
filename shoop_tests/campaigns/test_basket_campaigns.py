@@ -14,6 +14,7 @@ from shoop.campaigns.forms import BasketCampaignForm
 from shoop.campaigns.models.basket_conditions import (
     BasketTotalProductAmountCondition, BasketTotalAmountCondition
 )
+from shoop.campaigns.models.basket_effects import BasketDiscountAmount, BasketDiscountPercentage
 from shoop.campaigns.models.campaigns import BasketCampaign, Coupon, CouponUsage
 from shoop.core.models import OrderLineType
 from shoop.core.order_creator import OrderCreator
@@ -57,9 +58,10 @@ def test_basket_campaign_module_case1(rf):
     assert basket.product_count == 1
 
     campaign = BasketCampaign.objects.create(
-        shop=shop, public_name="test", name="test", discount_amount_value=discount_amount_value, active=True)
+        shop=shop, public_name="test", name="test", active=True)
     campaign.conditions.add(basket_rule1)
     campaign.save()
+    BasketDiscountAmount.objects.create(campaign=campaign, discount_amount=discount_amount_value)
 
     assert len(basket.get_final_lines()) == 1  # case 1
     assert basket.total_price == price(single_product_price) # case 1
@@ -96,9 +98,11 @@ def test_basket_campaign_case2(rf):
     assert basket.product_count == 3
 
     campaign = BasketCampaign.objects.create(
-        shop=shop, public_name="test", name="test", discount_amount_value=discount_amount_value, active=True)
+        shop=shop, public_name="test", name="test", active=True)
     campaign.conditions.add(rule)
     campaign.save()
+
+    BasketDiscountAmount.objects.create(discount_amount=discount_amount_value, campaign=campaign)
 
     assert len(basket.get_final_lines()) == 3
     assert basket.total_price == price(single_product_price) * basket.product_count
@@ -136,17 +140,18 @@ def test_only_cheapest_price_is_selected(rf):
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=product_price)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
 
-    campaign = BasketCampaign.objects.create(
-        shop=shop, public_name="test", name="test", discount_amount_value=discount1, active=True)
-    campaign.conditions.add(rule)
-    campaign.save()
+    campaign1 = BasketCampaign.objects.create(shop=shop, public_name="test", name="test", active=True)
+    campaign1.conditions.add(rule)
+    campaign1.save()
+    BasketDiscountAmount.objects.create(discount_amount=discount1, campaign=campaign1)
 
-    campaign = BasketCampaign.objects.create(
-        shop=shop, public_name="test", name="test", discount_amount_value=discount2, active=True)
-    campaign.conditions.add(rule)
-    campaign.save()
+    campaign2 = BasketCampaign.objects.create(shop=shop, public_name="test", name="test", active=True)
+    campaign2.conditions.add(rule)
+    campaign2.save()
+    BasketDiscountAmount.objects.create(discount_amount=discount2, campaign=campaign2)
 
     assert len(basket.get_final_lines()) == 2
+
     line_types = [l.type for l in basket.get_final_lines()]
     assert OrderLineType.DISCOUNT in line_types
 
@@ -172,18 +177,21 @@ def test_multiple_campaigns_match_with_coupon(rf):
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=product_price)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
 
-    campaign = BasketCampaign.objects.create(shop=shop, public_name="test", name="test", discount_amount_value=discount1, active=True)
+    campaign = BasketCampaign.objects.create(shop=shop, public_name="test", name="test", active=True)
     campaign.conditions.add(rule)
     campaign.save()
 
+    BasketDiscountAmount.objects.create(discount_amount=discount1, campaign=campaign)
+
     dc = Coupon.objects.create(code="TEST", active=True)
-    BasketCampaign.objects.create(
+    campaign2 = BasketCampaign.objects.create(
             shop=shop, public_name="test",
             name="test",
             coupon=dc,
-            discount_amount_value=discount2,
             active=True
     )
+
+    BasketDiscountAmount.objects.create(discount_amount=discount2, campaign=campaign2)
 
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
 
@@ -216,9 +224,11 @@ def test_percentage_campaign(rf):
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
 
     campaign = BasketCampaign.objects.create(
-        shop=shop, public_name="test", name="test", discount_percentage=discount_percentage, active=True)
+        shop=shop, public_name="test", name="test", active=True)
     campaign.conditions.add(rule)
     campaign.save()
+
+    BasketDiscountPercentage.objects.create(campaign=campaign, discount_percentage=discount_percentage)
 
     assert len(basket.get_final_lines()) == 2
     assert basket.product_count == 1
@@ -247,13 +257,13 @@ def test_order_creation_adds_usage(rf, admin_user):
     # add coupon
     coupon = Coupon.objects.create(active=True, code="asdf")
 
-    BasketCampaign.objects.create(
+    campaign = BasketCampaign.objects.create(
         active=True,
         shop=shop,
         name="test",
         public_name="test",
-        discount_percentage="0.1",
         coupon=coupon)
+    BasketDiscountPercentage.objects.create(campaign=campaign, discount_percentage="0.1")
 
     source.add_code(coupon.code)
 
@@ -271,7 +281,6 @@ def test_coupon_uniqueness(rf):
         shop=shop,
         name="test",
         public_name="test",
-        discount_percentage="0.1",
         coupon=None)
 
     second_campaign = BasketCampaign.objects.create(
@@ -279,8 +288,11 @@ def test_coupon_uniqueness(rf):
         shop=shop,
         name="test1",
         public_name="test1",
-        discount_percentage="0.1",
         coupon=None)
+
+    BasketDiscountPercentage.objects.create(campaign=first_campaign, discount_percentage="0.1")
+    BasketDiscountPercentage.objects.create(campaign=second_campaign, discount_percentage="0.1")
+
 
     coupon = Coupon.objects.create(active=True, code="test_code")
     first_campaign.coupon = coupon

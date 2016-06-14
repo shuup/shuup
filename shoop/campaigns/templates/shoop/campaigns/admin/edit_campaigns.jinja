@@ -17,8 +17,6 @@
                 {{ bs3.field(form.active) }}
                 {{ bs3.field(form.start_datetime) }}
                 {{ bs3.field(form.end_datetime) }}
-                {{ bs3.field(form.discount_percentage) }}
-                {{ bs3.field(form.discount_amount_value) }}
             {% endcall %}
 
             {% call content_block(_("Campaign Rules"), "fa-clock-o") %}
@@ -36,6 +34,19 @@
                 {% if form.coupon %}
                 {{ bs3.field(form.coupon) }}
                 {% endif %}
+            {% endcall %}
+            {% call content_block(_("Campaign effects"), "fa-clock-o") %}
+                <div class="row">
+                    <div class="col-sm-8 col-sm-push-4 col-lg-6 col-lg-push-3">
+                        <h3>{{ _("End Results") }}</h3>
+                        <p>{{ _("The following fields determine what this campaign applies. You must select one effect to be able to save this campaign.") }}</p>
+                    </div>
+                </div>
+                    {% for effect_id in form.effect_ids %}
+                        {{ bs3.field(form[effect_id]) }}
+                    {% endfor %}
+                </div>
+
             {% endcall %}
         </form>
     {% endcall %}

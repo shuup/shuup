@@ -18,7 +18,7 @@ from shoop.campaigns.forms import (
 from shoop.campaigns.models.campaigns import (
     BasketCampaign, CatalogCampaign, Coupon
 )
-from shoop.utils.i18n import format_percent, get_current_babel_locale
+from shoop.utils.i18n import get_current_babel_locale
 
 
 class _Breadcrumbed(object):
@@ -32,17 +32,10 @@ class CampaignListView(PicotableListView):
             "name", _(u"Title"), sort_field="name", display="name", linked=True,
             filter_config=TextFilter(operator="startswith")
         ),
-        Column("discount_percentage", _("Discount percentage"), display="format_percentage"),
-        Column("discount_amount", _("Discount amount"), sort_field="discount_amount_value"),
         Column("start_datetime", _("Starts")),
         Column("end_datetime", _("Ends")),
         Column("active", _("Active"), filter_config=ChoicesFilter(choices=[(0, _("No")), (1, _("Yes"))])),
     ]
-
-    def format_percentage(self, instance, *args, **kwargs):
-        if not instance.discount_percentage:
-            return ""
-        return format_percent(instance.discount_percentage)
 
     def start_datetime(self, instance, *args, **kwargs):
         if not instance.start_datetime:

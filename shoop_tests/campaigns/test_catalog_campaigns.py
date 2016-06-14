@@ -16,6 +16,7 @@ from django.utils.translation import activate
 
 from shoop.admin.modules.orders.views.edit import OrderEditView
 from shoop.campaigns.models.campaigns import CatalogCampaign
+from shoop.campaigns.models.product_effects import ProductDiscountAmount, ProductDiscountPercentage
 from shoop.campaigns.models.catalog_filters import CategoryFilter
 from shoop.campaigns.models.context_conditions import ContactGroupCondition
 from shoop.core.models import Category
@@ -43,10 +44,11 @@ def test_campaign_creation(rf):
     category_filter.categories.add(cat)
     category_filter.save()
 
-    campaign = CatalogCampaign.objects.create(shop=shop, name="test", discount_amount_value=20, active=True)
+    campaign = CatalogCampaign.objects.create(shop=shop, name="test", active=True)
     campaign.conditions.add(condition)
     campaign.filters.add(category_filter)
     campaign.save()
+    ProductDiscountAmount.objects.create(campaign=campaign, discount_amount=20)
 
 
 @pytest.mark.django_db
@@ -71,9 +73,11 @@ def test_condition_affects_price(rf):
     contact_condition.contact_groups = request.customer.groups.all()
     contact_condition.save()
 
-    campaign = CatalogCampaign.objects.create(shop=shop, name="test", discount_amount_value=20, active=True)
+    campaign = CatalogCampaign.objects.create(shop=shop, name="test", active=True)
     campaign.conditions.add(contact_condition)
     campaign.save()
+
+    ProductDiscountAmount.objects.create(campaign=campaign, discount_amount=20)
 
     price = shop.create_price
 
@@ -91,9 +95,11 @@ def test_filter_affects_price(rf):
     category_filter.categories.add(cat)
     category_filter.save()
 
-    campaign = CatalogCampaign.objects.create(shop=shop, name="test", discount_amount_value=20, active=True)
+    campaign = CatalogCampaign.objects.create(shop=shop, name="test", active=True)
     campaign.filters.add(category_filter)
     campaign.save()
+
+    ProductDiscountAmount.objects.create(campaign=campaign, discount_amount=20)
 
     price = shop.create_price
 
@@ -120,10 +126,13 @@ def test_campaign_all_rules_must_match1(rf):
     rule2.categories.add(cat)
     rule2.save()
 
-    campaign = CatalogCampaign.objects.create(shop=shop, name="test", discount_amount_value=discount_amount, active=True)
+    campaign = CatalogCampaign.objects.create(shop=shop, name="test", active=True)
     campaign.conditions.add(rule1)
     campaign.filters.add(rule2)
     campaign.save()
+
+    ProductDiscountAmount.objects.create(campaign=campaign, discount_amount=discount_amount)
+
 
     product = create_product("Just-A-Product-Too", shop, default_price=original_price)
 
@@ -137,16 +146,6 @@ def test_campaign_all_rules_must_match1(rf):
     # now the category is set, so both rules match, disconut should be given
     assert product.get_price_info(request, quantity=1).price == (price(original_price) - price(discount_amount))
 
-
-@pytest.mark.django_db
-def test_campaign_save_validation(rf):
-    # Discount percentage, or Discount amount in shop currency
-    request, shop, group = initialize_test(rf, False)
-    with pytest.raises(ValidationError):
-        campaign = CatalogCampaign.objects.create(shop=shop, name="test", discount_amount_value="20", discount_percentage="0.20")
-
-    with pytest.raises(ValidationError):
-        campaign = CatalogCampaign.objects.create(shop=shop, name="test")
 
 @pytest.mark.django_db
 def test_percentage_campaigns(rf):
@@ -163,10 +162,12 @@ def test_percentage_campaigns(rf):
     rule2 = CategoryFilter.objects.create()
     rule2.categories.add(cat)
     rule2.save()
-    campaign = CatalogCampaign.objects.create(shop=shop, name="test", discount_percentage=discount_percentage, active=True)
+    campaign = CatalogCampaign.objects.create(shop=shop, name="test", active=True)
     campaign.conditions.add(rule1)
     campaign.filters.add(rule2)
     campaign.save()
+
+    cdp = ProductDiscountPercentage.objects.create(campaign=campaign, discount_percentage=discount_percentage)
 
     product = create_product("Just-A-Product-Too", shop, default_price=original_price)
 
@@ -178,7 +179,7 @@ def test_percentage_campaigns(rf):
     shop_product.categories.add(cat)
     shop_product.save()
     # now the category is set, so both rules match, discount should be given
-    discounted_price = price(original_price) - (price(original_price) * Decimal(campaign.discount_percentage))
+    discounted_price = price(original_price) - (price(original_price) * Decimal(cdp.value))
     assert product.get_price_info(request, quantity=1).price == discounted_price
 
 
@@ -194,18 +195,21 @@ def test_only_best_price_affects(rf):
 
     rule1, rule2 = create_condition_and_filter(cat, request)
 
-    campaign = CatalogCampaign.objects.create(shop=shop, name="test", discount_amount_value=discount_amount, active=True)
+    campaign = CatalogCampaign.objects.create(shop=shop, name="test", active=True)
     campaign.conditions.add(rule1)
     campaign.filters.add(rule2)
     campaign.save()
 
+    ProductDiscountAmount.objects.create(campaign=campaign, discount_amount=discount_amount)
+
     rule3, rule4 = create_condition_and_filter(cat, request)
 
-    campaign = CatalogCampaign.objects.create(shop=shop, name="test", discount_amount_value=best_discount_amount, active=True)
+    campaign = CatalogCampaign.objects.create(shop=shop, name="test", active=True)
     campaign.conditions.add(rule3)
     campaign.filters.add(rule4)
     campaign.save()
 
+    ProductDiscountAmount.objects.create(campaign=campaign, discount_amount=best_discount_amount)
 
     product = create_product("Just-A-Product-Too", shop, default_price=original_price)
 
@@ -230,10 +234,12 @@ def test_minimum_price_is_forced(rf):
     request, shop, group = initialize_test(rf, False)
     cat = Category.objects.create(name="test")
     rule1, rule2 = create_condition_and_filter(cat, request)
-    campaign = CatalogCampaign.objects.create(shop=shop, name="test", discount_amount_value=discount_amount, active=True)
+    campaign = CatalogCampaign.objects.create(shop=shop, name="test", active=True)
     campaign.conditions.add(rule1)
     campaign.filters.add(rule2)
     campaign.save()
+
+    ProductDiscountAmount.objects.create(campaign=campaign, discount_amount=discount_amount)
 
     price = shop.create_price
 
@@ -261,10 +267,13 @@ def test_price_cannot_be_under_zero(rf):
     request, shop, group = initialize_test(rf, False)
     cat = Category.objects.create(name="test")
     rule1, rule2 = create_condition_and_filter(cat, request)
-    campaign = CatalogCampaign.objects.create(shop=shop, name="test", discount_amount_value=discount_amount, active=True)
+
+    campaign = CatalogCampaign.objects.create(shop=shop, name="test", active=True)
     campaign.conditions.add(rule1)
     campaign.filters.add(rule2)
     campaign.save()
+
+    ProductDiscountAmount.objects.create(campaign=campaign, discount_amount=discount_amount)
 
     price = shop.create_price
 
@@ -295,9 +304,14 @@ def test_start_end_dates(rf):
     cat = Category.objects.create(name="test")
     rule1, rule2 = create_condition_and_filter(cat, request)
 
-    campaign = CatalogCampaign.objects.create(shop=shop, name="test", discount_amount_value="20", active=True)
+    discount_amount = 20
+
+    campaign = CatalogCampaign.objects.create(shop=shop, name="test", active=True)
     campaign.conditions.add(rule1)
     campaign.save()
+
+    ProductDiscountAmount.objects.create(discount_amount=discount_amount, campaign=campaign)
+
     price = shop.create_price
 
     product = create_product("Just-A-Product-Too", shop, default_price=original_price)
@@ -344,10 +358,13 @@ def test_availability(rf):
     request, shop, group = initialize_test(rf, False)
     cat = Category.objects.create(name="test")
     rule1, rule2 = create_condition_and_filter(cat, request)
-
-    campaign = CatalogCampaign.objects.create(shop=shop, name="test", discount_amount_value="20", active=False)
+    discount_amount = "20"
+    campaign = CatalogCampaign.objects.create(shop=shop, name="test", active=False)
     campaign.conditions.add(rule1)
     campaign.save()
+
+    ProductDiscountAmount.objects.create(discount_amount=discount_amount, campaign=campaign)
+
 
     assert not campaign.is_available()
 
@@ -358,8 +375,10 @@ def test_admin_order_with_campaign(rf, admin_user):
     customer = request.customer
     cat = Category.objects.create(name="test")
     rule1, rule2 = create_condition_and_filter(cat, request)
-    campaign = CatalogCampaign.objects.create(shop=shop, name="test", discount_amount_value="10", active=True)
+    campaign = CatalogCampaign.objects.create(shop=shop, name="test", active=True)
     campaign.conditions.add(rule1)
+
+    ProductDiscountAmount.objects.create(campaign=campaign,  discount_amount="10")
     product = create_product("Just-A-Product-Too", shop, default_price=20)
     shop_product = product.get_shop_instance(shop)
     shop_product.categories.add(cat)

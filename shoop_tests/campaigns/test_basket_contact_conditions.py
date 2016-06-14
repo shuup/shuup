@@ -7,6 +7,7 @@
 import pytest
 
 from django.utils.translation import activate
+from shoop.campaigns.models.basket_effects import BasketDiscountAmount
 
 from shoop.campaigns.models.campaigns import BasketCampaign
 from shoop.campaigns.models.basket_conditions import (
@@ -43,8 +44,11 @@ def create_basket_and_campaign(request, conditions, product_price_value, campaig
     assert basket.product_count == 1
     original_price = basket.total_price
 
+
     campaign = BasketCampaign.objects.create(
-        shop=request.shop, name="test", public_name="test", discount_amount_value=campaign_discount_value, active=True)
+        shop=request.shop, name="test", public_name="test", active=True)
+    BasketDiscountAmount.objects.create(campaign=campaign, discount_amount=campaign_discount_value)
+
     for condition in conditions:
         campaign.conditions.add(condition)
     assert campaign.is_available()
