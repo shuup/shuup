@@ -73,6 +73,7 @@ Localization
 Admin
 ~~~~~
 
+- Add barcode filter to product list view
 - Show stock in order creator
 - Fix bug: Fix decimal precision issues on order creation
 - Enable order creation for contact from contact detail view
