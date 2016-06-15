@@ -73,6 +73,8 @@ Localization
 Admin
 ~~~~~
 
+- Add account manager for contact
+- Add PersonContact choice widget
 - Add barcode filter to product list view
 - Show stock in order creator
 - Fix bug: Fix decimal precision issues on order creation
