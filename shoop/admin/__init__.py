@@ -25,6 +25,7 @@ class ShoopAdminAppConfig(AppConfig):
             "shoop.admin.modules.categories:CategoryModule",
             "shoop.admin.modules.contacts:ContactModule",
             "shoop.admin.modules.contact_groups:ContactGroupModule",
+            "shoop.admin.modules.permission_groups:PermissionGroupModule",
             "shoop.admin.modules.users:UserModule",
             "shoop.admin.modules.service_providers:ServiceProviderModule",
             "shoop.admin.modules.services:PaymentMethodModule",

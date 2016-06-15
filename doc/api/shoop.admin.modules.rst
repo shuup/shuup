@@ -14,6 +14,7 @@ Subpackages
     shoop.admin.modules.manufacturers
     shoop.admin.modules.media
     shoop.admin.modules.orders
+    shoop.admin.modules.permission_groups
     shoop.admin.modules.product_types
     shoop.admin.modules.products
     shoop.admin.modules.sales_units
