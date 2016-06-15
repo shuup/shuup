@@ -13,7 +13,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.forms import ShoopAdminForm
 from shoop.core.models import (
-    FixedCostBehaviorComponent, PaymentMethod, ServiceProvider, ShippingMethod,
+    FixedCostBehaviorComponent, GroupAvailabilityBehaviorComponent,
+    PaymentMethod, ServiceProvider, ShippingMethod,
     WaivingCostBehaviorComponent, WeightLimitsBehaviorComponent
 )
 
@@ -120,4 +121,10 @@ class WaivingCostBehaviorComponentForm(ShoopAdminForm):
 class WeightLimitsBehaviorComponentForm(forms.ModelForm):
     class Meta:
         model = WeightLimitsBehaviorComponent
+        exclude = ["identifier"]
+
+
+class GroupAvailabilityBehaviorComponentForm(forms.ModelForm):
+    class Meta:
+        model = GroupAvailabilityBehaviorComponent
         exclude = ["identifier"]

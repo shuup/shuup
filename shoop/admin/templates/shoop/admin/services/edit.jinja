@@ -49,6 +49,9 @@
             var $selection = $("#component-select").find("option:selected");
             var component = $selection.val();
             var $source = $("#" + component+ "-placeholder");
+
+            // Remove activated select2 spans from placeholder
+            $source.find("span.select2.select2-container").remove();
             var targetID = $selection.data("target-id");
             var $totalFormsField = $("#" + targetID + "-TOTAL_FORMS");
             var componentCount = parseInt($totalFormsField.val());
@@ -56,6 +59,9 @@
             var $componentsPlaceholder = $("#insert-placeholder");
             $(html).insertAfter($componentsPlaceholder);
             $totalFormsField.val(componentCount + 1);
+
+            // reactivate possible select2 widgets
+            activateSelects();
         });
         $("#id_base-payment_processor,#id_base-carrier").on("change", function() {
             var url = window.location.href.split('?')[0];

@@ -151,3 +151,16 @@ class WeightBasedPricingBehaviorComponent(ServiceBehaviorComponent):
         range = self._get_matching_range_with_lowest_price(source)
         if not range:
             yield ValidationError(_("Weight does not match with any range."), code="out_of_range")
+
+
+class GroupAvailabilityBehaviorComponent(ServiceBehaviorComponent):
+    name = _("Contact group availability")
+    help_text = _("Limit service availability for specific contact groups.")
+
+    groups = models.ManyToManyField("ContactGroup", verbose_name=_("groups"))
+
+    def get_unavailability_reasons(self, service, source):
+        customer_groups = set(source.customer.groups.all().values_list("pk", flat=True))
+        groups_to_match = set(self.groups.all().values_list("pk", flat=True))
+        if not bool(customer_groups & groups_to_match):
+            yield ValidationError(_("Service is not available for any of the customers groups."))
