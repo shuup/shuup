@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-14 00:17+0000\n"
+"POT-Creation-Date: 2016-06-14 21:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -216,6 +216,15 @@ msgstr ""
 msgid "Give percentage discount."
 msgstr ""
 
+msgid "Free Product(s)"
+msgstr ""
+
+msgid "product"
+msgstr ""
+
+msgid "Select product(s) to give free."
+msgstr ""
+
 msgid "shop"
 msgstr ""
 
@@ -299,9 +308,6 @@ msgid "Limit the campaign to selected product types."
 msgstr ""
 
 msgid "Product"
-msgstr ""
-
-msgid "product"
 msgstr ""
 
 msgid "Limit the campaign to selected products."

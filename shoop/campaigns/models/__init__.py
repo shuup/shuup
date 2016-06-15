@@ -6,6 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 from .basket_conditions import BasketCondition
 from .basket_effects import BasketDiscountEffect
+from .basket_line_effects import BasketLineEffect
 from .campaigns import BasketCampaign, Campaign, CatalogCampaign, Coupon
 from .catalog_filters import CatalogFilter
 from .contact_group_sales_ranges import ContactGroupSalesRange
@@ -16,6 +17,7 @@ __all__ = [
     'BasketCampaign',
     'BasketDiscountEffect',
     'BasketCondition',
+    'BasketLineEffect',
     'Campaign',
     'ProductDiscountEffect',
     'CatalogCampaign',

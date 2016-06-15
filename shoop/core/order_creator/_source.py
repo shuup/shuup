@@ -14,6 +14,7 @@ from django.core.exceptions import ValidationError
 from django.utils.encoding import force_text
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
+from enumfields import Enum
 from six import iteritems
 
 from shoop.core import taxing
@@ -501,6 +502,13 @@ def _collect_lines_from_signal(signal_results):
                 yield line
 
 
+class LineSource(Enum):
+    CUSTOMER = 1
+    SELLER = 2
+    ADMIN = 3
+    DISCOUNT_MODULE = 4
+
+
 class SourceLine(TaxableItem, Priceful):
     """
     Line of OrderSource.
@@ -559,6 +567,8 @@ class SourceLine(TaxableItem, Priceful):
         self.text = kwargs.pop("text", "")
         self.require_verification = kwargs.pop("require_verification", False)
         self.accounting_identifier = kwargs.pop("accounting_identifier", "")
+
+        self.line_source = kwargs.pop("line_source", LineSource.CUSTOMER)
 
         self._taxes = None
 

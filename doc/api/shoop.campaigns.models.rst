@@ -12,6 +12,22 @@ shoop.campaigns.models.basket_conditions module
     :undoc-members:
     :show-inheritance:
 
+shoop.campaigns.models.basket_effects module
+--------------------------------------------
+
+.. automodule:: shoop.campaigns.models.basket_effects
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shoop.campaigns.models.basket_line_effects module
+-------------------------------------------------
+
+.. automodule:: shoop.campaigns.models.basket_line_effects
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.campaigns.models.campaigns module
 ---------------------------------------
 
@@ -40,6 +56,14 @@ shoop.campaigns.models.context_conditions module
 ------------------------------------------------
 
 .. automodule:: shoop.campaigns.models.context_conditions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shoop.campaigns.models.product_effects module
+---------------------------------------------
+
+.. automodule:: shoop.campaigns.models.product_effects
     :members:
     :undoc-members:
     :show-inheritance:
