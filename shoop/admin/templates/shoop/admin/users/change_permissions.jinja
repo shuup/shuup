@@ -9,6 +9,7 @@
                 {{ bs3.field(form.old_password, show_help_block=True) }}
                 {{ bs3.field(form.is_staff) }}
                 {{ bs3.field(form.is_superuser) }}
+                {{ bs3.field(form.permission_groups) }}
             {% endcall %}
         </form>
     {% endcall %}

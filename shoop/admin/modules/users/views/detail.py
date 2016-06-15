@@ -38,6 +38,12 @@ class BaseUserForm(forms.ModelForm):
         required=False,
         help_text=_("See the permissions view to change these.")
     )
+    permission_groups = forms.CharField(
+        label=_("Permission Groups"),
+        widget=forms.TextInput(attrs={"readonly": True, "disabled": True}),
+        required=False,
+        help_text=_("See the permissions view to change these.")
+    )
 
     def __init__(self, *args, **kwargs):
         super(BaseUserForm, self).__init__(*args, **kwargs)
@@ -48,8 +54,14 @@ class BaseUserForm(forms.ModelForm):
                 _("staff") if getattr(self.instance, 'is_staff', None) else "",
                 _("superuser") if getattr(self.instance, 'is_superuser', None) else "",
             ] if perm) or _("No special permissions")
+            if hasattr(self.instance, "groups"):
+                group_names = [force_text(group) for group in self.instance.groups.all()]
+                self.initial["permission_groups"] = ", ".join(sorted(group_names))
+            else:
+                self.initial["permission_groups"] = _("No permission groups")
         else:
             self.fields.pop("permission_info")
+            self.fields.pop("permission_groups")
 
     def save(self, commit=True):
         user = super(BaseUserForm, self).save(commit=False)

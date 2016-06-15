@@ -74,6 +74,7 @@ Localization
 Admin
 ~~~~~
 
+- Enable adding of permission groups from `Users` admin
 - Add admin module for managing Django permission groups
 - Add `get_required_permission` to ``AdminModule``
 - Add support for module-level permissions
