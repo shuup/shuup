@@ -14,40 +14,44 @@ from shoop.admin.modules.services.views import (
 )
 from shoop.core.models import (
     FixedCostBehaviorComponent, PaymentMethod, ShippingMethod,
-    WaivingCostBehaviorComponent, WeightBasedPricingBehaviorComponent,
+    WaivingCostBehaviorComponent, GroupAvailabilityBehaviorComponent,
     WeightLimitsBehaviorComponent
 )
 from shoop.testing.factories import (
-    get_default_payment_method, get_default_shipping_method, get_default_shop
+    get_default_payment_method, get_default_shipping_method, get_default_shop, get_default_customer_group
 )
 from shoop.testing.utils import apply_request_middleware
 
 
-DEFAULT_BEHAVIOR_SETTINGS = {
-    FixedCostBehaviorComponent.__name__.lower(): {
-        "description__en": "Fixed cost test",
-        "price_value": 1,
-        "id": "",
-    },
-    WaivingCostBehaviorComponent.__name__.lower(): {
-        "description__en": "Waiving cost test",
-        "price_value": 1,
-        "waive_limit_value": 1,
-        "id": "",
-    },
-    "weight_based_price_ranges": {
-        "description__en": "Weight based pricing test",
-        "price_value": 1,
-        "min_value": 1,
-        "max_value": 2,
-        "id": "",
-    },
-    WeightLimitsBehaviorComponent.__name__.lower(): {
-        "min_weight": 0,
-        "max_weight": 1,
-        "id": "",
-    },
-}
+def get_default_behavior_settings():
+    return {
+        FixedCostBehaviorComponent.__name__.lower(): {
+            "description__en": "Fixed cost test",
+            "price_value": 1,
+            "id": "",
+        },
+        WaivingCostBehaviorComponent.__name__.lower(): {
+            "description__en": "Waiving cost test",
+            "price_value": 1,
+            "waive_limit_value": 1,
+            "id": "",
+        },
+        "weight_based_price_ranges": {
+            "description__en": "Weight based pricing test",
+            "price_value": 1,
+            "min_value": 1,
+            "max_value": 2,
+            "id": "",
+        },
+        WeightLimitsBehaviorComponent.__name__.lower(): {
+            "min_weight": 0,
+            "max_weight": 1,
+            "id": "",
+        },
+        GroupAvailabilityBehaviorComponent.__name__.lower(): {
+            "groups": [get_default_customer_group().pk]
+        }
+    }
 
 
 def get_default_data(object, service_provider_attr, service_provider_attr_field, delete=False):
@@ -66,7 +70,7 @@ def get_default_data(object, service_provider_attr, service_provider_attr_field,
 
 def get_default_component_form_data(delete=False):
     data = {}
-    behavior_settings = DEFAULT_BEHAVIOR_SETTINGS
+    behavior_settings = get_default_behavior_settings()
 
     for component_name, component_dict in behavior_settings.items():
         data.update({
@@ -105,7 +109,7 @@ def test_behavior_add_save(rf, admin_user, view, model, get_object, service_prov
         request = apply_request_middleware(rf.post("/", data=data, user=admin_user))
         view(request, pk=object.pk)
         components_after = object.behavior_components.count()
-        assert components_after == len(DEFAULT_BEHAVIOR_SETTINGS)
+        assert components_after == len(get_default_behavior_settings())
 
 
 @pytest.mark.django_db

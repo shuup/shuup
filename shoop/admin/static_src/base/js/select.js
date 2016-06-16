@@ -7,6 +7,35 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+function activateSelects() {
+    $("select").each(function(idx, object) {
+        const select = $(object);
+        const model = select.data("model");
+        if(model === undefined) {
+            select.select2({language: "xx"});
+            return true;
+        }
+        select.select2({
+            language: "xx",
+            minimumInputLength: 3,
+            ajax: {
+                url: "/sa/select",
+                dataType: "json",
+                data: function(params) {
+                    return {model: model, search: params.term};
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data.results, function (item) {
+                            return {text: item.name, id: item.id};
+                        })
+                    };
+                }
+            }
+        });
+    });
+}
+
 $(function(){
     // Handle localization with Django instead of using select2 localization files
     $.fn.select2.amd.define("select2/i18n/xx", [], function () {
@@ -44,30 +73,5 @@ $(function(){
             }
         };
     });
-    $("select").each(function(idx, object) {
-        const select = $(object);
-        const model = select.data("model");
-        if(model === undefined) {
-            select.select2({language: "xx"});
-            return true;
-        }
-        select.select2({
-            language: "xx",
-            minimumInputLength: 3,
-            ajax: {
-                url: "/sa/select",
-                dataType: "json",
-                data: function(params) {
-                    return {model: model, search: params.term};
-                },
-                processResults: function (data) {
-                    return {
-                        results: $.map(data.results, function (item) {
-                            return {text: item.name, id: item.id};
-                        })
-                    };
-                }
-            }
-        });
-    });
+    activateSelects();
 });

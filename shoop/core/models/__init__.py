@@ -46,9 +46,9 @@ from ._service_base import (
     ServiceProvider
 )
 from ._service_behavior import (
-    FixedCostBehaviorComponent, WaivingCostBehaviorComponent,
-    WeightBasedPriceRange, WeightBasedPricingBehaviorComponent,
-    WeightLimitsBehaviorComponent
+    FixedCostBehaviorComponent, GroupAvailabilityBehaviorComponent,
+    WaivingCostBehaviorComponent, WeightBasedPriceRange,
+    WeightBasedPricingBehaviorComponent, WeightLimitsBehaviorComponent
 )
 from ._service_payment import (
     CustomPaymentProcessor, PaymentMethod, PaymentProcessor, PaymentUrls
@@ -74,6 +74,7 @@ __all__ = [
     "ConfigurationItem",
     "Contact",
     "ContactGroup",
+    "GroupAvailabilityBehaviorComponent",
     "Counter",
     "CounterType",
     "CustomCarrier",

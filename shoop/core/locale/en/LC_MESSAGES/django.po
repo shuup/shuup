@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-14 19:03+0000\n"
+"POT-Creation-Date: 2016-06-15 19:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1020,6 +1020,18 @@ msgid ""
 msgstr ""
 
 msgid "Weight does not match with any range."
+msgstr ""
+
+msgid "Contact group availability"
+msgstr ""
+
+msgid "Limit service availability for specific contact groups."
+msgstr ""
+
+msgid "groups"
+msgstr ""
+
+msgid "Service is not available for any of the customers groups."
 msgstr ""
 
 msgid "payment processor"
