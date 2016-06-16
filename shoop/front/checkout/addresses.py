@@ -51,7 +51,10 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
 
     template_name = "shoop/front/checkout/addresses.jinja"
 
-    address_kinds = ("shipping", "billing")  # When adding to this, you'll naturally have to edit the template too
+    # When adding to this, you'll naturally have to edit the template too, also change saved_fields below to match
+    address_kinds = ("shipping", "billing")
+    # Saved address field names for customer, use blank if default field name doesn't exist
+    address_kinds_saved_address_fields = ("default_shipping_address", "default_billing_address")
     address_form_class = AddressForm
     address_form_classes = {}  # Override by `address_kind` if required
     company_form_class = CompanyForm
@@ -66,10 +69,17 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
 
     def get_initial(self):
         initial = super(AddressesPhase, self).get_initial()
-        for address_kind in self.address_kinds:
+        for idx, address_kind in enumerate(self.address_kinds):
             if self.storage.get(address_kind):
-                for key, value in model_to_dict(self.storage[address_kind]).items():
-                    initial["%s-%s" % (address_kind, key)] = value
+                mutable_addresses_dict = model_to_dict(self.storage.get(address_kind))
+            else:
+                try:
+                    mutable_addresses_dict = model_to_dict(getattr(
+                        self.storage.request.customer, self.address_kinds_saved_address_fields[idx]))
+                except:
+                    continue
+            for key, value in mutable_addresses_dict.items():
+                initial["%s-%s" % (address_kind, key)] = value
         return initial
 
     def is_valid(self):
