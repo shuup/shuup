@@ -266,12 +266,12 @@ class OrderEditView(CreateOrUpdateView):
                 "name": force_text(product.tax_class),
             },
             "baseUnitPrice": {
-                "value": price_info.base_price.value,
-                "includesTax": price_info.base_price.includes_tax
+                "value": price_info.base_unit_price.value,
+                "includesTax": price_info.base_unit_price.includes_tax
             },
             "unitPrice": {
-                "value": price_info.price.value,
-                "includesTax": price_info.price.includes_tax
+                "value": price_info.discounted_unit_price.value,
+                "includesTax": price_info.base_unit_price.includes_tax
             }
         }
 
