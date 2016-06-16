@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.base import AdminModule, MenuEntry
+from shoop.admin.utils.permissions import get_default_model_permissions
 from shoop.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shoop.core.models import Manufacturer
 
@@ -22,7 +23,8 @@ class ManufacturerModule(AdminModule):
         return get_edit_and_list_urls(
             url_prefix="^Manufacturers",
             view_template="shoop.admin.modules.manufacturers.views.Manufacturer%sView",
-            name_template="manufacturers.%s"
+            name_template="manufacturers.%s",
+            permissions=get_default_model_permissions(Manufacturer),
         )
 
     def get_menu_entries(self, request):
@@ -35,6 +37,9 @@ class ManufacturerModule(AdminModule):
                 category=category
             ),
         ]
+
+    def get_required_permissions(self):
+        return get_default_model_permissions(Manufacturer)
 
     def get_model_url(self, object, kind):
         return derive_model_url(Manufacturer, "shoop_admin:manufacturers", object, kind)

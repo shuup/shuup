@@ -15,7 +15,7 @@ from django.utils.encoding import force_bytes, force_text
 
 
 class AdminModule(object):
-    name = "Base"
+    name = "_Base_"
 
     # A menu entry to represent this module in breadcrumbs
     breadcrumbs_menu_entry = None

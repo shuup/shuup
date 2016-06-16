@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.base import AdminModule, MenuEntry
+from shoop.admin.utils.permissions import get_default_model_permissions
 from shoop.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shoop.simple_cms.models import Page
 
@@ -22,7 +23,8 @@ class SimpleCMSAdminModule(AdminModule):
         return get_edit_and_list_urls(
             url_prefix="^cms/page",
             view_template="shoop.simple_cms.admin_module.views.Page%sView",
-            name_template="simple_cms.page.%s"
+            name_template="simple_cms.page.%s",
+            permissions=get_default_model_permissions(Page)
         )
 
     def get_menu_category_icons(self):
@@ -37,6 +39,9 @@ class SimpleCMSAdminModule(AdminModule):
                 category=category, aliases=[_("Show pages")]
             )
         ]
+
+    def get_required_permissions(self):
+        return get_default_model_permissions(Page)
 
     def get_model_url(self, object, kind):
         return derive_model_url(Page, "shoop_admin:simple_cms.page", object, kind)

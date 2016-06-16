@@ -9,6 +9,7 @@ from django.contrib.auth.models import Group as PermissionGroup
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.base import AdminModule, MenuEntry
+from shoop.admin.utils.permissions import get_default_model_permissions
 from shoop.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 
 
@@ -21,7 +22,8 @@ class PermissionGroupModule(AdminModule):
         return get_edit_and_list_urls(
             url_prefix="^permission-groups",
             view_template="shoop.admin.modules.permission_groups.views.PermissionGroup%sView",
-            name_template="permission_groups.%s"
+            name_template="permission_groups.%s",
+            permissions=get_default_model_permissions(PermissionGroup),
         )
 
     def get_menu_category_icons(self):
@@ -36,6 +38,9 @@ class PermissionGroupModule(AdminModule):
                 category=_("Contacts")
             )
         ]
+
+    def get_required_permissions(self):
+        return get_default_model_permissions(PermissionGroup)
 
     def get_model_url(self, object, kind):
         return derive_model_url(PermissionGroup, "shoop_admin:permission_groups", object, kind)

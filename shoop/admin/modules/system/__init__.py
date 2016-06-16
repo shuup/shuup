@@ -10,7 +10,9 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.base import AdminModule, MenuEntry, Notification
+from shoop.admin.utils.permissions import get_default_model_permissions
 from shoop.admin.utils.urls import admin_url
+from shoop.core.models import Shop
 from shoop.core.telemetry import (
     is_in_grace_period, is_opt_out, is_telemetry_enabled
 )
@@ -25,7 +27,8 @@ class SystemModule(AdminModule):
             admin_url(
                 "^system/telemetry/$",
                 "shoop.admin.modules.system.views.telemetry.TelemetryView",
-                name="telemetry"
+                name="telemetry",
+                permissions=get_default_model_permissions(Shop)
             ),
         ]
 
@@ -39,6 +42,9 @@ class SystemModule(AdminModule):
                 category=self.category
             ) if is_telemetry_enabled() else None,
         ] if e]
+
+    def get_required_permissions(self):
+        return get_default_model_permissions(Shop)
 
     def get_notifications(self, request):
         if is_telemetry_enabled() and is_in_grace_period() and not is_opt_out():
