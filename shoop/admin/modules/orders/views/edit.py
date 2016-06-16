@@ -180,7 +180,7 @@ class OrderEditView(CreateOrUpdateView):
             "shop": encode_shop(order.shop),
             "lines": [
                 get_line_data_for_edit(order.shop, line) for line in order.lines.filter(
-                    type__in=[OrderLineType.PRODUCT, OrderLineType.OTHER]
+                    type__in=[OrderLineType.PRODUCT, OrderLineType.OTHER], parent_line_id=None
                 )
             ],
             "shippingMethodId": (encode_method(order.shipping_method) if order.shipping_method else None),
@@ -266,12 +266,12 @@ class OrderEditView(CreateOrUpdateView):
                 "name": force_text(product.tax_class),
             },
             "baseUnitPrice": {
-                "value": price_info.base_price.value,
-                "includesTax": price_info.base_price.includes_tax
+                "value": price_info.base_unit_price.value,
+                "includesTax": price_info.base_unit_price.includes_tax
             },
             "unitPrice": {
-                "value": price_info.price.value,
-                "includesTax": price_info.price.includes_tax
+                "value": price_info.discounted_unit_price.value,
+                "includesTax": price_info.base_unit_price.includes_tax
             }
         }
 
