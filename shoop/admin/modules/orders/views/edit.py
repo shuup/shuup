@@ -180,7 +180,7 @@ class OrderEditView(CreateOrUpdateView):
             "shop": encode_shop(order.shop),
             "lines": [
                 get_line_data_for_edit(order.shop, line) for line in order.lines.filter(
-                    type__in=[OrderLineType.PRODUCT, OrderLineType.OTHER]
+                    type__in=[OrderLineType.PRODUCT, OrderLineType.OTHER], parent_line_id=None
                 )
             ],
             "shippingMethodId": (encode_method(order.shipping_method) if order.shipping_method else None),
