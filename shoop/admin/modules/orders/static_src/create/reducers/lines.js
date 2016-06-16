@@ -45,7 +45,7 @@ function getFormattedStockCounts(line) {
     return {
         physicalCount: physicalCount.toFixed(line.salesDecimals) + ' ' + line.salesUnit,
         logicalCount: logicalCount.toFixed(line.salesDecimals) + ' ' + line.salesUnit
-    }
+    };
 }
 
 function getDiscountsAndTotal(quantity, baseUnitPrice, unitPrice, updateUnitPrice=false) {
@@ -55,7 +55,7 @@ function getDiscountsAndTotal(quantity, baseUnitPrice, unitPrice, updateUnitPric
         updates.unitPrice = unitPrice;
     }
     var totalBeforeDiscount = baseUnitPrice * quantity;
-    var total = +(unitPrice * quantity).toFixed(2);
+    var total = +(unitPrice * quantity);
     updates.total = total;
     if (baseUnitPrice < unitPrice || unitPrice < 0) {
         updates.discountPercent = 0;
@@ -85,13 +85,15 @@ function updateLineFromProduct(state, {payload}) {
         return setLineProperties(state, id, updates);
     }
 
+    const baseUnitPrice = ensureNumericValue(product.baseUnitPrice.value);
+    const unitPrice = ensureNumericValue(product.unitPrice.value);
     updates = getDiscountsAndTotal(
         ensureNumericValue(product.quantity),
-        ensureNumericValue(product.baseUnitPrice.value),
-        ensureNumericValue(product.unitPrice.value)
+        baseUnitPrice,
+        unitPrice
     );
-    updates.baseUnitPrice = ensureNumericValue(product.baseUnitPrice.value);
-    updates.unitPrice = ensureNumericValue(product.unitPrice.value);
+    updates.baseUnitPrice = baseUnitPrice;
+    updates.unitPrice = unitPrice;
     updates.unitPriceIncludesTax = product.unitPrice.includesTax;
     updates.sku = product.sku;
     updates.text = product.name;
@@ -170,7 +172,7 @@ function setLineProperty(state, {payload}) {
             case "total":
                 const calculatedTotal = line.quantity * line.baseUnitPrice;
                 // TODO: change the hardcoded rounding when doing SHOOP-1912
-                const total = +ensureNumericValue(value, calculatedTotal).toFixed(2);
+                const total = +ensureNumericValue(value, calculatedTotal);
                 updates = getDiscountsAndTotal(
                     line.quantity,
                     line.baseUnitPrice,
