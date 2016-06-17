@@ -14,7 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from shoop.admin.forms import ShoopAdminForm
 from shoop.core.models import (
     FixedCostBehaviorComponent, GroupAvailabilityBehaviorComponent,
-    PaymentMethod, ServiceProvider, ShippingMethod,
+    PaymentMethod, RoundingBehaviorComponent, ServiceProvider, ShippingMethod,
     WaivingCostBehaviorComponent, WeightLimitsBehaviorComponent
 )
 
@@ -66,7 +66,6 @@ class BaseMethodForm(ShoopAdminForm):
         service_data = self._get_cleaned_data_without_translations()
         provider = service_data.pop(self.service_provider_attr)
         choice_identifier = service_data.pop("choice_identifier")
-
         return provider.create_service(choice_identifier, **service_data)
 
 
@@ -127,4 +126,10 @@ class WeightLimitsBehaviorComponentForm(forms.ModelForm):
 class GroupAvailabilityBehaviorComponentForm(forms.ModelForm):
     class Meta:
         model = GroupAvailabilityBehaviorComponent
+        exclude = ["identifier"]
+
+
+class RoundingBehaviorComponentForm(forms.ModelForm):
+    class Meta:
+        model = RoundingBehaviorComponent
         exclude = ["identifier"]

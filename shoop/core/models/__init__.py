@@ -47,8 +47,9 @@ from ._service_base import (
 )
 from ._service_behavior import (
     FixedCostBehaviorComponent, GroupAvailabilityBehaviorComponent,
-    WaivingCostBehaviorComponent, WeightBasedPriceRange,
-    WeightBasedPricingBehaviorComponent, WeightLimitsBehaviorComponent
+    RoundingBehaviorComponent, RoundingMode, WaivingCostBehaviorComponent,
+    WeightBasedPriceRange, WeightBasedPricingBehaviorComponent,
+    WeightLimitsBehaviorComponent
 )
 from ._service_payment import (
     CustomPaymentProcessor, PaymentMethod, PaymentProcessor, PaymentUrls
@@ -118,6 +119,8 @@ __all__ = [
     "ProductVariationVariable",
     "ProductVariationVariableValue",
     "ProductVisibility",
+    "RoundingMode",
+    "RoundingBehaviorComponent",
     "SalesUnit",
     "SavedAddress",
     "SavedAddressRole",

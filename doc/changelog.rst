@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add rounding behavior component
 - Add contact group availability behavior component
 - Fix bug: Do not display decimal values in scientific notation
 - Fix bug: Taxes of child order lines are filled incorrectly

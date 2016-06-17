@@ -45,6 +45,7 @@ class ShoopAdminAppConfig(AppConfig):
             "shoop.admin.modules.services.forms:WaivingCostBehaviorComponentForm",
             "shoop.admin.modules.services.forms:WeightLimitsBehaviorComponentForm",
             "shoop.admin.modules.services.forms:GroupAvailabilityBehaviorComponentForm",
+            "shoop.admin.modules.services.forms:RoundingBehaviorComponentForm",
         ],
         "service_behavior_component_form_part": [
             "shoop.admin.modules.services.weight_based_pricing.WeightBasedPricingFormPart"
