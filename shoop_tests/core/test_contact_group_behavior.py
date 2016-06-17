@@ -9,7 +9,7 @@
 import pytest
 
 from shoop.core.models import (
-    GroupAvailabilityBehaviorComponent, OrderLineType
+    GroupAvailabilityBehaviorComponent, OrderLineType, PersonContact
 )
 from shoop.testing.factories import (
     create_product, create_random_person, get_default_customer_group,
@@ -65,6 +65,17 @@ def test_with_multiple_groups(admin_user):
     assert source.customer == person
     assert len([group for group in person.groups.all() if group in groups]) == 1
     _test_service_availability(source, payment_method, True)
+
+
+@pytest.mark.django_db
+def test_unsaved_contact(admin_user):
+    payment_method = get_default_payment_method()
+    _assign_component_for_service(payment_method, [PersonContact.get_default_group()])
+    person = PersonContact(name="Kalle")
+    source = _get_source_for_contact(admin_user, payment_method)
+    source.customer = person
+    assert not person.pk and not source.customer.pk
+    _test_service_availability(source, payment_method, False)
 
 
 def _assign_component_for_service(service, groups):

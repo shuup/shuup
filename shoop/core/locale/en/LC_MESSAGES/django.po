@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-15 19:11+0000\n"
+"POT-Creation-Date: 2016-06-17 19:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1029,6 +1029,9 @@ msgid "Limit service availability for specific contact groups."
 msgstr ""
 
 msgid "groups"
+msgstr ""
+
+msgid "Customer does not belong to any group."
 msgstr ""
 
 msgid "Service is not available for any of the customers groups."
