@@ -55,7 +55,7 @@ class LogEntriesOrderSection(OrderSection):
 
     @staticmethod
     def visible_for_order(order):
-        return OrderLogEntry.objects.filter(target=order).count() > 0
+        return True
 
     @staticmethod
     def get_context_data(order):
