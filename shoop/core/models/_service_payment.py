@@ -9,6 +9,7 @@ from __future__ import unicode_literals, with_statement
 
 from django.db import models
 from django.http.response import HttpResponseRedirect
+from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from parler.models import TranslatedFields
 
@@ -129,4 +130,17 @@ class CustomPaymentProcessor(PaymentProcessor):
         verbose_name_plural = _("custom payment processors")
 
     def get_service_choices(self):
-        return [ServiceChoice('manual', _("Manually processed payment"))]
+        return [
+            ServiceChoice('manual', _("Manually processed payment")),
+            ServiceChoice('cash', _("Cash payment"))
+        ]
+
+    def process_payment_return_request(self, service, order, request):
+        if service == 'cash':
+            if not order.is_paid():
+                order.create_payment(
+                    order.taxful_total_price,
+                    payment_identifier="Cash-%s" % now().isoformat(),
+                    description="Cash Payment"
+                )
+        super(CustomPaymentProcessor, self).process_payment_return_request(service, order, request)
