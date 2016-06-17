@@ -160,6 +160,10 @@ class GroupAvailabilityBehaviorComponent(ServiceBehaviorComponent):
     groups = models.ManyToManyField("ContactGroup", verbose_name=_("groups"))
 
     def get_unavailability_reasons(self, service, source):
+        if not source.customer.pk:
+            yield ValidationError(_("Customer does not belong to any group."))
+            return
+
         customer_groups = set(source.customer.groups.all().values_list("pk", flat=True))
         groups_to_match = set(self.groups.all().values_list("pk", flat=True))
         if not bool(customer_groups & groups_to_match):
