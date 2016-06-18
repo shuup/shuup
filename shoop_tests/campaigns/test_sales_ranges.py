@@ -7,12 +7,13 @@
 # LICENSE file in the root directory of this source tree.
 
 import pytest
-
 from django.core.exceptions import ValidationError
 
 from shoop.campaigns.models import ContactGroupSalesRange
 from shoop.campaigns.signal_handlers import update_customers_groups
-from shoop.campaigns.utils import assign_to_group_based_on_sales, get_total_sales
+from shoop.campaigns.utils import (
+    assign_to_group_based_on_sales, get_total_sales
+)
 from shoop.core.models import AnonymousContact, ContactGroup, Payment
 from shoop.testing.factories import (
     create_order_with_product, create_product, create_random_company,

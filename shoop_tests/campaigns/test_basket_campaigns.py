@@ -9,7 +9,7 @@ from decimal import Decimal
 import pytest
 from django.db import IntegrityError
 
-from shoop.campaigns.forms import BasketCampaignForm
+from shoop.campaigns.admin_module.forms import BasketCampaignForm
 from shoop.campaigns.models.basket_conditions import (
     BasketTotalAmountCondition, BasketTotalProductAmountCondition
 )
@@ -296,7 +296,6 @@ def test_coupon_uniqueness(rf):
 
     BasketDiscountPercentage.objects.create(campaign=first_campaign, discount_percentage="0.1")
     BasketDiscountPercentage.objects.create(campaign=second_campaign, discount_percentage="0.1")
-
 
     coupon = Coupon.objects.create(active=True, code="test_code")
     first_campaign.coupon = coupon

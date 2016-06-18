@@ -16,9 +16,11 @@ from django.utils.translation import activate
 
 from shoop.admin.modules.orders.views.edit import OrderEditView
 from shoop.campaigns.models.campaigns import CatalogCampaign
-from shoop.campaigns.models.product_effects import ProductDiscountAmount, ProductDiscountPercentage
 from shoop.campaigns.models.catalog_filters import CategoryFilter
 from shoop.campaigns.models.context_conditions import ContactGroupCondition
+from shoop.campaigns.models.product_effects import (
+    ProductDiscountAmount, ProductDiscountPercentage
+)
 from shoop.core.models import Category
 from shoop.testing.factories import create_product, get_default_customer_group
 from shoop.testing.utils import apply_request_middleware

@@ -8,22 +8,13 @@ from babel.dates import format_datetime
 from django.utils.timezone import localtime
 from django.utils.translation import ugettext_lazy as _
 
-from shoop.admin.base import MenuEntry
 from shoop.admin.toolbar import NewActionButton, Toolbar
 from shoop.admin.utils.picotable import ChoicesFilter, Column, TextFilter
-from shoop.admin.utils.views import CreateOrUpdateView, PicotableListView
-from shoop.campaigns.forms import (
-    BasketCampaignForm, CatalogCampaignForm, CouponForm
-)
+from shoop.admin.utils.views import PicotableListView
 from shoop.campaigns.models.campaigns import (
     BasketCampaign, CatalogCampaign, Coupon
 )
 from shoop.utils.i18n import get_current_babel_locale
-
-
-class _Breadcrumbed(object):
-    def get_breadcrumb_parents(self):
-        return [MenuEntry(text=self.parent_name, url=self.parent_url)]
 
 
 class CampaignListView(PicotableListView):
@@ -109,32 +100,6 @@ class BasketCampaignListView(CampaignListView):
         return context
 
 
-class CampaignEditView(CreateOrUpdateView):
-    template_name = "shoop/campaigns/admin/edit_campaigns.jinja"
-
-    context_object_name = "campaign"
-    add_form_errors_as_messages = True
-
-    def get_form_kwargs(self):
-        kwargs = super(CampaignEditView, self).get_form_kwargs()
-        kwargs["request"] = self.request
-        return kwargs
-
-
-class CatalogCampaignEditView(_Breadcrumbed, CampaignEditView):
-    model = CatalogCampaign
-    form_class = CatalogCampaignForm
-    parent_name = _("Catalog Campaign")
-    parent_url = "shoop_admin:catalog_campaigns.list"
-
-
-class BasketCampaignEditView(_Breadcrumbed, CampaignEditView):
-    model = BasketCampaign
-    form_class = BasketCampaignForm
-    parent_name = _("Basket Campaign")
-    parent_url = "shoop_admin:basket_campaigns.list"
-
-
 class CouponListView(PicotableListView):
     model = Coupon
     columns = [
@@ -159,13 +124,3 @@ class CouponListView(PicotableListView):
             NewActionButton("shoop_admin:coupons.new", text=_("Create new Coupon")),
         ])
         return context
-
-
-class CouponEditView(_Breadcrumbed, CreateOrUpdateView):
-    model = Coupon
-    template_name = "shoop/campaigns/admin/edit_coupons.jinja"
-    form_class = CouponForm
-    context_object_name = "coupon"
-    add_form_errors_as_messages = True
-    parent_name = _("Coupon")
-    parent_url = "shoop_admin:coupons.list"

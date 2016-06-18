@@ -6,9 +6,12 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.utils.encoding import force_text
-from shoop.campaigns.models.catalog_filters import CategoryFilter, ProductFilter, ProductTypeFilter, CatalogFilter
+
+from shoop.campaigns.models.catalog_filters import (
+    CatalogFilter, CategoryFilter, ProductFilter, ProductTypeFilter
+)
 from shoop.core.models import Category, ShopProduct
-from shoop.testing.factories import get_default_category, create_product
+from shoop.testing.factories import create_product, get_default_category
 from shoop_tests.campaigns import initialize_test
 
 

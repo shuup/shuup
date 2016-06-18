@@ -5,9 +5,10 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.utils.translation import activate
+
 from shoop.testing.factories import (
-    get_shop, get_default_customer_group, get_payment_method,
-    create_random_person
+    create_random_person, get_default_customer_group, get_payment_method,
+    get_shop
 )
 from shoop.testing.utils import apply_request_middleware
 

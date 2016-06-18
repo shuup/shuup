@@ -7,12 +7,21 @@
 from __future__ import unicode_literals
 
 from django import forms
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.form_part import FormPart, TemplatedFormDef
+from shoop.campaigns.admin_module.forms import (
+    BasketCampaignForm, CatalogCampaignForm
+)
 from shoop.campaigns.models import ContactGroupSalesRange
 from shoop.core.models import Shop, ShopStatus
 from shoop.core.models._contacts import PROTECTED_CONTACT_GROUP_IDENTIFIERS
+
+from .form_sets import (
+    BasketConditionsFormSet, BasketEffectsFormSet, CatalogConditionsFormSet,
+    CatalogEffectsFormSet, CatalogFiltersFormSet
+)
 
 
 class SalesRangesForm(forms.ModelForm):
@@ -63,3 +72,81 @@ class SalesRangesFormPart(FormPart):
         for form in forms:
             if form.changed_data:
                 form.save()
+
+
+class CampaignBaseFormPart(FormPart):
+    priority = -1000  # Show this first
+    form = None  # Override in subclass
+
+    def __init__(self, *args, **kwargs):
+        super(CampaignBaseFormPart, self).__init__(*args, **kwargs)
+
+    def get_form_defs(self):
+        yield TemplatedFormDef(
+            "base",
+            self.form,
+            required=True,
+            template_name="shoop/campaigns/admin/_edit_base_form.jinja",
+            kwargs={"instance": self.object, "languages": settings.LANGUAGES, "request": self.request}
+        )
+
+    def form_valid(self, form):
+        self.object = form["base"].save()
+        return self.object
+
+
+class CatalogBaseFormPart(CampaignBaseFormPart):
+    form = CatalogCampaignForm
+
+
+class BasketBaseFormPart(CampaignBaseFormPart):
+    form = BasketCampaignForm
+
+
+class BaseFormPart(FormPart):
+    formset = None
+    template_name = "shoop/campaigns/admin/_edit_form.jinja"
+
+    def __init__(self, request, form, name, owner):
+        self.name = name
+        self.form = form
+        super(BaseFormPart, self).__init__(request, object=owner)
+
+    def get_form_defs(self):
+        yield TemplatedFormDef(
+            self.name,
+            self.formset,
+            self.template_name,
+            required=False,
+            kwargs={"form": self.form, "owner": self.object},
+        )
+
+    def form_valid(self, form):
+        component_form = form.forms[self.name]
+        component_form.save()
+
+        for component in component_form.new_objects:
+            if self.name.startswith("conditions"):
+                self.object.conditions.add(component)
+            elif self.name.startswith("filters"):
+                self.object.filters.add(component)
+
+
+class BasketConditionsFormPart(BaseFormPart):
+    formset = BasketConditionsFormSet
+
+
+class BasketEffectsFormPart(BaseFormPart):
+    formset = BasketEffectsFormSet
+
+
+class CatalogConditionsFormPart(BaseFormPart):
+    formset = CatalogConditionsFormSet
+
+
+class CatalogFiltersFormPart(BaseFormPart):
+    formset = CatalogFiltersFormSet
+
+
+class CatalogEffectsFormPart(BaseFormPart):
+    formset = CatalogEffectsFormSet

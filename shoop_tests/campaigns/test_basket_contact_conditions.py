@@ -5,19 +5,18 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from django.utils.translation import activate
-from shoop.campaigns.models.basket_effects import BasketDiscountAmount
 
-from shoop.campaigns.models.campaigns import BasketCampaign
 from shoop.campaigns.models.basket_conditions import (
     ContactBasketCondition, ContactGroupBasketCondition
 )
+from shoop.campaigns.models.basket_effects import BasketDiscountAmount
+from shoop.campaigns.models.campaigns import BasketCampaign
 from shoop.core.models import AnonymousContact, Shop
 from shoop.front.basket import get_basket
 from shoop.testing.factories import (
     create_product, create_random_person, get_default_customer_group,
-    get_default_supplier, get_payment_method, get_shop,
+    get_default_supplier, get_payment_method, get_shop
 )
 from shoop.testing.utils import apply_request_middleware
 

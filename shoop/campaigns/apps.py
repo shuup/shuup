@@ -30,30 +30,30 @@ class CampaignAppConfig(AppConfig):
         "admin_module": [
             "shoop.campaigns.admin_module:CampaignAdminModule",
         ],
-        "campaign_catalog_filter": [
-            "shoop.campaigns.models.catalog_filters:ProductTypeFilter",
-            "shoop.campaigns.models.catalog_filters:ProductFilter",
-            "shoop.campaigns.models.catalog_filters:CategoryFilter"
-        ],
-        "catalog_campaign_effect": [
-            "shoop.campaigns.models.product_effects:ProductDiscountAmount",
-            "shoop.campaigns.models.product_effects:ProductDiscountPercentage",
+        "campaign_basket_condition": [
+            "shoop.campaigns.admin_module.forms:BasketTotalProductAmountConditionForm",
+            "shoop.campaigns.admin_module.forms:BasketTotalAmountConditionForm",
+            "shoop.campaigns.admin_module.forms:ProductsInBasketConditionForm",
+            "shoop.campaigns.admin_module.forms:ContactGroupBasketConditionForm",
+            "shoop.campaigns.admin_module.forms:ContactBasketConditionForm",
         ],
         "basket_campaign_effect": [
-            "shoop.campaigns.models.basket_effects:BasketDiscountAmount",
-            "shoop.campaigns.models.basket_effects:BasketDiscountPercentage",
-            "shoop.campaigns.models.basket_line_effects:FreeProductLine",
+            "shoop.campaigns.admin_module.forms:BasketDiscountAmountForm",
+            "shoop.campaigns.admin_module.forms:BasketDiscountPercentageForm",
+            "shoop.campaigns.admin_module.forms:FreeProductLineForm",
         ],
         "campaign_context_condition": [
-            "shoop.campaigns.models.context_conditions:ContactGroupCondition",
-            "shoop.campaigns.models.context_conditions:ContactCondition",
+            "shoop.campaigns.admin_module.forms:ContactGroupConditionForm",
+            "shoop.campaigns.admin_module.forms:ContactConditionForm",
         ],
-        "campaign_basket_condition": [
-            "shoop.campaigns.models.basket_conditions:BasketTotalProductAmountCondition",
-            "shoop.campaigns.models.basket_conditions:BasketTotalAmountCondition",
-            "shoop.campaigns.models.basket_conditions:ProductsInBasketCondition",
-            "shoop.campaigns.models.basket_conditions:ContactGroupBasketCondition",
-            "shoop.campaigns.models.basket_conditions:ContactBasketCondition",
+        "campaign_catalog_filter": [
+            "shoop.campaigns.admin_module.forms:ProductTypeFilterForm",
+            "shoop.campaigns.admin_module.forms:ProductFilterForm",
+            "shoop.campaigns.admin_module.forms:CategoryFilterForm"
+        ],
+        "catalog_campaign_effect": [
+            "shoop.campaigns.admin_module.forms:ProductDiscountAmountForm",
+            "shoop.campaigns.admin_module.forms:ProductDiscountPercentageForm",
         ],
     }
 

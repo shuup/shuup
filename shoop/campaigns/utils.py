@@ -8,6 +8,7 @@
 
 from django.db.models import Q, Sum
 
+from shoop.admin.base import MenuEntry
 from shoop.core.models import Payment
 
 
@@ -55,3 +56,8 @@ def get_contacts_in_sales_range(shop, min_value, max_value):
         if min_value <= total_sales and (max_value is None or max_value > total_sales):
             results.add(result.get("order__customer_id"))
     return results
+
+
+class _Breadcrumbed(object):
+    def get_breadcrumb_parents(self):
+        return [MenuEntry(text=self.parent_name, url=self.parent_url)]
