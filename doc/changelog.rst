@@ -74,6 +74,7 @@ Localization
 Admin
 ~~~~~
 
+- Use Select2MultipleField for handling contact members
 - Add Select2MultipleField
 - Add account manager for contact
 - Add PersonContact choice widget
