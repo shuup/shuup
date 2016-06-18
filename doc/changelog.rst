@@ -74,6 +74,7 @@ Localization
 Admin
 ~~~~~
 
+- Add Select2MultipleField
 - Add account manager for contact
 - Add PersonContact choice widget
 - Add barcode filter to product list view
