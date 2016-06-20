@@ -1,6 +1,14 @@
 shoop.campaigns.admin_module package
 ====================================
 
+Subpackages
+-----------
+
+.. toctree::
+
+    shoop.campaigns.admin_module.forms
+    shoop.campaigns.admin_module.views
+
 Submodules
 ----------
 
@@ -12,10 +20,10 @@ shoop.campaigns.admin_module.form_parts module
     :undoc-members:
     :show-inheritance:
 
-shoop.campaigns.admin_module.views module
------------------------------------------
+shoop.campaigns.admin_module.form_sets module
+---------------------------------------------
 
-.. automodule:: shoop.campaigns.admin_module.views
+.. automodule:: shoop.campaigns.admin_module.form_sets
     :members:
     :undoc-members:
     :show-inheritance:

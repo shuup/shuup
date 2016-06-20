@@ -12,15 +12,19 @@
 """
 import pytest
 from django.core.exceptions import ValidationError
-from shoop.campaigns.models.basket_conditions import BasketTotalProductAmountCondition
+
+from shoop.campaigns.models.basket_conditions import \
+    BasketTotalProductAmountCondition
 from shoop.campaigns.models.basket_effects import BasketDiscountAmount
-from shoop.campaigns.models.campaigns import Coupon, CouponUsage, BasketCampaign
+from shoop.campaigns.models.campaigns import (
+    BasketCampaign, Coupon, CouponUsage
+)
 from shoop.core.models import OrderLineType
 from shoop.core.order_creator import OrderCreator
 from shoop.front.basket import get_basket
 from shoop.testing.factories import (
-    create_random_person, create_product, get_default_supplier,
-    create_random_order, get_initial_order_status, get_default_shop
+    create_product, create_random_order, create_random_person,
+    get_default_shop, get_default_supplier, get_initial_order_status
 )
 from shoop_tests.campaigns import initialize_test
 from shoop_tests.utils import printable_gibberish

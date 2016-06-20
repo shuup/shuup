@@ -7,7 +7,7 @@
 from decimal import Decimal
 from numbers import Number
 
-from django.forms import DecimalField
+from django.forms import DecimalField, Field, SelectMultiple
 
 
 class PercentageField(DecimalField):
@@ -32,4 +32,24 @@ class PercentageField(DecimalField):
             attrs['min'] = self.min_value * self.MULTIPLIER
         if self.max_value is not None:
             attrs['max'] = self.max_value * self.MULTIPLIER
+        return attrs
+
+
+class Select2MultipleField(Field):
+    widget = SelectMultiple
+
+    def __init__(self, model, *args, **kwargs):
+        self.model = model
+        super(Select2MultipleField, self).__init__(*args, **kwargs)
+
+    def to_python(self, value):
+        value = super(Select2MultipleField, self).to_python(value)
+        # Here we have sometimes None which will cause errors when
+        # saving related fields so let's fallback to empty list
+        return value or []
+
+    def widget_attrs(self, widget):
+        attrs = super(Select2MultipleField, self).widget_attrs(widget)
+        model_name = "%s.%s" % (self.model._meta.app_label, self.model._meta.model_name)
+        attrs.update({"data-model": model_name})
         return attrs

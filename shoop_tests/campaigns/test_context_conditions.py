@@ -7,14 +7,13 @@
 import pytest
 
 from shoop.campaigns.models.campaigns import CatalogCampaign
-from shoop.campaigns.models.product_effects import ProductDiscountAmount
 from shoop.campaigns.models.context_conditions import (
-    ContactCondition, ContactGroupCondition,
+    ContactCondition, ContactGroupCondition
 )
+from shoop.campaigns.models.product_effects import ProductDiscountAmount
 from shoop.core.models import AnonymousContact
 from shoop.testing.factories import (
-    create_product, create_random_person, get_default_customer_group,
-    get_shop
+    create_product, create_random_person, get_default_customer_group, get_shop
 )
 from shoop.testing.utils import apply_request_middleware
 

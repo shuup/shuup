@@ -7,7 +7,8 @@
 import pytest
 
 from shoop.campaigns.models import BasketCampaign, Coupon
-from shoop.campaigns.models.basket_conditions import BasketTotalProductAmountCondition
+from shoop.campaigns.models.basket_conditions import \
+    BasketTotalProductAmountCondition
 from shoop.campaigns.models.basket_line_effects import FreeProductLine
 from shoop.core.models import OrderLineType
 from shoop.core.order_creator._source import LineSource

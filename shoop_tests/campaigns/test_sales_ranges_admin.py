@@ -10,11 +10,13 @@ import pytest
 from mock import patch
 
 from shoop.admin.modules.contact_groups.views import ContactGroupEditView
-from shoop.admin.modules.contact_groups.views.forms import ContactGroupBaseFormPart
+from shoop.admin.modules.contact_groups.views.forms import \
+    ContactGroupBaseFormPart
 from shoop.campaigns.models import ContactGroupSalesRange
 from shoop.core.models import Shop, ShopStatus
 from shoop.testing.factories import (
-    create_random_company, get_default_customer_group, get_default_shop, get_shop
+    create_random_company, get_default_customer_group, get_default_shop,
+    get_shop
 )
 from shoop.testing.utils import apply_request_middleware
 
