@@ -15,7 +15,7 @@ from django.utils.encoding import force_bytes, force_text
 
 
 class AdminModule(object):
-    name = "Base"
+    name = "_Base_"
 
     # A menu entry to represent this module in breadcrumbs
     breadcrumbs_menu_entry = None
@@ -47,6 +47,12 @@ class AdminModule(object):
     def get_dashboard_blocks(self, request):
         """
         :rtype: list[shoop.admin.dashboard.DashboardBlock]
+        """
+        return ()
+
+    def get_required_permissions(self):
+        """
+        :rtype: list[str]
         """
         return ()
 

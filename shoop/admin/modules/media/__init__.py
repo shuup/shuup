@@ -6,8 +6,10 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.utils.translation import ugettext_lazy as _
+from filer.models import File
 
 from shoop.admin.base import AdminModule, MenuEntry
+from shoop.admin.utils.permissions import get_default_model_permissions
 from shoop.admin.utils.urls import admin_url
 
 
@@ -24,12 +26,16 @@ class MediaModule(AdminModule):
             admin_url(
                 "^media/$",
                 "shoop.admin.modules.media.views.MediaBrowserView",
-                name="media.browse"
+                name="media.browse",
+                permissions=get_default_model_permissions(File),
             ),
         ]
 
     def get_menu_category_icons(self):
         return {self.name: "fa fa-image"}
+
+    def get_required_permissions(self):
+        return get_default_model_permissions(File)
 
     def get_menu_entries(self, request):
         category = _("Media")

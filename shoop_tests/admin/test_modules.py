@@ -88,10 +88,14 @@ def test_dashboard_blocks(rf):
         assert block_ids >= set(["test-0", "test-1", "test-2", "test-3", "test-4"])
 
 
-def test_menu_entries(rf):
+def test_menu_entries(rf, admin_user):
     request = rf.get("/")
+    request.user = admin_user
     with replace_modules([ATestModule]):
-        test_category_menu_entries = get_menu_entry_categories(request).get("Test")
+        categories = get_menu_entry_categories(request)
+        assert categories
+
+        test_category_menu_entries = categories.get("Test")
         assert any(me.text == "OK" for me in test_category_menu_entries)
 
 

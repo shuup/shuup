@@ -8,7 +8,9 @@
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.base import AdminModule, MenuEntry
+from shoop.admin.utils.permissions import get_default_model_permissions
 from shoop.admin.utils.urls import admin_url
+from shoop.core.models import Shop
 
 
 class AddonModule(AdminModule):
@@ -21,22 +23,26 @@ class AddonModule(AdminModule):
             admin_url(
                 "^addons/$",
                 "shoop.addons.admin_module.views.AddonListView",
-                name="addon.list"
+                name="addon.list",
+                permissions=get_default_model_permissions(Shop)
             ),
             admin_url(
                 "^addons/add/$",
                 "shoop.addons.admin_module.views.AddonUploadView",
-                name="addon.upload"
+                name="addon.upload",
+                permissions=get_default_model_permissions(Shop)
             ),
             admin_url(
                 "^addons/add/confirm/$",
                 "shoop.addons.admin_module.views.AddonUploadConfirmView",
-                name="addon.upload_confirm"
+                name="addon.upload_confirm",
+                permissions=get_default_model_permissions(Shop)
             ),
             admin_url(
                 "^addons/reload/$",
                 "shoop.addons.admin_module.views.ReloadView",
-                name="addon.reload"
+                name="addon.reload",
+                permissions=get_default_model_permissions(Shop)
             ),
         ]
 
@@ -52,3 +58,6 @@ class AddonModule(AdminModule):
                 category=self.category
             )
         ]
+
+    def get_required_permissions(self):
+        return get_default_model_permissions(Shop)

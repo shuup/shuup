@@ -10,7 +10,9 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.base import AdminModule, MenuEntry
+from shoop.admin.utils.permissions import get_default_model_permissions
 from shoop.admin.utils.urls import admin_url
+from shoop.simple_supplier.models import StockAdjustment
 
 
 class StocksAdminModule(AdminModule):
@@ -22,7 +24,8 @@ class StocksAdminModule(AdminModule):
             admin_url(
                 "^adjust-stock/(?P<supplier_id>\d+)/(?P<product_id>\d+)/",
                 "shoop.simple_supplier.admin_module.views.process_stock_adjustment",
-                name="simple_supplier.stocks"
+                name="simple_supplier.stocks",
+                permissions=get_default_model_permissions(StockAdjustment)
             ),
             admin_url(
                 "^stocks/",
@@ -33,6 +36,9 @@ class StocksAdminModule(AdminModule):
 
     def get_menu_category_icons(self):
         return {self.name: "fa fa-cubes"}
+
+    def get_required_permissions(self):
+        return get_default_model_permissions(StockAdjustment)
 
     def get_menu_entries(self, request):
         return [

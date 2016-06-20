@@ -10,6 +10,9 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.base import AdminModule, MenuEntry
+from shoop.admin.utils.permissions import (
+    get_default_model_permissions, get_permissions_from_urls
+)
 from shoop.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shoop.core.models import CustomerTaxGroup, Tax, TaxClass
 
@@ -23,17 +26,20 @@ class TaxModule(AdminModule):
         tax_urls = get_edit_and_list_urls(
             url_prefix="^taxes/tax",
             view_template="shoop.admin.modules.taxes.views.Tax%sView",
-            name_template="tax.%s"
+            name_template="tax.%s",
+            permissions=get_default_model_permissions(Tax)
         )
         tax_group_urls = get_edit_and_list_urls(
             url_prefix="^taxes/customer-tax-group",
             view_template="shoop.admin.modules.taxes.views.CustomerTaxGroup%sView",
-            name_template="customer_tax_group.%s"
+            name_template="customer_tax_group.%s",
+            permissions=get_default_model_permissions(CustomerTaxGroup)
         )
         tax_class_urls = get_edit_and_list_urls(
             url_prefix="^taxes/tax-class",
             view_template="shoop.admin.modules.taxes.views.TaxClass%sView",
-            name_template="tax_class.%s"
+            name_template="tax_class.%s",
+            permissions=get_default_model_permissions(TaxClass)
         )
         return tax_urls + tax_group_urls + tax_class_urls
 
@@ -58,6 +64,9 @@ class TaxModule(AdminModule):
                 category=self.category
             )
         ]
+
+    def get_required_permissions(self):
+        return get_permissions_from_urls(self.get_urls())
 
     def get_model_url(self, object, kind):
         return (

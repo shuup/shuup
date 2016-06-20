@@ -15,12 +15,17 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.base import AdminModule, MenuEntry, SearchResult
+from shoop.admin.utils.permissions import (
+    get_default_model_permissions, get_permissions_from_urls
+)
 from shoop.admin.utils.search import split_query
 from shoop.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls, get_model_url,
     manipulate_query_string
 )
-from shoop.core.models import Product
+from shoop.core.models import (
+    Product, ProductCrossSell, ProductPackageLink, ProductVariationResult
+)
 
 
 class ProductModule(AdminModule):
@@ -31,28 +36,34 @@ class ProductModule(AdminModule):
         return [
             admin_url(
                 "^products/(?P<pk>\d+)/delete/$", "shoop.admin.modules.products.views.ProductDeleteView",
-                name="product.delete"
+                name="product.delete",
+                permissions=["shoop.delete_product"]
             ),
             admin_url(
                 "^products/(?P<pk>\d+)/media/$", "shoop.admin.modules.products.views.ProductMediaEditView",
-                name="product.edit_media"
+                name="product.edit_media",
+                permissions=get_default_model_permissions(Product),
             ),
             admin_url(
                 "^products/(?P<pk>\d+)/crosssell/$", "shoop.admin.modules.products.views.ProductCrossSellEditView",
-                name="product.edit_cross_sell"
+                name="product.edit_cross_sell",
+                permissions=get_default_model_permissions(ProductCrossSell),
             ),
             admin_url(
                 "^products/(?P<pk>\d+)/variation/$", "shoop.admin.modules.products.views.ProductVariationView",
-                name="product.edit_variation"
+                name="product.edit_variation",
+                permissions=get_default_model_permissions(ProductVariationResult),
             ),
             admin_url(
                 "^products/(?P<pk>\d+)/package/$", "shoop.admin.modules.products.views.ProductPackageView",
-                name="product.edit_package"
+                name="product.edit_package",
+                permissions=get_default_model_permissions(ProductPackageLink),
             ),
         ] + get_edit_and_list_urls(
             url_prefix="^products",
             view_template="shoop.admin.modules.products.views.Product%sView",
-            name_template="product.%s"
+            name_template="product.%s",
+            permissions=get_default_model_permissions(Product),
         )
 
     def get_menu_category_icons(self):
@@ -107,6 +118,9 @@ class ProductModule(AdminModule):
                         url=manipulate_query_string(url, sku=query),
                         is_action=True
                     )
+
+    def get_required_permissions(self):
+        return get_permissions_from_urls(self.get_urls()) | get_default_model_permissions(Product)
 
     def get_model_url(self, object, kind):
         return derive_model_url(Product, "shoop_admin:product", object, kind)

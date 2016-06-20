@@ -74,6 +74,11 @@ Localization
 Admin
 ~~~~~
 
+- Define module-level permissions for all admin modules
+- Enable adding of permission groups from `Users` admin
+- Add admin module for managing Django permission groups
+- Add `get_required_permission` to ``AdminModule``
+- Add support for module-level permissions
 - Remove Select2Multiple-widget as unused
 - Use Select2MultipleField for handling contact members
 - Add Select2MultipleField

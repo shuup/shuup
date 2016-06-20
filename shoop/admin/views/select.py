@@ -45,6 +45,8 @@ class MultiselectAjaxView(TemplateView):
         if issubclass(cls, user_model):
             if _field_exists(user_model, "username"):
                 self.search_fields.append("username")
+            if _field_exists(user_model, "email"):
+                self.search_fields.append("email")
             if not _field_exists(user_model, "name"):
                 self.search_fields.remove("name")
 

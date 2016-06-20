@@ -14,6 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
 
 from shoop.admin.base import AdminModule, MenuEntry, Notification
+from shoop.admin.utils.permissions import get_default_model_permissions
 from shoop.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls
 )
@@ -27,26 +28,31 @@ class NotifyAdminModule(AdminModule):
     breadcrumbs_menu_entry = MenuEntry(name, "shoop_admin:notify.script.list")
 
     def get_urls(self):
+        permissions = get_default_model_permissions(NotificationModel)
         return [
             admin_url(
                 "notify/script-item-editor/",
                 "shoop.notify.admin_module.views.script_item_editor",
-                name="notify.script-item-editor"
+                name="notify.script-item-editor",
+                permissions=permissions
             ),
             admin_url(
                 "notify/script/content/(?P<pk>\d+)/",
                 "shoop.notify.admin_module.views.EditScriptContentView",
-                name="notify.script.edit-content"
+                name="notify.script.edit-content",
+                permissions=permissions
             ),
             admin_url(
                 "notify/mark-read/(?P<pk>\d+)/$",
                 self.mark_notification_read_view,
-                name="notify.mark-read"
+                name="notify.mark-read",
+                permissions=permissions
             ),
         ] + get_edit_and_list_urls(
             url_prefix="^notify/script",
             view_template="shoop.notify.admin_module.views.Script%sView",
-            name_template="notify.script.%s"
+            name_template="notify.script.%s",
+            permissions=permissions
         )
 
     def get_menu_category_icons(self):
@@ -61,6 +67,9 @@ class NotifyAdminModule(AdminModule):
                 category=category, aliases=[_("Show notification scripts")]
             )
         ]
+
+    def get_required_permissions(self):
+        return get_default_model_permissions(NotificationModel)
 
     @csrf_exempt
     def mark_notification_read_view(self, request, pk):

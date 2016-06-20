@@ -11,11 +11,14 @@ from django import forms
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group as PermissionGroup
 from django.forms.models import modelform_factory
 from django.http.response import HttpResponseRedirect
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import UpdateView
 
+from shoop.admin.forms.fields import Select2MultipleField
 from shoop.admin.toolbar import get_default_edit_toolbar
 from shoop.admin.utils.urls import get_model_url
 
@@ -40,6 +43,22 @@ class PermissionChangeFormBase(forms.ModelForm):
             # Only require old password when editing
             self.fields.pop("old_password")
 
+        initial_groups = self._get_initial_groups()
+        permission_groups_field = Select2MultipleField(
+            model=PermissionGroup,
+            initial=[group.pk for group in initial_groups],
+            required=False,
+            label=_("Permission Groups"),
+        )
+        permission_groups_field.widget.choices = [(group.pk, force_text(group)) for group in initial_groups]
+        self.fields["permission_groups"] = permission_groups_field
+
+    def _get_initial_groups(self):
+        if self.instance.pk and hasattr(self.instance, "groups"):
+            return self.instance.groups.all()
+        else:
+            return []
+
     def clean_old_password(self):
         """
         Validates that the old_password field is correct.
@@ -52,12 +71,25 @@ class PermissionChangeFormBase(forms.ModelForm):
             )
         return old_password
 
+    def clean_members(self):
+        members = self.cleaned_data.get("members", [])
+        return get_user_model().objects.filter(pk__in=members).all()
+
+    def clean_permission_groups(self):
+        permission_groups = self.cleaned_data.get("permission_groups", [])
+        return PermissionGroup.objects.filter(pk__in=permission_groups)
+
     def clean(self):
         for field in ("is_staff", "is_superuser"):
             flag = self.cleaned_data[field]
             if self.changing_user == self.instance and not flag:
                 self.add_error(field, _("You can't unset this status for yourself."))
         return self.cleaned_data
+
+    def save(self):
+        obj = super(PermissionChangeFormBase, self).save()
+        obj.groups.clear()
+        obj.groups = self.cleaned_data["permission_groups"]
 
 
 class UserChangePermissionsView(UpdateView):

@@ -23,6 +23,7 @@ from django.utils.http import urlencode
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.module_registry import get_modules
+from shoop.admin.utils.permissions import get_missing_permissions
 from shoop.utils.excs import Problem
 
 try:
@@ -77,12 +78,7 @@ class AdminRegexURLPattern(RegexURLPattern):
             elif not getattr(request.user, 'is_staff', False):
                 return _("You must be a staff member.")
 
-        # If user model has a `has_perm` method and it is callable, then check the permissions,
-        # otherwise, all permissions are missing because we have no way to check them
-        if callable(getattr(request.user, 'has_perm', None)):
-            missing_permissions = set(p for p in set(self.permissions) if not request.user.has_perm(p))
-        else:
-            missing_permissions = set(self.permissions)
+        missing_permissions = get_missing_permissions(request.user, self.permissions)
         if missing_permissions:
             return _("You do not have the required permissions: %r") % missing_permissions
 
@@ -122,7 +118,7 @@ def admin_url(regex, view, kwargs=None, name=None, prefix='', require_authentica
     )
 
 
-def get_edit_and_list_urls(url_prefix, view_template, name_template):
+def get_edit_and_list_urls(url_prefix, view_template, name_template, permissions=()):
     """
     Get a list of edit/new/list URLs for (presumably) an object type with standardized URLs and names.
 
@@ -137,9 +133,25 @@ def get_edit_and_list_urls(url_prefix, view_template, name_template):
     :rtype: list[AdminRegexURLPattern]
     """
     return [
-        admin_url("%s/(?P<pk>\d+)/$" % url_prefix, view_template % "Edit", name=name_template % "edit"),
-        admin_url("%s/new/$" % url_prefix, view_template % "Edit", name=name_template % "new", kwargs={"pk": None}),
-        admin_url("%s/$" % url_prefix, view_template % "List", name=name_template % "list")
+        admin_url(
+            "%s/(?P<pk>\d+)/$" % url_prefix,
+            view_template % "Edit",
+            name=name_template % "edit",
+            permissions=permissions
+        ),
+        admin_url(
+            "%s/new/$" % url_prefix,
+            view_template % "Edit",
+            name=name_template % "new",
+            kwargs={"pk": None},
+            permissions=permissions
+        ),
+        admin_url(
+            "%s/$" % url_prefix,
+            view_template % "List",
+            name=name_template % "list",
+            permissions=permissions
+        )
     ]
 
 

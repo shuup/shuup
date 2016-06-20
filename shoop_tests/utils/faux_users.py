@@ -18,6 +18,10 @@ class AuthenticatedUser(AnonymousUser):
 
 class StaffUser(AuthenticatedUser):
     is_staff = True
+    permissions = set()
+
+    def has_perm(self, perm):
+        return self.is_superuser or (perm in self.permissions)
 
 class SuperUser(StaffUser):
     is_superuser = True

@@ -11,6 +11,7 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.base import AdminModule, MenuEntry
+from shoop.admin.utils.permissions import get_default_model_permissions
 from shoop.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls
 )
@@ -26,12 +27,14 @@ class ServiceProviderModule(AdminModule):
             admin_url(
                 "^service_provider/(?P<pk>\d+)/delete/$",
                 "shoop.admin.modules.service_providers.views.ServiceProviderDeleteView",
-                name="service_provider.delete"
+                name="service_provider.delete",
+                permissions=["shoop.delete_serviceprovider"]
             )
         ] + get_edit_and_list_urls(
             url_prefix="^service_provider",
             view_template="shoop.admin.modules.service_providers.views.ServiceProvider%sView",
-            name_template="service_provider.%s"
+            name_template="service_provider.%s",
+            permissions=get_default_model_permissions(ServiceProvider)
         )
 
     def get_menu_category_icons(self):
@@ -46,6 +49,9 @@ class ServiceProviderModule(AdminModule):
                 category=self.category
             )
         ]
+
+    def get_required_permissions(self):
+        return get_default_model_permissions(ServiceProvider)
 
     def get_model_url(self, object, kind):
         return derive_model_url(ServiceProvider, "shoop_admin:service_provider", object, kind)

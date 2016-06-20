@@ -12,9 +12,11 @@ from django.utils.translation import ugettext_lazy as _
 from django_jinja.backend import Jinja2
 
 from shoop.admin.base import AdminModule, MenuEntry, Notification
+from shoop.admin.utils.permissions import get_default_model_permissions
 from shoop.admin.utils.urls import admin_url
 from shoop.xtheme._theme import get_current_theme
 from shoop.xtheme.engine import XthemeEnvironment
+from shoop.xtheme.models import ThemeSettings
 
 
 class XthemeAdminModule(AdminModule):
@@ -31,12 +33,14 @@ class XthemeAdminModule(AdminModule):
             admin_url(
                 "^xtheme/(?P<theme_identifier>.+?)/",
                 "shoop.xtheme.admin_module.views.ThemeConfigDetailView",
-                name="xtheme.config_detail"
+                name="xtheme.config_detail",
+                permissions=get_default_model_permissions(ThemeSettings)
             ),
             admin_url(
                 "^xtheme/",
                 "shoop.xtheme.admin_module.views.ThemeConfigView",
-                name="xtheme.config"
+                name="xtheme.config",
+                permissions=get_default_model_permissions(ThemeSettings)
             )
         ]
 
@@ -51,6 +55,9 @@ class XthemeAdminModule(AdminModule):
                 category=self.name
             )
         ]
+
+    def get_required_permissions(self):
+        return get_default_model_permissions(ThemeSettings)
 
     def get_notifications(self, request):
         try:

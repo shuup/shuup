@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.base import AdminModule, MenuEntry
+from shoop.admin.utils.permissions import get_default_model_permissions
 from shoop.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shoop.core.models import Attribute
 
@@ -22,7 +23,8 @@ class AttributeModule(AdminModule):
         return get_edit_and_list_urls(
             url_prefix="^attributes",
             view_template="shoop.admin.modules.attributes.views.Attribute%sView",
-            name_template="attribute.%s"
+            name_template="attribute.%s",
+            permissions=get_default_model_permissions(Attribute)
         )
 
     def get_menu_category_icons(self):
@@ -37,6 +39,9 @@ class AttributeModule(AdminModule):
                 category=self.name
             )
         ]
+
+    def get_required_permissions(self):
+        return get_default_model_permissions(Attribute)
 
     def get_model_url(self, object, kind):
         return derive_model_url(Attribute, "shoop_admin:attribute", object, kind)

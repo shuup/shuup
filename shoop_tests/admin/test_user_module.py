@@ -8,15 +8,20 @@
 import pytest
 from bs4 import BeautifulSoup
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group as PermissionGroup
+from django.forms.models import modelform_factory
 from django.utils.encoding import force_text
 
 from shoop.admin.modules.users.views import UserDetailView
+from shoop.admin.modules.users.views.permissions import \
+    PermissionChangeFormBase
 from shoop.core.models import Contact
 from shoop.testing.factories import create_random_person, get_default_shop
 from shoop.testing.soup_utils import extract_form_fields
 from shoop.testing.utils import apply_request_middleware
 from shoop.utils.excs import Problem
 from shoop_tests.utils import printable_gibberish
+from shoop_tests.utils.fixtures import regular_user
 
 
 @pytest.mark.django_db
@@ -75,3 +80,27 @@ def test_user_detail_contact_seed(rf):
     assert force_text(contact.first_name) in content
     assert force_text(contact.last_name) in content
     assert force_text(contact.email) in content
+
+
+@pytest.mark.django_db
+def test_user_permission_form_changes_group(rf, admin_user, regular_user):
+    get_default_shop()
+    form_class = modelform_factory(
+        model=get_user_model(),
+        form=PermissionChangeFormBase,
+        fields=("is_staff", "is_superuser")
+    )
+
+    assert not regular_user.groups.all()
+
+    group = PermissionGroup.objects.create(name="TestGroup")
+    data = {"permission_groups": [group.pk]}
+    form = form_class(changing_user=admin_user, instance=regular_user, data=data)
+    form.save()
+
+    assert group in regular_user.groups.all()
+
+    form = form_class(changing_user=admin_user, instance=regular_user, data={})
+    form.save()
+
+    assert not regular_user.groups.all()

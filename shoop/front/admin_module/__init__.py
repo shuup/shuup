@@ -16,6 +16,7 @@ from django.utils.translation import ugettext_lazy as _
 from shoop.admin.base import AdminModule, MenuEntry
 from shoop.admin.currencybound import CurrencyBound
 from shoop.admin.dashboard import DashboardMoneyBlock
+from shoop.admin.utils.permissions import get_default_model_permissions
 from shoop.admin.utils.urls import admin_url
 from shoop.front.models.stored_basket import StoredBasket
 
@@ -51,6 +52,8 @@ def get_unfinalized_cart_block(currency, days=14):
 
 
 class CartAdminModule(CurrencyBound, AdminModule):
+    name = "Cart"
+
     def get_dashboard_blocks(self, request):
         if not self.currency:
             return
@@ -64,11 +67,15 @@ class CartAdminModule(CurrencyBound, AdminModule):
                 "^carts/$",
                 "shoop.front.admin_module.carts.views.CartListView",
                 name="cart.list",
+                permissions=get_default_model_permissions(StoredBasket),
             ),
         ]
 
     def get_menu_category_icons(self):
         return {self.name: "fa fa-cart"}
+
+    def get_required_permissions(self):
+        return get_default_model_permissions(StoredBasket)
 
     def get_menu_entries(self, request):
         category = _("Carts")

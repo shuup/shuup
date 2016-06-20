@@ -11,6 +11,7 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.base import AdminModule, MenuEntry, SearchResult
+from shoop.admin.utils.permissions import get_default_model_permissions
 from shoop.admin.utils.urls import admin_url, derive_model_url, get_model_url
 
 
@@ -20,37 +21,45 @@ class UserModule(AdminModule):
     breadcrumbs_menu_entry = MenuEntry(name, url="shoop_admin:user.list")
 
     def get_urls(self):
+        permissions = get_default_model_permissions(get_user_model())
+
         return [
             admin_url(
                 "^users/(?P<pk>\d+)/change-password/$",
                 "shoop.admin.modules.users.views.UserChangePasswordView",
-                name="user.change-password"
+                name="user.change-password",
+                permissions=permissions
             ),
             admin_url(
                 "^users/(?P<pk>\d+)/reset-password/$",
                 "shoop.admin.modules.users.views.UserResetPasswordView",
-                name="user.reset-password"
+                name="user.reset-password",
+                permissions=permissions
             ),
             admin_url(
                 "^users/(?P<pk>\d+)/change-permissions/$",
                 "shoop.admin.modules.users.views.UserChangePermissionsView",
-                name="user.change-permissions"
+                name="user.change-permissions",
+                permissions=permissions
             ),
             admin_url(
                 "^users/(?P<pk>\d+)/$",
                 "shoop.admin.modules.users.views.UserDetailView",
-                name="user.detail"
+                name="user.detail",
+                permissions=permissions
             ),
             admin_url(
                 "^users/new/$",
                 "shoop.admin.modules.users.views.UserDetailView",
                 kwargs={"pk": None},
-                name="user.new"
+                name="user.new",
+                permissions=permissions
             ),
             admin_url(
                 "^users/$",
                 "shoop.admin.modules.users.views.UserListView",
-                name="user.list"
+                name="user.list",
+                permissions=permissions
             ),
         ]
 
@@ -82,6 +91,9 @@ class UserModule(AdminModule):
                     category=self.category,
                     relevance=relevance
                 )
+
+    def get_required_permissions(self):
+        return get_default_model_permissions(get_user_model())
 
     def get_model_url(self, object, kind):
         return derive_model_url(get_user_model(), "shoop_admin:user", object, kind)

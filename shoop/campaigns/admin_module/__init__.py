@@ -10,7 +10,13 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.base import AdminModule, MenuEntry
+from shoop.admin.utils.permissions import (
+    get_default_model_permissions, get_permissions_from_urls
+)
 from shoop.admin.utils.urls import derive_model_url, get_edit_and_list_urls
+from shoop.campaigns.models import (
+    BasketCampaign, Campaign, CatalogCampaign, Coupon
+)
 
 
 class CampaignAdminModule(AdminModule):
@@ -20,19 +26,22 @@ class CampaignAdminModule(AdminModule):
         basket_campaign_urls = get_edit_and_list_urls(
             url_prefix="^campaigns/basket",
             view_template="shoop.campaigns.admin_module.views.BasketCampaign%sView",
-            name_template="basket_campaigns.%s"
+            name_template="basket_campaigns.%s",
+            permissions=get_default_model_permissions(BasketCampaign)
         )
 
         coupon_urls = get_edit_and_list_urls(
             url_prefix="^campaigns/coupons",
             view_template="shoop.campaigns.admin_module.views.Coupon%sView",
-            name_template="coupons.%s"
+            name_template="coupons.%s",
+            permissions=get_default_model_permissions(Coupon)
         )
 
         return basket_campaign_urls + coupon_urls + get_edit_and_list_urls(
             url_prefix="^campaigns/catalog",
             view_template="shoop.campaigns.admin_module.views.CatalogCampaign%sView",
-            name_template="catalog_campaigns.%s"
+            name_template="catalog_campaigns.%s",
+            permissions=get_default_model_permissions(CatalogCampaign)
         )
 
     def get_menu_category_icons(self):
@@ -57,6 +66,9 @@ class CampaignAdminModule(AdminModule):
                 category=category, aliases=[_("Show Coupons")]
             )
         ]
+
+    def get_required_permissions(self):
+        return get_permissions_from_urls(self.get_urls()) | get_default_model_permissions(Campaign)
 
     def get_model_url(self, object, kind):
         if not hasattr(object, "admin_url_suffix"):

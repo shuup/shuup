@@ -14,8 +14,11 @@ from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.base import AdminModule, MenuEntry, Notification, SearchResult
 from shoop.admin.currencybound import CurrencyBound
+from shoop.admin.utils.permissions import (
+    get_default_model_permissions, get_permissions_from_urls
+)
 from shoop.admin.utils.urls import admin_url, derive_model_url, get_model_url
-from shoop.core.models import Order, OrderStatusRole
+from shoop.core.models import Contact, Order, OrderStatusRole, Product
 
 
 class OrderModule(CurrencyBound, AdminModule):
@@ -27,42 +30,51 @@ class OrderModule(CurrencyBound, AdminModule):
             admin_url(
                 "^orders/(?P<pk>\d+)/create-shipment/$",
                 "shoop.admin.modules.orders.views.OrderCreateShipmentView",
-                name="order.create-shipment"
+                name="order.create-shipment",
+                permissions=["shoop.add_shipment"]
             ),
             admin_url(
                 "^orders/(?P<pk>\d+)/create-payment/$",
                 "shoop.admin.modules.orders.views.OrderCreatePaymentView",
-                name="order.create-payment"
+                name="order.create-payment",
+                permissions=["shoop.add_payment"]
             ),
             admin_url(
                 "^orders/(?P<pk>\d+)/set-status/$",
                 "shoop.admin.modules.orders.views.OrderSetStatusView",
-                name="order.set-status"
+                name="order.set-status",
+                permissions=get_default_model_permissions(Order)
             ),
             admin_url(
                 "^orders/(?P<pk>\d+)/new-log-entry/$",
                 "shoop.admin.modules.orders.views.NewLogEntryView",
-                name="order.new-log-entry"
+                name="order.new-log-entry",
+                permissions=get_default_model_permissions(Order)
             ),
             admin_url(
                 "^orders/(?P<pk>\d+)/$",
                 "shoop.admin.modules.orders.views.OrderDetailView",
-                name="order.detail"
+                name="order.detail",
+                permissions=get_default_model_permissions(Order)
             ),
             admin_url(
                 "^orders/new/$",
                 "shoop.admin.modules.orders.views.OrderEditView",
-                name="order.new"
+                name="order.new",
+                permissions=["shoop.add_order"]
             ),
             admin_url(
                 "^orders/(?P<pk>\d+)/edit/$",
                 "shoop.admin.modules.orders.views.OrderEditView",
-                name="order.edit"
+                name="order.edit",
+                permissions=["shoop.change_order"]
             ),
             admin_url(
                 "^orders/$",
                 "shoop.admin.modules.orders.views.OrderListView",
-                name="order.list"
+                name="order.list",
+                permissions=get_default_model_permissions(Order),
+
             ),
         ]
 
@@ -80,6 +92,14 @@ class OrderModule(CurrencyBound, AdminModule):
                 aliases=[_("Show orders")]
             ),
         ]
+
+    def get_required_permissions(self):
+        return (
+            get_permissions_from_urls(self.get_urls()) |
+            get_default_model_permissions(Contact) |
+            get_default_model_permissions(Order) |
+            get_default_model_permissions(Product)
+        )
 
     def get_search_results(self, request, query):
         minimum_query_length = 3

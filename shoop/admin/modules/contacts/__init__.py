@@ -10,6 +10,9 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.admin.base import AdminModule, MenuEntry, SearchResult
+from shoop.admin.utils.permissions import (
+    get_default_model_permissions, get_permissions_from_urls
+)
 from shoop.admin.utils.urls import admin_url, derive_model_url, get_model_url
 from shoop.core.models import Contact
 
@@ -27,27 +30,32 @@ class ContactModule(AdminModule):
                 "^contacts/new/$",
                 "shoop.admin.modules.contacts.views.ContactEditView",
                 kwargs={"pk": None},
-                name="contact.new"
+                name="contact.new",
+                permissions=["shoop.add_contact"],
             ),
             admin_url(
                 "^contacts/(?P<pk>\d+)/edit/$",
                 "shoop.admin.modules.contacts.views.ContactEditView",
-                name="contact.edit"
+                name="contact.edit",
+                permissions=["shoop.change_contact"],
             ),
             admin_url(
                 "^contacts/(?P<pk>\d+)/$",
                 "shoop.admin.modules.contacts.views.ContactDetailView",
-                name="contact.detail"
+                name="contact.detail",
+                permissions=get_default_model_permissions(Contact),
             ),
             admin_url(
                 "^contacts/reset-password/(?P<pk>\d+)/$",
                 "shoop.admin.modules.contacts.views.ContactResetPasswordView",
-                name="contact.reset_password"
+                name="contact.reset_password",
+                permissions=get_default_model_permissions(Contact),
             ),
             admin_url(
                 "^contacts/$",
                 "shoop.admin.modules.contacts.views.ContactListView",
-                name="contact.list"
+                name="contact.list",
+                permissions=get_default_model_permissions(Contact),
             ),
         ]
 
@@ -61,6 +69,9 @@ class ContactModule(AdminModule):
                 url="shoop_admin:contact.list", category=self.category
             )
         ]
+
+    def get_required_permissions(self):
+        return get_permissions_from_urls(self.get_urls()) | get_default_model_permissions(Contact)
 
     def get_search_results(self, request, query):
         minimum_query_length = 3
