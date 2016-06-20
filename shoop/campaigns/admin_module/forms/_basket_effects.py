@@ -10,7 +10,7 @@ from shoop.admin.forms.fields import PercentageField
 from shoop.campaigns.models.basket_effects import (
     BasketDiscountAmount, BasketDiscountPercentage
 )
-from shoop.campaigns.models.basket_line_effects import FreeProductLine
+from shoop.campaigns.models.basket_line_effects import FreeProductLine, DiscountFromProduct
 
 from ._base import BaseEffectModelForm
 
@@ -33,3 +33,8 @@ class BasketDiscountPercentageForm(BaseEffectModelForm):
 class FreeProductLineForm(BaseEffectModelForm):
     class Meta(BaseEffectModelForm.Meta):
         model = FreeProductLine
+
+
+class DiscountFromProductForm(BaseEffectModelForm):
+    class Meta(BaseEffectModelForm.Meta):
+        model = DiscountFromProduct

@@ -74,3 +74,37 @@ class FreeProductLine(BasketLineEffect):
             )
             lines.append(order_source.create_line(**line_data))
         return lines
+
+
+class DiscountFromProduct(BasketLineEffect):
+    identifier = "discount_from_product_line_effect"
+    model = Product
+    yields = True
+    name = _("Discount from Product")
+
+    per_line_discount = models.BooleanField(
+        default=True,
+        verbose_name=_("per line discount"),
+        help_text=_("Uncheck this if you want to give discount for each matched product."))
+
+    discount_amount = MoneyValueField(
+        default=None, blank=True, null=True,
+        verbose_name=_("discount amount"),
+        help_text=_("Flat amount of discount."))
+
+    products = models.ManyToManyField(Product, verbose_name=_("product"))
+
+    @property
+    def description(self):
+        return _("Select discount amount and products.")
+
+    def get_discount_lines(self, order_source, original_lines):
+        product_ids = self.products.values_list("pk", flat=True)
+        for line in original_lines:
+            if not line.type == OrderLineType.PRODUCT:
+                continue
+            if line.product.pk not in product_ids:
+                continue
+            amnt = (self.discount_amount * line.quantity) if not self.per_line_discount else self.discount_amount
+            line.discount_amount = order_source.create_price(amnt)
+        return []

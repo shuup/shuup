@@ -41,6 +41,7 @@ class CampaignAppConfig(AppConfig):
             "shoop.campaigns.admin_module.forms:BasketDiscountAmountForm",
             "shoop.campaigns.admin_module.forms:BasketDiscountPercentageForm",
             "shoop.campaigns.admin_module.forms:FreeProductLineForm",
+            "shoop.campaigns.admin_module.forms:DiscountFromProductForm"
         ],
         "campaign_context_condition": [
             "shoop.campaigns.admin_module.forms:ContactGroupConditionForm",
