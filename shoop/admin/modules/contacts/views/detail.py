@@ -10,14 +10,13 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-from django.db.models import Q
 from django.http.response import HttpResponseRedirect
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 
 from shoop.admin.toolbar import PostActionButton, Toolbar, URLActionButton
-from shoop.core.models import CompanyContact, Contact, Order, PersonContact
+from shoop.core.models import CompanyContact, Contact, PersonContact
 from shoop.utils.excs import Problem
 
 
@@ -103,18 +102,12 @@ class ContactDetailView(DetailView):
         context = super(ContactDetailView, self).get_context_data(**kwargs)
         context["companies"] = []
         if isinstance(self.object, PersonContact):
-            order_q = Q(orderer=self.object) | Q(customer=self.object)
             context["companies"] = sorted(
                 self.object.company_memberships.all(), key=(lambda x: force_text(x))
             )
-        else:
-            order_q = Q(customer=self.object)
-        user = getattr(self.object, "user", None)
-        if user:
-            order_q |= Q(creator=user)
         context["contact_groups"] = sorted(
             self.object.groups.all(), key=(lambda x: force_text(x)))
-        context["orders"] = Order.objects.filter(order_q).order_by("-id")
+        context["orders"] = self.object.customer_orders.order_by("-id")
         context["toolbar"] = ContactDetailToolbar(contact=self.object, request=self.request)
         context["title"] = "%s: %s" % (
             self.object._meta.verbose_name.title(),

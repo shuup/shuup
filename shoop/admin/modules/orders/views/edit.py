@@ -10,12 +10,13 @@ from __future__ import unicode_literals
 import decimal
 import json
 
-from babel.numbers import format_decimal
+from babel.numbers import format_currency, format_decimal
 from django.contrib import messages
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.core.urlresolvers import reverse
 from django.db import transaction
+from django.db.models import Sum
 from django.http.response import HttpResponse, JsonResponse
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
@@ -26,11 +27,12 @@ from shoop.admin.toolbar import Toolbar
 from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.core.models import (
     AnonymousContact, CompanyContact, Contact, Order, OrderLineType,
-    PaymentMethod, Product, ShippingMethod, Shop, ShopStatus
+    PaymentMethod, PersonContact, Product, ShippingMethod, Shop, ShopStatus
 )
 from shoop.core.pricing import get_pricing_module
 from shoop.utils.i18n import (
-    format_money, format_percent, get_current_babel_locale
+    format_money, format_percent, get_current_babel_locale,
+    get_locally_formatted_datetime
 )
 
 
@@ -278,6 +280,47 @@ class OrderEditView(CreateOrUpdateView):
     def handle_customer_data(self, request):
         customer_id = request.GET["id"]
         return self.get_customer_data(customer_id)
+
+    def handle_customer_details(self, request):
+        customer_id = request.GET["id"]
+        customer = Contact.objects.get(pk=customer_id)
+        companies = []
+        if isinstance(customer, PersonContact):
+            companies = sorted(customer.company_memberships.all(), key=(lambda x: force_text(x)))
+        recent_orders = customer.customer_orders.order_by('-id')[:10]
+
+        order_summary = []
+        for dt in customer.customer_orders.datetimes('order_date', 'year'):
+            summary = customer.customer_orders.filter(order_date__year=dt.year).aggregate(
+                total=Sum('taxful_total_price_value')
+            )
+            order_summary.append({
+                'year': dt.year,
+                'total': format_currency(
+                    summary['total'], currency=recent_orders[0].currency, locale=get_current_babel_locale()
+                )
+            })
+
+        return {
+            "customer_info": {
+                "name": customer.full_name,
+                "phone_no": customer.phone,
+                "email": customer.email,
+                "companies": companies if len(companies) else None,
+                "groups": [force_text(group) for group in customer.groups.all()],
+                "merchant_notes": customer.merchant_notes
+            },
+            "order_summary": order_summary,
+            "recent_orders": [
+                {
+                    "order_date": get_locally_formatted_datetime(order.order_date),
+                    "total": format_money(order.taxful_total_price),
+                    "status": order.get_status_display(),
+                    "payment_status": force_text(order.payment_status.label),
+                    "shipment_status": force_text(order.shipping_status.label)
+                } for order in recent_orders
+            ]
+        }
 
     @transaction.atomic
     def _handle_source_data(self, request):

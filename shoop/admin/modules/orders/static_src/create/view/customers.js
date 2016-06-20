@@ -7,8 +7,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 import {clearExistingCustomer, retrieveCustomerData, setAddressProperty,
-    setAddressSavingOption, setShipToBillingAddress, setIsCompany} from "../actions";
-import {ADDRESS_FIELDS, selectBox} from "./utils";
+    setAddressSavingOption, setShipToBillingAddress, setIsCompany, showCustomerModal, retrieveCustomerDetails} from "../actions";
+import {ADDRESS_FIELDS, selectBox, contentBlock, infoRow, table, modal} from "./utils";
 import BrowseAPI from "BrowseAPI";
 
 function renderAddress(store, shop, customer, address, addressType) {
@@ -37,33 +37,121 @@ function renderAddress(store, shop, customer, address, addressType) {
     }).value();
 }
 
+function customerDetailView(customerInfo) {
+    return (
+        m("div.row",
+            m("div.col-md-6",
+                m("dl.dl-horizontal", [
+                    infoRow(gettext("Full Name"), customerInfo.name),
+                    infoRow(gettext("Phone"), customerInfo.phone_no),
+                    infoRow(gettext("Email"), customerInfo.email)
+                ])
+            ),
+            m("div.col-md-6",
+                m("dl.dl-horizontal", [
+                    infoRow(gettext("Groups"), customerInfo.groups),
+                    infoRow(gettext("Companies"), customerInfo.companies),
+                    infoRow(gettext("Merchant Notes"), customerInfo.merchant_notes)
+                ])
+            )
+        )
+    );
+}
+
+function orderSummaryView(orderSummary) {
+    const columns = [
+        {key: "year", label: gettext("Year")},
+        {key: "total", label: gettext("Total Sales")}
+    ];
+
+    return table({
+        tableClass: "table-condensed table-striped",
+        columns,
+        data: orderSummary
+    });
+}
+
+function recentOrderView(recentOrders) {
+    const columns = [
+        {key: "order_date", label: gettext("Date")},
+        {key: "shipment_status", label: gettext("Shipment Status")},
+        {key: "payment_status", label: gettext("Payment Status")},
+        {key: "status", label: gettext("Order Status")},
+        {key: "total", label: gettext("Total")}
+    ];
+
+    return table({
+        tableClass: "table-condensed table-striped",
+        columns,
+        data: recentOrders
+    });
+}
+
+function renderCustomerDetailModal(store) {
+    const {customerDetails} = store.getState();
+
+    const customerInfo = customerDetails.customerInfo || {};
+    const orderSummary = customerDetails.orderSummary || [];
+    const recentOrders = customerDetails.recentOrders || [];
+
+    return modal({
+        show: customerDetails.showCustomerModal,
+        sizeClass: "modal-lg",
+        close: () => store.dispatch(showCustomerModal(false)),
+        title: m("h3.modal-title", customerInfo.name),
+        body: [
+            contentBlock("i.fa.fa-info-circle", gettext("Customer Information"), customerDetailView(customerInfo), "h3"),
+            contentBlock("i.fa.fa-inbox", gettext("Order Summary"), orderSummaryView(orderSummary), "h3"),
+            contentBlock("i.fa.fa-cubes", gettext("Recent Orders"), recentOrderView(recentOrders), "h3")
+        ],
+        footer: [
+            m("button.btn.btn-default", {
+                onclick: () => store.dispatch(showCustomerModal(false))
+            }, gettext("Close"))
+        ]
+    });
+}
+
 export function customerSelectView(store) {
-    const {customer, shop} = store.getState();
+    const {customer, customerDetails, shop} = store.getState();
     return m("div.form-group", [
         (!customer.id ? m("p", gettext("A new customer will be created based on billing address.")) : null),
         m("br"),
-        m("label.control-label", gettext("Customer")),
-        m("div.btn-group", [
-            m("button.btn.btn-default" + (customer.id ? " active" : ""), {
-                onclick: () => {
-                    BrowseAPI.openBrowseWindow({
-                        kind: "contact",
-                        clearable: true,
-                        onSelect: (obj) => {
-                            store.dispatch(retrieveCustomerData({id: obj.id}));
-                        }
-                    });
-                }
-                }, (customer.id ? [m("i.fa.fa-user"), " ", customer.name] : gettext("Select Existing Customer"))
-            ),
-            m("button.btn.btn-default" + (!customer.id ? " active" : ""), {
-                onclick: () => {
-                    store.dispatch(clearExistingCustomer());
-                }
-                }, [m("i.fa.fa-user"), " ", gettext("New Customer")]
-            )
+        m("div.clearfix", [
+            m("label.control-label", gettext("Customer")),
+            m("div.btn-group", [
+                m("button.btn.btn-default" + (customer.id ? " active" : ""), {
+                    onclick: () => {
+                        BrowseAPI.openBrowseWindow({
+                            kind: "contact",
+                            clearable: true,
+                            onSelect: (obj) => {
+                                store.dispatch(retrieveCustomerData({id: obj.id}));
+                            }
+                        });
+                    }
+                    }, (customer.id ? [m("i.fa.fa-user"), " ", customer.name] : gettext("Select Existing Customer"))
+                ),
+                m("button.btn.btn-default" + (!customer.id ? " active" : ""), {
+                    onclick: () => {
+                        store.dispatch(clearExistingCustomer());
+                    }
+                    }, [m("i.fa.fa-user"), " ", gettext("New Customer")]
+                )
+            ])
         ]),
         m("br"),
+        m("div.clearfix " + (!customer.id? " hidden": ""), [
+            m("label.control-label"),
+            m("a[href='#customer-detail-view']", {
+                onclick: (e) => {
+                    e.preventDefault();
+                    store.dispatch(retrieveCustomerDetails({id: customer.id})).then(() => {
+                        store.dispatch(showCustomerModal(true));
+                    });
+                }
+            }, gettext("View Details"))
+        ]),
         m("hr"),
         m("label", [
             m("input", {
@@ -114,6 +202,7 @@ export function customerSelectView(store) {
                         renderAddress(store, shop, customer, customer.shippingAddress, "shipping")
                     ])
                 ) : null)
-        ])
+        ]),
+        (customerDetails? renderCustomerDetailModal(store) : null)
     ]);
 }
