@@ -231,6 +231,7 @@ Default Tax
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
+- Rename UnitedDecimal to UnittedDecimal
 - Add a way to find out min and max values from pattern
 - Reword doc/provides.rst
 

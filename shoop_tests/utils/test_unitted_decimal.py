@@ -9,10 +9,10 @@ from decimal import Decimal
 import pytest
 import six
 
-from shoop.utils.numbers import UnitedDecimal
+from shoop.utils.numbers import UnittedDecimal
 
 
-class BaseDecimal(UnitedDecimal):
+class BaseDecimal(UnittedDecimal):
     unit = None
 
     def unit_matches_with(self, other):
@@ -27,7 +27,7 @@ class BarDecimal(BaseDecimal):
     unit = 'bar'
 
 
-def test_united_decimal_basics():
+def test_unitted_decimal_basics():
     assert FooDecimal(1) + FooDecimal(2) == FooDecimal(3)
     assert FooDecimal(3) - FooDecimal(2) == FooDecimal(1)
     assert FooDecimal(1) < FooDecimal(2)
@@ -39,7 +39,7 @@ def test_united_decimal_basics():
     assert -FooDecimal(4) == FooDecimal('-4')
 
 
-def test_united_decimal_value():
+def test_unitted_decimal_value():
     assert FooDecimal(42).value == 42
     assert type(FooDecimal(42).value) == Decimal
 
@@ -114,7 +114,7 @@ def test_invalid_power():
 
 def test_base_class_units_match_unimplemented():
     with pytest.raises(NotImplementedError):
-        UnitedDecimal().unit_matches_with(UnitedDecimal())
+        UnittedDecimal().unit_matches_with(UnittedDecimal())
 
 
 def test_floordiv():

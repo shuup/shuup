@@ -17,7 +17,7 @@ class Price(Money):
     will raise an :obj:`~shoop.utils.numbers.UnitMixupError`.
 
     In addition to `includes_tax` info, Prices are Money and know their
-    `~shoop.utils.numbers.UnitedDecimal.value` and
+    `~shoop.utils.numbers.UnittedDecimal.value` and
     `~shoop.utils.money.Money.currency`.  To get the bare Money amount
     of a `Price`, use the `amount` property.
     """

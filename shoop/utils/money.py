@@ -7,12 +7,12 @@
 from . import numbers
 
 
-class Money(numbers.UnitedDecimal):
+class Money(numbers.UnittedDecimal):
     """
     Money value with currency.
 
     The pure decimal value is available from the base classes
-    `~shoop.utils.numbers.UnitedDecimal.value` property (preferred way)
+    `~shoop.utils.numbers.UnittedDecimal.value` property (preferred way)
     or by casting to `Decimal`.
 
     Money objects with different currencies cannot be compared or

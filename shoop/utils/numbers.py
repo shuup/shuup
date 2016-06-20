@@ -12,10 +12,10 @@ import six
 
 from shoop.utils import update_module_attributes
 
-from ._united_decimal import UnitedDecimal, UnitMixupError
+from ._unitted_decimal import UnitMixupError, UnittedDecimal
 
 __all__ = [
-    "UnitedDecimal",
+    "UnittedDecimal",
     "UnitMixupError",
     "bankers_round",
     "strip_non_float_chars",
