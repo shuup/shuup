@@ -72,13 +72,9 @@ def _process_fields(form, **kwargs):
     for field in model_obj._meta.get_fields(include_parents=False):
         if not isinstance(field, ManyToManyField):
             continue
-        if not instance:
-            # This happens when before formsets is initialized properly
-            # with instance. Let's make the queryset faster.
-            form.fields[field.name].queryset = model_obj.model.objects.none()
-            continue
         formfield = CampaignsSelectMultipleField(model_obj)
-        objects = getattr(instance, field.name).all()
+        objects = (getattr(instance, field.name).all() if instance else model_obj.model.objects.none())
         formfield.required = False
+        formfield.initial = objects
         formfield.widget.choices = [(obj.pk, obj.name) for obj in objects]
         form.fields[field.name] = formfield
