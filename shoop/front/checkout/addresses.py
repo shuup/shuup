@@ -51,10 +51,8 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
 
     template_name = "shoop/front/checkout/addresses.jinja"
 
-    # When adding to this, you'll naturally have to edit the template too, also change saved_fields below to match
+    # When adding to this, you'll naturally have to edit the template too
     address_kinds = ("shipping", "billing")
-    # Saved address field names for customer, use blank if default field name doesn't exist
-    address_kinds_saved_address_fields = ("default_shipping_address", "default_billing_address")
     address_form_class = AddressForm
     address_form_classes = {}  # Override by `address_kind` if required
     company_form_class = CompanyForm
@@ -69,18 +67,26 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
 
     def get_initial(self):
         initial = super(AddressesPhase, self).get_initial()
-        for idx, address_kind in enumerate(self.address_kinds):
+        customer = self.request.basket.customer
+        for address_kind in self.address_kinds:
             if self.storage.get(address_kind):
-                mutable_addresses_dict = model_to_dict(self.storage.get(address_kind))
+                address = self.storage.get(address_kind)
+            elif customer:
+                address = self._get_address_of_contact(customer, address_kind)
             else:
-                try:
-                    mutable_addresses_dict = model_to_dict(getattr(
-                        self.storage.request.customer, self.address_kinds_saved_address_fields[idx]))
-                except:
-                    continue
-            for key, value in mutable_addresses_dict.items():
-                initial["%s-%s" % (address_kind, key)] = value
+                address = None
+            if address:
+                for (key, value) in model_to_dict(address).items():
+                    initial["%s-%s" % (address_kind, key)] = value
         return initial
+
+    def _get_address_of_contact(self, contact, kind):
+        if kind == 'billing':
+            return contact.default_billing_address
+        elif kind == 'shipping':
+            return contact.default_shipping_address
+        else:
+            raise TypeError('Unknown address kind: %r' % (kind,))
 
     def is_valid(self):
         return self.storage.has_all(self.address_kinds)

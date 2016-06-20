@@ -121,6 +121,7 @@ Addons
 Front
 ~~~~~
 
+- Initialize checkout addresses from customer data
 - Logout users linked to inactive contact
 - Allow user to change password from account settings
 - Add login check for inactive contacts
