@@ -6,7 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import re
-from decimal import Decimal, ROUND_HALF_EVEN
+from decimal import Decimal, ROUND_HALF_EVEN, ROUND_HALF_UP
 
 import six
 
@@ -37,6 +37,33 @@ def bankers_round(value, ndigits=0):
     if quantizer is None:
         quantizer = quant_cache[ndigits] = Decimal(10) ** (-int(ndigits))
     return value.quantize(quantizer, rounding=ROUND_HALF_EVEN)
+
+
+def nickel_round(value, quant=Decimal('0.05'), rounding=ROUND_HALF_UP):
+    """
+    Round decimal value to nearest quant.
+
+    >>> nickel_round(Decimal('10.32'))
+    Decimal('10.30')
+    >>> nickel_round(Decimal('10.33'))
+    Decimal('10.35')
+    >>> nickel_round(Decimal('10.325'))
+    Decimal('10.35')
+    >>> nickel_round(Decimal('10.3249'))
+    Decimal('10.30')
+    >>> nickel_round(Decimal('10.31'), Decimal('0.125'))
+    Decimal('10.250')
+    >>> nickel_round(Decimal('10.32'), Decimal('0.125'))
+    Decimal('10.375')
+
+    :type value: decimal.Decimal
+    :type quant: decimal.Decimal
+    :type rounding: str
+    :rtype: decimal.Decimal
+    """
+    assert isinstance(value, Decimal)
+    assert isinstance(quant, Decimal)
+    return (value / quant).quantize(1, rounding=rounding) * quant
 
 
 def strip_non_float_chars(s):
