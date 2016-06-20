@@ -51,7 +51,8 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
 
     template_name = "shoop/front/checkout/addresses.jinja"
 
-    address_kinds = ("shipping", "billing")  # When adding to this, you'll naturally have to edit the template too
+    # When adding to this, you'll naturally have to edit the template too
+    address_kinds = ("shipping", "billing")
     address_form_class = AddressForm
     address_form_classes = {}  # Override by `address_kind` if required
     company_form_class = CompanyForm
@@ -66,11 +67,26 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
 
     def get_initial(self):
         initial = super(AddressesPhase, self).get_initial()
+        customer = self.request.basket.customer
         for address_kind in self.address_kinds:
             if self.storage.get(address_kind):
-                for key, value in model_to_dict(self.storage[address_kind]).items():
+                address = self.storage.get(address_kind)
+            elif customer:
+                address = self._get_address_of_contact(customer, address_kind)
+            else:
+                address = None
+            if address:
+                for (key, value) in model_to_dict(address).items():
                     initial["%s-%s" % (address_kind, key)] = value
         return initial
+
+    def _get_address_of_contact(self, contact, kind):
+        if kind == 'billing':
+            return contact.default_billing_address
+        elif kind == 'shipping':
+            return contact.default_shipping_address
+        else:
+            raise TypeError('Unknown address kind: %r' % (kind,))
 
     def is_valid(self):
         return self.storage.has_all(self.address_kinds)

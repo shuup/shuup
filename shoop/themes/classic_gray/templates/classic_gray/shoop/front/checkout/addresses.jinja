@@ -38,7 +38,7 @@
                 <div class="order-for-company col-md-9 col-md-offset-3">
                     <legend>{% trans %}Shipping address{% endtrans %}</legend>
                     <div class="custom-checkbox">
-                        <input type="checkbox" name="same_as_billing" id="same_as_billing" value="1"{% if request.POST.get("same_as_billing", true) %} checked{% endif %}>
+                        <input type="checkbox" name="same_as_billing" id="same_as_billing" value="1"{% if request.POST.get("same_as_billing", false) %} checked{% endif %}>
                         <label for="same_as_billing">{% trans %}Ship to my billing address{% endtrans %}</label>
                     </div>
                     <hr>
