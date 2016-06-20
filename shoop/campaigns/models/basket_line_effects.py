@@ -10,6 +10,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.campaigns.models import BasketDiscountEffect
+from shoop.core.fields import MoneyValueField
 from shoop.core.models import OrderLineType, Product
 from shoop.core.order_creator._source import LineSource
 
@@ -35,6 +36,7 @@ class FreeProductLine(BasketLineEffect):
     yields = True
     name = _("Free Product(s)")
 
+    quantity = models.PositiveIntegerField(default=1, verbose_name=_("quantity"))
     products = models.ManyToManyField(Product, verbose_name=_("product"))
 
     @property
@@ -61,7 +63,7 @@ class FreeProductLine(BasketLineEffect):
             line_data = dict(
                 line_id="free_product_%s" % str(random.randint(0, 0x7FFFFFFF)),
                 type=OrderLineType.PRODUCT,
-                quantity=1,
+                quantity=self.quantity,
                 shop=shop,
                 text=("%s (%s)" % (product.name, self.campaign.public_name)),
                 base_unit_price=shop.create_price(0),

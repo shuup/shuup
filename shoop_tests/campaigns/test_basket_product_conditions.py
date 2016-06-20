@@ -34,6 +34,14 @@ def test_product_in_basket_condition(rf):
 
     assert condition.matches(basket, [])
 
+    condition.quantity = 2
+    condition.save()
+
+    assert not condition.matches(basket, [])
+
+    basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
+    assert condition.matches(basket, [])
+
 
 @pytest.mark.django_db
 def test_basket_total_amount_condition(rf):
