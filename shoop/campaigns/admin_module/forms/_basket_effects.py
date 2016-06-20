@@ -10,7 +10,9 @@ from shoop.admin.forms.fields import PercentageField
 from shoop.campaigns.models.basket_effects import (
     BasketDiscountAmount, BasketDiscountPercentage
 )
-from shoop.campaigns.models.basket_line_effects import FreeProductLine, DiscountFromProduct
+from shoop.campaigns.models.basket_line_effects import (
+    DiscountFromProduct, FreeProductLine
+)
 
 from ._base import BaseEffectModelForm
 
