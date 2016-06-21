@@ -36,13 +36,13 @@ class CatalogCampaignModule(DiscountModule):
         for campaign in CatalogCampaign.get_matching(context, shop_product):
             price = price_info.price
             # get first matching effect
-            effect = campaign.effects.first()
-            price -= effect.apply_for_product(context=context, product=product, price_info=price_info)
-            if best_discount is None:
-                best_discount = price
+            for effect in campaign.effects.all():
+                price -= effect.apply_for_product(context=context, product=product, price_info=price_info)
+                if best_discount is None:
+                    best_discount = price
 
-            if price < best_discount:
-                best_discount = price
+                if price < best_discount:
+                    best_discount = price
 
         if best_discount:
             if shop_product.minimum_price and best_discount < shop_product.minimum_price:
@@ -111,21 +111,21 @@ class BasketCampaignModule(OrderSourceModifierModule):
         best_discount_campaign = None
         lines = []
         for campaign in matching_campaigns:
-            effect = campaign.effects.first()
-            if not effect:
-                continue
+            for effect in campaign.effects.all():
+                if not effect:
+                    continue
 
-            if hasattr(effect, "get_discount_lines"):
-                continue
+                if hasattr(effect, "get_discount_lines"):
+                    continue
 
-            discount_amount = effect.apply_for_basket(order_source=order_source)
-            # if campaign has coupon, match it to order_source.codes
-            if campaign.coupon:
-                # campaign was found because discount code matched. This line is always added
-                lines.append(get_discount_line(campaign, discount_amount, price_so_far))
-            elif best_discount is None or discount_amount > best_discount:
-                best_discount = discount_amount
-                best_discount_campaign = campaign
+                discount_amount = effect.apply_for_basket(order_source=order_source)
+                # if campaign has coupon, match it to order_source.codes
+                if campaign.coupon:
+                    # campaign was found because discount code matched. This line is always added
+                    lines.append(get_discount_line(campaign, discount_amount, price_so_far))
+                elif best_discount is None or discount_amount > best_discount:
+                    best_discount = discount_amount
+                    best_discount_campaign = campaign
 
         if best_discount is not None:
             lines.append(get_discount_line(best_discount_campaign, best_discount, price_so_far))
@@ -134,12 +134,12 @@ class BasketCampaignModule(OrderSourceModifierModule):
     def _handle_line_effects(self, matching_campaigns, order_source, original_lines):
         lines = []
         for campaign in matching_campaigns:
-            effect = campaign.effects.first()
-            if not effect:
-                continue
+            for effect in campaign.effects.all():
+                if not effect:
+                    continue
 
-            if not hasattr(effect, "get_discount_lines"):
-                continue
+                if not hasattr(effect, "get_discount_lines"):
+                    continue
 
-            lines += effect.get_discount_lines(order_source=order_source, original_lines=original_lines)
+                lines += effect.get_discount_lines(order_source=order_source, original_lines=original_lines)
         return lines

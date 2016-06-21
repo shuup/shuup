@@ -78,10 +78,16 @@ class ProductsInBasketCondition(BasketCondition):
 
     model = Product
 
+    quantity = models.PositiveIntegerField(default=1, verbose_name=_("quantity"))
     products = models.ManyToManyField(Product, verbose_name=_("products"), blank=True)
 
     def matches(self, basket, lines):
-        return any((product_id in basket.product_ids) for product_id in self.products.values_list("pk", flat=True))
+        product_ids = self.products.values_list("pk", flat=True)
+        pidmap = [(x.product.id, x.quantity) for x in basket.get_lines() if x.product and x.product.id in product_ids]
+        for id, quantity in pidmap:
+            if quantity >= self.quantity:
+                return True
+        return False
 
     @property
     def description(self):

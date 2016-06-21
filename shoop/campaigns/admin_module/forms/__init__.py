@@ -12,7 +12,7 @@ from ._basket_conditions import (
 )
 from ._basket_effects import (
     BasketDiscountAmountForm, BasketDiscountPercentageForm,
-    FreeProductLineForm
+    DiscountFromProductForm, FreeProductLineForm
 )
 from ._catalog import CatalogCampaignForm
 from ._catalog_conditions import (
@@ -39,6 +39,7 @@ __all__ = [
     "ContactGroupBasketConditionForm",
     "ContactGroupConditionForm",
     "CouponForm",
+    "DiscountFromProductForm",
     "FreeProductLineForm",
     "ProductDiscountAmountForm",
     "ProductDiscountPercentageForm",
