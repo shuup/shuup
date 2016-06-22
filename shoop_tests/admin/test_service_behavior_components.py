@@ -6,6 +6,8 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
+import decimal
+
 import pytest
 from django.test import override_settings
 
@@ -13,12 +15,13 @@ from shoop.admin.modules.services.views import (
     PaymentMethodEditView, ShippingMethodEditView
 )
 from shoop.core.models import (
-    FixedCostBehaviorComponent, PaymentMethod, ShippingMethod,
-    WaivingCostBehaviorComponent, GroupAvailabilityBehaviorComponent,
-    WeightLimitsBehaviorComponent
+    FixedCostBehaviorComponent, GroupAvailabilityBehaviorComponent,
+    PaymentMethod, RoundingBehaviorComponent, RoundingMode, ShippingMethod,
+    WaivingCostBehaviorComponent, WeightLimitsBehaviorComponent
 )
 from shoop.testing.factories import (
-    get_default_payment_method, get_default_shipping_method, get_default_shop, get_default_customer_group
+    get_default_customer_group, get_default_payment_method,
+    get_default_shipping_method, get_default_shop
 )
 from shoop.testing.utils import apply_request_middleware
 
@@ -50,6 +53,10 @@ def get_default_behavior_settings():
         },
         GroupAvailabilityBehaviorComponent.__name__.lower(): {
             "groups": [get_default_customer_group().pk]
+        },
+        RoundingBehaviorComponent.__name__.lower(): {
+            "mode": RoundingMode.ROUND_UP.value,
+            "quant": decimal.Decimal('0.05')
         }
     }
 

@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-17 19:37+0000\n"
+"POT-Creation-Date: 2016-06-21 17:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
@@ -1037,6 +1037,36 @@ msgstr ""
 msgid "Service is not available for any of the customers groups."
 msgstr ""
 
+msgid "round to nearest with ties going away from zero"
+msgstr ""
+
+msgid "round to nearest with ties going towards zero"
+msgstr ""
+
+msgid "round away from zero"
+msgstr ""
+
+msgid "round towards zero"
+msgstr ""
+
+msgid "Rounding"
+msgstr ""
+
+msgid "Round total order price to the nearest quant."
+msgstr ""
+
+msgid "rounding quant"
+msgstr ""
+
+msgid "rounding mode"
+msgstr ""
+
+msgid "rounding"
+msgstr ""
+
+msgid "Only administrators can process cash payments"
+msgstr ""
+
 msgid "payment processor"
 msgstr ""
 
@@ -1047,6 +1077,9 @@ msgid "custom payment processors"
 msgstr ""
 
 msgid "Manually processed payment"
+msgstr ""
+
+msgid "Cash payment"
 msgstr ""
 
 msgid "carrier"

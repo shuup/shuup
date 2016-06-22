@@ -7,12 +7,16 @@
 
 from __future__ import unicode_literals
 
+import decimal
+
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from enumfields import Enum, EnumField
 from parler.models import TranslatableModel, TranslatedField, TranslatedFields
 
 from shoop.core.fields import MeasurementField, MoneyValueField
+from shoop.utils.numbers import nickel_round
 
 from ._service_base import (
     ServiceBehaviorComponent, ServiceCost,
@@ -168,3 +172,39 @@ class GroupAvailabilityBehaviorComponent(ServiceBehaviorComponent):
         groups_to_match = set(self.groups.all().values_list("pk", flat=True))
         if not bool(customer_groups & groups_to_match):
             yield ValidationError(_("Service is not available for any of the customers groups."))
+
+
+class RoundingMode(Enum):
+    ROUND_HALF_UP = decimal.ROUND_HALF_UP
+    ROUND_HALF_DOWN = decimal.ROUND_HALF_DOWN
+    ROUND_UP = decimal.ROUND_UP
+    ROUND_DOWN = decimal.ROUND_DOWN
+
+    class Labels:
+        ROUND_HALF_UP = _("round to nearest with ties going away from zero")
+        ROUND_HALF_DOWN = _("round to nearest with ties going towards zero")
+        ROUND_UP = _("round away from zero")
+        ROUND_DOWN = _("round towards zero")
+
+
+class RoundingBehaviorComponent(ServiceBehaviorComponent):
+    name = _("Rounding")
+    help_text = _("Round total order price to the nearest quant.")
+
+    quant = models.DecimalField(
+        max_digits=36, decimal_places=9, default=decimal.Decimal('0.05'),
+        verbose_name=_("rounding quant"))
+    mode = EnumField(
+        RoundingMode,
+        default=RoundingMode.ROUND_HALF_UP,
+        verbose_name=_("rounding mode"))
+
+    def get_costs(self, service, source):
+        total_price = source.total_price_of_products
+        rounded = nickel_round(total_price, self.quant, self.mode.value)
+        remainder = rounded - total_price
+        yield ServiceCost(remainder, _("rounding"))
+
+    def get_unavailability_reasons(self, service, source):
+        if not source.creator or not(source.creator.is_superuser or source.creator.is_staff):
+            yield ValidationError(_("Only administrators can process cash payments"))
