@@ -72,16 +72,69 @@ class BasketTotalAmountCondition(MoneyPropped, BasketCondition):
         self.amount_value = value
 
 
+class BasketMaxTotalProductAmountCondition(BasketCondition):
+    identifier = "basket_max_product_condition"
+    name = _("Basket maximum product count")
+
+    product_count = models.DecimalField(
+        verbose_name=_("maximum product count in basket"), blank=True, null=True, max_digits=36, decimal_places=9)
+
+    def matches(self, basket, lines):
+        return (basket.product_count <= self.product_count)
+
+    @property
+    def description(self):
+        return _("Limit the campaign to match when basket has at maximum the product count entered here.")
+
+    @property
+    def value(self):
+        return self.product_count
+
+    @value.setter
+    def value(self, value):
+        self.product_count = value
+
+
+class BasketMaxTotalAmountCondition(MoneyPropped, BasketCondition):
+    identifier = "basket_max_amount_condition"
+    name = _("Basket maximum total value")
+
+    amount = PriceProperty("amount_value", "campaign.shop.currency", "campaign.shop.prices_include_tax")
+    amount_value = MoneyValueField(default=None, blank=True, null=True, verbose_name=_("maximum basket total amount"))
+
+    def matches(self, basket, lines):
+        return (basket.total_price_of_products.value <= self.amount_value)
+
+    @property
+    def description(self):
+        return _("Limit the campaign to match when it has at maximum the total value entered here worth of products.")
+
+    @property
+    def value(self):
+        return self.amount_value
+
+    @value.setter
+    def value(self, value):
+        self.amount_value = value
+
+
 class ProductsInBasketCondition(BasketCondition):
     identifier = "basket_products_condition"
     name = _("Products in basket")
 
     model = Product
 
+    quantity = models.PositiveIntegerField(default=1, verbose_name=_("quantity"))
     products = models.ManyToManyField(Product, verbose_name=_("products"), blank=True)
 
     def matches(self, basket, lines):
-        return any((product_id in basket.product_ids) for product_id in self.products.values_list("pk", flat=True))
+        product_ids = self.products.values_list("pk", flat=True)
+        for line in basket.get_lines():
+            if not (line.product and (line.product.id in product_ids)):
+                continue
+            if line.quantity >= self.quantity:
+                return True
+        return False
 
     @property
     def description(self):

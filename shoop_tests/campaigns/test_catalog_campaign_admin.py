@@ -40,7 +40,7 @@ DEFAULT_EFFECT_FORMS = [
 def get_form_parts(request, view, object):
     with override_provides("campaign_context_condition", DEFAULT_CONDITION_FORMS):
         with override_provides("campaign_catalog_filter", DEFAULT_FILTER_FORMS):
-            with override_provides("catalog_campaign_effect", DEFAULT_EFFECT_FORMS):
+            with override_provides("campaign_product_discount_effect_form", DEFAULT_EFFECT_FORMS):
                 initialized_view = view(request=request, kwargs={"pk": object.pk})
                 return initialized_view.get_form_parts(object)
 
@@ -130,7 +130,7 @@ def test_campaign_edit_save(rf, admin_user):
         # Conditions, effects and effects is tested separately
         with override_provides("campaign_context_condition", []):
             with override_provides("campaign_catalog_filter", []):
-                with override_provides("catalog_campaign_effect", []):
+                with override_provides("campaign_product_discount_effect_form", []):
                     request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
                     response = view(request, pk=object.pk)
                     assert response.status_code in [200, 302]
@@ -168,7 +168,7 @@ def test_campaign_end_date(rf, admin_user):
         # Conditions, effects and effects is tested separately
         with override_provides("campaign_context_condition", []):
             with override_provides("campaign_catalog_filter", []):
-                with override_provides("catalog_campaign_effect", []):
+                with override_provides("campaign_product_discount_effect_form", []):
                     request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
                     response = view(request, pk=object.pk)
                     assert response.status_code in [200, 302]

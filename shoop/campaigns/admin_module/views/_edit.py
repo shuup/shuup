@@ -12,7 +12,8 @@ from shoop.admin.toolbar import get_default_edit_toolbar
 from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.apps.provides import get_provide_objects
 from shoop.campaigns.admin_module.form_parts import (
-    BasketBaseFormPart, BasketConditionsFormPart, BasketEffectsFormPart,
+    BasketBaseFormPart, BasketConditionsFormPart,
+    BasketDiscountEffectsFormPart, BasketLineEffectsFormPart,
     CatalogBaseFormPart, CatalogConditionsFormPart, CatalogEffectsFormPart,
     CatalogFiltersFormPart
 )
@@ -29,9 +30,8 @@ class CampaignEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateVie
     form_part_class_provide_key = "campaign"
     add_form_errors_as_messages = False
     rules_form_part_class = None  # Override in subclass
-    effects_form_part_class = None  # Override in subclass
+    effects = []  # Override in subclass
     condition_key = ""  # Override in subclass
-    effect_key = ""  # Override in subclass
 
     @atomic
     def form_valid(self, form):
@@ -45,8 +45,9 @@ class CampaignEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateVie
         for form in get_provide_objects(self.condition_key):
             form_parts.append(self._get_rules_form_part(form, object))
 
-        for form in get_provide_objects(self.effect_key):
-            form_parts.append(self._get_effects_form_part(form, object))
+        for provide_key, form_part_class in self.effects:
+            for form in get_provide_objects(provide_key):
+                form_parts.append(self._get_effects_form_part(form, object, form_part_class))
 
         return form_parts
 
@@ -54,9 +55,8 @@ class CampaignEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateVie
         return self.rules_form_part_class(
             self.request, form, "conditions_%s" % form._meta.model.__name__.lower(), object)
 
-    def _get_effects_form_part(self, form, object):
-        return self.effects_form_part_class(
-            self.request, form, "effects_%s" % form._meta.model.__name__.lower(), object)
+    def _get_effects_form_part(self, form, object, cls):
+        return cls(self.request, form, "effects_%s" % form._meta.model.__name__.lower(), object)
 
     def get_toolbar(self):
         save_form_id = self.get_save_form_id()
@@ -67,10 +67,9 @@ class CatalogCampaignEditView(_Breadcrumbed, CampaignEditView):
     model = CatalogCampaign
     condition_key = "campaign_context_condition"
     filter_key = "campaign_catalog_filter"
-    effect_key = "catalog_campaign_effect"
+    effects = [("campaign_product_discount_effect_form", CatalogEffectsFormPart)]
     base_form_part_classes = [CatalogBaseFormPart]
     rules_form_part_class = CatalogConditionsFormPart
-    effects_form_part_class = CatalogEffectsFormPart
 
     parent_name = _("Catalog Campaign")
     parent_url = "shoop_admin:catalog_campaigns.list"
@@ -93,10 +92,12 @@ class CatalogCampaignEditView(_Breadcrumbed, CampaignEditView):
 class BasketCampaignEditView(_Breadcrumbed, CampaignEditView):
     model = BasketCampaign
     condition_key = "campaign_basket_condition"
-    effect_key = "basket_campaign_effect"
+    effects = [
+        ("campaign_basket_discount_effect_form", BasketDiscountEffectsFormPart),
+        ("campaign_basket_line_effect_form", BasketLineEffectsFormPart)
+    ]
     base_form_part_classes = [BasketBaseFormPart]
     rules_form_part_class = BasketConditionsFormPart
-    effects_form_part_class = BasketEffectsFormPart
 
     parent_name = _("Basket Campaign")
     parent_url = "shoop_admin:basket_campaigns.list"

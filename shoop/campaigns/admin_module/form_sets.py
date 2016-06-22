@@ -10,8 +10,8 @@ from django.conf import settings
 from django.forms import BaseModelFormSet
 
 from shoop.campaigns.models import (
-    BasketCondition, BasketDiscountEffect, CatalogFilter, ContextCondition,
-    ProductDiscountEffect
+    BasketCondition, BasketDiscountEffect, BasketLineEffect, CatalogFilter,
+    ContextCondition, ProductDiscountEffect
 )
 from shoop.utils.multilanguage_model_form import TranslatableModelForm
 
@@ -58,17 +58,24 @@ class BasketConditionsFormSet(BaseFormset):
         return self.owner.conditions.instance_of(self._get_actual_model())
 
 
-class BasketEffectsFormSet(BaseFormset):
+class EffectsFormset(BaseFormset):
+    def form(self, **kwargs):
+        kwargs.setdefault("initial", {"campaign": self.owner})
+        return super(EffectsFormset, self).form(**kwargs)
+
+
+class BasketDiscountEffectsFormSet(EffectsFormset):
     model = BasketDiscountEffect
 
     def get_queryset(self):
-        return self.owner.effects.instance_of(self._get_actual_model())
+        return self.owner.discount_effects.instance_of(self._get_actual_model())
 
-    def form(self, **kwargs):
-        if issubclass(self.form_class, TranslatableModelForm):
-            kwargs.setdefault("languages", settings.LANGUAGES)
-            kwargs.setdefault("default_language", settings.PARLER_DEFAULT_LANGUAGE_CODE)
-        return self.form_class(initial={"campaign": self.owner}, **kwargs)
+
+class BasketLineEffectsFormSet(EffectsFormset):
+    model = BasketLineEffect
+
+    def get_queryset(self):
+        return self.owner.line_effects.instance_of(self._get_actual_model())
 
 
 class CatalogConditionsFormSet(BaseFormset):
@@ -85,14 +92,8 @@ class CatalogFiltersFormSet(BaseFormset):
         return self.owner.filters.instance_of(self._get_actual_model())
 
 
-class CatalogEffectsFormSet(BaseFormset):
+class CatalogEffectsFormSet(EffectsFormset):
     model = ProductDiscountEffect
 
     def get_queryset(self):
         return self.owner.effects.instance_of(self._get_actual_model())
-
-    def form(self, **kwargs):
-        if issubclass(self.form_class, TranslatableModelForm):
-            kwargs.setdefault("languages", settings.LANGUAGES)
-            kwargs.setdefault("default_language", settings.PARLER_DEFAULT_LANGUAGE_CODE)
-        return self.form_class(initial={"campaign": self.owner}, **kwargs)

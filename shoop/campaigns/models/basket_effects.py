@@ -18,7 +18,7 @@ class BasketDiscountEffect(PolymorphicShoopModel):
     model = None
     admin_form_class = None
 
-    campaign = models.ForeignKey("BasketCampaign", related_name='effects', verbose_name=_("campaign"))
+    campaign = models.ForeignKey("BasketCampaign", related_name="discount_effects", verbose_name=_("campaign"))
 
     def apply_for_basket(self, order_source):
         """

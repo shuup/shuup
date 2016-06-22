@@ -28,18 +28,22 @@ DEFAULT_CONDITION_FORMS = [
     "shoop.campaigns.admin_module.forms:ContactBasketConditionForm",
 ]
 
-DEFAULT_EFFECT_FORMS = [
+DEFAULT_DISCOUNT_EFFECT_FORMS = [
     "shoop.campaigns.admin_module.forms:BasketDiscountAmountForm",
     "shoop.campaigns.admin_module.forms:BasketDiscountPercentageForm",
+]
+
+DEFAULT_LINE_EFFECT_FORMS = [
     "shoop.campaigns.admin_module.forms:FreeProductLineForm",
 ]
 
 
 def get_form_parts(request, view, object):
     with override_provides("campaign_basket_condition", DEFAULT_CONDITION_FORMS):
-        with override_provides("basket_campaign_effect", DEFAULT_EFFECT_FORMS):
-            initialized_view = view(request=request, kwargs={"pk": object.pk})
-            return initialized_view.get_form_parts(object)
+        with override_provides("campaign_basket_discount_effect_form", DEFAULT_DISCOUNT_EFFECT_FORMS):
+            with override_provides("campaign_basket_line_effect_form", DEFAULT_LINE_EFFECT_FORMS):
+                initialized_view = view(request=request, kwargs={"pk": object.pk})
+                return initialized_view.get_form_parts(object)
 
 
 @pytest.mark.django_db
@@ -72,8 +76,8 @@ def test_campaign_edit_view_formsets(rf, admin_user):
     object = BasketCampaign.objects.create(name="test campaign", active=True, shop=shop)
     request = apply_request_middleware(rf.get("/"), user=admin_user)
     form_parts = get_form_parts(request, view, object)
-    # form parts should include forms  plus one for the base form
-    assert len(form_parts) == (len(DEFAULT_CONDITION_FORMS) + len(DEFAULT_EFFECT_FORMS) + 1)
+    # form parts should include forms plus one for the base form
+    assert len(form_parts) == (8 + 1)
 
 
 @pytest.mark.django_db
@@ -121,10 +125,11 @@ def test_campaign_edit_save(rf, admin_user):
         methods_before = BasketCampaign.objects.count()
         # Conditions and effects is tested separately
         with override_provides("campaign_basket_condition", []):
-            with override_provides("basket_campaign_effect", []):
-                request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
-                response = view(request, pk=object.pk)
-                assert response.status_code in [200, 302]
+            with override_provides("campaign_basket_discount_effect_form", []):
+                with override_provides("campaign_basket_line_effect_form", []):
+                    request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
+                    response = view(request, pk=object.pk)
+                    assert response.status_code in [200, 302]
 
         assert BasketCampaign.objects.count() == methods_before
         assert BasketCampaign.objects.get(pk=object.pk).name == new_name
@@ -141,7 +146,7 @@ def test_rules_and_effects(rf, admin_user):
         shop = get_default_shop()
         object = BasketCampaign.objects.create(name="test campaign", active=True, shop=shop)
         assert object.conditions.count() == 0
-        assert object.effects.count() == 0
+        assert object.discount_effects.count() == 0
         view = BasketCampaignEditView.as_view()
         data = {
             "base-name": "test campaign",
@@ -153,15 +158,16 @@ def test_rules_and_effects(rf, admin_user):
         with override_provides(
                 "campaign_basket_condition", ["shoop.campaigns.admin_module.forms:BasketTotalProductAmountConditionForm"]):
             with override_provides(
-                    "basket_campaign_effect", ["shoop.campaigns.admin_module.forms:BasketDiscountAmountForm"]):
-                data.update(get_products_in_basket_data())
-                data.update(get_free_product_data(object))
-                request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
-                view(request, pk=object.pk)
+                    "campaign_basket_discount_effect_form", ["shoop.campaigns.admin_module.forms:BasketDiscountAmountForm"]):
+                with override_provides("campaign_basket_line_effect_form", []):
+                    data.update(get_products_in_basket_data())
+                    data.update(get_free_product_data(object))
+                    request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
+                    view(request, pk=object.pk)
 
         object.refresh_from_db()
         assert object.conditions.count() == 1
-        assert object.effects.count() == 1
+        assert object.discount_effects.count() == 1
 
 
 def get_products_in_basket_data():

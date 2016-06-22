@@ -14,10 +14,10 @@ from .context_conditions import ContextCondition
 from .product_effects import ProductDiscountEffect
 
 __all__ = [
+    'BasketLineEffect',
     'BasketCampaign',
     'BasketDiscountEffect',
     'BasketCondition',
-    'BasketLineEffect',
     'Campaign',
     'ProductDiscountEffect',
     'CatalogCampaign',

@@ -6,13 +6,14 @@
 # LICENSE file in the root directory of this source tree.
 from ._basket import BasketCampaignForm
 from ._basket_conditions import (
-    BasketTotalAmountConditionForm, BasketTotalProductAmountConditionForm,
-    ContactBasketConditionForm, ContactGroupBasketConditionForm,
-    ProductsInBasketConditionForm
+    BasketMaxTotalAmountConditionForm,
+    BasketMaxTotalProductAmountConditionForm, BasketTotalAmountConditionForm,
+    BasketTotalProductAmountConditionForm, ContactBasketConditionForm,
+    ContactGroupBasketConditionForm, ProductsInBasketConditionForm
 )
 from ._basket_effects import (
     BasketDiscountAmountForm, BasketDiscountPercentageForm,
-    FreeProductLineForm
+    DiscountFromProductForm, FreeProductLineForm
 )
 from ._catalog import CatalogCampaignForm
 from ._catalog_conditions import (
@@ -30,6 +31,8 @@ __all__ = [
     "BasketCampaignForm",
     "BasketDiscountAmountForm",
     "BasketDiscountPercentageForm",
+    "BasketMaxTotalAmountConditionForm",
+    "BasketMaxTotalProductAmountConditionForm",
     "BasketTotalAmountConditionForm",
     "BasketTotalProductAmountConditionForm",
     "CatalogCampaignForm",
@@ -39,6 +42,7 @@ __all__ = [
     "ContactGroupBasketConditionForm",
     "ContactGroupConditionForm",
     "CouponForm",
+    "DiscountFromProductForm",
     "FreeProductLineForm",
     "ProductDiscountAmountForm",
     "ProductDiscountPercentageForm",
