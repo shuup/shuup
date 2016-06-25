@@ -29,6 +29,7 @@ class OrderLineType(Enum):
     PAYMENT = 3
     DISCOUNT = 4
     OTHER = 5
+    REFUND = 6
 
     class Labels:
         PRODUCT = _('product')
@@ -36,6 +37,7 @@ class OrderLineType(Enum):
         PAYMENT = _('payment')
         DISCOUNT = _('discount')
         OTHER = _('other')
+        REFUND = _('refund')
 
 
 class OrderLineManager(models.Manager):
@@ -51,6 +53,9 @@ class OrderLineManager(models.Manager):
 
     def discounts(self):
         return self.filter(type=OrderLineType.DISCOUNT)
+
+    def refunds(self):
+        return self.filter(type=OrderLineType.REFUND)
 
     def other(self):  # pragma: no cover
         return self.filter(type=OrderLineType.OTHER)
@@ -105,6 +110,15 @@ class OrderLine(MoneyPropped, models.Model, Priceful):
         """
         zero = Money(0, self.order.currency)
         return sum((x.amount for x in self.taxes.all()), zero)
+
+    @property
+    def max_refundable_amount(self):
+        """
+        :rtype: shoop.utils.money.Money
+        """
+        refunds = self.order.lines.refunds().filter(parent_line=self)
+        refund_total_value = sum(refund.taxful_price.amount.value for refund in refunds)
+        return (self.taxful_price.amount + Money(refund_total_value, self.order.currency))
 
     def save(self, *args, **kwargs):
         if not self.sku:

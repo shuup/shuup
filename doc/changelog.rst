@@ -12,6 +12,8 @@ Unreleased
 Core
 ~~~~
 
+- Add refund-related methods to ``Order``
+- Add `OrderLineType.REFUND` enum type
 - Update order phone max length to 64 characters
 - Add cash payment method
 - Add rounding behavior component

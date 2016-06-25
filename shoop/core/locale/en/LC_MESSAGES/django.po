@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-26 05:50+0000\n"
+"POT-Creation-Date: 2016-06-27 22:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -393,6 +393,9 @@ msgstr ""
 msgid "discount"
 msgstr ""
 
+msgid "refund"
+msgstr ""
+
 msgid "order"
 msgstr ""
 
@@ -593,6 +596,13 @@ msgstr ""
 
 #, python-format
 msgid "Shipment #%d created."
+msgstr ""
+
+#, python-format
+msgid "Refund for %s"
+msgstr ""
+
+msgid "Manual refund"
 msgstr ""
 
 msgid "All rows requiring verification have been verified."

@@ -14,11 +14,12 @@ from django.test import override_settings
 from django.utils.timezone import now
 
 from shoop.core.excs import (
-    NoPaymentToCreateException, NoProductsToShipException
+    NoPaymentToCreateException, NoProductsToShipException,
+    RefundExceedsAmountException
 )
 from shoop.core.models import (
-    Order, OrderLine, OrderLineTax, OrderLineType, OrderStatus, PaymentStatus,
-    ShippingStatus
+    Order, OrderLine, OrderLineTax, OrderLineType, OrderStatus,
+    PaymentStatus, ShippingStatus, StockBehavior
 )
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
 from shoop.testing.factories import (
@@ -27,6 +28,7 @@ from shoop.testing.factories import (
     get_default_tax, get_initial_order_status
 )
 from shoop.utils.money import Money
+from shoop_tests.simple_supplier.utils import get_simple_supplier
 
 
 @pytest.mark.django_db
@@ -221,7 +223,7 @@ def test_anon_disabling():
 
 
 @pytest.mark.django_db
-def test_payments(admin_user, rf):
+def test_payments():
     shop = get_default_shop()
     supplier = get_default_supplier()
     product = create_product("test-sku", shop=get_default_shop(), default_price=10)
@@ -243,3 +245,159 @@ def test_payments(admin_user, rf):
     order.create_payment(remaining_amount)
     assert order.payment_status == PaymentStatus.FULLY_PAID
     assert not order.can_edit()
+
+@pytest.mark.django_db
+def test_refunds():
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product = create_product(
+        "test-sku",
+        shop=get_default_shop(),
+        default_price=10,
+    )
+    order = create_order_with_product(product, supplier, 2, 200, shop=shop)
+    order.cache_prices()
+
+    assert order.get_total_refunded_amount().value == 0
+    assert order.get_total_unrefunded_amount().value == order.taxful_total_price.value
+    assert order.can_edit()
+
+    assert len(order.lines.all()) == 1
+
+    product_line = order.lines.first()
+    assert product_line.ordering == 0
+    assert order.can_create_refund()
+    assert not order.has_refunds()
+
+    # Create a refund with a parent line and quantity
+    order.create_refund([{"line": product_line, "quantity": 1}])
+    assert len(order.lines.all()) == 2
+    assert order.lines.last().ordering == 1
+    assert order.has_refunds()
+
+    # Confirm the value of the refund
+    assert order.lines.last().taxful_price == -product_line.base_unit_price
+
+    partial_refund_amount = order.taxful_total_price.amount / 2
+    remaining_amount = order.taxful_total_price.amount - partial_refund_amount
+
+    # Create a refund with a parent line and amount
+    order.create_refund([{"line": product_line, "amount": partial_refund_amount}])
+    assert len(order.lines.all()) == 3
+    assert order.lines.last().ordering == 2
+
+    assert order.lines.last().taxful_price.amount == -partial_refund_amount
+    assert order.taxful_total_price.amount == remaining_amount
+    assert order.can_create_refund()
+
+    # Create a refund without parent line and remaining amount in order
+    order.create_refund([{"amount": remaining_amount}])
+    assert len(order.lines.all()) == 4
+    assert order.lines.last().ordering == 3
+    assert order.lines.last().taxful_price.amount == -remaining_amount
+
+    assert not order.taxful_total_price.amount
+    assert not order.can_create_refund()
+
+    with pytest.raises(RefundExceedsAmountException):
+        order.create_refund([{"amount": remaining_amount}])
+
+@pytest.mark.django_db
+def test_refund_entire_order():
+    shop = get_default_shop()
+    supplier = get_simple_supplier()
+    product = create_product(
+        "test-sku",
+        shop=get_default_shop(),
+        default_price=10,
+        stock_behavior=StockBehavior.STOCKED
+    )
+    supplier.adjust_stock(product.id, 5)
+    assert supplier.get_stock_statuses([product.id])[product.id].logical_count == 5
+
+    order = create_order_with_product(product, supplier, 2, 200, shop=shop)
+    order.cache_prices()
+    original_total_price = order.taxful_total_price
+
+    assert supplier.get_stock_statuses([product.id])[product.id].logical_count == 3
+
+    # Create a full refund with `restock_products` set to False
+    order.create_full_refund(restock_products=False)
+
+    # Confirm the refund was created with correct amount
+    assert order.taxful_total_price.amount.value == 0
+    refund_line = order.lines.order_by("ordering").last()
+    assert refund_line.type == OrderLineType.REFUND
+    assert refund_line.taxful_price == -original_total_price
+
+    # Make sure stock status didn't change
+    assert supplier.get_stock_statuses([product.id])[product.id].logical_count == 3
+
+    # Delete refund line
+    refund_line.delete()
+    order.cache_prices()
+
+    assert order.taxful_total_price == original_total_price
+
+    # Create a full refund with `restock_products` set to True
+    order.create_full_refund(restock_products=True)
+
+    # Make sure product was restocked
+    assert supplier.get_stock_statuses([product.id])[product.id].logical_count == 5
+
+
+@pytest.mark.django_db
+def test_refund_with_product_restock():
+    shop = get_default_shop()
+    supplier = get_simple_supplier()
+    product = create_product(
+        "test-sku",
+        shop=get_default_shop(),
+        default_price=10,
+        stock_behavior=StockBehavior.STOCKED
+    )
+    supplier.adjust_stock(product.id, 5)
+    assert supplier.get_stock_statuses([product.id])[product.id].logical_count == 5
+
+    order = create_order_with_product(product, supplier, 2, 200, shop=shop)
+    order.cache_prices()
+
+    assert supplier.get_stock_statuses([product.id])[product.id].logical_count == 3
+
+    # Create a refund with a parent line and quanity with `restock_products` set to False
+    product_line = order.lines.first()
+    order.create_refund([{"line": product_line, "quantity": 1, "restock_products": False}])
+
+    assert supplier.get_stock_statuses([product.id])[product.id].logical_count == 3
+    assert order.lines.last().taxful_price == -product_line.base_unit_price
+    assert order.get_total_unrefunded_amount() == product_line.base_unit_price.amount
+
+    # Create a refund with a parent line and quanity with `restock_products` set to True
+    product_line = order.lines.first()
+    order.create_refund([{"line": product_line, "quantity": 1, "restock_products": True}])
+
+    assert supplier.get_stock_statuses([product.id])[product.id].logical_count == 4
+    assert not order.taxful_total_price
+
+
+@pytest.mark.django_db
+def test_max_refundable_amount():
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product = create_product(
+        "test-sku",
+        shop=get_default_shop(),
+        default_price=10,
+    )
+    order = create_order_with_product(product, supplier, 2, 200, shop=shop)
+
+    assert len(order.lines.all()) == 1
+
+    line = order.lines.first()
+    assert line.max_refundable_amount == line.taxful_price.amount
+
+    partial_refund_amount = Money(10, order.currency)
+    assert partial_refund_amount.value > 0
+
+    order.create_refund([{"line": line, "amount": partial_refund_amount}])
+    assert line.max_refundable_amount == line.taxful_price.amount - partial_refund_amount
