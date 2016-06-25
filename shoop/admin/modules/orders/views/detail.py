@@ -47,9 +47,15 @@ class OrderDetailView(BaseOrderDetailViewMixin, DetailView):
 
     def get_toolbar(self):
         order = self.object
-        if order.is_canceled():
-            return
         toolbar = Toolbar()
+        toolbar.append(URLActionButton(
+            text=_("Create Refund"),
+            icon="fa fa-dollar",
+            disable_reason=_("This order cannot be refunded") if not order.can_create_refund() else None,
+            url=reverse("shoop_admin:order.create-refund", kwargs={"pk": order.pk}),
+            extra_css_class="btn-info"
+        ))
+
         toolbar.append(URLActionButton(
             text=_("Create Payment"),
             icon="fa fa-money",

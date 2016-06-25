@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-26 05:50+0000\n"
+"POT-Creation-Date: 2016-06-27 22:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -377,6 +377,12 @@ msgstr ""
 msgid "Log Entries"
 msgstr ""
 
+msgid "Create Refund"
+msgstr ""
+
+msgid "This order cannot be refunded"
+msgstr ""
+
 msgid "Create Payment"
 msgstr ""
 
@@ -474,6 +480,50 @@ msgid "Payment %s created."
 msgstr ""
 
 msgid "Order has already been paid"
+msgstr ""
+
+msgid "Line number"
+msgstr ""
+
+msgid "Quantity"
+msgstr ""
+
+msgid "Amount"
+msgstr ""
+
+msgid "Restock products"
+msgstr ""
+
+#, python-format
+msgid "Create Refund -- %s"
+msgstr ""
+
+msgid "Refund Entire Order"
+msgstr ""
+
+msgid "This order already has existing refunds"
+msgstr ""
+
+msgid "Refund amount exceeds order amount."
+msgstr ""
+
+msgid "Refund amount cannot be 0"
+msgstr ""
+
+msgid "Refund created."
+msgstr ""
+
+#, python-format
+msgid "Create Full Refund -- %s"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Could not create full refund."
+msgstr ""
+
+msgid "Full refund created."
 msgstr ""
 
 #, python-format
@@ -1077,16 +1127,10 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-msgid "Amount"
-msgstr ""
-
 msgid "Text"
 msgstr ""
 
 msgid "Taxless Unit Price"
-msgstr ""
-
-msgid "Quantity"
 msgstr ""
 
 msgid "Taxless Discount"
@@ -1122,10 +1166,28 @@ msgstr ""
 msgid "There was an error adding the log entry."
 msgstr ""
 
+msgid "Line #"
+msgstr ""
+
+msgid "Refund Amount"
+msgstr ""
+
+msgid "Are you sure you want to create a full refund?"
+msgstr ""
+
+msgid "Confirm Refund"
+msgstr ""
+
 msgid "Paid"
 msgstr ""
 
 msgid "Remaining"
+msgstr ""
+
+msgid "Refunded"
+msgstr ""
+
+msgid "Add More Refunds "
 msgstr ""
 
 msgid "To Ship"

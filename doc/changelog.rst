@@ -79,6 +79,8 @@ Localization
 Admin
 ~~~~~
 
+- Add refund creator to `Order` admin
+- Add customer detail view to order creator 
 - Add purchase orders on manufacturers
 - Add customer detail view to order creator
 - Define module-level permissions for all admin modules
