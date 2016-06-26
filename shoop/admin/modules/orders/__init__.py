@@ -92,6 +92,11 @@ class OrderModule(CurrencyBound, AdminModule):
                 "shoop.admin.modules.orders.views.PurchaseOrderListView",
                 name="purchase_order.list"
             ),
+            admin_url(
+                "^purchase-orders/(?P<pk>\d+)/set-arrived/$",
+                "shoop.admin.modules.orders.views.PurchaseOrderSetArrivedView",
+                name="purchase_order.set-arrived"
+            ),
         ]
 
     def get_menu_category_icons(self):

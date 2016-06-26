@@ -700,11 +700,35 @@ class PurchaseOrder(Order):
     def __str__(self):  # pragma: no cover
         return "Purchase Order %s (%s)" % (self.identifier, self.manufacturer.name)
 
-    def get_payment_status_display(self): # pragma: no cover
+    def get_payment_status_display(self):  # pragma: no cover
         return None
 
-    def get_shipping_status_display(self): # pragma: no cover
+    def get_shipping_status_display(self):  # pragma: no cover
         return None
+
+    @atomic
+    def mark_as_arrived(self, user):
+        if not self.can_set_complete():
+            raise ValidationError(_("Purchase order cannot be marked as arrived"))
+        lines = (
+            self.lines
+            .filter(type=OrderLineType.PRODUCT)
+            .values("supplier_id", "product_id", "quantity", "base_unit_price_value"))
+        for line in lines:
+            supplier = Supplier.objects.get(id=line["supplier_id"])
+            supplier.adjust_stock(
+                line['product_id'],
+                delta=line['quantity'],
+                purchase_price=line['base_unit_price_value'],
+                created_by=user
+            )
+        self.status = OrderStatus.objects.get_default_complete()
+        message = _(u"All products have arrived. Order status set to %s." % self.status)
+        self.add_log_entry(message=message, user=user)
+        self.save(update_fields=("status",))
+
+    def can_set_complete(self):
+        return not self.is_complete() and not self.is_canceled()
 
 
 def _round_price(value):

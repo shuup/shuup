@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-26 02:32+0000\n"
+"POT-Creation-Date: 2016-06-26 05:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -605,6 +605,13 @@ msgid "purchase order"
 msgstr ""
 
 msgid "purchase orders"
+msgstr ""
+
+msgid "Purchase order cannot be marked as arrived"
+msgstr ""
+
+#, python-format
+msgid "All products have arrived. Order status set to %s."
 msgstr ""
 
 msgid "gateway ID"

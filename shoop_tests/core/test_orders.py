@@ -17,8 +17,8 @@ from shoop.core.excs import (
     NoPaymentToCreateException, NoProductsToShipException
 )
 from shoop.core.models import (
-    Order, OrderLine, OrderLineTax, OrderLineType, OrderStatus,
-    OrderStatusRole, PaymentStatus, ShippingStatus
+    Order, OrderLine, OrderLineTax, OrderLineType, OrderStatus, PaymentStatus,
+    ShippingStatus
 )
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
 from shoop.testing.factories import (

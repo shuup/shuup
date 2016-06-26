@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-26 05:43+0000\n"
+"POT-Creation-Date: 2016-06-26 05:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -405,6 +405,12 @@ msgid "Edit order"
 msgstr ""
 
 msgid "This order cannot modified at this point"
+msgstr ""
+
+msgid "Mark as Arrived"
+msgstr ""
+
+msgid "This order can not be marked as arrived at this point"
 msgstr ""
 
 msgid "Unable to set order as completed at this point"

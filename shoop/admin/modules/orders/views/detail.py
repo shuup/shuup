@@ -116,7 +116,20 @@ class PurchaseOrderDetailView(BaseOrderDetailViewMixin, DetailView):
     context_object_name = "order"
 
     def get_toolbar(self):
-        return Toolbar([])
+        order = self.object
+        return Toolbar([
+            PostActionButton(
+                post_url=reverse("shoop_admin:purchase_order.set-arrived", kwargs={"pk": order.pk}),
+                text=_("Mark as Arrived"),
+                icon="fa fa-check-circle",
+                disable_reason=(
+                    _("This order can not be marked as arrived at this point")
+                    if not order.can_set_complete()
+                    else None
+                ),
+                extra_css_class="btn-success"
+            )
+        ])
 
 
 class OrderSetStatusView(DetailView):
@@ -141,3 +154,15 @@ class OrderSetStatusView(DetailView):
         messages.success(self.request, message)
 
         return HttpResponseRedirect(get_model_url(self.get_object()))
+
+
+class PurchaseOrderSetArrivedView(DetailView):
+    model = PurchaseOrder
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponseRedirect(get_model_url(self.get_object()))
+
+    def post(self, request, *args, **kwargs):
+        order = self.get_object()
+        order.mark_as_arrived(request.user)
+        return HttpResponseRedirect(get_model_url(order))

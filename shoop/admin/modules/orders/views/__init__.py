@@ -7,7 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 
 from .detail import (
-    OrderDetailView, OrderSetStatusView, PurchaseOrderDetailView
+    OrderDetailView, OrderSetStatusView, PurchaseOrderDetailView,
+    PurchaseOrderSetArrivedView
 )
 from .edit import OrderEditView, PurchaseOrderEditView
 from .list import OrderListView, PurchaseOrderListView
@@ -18,5 +19,6 @@ from .shipment import OrderCreateShipmentView
 __all__ = [
     "NewLogEntryView", "OrderDetailView", "OrderEditView", "OrderListView",
     "OrderCreatePaymentView", "OrderCreateShipmentView", "OrderSetStatusView",
-    "PurchaseOrderEditView", "PurchaseOrderDetailView", "PurchaseOrderListView"
+    "PurchaseOrderEditView", "PurchaseOrderDetailView", "PurchaseOrderListView",
+    "PurchaseOrderSetArrivedView"
 ]
