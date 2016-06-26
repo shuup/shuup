@@ -156,6 +156,9 @@ class OrderQuerySet(models.QuerySet):
             )
         )
 
+    def sales_orders(self):
+        return self.filter(purchaseorder__isnull=True)
+
 
 @python_2_unicode_compatible
 class Order(MoneyPropped, models.Model):
@@ -682,6 +685,20 @@ class Order(MoneyPropped, models.Model):
 
 
 OrderLogEntry = define_log_model(Order)
+
+
+@python_2_unicode_compatible
+class PurchaseOrder(Order):
+    manufacturer = models.ForeignKey(
+        "Manufacturer", on_delete=models.PROTECT, related_name="purchase_orders", verbose_name=_('manufacturer'))
+
+    class Meta:
+        ordering = ("-id",)
+        verbose_name = _('purchase order')
+        verbose_name_plural = _('purchase orders')
+
+    def __str__(self):  # pragma: no cover
+        return "Purchase Order %s (%s)" % (self.identifier, self.manufacturer.name)
 
 
 def _round_price(value):
