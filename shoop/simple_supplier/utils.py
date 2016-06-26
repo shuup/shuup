@@ -5,10 +5,9 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from decimal import Decimal
 from math import pow
 
-from django.db.models import Sum
+from django.db.models import Q, Sum
 from django.template.loader import render_to_string
 
 from shoop.core.models import OrderLine, OrderStatusRole, ShipmentProduct
@@ -20,10 +19,8 @@ def get_current_stock_value(supplier_id, product_id):
     """
     Count stock values for supplier and product combination
 
-    Logical count is events minus orders bought (not cancelled)
-    describing how many products is currently orderable
-    Physical count is events minus orders actually sent
-    describing how many products is currently in stock
+    Logical count describes how many products are currently orderable
+    Physical count describes how many products are currently in stock
 
     :param supplier_id: supplier_id to count stock values for
     :param product_id: product_id to count stock values for
@@ -35,9 +32,16 @@ def get_current_stock_value(supplier_id, product_id):
         StockAdjustment.objects
         .filter(supplier_id=supplier_id, product_id=product_id)
         .aggregate(total=Sum("delta"))["total"] or 0)
+
+    pending_purchase_orders = (
+        OrderLine.objects
+        .filter(supplier_id=supplier_id, product_id=product_id, order__purchaseorder__isnull=False)
+        .exclude(Q(order__status__role=OrderStatusRole.COMPLETE) | Q(order__status__role=OrderStatusRole.CANCELED))
+        .aggregate(total=Sum("quantity"))["total"] or 0)
+
     orders_bought = (
         OrderLine.objects
-        .filter(supplier_id=supplier_id, product_id=product_id)
+        .filter(supplier_id=supplier_id, product_id=product_id, order__purchaseorder__isnull=True)
         .exclude(order__status__role=OrderStatusRole.CANCELED)
         .aggregate(total=Sum("quantity"))["total"] or 0)
     orders_sent = (
@@ -45,7 +49,7 @@ def get_current_stock_value(supplier_id, product_id):
         .filter(shipment__supplier=supplier_id, product_id=product_id)
         .aggregate(total=Sum("quantity"))["total"] or 0)
     return {
-        "logical_count": events - orders_bought,
+        "logical_count": events + pending_purchase_orders - orders_bought,
         "physical_count": events - orders_sent
     }
 
@@ -90,9 +94,7 @@ def get_stock_adjustment_div(request, supplier, product):
     :return: html div as a string
     :rtype: str
     """
-    latest_adjustment = StockAdjustment.objects.filter(
-        product=product, supplier=supplier).order_by("-created_on").first()
-    purchase_price = (latest_adjustment.purchase_price_value if latest_adjustment else Decimal("0.00"))
+    purchase_price = supplier.get_latest_purchase_price(product.pk)
     context = {
         "product": product,
         "supplier": supplier,

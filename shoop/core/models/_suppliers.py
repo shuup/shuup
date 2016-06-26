@@ -92,3 +92,6 @@ class Supplier(ModuleInterface, ShoopModel):
 
     def update_stocks(self, product_ids):
         return self.module.update_stocks(product_ids)
+
+    def get_latest_purchase_price(self, product_id):
+        return self.module.get_latest_purchase_price(product_id)
