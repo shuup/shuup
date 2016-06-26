@@ -24,10 +24,12 @@ export default handleActions({
     beginCreatingOrder: ((state) => _.assign(state, {creating: true})),
     endCreatingOrder:  ((state) => _.assign(state, {creating: false})),
     updateTotals,
+    setOrderType: ((state, {payload}) => _.assign(state, {type: payload})),
     setOrderId: ((state, {payload}) => _.assign(state, {id: payload})),
     setOrderSource: ((state, {payload}) => _.assign(state, {source: payload})),
     clearOrderSourceData: ((state) => _.assign(state, {source: null}))
 }, {
+    type: null,
     id: null,
     creating: false,
     source: null,

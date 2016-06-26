@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-16 00:45+0000\n"
+"POT-Creation-Date: 2016-06-26 05:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -235,6 +235,12 @@ msgstr ""
 msgid "Manufacturers"
 msgstr ""
 
+msgid "Create Purchase Order"
+msgstr ""
+
+msgid "Create an order for the manufacturer."
+msgstr ""
+
 msgid "Media"
 msgstr ""
 
@@ -276,7 +282,16 @@ msgstr ""
 msgid "Orders"
 msgstr ""
 
-msgid "Show orders"
+msgid "Sales Orders"
+msgstr ""
+
+msgid "Show sales orders"
+msgstr ""
+
+msgid "Purchase Orders"
+msgstr ""
+
+msgid "Show purchase orders"
 msgstr ""
 
 msgid "Outstanding Orders"
@@ -332,10 +347,6 @@ msgstr ""
 msgid "Product %(product)s is not available in the %(shop)s shop."
 msgstr ""
 
-#, python-format
-msgid "Product %(product)s is not orderable: %(error)s"
-msgstr ""
-
 msgid "Please add lines to the order."
 msgstr ""
 
@@ -352,6 +363,9 @@ msgid "Please select shipping method."
 msgstr ""
 
 msgid "Please select payment method."
+msgstr ""
+
+msgid "Please select manufacturer."
 msgstr ""
 
 msgid "Payments"
@@ -404,10 +418,6 @@ msgid "Create Order"
 msgstr ""
 
 #, python-format
-msgid "Contact %s does not exist."
-msgstr ""
-
-#, python-format
 msgid "Order %(identifier)s updated."
 msgstr ""
 
@@ -419,6 +429,10 @@ msgid "Could not proceed with order:"
 msgstr ""
 
 msgid "Could not finalize order:"
+msgstr ""
+
+#, python-format
+msgid "Contact %s does not exist."
 msgstr ""
 
 msgid "Order"

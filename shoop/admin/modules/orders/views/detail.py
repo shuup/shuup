@@ -13,15 +13,34 @@ from django.http.response import HttpResponseRedirect
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
 from django.views.generic import DetailView
+from django.views.generic.base import ContextMixin
 
 from shoop.admin.toolbar import PostActionButton, Toolbar, URLActionButton
 from shoop.admin.utils.urls import get_model_url
 from shoop.apps.provides import get_provide_objects
-from shoop.core.models import Order, OrderStatus, OrderStatusRole
+from shoop.core.models import (
+    Order, OrderStatus, OrderStatusRole, PurchaseOrder
+)
 from shoop.utils.excs import Problem
 
 
-class OrderDetailView(DetailView):
+class BaseOrderDetailViewMixin(ContextMixin):
+    def get_context_data(self, **kwargs):
+        context = super(BaseOrderDetailViewMixin, self).get_context_data(**kwargs)
+        context["toolbar"] = self.get_toolbar()
+        context["title"] = force_text(self.object)
+        context["order_sections"] = []
+        order_sections_provides = sorted(get_provide_objects("admin_order_section"), key=lambda x: x.order)
+        for admin_order_section in order_sections_provides:
+            # Check whether the OrderSection should be visible for the current object
+            if admin_order_section.visible_for_order(self.object):
+                context["order_sections"].append(admin_order_section)
+                # add additional context data where the key is the order_section identifier
+                context[admin_order_section.identifier] = admin_order_section.get_context_data(self.object)
+        return context
+
+
+class OrderDetailView(BaseOrderDetailViewMixin, DetailView):
     model = Order
     template_name = "shoop/admin/orders/detail.jinja"
     context_object_name = "order"
@@ -87,21 +106,17 @@ class OrderDetailView(DetailView):
 
         return toolbar
 
-    def get_context_data(self, **kwargs):
-        context = super(OrderDetailView, self).get_context_data(**kwargs)
-        context["toolbar"] = self.get_toolbar()
-        context["title"] = force_text(self.object)
-        context["order_sections"] = []
+    def get_queryset(self):
+        return Order.objects.sales_orders()
 
-        order_sections_provides = sorted(get_provide_objects("admin_order_section"), key=lambda x: x.order)
-        for admin_order_section in order_sections_provides:
-            # Check whether the OrderSection should be visible for the current object
-            if admin_order_section.visible_for_order(self.object):
-                context["order_sections"].append(admin_order_section)
-                # add additional context data where the key is the order_section identifier
-                context[admin_order_section.identifier] = admin_order_section.get_context_data(self.object)
 
-        return context
+class PurchaseOrderDetailView(BaseOrderDetailViewMixin, DetailView):
+    model = PurchaseOrder
+    template_name = "shoop/admin/orders/detail.jinja"
+    context_object_name = "order"
+
+    def get_toolbar(self):
+        return Toolbar([])
 
 
 class OrderSetStatusView(DetailView):

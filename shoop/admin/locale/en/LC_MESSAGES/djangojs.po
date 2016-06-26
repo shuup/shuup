@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-20 19:23+0000\n"
+"POT-Creation-Date: 2016-06-26 05:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -175,6 +175,11 @@ msgid "Recent Orders"
 msgstr ""
 
 msgid "Close"
+
+msgid "Back"
+msgstr ""
+
+msgid "Confirm"
 msgstr ""
 
 msgid "A new customer will be created based on billing address."
@@ -207,13 +212,15 @@ msgstr ""
 msgid "Shipping Address"
 msgstr ""
 
-msgid "Back"
-msgstr ""
-
-msgid "Confirm"
-msgstr ""
-
 msgid "Discard Changes"
+msgstr ""
+
+msgid ""
+"Method rules, taxes and possible extra discounts are calculated after "
+"proceeding."
+msgstr ""
+
+msgid "Proceed"
 msgstr ""
 
 msgid "Select Shop"
@@ -231,12 +238,25 @@ msgstr ""
 msgid "Payment Method"
 msgstr ""
 
-msgid ""
-"Method rules, taxes and possible extra discounts are calculated after "
-"proceeding."
+msgid "Manufacturer Details"
 msgstr ""
 
-msgid "Proceed"
+msgid "Qty"
+msgstr ""
+
+msgid "Base Unit Price"
+msgstr ""
+
+msgid "Line Total"
+msgstr ""
+
+msgid "Discounted Unit Price"
+msgstr ""
+
+msgid "Discount Percent"
+msgstr ""
+
+msgid "Total Discount Amount"
 msgstr ""
 
 msgid "Logical Count"
@@ -251,25 +271,7 @@ msgstr ""
 msgid "Text/Comment"
 msgstr ""
 
-msgid "Qty"
-msgstr ""
-
 msgid "Total Price"
-msgstr ""
-
-msgid "Base Unit Price"
-msgstr ""
-
-msgid "Discounted Unit Price"
-msgstr ""
-
-msgid "Discount Percent"
-msgstr ""
-
-msgid "Total Discount Amount"
-msgstr ""
-
-msgid "Line Total"
 msgstr ""
 
 msgid "Orderline type"
@@ -291,6 +293,9 @@ msgid "Taxes not included."
 msgstr ""
 
 msgid "Add new line"
+msgstr ""
+
+msgid "Manufacturer"
 msgstr ""
 
 msgid "No shipping method"

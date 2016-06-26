@@ -29,7 +29,45 @@ function renderNumberCell(store, line, value, fieldId, canEditPrice, min=null) {
     });
 }
 
+function getProductPriceCells(store, line) {
+    const {type} = store.getState().order;
+    const canEditPrice = line.type === 'product' && line.product && line.product.id;
+    var cells = [
+        m("div.line-cell", [
+            m("label", gettext("Qty")),
+            renderNumberCell(store, line, line.quantity, "quantity", canEditPrice, 0)
+        ]),
+        m("div.line-cell", [
+            m("label", gettext("Base Unit Price")),
+            renderNumberCell(store, line, line.baseUnitPrice, "baseUnitPrice", type !== 'sales')
+        ]),
+        m("div.line-cell", [
+            m("label", gettext("Line Total")),
+            renderNumberCell(store, line, line.total, "total", canEditPrice)
+        ])
+    ];
+
+    if(type === 'sales') {
+        cells.splice(2, 0,
+            m("div.line-cell", [
+                m("label", gettext("Discounted Unit Price")),
+                renderNumberCell(store, line, line.unitPrice, "unitPrice", canEditPrice)
+            ]),
+            m("div.line-cell", [
+                m("label", gettext("Discount Percent")),
+                renderNumberCell(store, line, line.discountPercent, "discountPercent", canEditPrice)
+            ]),
+            m("div.line-cell", [
+                m("label", gettext("Total Discount Amount")),
+                renderNumberCell(store, line, line.discountAmount, "discountAmount", canEditPrice)
+            ])
+        );
+    }
+    return cells;
+}
+
 export function renderOrderLines(store, shop, lines) {
+    const {type} = store.getState().order;
     return _(lines).map((line) => {
         var text = line.text, canEditPrice = true;
         const showPrice = (line.type !== "text");
@@ -38,9 +76,13 @@ export function renderOrderLines(store, shop, lines) {
                     href: "#",
                     onclick: (e) => {
                         e.preventDefault();
+                        var filter = {"shop": shop.id};
+                        if(type === "purchase") {
+                            filter['manufacturer'] = store.getState().manufacturer.selected;
+                        }
                         BrowseAPI.openBrowseWindow({
                             kind: "product",
-                            filter: {"shop": shop.id},
+                            filter,
                             onSelect: (obj) => {
                                 store.dispatch(setLineProperty(line.id, "product", obj));
                                 store.dispatch(retrieveProductData(
@@ -84,32 +126,7 @@ export function renderOrderLines(store, shop, lines) {
                 renderNumberCell(store, line, line.total, "total", canEditPrice)
             ])
         ];
-        const productPriceCells = [
-            m("div.line-cell", [
-                m("label", gettext("Qty")),
-                renderNumberCell(store, line, line.quantity, "quantity", canEditPrice, 0)
-            ]),
-            m("div.line-cell", [
-                m("label", gettext("Base Unit Price")),
-                renderNumberCell(store, line, line.baseUnitPrice, "baseUnitPrice", false)
-            ]),
-            m("div.line-cell", [
-                m("label", gettext("Discounted Unit Price")),
-                renderNumberCell(store, line, line.unitPrice, "unitPrice", canEditPrice)
-            ]),
-            m("div.line-cell", [
-                m("label", gettext("Discount Percent")),
-                renderNumberCell(store, line, line.discountPercent, "discountPercent", canEditPrice)
-            ]),
-            m("div.line-cell", [
-                m("label", gettext("Total Discount Amount")),
-                renderNumberCell(store, line, line.discountAmount, "discountAmount", canEditPrice)
-            ]),
-            m("div.line-cell", [
-                m("label", gettext("Line Total")),
-                renderNumberCell(store, line, line.total, "total", canEditPrice)
-            ])
-        ];
+        const productPriceCells = getProductPriceCells(store, line);
         return m("div.list-group-item", [
             m("div.cells", [
                 m("div.line-cell.line-type-select", [
@@ -136,8 +153,12 @@ export function renderOrderLines(store, shop, lines) {
 
 export function orderLinesView(store, isCreating) {
     const {lines, shop} = store.getState();
+    const {type} = store.getState().order;
+    
     return m("div", [
-        m("p", gettext("If your product prices vary based on customer, you might want to select customer first.")),
+        (type === 'sales'? 
+            m("p", gettext("If your product prices vary based on customer, you might want to select customer first.")): 
+            null),
         m("p", interpolate(gettext("All prices are in %s currency."), [shop.selected.currency])),
         m(
             "p",
