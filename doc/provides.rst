@@ -167,5 +167,20 @@ Campaigns Provide Categories
 ``campaign_context_condition``
     Context Conditions that matches against the current context in shop to see if campaign matches.
 
+``campaign_product_discount_effect_form``
+   Form for handling product discount effects of a catalog campaign.
+   Should be a ModelForm with its model being a subclass of
+   `~shoop.campaigns.models.ProductDiscountEffect`.
+
 ``campaign_basket_condition``
     Conditions that matches against the order source or source lines in basket.
+
+``campaign_basket_discount_effect_form``
+    Form for handling discount effects of a basket campaign. Should be
+    a ModelForm with its model being a subclass of
+    `~shoop.campaigns.models.BasketDiscountEffect`.
+
+``campaign_basket_line_effect_form``
+    Form for handling line effects of a basket campaign. Should be a
+    ModelForm with its model being a subclass of
+    `~shoop.campaigns.models.BasketLineEffect`.

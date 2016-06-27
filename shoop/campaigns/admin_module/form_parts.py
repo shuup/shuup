@@ -19,8 +19,9 @@ from shoop.core.models import Shop, ShopStatus
 from shoop.core.models._contacts import PROTECTED_CONTACT_GROUP_IDENTIFIERS
 
 from .form_sets import (
-    BasketConditionsFormSet, BasketEffectsFormSet, CatalogConditionsFormSet,
-    CatalogEffectsFormSet, CatalogFiltersFormSet
+    BasketConditionsFormSet, BasketDiscountEffectsFormSet,
+    BasketLineEffectsFormSet, CatalogConditionsFormSet, CatalogEffectsFormSet,
+    CatalogFiltersFormSet
 )
 
 
@@ -136,8 +137,12 @@ class BasketConditionsFormPart(BaseFormPart):
     formset = BasketConditionsFormSet
 
 
-class BasketEffectsFormPart(BaseFormPart):
-    formset = BasketEffectsFormSet
+class BasketDiscountEffectsFormPart(BaseFormPart):
+    formset = BasketDiscountEffectsFormSet
+
+
+class BasketLineEffectsFormPart(BaseFormPart):
+    formset = BasketLineEffectsFormSet
 
 
 class CatalogConditionsFormPart(BaseFormPart):

@@ -9,8 +9,8 @@ from django.utils.encoding import force_text
 
 from shoop.campaigns.models.basket_conditions import (
     BasketTotalAmountCondition, BasketTotalProductAmountCondition,
-    ProductsInBasketCondition
-)
+    ProductsInBasketCondition,
+    BasketMaxTotalProductAmountCondition, BasketMaxTotalAmountCondition)
 from shoop.front.basket import get_basket
 from shoop.testing.factories import create_product, get_default_supplier
 from shoop_tests.campaigns import initialize_test
@@ -34,9 +34,17 @@ def test_product_in_basket_condition(rf):
 
     assert condition.matches(basket, [])
 
+    condition.quantity = 2
+    condition.save()
+
+    assert not condition.matches(basket, [])
+
+    basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
+    assert condition.matches(basket, [])
+
 
 @pytest.mark.django_db
-def test_basket_total_amount_condition(rf):
+def test_basket_total_amount_conditions(rf):
     request, shop, group = initialize_test(rf, False)
 
     basket = get_basket(request)
@@ -51,9 +59,21 @@ def test_basket_total_amount_condition(rf):
     assert condition.value == 1
     assert condition.matches(basket, [])
 
+    condition2 = BasketMaxTotalAmountCondition.objects.create()
+    condition2.value = 200
+    condition2.save()
+
+    assert condition2.matches(basket, [])
+
+    condition2.value = 199
+    condition2.save()
+
+    assert not condition2.matches(basket, [])
+
+
 
 @pytest.mark.django_db
-def test_basket_total_value_condition(rf):
+def test_basket_total_value_conditions(rf):
     request, shop, group = initialize_test(rf, False)
 
     basket = get_basket(request)
@@ -68,3 +88,14 @@ def test_basket_total_value_condition(rf):
     assert condition.value == 1
     assert condition.matches(basket, [])
     assert "basket has at least the product count entered here" in force_text(condition.description)
+
+    condition2 = BasketMaxTotalProductAmountCondition.objects.create()
+    condition2.value = 1
+    condition2.save()
+    assert condition2.matches(basket, [])
+
+    basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
+
+    assert not condition2.matches(basket, [])
+
+

@@ -33,14 +33,19 @@ class CampaignAppConfig(AppConfig):
         "campaign_basket_condition": [
             "shoop.campaigns.admin_module.forms:BasketTotalProductAmountConditionForm",
             "shoop.campaigns.admin_module.forms:BasketTotalAmountConditionForm",
+            "shoop.campaigns.admin_module.forms:BasketMaxTotalProductAmountConditionForm",
+            "shoop.campaigns.admin_module.forms:BasketMaxTotalAmountConditionForm",
             "shoop.campaigns.admin_module.forms:ProductsInBasketConditionForm",
             "shoop.campaigns.admin_module.forms:ContactGroupBasketConditionForm",
             "shoop.campaigns.admin_module.forms:ContactBasketConditionForm",
         ],
-        "basket_campaign_effect": [
+        "campaign_basket_discount_effect_form": [
             "shoop.campaigns.admin_module.forms:BasketDiscountAmountForm",
-            "shoop.campaigns.admin_module.forms:BasketDiscountPercentageForm",
+            "shoop.campaigns.admin_module.forms:BasketDiscountPercentageForm"
+        ],
+        "campaign_basket_line_effect_form": [
             "shoop.campaigns.admin_module.forms:FreeProductLineForm",
+            "shoop.campaigns.admin_module.forms:DiscountFromProductForm",
         ],
         "campaign_context_condition": [
             "shoop.campaigns.admin_module.forms:ContactGroupConditionForm",
@@ -51,7 +56,7 @@ class CampaignAppConfig(AppConfig):
             "shoop.campaigns.admin_module.forms:ProductFilterForm",
             "shoop.campaigns.admin_module.forms:CategoryFilterForm"
         ],
-        "catalog_campaign_effect": [
+        "campaign_product_discount_effect_form": [
             "shoop.campaigns.admin_module.forms:ProductDiscountAmountForm",
             "shoop.campaigns.admin_module.forms:ProductDiscountPercentageForm",
         ],

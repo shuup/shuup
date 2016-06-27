@@ -5,6 +5,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from shoop.campaigns.models.basket_conditions import (
+    BasketMaxTotalAmountCondition, BasketMaxTotalProductAmountCondition,
     BasketTotalAmountCondition, BasketTotalProductAmountCondition,
     ContactBasketCondition, ContactGroupBasketCondition,
     ProductsInBasketCondition
@@ -36,3 +37,13 @@ class ContactGroupBasketConditionForm(BaseRuleModelForm):
 class ContactBasketConditionForm(BaseRuleModelForm):
     class Meta(BaseRuleModelForm.Meta):
         model = ContactBasketCondition
+
+
+class BasketMaxTotalProductAmountConditionForm(BaseRuleModelForm):
+    class Meta(BaseRuleModelForm.Meta):
+        model = BasketMaxTotalProductAmountCondition
+
+
+class BasketMaxTotalAmountConditionForm(BaseRuleModelForm):
+    class Meta(BaseRuleModelForm.Meta):
+        model = BasketMaxTotalAmountCondition

@@ -7,9 +7,9 @@
 import pytest
 
 from shoop.campaigns.models import BasketCampaign, Coupon
-from shoop.campaigns.models.basket_conditions import \
-    BasketTotalProductAmountCondition
-from shoop.campaigns.models.basket_line_effects import FreeProductLine
+
+from shoop.campaigns.models.basket_conditions import BasketTotalProductAmountCondition, ProductsInBasketCondition
+from shoop.campaigns.models.basket_line_effects import FreeProductLine, DiscountFromProduct
 from shoop.core.models import OrderLineType
 from shoop.core.order_creator._source import LineSource
 from shoop.front.basket import get_basket
@@ -28,11 +28,10 @@ def test_basket_free_product(rf):
 
     single_product_price = "50"
     discount_amount_value = "10"
-
+    original_quantity = 2
      # create basket rule that requires 2 products in basket
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=single_product_price)
-    basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
-    basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
+    basket.add_product(supplier=supplier, shop=shop, product=product, quantity=2)
     basket.save()
 
     second_product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=single_product_price)
@@ -42,9 +41,8 @@ def test_basket_free_product(rf):
     campaign = BasketCampaign.objects.create(active=True, shop=shop, name="test", public_name="test")
     campaign.conditions.add(rule)
 
-    effect = FreeProductLine.objects.create(campaign=campaign)
+    effect = FreeProductLine.objects.create(campaign=campaign, quantity=2)
     effect.products.add(second_product)
-
 
     basket.uncache()
     final_lines = basket.get_final_lines()
@@ -59,6 +57,7 @@ def test_basket_free_product(rf):
         if line.product != product:
             assert line.product == second_product
             assert line.line_source == LineSource.DISCOUNT_MODULE
+            assert line.quantity == original_quantity
         else:
             assert line.line_source == LineSource.CUSTOMER
 
@@ -106,3 +105,45 @@ def test_basket_free_product_coupon(rf):
 
         if line.product != product:
             assert line.product == second_product
+
+
+@pytest.mark.django_db
+def test_productdiscountamount(rf):
+    # Buy X amount of Y get Z discount from Y
+    request, shop, group = initialize_test(rf, False)
+    price = shop.create_price
+
+    basket = get_basket(request)
+    supplier = get_default_supplier()
+
+    single_product_price = "50"
+    discount_amount_value = "10"
+    quantity = 2
+
+     # create basket rule that requires 2 products in basket
+    product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=single_product_price)
+    basket.add_product(supplier=supplier, shop=shop, product=product, quantity=quantity)
+    basket.save()
+
+    rule = ProductsInBasketCondition.objects.create(quantity=2)
+    rule.products.add(product)
+    rule.save()
+
+    campaign = BasketCampaign.objects.create(active=True, shop=shop, name="test", public_name="test")
+    campaign.conditions.add(rule)
+
+    effect = DiscountFromProduct.objects.create(
+        campaign=campaign, discount_amount=discount_amount_value)
+    effect.products.add(product)
+
+    assert rule.matches(basket, [])
+    basket.uncache()
+
+    final_lines = basket.get_final_lines()
+
+    assert len(final_lines) == 1  # no new lines since the effect touches original lines
+    expected_discount_amount = basket.create_price(discount_amount_value)
+    original_price = basket.create_price(single_product_price) * quantity
+    line = final_lines[0]
+    assert line.discount_amount == expected_discount_amount
+    assert basket.total_price == original_price - expected_discount_amount
