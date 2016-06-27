@@ -175,6 +175,7 @@ msgid "Recent Orders"
 msgstr ""
 
 msgid "Close"
+msgstr ""
 
 msgid "Back"
 msgstr ""
