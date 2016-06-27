@@ -84,11 +84,14 @@ class Supplier(ModuleInterface, ShoopModel):
             if shop_product.is_orderable(self, customer, shop_product.minimum_purchase_quantity)
         ]
 
-    def adjust_stock(self, product_id, delta, created_by=None):
-        return self.module.adjust_stock(product_id, delta, created_by=created_by)
+    def adjust_stock(self, product_id, delta, purchase_price=0, created_by=None):
+        return self.module.adjust_stock(product_id, delta, purchase_price=purchase_price, created_by=created_by)
 
     def update_stock(self, product_id):
         return self.module.update_stock(product_id)
 
     def update_stocks(self, product_ids):
         return self.module.update_stocks(product_ids)
+
+    def get_latest_purchase_price(self, product_id):
+        return self.module.get_latest_purchase_price(product_id)

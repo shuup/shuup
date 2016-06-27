@@ -12,7 +12,7 @@ from decimal import Decimal
 
 from django.utils.encoding import force_text
 
-from shoop.core.models import Order, OrderLine, OrderLineType
+from shoop.core.models import Order, OrderLine, OrderLineType, PurchaseOrder
 from shoop.core.order_creator.signals import order_creator_finished
 from shoop.core.shortcuts import update_order_line_from_product
 from shoop.core.utils.users import real_user_or_none
@@ -66,7 +66,7 @@ class OrderProcessor(object):
         order_line.verified = (not order_line.require_verification)
         order_line.source_line = source_line
         order_line.parent_source_line = source_line.parent_line
-        self._check_orderability(order_line)
+        self.check_orderability(order_line)
 
         yield order_line
 
@@ -94,21 +94,11 @@ class OrderProcessor(object):
             child_order_line.source_line = None
             child_order_line.parent_source_line = order_line.source_line
             child_order_line.supplier = order_line.supplier
-            self._check_orderability(child_order_line)
+            self.check_orderability(child_order_line)
             yield child_order_line
 
-    def _check_orderability(self, order_line):
-        if not order_line.product:
-            return
-        if not order_line.supplier:
-            raise ValueError("Order line has no supplier")
-        order = order_line.order
-        shop_product = order_line.product.get_shop_instance(order.shop)
-        shop_product.raise_if_not_orderable(
-            supplier=order_line.supplier,
-            quantity=order_line.quantity,
-            customer=order.customer
-        )
+    def check_orderability(self, order_line):
+        pass
 
     def process_saved_order_line(self, order, order_line):
         """
@@ -268,3 +258,37 @@ class OrderCreator(OrderProcessor):
         order = self.finalize_creation(order, order_source)
         order_creator_finished.send(sender=type(self), order=order, source=order_source)
         return order
+
+    def check_orderability(self, order_line):
+        if not order_line.product:
+            return
+        if not order_line.supplier:
+            raise ValueError("Order line has no supplier")
+        order = order_line.order
+        shop_product = order_line.product.get_shop_instance(order.shop)
+        shop_product.raise_if_not_orderable(
+            supplier=order_line.supplier,
+            quantity=order_line.quantity,
+            customer=order.customer
+        )
+
+
+class PurchaseOrderCreator(OrderProcessor):
+    def get_source_base_data(self, order_source):
+        data = super(PurchaseOrderCreator, self).get_source_base_data(order_source)
+        data["manufacturer"] = order_source.manufacturer
+        return data
+
+    def create_order(self, order_source):
+        data = self.get_source_base_data(order_source)
+        purchase_order = PurchaseOrder(**data)
+        purchase_order.save()
+        self.finalize_creation(purchase_order, order_source)
+        return purchase_order
+
+    def check_orderability(self, order_line):
+        if not order_line.product:
+            return
+        if not order_line.supplier:
+            raise ValueError("Order line has no supplier")
+        # explicitly *not* checking orderability errors since insufficient quantities, etc are irrelevant

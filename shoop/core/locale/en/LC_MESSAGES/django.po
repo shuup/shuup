@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-21 17:57+0000\n"
+"POT-Creation-Date: 2016-06-26 05:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -599,6 +599,19 @@ msgid "All rows requiring verification have been verified."
 msgstr ""
 
 msgid "All products have been shipped. Fully Shipped status set."
+msgstr ""
+
+msgid "purchase order"
+msgstr ""
+
+msgid "purchase orders"
+msgstr ""
+
+msgid "Purchase order cannot be marked as arrived"
+msgstr ""
+
+#, python-format
+msgid "All products have arrived. Order status set to %s."
 msgstr ""
 
 msgid "gateway ID"
@@ -1242,6 +1255,13 @@ msgstr ""
 
 #, python-format
 msgid "%s not available in this shop"
+msgstr ""
+
+msgid "Only staff can create purchase orders"
+msgstr ""
+
+#, python-format
+msgid "%(product)s not manufactured by %(manufacturer)s"
 msgstr ""
 
 msgid "Default Pricing"

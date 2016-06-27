@@ -495,6 +495,32 @@ class OrderSource(object):
         return ((sum(l.product.gross_weight * l.quantity for l in product_lines)) if product_lines else 0)
 
 
+class PurchaseOrderSource(OrderSource):
+    def __init__(self, shop):
+        super(PurchaseOrderSource, self).__init__(shop)
+        self.manufacturer = None
+
+    def get_validation_errors(self):
+        if not self.creator or not (self.creator.is_superuser or self.creator.is_staff):
+            yield ValidationError(
+                _("Only staff can create purchase orders"),
+                code="invalid_creator"
+            )
+
+        for line in self.get_lines():
+            product = line.product
+            if not product:
+                continue
+            if product.manufacturer != self.manufacturer:
+                yield ValidationError(
+                    _("%(product)s not manufactured by %(manufacturer)s") % {
+                        "product": product.name,
+                        "manufacturer": self.manufacturer.name
+                    },
+                    code="invalid_product_manufacturer"
+                )
+
+
 def _collect_lines_from_signal(signal_results):
     for (receiver, response) in signal_results:
         for line in response:

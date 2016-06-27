@@ -13,6 +13,7 @@ import shop from "./shop";
 import customer from "./customer";
 import customerData from "./customerData";
 import customerDetails from "./customerDetails";
+import manufacturer from "./manufacturer";
 import methods from "./methods";
 import order from "./order";
 import comment from "./comment";
@@ -24,10 +25,12 @@ const childReducer = combineReducers({
     customer,
     customerData,
     customerDetails,
+    manufacturer,
     methods,
     order,
     comment
 });
+
 
 export default function(state, action) {
     if(action.type === "_replaceState") { // For debugging purposes.
