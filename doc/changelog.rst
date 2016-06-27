@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Update order phone max length to 64 characters
 - Add cash payment method
 - Add rounding behavior component
 - Add contact group availability behavior component
