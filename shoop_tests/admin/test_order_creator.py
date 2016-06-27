@@ -321,3 +321,16 @@ def test_order_creator_view_for_customer(rf, admin_user):
     response = OrderEditView.as_view()(request)
     assert_contains(response, "customerData")  # in the config
     assert_contains(response, "isCompany")  # in the config
+
+
+def test_order_creator_customer_details(rf, admin_user):
+    get_default_shop()
+    contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
+    request = apply_request_middleware(rf.get("/", {
+        "command": "customer_details",
+        "id": contact.id
+    }), user=admin_user)
+    response =OrderEditView.as_view()(request)
+    assert_contains(response, "customer_info")
+    assert_contains(response, "order_summary")
+    assert_contains(response, "recent_orders")

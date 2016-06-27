@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-13 20:20+0000\n"
+"POT-Creation-Date: 2016-06-20 19:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -132,6 +132,51 @@ msgstr ""
 msgid "Shipping address"
 msgstr ""
 
+msgid "Full Name"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Groups"
+msgstr ""
+
+msgid "Companies"
+msgstr ""
+
+msgid "Merchant Notes"
+msgstr ""
+
+msgid "Year"
+msgstr ""
+
+msgid "Total Sales"
+msgstr ""
+
+msgid "Shipment Status"
+msgstr ""
+
+msgid "Payment Status"
+msgstr ""
+
+msgid "Order Status"
+msgstr ""
+
+msgid "Customer Information"
+msgstr ""
+
+msgid "Order Summary"
+msgstr ""
+
+msgid "Recent Orders"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
 msgid "A new customer will be created based on billing address."
 msgstr ""
 
@@ -142,6 +187,9 @@ msgid "Select Existing Customer"
 msgstr ""
 
 msgid "New Customer"
+msgstr ""
+
+msgid "View Details"
 msgstr ""
 
 msgid "Save customer details while creating order"
@@ -263,12 +311,6 @@ msgstr ""
 msgid "Tax number"
 msgstr ""
 
-msgid "Phone"
-msgstr ""
-
-msgid "Email"
-msgstr ""
-
 msgid "Street"
 msgstr ""
 
@@ -285,6 +327,9 @@ msgid "Region"
 msgstr ""
 
 msgid "Country"
+msgstr ""
+
+msgid "No records found."
 msgstr ""
 
 msgid "Identifier"

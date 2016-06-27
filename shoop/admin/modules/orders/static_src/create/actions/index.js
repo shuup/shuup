@@ -27,6 +27,7 @@ export const setAddressSavingOption = createAction("setAddressSavingOption");
 export const setShipToBillingAddress = createAction("setShipToBillingAddress");
 export const setIsCompany = createAction("setIsCompany");
 export const setCustomer = createAction("setCustomer");
+export const showCustomerModal = createAction("showCustomerModal");
 // Methods actions
 export const setShippingMethodChoices = createAction("setShippingMethodChoices");
 export const setShippingMethod = createAction("setShippingMethod");
@@ -85,6 +86,20 @@ export const retrieveCustomerData = function({id}) {
     };
 };
 
+export const retrieveCustomerDetails = function({id}) {
+    return (dispatch) => {
+        return get("customer_details", {
+            id
+        }).then((data) => {
+            if (data.error) {
+                alert(data.error);
+                return;
+            }
+            dispatch(receiveCustomerDetails({ id, data }));
+        });
+    };
+};
+
 export const retrieveOrderSourceData = function () {
     return (dispatch, getState) => {
         const state = getState();
@@ -114,6 +129,7 @@ export const updateLines = () => {
 
 export const receiveProductData = createAction("receiveProductData");
 export const receiveCustomerData = createAction("receiveCustomerData");
+export const receiveCustomerDetails = createAction("receiveCustomerDetails");
 export const receiveOrderSourceData = createAction("receiveOrderSourceData");
 export const endFinalizingOrder = createAction("endFinalizingOrder");
 

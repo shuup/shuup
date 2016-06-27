@@ -77,6 +77,7 @@ Localization
 Admin
 ~~~~~
 
+- Add customer detail view to order creator 
 - Define module-level permissions for all admin modules
 - Enable adding of permission groups from `Users` admin
 - Add admin module for managing Django permission groups

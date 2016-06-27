@@ -23,8 +23,7 @@ import {
     setPaymentMethod,
     setLines,
     setOrderId,
-    updateTotals,
-    clearOrderSourceData
+    updateTotals
 } from "./actions";
 
 var controller = null;
@@ -43,6 +42,7 @@ export function init(config = {}) {
     const customerData = config.customerData;
 
     const persistor = persistStore(store);
+    persistor.purge(["customerDetails"]);
     const resetOrder = window.localStorage.getItem("resetSavedOrder") || "false";
     var savedOrder = {id: null};
     if (resetOrder === "true") {

@@ -36,7 +36,8 @@ export function renderOrderLines(store, shop, lines) {
         if (line.type === "product") {
             text = m("a", {
                     href: "#",
-                    onclick: () => {
+                    onclick: (e) => {
+                        e.preventDefault();
                         BrowseAPI.openBrowseWindow({
                             kind: "product",
                             filter: {"shop": shop.id},
