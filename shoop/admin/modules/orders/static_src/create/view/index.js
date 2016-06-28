@@ -9,7 +9,7 @@
 import m from "mithril";
 import {shopSelectView} from "./shops";
 import {orderLinesView} from "./lines";
-import {customerSelectView} from "./customers";
+import {customerSelectView, renderCustomerDetailModal} from "./customers";
 import {manufacturerSelectView} from "./manufacturers";
 import {shipmentMethodSelectView, paymentMethodSelectView} from "./methods";
 import {confirmView} from "./confirm";
@@ -58,13 +58,15 @@ function footer() {
 function salesOrderView() {
     const {creating} = store.getState().order;
     const {choices} = store.getState().shop;
+    const {customerDetails} = store.getState();
 
     return [
         (choices.length > 1 ? contentBlock("i.fa.fa-building", gettext("Select Shop"), shopSelectView(store)) : null),
         contentBlock("i.fa.fa-user", gettext("Customer Details"), customerSelectView(store)),
         contentBlock("i.fa.fa-cubes", gettext("Order Contents"), orderLinesView(store, creating)),
         contentBlock("i.fa.fa-truck", gettext("Shipping Method"), shipmentMethodSelectView(store)),
-        contentBlock("i.fa.fa-credit-card", gettext("Payment Method"), paymentMethodSelectView(store))
+        contentBlock("i.fa.fa-credit-card", gettext("Payment Method"), paymentMethodSelectView(store)),
+        (customerDetails? renderCustomerDetailModal(store) : null)
     ];
 }
 
