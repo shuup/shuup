@@ -15,7 +15,8 @@ from shoop.admin.forms import ShoopAdminForm
 from shoop.core.models import (
     FixedCostBehaviorComponent, GroupAvailabilityBehaviorComponent,
     PaymentMethod, RoundingBehaviorComponent, ServiceProvider, ShippingMethod,
-    WaivingCostBehaviorComponent, WeightLimitsBehaviorComponent
+    StaffOnlyBehaviorComponent, WaivingCostBehaviorComponent,
+    WeightLimitsBehaviorComponent
 )
 
 
@@ -76,6 +77,16 @@ def _get_service_choices(service_provider):
     return [(sc.identifier, sc.name) for sc in service_choices]
 
 
+class AlwaysChangedModelForm(forms.ModelForm):
+    """
+    ModelForm that can be saved if it is empty or has unchanged lines on creation
+    """
+    def has_changed(self, *args, **kwargs):
+        if self.instance.pk is None:
+            return True
+        return super(AlwaysChangedModelForm, self).has_changed(*args, **kwargs)
+
+
 class ShippingMethodForm(BaseMethodForm):
     service_provider_attr = "carrier"
 
@@ -129,7 +140,13 @@ class GroupAvailabilityBehaviorComponentForm(forms.ModelForm):
         exclude = ["identifier"]
 
 
-class RoundingBehaviorComponentForm(forms.ModelForm):
+class StaffOnlyBehaviorComponentForm(AlwaysChangedModelForm):
+    class Meta:
+        model = StaffOnlyBehaviorComponent
+        exclude = ["identifier"]
+
+
+class RoundingBehaviorComponentForm(AlwaysChangedModelForm):
     class Meta:
         model = RoundingBehaviorComponent
         exclude = ["identifier"]

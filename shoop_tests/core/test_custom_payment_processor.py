@@ -11,7 +11,9 @@ from decimal import Decimal
 import pytest
 
 from shoop.core.models import (
-    CustomPaymentProcessor, PaymentMethod, PaymentStatus, PaymentUrls
+    CustomPaymentProcessor, PaymentMethod, PaymentStatus,
+    RoundingBehaviorComponent, ServiceBehaviorComponent,
+    StaffOnlyBehaviorComponent
 )
 from shoop.core.pricing import TaxfulPrice
 from shoop.testing.factories import (
@@ -35,6 +37,7 @@ def test_custom_payment_processor_cash_service(choice_identifier, expected_payme
         payment_processor=processor,
         choice_identifier=choice_identifier,
         tax_class=get_default_tax_class())
+
     order = create_order_with_product(
         product=product,
         supplier=supplier,
@@ -50,3 +53,18 @@ def test_custom_payment_processor_cash_service(choice_identifier, expected_payme
     assert order.payment_status == expected_payment_status
     processor.process_payment_return_request(choice_identifier, order, None)
     assert order.payment_status == expected_payment_status
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize('choice_identifier, default_behavior_components', [
+    ('cash', [RoundingBehaviorComponent, StaffOnlyBehaviorComponent]),
+    ('manual', [])
+])
+def test_custom_payment_processor_defaults(choice_identifier, default_behavior_components):
+    shop = get_default_shop()
+    processor = CustomPaymentProcessor.objects.create()
+    service = processor.create_service(choice_identifier, shop=shop, tax_class=get_default_tax_class())
+
+    assert service.behavior_components.count() == len(default_behavior_components)
+    for behavior in default_behavior_components:
+        assert ServiceBehaviorComponent.objects.instance_of(behavior).count() == 1

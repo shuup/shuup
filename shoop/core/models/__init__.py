@@ -47,9 +47,9 @@ from ._service_base import (
 )
 from ._service_behavior import (
     FixedCostBehaviorComponent, GroupAvailabilityBehaviorComponent,
-    RoundingBehaviorComponent, RoundingMode, WaivingCostBehaviorComponent,
-    WeightBasedPriceRange, WeightBasedPricingBehaviorComponent,
-    WeightLimitsBehaviorComponent
+    RoundingBehaviorComponent, RoundingMode, StaffOnlyBehaviorComponent,
+    WaivingCostBehaviorComponent, WeightBasedPriceRange,
+    WeightBasedPricingBehaviorComponent, WeightLimitsBehaviorComponent
 )
 from ._service_payment import (
     CustomPaymentProcessor, PaymentMethod, PaymentProcessor, PaymentUrls
@@ -140,6 +140,7 @@ __all__ = [
     "Shop",
     "ShopProduct",
     "ShopStatus",
+    "StaffOnlyBehaviorComponent",
     "StockBehavior",
     "SuppliedProduct",
     "Supplier",

@@ -17,7 +17,8 @@ from shoop.admin.modules.services.views import (
 from shoop.core.models import (
     FixedCostBehaviorComponent, GroupAvailabilityBehaviorComponent,
     PaymentMethod, RoundingBehaviorComponent, RoundingMode, ShippingMethod,
-    WaivingCostBehaviorComponent, WeightLimitsBehaviorComponent
+    StaffOnlyBehaviorComponent, WaivingCostBehaviorComponent,
+    WeightLimitsBehaviorComponent
 )
 from shoop.testing.factories import (
     get_default_customer_group, get_default_payment_method,
@@ -57,7 +58,8 @@ def get_default_behavior_settings():
         RoundingBehaviorComponent.__name__.lower(): {
             "mode": RoundingMode.ROUND_UP.value,
             "quant": decimal.Decimal('0.05')
-        }
+        },
+        StaffOnlyBehaviorComponent.__name__.lower(): {}
     }
 
 
