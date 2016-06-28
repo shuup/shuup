@@ -4,6 +4,7 @@
 #
 # Translators:
 # Aarni Koskela, 2015
+# Heikki Saari <heikki.saari@anders.fi>, 2016
 # Juha Kujala <juha.kujala@shoop.io>, 2015
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
@@ -11,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 10:36+0000\n"
-"PO-Revision-Date: 2015-12-08 08:58+0000\n"
-"Last-Translator: Shoop Admin <admin@shoop.io>\n"
+"POT-Creation-Date: 2016-06-28 13:34+0000\n"
+"PO-Revision-Date: 2016-06-27 06:12+0000\n"
+"Last-Translator: Heikki Saari <heikki.saari@anders.fi>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
 "language/fi_FI/)\n"
 "Language: fi_FI\n"
@@ -23,10 +24,9 @@ msgstr ""
 "Generated-By: Babel 2.1.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#, fuzzy, javascript-format
-#| msgid "Edit Page"
+#, javascript-format
 msgid "Edit %s"
-msgstr "Muokkaa sivua"
+msgstr "Muokkaa %s"
 
 #, javascript-format
 msgid "Error: Cannot add more than %s cells to one row."

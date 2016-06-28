@@ -6,12 +6,13 @@
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
 # Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Heikki Saari <heikki.saari@anders.fi>, 2016
 # Janne Tammi <janne.tammi@shoop.io>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
 # Juha Kujala <juha.kujala@shoop.io>, 2015
 # Juha Louhiranta <charni@gmail.com>, 2015
 # Rauli Laine <rauli.laine@iki.fi>, 2015
-# Shoop Admin <admin@shoop.io>, 2015
+# Shoop Admin <admin@shoop.io>, 2015-2016
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # tomijarvi <tomi@jarvi.pro>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
@@ -19,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 10:36+0000\n"
-"PO-Revision-Date: 2015-12-08 08:41+0000\n"
+"POT-Creation-Date: 2016-06-28 13:34+0000\n"
+"PO-Revision-Date: 2016-06-28 03:24+0000\n"
 "Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
 "language/fi_FI/)\n"
@@ -35,23 +36,19 @@ msgid "Shoop Frontend - Customer Information Editing"
 msgstr "Kauppa - asiakastietojen muokkaaminen"
 
 msgid "Will become default user email when linked"
-msgstr ""
+msgstr "Tee tästä oletussähköpostiosoite"
 
 msgid "Change Password"
-msgstr ""
+msgstr "Vaihda salasana"
 
 msgid "Save password"
-msgstr ""
+msgstr "Tallenna salasana"
 
-#, fuzzy
-#| msgid "User account information"
 msgid "Company account information"
-msgstr "Käyttäjätunnuksen tiedot"
+msgstr "Yrityksen käyttäjätilin tiedot"
 
-#, fuzzy
-#| msgid "Shipping information"
 msgid "Company information"
-msgstr "Toimitustiedot"
+msgstr "Yrityksen tiedot"
 
 msgid "Billing information"
 msgstr "Laskutustiedot"
@@ -69,12 +66,10 @@ msgid "User information"
 msgstr "Käyttäjätiedot"
 
 msgid "Password successfully changed."
-msgstr ""
+msgstr "Salasana vaihdettu."
 
 msgid "Account information saved successfully."
 msgstr "Tilitiedot tallennettu."
 
-#, fuzzy
-#| msgid "Account information saved successfully."
 msgid "Company information saved successfully."
-msgstr "Tilitiedot tallennettu."
+msgstr "Yrityksen tiedot tallennettu onnistuneesti."

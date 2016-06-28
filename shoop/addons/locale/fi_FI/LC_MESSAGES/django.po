@@ -8,10 +8,10 @@
 # Eetu Häivälä <eetu.haivala@anders.fi>, 2015
 # Janne Tammi <janne.tammi@shoop.io>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
-# Juha Kujala <juha.kujala@shoop.io>, 2015
+# Juha Kujala <juha.kujala@shoop.io>, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
-# Rauli Laine <rauli.laine@iki.fi>, 2015
-# Shoop Admin <admin@shoop.io>, 2015
+# Rauli Laine <rauli.laine@iki.fi>, 2015-2016
+# Shoop Admin <admin@shoop.io>, 2015-2016
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # tomijarvi <tomi@jarvi.pro>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 10:36+0000\n"
-"PO-Revision-Date: 2016-01-05 06:43+0000\n"
+"POT-Creation-Date: 2016-06-28 13:34+0000\n"
+"PO-Revision-Date: 2016-06-28 03:27+0000\n"
 "Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
 "language/fi_FI/)\n"
@@ -47,7 +47,7 @@ msgid "%d previously enabled addons disabled."
 msgstr "%d aiemmin käytössä ollutta lisäosaa poistettu käytöstä."
 
 msgid "No changes were made."
-msgstr "Muutoksia ei tehty."
+msgstr "Ei muutoksia."
 
 msgid "Save addon changes"
 msgstr "Tallenna lisäosien muutokset"
@@ -62,12 +62,14 @@ msgid ""
 "There are no viable reload methods available. Please contact your system "
 "administrator."
 msgstr ""
+"Järjestelmän käynnistäminen uudelleen ei ole mahdollista. Ole hyvä ja ota "
+"yhteys järjestelmän ylläpitäjään."
 
 msgid "Reload Method"
 msgstr "Lataa menetelmä uudelleen"
 
 msgid "Reloading."
-msgstr ""
+msgstr "Ladataan uudelleen."
 
 msgid "Addon file (ZIP)"
 msgstr "Lisäosan tiedosto (ZIP)"
@@ -76,7 +78,7 @@ msgid "Only upload addon files you trust."
 msgstr "Lataa vain lisäosia joihin luotat."
 
 msgid "Only ZIP files are supported"
-msgstr ""
+msgstr "Vain ZIP-tiedostot ovat tuettuja."
 
 msgid "Upload"
 msgstr "Lataa"
@@ -113,39 +115,31 @@ msgstr ""
 "joudut tutkimaan ongelmaa itse (tai ottamaan yhteyttä "
 "järjestelmäylläpitäjään)."
 
-#, fuzzy
-#| msgid "Reload Method"
 msgid "Reload steps"
-msgstr "Lataa menetelmä uudelleen"
+msgstr "Lataa askeleet uudelleen"
 
 msgid ""
 "Finalize installations for newly installed addons (migrate and collect "
 "static resources)"
-msgstr ""
+msgstr "Viimeistele laajennustesi asennus."
 
-#, fuzzy
-#| msgid "Reload Application Server"
 msgid "Reload application server"
 msgstr "Käynnistä sovelluspalvelin uudelleen"
 
-#, fuzzy
-#| msgid "Reload Method"
 msgid "Reload initiated."
-msgstr "Lataa menetelmä uudelleen"
+msgstr "Uudelleenkäynnistäminen aloitettu."
 
-#, fuzzy
-#| msgid "Reload application"
 msgid "Error while reloading application."
-msgstr "Lataa sovellus uudelleen"
+msgstr "Virhe sovelluspalvelimen uudelleenlatauksessa."
 
 msgid "Finalizing installations."
-msgstr ""
+msgstr "Viimeistellään asennuksia."
 
 msgid "Your Shoop seems to be back up!"
-msgstr ""
+msgstr "Shuup näyttää olevan taas käytössä!"
 
 msgid "Your Shoop is not up yet. Trying again soon."
-msgstr ""
+msgstr "Shuup ei ole vielä käynnissä. Yritetään pian uudelleen."
 
 msgid "Select file"
 msgstr "Valitse tiedosto"
@@ -165,6 +159,10 @@ msgid ""
 "the newly installed addon</strong></a> and <a href=\"%(addon_reload_url)s\" "
 "class=\"text-success\"><strong>reload your application server</strong></a>."
 msgstr ""
+"Seuraavaksi: <a href=\"%(addon_list_url)s\" class=\"text-success"
+"\"><strong>aktivoi asennettu laajennus</strong></a> ja<a href="
+"\"%(addon_reload_url)s\" class=\"text-success\"><strong>käynnistä "
+"järjestelmä uudelleen</strong></a>."
 
 msgid "Error"
 msgstr "Virhe"

@@ -6,22 +6,24 @@
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
 # Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Heikki Saari <heikki.saari@anders.fi>, 2016
 # Janne Tammi <janne.tammi@shoop.io>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
 # Juha Kujala <juha.kujala@shoop.io>, 2015
 # Juha Louhiranta <charni@gmail.com>, 2015
 # Rauli Laine <rauli.laine@iki.fi>, 2015
-# Shoop Admin <admin@shoop.io>, 2015
+# Shoop Admin <admin@shoop.io>, 2015-2016
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # tomijarvi <tomi@jarvi.pro>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
+# Tuomas Suutari <tuomas.suutari@shoop.io>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 10:36+0000\n"
-"PO-Revision-Date: 2016-01-21 08:12+0000\n"
-"Last-Translator: Shoop Admin <admin@shoop.io>\n"
+"POT-Creation-Date: 2016-06-28 13:34+0000\n"
+"PO-Revision-Date: 2016-06-28 11:28+0000\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
 "language/fi_FI/)\n"
 "Language: fi_FI\n"
@@ -67,8 +69,6 @@ msgstr "nimen laajenne"
 msgid "company name"
 msgstr "yrityksen nimi"
 
-#, fuzzy
-#| msgid "Tax number"
 msgid "tax number"
 msgstr "veronumero"
 
@@ -87,10 +87,8 @@ msgstr "katuosoite (2)"
 msgid "street (3)"
 msgstr "katuosoite (3)"
 
-#, fuzzy
-#| msgid "ZIP / Postal code"
 msgid "postal code"
-msgstr "Postinumero"
+msgstr "postinumero"
 
 msgid "city"
 msgstr "kaupunki"
@@ -111,7 +109,7 @@ msgid "addresses"
 msgstr "osoitteet"
 
 msgid "owner"
-msgstr ""
+msgstr "omistaja"
 
 msgid "role"
 msgstr "rooli"
@@ -164,20 +162,14 @@ msgstr "käännösteksti"
 msgid "untranslated string"
 msgstr "teksti"
 
-#, fuzzy
-#| msgid "searchable metadata"
 msgid "searchable"
-msgstr "haettava metadata"
+msgstr "haettavissa"
 
-#, fuzzy
-#| msgid "line type"
 msgid "type"
-msgstr "rivityyppi"
+msgstr "tyyppi"
 
-#, fuzzy
-#| msgid "visibility limitations"
 msgid "visibility mode"
-msgstr "näkyvyysrajoitukset"
+msgstr "Näkyvyystila"
 
 msgid "attribute"
 msgstr "attribuutti"
@@ -186,23 +178,19 @@ msgid "attributes"
 msgstr "attribuutit"
 
 msgid "numeric value"
-msgstr ""
+msgstr "lukuarvo"
 
-#, fuzzy
-#| msgid "variation value"
 msgid "datetime value"
-msgstr "variaatioarvo"
+msgstr "päivämääräarvo"
 
-#, fuzzy
-#| msgid "untranslated string"
 msgid "untranslated value"
-msgstr "teksti"
+msgstr "kääntämätön tekstiarvo"
 
 msgid "The following fields can not be changed"
 msgstr "Seuraavia kenttiä ei voi muuttaa"
 
 msgid "invisible"
-msgstr "näkymätö"
+msgstr "näkymätön"
 
 msgid "visible"
 msgstr "näkyvissä"
@@ -223,7 +211,7 @@ msgid "parent category"
 msgstr "yläkategoria"
 
 msgid "shops"
-msgstr ""
+msgstr "kaupat"
 
 msgid "image"
 msgstr "kuva"
@@ -250,7 +238,7 @@ msgid "categories"
 msgstr "kategoriat"
 
 msgid "shop"
-msgstr ""
+msgstr "kauppa"
 
 msgid "key"
 msgstr "avain"
@@ -279,12 +267,10 @@ msgid "show as pricing option"
 msgstr "näytä hinnoitteluvaihtoehtona"
 
 msgid "show prices including taxes"
-msgstr ""
+msgstr "näytä hinnat sisältäen verot"
 
-#, fuzzy
-#| msgid "Default price"
 msgid "hide prices"
-msgstr "oletushinta"
+msgstr "piilot hinnat"
 
 msgid "contact group"
 msgstr "kontaktiryhmä"
@@ -293,15 +279,13 @@ msgid "contact groups"
 msgstr "kontaktiryhmät"
 
 msgid "Can't delete. This object is protected."
-msgstr ""
+msgstr "Ei voi poistaa"
 
-#, fuzzy
-#| msgid "related"
 msgid "created on"
-msgstr "liittyvä"
+msgstr "luotu"
 
 msgid "active"
-msgstr ""
+msgstr "aktiivinen"
 
 msgid "default shipping method"
 msgstr "oletustoimitustapa"
@@ -318,23 +302,17 @@ msgstr "markkinointilupa"
 msgid "web address"
 msgstr "web-osoite"
 
-#, fuzzy
-#| msgid "time interval"
 msgid "time zone"
-msgstr "aikaväli"
+msgstr "aikavyöhyke"
 
-#, fuzzy
-#| msgid "contact group"
 msgid "tax group"
-msgstr "kontaktiryhmä"
+msgstr "veroryhmä"
 
 msgid "merchant notes"
-msgstr ""
+msgstr "kauppiaan merkinnät"
 
-#, fuzzy
-#| msgid "counter"
 msgid "account manager"
-msgstr "laskur"
+msgstr "asiakkuudesta vastaava"
 
 msgid "contact"
 msgstr "kontakti"
@@ -342,10 +320,8 @@ msgstr "kontakti"
 msgid "contacts"
 msgstr "kontaktit"
 
-#, fuzzy
-#| msgid "Company Customers"
 msgid "Company Contacts"
-msgstr "Yritysasiakkaat"
+msgstr "Yrityskontaktit"
 
 msgid "e.g. EIN in US or VAT code in Europe"
 msgstr "esim. Y-tunnus, EIN tai VAT-koodi"
@@ -357,42 +333,34 @@ msgid "companies"
 msgstr "yritykset"
 
 msgid "undisclosed"
-msgstr ""
+msgstr "salainen"
 
 msgid "male"
-msgstr ""
+msgstr "mies"
 
 msgid "female"
-msgstr ""
+msgstr "nainen"
 
 msgid "other"
 msgstr "muu"
 
-#, fuzzy
-#| msgid "contacts"
 msgid "Person Contacts"
-msgstr "kontaktit"
+msgstr "Yksityiskontaktit"
 
 msgid "user"
-msgstr ""
+msgstr "käyttäjä"
 
 msgid "gender"
-msgstr ""
+msgstr "sukupuoli"
 
-#, fuzzy
-#| msgid "order date"
 msgid "birth date"
-msgstr "tilauspäivämäärä"
+msgstr "syntymäpäivä"
 
-#, fuzzy
-#| msgid "tax name"
 msgid "first name"
-msgstr "veron nimi"
+msgstr "etunimi"
 
-#, fuzzy
-#| msgid "tax name"
 msgid "last name"
-msgstr "veron nimi"
+msgstr "sukunimi"
 
 msgid "person"
 msgstr "henkilö"
@@ -401,15 +369,13 @@ msgid "persons"
 msgstr "henkilöt"
 
 msgid "Anonymous Contacts"
-msgstr ""
+msgstr "Anonyymit kontaktit"
 
 msgid "order reference"
 msgstr "tilausviite"
 
-#, fuzzy
-#| msgid "order identifier"
 msgid "identifier"
-msgstr "tilaustunniste"
+msgstr "tunniste"
 
 msgid "counter"
 msgstr "laskur"
@@ -442,7 +408,7 @@ msgid "discount"
 msgstr "alennus"
 
 msgid "refund"
-msgstr ""
+msgstr "hyvitys"
 
 msgid "order"
 msgstr "tilaus"
@@ -471,10 +437,8 @@ msgstr "vaadi hyväksyntä"
 msgid "verified"
 msgstr "hyväksytty"
 
-#, fuzzy
-#| msgid "order date"
 msgid "extra data"
-msgstr "tilauspäivämäärä"
+msgstr "lisätietoa"
 
 msgid "quantity"
 msgstr "lukumäärä"
@@ -539,13 +503,11 @@ msgstr "alk"
 msgid "complete"
 msgstr "valmis"
 
-#, fuzzy
-#| msgid "Default price"
 msgid "default"
-msgstr "oletushinta"
+msgstr "oletus"
 
 msgid "modified on"
-msgstr ""
+msgstr "muutettu"
 
 msgid "order identifier"
 msgstr "tilaustunniste"
@@ -569,7 +531,7 @@ msgid "creating user"
 msgstr "luojakäyttäjä"
 
 msgid "modifier user"
-msgstr ""
+msgstr "muokattu käyttäjä"
 
 msgid "payment status"
 msgstr "maksutila"
@@ -583,10 +545,8 @@ msgstr "maksutapa"
 msgid "payment method name"
 msgstr "maksutavan nimi"
 
-#, fuzzy
-#| msgid "payment date"
 msgid "payment data"
-msgstr "maksupäivämäärä"
+msgstr "maksutiedot"
 
 msgid "shipping method"
 msgstr "toimitustapa"
@@ -594,10 +554,8 @@ msgstr "toimitustapa"
 msgid "shipping method name"
 msgstr "toimitustavan nimi"
 
-#, fuzzy
-#| msgid "shipping status"
 msgid "shipping data"
-msgstr "toimitustila"
+msgstr "toimitustiedot"
 
 msgid "grand total"
 msgstr "loppusumma"
@@ -606,16 +564,16 @@ msgid "taxless total"
 msgstr "veroton summa"
 
 msgid "currency"
-msgstr ""
+msgstr "valuutta"
 
 msgid "prices include tax"
-msgstr ""
+msgstr "hinnat sisältävät veron"
 
 msgid "display currency"
-msgstr ""
+msgstr "esitettävä valuutta"
 
 msgid "display currency rate"
-msgstr ""
+msgstr "esitä valuuttakurssi"
 
 msgid "IP address"
 msgstr "IP-osoite"
@@ -638,10 +596,8 @@ msgstr "vaatii hyväksynnän"
 msgid "all lines verified"
 msgstr "kaikki rivit hyväksytty"
 
-#, fuzzy
-#| msgid "code"
 msgid "codes"
-msgstr "koodi"
+msgstr "koodit"
 
 msgid "orders"
 msgstr "tilaukset"
@@ -649,10 +605,8 @@ msgstr "tilaukset"
 msgid "Order marked as paid."
 msgstr "Tilaus merkitty maksetuksi."
 
-#, fuzzy
-#| msgid "Order marked as paid."
 msgid "Order marked as partially paid."
-msgstr "Tilaus merkitty maksetuksi."
+msgstr "Tilaus merkitty osittain maksetuksi."
 
 #, python-format
 msgid "Shipment #%d created."
@@ -660,10 +614,10 @@ msgstr "Lähetys #%d luotu."
 
 #, python-format
 msgid "Refund for %s"
-msgstr ""
+msgstr "Hyvitys: %s"
 
 msgid "Manual refund"
-msgstr ""
+msgstr "Käsin tehty hyvitys"
 
 msgid "All rows requiring verification have been verified."
 msgstr "Kaikki hyväksyntää vaativat rivit merkitty hyväksytyksi."
@@ -671,39 +625,30 @@ msgstr "Kaikki hyväksyntää vaativat rivit merkitty hyväksytyksi."
 msgid "All products have been shipped. Fully Shipped status set."
 msgstr "Kaikki tuotteet toimitettu. Tila asetettu täysin toimitetuksi."
 
-#, fuzzy
-#| msgid "purchase multiple"
 msgid "purchase order"
-msgstr "tilausmonikerta"
+msgstr "ostotilaus"
 
-#, fuzzy
-#| msgid "purchase multiple"
 msgid "purchase orders"
-msgstr "tilausmonikerta"
+msgstr "ostotilaukset"
 
 msgid "Purchase order cannot be marked as arrived"
-msgstr ""
+msgstr "Ostotilausta ei voida merkitä saapuneeksi"
 
-#, fuzzy, python-format
-#| msgid "All products have been shipped. Fully Shipped status set."
+#, python-format
 msgid "All products have arrived. Order status set to %s."
-msgstr "Kaikki tuotteet toimitettu. Tila asetettu täysin toimitetuksi."
+msgstr "Kaikki tuotteet ovat saapuneet. Tilauksen tilaksi merkitty \"%s\"."
 
 msgid "gateway ID"
-msgstr ""
+msgstr "yhdyskäytävän ID"
 
-#, fuzzy
-#| msgid "tax amount"
 msgid "amount"
-msgstr "veron määrä"
+msgstr "määrä"
 
-#, fuzzy
-#| msgid "base amount"
 msgid "foreign amount"
-msgstr "perusmäärä"
+msgstr "määrä vieraassa valuutassa"
 
 msgid "foreign amount currency"
-msgstr ""
+msgstr "vieras valuutta"
 
 msgid "payments"
 msgstr "maksut"
@@ -712,10 +657,10 @@ msgid "module"
 msgstr "moduuli"
 
 msgid "time"
-msgstr ""
+msgstr "aika"
 
 msgid "data"
-msgstr ""
+msgstr "tiedot"
 
 msgid "cache entry"
 msgstr "välimuistimerkintä"
@@ -757,28 +702,20 @@ msgstr "tuoteliitteet"
 msgid "attachment"
 msgstr "liite"
 
-#, fuzzy
-#| msgid "sent product"
 msgid "parent product"
-msgstr "lähetetty tuote"
+msgstr "päätuote"
 
-#, fuzzy
-#| msgid "product"
 msgid "child product"
-msgstr "tuote"
+msgstr "alituote"
 
-#, fuzzy
-#| msgid "supplier"
 msgid "suppliers"
-msgstr "toimittaja"
+msgstr "toimittajat"
 
 msgid "listed"
-msgstr ""
+msgstr "listattu"
 
-#, fuzzy
-#| msgid "purchase multiple"
 msgid "purchasable"
-msgstr "tilausmonikerta"
+msgstr "ostettavissa"
 
 msgid "purchase multiple"
 msgstr "tilausmonikerta"
@@ -786,15 +723,11 @@ msgstr "tilausmonikerta"
 msgid "minimum purchase"
 msgstr "vähimmäistilaus"
 
-#, fuzzy
-#| msgid "shipping methods"
 msgid "limited for shipping methods"
-msgstr "toimitustavat"
+msgstr "rajatut toimitustavat"
 
-#, fuzzy
-#| msgid "payment methods"
 msgid "limited for payment methods"
-msgstr "maksutavat"
+msgstr "rajatut maksutavat"
 
 msgid "shipping methods"
 msgstr "toimitustavat"
@@ -805,20 +738,14 @@ msgstr "maksutavat"
 msgid "primary category"
 msgstr "pääkategoria"
 
-#, fuzzy
-#| msgid "primary category"
 msgid "primary image"
-msgstr "pääkategoria"
+msgstr "pääkuva"
 
-#, fuzzy
-#| msgid "Default price"
 msgid "default price"
 msgstr "oletushinta"
 
-#, fuzzy
-#| msgid "minimum purchase"
 msgid "minimum price"
-msgstr "vähimmäistilaus"
+msgstr "vähimmäishinta"
 
 msgid "This product has been deleted."
 msgstr "Tuote on poistettu."
@@ -872,10 +799,10 @@ msgid "variation values"
 msgstr "variaatioarvot"
 
 msgid "combination hash"
-msgstr ""
+msgstr "yhdistelmä"
 
 msgid "result"
-msgstr ""
+msgstr "tulos"
 
 msgid "variation result"
 msgstr "variaation tulos"
@@ -920,7 +847,7 @@ msgid "computed"
 msgstr "laskettu"
 
 msgid "bought with"
-msgstr ""
+msgstr "ostettu samalla"
 
 msgid "shipped"
 msgstr "lähetetty"
@@ -941,7 +868,7 @@ msgid "product types"
 msgstr "tuotetyypit"
 
 msgid "mode"
-msgstr ""
+msgstr "tila"
 
 msgid "variation parent"
 msgstr "variaatioisäntä"
@@ -1051,20 +978,14 @@ msgstr "Paketteja ei voi luoda sisäkkäin"
 msgid "Quantity %s is invalid"
 msgstr "Määrä %s ei kelpaa"
 
-#, fuzzy
-#| msgid "primary category"
 msgid "primary product"
-msgstr "pääkategoria"
+msgstr "päätuote"
 
-#, fuzzy
-#| msgid "sent product"
 msgid "secondary product"
-msgstr "lähetetty tuote"
+msgstr "toissijainen tuote"
 
-#, fuzzy
-#| msgid "minimum weight"
 msgid "weight"
-msgstr "minimipaino"
+msgstr "paino"
 
 msgid "cross sell link"
 msgstr "ristiinmyyntilinkitys"
@@ -1072,10 +993,8 @@ msgstr "ristiinmyyntilinkitys"
 msgid "cross sell links"
 msgstr "ristiinmyyntilinkitykset"
 
-#, fuzzy
-#| msgid "translated string"
 msgid "translated value"
-msgstr "käännösteksti"
+msgstr "käännetty arvo"
 
 msgid "product attribute"
 msgstr "tuoteattribuutti"
@@ -1086,48 +1005,45 @@ msgstr "tuoteattribuutit"
 msgid "logo"
 msgstr "logo"
 
-#, fuzzy
-#| msgid "order identifier"
 msgid "choice identifier"
-msgstr "tilaustunniste"
+msgstr "valinnan tunniste"
 
 msgid "behavior components"
-msgstr ""
+msgstr "käyttäytymiskomponentit"
 
-#, fuzzy, python-format
-#| msgid "disabled"
+#, python-format
 msgid "%s is disabled"
-msgstr "pois käytöstä"
+msgstr "%s on pois käytöstä"
 
 #, python-format
 msgid "%s is for different shop"
-msgstr ""
+msgstr "%s on toiselle kaupalle"
 
 #, python-format
 msgid "%(service_name)s: %(sub_item)s"
-msgstr ""
+msgstr "%(service_name)s: %(sub_item)s"
 
 msgid "Fixed cost"
-msgstr ""
+msgstr "Kiinteä kustannus"
 
 msgid "Add fixed cost to price of the service."
-msgstr ""
+msgstr "Lisää kiinteä kustannus palvelun hintaan."
 
 msgid "Waiving cost"
-msgstr ""
+msgstr "Häviävä kustannus"
 
 msgid ""
 "Add cost to price of the service if total price of products is less than a "
 "waive limit."
 msgstr ""
+"Lisää kustannus palvelun hintaan, jos tuotteiden kokonaishinta on alle "
+"annetun rajan."
 
-#, fuzzy
-#| msgid "alert limit"
 msgid "Weight limits"
-msgstr "hälytysmäärä"
+msgstr "Painorajat"
 
 msgid "Limit availability of the service based on total weight of products."
-msgstr ""
+msgstr "Rajoita palvelun saatavuutta tuotteiden kokonaispainon perusteella."
 
 msgid "minimum weight"
 msgstr "minimipaino"
@@ -1141,120 +1057,100 @@ msgstr "Minimipaino ei täyty."
 msgid "Maximum weight exceeded."
 msgstr "Maksimipaino ylitetty."
 
-#, fuzzy
-#| msgid "minimum weight"
 msgid "min weight"
-msgstr "minimipaino"
+msgstr "min paino"
 
-#, fuzzy
-#| msgid "maximum weight"
 msgid "max weight"
-msgstr "maksimipaino"
+msgstr "max paino"
 
 msgid "Weight-based pricing"
-msgstr ""
+msgstr "Painoperusteinen hinnoittelu"
 
 msgid ""
 "Define price based on basket weight. Range minimums is counted in range only "
 "as zero."
-msgstr ""
+msgstr "Määritä painoperusteiset hintapisteet. "
 
 msgid "Weight does not match with any range."
-msgstr ""
+msgstr "Paino ei kohtaa hintapisteen kanssa"
 
-#, fuzzy
-#| msgid "contact group"
 msgid "Contact group availability"
-msgstr "kontaktiryhmä"
+msgstr "Kontaktiryhmän saatavuus"
 
 msgid "Limit service availability for specific contact groups."
-msgstr ""
+msgstr "Rajoita palvelun saatavuutta tietyille kontaktiryhmille"
 
-#, fuzzy
-#| msgid "contact group"
 msgid "groups"
-msgstr "kontaktiryhmä"
+msgstr "ryhmät"
 
 msgid "Customer does not belong to any group."
-msgstr ""
+msgstr "Tämä asiakas ei kuulu yhteenkään ryhmään"
 
-#, fuzzy
-#| msgid "visible to certain customer groups"
 msgid "Service is not available for any of the customers groups."
-msgstr "näkyvillä tietyille asiakasryhmille"
+msgstr "Palvelu ei ole saatavilla yhdellekään asiakkaan ryhmistä"
 
 msgid "Staff only availability"
-msgstr ""
+msgstr "Vain työntekijöille -saatavuus"
 
 msgid "Limit service availability to staff only"
-msgstr ""
+msgstr "Rajoita palvelun saatavuus vain työntekijöille"
 
 msgid "Service is only available for staff"
-msgstr ""
+msgstr "Palvelu on saatavilla vain työntekijöille"
 
 msgid "round to nearest with ties going away from zero"
-msgstr ""
+msgstr "pyöristä nollasta poispäin"
 
 msgid "round to nearest with ties going towards zero"
-msgstr ""
+msgstr "pyöristä nollaa kohti"
 
 msgid "round away from zero"
-msgstr ""
+msgstr "pyöristä nollasta poispäin"
 
 msgid "round towards zero"
-msgstr ""
+msgstr "pyöristä nollaan päin"
 
 msgid "Rounding"
-msgstr ""
+msgstr "Pyöristys"
 
 msgid "Round total order price to the nearest quant."
-msgstr ""
+msgstr "Pyöristä tilauksen hinta lähimpään arvoon."
 
 msgid "rounding quant"
-msgstr ""
+msgstr "pyöristysarvo"
 
-#, fuzzy
-#| msgid "shipping mode"
 msgid "rounding mode"
-msgstr "toimitustila"
+msgstr "pyöristystapa"
 
 msgid "rounding"
-msgstr ""
+msgstr "pyöristys"
 
-#, fuzzy
-#| msgid "payment method"
 msgid "payment processor"
-msgstr "maksutapa"
+msgstr "Maksupalvelun tarjoaja"
 
 msgid "custom payment processor"
-msgstr ""
+msgstr "Mukautettu maksupalvelun tarjoaja"
 
 msgid "custom payment processors"
-msgstr ""
+msgstr "Mukautetut maksupalvelun tarjoajat"
 
 msgid "Manually processed payment"
-msgstr ""
+msgstr "Manuaalinen maksu"
 
-#, fuzzy
-#| msgid "payment"
 msgid "Cash payment"
-msgstr "maksu"
+msgstr "Käteismaksu"
 
 msgid "carrier"
-msgstr ""
+msgstr "Kuljetusliike"
 
-#, fuzzy
-#| msgid "customer"
 msgid "custom carrier"
-msgstr "asiakas"
+msgstr "Mukautettu kuljetusliike"
 
-#, fuzzy
-#| msgid "customer"
 msgid "custom carriers"
-msgstr "asiakas"
+msgstr "Mukautetut kuljetusliikkeet"
 
 msgid "Manually processed shipment"
-msgstr ""
+msgstr "Manualisesti käsiteltävä toimitus"
 
 msgid "not sent"
 msgstr "ei lähetetty"
@@ -1272,7 +1168,7 @@ msgid "tracking code"
 msgstr "seurantakoodi"
 
 msgid "volume"
-msgstr ""
+msgstr "tilavuus"
 
 msgid "shipment"
 msgstr "lähetys"
@@ -1281,12 +1177,10 @@ msgid "shipments"
 msgstr "lähetykset"
 
 msgid "unit volume"
-msgstr ""
+msgstr "yksikön tilavuus"
 
-#, fuzzy
-#| msgid "net weight (g)"
 msgid "unit weight"
-msgstr "nettopaino (g)"
+msgstr "paino"
 
 msgid "sent product"
 msgstr "lähetetty tuote"
@@ -1300,26 +1194,22 @@ msgid ""
 msgstr "Seuraavia kenttiä ei voi muuttaa, sillä tälle kaupalle on tilauksia"
 
 msgid "domain"
-msgstr ""
+msgstr "verkkotunnus"
 
 msgid "options"
-msgstr ""
+msgstr "asetukset"
 
 msgid "maintenance mode"
 msgstr "huoltotila"
 
-#, fuzzy
-#| msgid "contacts"
 msgid "contact address"
-msgstr "kontaktit"
+msgstr "yhteystiedot"
 
 msgid "public name"
-msgstr ""
+msgstr "julkinen nimi"
 
-#, fuzzy
-#| msgid "maintenance mode"
 msgid "maintenance message"
-msgstr "huoltotila"
+msgstr "huoltotilan viesti"
 
 msgid "alert limit"
 msgstr "hälytysmäärä"
@@ -1330,28 +1220,20 @@ msgstr "fyysinen varastomäärä"
 msgid "logical stock count"
 msgstr "looginen varastomäärä"
 
-#, fuzzy
-#| msgid "time interval"
 msgid "internal"
-msgstr "aikaväli"
+msgstr "sisäinen"
 
 msgid "external"
-msgstr ""
+msgstr "ulkoinen"
 
-#, fuzzy
-#| msgid "supplier"
 msgid "supplier type"
-msgstr "toimittaja"
+msgstr "toimittajan tyyppi"
 
-#, fuzzy
-#| msgid "stocked"
 msgid "stock managed"
 msgstr "varastoitu"
 
-#, fuzzy
-#| msgid "module"
 msgid "module data"
-msgstr "moduuli"
+msgstr "moduulin data"
 
 msgid "Cannot change business critical fields of Tax that is in use"
 msgstr "Käytössäolevan veron liiketoimintakriittisiä kenttiä ei voi muokata"
@@ -1404,10 +1286,8 @@ msgstr "Yritysasiakkaat"
 msgid "allowed decimals"
 msgstr "sallitut desimaalit"
 
-#, fuzzy
-#| msgid "tax name"
 msgid "short name"
-msgstr "veron nimi"
+msgstr "lyhyt nimi"
 
 msgid "sales unit"
 msgstr "myyntiyksikkö"
@@ -1420,14 +1300,14 @@ msgstr "ei valintaa"
 
 #, python-format
 msgid "%s not available in this shop"
-msgstr ""
+msgstr "%s ei ole saatavilla tälle kaupalle"
 
 msgid "Only staff can create purchase orders"
-msgstr ""
+msgstr "Vain työntekijät voivat luoda ostotilauksia"
 
 #, python-format
 msgid "%(product)s not manufactured by %(manufacturer)s"
-msgstr ""
+msgstr "%(product)s ei ole valmistajan %(manufacturer)s valmistama"
 
 msgid "Default Pricing"
 msgstr "Oletushinnoittelu"

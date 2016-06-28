@@ -3,14 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
+# Rauli Laine <rauli.laine@iki.fi>, 2016
+# Shoop Admin <admin@shoop.io>, 2016
 # Tuomas Suutari <tuomas.suutari@shoop.io>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 10:36+0000\n"
-"PO-Revision-Date: 2016-01-21 08:13+0000\n"
-"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
+"POT-Creation-Date: 2016-06-28 13:34+0000\n"
+"PO-Revision-Date: 2016-06-28 03:21+0000\n"
+"Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
 "language/fi_FI/)\n"
 "Language: fi_FI\n"
@@ -20,67 +22,67 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Stock management"
-msgstr ""
+msgstr "Varastonhallinta"
 
-#, fuzzy
-#| msgid "product"
 msgid "Products"
-msgstr "tuote"
+msgstr "Tuotteet"
 
 msgid "SKU"
-msgstr ""
+msgstr "Tuotekoodi"
 
 msgid "Filter by SKU..."
-msgstr ""
+msgstr "Rajaa tuotekoodin mukaan..."
 
 msgid "Name"
-msgstr ""
+msgstr "Nimi"
 
 msgid "Filter by name..."
-msgstr ""
+msgstr "Rajaa nimen mukaan..."
 
-#, fuzzy
-#| msgid "supplier"
 msgid "Supplier"
-msgstr "toimittaja"
+msgstr "Toimittaja"
 
 msgid "Stock information"
-msgstr ""
+msgstr "Varastotiedot"
 
 msgid "Adjust stock"
-msgstr ""
+msgstr "Muuta varastosaldoa"
 
 #, python-format
 msgid ""
 "Added %(delta)s %(unit_short_name)s for product %(product_name)s stock "
 "(%(supplier_name)s)"
 msgstr ""
+"Lisättiin %(delta)s %(unit_short_name)s tuotteelle %(product_name)s "
+"varastoon (%(supplier_name)s)"
 
 #, python-format
 msgid ""
 "Removed %(delta)s %(unit_short_name)s from product %(product_name)s stock "
 "(%(supplier_name)s)"
 msgstr ""
+"Poistettiin %(delta)s %(unit_short_name)s tuotteelta %(product_name)s "
+"varastosta (%(supplier_name)s)"
 
 msgid "Not allowed"
-msgstr ""
+msgstr "Ei sallittu"
 
 msgid "Error, please check submitted values and try again."
-msgstr ""
+msgstr "Virhe, tarkista arvot ja koita uudelleen."
 
 #, python-format
 msgid "Error, please check submitted values and try again (%(error)s)."
-msgstr ""
+msgstr "Virhe, tarkista arvot ja koita uudelleen (%(error)s)."
 
 #, python-format
 msgid "Purchase price per unit (%(currency_name)s)"
-msgstr ""
+msgstr "Ostohinta per yksikkö (%(currency_name)s)"
 
 msgid "Quantity"
-msgstr ""
+msgstr "Lukumäärä"
 
 msgid "Only non-zero values can be added to stock."
-msgstr ""
+msgstr "Varastoarvon pitää olla suurempi kuin nolla."
 
 msgid "product"
 msgstr "tuote"
@@ -104,51 +106,53 @@ msgid "physical count"
 msgstr "fyysinen määrä"
 
 msgid "Add stock"
-msgstr ""
+msgstr "Lisää varastoa"
 
 #, python-format
 msgid ""
 "Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
 "does not have suppliers with %(module_name)s module."
 msgstr ""
+"Tuotteella <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</"
+"a> ei ole toimittajia modulissa %(module_name)s."
 
 msgid "Please set suppliers at Purchasing section."
-msgstr ""
+msgstr "Ole hyvä ja määritä toimittajat osiossa Ostaminen."
 
 #, python-format
 msgid ""
 "Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
 "is not stocked."
 msgstr ""
+"Tuote<a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> ei "
+"ole varastoitu."
 
 msgid "Please set product stock behavior at Additional Details section."
-msgstr ""
+msgstr "Ole hyvä ja määritä varastokäyttäytyminen osiosssa Lisätietoja."
 
 #, python-format
 msgid "No suppliers with %(module_name)s available."
-msgstr ""
+msgstr "Ei toimittajia saatavana modulille %(module_name)s."
 
 #, python-format
 msgid ""
 "Please set %(module_name)s module for at least one of the <a href="
 "\"%(supplier_url)s\" target=\"_blank\">Suppliers</a>."
 msgstr ""
+"Ole hyvä ja aseta %(module_name)s moduli ainakin yhdelle <a href="
+"\"%(supplier_url)s\" target=\"_blank\">toimittajalle</a>."
 
-#, fuzzy
-#| msgid "physical count"
 msgid "Physical count"
-msgstr "fyysinen määrä"
+msgstr "Fyysinen määrä"
 
-#, fuzzy
-#| msgid "logical count"
 msgid "Logical count"
-msgstr "looginen määrä"
+msgstr "Looginen määrä"
 
 msgid "Value per unit"
-msgstr ""
+msgstr "Yksikköarvo"
 
 msgid "Total value"
-msgstr ""
+msgstr "Kokonaisarvo"
 
 msgid "No stock information available."
-msgstr ""
+msgstr "Varastotietoa ei saatavilla."

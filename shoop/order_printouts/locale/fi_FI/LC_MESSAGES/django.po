@@ -8,101 +8,105 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 10:36+0000\n"
+"POT-Creation-Date: 2016-06-28 13:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>, 2016\n"
+"Language-Team: Finnish (Finland) (https://www.transifex.com/shoop/"
+"teams/55306/fi_FI/)\n"
+"Language: fi_FI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Order printouts"
-msgstr ""
+msgstr "Tilaustulosteet"
 
 msgid "Print"
-msgstr ""
+msgstr "Tulosta"
 
 #, python-format
 msgid "Get Delivery Slip (Shipment %(id)s)"
-msgstr ""
+msgstr "Hae Lähetysluettelo (Lähetys %(id)s)"
 
 msgid "Get Order Confirmation"
-msgstr ""
+msgstr "Hae tilausvahvistus"
 
 msgid "Delivery slip"
-msgstr ""
+msgstr "Lähetysluettelo"
 
 msgid "Order"
-msgstr ""
+msgstr "Tilaus"
 
 msgid "Order confirmation"
-msgstr ""
+msgstr "Tilausvahvistus"
 
 msgid ""
 "Could not create PDF since Weasyprint is not available. Please contact "
 "support."
 msgstr ""
+"Ei voitu luoda PDF:ää, sillä Weasyprint ei ole saatavilla. Ota yhteyttä "
+"tukeen."
 
 msgid "Shipped products"
-msgstr ""
+msgstr "Toimitetut tuotteet"
 
 msgid "Payment and shipping methods"
-msgstr ""
+msgstr "Maksu- ja toimitustavat"
 
 msgid "Order number"
-msgstr ""
+msgstr "Tilausnumero"
 
 msgid "Total price"
-msgstr ""
+msgstr "Kokonaishinta"
 
 msgid "Payment status"
-msgstr ""
+msgstr "Maksun tila"
 
 msgid "Shipping status"
-msgstr ""
+msgstr "Toimituksen tila"
 
 msgid "Order date"
-msgstr ""
+msgstr "Tilauspäivämäärä"
 
 msgid "Comment"
-msgstr ""
+msgstr "Kommentti"
 
 msgid "Identifier"
-msgstr ""
+msgstr "Tunniste"
 
 msgid "Shipment date"
-msgstr ""
+msgstr "Toimituspäivämäärä"
 
 msgid "SKU"
-msgstr ""
+msgstr "Tuotekoodi"
 
 msgid "Text"
-msgstr ""
+msgstr "Teksti"
 
 msgid "Quantity"
-msgstr ""
+msgstr "Määrä"
 
 msgid "Tax"
-msgstr ""
+msgstr "Vero"
 
 msgid "Taxful total"
-msgstr ""
+msgstr "Verollinen yhteensä"
 
 msgid "Taxless total"
-msgstr ""
+msgstr "Veroton yhteensä"
 
 msgid "Tax percentage"
-msgstr ""
+msgstr "Veroprosentti"
 
 msgid "Based on amount"
-msgstr ""
+msgstr "Veron peruste"
 
 msgid "Amount of tax"
-msgstr ""
+msgstr "Veron määrä"
 
 msgid "Total including tax"
-msgstr ""
+msgstr "Yhteensä veroineen"
 
 msgid "Billing address"
-msgstr ""
+msgstr "Laskutusosoite"

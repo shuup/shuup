@@ -6,11 +6,12 @@
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
 # Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Heikki Saari <heikki.saari@anders.fi>, 2016
 # Janne Tammi <janne.tammi@shoop.io>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
-# Juha Kujala <juha.kujala@shoop.io>, 2015
+# Juha Kujala <juha.kujala@shoop.io>, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
-# Rauli Laine <rauli.laine@iki.fi>, 2015
+# Rauli Laine <rauli.laine@iki.fi>, 2015-2016
 # Shoop Admin <admin@shoop.io>, 2015
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # tomijarvi <tomi@jarvi.pro>, 2015
@@ -19,9 +20,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 10:36+0000\n"
-"PO-Revision-Date: 2016-01-05 06:45+0000\n"
-"Last-Translator: Shoop Admin <admin@shoop.io>\n"
+"POT-Creation-Date: 2016-06-28 13:34+0000\n"
+"PO-Revision-Date: 2016-06-06 06:26+0000\n"
+"Last-Translator: Heikki Saari <heikki.saari@anders.fi>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
 "language/fi_FI/)\n"
 "Language: fi_FI\n"
@@ -94,10 +95,8 @@ msgstr ""
 msgid "Template"
 msgstr "Malline"
 
-#, fuzzy
-#| msgid "Variables"
 msgid "Bind to Variable"
-msgstr "Muuttujat"
+msgstr "Sido muuttujaan"
 
 msgid "Edit Script Contents..."
 msgstr "Muokkaa komentosarjan sisältöä..."
@@ -125,21 +124,19 @@ msgid "none"
 msgstr "ei mitään"
 
 msgid "unilingual"
-msgstr ""
+msgstr "yksikielinen"
 
 msgid "multilingual"
-msgstr ""
+msgstr "monikielinen"
 
-#, fuzzy
-#| msgid "Variables"
 msgid "variable only"
-msgstr "Muuttujat"
+msgstr "vain muuttuja"
 
 msgid "constant only"
-msgstr ""
+msgstr "vain vakio"
 
 msgid "variable or constant"
-msgstr ""
+msgstr "muuttuja tai vakio"
 
 msgid "continue to the next step"
 msgstr "jatka seuraavaan askeleeseen"
@@ -162,57 +159,49 @@ msgid "a specific user"
 msgstr "tietty käyttäjä"
 
 msgid "low"
-msgstr ""
+msgstr "matala"
 
 msgid "normal"
-msgstr ""
+msgstr "normaali"
 
 msgid "high"
-msgstr ""
+msgstr "korkea"
 
 msgid "critical"
-msgstr ""
+msgstr "kriittinen"
 
-#, fuzzy
-#| msgid "Recipient"
 msgid "recipient type"
-msgstr "Vastaanottaja"
+msgstr "vastaanottajan tyyppi"
 
-#, fuzzy
-#| msgid "Recipient"
 msgid "recipient"
-msgstr "Vastaanottaja"
+msgstr "vastaanottaja"
 
 msgid "created on"
-msgstr ""
+msgstr "luotu"
 
 msgid "message"
-msgstr ""
+msgstr "viesti"
 
 msgid "priority"
-msgstr ""
+msgstr "tärkeysjärjestys"
 
 msgid "marked read"
-msgstr ""
+msgstr "merkitty luetuksi"
 
 msgid "marked read by"
-msgstr ""
+msgstr "merkitty luetuksi"
 
 msgid "marked read on"
-msgstr ""
+msgstr "merkitty luetuksi"
 
-#, fuzzy
-#| msgid "Send Identifier"
 msgid "event identifier"
-msgstr "Lähetystunniste"
+msgstr "tapahtuman tunniste"
 
 msgid "name"
-msgstr ""
+msgstr "nimi"
 
-#, fuzzy
-#| msgid "Enabled"
 msgid "enabled"
-msgstr "Käytössä"
+msgstr "käytössä"
 
 msgid "Edit Script Information"
 msgstr "Muokkaa komentosarjan tietoja"

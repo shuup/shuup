@@ -6,11 +6,12 @@
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
 # Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Heikki Saari <heikki.saari@anders.fi>, 2016
 # Janne Tammi <janne.tammi@shoop.io>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
-# Juha Kujala <juha.kujala@shoop.io>, 2015
+# Juha Kujala <juha.kujala@shoop.io>, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
-# Rauli Laine <rauli.laine@iki.fi>, 2015
+# Rauli Laine <rauli.laine@iki.fi>, 2015-2016
 # Shoop Admin <admin@shoop.io>, 2015
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # tomijarvi <tomi@jarvi.pro>, 2015
@@ -19,9 +20,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 10:36+0000\n"
-"PO-Revision-Date: 2015-12-08 08:55+0000\n"
-"Last-Translator: Shoop Admin <admin@shoop.io>\n"
+"POT-Creation-Date: 2016-06-28 13:34+0000\n"
+"PO-Revision-Date: 2016-06-21 12:40+0000\n"
+"Last-Translator: Heikki Saari <heikki.saari@anders.fi>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
 "language/fi_FI/)\n"
 "Language: fi_FI\n"
@@ -43,47 +44,41 @@ msgstr "Teema ei ole aktiivinen. Klikkaa tästä aktivoidaksesi teema."
 msgid "Theming"
 msgstr "Teemat"
 
-#, fuzzy
-#| msgid "Activate"
 msgid "activate"
-msgstr "Aktivoi"
+msgstr "aktivoi"
 
 msgid "Theme activated."
 msgstr "Teema aktivoitu."
 
-#, fuzzy
-#| msgid "Currently active"
 msgid "current draft"
-msgstr "Aktiivinen"
+msgstr "nykyinen vedos"
 
 msgid "old version"
-msgstr ""
+msgstr "vanha versio"
 
 msgid "public"
-msgstr ""
+msgstr "julkinen"
 
 msgid "theme identifier"
-msgstr ""
+msgstr "teeman tunniste"
 
 msgid "view name"
-msgstr ""
+msgstr "näytä nimi"
 
 msgid "created on"
-msgstr ""
+msgstr "luotu"
 
 msgid "status"
-msgstr ""
+msgstr "tila"
 
 msgid "internal data"
-msgstr ""
+msgstr "sisäinen data"
 
-#, fuzzy
-#| msgid "Activate"
 msgid "active"
-msgstr "Aktivoi"
+msgstr "aktiivinen"
 
 msgid "data"
-msgstr ""
+msgstr "data"
 
 #, python-format
 msgid "Theme configuration for %s"
@@ -93,72 +88,70 @@ msgid "Plugin"
 msgstr "Lisäosa"
 
 msgid "Category Links"
-msgstr ""
+msgstr "Kategorialinkit"
 
 msgid "Title"
-msgstr ""
+msgstr "Otsikko"
 
 msgid "Show all categories"
-msgstr ""
+msgstr "Näytä kaikki kategoriat"
 
 msgid "All categories are shown, even if not selected"
-msgstr ""
+msgstr "Kaikki kategoriat ovat näkyvillä, vaikka eivät olisi valittuina"
 
 msgid "Image"
-msgstr ""
+msgstr "Kuva"
 
 msgid "Image Link URL"
-msgstr ""
+msgstr "Kuvan linkin URL-osoite"
 
-#, fuzzy
-#| msgid "Full Width"
 msgid "Full width"
 msgstr "Täysi leveys"
 
 msgid "Set image to full width of cell"
-msgstr ""
+msgstr "Aseta kuva solun levyiseksi"
 
 msgid "Width (px)"
-msgstr ""
+msgstr "Leveys (pikseliä)"
 
 msgid "Leave blank for default width"
-msgstr ""
+msgstr "Jätä tyhjäksi oletusleveydelle"
 
 msgid "Height (px)"
-msgstr ""
+msgstr "Korkeus (pikseliä)"
 
 msgid "Snippets"
-msgstr ""
+msgstr "Koodinpätkät"
 
 msgid "In-Place Snippet"
-msgstr ""
+msgstr "Kohdalla olevat koodinpätkät"
 
 msgid "Resource snippet for end of head"
-msgstr ""
+msgstr "Resurssikoodinpätkä HEAD-osion loppuun"
 
 msgid "Resource snippet for beginning of body"
-msgstr ""
+msgstr "Resurssikoodinpätkä BODY-osion alkuun"
 
 msgid "Resource for end of body"
-msgstr ""
+msgstr "Resurssi BODY-osion loppuun"
 
 msgid "Social Media Links"
-msgstr ""
+msgstr "Sosiaalisen median linkit"
 
 msgid "Topic"
-msgstr ""
+msgstr "Aihe"
 
 msgid "Icon Size"
-msgstr ""
+msgstr "Ikonin koko"
 
 msgid "Alignment"
-msgstr ""
+msgstr "Kohdistus"
 
 msgid "text"
-msgstr ""
+msgstr "teksti"
 
 msgid "(Untranslated)"
-msgstr ""
+msgstr "(Kääntämätön)"
 
 #, python-format
 msgid "Click to edit placeholder: %s"
@@ -223,14 +216,14 @@ msgid "Publish Changes"
 msgstr "Julkaise muutokset"
 
 msgid "No access to editing"
-msgstr ""
+msgstr "Ei oikeuksia editointiin"
 
 #, python-format
 msgid "Unknown command %s"
-msgstr ""
+msgstr "Tuntematon komento %s"
 
 msgid "Unable to determine current theme."
-msgstr ""
+msgstr "Nykyistä teemaa ei voitu määrittää."
 
 #, python-format
 msgid "Cannot add more than %d cells in one row."

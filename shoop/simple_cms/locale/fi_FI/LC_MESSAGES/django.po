@@ -8,9 +8,9 @@
 # Eetu Häivälä <eetu.haivala@anders.fi>, 2015
 # Janne Tammi <janne.tammi@shoop.io>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
-# Juha Kujala <juha.kujala@shoop.io>, 2015
+# Juha Kujala <juha.kujala@shoop.io>, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
-# Rauli Laine <rauli.laine@iki.fi>, 2015
+# Rauli Laine <rauli.laine@iki.fi>, 2015-2016
 # Shoop Admin <admin@shoop.io>, 2015
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # tomijarvi <tomi@jarvi.pro>, 2015
@@ -19,9 +19,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 10:36+0000\n"
-"PO-Revision-Date: 2015-12-08 08:41+0000\n"
-"Last-Translator: Shoop Admin <admin@shoop.io>\n"
+"POT-Creation-Date: 2016-06-28 13:34+0000\n"
+"PO-Revision-Date: 2016-05-10 07:03+0000\n"
+"Last-Translator: Juha Kujala <juha.kujala@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
 "language/fi_FI/)\n"
 "Language: fi_FI\n"
@@ -69,59 +69,45 @@ msgstr "Luontipvm"
 msgid "Page"
 msgstr "Sivu"
 
-#, fuzzy
-#| msgid "Available from"
 msgid "available from"
-msgstr "Saatavilla alkaen"
+msgstr "saatavilla alkaen"
 
-#, fuzzy
-#| msgid "Available to"
 msgid "available to"
-msgstr "Saatavilla päättyen"
+msgstr "saatavilla päättyen"
 
-#, fuzzy
-#| msgid "Created by"
 msgid "created by"
-msgstr "Luoja"
+msgstr "luoja"
 
 msgid "modified by"
-msgstr ""
+msgstr "muokkaaja"
 
-#, fuzzy
-#| msgid "Created by"
 msgid "created on"
-msgstr "Luoja"
+msgstr "luotu"
 
 msgid "modified on"
-msgstr ""
+msgstr "muutettu"
 
 msgid "This identifier can be used in templates to create URLs"
 msgstr ""
 "Tätä tunnistetta voidaan käyttää mallineissa URL-osoitteiden muodostamiseen"
 
-#, fuzzy
-#| msgid "Visible in menu"
 msgid "visible in menu"
-msgstr "Näkyvissä valikossa"
+msgstr "näkyvissä valikossa"
 
 msgid "parent"
-msgstr ""
+msgstr "isäntä"
 
 msgid "list children on page"
-msgstr ""
+msgstr "listaa lapset sivulla"
 
-#, fuzzy
-#| msgid "Title"
 msgid "title"
-msgstr "Otsikko"
+msgstr "otsikko"
 
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
-#, fuzzy
-#| msgid "Content"
 msgid "content"
-msgstr "Sisältö"
+msgstr "sisältö"
 
 msgid "page"
 msgstr "sivu"
@@ -133,18 +119,16 @@ msgid "Untitled"
 msgstr "Nimetön"
 
 msgid "CMS Page Links"
-msgstr ""
+msgstr "Sisällönhallinnan sivulinkit"
 
-#, fuzzy
-#| msgid "Show pages"
 msgid "Show all pages"
-msgstr "Näytä sivut"
+msgstr "Näytä kaikki sivut"
 
 msgid "All pages are shown, even if not selected"
-msgstr ""
+msgstr "Kaikki sivut ovat näkyvillä, vaikka eivät olisi valittuina"
 
 msgid "Hide expired pages"
-msgstr ""
+msgstr "Piilota vanhentuneet sivut"
 
 msgid "New Page"
 msgstr "Uusi sivu"

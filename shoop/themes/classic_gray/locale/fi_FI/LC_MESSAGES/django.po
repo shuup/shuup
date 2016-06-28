@@ -6,22 +6,24 @@
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
 # Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Heikki Saari <heikki.saari@anders.fi>, 2016
 # Janne Tammi <janne.tammi@shoop.io>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
-# Juha Kujala <juha.kujala@shoop.io>, 2015
+# Juha Kujala <juha.kujala@shoop.io>, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
-# Rauli Laine <rauli.laine@iki.fi>, 2015
+# Rauli Laine <rauli.laine@iki.fi>, 2015-2016
 # Shoop Admin <admin@shoop.io>, 2015
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # tomijarvi <tomi@jarvi.pro>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
+# Tuomas Suutari <tuomas.suutari@shoop.io>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 10:36+0000\n"
-"PO-Revision-Date: 2016-01-05 06:43+0000\n"
-"Last-Translator: Shoop Admin <admin@shoop.io>\n"
+"POT-Creation-Date: 2016-06-28 13:34+0000\n"
+"PO-Revision-Date: 2016-06-28 13:18+0000\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
 "language/fi_FI/)\n"
 "Language: fi_FI\n"
@@ -41,16 +43,16 @@ msgid "Title"
 msgstr "Otsikko"
 
 msgid "Type"
-msgstr ""
+msgstr "Tyyppi"
 
 msgid "Count"
-msgstr ""
+msgstr "Lukumäärä"
 
 msgid "Only show in-stock and orderable items"
-msgstr ""
+msgstr "Näytä vain varastossa olevat sekä tilattavat tuotteet"
 
 msgid "Product Cross Sells"
-msgstr ""
+msgstr "Tuotteiden ristiinmyynti"
 
 msgid "Product added to cart"
 msgstr "Tuote lisätty koriin"
@@ -95,38 +97,26 @@ msgstr "Näytä ruudukko/lista"
 msgid "Grid/list view"
 msgstr "Ruudukko-/listanäkymä"
 
-#, fuzzy
-#| msgid "Password"
 msgid "Change Password"
-msgstr "Salasana"
+msgstr "Vaihda salasana"
 
-#, fuzzy
-#| msgid "Password"
 msgid "Change password"
-msgstr "Salasana"
+msgstr "Vaihda salasana"
 
-#, fuzzy
-#| msgid "User account information"
 msgid "Edit user account information"
-msgstr "Käyttäjätunnuksen tiedot"
+msgstr "Muokkaa käyttäjän tietoja"
 
-#, fuzzy
-#| msgid "Password"
 msgid "Save password"
-msgstr "Salasana"
+msgstr "Tallenna salasana"
 
-#, fuzzy
-#| msgid "User account information"
 msgid "Company account information"
-msgstr "Käyttäjätunnuksen tiedot"
+msgstr "Yrityksen käyttäjätilin tiedot"
 
 msgid "Save changes"
 msgstr "Tallenna muutokset"
 
-#, fuzzy
-#| msgid "Shipping information"
 msgid "Company information"
-msgstr "Toimitustiedot"
+msgstr "Yrityksen tiedot"
 
 msgid "Billing information"
 msgstr "Laskutustiedot"
@@ -137,13 +127,11 @@ msgstr "Toimitustiedot"
 msgid "User account information"
 msgstr "Käyttäjätunnuksen tiedot"
 
-#, fuzzy
-#| msgid "Shipping information"
 msgid "Edit company information"
-msgstr "Toimitustiedot"
+msgstr "Muokkaa yrityksen tietoja"
 
 msgid "Link account to company"
-msgstr ""
+msgstr "Linkitä käyttäjätili yritykseen"
 
 msgid "User information"
 msgstr "Käyttäjätiedot"
@@ -175,13 +163,11 @@ msgstr "Jatka ostoksia"
 msgid "Proceed to checkout"
 msgstr "Jatka kassalle"
 
-#, fuzzy
-#| msgid "Combination not available"
 msgid "Coupon is not available."
-msgstr "Yhdistelmä ei ole saatavilla"
+msgstr "Kuponki ei ole saatavilla."
 
 msgid "Error when adding coupon."
-msgstr ""
+msgstr "Kupongin lisäämisessä tapahtui virhe."
 
 msgid "Qty"
 msgstr "Kpl"
@@ -193,13 +179,13 @@ msgid "Remove product from basket"
 msgstr "Poista tuote ostoskorista"
 
 msgid "Have a coupon code? Enter it here"
-msgstr ""
+msgstr "Onko sinulla kuponkikoodi? Syötä se tähän"
 
 msgid "Coupon Code"
-msgstr ""
+msgstr "Kuponkikoodi"
 
 msgid "Submit Code"
-msgstr ""
+msgstr "Lisää koodi"
 
 msgid "Checkout"
 msgstr "Kassa"
@@ -250,12 +236,10 @@ msgid "There are errors"
 msgstr "Virhe"
 
 msgid "Choose Shipping Method"
-msgstr ""
+msgstr "Valitse toimitustapa"
 
-#, fuzzy
-#| msgid "Payment method"
 msgid "Choose Payment Method"
-msgstr "Maksutapa"
+msgstr "Valitse maksutapa"
 
 msgid "Errors"
 msgstr "Virheet"
@@ -307,16 +291,14 @@ msgstr "Kategoriat"
 msgid "Edit account details"
 msgstr "Muokkaa tilin tietoja"
 
-#, fuzzy
-#| msgid "Edit account details"
 msgid "Edit company details"
-msgstr "Muokkaa tilin tietoja"
+msgstr "Muokkaa yrityksen lisätietoja"
 
 msgid "My orders"
 msgstr "Omat tilaukseni"
 
 msgid "My wishlists"
-msgstr ""
+msgstr "Toivelistani"
 
 msgid "Admin panel"
 msgstr "Hallintapaneeli"
@@ -345,10 +327,9 @@ msgstr "Valikko"
 msgid "Products"
 msgstr "Tuotteet"
 
-#, fuzzy, python-format
-#| msgid "Welcome to "
+#, python-format
 msgid "Welcome to %(shop_name)s!"
-msgstr "Tervetuloa"
+msgstr "%(shop_name)s, tervetuloa!"
 
 msgid "Preview"
 msgstr "Esikatselu"
@@ -536,7 +517,7 @@ msgid "Total Price (taxless)"
 msgstr "Kokonaishinta (veroton)"
 
 msgid "Tracking codes"
-msgstr ""
+msgstr "Seurantakoodit"
 
 msgid "Status"
 msgstr "Status"
@@ -615,10 +596,10 @@ msgstr "Ei tuloksia kyselylle \"<strong>%(query)s</strong>\"."
 msgid "%(n)s results found for \"<strong>%(query)s</strong>\"."
 msgstr "%(n)s tulosta löydettiin haulle \"<strong>%(query)s</strong>\"."
 
-#, fuzzy, python-format
-#| msgid "You have already been logged in as"
+#, python-format
 msgid "You have already logged in as <strong>%(username)s</strong>"
-msgstr "Olet jo kirjautunut sisään käyttäjänä"
+msgstr ""
+"Olet jo kirjautunut sisään käyttäjätunnuksella <strong>%(username)s</strong>"
 
 msgid "Go to Homepage"
 msgstr "Etusivulle"
