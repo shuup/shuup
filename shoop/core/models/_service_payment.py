@@ -16,6 +16,9 @@ from parler.models import TranslatedFields
 from ._order_lines import OrderLineType
 from ._orders import Order, PaymentStatus
 from ._service_base import Service, ServiceChoice, ServiceProvider
+from ._service_behavior import (
+    RoundingBehaviorComponent, StaffOnlyBehaviorComponent
+)
 
 
 class PaymentMethod(Service):
@@ -134,6 +137,16 @@ class CustomPaymentProcessor(PaymentProcessor):
             ServiceChoice('manual', _("Manually processed payment")),
             ServiceChoice('cash', _("Cash payment"))
         ]
+
+    def _create_service(self, choice_identifier, **kwargs):
+        service = super(CustomPaymentProcessor, self)._create_service(
+            choice_identifier, **kwargs)
+        if choice_identifier == 'cash':
+            service.behavior_components.add(
+                RoundingBehaviorComponent.objects.create())
+            service.behavior_components.add(
+                StaffOnlyBehaviorComponent.objects.create())
+        return service
 
     def process_payment_return_request(self, service, order, request):
         if service == 'cash':

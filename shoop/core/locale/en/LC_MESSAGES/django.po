@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-27 22:04+0000\n"
+"POT-Creation-Date: 2016-06-28 04:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1060,6 +1060,15 @@ msgstr ""
 msgid "Service is not available for any of the customers groups."
 msgstr ""
 
+msgid "Staff only availability"
+msgstr ""
+
+msgid "Limit service availability to staff only"
+msgstr ""
+
+msgid "Service is only available for staff"
+msgstr ""
+
 msgid "round to nearest with ties going away from zero"
 msgstr ""
 
@@ -1085,9 +1094,6 @@ msgid "rounding mode"
 msgstr ""
 
 msgid "rounding"
-msgstr ""
-
-msgid "Only administrators can process cash payments"
 msgstr ""
 
 msgid "payment processor"

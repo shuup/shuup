@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add staff only behavior component
 - Add refund-related methods to ``Order``
 - Add `OrderLineType.REFUND` enum type
 - Update order phone max length to 64 characters
@@ -80,7 +81,7 @@ Admin
 ~~~~~
 
 - Add refund creator to `Order` admin
-- Add customer detail view to order creator 
+- Add customer detail view to order creator
 - Add purchase orders on manufacturers
 - Add customer detail view to order creator
 - Define module-level permissions for all admin modules

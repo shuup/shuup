@@ -174,6 +174,15 @@ class GroupAvailabilityBehaviorComponent(ServiceBehaviorComponent):
             yield ValidationError(_("Service is not available for any of the customers groups."))
 
 
+class StaffOnlyBehaviorComponent(ServiceBehaviorComponent):
+    name = _("Staff only availability")
+    help_text = _("Limit service availability to staff only")
+
+    def get_unavailability_reasons(self, service, source):
+        if not source.creator or not source.creator.is_staff:
+            yield ValidationError(_("Service is only available for staff"))
+
+
 class RoundingMode(Enum):
     ROUND_HALF_UP = decimal.ROUND_HALF_UP
     ROUND_HALF_DOWN = decimal.ROUND_HALF_DOWN
@@ -204,7 +213,3 @@ class RoundingBehaviorComponent(ServiceBehaviorComponent):
         rounded = nickel_round(total_price, self.quant, self.mode.value)
         remainder = rounded - total_price
         yield ServiceCost(remainder, _("rounding"))
-
-    def get_unavailability_reasons(self, service, source):
-        if not source.creator or not(source.creator.is_superuser or source.creator.is_staff):
-            yield ValidationError(_("Only administrators can process cash payments"))

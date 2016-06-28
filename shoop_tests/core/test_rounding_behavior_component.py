@@ -43,18 +43,3 @@ def test_rounding_costs(price, cost, mode):
     assert len(costs) == 1
     assert costs[0].price.value == Decimal(cost)
 
-
-@pytest.mark.django_db
-def test_unavailability_reasons(admin_user, regular_user):
-    shop = get_default_shop()
-    source = OrderSource(shop)
-    source.creator = admin_user
-    behavior = RoundingBehaviorComponent.objects.create()
-    reasons = list(behavior.get_unavailability_reasons(None, source))
-
-    assert len(reasons) == 0
-
-    source.creator = regular_user
-    reasons = list(behavior.get_unavailability_reasons(None, source))
-
-    assert len(reasons) == 1

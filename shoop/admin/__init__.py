@@ -46,6 +46,7 @@ class ShoopAdminAppConfig(AppConfig):
             "shoop.admin.modules.services.forms:WaivingCostBehaviorComponentForm",
             "shoop.admin.modules.services.forms:WeightLimitsBehaviorComponentForm",
             "shoop.admin.modules.services.forms:GroupAvailabilityBehaviorComponentForm",
+            "shoop.admin.modules.services.forms.StaffOnlyBehaviorComponentForm",
             "shoop.admin.modules.services.forms:RoundingBehaviorComponentForm",
         ],
         "service_behavior_component_form_part": [
@@ -62,7 +63,8 @@ class ShoopAdminAppConfig(AppConfig):
         from shoop.core.order_creator.signals import order_creator_finished
         from shoop.admin.modules.orders.receivers import handle_custom_payment_return_requests
 
-        order_creator_finished.connect(handle_custom_payment_return_requests, dispatch_uid='shoop.admin.order_create')
+        order_creator_finished.connect(handle_custom_payment_return_requests,
+                                       dispatch_uid='shoop.admin.handle_cash_payments')
         validate_templates_configuration()
 
 
