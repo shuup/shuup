@@ -213,15 +213,13 @@ msgstr ""
 msgid "Shipping Address"
 msgstr ""
 
+msgid "Back"
+msgstr ""
+
+msgid "Confirm"
+msgstr ""
+
 msgid "Discard Changes"
-msgstr ""
-
-msgid ""
-"Method rules, taxes and possible extra discounts are calculated after "
-"proceeding."
-msgstr ""
-
-msgid "Proceed"
 msgstr ""
 
 msgid "Select Shop"
@@ -239,25 +237,12 @@ msgstr ""
 msgid "Payment Method"
 msgstr ""
 
-msgid "Manufacturer Details"
+msgid ""
+"Method rules, taxes and possible extra discounts are calculated after "
+"proceeding."
 msgstr ""
 
-msgid "Qty"
-msgstr ""
-
-msgid "Base Unit Price"
-msgstr ""
-
-msgid "Line Total"
-msgstr ""
-
-msgid "Discounted Unit Price"
-msgstr ""
-
-msgid "Discount Percent"
-msgstr ""
-
-msgid "Total Discount Amount"
+msgid "Proceed"
 msgstr ""
 
 msgid "Logical Count"
@@ -272,7 +257,25 @@ msgstr ""
 msgid "Text/Comment"
 msgstr ""
 
+msgid "Qty"
+msgstr ""
+
 msgid "Total Price"
+msgstr ""
+
+msgid "Base Unit Price"
+msgstr ""
+
+msgid "Discounted Unit Price"
+msgstr ""
+
+msgid "Discount Percent"
+msgstr ""
+
+msgid "Total Discount Amount"
+msgstr ""
+
+msgid "Line Total"
 msgstr ""
 
 msgid "Orderline type"
@@ -294,9 +297,6 @@ msgid "Taxes not included."
 msgstr ""
 
 msgid "Add new line"
-msgstr ""
-
-msgid "Manufacturer"
 msgstr ""
 
 msgid "No shipping method"

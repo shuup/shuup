@@ -798,12 +798,6 @@ class PurchaseOrder(Order):
     def __str__(self):  # pragma: no cover
         return "Purchase Order %s (%s)" % (self.identifier, self.manufacturer.name)
 
-    def get_payment_status_display(self): # pragma: no cover
-        return None
-
-    def get_shipping_status_display(self): # pragma: no cover
-        return None
-
 
 def _round_price(value):
     return bankers_round(value, 2)  # TODO: To be fixed in SHOOP-1912
