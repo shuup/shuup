@@ -611,12 +611,6 @@ msgstr ""
 msgid "All products have been shipped. Fully Shipped status set."
 msgstr ""
 
-msgid "purchase order"
-msgstr ""
-
-msgid "purchase orders"
-msgstr ""
-
 msgid "gateway ID"
 msgstr ""
 
@@ -1264,13 +1258,6 @@ msgstr ""
 
 #, python-format
 msgid "%s not available in this shop"
-msgstr ""
-
-msgid "Only staff can create purchase orders"
-msgstr ""
-
-#, python-format
-msgid "%(product)s not manufactured by %(manufacturer)s"
 msgstr ""
 
 msgid "Default Pricing"
