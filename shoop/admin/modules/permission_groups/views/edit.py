@@ -45,7 +45,7 @@ class PermissionGroupForm(forms.ModelForm):
         self.fields["members"] = members_field
 
     def _get_module_choices(self):
-        return set((force_text(module.name), force_text(module.name)) for module in get_modules())
+        return set((force_text(m.name), force_text(m.name)) for m in get_modules() if m.name != "_Base_")
 
     def _get_initial_members(self):
         if self.instance.pk:
