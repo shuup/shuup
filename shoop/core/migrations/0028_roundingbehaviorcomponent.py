@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('servicebehaviorcomponent_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='shoop.ServiceBehaviorComponent')),
                 ('quant', models.DecimalField(default=Decimal('0.05'), verbose_name='rounding quant', max_digits=36, decimal_places=9)),
-                ('mode', enumfields.fields.EnumField(default='ROUND_HALF_UP', max_length=10, verbose_name='rounding mode', enum=shoop.core.models.RoundingMode)),
+                ('mode', enumfields.fields.EnumField(default='ROUND_HALF_UP', max_length=50, verbose_name='rounding mode', enum=shoop.core.models.RoundingMode)),
             ],
             options={
                 'abstract': False,

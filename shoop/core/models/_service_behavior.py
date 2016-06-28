@@ -204,7 +204,7 @@ class RoundingBehaviorComponent(ServiceBehaviorComponent):
         max_digits=36, decimal_places=9, default=decimal.Decimal('0.05'),
         verbose_name=_("rounding quant"))
     mode = EnumField(
-        RoundingMode,
+        RoundingMode, max_length=50,
         default=RoundingMode.ROUND_HALF_UP,
         verbose_name=_("rounding mode"))
 
