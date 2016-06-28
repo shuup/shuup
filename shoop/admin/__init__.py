@@ -63,7 +63,8 @@ class ShoopAdminAppConfig(AppConfig):
         from shoop.core.order_creator.signals import order_creator_finished
         from shoop.admin.modules.orders.receivers import handle_custom_payment_return_requests
 
-        order_creator_finished.connect(handle_custom_payment_return_requests, dispatch_uid='shoop.admin.order_create')
+        order_creator_finished.connect(handle_custom_payment_return_requests,
+                                       dispatch_uid='shoop.admin.handle_cash_payments')
         validate_templates_configuration()
 
 
