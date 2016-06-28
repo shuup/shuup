@@ -38,6 +38,8 @@ function renderAddress(store, shop, customer, address, addressType) {
 }
 
 function customerDetailView(customerInfo) {
+    const groups = customerInfo.groups || [];
+
     return (
         m("div.row",
             m("div.col-md-6",
@@ -49,7 +51,7 @@ function customerDetailView(customerInfo) {
             ),
             m("div.col-md-6",
                 m("dl.dl-horizontal", [
-                    infoRow(gettext("Groups"), customerInfo.groups),
+                    infoRow(gettext("Groups"), groups.join(", ")),
                     infoRow(gettext("Companies"), customerInfo.companies),
                     infoRow(gettext("Merchant Notes"), customerInfo.merchant_notes)
                 ])
@@ -64,11 +66,13 @@ function orderSummaryView(orderSummary) {
         {key: "total", label: gettext("Total Sales")}
     ];
 
-    return table({
-        tableClass: "table-condensed table-striped",
-        columns,
-        data: orderSummary
-    });
+    return m("div.table-responsive",
+        table({
+            tableClass: "table-condensed table-striped",
+            columns,
+            data: orderSummary
+        })
+    );
 }
 
 function recentOrderView(recentOrders) {
@@ -80,14 +84,16 @@ function recentOrderView(recentOrders) {
         {key: "total", label: gettext("Total")}
     ];
 
-    return table({
-        tableClass: "table-condensed table-striped",
-        columns,
-        data: recentOrders
-    });
+    return m("div.table-responsive",
+        table({
+            tableClass: "table-condensed table-striped",
+            columns,
+            data: recentOrders
+        })
+    );
 }
 
-function renderCustomerDetailModal(store) {
+export function renderCustomerDetailModal(store) {
     const {customerDetails} = store.getState();
 
     const customerInfo = customerDetails.customerInfo || {};
@@ -202,7 +208,6 @@ export function customerSelectView(store) {
                         renderAddress(store, shop, customer, customer.shippingAddress, "shipping")
                     ])
                 ) : null)
-        ]),
-        (customerDetails? renderCustomerDetailModal(store) : null)
+        ])
     ]);
 }

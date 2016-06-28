@@ -9,7 +9,7 @@
 import m from "mithril";
 import {shopSelectView} from "./shops";
 import {orderLinesView} from "./lines";
-import {customerSelectView} from "./customers";
+import {customerSelectView, renderCustomerDetailModal} from "./customers";
 import {shipmentMethodSelectView, paymentMethodSelectView} from "./methods";
 import {confirmView} from "./confirm";
 import {contentBlock} from "./utils";
@@ -19,6 +19,7 @@ import store from "../store";
 export default function view() {
     const {creating, source, total} = store.getState().order;
     const {choices, selected} = store.getState().shop;
+    const {customerDetails} = store.getState();
     if (source) {
         return m("div.container-fluid",
             confirmView(source),
@@ -53,6 +54,7 @@ export default function view() {
                 contentBlock("i.fa.fa-cubes", gettext("Order Contents"), orderLinesView(store, creating)),
                 contentBlock("i.fa.fa-truck", gettext("Shipping Method"), shipmentMethodSelectView(store)),
                 contentBlock("i.fa.fa-credit-card", gettext("Payment Method"), paymentMethodSelectView(store)),
+                (customerDetails? renderCustomerDetailModal(store) : null),
                 m("div.order-footer",
                     m("div.text", m(
                         "small",
