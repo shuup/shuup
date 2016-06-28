@@ -14,9 +14,7 @@ from shoop.admin.utils.permissions import (
     get_default_model_permissions, get_permissions_from_urls
 )
 from shoop.admin.utils.urls import derive_model_url, get_edit_and_list_urls
-from shoop.campaigns.models import (
-    BasketCampaign, Campaign, CatalogCampaign, Coupon
-)
+from shoop.campaigns.models import BasketCampaign, CatalogCampaign, Coupon
 
 
 class CampaignAdminModule(AdminModule):
@@ -68,7 +66,7 @@ class CampaignAdminModule(AdminModule):
         ]
 
     def get_required_permissions(self):
-        return get_permissions_from_urls(self.get_urls()) | get_default_model_permissions(Campaign)
+        return get_permissions_from_urls(self.get_urls())
 
     def get_model_url(self, object, kind):
         if not hasattr(object, "admin_url_suffix"):
