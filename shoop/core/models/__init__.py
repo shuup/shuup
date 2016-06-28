@@ -26,7 +26,7 @@ from ._manufacturers import Manufacturer
 from ._order_lines import OrderLine, OrderLineTax, OrderLineType
 from ._orders import (
     Order, OrderLogEntry, OrderStatus, OrderStatusRole, PaymentStatus,
-    PurchaseOrder, ShippingStatus
+    ShippingStatus
 )
 from ._payments import Payment
 from ._persistent_cache import PersistentCacheEntry
@@ -121,7 +121,6 @@ __all__ = [
     "ProductVisibility",
     "RoundingMode",
     "RoundingBehaviorComponent",
-    "PurchaseOrder",
     "SalesUnit",
     "SavedAddress",
     "SavedAddressRole",

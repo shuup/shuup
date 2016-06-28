@@ -28,9 +28,6 @@ export const setShipToBillingAddress = createAction("setShipToBillingAddress");
 export const setIsCompany = createAction("setIsCompany");
 export const setCustomer = createAction("setCustomer");
 export const showCustomerModal = createAction("showCustomerModal");
-// Manufacturer actions
-export const setSelectedManufacturer = createAction("setSelectedManufacturer");
-export const setManufacturers = createAction("setManufacturers");
 // Methods actions
 export const setShippingMethodChoices = createAction("setShippingMethodChoices");
 export const setShippingMethod = createAction("setShippingMethod");
@@ -40,14 +37,13 @@ export const setPaymentMethod = createAction("setPaymentMethod");
 export const updateTotals = createAction("updateTotals");
 export const setOrderSource = createAction("setOrderSource");
 export const clearOrderSourceData = createAction("clearOrderSourceData");
-export const setOrderType = createAction("setOrderType");
 export const setOrderId = createAction("setOrderId");
 // Comment action
 export const setComment = createAction("setComment");
 
 export const retrieveProductData = function ({id, forLine, quantity}) {
     return (dispatch, getState) => {
-        const {customer, lines, shop, orderType} = getState();
+        const {customer, lines, shop} = getState();
         const prodsAlreadyInLinesQty = _.reduce(lines, function(sum, line) {
             if (line.id !== forLine && line.product && line.product.id === id) {
                 return sum + parseFloat(line.quantity);
@@ -67,7 +63,7 @@ export const retrieveProductData = function ({id, forLine, quantity}) {
             }
             dispatch(receiveProductData({id, data}));
             if (forLine) {
-                dispatch(updateLineFromProduct({id: forLine, orderType, product: data}));
+                dispatch(updateLineFromProduct({id: forLine, product: data}));
                 dispatch(updateTotals(getState));
             }
         });
@@ -107,7 +103,6 @@ export const retrieveCustomerDetails = function({id}) {
 export const retrieveOrderSourceData = function () {
     return (dispatch, getState) => {
         const state = getState();
-        console.log(state);
         post("source_data", {state}).then((data) => {
             dispatch(receiveOrderSourceData({data}));
             dispatch(setOrderSource(data));
@@ -164,7 +159,7 @@ function handleFinalizeResponse(dispatch, data) {
 
 export const beginFinalizingOrder = function () {
     return (dispatch, getState) => {
-        const state = _.assign({}, getState(), {order: {type: getState().order.type}}, {productData: null}); // We don't care about that substate
+        const state = _.assign({}, getState(), {productData: null, order: null}); // We don't care about that substate
         post("finalize", {state}).then((data) => {
             handleFinalizeResponse(dispatch, data);
         }, (data) => {  // error handler

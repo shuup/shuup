@@ -9,25 +9,20 @@ from __future__ import unicode_literals
 
 import decimal
 import json
-
 import pytest
 
 from shoop.admin.modules.orders.views.edit import OrderEditView
-from shoop.campaigns.models import BasketCampaign, Coupon
-from shoop.campaigns.models.basket_conditions import \
-    BasketTotalProductAmountCondition
+from shoop.campaigns.models import Coupon, BasketCampaign
+from shoop.campaigns.models.basket_conditions import BasketTotalProductAmountCondition
 from shoop.campaigns.models.basket_effects import BasketDiscountAmount
-from shoop.core.models import Order, OrderLineType, Tax, TaxClass
 from shoop.core.order_creator import OrderCreator
+from shoop.core.models import Order, OrderLineType, Tax, TaxClass
 from shoop.default_tax.models import TaxRule
 from shoop.front.basket import get_basket
 from shoop.testing.factories import (
-    create_product, create_random_person, get_default_supplier,
-    get_initial_order_status, get_payment_method, get_shipping_method,
-    UserFactory
+   create_product, get_payment_method, get_shipping_method, get_default_supplier, get_initial_order_status, create_random_person, UserFactory
 )
-from shoop_tests.admin.test_order_creator import \
-    get_frontend_request_for_command
+from shoop_tests.admin.test_order_creator import get_frontend_request_for_command
 from shoop_tests.campaigns import initialize_test
 from shoop_tests.utils import assert_contains, printable_gibberish
 
@@ -135,7 +130,6 @@ def _get_frontend_order_state(shop, contact):
     ]
 
     state = {
-        "order": {"type": "sales"},
         "customer": {"id": contact.id if contact else None},
         "lines": lines,
         "methods": {

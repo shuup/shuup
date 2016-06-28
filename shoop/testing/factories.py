@@ -31,12 +31,11 @@ from shoop.core.defaults.order_statuses import create_default_order_statuses
 from shoop.core.models import (
     AnonymousContact, Attribute, AttributeType, Category, CategoryStatus,
     CompanyContact, Contact, ContactGroup, CustomCarrier,
-    CustomPaymentProcessor, FixedCostBehaviorComponent, Manufacturer,
-    MutableAddress, Order, OrderLine, OrderLineTax, OrderLineType, OrderStatus,
-    PaymentMethod, PersonContact, Product, ProductMedia, ProductMediaKind,
-    ProductType, SalesUnit, ShippingMethod, Shop, ShopProduct, ShopStatus,
-    StockBehavior, Supplier, SupplierType, Tax, TaxClass,
-    WaivingCostBehaviorComponent
+    CustomPaymentProcessor, FixedCostBehaviorComponent, MutableAddress, Order,
+    OrderLine, OrderLineTax, OrderLineType, OrderStatus, PaymentMethod,
+    PersonContact, Product, ProductMedia, ProductMediaKind, ProductType,
+    SalesUnit, ShippingMethod, Shop, ShopProduct, ShopStatus, StockBehavior,
+    Supplier, SupplierType, Tax, TaxClass, WaivingCostBehaviorComponent
 )
 from shoop.core.order_creator import OrderCreator, OrderSource
 from shoop.core.pricing import get_pricing_module
@@ -408,11 +407,6 @@ def get_shop(prices_include_tax, currency="EUR"):
     return shop
 
 
-def get_default_manufacturer():
-    manufacturer, _ = Manufacturer.objects.get_or_create(name=DEFAULT_NAME)
-    return manufacturer
-
-
 def get_default_product():
     product = Product.objects.filter(sku=DEFAULT_IDENTIFIER).first()
     if not product:
@@ -477,7 +471,6 @@ def create_product(sku, shop=None, supplier=None, default_price=None, **attrs):
     product_attrs = dict(
         type=get_default_product_type(),
         tax_class=get_default_tax_class(),
-        manufacturer=get_default_manufacturer(),
         sku=sku,
         name=sku.title(),
         width=100,

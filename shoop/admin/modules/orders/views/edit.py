@@ -14,6 +14,7 @@ from babel.numbers import format_currency, format_decimal
 from django.contrib import messages
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.core.urlresolvers import reverse
 from django.db import transaction
 from django.db.models import Sum
 from django.http.response import HttpResponse, JsonResponse
@@ -21,17 +22,12 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
 from django_countries import countries
 
-from shoop.admin.base import MenuEntry
-from shoop.admin.modules.orders.json_order_creator import (
-    JsonPurchaseOrderCreator, JsonSalesOrderCreator
-)
+from shoop.admin.modules.orders.json_order_creator import JsonOrderCreator
 from shoop.admin.toolbar import Toolbar
-from shoop.admin.utils.urls import get_model_url
 from shoop.admin.utils.views import CreateOrUpdateView
 from shoop.core.models import (
-    AnonymousContact, CompanyContact, Contact, Manufacturer, Order,
-    OrderLineType, PaymentMethod, PersonContact, Product, PurchaseOrder,
-    ShippingMethod, Shop, ShopStatus
+    AnonymousContact, CompanyContact, Contact, Order, OrderLineType,
+    PaymentMethod, PersonContact, Product, ShippingMethod, Shop, ShopStatus
 )
 from shoop.core.pricing import get_pricing_module
 from shoop.utils.i18n import (
@@ -40,15 +36,8 @@ from shoop.utils.i18n import (
 )
 
 
-def get_order_creator_for_type(type):
-    if type == "sales":
-        return JsonSalesOrderCreator()
-    else:
-        return JsonPurchaseOrderCreator()
-
-
 def create_order_from_state(state, **kwargs):
-    joc = get_order_creator_for_type(state["order"]["type"])
+    joc = JsonOrderCreator()
     order = joc.create_order_from_state(state, **kwargs)
     if not order:
         raise ValidationError(list(joc.errors))
@@ -56,7 +45,7 @@ def create_order_from_state(state, **kwargs):
 
 
 def update_order_from_state(state, order_to_update, **kwargs):
-    joc = get_order_creator_for_type(state["order"]["type"])
+    joc = JsonOrderCreator()
     order = joc.update_order_from_state(state, order_to_update, **kwargs)
     if not order:
         raise ValidationError(list(joc.errors))
@@ -64,7 +53,7 @@ def update_order_from_state(state, order_to_update, **kwargs):
 
 
 def create_source_from_state(state, **kwargs):
-    joc = get_order_creator_for_type(state["order"]["type"])
+    joc = JsonOrderCreator()
     source = joc.create_source_from_state(state, **kwargs)
     if not source:
         raise ValidationError(list(joc.errors))
@@ -104,44 +93,7 @@ def encode_line(line):
     }
 
 
-def encode_manufacturer_data(manufacturer):
-    return {
-        "id": manufacturer.id,
-        "name": manufacturer.name
-    }
-
-
-def encode_customer_data(customer):
-    return {
-        "id": customer.id,
-        "name": customer.name,
-        "isCompany": bool(isinstance(customer, CompanyContact)),
-        "billingAddress": encode_address(customer.default_billing_address),
-        "shippingAddress": encode_address(customer.default_shipping_address)
-    }
-
-
-def encode_order_data_for_edit(order):
-    return {
-        "shop": encode_shop(order.shop),
-        "lines": [
-            encode_line_data_for_edit(order.shop, line) for line in order.lines.filter(
-                type__in=[OrderLineType.PRODUCT, OrderLineType.OTHER], parent_line_id=None
-            )
-        ],
-        "shippingMethodId": (encode_method(order.shipping_method) if order.shipping_method else None),
-        "paymentMethodId": (encode_method(order.payment_method) if order.payment_method else None),
-        "customer": {
-            "id": order.customer.id,
-            "name": order.customer.name,
-            "isCompany": bool(isinstance(order.customer, CompanyContact)),
-            "billingAddress": encode_address(order.billing_address),
-            "shippingAddress": encode_address(order.shipping_address)
-        }
-    }
-
-
-def encode_line_data_for_edit(shop, line):
+def get_line_data_for_edit(shop, line):
     total_price = line.taxful_price.value if shop.prices_include_tax else line.taxless_price.value
     base_data = {
         "id": line.id,
@@ -191,111 +143,77 @@ def get_price_info(shop, customer, product, quantity):
     return product.get_price_info(pricing_ctx, quantity=quantity)
 
 
-def get_product_data(request, for_purchase_order=False):
-    product_id = request.GET["id"]
-    shop_id = request.GET["shop_id"]
-    customer_id = request.GET.get("customer_id")
-    quantity = decimal.Decimal(request.GET.get("quantity", 1))
-    already_in_lines_qty = decimal.Decimal(request.GET.get("already_in_lines_qty", 0))
-    product = Product.objects.filter(pk=product_id).first()
-    errors = None
-    price_dict = None
-    if not product:
-        return {"errorText": _("Product %s does not exist.") % product_id}
-    shop = Shop.objects.get(pk=shop_id)
-    try:
-        shop_product = product.get_shop_instance(shop)
-    except ObjectDoesNotExist:
-        return {
-            "errorText": _("Product %(product)s is not available in the %(shop)s shop.") %
-            {"product": product.name, "shop": shop.name}
-        }
-
-    min_quantity = shop_product.minimum_purchase_quantity
-    # Make quantity to be at least minimum quantity
-    quantity = (min_quantity if quantity < min_quantity else quantity)
-    customer = Contact.objects.filter(pk=customer_id).first() if customer_id else None
-    # TODO: Allow setting a supplier?
-    supplier = shop_product.suppliers.filter().first()
-    stock_status = supplier.get_stock_status(product.pk) if supplier else None
-    if not for_purchase_order:
-        errors = " ".join(
-            [str(message.args[0]) for message in shop_product.get_orderability_errors(
-                supplier=supplier, quantity=(quantity + already_in_lines_qty), customer=customer, ignore_minimum=True)])
-    product_data = {
-        "id": product.id,
-        "sku": product.sku,
-        "name": product.name,
-        "quantity": quantity,
-        "logicalCount": stock_status.logical_count if stock_status else 0,
-        "physicalCount": stock_status.physical_count if stock_status else 0,
-        "salesDecimals": product.sales_unit.decimals if product.sales_unit else 0,
-        "salesUnit": product.sales_unit.short_name if product.sales_unit else "",
-        "purchaseMultiple": shop_product.purchase_multiple,
-        "errors": errors,
-        "taxClass": {
-            "id": product.tax_class.id,
-            "name": force_text(product.tax_class),
-        }
-    }
-
-    if for_purchase_order:
-        purchase_price = supplier.get_latest_purchase_price(product.id) if supplier else None
-        if purchase_price:
-            price_dict = {
-                "baseUnitPrice": {
-                    "value": purchase_price.value,
-                    "includesTax": purchase_price.includes_tax
-                }
-            }
-            price_dict["unitPrice"] = price_dict["baseUnitPrice"]
-
-    if not price_dict:
-        price_info = get_price_info(shop, customer, product, quantity)
-        price_dict = {
-            "baseUnitPrice": {
-                "value": price_info.base_unit_price.value,
-                "includesTax": price_info.base_unit_price.includes_tax
-            },
-            "unitPrice": {
-                "value": price_info.discounted_unit_price.value,
-                "includesTax": price_info.base_unit_price.includes_tax
-            }
-        }
-    product_data.update(price_dict)
-    return product_data
-
-
-class BaseOrderEditView(CreateOrUpdateView):
+class OrderEditView(CreateOrUpdateView):
+    model = Order
     template_name = "shoop/admin/orders/create.jinja"
     context_object_name = "order"
     title = _("Create Order")
     fields = []
 
-    def get_breadcrumb_parents(self):
-        return [
-            MenuEntry(
-                text=self.object._meta.verbose_name_plural.title(),
-                url=get_model_url(self.object, kind="list")
-            )
-        ]
-
     def get_context_data(self, **kwargs):
-        context = super(BaseOrderEditView, self).get_context_data(**kwargs)
-        context["config"] = {
-            "shops": [encode_shop(shop) for shop in Shop.objects.filter(status=ShopStatus.ENABLED)],
-            "orderId": self.object.pk,
-            "orderData": encode_order_data_for_edit(self.object) if self.object.pk else {}
-        }
+        context = super(OrderEditView, self).get_context_data(**kwargs)
+        context["config"] = self.get_config()
         return context
 
     def get_toolbar(self):
         return Toolbar([])
 
+    def get_config(self):
+        order = self.object
+        shops = [encode_shop(shop) for shop in Shop.objects.filter(status=ShopStatus.ENABLED)]
+        customer_id = self.request.GET.get("contact_id")
+        shipping_methods = ShippingMethod.objects.enabled()
+        payment_methods = PaymentMethod.objects.enabled()
+        return {
+            "shops": shops,
+            "countries": [{"id": code, "name": name} for code, name in list(countries)],
+            "shippingMethods": [encode_method(sm) for sm in shipping_methods],
+            "paymentMethods": [encode_method(pm) for pm in payment_methods],
+            "orderId": order.pk,
+            "orderData": self.get_initial_order_data(),
+            "customerData": self.get_customer_data(customer_id) if customer_id else None
+        }
+
+    def get_initial_order_data(self):
+        order = self.object
+        if not order.pk:
+            return {}
+        return {
+            "shop": encode_shop(order.shop),
+            "lines": [
+                get_line_data_for_edit(order.shop, line) for line in order.lines.filter(
+                    type__in=[OrderLineType.PRODUCT, OrderLineType.OTHER], parent_line_id=None
+                )
+            ],
+            "shippingMethodId": (encode_method(order.shipping_method) if order.shipping_method else None),
+            "paymentMethodId": (encode_method(order.payment_method) if order.payment_method else None),
+            "customer": {
+                "id": order.customer.id,
+                "name": order.customer.name,
+                "isCompany": bool(isinstance(order.customer, CompanyContact)),
+                "billingAddress": encode_address(order.billing_address),
+                "shippingAddress": encode_address(order.shipping_address)
+            }
+        }
+
+    def get_customer_data(self, customer_id):
+        customer = Contact.objects.filter(pk=customer_id).first()
+        if not customer:
+            return JsonResponse(
+                {"success": False, "errorMessage": _("Contact %s does not exist.") % customer_id}, status=400
+            )
+        return {
+            "id": customer.id,
+            "name": customer.name,
+            "isCompany": bool(isinstance(customer, CompanyContact)),
+            "billingAddress": encode_address(customer.default_billing_address),
+            "shippingAddress": encode_address(customer.default_shipping_address)
+        }
+
     def dispatch(self, request, *args, **kwargs):
         if request.GET.get("command"):
             return self.dispatch_command(request)
-        return super(BaseOrderEditView, self).dispatch(request, *args, **kwargs)
+        return super(OrderEditView, self).dispatch(request, *args, **kwargs)
 
     def dispatch_command(self, request):
         handler = getattr(self, "handle_%s" % request.GET.get("command"), None)
@@ -307,7 +225,102 @@ class BaseOrderEditView(CreateOrUpdateView):
         return retval
 
     def handle_product_data(self, request):
-        return {}
+        product_id = request.GET["id"]
+        shop_id = request.GET["shop_id"]
+        customer_id = request.GET.get("customer_id")
+        quantity = decimal.Decimal(request.GET.get("quantity", 1))
+        already_in_lines_qty = decimal.Decimal(request.GET.get("already_in_lines_qty", 0))
+        product = Product.objects.filter(pk=product_id).first()
+        if not product:
+            return {"errorText": _("Product %s does not exist.") % product_id}
+        shop = Shop.objects.get(pk=shop_id)
+        try:
+            shop_product = product.get_shop_instance(shop)
+        except ObjectDoesNotExist:
+            return {
+                "errorText": _("Product %(product)s is not available in the %(shop)s shop.") %
+                {"product": product.name, "shop": shop.name}
+            }
+
+        min_quantity = shop_product.minimum_purchase_quantity
+        # Make quantity to be at least minimum quantity
+        quantity = (min_quantity if quantity < min_quantity else quantity)
+        customer = Contact.objects.filter(pk=customer_id).first() if customer_id else None
+        price_info = get_price_info(shop, customer, product, quantity)
+        supplier = shop_product.suppliers.first()  # TODO: Allow setting a supplier?
+        stock_status = supplier.get_stock_status(product.pk) if supplier else None
+        errors = " ".join(
+            [str(message.args[0]) for message in shop_product.get_orderability_errors(
+                supplier=supplier, quantity=(quantity + already_in_lines_qty), customer=customer, ignore_minimum=True)])
+        return {
+            "id": product.id,
+            "sku": product.sku,
+            "name": product.name,
+            "quantity": quantity,
+            "logicalCount": stock_status.logical_count if stock_status else 0,
+            "physicalCount": stock_status.physical_count if stock_status else 0,
+            "salesDecimals": product.sales_unit.decimals if product.sales_unit else 0,
+            "salesUnit": product.sales_unit.short_name if product.sales_unit else "",
+            "purchaseMultiple": shop_product.purchase_multiple,
+            "errors": errors,
+            "taxClass": {
+                "id": product.tax_class.id,
+                "name": force_text(product.tax_class),
+            },
+            "baseUnitPrice": {
+                "value": price_info.base_unit_price.value,
+                "includesTax": price_info.base_unit_price.includes_tax
+            },
+            "unitPrice": {
+                "value": price_info.discounted_unit_price.value,
+                "includesTax": price_info.base_unit_price.includes_tax
+            }
+        }
+
+    def handle_customer_data(self, request):
+        customer_id = request.GET["id"]
+        return self.get_customer_data(customer_id)
+
+    def handle_customer_details(self, request):
+        customer_id = request.GET["id"]
+        customer = Contact.objects.get(pk=customer_id)
+        companies = []
+        if isinstance(customer, PersonContact):
+            companies = sorted(customer.company_memberships.all(), key=(lambda x: force_text(x)))
+        recent_orders = customer.customer_orders.order_by('-id')[:10]
+
+        order_summary = []
+        for dt in customer.customer_orders.datetimes('order_date', 'year'):
+            summary = customer.customer_orders.filter(order_date__year=dt.year).aggregate(
+                total=Sum('taxful_total_price_value')
+            )
+            order_summary.append({
+                'year': dt.year,
+                'total': format_currency(
+                    summary['total'], currency=recent_orders[0].currency, locale=get_current_babel_locale()
+                )
+            })
+
+        return {
+            "customer_info": {
+                "name": customer.full_name,
+                "phone_no": customer.phone,
+                "email": customer.email,
+                "companies": companies if len(companies) else None,
+                "groups": [force_text(group) for group in customer.groups.all()],
+                "merchant_notes": customer.merchant_notes
+            },
+            "order_summary": order_summary,
+            "recent_orders": [
+                {
+                    "order_date": get_locally_formatted_datetime(order.order_date),
+                    "total": format_money(order.taxful_total_price),
+                    "status": order.get_status_display(),
+                    "payment_status": force_text(order.payment_status.label),
+                    "shipment_status": force_text(order.shipping_status.label)
+                } for order in recent_orders
+            ]
+        }
 
     @transaction.atomic
     def _handle_source_data(self, request):
@@ -352,7 +365,7 @@ class BaseOrderEditView(CreateOrUpdateView):
         return JsonResponse({
             "success": True,
             "orderIdentifier": order.identifier,
-            "url": get_model_url(self.object, kind="list")
+            "url": reverse("shoop_admin:order.list")
         })
 
     def handle_source_data(self, request):
@@ -360,99 +373,6 @@ class BaseOrderEditView(CreateOrUpdateView):
 
     def handle_finalize(self, request):
         return _handle_or_return_error(self._handle_finalize, request, _("Could not finalize order:"))
-
-
-class OrderEditView(BaseOrderEditView):
-    model = Order
-
-    def get_queryset(self):
-        return Order.objects.sales_orders()
-
-    def get_context_data(self, **kwargs):
-        context = super(OrderEditView, self).get_context_data(**kwargs)
-        customer_id = self.request.GET.get("contact_id")
-        customer = Contact.objects.filter(pk=customer_id).first()
-        shipping_methods = ShippingMethod.objects.enabled()
-        payment_methods = PaymentMethod.objects.enabled()
-        context["config"].update({
-            "orderType": "sales",
-            "countries": [{"id": code, "name": name} for code, name in list(countries)],
-            "shippingMethods": [encode_method(sm) for sm in shipping_methods],
-            "paymentMethods": [encode_method(pm) for pm in payment_methods],
-            "customerData": encode_customer_data(customer) if customer else None
-        })
-        return context
-
-    def handle_customer_data(self, request):
-        customer_id = request.GET["id"]
-        customer = Contact.objects.filter(pk=customer_id).first()
-        if not customer:
-            return JsonResponse(
-                {"success": False, "errorMessage": _("Contact %s does not exist.") % customer_id}, status=400
-            )
-        return encode_customer_data(customer)
-
-    def handle_customer_details(self, request):
-        customer_id = request.GET["id"]
-        customer = Contact.objects.get(pk=customer_id)
-        companies = []
-        if isinstance(customer, PersonContact):
-            companies = sorted(customer.company_memberships.all(), key=(lambda x: force_text(x)))
-        customer_sales_orders = customer.customer_orders.filter(purchaseorder__isnull=True)
-        recent_orders = customer_sales_orders.order_by('-id')[:10]
-
-        order_summary = []
-        for dt in customer_sales_orders.datetimes('order_date', 'year'):
-            summary = customer_sales_orders.filter(order_date__year=dt.year).aggregate(
-                total=Sum('taxful_total_price_value')
-            )
-            order_summary.append({
-                'year': dt.year,
-                'total': format_currency(
-                    summary['total'], currency=recent_orders[0].currency, locale=get_current_babel_locale()
-                )
-            })
-
-        return {
-            "customer_info": {
-                "name": customer.full_name,
-                "phone_no": customer.phone,
-                "email": customer.email,
-                "companies": companies if len(companies) else None,
-                "groups": [force_text(group) for group in customer.groups.all()],
-                "merchant_notes": customer.merchant_notes
-            },
-            "order_summary": order_summary,
-            "recent_orders": [
-                {
-                    "order_date": get_locally_formatted_datetime(order.order_date),
-                    "total": format_money(order.taxful_total_price),
-                    "status": order.get_status_display(),
-                    "payment_status": force_text(order.payment_status.label),
-                    "shipment_status": force_text(order.shipping_status.label)
-                } for order in recent_orders
-            ]
-        }
-
-    def handle_product_data(self, request):
-        return get_product_data(request)
-
-
-class PurchaseOrderEditView(BaseOrderEditView):
-    model = PurchaseOrder
-
-    def get_context_data(self, **kwargs):
-        context = super(PurchaseOrderEditView, self).get_context_data(**kwargs)
-        manufacturer_id = self.request.GET.get("manufacturer_id")
-        context["config"].update({
-            "orderType": "purchase",
-            "manufacturers": [encode_manufacturer_data(manufacturer) for manufacturer in Manufacturer.objects.all()],
-            "manufacturer": manufacturer_id
-        })
-        return context
-
-    def handle_product_data(self, request):
-        return get_product_data(request, for_purchase_order=True)
 
 
 def _handle_or_return_error(func, request, error_message):

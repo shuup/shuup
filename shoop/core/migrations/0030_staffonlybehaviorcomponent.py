@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shoop', '0030_purchaseorder'),
+        ('shoop', '0029_update_order_phone_max_length'),
     ]
 
     operations = [

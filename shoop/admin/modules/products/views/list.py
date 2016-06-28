@@ -32,7 +32,6 @@ class ProductListView(PicotableListView):
     def get_queryset(self):
         filter = self.get_filter()
         shop_id = filter.get("shop")
-        manufacturer_id = filter.get("manufacturer")
         qs = Product.objects.all_except_deleted()
         q = Q()
         for mode in filter.get("modes", []):
@@ -40,8 +39,6 @@ class ProductListView(PicotableListView):
         qs = qs.filter(q)
         if shop_id:
             qs = qs.filter(shop_products__shop_id=int(shop_id))
-        if manufacturer_id:
-            qs = qs.filter(manufacturer_id=manufacturer_id)
         return qs
 
     def get_object_abstract(self, instance, item):

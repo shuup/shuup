@@ -18,13 +18,12 @@ from shoop.admin.utils.permissions import (
     get_default_model_permissions, get_permissions_from_urls
 )
 from shoop.admin.utils.urls import admin_url, derive_model_url, get_model_url
-from shoop.core.models import (
-    Contact, Order, OrderStatusRole, Product, PurchaseOrder
-)
+from shoop.core.models import Contact, Order, OrderStatusRole, Product
 
 
 class OrderModule(CurrencyBound, AdminModule):
     name = _("Orders")
+    breadcrumbs_menu_entry = MenuEntry(name, url="shoop_admin:order.list")
 
     def get_urls(self):
         return [
@@ -89,26 +88,6 @@ class OrderModule(CurrencyBound, AdminModule):
                 permissions=get_default_model_permissions(Order),
 
             ),
-            admin_url(
-                "^purchase-orders/(?P<pk>\d+)/$",
-                "shoop.admin.modules.orders.views.PurchaseOrderDetailView",
-                name="purchase_order.detail"
-            ),
-            admin_url(
-                "^purchase-orders/new/$",
-                "shoop.admin.modules.orders.views.PurchaseOrderEditView",
-                name="purchase_order.new"
-            ),
-            admin_url(
-                "^purchase-orders/$",
-                "shoop.admin.modules.orders.views.PurchaseOrderListView",
-                name="purchase_order.list"
-            ),
-            admin_url(
-                "^purchase-orders/(?P<pk>\d+)/set-arrived/$",
-                "shoop.admin.modules.orders.views.PurchaseOrderSetArrivedView",
-                name="purchase_order.set-arrived"
-            ),
         ]
 
     def get_menu_category_icons(self):
@@ -118,18 +97,11 @@ class OrderModule(CurrencyBound, AdminModule):
         category = _("Orders")
         return [
             MenuEntry(
-                text=_("Sales Orders"),
+                text=_("Orders"),
                 icon="fa fa-inbox",
                 url="shoop_admin:order.list",
                 category=category,
-                aliases=[_("Show sales orders")]
-            ),
-            MenuEntry(
-                text=_("Purchase Orders"),
-                icon="fa fa-inbox",
-                url="shoop_admin:purchase_order.list",
-                category=category,
-                aliases=[_("Show purchase orders")]
+                aliases=[_("Show orders")]
             ),
         ]
 
@@ -185,7 +157,4 @@ class OrderModule(CurrencyBound, AdminModule):
             )
 
     def get_model_url(self, object, kind):
-        return (
-            derive_model_url(PurchaseOrder, "shoop_admin:purchase_order", object, kind) or
-            derive_model_url(Order, "shoop_admin:order", object, kind)
-        )
+        return derive_model_url(Order, "shoop_admin:order", object, kind)

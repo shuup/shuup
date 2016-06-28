@@ -8,22 +8,15 @@
 
 import pytest
 
-from shoop.core.models import (
-    get_person_contact, Manufacturer, Order, OrderLineType, PurchaseOrder,
-    Shop
-)
-from shoop.core.order_creator import (
-    OrderCreator, OrderSource, PurchaseOrderCreator, PurchaseOrderSource,
-    SourceLine
-)
+from shoop.core.models import get_person_contact, Order, OrderLineType, Shop
+from shoop.core.order_creator import OrderCreator, OrderSource, SourceLine
 from shoop.testing.factories import (
-    get_address, get_default_manufacturer, get_default_payment_method,
-    get_default_product, get_default_shipping_method, get_default_shop,
-    get_default_supplier, get_initial_order_status
+    get_address, get_default_payment_method, get_default_product,
+    get_default_shipping_method, get_default_shop, get_default_supplier,
+    get_initial_order_status
 )
 from shoop.utils.models import get_data_dict
 from shoop_tests.utils.basketish_order_source import BasketishOrderSource
-from shoop_tests.utils.fixtures import regular_user
 
 
 def test_invalid_order_source_updating():
@@ -75,15 +68,6 @@ def seed_source(user):
     source.shipping_method = get_default_shipping_method()
     assert source.payment_method_id == get_default_payment_method().id
     assert source.shipping_method_id == get_default_shipping_method().id
-    return source
-
-
-def get_purchase_order_source(user):
-    source = PurchaseOrderSource(get_default_shop())
-    source.status = get_initial_order_status()
-    source.customer = get_person_contact(user)
-    source.creator = user
-    source.manufacturer = get_default_manufacturer()
     return source
 
 
@@ -155,44 +139,3 @@ def test_order_source_parentage(rf, admin_user):
     kid_line = order.lines.filter(sku="KIDKIDKID").first()
     assert kid_line
     assert kid_line.parent_line.product_id == product.pk
-
-
-@pytest.mark.django_db
-def test_purchase_order_creator(rf, admin_user):
-    source = get_purchase_order_source(admin_user)
-    product = get_default_product()
-    source.add_line(
-        type=OrderLineType.PRODUCT,
-        product=product,
-        supplier=get_default_supplier(),
-        quantity=1,
-        base_unit_price=source.create_price(10),
-        line_id="main"
-    )
-    creator = PurchaseOrderCreator()
-    purchase_order = PurchaseOrder.objects.get(pk=creator.create_order(source).pk)
-    assert purchase_order
-
-
-@pytest.mark.django_db
-def test_purchase_order_creator_validation_errors(rf, admin_user, regular_user):
-    source = get_purchase_order_source(admin_user)
-    product = get_default_product()
-    source.add_line(
-        type=OrderLineType.PRODUCT,
-        product=product,
-        supplier=get_default_supplier(),
-        quantity=1,
-        base_unit_price=source.create_price(10),
-        line_id="main"
-    )
-    creator = PurchaseOrderCreator()
-    source.creator = regular_user
-    with pytest.raises(Exception):
-        creator.create_order(source)  # invalid user
-
-    product.manufacturer = Manufacturer.objects.create(name='foo')
-    product.save()
-    source.creator = admin_user
-    with pytest.raises(Exception):
-        creator.create_order(source)  # invalid manufacturer

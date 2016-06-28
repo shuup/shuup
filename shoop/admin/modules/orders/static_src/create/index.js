@@ -10,7 +10,6 @@
 import _ from "lodash";
 import m from "mithril";
 import view from "./view";
-import purchaseOrderView from "./view";
 import {persistStore} from "redux-persist";
 import store from "./store";
 import {
@@ -20,15 +19,11 @@ import {
     setShippingMethodChoices,
     setPaymentMethodChoices,
     setCustomer,
-    setSelectedManufacturer,
-    setManufacturers,
     setShippingMethod,
     setPaymentMethod,
     setLines,
     setOrderId,
-    setOrderType,
-    updateTotals,
-    clearOrderSourceData
+    updateTotals
 } from "./actions";
 
 var controller = null;
@@ -37,19 +32,14 @@ export function init(config = {}) {
     if (controller !== null) {
         return;
     }
-
-    store.dispatch(setOrderType(config.orderType));
     store.dispatch(setShopChoices(config.shops || []));
     store.dispatch(setShop(config.shops[0] || []));
     store.dispatch(setCountries(config.countries || []));
-    store.dispatch(setManufacturers(config.manufacturers || []));
     store.dispatch(setShippingMethodChoices(config.shippingMethods || []));
     store.dispatch(setPaymentMethodChoices(config.paymentMethods || []));
-
     const orderId = config.orderId;
     store.dispatch(setOrderId(orderId));
     const customerData = config.customerData;
-    const manufacturer = config.manufacturer;
 
     const persistor = persistStore(store);
     persistor.purge(["customerDetails"]);
@@ -65,18 +55,9 @@ export function init(config = {}) {
         }
     }
 
-    if (savedOrder && savedOrder.type !== config.orderType) { // sales <-> purchase order
-        persistor.purgeAll();
-    }
-
-    if (customerData) { // contact -> New Sales Order
+    if (customerData) { // contact -> New Order
         persistor.purgeAll();
         store.dispatch(setCustomer(customerData));
-    }
-
-    if (manufacturer) { // manufacturer -> New Purchase Order
-        persistor.purgeAll();
-        store.dispatch(setSelectedManufacturer(manufacturer));
     }
 
     if (orderId) { // Edit mode

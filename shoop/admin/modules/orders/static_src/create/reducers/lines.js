@@ -20,7 +20,6 @@ function newLine() {
         quantity: 1,
         step: "",
         baseUnitPrice: 0,
-        purchasePrice: 0,
         unitPrice: 0,
         unitPriceIncludesTax: false,
         discountPercent: 0,
@@ -74,8 +73,7 @@ function getDiscountsAndTotal(quantity, baseUnitPrice, unitPrice, updateUnitPric
 }
 
 function updateLineFromProduct(state, {payload}) {
-    const {id, product, orderType} = payload;
-
+    const {id, product} = payload;
     const line = _.detect(state, (sLine) => sLine.id === id);
     if (!line) {
         return state;
@@ -89,13 +87,11 @@ function updateLineFromProduct(state, {payload}) {
 
     const baseUnitPrice = ensureNumericValue(product.baseUnitPrice.value);
     const unitPrice = ensureNumericValue(product.unitPrice.value);
-
     updates = getDiscountsAndTotal(
         ensureNumericValue(product.quantity),
         baseUnitPrice,
         unitPrice
     );
-
     updates.baseUnitPrice = baseUnitPrice;
     updates.unitPrice = unitPrice;
     updates.unitPriceIncludesTax = product.unitPrice.includesTax;
@@ -156,15 +152,6 @@ function setLineProperty(state, {payload}) {
                     ensureNumericValue(value, line.baseUnitPrice),
                     true
                 );
-                break;
-            case "baseUnitPrice":
-                const baseUnitPrice = ensureNumericValue(value, line.baseUnitPrice)
-                updates = getDiscountsAndTotal(
-                    line.quantity,
-                    baseUnitPrice,
-                    baseUnitPrice
-                );
-                updates.baseUnitPrice = baseUnitPrice;
                 break;
             case "discountPercent":
                 const discountPercent = Math.min(100, Math.max(0, ensureNumericValue(value)));

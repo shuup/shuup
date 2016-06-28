@@ -24,7 +24,7 @@ from shoop.utils.numbers import bankers_round
 
 
 def get_orders_by_currency(currency):
-    return Order.objects.sales_orders().filter(currency=currency)
+    return Order.objects.filter(currency=currency)
 
 
 class OrderValueChartDashboardBlock(DashboardChartBlock):
@@ -107,7 +107,7 @@ def get_avg_purchase_size_block(request, currency):
 
     # Average size of purchase with amount of orders it is calculated from
     average_purchase_size = (
-        Order.objects.sales_orders().all()
+        Order.objects.all()
         .aggregate(count=Count("id"), sum=Avg("taxful_total_price_value")))
     return DashboardMoneyBlock(
         id="average_purchase_sum",

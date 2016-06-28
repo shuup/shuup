@@ -13,13 +13,10 @@ from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.utils.translation import ugettext as _
 
 from shoop.core.models import (
-    CompanyContact, Contact, Manufacturer, MutableAddress, OrderLineType,
-    OrderStatus, PaymentMethod, PersonContact, Product, ShippingMethod, Shop
+    CompanyContact, Contact, MutableAddress, OrderLineType, OrderStatus,
+    PaymentMethod, PersonContact, Product, ShippingMethod, Shop
 )
-from shoop.core.order_creator import (
-    OrderCreator, OrderModifier, OrderSource, PurchaseOrderCreator,
-    PurchaseOrderSource
-)
+from shoop.core.order_creator import OrderCreator, OrderModifier, OrderSource
 from shoop.utils.analog import LogEntryKind
 from shoop.utils.numbers import parse_decimal_string
 
@@ -102,6 +99,17 @@ class JsonOrderCreator(object):
             }), code="no_shop_product"))
             return False
         supplier = shop_product.suppliers.first()  # TODO: Allow setting a supplier?
+        is_orderable = True
+        for message in shop_product.get_orderability_errors(
+                supplier=supplier, quantity=sl_kwargs["quantity"], customer=source.customer):
+            self.add_error(ValidationError((_("Product %(product)s is not orderable: %(error)s") % {
+                "product": product,
+                "error": str(message.args[0])
+            }), code=str(message.args[1])))
+            is_orderable = False
+
+        if not is_orderable:
+            return False
 
         sl_kwargs["product"] = product
         sl_kwargs["supplier"] = supplier
@@ -167,132 +175,17 @@ class JsonOrderCreator(object):
             customer = PersonContact(**fields)
         return customer
 
-    def initialize_source_from_state(self, state, creator, ip_address, save, order_to_update=None):
+    def _initialize_source_from_state(self, state, creator, ip_address, save, order_to_update=None):
         shop_data = state.pop("shop", None).get("selected", {})
         shop = self.safe_get_first(Shop, pk=shop_data.pop("id", None))
         if not shop:
             self.add_error(ValidationError(_("Please choose a valid shop."), code="no_shop"))
             return None
-        source = self.source(shop=shop)
+
+        source = OrderSource(shop=shop)
         if order_to_update:
             source.update_from_order(order_to_update)
-        return source
 
-    def _get_customer(self, customer_data, billing_address_data, is_company, save):
-        customer = self.safe_get_first(Contact, pk=customer_data.get("id")) if customer_data else None
-        if not customer:
-            customer = self._create_contact_from_address(billing_address_data, is_company)
-            if not customer:
-                return
-            if save:
-                customer.save()
-        return customer
-
-    def _postprocess_order(self, order, state):
-        comment = (state.pop("comment", None) or "")
-        if comment:
-            order.add_log_entry(comment, kind=LogEntryKind.NOTE, user=order.creator)
-
-    def create_source_from_state(self, state, creator=None, ip_address=None, save=False, order_to_update=None):
-        """
-        Create an order source from a state dict unserialized from JSON.
-
-        :param state: State dictionary
-        :type state: dict
-        :param creator: Creator user
-        :type creator: django.contrib.auth.models.User|None
-        :param save: Flag whether order customer and addresses is saved to database
-        :type save: boolean
-        :param order_to_update: Order object to edit
-        :type order_to_update: shoop.core.models.Order|None
-        :return: The created order source, or None if something failed along the way
-        :rtype: OrderSource|None
-        """
-        if not self.is_valid:  # pragma: no cover
-            raise ValueError("Create a new JsonOrderCreator for each order.")
-        # We'll be mutating the state to make it easier to track we've done everything,
-        # so it's nice to deepcopy things first.
-        state = deepcopy(state)
-
-        # First, initialize an OrderSource.
-        source = self.initialize_source_from_state(
-            state, creator=creator, ip_address=ip_address, save=save, order_to_update=order_to_update)
-        if not source:
-            return None
-
-        # Then, copy some lines into it.
-        self._process_lines(source, state)
-
-        if not self.is_valid:  # If we encountered any errors thus far, don't bother going forward
-            return None
-
-        for error in source.get_validation_errors():
-            self.add_error(error)
-
-        if not self.is_valid:
-            return None
-
-        if order_to_update:
-            for code in order_to_update.codes:
-                source.add_code(code)
-        return source
-
-    def create_order_from_state(self, state, creator=None, ip_address=None):
-        """
-        Create an order from a state dict unserialized from JSON.
-
-        :param state: State dictionary
-        :type state: dict
-        :param creator: Creator user
-        :type creator: django.contrib.auth.models.User|None
-        :param ip_address: Remote IP address (IPv4 or IPv6)
-        :type ip_address: str
-        :return: The created order, or None if something failed along the way
-        :rtype: Order|None
-        """
-        source = self.create_source_from_state(
-            state, creator=creator, ip_address=ip_address, save=True)
-        # Then create an OrderCreator and try to get things done!
-        creator = self.creator()
-        try:
-            order = creator.create_order(order_source=source)
-            self._postprocess_order(order, state)
-            return order
-        except Exception as exc:  # pragma: no cover
-            self.add_error(exc)
-            return
-
-    def update_order_from_state(self, state, order_to_update, modified_by=None):
-        """
-        Update an order from a state dict unserialized from JSON.
-
-        :param state: State dictionary
-        :type state: dict
-        :param order_to_update: Order object to edit
-        :type order_to_update: shoop.core.models.Order
-        :return: The created order, or None if something failed along the way
-        :rtype: Order|None
-        """
-        source = self.create_source_from_state(state, order_to_update=order_to_update, save=True)
-        if source:
-            source.modified_by = modified_by
-        modifier = OrderModifier()
-        try:
-            order = modifier.update_order_from_source(order_source=source, order=order_to_update)
-            self._postprocess_order(order, state)
-            return order
-        except Exception as exc:
-            self.add_error(exc)
-            return
-
-
-class JsonSalesOrderCreator(JsonOrderCreator):
-    source = OrderSource
-    creator = OrderCreator
-
-    def initialize_source_from_state(self, state, creator, ip_address, save, order_to_update=None):
-        source = super(JsonSalesOrderCreator, self).initialize_source_from_state(
-            state, creator, ip_address, save, order_to_update)
         customer_data = state.pop("customer", None)
         billing_address_data = customer_data.pop("billingAddress", {})
         shipping_address_data = (
@@ -336,35 +229,113 @@ class JsonSalesOrderCreator(JsonOrderCreator):
             shipping_address=shipping_address,
             status=OrderStatus.objects.get_default_initial(),
             shipping_method=self.safe_get_first(ShippingMethod, pk=shipping_method.get("id")),
-            payment_method=self.safe_get_first(PaymentMethod, pk=payment_method.get("id"))
+            payment_method=self.safe_get_first(PaymentMethod, pk=payment_method.get("id")),
         )
         return source
 
-
-class JsonPurchaseOrderCreator(JsonOrderCreator):
-    source = PurchaseOrderSource
-    creator = PurchaseOrderCreator
-
-    def initialize_source_from_state(self, state, creator, ip_address, save, order_to_update=None):
-        source = super(JsonPurchaseOrderCreator, self).initialize_source_from_state(
-            state, creator, ip_address, save, order_to_update)
-        customer = PersonContact.objects.get(user=creator)
+    def _get_customer(self, customer_data, billing_address_data, is_company, save):
+        customer = self.safe_get_first(Contact, pk=customer_data.get("id")) if customer_data else None
         if not customer:
-            return
+            customer = self._create_contact_from_address(billing_address_data, is_company)
+            if not customer:
+                return
+            if save:
+                customer.save()
+        return customer
 
-        selected_manufacturer = state.pop("manufacturer", {}).get("selected", None)
-        manufacturer = self.safe_get_first(Manufacturer, pk=selected_manufacturer)
-        if not manufacturer:
-            self.add_error(ValidationError(_("Please select manufacturer."), code="no_manufacturer"))
+    def _postprocess_order(self, order, state):
+        comment = (state.pop("comment", None) or "")
+        if comment:
+            order.add_log_entry(comment, kind=LogEntryKind.NOTE, user=order.creator)
 
-        if self.errors:
-            return
+    def create_source_from_state(self, state, creator=None, ip_address=None, save=False, order_to_update=None):
+        """
+        Create an order source from a state dict unserialized from JSON.
 
-        source.update(
-            creator=creator,
-            ip_address=ip_address,
-            customer=customer,
-            manufacturer=manufacturer,
-            status=OrderStatus.objects.get_default_initial()
-        )
+        :param state: State dictionary
+        :type state: dict
+        :param creator: Creator user
+        :type creator: django.contrib.auth.models.User|None
+        :param save: Flag whether order customer and addresses is saved to database
+        :type save: boolean
+        :param order_to_update: Order object to edit
+        :type order_to_update: shoop.core.models.Order|None
+        :return: The created order source, or None if something failed along the way
+        :rtype: OrderSource|None
+        """
+        if not self.is_valid:  # pragma: no cover
+            raise ValueError("Create a new JsonOrderCreator for each order.")
+        # We'll be mutating the state to make it easier to track we've done everything,
+        # so it's nice to deepcopy things first.
+        state = deepcopy(state)
+
+        # First, initialize an OrderSource.
+        source = self._initialize_source_from_state(
+            state, creator=creator, ip_address=ip_address, save=save, order_to_update=order_to_update)
+        if not source:
+            return None
+
+        # Then, copy some lines into it.
+        self._process_lines(source, state)
+        if not self.is_valid:  # If we encountered any errors thus far, don't bother going forward
+            return None
+
+        for error in source.get_validation_errors():
+            self.add_error(error)
+
+        if not self.is_valid:
+            return None
+
+        if order_to_update:
+            for code in order_to_update.codes:
+                source.add_code(code)
         return source
+
+    def create_order_from_state(self, state, creator=None, ip_address=None):
+        """
+        Create an order from a state dict unserialized from JSON.
+
+        :param state: State dictionary
+        :type state: dict
+        :param creator: Creator user
+        :type creator: django.contrib.auth.models.User|None
+        :param ip_address: Remote IP address (IPv4 or IPv6)
+        :type ip_address: str
+        :return: The created order, or None if something failed along the way
+        :rtype: Order|None
+        """
+        source = self.create_source_from_state(
+            state, creator=creator, ip_address=ip_address, save=True)
+
+        # Then create an OrderCreator and try to get things done!
+        creator = OrderCreator()
+        try:
+            order = creator.create_order(order_source=source)
+            self._postprocess_order(order, state)
+            return order
+        except Exception as exc:  # pragma: no cover
+            self.add_error(exc)
+            return
+
+    def update_order_from_state(self, state, order_to_update, modified_by=None):
+        """
+        Update an order from a state dict unserialized from JSON.
+
+        :param state: State dictionary
+        :type state: dict
+        :param order_to_update: Order object to edit
+        :type order_to_update: shoop.core.models.Order
+        :return: The created order, or None if something failed along the way
+        :rtype: Order|None
+        """
+        source = self.create_source_from_state(state, order_to_update=order_to_update, save=True)
+        if source:
+            source.modified_by = modified_by
+        modifier = OrderModifier()
+        try:
+            order = modifier.update_order_from_source(order_source=source, order=order_to_update)
+            self._postprocess_order(order, state)
+            return order
+        except Exception as exc:
+            self.add_error(exc)
+            return

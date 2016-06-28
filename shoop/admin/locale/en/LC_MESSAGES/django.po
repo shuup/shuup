@@ -235,12 +235,6 @@ msgstr ""
 msgid "Manufacturers"
 msgstr ""
 
-msgid "Create Purchase Order"
-msgstr ""
-
-msgid "Create an order for the manufacturer."
-msgstr ""
-
 msgid "Media"
 msgstr ""
 
@@ -282,16 +276,7 @@ msgstr ""
 msgid "Orders"
 msgstr ""
 
-msgid "Sales Orders"
-msgstr ""
-
-msgid "Show sales orders"
-msgstr ""
-
-msgid "Purchase Orders"
-msgstr ""
-
-msgid "Show purchase orders"
+msgid "Show orders"
 msgstr ""
 
 msgid "Outstanding Orders"
@@ -347,6 +332,10 @@ msgstr ""
 msgid "Product %(product)s is not available in the %(shop)s shop."
 msgstr ""
 
+#, python-format
+msgid "Product %(product)s is not orderable: %(error)s"
+msgstr ""
+
 msgid "Please add lines to the order."
 msgstr ""
 
@@ -363,9 +352,6 @@ msgid "Please select shipping method."
 msgstr ""
 
 msgid "Please select payment method."
-msgstr ""
-
-msgid "Please select manufacturer."
 msgstr ""
 
 msgid "Payments"
@@ -413,12 +399,6 @@ msgstr ""
 msgid "This order cannot modified at this point"
 msgstr ""
 
-msgid "Mark as Arrived"
-msgstr ""
-
-msgid "This order can not be marked as arrived at this point"
-msgstr ""
-
 msgid "Unable to set order as completed at this point"
 msgstr ""
 
@@ -427,6 +407,10 @@ msgid "Order status changed: {old_status} to {new_status}"
 msgstr ""
 
 msgid "Create Order"
+msgstr ""
+
+#, python-format
+msgid "Contact %s does not exist."
 msgstr ""
 
 #, python-format
@@ -441,10 +425,6 @@ msgid "Could not proceed with order:"
 msgstr ""
 
 msgid "Could not finalize order:"
-msgstr ""
-
-#, python-format
-msgid "Contact %s does not exist."
 msgstr ""
 
 msgid "Order"
