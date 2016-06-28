@@ -11,7 +11,7 @@
 # Juha Kujala <juha.kujala@shoop.io>, 2015
 # Juha Louhiranta <charni@gmail.com>, 2015
 # Rauli Laine <rauli.laine@iki.fi>, 2015
-# Shoop Admin <admin@shoop.io>, 2015
+# Shoop Admin <admin@shoop.io>, 2015-2016
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # tomijarvi <tomi@jarvi.pro>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
-"PO-Revision-Date: 2016-01-05 06:42+0000\n"
+"POT-Creation-Date: 2016-06-28 13:34+0000\n"
+"PO-Revision-Date: 2016-06-28 03:26+0000\n"
 "Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
 "language/fi_FI/)\n"
@@ -61,7 +61,7 @@ msgid "Customer"
 msgstr "Asiakas"
 
 msgid "Ordered by"
-msgstr "Järjestä"
+msgstr "Tilaaja"
 
 msgid "Creator"
 msgstr "Laatija"
@@ -73,7 +73,7 @@ msgid "Email"
 msgstr "Sähköposti"
 
 msgid "Tax number"
-msgstr "veronumero"
+msgstr "Veronumero"
 
 msgid "Total Price"
 msgstr "Kokonaishinta"
@@ -103,7 +103,7 @@ msgid "Order Contents"
 msgstr "Tilauksen sisältö"
 
 msgid "SKU"
-msgstr "Tuotekoodi"
+msgstr "Tuotenumero"
 
 msgid "Text"
 msgstr "Teksti"
@@ -112,7 +112,7 @@ msgid "Taxless Unit Price"
 msgstr "Veroton yksikköhinta"
 
 msgid "Quantity"
-msgstr "Lukumäärä"
+msgstr "Määrä"
 
 msgid "Taxless Discount"
 msgstr "Veroton alennus"

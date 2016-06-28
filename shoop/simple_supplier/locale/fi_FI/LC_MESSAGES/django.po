@@ -3,14 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
+# Rauli Laine <rauli.laine@iki.fi>, 2016
+# Shoop Admin <admin@shoop.io>, 2016
 # Tuomas Suutari <tuomas.suutari@shoop.io>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 08:27+0000\n"
-"PO-Revision-Date: 2016-01-21 08:13+0000\n"
-"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
+"POT-Creation-Date: 2016-06-28 13:34+0000\n"
+"PO-Revision-Date: 2016-06-28 03:21+0000\n"
+"Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
 "language/fi_FI/)\n"
 "Language: fi_FI\n"
@@ -18,6 +20,69 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Stock management"
+msgstr "Varastonhallinta"
+
+msgid "Products"
+msgstr "Tuotteet"
+
+msgid "SKU"
+msgstr "Tuotekoodi"
+
+msgid "Filter by SKU..."
+msgstr "Rajaa tuotekoodin mukaan..."
+
+msgid "Name"
+msgstr "Nimi"
+
+msgid "Filter by name..."
+msgstr "Rajaa nimen mukaan..."
+
+msgid "Supplier"
+msgstr "Toimittaja"
+
+msgid "Stock information"
+msgstr "Varastotiedot"
+
+msgid "Adjust stock"
+msgstr "Muuta varastosaldoa"
+
+#, python-format
+msgid ""
+"Added %(delta)s %(unit_short_name)s for product %(product_name)s stock "
+"(%(supplier_name)s)"
+msgstr ""
+"Lisättiin %(delta)s %(unit_short_name)s tuotteelle %(product_name)s "
+"varastoon (%(supplier_name)s)"
+
+#, python-format
+msgid ""
+"Removed %(delta)s %(unit_short_name)s from product %(product_name)s stock "
+"(%(supplier_name)s)"
+msgstr ""
+"Poistettiin %(delta)s %(unit_short_name)s tuotteelta %(product_name)s "
+"varastosta (%(supplier_name)s)"
+
+msgid "Not allowed"
+msgstr "Ei sallittu"
+
+msgid "Error, please check submitted values and try again."
+msgstr "Virhe, tarkista arvot ja koita uudelleen."
+
+#, python-format
+msgid "Error, please check submitted values and try again (%(error)s)."
+msgstr "Virhe, tarkista arvot ja koita uudelleen (%(error)s)."
+
+#, python-format
+msgid "Purchase price per unit (%(currency_name)s)"
+msgstr "Ostohinta per yksikkö (%(currency_name)s)"
+
+msgid "Quantity"
+msgstr "Lukumäärä"
+
+msgid "Only non-zero values can be added to stock."
+msgstr "Varastoarvon pitää olla suurempi kuin nolla."
 
 msgid "product"
 msgstr "tuote"
@@ -39,3 +104,55 @@ msgstr "looginen määrä"
 
 msgid "physical count"
 msgstr "fyysinen määrä"
+
+msgid "Add stock"
+msgstr "Lisää varastoa"
+
+#, python-format
+msgid ""
+"Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
+"does not have suppliers with %(module_name)s module."
+msgstr ""
+"Tuotteella <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</"
+"a> ei ole toimittajia modulissa %(module_name)s."
+
+msgid "Please set suppliers at Purchasing section."
+msgstr "Ole hyvä ja määritä toimittajat osiossa Ostaminen."
+
+#, python-format
+msgid ""
+"Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
+"is not stocked."
+msgstr ""
+"Tuote<a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> ei "
+"ole varastoitu."
+
+msgid "Please set product stock behavior at Additional Details section."
+msgstr "Ole hyvä ja määritä varastokäyttäytyminen osiosssa Lisätietoja."
+
+#, python-format
+msgid "No suppliers with %(module_name)s available."
+msgstr "Ei toimittajia saatavana modulille %(module_name)s."
+
+#, python-format
+msgid ""
+"Please set %(module_name)s module for at least one of the <a href="
+"\"%(supplier_url)s\" target=\"_blank\">Suppliers</a>."
+msgstr ""
+"Ole hyvä ja aseta %(module_name)s moduli ainakin yhdelle <a href="
+"\"%(supplier_url)s\" target=\"_blank\">toimittajalle</a>."
+
+msgid "Physical count"
+msgstr "Fyysinen määrä"
+
+msgid "Logical count"
+msgstr "Looginen määrä"
+
+msgid "Value per unit"
+msgstr "Yksikköarvo"
+
+msgid "Total value"
+msgstr "Kokonaisarvo"
+
+msgid "No stock information available."
+msgstr "Varastotietoa ei saatavilla."

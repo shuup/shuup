@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-06 20:27+0000\n"
+"POT-Creation-Date: 2016-06-28 12:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -83,10 +83,19 @@ msgstr ""
 msgid "Grid/list view"
 msgstr ""
 
-msgid "Company account information"
+msgid "Change Password"
+msgstr ""
+
+msgid "Change password"
 msgstr ""
 
 msgid "Edit user account information"
+msgstr ""
+
+msgid "Save password"
+msgstr ""
+
+msgid "Company account information"
 msgstr ""
 
 msgid "Save changes"
@@ -147,6 +156,9 @@ msgstr ""
 msgid "Qty"
 msgstr ""
 
+msgid "Quantity"
+msgstr ""
+
 msgid "Remove product from basket"
 msgstr ""
 
@@ -166,9 +178,6 @@ msgid "Continue"
 msgstr ""
 
 msgid "Product"
-msgstr ""
-
-msgid "Quantity"
 msgstr ""
 
 msgid "excl. tax"

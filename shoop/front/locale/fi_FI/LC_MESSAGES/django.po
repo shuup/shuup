@@ -6,9 +6,10 @@
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
 # Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Heikki Saari <heikki.saari@anders.fi>, 2016
 # Janne Tammi <janne.tammi@shoop.io>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
-# Juha Kujala <juha.kujala@shoop.io>, 2015
+# Juha Kujala <juha.kujala@shoop.io>, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
 # Rauli Laine <rauli.laine@iki.fi>, 2015
 # Shoop Admin <admin@shoop.io>, 2015
@@ -19,9 +20,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
-"PO-Revision-Date: 2015-12-08 08:41+0000\n"
-"Last-Translator: Shoop Admin <admin@shoop.io>\n"
+"POT-Creation-Date: 2016-06-28 13:34+0000\n"
+"PO-Revision-Date: 2016-06-27 07:35+0000\n"
+"Last-Translator: Heikki Saari <heikki.saari@anders.fi>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
 "language/fi_FI/)\n"
 "Language: fi_FI\n"
@@ -31,12 +32,51 @@ msgstr ""
 "Generated-By: Babel 2.1.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "Abandoned Basket Value"
+msgid "Abandoned Cart Value"
 msgstr "Hylättyjen ostoskorien arvo"
 
 #, python-brace-format
-msgid "Based on {b} baskets over the last {d} days"
+msgid "Based on {b} carts over the last {d} days"
 msgstr "Perustuen {b} koriin viimeisen {d} päivän aikana"
+
+msgid "Carts"
+msgstr "Ostoskorit"
+
+msgid "Show carts"
+msgstr "Näytä ostoskorit"
+
+msgid "Created on"
+msgstr "Luotu"
+
+msgid "Last updated on"
+msgstr "Viimeksi päivitetty"
+
+msgid "Abandoned"
+msgstr "Hylätty"
+
+msgid "yes"
+msgstr "kyllä"
+
+msgid "no"
+msgstr "ei"
+
+msgid "Shop"
+msgstr "Kauppa"
+
+msgid "Product count"
+msgstr "Tuotteiden määrä"
+
+msgid "Customer"
+msgstr "Asiakas"
+
+msgid "Orderer"
+msgstr "Tilaaja"
+
+msgid "Total"
+msgstr "Yhteensä"
+
+msgid "Ordered"
+msgstr "Tilattu"
 
 #, python-format
 msgid "Invalid command %s"
@@ -51,7 +91,7 @@ msgid "The quantity %s is not valid."
 msgstr "Määrä %s ei kelpaa."
 
 msgid "This variation is not available."
-msgstr "Variaatio ei ole saatavilla."
+msgstr "Tämä variaatio ei ole saatavilla."
 
 #, python-format
 msgid "Basket loading failed: Incompatible basket (%s)"
@@ -67,10 +107,6 @@ msgstr "Korin tuotteita ei voi toimittaa yhdessä. %s"
 #, python-format
 msgid "Products in basket have no common payment method. %s"
 msgstr "Korin tuotteilla ei ole yhteistä maksutapaa. %s"
-
-#, python-format
-msgid "%s not available in this shop"
-msgstr "%s ei ole saatavilla tälle kaupalle"
 
 msgid "Tax number required for companies"
 msgstr "Veronumero vaaditaan yrityksille"
@@ -88,7 +124,7 @@ msgid "I want to subscribe to your newsletter"
 msgstr "Haluan tilata uutiskirjeen"
 
 msgid "Comment"
-msgstr ""
+msgstr "Kommentti"
 
 msgid "Confirmation"
 msgstr "Vahvistus"
@@ -96,15 +132,11 @@ msgstr "Vahvistus"
 msgid "Empty Basket"
 msgstr "Tyhjä ostoskori"
 
-#, fuzzy
-#| msgid "Shipping method"
 msgid "shipping method"
-msgstr "Toimitustapa"
+msgstr "toimitustapa"
 
-#, fuzzy
-#| msgid "Payment method"
 msgid "payment method"
-msgstr "Maksutapa"
+msgstr "maksutapa"
 
 msgid "Shipping & Payment"
 msgstr "Toimitukset & Maksaminen"
@@ -124,61 +156,62 @@ msgstr "Maksutapa"
 msgid "Please send me marketing correspondence"
 msgstr "Lähettäkää minulle markkinointimateriaalia, kiitos"
 
-msgid "key"
-msgstr ""
+msgid "Logged out since this account is inactive."
+msgstr "Tämä tili ei ole aktiivinen"
 
-#, fuzzy
-#| msgid "your shop"
+msgid "key"
+msgstr "avain"
+
 msgid "shop"
-msgstr "kauppasi"
+msgstr "kauppa"
 
 msgid "customer"
-msgstr ""
+msgstr "asiakas"
 
 msgid "orderer"
-msgstr ""
+msgstr "tilaaja"
 
 msgid "creator"
-msgstr ""
+msgstr "laatija"
 
 msgid "created on"
-msgstr ""
+msgstr "luotu"
 
 msgid "updated on"
-msgstr ""
+msgstr "päivitetty"
 
 msgid "persistent"
-msgstr ""
+msgstr "sinnikäs"
 
 msgid "deleted"
-msgstr ""
+msgstr "poistettu"
 
 msgid "finished"
-msgstr ""
+msgstr "valmis"
 
 msgid "title"
-msgstr ""
+msgstr "otsikko"
 
 msgid "data"
-msgstr ""
+msgstr "data"
 
 msgid "taxless total price"
-msgstr ""
+msgstr "veroton hinta yhteensä"
 
 msgid "taxful total price"
-msgstr ""
+msgstr "verollinen hinta yhteensä"
 
 msgid "currency"
-msgstr ""
+msgstr "valuutta"
 
 msgid "prices include tax"
-msgstr ""
+msgstr "hinnat sisältävät veron"
 
 msgid "product_count"
-msgstr ""
+msgstr "tuotteiden_määrä"
 
 msgid "products"
-msgstr ""
+msgstr "tuotteet"
 
 msgid "Bad Request"
 msgstr "Epäkelpo pyyntö"
@@ -251,10 +284,10 @@ msgid "Price - High to Low"
 msgstr "Hinta - Suurimmasta pienimpään"
 
 msgid "Sort"
-msgstr ""
+msgstr "Järjestä"
 
 msgid "Manufacturer"
-msgstr ""
+msgstr "Valmistaja"
 
 msgid "This product is not available in this shop."
 msgstr "Tuote ei ole saatavilla tässä kaupassa."

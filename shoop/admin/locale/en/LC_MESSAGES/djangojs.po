@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-26 05:43+0000\n"
+"POT-Creation-Date: 2016-06-28 12:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -132,6 +132,12 @@ msgstr ""
 msgid "Shipping address"
 msgstr ""
 
+msgid "Back"
+msgstr ""
+
+msgid "Confirm"
+msgstr ""
+
 msgid "Full Name"
 msgstr ""
 
@@ -175,12 +181,6 @@ msgid "Recent Orders"
 msgstr ""
 
 msgid "Close"
-msgstr ""
-
-msgid "Back"
-msgstr ""
-
-msgid "Confirm"
 msgstr ""
 
 msgid "A new customer will be created based on billing address."

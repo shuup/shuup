@@ -15,13 +15,14 @@
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # tomijarvi <tomi@jarvi.pro>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
+# Tuomas Suutari <tuomas.suutari@shoop.io>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
-"PO-Revision-Date: 2015-12-08 08:41+0000\n"
-"Last-Translator: Shoop Admin <admin@shoop.io>\n"
+"POT-Creation-Date: 2016-06-28 13:34+0000\n"
+"PO-Revision-Date: 2016-06-01 13:31+0000\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
 "language/fi_FI/)\n"
 "Language: fi_FI\n"
@@ -32,7 +33,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Shoop Default Tax"
-msgstr "Shoop -oletusverot"
+msgstr "Shoop oletusvero"
 
 msgid "Tax Rules"
 msgstr "Verosäännöt"
@@ -44,7 +45,7 @@ msgid "Show tax rules"
 msgstr "Näytä verosäännöt"
 
 msgid "Use ISO 3166-1 country codes (US, FI etc.)"
-msgstr "Käytä ISO 3166-1 -maakoodeja (US, FI, jne.)"
+msgstr "Käytä ISO 3166-1 -maakoodeja (US, FI jne.)"
 
 msgid "Use two letter state codes for the US"
 msgstr "Käytä kaksikirjaimisia osavaltiokoodeja USAssa"
@@ -82,33 +83,23 @@ msgstr "Käytössä"
 msgid "enabled"
 msgstr "käytössä"
 
-#, fuzzy
-#| msgid "Tax classes"
 msgid "tax classes"
-msgstr "Veroluokat"
+msgstr "veroluokat"
 
 msgid "Tax classes of the items to be taxed"
 msgstr "Verotettavien asioiden veroluokat"
 
-#, fuzzy
-#| msgid "Customer tax groups"
 msgid "customer tax groups"
-msgstr "Asiakkaan veroryhmät"
+msgstr "asiakasveroryhmät"
 
-#, fuzzy
-#| msgid "Country codes pattern"
 msgid "country codes pattern"
-msgstr "Maakoodikuvio"
+msgstr "maakoodien kaava"
 
-#, fuzzy
-#| msgid "Region codes pattern"
 msgid "region codes pattern"
-msgstr "Aluekoodikuvio"
+msgstr "aluekoodien kaava"
 
-#, fuzzy
-#| msgid "Postal codes pattern"
 msgid "postal codes pattern"
-msgstr "Postinumerokuvio"
+msgstr "postikoodien kaava"
 
 msgid "priority"
 msgstr "tärkeysjärjestys"
@@ -135,10 +126,8 @@ msgstr ""
 "lisäämällä säännön suurella ylikirjoitusryhmänumerolla, joka asettaa "
 "nollaveron."
 
-#, fuzzy
-#| msgid "Tax"
 msgid "tax"
-msgstr "Vero"
+msgstr "vero"
 
 msgid "Tax rule {} ({})"
 msgstr "Verosääntö {} ({})"
@@ -153,7 +142,7 @@ msgid "Matching criteria"
 msgstr "Täsmäyskriteerit"
 
 msgid "Grouping"
-msgstr ""
+msgstr "Ryhmittely"
 
 msgid "Applied tax"
 msgstr "Käytettävä vero"
@@ -194,11 +183,11 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"Kuvio voi olla joko yksittäinen arvo tai pilkulla eroteltu lista, jossa "
+"Kaava voi olla joko yksittäinen arvo tai pilkulla eroteltu lista, jossa "
 "jokainen jäsen voi olla yksittäinen arvo tai arvoalue, esim. \"arvo1-"
 "arvo2\". Erityisarvo \"*\" täsmää kaikkeen. Esimerkiksi kuvio \"1,2,50-90\" "
 "täsmää arvoihin \"1\", \"2\", \"50\" ja \"90\" sekä muihin numeerisiin "
-"arvoihin 50 ja 90 välillä. Kuviot käyttävät aakkosellista järjestystä jollei "
+"arvoihin 50 ja 90 välillä. Kaavat käyttävät aakkosellista järjestystä jollei "
 "alku, loppu ja täsmättävä merkkijono ole kukin numeerisia."
 
 msgid ""
@@ -208,6 +197,10 @@ msgid ""
 "            tax rule or a set of tax rules that override other tax rules.\n"
 "        "
 msgstr ""
+"\n"
+"Seuraavien kenttien avulla voit määritellä summatut tai kertautuvat verot\n"
+"(kun  useampi vero kohdistuu samalle verotettavalle), tai tehdä\n"
+"verosäännön tai verosääntöjä, jotka ohittavat muut verosäännöt."
 
 msgid "When this rule applies, apply the following tax."
 msgstr "Kun sääntö aktivoituu, käytä seuraavaa veroa."
