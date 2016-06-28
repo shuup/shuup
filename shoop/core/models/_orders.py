@@ -27,14 +27,15 @@ from parler.models import TranslatableModel, TranslatedFields
 
 from shoop.core import taxing
 from shoop.core.excs import (
-    NoPaymentToCreateException, NoProductsToShipException
+    NoPaymentToCreateException, NoProductsToShipException,
+    NoRefundToCreateException, RefundExceedsAmountException
 )
 from shoop.core.fields import (
     CurrencyField, InternalIdentifierField, LanguageField, MoneyValueField,
     UnsavedForeignKey
 )
 from shoop.core.pricing import TaxfulPrice, TaxlessPrice
-from shoop.core.signals import shipment_created
+from shoop.core.signals import refund_created, shipment_created
 from shoop.utils.analog import define_log_model, LogEntryKind
 from shoop.utils.money import Money
 from shoop.utils.numbers import bankers_round
@@ -42,9 +43,9 @@ from shoop.utils.properties import (
     MoneyPropped, TaxfulPriceProperty, TaxlessPriceProperty
 )
 
-from ._order_lines import OrderLineType
+from ._order_lines import OrderLine, OrderLineType
 from ._order_utils import get_order_identifier, get_reference_number
-from ._products import Product
+from ._products import Product, StockBehavior
 from ._suppliers import Supplier
 
 
@@ -517,6 +518,102 @@ class Order(MoneyPropped, models.Model):
         shipment_created.send(sender=type(self), order=self, shipment=shipment)
         return shipment
 
+    def create_refund(self, refund_data, created_by=None):
+        """
+        Create a refund if passed a list of refund line data.
+
+        Refund line data is simply a list of dictionaries where
+        each dictionary contains data for a particular refund line.
+
+        If refund line data includes a parent line, the refund is
+        associated with that line and cannot exceed the line amount.
+
+        Additionally, if the parent line is of enum type
+        `OrderLineType.PRODUCT` and the `restock_products` boolean
+        flag is set to `True`, the products will be restocked with the
+        order's supplier the exact amount of the value of the `quantity`
+        field.
+
+        :param refund_data: List of dicts containing refund data.
+        :type refund_data: [dict]
+        :param created_by: Refund creator's user instance, used for
+                           adjusting supplier stock.
+        :type created_by: django.contrib.auth.User|None
+        """
+        index = self.lines.all().aggregate(models.Max("ordering"))["ordering__max"]
+        zero = Money(0, self.currency)
+        refund_lines = []
+        for refund in refund_data:
+            index += 1
+            amount = refund.get("amount", zero)
+            quantity = refund.get("quantity", 0)
+            parent_line = refund.get("line")
+            restock_products = refund.get("restock_products")
+
+            # TODO: Also raise this if the sum amount of refunds exceeds total,
+            #       order amount, and do so before creating any order lines
+            self.cache_prices()
+            if amount > self.taxful_total_price.amount:
+                raise RefundExceedsAmountException
+
+            unit_price = parent_line.base_unit_price.amount if parent_line else zero
+            total_price = unit_price * quantity + amount
+
+            refund_line = OrderLine.objects.create(
+                text=_("Refund for %s" % parent_line.text) if parent_line else _("Manual refund"),
+                order=self,
+                type=OrderLineType.REFUND,
+                parent_line=parent_line,
+                ordering=index,
+                base_unit_price_value=-total_price,
+                quantity=1
+            )
+            refund_lines.append(refund_line)
+
+            if parent_line and parent_line.type == OrderLineType.PRODUCT:
+                product = parent_line.product
+            else:
+                product = None
+
+            if restock_products and quantity and product and (product.stock_behavior == StockBehavior.STOCKED):
+                parent_line.supplier.adjust_stock(product.id, quantity, created_by=created_by)
+
+        self.cache_prices()
+        self.save()
+        refund_created.send(sender=type(self), order=self, refund_lines=refund_lines)
+
+    def create_full_refund(self, restock_products=False):
+        """
+        Create a full for entire order contents, with the option of
+        restocking stocked products.
+
+        :param restock_products: Boolean indicating whether to restock products
+        :type restock_products: bool|False
+        """
+        if self.has_refunds():
+            raise NoRefundToCreateException
+        self.cache_prices()
+        amount = self.taxful_total_price.amount
+        self.create_refund([{"amount": amount}])
+        if restock_products:
+            for product_line in self.lines.filter(
+                type=OrderLineType.PRODUCT, product__stock_behavior=StockBehavior.STOCKED
+            ):
+                product_line.supplier.adjust_stock(product_line.product.id, product_line.quantity)
+
+    def get_total_refunded_amount(self):
+        total = sum(line.taxful_price.amount.value for line in self.lines.refunds())
+        return Money(-total, self.currency)
+
+    def get_total_unrefunded_amount(self):
+        return max(self.taxful_total_price.amount, Money(0, self.currency))
+
+    def has_refunds(self):
+        return self.lines.refunds().exists()
+
+    def can_create_refund(self):
+        return (self.taxful_total_price.amount.value > 0)
+
     def create_shipment_of_all_products(self, supplier=None):
         """
         Create a shipment of all the products in this Order, no matter whether or not any have been previously
@@ -677,6 +774,7 @@ class Order(MoneyPropped, models.Model):
 
     def can_edit(self):
         return (
+            not self.has_refunds() and
             not self.is_canceled() and
             not self.is_complete() and
             self.shipping_status == ShippingStatus.NOT_SHIPPED and

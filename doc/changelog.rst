@@ -12,6 +12,8 @@ Unreleased
 Core
 ~~~~
 
+- Add refund-related methods to ``Order``
+- Add `OrderLineType.REFUND` enum type
 - Update order phone max length to 64 characters
 - Add cash payment method
 - Add rounding behavior component
@@ -77,6 +79,8 @@ Localization
 Admin
 ~~~~~
 
+- Add refund creator to `Order` admin
+- Add customer detail view to order creator 
 - Add purchase orders on manufacturers
 - Add customer detail view to order creator
 - Define module-level permissions for all admin modules

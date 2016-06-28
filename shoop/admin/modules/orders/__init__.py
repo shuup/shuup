@@ -53,6 +53,18 @@ class OrderModule(CurrencyBound, AdminModule):
                 permissions=get_default_model_permissions(Order)
             ),
             admin_url(
+                "^orders/(?P<pk>\d+)/create-refund/$",
+                "shoop.admin.modules.orders.views.OrderCreateRefundView",
+                name="order.create-refund",
+                permissions=get_default_model_permissions(Order)
+            ),
+            admin_url(
+                "^orders/(?P<pk>\d+)/create-refund/full-refund$",
+                "shoop.admin.modules.orders.views.OrderCreateFullRefundView",
+                name="order.create-full-refund",
+                permissions=get_default_model_permissions(Order)
+            ),
+            admin_url(
                 "^orders/(?P<pk>\d+)/$",
                 "shoop.admin.modules.orders.views.OrderDetailView",
                 name="order.detail",

@@ -20,6 +20,14 @@ class NoPaymentToCreateException(Exception):
     pass
 
 
+class NoRefundToCreateException(Exception):
+    pass
+
+
+class RefundExceedsAmountException(Exception):
+    pass
+
+
 class ProductNotOrderableProblem(Problem):
     pass
 
