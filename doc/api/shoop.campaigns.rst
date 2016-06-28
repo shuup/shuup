@@ -21,14 +21,6 @@ shoop.campaigns.apps module
     :undoc-members:
     :show-inheritance:
 
-shoop.campaigns.forms module
-----------------------------
-
-.. automodule:: shoop.campaigns.forms
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 shoop.campaigns.modules module
 ------------------------------
 

@@ -4,14 +4,6 @@ shoop.admin.modules.product_types.views package
 Submodules
 ----------
 
-shoop.admin.modules.product_types.views.ajax module
----------------------------------------------------
-
-.. automodule:: shoop.admin.modules.product_types.views.ajax
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 shoop.admin.modules.product_types.views.edit module
 ---------------------------------------------------
 

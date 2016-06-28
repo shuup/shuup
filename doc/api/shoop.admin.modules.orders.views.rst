@@ -44,6 +44,14 @@ shoop.admin.modules.orders.views.payment module
     :undoc-members:
     :show-inheritance:
 
+shoop.admin.modules.orders.views.refund module
+----------------------------------------------
+
+.. automodule:: shoop.admin.modules.orders.views.refund
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.admin.modules.orders.views.shipment module
 ------------------------------------------------
 

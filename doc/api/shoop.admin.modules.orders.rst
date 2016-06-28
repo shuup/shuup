@@ -27,6 +27,14 @@ shoop.admin.modules.orders.json_order_creator module
     :undoc-members:
     :show-inheritance:
 
+shoop.admin.modules.orders.receivers module
+-------------------------------------------
+
+.. automodule:: shoop.admin.modules.orders.receivers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shoop.admin.modules.orders.sections module
 ------------------------------------------
 
