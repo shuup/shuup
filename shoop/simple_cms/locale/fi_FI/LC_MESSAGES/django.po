@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
+"POT-Creation-Date: 2016-06-28 10:36+0000\n"
 "PO-Revision-Date: 2015-12-08 08:41+0000\n"
 "Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
@@ -104,6 +104,12 @@ msgstr ""
 msgid "visible in menu"
 msgstr "Näkyvissä valikossa"
 
+msgid "parent"
+msgstr ""
+
+msgid "list children on page"
+msgstr ""
+
 #, fuzzy
 #| msgid "Title"
 msgid "title"
@@ -125,6 +131,20 @@ msgstr "sivut"
 
 msgid "Untitled"
 msgstr "Nimetön"
+
+msgid "CMS Page Links"
+msgstr ""
+
+#, fuzzy
+#| msgid "Show pages"
+msgid "Show all pages"
+msgstr "Näytä sivut"
+
+msgid "All pages are shown, even if not selected"
+msgstr ""
+
+msgid "Hide expired pages"
+msgstr ""
 
 msgid "New Page"
 msgstr "Uusi sivu"

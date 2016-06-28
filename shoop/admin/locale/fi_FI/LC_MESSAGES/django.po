@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-24 10:45+0000\n"
+"POT-Creation-Date: 2016-06-28 10:36+0000\n"
 "PO-Revision-Date: 2016-01-05 06:44+0000\n"
 "Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
@@ -163,8 +163,45 @@ msgstr "Uusi käyttäjä"
 msgid "Create an user for the contact."
 msgstr "Luo kontaktille käyttäjä."
 
+#, fuzzy
+#| msgid "Order"
+msgid "New Order"
+msgstr "Tilaus"
+
+#, fuzzy
+#| msgid "Create an user for the contact."
+msgid "Create an order for the contact."
+msgstr "Luo kontaktille käyttäjä."
+
+#, fuzzy
+#| msgid "Deactivate User"
+msgid "Deactivate Contact"
+msgstr "Deaktivoi käyttäjä"
+
+#, fuzzy
+#| msgid "New Contact"
+msgid "Activate Contact"
+msgstr "Uusi kontakti"
+
 msgid "Edit..."
 msgstr "Muokkaa..."
+
+msgid "You can not deactivate a superuser."
+msgstr "Et voi deaktivoida pääkäyttäjää."
+
+msgid "You can not deactivate yourself."
+msgstr "Et voi deaktivoida itseäsi"
+
+#, fuzzy, python-format
+#| msgid "%(user)s is now %(state)s."
+msgid "%(contact)s is now %(state)s."
+msgstr "%(user)s on nyt %(state)s."
+
+msgid "active"
+msgstr "aktiivinen"
+
+msgid "inactive"
+msgstr "passiivinen"
 
 msgid "Person"
 msgstr "Henkilö"
@@ -185,8 +222,17 @@ msgstr "Puhelin"
 msgid "Active"
 msgstr "Aktiivinen"
 
+msgid "no"
+msgstr "ei"
+
+msgid "yes"
+msgstr "kyllä"
+
 msgid "# Orders"
 msgstr "Tilauslkm"
+
+msgid "Groups"
+msgstr "Ryhmät"
 
 msgid "Contact"
 msgstr "Kontakti"
@@ -215,6 +261,16 @@ msgstr "Demo"
 msgid "Manufacturers"
 msgstr "Valmistajat"
 
+#, fuzzy
+#| msgid "Create Order"
+msgid "Create Purchase Order"
+msgstr "Luo tilaus"
+
+#, fuzzy
+#| msgid "Create an user for the contact."
+msgid "Create an order for the manufacturer."
+msgstr "Luo kontaktille käyttäjä."
+
 msgid "Media"
 msgstr "Media"
 
@@ -224,12 +280,14 @@ msgstr "Mediaselain"
 msgid "Root"
 msgstr "Juuri"
 
-#, python-format
-msgid "%d subfolders moved to %s."
+#, fuzzy, python-brace-format
+#| msgid "%d subfolders moved to %s."
+msgid "{num} subfolders moved to {folder}."
 msgstr "%d alikansiota siirretty kohteeseen %s."
 
-#, python-format
-msgid "%d files moved to %s."
+#, fuzzy, python-brace-format
+#| msgid "%d files moved to %s."
+msgid "{num} files moved to {folder}."
 msgstr "%d tiedostoa siirretty kohteeseen %s."
 
 #, python-format
@@ -253,40 +311,27 @@ msgstr "Tiedosto poistettu."
 msgid "%(file)s moved from %(old)s to %(new)s."
 msgstr "%(file)s siirretty sijainnista %(old)s sijaintiin %(new)s."
 
-msgid "Methods"
-msgstr "Tavat"
-
-msgid "Shipping Methods"
-msgstr "Toimitustavat"
-
-msgid "Payment Methods"
-msgstr "Maksutavat"
-
-msgid "The selected module has no details to configure"
-msgstr "Valitulla moduulilla ei ole lisäasetuksia."
-
-msgid "The selected module is not currently available"
-msgstr "Valittu moduuli ei ole saatavilla"
-
-msgid "Edit Details"
-msgstr "Muokkaa tietoja"
-
-#, python-format
-msgid "Edit %(model)s"
-msgstr "Muokkaa %(model)s"
-
-#, python-format
-msgid "Default %s module"
-msgstr "Oletus%smoduuli"
-
-#, python-format
-msgid "Module %(name)s has no admin detail view"
-msgstr ""
-
 msgid "Orders"
 msgstr "Tilaukset"
 
-msgid "Show orders"
+#, fuzzy
+#| msgid "# Orders"
+msgid "Sales Orders"
+msgstr "Tilauslkm"
+
+#, fuzzy
+#| msgid "Show orders"
+msgid "Show sales orders"
+msgstr "Näytä tilaukset"
+
+#, fuzzy
+#| msgid "Create Order"
+msgid "Purchase Orders"
+msgstr "Luo tilaus"
+
+#, fuzzy
+#| msgid "Show orders"
+msgid "Show purchase orders"
 msgstr "Näytä tilaukset"
 
 msgid "Outstanding Orders"
@@ -343,10 +388,6 @@ msgstr "Tuotetta %s ei ole olemassa"
 msgid "Product %(product)s is not available in the %(shop)s shop."
 msgstr "Tuotetta %(product)s ei ole saatavilla %(shop)s kaupassa."
 
-#, python-format
-msgid "Product %(product)s is not orderable: %(error)s"
-msgstr "Tuote %(product)s ei ole tilattavissa: %(error)s"
-
 msgid "Please add lines to the order."
 msgstr "Lisää rivejä tilaukseen"
 
@@ -365,22 +406,37 @@ msgstr "Valitse toimitustapa."
 msgid "Please select payment method."
 msgstr "Valitse maksutapa."
 
-msgid "Create Order"
-msgstr "Luo tilaus"
+#, fuzzy
+#| msgid "Please select payment method."
+msgid "Please select manufacturer."
+msgstr "Valitse maksutapa."
 
-#, python-format
-msgid "Contact %s does not exist."
-msgstr "Yhteystietoa %s ei ole olemassa."
+msgid "Payments"
+msgstr "Maksut"
 
-#, python-format
-msgid "Order %(identifier)s created."
-msgstr "Tilaus %(identifier)s luotu"
+msgid "Order Contents"
+msgstr "Tilauksen sisältö"
 
-msgid "Could not proceed with order:"
-msgstr "Ei voitu luoda tilausta:"
+msgid "Log Entries"
+msgstr ""
 
-msgid "Could not create order:"
-msgstr "Ei voitu luoda tilausta:"
+#, fuzzy
+#| msgid "Create new"
+msgid "Create Refund"
+msgstr "Luo uusi"
+
+msgid "This order cannot be refunded"
+msgstr ""
+
+#, fuzzy
+#| msgid "Create Shipment"
+msgid "Create Payment"
+msgstr "Luo lähetys"
+
+#, fuzzy
+#| msgid "This order can not be set as complete at this point"
+msgid "This order cannot be paid at this point"
+msgstr "Tilausta ei voi asettaa käsitellyksi tällä hetkellä"
 
 msgid "Create Shipment"
 msgstr "Luo lähetys"
@@ -394,12 +450,65 @@ msgstr "Aseta käsitellyksi"
 msgid "This order can not be set as complete at this point"
 msgstr "Tilausta ei voi asettaa käsitellyksi tällä hetkellä"
 
+#, fuzzy
+#| msgid "Create Order"
+msgid "Cancel Order"
+msgstr "Luo tilaus"
+
+msgid "Paid, shipped, or canceled orders cannot be canceled"
+msgstr ""
+
+#, fuzzy
+#| msgid "%d orders"
+msgid "Edit order"
+msgstr "%d tilausta"
+
+#, fuzzy
+#| msgid "This order can not be set as complete at this point"
+msgid "This order cannot modified at this point"
+msgstr "Tilausta ei voi asettaa käsitellyksi tällä hetkellä"
+
+#, fuzzy
+#| msgid "Mark as read"
+msgid "Mark as Arrived"
+msgstr "Merkitse luetuksi"
+
+#, fuzzy
+#| msgid "This order can not be set as complete at this point"
+msgid "This order can not be marked as arrived at this point"
+msgstr "Tilausta ei voi asettaa käsitellyksi tällä hetkellä"
+
 msgid "Unable to set order as completed at this point"
 msgstr "Tilausta ei voi asettaa käsitellyksi tällä hetkellä"
 
-#, python-format
-msgid "Order status changed: %s to %s"
+#, fuzzy, python-brace-format
+#| msgid "Order status changed: %s to %s"
+msgid "Order status changed: {old_status} to {new_status}"
 msgstr "Tilauksen tila muutettu: Tilasta %s tilaan %s"
+
+msgid "Create Order"
+msgstr "Luo tilaus"
+
+#, fuzzy, python-format
+#| msgid "Order %(identifier)s created."
+msgid "Order %(identifier)s updated."
+msgstr "Tilaus %(identifier)s luotu"
+
+#, python-format
+msgid "Order %(identifier)s created."
+msgstr "Tilaus %(identifier)s luotu"
+
+msgid "Could not proceed with order:"
+msgstr "Ei voitu luoda tilausta:"
+
+#, fuzzy
+#| msgid "Could not create order:"
+msgid "Could not finalize order:"
+msgstr "Ei voitu luoda tilausta:"
+
+#, python-format
+msgid "Contact %s does not exist."
+msgstr "Yhteystietoa %s ei ole olemassa."
 
 msgid "Order"
 msgstr "Tilaus"
@@ -419,6 +528,79 @@ msgstr "Toimitustila"
 msgid "Total"
 msgstr "Yhteensä"
 
+#, fuzzy, python-format
+#| msgid "Create Shipment -- %s"
+msgid "Create Payment -- %s"
+msgstr "Luo toimitus -- %s"
+
+#, fuzzy
+#| msgid "Payment Status"
+msgid "Payment amount"
+msgstr "Maksutila"
+
+msgid "Payment amount cannot be 0"
+msgstr ""
+
+#, fuzzy, python-format
+#| msgid "Shipment %s created."
+msgid "Payment %s created."
+msgstr "Lähetys %s luotu."
+
+msgid "Order has already been paid"
+msgstr ""
+
+#, fuzzy
+#| msgid "Tax number"
+msgid "Line number"
+msgstr "veronumero"
+
+msgid "Quantity"
+msgstr "Lukumäärä"
+
+msgid "Amount"
+msgstr "Määrä"
+
+msgid "Restock products"
+msgstr ""
+
+#, fuzzy, python-format
+#| msgid "Create Shipment -- %s"
+msgid "Create Refund -- %s"
+msgstr "Luo toimitus -- %s"
+
+msgid "Refund Entire Order"
+msgstr ""
+
+msgid "This order already has existing refunds"
+msgstr ""
+
+msgid "Refund amount exceeds order amount."
+msgstr ""
+
+msgid "Refund amount cannot be 0"
+msgstr ""
+
+#, fuzzy
+#| msgid "New %s created."
+msgid "Refund created."
+msgstr "Uusi %s luotu."
+
+#, fuzzy, python-format
+#| msgid "Create Shipment -- %s"
+msgid "Create Full Refund -- %s"
+msgstr "Luo toimitus -- %s"
+
+msgid "Cancel"
+msgstr ""
+
+#, fuzzy
+#| msgid "Could not create order:"
+msgid "Could not create full refund."
+msgstr "Ei voitu luoda tilausta:"
+
+msgid "Full refund created."
+msgstr ""
+
 #, python-format
 msgid "Create Shipment -- %s"
 msgstr "Luo toimitus -- %s"
@@ -432,6 +614,24 @@ msgstr "Ei toimitettavia tuotteita."
 #, python-format
 msgid "Shipment %s created."
 msgstr "Lähetys %s luotu."
+
+#, fuzzy
+#| msgid "Permissions"
+msgid "Permission Groups"
+msgstr "Oikeudet"
+
+#, fuzzy
+#| msgid "Edit Permissions"
+msgid "Module Permissions"
+msgstr "Muokkaa oikeuksia"
+
+msgid ""
+"Modules with the same permissions as selected modules will be added "
+"automatically."
+msgstr ""
+
+msgid "Members"
+msgstr "Jäsenet"
 
 msgid "Product Types"
 msgstr "Tuotetyypit"
@@ -449,6 +649,57 @@ msgstr "Luo tuote \"%s\""
 #, python-format
 msgid "Create Product with SKU \"%s\""
 msgstr "Luo tuote tuotekoodilla \"%s\""
+
+msgid "Minimum Purchase Quantity must be greater than 0."
+msgstr "Minimiostomäärän tulee olla vähintään 0."
+
+#, fuzzy, python-format
+#| msgid "Thumbnail generation of %s failed: %s"
+msgid "Thumbnail generation of %(media)s failed: %(error)s"
+msgstr "Pikkukuvan muodostus %s:lle epäonnistui: %s"
+
+msgid "Use only URL or file, not both"
+msgstr "Vain URL-osoite tai tiedosto, ei molempia"
+
+#, fuzzy
+#| msgid "Set as primary image"
+msgid "Is primary"
+msgstr "Aseta pääkuvaksi"
+
+msgid "Only images allowed in this field"
+msgstr "Voit liittää tähän vain kuvatiedostoja"
+
+#, python-format
+msgid "Unable to make package %(product)s: %(error)s"
+msgstr ""
+
+#, python-format
+msgid "New: %d"
+msgstr "Uusi: %d"
+
+#, python-format
+msgid "Removed: %d"
+msgstr "Poistettu: %d"
+
+#, python-format
+msgid "Couldn't add product %s to own package"
+msgstr ""
+
+msgid "child"
+msgstr ""
+
+msgid "Unlink"
+msgstr "Poista linkki"
+
+#, fuzzy, python-format
+#| msgid "Unable to link %s: %s"
+msgid "Unable to link %(product)s: %(error)s"
+msgstr "Ei voi linkata %s: %s"
+
+#, fuzzy
+#| msgid "Combination"
+msgid "variable combination"
+msgstr "Yhdistelmä"
 
 #, python-format
 msgid "%s has been marked deleted."
@@ -481,72 +732,27 @@ msgstr "Muutokset tallennettu."
 msgid "Edit Media: %s"
 msgstr "Muokkaa mediaa: %s"
 
-msgid "Minimum Purchase Quantity must be greater than 0."
-msgstr "Minimiostomäärän tulee olla vähintään 0."
+#, fuzzy
+#| msgid ""
+#| "Are you sure? This will unlink all children and remove all variation "
+#| "variables."
+msgid "Are you sure? This will remove all products from package."
+msgstr ""
+"Oletko varma? Tämä toiminto poistaa liitokset kaikkiin lapsiin ja poistaa "
+"kaikki variaatiomuuttujat."
 
-#, python-format
-msgid "Thumbnail generation of %s failed: %s"
-msgstr "Pikkukuvan muodostus %s:lle epäonnistui: %s"
+msgid "Clear package"
+msgstr ""
 
-msgid "Use only URL or file, not both"
-msgstr "Vain URL-osoite tai tiedosto, ei molempia"
+#, fuzzy, python-format
+#| msgid "Edit Media: %s"
+msgid "Edit Package: %s"
+msgstr "Muokkaa mediaa: %s"
 
 #, fuzzy
-#| msgid "Set as primary image"
-msgid "Is primary"
-msgstr "Aseta pääkuvaksi"
-
-msgid "Only images allowed in this field"
-msgstr "Voit liittää tähän vain kuvatiedostoja"
-
-msgid "SKU"
-msgstr "Tuotekoodi"
-
-msgid "Filter by SKU..."
-msgstr "Rajaa tuotekoodin mukaan..."
-
-msgid "Mode"
-msgstr "Tila"
-
-msgid "Primary Category"
-msgstr "Pääkategoria"
-
-msgid "Manage Cross-Selling"
-msgstr "Hallinnoi ristiinmyyntiä"
-
-msgid "Cross-Selling"
-msgstr "Ristiinmyynti"
-
-msgid "Actions"
-msgstr "Toiminnot"
-
-msgid "Variations"
-msgstr "Variaatiot"
-
-msgid "Manage Variations"
-msgstr "Hallinnoi variaatioita"
-
-#, python-format
-msgid "Child: %s"
-msgstr "Lapsi: %s"
-
-#, python-format
-msgid "Parent: %s"
-msgstr "Isäntä: %s"
-
-#, python-format
-msgid "Sibling: %s"
-msgstr "Sisarus: %s"
-
-msgid "Manage Package"
-msgstr "Hallinnoi pakettia"
-
-#, python-format
-msgid "Package Parent: %s"
-msgstr "Paketti-isäntä: %s"
-
-msgid "Convert to Variation Parent"
-msgstr "Muunna variaatioisännäksi"
+#| msgid "Variation cleared."
+msgid "Package cleared."
+msgstr "Variaatio tyhjennetty."
 
 msgid ""
 "Are you sure? This will unlink all children and remove all variation "
@@ -578,28 +784,68 @@ msgstr "Variaatio tyhjennetty."
 msgid "Variation simplified."
 msgstr "Variaatio yksinkertaistettu."
 
-msgid "child"
+msgid "SKU"
+msgstr "Tuotekoodi"
+
+msgid "Filter by SKU..."
+msgstr "Rajaa tuotekoodin mukaan..."
+
+msgid "Barcode"
 msgstr ""
 
-msgid "Unlink"
-msgstr "Poista linkki"
+#, fuzzy
+#| msgid "Filter by name..."
+msgid "Filter by barcode..."
+msgstr "Rajaa nimen mukaan"
+
+msgid "Mode"
+msgstr "Tila"
+
+msgid "Primary Category"
+msgstr "Pääkategoria"
+
+msgid "Manage Cross-Selling"
+msgstr "Hallinnoi ristiinmyyntiä"
+
+msgid "Cross-Selling"
+msgstr "Ristiinmyynti"
+
+msgid "Actions"
+msgstr "Toiminnot"
 
 #, python-format
-msgid "Unable to link %s: %s"
-msgstr "Ei voi linkata %s: %s"
+msgid "Child: %s"
+msgstr "Lapsi: %s"
 
 #, python-format
-msgid "New: %d"
-msgstr "Uusi: %d"
+msgid "Parent: %s"
+msgstr "Isäntä: %s"
 
 #, python-format
-msgid "Removed: %d"
-msgstr "Poistettu: %d"
+msgid "Sibling: %s"
+msgstr "Sisarus: %s"
+
+msgid "Variations"
+msgstr "Variaatiot"
+
+msgid "Manage Variations"
+msgstr "Hallinnoi variaatioita"
 
 #, fuzzy
-#| msgid "Combination"
-msgid "variable combination"
-msgstr "Yhdistelmä"
+#| msgid "Manage Package"
+msgid "Packages"
+msgstr "Hallinnoi pakettia"
+
+msgid "Manage Package"
+msgstr "Hallinnoi pakettia"
+
+#, fuzzy
+#| msgid "Convert to Variation Parent"
+msgid "Convert to Package Parent"
+msgstr "Muunna variaatioisännäksi"
+
+msgid "Convert to Variation Parent"
+msgstr "Muunna variaatioisännäksi"
 
 msgid "Sales Units"
 msgstr "Myyntiyksiköt"
@@ -609,6 +855,65 @@ msgstr "Lyhyt nimi"
 
 msgid "Allowed decimals"
 msgstr "Sallitut desimaalit"
+
+msgid "Service Providers"
+msgstr ""
+
+msgid "Payment and Shipping"
+msgstr ""
+
+#, python-format
+msgid "Edit %(model)s"
+msgstr "Muokkaa %(model)s"
+
+#, python-brace-format
+msgid "Create {service_name}"
+msgstr ""
+
+msgid "Shipping Methods"
+msgstr "Toimitustavat"
+
+msgid "Payment Methods"
+msgstr "Maksutavat"
+
+msgid "Service"
+msgstr ""
+
+msgid "Select carrier before filling other fields."
+msgstr ""
+
+msgid "Select payment processor before filling other fields."
+msgstr ""
+
+#, fuzzy
+#| msgid "Total Price"
+msgid "Price"
+msgstr "Kokonaishinta"
+
+msgid "Waive limit"
+msgstr ""
+
+msgid "Service choice"
+msgstr ""
+
+msgid "Enabled"
+msgstr "Käytössä"
+
+#, fuzzy
+#| msgid "Shops"
+msgid "Shop"
+msgstr "Kaupat"
+
+msgid "Carrier"
+msgstr ""
+
+#, fuzzy
+#| msgid "Payments"
+msgid "Payment Processor"
+msgstr "Maksut"
+
+msgid "Weight-based pricing range"
+msgstr ""
 
 msgid "Shops"
 msgstr "Kaupat"
@@ -659,9 +964,6 @@ msgstr "Koodi"
 msgid "Rate"
 msgstr "Määrä"
 
-msgid "Enabled"
-msgstr "Käytössä"
-
 msgid "Users"
 msgstr "Käyttäjät"
 
@@ -681,6 +983,11 @@ msgid "superuser"
 msgstr "pääkäyttäjä"
 
 msgid "No special permissions"
+msgstr "Ei erityisiä oikeuksia"
+
+#, fuzzy
+#| msgid "No special permissions"
+msgid "No permission groups"
 msgstr "Ei erityisiä oikeuksia"
 
 msgid "Change Password"
@@ -714,21 +1021,9 @@ msgstr "Deaktivoi käyttäjä"
 msgid "User bound to contact %(contact)s."
 msgstr "Käyttäjä liitetty kontaktiin %(contact)s."
 
-msgid "You can not deactivate a superuser."
-msgstr "Et voi deaktivoida pääkäyttäjää."
-
-msgid "You can not deactivate yourself."
-msgstr "Et voi deaktivoida itseäsi"
-
 #, python-format
 msgid "%(user)s is now %(state)s."
 msgstr "%(user)s on nyt %(state)s."
-
-msgid "active"
-msgstr "aktiivinen"
-
-msgid "inactive"
-msgstr "passiivinen"
 
 msgid "Username"
 msgstr "Käyttäjänimi"
@@ -858,7 +1153,9 @@ msgstr "Kategorian kuva"
 msgid "General information"
 msgstr "Yleiset tiedot"
 
-msgid "Members"
+#, fuzzy
+#| msgid "Members"
+msgid "Add Members"
 msgstr "Jäsenet"
 
 msgid "Add more"
@@ -882,14 +1179,24 @@ msgstr "Perustiedot"
 msgid "Full Name"
 msgstr "Koko nimi"
 
-msgid "Groups"
-msgstr "Ryhmät"
-
 msgid "No groups"
 msgstr "Ei ryhmiä"
 
 msgid "Bound User"
 msgstr "Sidottu käyttäjä"
+
+#, fuzzy
+#| msgid "Company"
+msgid "Companies"
+msgstr "Yritys"
+
+#, fuzzy
+#| msgid "Accounting"
+msgid "Account Manager"
+msgstr "Kirjanpito"
+
+msgid "Merchant Notes"
+msgstr ""
 
 msgid "Shipping address"
 msgstr "Toimitusosoite"
@@ -902,6 +1209,11 @@ msgstr "Laskutusosoite"
 
 msgid "No billing address defined."
 msgstr "Laskutusosoitetta ei ole asetettu."
+
+#, fuzzy
+#| msgid "Members"
+msgid "No members."
+msgstr "Jäsenet"
 
 msgid "Remove block"
 msgstr "Poista lohko"
@@ -940,8 +1252,72 @@ msgstr "Lataa"
 msgid "Description"
 msgstr "Kuvaus"
 
-msgid "Amount"
+msgid "Text"
+msgstr "Teksti"
+
+msgid "Taxless Unit Price"
+msgstr "Veroton yksikköhinta"
+
+msgid "Taxless Discount"
+msgstr "Veroton alennus"
+
+msgid "Tax"
+msgstr "Vero"
+
+msgid "Taxless Total"
+msgstr "Veroton yhteensä"
+
+msgid "Total incl. Tax"
+msgstr "Verollinen yhteensä"
+
+msgid "Discount"
+msgstr "Alennus"
+
+msgid "Taxless"
+msgstr "Veroton"
+
+msgid "Message"
+msgstr ""
+
+msgid "No log entries have been added yet."
+msgstr ""
+
+msgid "Use the input below to add new log entries."
+msgstr ""
+
+msgid "Add to Log"
+msgstr ""
+
+msgid "There was an error adding the log entry."
+msgstr ""
+
+msgid "Line #"
+msgstr ""
+
+#, fuzzy
+#| msgid "Amount"
+msgid "Refund Amount"
 msgstr "Määrä"
+
+#, fuzzy
+#| msgid "Are you sure you wish to delete %s?"
+msgid "Are you sure you want to create a full refund?"
+msgstr "Haluatko poistaa %s?"
+
+msgid "Confirm Refund"
+msgstr ""
+
+msgid "Paid"
+msgstr ""
+
+msgid "Remaining"
+msgstr ""
+
+msgid "Refunded"
+msgstr ""
+
+msgid "Add More Refunds "
+msgstr ""
 
 msgid "To Ship"
 msgstr "Lähetettäväksi"
@@ -988,38 +1364,8 @@ msgstr "Kokonaishinta (veroton)"
 msgid "Total Price"
 msgstr "Kokonaishinta"
 
-msgid "Order Contents"
-msgstr "Tilauksen sisältö"
-
-msgid "Text"
-msgstr "Teksti"
-
-msgid "Taxless Unit Price"
-msgstr "Veroton yksikköhinta"
-
-msgid "Quantity"
-msgstr "Lukumäärä"
-
-msgid "Taxless Discount"
-msgstr "Veroton alennus"
-
-msgid "Tax"
-msgstr "Vero"
-
-msgid "Taxless Total"
-msgstr "Veroton yhteensä"
-
-msgid "Total incl. Tax"
-msgstr "Verollinen yhteensä"
-
-msgid "Discount"
-msgstr "Alennus"
-
-msgid "Taxless"
-msgstr "Veroton"
-
-msgid "Payments"
-msgstr "Maksut"
+msgid "Tracking codes"
+msgstr ""
 
 msgid "Error!"
 msgstr ""
@@ -1089,6 +1435,21 @@ msgstr "Ristiinmyynti"
 msgid "File "
 msgstr "Tiedosto"
 
+#, fuzzy
+#| msgid "Package Parent: %s"
+msgid "Package Products"
+msgstr "Paketti-isäntä: %s"
+
+#, fuzzy
+#| msgid "This product is not yet a variation."
+msgid "This product is not yet a package."
+msgstr "Tämä tuote ei ole vielä variaatio."
+
+#, fuzzy
+#| msgid "To create a simple variation, choose products below."
+msgid "To create a package, choose products below."
+msgstr "Valitse alla olevat tuotteet tehdäksesi yksinkertaisen variaation."
+
 msgid "Simple Variation Children"
 msgstr "Yksinkertainen variaatiolapsi"
 
@@ -1113,6 +1474,20 @@ msgid ""
 msgstr ""
 "Luodaksesi variaation useammalla muuttujalla, luo muuttujat Muuttujat-"
 "välilehdellä ja linkitä ne sitten täällä tuotteisiin."
+
+msgid ""
+"Define price based basket weight range. Range minimum is counted in range "
+"only as zero."
+msgstr ""
+
+msgid "Behavior"
+msgstr ""
+
+msgid "Behavior component type"
+msgstr ""
+
+msgid "Add component"
+msgstr ""
 
 msgid "Shop Logo"
 msgstr "Kaupan logo"
@@ -1233,12 +1608,6 @@ msgstr "Tallenna ja luo uusi"
 msgid "Are you sure you wish to delete %s?"
 msgstr "Haluatko poistaa %s?"
 
-msgid "no"
-msgstr "ei"
-
-msgid "yes"
-msgstr "kyllä"
-
 #, python-format
 msgid "Showing %(per_page)s of %(n_items)s %(verbose_name_plural)s"
 msgstr "Näytetään %(per_page)s/%(n_items)s %(verbose_name_plural)s-kohdetta"
@@ -1283,3 +1652,7 @@ msgstr "Nimeämätön %s"
 #| msgid "Only one shop permitted."
 msgid "Only one %(model)s permitted."
 msgstr "Vain yksi kauppa sallittu"
+
+#, python-format
+msgid "Couldn't get selections for %s."
+msgstr ""

@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
+"POT-Creation-Date: 2016-06-28 10:36+0000\n"
 "PO-Revision-Date: 2015-12-08 08:41+0000\n"
 "Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
@@ -31,12 +31,54 @@ msgstr ""
 "Generated-By: Babel 2.1.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "Abandoned Basket Value"
+#, fuzzy
+#| msgid "Abandoned Basket Value"
+msgid "Abandoned Cart Value"
 msgstr "Hylättyjen ostoskorien arvo"
 
-#, python-brace-format
-msgid "Based on {b} baskets over the last {d} days"
+#, fuzzy, python-brace-format
+#| msgid "Based on {b} baskets over the last {d} days"
+msgid "Based on {b} carts over the last {d} days"
 msgstr "Perustuen {b} koriin viimeisen {d} päivän aikana"
+
+msgid "Carts"
+msgstr ""
+
+msgid "Show carts"
+msgstr ""
+
+msgid "Created on"
+msgstr ""
+
+msgid "Last updated on"
+msgstr ""
+
+msgid "Abandoned"
+msgstr ""
+
+msgid "yes"
+msgstr ""
+
+msgid "no"
+msgstr ""
+
+msgid "Shop"
+msgstr ""
+
+msgid "Product count"
+msgstr ""
+
+msgid "Customer"
+msgstr ""
+
+msgid "Orderer"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Ordered"
+msgstr ""
 
 #, python-format
 msgid "Invalid command %s"
@@ -67,10 +109,6 @@ msgstr "Korin tuotteita ei voi toimittaa yhdessä. %s"
 #, python-format
 msgid "Products in basket have no common payment method. %s"
 msgstr "Korin tuotteilla ei ole yhteistä maksutapaa. %s"
-
-#, python-format
-msgid "%s not available in this shop"
-msgstr "%s ei ole saatavilla tälle kaupalle"
 
 msgid "Tax number required for companies"
 msgstr "Veronumero vaaditaan yrityksille"
@@ -123,6 +161,9 @@ msgstr "Maksutapa"
 
 msgid "Please send me marketing correspondence"
 msgstr "Lähettäkää minulle markkinointimateriaalia, kiitos"
+
+msgid "Logged out since this account is inactive."
+msgstr ""
 
 msgid "key"
 msgstr ""

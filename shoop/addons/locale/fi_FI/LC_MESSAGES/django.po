@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
+"POT-Creation-Date: 2016-06-28 10:36+0000\n"
 "PO-Revision-Date: 2016-01-05 06:43+0000\n"
 "Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
@@ -58,14 +58,25 @@ msgstr "Lataa uusi lisäosa"
 msgid "Reload application"
 msgstr "Lataa sovellus uudelleen"
 
+msgid ""
+"There are no viable reload methods available. Please contact your system "
+"administrator."
+msgstr ""
+
 msgid "Reload Method"
 msgstr "Lataa menetelmä uudelleen"
+
+msgid "Reloading."
+msgstr ""
 
 msgid "Addon file (ZIP)"
 msgstr "Lisäosan tiedosto (ZIP)"
 
 msgid "Only upload addon files you trust."
 msgstr "Lataa vain lisäosia joihin luotat."
+
+msgid "Only ZIP files are supported"
+msgstr ""
 
 msgid "Upload"
 msgstr "Lataa"
@@ -102,6 +113,40 @@ msgstr ""
 "joudut tutkimaan ongelmaa itse (tai ottamaan yhteyttä "
 "järjestelmäylläpitäjään)."
 
+#, fuzzy
+#| msgid "Reload Method"
+msgid "Reload steps"
+msgstr "Lataa menetelmä uudelleen"
+
+msgid ""
+"Finalize installations for newly installed addons (migrate and collect "
+"static resources)"
+msgstr ""
+
+#, fuzzy
+#| msgid "Reload Application Server"
+msgid "Reload application server"
+msgstr "Käynnistä sovelluspalvelin uudelleen"
+
+#, fuzzy
+#| msgid "Reload Method"
+msgid "Reload initiated."
+msgstr "Lataa menetelmä uudelleen"
+
+#, fuzzy
+#| msgid "Reload application"
+msgid "Error while reloading application."
+msgstr "Lataa sovellus uudelleen"
+
+msgid "Finalizing installations."
+msgstr ""
+
+msgid "Your Shoop seems to be back up!"
+msgstr ""
+
+msgid "Your Shoop is not up yet. Trying again soon."
+msgstr ""
+
 msgid "Select file"
 msgstr "Valitse tiedosto"
 
@@ -114,17 +159,12 @@ msgstr "Asennus epäonnistunut"
 msgid "Success"
 msgstr "Onnistui"
 
-msgid "Next"
-msgstr "Seuraava"
-
-msgid "activate the newly installed addon"
-msgstr "aktivoi vasta-asennettu lisäosa"
-
-msgid "and"
-msgstr "ja"
-
-msgid "reload your application server"
-msgstr "käynnistä sovelluspalvelin uudelleen"
+#, python-format
+msgid ""
+"Next, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activate "
+"the newly installed addon</strong></a> and <a href=\"%(addon_reload_url)s\" "
+"class=\"text-success\"><strong>reload your application server</strong></a>."
+msgstr ""
 
 msgid "Error"
 msgstr "Virhe"

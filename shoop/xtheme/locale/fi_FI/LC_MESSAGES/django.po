@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
+"POT-Creation-Date: 2016-06-28 10:36+0000\n"
 "PO-Revision-Date: 2015-12-08 08:55+0000\n"
 "Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
@@ -51,6 +51,17 @@ msgstr "Aktivoi"
 msgid "Theme activated."
 msgstr "Teema aktivoitu."
 
+#, fuzzy
+#| msgid "Currently active"
+msgid "current draft"
+msgstr "Aktiivinen"
+
+msgid "old version"
+msgstr ""
+
+msgid "public"
+msgstr ""
+
 msgid "theme identifier"
 msgstr ""
 
@@ -80,6 +91,68 @@ msgstr "Teeman %s asetukset"
 
 msgid "Plugin"
 msgstr "Lisäosa"
+
+msgid "Category Links"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Show all categories"
+msgstr ""
+
+msgid "All categories are shown, even if not selected"
+msgstr ""
+
+msgid "Image"
+msgstr ""
+
+msgid "Image Link URL"
+msgstr ""
+
+#, fuzzy
+#| msgid "Full Width"
+msgid "Full width"
+msgstr "Täysi leveys"
+
+msgid "Set image to full width of cell"
+msgstr ""
+
+msgid "Width (px)"
+msgstr ""
+
+msgid "Leave blank for default width"
+msgstr ""
+
+msgid "Height (px)"
+msgstr ""
+
+msgid "Snippets"
+msgstr ""
+
+msgid "In-Place Snippet"
+msgstr ""
+
+msgid "Resource snippet for end of head"
+msgstr ""
+
+msgid "Resource snippet for beginning of body"
+msgstr ""
+
+msgid "Resource for end of body"
+msgstr ""
+
+msgid "Social Media Links"
+msgstr ""
+
+msgid "Topic"
+msgstr ""
+
+msgid "Icon Size"
+msgstr ""
+
+msgid "Alignment"
+msgstr ""
 
 msgid "text"
 msgstr ""
@@ -148,6 +221,16 @@ msgstr "Palauta muutokset"
 
 msgid "Publish Changes"
 msgstr "Julkaise muutokset"
+
+msgid "No access to editing"
+msgstr ""
+
+#, python-format
+msgid "Unknown command %s"
+msgstr ""
+
+msgid "Unable to determine current theme."
+msgstr ""
 
 #, python-format
 msgid "Cannot add more than %d cells in one row."

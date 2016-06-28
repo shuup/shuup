@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-01 18:04+0000\n"
+"POT-Creation-Date: 2016-06-28 10:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -37,13 +38,43 @@ msgstr ""
 msgid "Show Coupons"
 msgstr ""
 
+msgid "Minimum value"
+msgstr ""
+
+msgid "Maximum value"
+msgstr ""
+
+msgid "Leave empty for no maximum"
+msgstr ""
+
+msgid "Campaign end date can't be before start date."
+msgstr ""
+
+msgid "Define the required coupon for this campaign."
+msgstr ""
+
+msgid "discount percentage"
+msgstr ""
+
+msgid "The discount percentage for this campaign."
+msgstr ""
+
+msgid "Autogenerate code"
+msgstr ""
+
+msgid "Discount Code already in use."
+msgstr ""
+
+msgid "Catalog Campaign"
+msgstr ""
+
+msgid "Basket Campaign"
+msgstr ""
+
+msgid "Coupon"
+msgstr ""
+
 msgid "Title"
-msgstr ""
-
-msgid "Discount percentage"
-msgstr ""
-
-msgid "Discount amount"
 msgstr ""
 
 msgid "Starts"
@@ -79,12 +110,6 @@ msgstr ""
 msgid "Create new Basket Campaign"
 msgstr ""
 
-msgid "Catalog Campaign"
-msgstr ""
-
-msgid "Basket Campaign"
-msgstr ""
-
 msgid "Code"
 msgstr ""
 
@@ -106,36 +131,6 @@ msgstr ""
 msgid "Create new Coupon"
 msgstr ""
 
-msgid "Coupon"
-msgstr ""
-
-msgid "You should only define either discount percentage or amount."
-msgstr ""
-
-msgid "You must define discount percentage or amount."
-msgstr ""
-
-msgid "Discount percentage cannot be negative."
-msgstr ""
-
-msgid "Discount amount cannot be negative."
-msgstr ""
-
-msgid "You must set at least one rule for this campaign."
-msgstr ""
-
-msgid "Define the required coupon for this campaign."
-msgstr ""
-
-msgid "You must set atleast one rule or discount code for this campaign."
-msgstr ""
-
-msgid "Autogenerate code"
-msgstr ""
-
-msgid "Discount Code already in use."
-msgstr ""
-
 msgid "Basket condition"
 msgstr ""
 
@@ -146,8 +141,8 @@ msgid "product count in basket"
 msgstr ""
 
 msgid ""
-"Limit the campaign to match when it has atleast the product count entered "
-"here."
+"Limit the campaign to match when basket has at least the product count "
+"entered here."
 msgstr ""
 
 msgid "Basket total value"
@@ -161,13 +156,98 @@ msgid ""
 "here worth of products."
 msgstr ""
 
+msgid "Basket maximum product count"
+msgstr ""
+
+msgid "maximum product count in basket"
+msgstr ""
+
+msgid ""
+"Limit the campaign to match when basket has at maximum the product count "
+"entered here."
+msgstr ""
+
+msgid "Basket maximum total value"
+msgstr ""
+
+msgid "maximum basket total amount"
+msgstr ""
+
+msgid ""
+"Limit the campaign to match when it has at maximum the total value entered "
+"here worth of products."
+msgstr ""
+
 msgid "Products in basket"
+msgstr ""
+
+msgid "quantity"
 msgstr ""
 
 msgid "products"
 msgstr ""
 
 msgid "Limit the campaign to have the selected products in basket."
+msgstr ""
+
+msgid "Contact Group"
+msgstr ""
+
+msgid "contact groups"
+msgstr ""
+
+msgid "Limit the campaign to members of the selected contact groups."
+msgstr ""
+
+msgid "Contact"
+msgstr ""
+
+msgid "contacts"
+msgstr ""
+
+msgid "Limit the campaign to selected contacts."
+msgstr ""
+
+msgid "campaign"
+msgstr ""
+
+msgid "Discount amount value"
+msgstr ""
+
+msgid "discount amount"
+msgstr ""
+
+msgid "Flat amount of discount."
+msgstr ""
+
+msgid "Give discount amount."
+msgstr ""
+
+msgid "Discount amount percentage"
+msgstr ""
+
+msgid "Give percentage discount."
+msgstr ""
+
+msgid "Free Product(s)"
+msgstr ""
+
+msgid "product"
+msgstr ""
+
+msgid "Select product(s) to give free."
+msgstr ""
+
+msgid "Discount from Product"
+msgstr ""
+
+msgid "per line discount"
+msgstr ""
+
+msgid "Uncheck this if you want to give discount for each matched product."
+msgstr ""
+
+msgid "Select discount amount and products."
 msgstr ""
 
 msgid "shop"
@@ -180,18 +260,6 @@ msgid "name"
 msgstr ""
 
 msgid "The name for this campaign."
-msgstr ""
-
-msgid "discount percentage"
-msgstr ""
-
-msgid "The discount percentage for this campaign."
-msgstr ""
-
-msgid "discount amount value"
-msgstr ""
-
-msgid "Flat amount of discount. Mutually exclusive with percentage."
 msgstr ""
 
 msgid "active"
@@ -267,9 +335,6 @@ msgstr ""
 msgid "Product"
 msgstr ""
 
-msgid "product"
-msgstr ""
-
 msgid "Limit the campaign to selected products."
 msgstr ""
 
@@ -282,19 +347,19 @@ msgstr ""
 msgid "Limit the campaign to products in selected categories."
 msgstr ""
 
+msgid "group"
+msgstr ""
+
+msgid "min amount"
+msgstr ""
+
+msgid "max amount"
+msgstr ""
+
+msgid "Can not add sales limits for default contact groups"
+msgstr ""
+
 msgid "Context Condition"
-msgstr ""
-
-msgid "Contact Group"
-msgstr ""
-
-msgid "Contact group"
-msgstr ""
-
-msgid "contact groups"
-msgstr ""
-
-msgid "Limit the campaign to members of the selected contact groups."
 msgstr ""
 
 msgid "Campaign Basket Discounts"
@@ -303,24 +368,31 @@ msgstr ""
 msgid "Coupon Code:"
 msgstr ""
 
-msgid "New Campaign"
+msgid "General Information"
 msgstr ""
 
-msgid "General information"
+msgid "Rules"
 msgstr ""
 
-msgid "Campaign Rules"
+msgid "Rule type"
 msgstr ""
 
-msgid "Matching Rules"
+msgid "Add rule"
 msgstr ""
 
-msgid ""
-"The following fields determine when this campaign applies. You must select "
-"atleast one rule to be able to save this campaign."
+msgid "Effects"
+msgstr ""
+
+msgid "Effect type"
+msgstr ""
+
+msgid "Add effect"
 msgstr ""
 
 msgid "New Discount Code"
+msgstr ""
+
+msgid "General information"
 msgstr ""
 
 msgid "Generate"
@@ -328,4 +400,10 @@ msgstr ""
 
 #, python-format
 msgid "%(coupons)s used"
+msgstr ""
+
+msgid "Sales Ranges"
+msgstr ""
+
+msgid "Customers within this sales range are assigned to this contact group."
 msgstr ""
