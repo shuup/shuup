@@ -9,8 +9,6 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 from shoop.core.models import StockBehavior
-from shoop.core.pricing import TaxlessPrice
-from shoop.core.settings import SHOOP_HOME_CURRENCY
 from shoop.core.stocks import ProductStockStatus
 
 
@@ -76,6 +74,3 @@ class BaseSupplierModule(object):
         # Naive default implementation; smarter modules can do something better
         for product_id in product_ids:
             self.update_stock(product_id)
-
-    def get_latest_purchase_price(self, product_id):
-        return TaxlessPrice("0.00", SHOOP_HOME_CURRENCY)
