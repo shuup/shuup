@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Fix bug: Category model is missing MPTT ordering options
 - Add staff only behavior component
 - Add refund-related methods to ``Order``
 - Add `OrderLineType.REFUND` enum type

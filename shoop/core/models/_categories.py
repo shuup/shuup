@@ -99,6 +99,7 @@ class Category(MPTTModel, TranslatableModel):
     objects = CategoryManager()
 
     class Meta:
+        ordering = ('tree_id', 'lft')
         verbose_name = _('category')
         verbose_name_plural = _('categories')
 

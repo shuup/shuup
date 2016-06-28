@@ -131,6 +131,7 @@ class Migration(migrations.Migration):
                 ('parent', mptt.fields.TreeForeignKey(to='shoop.Category', verbose_name='parent category', blank=True, related_name='children', null=True)),
             ],
             options={
+                'ordering': ('tree_id', 'lft'),
                 'verbose_name_plural': 'categories',
                 'verbose_name': 'category',
             },
