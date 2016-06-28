@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 13:34+0000\n"
-"PO-Revision-Date: 2016-06-28 11:17+0000\n"
+"POT-Creation-Date: 2016-06-28 22:03+0000\n"
+"PO-Revision-Date: 2016-06-28 21:58+0000\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
 "language/fi_FI/)\n"
@@ -142,12 +142,6 @@ msgstr "Laskutusosoite"
 msgid "Shipping address"
 msgstr "Toimitusosoite"
 
-msgid "Back"
-msgstr "Takaisin"
-
-msgid "Confirm"
-msgstr "Hyväksy"
-
 msgid "Full Name"
 msgstr "Koko nimi"
 
@@ -223,18 +217,14 @@ msgstr "Laskutusosoite"
 msgid "Shipping Address"
 msgstr "Toimitusosoite"
 
+msgid "Back"
+msgstr "Takaisin"
+
+msgid "Confirm"
+msgstr "Hyväksy"
+
 msgid "Discard Changes"
 msgstr "Hylkää muutokset"
-
-msgid ""
-"Method rules, taxes and possible extra discounts are calculated after "
-"proceeding."
-msgstr ""
-"Tapojen säännöt, verot ja mahdolliset lisäalennukset lasketaan seuraavassa "
-"vaiheessa."
-
-msgid "Proceed"
-msgstr "Jatka"
 
 msgid "Select Shop"
 msgstr "Valitse kauppa"
@@ -251,26 +241,15 @@ msgstr "Toimitustapa"
 msgid "Payment Method"
 msgstr "Maksutapa"
 
-msgid "Manufacturer Details"
-msgstr "Valmistajan tiedot"
+msgid ""
+"Method rules, taxes and possible extra discounts are calculated after "
+"proceeding."
+msgstr ""
+"Tapojen säännöt, verot ja mahdolliset lisäalennukset lasketaan seuraavassa "
+"vaiheessa."
 
-msgid "Qty"
-msgstr "Määrä"
-
-msgid "Base Unit Price"
-msgstr "Perusyksikköhinta"
-
-msgid "Line Total"
-msgstr "Rivin hinta"
-
-msgid "Discounted Unit Price"
-msgstr "Alennettu yksikköhinta"
-
-msgid "Discount Percent"
-msgstr "Alennusprosentti"
-
-msgid "Total Discount Amount"
-msgstr "Kokonaisalennus"
+msgid "Proceed"
+msgstr "Jatka"
 
 msgid "Logical Count"
 msgstr "Looginen määrä"
@@ -284,8 +263,26 @@ msgstr "Valitse tuote"
 msgid "Text/Comment"
 msgstr "Teksti/Kommentti"
 
+msgid "Qty"
+msgstr "Määrä"
+
 msgid "Total Price"
 msgstr "Kokonaishinta"
+
+msgid "Base Unit Price"
+msgstr "Perusyksikköhinta"
+
+msgid "Discounted Unit Price"
+msgstr "Alennettu yksikköhinta"
+
+msgid "Discount Percent"
+msgstr "Alennusprosentti"
+
+msgid "Total Discount Amount"
+msgstr "Kokonaisalennus"
+
+msgid "Line Total"
+msgstr "Rivin hinta"
 
 msgid "Orderline type"
 msgstr "Tilausrivin tyyppi"
@@ -308,9 +305,6 @@ msgstr "Veroja ei sisällytettynä."
 
 msgid "Add new line"
 msgstr "Lisää uusi rivi"
-
-msgid "Manufacturer"
-msgstr "Valmistaja"
 
 msgid "No shipping method"
 msgstr "Ei toimitustapaa"
