@@ -617,13 +617,6 @@ msgstr ""
 msgid "purchase orders"
 msgstr ""
 
-msgid "Purchase order cannot be marked as arrived"
-msgstr ""
-
-#, python-format
-msgid "All products have arrived. Order status set to %s."
-msgstr ""
-
 msgid "gateway ID"
 msgstr ""
 

@@ -66,7 +66,7 @@ class BaseSupplierModule(object):
             if quantity > stock_status.logical_count:
                 yield ValidationError(stock_status.message or _(u"Insufficient stock"), code="stock_insufficient")
 
-    def adjust_stock(self, product_id, delta, purchase_price=0, created_by=None):
+    def adjust_stock(self, product_id, delta, created_by=None):
         raise NotImplementedError("Not implemented in BaseSupplierModule")
 
     def update_stock(self, product_id):

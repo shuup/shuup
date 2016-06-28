@@ -413,12 +413,6 @@ msgstr ""
 msgid "This order cannot modified at this point"
 msgstr ""
 
-msgid "Mark as Arrived"
-msgstr ""
-
-msgid "This order can not be marked as arrived at this point"
-msgstr ""
-
 msgid "Unable to set order as completed at this point"
 msgstr ""
 
