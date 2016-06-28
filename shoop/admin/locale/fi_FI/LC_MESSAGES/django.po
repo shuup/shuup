@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 13:34+0000\n"
-"PO-Revision-Date: 2016-06-28 12:18+0000\n"
+"POT-Creation-Date: 2016-06-28 22:03+0000\n"
+"PO-Revision-Date: 2016-06-28 22:00+0000\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
 "language/fi_FI/)\n"
@@ -250,12 +250,6 @@ msgstr "Demo"
 msgid "Manufacturers"
 msgstr "Valmistajat"
 
-msgid "Create Purchase Order"
-msgstr "Luo ostotilaus"
-
-msgid "Create an order for the manufacturer."
-msgstr "Luo tilaus valmistajalle."
-
 msgid "Media"
 msgstr "Media"
 
@@ -297,17 +291,8 @@ msgstr "%(file)s siirretty sijainnista %(old)s sijaintiin %(new)s."
 msgid "Orders"
 msgstr "Tilaukset"
 
-msgid "Sales Orders"
-msgstr "Myyntitilaukset"
-
-msgid "Show sales orders"
-msgstr "Näytä myyntitilaukset"
-
-msgid "Purchase Orders"
-msgstr "Ostotilaukset"
-
-msgid "Show purchase orders"
-msgstr "Näytä ostotilaukset"
+msgid "Show orders"
+msgstr "Näytä tilaukset"
 
 msgid "Outstanding Orders"
 msgstr "Avoimet tilaukset"
@@ -363,6 +348,10 @@ msgstr "Tuotetta %s ei ole olemassa"
 msgid "Product %(product)s is not available in the %(shop)s shop."
 msgstr "Tuotetta %(product)s ei ole saatavilla %(shop)s kaupassa."
 
+#, python-format
+msgid "Product %(product)s is not orderable: %(error)s"
+msgstr "Tuote %(product)s ei ole tilattavissa: %(error)s"
+
 msgid "Please add lines to the order."
 msgstr "Lisää rivejä tilaukseen"
 
@@ -380,9 +369,6 @@ msgstr "Valitse toimitustapa."
 
 msgid "Please select payment method."
 msgstr "Valitse maksutapa."
-
-msgid "Please select manufacturer."
-msgstr "Valitse valmistaja."
 
 msgid "Payments"
 msgstr "Maksut"
@@ -429,12 +415,6 @@ msgstr "Muokkaa tilausta"
 msgid "This order cannot modified at this point"
 msgstr "Tätä tilausta ei voi muokata tällä hetkellä"
 
-msgid "Mark as Arrived"
-msgstr "Merkitse saapuneeksi"
-
-msgid "This order can not be marked as arrived at this point"
-msgstr "Tilausta ei voi merkitä saapuneeksi tällä hetkellä"
-
 msgid "Unable to set order as completed at this point"
 msgstr "Tilausta ei voi asettaa käsitellyksi tällä hetkellä"
 
@@ -444,6 +424,10 @@ msgstr "Tilauksen tila ({old_status} tmuutettu ({new_status})"
 
 msgid "Create Order"
 msgstr "Luo tilaus"
+
+#, python-format
+msgid "Contact %s does not exist."
+msgstr "Yhteystietoa %s ei ole olemassa."
 
 #, python-format
 msgid "Order %(identifier)s updated."
@@ -458,10 +442,6 @@ msgstr "Ei voitu luoda tilausta:"
 
 msgid "Could not finalize order:"
 msgstr "Tilausta ei voitu luoda"
-
-#, python-format
-msgid "Contact %s does not exist."
-msgstr "Yhteystietoa %s ei ole olemassa."
 
 msgid "Order"
 msgstr "Tilaus"

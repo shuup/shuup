@@ -132,12 +132,6 @@ msgstr ""
 msgid "Shipping address"
 msgstr ""
 
-msgid "Back"
-msgstr ""
-
-msgid "Confirm"
-msgstr ""
-
 msgid "Full Name"
 msgstr ""
 

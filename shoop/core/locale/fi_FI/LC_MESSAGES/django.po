@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 13:34+0000\n"
-"PO-Revision-Date: 2016-06-28 11:28+0000\n"
+"POT-Creation-Date: 2016-06-28 22:03+0000\n"
+"PO-Revision-Date: 2016-06-28 21:59+0000\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shoop/shoop/"
 "language/fi_FI/)\n"
@@ -624,19 +624,6 @@ msgstr "Kaikki hyväksyntää vaativat rivit merkitty hyväksytyksi."
 
 msgid "All products have been shipped. Fully Shipped status set."
 msgstr "Kaikki tuotteet toimitettu. Tila asetettu täysin toimitetuksi."
-
-msgid "purchase order"
-msgstr "ostotilaus"
-
-msgid "purchase orders"
-msgstr "ostotilaukset"
-
-msgid "Purchase order cannot be marked as arrived"
-msgstr "Ostotilausta ei voida merkitä saapuneeksi"
-
-#, python-format
-msgid "All products have arrived. Order status set to %s."
-msgstr "Kaikki tuotteet ovat saapuneet. Tilauksen tilaksi merkitty \"%s\"."
 
 msgid "gateway ID"
 msgstr "yhdyskäytävän ID"
@@ -1301,13 +1288,6 @@ msgstr "ei valintaa"
 #, python-format
 msgid "%s not available in this shop"
 msgstr "%s ei ole saatavilla tälle kaupalle"
-
-msgid "Only staff can create purchase orders"
-msgstr "Vain työntekijät voivat luoda ostotilauksia"
-
-#, python-format
-msgid "%(product)s not manufactured by %(manufacturer)s"
-msgstr "%(product)s ei ole valmistajan %(manufacturer)s valmistama"
 
 msgid "Default Pricing"
 msgstr "Oletushinnoittelu"
