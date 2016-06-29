@@ -35,11 +35,11 @@ class SocialMediaLinksPluginForm(GenericPluginForm):
             ordering = links[name]["ordering"] if name in links else None
             self.fields[name] = forms.URLField(
                 label=name, required=False,
-                widget=forms.TextInput(attrs={"placeholder": "URL"}),
+                widget=forms.TextInput(attrs={"placeholder": _("URL")}),
                 initial=url)
             self.fields["%s-ordering" % name] = forms.IntegerField(
                 label="", required=False, min_value=0, max_value=len(icon_classes)*2,
-                initial=ordering, widget=forms.NumberInput(attrs={"placeholder": "Ordering"}))
+                initial=ordering, widget=forms.NumberInput(attrs={"placeholder": _("Ordering")}))
         super(SocialMediaLinksPluginForm, self).populate()
 
     def clean(self):
@@ -77,18 +77,18 @@ class SocialMediaLinksPlugin(TemplatedPlugin):
         ("topic", TranslatableField(label=_("Topic"), required=False, initial="")),
         ("text", TranslatableField(label=_("Title"), required=False, initial="")),
         ("icon_size", forms.ChoiceField(label=_("Icon Size"), required=False, choices=[
-            ("", "Default"),
-            ("lg", "Large"),
+            ("", _("Default")),
+            ("lg", _("Large")),
             ("2x", "2x"),
             ("3x", "3x"),
             ("4x", "4x"),
             ("5x", "5x"),
         ], initial="")),
         ("alignment", forms.ChoiceField(label=_("Alignment"), required=False, choices=[
-            ("", "Default"),
-            ("left", "Left"),
-            ("center", "Center"),
-            ("right", "Right"),
+            ("", _("Default")),
+            ("left", _("Left")),
+            ("center", _("Center")),
+            ("right", _("Right")),
         ], initial="")),
     ]
 

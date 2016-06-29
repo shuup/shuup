@@ -8,16 +8,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 04:22+0000\n"
+"POT-Creation-Date: 2016-06-29 17:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
-"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
+
+msgid "received"
+msgstr ""
+
+msgid "in progress"
+msgstr ""
+
+msgid "complete"
+msgstr ""
+
+msgid "canceled"
+msgstr ""
 
 msgid "internal identifier"
 msgstr ""
@@ -465,9 +477,6 @@ msgstr ""
 msgid "fully paid"
 msgstr ""
 
-msgid "canceled"
-msgstr ""
-
 msgid "deferred"
 msgstr ""
 
@@ -484,9 +493,6 @@ msgid "none"
 msgstr ""
 
 msgid "initial"
-msgstr ""
-
-msgid "complete"
 msgstr ""
 
 msgid "default"
@@ -1114,9 +1120,6 @@ msgid "not sent"
 msgstr ""
 
 msgid "sent"
-msgstr ""
-
-msgid "received"
 msgstr ""
 
 msgid "error"
