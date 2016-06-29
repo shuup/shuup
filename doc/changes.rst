@@ -5,4 +5,5 @@ Change History
    :maxdepth: 2
 
    release_notes/index
+   changelog
    shoop-changelog

@@ -4,8 +4,9 @@ Shoop 3.0.0 Release Notes
 Released on 2016-01-21 11:15 +0200.
 
 Here's a few highlights of new features, improvements and fixes in Shoop
-3.0.0 since 2.0.0.  For complete list of changes see :doc:`../changelog`
-or `Git commit log <https://github.com/shuup/shoop/commits/v3.0.0>`__.
+3.0.0 since 2.0.0.  For complete list of changes see
+:doc:`../shoop-changelog` or `Git commit log
+<https://github.com/shuup/shoop/commits/v3.0.0>`__.
 
 There's also update instructions for :ref:`updating from 2.0
 <updating-from-2-to-3>`.

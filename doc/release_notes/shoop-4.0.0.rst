@@ -5,8 +5,9 @@ Released on 2016-06-29 21:30 +0300.
 
 This release includes many new features, bug fixes and improvements in
 over 400 non-merge commits since 3.0.0.  Highlights of the changes are
-listed here, but for complete list of changes see :doc:`../changelog` or
-`Git commit log <https://github.com/shuup/shoop/commits/v4.0.0>`__.
+listed here, but for complete list of changes see
+:doc:`../shoop-changelog` or `Git commit log
+<https://github.com/shuup/shoop/commits/v4.0.0>`__.
 
 This is also the last release of Shoop, since the product name will
 change to Shuup.  The same code base with "shoop" replaced by "shuup"

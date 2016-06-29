@@ -13,5 +13,5 @@ The highlights of this release (over 500 commits since 1.2!) are:
 - A brand new, slick frontend theme "Classic Gray"
 - Lots and lots of other fixes and improvements!
 
-For more detailed list of changes see :doc:`../changelog` or `Git
+For more detailed list of changes see :doc:`../shoop-changelog` or `Git
 commit log <https://github.com/shuup/shoop/commits/v2.0.0>`__.
