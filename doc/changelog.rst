@@ -220,12 +220,6 @@ Customer Group Pricing
 - Rename Simple Pricing to Customer Group Pricing
 - Fix pricing for ``AnonymousContact``
 
-
-Guide
-~~~~~
-
-- Add guide app that integrates help documentation into admin search
-
 Discount Pricing
 ~~~~~~~~~~~~~~~~
 
@@ -242,6 +236,11 @@ Default Tax
 
 - Filter tax rules by postal codes to gain better performance
 - Add minimum and maximum postal code values to ``TaxRule``
+
+Guide
+~~~~~
+
+- Add guide app that integrates help documentation into admin search
 
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
