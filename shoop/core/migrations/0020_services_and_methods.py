@@ -9,26 +9,79 @@ import shoop.core.fields
 from shoop.core.models import ShopStatus
 
 
-def create_default_service_providers(apps, schema_editor):
-    """
-    Create default carrier and payment processor.
+def migrate_payment_and_shipping_methods(apps, schema_editor):
+    entries = [
+        dict(
+            model='ShippingMethod',
+            module_identifier='default_shipping',
+            provider_attr='carrier',
+            provider_creator=get_default_carrier,
+        ),
+        dict(
+            model='PaymentMethod',
+            module_identifier='default_payment',
+            provider_attr='payment_processor',
+            provider_creator=get_default_payment_processor,
+        ),
+    ]
+    for entry in entries:
+        method_model = apps.get_model("shoop", entry['model'])
+        module_identifier = entry['module_identifier']
+        provider_attr = entry['provider_attr']
+        provider_creator = entry['provider_creator']
 
-    Link existing ShippingMethods and PaymentMethods which use the
-    previous default module to the created carrier or payment processor.
-    """
-    carrier = create_service_provider(apps, "CustomCarrier", "Carrier")
-    apps.get_model("shoop", "ShippingMethod").objects.filter(
-        old_module_identifier="default_shipping").update(
-            carrier=carrier)
+        # Set shop for all methods
+        methods = method_model.objects.filter(shop=None)
+        if methods:
+            methods.update(shop=get_default_shop(apps))
 
-    payment_processor = create_service_provider(
+        # Migrate methods using the default module
+        methods = method_model.objects.filter(
+            old_module_identifier__in=set([module_identifier, '']))
+        if methods:
+            # Set service provider
+            methods.update(**{provider_attr: provider_creator(apps)})
+
+            # Migrate module data to behavior components
+            for method in methods:
+                data = method.old_module_data
+                if data:
+                    price = data.get('price', 0)
+                    waiver = data.get('price_waiver_product_minimum', 0)
+                    minw = data.get('min_weight', 0)
+                    maxw = data.get('max_weight', 0)
+                    if price and not waiver:
+                        method.behavior_components.add(
+                            create_polymorphic_object(
+                                apps, 'FixedCostBehaviorComponent',
+                                price_value=price))
+                    elif waiver:
+                        method.behavior_components.add(
+                            create_polymorphic_object(
+                                apps, 'WaivingCostBehaviorComponent',
+                                price_value=price, waive_limit_value=waiver))
+                    if minw or maxw:
+                        method.behavior_components.add(
+                            create_polymorphic_object(
+                                apps, 'WeightLimitsBehaviorComponent',
+                                min_weight=minw, max_weight=maxw))
+
+                # Migrate "status" field to "enabled" field
+                if method.status:  # 0 = DISABLED, 1 = ENABLED
+                    method.enabled = True
+                    method.save()
+
+
+def get_default_carrier(apps):
+    return get_or_create_service_provider(apps, "CustomCarrier", "Carrier")
+
+
+def get_default_payment_processor(apps):
+    return get_or_create_service_provider(
         apps, "CustomPaymentProcessor", "Manual payment processing")
-    apps.get_model("shoop", "PaymentMethod").objects.filter(
-        old_module_identifier="default_payment").update(
-            payment_processor=payment_processor)
 
 
-def create_service_provider(apps, model_name, name):
+def get_or_create_service_provider(apps, model_name, name):
     """
     Create a service provider by model name.
 
@@ -37,31 +90,31 @@ def create_service_provider(apps, model_name, name):
     """
     sp_model = apps.get_model("shoop", model_name)
     sp_trans_model = apps.get_model("shoop", "ServiceProviderTranslation")
-    provider = sp_model.objects.create(identifier=sp_model.__name__)
-    sp_trans_model.objects.create(
-        master_id=provider.pk, language_code="en", name=name)
+    identifier = 'default:' + sp_model.__name__.lower()
 
-    # Update polymorphic_ctype
-    content_type_model = apps.get_model("contenttypes", "ContentType")
-    new_ct = content_type_model.objects.get_for_model(sp_model)
-    sp_model.objects.filter(
-        polymorphic_ctype__isnull=True).update(polymorphic_ctype=new_ct)
+    (provider, created) = sp_model.objects.get_or_create(identifier=identifier)
+
+    if created:
+        sp_trans_model.objects.create(
+            master_id=provider.pk, language_code="en", name=name)
+        update_polymorphic_ctype(apps, provider)
 
     return provider
 
 
-def set_shop_for_methods(apps, schema_editor):
-    shop = None
-    method_models = [
-        apps.get_model("shoop", "PaymentMethod"),
-        apps.get_model("shoop", "ShippingMethod"),
-    ]
-    for method_model in method_models:
-        methods = method_model.objects.filter(shop=None)
-        if methods:
-            if not shop:
-                shop = get_default_shop(apps)
-            methods.update(shop=shop)
+def create_polymorphic_object(apps, model_name, **kwargs):
+    model = apps.get_model("shoop", model_name)
+    obj = model.objects.create(**kwargs)
+    update_polymorphic_ctype(apps, obj)
+    return obj
+
+
+def update_polymorphic_ctype(apps, obj):
+    if obj.polymorphic_ctype is None:
+        content_type_model = apps.get_model('contenttypes', 'ContentType')
+        ctype = content_type_model.objects.get_for_model(obj._meta.model)
+        obj.polymorphic_ctype = ctype
+        obj.save()
 
 
 def get_default_shop(apps):
@@ -173,14 +226,6 @@ class Migration(migrations.Migration):
             model_name='shippingmethod',
             old_name='module_data',
             new_name='old_module_data',
-        ),
-        migrations.RemoveField(
-            model_name='paymentmethod',
-            name='status',
-        ),
-        migrations.RemoveField(
-            model_name='shippingmethod',
-            name='status',
         ),
         migrations.AlterField(
             model_name='paymentmethod',
@@ -396,8 +441,18 @@ class Migration(migrations.Migration):
             name='fixedcostbehaviorcomponenttranslation',
             unique_together=set([('language_code', 'master')]),
         ),
-        migrations.RunPython(create_default_service_providers, migrations.RunPython.noop),
-        migrations.RunPython(set_shop_for_methods, migrations.RunPython.noop),
+        migrations.RunPython(
+            migrate_payment_and_shipping_methods,
+            migrations.RunPython.noop
+        ),
+        migrations.RemoveField(
+            model_name='paymentmethod',
+            name='status',
+        ),
+        migrations.RemoveField(
+            model_name='shippingmethod',
+            name='status',
+        ),
         migrations.AlterField(
             model_name='paymentmethod',
             name='shop',
