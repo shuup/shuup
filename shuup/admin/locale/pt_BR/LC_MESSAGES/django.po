@@ -812,9 +812,9 @@ msgid "Telemetry"
 msgstr "Telemetria"
 
 msgid ""
-"Statistics will be periodically sent to Shuup.io after 24 hours. Click here "
+"Statistics will be periodically sent to Shuup.com after 24 hours. Click here "
 "for more information."
-msgstr "As estatísticas serão enviadas periodicamente a Shuup.io após 24 horas. Clique aqui para obter mais informações."
+msgstr "As estatísticas serão enviadas periodicamente a Shuup.com após 24 horas. Clique aqui para obter mais informações."
 
 msgid "Taxes"
 msgstr "Impostos"
@@ -1345,8 +1345,8 @@ msgstr "Endereço de Contato"
 msgid "About Shuup Telemetry"
 msgstr "Sobre a Telemetria do Shuup"
 
-msgid "Shuup will occasionally send telemetry data to a Shuup.io server."
-msgstr "O Shuup ocasionalmente envia dados de telemetria a um servidor Shuup.io."
+msgid "Shuup will occasionally send telemetry data to a Shuup.com server."
+msgstr "O Shuup ocasionalmente envia dados de telemetria a um servidor Shuup.com."
 
 #, python-format
 msgid ""
@@ -1356,18 +1356,18 @@ msgid ""
 msgstr "Os dados contém, além de uma chave de instalação única, o hostname da instalação (como enviado pelo navegador visitante, neste caso <code>%(host)s</code>)."
 
 msgid ""
-"No business data or other customer information is ever sent. Shuup.io only "
+"No business data or other customer information is ever sent. Shuup.com only "
 "uses the telemetry data for statistical purposes and for insights about the "
 "software's installation base."
-msgstr "Nenhum dado de negócio ou outras informações sobre clientes jamais são enviados. Shuup.io utiliza os dados de telemetria apenas para fins estatísticos e para insights sobre a base de instalação do software."
+msgstr "Nenhum dado de negócio ou outras informações sobre clientes jamais são enviados. Shuup.com utiliza os dados de telemetria apenas para fins estatísticos e para insights sobre a base de instalação do software."
 
 msgid "Opt-in / opt-out"
 msgstr "Optar por / não optar"
 
 msgid ""
 "You are currently <span class=\"lead label label-success\">opted in</span> "
-"to send telemetry data to Shuup.io."
-msgstr "Você atualmente <span class=\"lead label label-success\">opta por</span> enviar os dados de telemetria a Shuup.io."
+"to send telemetry data to Shuup.com."
+msgstr "Você atualmente <span class=\"lead label label-success\">opta por</span> enviar os dados de telemetria a Shuup.com."
 
 msgid "Thank you for your valuable contribution."
 msgstr "Obrigado por sua valiosa contribuição."

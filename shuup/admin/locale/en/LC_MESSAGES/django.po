@@ -812,7 +812,7 @@ msgid "Telemetry"
 msgstr ""
 
 msgid ""
-"Statistics will be periodically sent to Shuup.io after 24 hours. Click here "
+"Statistics will be periodically sent to Shuup.com after 24 hours. Click here "
 "for more information."
 msgstr ""
 
@@ -1344,7 +1344,7 @@ msgstr ""
 msgid "About Shuup Telemetry"
 msgstr ""
 
-msgid "Shuup will occasionally send telemetry data to a Shuup.io server."
+msgid "Shuup will occasionally send telemetry data to a Shuup.com server."
 msgstr ""
 
 #, python-format
@@ -1355,7 +1355,7 @@ msgid ""
 msgstr ""
 
 msgid ""
-"No business data or other customer information is ever sent. Shuup.io only "
+"No business data or other customer information is ever sent. Shuup.com only "
 "uses the telemetry data for statistical purposes and for insights about the "
 "software's installation base."
 msgstr ""
@@ -1365,7 +1365,7 @@ msgstr ""
 
 msgid ""
 "You are currently <span class=\"lead label label-success\">opted in</span> "
-"to send telemetry data to Shuup.io."
+"to send telemetry data to Shuup.com."
 msgstr ""
 
 msgid "Thank you for your valuable contribution."

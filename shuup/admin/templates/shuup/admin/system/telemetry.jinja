@@ -5,15 +5,15 @@
             <div class="row">
                 <div class="col-md-6">
                     <h2>{% trans %}About Shuup Telemetry{% endtrans %}</h2>
-                    <p>{% trans %}Shuup will occasionally send telemetry data to a Shuup.io server.{% endtrans %}</p>
+                    <p>{% trans %}Shuup will occasionally send telemetry data to a Shuup.com server.{% endtrans %}</p>
                     <p>{% trans host=request.get_host() %}The data contains an unique installation key, as well as the hostname of the installation (as sent by the visiting browser; currently <code>{{ host }}</code>).{% endtrans %}</p>
-                    <p>{% trans %}No business data or other customer information is ever sent. Shuup.io only uses the telemetry data for statistical purposes and for insights about the software's installation base.{% endtrans %}</p>
+                    <p>{% trans %}No business data or other customer information is ever sent. Shuup.com only uses the telemetry data for statistical purposes and for insights about the software's installation base.{% endtrans %}</p>
                     <hr>
                     <h2>{% trans %}Opt-in / opt-out{% endtrans %}</h2>
                     <form action="{{ request.path }}" method="post">
                         {% csrf_token %}
                         {% if opt_in %}
-                            <p><span class="text-success"><strong>{% trans %}You are currently <span class="lead label label-success">opted in</span> to send telemetry data to Shuup.io.{% endtrans %}</strong></span> {% trans %}Thank you for your valuable contribution.{% endtrans %} <i class="fa fa-heart-o"></i><br></p>
+                            <p><span class="text-success"><strong>{% trans %}You are currently <span class="lead label label-success">opted in</span> to send telemetry data to Shuup.com.{% endtrans %}</strong></span> {% trans %}Thank you for your valuable contribution.{% endtrans %} <i class="fa fa-heart-o"></i><br></p>
                             <button type="submit" value="out" name="opt" class="btn btn-xs btn-warning btn-inverse"><i class="fa fa-ban"></i> {% trans %}Opt out{% endtrans %}</button>
                         {% else %}
                             <p class="text-warning"><strong>{% trans %}You are currently <span class="label label-warning">opted out</span> of Shuup telemetry.{% endtrans %}</strong></p>
