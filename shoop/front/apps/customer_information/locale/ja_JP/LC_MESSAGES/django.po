@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
+"POT-Creation-Date: 2016-06-29 14:44+0000\n"
 "PO-Revision-Date: 2015-12-08 08:41+0000\n"
 "Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
@@ -23,10 +23,23 @@ msgstr ""
 msgid "Shoop Frontend - Customer Information Editing"
 msgstr ""
 
-msgid "User account information"
+msgid "Will become default user email when linked"
+msgstr ""
+
+msgid "Change Password"
+msgstr ""
+
+msgid "Save password"
+msgstr ""
+
+#, fuzzy
+#| msgid "User account information"
+msgid "Company account information"
 msgstr "ユーザーアカウント情報"
 
-msgid "User information"
+#, fuzzy
+#| msgid "User information"
+msgid "Company information"
 msgstr "ユーザー情報"
 
 msgid "Billing information"
@@ -38,5 +51,19 @@ msgstr ""
 msgid "Save changes"
 msgstr "変更を保存する"
 
+msgid "User account information"
+msgstr "ユーザーアカウント情報"
+
+msgid "User information"
+msgstr "ユーザー情報"
+
+msgid "Password successfully changed."
+msgstr ""
+
 msgid "Account information saved successfully."
+msgstr "アカウント情報は保存されました。"
+
+#, fuzzy
+#| msgid "Account information saved successfully."
+msgid "Company information saved successfully."
 msgstr "アカウント情報は保存されました。"

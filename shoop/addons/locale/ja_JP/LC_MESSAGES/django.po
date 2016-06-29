@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
+"POT-Creation-Date: 2016-06-29 14:44+0000\n"
 "PO-Revision-Date: 2015-12-08 08:41+0000\n"
 "Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
@@ -47,14 +47,25 @@ msgstr "新しいアドオンをアップロードする"
 msgid "Reload application"
 msgstr "アプリケーションをリロードする"
 
+msgid ""
+"There are no viable reload methods available. Please contact your system "
+"administrator."
+msgstr ""
+
 msgid "Reload Method"
 msgstr "メソッドをリロードする"
+
+msgid "Reloading."
+msgstr ""
 
 msgid "Addon file (ZIP)"
 msgstr "アドオンファイル (ZIP)"
 
 msgid "Only upload addon files you trust."
 msgstr "あなたが信頼できるアドオンファイルのみアップロードしてください。"
+
+msgid "Only ZIP files are supported"
+msgstr ""
 
 msgid "Upload"
 msgstr "アップロード"
@@ -92,6 +103,40 @@ msgstr ""
 "また、サーバが正常に初期化しない場合は、問題を自分でトラブルシューティングす"
 "る (またはシステム管理者に依頼する) 必要がある可能性があります。"
 
+#, fuzzy
+#| msgid "Reload Method"
+msgid "Reload steps"
+msgstr "メソッドをリロードする"
+
+msgid ""
+"Finalize installations for newly installed addons (migrate and collect "
+"static resources)"
+msgstr ""
+
+#, fuzzy
+#| msgid "Reload Application Server"
+msgid "Reload application server"
+msgstr "アプリケーションサーバをリロード"
+
+#, fuzzy
+#| msgid "Reload Method"
+msgid "Reload initiated."
+msgstr "メソッドをリロードする"
+
+#, fuzzy
+#| msgid "Reload application"
+msgid "Error while reloading application."
+msgstr "アプリケーションをリロードする"
+
+msgid "Finalizing installations."
+msgstr ""
+
+msgid "Your Shoop seems to be back up!"
+msgstr ""
+
+msgid "Your Shoop is not up yet. Trying again soon."
+msgstr ""
+
 msgid "Select file"
 msgstr "ファイルを選ぶ"
 
@@ -104,17 +149,12 @@ msgstr "インストールに失敗しました"
 msgid "Success"
 msgstr "成功"
 
-msgid "Next"
-msgstr "次"
-
-msgid "activate the newly installed addon"
-msgstr "新しくインストールしたアドオンをアクティブ化する"
-
-msgid "and"
-msgstr "と"
-
-msgid "reload your application server"
-msgstr "アプリケーションサーバをリロード"
+#, python-format
+msgid ""
+"Next, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activate "
+"the newly installed addon</strong></a> and <a href=\"%(addon_reload_url)s\" "
+"class=\"text-success\"><strong>reload your application server</strong></a>."
+msgstr ""
 
 msgid "Error"
 msgstr "エラー"

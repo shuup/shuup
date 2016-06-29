@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
+"POT-Creation-Date: 2016-06-29 14:44+0000\n"
 "PO-Revision-Date: 2015-12-10 09:39+0000\n"
 "Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
@@ -91,6 +91,12 @@ msgstr "该标识符可用于模板里创建URL"
 msgid "visible in menu"
 msgstr "在菜单可见"
 
+msgid "parent"
+msgstr ""
+
+msgid "list children on page"
+msgstr ""
+
 #, fuzzy
 #| msgid "Title"
 msgid "title"
@@ -112,6 +118,20 @@ msgstr "页面"
 
 msgid "Untitled"
 msgstr "无标题"
+
+msgid "CMS Page Links"
+msgstr ""
+
+#, fuzzy
+#| msgid "Show pages"
+msgid "Show all pages"
+msgstr "显示页面"
+
+msgid "All pages are shown, even if not selected"
+msgstr ""
+
+msgid "Hide expired pages"
+msgstr ""
 
 msgid "New Page"
 msgstr "新页面"

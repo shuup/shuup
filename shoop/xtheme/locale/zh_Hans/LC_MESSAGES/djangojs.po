@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
+"POT-Creation-Date: 2016-06-29 14:44+0000\n"
 "PO-Revision-Date: 2015-12-10 09:23+0000\n"
 "Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
@@ -20,10 +20,9 @@ msgstr ""
 "Generated-By: Babel 2.1.1\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgid "Exit Edit"
-msgstr "退出编辑"
-
-msgid "Edit Page"
+#, fuzzy, javascript-format
+#| msgid "Edit Page"
+msgid "Edit %s"
 msgstr "编辑页面"
 
 #, javascript-format
@@ -46,3 +45,9 @@ msgstr "自从上一次版本发布后，您确定要复原所有更改吗？"
 
 msgid "Changing plugins will cause other changes made on this form to be lost."
 msgstr "改变插件将导致该表格上其他更改的丢失。"
+
+msgid "Exit Edit"
+msgstr "退出编辑"
+
+msgid "Edit Page"
+msgstr "编辑页面"

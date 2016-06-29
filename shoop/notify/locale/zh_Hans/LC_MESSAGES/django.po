@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
+"POT-Creation-Date: 2016-06-29 14:44+0000\n"
 "PO-Revision-Date: 2015-12-10 14:00+0000\n"
 "Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
@@ -107,6 +107,26 @@ msgstr "请检查界值的 `value`是否为空或归零。"
 msgid "Empty"
 msgstr "空"
 
+msgid "none"
+msgstr "无"
+
+msgid "unilingual"
+msgstr ""
+
+msgid "multilingual"
+msgstr ""
+
+#, fuzzy
+#| msgid "Variables"
+msgid "variable only"
+msgstr "变量"
+
+msgid "constant only"
+msgstr ""
+
+msgid "variable or constant"
+msgstr ""
+
 msgid "continue to the next step"
 msgstr "继续至下一步"
 
@@ -119,14 +139,23 @@ msgstr "全部"
 msgid "any"
 msgstr "任何"
 
-msgid "none"
-msgstr "无"
-
 msgid "any shop administrator"
 msgstr "任何店铺管理员"
 
 msgid "a specific user"
 msgstr "一个指定用户"
+
+msgid "low"
+msgstr ""
+
+msgid "normal"
+msgstr ""
+
+msgid "high"
+msgstr ""
+
+msgid "critical"
+msgstr ""
 
 #, fuzzy
 #| msgid "Recipient"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
+"POT-Creation-Date: 2016-06-29 14:44+0000\n"
 "PO-Revision-Date: 2015-12-10 12:59+0000\n"
 "Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
@@ -47,14 +47,25 @@ msgstr "上传新附加组件"
 msgid "Reload application"
 msgstr "重新加载应用程序"
 
+msgid ""
+"There are no viable reload methods available. Please contact your system "
+"administrator."
+msgstr ""
+
 msgid "Reload Method"
 msgstr "重新加载方式"
+
+msgid "Reloading."
+msgstr ""
 
 msgid "Addon file (ZIP)"
 msgstr "附加组件文件 (ZIP)"
 
 msgid "Only upload addon files you trust."
 msgstr "只上传信任的附加组件文件。"
+
+msgid "Only ZIP files are supported"
+msgstr ""
 
 msgid "Upload"
 msgstr "上传"
@@ -91,6 +102,40 @@ msgstr ""
 "此外，服务器有时会不能正确地初始化，在这种情况下，您需要自己排除故障 (或者请"
 "个系统管理员)。"
 
+#, fuzzy
+#| msgid "Reload Method"
+msgid "Reload steps"
+msgstr "重新加载方式"
+
+msgid ""
+"Finalize installations for newly installed addons (migrate and collect "
+"static resources)"
+msgstr ""
+
+#, fuzzy
+#| msgid "Reload Application Server"
+msgid "Reload application server"
+msgstr "重新加载应用服务器"
+
+#, fuzzy
+#| msgid "Reload Method"
+msgid "Reload initiated."
+msgstr "重新加载方式"
+
+#, fuzzy
+#| msgid "Reload application"
+msgid "Error while reloading application."
+msgstr "重新加载应用程序"
+
+msgid "Finalizing installations."
+msgstr ""
+
+msgid "Your Shoop seems to be back up!"
+msgstr ""
+
+msgid "Your Shoop is not up yet. Trying again soon."
+msgstr ""
+
 msgid "Select file"
 msgstr "选择文件"
 
@@ -103,17 +148,12 @@ msgstr "安装失败"
 msgid "Success"
 msgstr "成功"
 
-msgid "Next"
-msgstr "下一步"
-
-msgid "activate the newly installed addon"
-msgstr "激活新安装的附加组件"
-
-msgid "and"
-msgstr "和"
-
-msgid "reload your application server"
-msgstr "重新加载您的应用服务器"
+#, python-format
+msgid ""
+"Next, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activate "
+"the newly installed addon</strong></a> and <a href=\"%(addon_reload_url)s\" "
+"class=\"text-success\"><strong>reload your application server</strong></a>."
+msgstr ""
 
 msgid "Error"
 msgstr "错误"

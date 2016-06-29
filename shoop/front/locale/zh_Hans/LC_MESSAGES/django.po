@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
+"POT-Creation-Date: 2016-06-29 14:44+0000\n"
 "PO-Revision-Date: 2015-12-17 15:11+0000\n"
 "Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
@@ -20,12 +20,54 @@ msgstr ""
 "Generated-By: Babel 2.1.1\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgid "Abandoned Basket Value"
+#, fuzzy
+#| msgid "Abandoned Basket Value"
+msgid "Abandoned Cart Value"
 msgstr "已放弃的购物篮价值"
 
-#, python-brace-format
-msgid "Based on {b} baskets over the last {d} days"
+#, fuzzy, python-brace-format
+#| msgid "Based on {b} baskets over the last {d} days"
+msgid "Based on {b} carts over the last {d} days"
 msgstr "根据过去 {d} 天的 {b} 购物篮"
+
+msgid "Carts"
+msgstr ""
+
+msgid "Show carts"
+msgstr ""
+
+msgid "Created on"
+msgstr ""
+
+msgid "Last updated on"
+msgstr ""
+
+msgid "Abandoned"
+msgstr ""
+
+msgid "yes"
+msgstr ""
+
+msgid "no"
+msgstr ""
+
+msgid "Shop"
+msgstr ""
+
+msgid "Product count"
+msgstr ""
+
+msgid "Customer"
+msgstr ""
+
+msgid "Orderer"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Ordered"
+msgstr ""
 
 #, python-format
 msgid "Invalid command %s"
@@ -56,10 +98,6 @@ msgstr "购物篮里的产品不能一起配送。%s"
 #, python-format
 msgid "Products in basket have no common payment method. %s"
 msgstr "购物篮里的产品没有共同的支付方式。%s"
-
-#, python-format
-msgid "%s not available in this shop"
-msgstr "%s 在该店铺无法找到"
 
 msgid "Tax number required for companies"
 msgstr "所有公司要求提供税号"
@@ -112,6 +150,9 @@ msgstr "支付方式"
 
 msgid "Please send me marketing correspondence"
 msgstr "请发送给我营销通信"
+
+msgid "Logged out since this account is inactive."
+msgstr ""
 
 msgid "key"
 msgstr ""

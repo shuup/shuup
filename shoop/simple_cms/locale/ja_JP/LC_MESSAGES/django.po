@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
+"POT-Creation-Date: 2016-06-29 14:44+0000\n"
 "PO-Revision-Date: 2015-12-08 08:41+0000\n"
 "Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
@@ -81,6 +81,12 @@ msgstr ""
 msgid "visible in menu"
 msgstr ""
 
+msgid "parent"
+msgstr ""
+
+msgid "list children on page"
+msgstr ""
+
 #, fuzzy
 #| msgid "Title"
 msgid "title"
@@ -100,6 +106,20 @@ msgstr "ページ"
 
 msgid "Untitled"
 msgstr "タイトルなし"
+
+msgid "CMS Page Links"
+msgstr ""
+
+#, fuzzy
+#| msgid "Show pages"
+msgid "Show all pages"
+msgstr "ページを見る"
+
+msgid "All pages are shown, even if not selected"
+msgstr ""
+
+msgid "Hide expired pages"
+msgstr ""
 
 msgid "New Page"
 msgstr ""

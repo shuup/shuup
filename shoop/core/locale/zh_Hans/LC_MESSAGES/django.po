@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-27 04:56+0000\n"
+"POT-Creation-Date: 2016-06-29 14:44+0000\n"
 "PO-Revision-Date: 2015-12-10 12:47+0000\n"
 "Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
@@ -25,38 +25,6 @@ msgstr "内部标识符 "
 
 msgid "Do not change this value if you are not sure what you're doing."
 msgstr "如果您不确定请不要更改该值。"
-
-msgid "Price"
-msgstr "价格"
-
-msgid "Waiver minimum"
-msgstr "最低减免"
-
-msgid ""
-"Waive the price when the total price of products in the order reaches this "
-"amount"
-msgstr "当订单产品总价达到这个数额时，减免该价格"
-
-msgid "0 or below: no lower limit"
-msgstr "0 或以下：没有下限"
-
-msgid "minimum weight"
-msgstr "最低重量"
-
-msgid "maximum weight"
-msgstr "最大重量"
-
-msgid "Minimum weight not met."
-msgstr "没有达到最低重量。"
-
-msgid "Maximum weight exceeded."
-msgstr "最大重量已超过。"
-
-msgid "Default Shipping"
-msgstr "默认配送"
-
-msgid "Default Payment"
-msgstr "默认支付"
 
 msgid "Error"
 msgstr "错误"
@@ -299,11 +267,22 @@ msgstr "成员"
 msgid "show as pricing option"
 msgstr "以定价选项显示"
 
+msgid "show prices including taxes"
+msgstr ""
+
+#, fuzzy
+#| msgid "Default price"
+msgid "hide prices"
+msgstr "默认价格"
+
 msgid "contact group"
 msgstr "联系群组"
 
 msgid "contact groups"
 msgstr "联系群组"
+
+msgid "Can't delete. This object is protected."
+msgstr ""
 
 #, fuzzy
 #| msgid "related"
@@ -338,11 +317,24 @@ msgstr "时距"
 msgid "tax group"
 msgstr "联系群组"
 
+msgid "merchant notes"
+msgstr ""
+
+#, fuzzy
+#| msgid "counter"
+msgid "account manager"
+msgstr "柜台"
+
 msgid "contact"
 msgstr "联系"
 
 msgid "contacts"
 msgstr "联系"
+
+#, fuzzy
+#| msgid "Company Customers"
+msgid "Company Contacts"
+msgstr "公司客户"
 
 msgid "e.g. EIN in US or VAT code in Europe"
 msgstr "例如美国的雇主识别号码EIN或者欧洲的增值税代码VAT"
@@ -352,6 +344,23 @@ msgstr "公司"
 
 msgid "companies"
 msgstr "公司"
+
+msgid "undisclosed"
+msgstr ""
+
+msgid "male"
+msgstr ""
+
+msgid "female"
+msgstr ""
+
+msgid "other"
+msgstr "其他"
+
+#, fuzzy
+#| msgid "contacts"
+msgid "Person Contacts"
+msgstr "联系"
 
 msgid "user"
 msgstr ""
@@ -364,11 +373,24 @@ msgstr ""
 msgid "birth date"
 msgstr "订单日期"
 
+#, fuzzy
+#| msgid "tax name"
+msgid "first name"
+msgstr "税名"
+
+#, fuzzy
+#| msgid "tax name"
+msgid "last name"
+msgstr "税名"
+
 msgid "person"
 msgstr "人"
 
 msgid "persons"
 msgstr "人"
+
+msgid "Anonymous Contacts"
+msgstr ""
 
 msgid "order reference"
 msgstr "订单参考"
@@ -396,43 +418,20 @@ msgstr "制造商"
 msgid "manufacturers"
 msgstr "制造商"
 
+msgid "product"
+msgstr "产品"
+
 msgid "shipping"
 msgstr "配送"
 
 msgid "payment"
 msgstr "支付"
 
-msgid "tax class"
-msgstr "税种"
-
-msgid "module"
-msgstr "模块"
-
-#, fuzzy
-#| msgid "module"
-msgid "module data"
-msgstr "模块"
-
-msgid "shipping method"
-msgstr "配送方式"
-
-msgid "shipping methods"
-msgstr "配送方式"
-
-msgid "payment method"
-msgstr "支付方式"
-
-msgid "payment methods"
-msgstr "支付方式"
-
-msgid "product"
-msgstr "产品"
-
 msgid "discount"
 msgstr ""
 
-msgid "other"
-msgstr "其他"
+msgid "refund"
+msgstr ""
 
 msgid "order"
 msgstr "订单"
@@ -534,6 +533,9 @@ msgstr "完成"
 msgid "default"
 msgstr "默认价格"
 
+msgid "modified on"
+msgstr ""
+
 msgid "order identifier"
 msgstr "订单标识符"
 
@@ -555,11 +557,17 @@ msgstr "邮箱地址"
 msgid "creating user"
 msgstr "创建用户"
 
+msgid "modifier user"
+msgstr ""
+
 msgid "payment status"
 msgstr "支付状态"
 
 msgid "shipping status"
 msgstr "配送状态"
+
+msgid "payment method"
+msgstr "支付方式"
 
 msgid "payment method name"
 msgstr "支付方式名"
@@ -568,6 +576,9 @@ msgstr "支付方式名"
 #| msgid "payment date"
 msgid "payment data"
 msgstr "支付日期"
+
+msgid "shipping method"
+msgstr "配送方式"
 
 msgid "shipping method name"
 msgstr "配送方式名"
@@ -616,15 +627,32 @@ msgstr "验证要求"
 msgid "all lines verified"
 msgstr "所有行已验证"
 
+#, fuzzy
+#| msgid "code"
+msgid "codes"
+msgstr "代码"
+
 msgid "orders"
 msgstr "订单"
 
 msgid "Order marked as paid."
 msgstr "标记为已付的订单。"
 
+#, fuzzy
+#| msgid "Order marked as paid."
+msgid "Order marked as partially paid."
+msgstr "标记为已付的订单。"
+
 #, python-format
 msgid "Shipment #%d created."
 msgstr "#%d 已发货。"
+
+#, python-format
+msgid "Refund for %s"
+msgstr ""
+
+msgid "Manual refund"
+msgstr ""
 
 msgid "All rows requiring verification have been verified."
 msgstr "所有需要验证的行列已验证。"
@@ -650,6 +678,9 @@ msgstr ""
 
 msgid "payments"
 msgstr "支付"
+
+msgid "module"
+msgstr "模块"
 
 msgid "time"
 msgstr ""
@@ -732,6 +763,12 @@ msgstr "配送方式"
 #, fuzzy
 #| msgid "payment methods"
 msgid "limited for payment methods"
+msgstr "支付方式"
+
+msgid "shipping methods"
+msgstr "配送方式"
+
+msgid "payment methods"
 msgstr "支付方式"
 
 msgid "primary category"
@@ -849,6 +886,9 @@ msgstr "相关"
 msgid "computed"
 msgstr "计算的"
 
+msgid "bought with"
+msgstr ""
+
 msgid "shipped"
 msgstr "已发货"
 
@@ -867,9 +907,6 @@ msgstr "产品类型"
 msgid "product types"
 msgstr "产品类型"
 
-msgid "modified on"
-msgstr ""
-
 msgid "mode"
 msgstr ""
 
@@ -884,6 +921,9 @@ msgstr "配送模式"
 
 msgid "unit"
 msgstr "单位"
+
+msgid "tax class"
+msgstr "税种"
 
 msgid "SKU"
 msgstr "SKU"
@@ -1003,6 +1043,179 @@ msgstr "产品属性"
 msgid "product attributes"
 msgstr "产品属性"
 
+msgid "logo"
+msgstr "商标"
+
+#, fuzzy
+#| msgid "order identifier"
+msgid "choice identifier"
+msgstr "订单标识符"
+
+msgid "behavior components"
+msgstr ""
+
+#, fuzzy, python-format
+#| msgid "disabled"
+msgid "%s is disabled"
+msgstr "关闭"
+
+#, python-format
+msgid "%s is for different shop"
+msgstr ""
+
+#, python-format
+msgid "%(service_name)s: %(sub_item)s"
+msgstr ""
+
+msgid "Fixed cost"
+msgstr ""
+
+msgid "Add fixed cost to price of the service."
+msgstr ""
+
+msgid "Waiving cost"
+msgstr ""
+
+msgid ""
+"Add cost to price of the service if total price of products is less than a "
+"waive limit."
+msgstr ""
+
+#, fuzzy
+#| msgid "alert limit"
+msgid "Weight limits"
+msgstr "警告限制"
+
+msgid "Limit availability of the service based on total weight of products."
+msgstr ""
+
+msgid "minimum weight"
+msgstr "最低重量"
+
+msgid "maximum weight"
+msgstr "最大重量"
+
+msgid "Minimum weight not met."
+msgstr "没有达到最低重量。"
+
+msgid "Maximum weight exceeded."
+msgstr "最大重量已超过。"
+
+#, fuzzy
+#| msgid "minimum weight"
+msgid "min weight"
+msgstr "最低重量"
+
+#, fuzzy
+#| msgid "maximum weight"
+msgid "max weight"
+msgstr "最大重量"
+
+msgid "Weight-based pricing"
+msgstr ""
+
+msgid ""
+"Define price based on basket weight. Range minimums is counted in range only "
+"as zero."
+msgstr ""
+
+msgid "Weight does not match with any range."
+msgstr ""
+
+#, fuzzy
+#| msgid "contact group"
+msgid "Contact group availability"
+msgstr "联系群组"
+
+msgid "Limit service availability for specific contact groups."
+msgstr ""
+
+#, fuzzy
+#| msgid "contact group"
+msgid "groups"
+msgstr "联系群组"
+
+msgid "Customer does not belong to any group."
+msgstr ""
+
+#, fuzzy
+#| msgid "visible to certain customer groups"
+msgid "Service is not available for any of the customers groups."
+msgstr "某顾客群组可见"
+
+msgid "Staff only availability"
+msgstr ""
+
+msgid "Limit service availability to staff only"
+msgstr ""
+
+msgid "Service is only available for staff"
+msgstr ""
+
+msgid "round to nearest with ties going away from zero"
+msgstr ""
+
+msgid "round to nearest with ties going towards zero"
+msgstr ""
+
+msgid "round away from zero"
+msgstr ""
+
+msgid "round towards zero"
+msgstr ""
+
+msgid "Rounding"
+msgstr ""
+
+msgid "Round total order price to the nearest quant."
+msgstr ""
+
+msgid "rounding quant"
+msgstr ""
+
+#, fuzzy
+#| msgid "shipping mode"
+msgid "rounding mode"
+msgstr "配送模式"
+
+msgid "rounding"
+msgstr ""
+
+#, fuzzy
+#| msgid "payment method"
+msgid "payment processor"
+msgstr "支付方式"
+
+msgid "custom payment processor"
+msgstr ""
+
+msgid "custom payment processors"
+msgstr ""
+
+msgid "Manually processed payment"
+msgstr ""
+
+#, fuzzy
+#| msgid "payment"
+msgid "Cash payment"
+msgstr "支付"
+
+msgid "carrier"
+msgstr ""
+
+#, fuzzy
+#| msgid "customer"
+msgid "custom carrier"
+msgstr "顾客"
+
+#, fuzzy
+#| msgid "customer"
+msgid "custom carriers"
+msgstr "顾客"
+
+msgid "Manually processed shipment"
+msgstr ""
+
 msgid "not sent"
 msgstr "未发送"
 
@@ -1052,11 +1265,13 @@ msgstr ""
 msgid "options"
 msgstr ""
 
-msgid "logo"
-msgstr "商标"
-
 msgid "maintenance mode"
 msgstr "维修模式"
+
+#, fuzzy
+#| msgid "contacts"
+msgid "contact address"
+msgstr "联系"
 
 msgid "public name"
 msgstr ""
@@ -1076,6 +1291,14 @@ msgid "logical stock count"
 msgstr "逻辑库存计数"
 
 #, fuzzy
+#| msgid "time interval"
+msgid "internal"
+msgstr "时距"
+
+msgid "external"
+msgstr ""
+
+#, fuzzy
 #| msgid "supplier"
 msgid "supplier type"
 msgstr "供应商"
@@ -1084,6 +1307,11 @@ msgstr "供应商"
 #| msgid "stocked"
 msgid "stock managed"
 msgstr "有库存"
+
+#, fuzzy
+#| msgid "module"
+msgid "module data"
+msgstr "模块"
 
 msgid "Cannot change business critical fields of Tax that is in use"
 msgstr "无法改变使用中的税收业务关键字段"
@@ -1149,6 +1377,10 @@ msgstr "销售单位"
 
 msgid "No Choice"
 msgstr "没有选项"
+
+#, python-format
+msgid "%s not available in this shop"
+msgstr ""
 
 msgid "Default Pricing"
 msgstr "默认定价"

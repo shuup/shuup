@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
+"POT-Creation-Date: 2016-06-29 14:44+0000\n"
 "PO-Revision-Date: 2015-12-10 10:47+0000\n"
 "Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
@@ -23,33 +23,6 @@ msgstr ""
 msgid "Show Frontpage Welcome Text"
 msgstr "首页显示欢迎文本"
 
-msgid "Footer custom HTML"
-msgstr "自定义HTML脚注"
-
-msgid "Footer links"
-msgstr "脚注链接"
-
-msgid "One line per link in format 'http://example.com Example Link'"
-msgstr "每行一个链接，如格式'http://example.com Example Link'"
-
-msgid "Footer column order"
-msgstr "脚注栏排序"
-
-msgid "CMS Page Links"
-msgstr "内容管理系统CMS页面链接"
-
-msgid "Custom HTML"
-msgstr "定制HTML"
-
-msgid "Footer Links"
-msgstr "脚注链接"
-
-msgid "None"
-msgstr "无"
-
-msgid "Footer CMS pages"
-msgstr "脚注内容管理系统CMS页面"
-
 msgid "Product Highlights"
 msgstr "产品特点"
 
@@ -60,6 +33,12 @@ msgid "Type"
 msgstr ""
 
 msgid "Count"
+msgstr ""
+
+msgid "Only show in-stock and orderable items"
+msgstr ""
+
+msgid "Product Cross Sells"
 msgstr ""
 
 msgid "Product added to cart"
@@ -105,20 +84,58 @@ msgstr "网格/列表显示"
 msgid "Grid/list view"
 msgstr "网格/列表视图"
 
-msgid "User account information"
+#, fuzzy
+#| msgid "Password"
+msgid "Change Password"
+msgstr "密码"
+
+#, fuzzy
+#| msgid "Password"
+msgid "Change password"
+msgstr "密码"
+
+#, fuzzy
+#| msgid "User account information"
+msgid "Edit user account information"
+msgstr "用户账号信息"
+
+#, fuzzy
+#| msgid "Password"
+msgid "Save password"
+msgstr "密码"
+
+#, fuzzy
+#| msgid "User account information"
+msgid "Company account information"
 msgstr "用户账号信息"
 
 msgid "Save changes"
 msgstr "保存更改"
 
-msgid "User information"
-msgstr "用户信息"
+#, fuzzy
+#| msgid "Shipping information"
+msgid "Company information"
+msgstr "配送信息"
 
 msgid "Billing information"
 msgstr "账单信息"
 
 msgid "Shipping information"
 msgstr "配送信息"
+
+msgid "User account information"
+msgstr "用户账号信息"
+
+#, fuzzy
+#| msgid "Shipping information"
+msgid "Edit company information"
+msgstr "配送信息"
+
+msgid "Link account to company"
+msgstr ""
+
+msgid "User information"
+msgstr "用户信息"
 
 msgid "Shop is currently in maintenance mode."
 msgstr "店铺目前在维修模式中。"
@@ -145,20 +162,40 @@ msgstr "继续购物"
 msgid "Proceed to checkout"
 msgstr "去结账"
 
+#, fuzzy
+#| msgid "Combination not available"
+msgid "Coupon is not available."
+msgstr "无法合并"
+
+msgid "Error when adding coupon."
+msgstr ""
+
 msgid "Qty"
+msgstr "数量"
+
+msgid "Quantity"
 msgstr "数量"
 
 msgid "Remove product from basket"
 msgstr "从购物篮中删除该产品"
 
+msgid "Have a coupon code? Enter it here"
+msgstr ""
+
+msgid "Coupon Code"
+msgstr ""
+
+msgid "Submit Code"
+msgstr ""
+
 msgid "Checkout"
 msgstr "结账"
 
+msgid "Continue"
+msgstr "继续"
+
 msgid "Product"
 msgstr "产品"
-
-msgid "Quantity"
-msgstr "数量"
 
 msgid "excl. tax"
 msgstr "不包税"
@@ -177,9 +214,6 @@ msgstr "收货地址"
 
 msgid "Ship to my billing address"
 msgstr "发货至我的账单地址"
-
-msgid "Continue"
-msgstr "继续"
 
 msgid "Delivery"
 msgstr "邮寄"
@@ -202,11 +236,13 @@ msgstr "下订单"
 msgid "There are errors"
 msgstr "出错"
 
-msgid "Shipping"
-msgstr "配送"
+msgid "Choose Shipping Method"
+msgstr ""
 
-msgid "Payment"
-msgstr "支付"
+#, fuzzy
+#| msgid "Payment method"
+msgid "Choose Payment Method"
+msgstr "支付方式"
 
 msgid "Errors"
 msgstr "错误"
@@ -255,8 +291,16 @@ msgstr "分类"
 msgid "Edit account details"
 msgstr "账号详情编辑"
 
+#, fuzzy
+#| msgid "Edit account details"
+msgid "Edit company details"
+msgstr "账号详情编辑"
+
 msgid "My orders"
 msgstr "我的订单"
+
+msgid "My wishlists"
+msgstr ""
 
 msgid "Admin panel"
 msgstr "管理面板"
@@ -285,7 +329,9 @@ msgstr "菜单"
 msgid "Products"
 msgstr "产品"
 
-msgid "Welcome to "
+#, fuzzy, python-format
+#| msgid "Welcome to "
+msgid "Welcome to %(shop_name)s!"
 msgstr "欢迎来到"
 
 msgid "Preview"
@@ -299,6 +345,9 @@ msgstr "产品已订购。"
 
 msgid "Tax breakdown"
 msgstr "税收明细"
+
+msgid "Payment"
+msgstr "支付"
 
 msgid "Company"
 msgstr "公司"
@@ -411,23 +460,14 @@ msgstr "详情"
 msgid "Attributes"
 msgstr "属性"
 
-msgid "No product description available"
-msgstr "没有产品描述"
-
 msgid "Includes these products"
 msgstr "包含这些产品"
 
+msgid "No product description available"
+msgstr "没有产品描述"
+
 msgid "Also available in"
 msgstr "也提供"
-
-msgid "Related products"
-msgstr "相关产品"
-
-msgid "We recommend these products"
-msgstr "我们推荐这些产品"
-
-msgid "Users who bought this product also bought"
-msgstr "购买该产品的用户也购买了"
 
 #, python-format
 msgid "Order %(identifier)s"
@@ -478,6 +518,9 @@ msgstr "总价"
 
 msgid "Total Price (taxless)"
 msgstr "总价 (无税)"
+
+msgid "Tracking codes"
+msgstr ""
 
 msgid "Status"
 msgstr "状态"
@@ -556,7 +599,9 @@ msgstr "没有 \"<strong>%(query)s</strong>\"搜索结果。"
 msgid "%(n)s results found for \"<strong>%(query)s</strong>\"."
 msgstr "\"<strong>%(query)s</strong>\"的%(n)s 结果已找到。"
 
-msgid "You have already been logged in as"
+#, fuzzy, python-format
+#| msgid "You have already been logged in as"
+msgid "You have already logged in as <strong>%(username)s</strong>"
 msgstr "您已经登录为"
 
 msgid "Go to Homepage"

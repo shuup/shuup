@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
+"POT-Creation-Date: 2016-06-29 14:44+0000\n"
 "PO-Revision-Date: 2015-12-08 08:41+0000\n"
 "Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
@@ -20,11 +20,52 @@ msgstr ""
 "Generated-By: Babel 2.1.1\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-msgid "Abandoned Basket Value"
+#, fuzzy
+#| msgid "Abandoned Basket Value"
+msgid "Abandoned Cart Value"
 msgstr "放棄されたカートの価値"
 
 #, python-brace-format
-msgid "Based on {b} baskets over the last {d} days"
+msgid "Based on {b} carts over the last {d} days"
+msgstr ""
+
+msgid "Carts"
+msgstr ""
+
+msgid "Show carts"
+msgstr ""
+
+msgid "Created on"
+msgstr ""
+
+msgid "Last updated on"
+msgstr ""
+
+msgid "Abandoned"
+msgstr ""
+
+msgid "yes"
+msgstr ""
+
+msgid "no"
+msgstr ""
+
+msgid "Shop"
+msgstr ""
+
+msgid "Product count"
+msgstr ""
+
+msgid "Customer"
+msgstr ""
+
+msgid "Orderer"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Ordered"
 msgstr ""
 
 #, python-format
@@ -55,10 +96,6 @@ msgstr ""
 
 #, python-format
 msgid "Products in basket have no common payment method. %s"
-msgstr ""
-
-#, python-format
-msgid "%s not available in this shop"
 msgstr ""
 
 msgid "Tax number required for companies"
@@ -109,6 +146,9 @@ msgid "Payment method"
 msgstr ""
 
 msgid "Please send me marketing correspondence"
+msgstr ""
+
+msgid "Logged out since this account is inactive."
 msgstr ""
 
 msgid "key"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
+"POT-Creation-Date: 2016-06-29 14:44+0000\n"
 "PO-Revision-Date: 2015-12-10 09:46+0000\n"
 "Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
@@ -40,6 +40,17 @@ msgstr "激活"
 msgid "Theme activated."
 msgstr "主题已激活。"
 
+#, fuzzy
+#| msgid "Currently active"
+msgid "current draft"
+msgstr "目前活跃"
+
+msgid "old version"
+msgstr ""
+
+msgid "public"
+msgstr ""
+
 msgid "theme identifier"
 msgstr ""
 
@@ -69,6 +80,68 @@ msgstr "%s 主题配置 "
 
 msgid "Plugin"
 msgstr "插件"
+
+msgid "Category Links"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Show all categories"
+msgstr ""
+
+msgid "All categories are shown, even if not selected"
+msgstr ""
+
+msgid "Image"
+msgstr ""
+
+msgid "Image Link URL"
+msgstr ""
+
+#, fuzzy
+#| msgid "Full Width"
+msgid "Full width"
+msgstr "最大化"
+
+msgid "Set image to full width of cell"
+msgstr ""
+
+msgid "Width (px)"
+msgstr ""
+
+msgid "Leave blank for default width"
+msgstr ""
+
+msgid "Height (px)"
+msgstr ""
+
+msgid "Snippets"
+msgstr ""
+
+msgid "In-Place Snippet"
+msgstr ""
+
+msgid "Resource snippet for end of head"
+msgstr ""
+
+msgid "Resource snippet for beginning of body"
+msgstr ""
+
+msgid "Resource for end of body"
+msgstr ""
+
+msgid "Social Media Links"
+msgstr ""
+
+msgid "Topic"
+msgstr ""
+
+msgid "Icon Size"
+msgstr ""
+
+msgid "Alignment"
+msgstr ""
 
 msgid "text"
 msgstr ""
@@ -137,6 +210,16 @@ msgstr "还原改变"
 
 msgid "Publish Changes"
 msgstr "发布更改"
+
+msgid "No access to editing"
+msgstr ""
+
+#, python-format
+msgid "Unknown command %s"
+msgstr ""
+
+msgid "Unable to determine current theme."
+msgstr ""
 
 #, python-format
 msgid "Cannot add more than %d cells in one row."

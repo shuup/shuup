@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
+"POT-Creation-Date: 2016-06-29 14:44+0000\n"
 "PO-Revision-Date: 2015-12-08 08:41+0000\n"
 "Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
@@ -23,33 +23,6 @@ msgstr ""
 msgid "Show Frontpage Welcome Text"
 msgstr ""
 
-msgid "Footer custom HTML"
-msgstr "フッターカスタムHTML"
-
-msgid "Footer links"
-msgstr "フッターリンク"
-
-msgid "One line per link in format 'http://example.com Example Link'"
-msgstr ""
-
-msgid "Footer column order"
-msgstr ""
-
-msgid "CMS Page Links"
-msgstr "CMSページリンク"
-
-msgid "Custom HTML"
-msgstr "カスタムHTML"
-
-msgid "Footer Links"
-msgstr "フッターリンク"
-
-msgid "None"
-msgstr ""
-
-msgid "Footer CMS pages"
-msgstr "フッターCMSページ"
-
 msgid "Product Highlights"
 msgstr ""
 
@@ -60,6 +33,12 @@ msgid "Type"
 msgstr ""
 
 msgid "Count"
+msgstr ""
+
+msgid "Only show in-stock and orderable items"
+msgstr ""
+
+msgid "Product Cross Sells"
 msgstr ""
 
 msgid "Product added to cart"
@@ -105,13 +84,37 @@ msgstr "グリッド/リストを表示する"
 msgid "Grid/list view"
 msgstr "グリッド/リストビュー"
 
-msgid "User account information"
+#, fuzzy
+#| msgid "Password"
+msgid "Change Password"
+msgstr "パスワード"
+
+#, fuzzy
+#| msgid "Password"
+msgid "Change password"
+msgstr "パスワード"
+
+#, fuzzy
+#| msgid "User account information"
+msgid "Edit user account information"
+msgstr "ユーザーアカウント情報"
+
+#, fuzzy
+#| msgid "Password"
+msgid "Save password"
+msgstr "パスワード"
+
+#, fuzzy
+#| msgid "User account information"
+msgid "Company account information"
 msgstr "ユーザーアカウント情報"
 
 msgid "Save changes"
 msgstr "変更を保存する"
 
-msgid "User information"
+#, fuzzy
+#| msgid "User information"
+msgid "Company information"
 msgstr "ユーザー情報"
 
 msgid "Billing information"
@@ -119,6 +122,20 @@ msgstr ""
 
 msgid "Shipping information"
 msgstr ""
+
+msgid "User account information"
+msgstr "ユーザーアカウント情報"
+
+#, fuzzy
+#| msgid "User account information"
+msgid "Edit company information"
+msgstr "ユーザーアカウント情報"
+
+msgid "Link account to company"
+msgstr ""
+
+msgid "User information"
+msgstr "ユーザー情報"
 
 msgid "Shop is currently in maintenance mode."
 msgstr "ショップは現在メンテナンスモードになっています。"
@@ -145,20 +162,40 @@ msgstr "買い物を続ける"
 msgid "Proceed to checkout"
 msgstr "レジに進む"
 
+#, fuzzy
+#| msgid "Combination not available"
+msgid "Coupon is not available."
+msgstr "組み合わせはできません"
+
+msgid "Error when adding coupon."
+msgstr ""
+
 msgid "Qty"
 msgstr ""
+
+msgid "Quantity"
+msgstr "数量"
 
 msgid "Remove product from basket"
 msgstr "商品をカートから削除する"
 
+msgid "Have a coupon code? Enter it here"
+msgstr ""
+
+msgid "Coupon Code"
+msgstr ""
+
+msgid "Submit Code"
+msgstr ""
+
 msgid "Checkout"
 msgstr "チェックアウト"
 
+msgid "Continue"
+msgstr "続ける"
+
 msgid "Product"
 msgstr "商品"
-
-msgid "Quantity"
-msgstr "数量"
 
 msgid "excl. tax"
 msgstr ""
@@ -177,9 +214,6 @@ msgstr "お届け先住所"
 
 msgid "Ship to my billing address"
 msgstr ""
-
-msgid "Continue"
-msgstr "続ける"
 
 msgid "Delivery"
 msgstr ""
@@ -202,11 +236,11 @@ msgstr "注文する"
 msgid "There are errors"
 msgstr ""
 
-msgid "Shipping"
+msgid "Choose Shipping Method"
 msgstr ""
 
-msgid "Payment"
-msgstr "お支払い"
+msgid "Choose Payment Method"
+msgstr ""
 
 msgid "Errors"
 msgstr "エラー"
@@ -255,7 +289,15 @@ msgstr "カテゴリー"
 msgid "Edit account details"
 msgstr "アカウント詳細の編集"
 
+#, fuzzy
+#| msgid "Edit account details"
+msgid "Edit company details"
+msgstr "アカウント詳細の編集"
+
 msgid "My orders"
+msgstr ""
+
+msgid "My wishlists"
 msgstr ""
 
 msgid "Admin panel"
@@ -285,7 +327,9 @@ msgstr "メニュー"
 msgid "Products"
 msgstr "商品"
 
-msgid "Welcome to "
+#, fuzzy, python-format
+#| msgid "Welcome to "
+msgid "Welcome to %(shop_name)s!"
 msgstr "ようこそ"
 
 msgid "Preview"
@@ -299,6 +343,9 @@ msgstr "商品は注文されました"
 
 msgid "Tax breakdown"
 msgstr ""
+
+msgid "Payment"
+msgstr "お支払い"
 
 msgid "Company"
 msgstr "会社"
@@ -411,22 +458,13 @@ msgstr "詳細"
 msgid "Attributes"
 msgstr "属性"
 
-msgid "No product description available"
-msgstr "商品の説明はありません"
-
 msgid "Includes these products"
 msgstr "これらの商品が含まれています"
 
+msgid "No product description available"
+msgstr "商品の説明はありません"
+
 msgid "Also available in"
-msgstr ""
-
-msgid "Related products"
-msgstr ""
-
-msgid "We recommend these products"
-msgstr ""
-
-msgid "Users who bought this product also bought"
 msgstr ""
 
 #, python-format
@@ -477,6 +515,9 @@ msgid "Total Price"
 msgstr ""
 
 msgid "Total Price (taxless)"
+msgstr ""
+
+msgid "Tracking codes"
 msgstr ""
 
 msgid "Status"
@@ -556,7 +597,9 @@ msgstr ""
 msgid "%(n)s results found for \"<strong>%(query)s</strong>\"."
 msgstr ""
 
-msgid "You have already been logged in as"
+#, fuzzy, python-format
+#| msgid "You have already been logged in as"
+msgid "You have already logged in as <strong>%(username)s</strong>"
 msgstr "お客様は既にログインされています"
 
 msgid "Go to Homepage"

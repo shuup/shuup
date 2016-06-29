@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
+"POT-Creation-Date: 2016-06-29 14:44+0000\n"
 "PO-Revision-Date: 2015-12-08 08:41+0000\n"
 "Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
@@ -105,6 +105,26 @@ msgstr ""
 msgid "Empty"
 msgstr ""
 
+msgid "none"
+msgstr ""
+
+msgid "unilingual"
+msgstr ""
+
+msgid "multilingual"
+msgstr ""
+
+#, fuzzy
+#| msgid "Variables"
+msgid "variable only"
+msgstr "変数"
+
+msgid "constant only"
+msgstr ""
+
+msgid "variable or constant"
+msgstr ""
+
 msgid "continue to the next step"
 msgstr ""
 
@@ -117,13 +137,22 @@ msgstr ""
 msgid "any"
 msgstr ""
 
-msgid "none"
-msgstr ""
-
 msgid "any shop administrator"
 msgstr ""
 
 msgid "a specific user"
+msgstr ""
+
+msgid "low"
+msgstr ""
+
+msgid "normal"
+msgstr ""
+
+msgid "high"
+msgstr ""
+
+msgid "critical"
 msgstr ""
 
 msgid "recipient type"
