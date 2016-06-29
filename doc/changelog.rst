@@ -15,7 +15,7 @@ Core
 - Fix bug: Category model is missing MPTT ordering options
 - Add staff only behavior component
 - Add refund-related methods to ``Order``
-- Add `OrderLineType.REFUND` enum type
+- Add ``OrderLineType.REFUND`` enum type
 - Update order phone max length to 64 characters
 - Add cash payment method
 - Add rounding behavior component
@@ -31,11 +31,12 @@ Core
 - Add ``ShopProduct.is_visible``
 - Add ``Order.can_edit``
 - Update shipping status correctly in ``Order.create_shipment``
-- Add ``OrderModifier`` for basic ``Order`` modifying from ``OrderSource``
+- Add ``OrderModifier`` for modifying orders with ``OrderSource``
 - Add option use ``Order.create_shipment`` with unsaved ``Shipment``
 - Add identifier for ``Shipment``
 - Fix bug: Fix max length for service method names for ``Order``
-- Add payment methods to ``Order``
+- Make ``Order.create_payment`` also do status update for partially paid
+- Add ``get_total_unpaid_amount`` method to ``Order``
 - Add ``is_canceled`` and ``can_set_canceled`` to ``Order``
 - Fix bug: Convert ``Shipment`` weight to kilograms
 - Make ``create_shipment`` for order atomic
@@ -81,14 +82,13 @@ Localization
 Admin
 ~~~~~
 
-- Add refund creator to `Order` admin
+- Add refund creator to order admin
 - Add customer detail view to order creator
 - Define module-level permissions for all admin modules
-- Enable adding of permission groups from `Users` admin
+- Enable adding of permission groups from users admin
 - Add admin module for managing Django permission groups
-- Add `get_required_permission` to ``AdminModule``
+- Add ``get_required_permission`` to ``AdminModule``
 - Add support for module-level permissions
-- Remove Select2Multiple-widget as unused
 - Use Select2MultipleField for handling contact members
 - Add Select2MultipleField
 - Add account manager for contact
@@ -134,6 +134,8 @@ Addons
 ~~~~~~
 
 - Enable upgrade, migrations and collectstatic from admin
+
+  - Has a known problem in reloading application server.
 
 Front
 ~~~~~
@@ -193,16 +195,15 @@ Classic Gray Theme
 Simple Supplier
 ~~~~~~~~~~~~~~~
 
-- Fix bug: Cannot create products from Admin if SimpleSupplier is active
 - Add admin modules for updating stock
 - Add support for stock counts and values
 
 Order Printouts
 ~~~~~~~~~~~~~~~
 
-- Output tax rates as percentages
-- Add basic support to create PDF printouts
-- Add admin module to print order shipments and confirmation
+- Add app for creating PDF printouts of orders
+
+  - Currently supports printing of Order confirmation and Delivery slips
 
 Campaigns
 ~~~~~~~~~
@@ -239,8 +240,8 @@ Simple CMS
 Default Tax
 ~~~~~~~~~~~
 
-- Filter `TaxRule`s by postal codes to gain better performance
-- Add minimum and maximum postal code values to `TaxRule`
+- Filter tax rules by postal codes to gain better performance
+- Add minimum and maximum postal code values to ``TaxRule``
 
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
