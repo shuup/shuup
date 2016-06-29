@@ -126,7 +126,7 @@ class OrderStatus(TranslatableModel):
         name=models.CharField(verbose_name=_("name"), max_length=64)
     )
 
-    def __str__(self):
+    def __unicode__(self):
         return self.safe_translation_getter("name", default=self.identifier)
 
     def save(self, *args, **kwargs):
