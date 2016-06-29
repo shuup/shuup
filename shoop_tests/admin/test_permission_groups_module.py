@@ -9,6 +9,7 @@ import pytest
 from django.contrib.auth.models import Group as PermissionGroup
 from django.utils.encoding import force_text
 
+from shoop.admin.base import AdminModule
 from shoop.admin.module_registry import get_modules, replace_modules
 from shoop.admin.modules.permission_groups.views.edit import (
     PermissionGroupEditView, PermissionGroupForm
@@ -66,3 +67,13 @@ def test_permission_group_form_updates_members(regular_user):
 
         assert not group.permissions.all()
         assert not group.user_set.all()
+
+
+def test_only_show_modules_with_defined_names():
+    """
+    Make sure that only modules with defined names are show as choices
+    in admin.
+    """
+    form = PermissionGroupForm(prefix=None)
+    choices = [name for (name, value) in form.fields["modules"].choices]
+    assert AdminModule.name not in choices
