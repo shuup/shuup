@@ -1,8 +1,0 @@
-{% extends "shoop/order_printouts/admin/order_base.jinja" %}
-{% block information %}{{ macros.order_information_table(order) }}{% endblock %}
-{% block content %}
-    <br>
-    {{ macros.order_lines_table(order, order.lines.order_by("ordering")) }}
-    <br>
-    {{ macros.tax_information_table(order) }}
-{% endblock %}

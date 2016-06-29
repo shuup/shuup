@@ -1,4 +1,4 @@
-Shoop Release Notes
+Shuup Release Notes
 ===================
 
 .. toctree::

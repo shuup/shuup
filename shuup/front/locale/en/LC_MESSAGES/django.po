@@ -1,0 +1,278 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-28 12:52+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: en <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Generated-By: Babel 2.1.1\n"
+
+msgid "Abandoned Cart Value"
+msgstr ""
+
+#, python-brace-format
+msgid "Based on {b} carts over the last {d} days"
+msgstr ""
+
+msgid "Carts"
+msgstr ""
+
+msgid "Show carts"
+msgstr ""
+
+msgid "Created on"
+msgstr ""
+
+msgid "Last updated on"
+msgstr ""
+
+msgid "Abandoned"
+msgstr ""
+
+msgid "yes"
+msgstr ""
+
+msgid "no"
+msgstr ""
+
+msgid "Shop"
+msgstr ""
+
+msgid "Product count"
+msgstr ""
+
+msgid "Customer"
+msgstr ""
+
+msgid "Orderer"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Ordered"
+msgstr ""
+
+#, python-format
+msgid "Invalid command %s"
+msgstr ""
+
+#, python-format
+msgid "The quantity %f is not allowed. Please use an integer value."
+msgstr ""
+
+#, python-format
+msgid "The quantity %s is not valid."
+msgstr ""
+
+msgid "This variation is not available."
+msgstr ""
+
+#, python-format
+msgid "Basket loading failed: Incompatible basket (%s)"
+msgstr ""
+
+msgid "Try to remove some products from the basket and order them separately."
+msgstr ""
+
+#, python-format
+msgid "Products in basket cannot be shipped together. %s"
+msgstr ""
+
+#, python-format
+msgid "Products in basket have no common payment method. %s"
+msgstr ""
+
+msgid "Tax number required for companies"
+msgstr ""
+
+msgid "Cannot use tax number without company name"
+msgstr ""
+
+msgid "Addresses"
+msgstr ""
+
+msgid "I accept the terms and conditions"
+msgstr ""
+
+msgid "I want to subscribe to your newsletter"
+msgstr ""
+
+msgid "Comment"
+msgstr ""
+
+msgid "Confirmation"
+msgstr ""
+
+msgid "Empty Basket"
+msgstr ""
+
+msgid "shipping method"
+msgstr ""
+
+msgid "payment method"
+msgstr ""
+
+msgid "Shipping & Payment"
+msgstr ""
+
+msgid "Company name"
+msgstr ""
+
+msgid "Tax number"
+msgstr ""
+
+msgid "Shipping method"
+msgstr ""
+
+msgid "Payment method"
+msgstr ""
+
+msgid "Please send me marketing correspondence"
+msgstr ""
+
+msgid "Logged out since this account is inactive."
+msgstr ""
+
+msgid "key"
+msgstr ""
+
+msgid "shop"
+msgstr ""
+
+msgid "customer"
+msgstr ""
+
+msgid "orderer"
+msgstr ""
+
+msgid "creator"
+msgstr ""
+
+msgid "created on"
+msgstr ""
+
+msgid "updated on"
+msgstr ""
+
+msgid "persistent"
+msgstr ""
+
+msgid "deleted"
+msgstr ""
+
+msgid "finished"
+msgstr ""
+
+msgid "title"
+msgstr ""
+
+msgid "data"
+msgstr ""
+
+msgid "taxless total price"
+msgstr ""
+
+msgid "taxful total price"
+msgstr ""
+
+msgid "currency"
+msgstr ""
+
+msgid "prices include tax"
+msgstr ""
+
+msgid "product_count"
+msgstr ""
+
+msgid "products"
+msgstr ""
+
+msgid "Bad Request"
+msgstr ""
+
+msgid "Back to home"
+msgstr ""
+
+msgid "Permission Denied"
+msgstr ""
+
+msgid "Page not Found"
+msgstr ""
+
+msgid "Internal Server Error"
+msgstr ""
+
+msgid "Server Error"
+msgstr ""
+
+msgid "Welcome to Shuup!"
+msgstr ""
+
+#, python-format
+msgid "Welcome to %(name)s!"
+msgstr ""
+
+msgid "your shop"
+msgstr ""
+
+msgid ""
+"You are seeing this page because there is no theme selected for the default "
+"frontend."
+msgstr ""
+
+msgid "Log in to the administration interface"
+msgstr ""
+
+msgid "to choose a theme and set up your shop."
+msgstr ""
+
+msgid ""
+"The administration interface does not seem to be available. Use other means "
+"to choose a theme."
+msgstr ""
+
+msgid "You are not an administrator"
+msgstr ""
+
+msgid "ask an administrator to select a theme."
+msgstr ""
+
+msgid "Maintenance mode"
+msgstr ""
+
+msgid "Shop is currently down for maintenance."
+msgstr ""
+
+msgid "Name - A-Z"
+msgstr ""
+
+msgid "Name - Z-A"
+msgstr ""
+
+msgid "Price - Low to High"
+msgstr ""
+
+msgid "Price - High to Low"
+msgstr ""
+
+msgid "Sort"
+msgstr ""
+
+msgid "Manufacturer"
+msgstr ""
+
+msgid "This product is not available in this shop."
+msgstr ""

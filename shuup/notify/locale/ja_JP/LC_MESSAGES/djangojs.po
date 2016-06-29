@@ -1,0 +1,74 @@
+# English translations for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+#
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-02-05 12:24+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"Language-Team: Japanese (Japan) (http://www.transifex.com/shuup/shuup/"
+"language/ja_JP/)\n"
+"Language: ja_JP\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "An error occurred."
+msgstr ""
+
+msgid "Success."
+msgstr ""
+
+msgid "An unspecified error occurred."
+msgstr ""
+
+msgid "Unexpected edit data received."
+msgstr ""
+
+msgid "Add new"
+msgstr ""
+
+msgid ""
+"Delete this item?\n"
+"This can not be undone."
+msgstr ""
+
+msgid "New"
+msgstr ""
+
+msgid "Move Up"
+msgstr ""
+
+msgid "Move Down"
+msgstr ""
+
+msgid "Disable"
+msgstr ""
+
+msgid "Enable"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Are you sure you wish to delete this step?"
+msgstr ""
+
+#, javascript-format
+msgid "If %s of these conditions hold..."
+msgstr ""
+
+msgid "then execute these actions..."
+msgstr ""
+
+msgid "and then..."
+msgstr ""
+
+msgid "New step"
+msgstr ""

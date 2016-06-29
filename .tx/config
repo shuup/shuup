@@ -2,127 +2,127 @@
 host = https://www.transifex.com
 lang_map = cmn:zh_Hans
 
-[shoop.addons]
-file_filter = shoop/addons/locale/<lang>/LC_MESSAGES/django.po
+[shuup.addons]
+file_filter = shuup/addons/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
-[shoop.admin]
-file_filter = shoop/admin/locale/<lang>/LC_MESSAGES/django.po
+[shuup.admin]
+file_filter = shuup/admin/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
-[shoop.admin-javascript]
-file_filter = shoop/admin/locale/<lang>/LC_MESSAGES/djangojs.po
+[shuup.admin-javascript]
+file_filter = shuup/admin/locale/<lang>/LC_MESSAGES/djangojs.po
 source_lang = en
 type = PO
 
-[shoop.campaigns]
-file_filter = shoop/campaigns/locale/<lang>/LC_MESSAGES/django.po
+[shuup.campaigns]
+file_filter = shuup/campaigns/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
-[shoop.core]
-file_filter = shoop/core/locale/<lang>/LC_MESSAGES/django.po
+[shuup.core]
+file_filter = shuup/core/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
-[shoop.customer-group-pricing]
-file_filter = shoop/customer_group_pricing/locale/<lang>/LC_MESSAGES/django.po
+[shuup.customer-group-pricing]
+file_filter = shuup/customer_group_pricing/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
-[shoop.default-tax]
-file_filter = shoop/default_tax/locale/<lang>/LC_MESSAGES/django.po
+[shuup.default-tax]
+file_filter = shuup/default_tax/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
-[shoop.front]
-file_filter = shoop/front/locale/<lang>/LC_MESSAGES/django.po
+[shuup.front]
+file_filter = shuup/front/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
-[shoop.front-apps-auth]
-file_filter = shoop/front/apps/auth/locale/<lang>/LC_MESSAGES/django.po
+[shuup.front-apps-auth]
+file_filter = shuup/front/apps/auth/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
-[shoop.front-apps-customer-information]
-file_filter = shoop/front/apps/customer_information/locale/<lang>/LC_MESSAGES/django.po
+[shuup.front-apps-customer-information]
+file_filter = shuup/front/apps/customer_information/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
-[shoop.front-apps-personal-order-history]
-file_filter = shoop/front/apps/personal_order_history/locale/<lang>/LC_MESSAGES/django.po
+[shuup.front-apps-personal-order-history]
+file_filter = shuup/front/apps/personal_order_history/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
-[shoop.front-apps-registration]
-file_filter = shoop/front/apps/registration/locale/<lang>/LC_MESSAGES/django.po
+[shuup.front-apps-registration]
+file_filter = shuup/front/apps/registration/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
-[shoop.front-apps-simple-order-notification]
-file_filter = shoop/front/apps/simple_order_notification/locale/<lang>/LC_MESSAGES/django.po
+[shuup.front-apps-simple-order-notification]
+file_filter = shuup/front/apps/simple_order_notification/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
-[shoop.front-apps-simple-search]
-file_filter = shoop/front/apps/simple_search/locale/<lang>/LC_MESSAGES/django.po
+[shuup.front-apps-simple-search]
+file_filter = shuup/front/apps/simple_search/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
-[shoop.guide]
-file_filter = shoop/guide/locale/<lang>/LC_MESSAGES/django.po
+[shuup.guide]
+file_filter = shuup/guide/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
-[shoop.notify]
-file_filter = shoop/notify/locale/<lang>/LC_MESSAGES/django.po
+[shuup.notify]
+file_filter = shuup/notify/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
-[shoop.notify-javascript]
-file_filter = shoop/notify/locale/<lang>/LC_MESSAGES/djangojs.po
+[shuup.notify-javascript]
+file_filter = shuup/notify/locale/<lang>/LC_MESSAGES/djangojs.po
 source_lang = en
 type = PO
 
-[shoop.order-printouts]
-file_filter = shoop/order_printouts/locale/<lang>/LC_MESSAGES/django.po
+[shuup.order-printouts]
+file_filter = shuup/order_printouts/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
-[shoop.simple-cms]
-file_filter = shoop/simple_cms/locale/<lang>/LC_MESSAGES/django.po
+[shuup.simple-cms]
+file_filter = shuup/simple_cms/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
-[shoop.simple-supplier]
-file_filter = shoop/simple_supplier/locale/<lang>/LC_MESSAGES/django.po
+[shuup.simple-supplier]
+file_filter = shuup/simple_supplier/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
-[shoop.testing]
-file_filter = shoop/testing/locale/<lang>/LC_MESSAGES/django.po
+[shuup.testing]
+file_filter = shuup/testing/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
-[shoop.themes-classic-gray]
-file_filter = shoop/themes/classic_gray/locale/<lang>/LC_MESSAGES/django.po
+[shuup.themes-classic-gray]
+file_filter = shuup/themes/classic_gray/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
-[shoop.utils]
-file_filter = shoop/utils/locale/<lang>/LC_MESSAGES/django.po
+[shuup.utils]
+file_filter = shuup/utils/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
-[shoop.xtheme]
-file_filter = shoop/xtheme/locale/<lang>/LC_MESSAGES/django.po
+[shuup.xtheme]
+file_filter = shuup/xtheme/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
-[shoop.xtheme-javascript]
-file_filter = shoop/xtheme/locale/<lang>/LC_MESSAGES/djangojs.po
+[shuup.xtheme-javascript]
+file_filter = shuup/xtheme/locale/<lang>/LC_MESSAGES/djangojs.po
 source_lang = en
 type = PO

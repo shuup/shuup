@@ -1,0 +1,44 @@
+{% extends "shuup/front/base.jinja" %}
+{% block title %}{% trans %}Company account information{% endtrans %}{% endblock %}
+{% block content_title %}{% trans %}Company account information{% endtrans %}{% endblock %}
+
+{% block content %}
+    <form role="form" method="post" action="">
+        {% csrf_token %}
+        {% for field in form.contact.hidden_fields() %}{{ field|safe }}{% endfor %}
+        {% for field in form.billing.hidden_fields() %}{{ field|safe }}{% endfor %}
+        {% for field in form.shipping.hidden_fields() %}{{ field|safe }}{% endfor %}
+        <div class="well">
+            <fieldset>
+                <legend>{% trans %}Company information{% endtrans %}</legend>
+                {% for field in form.contact.visible_fields() %}
+                    {{ macros.render_field(field) }}
+                {% endfor %}
+            </fieldset>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="well">
+                    <fieldset>
+                        <legend>{% trans %}Billing information{% endtrans %}</legend>
+                        {% for field in form.billing.visible_fields() %}
+                            {{ macros.render_field(field) }}
+                        {% endfor %}
+                    </fieldset>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="well">
+                    <fieldset>
+                        <legend>{% trans %}Shipping information{% endtrans %}</legend>
+                        {% for field in form.shipping.visible_fields() %}
+                            {{ macros.render_field(field) }}
+                        {% endfor %}
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-ok"></i> {% trans %}Save changes{% endtrans %}</button>
+    </form>
+{% endblock %}

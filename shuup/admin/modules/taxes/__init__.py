@@ -1,0 +1,76 @@
+# -*- coding: utf-8 -*-
+# This file is part of Shuup.
+#
+# Copyright (c) 2012-2016, Shuup Ltd. All rights reserved.
+#
+# This source code is licensed under the AGPLv3 license found in the
+# LICENSE file in the root directory of this source tree.
+from __future__ import unicode_literals
+
+from django.utils.translation import ugettext_lazy as _
+
+from shuup.admin.base import AdminModule, MenuEntry
+from shuup.admin.utils.permissions import (
+    get_default_model_permissions, get_permissions_from_urls
+)
+from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
+from shuup.core.models import CustomerTaxGroup, Tax, TaxClass
+
+
+class TaxModule(AdminModule):
+    name = _("Taxes")
+    category = name
+
+    def get_urls(self):
+        # TODO: Add url for tax dashboard?
+        tax_urls = get_edit_and_list_urls(
+            url_prefix="^taxes/tax",
+            view_template="shuup.admin.modules.taxes.views.Tax%sView",
+            name_template="tax.%s",
+            permissions=get_default_model_permissions(Tax)
+        )
+        tax_group_urls = get_edit_and_list_urls(
+            url_prefix="^taxes/customer-tax-group",
+            view_template="shuup.admin.modules.taxes.views.CustomerTaxGroup%sView",
+            name_template="customer_tax_group.%s",
+            permissions=get_default_model_permissions(CustomerTaxGroup)
+        )
+        tax_class_urls = get_edit_and_list_urls(
+            url_prefix="^taxes/tax-class",
+            view_template="shuup.admin.modules.taxes.views.TaxClass%sView",
+            name_template="tax_class.%s",
+            permissions=get_default_model_permissions(TaxClass)
+        )
+        return tax_urls + tax_group_urls + tax_class_urls
+
+    def get_menu_category_icons(self):
+        return {self.category: "fa fa-pie-chart"}
+
+    def get_menu_entries(self, request):
+        return [
+            MenuEntry(
+                text=_("Taxes"), icon="fa fa-pie-chart",
+                url="shuup_admin:tax.list",
+                category=self.category
+            ),
+            MenuEntry(
+                text=_("Customer Tax Groups"), icon="fa fa-pie-chart",
+                url="shuup_admin:customer_tax_group.list",
+                category=self.category
+            ),
+            MenuEntry(
+                text=_("Tax Classes"), icon="fa fa-pie-chart",
+                url="shuup_admin:tax_class.list",
+                category=self.category
+            )
+        ]
+
+    def get_required_permissions(self):
+        return get_permissions_from_urls(self.get_urls())
+
+    def get_model_url(self, object, kind):
+        return (
+            derive_model_url(Tax, "shuup_admin:tax", object, kind) or
+            derive_model_url(TaxClass, "shuup_admin:tax_class", object, kind) or
+            derive_model_url(CustomerTaxGroup, "shuup_admin:customer_tax_group", object, kind)
+        )

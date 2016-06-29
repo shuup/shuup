@@ -1,10 +1,10 @@
-Shoop Web APIs
+Shuup Web APIs
 ==============
 
 REST API
 --------
 
-The Shoop REST API is built on `Django REST Framework`_ with additional
+The Shuup REST API is built on `Django REST Framework`_ with additional
 functionality built on :doc:`provides` to auto-discover available viewsets.
 
 

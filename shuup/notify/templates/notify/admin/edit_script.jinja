@@ -1,0 +1,29 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block, content_with_sidebar %}
+{% block title %}
+    {% if script.pk %}
+        {% trans %}Edit Script Information{% endtrans %}
+    {% else %}
+        {% trans %}Create a new script{% endtrans %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% call content_with_sidebar(content_id="script_form") %}
+        <form method="post" id="script_form">
+            {% csrf_token %}
+            {% call content_block(_("Script Details"), "fa-info-circle") %}
+                {{ bs3.field(form.event_identifier) }}
+                {{ bs3.field(form.name) }}
+                {{ bs3.field(form.enabled) }}
+                <div class="row">
+                    <div class="col-lg-6 col-lg-offset-3 col-sm-8 col-sm-offset-4">
+                        <button class="btn btn-success btn-block" type="submit">
+                            <i class="fa fa-check"></i> {% trans %}OK{% endtrans %}
+                        </button>
+                    </div>
+                </div>
+            {% endcall %}
+        </form>
+    {% endcall %}
+{% endblock %}

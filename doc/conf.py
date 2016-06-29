@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# This file is part of Shoop.
+# This file is part of Shuup.
 #
-# Copyright (c) 2012-2016, Shoop Ltd. All rights reserved.
+# Copyright (c) 2012-2016, Shuup Ltd. All rights reserved.
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 """
-Shoop documentation build configuration file
+Shuup documentation build configuration file
 """
 
 import os
@@ -25,7 +25,7 @@ sys.path.insert(0, os.path.join(DOC_PATH, '..'))
 # -- Initialize Django ----------------------------------------------------
 
 def initialize_django():
-    os.environ['DJANGO_SETTINGS_MODULE'] = 'shoop_workbench.settings'
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'shuup_workbench.settings'
     from django.conf import settings
 
     # Set USE_I18N=False to avoid warnings from import-time ugettext calls
@@ -39,16 +39,16 @@ initialize_django()
 # -- Monkey patch some property descriptors to allow introspection
 
 def patch_for_introspection():
-    import shoop_introspection_helper
-    shoop_introspection_helper.enable_patches()
+    import shuup_introspection_helper
+    shuup_introspection_helper.enable_patches()
 
 
 patch_for_introspection()
 
 # -- General configuration ------------------------------------------------
 
-project = 'Shoop'
-copyright = '2016, Shoop Ltd.'
+project = 'Shuup'
+copyright = '2016, Shuup Ltd.'
 
 extensions = [
     'djangodocs',
@@ -219,7 +219,7 @@ html_use_smartypants = True
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'Shoopdoc'
+htmlhelp_basename = 'Shuupdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -239,8 +239,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'Shoop.tex', 'Shoop Documentation',
-   'Shoop Ltd.', 'manual'),
+  ('index', 'Shuup.tex', 'Shuup Documentation',
+   'Shuup Ltd.', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -269,8 +269,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'shoop', 'Shoop Documentation',
-     ['Shoop Ltd.'], 1)
+    ('index', 'shuup', 'Shuup Documentation',
+     ['Shuup Ltd.'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -283,8 +283,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'Shoop', 'Shoop Documentation',
-   'Shoop Ltd.', 'Shoop', 'One line description of project.',
+  ('index', 'Shuup', 'Shuup Documentation',
+   'Shuup Ltd.', 'Shuup', 'One line description of project.',
    'Miscellaneous'),
 ]
 

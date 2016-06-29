@@ -1,0 +1,11 @@
+<select id="id_{{ name }}" name="{{ name }}" class="xtheme-model-choice-widget">
+    {% for pk, object in objects %}
+        {% set url = (shuup_admin.model_url(object, "detail") if pk else "") %}
+        <option
+            value="{{ pk }}"
+            {% if pk|string == selected_value|string %}selected{% endif %}
+            data-admin-url="{{ url }}"
+         >{{ object }}</option>
+    {% endfor %}
+</select>
+<div id="extra_for_id_{{ name }}"></div>

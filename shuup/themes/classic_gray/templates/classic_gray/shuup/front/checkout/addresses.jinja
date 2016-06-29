@@ -1,0 +1,100 @@
+{% extends "shuup/front/checkout/_base.jinja" %}
+{% from "shuup/front/checkout/_buttons.jinja" import default_buttons %}
+
+{% block checkout_phase_content %}
+<form role="form" method="post" action="" id="addresses">
+    {% set forms = form.forms %}
+    {% csrf_token %}
+    <div class="well">
+        <fieldset>
+            <div class="row">
+                <div class="order-for-company col-md-9 col-md-offset-3">
+                    <legend>{% trans %}Billing address{% endtrans %}</legend>
+                </div>
+            </div>
+            <div id="billing" class="form-horizontal">
+                {% for field in forms.billing %}
+                    {{ bs3.field(field, layout="horizontal") }}
+                {% endfor %}
+            </div>
+            {% if forms.company %}
+                <div class="row">
+                    <div class="order-for-company col-md-9 col-md-offset-3">
+                        <hr>
+                        <h4>{% trans %}Ordering for a company?{% endtrans %}</h4>
+                        <p>{% trans %}Please fill out these fields if you are ordering for a company.{% endtrans %}</p>
+                    </div>
+                </div>
+                <div class="form-horizontal">
+                    {{ bs3.field(forms.company.name, layout="horizontal") }}
+                    {{ bs3.field(forms.company.tax_number, layout="horizontal") }}
+                </div>
+            {% endif %}
+        </fieldset>
+    </div>
+    <div class="well">
+        <fieldset>
+            <div class="row">
+                <div class="order-for-company col-md-9 col-md-offset-3">
+                    <legend>{% trans %}Shipping address{% endtrans %}</legend>
+                    <div class="custom-checkbox">
+                        <input type="checkbox" name="same_as_billing" id="same_as_billing" value="1"{% if request.POST.get("same_as_billing", false) %} checked{% endif %}>
+                        <label for="same_as_billing">{% trans %}Ship to my billing address{% endtrans %}</label>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            <div id="shipping" class="form-horizontal">
+                {% for field in forms.shipping %}
+                    {{ bs3.field(field, layout="horizontal") }}
+                {% endfor %}
+            </div>
+        </fieldset>
+    </div>
+    {{ default_buttons() }}
+</form>
+{% endblock %}
+
+{% block extrajs %}
+<script>
+    $(function(){
+        function activateCheckoutAddressCopy() {
+            var shouldCopyFields = false;
+
+            function toggleFieldDisability($field) {
+                $field.toggleClass("disabled", shouldCopyFields);
+            }
+
+            function toggleCopyFields() {
+                shouldCopyFields = $("#same_as_billing").is(":checked");
+                $("#shipping :input").each(function() {
+                    $(this).attr("readonly", shouldCopyFields);
+                    toggleFieldDisability($(this));
+                });
+
+                $("#id_shipping-country").attr("readonly", shouldCopyFields);
+
+                $target = $("#id_shipping-country");
+                toggleFieldDisability($target);
+                if(shouldCopyFields) {
+                    $("#billing :input").change();
+                }
+            }
+
+            function copyFieldValue() {
+                if(!shouldCopyFields)
+                    return;
+                var targetName = $(this).attr("id").split("-")[1];
+                var $target = $("#id_shipping-"+targetName);
+                $target.val($(this).val());
+            }
+
+            $("#id_shipping-country").attr("readonly", true);
+            toggleCopyFields();
+            $(document).on("input change", "#billing :input", copyFieldValue);
+            $("#same_as_billing").on("change", toggleCopyFields);
+        }
+        activateCheckoutAddressCopy();
+    });
+</script>
+{% endblock %}

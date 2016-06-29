@@ -1,0 +1,410 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Language-Team: Japanese (Japan) (https://www.transifex.com/shuup/teams/55306/"
+"ja_JP/)\n"
+"Language: ja_JP\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Campaigns"
+msgstr ""
+
+msgid "Catalog Campaigns"
+msgstr ""
+
+msgid "Show Catalog Campaigns"
+msgstr ""
+
+msgid "Basket Campaigns"
+msgstr ""
+
+msgid "Show Basket Campaigns"
+msgstr ""
+
+msgid "Coupons"
+msgstr ""
+
+msgid "Show Coupons"
+msgstr ""
+
+msgid "Minimum value"
+msgstr ""
+
+msgid "Maximum value"
+msgstr ""
+
+msgid "Leave empty for no maximum"
+msgstr ""
+
+msgid "Campaign end date can't be before start date."
+msgstr ""
+
+msgid "Define the required coupon for this campaign."
+msgstr ""
+
+msgid "discount percentage"
+msgstr ""
+
+msgid "The discount percentage for this campaign."
+msgstr ""
+
+msgid "Autogenerate code"
+msgstr ""
+
+msgid "Discount Code already in use."
+msgstr ""
+
+msgid "Catalog Campaign"
+msgstr ""
+
+msgid "Basket Campaign"
+msgstr ""
+
+msgid "Coupon"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Starts"
+msgstr ""
+
+msgid "Ends"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "CatalogCampaign"
+msgstr ""
+
+msgid "Used Conditions"
+msgstr ""
+
+msgid "Used filters"
+msgstr ""
+
+msgid "Create new Catalog Campaign"
+msgstr ""
+
+msgid "Discount Code"
+msgstr ""
+
+msgid "Create new Basket Campaign"
+msgstr ""
+
+msgid "Code"
+msgstr ""
+
+msgid "Usages"
+msgstr ""
+
+msgid "Usages Limit per contact"
+msgstr ""
+
+msgid "Usage Limit"
+msgstr ""
+
+msgid "Created by"
+msgstr ""
+
+msgid "Date created"
+msgstr ""
+
+msgid "Create new Coupon"
+msgstr ""
+
+msgid "Basket condition"
+msgstr ""
+
+msgid "Basket product count"
+msgstr ""
+
+msgid "product count in basket"
+msgstr ""
+
+msgid ""
+"Limit the campaign to match when basket has at least the product count "
+"entered here."
+msgstr ""
+
+msgid "Basket total value"
+msgstr ""
+
+msgid "basket total amount"
+msgstr ""
+
+msgid ""
+"Limit the campaign to match when it has at least the total value entered "
+"here worth of products."
+msgstr ""
+
+msgid "Basket maximum product count"
+msgstr ""
+
+msgid "maximum product count in basket"
+msgstr ""
+
+msgid ""
+"Limit the campaign to match when basket has at maximum the product count "
+"entered here."
+msgstr ""
+
+msgid "Basket maximum total value"
+msgstr ""
+
+msgid "maximum basket total amount"
+msgstr ""
+
+msgid ""
+"Limit the campaign to match when it has at maximum the total value entered "
+"here worth of products."
+msgstr ""
+
+msgid "Products in basket"
+msgstr ""
+
+msgid "quantity"
+msgstr ""
+
+msgid "products"
+msgstr ""
+
+msgid "Limit the campaign to have the selected products in basket."
+msgstr ""
+
+msgid "Contact Group"
+msgstr ""
+
+msgid "contact groups"
+msgstr ""
+
+msgid "Limit the campaign to members of the selected contact groups."
+msgstr ""
+
+msgid "Contact"
+msgstr ""
+
+msgid "contacts"
+msgstr ""
+
+msgid "Limit the campaign to selected contacts."
+msgstr ""
+
+msgid "campaign"
+msgstr ""
+
+msgid "Discount amount value"
+msgstr ""
+
+msgid "discount amount"
+msgstr ""
+
+msgid "Flat amount of discount."
+msgstr ""
+
+msgid "Give discount amount."
+msgstr ""
+
+msgid "Discount amount percentage"
+msgstr ""
+
+msgid "Give percentage discount."
+msgstr ""
+
+msgid "Free Product(s)"
+msgstr ""
+
+msgid "product"
+msgstr ""
+
+msgid "Select product(s) to give free."
+msgstr ""
+
+msgid "Discount from Product"
+msgstr ""
+
+msgid "per line discount"
+msgstr ""
+
+msgid "Uncheck this if you want to give discount for each matched product."
+msgstr ""
+
+msgid "Select discount amount and products."
+msgstr ""
+
+msgid "shop"
+msgstr ""
+
+msgid "The shop where campaign is active."
+msgstr ""
+
+msgid "name"
+msgstr ""
+
+msgid "The name for this campaign."
+msgstr ""
+
+msgid "active"
+msgstr ""
+
+msgid "start date and time"
+msgstr ""
+
+msgid "end date and time"
+msgstr ""
+
+msgid "created by"
+msgstr ""
+
+msgid "modified by"
+msgstr ""
+
+msgid "created on"
+msgstr ""
+
+msgid "modified on"
+msgstr ""
+
+msgid "Campaign"
+msgstr ""
+
+#, python-format
+msgid "Catalog Campaign: %(name)s"
+msgstr ""
+
+msgid "basket line text"
+msgstr ""
+
+msgid "This text will be shown in basket."
+msgstr ""
+
+#, python-format
+msgid "Basket Campaign: %(name)s"
+msgstr ""
+
+msgid "usage limit per customer"
+msgstr ""
+
+msgid "Limit the amount of usages per a single customer."
+msgstr ""
+
+msgid "usage limit"
+msgstr ""
+
+msgid ""
+"Set the absolute limit of usages for this coupon. If the limit is zero (0) "
+"coupon cannot be used."
+msgstr ""
+
+msgid "is active"
+msgstr ""
+
+msgid "Cannot have two same codes active at the same time."
+msgstr ""
+
+msgid "Base Catalog Filter"
+msgstr ""
+
+msgid "Product type"
+msgstr ""
+
+msgid "product Types"
+msgstr ""
+
+msgid "Limit the campaign to selected product types."
+msgstr ""
+
+msgid "Product"
+msgstr ""
+
+msgid "Limit the campaign to selected products."
+msgstr ""
+
+msgid "Product Category"
+msgstr ""
+
+msgid "categories"
+msgstr ""
+
+msgid "Limit the campaign to products in selected categories."
+msgstr ""
+
+msgid "group"
+msgstr ""
+
+msgid "min amount"
+msgstr ""
+
+msgid "max amount"
+msgstr ""
+
+msgid "Can not add sales limits for default contact groups"
+msgstr ""
+
+msgid "Context Condition"
+msgstr ""
+
+msgid "Campaign Basket Discounts"
+msgstr ""
+
+msgid "Coupon Code:"
+msgstr ""
+
+msgid "General Information"
+msgstr ""
+
+msgid "Rules"
+msgstr ""
+
+msgid "Rule type"
+msgstr ""
+
+msgid "Add rule"
+msgstr ""
+
+msgid "Effects"
+msgstr ""
+
+msgid "Effect type"
+msgstr ""
+
+msgid "Add effect"
+msgstr ""
+
+msgid "New Discount Code"
+msgstr ""
+
+msgid "General information"
+msgstr ""
+
+msgid "Generate"
+msgstr ""
+
+#, python-format
+msgid "%(coupons)s used"
+msgstr ""
+
+msgid "Sales Ranges"
+msgstr ""
+
+msgid "Customers within this sales range are assigned to this contact group."
+msgstr ""

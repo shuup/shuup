@@ -1,0 +1,32 @@
+{
+  "name": "shuup_admin",
+  "version": "0.0.0",
+  "homepage": "-",
+  "authors": [
+    "Shuup Team <shuup@shuup.com>"
+  ],
+  "moduleType": [
+    "globals"
+  ],
+  "license": "n/a",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "private": true,
+  "dependencies": {
+    "bootstrap": "3.3.6",
+    "jquery": "2.1.4",
+    "lodash": "3.10.1",
+    "mithriljs": "0.2.0",
+    "moment": "2.10.6",
+    "jquery.easing": "1.3.1",
+    "bootstrap-select": "1.6.5",
+    "jquery.scrollbar": "0.2.10",
+    "select2": "4.0.2",
+    "smalot-bootstrap-datetimepicker": "2.3.8"
+  }
+}

@@ -1,15 +1,15 @@
 The Provides system
 ===================
 
-The Provides system is Shoop's mechanism for discovering and loading
-components, both first-party and third-party.  Shoop apps use
+The Provides system is Shuup's mechanism for discovering and loading
+components, both first-party and third-party.  Shuup apps use
 the provides system in various ways.
 
 * The core itself uses Provides for discovering method and supplier modules.
-* ``shoop.admin`` uses Provides to load admin modules, form customizations etc.
-* ``shoop.front`` uses it for URLconf overrides etc.
+* ``shuup.admin`` uses Provides to load admin modules, form customizations etc.
+* ``shuup.front`` uses it for URLconf overrides etc.
 
-The provide categories used by Shoop are listed in :ref:`provide-categories` but you
+The provide categories used by Shuup are listed in :ref:`provide-categories` but you
 can also define your own categories as you wish.
 
 .. TODO:: Document the various ways better.
@@ -20,7 +20,7 @@ Provides are grouped under different categories, such as ``admin_module``,
 Declaring Provides
 ------------------
 
-Shoop uses the Django 1.7+ ``AppConfig`` system to declare provides.
+Shuup uses the Django 1.7+ ``AppConfig`` system to declare provides.
 
 Quite simply, a developer needs only include a dict with provide categories as
 the keys and lists of loading specs as values for new provides to be discovered.
@@ -42,9 +42,9 @@ the keys and lists of loading specs as values for new provides to be discovered.
 Using Provides
 --------------
 
-Provide management functions are found in the :mod:`shoop.apps.provides` module.
+Provide management functions are found in the :mod:`shuup.apps.provides` module.
 
-In general, the :obj:`shoop.apps.provides.get_provide_objects` method is your most useful
+In general, the :obj:`shuup.apps.provides.get_provide_objects` method is your most useful
 entry point.
 
 .. _provide-categories:
@@ -67,7 +67,7 @@ Core
 ``admin_extend_create_shipment_form``
     Allows providing extension for shipment creation in admin.
     Should implement the
-    `~shoop.admin.modules.orders.views.shipment.ShipmentFormModifier`
+    `~shuup.admin.modules.orders.views.shipment.ShipmentFormModifier`
     interface.
 
 ``admin_product_form_part``
@@ -82,15 +82,15 @@ Core
     via admin modules.
 
 ``discount_module``
-    `~shoop.core.pricing.DiscountModule` for pricing system.
+    `~shuup.core.pricing.DiscountModule` for pricing system.
 
 ``front_service_checkout_phase_provider``
     Allows providing a custom checkout phase for a service (e.g. payment
     method or shipping method).  Should implement the
-    `~shoop.front.checkout.ServiceCheckoutPhaseProvider` interface.
+    `~shuup.front.checkout.ServiceCheckoutPhaseProvider` interface.
 
 ``front_template_helper_namespace``
-    Additional namespaces to install in the ``shoop`` "package" within
+    Additional namespaces to install in the ``shuup`` "package" within
     template contexts.
     .. seealso:: :ref:`custom-template-helper-functions`
 
@@ -113,41 +113,41 @@ Core
     Most of the time, ``front_urls`` should do.
 
 ``notify_action``
-    Notification framework `~shoop.notify.Action` classes.
+    Notification framework `~shuup.notify.Action` classes.
 
 ``notify_condition``
-    Notification framework `~shoop.notify.Condition` classes.
+    Notification framework `~shuup.notify.Condition` classes.
 
 ``notify_event``
-    Notification framework `~shoop.notify.Event` classes.
+    Notification framework `~shuup.notify.Event` classes.
 
 ``order_source_modifier_module``
-    `~shoop.core.order_creator.OrderSourceModifierModule` for modifying
+    `~shuup.core.order_creator.OrderSourceModifierModule` for modifying
     order source, e.g. in its
-    `~shoop.core.order_creator.OrderSource.get_final_lines`.
+    `~shuup.core.order_creator.OrderSource.get_final_lines`.
 
 ``pricing_module``
-    Pricing module classes; the pricing module in use is set with the ``SHOOP_PRICING_MODULE`` setting.
+    Pricing module classes; the pricing module in use is set with the ``SHUUP_PRICING_MODULE`` setting.
 
 ``service_behavior_component_form``
     Forms for creating service behavior components in Shop Admin.  When
     creating a custom `service behavior component
-    <shoop.core.models.ServiceBehaviorComponent>`, provide a form for it
+    <shuup.core.models.ServiceBehaviorComponent>`, provide a form for it
     via this provide.
 
 ``service_provider_admin_form``
     Forms for creating service providers in Shop Admin.  When creating a
-    custom `service provider <shoop.core.models.ServiceProvider>`
-    (e.g. `carrier <shoop.core.models.Carrier>` or `payment processor
-    <shoop.core.models.PaymentProcessor>`), provide a form for it via
+    custom `service provider <shuup.core.models.ServiceProvider>`
+    (e.g. `carrier <shuup.core.models.Carrier>` or `payment processor
+    <shuup.core.models.PaymentProcessor>`), provide a form for it via
     this provide.
 
 ``supplier_module``
-    Supplier module classes (deriving from `~shoop.core.suppliers.base.BaseSupplierModule`),
-    as used by `~shoop.core.models.Supplier`.
+    Supplier module classes (deriving from `~shuup.core.suppliers.base.BaseSupplierModule`),
+    as used by `~shuup.core.models.Supplier`.
 
 ``tax_module``
-    Tax module classes; the tax module in use is set with the ``SHOOP_TAX_MODULE`` setting.
+    Tax module classes; the tax module in use is set with the ``SHUUP_TAX_MODULE`` setting.
 
 ``xtheme``
     XTheme themes (full theme sets).
@@ -170,7 +170,7 @@ Campaigns Provide Categories
 ``campaign_product_discount_effect_form``
    Form for handling product discount effects of a catalog campaign.
    Should be a ModelForm with its model being a subclass of
-   `~shoop.campaigns.models.ProductDiscountEffect`.
+   `~shuup.campaigns.models.ProductDiscountEffect`.
 
 ``campaign_basket_condition``
     Conditions that matches against the order source or source lines in basket.
@@ -178,9 +178,9 @@ Campaigns Provide Categories
 ``campaign_basket_discount_effect_form``
     Form for handling discount effects of a basket campaign. Should be
     a ModelForm with its model being a subclass of
-    `~shoop.campaigns.models.BasketDiscountEffect`.
+    `~shuup.campaigns.models.BasketDiscountEffect`.
 
 ``campaign_basket_line_effect_form``
     Form for handling line effects of a basket campaign. Should be a
     ModelForm with its model being a subclass of
-    `~shoop.campaigns.models.BasketLineEffect`.
+    `~shuup.campaigns.models.BasketLineEffect`.

@@ -1,0 +1,236 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Yuki Miyagi <yuki.miyagi@anders.fi>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-04-19 08:32+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"Language-Team: Japanese (Japan) (http://www.transifex.com/shuup/shuup/"
+"language/ja_JP/)\n"
+"Language: ja_JP\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Subject"
+msgstr ""
+
+msgid "Email Body"
+msgstr ""
+
+msgid "Recipient"
+msgstr ""
+
+msgid "Language"
+msgstr "言語"
+
+msgid "Fallback language"
+msgstr ""
+
+msgid "Send Identifier"
+msgstr ""
+
+msgid ""
+"If set, this identifier will be logged into the event's log target. If the "
+"identifier has already been logged, the e-mail won't be sent again."
+msgstr ""
+
+msgid "Notifications"
+msgstr "通知"
+
+msgid "Notification scripts"
+msgstr ""
+
+msgid "Show notification scripts"
+msgstr ""
+
+msgid "Event"
+msgstr "イベント"
+
+msgid "Choose which event to bind this script to."
+msgstr ""
+
+msgid "Script Name"
+msgstr "スクリプトネーム"
+
+msgid "Type in a descriptive name for your new script."
+msgstr ""
+
+msgid "Enable Script"
+msgstr "スクリプトを有効にする"
+
+msgid "Choose whether this script should be activated when its event fires."
+msgstr ""
+
+msgid ""
+"Warning: Changing the event for an existing script may have unexpected "
+"effects."
+msgstr ""
+
+msgid "Template"
+msgstr "テンプレート"
+
+msgid "Bind to Variable"
+msgstr ""
+
+msgid "Edit Script Contents..."
+msgstr "スクリプトの内容を編集する..."
+
+msgid "Name"
+msgstr "名前"
+
+msgid "Enabled"
+msgstr ""
+
+msgid ""
+"Check whether the bound value `value` exists and is non-empty and non-zero."
+msgstr ""
+
+msgid "Non-Empty"
+msgstr ""
+
+msgid "Check whether the bound value `value` is empty or zero."
+msgstr ""
+
+msgid "Empty"
+msgstr ""
+
+msgid "none"
+msgstr ""
+
+msgid "unilingual"
+msgstr ""
+
+msgid "multilingual"
+msgstr ""
+
+msgid "variable only"
+msgstr ""
+
+msgid "constant only"
+msgstr ""
+
+msgid "variable or constant"
+msgstr ""
+
+msgid "continue to the next step"
+msgstr ""
+
+msgid "stop processing"
+msgstr "処理を停止する"
+
+msgid "all"
+msgstr ""
+
+msgid "any"
+msgstr ""
+
+msgid "any shop administrator"
+msgstr ""
+
+msgid "a specific user"
+msgstr ""
+
+msgid "low"
+msgstr ""
+
+msgid "normal"
+msgstr ""
+
+msgid "high"
+msgstr ""
+
+msgid "critical"
+msgstr ""
+
+msgid "recipient type"
+msgstr ""
+
+msgid "recipient"
+msgstr ""
+
+msgid "created on"
+msgstr ""
+
+msgid "message"
+msgstr ""
+
+msgid "priority"
+msgstr ""
+
+msgid "marked read"
+msgstr ""
+
+msgid "marked read by"
+msgstr ""
+
+msgid "marked read on"
+msgstr ""
+
+msgid "event identifier"
+msgstr ""
+
+msgid "name"
+msgstr ""
+
+msgid "enabled"
+msgstr ""
+
+msgid "Edit Script Information"
+msgstr ""
+
+msgid "Create a new script"
+msgstr "スクリプトを新規作成する"
+
+msgid "Script Details"
+msgstr "スクリプト詳細"
+
+msgid "OK"
+msgstr ""
+
+msgid "Edit Script"
+msgstr "スクリプトを編集する"
+
+msgid "Edit Step"
+msgstr ""
+
+msgid "Done"
+msgstr "完了"
+
+msgid "Please correct the errors below."
+msgstr "以下のエラーを修正してください。"
+
+msgid "Variables"
+msgstr "変数"
+
+msgid "Save changes"
+msgstr "変更を保存する"
+
+msgid "Boolean"
+msgstr "ブーリアン"
+
+msgid "Integer Number"
+msgstr "整数"
+
+msgid "Decimal Number"
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "Email Address"
+msgstr "Eメールアドレス"
+
+msgid "URL Address"
+msgstr "URLアドレス"
+
+msgid "Phone Number"
+msgstr "電話番号"

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Shuup &dash; {% block title -%}
+            {% if title %}{{ title }}
+            {% elif view and view.title %}{{ view.title }}{% endif %}
+        {%- endblock %}
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{{ static("shuup_admin/img/favicon.ico") }}" rel="icon" type="image/x-icon">
+        <link href="{{ static("shuup_admin/css/select2.css") }}" rel="stylesheet" type="text/css">
+        <link href="{{ static("shuup_admin/css/base.css") }}" rel="stylesheet" type="text/css">
+        {% block extra_css %}{% endblock -%}
+        {% block extra_head %}{% endblock -%}
+        <script>var ShuupAdminConfig = {{ shuup_admin.get_config()|json }};</script>
+        <script type="text/javascript" src="{{ url("shuup_admin:js-catalog") }}"></script>
+    </head>
+    <body class="{% block body_class %}{% endblock %} {{ "popup" if request.GET.popup else "" }}">
+        {% block top %}
+        <header id="top-header">{% include "shuup/admin/base/_navigation.jinja" %}</header>
+        <nav id="main-menu">{# this content is loaded dynamically; see base/_main_menu.jinja #}</nav>
+        {% endblock %}
+
+        {% block content_wrap %}
+        <main id="main-content">
+            {% block support_content %}
+            <div class="container-fluid">
+                <div class="support-nav">
+                    {% block breadcrumbs -%}
+                        {% set breadcrumbs = breadcrumbs or shuup_admin.get_breadcrumbs() %}
+                        {%- if breadcrumbs -%}
+                            {% from "shuup/admin/macros/breadcrumbs.jinja" import render_breadcrumbs with context %}
+                            {{ render_breadcrumbs(breadcrumbs) }}
+                        {%- endif -%}
+                    {%- endblock %}
+                    <div class="flex-wrapper">
+                        <h1 class="main-header">{% block header %}{{ self.title() }}{% endblock %}</h1>
+                        <div class="page-actions">
+                            {%- block action_buttons -%}
+                                {%- if toolbar -%}{{ toolbar.render_to_string(request)|safe }}{%- endif -%}
+                            {%- endblock -%}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+            {% block content %}{% endblock %}
+        </main>
+        {% endblock %}
+        {% block post_content %}{% endblock %}
+        <script src="{{ static("shuup_admin/js/vendor.js") }}"></script>
+        <script src="{{ static("shuup_admin/js/base.js") }}"></script>
+        {% block extra_js %}{% endblock %}
+        {% if messages %}
+        <script>
+            (function(){
+                if(!window.Messages) return;
+                {% for message in messages -%}Messages.enqueue({
+                    tags: {{ message.tags|json }},
+                    text: {{ (""~message.message)|json }}
+                });{% endfor %}
+            }());
+        </script>
+        {% endif %}
+    </body>
+</html>

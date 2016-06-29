@@ -1,0 +1,254 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Aarni Koskela, 2015
+# Antti Mäki <antti@anttimaki.com>, 2015
+# Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Heikki Saari <heikki.saari@anders.fi>, 2016
+# Janne Tammi <janne.tammi@shuup.com>, 2015
+# Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
+# Juha Kujala <juha.kujala@shuup.com>, 2015-2016
+# Juha Louhiranta <charni@gmail.com>, 2015
+# Rauli Laine <rauli.laine@iki.fi>, 2015-2016
+# Shuup Admin <admin@shuup.com>, 2015
+# Teemu Selkälä <teemu.selkala@anders.fi>, 2015
+# tomijarvi <tomi@jarvi.pro>, 2015
+# Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-06-21 12:40+0000\n"
+"Last-Translator: Heikki Saari <heikki.saari@anders.fi>\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
+"language/fi_FI/)\n"
+"Language: fi_FI\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Shuup Extensible Theme Engine"
+msgstr "Shuupin laajennettava teemamoottori"
+
+msgid "Themes"
+msgstr "Teemat"
+
+msgid "No theme is active. Click here to activate one."
+msgstr "Teema ei ole aktiivinen. Klikkaa tästä aktivoidaksesi teema."
+
+msgid "Theming"
+msgstr "Teemat"
+
+msgid "activate"
+msgstr "aktivoi"
+
+msgid "Theme activated."
+msgstr "Teema aktivoitu."
+
+msgid "current draft"
+msgstr "nykyinen vedos"
+
+msgid "old version"
+msgstr "vanha versio"
+
+msgid "public"
+msgstr "julkinen"
+
+msgid "theme identifier"
+msgstr "teeman tunniste"
+
+msgid "view name"
+msgstr "näytä nimi"
+
+msgid "created on"
+msgstr "luotu"
+
+msgid "status"
+msgstr "tila"
+
+msgid "internal data"
+msgstr "sisäinen data"
+
+msgid "active"
+msgstr "aktiivinen"
+
+msgid "data"
+msgstr "data"
+
+#, python-format
+msgid "Theme configuration for %s"
+msgstr "Teeman %s asetukset"
+
+msgid "Plugin"
+msgstr "Lisäosa"
+
+msgid "Category Links"
+msgstr "Kategorialinkit"
+
+msgid "Title"
+msgstr "Otsikko"
+
+msgid "Show all categories"
+msgstr "Näytä kaikki kategoriat"
+
+msgid "All categories are shown, even if not selected"
+msgstr "Kaikki kategoriat ovat näkyvillä, vaikka eivät olisi valittuina"
+
+msgid "Image"
+msgstr "Kuva"
+
+msgid "Image Link URL"
+msgstr "Kuvan linkin URL-osoite"
+
+msgid "Full width"
+msgstr "Täysi leveys"
+
+msgid "Set image to full width of cell"
+msgstr "Aseta kuva solun levyiseksi"
+
+msgid "Width (px)"
+msgstr "Leveys (pikseliä)"
+
+msgid "Leave blank for default width"
+msgstr "Jätä tyhjäksi oletusleveydelle"
+
+msgid "Height (px)"
+msgstr "Korkeus (pikseliä)"
+
+msgid "Snippets"
+msgstr "Koodinpätkät"
+
+msgid "In-Place Snippet"
+msgstr "Kohdalla olevat koodinpätkät"
+
+msgid "Resource snippet for end of head"
+msgstr "Resurssikoodinpätkä HEAD-osion loppuun"
+
+msgid "Resource snippet for beginning of body"
+msgstr "Resurssikoodinpätkä BODY-osion alkuun"
+
+msgid "Resource for end of body"
+msgstr "Resurssi BODY-osion loppuun"
+
+msgid "Social Media Links"
+msgstr "Sosiaalisen median linkit"
+
+msgid "Topic"
+msgstr "Aihe"
+
+msgid "Icon Size"
+msgstr "Ikonin koko"
+
+msgid "Alignment"
+msgstr "Kohdistus"
+
+msgid "text"
+msgstr "teksti"
+
+msgid "(Untranslated)"
+msgstr "(Kääntämätön)"
+
+#, python-format
+msgid "Click to edit placeholder: %s"
+msgstr "Napsauta muokataksesi aluetta %s"
+
+msgid "Delete This Cell"
+msgstr "Poista tämä solu"
+
+msgid "There's nothing to configure in this plugin."
+msgstr "Tällä lisäosalla ei ole asetuksia."
+
+msgid "Save Plugin"
+msgstr "Tallenna lisäosa"
+
+msgid "Edit Placeholder"
+msgstr "Muokkaa aluetta"
+
+msgid "Add new cell"
+msgstr "Lisää uusi solu"
+
+msgid "Delete row"
+msgstr "Poista rivi"
+
+msgid "Add new row"
+msgstr "Lisää uusi rivi"
+
+msgid "Theme Configuration"
+msgstr "Teeman asetukset"
+
+msgid "No themes are installed."
+msgstr "Teemoja ei ole asennettu"
+
+msgid "Theme"
+msgstr "Teema"
+
+msgid "Actions"
+msgstr "Toiminnot"
+
+msgid "Author"
+msgstr "Tekijä"
+
+msgid "Currently active"
+msgstr "Aktiivinen"
+
+msgid "Activate"
+msgstr "Aktivoi"
+
+msgid "Configure"
+msgstr "Muokkaa"
+
+#, python-format
+msgid "Theme Configuration: %(name)s"
+msgstr "Teeman asetukset: %(name)s"
+
+msgid "There's nothing to configure in this theme."
+msgstr "Teemalla ei ole asetuksia."
+
+msgid "Revert Changes"
+msgstr "Palauta muutokset"
+
+msgid "Publish Changes"
+msgstr "Julkaise muutokset"
+
+msgid "No access to editing"
+msgstr "Ei oikeuksia editointiin"
+
+#, python-format
+msgid "Unknown command %s"
+msgstr "Tuntematon komento %s"
+
+msgid "Unable to determine current theme."
+msgstr "Nykyistä teemaa ei voitu määrittää."
+
+#, python-format
+msgid "Cannot add more than %d cells in one row."
+msgstr "Rivissä ei voi olla enempää kuin %d solua."
+
+msgid "Full Width"
+msgstr "Täysi leveys"
+
+msgid "Three Fourths (3/4)"
+msgstr "Kolme neljäsosaa (3/4)"
+
+msgid "Two Thirds (2/3)"
+msgstr "Kaksi kolmasosaa (2/3)"
+
+msgid "Half (1/2)"
+msgstr "Puolet (1/2)"
+
+msgid "One Third (1/3)"
+msgstr "Kolmasosa (1/3)"
+
+msgid "One Fourth (1/4)"
+msgstr "Neljäsosa (1/4)"
+
+msgid "Cell width"
+msgstr "Solun leveys"
+
+msgid "No Plugin"
+msgstr "Ei lisäosaa"

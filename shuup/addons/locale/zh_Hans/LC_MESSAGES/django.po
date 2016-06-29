@@ -1,0 +1,166 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Jessica Wang <jessica.wang@shuup.com>, 2015-2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-03-09 09:49+0000\n"
+"Last-Translator: Jessica Wang <jessica.wang@shuup.com>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/"
+"language/cmn/)\n"
+"Language: cmn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Addons"
+msgstr "附加组件"
+
+#, python-format
+msgid "Enable %s"
+msgstr " 启用 %s"
+
+#, python-format
+msgid "%d new addons enabled."
+msgstr "%d 新附加组件已启用。"
+
+#, python-format
+msgid "%d previously enabled addons disabled."
+msgstr "%d 之前启用的附加组件已禁用。"
+
+msgid "No changes were made."
+msgstr "没有发生更改。"
+
+msgid "Save addon changes"
+msgstr "保存附加组件更改"
+
+msgid "Upload new addon"
+msgstr "上传新附加组件"
+
+msgid "Reload application"
+msgstr "重新加载应用程序"
+
+msgid ""
+"There are no viable reload methods available. Please contact your system "
+"administrator."
+msgstr ""
+
+msgid "Reload Method"
+msgstr "重新加载方式"
+
+msgid "Reloading."
+msgstr "重新载入。"
+
+msgid "Addon file (ZIP)"
+msgstr "附加组件文件 (ZIP)"
+
+msgid "Only upload addon files you trust."
+msgstr "只上传信任的附加组件文件。"
+
+msgid "Only ZIP files are supported"
+msgstr "只支持ZIP文件"
+
+msgid "Upload"
+msgstr "上传"
+
+msgid "Install Addon"
+msgstr "安装附加组件"
+
+msgid "Installed addons"
+msgstr "已安装的附加组件"
+
+msgid "Addon name"
+msgstr "附加组件名"
+
+msgid "Is enabled"
+msgstr "已启用"
+
+msgid "You don't have any installed addons"
+msgstr "您没有任何已安装的附加组件"
+
+msgid "Reload Application Server"
+msgstr "重新加载应用服务器"
+
+msgid ""
+"When you reload the application server, it may take some time for the new "
+"instance of your application to properly initialize."
+msgstr ""
+"当您重新加载应用服务器的时候，有可能需要一段时间正确初始化您应用的新实例。"
+
+msgid ""
+"In addition, there is always a chance for the server to not properly "
+"initialize at all, in which case you may need to troubleshoot the problem "
+"yourself (or have a system administrator handy)."
+msgstr ""
+"此外，服务器有时会不能正确地初始化，在这种情况下，您需要自己排除故障 (或者请"
+"个系统管理员)。"
+
+msgid "Reload steps"
+msgstr ""
+
+msgid ""
+"Finalize installations for newly installed addons (migrate and collect "
+"static resources)"
+msgstr ""
+
+msgid "Reload application server"
+msgstr "重新加载应用服务器"
+
+msgid "Reload initiated."
+msgstr ""
+
+msgid "Error while reloading application."
+msgstr "重新加载应用程序时出错。"
+
+msgid "Finalizing installations."
+msgstr ""
+
+msgid "Your Shuup seems to be back up!"
+msgstr ""
+
+msgid "Your Shuup is not up yet. Trying again soon."
+msgstr ""
+
+msgid "Select file"
+msgstr "选择文件"
+
+msgid "Installation Finished"
+msgstr "安装已完成"
+
+msgid "Installation Failed"
+msgstr "安装失败"
+
+msgid "Success"
+msgstr "成功"
+
+#, python-format
+msgid ""
+"Next, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activate "
+"the newly installed addon</strong></a> and <a href=\"%(addon_reload_url)s\" "
+"class=\"text-success\"><strong>reload your application server</strong></a>."
+msgstr ""
+
+msgid "Error"
+msgstr "错误"
+
+msgid "Installer Log"
+msgstr "安装日志"
+
+msgid "Upload Addon - Install"
+msgstr "上传附加组件 - 安装"
+
+msgid "Package Information"
+msgstr "信息包"
+
+msgid "No package information could be extracted."
+msgstr "没有信息包可提取。"
+
+msgid "File List"
+msgstr "文件列表"

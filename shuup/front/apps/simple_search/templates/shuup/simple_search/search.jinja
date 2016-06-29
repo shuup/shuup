@@ -1,0 +1,23 @@
+{% extends "shuup/front/base.jinja" %}
+{% block title %}{% trans %}Search{% endtrans %}{% endblock %}
+{% block content %}
+    <h1>{% trans %}Search{% endtrans %}</h1>
+    <form method="get">
+        <div class="row">
+            <div class="col-md-8">{{ bs3.field(form.q) }}</div>
+            <div class="col-sm-6 col-md-4">{{ bs3.field(form.sort) }}</div>
+        </div>
+        <hr>
+    </form>
+    {% if no_results %}
+        <p class="lead">{% trans query=form.cleaned_data.q %}No results found for "<strong>{{ query }}</strong>".{% endtrans %}</p>
+    {% elif products %}
+        <div class="row">
+        {% for product in products if shuup.product.is_visible(product) %}
+            <div class="col-sm-4 col-md-3">
+                {{ macros.product_box(product, show_description=True, class="product-card box") }}
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

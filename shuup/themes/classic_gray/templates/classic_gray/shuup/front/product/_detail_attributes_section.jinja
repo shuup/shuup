@@ -1,0 +1,8 @@
+<dl class="dl-horizontal">
+    {% for attribute in shuup.product.get_visible_attributes(product) %}
+        {% if attribute.value is not none %}
+            <dt>{{ attribute.name }}</dt>
+            <dd>{{ attribute.formatted_value }}</dd>
+        {% endif %}
+    {% endfor %}
+</dl>

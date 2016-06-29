@@ -1,0 +1,12 @@
+<section class="categories-links-plugin">
+    {% if title %}<h2>{{ title }}</h2>{% endif %}
+    {% if categories %}
+        <ul>
+        {% for category in categories %}
+            <li>
+                <a href="{{ url("shuup:category", pk=category.pk, slug=category.slug) }}">{{ category.name }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</section>

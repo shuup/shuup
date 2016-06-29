@@ -1,0 +1,1487 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-27 22:07+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: en <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Generated-By: Babel 2.1.1\n"
+
+msgid "Home"
+msgstr ""
+
+msgid "Browse"
+msgstr ""
+
+msgid "Clear"
+msgstr ""
+
+msgid "Select"
+msgstr ""
+
+msgid "Attributes"
+msgstr ""
+
+msgid "Identifier"
+msgstr ""
+
+msgid "Filter by identifier..."
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Filter by name..."
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Visibility Mode"
+msgstr ""
+
+msgid "Searchable"
+msgstr ""
+
+msgid "Used in # Product Types"
+msgstr ""
+
+msgid "Categories"
+msgstr ""
+
+msgid "Products"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Visibility"
+msgstr ""
+
+msgid "Parent"
+msgstr ""
+
+msgid "Contact Groups"
+msgstr ""
+
+msgid "Contacts"
+msgstr ""
+
+msgid "Price display mode"
+msgstr ""
+
+msgid "unspecified"
+msgstr ""
+
+msgid "show prices with taxes included"
+msgstr ""
+
+msgid "show pre-tax prices"
+msgstr ""
+
+msgid "hide prices"
+msgstr ""
+
+msgid "member"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+#, python-format
+msgid "%(count)s member added"
+msgid_plural "%(count)s members added"
+msgstr[0] ""
+msgstr[1] ""
+
+#, python-format
+msgid "%(count)s member removed"
+msgid_plural "%(count)s members removed"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Number of Members"
+msgstr ""
+
+msgid "Active customers"
+msgstr ""
+
+msgid "Based on orders within 30 days"
+msgstr ""
+
+msgid "The Shuup frontend is not enabled."
+msgstr ""
+
+msgid "Contact has no associated user."
+msgstr ""
+
+msgid "User has no associated email."
+msgstr ""
+
+msgid "Reset password"
+msgstr ""
+
+msgid "Send a password renewal email."
+msgstr ""
+
+#, python-format
+msgid "Are you sure you wish to send a password recovery email to %s?"
+msgstr ""
+
+msgid "New User"
+msgstr ""
+
+msgid "Create an user for the contact."
+msgstr ""
+
+msgid "New Order"
+msgstr ""
+
+msgid "Create an order for the contact."
+msgstr ""
+
+msgid "Deactivate Contact"
+msgstr ""
+
+msgid "Activate Contact"
+msgstr ""
+
+msgid "Edit..."
+msgstr ""
+
+msgid "You can not deactivate a superuser."
+msgstr ""
+
+msgid "You can not deactivate yourself."
+msgstr ""
+
+#, python-format
+msgid "%(contact)s is now %(state)s."
+msgstr ""
+
+msgid "active"
+msgstr ""
+
+msgid "inactive"
+msgstr ""
+
+msgid "Person"
+msgstr ""
+
+msgid "Company"
+msgstr ""
+
+#, python-format
+msgid "User %(bind_user)s already has a contact"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "no"
+msgstr ""
+
+msgid "yes"
+msgstr ""
+
+msgid "# Orders"
+msgstr ""
+
+msgid "Groups"
+msgstr ""
+
+msgid "Contact"
+msgstr ""
+
+msgid "Inactive"
+msgstr ""
+
+#, python-format
+msgid "Email: %s"
+msgstr ""
+
+#, python-format
+msgid "Phone: %s"
+msgstr ""
+
+#, python-format
+msgid "%d orders"
+msgstr ""
+
+msgid "The contact does not have an associated user."
+msgstr ""
+
+msgid "Demo"
+msgstr ""
+
+msgid "Manufacturers"
+msgstr ""
+
+msgid "Media"
+msgstr ""
+
+msgid "Media browser"
+msgstr ""
+
+msgid "Root"
+msgstr ""
+
+#, python-brace-format
+msgid "{num} subfolders moved to {folder}."
+msgstr ""
+
+#, python-brace-format
+msgid "{num} files moved to {folder}."
+msgstr ""
+
+#, python-format
+msgid "Folder %s deleted."
+msgstr ""
+
+#, python-format
+msgid "%(file)s uploaded to %(folder)s"
+msgstr ""
+
+msgid "Folder renamed."
+msgstr ""
+
+msgid "File renamed."
+msgstr ""
+
+msgid "File deleted."
+msgstr ""
+
+#, python-format
+msgid "%(file)s moved from %(old)s to %(new)s."
+msgstr ""
+
+msgid "Orders"
+msgstr ""
+
+msgid "Show orders"
+msgstr ""
+
+msgid "Outstanding Orders"
+msgstr ""
+
+#, python-format
+msgid "%d outstanding orders"
+msgstr ""
+
+msgid "Sales per Month (last year)"
+msgstr ""
+
+#, python-format
+msgid "Sales (%(currency)s)"
+msgstr ""
+
+#, python-format
+msgid "Based on %d orders"
+msgstr ""
+
+msgid "Today's Sales"
+msgstr ""
+
+msgid "Lifetime Sales"
+msgstr ""
+
+msgid "Average Purchase"
+msgstr ""
+
+msgid "Open Orders Value"
+msgstr ""
+
+#, python-format
+msgid "The quantity '%(quantity)s' (for line %(text)s) is invalid (%(error)s)"
+msgstr ""
+
+#, python-format
+msgid "The price '%(price)s' (for line %(text)s) is invalid (%(error)s)"
+msgstr ""
+
+#, python-format
+msgid "The discount '%(discount)s' (for line %(text)s is invalid (%(error)s)"
+msgstr ""
+
+msgid "Product line does not have a product set."
+msgstr ""
+
+#, python-format
+msgid "Product %s does not exist."
+msgstr ""
+
+#, python-format
+msgid "Product %(product)s is not available in the %(shop)s shop."
+msgstr ""
+
+#, python-format
+msgid "Product %(product)s is not orderable: %(error)s"
+msgstr ""
+
+msgid "Please add lines to the order."
+msgstr ""
+
+msgid "Name is required for customer"
+msgstr ""
+
+msgid "Tax number is not set for company."
+msgstr ""
+
+msgid "Please choose a valid shop."
+msgstr ""
+
+msgid "Please select shipping method."
+msgstr ""
+
+msgid "Please select payment method."
+msgstr ""
+
+msgid "Payments"
+msgstr ""
+
+msgid "Order Contents"
+msgstr ""
+
+msgid "Log Entries"
+msgstr ""
+
+msgid "Create Refund"
+msgstr ""
+
+msgid "This order cannot be refunded"
+msgstr ""
+
+msgid "Create Payment"
+msgstr ""
+
+msgid "This order cannot be paid at this point"
+msgstr ""
+
+msgid "Create Shipment"
+msgstr ""
+
+msgid "There are no products to ship"
+msgstr ""
+
+msgid "Set Complete"
+msgstr ""
+
+msgid "This order can not be set as complete at this point"
+msgstr ""
+
+msgid "Cancel Order"
+msgstr ""
+
+msgid "Paid, shipped, or canceled orders cannot be canceled"
+msgstr ""
+
+msgid "Edit order"
+msgstr ""
+
+msgid "This order cannot modified at this point"
+msgstr ""
+
+msgid "Unable to set order as completed at this point"
+msgstr ""
+
+#, python-brace-format
+msgid "Order status changed: {old_status} to {new_status}"
+msgstr ""
+
+msgid "Create Order"
+msgstr ""
+
+#, python-format
+msgid "Contact %s does not exist."
+msgstr ""
+
+#, python-format
+msgid "Order %(identifier)s updated."
+msgstr ""
+
+#, python-format
+msgid "Order %(identifier)s created."
+msgstr ""
+
+msgid "Could not proceed with order:"
+msgstr ""
+
+msgid "Could not finalize order:"
+msgstr ""
+
+msgid "Order"
+msgstr ""
+
+msgid "Order Date"
+msgstr ""
+
+msgid "Customer"
+msgstr ""
+
+msgid "Payment Status"
+msgstr ""
+
+msgid "Shipping Status"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+#, python-format
+msgid "Create Payment -- %s"
+msgstr ""
+
+msgid "Payment amount"
+msgstr ""
+
+msgid "Payment amount cannot be 0"
+msgstr ""
+
+#, python-format
+msgid "Payment %s created."
+msgstr ""
+
+msgid "Order has already been paid"
+msgstr ""
+
+msgid "Line number"
+msgstr ""
+
+msgid "Quantity"
+msgstr ""
+
+msgid "Amount"
+msgstr ""
+
+msgid "Restock products"
+msgstr ""
+
+#, python-format
+msgid "Create Refund -- %s"
+msgstr ""
+
+msgid "Refund Entire Order"
+msgstr ""
+
+msgid "This order already has existing refunds"
+msgstr ""
+
+msgid "Refund amount exceeds order amount."
+msgstr ""
+
+msgid "Refund amount cannot be 0"
+msgstr ""
+
+msgid "Refund created."
+msgstr ""
+
+#, python-format
+msgid "Create Full Refund -- %s"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Could not create full refund."
+msgstr ""
+
+msgid "Full refund created."
+msgstr ""
+
+#, python-format
+msgid "Create Shipment -- %s"
+msgstr ""
+
+msgid "Supplier"
+msgstr ""
+
+msgid "No products to ship."
+msgstr ""
+
+#, python-format
+msgid "Shipment %s created."
+msgstr ""
+
+msgid "Permission Groups"
+msgstr ""
+
+msgid "Module Permissions"
+msgstr ""
+
+msgid ""
+"Modules with the same permissions as selected modules will be added "
+"automatically."
+msgstr ""
+
+msgid "Members"
+msgstr ""
+
+msgid "Product Types"
+msgstr ""
+
+msgid "Product types"
+msgstr ""
+
+msgid "Number of Attributes"
+msgstr ""
+
+#, python-format
+msgid "Create Product Called \"%s\""
+msgstr ""
+
+#, python-format
+msgid "Create Product with SKU \"%s\""
+msgstr ""
+
+msgid "Minimum Purchase Quantity must be greater than 0."
+msgstr ""
+
+#, python-format
+msgid "Thumbnail generation of %(media)s failed: %(error)s"
+msgstr ""
+
+msgid "Use only URL or file, not both"
+msgstr ""
+
+msgid "Is primary"
+msgstr ""
+
+msgid "Only images allowed in this field"
+msgstr ""
+
+#, python-format
+msgid "Unable to make package %(product)s: %(error)s"
+msgstr ""
+
+#, python-format
+msgid "New: %d"
+msgstr ""
+
+#, python-format
+msgid "Removed: %d"
+msgstr ""
+
+#, python-format
+msgid "Couldn't add product %s to own package"
+msgstr ""
+
+msgid "child"
+msgstr ""
+
+msgid "Unlink"
+msgstr ""
+
+#, python-format
+msgid "Unable to link %(product)s: %(error)s"
+msgstr ""
+
+msgid "variable combination"
+msgstr ""
+
+#, python-format
+msgid "%s has been marked deleted."
+msgstr ""
+
+msgid "Minimum Purchase Quantity has been rounded to match Sales Unit."
+msgstr ""
+
+#, python-format
+msgid "Changes to shop instance for %s saved"
+msgstr ""
+
+msgid "Product is not available."
+msgstr ""
+
+msgid "Product"
+msgstr ""
+
+#, python-format
+msgid "Edit Cross-Sell: %s"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Changes saved."
+msgstr ""
+
+#, python-format
+msgid "Edit Media: %s"
+msgstr ""
+
+msgid "Are you sure? This will remove all products from package."
+msgstr ""
+
+msgid "Clear package"
+msgstr ""
+
+#, python-format
+msgid "Edit Package: %s"
+msgstr ""
+
+msgid "Package cleared."
+msgstr ""
+
+msgid ""
+"Are you sure? This will unlink all children and remove all variation "
+"variables."
+msgstr ""
+
+msgid "Clear variation"
+msgstr ""
+
+msgid ""
+"Are you sure? This will remove all variation variables, converting children "
+"to direct links."
+msgstr ""
+
+msgid "Convert to simple variation"
+msgstr ""
+
+#, python-format
+msgid "Edit Variation: %s"
+msgstr ""
+
+msgid "Variation cleared."
+msgstr ""
+
+msgid "Variation simplified."
+msgstr ""
+
+msgid "SKU"
+msgstr ""
+
+msgid "Filter by SKU..."
+msgstr ""
+
+msgid "Barcode"
+msgstr ""
+
+msgid "Filter by barcode..."
+msgstr ""
+
+msgid "Mode"
+msgstr ""
+
+msgid "Primary Category"
+msgstr ""
+
+msgid "Manage Cross-Selling"
+msgstr ""
+
+msgid "Cross-Selling"
+msgstr ""
+
+msgid "Actions"
+msgstr ""
+
+#, python-format
+msgid "Child: %s"
+msgstr ""
+
+#, python-format
+msgid "Parent: %s"
+msgstr ""
+
+#, python-format
+msgid "Sibling: %s"
+msgstr ""
+
+msgid "Variations"
+msgstr ""
+
+msgid "Manage Variations"
+msgstr ""
+
+msgid "Packages"
+msgstr ""
+
+msgid "Manage Package"
+msgstr ""
+
+msgid "Convert to Package Parent"
+msgstr ""
+
+msgid "Convert to Variation Parent"
+msgstr ""
+
+msgid "Sales Units"
+msgstr ""
+
+msgid "Short Name"
+msgstr ""
+
+msgid "Allowed decimals"
+msgstr ""
+
+msgid "Service Providers"
+msgstr ""
+
+msgid "Payment and Shipping"
+msgstr ""
+
+#, python-format
+msgid "Edit %(model)s"
+msgstr ""
+
+#, python-brace-format
+msgid "Create {service_name}"
+msgstr ""
+
+msgid "Shipping Methods"
+msgstr ""
+
+msgid "Payment Methods"
+msgstr ""
+
+msgid "Service"
+msgstr ""
+
+msgid "Select carrier before filling other fields."
+msgstr ""
+
+msgid "Select payment processor before filling other fields."
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
+msgid "Waive limit"
+msgstr ""
+
+msgid "Service choice"
+msgstr ""
+
+msgid "Enabled"
+msgstr ""
+
+msgid "Shop"
+msgstr ""
+
+msgid "Carrier"
+msgstr ""
+
+msgid "Payment Processor"
+msgstr ""
+
+msgid "Weight-based pricing range"
+msgstr ""
+
+msgid "Shops"
+msgstr ""
+
+msgid "System"
+msgstr ""
+
+msgid ""
+"This field cannot be changed since there are existing orders for this shop."
+msgstr ""
+
+msgid "Domain"
+msgstr ""
+
+msgid "Suppliers"
+msgstr ""
+
+#, python-format
+msgid "No %s module"
+msgstr ""
+
+msgid "Module"
+msgstr ""
+
+msgid "Telemetry"
+msgstr ""
+
+msgid ""
+"Statistics will be periodically sent to Shuup.io after 24 hours. Click here "
+"for more information."
+msgstr ""
+
+msgid "Taxes"
+msgstr ""
+
+msgid "Customer Tax Groups"
+msgstr ""
+
+msgid "Tax Classes"
+msgstr ""
+
+msgid "Code"
+msgstr ""
+
+msgid "Rate"
+msgstr ""
+
+msgid "Users"
+msgstr ""
+
+msgid "Password"
+msgstr ""
+
+msgid "Permissions"
+msgstr ""
+
+msgid "See the permissions view to change these."
+msgstr ""
+
+msgid "staff"
+msgstr ""
+
+msgid "superuser"
+msgstr ""
+
+msgid "No special permissions"
+msgstr ""
+
+msgid "No permission groups"
+msgstr ""
+
+msgid "Change Password"
+msgstr ""
+
+msgid "User has no email address"
+msgstr ""
+
+msgid "Send Password Reset Email"
+msgstr ""
+
+msgid "Edit Permissions"
+msgstr ""
+
+msgid "Contact Details"
+msgstr ""
+
+msgid "New Contact"
+msgstr ""
+
+msgid "Create a new contact and associate it with this user"
+msgstr ""
+
+msgid "Activate User"
+msgstr ""
+
+msgid "Deactivate User"
+msgstr ""
+
+#, python-format
+msgid "User bound to contact %(contact)s."
+msgstr ""
+
+#, python-format
+msgid "%(user)s is now %(state)s."
+msgstr ""
+
+msgid "Username"
+msgstr ""
+
+msgid "First Name"
+msgstr ""
+
+msgid "Last Name"
+msgstr ""
+
+msgid "Staff"
+msgstr ""
+
+msgid "Superuser"
+msgstr ""
+
+#, python-format
+msgid "First Name: %s"
+msgstr ""
+
+#, python-format
+msgid "Last Name: %s"
+msgstr ""
+
+msgid "User"
+msgstr ""
+
+msgid "The two password fields didn't match."
+msgstr ""
+
+msgid "Your old password was entered incorrectly. Please enter it again."
+msgstr ""
+
+msgid "Your Password"
+msgstr ""
+
+msgid "For security purposes, we need your current password."
+msgstr ""
+
+msgid "New Password"
+msgstr ""
+
+msgid "New Password (again)"
+msgstr ""
+
+msgid "You can not change the password of a superuser."
+msgstr ""
+
+msgid "Change User Password"
+msgstr ""
+
+#, python-format
+msgid "Password changed for %s."
+msgstr ""
+
+msgid "Reset User Password"
+msgstr ""
+
+msgid "The `shuup.front.apps.auth` app needs to be enabled for password reset."
+msgstr ""
+
+#, python-format
+msgid "Password recovery email sent to %(email)s"
+msgstr ""
+
+msgid "Sending the password recovery email failed."
+msgstr ""
+
+msgid "You can't unset this status for yourself."
+msgstr ""
+
+msgid "Change User Permissions"
+msgstr ""
+
+#, python-format
+msgid "Change Permissions: %s"
+msgstr ""
+
+#, python-format
+msgid "Permissions changed for %s."
+msgstr ""
+
+msgid "New Attribute"
+msgstr ""
+
+msgid "Login"
+msgstr ""
+
+msgid "Logged out"
+msgstr ""
+
+msgid "You have been logged out. Good bye!"
+msgstr ""
+
+msgid "Log in again"
+msgstr ""
+
+msgid "Visit shop"
+msgstr ""
+
+msgid "Menu"
+msgstr ""
+
+msgid "Dashboard"
+msgstr ""
+
+msgid "Search for"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Hello"
+msgstr ""
+
+msgid "Log out"
+msgstr ""
+
+msgid "General Information"
+msgstr ""
+
+msgid "Category Image"
+msgstr ""
+
+msgid "General information"
+msgstr ""
+
+msgid "Add Members"
+msgstr ""
+
+msgid "Add more"
+msgstr ""
+
+msgid "Addresses"
+msgstr ""
+
+msgid "Billing Address"
+msgstr ""
+
+msgid "Shipping Address"
+msgstr ""
+
+msgid "Basic details"
+msgstr ""
+
+msgid "Basic Information"
+msgstr ""
+
+msgid "Full Name"
+msgstr ""
+
+msgid "No groups"
+msgstr ""
+
+msgid "Bound User"
+msgstr ""
+
+msgid "Companies"
+msgstr ""
+
+msgid "Account Manager"
+msgstr ""
+
+msgid "Merchant Notes"
+msgstr ""
+
+msgid "Shipping address"
+msgstr ""
+
+msgid "No shipping address defined."
+msgstr ""
+
+msgid "Billing address"
+msgstr ""
+
+msgid "No billing address defined."
+msgstr ""
+
+msgid "No members."
+msgstr ""
+
+msgid "Remove block"
+msgstr ""
+
+msgid "Resize block"
+msgstr ""
+
+msgid "Welcome!"
+msgstr ""
+
+msgid "Notifications"
+msgstr ""
+
+msgid "Mark as read"
+msgstr ""
+
+msgid "Activity Feed"
+msgstr ""
+
+#, python-format
+msgid "Shuup %(version)s"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Order Status"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Upload"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "Taxless Unit Price"
+msgstr ""
+
+msgid "Taxless Discount"
+msgstr ""
+
+msgid "Tax"
+msgstr ""
+
+msgid "Taxless Total"
+msgstr ""
+
+msgid "Total incl. Tax"
+msgstr ""
+
+msgid "Discount"
+msgstr ""
+
+msgid "Taxless"
+msgstr ""
+
+msgid "Message"
+msgstr ""
+
+msgid "No log entries have been added yet."
+msgstr ""
+
+msgid "Use the input below to add new log entries."
+msgstr ""
+
+msgid "Add to Log"
+msgstr ""
+
+msgid "There was an error adding the log entry."
+msgstr ""
+
+msgid "Line #"
+msgstr ""
+
+msgid "Refund Amount"
+msgstr ""
+
+msgid "Are you sure you want to create a full refund?"
+msgstr ""
+
+msgid "Confirm Refund"
+msgstr ""
+
+msgid "Paid"
+msgstr ""
+
+msgid "Remaining"
+msgstr ""
+
+msgid "Refunded"
+msgstr ""
+
+msgid "Add More Refunds "
+msgstr ""
+
+msgid "To Ship"
+msgstr ""
+
+msgid "Ordered"
+msgstr ""
+
+msgid "Shipped"
+msgstr ""
+
+msgid "Unshipped"
+msgstr ""
+
+msgid "Set All Products To Ship"
+msgstr ""
+
+msgid "Ship All"
+msgstr ""
+
+msgid "Details & Status"
+msgstr ""
+
+msgid "Order Number"
+msgstr ""
+
+msgid "Reference"
+msgstr ""
+
+msgid "Label"
+msgstr ""
+
+msgid "Ordered by"
+msgstr ""
+
+msgid "Creator"
+msgstr ""
+
+msgid "Tax number"
+msgstr ""
+
+msgid "Total Price (taxless)"
+msgstr ""
+
+msgid "Total Price"
+msgstr ""
+
+msgid "Tracking codes"
+msgstr ""
+
+msgid "Error!"
+msgstr ""
+
+msgid "Additional Details"
+msgstr ""
+
+msgid "Accounting"
+msgstr ""
+
+msgid "Physical Properties"
+msgstr ""
+
+msgid "Manufacturer"
+msgstr ""
+
+#, python-format
+msgid "Product image %(index)s"
+msgstr ""
+
+#, python-format
+msgid "Product media %(index)s"
+msgstr ""
+
+msgid "Primary image"
+msgstr ""
+
+msgid "Set as primary image"
+msgstr ""
+
+msgid "No image"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Advanced options"
+msgstr ""
+
+msgid "Product Images"
+msgstr ""
+
+msgid "Product Media"
+msgstr ""
+
+msgid "Add new image"
+msgstr ""
+
+msgid "Add new media"
+msgstr ""
+
+msgid "Purchasing"
+msgstr ""
+
+msgid "Shipping & Payment"
+msgstr ""
+
+msgid "This product is currently not orderable."
+msgstr ""
+
+msgid "Cross-sells"
+msgstr ""
+
+msgid "Cross-sell"
+msgstr ""
+
+msgid "File "
+msgstr ""
+
+msgid "Package Products"
+msgstr ""
+
+msgid "This product is not yet a package."
+msgstr ""
+
+msgid "To create a package, choose products below."
+msgstr ""
+
+msgid "Simple Variation Children"
+msgstr ""
+
+msgid "Variable Children"
+msgstr ""
+
+msgid "Combination"
+msgstr ""
+
+msgid "Variables"
+msgstr ""
+
+msgid "This product is not yet a variation."
+msgstr ""
+
+msgid "To create a simple variation, choose products below."
+msgstr ""
+
+msgid ""
+"To create a variation with multiple variables, create the variables on the "
+"Variables tab and then link them to products here."
+msgstr ""
+
+msgid ""
+"Define price based basket weight range. Range minimum is counted in range "
+"only as zero."
+msgstr ""
+
+msgid "Behavior"
+msgstr ""
+
+msgid "Behavior component type"
+msgstr ""
+
+msgid "Add component"
+msgstr ""
+
+msgid "Shop Logo"
+msgstr ""
+
+msgid "Maintenance Mode"
+msgstr ""
+
+msgid "Contact Address"
+msgstr ""
+
+msgid "About Shuup Telemetry"
+msgstr ""
+
+msgid "Shuup will occasionally send telemetry data to a Shuup.io server."
+msgstr ""
+
+#, python-format
+msgid ""
+"The data contains an unique installation key, as well as the hostname of the "
+"installation (as sent by the visiting browser; currently <code>%(host)s</"
+"code>)."
+msgstr ""
+
+msgid ""
+"No business data or other customer information is ever sent. Shuup.io only "
+"uses the telemetry data for statistical purposes and for insights about the "
+"software's installation base."
+msgstr ""
+
+msgid "Opt-in / opt-out"
+msgstr ""
+
+msgid ""
+"You are currently <span class=\"lead label label-success\">opted in</span> "
+"to send telemetry data to Shuup.io."
+msgstr ""
+
+msgid "Thank you for your valuable contribution."
+msgstr ""
+
+msgid "Opt out"
+msgstr ""
+
+msgid ""
+"You are currently <span class=\"label label-warning\">opted out</span> of "
+"Shuup telemetry."
+msgstr ""
+
+msgid "Opt in"
+msgstr ""
+
+msgid "Last Telemetry"
+msgstr ""
+
+msgid ""
+"Telemetry submission is currently suspended; data will only be sent 24 hours "
+"after installation if still opted in at that point."
+msgstr ""
+
+#, python-format
+msgid ""
+"Telemetry data was last submitted at %(submission_datetime)s - "
+"(%(submission_timesince)s) ago"
+msgstr ""
+
+msgid "See the data that was submitted."
+msgstr ""
+
+msgid "Telemetry data has not yet been submitted."
+msgstr ""
+
+msgid "Telemetry Data"
+msgstr ""
+
+msgid "Here is an example of the data that would be submitted right now."
+msgstr ""
+
+msgid "User Information"
+msgstr ""
+
+#, python-format
+msgid "Send a password reset email to %(email)s?"
+msgstr ""
+
+msgid "Send Reset Email"
+msgstr ""
+
+msgid "Create new"
+msgstr ""
+
+#, python-format
+msgid "New %(model)s"
+msgstr ""
+
+msgid "Discard Changes"
+msgstr ""
+
+msgid "Save and Exit"
+msgstr ""
+
+msgid "Save and Create New"
+msgstr ""
+
+#, python-format
+msgid "Are you sure you wish to delete %s?"
+msgstr ""
+
+#, python-format
+msgid "Showing %(per_page)s of %(n_items)s %(verbose_name_plural)s"
+msgstr ""
+
+msgid "objects"
+msgstr ""
+
+#, python-format
+msgid "Can't view this page. %(reason)s"
+msgstr ""
+
+msgid "Log in with different credentials..."
+msgstr ""
+
+msgid "You must be logged in."
+msgstr ""
+
+msgid "You must be a staff member."
+msgstr ""
+
+#, python-format
+msgid "You do not have the required permissions: %r"
+msgstr ""
+
+#, python-format
+msgid "New %s created."
+msgstr ""
+
+#, python-format
+msgid "%s edited."
+msgstr ""
+
+#, python-format
+msgid "New %s"
+msgstr ""
+
+#, python-format
+msgid "Unnamed %s"
+msgstr ""
+
+#, python-format
+msgid "Only one %(model)s permitted."
+msgstr ""
+
+#, python-format
+msgid "Couldn't get selections for %s."
+msgstr ""

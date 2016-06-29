@@ -1,0 +1,105 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% block title %}{% trans %}Addons{% endtrans %}{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <form method="post" id="addon_reload_form" target="reload-target" onsubmit="beginReload(event)">
+            {% csrf_token %}
+            {% call content_block(_("Reload Application Server"), "fa-refresh") %}
+                {{ bs3.field(form.reload_method) }}
+                <div class="row">
+                    <div class="col-sm-8 col-sm-push-4 col-lg-6 col-lg-push-3">
+                        <div class="text-warning">
+                            <p><strong>{% trans %}When you reload the application server, it may take some time for the new instance of your application to properly initialize.{% endtrans %}</strong></p>
+                            <p><strong>{% trans %}In addition, there is always a chance for the server to not properly initialize at all, in which case you may need to troubleshoot the problem yourself (or have a system administrator handy).{% endtrans %}</strong></p>
+                        </div>
+                        <h3>{% trans %}Reload steps{% endtrans %}</h3>
+                        <ol>
+                            <li>{% trans %}Finalize installations for newly installed addons (migrate and collect static resources){% endtrans %}</li>
+                            <li>{% trans %}Reload application server{% endtrans %}</li>
+                        </ol>
+                        <hr>
+                        <button id="reload-button" type="submit" class="btn btn-warning">
+                            <i class="fa fa-refresh"></i>
+                            {% trans %}Reload Application Server{% endtrans %}
+                        </button>
+                        <iframe name="reload-target" src="about:blank" frameborder="0" style="display: none"></iframe>
+                    </div>
+                </div>
+                <div id="reload-log"></div>
+            {% endcall %}
+        </form>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    var reloadCheckTimer = null;
+    var started_migrating = false;
+    var reloadUrl = {{ request.path|json }};
+    var reloadCheckUrl = {{ (request.path + "?ping=1")|json }};
+    var finalizeUrl = {{ (request.path + "?finalize=1")|json }};
+
+    function stopCheckReload() {
+        if(reloadCheckTimer) {
+            clearInterval(reloadCheckTimer);
+            reloadCheckTimer = null;
+        }
+    }
+
+    function reloadApplication() {
+        stopCheckReload();
+        reloadCheckTimer = setInterval(checkReload, 2000);
+        Messages.enqueue({tags: "info", text: "{% trans %}Reload initiated.{% endtrans %}"});
+        $.ajax({type: "POST", url: reloadUrl, data: $("#addon_reload_form").serialize()});
+    }
+
+    function beginReload(event) {
+        event.preventDefault();
+        $("#reload-button").attr("disabled", true);
+        finalizeInstallations();
+    }
+
+    function sendCommand(url, next) {
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (data) {
+                $("#reload-log").append("<pre><code>" + data.message + "</code></pre>");
+                next();
+            },
+            error: function (response) {
+                Messages.enqueue({tags: "error", text: "{% trans %}Error while reloading application.{% endtrans %}"});
+                $("#reload-log").append("<pre><code>" + response.responseJSON.message + "</code></pre>");
+            }
+        });
+    }
+
+    function finalizeInstallations() {
+        started_migrating = true;
+        Messages.enqueue({tags: "info", text: "{% trans %}Finalizing installations.{% endtrans %}"});
+        sendCommand(finalizeUrl, reloadApplication);
+    }
+
+    function checkReload() {
+        $.ajax({
+            type: "GET",
+            url: reloadCheckUrl,
+            success: function() {
+                Messages.enqueue({
+                    tags: "success",
+                    text: "{% trans %}Your Shuup seems to be back up!{% endtrans %}"
+                });
+                stopCheckReload();
+            },
+            error: function() {
+                Messages.enqueue({
+                    tags: "info",
+                    text: "{% trans %}Your Shuup is not up yet. Trying again soon.{% endtrans %}"
+                });
+            }
+        })
+    }
+</script>
+{% endblock %}

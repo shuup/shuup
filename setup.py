@@ -1,6 +1,6 @@
-# This file is part of Shoop.
+# This file is part of Shuup.
 #
-# Copyright (c) 2012-2016, Shoop Ltd. All rights reserved.
+# Copyright (c) 2012-2016, Shuup Ltd. All rights reserved.
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -9,11 +9,11 @@ import sys
 
 import setuptools
 
-import shoop_setup_utils as utils
+import shuup_setup_utils as utils
 
 TOPDIR = os.path.abspath(os.path.dirname(__file__))
 LONG_DESCRIPTION_FILE = os.path.join(TOPDIR, 'README.rst')
-VERSION_FILE = os.path.join(TOPDIR, 'shoop', '_version.py')
+VERSION_FILE = os.path.join(TOPDIR, 'shuup', '_version.py')
 
 # Release instructions
 #
@@ -29,7 +29,7 @@ VERSION_FILE = os.path.join(TOPDIR, 'shoop', '_version.py')
 #  4. Update version and release variables in doc/conf.py
 #  5. Commit changes of steps 1--3
 #  6. Tag the commit (of step 4) with
-#        git tag -a -m "Shoop X.Y.Z" vX.Y.Z
+#        git tag -a -m "Shuup X.Y.Z" vX.Y.Z
 #     where X.Y.Z is the new version number (must be same as VERSION
 #     variable here)
 #  7. Check the tag is OK and push it with
@@ -39,12 +39,12 @@ VERSION_FILE = os.path.join(TOPDIR, 'shoop', '_version.py')
 #        Change Log
 #      - Add ".post0.dev" suffix to VERSION variable here
 
-NAME = 'shoop'
-VERSION = '4.0.0'
+NAME = 'shuup'
+VERSION = '0.0.0.post0.dev'
 DESCRIPTION = 'E-Commerce Platform'
-AUTHOR = 'Shoop Ltd.'
-AUTHOR_EMAIL = 'shoop@shoop.io'
-URL = 'http://shoop.io/'
+AUTHOR = 'Shuup Ltd.'
+AUTHOR_EMAIL = 'shuup@shuup.com'
+URL = 'http://shuup.com/'
 LICENSE = 'AGPL-3.0'  # https://spdx.org/licenses/
 CLASSIFIERS = """
 Development Status :: 4 - Beta
@@ -63,7 +63,7 @@ Topic :: Software Development :: Libraries :: Python Modules
 """.strip().splitlines()
 
 EXCLUDED_PACKAGES = [
-    'shoop_tests', 'shoop_tests.*',
+    'shuup_tests', 'shuup_tests.*',
 ]
 
 utils.add_exclude_patters([

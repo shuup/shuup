@@ -1,0 +1,12 @@
+{% extends "shuup/admin/base.jinja" %}
+{% block body_class %}auth{% endblock %}
+{% block top %}{% endblock %}
+{% block content_wrap %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

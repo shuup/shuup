@@ -1,0 +1,10 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
+
+{% set attr_form = form[form_def.name] %}
+
+{% call content_block(_("Attributes"), "fa-tags") %}
+    {{ language_dependent_content_tabs(attr_form, tab_id_prefix="attributes") }}
+    <div class="form-divider"></div>
+    {{ render_monolingual_fields(attr_form) }}
+{% endcall %}

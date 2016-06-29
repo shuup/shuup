@@ -1,0 +1,1486 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Yuki Miyagi <yuki.miyagi@anders.fi>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-06-28 21:58+0000\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shuup.com>\n"
+"Language-Team: Japanese (Japan) (http://www.transifex.com/shuup/shuup/"
+"language/ja_JP/)\n"
+"Language: ja_JP\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Home"
+msgstr "ホーム"
+
+msgid "Browse"
+msgstr "ブラウズ"
+
+msgid "Clear"
+msgstr "クリア"
+
+msgid "Select"
+msgstr ""
+
+msgid "Attributes"
+msgstr "属性"
+
+msgid "Identifier"
+msgstr "識別子"
+
+msgid "Filter by identifier..."
+msgstr "識別子でフィルタ..."
+
+msgid "Name"
+msgstr "名前"
+
+msgid "Filter by name..."
+msgstr "名前でフィルタ..."
+
+msgid "Type"
+msgstr "タイプ"
+
+msgid "Visibility Mode"
+msgstr "可視性モード"
+
+msgid "Searchable"
+msgstr "検索可能"
+
+msgid "Used in # Product Types"
+msgstr "# の商品タイプで使用される"
+
+msgid "Categories"
+msgstr "カテゴリー"
+
+msgid "Products"
+msgstr "商品"
+
+msgid "Status"
+msgstr "ステータス"
+
+msgid "Visibility"
+msgstr "可視性"
+
+msgid "Parent"
+msgstr "親"
+
+msgid "Contact Groups"
+msgstr "コンタクトグループ"
+
+msgid "Contacts"
+msgstr "コンタクト"
+
+msgid "Price display mode"
+msgstr ""
+
+msgid "unspecified"
+msgstr ""
+
+msgid "show prices with taxes included"
+msgstr ""
+
+msgid "show pre-tax prices"
+msgstr ""
+
+msgid "hide prices"
+msgstr ""
+
+msgid "member"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+#, python-format
+msgid "%(count)s member added"
+msgid_plural "%(count)s members added"
+msgstr[0] ""
+
+#, python-format
+msgid "%(count)s member removed"
+msgid_plural "%(count)s members removed"
+msgstr[0] ""
+
+msgid "Number of Members"
+msgstr "会員数"
+
+msgid "Active customers"
+msgstr "アクティブカスタマー"
+
+msgid "Based on orders within 30 days"
+msgstr "30日以内のオーダーに基づいて"
+
+msgid "The Shuup frontend is not enabled."
+msgstr "Shuupのフロントエンドは有効になっていません。"
+
+msgid "Contact has no associated user."
+msgstr "コンタクトには関連するユーザーがいません。"
+
+msgid "User has no associated email."
+msgstr "ユーザーは関連するEメールを持っていません。"
+
+msgid "Reset password"
+msgstr "パスワードをリセットする"
+
+msgid "Send a password renewal email."
+msgstr "パスワード再設定メールを送る。"
+
+#, python-format
+msgid "Are you sure you wish to send a password recovery email to %s?"
+msgstr "あなたは %s にパスワード再設定のメールを送信したいですか？"
+
+msgid "New User"
+msgstr "新しいユーザー"
+
+msgid "Create an user for the contact."
+msgstr "コンタクトのユーザーを作成"
+
+msgid "New Order"
+msgstr ""
+
+msgid "Create an order for the contact."
+msgstr ""
+
+msgid "Deactivate Contact"
+msgstr ""
+
+msgid "Activate Contact"
+msgstr ""
+
+msgid "Edit..."
+msgstr "編集…"
+
+msgid "You can not deactivate a superuser."
+msgstr ""
+
+msgid "You can not deactivate yourself."
+msgstr ""
+
+#, python-format
+msgid "%(contact)s is now %(state)s."
+msgstr ""
+
+msgid "active"
+msgstr "アクティブ"
+
+msgid "inactive"
+msgstr "非アクティブ"
+
+msgid "Person"
+msgstr "人物"
+
+msgid "Company"
+msgstr "会社"
+
+#, python-format
+msgid "User %(bind_user)s already has a contact"
+msgstr ""
+
+msgid "Email"
+msgstr "Eメール"
+
+msgid "Phone"
+msgstr "電話"
+
+msgid "Active"
+msgstr "アクティブ"
+
+msgid "no"
+msgstr "いいえ"
+
+msgid "yes"
+msgstr "はい"
+
+msgid "# Orders"
+msgstr ""
+
+msgid "Groups"
+msgstr ""
+
+msgid "Contact"
+msgstr "コンタクト"
+
+msgid "Inactive"
+msgstr "アクティブでない"
+
+#, python-format
+msgid "Email: %s"
+msgstr "Eメール: %s"
+
+#, python-format
+msgid "Phone: %s"
+msgstr "電話: %s"
+
+#, python-format
+msgid "%d orders"
+msgstr ""
+
+msgid "The contact does not have an associated user."
+msgstr "コンタクトは関連するユーザーがいません。"
+
+msgid "Demo"
+msgstr "デモ"
+
+msgid "Manufacturers"
+msgstr "メーカー"
+
+msgid "Media"
+msgstr "メディア"
+
+msgid "Media browser"
+msgstr "メディアブラウザー"
+
+msgid "Root"
+msgstr "ルート"
+
+#, python-brace-format
+msgid "{num} subfolders moved to {folder}."
+msgstr ""
+
+#, python-brace-format
+msgid "{num} files moved to {folder}."
+msgstr ""
+
+#, python-format
+msgid "Folder %s deleted."
+msgstr ""
+
+#, python-format
+msgid "%(file)s uploaded to %(folder)s"
+msgstr ""
+
+msgid "Folder renamed."
+msgstr "フォルダの名前は変更されました。"
+
+msgid "File renamed."
+msgstr "ファイルの名前は変更されました。"
+
+msgid "File deleted."
+msgstr "フォルダは削除されました"
+
+#, python-format
+msgid "%(file)s moved from %(old)s to %(new)s."
+msgstr ""
+
+msgid "Orders"
+msgstr "注文"
+
+msgid "Show orders"
+msgstr ""
+
+msgid "Outstanding Orders"
+msgstr "未処理注文"
+
+#, python-format
+msgid "%d outstanding orders"
+msgstr ""
+
+msgid "Sales per Month (last year)"
+msgstr "月ごとの売上高 (前年)"
+
+#, python-format
+msgid "Sales (%(currency)s)"
+msgstr ""
+
+#, python-format
+msgid "Based on %d orders"
+msgstr ""
+
+msgid "Today's Sales"
+msgstr "本日の売上高"
+
+msgid "Lifetime Sales"
+msgstr ""
+
+msgid "Average Purchase"
+msgstr "平均購入"
+
+msgid "Open Orders Value"
+msgstr ""
+
+#, python-format
+msgid "The quantity '%(quantity)s' (for line %(text)s) is invalid (%(error)s)"
+msgstr ""
+
+#, python-format
+msgid "The price '%(price)s' (for line %(text)s) is invalid (%(error)s)"
+msgstr ""
+
+#, python-format
+msgid "The discount '%(discount)s' (for line %(text)s is invalid (%(error)s)"
+msgstr ""
+
+msgid "Product line does not have a product set."
+msgstr ""
+
+#, python-format
+msgid "Product %s does not exist."
+msgstr ""
+
+#, python-format
+msgid "Product %(product)s is not available in the %(shop)s shop."
+msgstr ""
+
+#, python-format
+msgid "Product %(product)s is not orderable: %(error)s"
+msgstr ""
+
+msgid "Please add lines to the order."
+msgstr ""
+
+msgid "Name is required for customer"
+msgstr ""
+
+msgid "Tax number is not set for company."
+msgstr ""
+
+msgid "Please choose a valid shop."
+msgstr ""
+
+msgid "Please select shipping method."
+msgstr ""
+
+msgid "Please select payment method."
+msgstr ""
+
+msgid "Payments"
+msgstr ""
+
+msgid "Order Contents"
+msgstr ""
+
+msgid "Log Entries"
+msgstr ""
+
+msgid "Create Refund"
+msgstr ""
+
+msgid "This order cannot be refunded"
+msgstr ""
+
+msgid "Create Payment"
+msgstr ""
+
+msgid "This order cannot be paid at this point"
+msgstr ""
+
+msgid "Create Shipment"
+msgstr "配送の作成"
+
+msgid "There are no products to ship"
+msgstr "配送する商品はありません"
+
+msgid "Set Complete"
+msgstr ""
+
+msgid "This order can not be set as complete at this point"
+msgstr "この注文は、ただいま完了できません"
+
+msgid "Cancel Order"
+msgstr ""
+
+msgid "Paid, shipped, or canceled orders cannot be canceled"
+msgstr ""
+
+msgid "Edit order"
+msgstr ""
+
+msgid "This order cannot modified at this point"
+msgstr ""
+
+msgid "Unable to set order as completed at this point"
+msgstr ""
+
+#, python-brace-format
+msgid "Order status changed: {old_status} to {new_status}"
+msgstr ""
+
+msgid "Create Order"
+msgstr ""
+
+#, python-format
+msgid "Contact %s does not exist."
+msgstr ""
+
+#, python-format
+msgid "Order %(identifier)s updated."
+msgstr ""
+
+#, python-format
+msgid "Order %(identifier)s created."
+msgstr ""
+
+msgid "Could not proceed with order:"
+msgstr ""
+
+msgid "Could not finalize order:"
+msgstr ""
+
+msgid "Order"
+msgstr "注文"
+
+msgid "Order Date"
+msgstr "注文日付"
+
+msgid "Customer"
+msgstr "カスタマー"
+
+msgid "Payment Status"
+msgstr "支払状況"
+
+msgid "Shipping Status"
+msgstr "運送状況"
+
+msgid "Total"
+msgstr "合計"
+
+#, python-format
+msgid "Create Payment -- %s"
+msgstr ""
+
+msgid "Payment amount"
+msgstr ""
+
+msgid "Payment amount cannot be 0"
+msgstr ""
+
+#, python-format
+msgid "Payment %s created."
+msgstr ""
+
+msgid "Order has already been paid"
+msgstr ""
+
+msgid "Line number"
+msgstr ""
+
+msgid "Quantity"
+msgstr "数量"
+
+msgid "Amount"
+msgstr ""
+
+msgid "Restock products"
+msgstr ""
+
+#, python-format
+msgid "Create Refund -- %s"
+msgstr ""
+
+msgid "Refund Entire Order"
+msgstr ""
+
+msgid "This order already has existing refunds"
+msgstr ""
+
+msgid "Refund amount exceeds order amount."
+msgstr ""
+
+msgid "Refund amount cannot be 0"
+msgstr ""
+
+msgid "Refund created."
+msgstr ""
+
+#, python-format
+msgid "Create Full Refund -- %s"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Could not create full refund."
+msgstr ""
+
+msgid "Full refund created."
+msgstr ""
+
+#, python-format
+msgid "Create Shipment -- %s"
+msgstr ""
+
+msgid "Supplier"
+msgstr "供給者"
+
+msgid "No products to ship."
+msgstr "配送する商品はありません。"
+
+#, python-format
+msgid "Shipment %s created."
+msgstr ""
+
+msgid "Permission Groups"
+msgstr ""
+
+msgid "Module Permissions"
+msgstr ""
+
+msgid ""
+"Modules with the same permissions as selected modules will be added "
+"automatically."
+msgstr ""
+
+msgid "Members"
+msgstr ""
+
+msgid "Product Types"
+msgstr "商品タイプ"
+
+msgid "Product types"
+msgstr "商品タイプ"
+
+msgid "Number of Attributes"
+msgstr "属性数"
+
+#, python-format
+msgid "Create Product Called \"%s\""
+msgstr ""
+
+#, python-format
+msgid "Create Product with SKU \"%s\""
+msgstr ""
+
+msgid "Minimum Purchase Quantity must be greater than 0."
+msgstr ""
+
+#, python-format
+msgid "Thumbnail generation of %(media)s failed: %(error)s"
+msgstr ""
+
+msgid "Use only URL or file, not both"
+msgstr ""
+
+msgid "Is primary"
+msgstr ""
+
+msgid "Only images allowed in this field"
+msgstr "このフィールドでは画像のみが許可されております"
+
+#, python-format
+msgid "Unable to make package %(product)s: %(error)s"
+msgstr ""
+
+#, python-format
+msgid "New: %d"
+msgstr "新しい: %d"
+
+#, python-format
+msgid "Removed: %d"
+msgstr ""
+
+#, python-format
+msgid "Couldn't add product %s to own package"
+msgstr ""
+
+msgid "child"
+msgstr ""
+
+msgid "Unlink"
+msgstr "リンク解除"
+
+#, python-format
+msgid "Unable to link %(product)s: %(error)s"
+msgstr ""
+
+msgid "variable combination"
+msgstr ""
+
+#, python-format
+msgid "%s has been marked deleted."
+msgstr ""
+
+msgid "Minimum Purchase Quantity has been rounded to match Sales Unit."
+msgstr ""
+
+#, python-format
+msgid "Changes to shop instance for %s saved"
+msgstr ""
+
+msgid "Product is not available."
+msgstr ""
+
+msgid "Product"
+msgstr "商品"
+
+#, python-format
+msgid "Edit Cross-Sell: %s"
+msgstr ""
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Changes saved."
+msgstr "変更は保存されました"
+
+#, python-format
+msgid "Edit Media: %s"
+msgstr "メディアを編集する: %s"
+
+msgid "Are you sure? This will remove all products from package."
+msgstr ""
+
+msgid "Clear package"
+msgstr ""
+
+#, python-format
+msgid "Edit Package: %s"
+msgstr ""
+
+msgid "Package cleared."
+msgstr ""
+
+msgid ""
+"Are you sure? This will unlink all children and remove all variation "
+"variables."
+msgstr ""
+
+msgid "Clear variation"
+msgstr ""
+
+msgid ""
+"Are you sure? This will remove all variation variables, converting children "
+"to direct links."
+msgstr ""
+
+msgid "Convert to simple variation"
+msgstr ""
+
+#, python-format
+msgid "Edit Variation: %s"
+msgstr "バリエーションを編集する: %s"
+
+msgid "Variation cleared."
+msgstr "バリエーションはクリアされました。"
+
+msgid "Variation simplified."
+msgstr "バリエーションは単純化されました。"
+
+msgid "SKU"
+msgstr "最小管理単位"
+
+msgid "Filter by SKU..."
+msgstr "最小管理単位でフィルターする..."
+
+msgid "Barcode"
+msgstr ""
+
+msgid "Filter by barcode..."
+msgstr ""
+
+msgid "Mode"
+msgstr "モード"
+
+msgid "Primary Category"
+msgstr "主要カテゴリー"
+
+msgid "Manage Cross-Selling"
+msgstr "クロスセリングを管理する"
+
+msgid "Cross-Selling"
+msgstr "クロスセリング"
+
+msgid "Actions"
+msgstr "アクション"
+
+#, python-format
+msgid "Child: %s"
+msgstr ""
+
+#, python-format
+msgid "Parent: %s"
+msgstr ""
+
+#, python-format
+msgid "Sibling: %s"
+msgstr ""
+
+msgid "Variations"
+msgstr "バリエーション"
+
+msgid "Manage Variations"
+msgstr "バリエーションを管理する"
+
+msgid "Packages"
+msgstr ""
+
+msgid "Manage Package"
+msgstr "パッケージを管理する"
+
+msgid "Convert to Package Parent"
+msgstr ""
+
+msgid "Convert to Variation Parent"
+msgstr ""
+
+msgid "Sales Units"
+msgstr "販売単位"
+
+msgid "Short Name"
+msgstr "ショートネーム"
+
+msgid "Allowed decimals"
+msgstr "可小数"
+
+msgid "Service Providers"
+msgstr ""
+
+msgid "Payment and Shipping"
+msgstr ""
+
+#, python-format
+msgid "Edit %(model)s"
+msgstr ""
+
+#, python-brace-format
+msgid "Create {service_name}"
+msgstr ""
+
+msgid "Shipping Methods"
+msgstr ""
+
+msgid "Payment Methods"
+msgstr ""
+
+msgid "Service"
+msgstr ""
+
+msgid "Select carrier before filling other fields."
+msgstr ""
+
+msgid "Select payment processor before filling other fields."
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
+msgid "Waive limit"
+msgstr ""
+
+msgid "Service choice"
+msgstr ""
+
+msgid "Enabled"
+msgstr ""
+
+msgid "Shop"
+msgstr ""
+
+msgid "Carrier"
+msgstr ""
+
+msgid "Payment Processor"
+msgstr ""
+
+msgid "Weight-based pricing range"
+msgstr ""
+
+msgid "Shops"
+msgstr "ショップ"
+
+msgid "System"
+msgstr "システム"
+
+msgid ""
+"This field cannot be changed since there are existing orders for this shop."
+msgstr ""
+
+msgid "Domain"
+msgstr "ドメイン"
+
+msgid "Suppliers"
+msgstr "供給者"
+
+#, python-format
+msgid "No %s module"
+msgstr ""
+
+msgid "Module"
+msgstr "モジュール"
+
+msgid "Telemetry"
+msgstr "遠隔測定"
+
+msgid ""
+"Statistics will be periodically sent to Shuup.io after 24 hours. Click here "
+"for more information."
+msgstr ""
+
+msgid "Taxes"
+msgstr "税"
+
+msgid "Customer Tax Groups"
+msgstr "カスタマー税グループ"
+
+msgid "Tax Classes"
+msgstr "税クラス"
+
+msgid "Code"
+msgstr "コード"
+
+msgid "Rate"
+msgstr ""
+
+msgid "Users"
+msgstr "ユーザー"
+
+msgid "Password"
+msgstr "パスワード"
+
+msgid "Permissions"
+msgstr "許可"
+
+msgid "See the permissions view to change these."
+msgstr ""
+
+msgid "staff"
+msgstr "スタッフ"
+
+msgid "superuser"
+msgstr "スーパーユーザー"
+
+msgid "No special permissions"
+msgstr ""
+
+msgid "No permission groups"
+msgstr ""
+
+msgid "Change Password"
+msgstr "パスワードを変更する"
+
+msgid "User has no email address"
+msgstr ""
+
+msgid "Send Password Reset Email"
+msgstr ""
+
+msgid "Edit Permissions"
+msgstr ""
+
+msgid "Contact Details"
+msgstr ""
+
+msgid "New Contact"
+msgstr "新しいコンタクト"
+
+msgid "Create a new contact and associate it with this user"
+msgstr ""
+
+msgid "Activate User"
+msgstr "ユーザーをアクティブ化"
+
+msgid "Deactivate User"
+msgstr "ユーザーの非アクティブ化"
+
+#, python-format
+msgid "User bound to contact %(contact)s."
+msgstr ""
+
+#, python-format
+msgid "%(user)s is now %(state)s."
+msgstr ""
+
+msgid "Username"
+msgstr "ユーザーネーム"
+
+msgid "First Name"
+msgstr "名"
+
+msgid "Last Name"
+msgstr "苗字"
+
+msgid "Staff"
+msgstr "スタッフ"
+
+msgid "Superuser"
+msgstr "スーパーユーザー"
+
+#, python-format
+msgid "First Name: %s"
+msgstr "名: %s"
+
+#, python-format
+msgid "Last Name: %s"
+msgstr "苗字: %s"
+
+msgid "User"
+msgstr "ユーザー"
+
+msgid "The two password fields didn't match."
+msgstr "二つのパスワードフィールドが一致しませんでした。"
+
+msgid "Your old password was entered incorrectly. Please enter it again."
+msgstr "古いパスワードが正しく入力されていません。もう一度入力してください。"
+
+msgid "Your Password"
+msgstr "あなたのパスワード"
+
+msgid "For security purposes, we need your current password."
+msgstr "セキュリティ上の理由から、あなたの現在のパスワードが必要です。"
+
+msgid "New Password"
+msgstr "新しいパスワード"
+
+msgid "New Password (again)"
+msgstr "新しいパスワード (再度入力)"
+
+msgid "You can not change the password of a superuser."
+msgstr "スーパーユーザーのパスワードを変更することはできません。"
+
+msgid "Change User Password"
+msgstr "ユーザーのパスワードを変更する"
+
+#, python-format
+msgid "Password changed for %s."
+msgstr ""
+
+msgid "Reset User Password"
+msgstr "ユーザーパスワードをリセットする"
+
+msgid "The `shuup.front.apps.auth` app needs to be enabled for password reset."
+msgstr ""
+
+#, python-format
+msgid "Password recovery email sent to %(email)s"
+msgstr ""
+
+msgid "Sending the password recovery email failed."
+msgstr "パスワード再設定のメールを送ることができませんでした。"
+
+msgid "You can't unset this status for yourself."
+msgstr ""
+
+msgid "Change User Permissions"
+msgstr ""
+
+#, python-format
+msgid "Change Permissions: %s"
+msgstr ""
+
+#, python-format
+msgid "Permissions changed for %s."
+msgstr ""
+
+msgid "New Attribute"
+msgstr ""
+
+msgid "Login"
+msgstr "ログイン"
+
+msgid "Logged out"
+msgstr "ログアウト"
+
+msgid "You have been logged out. Good bye!"
+msgstr "あなたはログアウトされました。さようなら！"
+
+msgid "Log in again"
+msgstr "もう一度ログインする"
+
+msgid "Visit shop"
+msgstr "ショップに行く"
+
+msgid "Menu"
+msgstr "メニュー"
+
+msgid "Dashboard"
+msgstr "ダッシュボード"
+
+msgid "Search for"
+msgstr "を検索"
+
+msgid "Settings"
+msgstr ""
+
+msgid "Hello"
+msgstr "こんにちは"
+
+msgid "Log out"
+msgstr "ログアウト"
+
+msgid "General Information"
+msgstr "基本情報"
+
+msgid "Category Image"
+msgstr "カテゴリー画像"
+
+msgid "General information"
+msgstr "基本情報"
+
+msgid "Add Members"
+msgstr ""
+
+msgid "Add more"
+msgstr ""
+
+msgid "Addresses"
+msgstr "住所"
+
+msgid "Billing Address"
+msgstr "請求先住所"
+
+msgid "Shipping Address"
+msgstr "お届け先住所"
+
+msgid "Basic details"
+msgstr "基本詳細"
+
+msgid "Basic Information"
+msgstr "基本情報"
+
+msgid "Full Name"
+msgstr ""
+
+msgid "No groups"
+msgstr ""
+
+msgid "Bound User"
+msgstr ""
+
+msgid "Companies"
+msgstr ""
+
+msgid "Account Manager"
+msgstr ""
+
+msgid "Merchant Notes"
+msgstr ""
+
+msgid "Shipping address"
+msgstr "お届け先住所"
+
+msgid "No shipping address defined."
+msgstr ""
+
+msgid "Billing address"
+msgstr " 請求先住所"
+
+msgid "No billing address defined."
+msgstr ""
+
+msgid "No members."
+msgstr ""
+
+msgid "Remove block"
+msgstr ""
+
+msgid "Resize block"
+msgstr ""
+
+msgid "Welcome!"
+msgstr "ようこそ！"
+
+msgid "Notifications"
+msgstr "通知"
+
+msgid "Mark as read"
+msgstr "既読にする"
+
+msgid "Activity Feed"
+msgstr ""
+
+#, python-format
+msgid "Shuup %(version)s"
+msgstr ""
+
+msgid "Date"
+msgstr "日付"
+
+msgid "Order Status"
+msgstr "注文状況"
+
+msgid "Edit"
+msgstr "編集"
+
+msgid "Upload"
+msgstr "アップロード"
+
+msgid "Description"
+msgstr "記述"
+
+msgid "Text"
+msgstr ""
+
+msgid "Taxless Unit Price"
+msgstr ""
+
+msgid "Taxless Discount"
+msgstr ""
+
+msgid "Tax"
+msgstr "税"
+
+msgid "Taxless Total"
+msgstr ""
+
+msgid "Total incl. Tax"
+msgstr ""
+
+msgid "Discount"
+msgstr "割引"
+
+msgid "Taxless"
+msgstr ""
+
+msgid "Message"
+msgstr ""
+
+msgid "No log entries have been added yet."
+msgstr ""
+
+msgid "Use the input below to add new log entries."
+msgstr ""
+
+msgid "Add to Log"
+msgstr ""
+
+msgid "There was an error adding the log entry."
+msgstr ""
+
+msgid "Line #"
+msgstr ""
+
+msgid "Refund Amount"
+msgstr ""
+
+msgid "Are you sure you want to create a full refund?"
+msgstr ""
+
+msgid "Confirm Refund"
+msgstr ""
+
+msgid "Paid"
+msgstr ""
+
+msgid "Remaining"
+msgstr ""
+
+msgid "Refunded"
+msgstr ""
+
+msgid "Add More Refunds "
+msgstr ""
+
+msgid "To Ship"
+msgstr ""
+
+msgid "Ordered"
+msgstr ""
+
+msgid "Shipped"
+msgstr ""
+
+msgid "Unshipped"
+msgstr ""
+
+msgid "Set All Products To Ship"
+msgstr ""
+
+msgid "Ship All"
+msgstr ""
+
+msgid "Details & Status"
+msgstr ""
+
+msgid "Order Number"
+msgstr ""
+
+msgid "Reference"
+msgstr ""
+
+msgid "Label"
+msgstr ""
+
+msgid "Ordered by"
+msgstr ""
+
+msgid "Creator"
+msgstr ""
+
+msgid "Tax number"
+msgstr "税番号"
+
+msgid "Total Price (taxless)"
+msgstr ""
+
+msgid "Total Price"
+msgstr ""
+
+msgid "Tracking codes"
+msgstr ""
+
+msgid "Error!"
+msgstr ""
+
+msgid "Additional Details"
+msgstr ""
+
+msgid "Accounting"
+msgstr "会計"
+
+msgid "Physical Properties"
+msgstr "物理的特性"
+
+msgid "Manufacturer"
+msgstr "メーカー"
+
+#, python-format
+msgid "Product image %(index)s"
+msgstr ""
+
+#, python-format
+msgid "Product media %(index)s"
+msgstr ""
+
+msgid "Primary image"
+msgstr "主要画像"
+
+msgid "Set as primary image"
+msgstr "主要画像に設定"
+
+msgid "No image"
+msgstr "画像無し"
+
+msgid "Delete"
+msgstr "削除"
+
+msgid "Advanced options"
+msgstr "詳細設定"
+
+msgid "Product Images"
+msgstr "商品画像"
+
+msgid "Product Media"
+msgstr "商品メディア"
+
+msgid "Add new image"
+msgstr "新しい画像を追加する"
+
+msgid "Add new media"
+msgstr ""
+
+msgid "Purchasing"
+msgstr "購買"
+
+msgid "Shipping & Payment"
+msgstr "配送料と配送情報"
+
+msgid "This product is currently not orderable."
+msgstr "この商品は現在注文できません。"
+
+msgid "Cross-sells"
+msgstr ""
+
+msgid "Cross-sell"
+msgstr ""
+
+msgid "File "
+msgstr "ファイル"
+
+msgid "Package Products"
+msgstr ""
+
+msgid "This product is not yet a package."
+msgstr ""
+
+msgid "To create a package, choose products below."
+msgstr ""
+
+msgid "Simple Variation Children"
+msgstr ""
+
+msgid "Variable Children"
+msgstr ""
+
+msgid "Combination"
+msgstr ""
+
+msgid "Variables"
+msgstr "変数"
+
+msgid "This product is not yet a variation."
+msgstr ""
+
+msgid "To create a simple variation, choose products below."
+msgstr ""
+
+msgid ""
+"To create a variation with multiple variables, create the variables on the "
+"Variables tab and then link them to products here."
+msgstr ""
+
+msgid ""
+"Define price based basket weight range. Range minimum is counted in range "
+"only as zero."
+msgstr ""
+
+msgid "Behavior"
+msgstr ""
+
+msgid "Behavior component type"
+msgstr ""
+
+msgid "Add component"
+msgstr ""
+
+msgid "Shop Logo"
+msgstr "ショップロゴ"
+
+msgid "Maintenance Mode"
+msgstr "メンテナンスモード"
+
+msgid "Contact Address"
+msgstr ""
+
+msgid "About Shuup Telemetry"
+msgstr ""
+
+msgid "Shuup will occasionally send telemetry data to a Shuup.io server."
+msgstr ""
+
+#, python-format
+msgid ""
+"The data contains an unique installation key, as well as the hostname of the "
+"installation (as sent by the visiting browser; currently <code>%(host)s</"
+"code>)."
+msgstr ""
+
+msgid ""
+"No business data or other customer information is ever sent. Shuup.io only "
+"uses the telemetry data for statistical purposes and for insights about the "
+"software's installation base."
+msgstr ""
+
+msgid "Opt-in / opt-out"
+msgstr ""
+
+msgid ""
+"You are currently <span class=\"lead label label-success\">opted in</span> "
+"to send telemetry data to Shuup.io."
+msgstr ""
+
+msgid "Thank you for your valuable contribution."
+msgstr ""
+
+msgid "Opt out"
+msgstr ""
+
+msgid ""
+"You are currently <span class=\"label label-warning\">opted out</span> of "
+"Shuup telemetry."
+msgstr ""
+
+msgid "Opt in"
+msgstr ""
+
+msgid "Last Telemetry"
+msgstr ""
+
+msgid ""
+"Telemetry submission is currently suspended; data will only be sent 24 hours "
+"after installation if still opted in at that point."
+msgstr ""
+
+#, python-format
+msgid ""
+"Telemetry data was last submitted at %(submission_datetime)s - "
+"(%(submission_timesince)s) ago"
+msgstr ""
+
+msgid "See the data that was submitted."
+msgstr ""
+
+msgid "Telemetry data has not yet been submitted."
+msgstr ""
+
+msgid "Telemetry Data"
+msgstr ""
+
+msgid "Here is an example of the data that would be submitted right now."
+msgstr ""
+
+msgid "User Information"
+msgstr "ユーザー情報"
+
+#, python-format
+msgid "Send a password reset email to %(email)s?"
+msgstr ""
+
+msgid "Send Reset Email"
+msgstr ""
+
+msgid "Create new"
+msgstr "新規作成"
+
+#, python-format
+msgid "New %(model)s"
+msgstr ""
+
+msgid "Discard Changes"
+msgstr "変更を破棄する"
+
+msgid "Save and Exit"
+msgstr "保存して終了する"
+
+msgid "Save and Create New"
+msgstr "保存して新規作成する"
+
+#, python-format
+msgid "Are you sure you wish to delete %s?"
+msgstr ""
+
+#, python-format
+msgid "Showing %(per_page)s of %(n_items)s %(verbose_name_plural)s"
+msgstr ""
+
+msgid "objects"
+msgstr ""
+
+#, python-format
+msgid "Can't view this page. %(reason)s"
+msgstr ""
+
+msgid "Log in with different credentials..."
+msgstr ""
+
+msgid "You must be logged in."
+msgstr ""
+
+msgid "You must be a staff member."
+msgstr ""
+
+#, python-format
+msgid "You do not have the required permissions: %r"
+msgstr ""
+
+#, python-format
+msgid "New %s created."
+msgstr ""
+
+#, python-format
+msgid "%s edited."
+msgstr ""
+
+#, python-format
+msgid "New %s"
+msgstr ""
+
+#, python-format
+msgid "Unnamed %s"
+msgstr ""
+
+#, python-format
+msgid "Only one %(model)s permitted."
+msgstr ""
+
+#, python-format
+msgid "Couldn't get selections for %s."
+msgstr ""

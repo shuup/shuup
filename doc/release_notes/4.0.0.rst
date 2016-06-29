@@ -1,4 +1,4 @@
-Shoop 4.0.0 Release Notes
+Shuup 4.0.0 Release Notes
 =========================
 
 Released on 2016-06-29 21:30 +0300.
@@ -6,11 +6,11 @@ Released on 2016-06-29 21:30 +0300.
 This release includes many new features, bug fixes and improvements in
 over 400 non-merge commits since 3.0.0.  Highlights of the changes are
 listed here, but for complete list of changes see :doc:`../changelog` or
-`Git commit log <https://github.com/shuup/shoop/commits/v4.0.0>`__.
+`Git commit log <https://github.com/shuup/shuup/commits/v4.0.0>`__.
 
-This is also the last release of Shoop, since the product name will
-change to Shuup.  The same code base with "shoop" replaced by "shuup"
-will be released as Shuup 0.4 shortly after Shoop 4.0 release.
+This is also the last release of Shuup, since the product name will
+change to Shuup.  The same code base with "shuup" replaced by "shuup"
+will be released as Shuup 0.4 shortly after Shuup 4.0 release.
 
 There's also update instructions for :ref:`updating from 3.0
 <updating-from-3-to-4>`.
@@ -59,7 +59,7 @@ New Features
 
 * Guide
 
-  - Guide app integrates search results from Shoop Guide documentation
+  - Guide app integrates search results from Shuup Guide documentation
     into Admin search
 
 Miscellaneous
@@ -78,8 +78,8 @@ Miscellaneous
 Updating from 3.0
 -----------------
 
-Shoop 4.0 introduces many API changes which could affect projects or
-addons based on Shoop 3.0.  Here is a list of the API changes and
+Shuup 4.0 introduces many API changes which could affect projects or
+addons based on Shuup 3.0.  Here is a list of the API changes and
 instructions how to update your code.
 
 * Database changes

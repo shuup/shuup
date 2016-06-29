@@ -1,4 +1,4 @@
-Shoop 2.0.0 Release Notes
+Shuup 2.0.0 Release Notes
 =========================
 
 Released on 2015-10-05 16:45 +0300.
@@ -14,4 +14,4 @@ The highlights of this release (over 500 commits since 1.2!) are:
 - Lots and lots of other fixes and improvements!
 
 For more detailed list of changes see :doc:`../changelog` or `Git
-commit log <https://github.com/shoopio/shoop/commits/v2.0.0>`__.
+commit log <https://github.com/shuupio/shuup/commits/v2.0.0>`__.

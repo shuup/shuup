@@ -1,0 +1,55 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shuup.com>, 2016\n"
+"Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/"
+"teams/55306/fi_FI/)\n"
+"Language: fi_FI\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Shuup Customer Group Pricing"
+msgstr "Shuup Asiakasryhmähinnoittelu"
+
+#, python-format
+msgid "Price (%(shop)s/%(group)s)"
+msgstr "Hinta (%(shop)s/%(group)s)"
+
+msgid "product"
+msgstr "tuote"
+
+msgid "shop"
+msgstr "kauppa"
+
+msgid "contact group"
+msgstr "kontaktiryhmä"
+
+msgid "price"
+msgstr "hinta"
+
+msgid "product price"
+msgstr "tuotehinta"
+
+msgid "product prices"
+msgstr "tuotehinnat"
+
+msgid "Customer Group Pricing"
+msgstr "Asiakasryhmähinnoittelu"
+
+msgid "Default price"
+msgstr "Oletushinta"
+
+msgid "Other shops"
+msgstr "Muut kaupat"

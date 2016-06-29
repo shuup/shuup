@@ -4,24 +4,24 @@ include VENDOR-LICENSES.md
 
 include tox.ini
 
-recursive-include shoop \
+recursive-include shuup \
     *.jinja *.txt *.js *.css *.json *.less *.map \
     *.ico *.png *.svg \
     *.woff *.woff2 *.eot *.otf *.ttf *.po *.mo
 
-recursive-include shoop_tests *.jinja
+recursive-include shuup_tests *.jinja
 
-# No extra extensions to include from shoop_workbench, but it will be
+# No extra extensions to include from shuup_workbench, but it will be
 # included still, since it's a Python package.
-# recursive-include shoop_workbench ...
+# recursive-include shuup_workbench ...
 
-prune shoop/*/bower_components
-prune shoop/*/*/bower_components
-prune shoop/*/*/*/bower_components
-prune shoop/*/*/*/*/bower_components
-prune shoop/*/*/*/*/node_modules
-prune shoop/*/*/*/node_modules
-prune shoop/*/*/node_modules
-prune shoop/*/node_modules
+prune shuup/*/bower_components
+prune shuup/*/*/bower_components
+prune shuup/*/*/*/bower_components
+prune shuup/*/*/*/*/bower_components
+prune shuup/*/*/*/*/node_modules
+prune shuup/*/*/*/node_modules
+prune shuup/*/*/node_modules
+prune shuup/*/node_modules
 
 recursive-include doc *.rst *.py *.LICENSE Makefile make.bat

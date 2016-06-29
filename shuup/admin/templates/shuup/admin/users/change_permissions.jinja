@@ -1,0 +1,16 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block, info_row, content_with_sidebar %}
+
+{% block content %}
+    {% call content_with_sidebar(content_id="permissions_form") %}
+        <form method="post" id="permissions_form">
+            {% csrf_token %}
+            {% call content_block(title, "fa-key") %}
+                {{ bs3.field(form.old_password, show_help_block=True) }}
+                {{ bs3.field(form.is_staff) }}
+                {{ bs3.field(form.is_superuser) }}
+                {{ bs3.field(form.permission_groups) }}
+            {% endcall %}
+        </form>
+    {% endcall %}
+{% endblock %}

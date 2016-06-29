@@ -1,4 +1,4 @@
-Shoop Change Log
+Shuup Change Log
 ================
 
 Version 4.0.0
@@ -22,7 +22,7 @@ Core
 - Fix bug: Order line parent lines are not linked
 - Add modified on for ``Order``
 - Add modified by for ``Order`` and ``OrderSource``
-- Add ``get_company_contact`` to ``shoop.core.models``
+- Add ``get_company_contact`` to ``shuup.core.models``
 - Implement taxing of lines without tax class
 - Add new abstract method ``get_taxed_price`` to ``TaxModule``
 - Add ``ShopProduct.is_visible``
@@ -38,12 +38,12 @@ Core
 - Fix bug: Convert ``Shipment`` weight to kilograms
 - Make ``create_shipment`` for order atomic
 - Add ``shipment_created`` signal
-- Add ``get_tracking_codes`` to ``shoop.core.models.Order``
+- Add ``get_tracking_codes`` to ``shuup.core.models.Order``
 - Add weight based pricing behavior component
 - Add ``total_gross_weight`` property for ``Source``
 - Fix bug: Order line text is not set for package products
 - Add new Service API and implement shipping and payments with it
-- Remove BaseMethodModule based API (``shoop.core.methods``)
+- Remove BaseMethodModule based API (``shuup.core.methods``)
 - Add support for custom user model (``AUTH_USER_MODEL``)
 - Add management command to generate bought with relations
 - Add ``merchant_notes`` text-field to ``Contact``
@@ -67,8 +67,8 @@ Core
 - Add ``OrderSourceModifierModule`` interface for modifying order source
 - Add ``DiscountModule`` interface for pricing
 - Simplify ``PricingContext`` and require shop and customer for it
-- Add ``get_price_info`` etc. functions to ``shoop.core.pricing``
-- Add ``get_suppliable_products`` to ``shoop.core.models.Supplier``
+- Add ``get_price_info`` etc. functions to ``shuup.core.pricing``
+- Add ``get_suppliable_products`` to ``shuup.core.models.Supplier``
 - Add "codes" API to OrderSource and BaseBasket
 
 Localization
@@ -149,7 +149,7 @@ Front
 - Make ``get_visible_products`` faster
 - Fix bug with multiple service checkout phases
 - Update UI for package products
-- Add SHOOP_FRONT_ADDRESS_FIELD_PROPERTIES setting
+- Add SHUUP_FRONT_ADDRESS_FIELD_PROPERTIES setting
 - Support also django-registration-redux 1.4
 - Enable description and logo for methods in checkout
 - Add admin view for monitoring customer carts
@@ -176,7 +176,7 @@ Xtheme
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 
-- Add Shoop Wishlist addon support for logged in users
+- Add Shuup Wishlist addon support for logged in users
 - Hide product order section when prices are hidden
 - Hide cart when prices are hidden
 - Show tracking codes in order detail
@@ -255,28 +255,28 @@ Released on 2016-01-21 11:15 +0200.
 Core
 ~~~~
 
-- Document Shoop tax system
+- Document Shuup tax system
 - API and documentation clean-up
 - Remove ``AddressManager``
 - Split address into mutable and immutable address
 - Add Product.get_public_media helper function
-- Ensure ``TranslatabelShoopModel.__str__`` doesn't return lazy objects
+- Ensure ``TranslatabelShuupModel.__str__`` doesn't return lazy objects
 - Deny price unit changes of in-use ``Shop``
 - Assign created customers to ``CustomerTaxGroups`` on creation
 - Fix couple tax related terms
 - Remove ``PriceTaxContext``
 - Add ``PricingContextable`` interface and fix related docstrings
 - Remove ``Priceful.total_price``
-- Add dynamic configuration API: ``shoop.configuration``
+- Add dynamic configuration API: ``shuup.configuration``
 - Fix tax calculations and implement override groups
-- Add autoexpiring versioned cache API: ``shoop.core.cache``
+- Add autoexpiring versioned cache API: ``shuup.core.cache``
 - Enable email login and password recovery with username
 
 Localization
 ~~~~~~~~~~~~
 
 - Add translations for Finnish, Chinese and Japanese
-- Add translation extraction tools (``shoop_makemessages``)
+- Add translation extraction tools (``shuup_makemessages``)
 - Mark more messages for translation in templates
 - Enable JavaScript translations
 
@@ -284,7 +284,7 @@ Admin
 ~~~~~
 
 - Bump bootstrap-datetimepicker version to 2.3.8
-- Show Shoop version number in Admin
+- Show Shuup version number in Admin
 - Fix order list sorting and filtering by total price
 - Fix CMS page list sorting by title
 - JavaScript compilation fixes: Turn our ES6 to ES5 with Babel
@@ -300,7 +300,7 @@ Front
 ~~~~~
 
 - Set default country in checkout address forms
-- Fix SHOOP_FRONT_INSTALL_ERROR_HANDLERS setting being not respected
+- Fix SHUUP_FRONT_INSTALL_ERROR_HANDLERS setting being not respected
 - Change password recover error message
 
 Xtheme
@@ -329,8 +329,8 @@ Classic Gray Theme
 Default Theme
 ~~~~~~~~~~~~~
 
-- Remove Default theme from Shoop Base. Moved to
-  https://github.com/shoopio/shoop-simple-theme
+- Remove Default theme from Shuup Base. Moved to
+  https://github.com/shuupio/shuup-simple-theme
 
 Campaigns
 ~~~~~~~~~
@@ -398,7 +398,7 @@ Core
 - Add new fields to shop core
 - Add ``DiscountPricingModule``
 - Fix PriceInfo usage with non-one quantities
-- Fix shoop.core.migrations.0006
+- Fix shuup.core.migrations.0006
 - Tax clean-up and refactoring
 - Prevent ``Shop`` being deleted when image was deleted
 
@@ -498,7 +498,7 @@ Version 1.1.0
 
 Released on 2015-07-03 12:30 +0300.
 
-- Improve "Getting Started with Shoop Development" documentation
+- Improve "Getting Started with Shuup Development" documentation
 
 - Add a basic REST API for reading/writing products and reading orders
 
@@ -524,13 +524,13 @@ Released on 2015-07-03 12:30 +0300.
 
 - Embetter admin order layouts
 
-- Create the Shop as active with ``shoop_init`` management command
+- Create the Shop as active with ``shuup_init`` management command
 
 - Fix usages of ``Category.get_ancestors()`` in templates
 
-- Remove Stripe integration (shoop.stripe)
+- Remove Stripe integration (shuup.stripe)
 
-  - It now lives in https://github.com/shoopio/shoop-stripe
+  - It now lives in https://github.com/shuupio/shuup-stripe
 
 - Core: Declare correct ``required_installed_apps`` in AppConfig
 
@@ -538,7 +538,7 @@ Released on 2015-07-03 12:30 +0300.
 
 - Fix Money class to not read settings at instance creation
 
-- Fix management command ``shoop_show_settings`` for Python 3
+- Fix management command ``shuup_show_settings`` for Python 3
 
 - Add Addon documentation (doc/addons.rst)
 
@@ -548,4 +548,4 @@ Version 1.0.0
 
 Released on 2015-06-04 16:30 +0300.
 
-- The first Open Source version of Shoop.
+- The first Open Source version of Shuup.

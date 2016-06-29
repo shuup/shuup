@@ -1,0 +1,77 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block, content_with_sidebar, text_between_fields %}
+
+{% block content %}
+    {% call content_with_sidebar(content_id="tax_rule_form") %}
+        <form method="post" id="tax_rule_form">
+            {% csrf_token %}
+            {% call content_block(_("Tax rule information"), "fa-info-circle") %}
+                {{ bs3.field(form.enabled) }}
+
+                {% call text_between_fields() %}
+                    <h3>{% trans %}Matching criteria{% endtrans %}</h3>
+                    {{ _matching_criteria_help_text() }}
+                {% endcall %}
+
+                {{ bs3.field(form.tax_classes) }}
+                {{ bs3.field(form.customer_tax_groups) }}
+                {{ bs3.field(form.country_codes_pattern) }}
+                {{ bs3.field(form.region_codes_pattern) }}
+                {{ bs3.field(form.postal_codes_pattern) }}
+
+                {% call text_between_fields() %}
+                    <h3>{% trans %}Grouping{% endtrans %}</h3>
+                    {{ _grouping_help_text() }}
+                {% endcall %}
+
+                {{ bs3.field(form.priority) }}
+                {{ bs3.field(form.override_group) }}
+
+                {% call text_between_fields() %}
+                    <h3>{% trans %}Applied tax{% endtrans %}</h3>
+                    {{ _applied_tax_help_text() }}
+                {% endcall %}
+
+                {{ bs3.field(form.tax) }}
+            {% endcall %}
+        </form>
+    {% endcall %}
+{% endblock %}
+
+{% macro _matching_criteria_help_text() %}
+    <p>
+        {% trans %}
+            The following fields determine when this rule applies.  All
+            non-empty fields must match for the rule to apply.  Empty fields are
+            not considered, e.g. if "Customer tax groups" is left empty, all
+            customer tax groups will match.
+        {% endtrans %}
+    </p>
+    <p>
+        {% trans %}
+            Pattern can be a single value or a comma separated list of items,
+            where each item can be a single value or a range, such as
+            "value1-value2".  Special value "*" matches everything.  For
+            example, a pattern "1,2,50-90" will match values "1" and "2", and
+            "50", "90", and everything between.  The range uses alphabetical
+            ordering unless start, end and the string to be matched are all
+            numerical, i.e. "50-90" will match also "6a" and "700X", since they
+            are alphabetically between "50" and "90", but it will not match
+            "700000" since for numerical items natural numeric ordering is used.
+        {% endtrans %}
+    </p>
+{% endmacro %}
+
+{% macro _grouping_help_text() %}
+    <p>
+        {% trans %}
+            Use the following fields to configure added or compounded
+            taxes (when several taxes apply for an item), or to create a
+            tax rule or a set of tax rules that override other tax rules.
+        {% endtrans %}
+    </p>
+{% endmacro %}
+
+{% macro _applied_tax_help_text() %}
+    <p>{% trans %}When this rule applies, apply the following tax.{% endtrans %}</p>
+{% endmacro %}

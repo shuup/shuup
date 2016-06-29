@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-# This file is part of Shoop.
+# This file is part of Shuup.
 #
-# Copyright (c) 2012-2016, Shoop Ltd. All rights reserved.
+# Copyright (c) 2012-2016, Shuup Ltd. All rights reserved.
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -17,9 +17,9 @@ import sys
 import sanity_utils
 
 HEADER = """
-This file is part of Shoop.
+This file is part of Shuup.
 
-Copyright (c) 2012-2016, Shoop Ltd. All rights reserved.
+Copyright (c) 2012-2016, Shuup Ltd. All rights reserved.
 
 This source code is licensed under the AGPLv3 license found in the
 LICENSE file in the root directory of this source tree.
@@ -105,7 +105,7 @@ def is_file_ignored(filepath):
 
 def has_header(path):
     with open(path, 'rb') as fp:
-        return b"This file is part of Shoop." in fp.read(256)
+        return b"This file is part of Shuup." in fp.read(256)
 
 
 def add_header_to_python_file(path):

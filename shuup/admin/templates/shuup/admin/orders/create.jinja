@@ -1,0 +1,13 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block, text_between_fields %}
+
+{% block body_class %}order-create{% endblock %}
+
+{% block content %}
+    <div id="order-tool-container"></div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{{ static("shuup_admin/js/order-creator.js") }}"></script>
+    <script>OrderCreator.init({{ config|json }})</script>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_with_sidebar %}
+
+{% block content %}
+    {% if orderability_errors %}
+        <div class="container-fluid">
+            {# TODO: FIX THIS FOR MOBILE SCREEN SIZES #}
+            <p class="pull-right" data-toggle="tooltip" data-title="{% for error in orderability_errors %}{{ error }} {% endfor %}" data-placement="bottom">
+                <i class="fa fa-info-circle text-info"></i> {% trans %}This product is currently not orderable.{% endtrans %}
+            </p>
+        </div>
+    {% endif %}
+    {% call content_with_sidebar(content_id="product_form") %}
+        <form method="post" id="product_form">
+            {% csrf_token %}
+            {% for form_def in form.form_defs.values() %}
+                {% include form_def.template_name with context %}
+            {% endfor %}
+        </form>
+    {% endcall %}
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{{ static("shuup_admin/js/product.js") }}"></script>
+    <script src="{{ static("shuup_admin/js/remarkable.js") }}"></script>
+{% endblock %}

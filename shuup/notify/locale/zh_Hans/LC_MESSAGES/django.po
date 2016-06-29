@@ -1,0 +1,238 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Jessica Wang <jessica.wang@shuup.com>, 2015-2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-04-19 08:32+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/"
+"language/cmn/)\n"
+"Language: cmn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Subject"
+msgstr "标题"
+
+msgid "Email Body"
+msgstr "电子邮件主文"
+
+msgid "Recipient"
+msgstr "收件人"
+
+msgid "Language"
+msgstr "语言"
+
+msgid "Fallback language"
+msgstr "后备语言"
+
+msgid "Send Identifier"
+msgstr "发送标识符"
+
+msgid ""
+"If set, this identifier will be logged into the event's log target. If the "
+"identifier has already been logged, the e-mail won't be sent again."
+msgstr ""
+"如果设置了，该标识符将被记录在事件日志记录目标。如果标识符已经被记录了， 其电"
+"子邮件将不再发送。"
+
+msgid "Notifications"
+msgstr "通知"
+
+msgid "Notification scripts"
+msgstr "脚本通知"
+
+msgid "Show notification scripts"
+msgstr "显示脚本通知"
+
+msgid "Event"
+msgstr "事件"
+
+msgid "Choose which event to bind this script to."
+msgstr "请选择该脚本绑定的事件。"
+
+msgid "Script Name"
+msgstr "脚本名"
+
+msgid "Type in a descriptive name for your new script."
+msgstr "请输入新的脚本描述名。"
+
+msgid "Enable Script"
+msgstr "启用脚本"
+
+msgid "Choose whether this script should be activated when its event fires."
+msgstr "事件触发时，是否选择其脚本激活。"
+
+msgid ""
+"Warning: Changing the event for an existing script may have unexpected "
+"effects."
+msgstr "警告：更改现存的脚本事件有可能导致意外的效果。"
+
+msgid "Template"
+msgstr "模板"
+
+msgid "Bind to Variable"
+msgstr ""
+
+msgid "Edit Script Contents..."
+msgstr "脚本内容编辑……"
+
+msgid "Name"
+msgstr "名称"
+
+msgid "Enabled"
+msgstr "启用"
+
+msgid ""
+"Check whether the bound value `value` exists and is non-empty and non-zero."
+msgstr "请检查界值的 `value`是否存在，且非空非零的。 "
+
+msgid "Non-Empty"
+msgstr "不能为空"
+
+msgid "Check whether the bound value `value` is empty or zero."
+msgstr "请检查界值的 `value`是否为空或归零。"
+
+msgid "Empty"
+msgstr "空"
+
+msgid "none"
+msgstr "无"
+
+msgid "unilingual"
+msgstr ""
+
+msgid "multilingual"
+msgstr ""
+
+msgid "variable only"
+msgstr ""
+
+msgid "constant only"
+msgstr ""
+
+msgid "variable or constant"
+msgstr ""
+
+msgid "continue to the next step"
+msgstr "继续至下一步"
+
+msgid "stop processing"
+msgstr "停止处理"
+
+msgid "all"
+msgstr "全部"
+
+msgid "any"
+msgstr "任何"
+
+msgid "any shop administrator"
+msgstr "任何商店管理员"
+
+msgid "a specific user"
+msgstr "一个指定用户"
+
+msgid "low"
+msgstr ""
+
+msgid "normal"
+msgstr ""
+
+msgid "high"
+msgstr ""
+
+msgid "critical"
+msgstr ""
+
+msgid "recipient type"
+msgstr ""
+
+msgid "recipient"
+msgstr "收件人"
+
+msgid "created on"
+msgstr "创建"
+
+msgid "message"
+msgstr "信息"
+
+msgid "priority"
+msgstr "优先"
+
+msgid "marked read"
+msgstr ""
+
+msgid "marked read by"
+msgstr ""
+
+msgid "marked read on"
+msgstr ""
+
+msgid "event identifier"
+msgstr "事件标识符"
+
+msgid "name"
+msgstr "名称"
+
+msgid "enabled"
+msgstr "启用"
+
+msgid "Edit Script Information"
+msgstr "脚本信息编辑"
+
+msgid "Create a new script"
+msgstr "创建新的脚本"
+
+msgid "Script Details"
+msgstr "脚本详情"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Edit Script"
+msgstr "脚本编辑"
+
+msgid "Edit Step"
+msgstr "编辑步骤"
+
+msgid "Done"
+msgstr "完成"
+
+msgid "Please correct the errors below."
+msgstr "请改正下列的错误。"
+
+msgid "Variables"
+msgstr "变量"
+
+msgid "Save changes"
+msgstr "保存更改"
+
+msgid "Boolean"
+msgstr "布尔"
+
+msgid "Integer Number"
+msgstr "整数"
+
+msgid "Decimal Number"
+msgstr "小数"
+
+msgid "Text"
+msgstr "文本"
+
+msgid "Email Address"
+msgstr "邮箱地址"
+
+msgid "URL Address"
+msgstr "URL地址"
+
+msgid "Phone Number"
+msgstr "电话号码"
