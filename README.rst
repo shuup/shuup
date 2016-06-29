@@ -8,9 +8,9 @@ https://shuup.com/
 Copyright
 ---------
 
-Copyright (C) 2012-2016 by Shuup Ltd. <contact@shuup.com>
+Copyright (C) 2012-2016 by Shoop Ltd. <contact@shuup.com>
 
-Shuup is International Registered Trademark & Property of Shuup Ltd.,
+Shuup is International Registered Trademark & Property of Shoop Ltd.,
 Business ID: FI24815722, Business Address: Aurakatu 12 B, 20100 Turku,
 Finland.
 
