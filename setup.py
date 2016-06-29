@@ -27,8 +27,8 @@ VERSION_FILE = os.path.join(TOPDIR, 'shuup', '_version.py')
 #     add it to index (doc/release_notes/index.rst)
 #  3. Update VERSION variable here: Increase and drop .post0.dev suffix
 #  4. Update version and release variables in doc/conf.py
-#  5. Commit changes of steps 1--3
-#  6. Tag the commit (of step 4) with
+#  5. Commit changes of steps 1--4
+#  6. Tag the commit (of step 5) with
 #        git tag -a -m "Shuup X.Y.Z" vX.Y.Z
 #     where X.Y.Z is the new version number (must be same as VERSION
 #     variable here)
