@@ -1,9 +1,9 @@
-Shuup 3.0.0 Release Notes
+Shoop 3.0.0 Release Notes
 =========================
 
 Released on 2016-01-21 11:15 +0200.
 
-Here's a few highlights of new features, improvements and fixes in Shuup
+Here's a few highlights of new features, improvements and fixes in Shoop
 3.0.0 since 2.0.0.  For complete list of changes see :doc:`../changelog`
 or `Git commit log <https://github.com/shuup/shoop/commits/v3.0.0>`__.
 
@@ -33,7 +33,7 @@ Improvements
 
 * Show product media at order history and product detail pages
 
-* Show Shuup version number in Admin
+* Show Shoop version number in Admin
 
 * Xtheme editor improvements
 
@@ -68,8 +68,8 @@ Miscellaneous
 Updating from 2.0
 -----------------
 
-Shuup 3.0 introduces some API changes which could affect projects or
-addons based on Shuup 2.0.  Here is a list of the API changes and
+Shoop 3.0 introduces some API changes which could affect projects or
+addons based on Shoop 2.0.  Here is a list of the API changes and
 instructions how to update your code.
 
 * `Priceful.total_price` has been removed.  This affects
@@ -95,29 +95,29 @@ instructions how to update your code.
     but they should be converted to immutable with
     `Address.to_immutable` for e.g. `Order` addresses.
 
-* Submodules of `shuup.core.pricing` are now private.
+* Submodules of `shoop.core.pricing` are now private.
 
-  - Use the API exposed by the `shuup.core.pricing` module's
-    ``__init__.py``.  E.g. use `shuup.core.pricing.PriceInfo` instead of
-    `shuup.core.pricing.price_info.PriceInfo`.
+  - Use the API exposed by the `shoop.core.pricing` module's
+    ``__init__.py``.  E.g. use `shoop.core.pricing.PriceInfo` instead of
+    `shoop.core.pricing.price_info.PriceInfo`.
 
-* Submodules of `shuup.core.order_creator` are now private.
+* Submodules of `shoop.core.order_creator` are now private.
 
   - Use the API exposed by the module's ``__init__.py``.
 
-* `shuup.core.utils.reference` is removed.
+* `shoop.core.utils.reference` is removed.
 
-* Some submodules of `shuup.xtheme` are now private.
+* Some submodules of `shoop.xtheme` are now private.
 
-  - Use symbols directly from `shuup.xtheme`, e.g. `shuup.xtheme.Theme`
-    instead of `shuup.xtheme.theme.Theme` or
-    `shuup.xtheme.TemplatedPlugin` instead of
-    `shuup.xtheme.plugins.TemplatedPlugin`.
+  - Use symbols directly from `shoop.xtheme`, e.g. `shoop.xtheme.Theme`
+    instead of `shoop.xtheme.theme.Theme` or
+    `shoop.xtheme.TemplatedPlugin` instead of
+    `shoop.xtheme.plugins.TemplatedPlugin`.
 
-* Submodules of `shuup.core.models` are now private.
+* Submodules of `shoop.core.models` are now private.
 
   - Use the models or enums directly from the main package.
 
-* `shuup.core.models.product_variation` is removed.
+* `shoop.core.models.product_variation` is removed.
 
   - Relevant functions are now available as `Product` methods.
