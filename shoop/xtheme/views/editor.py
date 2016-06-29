@@ -162,8 +162,8 @@ class EditorView(TemplateView):
 
     def dispatch_publish(self, **kwargs):
         self.view_config.publish()
-        return HttpResponse("<html><script>parent.location.reload()</script>Published.</html>")
+        return HttpResponse("<html><script>parent.location.reload()</script>%s.</html>" % _("Published"))
 
     def dispatch_revert(self, **kwargs):
         self.view_config.revert()
-        return HttpResponse("<html><script>parent.location.reload()</script>Reverted.</html>")
+        return HttpResponse("<html><script>parent.location.reload()</script>%s.</html>" % _("Reverted"))
