@@ -5,7 +5,7 @@ Released on 2016-01-21 11:15 +0200.
 
 Here's a few highlights of new features, improvements and fixes in Shuup
 3.0.0 since 2.0.0.  For complete list of changes see :doc:`../changelog`
-or `Git commit log <https://github.com/shuupio/shuup/commits/v3.0.0>`__.
+or `Git commit log <https://github.com/shuup/shoop/commits/v3.0.0>`__.
 
 There's also update instructions for :ref:`updating from 2.0
 <updating-from-2-to-3>`.
@@ -57,7 +57,7 @@ Fixes
 Miscellaneous
 -------------
 
-* Test are now ran also on `Travis <https://travis-ci.org/shuupio>`__
+* Test are now ran also on `Travis <https://travis-ci.org/shuup>`__
 
 * Python package dependencies are updated and not so strict anymore
 
@@ -85,7 +85,7 @@ instructions how to update your code.
 * Default Theme is removed.
 
   - It is available as a separate package from
-    https://github.com/shuupio/shuup-simple-theme
+    https://github.com/shuup/shuup-simple-theme
 
 * `Address` is split to `MutableAddress` and `ImmutableAddress`.
   `Address` is converted to abstract base class.

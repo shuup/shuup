@@ -14,7 +14,7 @@ Github fork of Shuup for creating pull requests.  Github pull requests
 are used to get your changes into Shuup Base.
 
  1. If you haven't done so already, create a fork of Shuup in Github by
-    clicking the "Fork" button at https://github.com/shuupio/shuup and
+    clicking the "Fork" button at https://github.com/shuup/shuup and
     clone the fork to your computer as usual. See `Github Help about
     forking repos <https://help.github.com/articles/fork-a-repo/>`__ for
     details.

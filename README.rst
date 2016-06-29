@@ -38,7 +38,7 @@ Chat
 We have a Gitter chat room for Shuup.  Come chat with us!  |Join chat|
 
 .. |Join chat| image:: https://badges.gitter.im/Join%20Chat.svg
-   :target: https://gitter.im/shuupio/shuup
+   :target: https://gitter.im/shuup/shuup
 
 Getting started with Shuup development
 --------------------------------------

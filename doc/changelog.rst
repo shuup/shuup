@@ -330,7 +330,7 @@ Default Theme
 ~~~~~~~~~~~~~
 
 - Remove Default theme from Shuup Base. Moved to
-  https://github.com/shuupio/shuup-simple-theme
+  https://github.com/shuup/shuup-simple-theme
 
 Campaigns
 ~~~~~~~~~
@@ -530,7 +530,7 @@ Released on 2015-07-03 12:30 +0300.
 
 - Remove Stripe integration (shuup.stripe)
 
-  - It now lives in https://github.com/shuupio/shuup-stripe
+  - It now lives in https://github.com/shuup/shuup-stripe
 
 - Core: Declare correct ``required_installed_apps`` in AppConfig
 
