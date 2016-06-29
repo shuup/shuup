@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-11 12:32+0000\n"
-"PO-Revision-Date: 2016-04-22 01:03+0000\n"
+"POT-Creation-Date: 2016-06-28 12:52+0000\n"
+"PO-Revision-Date: 2016-06-28 16:05+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shoop/shoop/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -44,7 +44,7 @@ msgid "Product added to cart"
 msgstr "O produto foi adicionado ao carrinho"
 
 msgid "There was an error adding the product to the basket"
-msgstr "Houve um erro ao adicionar o produto no carrinho"
+msgstr "Ocorreu um erro ao adicionar o produto no carrinho"
 
 msgid "Cart"
 msgstr "Carrinho"
@@ -72,7 +72,7 @@ msgid "Open product page"
 msgstr "Abrir a página do produto"
 
 msgid "Newest products"
-msgstr "Produtos recentes"
+msgstr "Produtos mais recentes"
 
 msgid "Home"
 msgstr "Início"
@@ -81,16 +81,28 @@ msgid "Show Grid/List"
 msgstr "Mostrar Grade/Lista"
 
 msgid "Grid/list view"
-msgstr "Exibição de grade/lista"
+msgstr "Exibição em grade/lista"
 
-msgid "User account information"
-msgstr "Informações da conta de usuário"
+msgid "Change Password"
+msgstr "Alterar Senha"
+
+msgid "Change password"
+msgstr "Alterar senha"
+
+msgid "Edit user account information"
+msgstr "Editar informações da conta de usuário"
+
+msgid "Save password"
+msgstr "Salvar senha"
+
+msgid "Company account information"
+msgstr "Informações da conta empresarial"
 
 msgid "Save changes"
 msgstr "Salvar alterações"
 
-msgid "User information"
-msgstr "Informações do usuário"
+msgid "Company information"
+msgstr "Informações da empresa"
 
 msgid "Billing information"
 msgstr "Informações de cobrança"
@@ -98,12 +110,24 @@ msgstr "Informações de cobrança"
 msgid "Shipping information"
 msgstr "Informações de entrega"
 
+msgid "User account information"
+msgstr "Informações da conta de usuário"
+
+msgid "Edit company information"
+msgstr "Editar informações da conta empresarial"
+
+msgid "Link account to company"
+msgstr "Vincular conta à empresa"
+
+msgid "User information"
+msgstr "Informações do usuário"
+
 msgid "Shop is currently in maintenance mode."
-msgstr "A loja está em modo de manutenção no momento."
+msgstr "A loja está em modo de manutenção."
 
 msgid ""
 "There were errors on submitted form fields. Please check them and try again."
-msgstr "Houve erros em alguns campos do formulário enviado. Por favor, verifique-os e tente novamente."
+msgstr "Ocorreram erros em alguns campos do formulário enviado. Por favor, verifique-os e tente novamente."
 
 msgid "Shopping cart"
 msgstr "Carrinho de compras"
@@ -112,10 +136,10 @@ msgid "Back to Products"
 msgstr "Voltar aos Produtos"
 
 msgid "There were errors on following items"
-msgstr "Houve erros nos seguintes itens"
+msgstr "Ocorreram erros nos seguintes itens"
 
 msgid "You are unable to proceed to checkout!"
-msgstr "Você está impossibilitado de avançar para o checkout!"
+msgstr "Você está sem poder prosseguir com o checkout!"
 
 msgid "Continue Shopping"
 msgstr "Continuar Comprando"
@@ -127,10 +151,13 @@ msgid "Coupon is not available."
 msgstr "Cupom não está disponível."
 
 msgid "Error when adding coupon."
-msgstr "Erro ao adicionar cupom."
+msgstr "Erro ao adicionar o cupom."
 
 msgid "Qty"
 msgstr "Qtd."
+
+msgid "Quantity"
+msgstr "Quantidade"
 
 msgid "Remove product from basket"
 msgstr "Remover produto do carrinho"
@@ -147,11 +174,11 @@ msgstr "Enviar Código"
 msgid "Checkout"
 msgstr "Checkout"
 
+msgid "Continue"
+msgstr "Continuar"
+
 msgid "Product"
 msgstr "Produto"
-
-msgid "Quantity"
-msgstr "Quantidade"
 
 msgid "excl. tax"
 msgstr "excl. imposto"
@@ -170,9 +197,6 @@ msgstr "Endereço de entrega"
 
 msgid "Ship to my billing address"
 msgstr "Enviar para o meu endereço de cobrança"
-
-msgid "Continue"
-msgstr "Continuar"
 
 msgid "Delivery"
 msgstr "Entrega"
@@ -195,11 +219,11 @@ msgstr "Fazer Pedido"
 msgid "There are errors"
 msgstr "Existem erros"
 
-msgid "Shipping"
-msgstr "Entrega"
+msgid "Choose Shipping Method"
+msgstr "Escolha a Forma de Entrega"
 
-msgid "Payment"
-msgstr "Pagamento"
+msgid "Choose Payment Method"
+msgstr "Escolha a Forma de Pagamento"
 
 msgid "Errors"
 msgstr "Erros"
@@ -217,7 +241,7 @@ msgid "Bad Request"
 msgstr "Requisição Inválida"
 
 msgid "Unfortunately the server couldn't process your request."
-msgstr "Infelizmente, o servidor não pôde processar a sua solicitação."
+msgstr "Infelizmente o servidor não pôde processar a sua solicitação."
 
 msgid "Back to Homepage"
 msgstr "Voltar à Página Inicial"
@@ -226,13 +250,13 @@ msgid "Permission Denied"
 msgstr "Permissão Negada"
 
 msgid "Unfortunately you didn't have permission to display this page."
-msgstr "Infelizmente você não tem permissão para exibir esta página."
+msgstr "Infelizmente você não tem permissão para visualizar esta página."
 
 msgid "Page not Found"
 msgstr "Página não Encontrada"
 
 msgid "Unfortunately the page you were looking for does not exist."
-msgstr "Infelizmente, a página que você estava procurando não existe."
+msgstr "Infelizmente a página que você estava procurando não existe."
 
 msgid "Internal Server Error"
 msgstr "Erro Interno do Servidor"
@@ -248,8 +272,14 @@ msgstr "Categorias"
 msgid "Edit account details"
 msgstr "Editar detalhes da conta"
 
+msgid "Edit company details"
+msgstr "Editar detalhes da empresa"
+
 msgid "My orders"
 msgstr "Meus pedidos"
+
+msgid "My wishlists"
+msgstr "Minhas listas de desejos"
 
 msgid "Admin panel"
 msgstr "Painel de administração"
@@ -258,7 +288,7 @@ msgid "Log out"
 msgstr "Sair"
 
 msgid "Log in"
-msgstr "Entrar"
+msgstr "Fazer login"
 
 msgid "Username or email address"
 msgstr "Nome de usuário ou endereço de e-mail"
@@ -292,13 +322,16 @@ msgid "Products ordered"
 msgstr "Produtos comprados"
 
 msgid "Tax breakdown"
-msgstr "Discriminação fiscal"
+msgstr "Detalhamento fiscal"
+
+msgid "Payment"
+msgstr "Pagamento"
 
 msgid "Company"
 msgstr "Empresa"
 
 msgid "Tax number"
-msgstr "Número de contribuinte (CNPJ)"
+msgstr "CNPJ"
 
 msgid "Previous"
 msgstr "Anterior"
@@ -311,7 +344,7 @@ msgstr "Obrigado pela sua preferência!"
 
 msgid ""
 "Your order has been received. You can see the details of your order below."
-msgstr "Seu pedido foi recebido. Você pode visualizar maiores detalhes logo abaixo."
+msgstr "Seu pedido foi recebido. Você pode visualizar os detalhes da sua compra a seguir."
 
 msgid "User account activation"
 msgstr "Ativação da conta de usuário"
@@ -319,7 +352,7 @@ msgstr "Ativação da conta de usuário"
 msgid ""
 "If you want to be able to see your order history, please create a password "
 "for your account: "
-msgstr "Se você quer ter a possibilidade de acompanhar o seu histórico de pedidos, por favor, crie uma senha para a sua conta:"
+msgstr "Se você quer ter a possibilidade de acompanhar o seu histórico de pedidos no futuro, por favor, crie uma senha para a sua conta:"
 
 msgid "Send"
 msgstr "Enviar"
@@ -405,11 +438,11 @@ msgstr "Detalhes"
 msgid "Attributes"
 msgstr "Atributos"
 
-msgid "No product description available"
-msgstr "Nenhuma descrição do produto disponível"
-
 msgid "Includes these products"
 msgstr "Inclui estes produtos"
+
+msgid "No product description available"
+msgstr "Nenhuma descrição do produto disponível"
 
 msgid "Also available in"
 msgstr "Também disponível em"
@@ -438,7 +471,7 @@ msgid "Reference"
 msgstr "Referência"
 
 msgid "Label"
-msgstr "Rótulo"
+msgstr "Etiqueta"
 
 msgid "Customer"
 msgstr "Cliente"
@@ -456,13 +489,16 @@ msgid "Email"
 msgstr "E-mail"
 
 msgid "Tax Number"
-msgstr "Número de Contribuinte (CNPJ)"
+msgstr "CNPJ"
 
 msgid "Total Price"
 msgstr "Preço Total"
 
 msgid "Total Price (taxless)"
-msgstr "Preço Total (não tributado)"
+msgstr "Preço Total (sem impostos)"
+
+msgid "Tracking codes"
+msgstr "Códigos de rastreamento"
 
 msgid "Status"
 msgstr "Status"
@@ -489,13 +525,13 @@ msgid "Text"
 msgstr "Texto"
 
 msgid "Taxless Unit Price"
-msgstr "Preço Unitário não Tributado"
+msgstr "Preço Unitário sem Impostos"
 
 msgid "Taxless Discount"
-msgstr "Desconto não Tributado"
+msgstr "Desconto sem Impostos"
 
 msgid "Taxless Total"
-msgstr "Total não Tributado"
+msgstr "Total sem Impostos"
 
 msgid "Total incl. Tax"
 msgstr "Total incl. Imposto"
@@ -519,7 +555,7 @@ msgid "Account activation"
 msgstr "Ativação da conta"
 
 msgid "Account activation failed."
-msgstr "Falha na ativação da conta."
+msgstr "A ativação da conta falhou."
 
 msgid "Register"
 msgstr "Cadastre-se"
@@ -543,25 +579,25 @@ msgstr "%(n)s resultados encontrados para \"<strong>%(query)s</strong>\"."
 
 #, python-format
 msgid "You have already logged in as <strong>%(username)s</strong>"
-msgstr "Você já está autenticado como <strong>%(username)s</strong>"
+msgstr "Você já efetuou o login como <strong>%(username)s</strong>"
 
 msgid "Go to Homepage"
 msgstr "Vá para a Página Inicial"
 
 msgid "Logged out"
-msgstr "Saiu"
+msgstr "Efetuou o logout"
 
 msgid "You have been logged out. Thank you for visiting!"
-msgstr "Você foi desconectado. Obrigado pela visita!"
+msgstr "Você foi desautenticado. Obrigado pela visita!"
 
 msgid "Recover your password"
 msgstr "Recupere sua senha"
 
 msgid "You can recover your password with either username or email."
-msgstr "Você pode recuperar sua senha tendo em mãos o nome de usuário ou e-mail."
+msgstr "Você pode recuperar a sua senha tendo em mãos o nome de usuário ou e-mail."
 
 msgid "Send password recovery instructions"
-msgstr "Enviar instruções de recuperação de senha"
+msgstr "Enviar instruções de recuperação da senha"
 
 msgid "This product is not available in this shop."
 msgstr "Este produto não está disponível nesta loja."

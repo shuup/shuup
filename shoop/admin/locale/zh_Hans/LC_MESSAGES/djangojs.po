@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PROJECT project.
 #
 # Translators:
-# Jessica Wang <jessica.wang@shoop.io>, 2015
+# Jessica Wang <jessica.wang@shoop.io>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
-"PO-Revision-Date: 2015-12-10 10:11+0000\n"
-"Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-06-28 21:58+0000\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
 "language/cmn/)\n"
 "Language: cmn\n"
@@ -47,7 +47,7 @@ msgid "New folder"
 msgstr "新文件夹"
 
 msgid "current"
-msgstr "当前"
+msgstr ""
 
 msgid "Oldest first"
 msgstr "最老优先"
@@ -133,6 +133,51 @@ msgstr "账单地址"
 msgid "Shipping address"
 msgstr "收货地址"
 
+msgid "Full Name"
+msgstr ""
+
+msgid "Phone"
+msgstr "电话"
+
+msgid "Email"
+msgstr "电子邮箱"
+
+msgid "Groups"
+msgstr ""
+
+msgid "Companies"
+msgstr ""
+
+msgid "Merchant Notes"
+msgstr ""
+
+msgid "Year"
+msgstr ""
+
+msgid "Total Sales"
+msgstr ""
+
+msgid "Shipment Status"
+msgstr ""
+
+msgid "Payment Status"
+msgstr ""
+
+msgid "Order Status"
+msgstr ""
+
+msgid "Customer Information"
+msgstr ""
+
+msgid "Order Summary"
+msgstr ""
+
+msgid "Recent Orders"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
 msgid "A new customer will be created based on billing address."
 msgstr "根据账单地址建立新的顾客。"
 
@@ -144,6 +189,9 @@ msgstr "选择现有的顾客"
 
 msgid "New Customer"
 msgstr "新顾客"
+
+msgid "View Details"
+msgstr ""
 
 msgid "Save customer details while creating order"
 msgstr "订单形成时保存顾客信息"
@@ -166,14 +214,17 @@ msgstr "后退"
 msgid "Confirm"
 msgstr "确定"
 
-msgid "Select Shop"
-msgstr "选择店铺"
+msgid "Discard Changes"
+msgstr ""
 
-msgid "Order Contents"
-msgstr "订单内容"
+msgid "Select Shop"
+msgstr "选择商店"
 
 msgid "Customer Details"
 msgstr "顾客详细信息"
+
+msgid "Order Contents"
+msgstr "订单内容"
 
 msgid "Shipping Method"
 msgstr "配送方式"
@@ -188,6 +239,12 @@ msgstr "方式，税收与有可能的额外折扣将会在进行后结算。"
 
 msgid "Proceed"
 msgstr "进行"
+
+msgid "Logical Count"
+msgstr ""
+
+msgid "Physical Count"
+msgstr ""
 
 msgid "Select product"
 msgstr "选择产品"
@@ -220,27 +277,22 @@ msgid "Orderline type"
 msgstr "订单行类型"
 
 msgid ""
-"If your product prices vary based on customers you might wan't to select "
+"If your product prices vary based on customer, you might want to select "
 "customer first."
-msgstr "如果您产品价格根据顾客而变化，您也许先要选择顾客。"
+msgstr ""
 
-msgid "All prices is in "
-msgstr "全部价格都有"
-
-msgid " currency."
-msgstr "货币"
+#, javascript-format
+msgid "All prices are in %s currency."
+msgstr ""
 
 msgid "All prices include taxes."
 msgstr "全部价格包含税。"
 
-msgid "Taxes is not included."
+msgid "Taxes not included."
 msgstr "不包含税。"
 
 msgid "Add new line"
 msgstr "添加新行"
-
-msgid "Price"
-msgstr "价格"
 
 msgid "No shipping method"
 msgstr "无配送方式"
@@ -249,7 +301,7 @@ msgid "No payment method"
 msgstr "无支付方式"
 
 msgid "Shop"
-msgstr "店铺"
+msgstr "商店"
 
 msgid "Product"
 msgstr "产品"
@@ -259,12 +311,6 @@ msgstr "其他"
 
 msgid "Tax number"
 msgstr "税号"
-
-msgid "Phone"
-msgstr "电话"
-
-msgid "Email"
-msgstr "电子邮箱"
 
 msgid "Street"
 msgstr "街道"
@@ -283,6 +329,9 @@ msgstr "区域"
 
 msgid "Country"
 msgstr "国家"
+
+msgid "No records found."
+msgstr ""
 
 msgid "Identifier"
 msgstr "标识符"
@@ -321,23 +370,40 @@ msgstr "变量未定义"
 msgid "Add new variable"
 msgstr "添加新变量"
 
-msgid "No results."
-msgstr "无搜索结果。"
-
 msgid "No browser URL for kind:"
 msgstr "无浏览器URL："
 
 msgid "Expand Editor"
 msgstr "展开编辑器"
 
-msgid "Previous"
-msgstr "上一页"
+msgid "No results."
+msgstr "无搜索结果。"
 
-msgid "Next"
-msgstr "下一页"
+msgid "The results could not be loaded"
+msgstr ""
 
-msgid "Filters"
-msgstr "过滤器"
+#, javascript-format
+msgid "Please delete %s character"
+msgid_plural "Please delete %s characters"
+msgstr[0] ""
+
+#, javascript-format
+msgid "Please enter %s or more characters"
+msgstr ""
+
+msgid "Loading more results..."
+msgstr ""
+
+#, javascript-format
+msgid "You can only select %s item"
+msgid_plural "You can only select %s items"
+msgstr[0] ""
+
+msgid "No results found"
+msgstr ""
+
+msgid "Searching..."
+msgstr ""
 
 msgid "From"
 msgstr "从"
@@ -365,6 +431,19 @@ msgstr "降序"
 
 msgid "Default sorting"
 msgstr "默认排序"
+
+msgid "Previous"
+msgstr "上一页"
+
+msgid "Next"
+msgstr "下一页"
+
+#, javascript-format
+msgid "Filter by %s"
+msgstr "按%s过滤"
+
+msgid "Filters"
+msgstr "过滤器"
 
 msgid "Are you sure you want to delete this media?"
 msgstr "您确定要删除该媒体吗？"
@@ -395,6 +474,3 @@ msgstr "编辑器"
 
 msgid "Done"
 msgstr "完成"
-
-msgid "en"
-msgstr "英语"

@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
-# Jessica Wang <jessica.wang@shoop.io>, 2015
+# Jessica Wang <jessica.wang@shoop.io>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
-"PO-Revision-Date: 2015-12-10 09:27+0000\n"
-"Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-04-14 09:11+0000\n"
+"Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
 "language/cmn/)\n"
 "Language: cmn\n"
@@ -48,24 +48,33 @@ msgid "error"
 msgstr "错误"
 
 msgid "created on"
-msgstr ""
+msgstr "创建"
 
 msgid "user"
-msgstr ""
+msgstr "用户"
 
 msgid "message"
-msgstr ""
+msgstr "信息"
 
 msgid "identifier"
-msgstr ""
+msgstr "标识符"
 
 msgid "log entry kind"
 msgstr ""
 
 msgid "extra data"
-msgstr ""
+msgstr "多余的数据"
 
 msgid "target"
+msgstr "目标"
+
+#, python-format
+msgid "%s day"
+msgid_plural "%s days"
+msgstr[0] ""
+
+#, python-format
+msgid "%(min)s--%(max)s days"
 msgstr ""
 
 msgid ""

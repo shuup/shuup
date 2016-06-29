@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-04-10 16:38+0000\n"
-"PO-Revision-Date: 2016-04-21 19:39+0000\n"
+"PO-Revision-Date: 2016-06-29 01:20+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shoop/shoop/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -69,7 +69,7 @@ msgstr "dados"
 
 #, python-format
 msgid "Theme configuration for %s"
-msgstr "Configurações do tema para %s"
+msgstr "Configuração de tema para %s"
 
 msgid "Plugin"
 msgstr "Plugin"
@@ -96,7 +96,7 @@ msgid "Full width"
 msgstr "Largura total"
 
 msgid "Set image to full width of cell"
-msgstr "Definir imagem na largura total da célula"
+msgstr "Definir imagem à largura total da célula"
 
 msgid "Width (px)"
 msgstr "Largura (px)"
@@ -191,10 +191,10 @@ msgstr " Configurar"
 
 #, python-format
 msgid "Theme Configuration: %(name)s"
-msgstr "Configurações do Tema: %(name)s"
+msgstr "Configuração de Tema: %(name)s"
 
 msgid "There's nothing to configure in this theme."
-msgstr "Não há nada para configurar neste tema."
+msgstr "Não há nada para configurar no âmbito deste tema."
 
 msgid "Revert Changes"
 msgstr "Reverter Alterações"
@@ -210,7 +210,7 @@ msgid "Unknown command %s"
 msgstr "Comando desconhecido %s"
 
 msgid "Unable to determine current theme."
-msgstr "Não foi possível determinar o tema atual."
+msgstr "Não é possível determinar o tema atual."
 
 #, python-format
 msgid "Cannot add more than %d cells in one row."

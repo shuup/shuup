@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
-"PO-Revision-Date: 2015-12-08 08:55+0000\n"
-"Last-Translator: Shoop Admin <admin@shoop.io>\n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-06-28 21:58+0000\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
 "language/ja_JP/)\n"
 "Language: ja_JP\n"
@@ -28,6 +28,9 @@ msgstr "ブラウズ"
 
 msgid "Clear"
 msgstr "クリア"
+
+msgid "Select"
+msgstr ""
 
 msgid "Attributes"
 msgstr "属性"
@@ -77,6 +80,37 @@ msgstr "コンタクトグループ"
 msgid "Contacts"
 msgstr "コンタクト"
 
+msgid "Price display mode"
+msgstr ""
+
+msgid "unspecified"
+msgstr ""
+
+msgid "show prices with taxes included"
+msgstr ""
+
+msgid "show pre-tax prices"
+msgstr ""
+
+msgid "hide prices"
+msgstr ""
+
+msgid "member"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+#, python-format
+msgid "%(count)s member added"
+msgid_plural "%(count)s members added"
+msgstr[0] ""
+
+#, python-format
+msgid "%(count)s member removed"
+msgid_plural "%(count)s members removed"
+msgstr[0] ""
+
 msgid "Number of Members"
 msgstr "会員数"
 
@@ -111,14 +145,46 @@ msgstr "新しいユーザー"
 msgid "Create an user for the contact."
 msgstr "コンタクトのユーザーを作成"
 
+msgid "New Order"
+msgstr ""
+
+msgid "Create an order for the contact."
+msgstr ""
+
+msgid "Deactivate Contact"
+msgstr ""
+
+msgid "Activate Contact"
+msgstr ""
+
 msgid "Edit..."
 msgstr "編集…"
+
+msgid "You can not deactivate a superuser."
+msgstr ""
+
+msgid "You can not deactivate yourself."
+msgstr ""
+
+#, python-format
+msgid "%(contact)s is now %(state)s."
+msgstr ""
+
+msgid "active"
+msgstr "アクティブ"
+
+msgid "inactive"
+msgstr "非アクティブ"
 
 msgid "Person"
 msgstr "人物"
 
 msgid "Company"
 msgstr "会社"
+
+#, python-format
+msgid "User %(bind_user)s already has a contact"
+msgstr ""
 
 msgid "Email"
 msgstr "Eメール"
@@ -129,7 +195,16 @@ msgstr "電話"
 msgid "Active"
 msgstr "アクティブ"
 
+msgid "no"
+msgstr "いいえ"
+
+msgid "yes"
+msgstr "はい"
+
 msgid "# Orders"
+msgstr ""
+
+msgid "Groups"
 msgstr ""
 
 msgid "Contact"
@@ -168,12 +243,12 @@ msgstr "メディアブラウザー"
 msgid "Root"
 msgstr "ルート"
 
-#, python-format
-msgid "%d subfolders moved to %s."
+#, python-brace-format
+msgid "{num} subfolders moved to {folder}."
 msgstr ""
 
-#, python-format
-msgid "%d files moved to %s."
+#, python-brace-format
+msgid "{num} files moved to {folder}."
 msgstr ""
 
 #, python-format
@@ -197,37 +272,11 @@ msgstr "フォルダは削除されました"
 msgid "%(file)s moved from %(old)s to %(new)s."
 msgstr ""
 
-msgid "Methods"
-msgstr "方法"
-
-msgid "Shipping Methods"
-msgstr "配送方法"
-
-msgid "Payment Methods"
-msgstr "お支払い方法"
-
-msgid "The selected module has no details to configure"
-msgstr "選択されたモジュールには設定する詳細がありません"
-
-msgid "The selected module is not currently available"
-msgstr "選択されたモジュールは現在利用できません"
-
-msgid "Edit Details"
-msgstr "詳細を編集する"
-
-#, python-format
-msgid "Edit %(model)s"
-msgstr ""
-
-#, python-format
-msgid "Default %s module"
-msgstr ""
-
 msgid "Orders"
 msgstr "注文"
 
 msgid "Show orders"
-msgstr "注文を見る"
+msgstr ""
 
 msgid "Outstanding Orders"
 msgstr "未処理注文"
@@ -304,21 +353,25 @@ msgstr ""
 msgid "Please select payment method."
 msgstr ""
 
-msgid "Create Order"
+msgid "Payments"
 msgstr ""
 
-#, python-format
-msgid "Contact %s does not exist."
+msgid "Order Contents"
 msgstr ""
 
-#, python-format
-msgid "Order %(identifier)s created."
+msgid "Log Entries"
 msgstr ""
 
-msgid "Could not proceed with order:"
+msgid "Create Refund"
 msgstr ""
 
-msgid "Could not create order:"
+msgid "This order cannot be refunded"
+msgstr ""
+
+msgid "Create Payment"
+msgstr ""
+
+msgid "This order cannot be paid at this point"
 msgstr ""
 
 msgid "Create Shipment"
@@ -333,11 +386,44 @@ msgstr ""
 msgid "This order can not be set as complete at this point"
 msgstr "この注文は、ただいま完了できません"
 
+msgid "Cancel Order"
+msgstr ""
+
+msgid "Paid, shipped, or canceled orders cannot be canceled"
+msgstr ""
+
+msgid "Edit order"
+msgstr ""
+
+msgid "This order cannot modified at this point"
+msgstr ""
+
 msgid "Unable to set order as completed at this point"
 msgstr ""
 
+#, python-brace-format
+msgid "Order status changed: {old_status} to {new_status}"
+msgstr ""
+
+msgid "Create Order"
+msgstr ""
+
 #, python-format
-msgid "Order status changed: %s to %s"
+msgid "Contact %s does not exist."
+msgstr ""
+
+#, python-format
+msgid "Order %(identifier)s updated."
+msgstr ""
+
+#, python-format
+msgid "Order %(identifier)s created."
+msgstr ""
+
+msgid "Could not proceed with order:"
+msgstr ""
+
+msgid "Could not finalize order:"
 msgstr ""
 
 msgid "Order"
@@ -359,6 +445,67 @@ msgid "Total"
 msgstr "合計"
 
 #, python-format
+msgid "Create Payment -- %s"
+msgstr ""
+
+msgid "Payment amount"
+msgstr ""
+
+msgid "Payment amount cannot be 0"
+msgstr ""
+
+#, python-format
+msgid "Payment %s created."
+msgstr ""
+
+msgid "Order has already been paid"
+msgstr ""
+
+msgid "Line number"
+msgstr ""
+
+msgid "Quantity"
+msgstr "数量"
+
+msgid "Amount"
+msgstr ""
+
+msgid "Restock products"
+msgstr ""
+
+#, python-format
+msgid "Create Refund -- %s"
+msgstr ""
+
+msgid "Refund Entire Order"
+msgstr ""
+
+msgid "This order already has existing refunds"
+msgstr ""
+
+msgid "Refund amount exceeds order amount."
+msgstr ""
+
+msgid "Refund amount cannot be 0"
+msgstr ""
+
+msgid "Refund created."
+msgstr ""
+
+#, python-format
+msgid "Create Full Refund -- %s"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Could not create full refund."
+msgstr ""
+
+msgid "Full refund created."
+msgstr ""
+
+#, python-format
 msgid "Create Shipment -- %s"
 msgstr ""
 
@@ -370,6 +517,20 @@ msgstr "配送する商品はありません。"
 
 #, python-format
 msgid "Shipment %s created."
+msgstr ""
+
+msgid "Permission Groups"
+msgstr ""
+
+msgid "Module Permissions"
+msgstr ""
+
+msgid ""
+"Modules with the same permissions as selected modules will be added "
+"automatically."
+msgstr ""
+
+msgid "Members"
 msgstr ""
 
 msgid "Product Types"
@@ -387,6 +548,51 @@ msgstr ""
 
 #, python-format
 msgid "Create Product with SKU \"%s\""
+msgstr ""
+
+msgid "Minimum Purchase Quantity must be greater than 0."
+msgstr ""
+
+#, python-format
+msgid "Thumbnail generation of %(media)s failed: %(error)s"
+msgstr ""
+
+msgid "Use only URL or file, not both"
+msgstr ""
+
+msgid "Is primary"
+msgstr ""
+
+msgid "Only images allowed in this field"
+msgstr "このフィールドでは画像のみが許可されております"
+
+#, python-format
+msgid "Unable to make package %(product)s: %(error)s"
+msgstr ""
+
+#, python-format
+msgid "New: %d"
+msgstr "新しい: %d"
+
+#, python-format
+msgid "Removed: %d"
+msgstr ""
+
+#, python-format
+msgid "Couldn't add product %s to own package"
+msgstr ""
+
+msgid "child"
+msgstr ""
+
+msgid "Unlink"
+msgstr "リンク解除"
+
+#, python-format
+msgid "Unable to link %(product)s: %(error)s"
+msgstr ""
+
+msgid "variable combination"
 msgstr ""
 
 #, python-format
@@ -420,71 +626,17 @@ msgstr "変更は保存されました"
 msgid "Edit Media: %s"
 msgstr "メディアを編集する: %s"
 
-msgid "Minimum Purchase Quantity must be greater than 0."
+msgid "Are you sure? This will remove all products from package."
+msgstr ""
+
+msgid "Clear package"
 msgstr ""
 
 #, python-format
-msgid "Thumbnail generation of %s failed: %s"
+msgid "Edit Package: %s"
 msgstr ""
 
-msgid "Use only URL or file, not both"
-msgstr ""
-
-#, fuzzy
-#| msgid "Set as primary image"
-msgid "Is primary"
-msgstr "主要画像に設定"
-
-msgid "Only images allowed in this field"
-msgstr "このフィールドでは画像のみが許可されております"
-
-msgid "SKU"
-msgstr "最小管理単位"
-
-msgid "Filter by SKU..."
-msgstr "最小管理単位でフィルターする..."
-
-msgid "Mode"
-msgstr "モード"
-
-msgid "Primary Category"
-msgstr "主要カテゴリー"
-
-msgid "Manage Cross-Selling"
-msgstr "クロスセリングを管理する"
-
-msgid "Cross-Selling"
-msgstr "クロスセリング"
-
-msgid "Actions"
-msgstr "アクション"
-
-msgid "Variations"
-msgstr "バリエーション"
-
-msgid "Manage Variations"
-msgstr "バリエーションを管理する"
-
-#, python-format
-msgid "Child: %s"
-msgstr ""
-
-#, python-format
-msgid "Parent: %s"
-msgstr ""
-
-#, python-format
-msgid "Sibling: %s"
-msgstr ""
-
-msgid "Manage Package"
-msgstr "パッケージを管理する"
-
-#, python-format
-msgid "Package Parent: %s"
-msgstr ""
-
-msgid "Convert to Variation Parent"
+msgid "Package cleared."
 msgstr ""
 
 msgid ""
@@ -513,25 +665,61 @@ msgstr "バリエーションはクリアされました。"
 msgid "Variation simplified."
 msgstr "バリエーションは単純化されました。"
 
-msgid "child"
+msgid "SKU"
+msgstr "最小管理単位"
+
+msgid "Filter by SKU..."
+msgstr "最小管理単位でフィルターする..."
+
+msgid "Barcode"
 msgstr ""
 
-msgid "Unlink"
-msgstr "リンク解除"
-
-#, python-format
-msgid "Unable to link %s: %s"
-msgstr "リンクすることができません %s: %s"
-
-#, python-format
-msgid "New: %d"
-msgstr "新しい: %d"
-
-#, python-format
-msgid "Removed: %d"
+msgid "Filter by barcode..."
 msgstr ""
 
-msgid "variable combination"
+msgid "Mode"
+msgstr "モード"
+
+msgid "Primary Category"
+msgstr "主要カテゴリー"
+
+msgid "Manage Cross-Selling"
+msgstr "クロスセリングを管理する"
+
+msgid "Cross-Selling"
+msgstr "クロスセリング"
+
+msgid "Actions"
+msgstr "アクション"
+
+#, python-format
+msgid "Child: %s"
+msgstr ""
+
+#, python-format
+msgid "Parent: %s"
+msgstr ""
+
+#, python-format
+msgid "Sibling: %s"
+msgstr ""
+
+msgid "Variations"
+msgstr "バリエーション"
+
+msgid "Manage Variations"
+msgstr "バリエーションを管理する"
+
+msgid "Packages"
+msgstr ""
+
+msgid "Manage Package"
+msgstr "パッケージを管理する"
+
+msgid "Convert to Package Parent"
+msgstr ""
+
+msgid "Convert to Variation Parent"
 msgstr ""
 
 msgid "Sales Units"
@@ -543,6 +731,59 @@ msgstr "ショートネーム"
 msgid "Allowed decimals"
 msgstr "可小数"
 
+msgid "Service Providers"
+msgstr ""
+
+msgid "Payment and Shipping"
+msgstr ""
+
+#, python-format
+msgid "Edit %(model)s"
+msgstr ""
+
+#, python-brace-format
+msgid "Create {service_name}"
+msgstr ""
+
+msgid "Shipping Methods"
+msgstr ""
+
+msgid "Payment Methods"
+msgstr ""
+
+msgid "Service"
+msgstr ""
+
+msgid "Select carrier before filling other fields."
+msgstr ""
+
+msgid "Select payment processor before filling other fields."
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
+msgid "Waive limit"
+msgstr ""
+
+msgid "Service choice"
+msgstr ""
+
+msgid "Enabled"
+msgstr ""
+
+msgid "Shop"
+msgstr ""
+
+msgid "Carrier"
+msgstr ""
+
+msgid "Payment Processor"
+msgstr ""
+
+msgid "Weight-based pricing range"
+msgstr ""
+
 msgid "Shops"
 msgstr "ショップ"
 
@@ -552,9 +793,6 @@ msgstr "システム"
 msgid ""
 "This field cannot be changed since there are existing orders for this shop."
 msgstr ""
-
-msgid "Only one shop permitted."
-msgstr "一つだけのショップが許可されています。"
 
 msgid "Domain"
 msgstr "ドメイン"
@@ -592,9 +830,6 @@ msgstr "コード"
 msgid "Rate"
 msgstr ""
 
-msgid "Enabled"
-msgstr ""
-
 msgid "Users"
 msgstr "ユーザー"
 
@@ -614,6 +849,9 @@ msgid "superuser"
 msgstr "スーパーユーザー"
 
 msgid "No special permissions"
+msgstr ""
+
+msgid "No permission groups"
 msgstr ""
 
 msgid "Change Password"
@@ -647,21 +885,9 @@ msgstr "ユーザーの非アクティブ化"
 msgid "User bound to contact %(contact)s."
 msgstr ""
 
-msgid "You can not deactivate a superuser."
-msgstr ""
-
-msgid "You can not deactivate yourself."
-msgstr ""
-
 #, python-format
 msgid "%(user)s is now %(state)s."
 msgstr ""
-
-msgid "active"
-msgstr "アクティブ"
-
-msgid "inactive"
-msgstr "非アクティブ"
 
 msgid "Username"
 msgstr "ユーザーネーム"
@@ -771,6 +997,9 @@ msgstr "ダッシュボード"
 msgid "Search for"
 msgstr "を検索"
 
+msgid "Settings"
+msgstr ""
+
 msgid "Hello"
 msgstr "こんにちは"
 
@@ -786,11 +1015,11 @@ msgstr "カテゴリー画像"
 msgid "General information"
 msgstr "基本情報"
 
-msgid "Members"
-msgstr "メンバー"
+msgid "Add Members"
+msgstr ""
 
-msgid "No members."
-msgstr "メンバーはいません。"
+msgid "Add more"
+msgstr ""
 
 msgid "Addresses"
 msgstr "住所"
@@ -810,13 +1039,19 @@ msgstr "基本情報"
 msgid "Full Name"
 msgstr ""
 
-msgid "Groups"
-msgstr ""
-
 msgid "No groups"
 msgstr ""
 
 msgid "Bound User"
+msgstr ""
+
+msgid "Companies"
+msgstr ""
+
+msgid "Account Manager"
+msgstr ""
+
+msgid "Merchant Notes"
 msgstr ""
 
 msgid "Shipping address"
@@ -829,6 +1064,9 @@ msgid "Billing address"
 msgstr " 請求先住所"
 
 msgid "No billing address defined."
+msgstr ""
+
+msgid "No members."
 msgstr ""
 
 msgid "Remove block"
@@ -868,7 +1106,67 @@ msgstr "アップロード"
 msgid "Description"
 msgstr "記述"
 
-msgid "Amount"
+msgid "Text"
+msgstr ""
+
+msgid "Taxless Unit Price"
+msgstr ""
+
+msgid "Taxless Discount"
+msgstr ""
+
+msgid "Tax"
+msgstr "税"
+
+msgid "Taxless Total"
+msgstr ""
+
+msgid "Total incl. Tax"
+msgstr ""
+
+msgid "Discount"
+msgstr "割引"
+
+msgid "Taxless"
+msgstr ""
+
+msgid "Message"
+msgstr ""
+
+msgid "No log entries have been added yet."
+msgstr ""
+
+msgid "Use the input below to add new log entries."
+msgstr ""
+
+msgid "Add to Log"
+msgstr ""
+
+msgid "There was an error adding the log entry."
+msgstr ""
+
+msgid "Line #"
+msgstr ""
+
+msgid "Refund Amount"
+msgstr ""
+
+msgid "Are you sure you want to create a full refund?"
+msgstr ""
+
+msgid "Confirm Refund"
+msgstr ""
+
+msgid "Paid"
+msgstr ""
+
+msgid "Remaining"
+msgstr ""
+
+msgid "Refunded"
+msgstr ""
+
+msgid "Add More Refunds "
 msgstr ""
 
 msgid "To Ship"
@@ -916,47 +1214,14 @@ msgstr ""
 msgid "Total Price"
 msgstr ""
 
-msgid "Order Contents"
+msgid "Tracking codes"
 msgstr ""
 
-msgid "Text"
-msgstr ""
-
-msgid "Taxless Unit Price"
-msgstr ""
-
-msgid "Quantity"
-msgstr "数量"
-
-msgid "Taxless Discount"
-msgstr ""
-
-msgid "Tax"
-msgstr "税"
-
-msgid "Taxless Total"
-msgstr ""
-
-msgid "Total incl. Tax"
-msgstr ""
-
-msgid "Discount"
-msgstr "割引"
-
-msgid "Taxless"
-msgstr ""
-
-msgid "Payments"
+msgid "Error!"
 msgstr ""
 
 msgid "Additional Details"
 msgstr ""
-
-msgid "Stock"
-msgstr "在庫"
-
-msgid "Unstocked"
-msgstr "在庫切れ"
 
 msgid "Accounting"
 msgstr "会計"
@@ -1020,6 +1285,15 @@ msgstr ""
 msgid "File "
 msgstr "ファイル"
 
+msgid "Package Products"
+msgstr ""
+
+msgid "This product is not yet a package."
+msgstr ""
+
+msgid "To create a package, choose products below."
+msgstr ""
+
 msgid "Simple Variation Children"
 msgstr ""
 
@@ -1043,11 +1317,28 @@ msgid ""
 "Variables tab and then link them to products here."
 msgstr ""
 
+msgid ""
+"Define price based basket weight range. Range minimum is counted in range "
+"only as zero."
+msgstr ""
+
+msgid "Behavior"
+msgstr ""
+
+msgid "Behavior component type"
+msgstr ""
+
+msgid "Add component"
+msgstr ""
+
 msgid "Shop Logo"
 msgstr "ショップロゴ"
 
 msgid "Maintenance Mode"
 msgstr "メンテナンスモード"
+
+msgid "Contact Address"
+msgstr ""
 
 msgid "About Shoop Telemetry"
 msgstr ""
@@ -1055,9 +1346,11 @@ msgstr ""
 msgid "Shoop will occasionally send telemetry data to a Shoop.io server."
 msgstr ""
 
+#, python-format
 msgid ""
 "The data contains an unique installation key, as well as the hostname of the "
-"installation (as sent by the visiting browser; currently"
+"installation (as sent by the visiting browser; currently <code>%(host)s</"
+"code>)."
 msgstr ""
 
 msgid ""
@@ -1069,13 +1362,9 @@ msgstr ""
 msgid "Opt-in / opt-out"
 msgstr ""
 
-msgid "You are currently"
-msgstr "あなたは現在"
-
-msgid "opted in"
-msgstr ""
-
-msgid "to send telemetry data to Shoop.io."
+msgid ""
+"You are currently <span class=\"lead label label-success\">opted in</span> "
+"to send telemetry data to Shoop.io."
 msgstr ""
 
 msgid "Thank you for your valuable contribution."
@@ -1084,10 +1373,9 @@ msgstr ""
 msgid "Opt out"
 msgstr ""
 
-msgid "opted out"
-msgstr ""
-
-msgid "of Shoop telemetry."
+msgid ""
+"You are currently <span class=\"label label-warning\">opted out</span> of "
+"Shoop telemetry."
 msgstr ""
 
 msgid "Opt in"
@@ -1101,10 +1389,10 @@ msgid ""
 "after installation if still opted in at that point."
 msgstr ""
 
-msgid "Telemetry data was last submitted at"
-msgstr ""
-
-msgid "ago"
+#, python-format
+msgid ""
+"Telemetry data was last submitted at %(submission_datetime)s - "
+"(%(submission_timesince)s) ago"
 msgstr ""
 
 msgid "See the data that was submitted."
@@ -1149,12 +1437,6 @@ msgstr "保存して新規作成する"
 msgid "Are you sure you wish to delete %s?"
 msgstr ""
 
-msgid "no"
-msgstr "いいえ"
-
-msgid "yes"
-msgstr "はい"
-
 #, python-format
 msgid "Showing %(per_page)s of %(n_items)s %(verbose_name_plural)s"
 msgstr ""
@@ -1193,4 +1475,12 @@ msgstr ""
 
 #, python-format
 msgid "Unnamed %s"
+msgstr ""
+
+#, python-format
+msgid "Only one %(model)s permitted."
+msgstr ""
+
+#, python-format
+msgid "Couldn't get selections for %s."
 msgstr ""

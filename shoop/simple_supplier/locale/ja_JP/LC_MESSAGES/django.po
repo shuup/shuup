@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 08:27+0000\n"
-"PO-Revision-Date: 2016-01-21 08:09+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-02-19 10:29+0000\n"
+"Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
 "language/ja_JP/)\n"
 "Language: ja_JP\n"
@@ -17,6 +17,65 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Stock management"
+msgstr ""
+
+msgid "Products"
+msgstr ""
+
+msgid "SKU"
+msgstr ""
+
+msgid "Filter by SKU..."
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Filter by name..."
+msgstr ""
+
+msgid "Supplier"
+msgstr ""
+
+msgid "Stock information"
+msgstr ""
+
+msgid "Adjust stock"
+msgstr ""
+
+#, python-format
+msgid ""
+"Added %(delta)s %(unit_short_name)s for product %(product_name)s stock "
+"(%(supplier_name)s)"
+msgstr ""
+
+#, python-format
+msgid ""
+"Removed %(delta)s %(unit_short_name)s from product %(product_name)s stock "
+"(%(supplier_name)s)"
+msgstr ""
+
+msgid "Not allowed"
+msgstr ""
+
+msgid "Error, please check submitted values and try again."
+msgstr ""
+
+#, python-format
+msgid "Error, please check submitted values and try again (%(error)s)."
+msgstr ""
+
+#, python-format
+msgid "Purchase price per unit (%(currency_name)s)"
+msgstr ""
+
+msgid "Quantity"
+msgstr ""
+
+msgid "Only non-zero values can be added to stock."
+msgstr ""
 
 msgid "product"
 msgstr ""
@@ -37,4 +96,50 @@ msgid "logical count"
 msgstr ""
 
 msgid "physical count"
+msgstr ""
+
+msgid "Add stock"
+msgstr ""
+
+#, python-format
+msgid ""
+"Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
+"does not have suppliers with %(module_name)s module."
+msgstr ""
+
+msgid "Please set suppliers at Purchasing section."
+msgstr ""
+
+#, python-format
+msgid ""
+"Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
+"is not stocked."
+msgstr ""
+
+msgid "Please set product stock behavior at Additional Details section."
+msgstr ""
+
+#, python-format
+msgid "No suppliers with %(module_name)s available."
+msgstr ""
+
+#, python-format
+msgid ""
+"Please set %(module_name)s module for at least one of the <a href="
+"\"%(supplier_url)s\" target=\"_blank\">Suppliers</a>."
+msgstr ""
+
+msgid "Physical count"
+msgstr ""
+
+msgid "Logical count"
+msgstr ""
+
+msgid "Value per unit"
+msgstr ""
+
+msgid "Total value"
+msgstr ""
+
+msgid "No stock information available."
 msgstr ""

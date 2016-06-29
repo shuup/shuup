@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-30 23:37+0000\n"
-"PO-Revision-Date: 2016-04-10 03:33+0000\n"
+"POT-Creation-Date: 2016-06-08 18:15+0000\n"
+"PO-Revision-Date: 2016-06-25 12:47+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shoop/shoop/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -22,11 +22,20 @@ msgstr ""
 msgid "Shoop Frontend - Customer Information Editing"
 msgstr "Frontend do Shoop - Edição das Informações do Cliente"
 
-msgid "User account information"
-msgstr "Informações da conta de usuário"
+msgid "Will become default user email when linked"
+msgstr "Irá se tornar o e-mail de usuário padrão quando vinculado"
 
-msgid "User information"
-msgstr "Informações do usuário"
+msgid "Change Password"
+msgstr "Alterar Senha"
+
+msgid "Save password"
+msgstr "Salvar senha"
+
+msgid "Company account information"
+msgstr "Informações da conta empresarial"
+
+msgid "Company information"
+msgstr "Informações da empresa"
 
 msgid "Billing information"
 msgstr "Informações de cobrança"
@@ -37,5 +46,17 @@ msgstr "Informações de entrega"
 msgid "Save changes"
 msgstr "Salvar alterações"
 
+msgid "User account information"
+msgstr "Informações da conta de usuário"
+
+msgid "User information"
+msgstr "Informações do usuário"
+
+msgid "Password successfully changed."
+msgstr "Senha alterada com sucesso."
+
 msgid "Account information saved successfully."
 msgstr "Informações da conta salvas com sucesso."
+
+msgid "Company information saved successfully."
+msgstr "Informações da empresa salvas com sucesso."

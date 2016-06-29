@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
-"PO-Revision-Date: 2015-12-08 08:41+0000\n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-02-05 12:24+0000\n"
 "Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
 "language/ja_JP/)\n"
@@ -71,18 +71,14 @@ msgstr ""
 msgid "enabled"
 msgstr "使用可能"
 
-#, fuzzy
-#| msgid "Tax classes"
 msgid "tax classes"
-msgstr "税クラス"
+msgstr ""
 
 msgid "Tax classes of the items to be taxed"
 msgstr ""
 
-#, fuzzy
-#| msgid "Customer tax groups"
 msgid "customer tax groups"
-msgstr "カスタマー税グループ"
+msgstr ""
 
 msgid "country codes pattern"
 msgstr ""
@@ -90,10 +86,8 @@ msgstr ""
 msgid "region codes pattern"
 msgstr ""
 
-#, fuzzy
-#| msgid "Postal Codes"
 msgid "postal codes pattern"
-msgstr "郵便番号"
+msgstr ""
 
 msgid "priority"
 msgstr "優先"
@@ -113,10 +107,8 @@ msgid ""
 "tax."
 msgstr ""
 
-#, fuzzy
-#| msgid "Tax"
 msgid "tax"
-msgstr "税"
+msgstr ""
 
 msgid "Tax rule {} ({})"
 msgstr ""
