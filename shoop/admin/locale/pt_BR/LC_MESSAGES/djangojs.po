@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-19 08:57+0000\n"
-"PO-Revision-Date: 2016-04-21 23:58+0000\n"
-"Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
+"POT-Creation-Date: 2016-06-28 12:52+0000\n"
+"PO-Revision-Date: 2016-06-28 21:58+0000\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shoop/shoop/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -76,7 +76,7 @@ msgid "Edit"
 msgstr "Editar"
 
 msgid "Click the <strong>Upload</strong> button to upload files."
-msgstr "Clique no botão <strong>Fazer upload</strong> para fazer o upload dos arquivos."
+msgstr "Clique no botão <strong>Fazer upload</strong> para fazer o upload de arquivos."
 
 msgid ""
 "<span>Drag and drop</span> files here<br> or click the <span>Upload</span> "
@@ -115,10 +115,10 @@ msgid "Unit Price"
 msgstr "Preço Unitário"
 
 msgid "Discount amount"
-msgstr "Valor do desconto"
+msgstr "Valor de desconto"
 
 msgid "Total (excluding taxes)"
-msgstr "Total (excluindo impostos)"
+msgstr "Total (sem impostos)"
 
 msgid "Tax percent"
 msgstr "Alíquota de imposto"
@@ -132,6 +132,51 @@ msgstr "Endereço de cobrança"
 msgid "Shipping address"
 msgstr "Endereço de entrega"
 
+msgid "Full Name"
+msgstr ""
+
+msgid "Phone"
+msgstr "Telefone"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Groups"
+msgstr ""
+
+msgid "Companies"
+msgstr ""
+
+msgid "Merchant Notes"
+msgstr ""
+
+msgid "Year"
+msgstr ""
+
+msgid "Total Sales"
+msgstr ""
+
+msgid "Shipment Status"
+msgstr ""
+
+msgid "Payment Status"
+msgstr ""
+
+msgid "Order Status"
+msgstr ""
+
+msgid "Customer Information"
+msgstr ""
+
+msgid "Order Summary"
+msgstr ""
+
+msgid "Recent Orders"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
 msgid "A new customer will be created based on billing address."
 msgstr "Um novo cliente será criado com base no endereço de cobrança."
 
@@ -143,6 +188,9 @@ msgstr "Selecionar Cliente Existente"
 
 msgid "New Customer"
 msgstr "Novo Cliente"
+
+msgid "View Details"
+msgstr ""
 
 msgid "Save customer details while creating order"
 msgstr "Salvar detalhes do cliente durante a criação do pedido"
@@ -165,14 +213,17 @@ msgstr "Voltar"
 msgid "Confirm"
 msgstr "Confirmar"
 
+msgid "Discard Changes"
+msgstr "Descartar Alterações"
+
 msgid "Select Shop"
 msgstr "Selecionar Loja"
 
-msgid "Order Contents"
-msgstr "Conteúdo do Pedido"
-
 msgid "Customer Details"
 msgstr "Detalhes do Cliente"
+
+msgid "Order Contents"
+msgstr "Conteúdo do Pedido"
 
 msgid "Shipping Method"
 msgstr "Forma de Entrega"
@@ -187,6 +238,12 @@ msgstr "Formas de entrega e pagamento, impostos e possíveis descontos extras se
 
 msgid "Proceed"
 msgstr "Prosseguir"
+
+msgid "Logical Count"
+msgstr "Contagem Lógica"
+
+msgid "Physical Count"
+msgstr "Contagem Física"
 
 msgid "Select product"
 msgstr "Selecionar produto"
@@ -210,13 +267,13 @@ msgid "Discount Percent"
 msgstr "% de Desconto"
 
 msgid "Total Discount Amount"
-msgstr "Valor Total de Desconto"
+msgstr "Valor Total do Desconto"
 
 msgid "Line Total"
 msgstr "Total do Item"
 
 msgid "Orderline type"
-msgstr "Tipo de item do pedido"
+msgstr "Tipo do item de pedido"
 
 msgid ""
 "If your product prices vary based on customer, you might want to select "
@@ -225,7 +282,7 @@ msgstr "Se os preços dos produtos variarem de acordo com o cliente, você pode 
 
 #, javascript-format
 msgid "All prices are in %s currency."
-msgstr "Todos os preços estão em %s."
+msgstr "Todos os preços estão em %s (moeda)."
 
 msgid "All prices include taxes."
 msgstr "Todos os preços incluem impostos."
@@ -252,13 +309,7 @@ msgid "Other"
 msgstr "Outro"
 
 msgid "Tax number"
-msgstr "Número de contribuinte (CNPJ)"
-
-msgid "Phone"
-msgstr "Telefone"
-
-msgid "Email"
-msgstr "E-mail"
+msgstr "CNPJ"
 
 msgid "Street"
 msgstr "Endereço"
@@ -277,6 +328,9 @@ msgstr "Estado"
 
 msgid "Country"
 msgstr "País"
+
+msgid "No records found."
+msgstr ""
 
 msgid "Identifier"
 msgstr "Identificador"
@@ -316,13 +370,41 @@ msgid "Add new variable"
 msgstr "Adicionar nova variável"
 
 msgid "No browser URL for kind:"
-msgstr "Nenhuma URL do navegador para o tipo:"
+msgstr "Nenhum URL do navegador para o tipo:"
 
 msgid "Expand Editor"
 msgstr "Expandir Editor"
 
 msgid "No results."
 msgstr "Nenhum resultado."
+
+msgid "The results could not be loaded"
+msgstr "Os resultados não puderam ser carregados"
+
+#, javascript-format
+msgid "Please delete %s character"
+msgid_plural "Please delete %s characters"
+msgstr[0] "Por favor, remova %s caractere"
+msgstr[1] "Por favor, remova %s caracteres"
+
+#, javascript-format
+msgid "Please enter %s or more characters"
+msgstr "Por favor, insira %s ou mais caracteres"
+
+msgid "Loading more results..."
+msgstr "Carregando mais resultados..."
+
+#, javascript-format
+msgid "You can only select %s item"
+msgid_plural "You can only select %s items"
+msgstr[0] "Você só pode selecionar %s item"
+msgstr[1] "Você só pode selecionar %s itens"
+
+msgid "No results found"
+msgstr "Nenhum resultado encontrado"
+
+msgid "Searching..."
+msgstr "Procurando..."
 
 msgid "From"
 msgstr "De"

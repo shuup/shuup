@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
-# Jessica Wang <jessica.wang@shoop.io>, 2015
+# Jessica Wang <jessica.wang@shoop.io>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 14:44+0000\n"
-"PO-Revision-Date: 2015-12-10 12:59+0000\n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-03-09 09:49+0000\n"
 "Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
 "language/cmn/)\n"
@@ -56,7 +56,7 @@ msgid "Reload Method"
 msgstr "重新加载方式"
 
 msgid "Reloading."
-msgstr ""
+msgstr "重新载入。"
 
 msgid "Addon file (ZIP)"
 msgstr "附加组件文件 (ZIP)"
@@ -65,7 +65,7 @@ msgid "Only upload addon files you trust."
 msgstr "只上传信任的附加组件文件。"
 
 msgid "Only ZIP files are supported"
-msgstr ""
+msgstr "只支持ZIP文件"
 
 msgid "Upload"
 msgstr "上传"
@@ -102,30 +102,22 @@ msgstr ""
 "此外，服务器有时会不能正确地初始化，在这种情况下，您需要自己排除故障 (或者请"
 "个系统管理员)。"
 
-#, fuzzy
-#| msgid "Reload Method"
 msgid "Reload steps"
-msgstr "重新加载方式"
+msgstr ""
 
 msgid ""
 "Finalize installations for newly installed addons (migrate and collect "
 "static resources)"
 msgstr ""
 
-#, fuzzy
-#| msgid "Reload Application Server"
 msgid "Reload application server"
 msgstr "重新加载应用服务器"
 
-#, fuzzy
-#| msgid "Reload Method"
 msgid "Reload initiated."
-msgstr "重新加载方式"
+msgstr ""
 
-#, fuzzy
-#| msgid "Reload application"
 msgid "Error while reloading application."
-msgstr "重新加载应用程序"
+msgstr "重新加载应用程序时出错。"
 
 msgid "Finalizing installations."
 msgstr ""

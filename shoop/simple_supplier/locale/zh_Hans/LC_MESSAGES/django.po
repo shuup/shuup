@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
+# Jessica Wang <jessica.wang@shoop.io>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 14:44+0000\n"
-"PO-Revision-Date: 2016-01-21 08:09+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-03-09 10:20+0000\n"
+"Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
 "language/cmn/)\n"
 "Language: cmn\n"
@@ -19,31 +20,31 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "Stock management"
-msgstr ""
+msgstr "库存管理"
 
 msgid "Products"
-msgstr ""
+msgstr "产品"
 
 msgid "SKU"
-msgstr ""
+msgstr "SKU"
 
 msgid "Filter by SKU..."
-msgstr ""
+msgstr "按SKU过滤……"
 
 msgid "Name"
-msgstr ""
+msgstr "名称"
 
 msgid "Filter by name..."
-msgstr ""
+msgstr "按名称过滤……"
 
 msgid "Supplier"
-msgstr ""
+msgstr "供应商"
 
 msgid "Stock information"
-msgstr ""
+msgstr "库存信息"
 
 msgid "Adjust stock"
-msgstr ""
+msgstr "调整库存"
 
 #, python-format
 msgid ""
@@ -58,48 +59,48 @@ msgid ""
 msgstr ""
 
 msgid "Not allowed"
-msgstr ""
+msgstr "不允许"
 
 msgid "Error, please check submitted values and try again."
-msgstr ""
+msgstr "错误，请查看所提交的值并重试。"
 
 #, python-format
 msgid "Error, please check submitted values and try again (%(error)s)."
-msgstr ""
+msgstr "错误，请查看所提交的值并重试 (%(error)s)。"
 
 #, python-format
 msgid "Purchase price per unit (%(currency_name)s)"
 msgstr ""
 
 msgid "Quantity"
-msgstr ""
+msgstr "数量"
 
 msgid "Only non-zero values can be added to stock."
-msgstr ""
+msgstr "只有非零值可加进库存。"
 
 msgid "product"
-msgstr ""
+msgstr "产品"
 
 msgid "supplier"
-msgstr ""
+msgstr "供应商"
 
 msgid "created on"
-msgstr ""
+msgstr "创建"
 
 msgid "created by"
-msgstr ""
+msgstr "创建于"
 
 msgid "delta"
 msgstr ""
 
 msgid "logical count"
-msgstr ""
+msgstr "逻辑盘点"
 
 msgid "physical count"
-msgstr ""
+msgstr "实物盘点"
 
 msgid "Add stock"
-msgstr ""
+msgstr "添加库存"
 
 #, python-format
 msgid ""
@@ -115,6 +116,8 @@ msgid ""
 "Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
 "is not stocked."
 msgstr ""
+"该产品<a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a>无备"
+"有。"
 
 msgid "Please set product stock behavior at Additional Details section."
 msgstr ""
@@ -130,10 +133,10 @@ msgid ""
 msgstr ""
 
 msgid "Physical count"
-msgstr ""
+msgstr "实物盘点"
 
 msgid "Logical count"
-msgstr ""
+msgstr "逻辑盘点"
 
 msgid "Value per unit"
 msgstr ""

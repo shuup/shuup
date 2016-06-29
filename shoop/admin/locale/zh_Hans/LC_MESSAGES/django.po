@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
-# Jessica Wang <jessica.wang@shoop.io>, 2015
+# Jessica Wang <jessica.wang@shoop.io>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 14:44+0000\n"
-"PO-Revision-Date: 2015-12-17 10:37+0000\n"
-"Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-06-28 21:58+0000\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
 "language/cmn/)\n"
 "Language: cmn\n"
@@ -95,15 +95,11 @@ msgstr ""
 msgid "hide prices"
 msgstr ""
 
-#, fuzzy
-#| msgid "Members"
 msgid "member"
-msgstr "成员"
+msgstr ""
 
-#, fuzzy
-#| msgid "Removed: %d"
 msgid "Remove"
-msgstr "已删除：%d"
+msgstr ""
 
 #, python-format
 msgid "%(count)s member added"
@@ -149,25 +145,17 @@ msgstr "新用户"
 msgid "Create an user for the contact."
 msgstr "为该联系人创建用户。"
 
-#, fuzzy
-#| msgid "Order"
 msgid "New Order"
-msgstr "订单"
+msgstr ""
 
-#, fuzzy
-#| msgid "Create an user for the contact."
 msgid "Create an order for the contact."
-msgstr "为该联系人创建用户。"
+msgstr ""
 
-#, fuzzy
-#| msgid "Deactivate User"
 msgid "Deactivate Contact"
-msgstr "撤销用户"
+msgstr ""
 
-#, fuzzy
-#| msgid "New Contact"
 msgid "Activate Contact"
-msgstr "新联系"
+msgstr ""
 
 msgid "Edit..."
 msgstr "编辑……"
@@ -178,10 +166,9 @@ msgstr "无法撤销超级用户。"
 msgid "You can not deactivate yourself."
 msgstr "无法撤销自己。"
 
-#, fuzzy, python-format
-#| msgid "%(user)s is now %(state)s."
+#, python-format
 msgid "%(contact)s is now %(state)s."
-msgstr "%(user)s 现在是 %(state)s。"
+msgstr ""
 
 msgid "active"
 msgstr "活跃"
@@ -197,7 +184,7 @@ msgstr "公司"
 
 #, python-format
 msgid "User %(bind_user)s already has a contact"
-msgstr ""
+msgstr "用户%(bind_user)s已有联系信息"
 
 msgid "Email"
 msgstr "电子邮箱"
@@ -256,15 +243,13 @@ msgstr "媒体浏览器"
 msgid "Root"
 msgstr "根"
 
-#, fuzzy, python-brace-format
-#| msgid "%d subfolders moved to %s."
+#, python-brace-format
 msgid "{num} subfolders moved to {folder}."
-msgstr "%d 子文件夹已转移至 %s。"
+msgstr ""
 
-#, fuzzy, python-brace-format
-#| msgid "%d files moved to %s."
+#, python-brace-format
 msgid "{num} files moved to {folder}."
-msgstr "%d 文件已转移至 %s。"
+msgstr ""
 
 #, python-format
 msgid "Folder %s deleted."
@@ -291,7 +276,7 @@ msgid "Orders"
 msgstr "订单"
 
 msgid "Show orders"
-msgstr "显示订单"
+msgstr ""
 
 msgid "Outstanding Orders"
 msgstr "未处理订单"
@@ -344,11 +329,11 @@ msgstr "该产品 %s 不存在。"
 
 #, python-format
 msgid "Product %(product)s is not available in the %(shop)s shop."
-msgstr "该产品 %(product)s 在此店铺 %(shop)s 无法找到。"
+msgstr "该产品 %(product)s 在此商店 %(shop)s 无法找到。"
 
 #, python-format
 msgid "Product %(product)s is not orderable: %(error)s"
-msgstr "该产品 %(product)s 不可订购： %(error)s"
+msgstr ""
 
 msgid "Please add lines to the order."
 msgstr "请添加行至订单。"
@@ -360,7 +345,7 @@ msgid "Tax number is not set for company."
 msgstr "公司税号未设置。"
 
 msgid "Please choose a valid shop."
-msgstr "请选择有效的店铺。"
+msgstr "请选择有效的商店。"
 
 msgid "Please select shipping method."
 msgstr "请选择配送方式。"
@@ -377,23 +362,17 @@ msgstr "订单内容"
 msgid "Log Entries"
 msgstr ""
 
-#, fuzzy
-#| msgid "Create new"
 msgid "Create Refund"
-msgstr "创建新群组"
+msgstr ""
 
 msgid "This order cannot be refunded"
 msgstr ""
 
-#, fuzzy
-#| msgid "Create Shipment"
 msgid "Create Payment"
-msgstr "创建配送"
+msgstr ""
 
-#, fuzzy
-#| msgid "This order can not be set as complete at this point"
 msgid "This order cannot be paid at this point"
-msgstr "该订单无法在此阶段设为完成"
+msgstr ""
 
 msgid "Create Shipment"
 msgstr "创建配送"
@@ -407,31 +386,24 @@ msgstr "完成设置"
 msgid "This order can not be set as complete at this point"
 msgstr "该订单无法在此阶段设为完成"
 
-#, fuzzy
-#| msgid "Create Order"
 msgid "Cancel Order"
-msgstr "创建订单"
+msgstr ""
 
 msgid "Paid, shipped, or canceled orders cannot be canceled"
 msgstr ""
 
-#, fuzzy
-#| msgid "%d orders"
 msgid "Edit order"
-msgstr "%d 订单"
+msgstr ""
 
-#, fuzzy
-#| msgid "This order can not be set as complete at this point"
 msgid "This order cannot modified at this point"
-msgstr "该订单无法在此阶段设为完成"
+msgstr ""
 
 msgid "Unable to set order as completed at this point"
 msgstr "无法在该阶段设置订单为完成"
 
-#, fuzzy, python-brace-format
-#| msgid "Order status changed: %s to %s"
+#, python-brace-format
 msgid "Order status changed: {old_status} to {new_status}"
-msgstr "订单状态已改变：%s 至 %s"
+msgstr ""
 
 msgid "Create Order"
 msgstr "创建订单"
@@ -440,10 +412,9 @@ msgstr "创建订单"
 msgid "Contact %s does not exist."
 msgstr "该联系人%s不存在。"
 
-#, fuzzy, python-format
-#| msgid "Order %(identifier)s created."
+#, python-format
 msgid "Order %(identifier)s updated."
-msgstr "订单 %(identifier)s 已形成。"
+msgstr ""
 
 #, python-format
 msgid "Order %(identifier)s created."
@@ -452,10 +423,8 @@ msgstr "订单 %(identifier)s 已形成。"
 msgid "Could not proceed with order:"
 msgstr "无法处理订单："
 
-#, fuzzy
-#| msgid "Could not create order:"
 msgid "Could not finalize order:"
-msgstr "无法形成订单："
+msgstr ""
 
 msgid "Order"
 msgstr "订单"
@@ -475,31 +444,25 @@ msgstr "配送状态"
 msgid "Total"
 msgstr "总共"
 
-#, fuzzy, python-format
-#| msgid "Create Shipment -- %s"
+#, python-format
 msgid "Create Payment -- %s"
-msgstr "创建配送 -- %s"
+msgstr ""
 
-#, fuzzy
-#| msgid "Payment Status"
 msgid "Payment amount"
-msgstr "支付状态"
+msgstr ""
 
 msgid "Payment amount cannot be 0"
 msgstr ""
 
-#, fuzzy, python-format
-#| msgid "Shipment %s created."
+#, python-format
 msgid "Payment %s created."
-msgstr "配送 %s 已创建。"
+msgstr ""
 
 msgid "Order has already been paid"
 msgstr ""
 
-#, fuzzy
-#| msgid "Tax number"
 msgid "Line number"
-msgstr "税号"
+msgstr ""
 
 msgid "Quantity"
 msgstr "数量"
@@ -510,10 +473,9 @@ msgstr "合计"
 msgid "Restock products"
 msgstr ""
 
-#, fuzzy, python-format
-#| msgid "Create Shipment -- %s"
+#, python-format
 msgid "Create Refund -- %s"
-msgstr "创建配送 -- %s"
+msgstr ""
 
 msgid "Refund Entire Order"
 msgstr ""
@@ -527,23 +489,18 @@ msgstr ""
 msgid "Refund amount cannot be 0"
 msgstr ""
 
-#, fuzzy
-#| msgid "New %s created."
 msgid "Refund created."
-msgstr "新 %s已创建"
+msgstr ""
 
-#, fuzzy, python-format
-#| msgid "Create Shipment -- %s"
+#, python-format
 msgid "Create Full Refund -- %s"
-msgstr "创建配送 -- %s"
+msgstr ""
 
 msgid "Cancel"
 msgstr ""
 
-#, fuzzy
-#| msgid "Could not create order:"
 msgid "Could not create full refund."
-msgstr "无法形成订单："
+msgstr ""
 
 msgid "Full refund created."
 msgstr ""
@@ -562,15 +519,11 @@ msgstr "无发货产品。"
 msgid "Shipment %s created."
 msgstr "配送 %s 已创建。"
 
-#, fuzzy
-#| msgid "Permissions"
 msgid "Permission Groups"
-msgstr "许可"
+msgstr ""
 
-#, fuzzy
-#| msgid "Edit Permissions"
 msgid "Module Permissions"
-msgstr "权限编辑"
+msgstr ""
 
 msgid ""
 "Modules with the same permissions as selected modules will be added "
@@ -578,7 +531,7 @@ msgid ""
 msgstr ""
 
 msgid "Members"
-msgstr "成员"
+msgstr ""
 
 msgid "Product Types"
 msgstr "产品类型"
@@ -600,18 +553,15 @@ msgstr "创建带有SKU\"%s\"的产品"
 msgid "Minimum Purchase Quantity must be greater than 0."
 msgstr "最小购买数量必须大于0。"
 
-#, fuzzy, python-format
-#| msgid "Thumbnail generation of %s failed: %s"
+#, python-format
 msgid "Thumbnail generation of %(media)s failed: %(error)s"
-msgstr " %s的缩略图生成失败：%s"
+msgstr ""
 
 msgid "Use only URL or file, not both"
 msgstr "请只使用URL或文件其一"
 
-#, fuzzy
-#| msgid "Set as primary image"
 msgid "Is primary"
-msgstr "设置为主要图像"
+msgstr "是 主要的"
 
 msgid "Only images allowed in this field"
 msgstr "该字段只允许图像"
@@ -633,20 +583,17 @@ msgid "Couldn't add product %s to own package"
 msgstr ""
 
 msgid "child"
-msgstr ""
+msgstr "子"
 
 msgid "Unlink"
 msgstr "断开链接"
 
-#, fuzzy, python-format
-#| msgid "Unable to link %s: %s"
+#, python-format
 msgid "Unable to link %(product)s: %(error)s"
-msgstr "无法连接%s：%s"
+msgstr ""
 
-#, fuzzy
-#| msgid "Combination"
 msgid "variable combination"
-msgstr "结合"
+msgstr "变量组合"
 
 #, python-format
 msgid "%s has been marked deleted."
@@ -657,7 +604,7 @@ msgstr "最小购买量已经舍入与销售单位匹配。"
 
 #, python-format
 msgid "Changes to shop instance for %s saved"
-msgstr "保存 %s 店铺实例更改"
+msgstr "保存 %s 商店实例更改"
 
 msgid "Product is not available."
 msgstr "没有该产品。"
@@ -679,25 +626,18 @@ msgstr "更改已保存。"
 msgid "Edit Media: %s"
 msgstr "媒体编辑：%s"
 
-#, fuzzy
-#| msgid ""
-#| "Are you sure? This will unlink all children and remove all variation "
-#| "variables."
 msgid "Are you sure? This will remove all products from package."
-msgstr "您确定吗？该操作将取消所有的子级链接和删除所有的变体变量。 "
+msgstr ""
 
 msgid "Clear package"
 msgstr ""
 
-#, fuzzy, python-format
-#| msgid "Edit Media: %s"
+#, python-format
 msgid "Edit Package: %s"
-msgstr "媒体编辑：%s"
+msgstr ""
 
-#, fuzzy
-#| msgid "Variation cleared."
 msgid "Package cleared."
-msgstr "变体已清除。"
+msgstr ""
 
 msgid ""
 "Are you sure? This will unlink all children and remove all variation "
@@ -723,7 +663,7 @@ msgid "Variation cleared."
 msgstr "变体已清除。"
 
 msgid "Variation simplified."
-msgstr "简化变体。"
+msgstr "变体已简化。"
 
 msgid "SKU"
 msgstr "SKU"
@@ -734,10 +674,8 @@ msgstr "按SKU过滤……"
 msgid "Barcode"
 msgstr ""
 
-#, fuzzy
-#| msgid "Filter by name..."
 msgid "Filter by barcode..."
-msgstr "按名称过滤……"
+msgstr ""
 
 msgid "Mode"
 msgstr "模式"
@@ -772,18 +710,14 @@ msgstr "变体"
 msgid "Manage Variations"
 msgstr "管理变体"
 
-#, fuzzy
-#| msgid "Manage Package"
 msgid "Packages"
-msgstr "管理包"
+msgstr ""
 
 msgid "Manage Package"
 msgstr "管理包"
 
-#, fuzzy
-#| msgid "Convert to Variation Parent"
 msgid "Convert to Package Parent"
-msgstr "转换为父级变体"
+msgstr ""
 
 msgid "Convert to Variation Parent"
 msgstr "转换为父级变体"
@@ -812,10 +746,10 @@ msgid "Create {service_name}"
 msgstr ""
 
 msgid "Shipping Methods"
-msgstr "配送方式"
+msgstr ""
 
 msgid "Payment Methods"
-msgstr "支付方式"
+msgstr ""
 
 msgid "Service"
 msgstr ""
@@ -826,10 +760,8 @@ msgstr ""
 msgid "Select payment processor before filling other fields."
 msgstr ""
 
-#, fuzzy
-#| msgid "Total Price"
 msgid "Price"
-msgstr "总价"
+msgstr ""
 
 msgid "Waive limit"
 msgstr ""
@@ -840,31 +772,27 @@ msgstr ""
 msgid "Enabled"
 msgstr "启用"
 
-#, fuzzy
-#| msgid "Shops"
 msgid "Shop"
-msgstr "店铺"
+msgstr ""
 
 msgid "Carrier"
 msgstr ""
 
-#, fuzzy
-#| msgid "Payments"
 msgid "Payment Processor"
-msgstr "支付"
+msgstr ""
 
 msgid "Weight-based pricing range"
 msgstr ""
 
 msgid "Shops"
-msgstr "店铺"
+msgstr "商店"
 
 msgid "System"
 msgstr "系统"
 
 msgid ""
 "This field cannot be changed since there are existing orders for this shop."
-msgstr "因为有该店铺的现有订单，此字段无法更改。"
+msgstr "因为有该商店的现有订单，此字段无法更改。"
 
 msgid "Domain"
 msgstr "域名"
@@ -923,10 +851,8 @@ msgstr "超级用户"
 msgid "No special permissions"
 msgstr "没有特权"
 
-#, fuzzy
-#| msgid "No special permissions"
 msgid "No permission groups"
-msgstr "没有特权"
+msgstr ""
 
 msgid "Change Password"
 msgstr "更改密码"
@@ -1060,7 +986,7 @@ msgid "Log in again"
 msgstr "重新登录"
 
 msgid "Visit shop"
-msgstr "访问店铺"
+msgstr "访问商店"
 
 msgid "Menu"
 msgstr "菜单"
@@ -1072,7 +998,7 @@ msgid "Search for"
 msgstr "搜索"
 
 msgid "Settings"
-msgstr ""
+msgstr "设置"
 
 msgid "Hello"
 msgstr "您好"
@@ -1089,10 +1015,8 @@ msgstr "图像分类"
 msgid "General information"
 msgstr "基本信息"
 
-#, fuzzy
-#| msgid "Members"
 msgid "Add Members"
-msgstr "成员"
+msgstr ""
 
 msgid "Add more"
 msgstr ""
@@ -1121,15 +1045,11 @@ msgstr "没有群组"
 msgid "Bound User"
 msgstr "绑定用户"
 
-#, fuzzy
-#| msgid "Company"
 msgid "Companies"
-msgstr "公司"
+msgstr ""
 
-#, fuzzy
-#| msgid "Accounting"
 msgid "Account Manager"
-msgstr "会计"
+msgstr ""
 
 msgid "Merchant Notes"
 msgstr ""
@@ -1147,7 +1067,7 @@ msgid "No billing address defined."
 msgstr "没有账单地址被定义。"
 
 msgid "No members."
-msgstr "没有成员。"
+msgstr ""
 
 msgid "Remove block"
 msgstr "清除区块"
@@ -1169,7 +1089,7 @@ msgstr "动态消息"
 
 #, python-format
 msgid "Shoop %(version)s"
-msgstr ""
+msgstr "Shoop %(version)s"
 
 msgid "Date"
 msgstr "日期"
@@ -1228,15 +1148,11 @@ msgstr ""
 msgid "Line #"
 msgstr ""
 
-#, fuzzy
-#| msgid "Amount"
 msgid "Refund Amount"
-msgstr "合计"
+msgstr ""
 
-#, fuzzy
-#| msgid "Are you sure you wish to delete %s?"
 msgid "Are you sure you want to create a full refund?"
-msgstr "您确定删除 %s？"
+msgstr ""
 
 msgid "Confirm Refund"
 msgstr ""
@@ -1302,7 +1218,7 @@ msgid "Tracking codes"
 msgstr ""
 
 msgid "Error!"
-msgstr ""
+msgstr "错误！"
 
 msgid "Additional Details"
 msgstr "内容补充"
@@ -1311,7 +1227,7 @@ msgid "Accounting"
 msgstr "会计"
 
 msgid "Physical Properties"
-msgstr "物理性能"
+msgstr "物理特性"
 
 msgid "Manufacturer"
 msgstr "厂商"
@@ -1369,20 +1285,14 @@ msgstr "交叉推销"
 msgid "File "
 msgstr "文件"
 
-#, fuzzy
-#| msgid "Package Parent: %s"
 msgid "Package Products"
-msgstr "父包：%s"
+msgstr ""
 
-#, fuzzy
-#| msgid "This product is not yet a variation."
 msgid "This product is not yet a package."
-msgstr "该产品还不是变体。"
+msgstr ""
 
-#, fuzzy
-#| msgid "To create a simple variation, choose products below."
 msgid "To create a package, choose products below."
-msgstr "请选择下列产品来创建简单变体。"
+msgstr ""
 
 msgid "Simple Variation Children"
 msgstr "简单变体子级"
@@ -1422,15 +1332,13 @@ msgid "Add component"
 msgstr ""
 
 msgid "Shop Logo"
-msgstr "店铺商标"
+msgstr "商店商标"
 
 msgid "Maintenance Mode"
 msgstr "维护模式"
 
-#, fuzzy
-#| msgid "Contacts"
 msgid "Contact Address"
-msgstr "通讯录"
+msgstr ""
 
 msgid "About Shoop Telemetry"
 msgstr "关于Shoop的遥测"
@@ -1438,15 +1346,14 @@ msgstr "关于Shoop的遥测"
 msgid "Shoop will occasionally send telemetry data to a Shoop.io server."
 msgstr "Shoop会偶尔发送遥测数据至Shoop.io服务器。"
 
-#, fuzzy, python-format
-#| msgid ""
-#| "The data contains an unique installation key, as well as the hostname of "
-#| "the installation (as sent by the visiting browser; currently"
+#, python-format
 msgid ""
 "The data contains an unique installation key, as well as the hostname of the "
 "installation (as sent by the visiting browser; currently <code>%(host)s</"
 "code>)."
-msgstr "数据里含有一个独特的安装键，还有安装主机名(从该访问的浏览器； 目前"
+msgstr ""
+"该数据含有独特的安装钥匙 ，以及安装的主机名 (如访问的浏览器所发送; 目前 "
+"<code>%(host)s</code>)。"
 
 msgid ""
 "No business data or other customer information is ever sent. Shoop.io only "
@@ -1463,6 +1370,8 @@ msgid ""
 "You are currently <span class=\"lead label label-success\">opted in</span> "
 "to send telemetry data to Shoop.io."
 msgstr ""
+"您目前<span class=\"lead label label-success\">选择加入</span>并发送遥测数据"
+"至Shoop.io."
 
 msgid "Thank you for your valuable contribution."
 msgstr "感谢您的重大贡献。"
@@ -1473,7 +1382,7 @@ msgstr "选择退出"
 msgid ""
 "You are currently <span class=\"label label-warning\">opted out</span> of "
 "Shoop telemetry."
-msgstr ""
+msgstr "您目前<span class=\"label label-warning\">选择退出</span>Shoop的遥测。"
 
 msgid "Opt in"
 msgstr "选择加入"
@@ -1493,6 +1402,8 @@ msgid ""
 "Telemetry data was last submitted at %(submission_datetime)s - "
 "(%(submission_timesince)s) ago"
 msgstr ""
+"遥测数据最后一次提交是在%(submission_datetime)s - (%(submission_timesince)s) "
+"前"
 
 msgid "See the data that was submitted."
 msgstr "查看已提交的数据。"
@@ -1576,10 +1487,9 @@ msgstr "新%s"
 msgid "Unnamed %s"
 msgstr "未命名 %s"
 
-#, fuzzy, python-format
-#| msgid "Only one shop permitted."
+#, python-format
 msgid "Only one %(model)s permitted."
-msgstr "只准许一家店铺。"
+msgstr "只允许一个 %(model)s。"
 
 #, python-format
 msgid "Couldn't get selections for %s."

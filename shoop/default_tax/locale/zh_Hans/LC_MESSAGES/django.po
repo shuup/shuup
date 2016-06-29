@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
-# Jessica Wang <jessica.wang@shoop.io>, 2015
+# Jessica Wang <jessica.wang@shoop.io>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 07:22+0000\n"
-"PO-Revision-Date: 2015-12-10 14:43+0000\n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-03-09 10:32+0000\n"
 "Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
 "language/cmn/)\n"
@@ -71,31 +71,21 @@ msgstr "启用"
 msgid "enabled"
 msgstr "启用"
 
-#, fuzzy
-#| msgid "Tax classes"
 msgid "tax classes"
 msgstr "税种"
 
 msgid "Tax classes of the items to be taxed"
 msgstr "物品税种需交税"
 
-#, fuzzy
-#| msgid "Customer tax groups"
 msgid "customer tax groups"
 msgstr "顾客税组"
 
-#, fuzzy
-#| msgid "Country codes pattern"
 msgid "country codes pattern"
 msgstr "国家代码模式"
 
-#, fuzzy
-#| msgid "Region codes pattern"
 msgid "region codes pattern"
 msgstr "区域代码模式"
 
-#, fuzzy
-#| msgid "Postal codes pattern"
 msgid "postal codes pattern"
 msgstr "邮政编码模式"
 
@@ -121,8 +111,6 @@ msgstr ""
 "如果多个规定匹配，只有最高的覆写组号规定有效。这比如可用于添加新的免税规定并"
 "带有极高覆盖组零税收设置。"
 
-#, fuzzy
-#| msgid "Tax"
 msgid "tax"
 msgstr "税收"
 

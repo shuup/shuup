@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 14:44+0000\n"
-"PO-Revision-Date: 2015-12-08 08:41+0000\n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-06-10 09:12+0000\n"
 "Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
 "language/ja_JP/)\n"
@@ -32,15 +32,11 @@ msgstr ""
 msgid "Save password"
 msgstr ""
 
-#, fuzzy
-#| msgid "User account information"
 msgid "Company account information"
-msgstr "ユーザーアカウント情報"
+msgstr ""
 
-#, fuzzy
-#| msgid "User information"
 msgid "Company information"
-msgstr "ユーザー情報"
+msgstr ""
 
 msgid "Billing information"
 msgstr ""
@@ -63,7 +59,5 @@ msgstr ""
 msgid "Account information saved successfully."
 msgstr "アカウント情報は保存されました。"
 
-#, fuzzy
-#| msgid "Account information saved successfully."
 msgid "Company information saved successfully."
-msgstr "アカウント情報は保存されました。"
+msgstr ""

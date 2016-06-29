@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 14:44+0000\n"
-"PO-Revision-Date: 2015-12-08 08:41+0000\n"
-"Last-Translator: Shoop Admin <admin@shoop.io>\n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-06-28 13:14+0000\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
 "language/ja_JP/)\n"
 "Language: ja_JP\n"
@@ -84,38 +84,26 @@ msgstr "グリッド/リストを表示する"
 msgid "Grid/list view"
 msgstr "グリッド/リストビュー"
 
-#, fuzzy
-#| msgid "Password"
 msgid "Change Password"
-msgstr "パスワード"
+msgstr ""
 
-#, fuzzy
-#| msgid "Password"
 msgid "Change password"
-msgstr "パスワード"
+msgstr ""
 
-#, fuzzy
-#| msgid "User account information"
 msgid "Edit user account information"
-msgstr "ユーザーアカウント情報"
+msgstr ""
 
-#, fuzzy
-#| msgid "Password"
 msgid "Save password"
-msgstr "パスワード"
+msgstr ""
 
-#, fuzzy
-#| msgid "User account information"
 msgid "Company account information"
-msgstr "ユーザーアカウント情報"
+msgstr ""
 
 msgid "Save changes"
 msgstr "変更を保存する"
 
-#, fuzzy
-#| msgid "User information"
 msgid "Company information"
-msgstr "ユーザー情報"
+msgstr ""
 
 msgid "Billing information"
 msgstr ""
@@ -126,10 +114,8 @@ msgstr ""
 msgid "User account information"
 msgstr "ユーザーアカウント情報"
 
-#, fuzzy
-#| msgid "User account information"
 msgid "Edit company information"
-msgstr "ユーザーアカウント情報"
+msgstr ""
 
 msgid "Link account to company"
 msgstr ""
@@ -162,10 +148,8 @@ msgstr "買い物を続ける"
 msgid "Proceed to checkout"
 msgstr "レジに進む"
 
-#, fuzzy
-#| msgid "Combination not available"
 msgid "Coupon is not available."
-msgstr "組み合わせはできません"
+msgstr ""
 
 msgid "Error when adding coupon."
 msgstr ""
@@ -289,10 +273,8 @@ msgstr "カテゴリー"
 msgid "Edit account details"
 msgstr "アカウント詳細の編集"
 
-#, fuzzy
-#| msgid "Edit account details"
 msgid "Edit company details"
-msgstr "アカウント詳細の編集"
+msgstr ""
 
 msgid "My orders"
 msgstr ""
@@ -327,10 +309,9 @@ msgstr "メニュー"
 msgid "Products"
 msgstr "商品"
 
-#, fuzzy, python-format
-#| msgid "Welcome to "
+#, python-format
 msgid "Welcome to %(shop_name)s!"
-msgstr "ようこそ"
+msgstr ""
 
 msgid "Preview"
 msgstr "プレビュー"
@@ -597,10 +578,9 @@ msgstr ""
 msgid "%(n)s results found for \"<strong>%(query)s</strong>\"."
 msgstr ""
 
-#, fuzzy, python-format
-#| msgid "You have already been logged in as"
+#, python-format
 msgid "You have already logged in as <strong>%(username)s</strong>"
-msgstr "お客様は既にログインされています"
+msgstr ""
 
 msgid "Go to Homepage"
 msgstr ""

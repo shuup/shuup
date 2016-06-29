@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PROJECT project.
 #
 # Translators:
-# Jessica Wang <jessica.wang@shoop.io>, 2015
+# Jessica Wang <jessica.wang@shoop.io>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 14:44+0000\n"
-"PO-Revision-Date: 2015-12-10 10:11+0000\n"
-"Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-06-28 21:58+0000\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
 "language/cmn/)\n"
 "Language: cmn\n"
@@ -47,7 +47,7 @@ msgid "New folder"
 msgstr "新文件夹"
 
 msgid "current"
-msgstr "当前"
+msgstr ""
 
 msgid "Oldest first"
 msgstr "最老优先"
@@ -133,10 +133,8 @@ msgstr "账单地址"
 msgid "Shipping address"
 msgstr "收货地址"
 
-#, fuzzy
-#| msgid "Name"
 msgid "Full Name"
-msgstr "名称"
+msgstr ""
 
 msgid "Phone"
 msgstr "电话"
@@ -156,33 +154,23 @@ msgstr ""
 msgid "Year"
 msgstr ""
 
-#, fuzzy
-#| msgid "Total Price"
 msgid "Total Sales"
-msgstr "总价"
+msgstr ""
 
 msgid "Shipment Status"
 msgstr ""
 
-#, fuzzy
-#| msgid "Payment Method"
 msgid "Payment Status"
-msgstr "支付方式"
+msgstr ""
 
-#, fuzzy
-#| msgid "Order Contents"
 msgid "Order Status"
-msgstr "订单内容"
+msgstr ""
 
-#, fuzzy
-#| msgid "Customer Details"
 msgid "Customer Information"
-msgstr "顾客详细信息"
+msgstr ""
 
-#, fuzzy
-#| msgid "Order for company"
 msgid "Order Summary"
-msgstr "为公司订购"
+msgstr ""
 
 msgid "Recent Orders"
 msgstr ""
@@ -202,10 +190,8 @@ msgstr "选择现有的顾客"
 msgid "New Customer"
 msgstr "新顾客"
 
-#, fuzzy
-#| msgid "Customer Details"
 msgid "View Details"
-msgstr "顾客详细信息"
+msgstr ""
 
 msgid "Save customer details while creating order"
 msgstr "订单形成时保存顾客信息"
@@ -232,7 +218,7 @@ msgid "Discard Changes"
 msgstr ""
 
 msgid "Select Shop"
-msgstr "选择店铺"
+msgstr "选择商店"
 
 msgid "Customer Details"
 msgstr "顾客详细信息"
@@ -290,25 +276,18 @@ msgstr "总行"
 msgid "Orderline type"
 msgstr "订单行类型"
 
-#, fuzzy
-#| msgid ""
-#| "If your product prices vary based on customers you might wan't to select "
-#| "customer first."
 msgid ""
 "If your product prices vary based on customer, you might want to select "
 "customer first."
-msgstr "如果您产品价格根据顾客而变化，您也许先要选择顾客。"
+msgstr ""
 
-#, fuzzy, javascript-format
-#| msgid "All prices is in "
+#, javascript-format
 msgid "All prices are in %s currency."
-msgstr "全部价格都有"
+msgstr ""
 
 msgid "All prices include taxes."
 msgstr "全部价格包含税。"
 
-#, fuzzy
-#| msgid "Taxes is not included."
 msgid "Taxes not included."
 msgstr "不包含税。"
 
@@ -322,7 +301,7 @@ msgid "No payment method"
 msgstr "无支付方式"
 
 msgid "Shop"
-msgstr "店铺"
+msgstr "商店"
 
 msgid "Product"
 msgstr "产品"
@@ -420,10 +399,8 @@ msgid "You can only select %s item"
 msgid_plural "You can only select %s items"
 msgstr[0] ""
 
-#, fuzzy
-#| msgid "No results."
 msgid "No results found"
-msgstr "无搜索结果。"
+msgstr ""
 
 msgid "Searching..."
 msgstr ""
@@ -461,10 +438,9 @@ msgstr "上一页"
 msgid "Next"
 msgstr "下一页"
 
-#, fuzzy, javascript-format
-#| msgid "Filters"
+#, javascript-format
 msgid "Filter by %s"
-msgstr "过滤器"
+msgstr "按%s过滤"
 
 msgid "Filters"
 msgstr "过滤器"

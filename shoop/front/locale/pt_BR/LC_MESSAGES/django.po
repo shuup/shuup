@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-19 08:57+0000\n"
-"PO-Revision-Date: 2016-04-22 00:12+0000\n"
+"POT-Creation-Date: 2016-06-28 12:52+0000\n"
+"PO-Revision-Date: 2016-06-29 02:20+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shoop/shoop/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr "Valor de Carrinhos Abandonados"
 
 #, python-brace-format
 msgid "Based on {b} carts over the last {d} days"
-msgstr "Baseado em {b} carrinhos ao longo dos últimos {d} dias"
+msgstr "Baseado em {b} carrinhos nos últimos {d} dias"
 
 msgid "Carts"
 msgstr "Carrinhos"
@@ -63,7 +63,7 @@ msgid "Total"
 msgstr "Total"
 
 msgid "Ordered"
-msgstr "Comprador"
+msgstr "Comprado"
 
 #, python-format
 msgid "Invalid command %s"
@@ -71,7 +71,7 @@ msgstr "Comando inválido %s"
 
 #, python-format
 msgid "The quantity %f is not allowed. Please use an integer value."
-msgstr "A quantidade %f não é permitida. Por favor, use um valor inteiro."
+msgstr "A quantidade %f não é permitida. Por favor, informe um valor inteiro."
 
 #, python-format
 msgid "The quantity %s is not valid."
@@ -89,17 +89,17 @@ msgstr "Tente remover alguns produtos do carrinho e comprá-los separadamente."
 
 #, python-format
 msgid "Products in basket cannot be shipped together. %s"
-msgstr "Os produtos no carrinho não podem ser enviados juntos. %s"
+msgstr "Alguns produtos no carrinho não podem ser enviados juntos. %s"
 
 #, python-format
 msgid "Products in basket have no common payment method. %s"
-msgstr "Os produtos no carrinho não têm formas de pagamento em comum. %s"
+msgstr "Os produtos no carrinho não têm nenhuma forma de pagamento em comum. %s"
 
 msgid "Tax number required for companies"
-msgstr "Número de contribuinte (CNPJ) é obrigatório para empresas"
+msgstr "CNPJ é obrigatório para empresas"
 
 msgid "Cannot use tax number without company name"
-msgstr "Não é possível utilizar o número de contribuinte (CNPJ) sem o nome da empresa (razão social)"
+msgstr "Não é possível usar o CNPJ sem o nome da empresa (razão social)"
 
 msgid "Addresses"
 msgstr "Endereços"
@@ -119,10 +119,6 @@ msgstr "Confirmação"
 msgid "Empty Basket"
 msgstr "Carrinho Vazio"
 
-#, python-brace-format
-msgid "{name} ({price})"
-msgstr "{name} ({price})"
-
 msgid "shipping method"
 msgstr "forma de entrega"
 
@@ -136,7 +132,7 @@ msgid "Company name"
 msgstr "Nome da empresa (razão social)"
 
 msgid "Tax number"
-msgstr "Número de contribuinte (CNPJ)"
+msgstr "CNPJ"
 
 msgid "Shipping method"
 msgstr "Forma de entrega"
@@ -145,7 +141,10 @@ msgid "Payment method"
 msgstr "Forma de pagamento"
 
 msgid "Please send me marketing correspondence"
-msgstr "Por favor, me envie as correspondências do marketing"
+msgstr "Por favor, me envie correspondências de marketing"
+
+msgid "Logged out since this account is inactive."
+msgstr "Desautenticado uma vez que esta conta está inativa."
 
 msgid "key"
 msgstr "chave"
@@ -175,7 +174,7 @@ msgid "deleted"
 msgstr "excluído"
 
 msgid "finished"
-msgstr "concluído"
+msgstr "finalizado"
 
 msgid "title"
 msgstr "título"
@@ -184,7 +183,7 @@ msgid "data"
 msgstr "dados"
 
 msgid "taxless total price"
-msgstr "preço total não tributado"
+msgstr "preço total sem impostos"
 
 msgid "taxful total price"
 msgstr "preço total tributado"
@@ -193,7 +192,7 @@ msgid "currency"
 msgstr "moeda"
 
 msgid "prices include tax"
-msgstr "preços incluem imposto"
+msgstr "preços incluem impostos"
 
 msgid "product_count"
 msgstr "contagem do produto"
@@ -235,7 +234,7 @@ msgid ""
 msgstr "Você está visualizando esta página porque não existe nenhum tema selecionado para o frontend padrão."
 
 msgid "Log in to the administration interface"
-msgstr "Faça o login na interface de administração"
+msgstr "Autentique-se na interface de administração"
 
 msgid "to choose a theme and set up your shop."
 msgstr "para escolher um tema e configurar a sua loja."
@@ -255,7 +254,7 @@ msgid "Maintenance mode"
 msgstr "Modo de manutenção"
 
 msgid "Shop is currently down for maintenance."
-msgstr "A loja está atualmente indisponível por motivos de manutenção."
+msgstr "A loja está atualmente indisponível para manutenção."
 
 msgid "Name - A-Z"
 msgstr "Nome - A-Z"

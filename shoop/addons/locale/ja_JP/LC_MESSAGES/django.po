@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 14:44+0000\n"
-"PO-Revision-Date: 2015-12-08 08:41+0000\n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-02-20 10:21+0000\n"
 "Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
 "language/ja_JP/)\n"
@@ -103,30 +103,22 @@ msgstr ""
 "また、サーバが正常に初期化しない場合は、問題を自分でトラブルシューティングす"
 "る (またはシステム管理者に依頼する) 必要がある可能性があります。"
 
-#, fuzzy
-#| msgid "Reload Method"
 msgid "Reload steps"
-msgstr "メソッドをリロードする"
+msgstr ""
 
 msgid ""
 "Finalize installations for newly installed addons (migrate and collect "
 "static resources)"
 msgstr ""
 
-#, fuzzy
-#| msgid "Reload Application Server"
 msgid "Reload application server"
-msgstr "アプリケーションサーバをリロード"
+msgstr ""
 
-#, fuzzy
-#| msgid "Reload Method"
 msgid "Reload initiated."
-msgstr "メソッドをリロードする"
+msgstr ""
 
-#, fuzzy
-#| msgid "Reload application"
 msgid "Error while reloading application."
-msgstr "アプリケーションをリロードする"
+msgstr ""
 
 msgid "Finalizing installations."
 msgstr ""

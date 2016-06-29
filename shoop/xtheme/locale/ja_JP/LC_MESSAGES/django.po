@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 14:44+0000\n"
-"PO-Revision-Date: 2015-12-08 08:55+0000\n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-04-19 08:32+0000\n"
 "Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
 "language/ja_JP/)\n"
@@ -34,18 +34,14 @@ msgstr ""
 msgid "Theming"
 msgstr ""
 
-#, fuzzy
-#| msgid "Theme activated."
 msgid "activate"
-msgstr "テーマはアクティブ化されました。"
+msgstr ""
 
 msgid "Theme activated."
 msgstr "テーマはアクティブ化されました。"
 
-#, fuzzy
-#| msgid "Currently active"
 msgid "current draft"
-msgstr "現在アクティブ"
+msgstr ""
 
 msgid "old version"
 msgstr ""
@@ -99,10 +95,8 @@ msgstr ""
 msgid "Image Link URL"
 msgstr ""
 
-#, fuzzy
-#| msgid "Full Width"
 msgid "Full width"
-msgstr "全幅"
+msgstr ""
 
 msgid "Set image to full width of cell"
 msgstr ""

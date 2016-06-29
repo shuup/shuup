@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
-# Jessica Wang <jessica.wang@shoop.io>, 2015
+# Jessica Wang <jessica.wang@shoop.io>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 14:44+0000\n"
-"PO-Revision-Date: 2015-12-10 09:46+0000\n"
-"Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-04-19 08:32+0000\n"
+"Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
 "language/cmn/)\n"
 "Language: cmn\n"
@@ -32,18 +32,14 @@ msgstr "没有有效的主题。点击这里激活。"
 msgid "Theming"
 msgstr "主题"
 
-#, fuzzy
-#| msgid "Activate"
 msgid "activate"
 msgstr "激活"
 
 msgid "Theme activated."
 msgstr "主题已激活。"
 
-#, fuzzy
-#| msgid "Currently active"
 msgid "current draft"
-msgstr "目前活跃"
+msgstr ""
 
 msgid "old version"
 msgstr ""
@@ -52,27 +48,25 @@ msgid "public"
 msgstr ""
 
 msgid "theme identifier"
-msgstr ""
+msgstr "主题标识符"
 
 msgid "view name"
-msgstr ""
+msgstr "浏览名称"
 
 msgid "created on"
-msgstr ""
+msgstr "创建"
 
 msgid "status"
-msgstr ""
+msgstr "状态"
 
 msgid "internal data"
-msgstr ""
+msgstr "内部数据"
 
-#, fuzzy
-#| msgid "Activate"
 msgid "active"
-msgstr "激活"
+msgstr "活跃"
 
 msgid "data"
-msgstr ""
+msgstr "数据"
 
 #, python-format
 msgid "Theme configuration for %s"
@@ -99,10 +93,8 @@ msgstr ""
 msgid "Image Link URL"
 msgstr ""
 
-#, fuzzy
-#| msgid "Full Width"
 msgid "Full width"
-msgstr "最大化"
+msgstr ""
 
 msgid "Set image to full width of cell"
 msgstr ""
@@ -144,10 +136,10 @@ msgid "Alignment"
 msgstr ""
 
 msgid "text"
-msgstr ""
+msgstr "文本"
 
 msgid "(Untranslated)"
-msgstr ""
+msgstr "(未翻译)"
 
 #, python-format
 msgid "Click to edit placeholder: %s"

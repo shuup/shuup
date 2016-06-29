@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
-# Jessica Wang <jessica.wang@shoop.io>, 2015
+# Jessica Wang <jessica.wang@shoop.io>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 14:44+0000\n"
-"PO-Revision-Date: 2015-12-10 14:00+0000\n"
-"Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-04-19 08:32+0000\n"
+"Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
 "language/cmn/)\n"
 "Language: cmn\n"
@@ -80,10 +80,8 @@ msgstr "警告：更改现存的脚本事件有可能导致意外的效果。"
 msgid "Template"
 msgstr "模板"
 
-#, fuzzy
-#| msgid "Variables"
 msgid "Bind to Variable"
-msgstr "变量"
+msgstr ""
 
 msgid "Edit Script Contents..."
 msgstr "脚本内容编辑……"
@@ -116,10 +114,8 @@ msgstr ""
 msgid "multilingual"
 msgstr ""
 
-#, fuzzy
-#| msgid "Variables"
 msgid "variable only"
-msgstr "变量"
+msgstr ""
 
 msgid "constant only"
 msgstr ""
@@ -140,7 +136,7 @@ msgid "any"
 msgstr "任何"
 
 msgid "any shop administrator"
-msgstr "任何店铺管理员"
+msgstr "任何商店管理员"
 
 msgid "a specific user"
 msgstr "一个指定用户"
@@ -157,24 +153,20 @@ msgstr ""
 msgid "critical"
 msgstr ""
 
-#, fuzzy
-#| msgid "Recipient"
 msgid "recipient type"
-msgstr "收件人"
+msgstr ""
 
-#, fuzzy
-#| msgid "Recipient"
 msgid "recipient"
 msgstr "收件人"
 
 msgid "created on"
-msgstr ""
+msgstr "创建"
 
 msgid "message"
-msgstr ""
+msgstr "信息"
 
 msgid "priority"
-msgstr ""
+msgstr "优先"
 
 msgid "marked read"
 msgstr ""
@@ -185,16 +177,12 @@ msgstr ""
 msgid "marked read on"
 msgstr ""
 
-#, fuzzy
-#| msgid "Send Identifier"
 msgid "event identifier"
-msgstr "发送标识符"
+msgstr "事件标识符"
 
 msgid "name"
-msgstr ""
+msgstr "名称"
 
-#, fuzzy
-#| msgid "Enabled"
 msgid "enabled"
 msgstr "启用"
 

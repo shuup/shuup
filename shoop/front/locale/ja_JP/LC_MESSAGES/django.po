@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 14:44+0000\n"
-"PO-Revision-Date: 2015-12-08 08:41+0000\n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-06-14 08:38+0000\n"
 "Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/shoop/shoop/"
 "language/ja_JP/)\n"
@@ -20,10 +20,8 @@ msgstr ""
 "Generated-By: Babel 2.1.1\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#, fuzzy
-#| msgid "Abandoned Basket Value"
 msgid "Abandoned Cart Value"
-msgstr "放棄されたカートの価値"
+msgstr ""
 
 #, python-brace-format
 msgid "Based on {b} carts over the last {d} days"
@@ -122,10 +120,8 @@ msgstr ""
 msgid "Empty Basket"
 msgstr ""
 
-#, fuzzy
-#| msgid "Shipping & Payment"
 msgid "shipping method"
-msgstr "配送料と配送情報"
+msgstr ""
 
 msgid "payment method"
 msgstr ""
@@ -154,10 +150,8 @@ msgstr ""
 msgid "key"
 msgstr ""
 
-#, fuzzy
-#| msgid "your shop"
 msgid "shop"
-msgstr "あなたのショップ"
+msgstr ""
 
 msgid "customer"
 msgstr ""

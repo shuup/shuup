@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
-# Jessica Wang <jessica.wang@shoop.io>, 2015
+# Jessica Wang <jessica.wang@shoop.io>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 14:44+0000\n"
-"PO-Revision-Date: 2015-12-10 09:39+0000\n"
-"Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-03-29 08:44+0000\n"
+"Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
 "language/cmn/)\n"
 "Language: cmn\n"
@@ -57,28 +57,20 @@ msgstr "创建日期"
 msgid "Page"
 msgstr "页面"
 
-#, fuzzy
-#| msgid "Available from"
 msgid "available from"
 msgstr "可从"
 
-#, fuzzy
-#| msgid "Available to"
 msgid "available to"
 msgstr "可供"
 
-#, fuzzy
-#| msgid "Created by"
 msgid "created by"
 msgstr "创建于"
 
 msgid "modified by"
 msgstr ""
 
-#, fuzzy
-#| msgid "Created by"
 msgid "created on"
-msgstr "创建于"
+msgstr "创建"
 
 msgid "modified on"
 msgstr ""
@@ -86,8 +78,6 @@ msgstr ""
 msgid "This identifier can be used in templates to create URLs"
 msgstr "该标识符可用于模板里创建URL"
 
-#, fuzzy
-#| msgid "Visible in menu"
 msgid "visible in menu"
 msgstr "在菜单可见"
 
@@ -97,16 +87,12 @@ msgstr ""
 msgid "list children on page"
 msgstr ""
 
-#, fuzzy
-#| msgid "Title"
 msgid "title"
 msgstr "名称"
 
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
-#, fuzzy
-#| msgid "Content"
 msgid "content"
 msgstr "内容"
 
@@ -122,10 +108,8 @@ msgstr "无标题"
 msgid "CMS Page Links"
 msgstr ""
 
-#, fuzzy
-#| msgid "Show pages"
 msgid "Show all pages"
-msgstr "显示页面"
+msgstr ""
 
 msgid "All pages are shown, even if not selected"
 msgstr ""

@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
-# Jessica Wang <jessica.wang@shoop.io>, 2015
+# Jessica Wang <jessica.wang@shoop.io>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 14:44+0000\n"
-"PO-Revision-Date: 2015-12-10 10:47+0000\n"
-"Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-06-28 13:14+0000\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
 "language/cmn/)\n"
 "Language: cmn\n"
@@ -30,10 +30,10 @@ msgid "Title"
 msgstr "名称"
 
 msgid "Type"
-msgstr ""
+msgstr "类型"
 
 msgid "Count"
-msgstr ""
+msgstr "总数"
 
 msgid "Only show in-stock and orderable items"
 msgstr ""
@@ -84,38 +84,26 @@ msgstr "网格/列表显示"
 msgid "Grid/list view"
 msgstr "网格/列表视图"
 
-#, fuzzy
-#| msgid "Password"
 msgid "Change Password"
-msgstr "密码"
+msgstr ""
 
-#, fuzzy
-#| msgid "Password"
 msgid "Change password"
-msgstr "密码"
+msgstr ""
 
-#, fuzzy
-#| msgid "User account information"
 msgid "Edit user account information"
-msgstr "用户账号信息"
+msgstr ""
 
-#, fuzzy
-#| msgid "Password"
 msgid "Save password"
-msgstr "密码"
+msgstr ""
 
-#, fuzzy
-#| msgid "User account information"
 msgid "Company account information"
-msgstr "用户账号信息"
+msgstr ""
 
 msgid "Save changes"
 msgstr "保存更改"
 
-#, fuzzy
-#| msgid "Shipping information"
 msgid "Company information"
-msgstr "配送信息"
+msgstr ""
 
 msgid "Billing information"
 msgstr "账单信息"
@@ -126,10 +114,8 @@ msgstr "配送信息"
 msgid "User account information"
 msgstr "用户账号信息"
 
-#, fuzzy
-#| msgid "Shipping information"
 msgid "Edit company information"
-msgstr "配送信息"
+msgstr ""
 
 msgid "Link account to company"
 msgstr ""
@@ -138,7 +124,7 @@ msgid "User information"
 msgstr "用户信息"
 
 msgid "Shop is currently in maintenance mode."
-msgstr "店铺目前在维修模式中。"
+msgstr "商店目前在维修模式中。"
 
 msgid ""
 "There were errors on submitted form fields. Please check them and try again."
@@ -162,10 +148,8 @@ msgstr "继续购物"
 msgid "Proceed to checkout"
 msgstr "去结账"
 
-#, fuzzy
-#| msgid "Combination not available"
 msgid "Coupon is not available."
-msgstr "无法合并"
+msgstr ""
 
 msgid "Error when adding coupon."
 msgstr ""
@@ -239,10 +223,8 @@ msgstr "出错"
 msgid "Choose Shipping Method"
 msgstr ""
 
-#, fuzzy
-#| msgid "Payment method"
 msgid "Choose Payment Method"
-msgstr "支付方式"
+msgstr ""
 
 msgid "Errors"
 msgstr "错误"
@@ -291,10 +273,8 @@ msgstr "分类"
 msgid "Edit account details"
 msgstr "账号详情编辑"
 
-#, fuzzy
-#| msgid "Edit account details"
 msgid "Edit company details"
-msgstr "账号详情编辑"
+msgstr ""
 
 msgid "My orders"
 msgstr "我的订单"
@@ -329,10 +309,9 @@ msgstr "菜单"
 msgid "Products"
 msgstr "产品"
 
-#, fuzzy, python-format
-#| msgid "Welcome to "
+#, python-format
 msgid "Welcome to %(shop_name)s!"
-msgstr "欢迎来到"
+msgstr "欢迎到 %(shop_name)s!"
 
 msgid "Preview"
 msgstr "预览"
@@ -599,10 +578,9 @@ msgstr "没有 \"<strong>%(query)s</strong>\"搜索结果。"
 msgid "%(n)s results found for \"<strong>%(query)s</strong>\"."
 msgstr "\"<strong>%(query)s</strong>\"的%(n)s 结果已找到。"
 
-#, fuzzy, python-format
-#| msgid "You have already been logged in as"
+#, python-format
 msgid "You have already logged in as <strong>%(username)s</strong>"
-msgstr "您已经登录为"
+msgstr "您已登录为 <strong>%(username)s</strong>"
 
 msgid "Go to Homepage"
 msgstr "转到主页"
@@ -623,4 +601,4 @@ msgid "Send password recovery instructions"
 msgstr "发送密码恢复指示"
 
 msgid "This product is not available in this shop."
-msgstr "该店铺没有此产品。"
+msgstr "该商店没有此产品。"

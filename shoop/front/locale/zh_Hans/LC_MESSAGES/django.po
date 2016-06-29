@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
-# Jessica Wang <jessica.wang@shoop.io>, 2015
+# Jessica Wang <jessica.wang@shoop.io>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shoop\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 14:44+0000\n"
-"PO-Revision-Date: 2015-12-17 15:11+0000\n"
-"Last-Translator: Jessica Wang <jessica.wang@shoop.io>\n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-06-14 08:38+0000\n"
+"Last-Translator: Shoop Admin <admin@shoop.io>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shoop/shoop/"
 "language/cmn/)\n"
 "Language: cmn\n"
@@ -20,15 +20,12 @@ msgstr ""
 "Generated-By: Babel 2.1.1\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#, fuzzy
-#| msgid "Abandoned Basket Value"
 msgid "Abandoned Cart Value"
-msgstr "已放弃的购物篮价值"
+msgstr ""
 
-#, fuzzy, python-brace-format
-#| msgid "Based on {b} baskets over the last {d} days"
+#, python-brace-format
 msgid "Based on {b} carts over the last {d} days"
-msgstr "根据过去 {d} 天的 {b} 购物篮"
+msgstr ""
 
 msgid "Carts"
 msgstr ""
@@ -115,7 +112,7 @@ msgid "I want to subscribe to your newsletter"
 msgstr "我想要订阅你们的时事通讯"
 
 msgid "Comment"
-msgstr ""
+msgstr "评论"
 
 msgid "Confirmation"
 msgstr "确认"
@@ -123,13 +120,9 @@ msgstr "确认"
 msgid "Empty Basket"
 msgstr "购物篮为空"
 
-#, fuzzy
-#| msgid "Shipping method"
 msgid "shipping method"
 msgstr "配送方式"
 
-#, fuzzy
-#| msgid "Payment method"
 msgid "payment method"
 msgstr "支付方式"
 
@@ -155,24 +148,22 @@ msgid "Logged out since this account is inactive."
 msgstr ""
 
 msgid "key"
-msgstr ""
+msgstr "键"
 
-#, fuzzy
-#| msgid "your shop"
 msgid "shop"
-msgstr "您的店铺"
+msgstr "商店"
 
 msgid "customer"
-msgstr ""
+msgstr "顾客"
 
 msgid "orderer"
-msgstr ""
+msgstr "订货人"
 
 msgid "creator"
-msgstr ""
+msgstr "创建人"
 
 msgid "created on"
-msgstr ""
+msgstr "创建"
 
 msgid "updated on"
 msgstr ""
@@ -181,16 +172,16 @@ msgid "persistent"
 msgstr ""
 
 msgid "deleted"
-msgstr ""
+msgstr "已删除"
 
 msgid "finished"
 msgstr ""
 
 msgid "title"
-msgstr ""
+msgstr "名称"
 
 msgid "data"
-msgstr ""
+msgstr "数据"
 
 msgid "taxless total price"
 msgstr ""
@@ -199,16 +190,16 @@ msgid "taxful total price"
 msgstr ""
 
 msgid "currency"
-msgstr ""
+msgstr "货币"
 
 msgid "prices include tax"
-msgstr ""
+msgstr "含税价"
 
 msgid "product_count"
 msgstr ""
 
 msgid "products"
-msgstr ""
+msgstr "产品"
 
 msgid "Bad Request"
 msgstr "错误请求"
@@ -236,7 +227,7 @@ msgid "Welcome to %(name)s!"
 msgstr "欢迎来到%(name)s！"
 
 msgid "your shop"
-msgstr "您的店铺"
+msgstr "您的商店"
 
 msgid ""
 "You are seeing this page because there is no theme selected for the default "
@@ -247,7 +238,7 @@ msgid "Log in to the administration interface"
 msgstr "登录进入管理界面"
 
 msgid "to choose a theme and set up your shop."
-msgstr "选择主题并建立您的店铺。"
+msgstr "选择主题并建立您的商店。"
 
 msgid ""
 "The administration interface does not seem to be available. Use other means "
@@ -264,7 +255,7 @@ msgid "Maintenance mode"
 msgstr "维护模式"
 
 msgid "Shop is currently down for maintenance."
-msgstr "店铺目前在维修中。"
+msgstr "商店目前在维修中。"
 
 msgid "Name - A-Z"
 msgstr "名称 - A-Z"
@@ -279,10 +270,10 @@ msgid "Price - High to Low"
 msgstr "价格 - 由高到低"
 
 msgid "Sort"
-msgstr ""
+msgstr "排列"
 
 msgid "Manufacturer"
-msgstr ""
+msgstr "制造商"
 
 msgid "This product is not available in this shop."
-msgstr "该店铺没有此产品。"
+msgstr "该商店没有此产品。"
