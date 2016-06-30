@@ -13,22 +13,6 @@ from .utils import create_page
 
 
 @pytest.mark.django_db
-def test_page_links_plugin_visible_in_menu():
-    """
-    Make sure plugin correctly filters out pages that are not set to be
-    visible in menus
-    """
-    context = get_jinja_context()
-    page = create_page(eternal=True, visible_in_menu=True)
-    plugin = PageLinksPlugin({"pages": [page.pk]})
-    assert page in plugin.get_context_data(context)["pages"]
-
-    page.visible_in_menu = False
-    page.save()
-    assert page not in plugin.get_context_data(context)["pages"]
-
-
-@pytest.mark.django_db
 @pytest.mark.parametrize("show_all_pages", [True, False])
 def test_page_links_plugin_hide_expired(show_all_pages):
     """
