@@ -1,6 +1,8 @@
 Shuup 0.4.0 Release Notes
 =========================
 
+Released on 2016-06-30 06:00 +0300.
+
 This is the first Shuup release.
 
 Content of Shuup 0.4.0 is same as Shoop 4.0.0 with all "shoop" texts
