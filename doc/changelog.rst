@@ -20,6 +20,8 @@ Localization
 Admin
 ~~~~~
 
+- Replace buttons with dropdown in Orders admin
+
 Addons
 ~~~~~~
 

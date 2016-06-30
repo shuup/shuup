@@ -14,7 +14,10 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
 from django.views.generic import DetailView
 
-from shuup.admin.toolbar import PostActionButton, Toolbar, URLActionButton
+from shuup.admin.toolbar import (
+    DropdownActionButton, DropdownItem, PostActionButton, Toolbar,
+    URLActionButton
+)
 from shuup.admin.utils.urls import get_model_url
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Order, OrderStatus, OrderStatusRole
@@ -29,30 +32,40 @@ class OrderDetailView(DetailView):
     def get_toolbar(self):
         order = self.object
         toolbar = Toolbar()
-        toolbar.append(URLActionButton(
-            text=_("Create Refund"),
-            icon="fa fa-dollar",
-            disable_reason=_("This order cannot be refunded") if not order.can_create_refund() else None,
-            url=reverse("shuup_admin:order.create-refund", kwargs={"pk": order.pk}),
-            extra_css_class="btn-info"
-        ))
+        action_menu_items = []
+        if not (order.is_paid() or order.is_canceled() or order.has_refunds()):
+            action_menu_items.append(
+                DropdownItem(
+                    url=reverse("shuup_admin:order.create-payment", kwargs={"pk": order.pk}),
+                    icon="fa fa-money",
+                    text=_("Create Payment"),
+                )
+            )
+        if (order.get_unshipped_products() and not order.is_canceled() and not order.has_refunds()):
+            action_menu_items.append(
+                DropdownItem(
+                    url=reverse("shuup_admin:order.create-shipment", kwargs={"pk": order.pk}),
+                    icon="fa fa-truck",
+                    text=_("Create Shipment"),
+                )
+            )
+        if order.can_create_refund() and order.payments.exists():
+            action_menu_items.append(
+                DropdownItem(
+                    url=reverse("shuup_admin:order.create-refund", kwargs={"pk": order.pk}),
+                    icon="fa fa-dollar",
+                    text=_("Create Refund"),
+                )
+            )
 
-        toolbar.append(URLActionButton(
-            text=_("Create Payment"),
-            icon="fa fa-money",
-            disable_reason=_("This order cannot be paid at this point") if order.is_paid() else None,
-            url=reverse("shuup_admin:order.create-payment", kwargs={"pk": order.pk}),
-            extra_css_class="btn-info"
-        ))
-
-        toolbar.append(URLActionButton(
-            text=_("Create Shipment"),
-            icon="fa fa-truck",
-            disable_reason=_("There are no products to ship") if not order.get_unshipped_products() else None,
-            url=reverse("shuup_admin:order.create-shipment", kwargs={"pk": order.pk}),
-            extra_css_class="btn-info"
-        ))
-
+        toolbar.append(
+            DropdownActionButton(
+                action_menu_items,
+                icon="fa fa-star",
+                text=_(u"Actions"),
+                extra_css_class="btn-info",
+            )
+        )
         toolbar.append(PostActionButton(
             post_url=reverse("shuup_admin:order.set-status", kwargs={"pk": order.pk}),
             name="status",
