@@ -12,6 +12,8 @@ Unreleased
 Core
 ~~~~
 
+- Fix handling of refunds for discounted lines
+
 Localization
 ~~~~~~~~~~~~
 

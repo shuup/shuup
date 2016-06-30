@@ -553,7 +553,7 @@ class Order(MoneyPropped, models.Model):
             if amount > self.taxful_total_price.amount:
                 raise RefundExceedsAmountException
 
-            unit_price = parent_line.base_unit_price.amount if parent_line else zero
+            unit_price = parent_line.discounted_unit_price.amount if parent_line else zero
             total_price = unit_price * quantity + amount
 
             refund_line = OrderLine.objects.create(

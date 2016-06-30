@@ -401,3 +401,27 @@ def test_max_refundable_amount():
 
     order.create_refund([{"line": line, "amount": partial_refund_amount}])
     assert line.max_refundable_amount == line.taxful_price.amount - partial_refund_amount
+
+
+@pytest.mark.django_db
+def test_refunds_for_discounted_order_lines():
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product = create_product(
+        "test-sku",
+        shop=get_default_shop(),
+        default_price=10,
+        stock_behavior=StockBehavior.STOCKED
+    )
+
+    order = create_order_with_product(product, supplier, 2, 200, shop=shop)
+    order.cache_prices()
+
+    product_line = order.lines.first()
+    product_line.discount_amount = TaxfulPrice(100, order.currency)
+    taxful_price_with_discount = product_line.taxful_price
+    assert product_line.base_price == TaxfulPrice(400, order.currency)
+    assert taxful_price_with_discount == TaxfulPrice(300, order.currency)
+
+    order.create_refund([{"line": product_line, "quantity": 1}])
+    assert order.lines.refunds().first().taxful_price == (-taxful_price_with_discount / 2)

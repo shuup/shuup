@@ -146,9 +146,9 @@ class OrderCreateRefundView(UpdateView):
             refund_line_info["line"] = line
 
             if data.get("quantity", None):
-                unit_price = line.base_unit_price.amount
+                price = line.discounted_unit_price.amount
                 quantity = data["quantity"]
-                calculated_refund_amount = unit_price * quantity
+                calculated_refund_amount = price * quantity
 
                 refund_line_info["quantity"] = quantity
                 total_amount += calculated_refund_amount
