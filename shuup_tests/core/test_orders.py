@@ -425,3 +425,32 @@ def test_refunds_for_discounted_order_lines():
 
     order.create_refund([{"line": product_line, "quantity": 1}])
     assert order.lines.refunds().first().taxful_price == (-taxful_price_with_discount / 2)
+
+
+@pytest.mark.django_db
+def test_refunds_with_quantities():
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product = create_product(
+        "test-sku",
+        shop=get_default_shop(),
+        default_price=10,
+        stock_behavior=StockBehavior.STOCKED
+    )
+
+    order = create_order_with_product(product, supplier, 3, 200, shop=shop)
+    order.cache_prices()
+    assert not order.lines.refunds()
+
+    product_line = order.lines.first()
+    refund_amount = Money(100, order.currency)
+    order.create_refund([{"line": product_line, "quantity": 2, "amount": refund_amount}])
+    assert len(order.lines.refunds()) == 2
+
+    quantity_line = order.lines.refunds().filter(quantity=2).first()
+    assert quantity_line
+    amount_line = order.lines.refunds().filter(quantity=1).first()
+    assert amount_line
+
+    assert quantity_line.taxful_base_unit_price == -product_line.taxful_base_unit_price
+    assert amount_line.taxful_price.amount == -refund_amount

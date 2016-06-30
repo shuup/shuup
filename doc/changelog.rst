@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Create separate refund lines for quantities and amounts
 - Fix handling of refunds for discounted lines
 
 Localization

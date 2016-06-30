@@ -531,6 +531,10 @@ class Order(MoneyPropped, models.Model):
         order's supplier the exact amount of the value of the `quantity`
         field.
 
+        If data for a refund line includes both an amount and a
+        quantity to refund, creates a separate refund line for each
+        refund type.
+
         :param refund_data: List of dicts containing refund data.
         :type refund_data: [dict]
         :param created_by: Refund creator's user instance, used for
@@ -553,19 +557,32 @@ class Order(MoneyPropped, models.Model):
             if amount > self.taxful_total_price.amount:
                 raise RefundExceedsAmountException
 
-            unit_price = parent_line.discounted_unit_price.amount if parent_line else zero
-            total_price = unit_price * quantity + amount
+            # If a quantity provided, add a separate refund line
+            if quantity and parent_line:
+                unit_price = parent_line.discounted_unit_price.amount
+                refund_line = OrderLine.objects.create(
+                    text=_("Refund for %s" % parent_line.text),
+                    order=self,
+                    type=OrderLineType.REFUND,
+                    parent_line=parent_line,
+                    ordering=index,
+                    base_unit_price_value=-unit_price,
+                    quantity=quantity
+                )
+                refund_lines.append(refund_line)
 
-            refund_line = OrderLine.objects.create(
-                text=_("Refund for %s" % parent_line.text) if parent_line else _("Manual refund"),
-                order=self,
-                type=OrderLineType.REFUND,
-                parent_line=parent_line,
-                ordering=index,
-                base_unit_price_value=-total_price,
-                quantity=1
-            )
-            refund_lines.append(refund_line)
+            # If amount is provided, add a separate refund line
+            if amount:
+                refund_line = OrderLine.objects.create(
+                    text=_("Refund for %s" % parent_line.text) if parent_line else _("Manual refund"),
+                    order=self,
+                    type=OrderLineType.REFUND,
+                    parent_line=parent_line,
+                    ordering=index,
+                    base_unit_price_value=-amount,
+                    quantity=1
+                )
+                refund_lines.append(refund_line)
 
             if parent_line and parent_line.type == OrderLineType.PRODUCT:
                 product = parent_line.product
