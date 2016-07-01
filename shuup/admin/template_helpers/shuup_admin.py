@@ -94,23 +94,24 @@ def get_breadcrumbs(context):
     return breadcrumbs
 
 
-def model_url(model, kind="detail", default=None):
+@contextfunction
+def model_url(context, model, kind="detail", default=None):
     """
     Get a model URL of the given kind for a model (instance or class).
 
+    :param context: Jinja rendering context
+    :type context: jinja2.runtime.Context
     :param model: The model instance or class.
     :type model: django.db.Model
     :param kind: The URL kind to retrieve. See `get_model_url`.
     :type kind: str
-    :param default: Default value to return if model URL retrieval fails. If None,
-                    the `NoModelUrl` exception is (re)raised.
-    :type default: str|None
+    :param default: Default value to return if model URL retrieval fails.
+    :type default: str
     :return: URL string.
     :rtype: str
     """
+    user = context.get("user")
     try:
-        return get_model_url(model, kind)
+        return get_model_url(model, kind=kind, user=user)
     except NoModelUrl:
-        if default is None:
-            raise
         return default

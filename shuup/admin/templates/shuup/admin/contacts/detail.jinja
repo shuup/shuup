@@ -68,7 +68,8 @@
                     <tbody>
                         {% for member in contact.members.all() %}
                             <tr>
-                                <td><a href="{{ shuup_admin.model_url(member) }}">{{ member.name }}</a></td>
+                                {% set url = shuup_admin.model_url(member) %}
+                                <td>{% if url %}<a href="{{ url }}">{% endif %}{{ member.name }}{% if url %}</a>{% endif %}</td>
                                 <td>{{ member.email }}</td>
                             </tr>
                         {% endfor %}
@@ -89,7 +90,8 @@
 {%- endmacro -%}
 
 {%- macro render_object(obj) -%}
-    <a href="{{ shuup_admin.model_url(obj) }}">
+    {% set url = shuup_admin.model_url(obj) %}
+    {% if url %}<a href="{{ url }}">{% endif %}
         {{- obj -}}
-    </a>
+    {% if url %}</a>{% endif %}
 {%- endmacro -%}
