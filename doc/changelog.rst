@@ -24,6 +24,7 @@ Localization
 Admin
 ~~~~~
 
+- Add permission check for dashboard blocks
 - Fix required permission issues for various modules
 - Make `model_url` context function and add permission check
 - Add permission check option to `get_model_url`
