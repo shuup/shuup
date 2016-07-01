@@ -36,9 +36,9 @@ regular_user = regular_user  # noqa
 def test_rounding_costs(price, cost, mode):
     shop = get_default_shop()
     source = OrderSource(shop)
-    source.total_price_of_products = source.create_price(price)
+    source.taxful_total_price = source.create_price(price)
     behavior = RoundingBehaviorComponent.objects.create(mode=mode)
-    costs = list(behavior.get_costs(None, source))
+    costs = list(behavior.get_post_tax_costs(None, source))
 
     assert len(costs) == 1
     assert costs[0].price.value == Decimal(cost)

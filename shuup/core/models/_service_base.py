@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2016, Shuup Ltd. All rights reserved.
+# Copyright (c) 2012-2016, Shoop Ltd. All rights reserved.
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -321,11 +321,12 @@ class Service(TranslatableShuupModel):
         :type source: shuup.core.order_creator.OrderSource
         :rtype: Iterable[shuup.core.order_creator.SourceLine]
         """
-        for (num, line_data) in enumerate(self._get_line_data(source, self.get_post_tax_costs), 1):
+        for (num, line_data) in enumerate(
+                self._get_line_data(source, self.get_post_tax_costs, include_empty_cost=False), 1):
             (price_info, tax_class, text) = line_data
             yield self._create_line(source, num, price_info, tax_class, text)
 
-    def _get_line_data(self, source, cost_getter):
+    def _get_line_data(self, source, cost_getter, include_empty_cost=True):
         # Split to costs with and without description
         costs_with_description = []
         costs_without_description = []
@@ -335,7 +336,7 @@ class Service(TranslatableShuupModel):
             else:
                 assert cost.tax_class is None
                 costs_without_description.append(cost)
-        if not (costs_with_description or costs_without_description):
+        if include_empty_cost and not (costs_with_description or costs_without_description):
             costs_without_description = [ServiceCost(source.create_price(0))]
 
         effective_name = self.get_effective_name(source)
