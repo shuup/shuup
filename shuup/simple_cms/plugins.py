@@ -30,7 +30,7 @@ class PageLinksConfigForm(GenericPluginForm):
                 value.initial = self.plugin.config.get(name, value.initial)
                 self.fields[name] = value
         self.fields["pages"] = forms.ModelMultipleChoiceField(
-            queryset=Page.objects.filter(visible_in_menu=True),
+            queryset=Page.objects.visible(),
             required=False,
             initial=self.plugin.config.get("pages", None),
         )
@@ -78,7 +78,7 @@ class PageLinksPlugin(TemplatedPlugin):
         show_all_pages = self.config.get("show_all_pages", True)
         hide_expired = self.config.get("hide_expired", False)
 
-        pages_qs = Page.objects.filter(visible_in_menu=True)
+        pages_qs = Page.objects.filter()
         if hide_expired:
             pages_qs = pages_qs.visible()
 
