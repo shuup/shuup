@@ -229,7 +229,6 @@ class OrderEditView(CreateOrUpdateView):
         shop_id = request.GET["shop_id"]
         customer_id = request.GET.get("customer_id")
         quantity = decimal.Decimal(request.GET.get("quantity", 1))
-        already_in_lines_qty = decimal.Decimal(request.GET.get("already_in_lines_qty", 0))
         product = Product.objects.filter(pk=product_id).first()
         if not product:
             return {"errorText": _("Product %s does not exist.") % product_id}
@@ -249,9 +248,6 @@ class OrderEditView(CreateOrUpdateView):
         price_info = get_price_info(shop, customer, product, quantity)
         supplier = shop_product.suppliers.first()  # TODO: Allow setting a supplier?
         stock_status = supplier.get_stock_status(product.pk) if supplier else None
-        errors = " ".join(
-            [str(message.args[0]) for message in shop_product.get_orderability_errors(
-                supplier=supplier, quantity=(quantity + already_in_lines_qty), customer=customer, ignore_minimum=True)])
         return {
             "id": product.id,
             "sku": product.sku,
@@ -262,7 +258,6 @@ class OrderEditView(CreateOrUpdateView):
             "salesDecimals": product.sales_unit.decimals if product.sales_unit else 0,
             "salesUnit": product.sales_unit.short_name if product.sales_unit else "",
             "purchaseMultiple": shop_product.purchase_multiple,
-            "errors": errors,
             "taxClass": {
                 "id": product.tax_class.id,
                 "name": force_text(product.tax_class),

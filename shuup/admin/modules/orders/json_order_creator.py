@@ -21,6 +21,21 @@ from shuup.utils.analog import LogEntryKind
 from shuup.utils.numbers import parse_decimal_string
 
 
+class AdminOrderSource(OrderSource):
+    def get_validation_errors(self):
+        return []
+
+
+class AdminOrderCreator(OrderCreator):
+    def _check_orderability(self, order_line):
+        return
+
+
+class AdminOrderModifier(OrderModifier):
+    def _check_orderability(self, order_line):
+        return
+
+
 class JsonOrderCreator(object):
 
     def __init__(self):
@@ -99,17 +114,6 @@ class JsonOrderCreator(object):
             }), code="no_shop_product"))
             return False
         supplier = shop_product.suppliers.first()  # TODO: Allow setting a supplier?
-        is_orderable = True
-        for message in shop_product.get_orderability_errors(
-                supplier=supplier, quantity=sl_kwargs["quantity"], customer=source.customer):
-            self.add_error(ValidationError((_("Product %(product)s is not orderable: %(error)s") % {
-                "product": product,
-                "error": str(message.args[0])
-            }), code=str(message.args[1])))
-            is_orderable = False
-
-        if not is_orderable:
-            return False
 
         sl_kwargs["product"] = product
         sl_kwargs["supplier"] = supplier
@@ -182,7 +186,7 @@ class JsonOrderCreator(object):
             self.add_error(ValidationError(_("Please choose a valid shop."), code="no_shop"))
             return None
 
-        source = OrderSource(shop=shop)
+        source = AdminOrderSource(shop=shop)
         if order_to_update:
             source.update_from_order(order_to_update)
 
@@ -280,9 +284,6 @@ class JsonOrderCreator(object):
         if not self.is_valid:  # If we encountered any errors thus far, don't bother going forward
             return None
 
-        for error in source.get_validation_errors():
-            self.add_error(error)
-
         if not self.is_valid:
             return None
 
@@ -308,7 +309,7 @@ class JsonOrderCreator(object):
             state, creator=creator, ip_address=ip_address, save=True)
 
         # Then create an OrderCreator and try to get things done!
-        creator = OrderCreator()
+        creator = AdminOrderCreator()
         try:
             order = creator.create_order(order_source=source)
             self._postprocess_order(order, state)
@@ -331,7 +332,7 @@ class JsonOrderCreator(object):
         source = self.create_source_from_state(state, order_to_update=order_to_update, save=True)
         if source:
             source.modified_by = modified_by
-        modifier = OrderModifier()
+        modifier = AdminOrderModifier()
         try:
             order = modifier.update_order_from_source(order_source=source, order=order_to_update)
             self._postprocess_order(order, state)

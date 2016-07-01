@@ -141,14 +141,12 @@ def test_order_creator_invalid_line_data(rf, admin_user):
     contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
     state = get_frontend_order_state(contact=contact, valid_lines=False)
     request = get_frontend_request_for_command(state, "finalize", admin_user)
-    response =OrderEditView.as_view()(request)
+    response = OrderEditView.as_view()(request)
     # Let's see that we get a cornucopia of trouble:
     assert_contains(response, "does not exist", status_code=400)
     assert_contains(response, "does not have a product", status_code=400)
-    assert_contains(response, "is not available", status_code=400)
     assert_contains(response, "The price", status_code=400)
     assert_contains(response, "The quantity", status_code=400)
-    assert_contains(response, "not visible", status_code=400)
 
 
 def test_order_creator_view_GET(rf, admin_user):
