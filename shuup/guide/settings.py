@@ -8,13 +8,13 @@
 #: ReadtheDocs API URL
 #:
 #: URL for fetching search results via ReadtheDocs API.
-SHUUP_GUIDE_API_URL = "https://readthedocs.org/api/v2/search/?project=shuup-guide&version=latest&"
+SHUUP_GUIDE_API_URL = "https://readthedocs.org/api/v2/search/?project=shoop-guide&version=latest&"
 
 #: ReadtheDocs link URL
 #:
 #: URL for manually linking search query link. Query parameters are
 #: added to end of URL when constructing link.
-SHUUP_GUIDE_LINK_URL = "http://shuup-guide.readthedocs.io/en/latest/search.html?check_keywords=yes&area=default&"
+SHUUP_GUIDE_LINK_URL = "http://shoop-guide.readthedocs.io/en/latest/search.html?check_keywords=yes&area=default&"
 
 #: Whether or not to fetch search results from ReadtheDocs
 #:
