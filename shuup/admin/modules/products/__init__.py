@@ -13,6 +13,7 @@ from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
+from filer.models import File
 
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
 from shuup.admin.utils.permissions import (
@@ -120,7 +121,11 @@ class ProductModule(AdminModule):
                     )
 
     def get_required_permissions(self):
-        return get_permissions_from_urls(self.get_urls()) | get_default_model_permissions(Product)
+        return (
+            get_permissions_from_urls(self.get_urls()) |
+            get_default_model_permissions(Product) |
+            get_default_model_permissions(File)
+        )
 
     def get_model_url(self, object, kind):
         return derive_model_url(Product, "shuup_admin:product", object, kind)

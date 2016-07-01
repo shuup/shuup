@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.utils.encoding import force_text
@@ -16,6 +17,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 
 from shuup.admin.toolbar import PostActionButton, Toolbar, URLActionButton
+from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.core.models import CompanyContact, Contact, PersonContact
 from shuup.utils.excs import Problem
 
@@ -59,6 +61,7 @@ class ContactDetailToolbar(Toolbar):
             tooltip=_(u"Create an user for the contact."),
             icon="fa fa-star",
             extra_css_class="btn-gray btn-inverse",
+            required_permissions=get_default_model_permissions(get_user_model()),
         ))
 
     def build_new_order_button(self):

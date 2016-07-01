@@ -10,11 +10,9 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
-from shuup.admin.utils.permissions import (
-    get_default_model_permissions, get_permissions_from_urls
-)
+from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url, derive_model_url, get_model_url
-from shuup.core.models import Contact
+from shuup.core.models import CompanyContact, Contact, PersonContact
 
 from .dashboard import get_active_customers_block
 
@@ -71,7 +69,11 @@ class ContactModule(AdminModule):
         ]
 
     def get_required_permissions(self):
-        return get_permissions_from_urls(self.get_urls()) | get_default_model_permissions(Contact)
+        return (
+            get_default_model_permissions(CompanyContact) |
+            get_default_model_permissions(Contact) |
+            get_default_model_permissions(PersonContact)
+        )
 
     def get_search_results(self, request, query):
         minimum_query_length = 3
