@@ -21,6 +21,7 @@ Localization
 Admin
 ~~~~~
 
+- Add option to filter product list with manufacturer
 - Remove orderability checks from order editor
 - Replace buttons with dropdown in Orders admin
 

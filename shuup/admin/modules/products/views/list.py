@@ -35,7 +35,10 @@ class ProductListView(PicotableListView):
         qs = Product.objects.all_except_deleted()
         q = Q()
         for mode in filter.get("modes", []):
-            q = q | Q(mode=mode)
+            q |= Q(mode=mode)
+        manufacturer_ids = filter.get("manufacturers")
+        if manufacturer_ids:
+            q |= Q(manufacturer_id__in=manufacturer_ids)
         qs = qs.filter(q)
         if shop_id:
             qs = qs.filter(shop_products__shop_id=int(shop_id))
