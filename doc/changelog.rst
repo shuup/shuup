@@ -24,6 +24,7 @@ Localization
 Admin
 ~~~~~
 
+- Add permission check to toolbar button classes
 - Enable remarkable editor for service description
 - Add option to filter product list with manufacturer
 - Remove orderability checks from order editor
