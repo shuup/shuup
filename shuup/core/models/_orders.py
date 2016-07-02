@@ -515,6 +515,7 @@ class Order(MoneyPropped, models.Model):
         shipment_created.send(sender=type(self), order=self, shipment=shipment)
         return shipment
 
+    @atomic
     def create_refund(self, refund_data, created_by=None):
         """
         Create a refund if passed a list of refund line data.
@@ -626,7 +627,7 @@ class Order(MoneyPropped, models.Model):
         return self.lines.refunds().exists()
 
     def can_create_refund(self):
-        return (self.taxful_total_price.amount.value > 0)
+        return (self.taxful_total_price.amount.value > 0 and not self.can_edit())
 
     def create_shipment_of_all_products(self, supplier=None):
         """
