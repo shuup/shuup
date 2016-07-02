@@ -49,7 +49,7 @@ class OrderDetailView(DetailView):
                     text=_("Create Shipment"),
                 )
             )
-        if order.can_create_refund() and order.payments.exists():
+        if order.can_create_refund():
             action_menu_items.append(
                 DropdownItem(
                     url=reverse("shuup_admin:order.create-refund", kwargs={"pk": order.pk}),

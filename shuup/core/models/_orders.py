@@ -626,7 +626,7 @@ class Order(MoneyPropped, models.Model):
         return self.lines.refunds().exists()
 
     def can_create_refund(self):
-        return (self.taxful_total_price.amount.value > 0)
+        return (self.taxful_total_price.amount.value > 0 and not self.can_edit())
 
     def create_shipment_of_all_products(self, supplier=None):
         """

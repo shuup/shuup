@@ -256,11 +256,13 @@ def test_refunds():
         default_price=10,
     )
     order = create_order_with_product(product, supplier, 2, 200, shop=shop)
+    order.payment_status = PaymentStatus.DEFERRED
     order.cache_prices()
+    order.save()
 
     assert order.get_total_refunded_amount().value == 0
     assert order.get_total_unrefunded_amount().value == order.taxful_total_price.value
-    assert order.can_edit()
+    assert not order.can_edit()
 
     assert len(order.lines.all()) == 1
 

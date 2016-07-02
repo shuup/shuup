@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Allow refund only for non editable orders
 - Create separate refund lines for quantities and amounts
 - Fix handling of refunds for discounted lines
 
