@@ -515,6 +515,7 @@ class Order(MoneyPropped, models.Model):
         shipment_created.send(sender=type(self), order=self, shipment=shipment)
         return shipment
 
+    @atomic
     def create_refund(self, refund_data, created_by=None):
         """
         Create a refund if passed a list of refund line data.
