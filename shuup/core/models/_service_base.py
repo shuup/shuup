@@ -285,6 +285,18 @@ class Service(TranslatableShuupModel):
             for cost in component.get_costs(self, source):
                 yield cost
 
+    def get_post_tax_costs(self, source):
+        """
+        Get post tax costs of this service for items in given source.
+
+        :type source: shuup.core.order_creator.OrderSource
+        :return: description, price and tax class of the costs
+        :rtype: Iterable[ServiceCost]
+        """
+        for component in self.behavior_components.all():
+            for cost in component.get_post_tax_costs(self, source):
+                yield cost
+
     def get_lines(self, source):
         """
         Get lines for given source.
@@ -295,26 +307,39 @@ class Service(TranslatableShuupModel):
         :type source: shuup.core.order_creator.OrderSource
         :rtype: Iterable[shuup.core.order_creator.SourceLine]
         """
-        for (num, line_data) in enumerate(self._get_line_data(source), 1):
+        for (num, line_data) in enumerate(self._get_line_data(source, self.get_costs), 1):
             (price_info, tax_class, text) = line_data
             yield self._create_line(source, num, price_info, tax_class, text)
 
-    def _get_line_data(self, source):
+    def get_post_tax_lines(self, source):
+        """
+        Get post tax lines for given source.
+
+        Lines are created based on costs.  Costs without description are
+        combined to single line.
+
+        :type source: shuup.core.order_creator.OrderSource
+        :rtype: Iterable[shuup.core.order_creator.SourceLine]
+        """
+        for (num, line_data) in enumerate(
+                self._get_line_data(source, self.get_post_tax_costs, include_empty_cost=False), 1):
+            (price_info, tax_class, text) = line_data
+            yield self._create_line(source, num, price_info, tax_class, text)
+
+    def _get_line_data(self, source, cost_getter, include_empty_cost=True):
         # Split to costs with and without description
         costs_with_description = []
         costs_without_description = []
-        for cost in self.get_costs(source):
+        for cost in cost_getter(source):
             if cost.description:
                 costs_with_description.append(cost)
             else:
                 assert cost.tax_class is None
                 costs_without_description.append(cost)
-
-        if not (costs_with_description or costs_without_description):
+        if include_empty_cost and not (costs_with_description or costs_without_description):
             costs_without_description = [ServiceCost(source.create_price(0))]
 
         effective_name = self.get_effective_name(source)
-
         # Yield the combined cost first
         if costs_without_description:
             combined_price_info = _sum_costs(costs_without_description, source)
@@ -430,6 +455,19 @@ class ServiceBehaviorComponent(PolymorphicShuupModel):
         Return costs for for this object. This should be implemented
         in subclass. This method is used to calculate price for
         ``ShippingMethod`` and ``PaymentMethod`` objects.
+
+        :type service: Service
+        :type source: shuup.core.order_creator.OrderSource
+        :rtype: Iterable[ServiceCost]
+        """
+        return ()
+
+    def get_post_tax_costs(self, service, source):
+        """
+        Return post tax costs for for this object. This should be
+        implemented in subclass. This method is used to calculate
+        post tax costs for ``ShippingMethod`` and ``PaymentMethod``
+        objects.
 
         :type service: Service
         :type source: shuup.core.order_creator.OrderSource

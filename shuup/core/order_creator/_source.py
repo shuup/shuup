@@ -366,10 +366,11 @@ class OrderSource(object):
         lines = self._processed_lines_cache
         if lines is None:
             lines = self.__compute_lines()
-            self._processed_lines_cache = lines
         if not self._taxes_calculated:
             if with_taxes or should_calculate_taxes_automatically():
                 self._calculate_taxes(lines)
+                self._add_post_tax_lines(lines)
+        self._processed_lines_cache = lines
         for error_message in self.get_validation_errors():
             raise ValidationError(error_message.args[0], code="invalid_order_source")
         return lines
@@ -428,6 +429,11 @@ class OrderSource(object):
             for line in self.shipping_method.get_lines(self):
                 yield line
 
+    def _compute_payment_method_post_tax_lines(self):
+        if self.payment_method:
+            for line in self.payment_method.get_post_tax_lines(self):
+                yield line
+
     def _add_lines_from_modifiers(self, lines):
         """
         Add lines from OrderSourceModifiers to given list of lines.
@@ -435,6 +441,11 @@ class OrderSource(object):
         for module in get_order_source_modifier_modules():
             new_lines = list(module.get_new_lines(self, list(lines)))
             # Extend lines now to allow next module to see them
+            lines.extend(new_lines)
+
+    def _add_post_tax_lines(self, lines):
+        if self.payment_method:
+            new_lines = list(self.payment_method.get_post_tax_lines(self))
             lines.extend(new_lines)
 
     def get_product_lines(self):

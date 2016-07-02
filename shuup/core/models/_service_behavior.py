@@ -208,8 +208,8 @@ class RoundingBehaviorComponent(ServiceBehaviorComponent):
         default=RoundingMode.ROUND_HALF_UP,
         verbose_name=_("rounding mode"))
 
-    def get_costs(self, service, source):
-        total_price = source.total_price_of_products
+    def get_post_tax_costs(self, service, source):
+        total_price = source.taxful_total_price.amount
         rounded = nickel_round(total_price, self.quant, self.mode.value)
         remainder = rounded - total_price
-        yield ServiceCost(remainder, _("rounding"))
+        yield ServiceCost(source.shop.create_price(remainder), _("rounding"))

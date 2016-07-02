@@ -12,6 +12,8 @@ Unreleased
 Core
 ~~~~
 
+- Fix rounding behavior component to create service cost on post-tax totals
+- Add support for service behavior costs on post-tax totals
 - Create separate refund lines for quantities and amounts
 - Fix handling of refunds for discounted lines
 
