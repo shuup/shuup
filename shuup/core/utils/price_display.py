@@ -161,5 +161,7 @@ def _get_priceful(request, item, quantity):
             if item.is_variation_parent():
                 return item.get_cheapest_child_price_info(request, quantity)
         return item.get_price_info(request, quantity=quantity)
+    if hasattr(item, 'get_total_cost'):
+        return item.get_total_cost(request.basket)
     assert isinstance(item, Priceful)
     return item

@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add support for using pricing templatetags for services
 - Make refund creation atomic
 - Allow refund only for non editable orders
 - Create separate refund lines for quantities and amounts
