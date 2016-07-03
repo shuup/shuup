@@ -26,12 +26,11 @@
                     <span class="title">
                         <span class="name">{{ service.name }}</span>
                         {% if show_prices() %}
-                            {% set price_info = service.get_total_cost(basket) %}
-                            <span class="price">{{ price_info.price|money }}</span>
+                            <span class="price">{{ service|price }}</span>
                         {% endif %}
                     </span>
                     <div class="description">
-                        {{ service.description }}
+                        {{ service.description|markdown|safe }}
                     </div>
                 </span>
             </label>

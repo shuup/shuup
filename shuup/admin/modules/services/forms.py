@@ -31,6 +31,9 @@ class BaseMethodForm(ShuupAdminForm):
             "choice_identifier", "name", "description", "enabled", "shop",
             "logo", "tax_class"
         ]
+        widgets = {
+            "description": forms.Textarea
+        }
 
     def __init__(self, **kwargs):
         self.request = kwargs.pop("request")

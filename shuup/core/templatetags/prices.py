@@ -24,7 +24,7 @@ from shuup.core.utils.price_display import (
     PricePropertyFilter, PriceRangeDisplayFilter, TotalPriceDisplayFilter
 )
 
-# Filters for Product, SourceLine, BasketLine, OrderLine
+# Filters for Product, SourceLine, BasketLine, OrderLine, Service
 
 price = PriceDisplayFilter('price')
 base_price = PriceDisplayFilter('base_price')
