@@ -30,8 +30,11 @@ class ProductTypeFilter(CatalogFilter):
 
     product_types = models.ManyToManyField(ProductType, verbose_name=_("product Types"))
 
+    def matches(self, shop_product):
+        return (shop_product.type_id in self.values.values_list("id", flat=True))
+
     def filter_queryset(self, queryset):
-        return queryset.filter(product__type__in=self.values.all())
+        return queryset.filter(product__type_id__in=self.values.values_list("id", flat=True))
 
     @property
     def description(self):
@@ -53,8 +56,11 @@ class ProductFilter(CatalogFilter):
 
     products = models.ManyToManyField(Product, verbose_name=_("product"))
 
+    def matches(self, shop_product):
+        return (shop_product.pk in self.values.values_list("pk", flat=True))
+
     def filter_queryset(self, queryset):
-        return queryset.filter(product_id__in=self.products.all().values_list("id", flat=True))
+        return queryset.filter(product_id__in=self.products.values_list("id", flat=True))
 
     @property
     def description(self):
@@ -75,6 +81,11 @@ class CategoryFilter(CatalogFilter):
     name = _("Product Category")
 
     categories = models.ManyToManyField(Category, verbose_name=_("categories"))
+
+    def matches(self, shop_product):
+        ids = shop_product.categories.values_list("id", flat=True)
+        new_ids = self.values.values_list("id", flat=True)
+        return bool([x for x in ids if x in new_ids])
 
     def filter_queryset(self, queryset):
         return queryset.filter(categories__in=self.categories.all())
