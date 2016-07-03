@@ -23,6 +23,7 @@ Localization
 Admin
 ~~~~~
 
+- Enable remarkable editor for service description
 - Add option to filter product list with manufacturer
 - Remove orderability checks from order editor
 - Replace buttons with dropdown in Orders admin

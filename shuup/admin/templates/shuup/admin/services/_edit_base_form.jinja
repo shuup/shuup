@@ -5,7 +5,10 @@
 
 {% call content_block(_("General Information"), ("fa-info-circle")) %}
     {{ render_monolingual_fields(shipping_method_form, field_names=priority_fields) }}
-    {{ language_dependent_content_tabs(shipping_method_form, tab_id_prefix="base") }}
+    {% call(form, language, map) language_dependent_content_tabs(shipping_method_form, tab_id_prefix="base") %}
+        {{ bs3.field(shipping_method_form[map.name]) }}
+        {{ bs3.field(shipping_method_form[map.description], widget_class="remarkable-field") }}
+    {% endcall %}
     <div class="form-divider"></div>
     {{ render_monolingual_fields(shipping_method_form, exclude=priority_fields) }}
 {% endcall %}
