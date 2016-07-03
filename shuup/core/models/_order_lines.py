@@ -30,6 +30,7 @@ class OrderLineType(Enum):
     DISCOUNT = 4
     OTHER = 5
     REFUND = 6
+    ROUNDING = 7
 
     class Labels:
         PRODUCT = _('product')
@@ -38,6 +39,7 @@ class OrderLineType(Enum):
         DISCOUNT = _('discount')
         OTHER = _('other')
         REFUND = _('refund')
+        ROUNDING = _('rounding')
 
 
 class OrderLineManager(models.Manager):

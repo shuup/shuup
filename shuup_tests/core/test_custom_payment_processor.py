@@ -12,7 +12,7 @@ import pytest
 
 from shuup.core.models import (
     CustomPaymentProcessor, PaymentMethod, PaymentStatus,
-    RoundingBehaviorComponent, ServiceBehaviorComponent,
+    ServiceBehaviorComponent,
     StaffOnlyBehaviorComponent
 )
 from shuup.core.pricing import TaxfulPrice
@@ -57,7 +57,7 @@ def test_custom_payment_processor_cash_service(choice_identifier, expected_payme
 
 @pytest.mark.django_db
 @pytest.mark.parametrize('choice_identifier, default_behavior_components', [
-    ('cash', [RoundingBehaviorComponent, StaffOnlyBehaviorComponent]),
+    ('cash', [StaffOnlyBehaviorComponent]),
     ('manual', [])
 ])
 def test_custom_payment_processor_defaults(choice_identifier, default_behavior_components):

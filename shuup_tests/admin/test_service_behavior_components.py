@@ -16,7 +16,7 @@ from shuup.admin.modules.services.views import (
 )
 from shuup.core.models import (
     FixedCostBehaviorComponent, GroupAvailabilityBehaviorComponent,
-    PaymentMethod, RoundingBehaviorComponent, RoundingMode, ShippingMethod,
+    PaymentMethod, RoundingMode, ShippingMethod,
     StaffOnlyBehaviorComponent, WaivingCostBehaviorComponent,
     WeightLimitsBehaviorComponent
 )
@@ -54,10 +54,6 @@ def get_default_behavior_settings():
         },
         GroupAvailabilityBehaviorComponent.__name__.lower(): {
             "groups": [get_default_customer_group().pk]
-        },
-        RoundingBehaviorComponent.__name__.lower(): {
-            "mode": RoundingMode.ROUND_UP.value,
-            "quant": decimal.Decimal('0.05')
         },
         StaffOnlyBehaviorComponent.__name__.lower(): {}
     }

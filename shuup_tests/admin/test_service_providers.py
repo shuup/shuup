@@ -79,6 +79,9 @@ def test_new_service_providers_type_select(rf, admin_user, sp_model, type_param)
                 "name__en": name,
                 "enabled": True
             }
+            if selected_type == "shuup.custompaymentprocessor":
+                data["rounding_quantize"] = "0.05"
+                data["rounding_mode"] = "ROUND_HALF_UP"
             provider_count = sp_model.objects.count()
             get_bs_object_for_view(rf.post(url, data=data), view, admin_user)
             assert sp_model.objects.count() == provider_count + 1
@@ -108,7 +111,7 @@ def test_invalid_service_provider_type(rf, admin_user):
 
 
 @pytest.mark.parametrize("type,extra_inputs", [
-    ("shuup.custompaymentprocessor", []),
+    ("shuup.custompaymentprocessor", ["rounding_quantize"]),
     ("shuup_testing.pseudopaymentprocessor", ["bg_color", "fg_color"])
 ])
 def test_new_service_provider_form_fields(rf, admin_user, type, extra_inputs):
@@ -134,7 +137,7 @@ def test_new_service_provider_form_fields(rf, admin_user, type, extra_inputs):
 
 @pytest.mark.parametrize("sp_model,extra_inputs", [
     (CustomCarrier, []),
-    (CustomPaymentProcessor, []),
+    (CustomPaymentProcessor, ["rounding_quantize"]),
     (PseudoPaymentProcessor, ["bg_color", "fg_color"])
 ])
 def test_service_provide_edit_view(rf, admin_user, sp_model, extra_inputs):
