@@ -41,6 +41,7 @@ Xtheme
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 
+- Honor customer group pricing options for services
 - Enable markdown for service description
 
 Simple Supplier
