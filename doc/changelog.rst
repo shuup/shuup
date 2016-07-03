@@ -40,6 +40,8 @@ Xtheme
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 
+- Enable markdown for service description
+
 Simple Supplier
 ~~~~~~~~~~~~~~~
 

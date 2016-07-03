@@ -31,7 +31,7 @@
                         {% endif %}
                     </span>
                     <div class="description">
-                        {{ service.description }}
+                        {{ service.description|markdown|safe }}
                     </div>
                 </span>
             </label>
