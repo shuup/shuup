@@ -16,8 +16,13 @@ from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum
 from parler.models import TranslatableModel, TranslatedFields
 
+from shuup.campaigns.consts import (
+    CAMPAIGNS_CACHE_NAMESPACE, CATALOG_FILTER_CACHE_NAMESPACE,
+    CONTEXT_CONDITION_CACHE_NAMESPACE
+)
+from shuup.core import cache
 from shuup.core.fields import InternalIdentifierField
-from shuup.core.models import Order, Shop, ShopProduct
+from shuup.core.models import Order, Shop
 from shuup.utils.properties import MoneyPropped
 
 
@@ -54,6 +59,12 @@ class Campaign(MoneyPropped, TranslatableModel):
         verbose_name = _('Campaign')
         verbose_name_plural = _('Campaigns')
 
+    def save(self, *args, **kwargs):
+        super(Campaign, self).save(*args, **kwargs)
+        cache.bump_version(CAMPAIGNS_CACHE_NAMESPACE)
+        cache.bump_version(CONTEXT_CONDITION_CACHE_NAMESPACE)
+        cache.bump_version(CATALOG_FILTER_CACHE_NAMESPACE)
+
     def is_available(self):
         if not self.active:  # move to manager?
             return False
@@ -86,27 +97,66 @@ class CatalogCampaign(Campaign):
     def __str__(self):
         return force_text(_("Catalog Campaign: %(name)s" % dict(name=self.name)))
 
-    def rules_match(self, context, shop_product):
+    def rules_match(self, context, shop_product, matching_catalog_filters, matching_context_conditions):
         if not self.is_available():
             return False
 
-        if not self._queryset:
-            queryset = ShopProduct.objects.filter(shop=self.shop)
-            for catalog_filter in self.filters.all():
-                queryset = catalog_filter.filter_queryset(queryset)
-            self._queryset = queryset
-        filters_match = self._queryset.filter(pk=shop_product.pk).exists()
+        # If rule has filters, all of them has to match
+        for filter_pk in self.filters.values_list("pk", flat=True):
+            if filter_pk not in matching_catalog_filters:
+                return False
 
-        conditions_match = all(condition.matches(context) for condition in self.conditions.all())
-
-        return (conditions_match and filters_match)
+        # All filters match so let's check that also all the conditions match
+        for condition_pk in self.conditions.values_list("pk", flat=True):
+            if condition_pk not in matching_context_conditions:
+                return False
+        return True
 
     @classmethod
-    def get_matching(cls, context, product):
+    def get_matching(cls, context, shop_product):
+        prod_ctx_cache_elements = dict(
+            customer=context.customer.pk or 0,
+            shop=context.shop.pk,
+            product_id=shop_product.pk)
+        namespace = CAMPAIGNS_CACHE_NAMESPACE
+        key = "%s:%s" % (namespace, hash(frozenset(prod_ctx_cache_elements.items())))
+        cached_matching = cache.get(key, None)
+        if cached_matching is not None:
+            return cached_matching
+
+        from shuup.campaigns.models.matching import get_matching_context_conditions, get_matching_catalog_filters
+        matching_context_conditions = get_matching_context_conditions(context)
+        matching_catalog_filters = get_matching_catalog_filters(shop_product)
+
+        if not (matching_context_conditions or matching_catalog_filters):
+            return []
+
+        # Get all possible campaign id's for matching context_conditions
+        campaigns_based_on_conditions = set(
+            cls.objects.filter(
+                active=True,
+                shop=context.shop,
+                conditions__id__in=matching_context_conditions
+            ).values_list("pk", flat=True)
+        )
+
+        campaigns_based_on_catalog_filters = set()
+        if hasattr(cls, "filters"):
+            # Get all possible campaigns for matching catalog_filters
+            campaigns_based_on_catalog_filters = set(
+                cls.objects.filter(
+                    active=True,
+                    shop=context.shop,
+                    filters__id__in=matching_catalog_filters
+                ).values_list("pk", flat=True)
+            )
+
+        all_possible_campaigns_ids = (campaigns_based_on_conditions | campaigns_based_on_catalog_filters)
         matching = []
-        for campaign in cls.objects.filter(active=True, shop=context.shop):
-            if campaign.rules_match(context, product):
+        for campaign in cls.objects.filter(id__in=all_possible_campaigns_ids):
+            if campaign.rules_match(context, shop_product, matching_catalog_filters, matching_context_conditions):
                 matching.append(campaign)
+        cache.set(key, matching, timeout=None)
         return matching
 
 
