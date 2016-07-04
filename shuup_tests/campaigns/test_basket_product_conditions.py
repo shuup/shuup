@@ -8,9 +8,10 @@ import pytest
 from django.utils.encoding import force_text
 
 from shuup.campaigns.models.basket_conditions import (
+    BasketMaxTotalAmountCondition, BasketMaxTotalProductAmountCondition,
     BasketTotalAmountCondition, BasketTotalProductAmountCondition,
-    ProductsInBasketCondition,
-    BasketMaxTotalProductAmountCondition, BasketMaxTotalAmountCondition)
+    ProductsInBasketComparisonOperator, ProductsInBasketCondition
+)
 from shuup.front.basket import get_basket
 from shuup.testing.factories import create_product, get_default_supplier
 from shuup_tests.campaigns import initialize_test
@@ -41,6 +42,14 @@ def test_product_in_basket_condition(rf):
 
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
     assert condition.matches(basket, [])
+
+    condition.operator = ProductsInBasketComparisonOperator.EQUALS
+    condition.save()
+
+    assert condition.matches(basket, [])
+
+    basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
+    assert not condition.matches(basket, [])
 
 
 @pytest.mark.django_db
@@ -97,5 +106,3 @@ def test_basket_total_value_conditions(rf):
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
 
     assert not condition2.matches(basket, [])
-
-

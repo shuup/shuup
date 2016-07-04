@@ -7,6 +7,7 @@
 from django.db import models
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
+from enumfields import Enum, EnumIntegerField
 from polymorphic.models import PolymorphicModel
 
 from shuup.core.fields import MoneyValueField
@@ -118,12 +119,23 @@ class BasketMaxTotalAmountCondition(MoneyPropped, BasketCondition):
         self.amount_value = value
 
 
+class ProductsInBasketComparisonOperator(Enum):
+    EQUALS = 0
+    GTE = 1
+
+    class Labels:
+        EQUALS = _('Exactly')
+        GTE = _('Greater than or equal to')
+
+
 class ProductsInBasketCondition(BasketCondition):
     identifier = "basket_products_condition"
     name = _("Products in basket")
 
     model = Product
 
+    operator = EnumIntegerField(
+        ProductsInBasketComparisonOperator, default=ProductsInBasketComparisonOperator.GTE, verbose_name=_("operator"))
     quantity = models.PositiveIntegerField(default=1, verbose_name=_("quantity"))
     products = models.ManyToManyField(Product, verbose_name=_("products"), blank=True)
 
@@ -132,8 +144,10 @@ class ProductsInBasketCondition(BasketCondition):
         for line in basket.get_lines():
             if not (line.product and (line.product.id in product_ids)):
                 continue
-            if line.quantity >= self.quantity:
-                return True
+            if self.operator == ProductsInBasketComparisonOperator.GTE:
+                return line.quantity >= self.quantity
+            elif self.operator == ProductsInBasketComparisonOperator.EQUALS:
+                return line.quantity == self.quantity
         return False
 
     @property

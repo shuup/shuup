@@ -53,6 +53,8 @@ Order Printouts
 Campaigns
 ~~~~~~~~~
 
+- Enable exact quantity matches for products in basket campaigns
+
 Customer Group Pricing
 ~~~~~~~~~~~~~~~~~~~~~~
 
