@@ -167,10 +167,10 @@ class BasketCampaign(Campaign):
         max_length=120, verbose_name=_("basket line text"), help_text=_("This text will be shown in basket."))
 
     conditions = models.ManyToManyField('BasketCondition', blank=True, related_name='campaign')
-    coupon = models.OneToOneField('Coupon', null=True, blank=True, related_name='campaign')
+    coupon = models.OneToOneField('Coupon', null=True, blank=True, related_name='campaign', verbose_name=_("coupon"))
 
     translations = TranslatedFields(
-        public_name=models.CharField(max_length=120)
+        public_name=models.CharField(max_length=120, verbose_name=_("public name"))
     )
 
     def __str__(self):

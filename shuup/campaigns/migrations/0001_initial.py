@@ -43,7 +43,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
                 ('language_code', models.CharField(db_index=True, max_length=15, verbose_name='Language')),
-                ('public_name', models.CharField(max_length=120)),
+                ('public_name', models.CharField(verbose_name='public name', max_length=120)),
                 ('master', models.ForeignKey(related_name='translations', to='campaigns.BasketCampaign', null=True, editable=False)),
             ],
             options={
@@ -462,7 +462,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='basketcampaign',
             name='coupon',
-            field=models.OneToOneField(blank=True, related_name='campaign', to='campaigns.Coupon', null=True),
+            field=models.OneToOneField(verbose_name='coupon', blank=True, related_name='campaign', to='campaigns.Coupon', null=True),
         ),
         migrations.AddField(
             model_name='basketcampaign',
