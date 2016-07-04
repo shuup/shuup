@@ -7,18 +7,19 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals, with_statement
 
+import decimal
+
 from django.db import models
 from django.http.response import HttpResponseRedirect
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
+from enumfields import Enum, EnumField
 from parler.models import TranslatedFields
 
 from ._order_lines import OrderLineType
 from ._orders import Order, PaymentStatus
 from ._service_base import Service, ServiceChoice, ServiceProvider
-from ._service_behavior import (
-    RoundingBehaviorComponent, StaffOnlyBehaviorComponent
-)
+from ._service_behavior import StaffOnlyBehaviorComponent
 
 
 class PaymentMethod(Service):
@@ -121,6 +122,19 @@ class PaymentUrls(object):
         self.cancel_url = cancel_url
 
 
+class RoundingMode(Enum):
+    ROUND_HALF_UP = decimal.ROUND_HALF_UP
+    ROUND_HALF_DOWN = decimal.ROUND_HALF_DOWN
+    ROUND_UP = decimal.ROUND_UP
+    ROUND_DOWN = decimal.ROUND_DOWN
+
+    class Labels:
+        ROUND_HALF_UP = _("round to nearest with ties going away from zero")
+        ROUND_HALF_DOWN = _("round to nearest with ties going towards zero")
+        ROUND_UP = _("round away from zero")
+        ROUND_DOWN = _("round towards zero")
+
+
 class CustomPaymentProcessor(PaymentProcessor):
     """
     Payment processor without any integration or special processing.
@@ -128,6 +142,14 @@ class CustomPaymentProcessor(PaymentProcessor):
     Can be used for payment methods whose payments are processed
     manually.
     """
+
+    rounding_quantize = models.DecimalField(
+        max_digits=36, decimal_places=9, default=decimal.Decimal('0.05'), verbose_name=_("rounding quantize"),
+        help_text=_("Rounding quantize for cash payment."))
+    rounding_mode = EnumField(
+        RoundingMode, max_length=50, default=RoundingMode.ROUND_HALF_UP, verbose_name=_("rounding mode"),
+        help_text=_("Rounding mode for cash payment."))
+
     class Meta:
         verbose_name = _("custom payment processor")
         verbose_name_plural = _("custom payment processors")
@@ -142,8 +164,6 @@ class CustomPaymentProcessor(PaymentProcessor):
         service = super(CustomPaymentProcessor, self)._create_service(
             choice_identifier, **kwargs)
         if choice_identifier == 'cash':
-            service.behavior_components.add(
-                RoundingBehaviorComponent.objects.create())
             service.behavior_components.add(
                 StaffOnlyBehaviorComponent.objects.create())
         return service

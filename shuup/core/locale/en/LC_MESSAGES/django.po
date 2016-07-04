@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 04:22+0000\n"
+"POT-Creation-Date: 2016-07-04 11:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
-"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
@@ -394,6 +394,9 @@ msgid "discount"
 msgstr ""
 
 msgid "refund"
+msgstr ""
+
+msgid "rounding"
 msgstr ""
 
 msgid "order"
@@ -1068,22 +1071,19 @@ msgstr ""
 msgid "round towards zero"
 msgstr ""
 
-msgid "Rounding"
+msgid "payment processor"
 msgstr ""
 
-msgid "Round total order price to the nearest quant."
+msgid "rounding quantize"
 msgstr ""
 
-msgid "rounding quant"
+msgid "Rounding quantize for cash payment."
 msgstr ""
 
 msgid "rounding mode"
 msgstr ""
 
-msgid "rounding"
-msgstr ""
-
-msgid "payment processor"
+msgid "Rounding mode for cash payment."
 msgstr ""
 
 msgid "custom payment processor"

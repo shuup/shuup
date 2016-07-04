@@ -12,11 +12,10 @@ import decimal
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from enumfields import Enum, EnumField
+from enumfields import Enum
 from parler.models import TranslatableModel, TranslatedField, TranslatedFields
 
 from shuup.core.fields import MeasurementField, MoneyValueField
-from shuup.utils.numbers import nickel_round
 
 from ._service_base import (
     ServiceBehaviorComponent, ServiceCost,
@@ -194,22 +193,3 @@ class RoundingMode(Enum):
         ROUND_HALF_DOWN = _("round to nearest with ties going towards zero")
         ROUND_UP = _("round away from zero")
         ROUND_DOWN = _("round towards zero")
-
-
-class RoundingBehaviorComponent(ServiceBehaviorComponent):
-    name = _("Rounding")
-    help_text = _("Round total order price to the nearest quant.")
-
-    quant = models.DecimalField(
-        max_digits=36, decimal_places=9, default=decimal.Decimal('0.05'),
-        verbose_name=_("rounding quant"))
-    mode = EnumField(
-        RoundingMode, max_length=50,
-        default=RoundingMode.ROUND_HALF_UP,
-        verbose_name=_("rounding mode"))
-
-    def get_costs(self, service, source):
-        total_price = source.total_price_of_products
-        rounded = nickel_round(total_price, self.quant, self.mode.value)
-        remainder = rounded - total_price
-        yield ServiceCost(remainder, _("rounding"))

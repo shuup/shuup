@@ -14,9 +14,8 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.admin.forms import ShuupAdminForm
 from shuup.core.models import (
     FixedCostBehaviorComponent, GroupAvailabilityBehaviorComponent,
-    PaymentMethod, RoundingBehaviorComponent, ServiceProvider, ShippingMethod,
-    StaffOnlyBehaviorComponent, WaivingCostBehaviorComponent,
-    WeightLimitsBehaviorComponent
+    PaymentMethod, ServiceProvider, ShippingMethod, StaffOnlyBehaviorComponent,
+    WaivingCostBehaviorComponent, WeightLimitsBehaviorComponent
 )
 
 
@@ -146,10 +145,4 @@ class GroupAvailabilityBehaviorComponentForm(forms.ModelForm):
 class StaffOnlyBehaviorComponentForm(AlwaysChangedModelForm):
     class Meta:
         model = StaffOnlyBehaviorComponent
-        exclude = ["identifier"]
-
-
-class RoundingBehaviorComponentForm(AlwaysChangedModelForm):
-    class Meta:
-        model = RoundingBehaviorComponent
         exclude = ["identifier"]

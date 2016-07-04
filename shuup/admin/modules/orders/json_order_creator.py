@@ -17,13 +17,17 @@ from shuup.core.models import (
     PaymentMethod, PersonContact, Product, ShippingMethod, Shop
 )
 from shuup.core.order_creator import OrderCreator, OrderModifier, OrderSource
+from shuup.core.order_creator._source import LineSource
 from shuup.utils.analog import LogEntryKind
-from shuup.utils.numbers import parse_decimal_string
+from shuup.utils.numbers import nickel_round, parse_decimal_string
 
 
 class AdminOrderSource(OrderSource):
     def get_validation_errors(self):
         return []
+
+    def is_cash_order(self):
+        return (self.payment_method and self.payment_method.choice_identifier == "cash")
 
 
 class AdminOrderCreator(OrderCreator):
@@ -290,6 +294,26 @@ class JsonOrderCreator(object):
         if order_to_update:
             for code in order_to_update.codes:
                 source.add_code(code)
+
+        if source.is_cash_order():
+            processor = source.payment_method.payment_processor
+            taxful_total = source.taxful_total_price
+            rounded = nickel_round(
+                taxful_total, quant=processor.rounding_quantize, rounding=processor.rounding_mode.value)
+            remainder = rounded - taxful_total
+            line_data = dict(
+                line_id="rounding",
+                type=OrderLineType.ROUNDING,
+                quantity=1,
+                shop=source.shop,
+                text="Rounding",
+                base_unit_price=source.create_price(remainder.value),
+                tax_class=None,
+                line_source=LineSource.ADMIN
+            )
+            source.add_line(**line_data)
+            source.get_final_lines()
+
         return source
 
     def create_order_from_state(self, state, creator=None, ip_address=None):
