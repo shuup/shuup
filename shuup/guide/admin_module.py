@@ -24,18 +24,19 @@ class GuideAdminModule(AdminModule):
                     settings.SHUUP_GUIDE_API_URL, timeout=settings.SHUUP_GUIDE_TIMEOUT_LIMIT, params={"q": query}
                 )
                 json = response.json()
-                results = json["results"]["hits"]["hits"]
-                for result in results:
-                    title = result["fields"]["title"][0]
-                    link = result["fields"]["link"] + ".html"
-                    url = manipulate_query_string(link, highlight=query)
-                    yield SearchResult(
-                        text=_("Guide: %s") % title,
-                        url=url,
-                        is_action=True,
-                        relevance=0,
-                        target="_blank",
-                    )
+                if "results" in json:
+                    results = json["results"]["hits"]["hits"]
+                    for result in results:
+                        title = result["fields"]["title"][0]
+                        link = result["fields"]["link"] + ".html"
+                        url = manipulate_query_string(link, highlight=query)
+                        yield SearchResult(
+                            text=_("Guide: %s") % title,
+                            url=url,
+                            is_action=True,
+                            relevance=0,
+                            target="_blank",
+                        )
             except RequestException:
                 # Catch timeout or network errors so as not to break the search
                 pass

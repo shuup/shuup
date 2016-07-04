@@ -68,6 +68,8 @@ Default Tax
 Guide
 ~~~~~
 
+- Fix admin search for invalid API URL settings
+
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
