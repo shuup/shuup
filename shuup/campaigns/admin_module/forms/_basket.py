@@ -28,6 +28,7 @@ class BasketCampaignForm(BaseCampaignForm):
         )
         field_kwargs = dict(choices=coupon_code_choices, required=False)
         field_kwargs["help_text"] = _("Define the required coupon for this campaign.")
+        field_kwargs["label"] = _("Coupon")
         if self.instance.pk and self.instance.coupon:
             field_kwargs["initial"] = self.instance.coupon.pk
 
