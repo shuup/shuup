@@ -10,7 +10,7 @@ from filer.models import Folder, Image
 
 from shuup.core.models import (
     AnonymousContact, Category, CategoryStatus, CategoryVisibility,
-    get_person_contact
+    ContactGroup, get_person_contact
 )
 from shuup.testing.factories import DEFAULT_NAME
 from shuup_tests.utils.fixtures import regular_user
@@ -56,6 +56,36 @@ def test_category_visibility(admin_user, regular_user):
         assert category.is_visible(customer) == expect, "Direct visibility of %s for %s as expected" % (category.identifier, customer)
 
     assert not Category.objects.all_except_deleted().filter(pk=deleted_public_category.pk).exists(), "Deleted category does not show up in 'all_except_deleted'"
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("regular_user")
+def test_category_group_visibilities(regular_user):
+    regular_contact = get_person_contact(regular_user)
+    silver_group = ContactGroup.objects.create(identifier="silver")
+    diamond_group = ContactGroup.objects.create(identifier="gold")
+    regular_contact.groups.add(silver_group)
+
+
+    silvers = Category.objects.create(
+        status=CategoryStatus.VISIBLE,
+        visibility=CategoryVisibility.VISIBLE_TO_GROUPS,
+        identifier="silver_groups",
+        name="Silvers")
+    silvers.visibility_groups.add(regular_contact.get_default_group(), silver_group)
+
+    diamonds = Category.objects.create(
+        status=CategoryStatus.VISIBLE,
+        visibility=CategoryVisibility.VISIBLE_TO_GROUPS,
+        identifier="silver_and_diamonds_groups",
+        name="Diamonds")
+    diamonds.visibility_groups.add(diamond_group)
+
+    # Multiple groups for contact should not cause duplicate results
+    assert Category.objects.all_visible(customer=regular_contact).count() == 1
+
+    regular_contact.groups.add(diamond_group)
+    assert Category.objects.all_visible(customer=regular_contact).count() == 2
 
 
 @pytest.mark.django_db
