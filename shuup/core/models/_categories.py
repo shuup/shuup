@@ -66,7 +66,7 @@ class CategoryManager(TranslatableManager, TreeManager):
             else:
                 qs = qs.filter(visibility=CategoryVisibility.VISIBLE_TO_ALL)
 
-        return qs.order_by("tree_id", "lft")
+        return qs.distinct()
 
     def all_except_deleted(self, language=None):
         return (self.language(language) if language else self).exclude(status=CategoryStatus.DELETED)
