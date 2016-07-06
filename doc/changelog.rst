@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Fix tax handling for refunds
 - Fix bug: Prevent duplicate categories from all_visible-filter
 - Add support for using pricing templatetags for services
 - Make refund creation atomic

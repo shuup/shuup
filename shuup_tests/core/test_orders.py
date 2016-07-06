@@ -255,7 +255,8 @@ def test_refunds():
         shop=get_default_shop(),
         default_price=10,
     )
-    order = create_order_with_product(product, supplier, 2, 200, shop=shop)
+    tax_rate = Decimal("0.1")
+    order = create_order_with_product(product, supplier, 2, 200, tax_rate, shop=shop)
     order.payment_status = PaymentStatus.DEFERRED
     order.cache_prices()
     order.save()
@@ -279,6 +280,7 @@ def test_refunds():
 
     # Confirm the value of the refund
     assert order.lines.last().taxful_price == -product_line.base_unit_price
+    assert order.lines.last().tax_amount == -(product_line.base_unit_price * tax_rate).amount
 
     partial_refund_amount = order.taxful_total_price.amount / 2
     remaining_amount = order.taxful_total_price.amount - partial_refund_amount
@@ -289,6 +291,9 @@ def test_refunds():
     assert order.lines.last().ordering == 2
 
     assert order.lines.last().taxful_price.amount == -partial_refund_amount
+    assert order.lines.last().tax_amount == -partial_refund_amount * tax_rate
+
+    assert order.taxless_total_price.amount == remaining_amount * (1 - tax_rate)
     assert order.taxful_total_price.amount == remaining_amount
     assert order.can_create_refund()
 
@@ -317,16 +322,16 @@ def test_refund_entire_order():
     supplier.adjust_stock(product.id, 5)
     assert supplier.get_stock_statuses([product.id])[product.id].logical_count == 5
 
-    order = create_order_with_product(product, supplier, 2, 200, shop=shop)
+    order = create_order_with_product(product, supplier, 2, 200, Decimal("0.1"), shop=shop)
     order.cache_prices()
     original_total_price = order.taxful_total_price
-
     assert supplier.get_stock_statuses([product.id])[product.id].logical_count == 3
 
     # Create a full refund with `restock_products` set to False
     order.create_full_refund(restock_products=False)
 
     # Confirm the refund was created with correct amount
+    assert order.taxless_total_price.amount.value == 0
     assert order.taxful_total_price.amount.value == 0
     refund_line = order.lines.order_by("ordering").last()
     assert refund_line.type == OrderLineType.REFUND
@@ -335,11 +340,25 @@ def test_refund_entire_order():
     # Make sure stock status didn't change
     assert supplier.get_stock_statuses([product.id])[product.id].logical_count == 3
 
-    # Delete refund line
-    refund_line.delete()
-    order.cache_prices()
 
-    assert order.taxful_total_price == original_total_price
+@pytest.mark.django_db
+def test_refund_entire_order_with_product_restock():
+    shop = get_default_shop()
+    supplier = get_simple_supplier()
+    product = create_product(
+        "test-sku",
+        shop=get_default_shop(),
+        default_price=10,
+        stock_behavior=StockBehavior.STOCKED
+    )
+    supplier.adjust_stock(product.id, 5)
+    assert supplier.get_stock_statuses([product.id])[product.id].logical_count == 5
+
+    order = create_order_with_product(product, supplier, 2, 200, shop=shop)
+    order.cache_prices()
+    original_total_price = order.taxful_total_price
+
+    assert supplier.get_stock_statuses([product.id])[product.id].logical_count == 3
 
     # Create a full refund with `restock_products` set to True
     order.create_full_refund(restock_products=True)
@@ -456,3 +475,4 @@ def test_refunds_with_quantities():
 
     assert quantity_line.taxful_base_unit_price == -product_line.taxful_base_unit_price
     assert amount_line.taxful_price.amount == -refund_amount
+
