@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Ensure refund amounts are associated with an order line
 - Fix tax handling for refunds
 - Fix bug: Prevent duplicate categories from all_visible-filter
 - Add support for using pricing templatetags for services

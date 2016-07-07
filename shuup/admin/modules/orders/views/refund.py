@@ -136,23 +136,20 @@ class OrderCreateRefundView(UpdateView):
         quantity = data.get("quantity", 0)
         restock_products = data.get("restock_products")
 
-        if amount_value:
-            amount = Money(amount_value, order.currency)
-            refund_line_info["amount"] = amount
-            total_amount += amount
-
         if line_number:
             line = order.lines.get(ordering=line_number)
             refund_line_info["line"] = line
 
-            if data.get("quantity", None):
+            if quantity:
                 price = line.discounted_unit_price.amount
-                quantity = data["quantity"]
                 calculated_refund_amount = price * quantity
-
                 refund_line_info["quantity"] = quantity
                 total_amount += calculated_refund_amount
-                # Add taxes to refund or somehow otherwise include it
+
+            if amount_value:
+                amount = Money(amount_value, order.currency)
+                refund_line_info["amount"] = amount
+                total_amount += amount
 
             # Check to make sure total amount isn't more than line total
             if total_amount > line.max_refundable_amount:

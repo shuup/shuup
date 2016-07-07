@@ -297,8 +297,12 @@ def test_refunds():
     assert order.taxful_total_price.amount == remaining_amount
     assert order.can_create_refund()
 
-    # Create a refund without parent line and remaining amount in order
-    order.create_refund([{"amount": remaining_amount}])
+    # Try to refunding remaining amount without a parent line
+    with pytest.raises(AssertionError):
+        order.create_refund([{"amount": remaining_amount}])
+
+    # refund remaining amount
+    order.create_refund([{"line": product_line, "amount": remaining_amount}])
     assert len(order.lines.all()) == 4
     assert order.lines.last().ordering == 3
     assert order.lines.last().taxful_price.amount == -remaining_amount
@@ -307,7 +311,8 @@ def test_refunds():
     assert not order.can_create_refund()
 
     with pytest.raises(RefundExceedsAmountException):
-        order.create_refund([{"amount": remaining_amount}])
+        order.create_refund([{"line": product_line, "amount": remaining_amount}])
+
 
 @pytest.mark.django_db
 def test_refund_entire_order():
