@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import hashlib
+import re
 
 from django import forms
 from django.db.models import Q
@@ -24,16 +25,49 @@ from shuup.front.utils.product_sorting import (
 from shuup.front.utils.views import cache_product_things
 
 
+def get_query_words(query):
+    """
+    Get query words
+
+    Split the query into words and return a list of strings.
+
+    :type query_string: str
+    :return: List of strings
+    :rtype: list
+    """
+    word_finder = re.compile(r'"([^"]+)"|(\S+)').findall
+    normalize_spaces = re.compile(r'\s{2,}').sub
+    words = []
+    for word in word_finder(query):
+        found_word = word[0] or word[1]
+        words.append(normalize_spaces(" ", found_word.strip()))
+    return words
+
+
+def get_compiled_query(query_string, needles):
+    """
+    Get compiled query
+
+    Complile query string into `Q` objects and return it
+    """
+    compiled_query = None
+    for word in get_query_words(query_string):
+        inner_query = None
+        for needle in needles:
+            q = Q(**{"%s__icontains" % needle: word})
+            inner_query = q if inner_query is None else inner_query | q
+        compiled_query = inner_query if compiled_query is None else compiled_query & inner_query
+    return compiled_query
+
+
 def get_search_product_ids(request, query):
     query = query.strip().lower()
     cache_key = "simple_search:%s" % hashlib.sha1(force_bytes(query)).hexdigest()
     product_ids = cache.get(cache_key)
     if product_ids is None:
-        product_ids = Product.objects.filter(
-            Q(translations__name__icontains=query) |
-            Q(translations__description__icontains=query) |
-            Q(translations__keywords__icontains=query)
-        ).distinct().values_list("pk", flat=True)
+        entry_query = get_compiled_query(
+            query, ['translations__name', 'translations__description', 'translations__keywords'])
+        product_ids = Product.objects.filter(entry_query).distinct().values_list("pk", flat=True)
         cache.set(cache_key, product_ids, 60 * 5)
     return product_ids
 
