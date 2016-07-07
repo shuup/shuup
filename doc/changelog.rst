@@ -27,6 +27,8 @@ Localization
 Admin
 ~~~~~
 
+- Manage category products from category edit view
+- Filter products based on category
 - Add permission check for dashboard blocks
 - Fix required permission issues for various modules
 - Make `model_url` context function and add permission check
