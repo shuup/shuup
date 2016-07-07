@@ -103,3 +103,17 @@
         </div>
     </div>
 {% endmacro %}
+
+{%- macro render_objects(objs) -%}
+    {%- for obj in objs -%}
+        {{- render_object(obj) -}}
+        {%- if not loop.last %}, {% endif -%}
+    {%- endfor -%}
+{%- endmacro -%}
+
+{%- macro render_object(obj) -%}
+    {% set url = shuup_admin.model_url(obj) %}
+    {% if url %}<a href="{{ url }}">{% endif %}
+        {{- obj -}}
+    {% if url %}</a>{% endif %}
+{%- endmacro -%}
