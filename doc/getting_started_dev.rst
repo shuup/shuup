@@ -3,8 +3,15 @@ Getting Started with Shuup Development
 
 .. note::
 
-   If you are planning on using Shuup for developing your own shop,
-   read the :doc:`other Getting Started guide <getting_started>` instead.
+   If you are planning on using Shuup to build your own shop,
+   read the :doc:`Getting Started with Shuup guide <getting_started>`
+   instead.
+
+Requirements
+------------
+* Python 2.7.9+/3.4+. https://www.python.org/download/.
+* Node.js. https://nodejs.org/en/download/
+* Any database supported by Django.
 
 Installation for Shuup Development
 ----------------------------------
@@ -13,32 +20,31 @@ To start developing Shuup, you'll need a Git checkout of Shuup and a
 Github fork of Shuup for creating pull requests.  Github pull requests
 are used to get your changes into Shuup Base.
 
- 1. If you haven't done so already, create a fork of Shuup in Github by
-    clicking the "Fork" button at https://github.com/shuup/shuup and
-    clone the fork to your computer as usual. See `Github Help about
-    forking repos <https://help.github.com/articles/fork-a-repo/>`__ for
-    details.
+1. If you haven't done so already, create a fork of Shuup in Github by
+   clicking the "Fork" button at https://github.com/shuup/shuup and
+   clone the fork to your computer as usual. See `Github Help about
+   forking repos <https://help.github.com/articles/fork-a-repo/>`__ for
+   details.
 
- 2. Setup a virtualenv and activate it.  You may use the traditional
-    ``virtualenv`` command, or the newer ``python -m venv`` if you're
-    using Python 3.  See `Virtualenv User Guide
-    <https://virtualenv.pypa.io/en/latest/userguide.html>`__, if you
-    don't know virtualenv already.  For example, following commands
-    create and activate a virtualenv in Linux:
+2. Setup a virtualenv and activate it.  You may use the traditional
+   ``virtualenv`` command, or the newer ``python -m venv`` if you're
+   using Python 3.  See `Virtualenv User Guide
+   <https://virtualenv.pypa.io/en/latest/userguide.html>`__, if you
+   are unfamiliar with virtualenv.  For example, following commands
+   create and activate a virtualenv in Linux:
 
-    .. code-block:: shell
+   .. code-block:: shell
 
-       virtualenv shuup-venv
-       . shuup-venv/bin/activate
+      virtualenv shuup-venv
+      . shuup-venv/bin/activate
 
- 3. Finally, you'll need to install Shuup in the activated virtualenv in
-    development mode.  To do that, run the following commands in the
-    root of the checkout (within the activated virtualenv):
+3. Finally, you'll need to install Shuup in the activated virtualenv in
+   development mode.  To do that, run the following commands in the
+   root of the checkout (within the activated virtualenv):
 
-    .. code-block:: shell
+   .. code-block:: shell
 
-       pip install -e .
-       python setup.py build_resources
+      pip install -e .[everything]
 
 Workbench, the built-in test project
 ------------------------------------
@@ -95,9 +101,9 @@ To run tests in the active virtualenv:
 
 .. code-block:: shell
 
-   py.test -v shuup_tests
+   py.test -v --nomigrations shuup_tests
    # Or with coverage
-   py.test -vvv --cov shuup --cov-report html shuup_tests
+   py.test -vvv --nomigrations --cov shuup --cov-report html shuup_tests
 
 To run tests for all supported Python versions run:
 
@@ -116,12 +122,3 @@ the ``shuup`` directory:
 .. code-block:: shell
 
    cd shuup && python -m shuup_workbench shuup_makemessages
-
-Docstring coverage
-------------------
-
-The DocCov script is included for calculating some documentation coverage metrics.
-
-.. code-block:: shell
-
-   python _misc/doccov.py shuup/core -o doccov.html

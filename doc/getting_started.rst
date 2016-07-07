@@ -4,7 +4,13 @@ Getting Started with Shuup
 .. note::
 
    If you are planning on developing Shuup,
-   read the :doc:`other Getting Started guide <getting_started_dev>` instead.
+   read the :doc:`Getting Started with Shuup Development guide
+   <getting_started_dev>` instead.
+
+Requirements
+------------
+* Python 2.7.9+/3.4+. https://www.python.org/download/.
+* Any database supported by Django.
 
 Installation
 ------------
@@ -14,19 +20,52 @@ Installation
 This guide assumes familiarity with the PyPA tools for Python packaging,
 including ``pip`` and ``virtualenv``.
 
-1. Set up a new virtualenv for your Shuup project.
-2. Grab a Git clone of the Shuup sources. For this guide,
-   we'll assume the checkout of the clone lives in :file:`/stuff/shuup`.
-3. Activate the virtualenv. Within the virtualenv, run
+1. Update pip and setuptools
 
    .. code-block:: shell
 
-      pip install /stuff/shuup
+      pip install -U pip
+      pip install -U setuptools
 
-This will install Shuup and its dependencies into your virtualenv.
+2. Set up a new virtualenv for Shuup and activate it
 
-After this, you can begin setting up a Django project using whichever
-standards you fancy.
+   .. code-block:: shell
+
+      virtualenv shuup-venv
+      . shuup-venv/bin/activate
+
+3. Download the latest Shuup Wheel package from
+   https://github.com/shuup/shuup/releases and run
+
+   .. code-block:: shell
+
+      pip install /path/to/shuup/whl
+
+4. Once installed, you can begin setting up a Django project using whichever
+   standards you fancy. Refer to the top-level `settings
+   <https://github.com/shuup/shuup/blob/master/shuup_workbench/settings/base_settings.py>`_
+   and `urls
+   <https://github.com/shuup/shuup/blob/master/shuup_workbench/urls.py>`_
+   for configuration details. At minimum, you will need to add ``shuup.core``
+   to your ``INSTALLED_APPS``.
+
+.. note::
+   Shuup uses ``django-parler`` for model translations. Please ensure
+   ``PARLER_DEFAULT_LANGUAGE_CODE`` is set. See `django-parler configuration
+   <http://django-parler.readthedocs.io/en/latest/configuration.html>`_ for more
+   details.
+
+.. note::
+   Shuup uses the ``LANGUAGES`` setting to render multilingual forms. You'll likely
+   want to override this setting to restrict your applications supported languages.
+
+5. Once you have configured the Shuup apps you would like to use, run the
+   following commands to create the database and initialize Shuup
+
+   .. code-block:: shell
+
+      python manage.py migrate
+      python.manage.py shuup_init
 
 Shuup Packages
 --------------
@@ -35,17 +74,58 @@ Shuup is a constellation of Django apps, with many delivered in the single
 "Shuup Base" distribution, and with additional apps available as separate
 downloads.
 
-The core package all Shuup installations will require is ``shuup.core``.
+``shuup.core`` is the core package required by all Shuup installations.
 It contains the core business logic for e-commerce, and all of the database
 models required. However, it contains no frontend or admin dashboard, as
 different projects may wish to replace them with other components or even
 elide them altogether.
 
-A default frontend, a basic but fully featured storefront, is included, as
-the application ``shuup.front``. It itself has several sub-applications that
-may be used to toggle functionality on and off.
+``shuup.front`` is a basic but fully featured storefront. It itself has
+several sub-applications that may be used to toggle functionality on and off.
 
-.. TODO:: Describe the sub-apps.
+* ``shuup.front.apps.auth`` is a wrapper around django auth for login and
+  password recovery.
+* ``shuup.front.apps.registration`` provides views for customer activation
+  and registration.
+* ``shuup.front.apps.customer_information`` provides views for customer
+  address management.
+* ``shuup.front.apps.personal_order_history`` adds views for customer
+  order history.
+*  ``shuup.front.apps.simple_order_notification`` can be used to send
+   email notifications to the customer upon order completion.
+* ``shuup.front.apps.simple_search`` provides basic product search
+  functionality.
 
-A fully featured administration dashboard is also included as the application
-``shuup.admin``.
+``shuup.admin`` provides a fully featured administration dashboard.
+
+``shuup.addons`` can be used to install and manage Shuup addons.
+
+``shuup.api`` exposes SHUUP APIs as RESTful url endpoints. See the
+:doc:`web API documentation <web_api>` for details.
+
+``shuup.campaigns`` provides a highly customizable promotion and discount
+management system.
+
+``shuup.customer_group_pricing`` can be used to customize product pricing by
+customer contact groups.
+
+``shuup.default_tax`` is a rules-based tax module that calculates and applies
+taxes on orders. See the :doc:`prices and taxes documentation
+<prices_and_taxes>` for details.
+
+``shuup.guide`` integrates search results from this documentation into Admin
+search.
+
+``shuup.notify`` is a generic notification framework that can be used to
+inform users about various events (order creation, shipments, password
+resets, etc). See the :doc:`notification documentation
+<notify_specification>` for details.
+
+``shuup.order_printouts`` adds support to create PDF printouts of orders from
+admin.
+
+``shuup.simple_cms`` is a basic content management system that can be used to
+add pages to the storefront.
+
+``shuup.simple_supplier`` is a simple inventory management system that can be
+used to keep track of product inventory.
