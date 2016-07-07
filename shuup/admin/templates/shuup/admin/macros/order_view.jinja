@@ -14,14 +14,15 @@
             </thead>
             <tbody>
             {% for order in orders %}
+                {% set url = shuup_admin.model_url(order) %}
                 <tr>
-                    <td><a href="{{ shuup_admin.model_url(order) }}">{{ order.identifier }}</a></td>
+                    <td>{% if url %}<a href="{{ url }}">{% endif %}{{ order.identifier }}{% if url %}</a>{% endif %}</td>
                     <td>{{ order.order_date|datetime(format="short") }}</td>
                     <td class="text-right">{{ order.taxful_total_price|money }}</td>
                     <td>{{ order.get_status_display() }}</td>
                     <td>{{ order.get_shipping_status_display() }}</td>
                     <td>{{ order.get_payment_status_display() }}</td>
-                    <td><a href="{{ shuup_admin.model_url(order) }}"><i class="fa fa-arrow-right"></i></a></td>
+                    <td>{% if url %}<a href="url }}">{% endif %}<i class="fa fa-arrow-right"></i>{% if url %}</a>{% endif %}</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -30,12 +31,13 @@
     <div class="visible-xs mobile-list-group">
         <ul class="list-group">
             {% for order in orders %}
+                {% set url = shuup_admin.model_url(order) %}
                 <li class="list-group-item">
-                    <a href="{{ shuup_admin.model_url(order) }}">
+                    {% if url %}<a href="{{ url }}">{% endif %}
                         <h4 class="list-group-item-heading">
                             <strong>{% trans %}Order{% endtrans %} {{ order.identifier }}</strong> ({{ order.order_date|datetime(format="short") }})
                         </h4>
-                    </a>
+                    {% if url %}</a>{% endif %}
                     <p class="list-group-item-text">
                         {{ order.get_status_display() }},
                         {{ order.get_shipping_status_display() }},

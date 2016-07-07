@@ -17,13 +17,15 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
 from shuup.admin.utils.forms import flatatt_filter
+from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.admin.utils.urls import get_model_url, NoModelUrl
 
 
 class BaseActionButton(object):
     base_css_classes = ("btn",)
 
-    def __init__(self, text="", icon=None, disable_reason=None, tooltip=None, extra_css_class="btn-default"):
+    def __init__(self, text="", icon=None, disable_reason=None, tooltip=None,
+                 extra_css_class="btn-default", required_permissions=()):
         """
         :param text: The actual text for the button.
         :param icon: Icon CSS class string
@@ -36,6 +38,8 @@ class BaseActionButton(object):
         :type tooltip: str|None
         :param extra_css_class: Extra CSS class(es)
         :type extra_css_class: str
+        :param required_permissions: Optional iterable of permission strings
+        :type required_permissions: Iterable[str]
         """
         self.text = text
         self.icon = icon
@@ -43,6 +47,7 @@ class BaseActionButton(object):
         self.disabled = bool(self.disable_reason)
         self.tooltip = (self.disable_reason or tooltip)
         self.extra_css_class = extra_css_class
+        self.required_permissions = required_permissions
 
     def render(self, request):
         """
@@ -86,13 +91,14 @@ class URLActionButton(BaseActionButton):
         super(URLActionButton, self).__init__(**kwargs)
 
     def render(self, request):
-        yield '<a %s>' % flatatt_filter({
-            "href": self.url,
-            "class": self.get_computed_class(),
-            "title": self.tooltip
-        })
-        yield self.render_label()
-        yield '</a>'
+        if not get_missing_permissions(request.user, self.required_permissions):
+            yield '<a %s>' % flatatt_filter({
+                "href": self.url,
+                "class": self.get_computed_class(),
+                "title": self.tooltip
+            })
+            yield self.render_label()
+            yield '</a>'
 
 
 class NewActionButton(URLActionButton):
@@ -135,14 +141,15 @@ class JavaScriptActionButton(BaseActionButton):
         super(JavaScriptActionButton, self).__init__(**kwargs)
 
     def render(self, request):
-        yield '<a %s>' % flatatt_filter({
-            "href": "#",
-            "class": self.get_computed_class(),
-            "title": self.tooltip,
-            "onclick": mark_safe(self.onclick) if self.onclick else None
-        })
-        yield self.render_label()
-        yield '</a>'
+        if not get_missing_permissions(request.user, self.required_permissions):
+            yield '<a %s>' % flatatt_filter({
+                "href": "#",
+                "class": self.get_computed_class(),
+                "title": self.tooltip,
+                "onclick": mark_safe(self.onclick) if self.onclick else None
+            })
+            yield self.render_label()
+            yield '</a>'
 
 
 class PostActionButton(BaseActionButton):
@@ -160,18 +167,19 @@ class PostActionButton(BaseActionButton):
         super(PostActionButton, self).__init__(**kwargs)
 
     def render(self, request):
-        yield '<button %s>' % flatatt_filter({
-            "form": self.form_id,  # This can be used to post another form
-            "formaction": self.post_url,
-            "name": self.name,
-            "value": self.value,
-            "type": "submit",
-            "title": self.tooltip,
-            "class": self.get_computed_class(),
-            "onclick": ("return confirm(%s)" % json.dumps(force_text(self.confirm)) if self.confirm else None)
-        })
-        yield self.render_label()
-        yield '</button>'
+        if not get_missing_permissions(request.user, self.required_permissions):
+            yield '<button %s>' % flatatt_filter({
+                "form": self.form_id,  # This can be used to post another form
+                "formaction": self.post_url,
+                "name": self.name,
+                "value": self.value,
+                "type": "submit",
+                "title": self.tooltip,
+                "class": self.get_computed_class(),
+                "onclick": ("return confirm(%s)" % json.dumps(force_text(self.confirm)) if self.confirm else None)
+            })
+            yield self.render_label()
+            yield '</button>'
 
 
 class DropdownActionButton(BaseActionButton):
@@ -195,30 +203,31 @@ class DropdownActionButton(BaseActionButton):
         yield '</ul>'
 
     def render(self, request):
-        if not self.items:
-            return
-        yield '<div class="btn-group" role="group">'
+        if not get_missing_permissions(request.user, self.required_permissions):
+            if not self.items:
+                return
+            yield '<div class="btn-group" role="group">'
 
-        if self.split_button:
-            for bit in self.split_button.render(request):
+            if self.split_button:
+                for bit in self.split_button.render(request):
+                    yield bit
+
+            yield '<button %s>' % flatatt_filter({
+                "type": "button",
+                "class": self.get_computed_class(),
+                "data-toggle": "dropdown",
+                "title": self.tooltip
+            })
+
+            if not self.split_button:
+                yield self.render_label()
+                yield " "
+
+            yield '<i class="fa fa-chevron-down"></i>'
+            yield '</button>'
+            for bit in self.render_dropdown(request):
                 yield bit
-
-        yield '<button %s>' % flatatt_filter({
-            "type": "button",
-            "class": self.get_computed_class(),
-            "data-toggle": "dropdown",
-            "title": self.tooltip
-        })
-
-        if not self.split_button:
-            yield self.render_label()
-            yield " "
-
-        yield '<i class="fa fa-chevron-down"></i>'
-        yield '</button>'
-        for bit in self.render_dropdown(request):
-            yield bit
-        yield '</div>'
+            yield '</div>'
 
 
 class DropdownItem(BaseActionButton):
@@ -233,17 +242,18 @@ class DropdownItem(BaseActionButton):
         super(DropdownItem, self).__init__(**kwargs)
 
     def render(self, request):
-        yield '<li>'
-        attrs = {
-            "class": self.get_computed_class(),
-            "title": self.tooltip,
-            "href": self.url,
-            "onclick": (mark_safe(self.onclick) if self.onclick else None)
-        }
-        yield '<a %s>' % flatatt_filter(attrs)
-        yield self.render_label()
-        yield '</a>'
-        yield '</li>'
+        if not get_missing_permissions(request.user, self.required_permissions):
+            yield '<li>'
+            attrs = {
+                "class": self.get_computed_class(),
+                "title": self.tooltip,
+                "href": self.url,
+                "onclick": (mark_safe(self.onclick) if self.onclick else None)
+            }
+            yield '<a %s>' % flatatt_filter(attrs)
+            yield self.render_label()
+            yield '</a>'
+            yield '</li>'
 
 
 class DropdownDivider(BaseActionButton):
@@ -263,7 +273,8 @@ class DropdownHeader(BaseActionButton):
     base_css_classes = ()
 
     def render(self, request):
-        yield '<li class="dropdown-header">%s</li>' % self.text
+        if not get_missing_permissions(request.user, self.required_permissions):
+            yield '<li class="dropdown-header">%s</li>' % self.text
 
 
 # -----------
@@ -322,7 +333,8 @@ def get_default_edit_toolbar(
         discard_url=None,
         delete_url=None,
         with_split_save=True,
-        toolbar=None
+        toolbar=None,
+        required_permissions=(),
 ):
     """
     Get a toolbar with buttons used for object editing.
@@ -352,13 +364,14 @@ def get_default_edit_toolbar(
         form_id=save_form_id,
         text=_("Save"),
         extra_css_class="btn-success",
+        required_permissions=required_permissions,
     )
 
     if with_split_save:
         save_dropdown = DropdownActionButton([
             DropdownItem(onclick="setNextActionAndSubmit('%s', 'return')" % save_form_id, text=_("Save and Exit")),
             DropdownItem(onclick="setNextActionAndSubmit('%s', 'new')" % save_form_id, text=_("Save and Create New")),
-        ], split_button=default_save_button, extra_css_class="btn-success")
+        ], split_button=default_save_button, extra_css_class="btn-success", required_permissions=required_permissions)
         toolbar.append(save_dropdown)
     else:
         toolbar.append(default_save_button)
@@ -373,7 +386,8 @@ def get_default_edit_toolbar(
                 text=_(u"Delete"),
                 icon="fa fa-trash",
                 extra_css_class="btn-danger btn-inverse",
-                confirm=_("Are you sure you wish to delete %s?") % object
+                confirm=_("Are you sure you wish to delete %s?") % object,
+                required_permissions=required_permissions
             ))
 
     # TODO: Add extensibility

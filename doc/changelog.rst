@@ -25,6 +25,11 @@ Localization
 Admin
 ~~~~~
 
+- Add permission check for dashboard blocks
+- Fix required permission issues for various modules
+- Make `model_url` context function and add permission check
+- Add permission check option to `get_model_url`
+- Add permission check to toolbar button classes
 - Enable remarkable editor for service description
 - Add option to filter product list with manufacturer
 - Remove orderability checks from order editor

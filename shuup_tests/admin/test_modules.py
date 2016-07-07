@@ -13,6 +13,7 @@ from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.test.utils import override_settings
 from django.utils.timezone import now
+import pytest
 
 from shuup.admin import ShuupAdminAppConfig
 from shuup.admin.base import AdminModule
@@ -21,11 +22,12 @@ from shuup.admin.menu import get_menu_entry_categories
 from shuup.admin.module_registry import (
     get_module_urls, get_modules, replace_modules
 )
+from shuup.admin.views.dashboard import DashboardView
 from shuup.admin.views.search import get_search_results
 from shuup.testing.factories import get_default_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.excs import Problem
-from shuup_tests.admin.fixtures.test_module import ATestModule
+from shuup_tests.admin.fixtures.test_module import ATestModule, ARestrictedTestModule
 from shuup_tests.utils import empty_iterable
 from shuup_tests.utils.faux_users import (
     AnonymousUser, AuthenticatedUser, StaffUser, SuperUser
@@ -87,6 +89,20 @@ def test_dashboard_blocks(rf):
             block_ids.add(block.id)
         assert block_ids >= set(["test-0", "test-1", "test-2", "test-3", "test-4"])
 
+
+@pytest.mark.django_db
+def test_dashboard_blocks_permissions(rf, client):
+    with replace_modules([ARestrictedTestModule]):
+        permissions = set(["shuup.add_product", "shuup.delete_product", "shuup.change_product"])
+        request = rf.get("/")
+        request.user = StaffUser()
+        request.session = client.session
+        view = DashboardView(request=request)
+        assert not view.get_context_data()["blocks"]
+
+        request.user.permissions = permissions 
+        view = DashboardView(request=request)
+        assert view.get_context_data()["blocks"]
 
 def test_menu_entries(rf, admin_user):
     request = rf.get("/")

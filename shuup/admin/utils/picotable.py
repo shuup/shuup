@@ -381,7 +381,7 @@ class PicotableViewMixin(object):
 
     def get_object_url(self, instance):
         try:
-            return get_model_url(instance)
+            return get_model_url(instance, user=self.request.user)
         except NoModelUrl:
             pass
         return None

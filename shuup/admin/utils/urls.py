@@ -23,7 +23,9 @@ from django.utils.http import urlencode
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.module_registry import get_modules
-from shuup.admin.utils.permissions import get_missing_permissions
+from shuup.admin.utils.permissions import (
+    get_default_model_permissions, get_missing_permissions
+)
 from shuup.utils.excs import Problem
 
 try:
@@ -80,7 +82,7 @@ class AdminRegexURLPattern(RegexURLPattern):
 
         missing_permissions = get_missing_permissions(request.user, self.permissions)
         if missing_permissions:
-            return _("You do not have the required permissions: %r") % missing_permissions
+            return _("You do not have the required permissions: %s") % ", ".join(missing_permissions)
 
     def wrap_with_permissions(self, view_func):
         if callable(getattr(view_func, "as_view", None)):
@@ -159,10 +161,13 @@ class NoModelUrl(ValueError):
     pass
 
 
-def get_model_url(object, kind="detail"):
+def get_model_url(object, kind="detail", user=None, required_permissions=None):
     """
-    Get a an admin object URL for the given object or object class by interrogating
-    each admin module.
+    Get a an admin object URL for the given object or object class by
+    interrogating each admin module.
+
+    If a user is provided, checks whether user has correct permissions
+    before returning URL.
 
     Raises `NoModelUrl` if lookup fails
 
@@ -170,14 +175,29 @@ def get_model_url(object, kind="detail"):
     :type object: class
     :param kind: URL kind. Currently "new", "list", "edit", "detail".
     :type kind: str
+    :param user: Optional instance to check for permissions
+    :type user: django.contrib.auth.models.User|None
+    :param required_permissions: Optional iterable of permission strings
+    :type required_permissions: Iterable[str]|None
     :return: Resolved URL.
     :rtype: str
     """
     for module in get_modules():
         url = module.get_model_url(object, kind)
-        if url:
+        if not url:
+            continue
+        if user is None:
             return url
-    raise NoModelUrl("Can't get object URL of kind %s: %r" % (kind, object))
+        else:
+            permissions = ()
+            if required_permissions is not None:
+                permissions = required_permissions
+            else:
+                # TODO: Check permission type based on kind
+                permissions = get_default_model_permissions(object)
+            if not get_missing_permissions(user, permissions):
+                return url
+    raise NoModelUrl("Can't get object URL of kind %s: %r" % (kind, force_text(object)))
 
 
 def derive_model_url(model_class, urlname_prefix, object, kind):

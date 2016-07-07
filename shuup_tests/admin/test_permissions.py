@@ -9,6 +9,10 @@ import pytest
 
 from shuup.admin.menu import get_menu_entry_categories
 from shuup.admin.module_registry import get_modules, replace_modules
+from shuup.admin.toolbar import (
+    DropdownActionButton, DropdownItem, JavaScriptActionButton,
+    PostActionButton, URLActionButton
+)
 from shuup.admin.utils.permissions import (
     get_default_model_permissions, get_permission_object_from_string,
     get_permissions_from_urls
@@ -59,3 +63,25 @@ def test_valid_permissions_for_all_modules():
         module_permissions = set(module.get_required_permissions())
         for permission in (url_permissions | module_permissions):
             assert get_permission_object_from_string(permission)
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("button_class, kwargs", [
+    (URLActionButton, {"url": "/test/url/"}),
+    (JavaScriptActionButton, {"onclick": None}),
+    (PostActionButton, {}),
+    (DropdownActionButton, {"items": [DropdownItem()]}),
+    (DropdownItem, {})
+])
+def test_toolbar_button_permissions(rf, button_class, kwargs):
+    permissions = set(["shuup.add_product", "shuup.delete_product", "shuup.change_product"])
+
+    request = rf.get("/")
+    request.user = StaffUser()
+    button = button_class(required_permissions=permissions, **kwargs)
+    rendered_button = "".join(bit for bit in button.render(request))
+    assert not rendered_button
+
+    request.user.permissions = permissions
+    rendered_button = "".join(bit for bit in button.render(request))
+    assert rendered_button
