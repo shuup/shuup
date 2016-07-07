@@ -10,16 +10,9 @@
       {% endfor %}
       </select>
     </div>
-    <div class="form-group" style="display:none">
-        <label class="control-label" for="id_{{ form.quantity.html_name }}">Quantity</label>
-        <input class="form-control" id="id_{{ form.quantity.html_name }}" min="{{ form.quantity.field.min_value }}" name="{{ form.quantity.html_name }}" placeholder="{{ form.quantity.label }}" step="any" type="number" value="0" />
-    </div>
-    {{ bs3.field(form.amount) }}
-    <div class="form-group" style="display:none">
-        <div class="checkbox">
-            <label for="id_{{ form.restock_products.html_name }}">{{ form.restock_products }} {{ form.restock_products.label }}</label>
-        </div>
-    </div>
+    {{ bs3.field(form.quantity, form_group_class="form-group hidden") }}
+    {{ bs3.field(form.amount, form_group_class="form-group hidden") }}
+    {{ bs3.field(form.restock_products, form_group_class="form-group hidden") }}
 {% endmacro %}
 
 {% block content %}
@@ -34,7 +27,7 @@
                     <h3>{% trans %}Remaining{% endtrans %}: {{ order.get_total_unrefunded_amount()|money }}</h3>
                 </div>
                 <hr>
-                <div id="empty-form" style="display:none" class="refund-line">
+                <div id="empty-form" class="refund-line hidden">
                     <hr>
                     {{ render_form(form.empty_form) }}
                 </div>
@@ -71,7 +64,7 @@
             var $newForm = $blankForm.clone();
             var html = $newForm.get(0).outerHTML.replace(/__prefix__/g, getTotalFormsNumber());
             $newForm = $(html);
-            $newForm.show();
+            $newForm.find('.hidden').removeClass('hidden');
             $newForm.insertAfter($lastForm);
         }
 
@@ -83,22 +76,25 @@
             activateLineTypeListeners();
         });
 
+        function setFormGroupVisibility($input, show){
+            if(show) {
+                $input.closest('.form-group').removeClass('hidden');
+            }
+            else {
+                $input.closest('.form-group').addClass('hidden');
+            }
+        }
+
         function activateLineTypeListeners(){
             $(".refund-line").find("select").on("change", function(){
                 var line = LineData[$(this).val()];
-                var $refund = $(this).parent().parent();
-                if (line && (line["quantity"] != 0)){
-                    $refund.find("input[id$='quantity']").parent().show();
-                }
-                else {
-                    $refund.find("input[id$='quantity']").parent().hide();
-                }
-                if (line && (line["type"]=="product")){
-                    $refund.find("input[id$='restock_products']").parent().parent().parent().show();
-                }
-                else {
-                    $refund.find("input[id$='restock_products']").parent().parent().parent().hide();
-                }
+                var $refund = $(this).closest('.refund-line');
+                setFormGroupVisibility(
+                    $refund.find("input[id$='quantity']"), line && line["quantity"] != 0);
+                setFormGroupVisibility(
+                    $refund.find("input[id$='amount']"), line && line["amount"] != 0);
+                setFormGroupVisibility(
+                    $refund.find("input[id$='restock_products']"), line && line["type"] === "product");
             });
         }
 

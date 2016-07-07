@@ -523,9 +523,6 @@ class Order(MoneyPropped, models.Model):
         Refund line data is simply a list of dictionaries where
         each dictionary contains data for a particular refund line.
 
-        If refund line data includes a parent line, the refund is
-        associated with that line and cannot exceed the line amount.
-
         Additionally, if the parent line is of enum type
         `OrderLineType.PRODUCT` and the `restock_products` boolean
         flag is set to `True`, the products will be restocked with the
@@ -551,7 +548,10 @@ class Order(MoneyPropped, models.Model):
             quantity = refund.get("quantity", 0)
             parent_line = refund.get("line")
             restock_products = refund.get("restock_products")
+            refund_line = None
+            percent_refunded = 0
 
+            assert parent_line
             # TODO: Also raise this if the sum amount of refunds exceeds total,
             #       order amount, and do so before creating any order lines
             self.cache_prices()
@@ -559,7 +559,7 @@ class Order(MoneyPropped, models.Model):
                 raise RefundExceedsAmountException
 
             # If a quantity provided, add a separate refund line
-            if quantity and parent_line:
+            if quantity:
                 unit_price = parent_line.discounted_unit_price.amount
                 refund_line = OrderLine.objects.create(
                     text=_("Refund for %s" % parent_line.text),
@@ -570,12 +570,13 @@ class Order(MoneyPropped, models.Model):
                     base_unit_price_value=-unit_price,
                     quantity=quantity
                 )
+                percent_refunded = quantity / parent_line.quantity
                 refund_lines.append(refund_line)
 
             # If amount is provided, add a separate refund line
             if amount:
                 refund_line = OrderLine.objects.create(
-                    text=_("Refund for %s" % parent_line.text) if parent_line else _("Manual refund"),
+                    text=_("Refund for %s" % parent_line.text),
                     order=self,
                     type=OrderLineType.REFUND,
                     parent_line=parent_line,
@@ -583,9 +584,20 @@ class Order(MoneyPropped, models.Model):
                     base_unit_price_value=-amount,
                     quantity=1
                 )
+                percent_refunded = amount / parent_line.price
                 refund_lines.append(refund_line)
 
-            if parent_line and parent_line.type == OrderLineType.PRODUCT:
+            if refund_line:
+                for line_tax in parent_line.taxes.all():
+                    refund_line.taxes.create(
+                        tax=line_tax.tax,
+                        name=_("Refund for %s" % line_tax.name),
+                        amount_value=-line_tax.amount_value * percent_refunded,
+                        base_amount_value=-line_tax.base_amount_value * percent_refunded,
+                        ordering=line_tax.ordering
+                    )
+
+            if parent_line.type == OrderLineType.PRODUCT:
                 product = parent_line.product
             else:
                 product = None
@@ -608,8 +620,8 @@ class Order(MoneyPropped, models.Model):
         if self.has_refunds():
             raise NoRefundToCreateException
         self.cache_prices()
-        amount = self.taxful_total_price.amount
-        self.create_refund([{"amount": amount}])
+        line_data = [{"line": line, "quantity": line.quantity} for line in self.lines.all()]
+        self.create_refund(line_data)
         if restock_products:
             for product_line in self.lines.filter(
                 type=OrderLineType.PRODUCT, product__stock_behavior=StockBehavior.STOCKED
