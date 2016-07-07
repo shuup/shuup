@@ -7,6 +7,7 @@
                 <th>{% trans %}Text{% endtrans %}</th>
                 <th class="text-right">{% trans %}Taxless Unit Price{% endtrans %}</th>
                 <th class="text-right">{% trans %}Quantity{% endtrans %}</th>
+                <th class="text-right">{% trans %}Refunded Quantity{% endtrans %}</th>
                 <th class="text-right">{% trans %}Taxless Discount{% endtrans %}</th>
                 <th class="text-right">{% trans %}Tax{% endtrans %}</th>
                 <th class="text-right">{% trans %}Taxless Total{% endtrans %}</th>
@@ -15,7 +16,7 @@
         </thead>
         <tfoot>
             <tr>
-                <th colspan="7"></th>
+                <th colspan="8"></th>
                 <th class="text-right">{{ order.taxless_total_price|money }}</th>
                 <th class="text-right">{{ order.taxful_total_price|money }}</th>
             </tr>
@@ -28,6 +29,7 @@
                 <td>{{ line.text }}</td>
                 <td class="text-right">{{ line.taxless_base_unit_price|money }}</td>
                 <td class="text-right">{{ line.quantity|number }}</td>
+                <td class="text-right">{{ line.refunded_quantity|number }}</td>
                 <td class="text-right">{% if line.taxless_discount_amount %}{{ line.taxless_discount_amount|money }}{% else %}-{% endif %}</td>
                 <td class="text-right">{{ line.tax_rate|percent }}</td>
                 <td class="text-right">{{ line.taxless_price|money }}</td>

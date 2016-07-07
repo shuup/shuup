@@ -50,7 +50,7 @@ def test_create_refund_view(rf, admin_user):
     assert order.has_refunds()
 
     assert len(order.lines.all()) == 2
-    refund_line = order.lines.filter(type=OrderLineType.REFUND).last()
+    refund_line = order.lines.filter(type=OrderLineType.QUANTITY_REFUND).last()
     assert refund_line
     assert refund_line.taxful_price == -product_line.taxful_price
 
@@ -82,7 +82,7 @@ def test_create_full_refund_view(rf, admin_user):
     order.cache_prices()
 
     assert order.taxful_total_price.amount.value == 0
-    refund_line = order.lines.filter(type=OrderLineType.REFUND).last()
+    refund_line = order.lines.filter(type=OrderLineType.QUANTITY_REFUND).last()
     assert refund_line
     assert refund_line.taxful_price == -original_total_price
 
