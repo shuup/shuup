@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-27 22:07+0000\n"
+"POT-Creation-Date: 2016-07-07 22:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
-"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
@@ -62,6 +62,30 @@ msgid "Categories"
 msgstr ""
 
 msgid "Products"
+msgstr ""
+
+msgid "Primary Category"
+msgstr ""
+
+msgid "Set this category as a primary for selected products."
+msgstr ""
+
+msgid "Default Category"
+msgstr ""
+
+msgid "Update product default category while setting primary category."
+msgstr ""
+
+msgid "Additional Category"
+msgstr ""
+
+msgid "Add selected products to this category"
+msgstr ""
+
+msgid "Remove Products"
+msgstr ""
+
+msgid "Remove selected products from this category"
 msgstr ""
 
 msgid "Status"
@@ -244,11 +268,9 @@ msgstr ""
 msgid "Root"
 msgstr ""
 
-#, python-brace-format
 msgid "{num} subfolders moved to {folder}."
 msgstr ""
 
-#, python-brace-format
 msgid "{num} files moved to {folder}."
 msgstr ""
 
@@ -332,10 +354,6 @@ msgstr ""
 msgid "Product %(product)s is not available in the %(shop)s shop."
 msgstr ""
 
-#, python-format
-msgid "Product %(product)s is not orderable: %(error)s"
-msgstr ""
-
 msgid "Please add lines to the order."
 msgstr ""
 
@@ -363,22 +381,16 @@ msgstr ""
 msgid "Log Entries"
 msgstr ""
 
-msgid "Create Refund"
-msgstr ""
-
-msgid "This order cannot be refunded"
-msgstr ""
-
 msgid "Create Payment"
-msgstr ""
-
-msgid "This order cannot be paid at this point"
 msgstr ""
 
 msgid "Create Shipment"
 msgstr ""
 
-msgid "There are no products to ship"
+msgid "Create Refund"
+msgstr ""
+
+msgid "Actions"
 msgstr ""
 
 msgid "Set Complete"
@@ -402,7 +414,6 @@ msgstr ""
 msgid "Unable to set order as completed at this point"
 msgstr ""
 
-#, python-brace-format
 msgid "Order status changed: {old_status} to {new_status}"
 msgstr ""
 
@@ -681,16 +692,10 @@ msgstr ""
 msgid "Mode"
 msgstr ""
 
-msgid "Primary Category"
-msgstr ""
-
 msgid "Manage Cross-Selling"
 msgstr ""
 
 msgid "Cross-Selling"
-msgstr ""
-
-msgid "Actions"
 msgstr ""
 
 #, python-format
@@ -742,7 +747,6 @@ msgstr ""
 msgid "Edit %(model)s"
 msgstr ""
 
-#, python-brace-format
 msgid "Create {service_name}"
 msgstr ""
 
@@ -1011,6 +1015,9 @@ msgid "General Information"
 msgstr ""
 
 msgid "Category Image"
+msgstr ""
+
+msgid "* Products that has this category as a primary category."
 msgstr ""
 
 msgid "General information"
@@ -1392,8 +1399,8 @@ msgstr ""
 
 #, python-format
 msgid ""
-"Telemetry data was last submitted at %(submission_datetime)s - "
-"(%(submission_timesince)s) ago"
+"Telemetry data was last submitted at %(submission_datetime)s - (%"
+"(submission_timesince)s) ago"
 msgstr ""
 
 msgid "See the data that was submitted."
@@ -1459,7 +1466,7 @@ msgid "You must be a staff member."
 msgstr ""
 
 #, python-format
-msgid "You do not have the required permissions: %r"
+msgid "You do not have the required permissions: %s"
 msgstr ""
 
 #, python-format

@@ -9,8 +9,8 @@ import pytest
 from django.db import transaction
 
 from shuup.admin.modules.categories import CategoryModule
-from shuup.admin.modules.categories.views.edit import CategoryBaseForm
-from shuup.testing.factories import CategoryFactory
+from shuup.admin.modules.categories.forms import CategoryBaseForm, CategoryProductForm
+from shuup.testing.factories import CategoryFactory, get_default_shop, get_default_category, create_product
 from shuup_tests.utils import empty_iterable
 from shuup_tests.utils.forms import get_form_data
 
@@ -42,3 +42,108 @@ def test_category_form_saving(rf):
         category = form.instance
         category.set_current_language("sw")
         assert category.name == "IJWEHGWOHKSL"
+
+
+@pytest.mark.django_db
+def test_products_form_add():
+    shop = get_default_shop()
+    category = get_default_category()
+    category.shops.add(shop)
+    product = create_product("test_product", shop=shop)
+    shop_product = product.get_shop_instance(shop)
+    product_category = product.category
+    assert (product_category is None)
+    assert (category not in shop_product.categories.all())
+    data = {
+        "primary_products": ["%s" % product.id]
+    }
+    form = CategoryProductForm(shop=shop, category=category, data=data)
+    form.full_clean()
+    form.save()
+    shop_product.refresh_from_db()
+    product.refresh_from_db(())
+    assert (shop_product.primary_category == category)
+    assert (category in shop_product.categories.all())
+    assert (product.category is None)
+
+
+@pytest.mark.django_db
+def test_products_form_update_default_category():
+    shop = get_default_shop()
+    category = get_default_category()
+    category.shops.add(shop)
+    product = create_product("test_product", shop=shop)
+    shop_product = product.get_shop_instance(shop)
+    product_category = product.category
+    assert (product_category is None)
+    assert (category not in shop_product.categories.all())
+    data = {
+        "primary_products": ["%s" % product.id],
+        "update_product_category": True
+    }
+    form = CategoryProductForm(shop=shop, category=category, data=data)
+    form.full_clean()
+    form.save()
+    shop_product.refresh_from_db()
+    product.refresh_from_db()
+    assert (shop_product.primary_category == category)
+    assert (category in shop_product.categories.all())
+    assert (product.category == category)
+
+
+@pytest.mark.django_db
+def test_products_form_add_multiple_products():
+    shop = get_default_shop()
+    category = get_default_category()
+    category.shops.add(shop)
+    product_ids = []
+    for x in range(0, 15):
+        product = create_product("%s" % x, shop=shop)
+        product_ids.append(product.id)
+
+    assert (category.shop_products.count() == 0)
+    data = {
+        "additional_products": ["%s" % product_id for product_id in product_ids]
+    }
+    form = CategoryProductForm(shop=shop, category=category, data=data)
+    form.full_clean()
+    form.save()
+
+    category.refresh_from_db()
+    assert (category.shop_products.count() == len(product_ids))
+
+
+@pytest.mark.django_db
+def test_products_form_remove():
+    shop = get_default_shop()
+    category = get_default_category()
+    category.shops.add(shop)
+    product = create_product("test_product", shop=shop)
+    product.category = category
+    product.save()
+    shop_product = product.get_shop_instance(shop)
+    shop_product.primary_category = category
+    shop_product.save()
+    shop_product.categories.add(category)
+
+    product.refresh_from_db()
+    assert (product.category == category)
+    shop_product.refresh_from_db()
+    assert (shop_product.primary_category == category)
+    assert (shop_product.categories.count() == 1)
+    assert (shop_product.categories.first() == category)
+
+    data = {
+        "remove_products": ["%s" % shop_product.id]
+    }
+    form = CategoryProductForm(shop=shop, category=category, data=data)
+    form.full_clean()
+    form.save()
+
+    category.refresh_from_db()
+    assert (category.shop_products.count() == 0)
+    product.refresh_from_db()
+    assert (product.category is None)
+    shop_product.refresh_from_db()
+    assert (shop_product.primary_category is None)
+    assert (shop_product.categories.count() == 0)

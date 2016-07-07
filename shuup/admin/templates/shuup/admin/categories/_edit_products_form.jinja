@@ -1,0 +1,25 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+
+{% set product_form = form[form_def.name] %}
+{% set shop = product_form.shop %}
+{% set shop_name_prefix = shop.name ~ " - " %}
+
+{% call content_block(shop_name_prefix ~ _("Products"), "fa-info-circle") %}
+    {{ bs3.field(product_form.primary_products) }}
+    {{ bs3.field(product_form.update_product_category) }}
+    {{ bs3.field(product_form.additional_products) }}
+    {{ bs3.field(product_form.remove_products) }}
+    <h2>{% trans %}Products{% endtrans %}</h2>
+    <div class="list-group">
+        <p class="small">
+            {% trans %}* Products that has this category as a primary category.{% endtrans %}
+        </p>
+        {% for shop_product in object.shop_products.filter(shop=shop) %}
+            {% set product = shop_product.product %}
+            {% set url = shuup_admin.model_url(product) %}
+            <a class="list-group-item" href="{{ url }}" target="_blank">
+                {{ product.name }}{% if object == shop_product.primary_category %}  *{% endif %}
+            </a>
+        {% endfor %}
+    </div>
+{% endcall %}
