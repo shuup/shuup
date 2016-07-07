@@ -114,8 +114,8 @@ class OrderDetailView(DetailView):
 
         order_sections_provides = sorted(get_provide_objects("admin_order_section"), key=lambda x: x.order)
         for admin_order_section in order_sections_provides:
-            # Check whether the OrderSection should be visible for the current object
-            if admin_order_section.visible_for_order(self.object):
+            # Check whether the Section should be visible for the current object
+            if admin_order_section.visible_for_object(self.object):
                 context["order_sections"].append(admin_order_section)
                 # add additional context data where the key is the order_section identifier
                 context[admin_order_section.identifier] = admin_order_section.get_context_data(self.object)

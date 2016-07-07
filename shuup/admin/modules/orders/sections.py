@@ -9,11 +9,11 @@ from __future__ import unicode_literals
 
 from django.utils.translation import ugettext as _
 
-from shuup.admin.base import OrderSection
+from shuup.admin.base import Section
 from shuup.core.models._orders import OrderLogEntry
 
 
-class PaymentOrderSection(OrderSection):
+class PaymentOrderSection(Section):
     identifier = "payments"
     name = _("Payments")
     icon = "fa-dollar"
@@ -29,7 +29,7 @@ class PaymentOrderSection(OrderSection):
         return order.payments.all()
 
 
-class ContentsOrderSection(OrderSection):
+class ContentsOrderSection(Section):
     identifier = "contents"
     name = _("Order Contents")
     icon = "fa-file-text"
@@ -37,7 +37,7 @@ class ContentsOrderSection(OrderSection):
     order = 2
 
     @staticmethod
-    def visible_for_order(order):
+    def visible_for_object(order):
         return True
 
     @staticmethod
@@ -45,7 +45,7 @@ class ContentsOrderSection(OrderSection):
         return None
 
 
-class LogEntriesOrderSection(OrderSection):
+class LogEntriesOrderSection(Section):
     identifier = "log_entries"
     name = _("Log Entries")
     icon = "fa-pencil"
@@ -54,7 +54,7 @@ class LogEntriesOrderSection(OrderSection):
     order = 3
 
     @staticmethod
-    def visible_for_order(order):
+    def visible_for_object(order):
         return True
 
     @staticmethod

@@ -10,6 +10,8 @@ from __future__ import unicode_literals
 import hashlib
 
 import six
+import warnings
+
 from django.core.urlresolvers import reverse
 from django.utils.encoding import force_bytes, force_text
 
@@ -193,10 +195,11 @@ class Activity(Resolvable):
         self._url = url
 
 
-class OrderSection(object):
+class Section(object):
     """
-    Subclass this and add the class to the `admin_order_section` provide list
-    to show a custom section on the order detail on admin.
+    Subclass this and add the class to the admin_*_section provide list 
+    (e.g. `admin_order_section`) to show a custom section on the specified 
+    model object's admin detail page.
 
     `identifier` must be unique
     `name` the section caption
@@ -214,24 +217,44 @@ class OrderSection(object):
     order = 0
 
     @staticmethod
-    def visible_for_order(order):
+    def visible_for_object(obj):
         """
-        Returns whether this sections must be visible while editing the `order`
-        :type order: shuup.core.models.Order
-        :return whether this section must be shown in order section list
+        Returns whether this sections must be visible for the provided object (e.g. `order`)
+        :type model object: e.g. shuup.core.models.Order
+        :return whether this section must be shown in order section list, defaults to false
         :rtype: bool
         """
-        raise False
+        return False
 
     @staticmethod
-    def get_context_data(order):
+    def get_context_data(obj):
         """
         Returns additional information to be used in the template
 
-        To fetch this data in the template, just access it through `OrderSection_identifier.data`
+        To fetch this data in the template, you must first add it to your request's context
+       
+        e.g. `context[admin_order_section.identifier] = 
+                admin_order_section.get_context_data(self.object)`
 
-        :type order: shuup.core.models.Order
+
+        :type object: e.g. shuup.core.models.Order
         :return additional context data
         :rtype: object|None
         """
         return None
+
+
+class OrderSection(Section):
+    """
+    Deprecated use Section instead
+    """
+    def __new__(cls):
+        warnings.error("OrderSection in shuup.admin.base is deprecated, use Section instead ", DeprecationWarning)
+        return super(OrderSection, cls).__new__(cls)
+
+    @classmethod
+    def visible_for_object(cls, order):
+        """
+        Support for the deprecated `visible_for_order` function
+        """
+        return cls.visible_for_order(order) or super(OrderSection).visible_for_object(order)
