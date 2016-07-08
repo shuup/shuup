@@ -481,3 +481,94 @@ def test_refunds_with_quantities():
     assert quantity_line.taxful_base_unit_price == -product_line.taxful_base_unit_price
     assert amount_line.taxful_price.amount == -refund_amount
 
+@pytest.mark.django_db
+def test_can_create_shipment():
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product = create_product(
+        "test-sku",
+        shop=get_default_shop(),
+        default_price=10,
+        stock_behavior=StockBehavior.STOCKED
+    )
+
+    order = create_order_with_product(product, supplier, 1, 200, shop=shop)
+    assert order.can_create_shipment()
+
+    # Fully shipped orders can't create shipments
+    order.create_shipment_of_all_products(supplier)
+    assert not order.can_create_shipment()
+
+    order = create_order_with_product(product, supplier, 1, 200, shop=shop)
+    assert order.can_create_shipment()
+
+    # Canceled orders can't create shipments
+    order.set_canceled()
+    assert not order.can_create_shipment()
+
+
+@pytest.mark.django_db
+def test_can_create_payment():
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product = create_product(
+        "test-sku",
+        shop=get_default_shop(),
+        default_price=10,
+        stock_behavior=StockBehavior.STOCKED
+    )
+
+    order = create_order_with_product(product, supplier, 1, 200, shop=shop)
+    assert order.can_create_payment()
+    order.cache_prices()
+
+    # Partially paid orders can create payments
+    payment_amount = (order.taxful_total_price.amount / 2)
+    order.create_payment(payment_amount)
+    assert order.can_create_payment()
+
+    # But fully paid orders can't
+    remaining_amount = order.taxful_total_price.amount - payment_amount
+    order.create_payment(remaining_amount)
+    assert not order.can_create_payment()
+
+    order = create_order_with_product(product, supplier, 1, 200, shop=shop)
+    assert order.can_create_payment()
+
+    # Canceled orders can't create payments
+    order.set_canceled()
+    assert not order.can_create_payment()
+
+    order = create_order_with_product(product, supplier, 2, 200, shop=shop)
+    assert order.can_create_payment()
+
+    # Partially refunded orders can create payments
+    order.create_refund([{"line": order.lines.first(), "quantity": 1, "restock": False}])
+    assert order.can_create_payment()
+
+    # But fully refunded orders can't
+    order.create_refund([{"line": order.lines.first(), "quantity": 1, "restock": False}])
+    assert not order.can_create_payment()
+
+
+@pytest.mark.django_db
+def test_can_create_refund():
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product = create_product(
+        "test-sku",
+        shop=get_default_shop(),
+        default_price=10,
+        stock_behavior=StockBehavior.STOCKED
+    )
+
+    order = create_order_with_product(product, supplier, 2, 200, shop=shop)
+    assert order.can_create_payment()
+
+    # Partially refunded orders can create refunds
+    order.create_refund([{"line": order.lines.first(), "quantity": 1, "restock": False}])
+    assert order.can_create_refund()
+
+    # But fully refunded orders can't
+    order.create_refund([{"line": order.lines.first(), "quantity": 1, "restock": False}])
+    assert not order.can_create_refund()

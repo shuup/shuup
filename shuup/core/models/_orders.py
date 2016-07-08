@@ -412,6 +412,9 @@ class Order(MoneyPropped, models.Model):
         difference = self.taxful_total_price.amount - self.get_total_paid_amount()
         return max(difference, Money(0, self.currency))
 
+    def can_create_payment(self):
+        return not(self.is_paid() or self.is_canceled() or (self.has_refunds() and not self.can_create_refund()))
+
     def create_payment(self, amount, payment_identifier=None, description=''):
         """
         Create a payment with given amount for this order.
@@ -469,6 +472,9 @@ class Order(MoneyPropped, models.Model):
 
         return payment
 
+    def can_create_shipment(self):
+        return (self.get_unshipped_products() and not self.is_canceled())
+
     @atomic
     def create_shipment(self, product_quantities, supplier=None, shipment=None):
         """
@@ -514,6 +520,9 @@ class Order(MoneyPropped, models.Model):
         self.update_shipping_status()
         shipment_created.send(sender=type(self), order=self, shipment=shipment)
         return shipment
+
+    def can_create_refund(self):
+        return (self.taxful_total_price.amount.value > 0 and not self.can_edit())
 
     @atomic
     def create_refund(self, refund_data, created_by=None):
@@ -637,9 +646,6 @@ class Order(MoneyPropped, models.Model):
 
     def has_refunds(self):
         return self.lines.refunds().exists()
-
-    def can_create_refund(self):
-        return (self.taxful_total_price.amount.value > 0 and not self.can_edit())
 
     def create_shipment_of_all_products(self, supplier=None):
         """
