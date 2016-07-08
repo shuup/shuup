@@ -7,10 +7,14 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.db import transaction
+from django.test import override_settings
 
 from shuup.admin.modules.categories import CategoryModule
+from shuup.admin.modules.categories.views import CategoryEditView
 from shuup.admin.modules.categories.forms import CategoryBaseForm, CategoryProductForm
+from shuup.core.models import Category, CategoryStatus, CategoryVisibility
 from shuup.testing.factories import CategoryFactory, get_default_shop, get_default_category, create_product
+from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import empty_iterable
 from shuup_tests.utils.forms import get_form_data
 
@@ -147,3 +151,25 @@ def test_products_form_remove():
     shop_product.refresh_from_db()
     assert (shop_product.primary_category is None)
     assert (shop_product.categories.count() == 0)
+
+
+@pytest.mark.django_db
+def test_category_create(rf, admin_user):
+    get_default_shop()
+    with override_settings(LANGUAGES=[("en", "en")]):
+        view = CategoryEditView.as_view()
+        cat_name = "Random name"
+        data = {
+            "base-name__en": cat_name,
+            "base-status": CategoryStatus.VISIBLE.value,
+            "base-visibility": CategoryVisibility.VISIBLE_TO_ALL.value,
+            "base-ordering": 1
+        }
+        assert Category.objects.count() == 0
+        request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
+        response = view(request, pk=None)
+        if hasattr(response, "render"):
+            response.render()
+        assert response.status_code in [200, 302]
+        assert Category.objects.count() == 1
+        assert Category.objects.first().name == cat_name
