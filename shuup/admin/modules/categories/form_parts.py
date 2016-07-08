@@ -38,6 +38,8 @@ class CategoryProductFormPart(FormPart):
     name = "products"
 
     def get_form_defs(self):
+        if not self.object.pk:
+            return
         for shop in self.object.shops.all():
             yield TemplatedFormDef(
                 self._get_form_name(shop),
