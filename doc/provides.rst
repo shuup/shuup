@@ -64,6 +64,17 @@ Core
 ``admin_contact_group_form_part``
     Additional ``FormPart`` classes for ContactGroup editing
 
+``admin_contact_toolbar_button``
+    Additional ``BaseActionButton`` subclasses for Contact detail.
+    Subclass init should take current contact as a parameter.
+
+``admin_contact_edit_toolbar_button``
+    Additional ``BaseActionButton`` subclasses for Contact edit.
+    Subclass init should take current contact as a parameter.
+
+``admin_contact_section``
+    Additional ``Section`` subclasses for Contact detail sections.
+
 ``admin_extend_create_shipment_form``
     Allows providing extension for shipment creation in admin.
     Should implement the

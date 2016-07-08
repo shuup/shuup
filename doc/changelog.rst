@@ -31,6 +31,8 @@ Localization
 Admin
 ~~~~~
 
+- Make contact views extendable
+- Make generic Section object for detail view sections
 - Display shipment form errors as messages
 - Populate tax number from contact for admin order creator
 - Move various dashboard blocks to own admin modules

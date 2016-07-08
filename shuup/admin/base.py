@@ -8,10 +8,9 @@
 from __future__ import unicode_literals
 
 import hashlib
-
-import six
 import warnings
 
+import six
 from django.core.urlresolvers import reverse
 from django.utils.encoding import force_bytes, force_text
 
@@ -197,8 +196,8 @@ class Activity(Resolvable):
 
 class Section(object):
     """
-    Subclass this and add the class to the admin_*_section provide list 
-    (e.g. `admin_order_section`) to show a custom section on the specified 
+    Subclass this and add the class to the admin_*_section provide list
+    (e.g. `admin_order_section`) to show a custom section on the specified
     model object's admin detail page.
 
     `identifier` must be unique
@@ -232,8 +231,8 @@ class Section(object):
         Returns additional information to be used in the template
 
         To fetch this data in the template, you must first add it to your request's context
-       
-        e.g. `context[admin_order_section.identifier] = 
+
+        e.g. `context[admin_order_section.identifier] =
                 admin_order_section.get_context_data(self.object)`
 
 
@@ -249,7 +248,7 @@ class OrderSection(Section):
     Deprecated use Section instead
     """
     def __new__(cls):
-        warnings.error("OrderSection in shuup.admin.base is deprecated, use Section instead ", DeprecationWarning)
+        warnings.warn("OrderSection in shuup.admin.base is deprecated, use Section instead ", DeprecationWarning)
         return super(OrderSection, cls).__new__(cls)
 
     @classmethod

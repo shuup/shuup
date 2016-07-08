@@ -24,6 +24,7 @@ from shuup.admin.forms.widgets import PersonContactChoiceWidget
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.urls import get_model_url
 from shuup.admin.utils.views import CreateOrUpdateView
+from shuup.apps.provides import get_provide_objects
 from shuup.core.models import (
     CompanyContact, Contact, ContactGroup, ImmutableAddress, MutableAddress,
     PersonContact
@@ -239,5 +240,8 @@ class ContactEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
             self.get_save_form_id(),
             discard_url=(get_model_url(self.object) if self.object.pk else None)
         )
-        # TODO: Add extensibility
+
+        for button in get_provide_objects("admin_contact_edit_toolbar_button"):
+            toolbar.append(button(self.object))
+
         return toolbar
