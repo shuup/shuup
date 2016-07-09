@@ -84,8 +84,10 @@ class Supplier(ModuleInterface, ShuupModel):
             if shop_product.is_orderable(self, customer, shop_product.minimum_purchase_quantity)
         ]
 
-    def adjust_stock(self, product_id, delta, created_by=None):
-        return self.module.adjust_stock(product_id, delta, created_by=created_by)
+    def adjust_stock(self, product_id, delta, created_by=None, type=None):
+        from shuup.core.suppliers.base import StockAdjustmentType
+        adjustment_type = type or StockAdjustmentType.INVENTORY
+        return self.module.adjust_stock(product_id, delta, created_by=created_by, type=adjustment_type)
 
     def update_stock(self, product_id):
         return self.module.update_stock(product_id)

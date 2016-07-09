@@ -12,6 +12,8 @@ Unreleased
 Core
 ~~~~
 
+- Fix restocking issues with refunded products
+- Add separate order line types for quantity and amount refunds
 - Add `can_create_shipment` and `can_create_payment` to `Order`
 - Ensure refund amounts are associated with an order line
 - Fix tax handling for refunds
