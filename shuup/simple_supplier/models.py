@@ -8,9 +8,11 @@
 from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from enumfields import EnumIntegerField
 
 from shuup.core.fields import MoneyValueField, QuantityField
 from shuup.core.settings import SHUUP_HOME_CURRENCY
+from shuup.core.suppliers.enums import StockAdjustmentType
 from shuup.utils.properties import PriceProperty
 
 
@@ -23,6 +25,8 @@ class StockAdjustment(models.Model):
     delta = QuantityField(default=0, verbose_name=_("delta"))
     purchase_price_value = MoneyValueField(default=0)
     purchase_price = PriceProperty("purchase_price_value", "currency", "includes_tax")
+    type = EnumIntegerField(
+        StockAdjustmentType, db_index=True, default=StockAdjustmentType.INVENTORY, verbose_name=_("type"))
 
     @property
     def currency(self):

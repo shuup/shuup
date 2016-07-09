@@ -8,10 +8,12 @@
 from decimal import Decimal
 from math import pow
 
-from django.db.models import Sum
+from django.db.models import Q, Sum
 from django.template.loader import render_to_string
 
-from shuup.core.models import OrderLine, OrderStatusRole, ShipmentProduct
+from shuup.core.models import (
+    OrderLine, OrderLineType, OrderStatusRole, ShipmentProduct
+)
 from shuup.simple_supplier.forms import StockAdjustmentForm
 from shuup.simple_supplier.models import StockAdjustment, StockCount
 
@@ -38,12 +40,17 @@ def get_current_stock_value(supplier_id, product_id):
     orders_bought = (
         OrderLine.objects
         .filter(supplier_id=supplier_id, product_id=product_id)
-        .exclude(order__status__role=OrderStatusRole.CANCELED)
+        .exclude(
+            Q(order__status__role=OrderStatusRole.CANCELED) |
+            Q(type=OrderLineType.AMOUNT_REFUND) |
+            Q(type=OrderLineType.QUANTITY_REFUND)
+        )
         .aggregate(total=Sum("quantity"))["total"] or 0)
     orders_sent = (
         ShipmentProduct.objects
         .filter(shipment__supplier=supplier_id, product_id=product_id)
         .aggregate(total=Sum("quantity"))["total"] or 0)
+
     return {
         "logical_count": events - orders_bought,
         "physical_count": events - orders_sent

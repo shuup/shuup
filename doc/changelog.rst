@@ -63,6 +63,8 @@ Classic Gray Theme
 Simple Supplier
 ~~~~~~~~~~~~~~~
 
+- Skip refund lines when getting product stock counts
+
 Order Printouts
 ~~~~~~~~~~~~~~~
 
