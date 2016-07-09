@@ -70,7 +70,8 @@ class ContactDetailToolbar(Toolbar):
             text=_(u"New Order"),
             tooltip=_(u"Create an order for the contact."),
             icon="fa fa-plus",
-            extra_css_class="btn-success"
+            extra_css_class="btn-success",
+            required_permissions=["shuup.add_order"],
         ))
 
     def build_deactivate_button(self):
