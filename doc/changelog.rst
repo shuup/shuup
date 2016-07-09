@@ -28,6 +28,7 @@ Localization
 Admin
 ~~~~~
 
+- Add `StockAdjustmentType` Enum
 - Fix payment and shipment visibility in Orders admin
 - Manage category products from category edit view
 - Filter products based on category
