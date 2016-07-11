@@ -46,12 +46,12 @@ class ShippingMethod(Service):
 
         :rtype: shuup.utils.dates.DurationRange|None
         """
-        min_time, max_time = None
+        min_time, max_time = None, None
         for component in self.behavior_components.all():
             delivery_time = component.get_delivery_time(self, source)
             if delivery_time:
                 assert isinstance(delivery_time, DurationRange)
-                if not max_time and max_time < delivery_time.max_duration:
+                if not max_time or max_time < delivery_time.max_duration:
                     max_time = delivery_time.max_duration
                     min_time = delivery_time.min_duration
         if not max_time:
