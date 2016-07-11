@@ -45,13 +45,21 @@ def get_delivery_pdf(request, shipment_pk):
     return pdf_export.render_html_to_pdf(html, stylesheet_paths=["order_printouts/css/extra.css"])
 
 
-def get_confirmation_pdf(request, order_pk):
+def _get_confirmation_pdf(request, order_pk, title):
     order = Order.objects.get(pk=order_pk)
     context = {
         "order": order,
         "today": datetime.date.today(),
-        "header": "%s | %s | %s %s" % (_("Order confirmation"), order.shop.name, _("Order"), order.pk),
+        "header": "%s | %s | %s %s" % (title, order.shop.name, _("Order"), order.pk),
         "footer": get_footer_information(order.shop)
     }
     html = render_to_string("shuup/order_printouts/admin/confirmation_pdf.jinja", context=context, request=request)
     return pdf_export.render_html_to_pdf(html, stylesheet_paths=["order_printouts/css/extra.css"])
+
+
+def get_confirmation_pdf(request, order_pk):
+    return _get_confirmation_pdf(request, order_pk=order_pk, title=_("Order confirmation"))
+
+
+def get_receipt_pdf(request, order_pk):
+    return _get_confirmation_pdf(request, order_pk=order_pk, title=_("Receipt"))
