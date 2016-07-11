@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-11 12:32+0000\n"
+"POT-Creation-Date: 2016-07-11 16:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
 
 msgid "Order printouts"
 msgstr ""
@@ -30,6 +30,9 @@ msgstr ""
 msgid "Get Order Confirmation"
 msgstr ""
 
+msgid "Get Receipt"
+msgstr ""
+
 msgid "Delivery slip"
 msgstr ""
 
@@ -37,6 +40,9 @@ msgid "Order"
 msgstr ""
 
 msgid "Order confirmation"
+msgstr ""
+
+msgid "Receipt"
 msgstr ""
 
 msgid ""

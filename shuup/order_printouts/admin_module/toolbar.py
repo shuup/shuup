@@ -39,5 +39,10 @@ class SimplePrintoutsToolbarButton(DropdownActionButton):
                 text=_("Get Order Confirmation"),
                 icon="fa fa-money",
                 url=reverse("shuup_admin:printouts.confirmation_pdf", kwargs={"order_pk": self.order.pk})
+            ),
+            DropdownItem(
+                text=_("Get Receipt"),
+                icon="fa fa-money",
+                url=reverse("shuup_admin:printouts.receipt_pdf", kwargs={"order_pk": self.order.pk})
             )
         ]

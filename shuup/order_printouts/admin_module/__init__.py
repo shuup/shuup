@@ -24,4 +24,9 @@ class PrintoutsAdminModule(AdminModule):
                 "shuup.order_printouts.admin_module.views.get_confirmation_pdf",
                 name="printouts.confirmation_pdf"
             ),
+            admin_url(
+                "^printouts/receipt/(?P<order_pk>\d+)/$",
+                "shuup.order_printouts.admin_module.views.get_receipt_pdf",
+                name="printouts.receipt_pdf"
+            ),
         ]
