@@ -10,7 +10,9 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.fields import MoneyValueField
-from shuup.core.models import OrderLineType, PolymorphicShuupModel, Product
+from shuup.core.models import (
+    Category, OrderLineType, PolymorphicShuupModel, Product
+)
 from shuup.core.order_creator._source import LineSource
 
 
@@ -106,4 +108,45 @@ class DiscountFromProduct(BasketLineEffect):
                 continue
             amnt = (self.discount_amount * line.quantity) if not self.per_line_discount else self.discount_amount
             line.discount_amount = order_source.create_price(amnt)
+        return []
+
+
+class DiscountFromCategoryProducts(BasketLineEffect):
+    identifier = "discount_from_category_products_line_effect"
+    model = Category
+    name = _("Discount from Category products")
+
+    discount_amount = MoneyValueField(
+        default=None, blank=True, null=True,
+        verbose_name=_("discount amount"),
+        help_text=_("Flat amount of discount."))
+    discount_percentage = models.DecimalField(
+        max_digits=6, decimal_places=5, blank=True, null=True,
+        verbose_name=_("discount percentage"),
+        help_text=_("The discount percentage for this campaign."))
+    category = models.ForeignKey(Category, verbose_name=_("category"))
+
+    @property
+    def description(self):
+        return _(
+            'Select discount amount and category. '
+            'Please note that the discount will be given to all matching products in basket.')
+
+    def get_discount_lines(self, order_source, original_lines):
+        if not (self.discount_percentage or self.discount_amount):
+            return []
+
+        product_ids = self.category.shop_products.values_list("product_id", flat=True)
+        for line in original_lines:  # Use original lines since we don't want to discount free product lines
+            if not line.type == OrderLineType.PRODUCT:
+                continue
+            if line.product.pk not in product_ids:
+                continue
+
+            if self.discount_amount:
+                amount = self.discount_amount * line.quantity
+                line.discount_amount = order_source.create_price(amount)
+            elif self.discount_percentage:
+                amount = line.taxless_price * self.discount_percentage
+                line.discount_amount = order_source.create_price(amount)
         return []

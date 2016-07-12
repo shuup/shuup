@@ -11,7 +11,7 @@ from shuup.campaigns.models.basket_effects import (
     BasketDiscountAmount, BasketDiscountPercentage
 )
 from shuup.campaigns.models.basket_line_effects import (
-    DiscountFromProduct, FreeProductLine
+    DiscountFromCategoryProducts, DiscountFromProduct, FreeProductLine
 )
 
 from ._base import BaseEffectModelForm
@@ -40,3 +40,21 @@ class FreeProductLineForm(BaseEffectModelForm):
 class DiscountFromProductForm(BaseEffectModelForm):
     class Meta(BaseEffectModelForm.Meta):
         model = DiscountFromProduct
+
+
+class DiscountFromCategoryProductsForm(BaseEffectModelForm):
+    discount_percentage = PercentageField(
+        max_digits=6, decimal_places=5,
+        label=_("discount percentage"),
+        help_text=_("The discount percentage for this campaign."))
+
+    class Meta(BaseEffectModelForm.Meta):
+        model = DiscountFromCategoryProducts
+
+    def clean(self):
+        data = self.cleaned_data
+        if data["discount_amount"] and data["discount_percentage"]:
+            msg = _("Only amount or percentage can be set.")
+            self.add_error("discount_amount", msg)
+            self.add_error("discount_percentage", msg)
+        return data
