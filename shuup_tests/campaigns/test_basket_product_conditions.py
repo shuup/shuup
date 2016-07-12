@@ -10,7 +10,7 @@ from django.utils.encoding import force_text
 from shuup.campaigns.models.basket_conditions import (
     BasketMaxTotalAmountCondition, BasketMaxTotalProductAmountCondition,
     BasketTotalAmountCondition, BasketTotalProductAmountCondition,
-    ProductsInBasketComparisonOperator, ProductsInBasketCondition
+    ComparisonOperator, ProductsInBasketCondition
 )
 from shuup.front.basket import get_basket
 from shuup.testing.factories import create_product, get_default_supplier
@@ -43,7 +43,7 @@ def test_product_in_basket_condition(rf):
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
     assert condition.matches(basket, [])
 
-    condition.operator = ProductsInBasketComparisonOperator.EQUALS
+    condition.operator = ComparisonOperator.EQUALS
     condition.save()
 
     assert condition.matches(basket, [])

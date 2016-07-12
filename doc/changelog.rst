@@ -73,6 +73,7 @@ Order Printouts
 Campaigns
 ~~~~~~~~~
 
+- Add category products basket condition and effect
 - Enable exact quantity matches for products in basket campaigns
 
 Customer Group Pricing
