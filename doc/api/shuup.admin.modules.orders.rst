@@ -11,14 +11,6 @@ Subpackages
 Submodules
 ----------
 
-shuup.admin.modules.orders.dashboard module
--------------------------------------------
-
-.. automodule:: shuup.admin.modules.orders.dashboard
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 shuup.admin.modules.orders.json_order_creator module
 ----------------------------------------------------
 

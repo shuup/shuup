@@ -30,6 +30,7 @@ Localization
 Admin
 ~~~~~
 
+- Move various dashboard blocks to own admin modules
 - Prevent shipments from being created for refunded products
 - Add `StockAdjustmentType` Enum
 - Fix payment and shipment visibility in Orders admin

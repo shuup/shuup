@@ -10,6 +10,7 @@ Subpackages
     shuup.admin.modules.categories
     shuup.admin.modules.contact_groups
     shuup.admin.modules.contacts
+    shuup.admin.modules.customers_dashboard
     shuup.admin.modules.demo
     shuup.admin.modules.manufacturers
     shuup.admin.modules.media
@@ -17,6 +18,7 @@ Subpackages
     shuup.admin.modules.permission_groups
     shuup.admin.modules.product_types
     shuup.admin.modules.products
+    shuup.admin.modules.sales_dashboard
     shuup.admin.modules.sales_units
     shuup.admin.modules.service_providers
     shuup.admin.modules.services

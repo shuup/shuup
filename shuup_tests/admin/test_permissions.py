@@ -8,6 +8,8 @@
 import pytest
 
 from shuup.admin.menu import get_menu_entry_categories
+from shuup.admin.modules.customers_dashboard import CustomersDashboardModule
+from shuup.admin.modules.sales_dashboard import SalesDashboardModule
 from shuup.admin.module_registry import get_modules, replace_modules
 from shuup.admin.toolbar import (
     DropdownActionButton, DropdownItem, JavaScriptActionButton,
@@ -20,6 +22,12 @@ from shuup.admin.utils.permissions import (
 from shuup.core.models import Product
 from shuup_tests.admin.fixtures.test_module import ARestrictedTestModule
 from shuup_tests.utils.faux_users import StaffUser
+
+
+migrated_permissions = {
+    CustomersDashboardModule: ("shuup.view_customers_dashboard"),
+    SalesDashboardModule: ("shuup.view_sales_dashboard"),
+}
 
 
 def test_default_model_permissions():
@@ -57,12 +65,18 @@ def test_valid_permissions_for_all_modules():
     """
     If a module requires permissions, make sure all url and module-
     level permissions are valid.
+
+    Modules that add permissions using migrations must be checked
+    manually since their permissions will not be in the test database.
     """
     for module in get_modules():
         url_permissions = set(get_permissions_from_urls(module.get_urls()))
         module_permissions = set(module.get_required_permissions())
         for permission in (url_permissions | module_permissions):
-            assert get_permission_object_from_string(permission)
+            if module.__class__ in migrated_permissions:
+                assert permission in migrated_permissions[module.__class__]
+            else:
+                assert get_permission_object_from_string(permission)
 
 
 @pytest.mark.django_db

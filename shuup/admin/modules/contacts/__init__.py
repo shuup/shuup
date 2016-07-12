@@ -14,8 +14,6 @@ from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url, derive_model_url, get_model_url
 from shuup.core.models import CompanyContact, Contact, PersonContact
 
-from .dashboard import get_active_customers_block
-
 
 class ContactModule(AdminModule):
     name = _("Contacts")
@@ -88,9 +86,6 @@ class ContactModule(AdminModule):
                     text=six.text_type(contact), url=get_model_url(contact),
                     category=self.category, relevance=relevance
                 )
-
-    def get_dashboard_blocks(self, request):
-        yield get_active_customers_block(request)
 
     def get_model_url(self, object, kind):
         return derive_model_url(Contact, "shuup_admin:contact", object, kind)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-09 01:15+0000\n"
+"POT-Creation-Date: 2016-07-12 02:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -139,12 +139,6 @@ msgstr[1] ""
 msgid "Number of Members"
 msgstr ""
 
-msgid "Active customers"
-msgstr ""
-
-msgid "Based on orders within 30 days"
-msgstr ""
-
 msgid "The Shuup frontend is not enabled."
 msgstr ""
 
@@ -253,6 +247,15 @@ msgstr ""
 msgid "The contact does not have an associated user."
 msgstr ""
 
+msgid "Customers Dashboard"
+msgstr ""
+
+msgid "Active customers"
+msgstr ""
+
+msgid "Based on orders within 30 days"
+msgstr ""
+
 msgid "Demo"
 msgstr ""
 
@@ -308,29 +311,6 @@ msgstr ""
 
 #, python-format
 msgid "%d outstanding orders"
-msgstr ""
-
-msgid "Sales per Month (last year)"
-msgstr ""
-
-#, python-format
-msgid "Sales (%(currency)s)"
-msgstr ""
-
-#, python-format
-msgid "Based on %d orders"
-msgstr ""
-
-msgid "Today's Sales"
-msgstr ""
-
-msgid "Lifetime Sales"
-msgstr ""
-
-msgid "Average Purchase"
-msgstr ""
-
-msgid "Open Orders Value"
 msgstr ""
 
 #, python-format
@@ -729,6 +709,32 @@ msgid "Convert to Package Parent"
 msgstr ""
 
 msgid "Convert to Variation Parent"
+msgstr ""
+
+msgid "Sales Dashboard"
+msgstr ""
+
+msgid "Sales per Month (last year)"
+msgstr ""
+
+#, python-format
+msgid "Sales (%(currency)s)"
+msgstr ""
+
+#, python-format
+msgid "Based on %d orders"
+msgstr ""
+
+msgid "Today's Sales"
+msgstr ""
+
+msgid "Lifetime Sales"
+msgstr ""
+
+msgid "Average Purchase"
+msgstr ""
+
+msgid "Open Orders Value"
 msgstr ""
 
 msgid "Sales Units"
