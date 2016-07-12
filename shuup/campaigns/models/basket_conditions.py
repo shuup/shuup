@@ -11,7 +11,7 @@ from enumfields import Enum, EnumIntegerField
 from polymorphic.models import PolymorphicModel
 
 from shuup.core.fields import MoneyValueField
-from shuup.core.models import Contact, ContactGroup, Product
+from shuup.core.models import Category, Contact, ContactGroup, Product
 from shuup.utils.properties import MoneyPropped, PriceProperty
 
 
@@ -119,7 +119,7 @@ class BasketMaxTotalAmountCondition(MoneyPropped, BasketCondition):
         self.amount_value = value
 
 
-class ProductsInBasketComparisonOperator(Enum):
+class ComparisonOperator(Enum):
     EQUALS = 0
     GTE = 1
 
@@ -135,7 +135,7 @@ class ProductsInBasketCondition(BasketCondition):
     model = Product
 
     operator = EnumIntegerField(
-        ProductsInBasketComparisonOperator, default=ProductsInBasketComparisonOperator.GTE, verbose_name=_("operator"))
+        ComparisonOperator, default=ComparisonOperator.GTE, verbose_name=_("operator"))
     quantity = models.PositiveIntegerField(default=1, verbose_name=_("quantity"))
     products = models.ManyToManyField(Product, verbose_name=_("products"), blank=True)
 
@@ -144,9 +144,9 @@ class ProductsInBasketCondition(BasketCondition):
         for line in basket.get_lines():
             if not (line.product and (line.product.id in product_ids)):
                 continue
-            if self.operator == ProductsInBasketComparisonOperator.GTE:
+            if self.operator == ComparisonOperator.GTE:
                 return line.quantity >= self.quantity
-            elif self.operator == ProductsInBasketComparisonOperator.EQUALS:
+            elif self.operator == ComparisonOperator.EQUALS:
                 return line.quantity == self.quantity
         return False
 
@@ -209,3 +209,28 @@ class ContactBasketCondition(BasketCondition):
     @values.setter
     def values(self, values):
         self.contacts = values
+
+
+class CategoryProductsBasketCondition(BasketCondition):
+    identifier = "basket_category_condition"
+    name = _("Category products in basket")
+
+    operator = EnumIntegerField(
+        ComparisonOperator, default=ComparisonOperator.GTE, verbose_name=_("operator"))
+    quantity = models.PositiveIntegerField(default=1, verbose_name=_("quantity"))
+    category = models.ForeignKey(Category, verbose_name=_("category"), blank=True)
+
+    def matches(self, basket, lines):
+        category_product_ids = self.category.shop_products.values_list("product_id", flat=True)
+        product_count = 0
+        for line in basket.get_lines():
+            if line.product.id and line.product.id in category_product_ids:
+                product_count += line.quantity
+        if self.operator == ComparisonOperator.EQUALS:
+            return bool(self.quantity == product_count)
+        else:
+            return bool(self.quantity <= product_count)
+
+    @property
+    def description(self):
+        return _("Limit the campaign to have the products from selected category in basket.")

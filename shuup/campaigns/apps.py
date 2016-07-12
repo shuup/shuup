@@ -47,6 +47,7 @@ class CampaignAppConfig(AppConfig):
             "shuup.campaigns.admin_module.forms:ProductsInBasketConditionForm",
             "shuup.campaigns.admin_module.forms:ContactGroupBasketConditionForm",
             "shuup.campaigns.admin_module.forms:ContactBasketConditionForm",
+            "shuup.campaigns.admin_module.forms:CategoryProductsBasketConditionForm"
         ],
         "campaign_basket_discount_effect_form": [
             "shuup.campaigns.admin_module.forms:BasketDiscountAmountForm",
@@ -55,6 +56,7 @@ class CampaignAppConfig(AppConfig):
         "campaign_basket_line_effect_form": [
             "shuup.campaigns.admin_module.forms:FreeProductLineForm",
             "shuup.campaigns.admin_module.forms:DiscountFromProductForm",
+            "shuup.campaigns.admin_module.forms:DiscountFromCategoryProductsForm",
         ],
         "campaign_context_condition": [
             "shuup.campaigns.admin_module.forms:ContactGroupConditionForm",
