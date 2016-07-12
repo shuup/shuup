@@ -7,7 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from shuup.admin.modules.orders.dashboard import OrderValueChartDashboardBlock
 from shuup.admin.modules.orders.views import (
     NewLogEntryView, OrderSetStatusView
 )
@@ -61,10 +60,3 @@ def test_add_order_log_entry(admin_user, rf):
     assert response.status_code < 400
     assert OrderLogEntry.objects.filter(target=order).exists()
     assert OrderLogEntry.objects.filter(target=order).first().message == test_message
-
-
-@pytest.mark.django_db
-def test_order_chart_works():
-    order = create_random_order(customer=create_random_person(), products=(get_default_product(),))
-    chart = OrderValueChartDashboardBlock("test", order.currency).get_chart()
-    assert len(chart.series[0]) > 0

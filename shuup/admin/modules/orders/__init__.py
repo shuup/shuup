@@ -13,7 +13,6 @@ from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry, Notification, SearchResult
-from shuup.admin.currencybound import CurrencyBound
 from shuup.admin.utils.permissions import (
     get_default_model_permissions, get_permissions_from_urls
 )
@@ -21,7 +20,7 @@ from shuup.admin.utils.urls import admin_url, derive_model_url, get_model_url
 from shuup.core.models import Contact, Order, OrderStatusRole, Product
 
 
-class OrderModule(CurrencyBound, AdminModule):
+class OrderModule(AdminModule):
     name = _("Orders")
     breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:order.list")
 
@@ -131,17 +130,6 @@ class OrderModule(CurrencyBound, AdminModule):
                     category=_("Orders"),
                     relevance=relevance
                 )
-
-    def get_dashboard_blocks(self, request):
-        import shuup.admin.modules.orders.dashboard as dashboard
-        currency = self.currency
-        if not currency:
-            return
-        yield dashboard.get_sales_of_the_day_block(request, currency)
-        yield dashboard.get_lifetime_sales_block(request, currency)
-        yield dashboard.get_avg_purchase_size_block(request, currency)
-        yield dashboard.get_open_orders_block(request, currency)
-        yield dashboard.get_order_value_chart_dashboard_block(request, currency)
 
     def get_notifications(self, request):
         old_open_orders = Order.objects.filter(
