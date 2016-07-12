@@ -60,10 +60,12 @@ def create_source_from_state(state, **kwargs):
     return source
 
 
-def encode_address(address):
+def encode_address(address, tax_number=None):
     if not address:
-        return {}
-    return json.loads(serializers.serialize("json", [address]))[0].get("fields")
+        return {"tax_number": tax_number}
+    address_dict = json.loads(serializers.serialize("json", [address]))[0].get("fields")
+    address_dict.setdefault("tax_number", tax_number)
+    return address_dict
 
 
 def encode_shop(shop):
@@ -191,8 +193,8 @@ class OrderEditView(CreateOrUpdateView):
                 "id": order.customer.id,
                 "name": order.customer.name,
                 "isCompany": bool(isinstance(order.customer, CompanyContact)),
-                "billingAddress": encode_address(order.billing_address),
-                "shippingAddress": encode_address(order.shipping_address)
+                "billingAddress": encode_address(order.billing_address, order.tax_number),
+                "shippingAddress": encode_address(order.shipping_address, order.tax_number)
             }
         }
 
@@ -202,12 +204,13 @@ class OrderEditView(CreateOrUpdateView):
             return JsonResponse(
                 {"success": False, "errorMessage": _("Contact %s does not exist.") % customer_id}, status=400
             )
+        tax_number = getattr(customer, "tax_number", None)
         return {
             "id": customer.id,
             "name": customer.name,
             "isCompany": bool(isinstance(customer, CompanyContact)),
-            "billingAddress": encode_address(customer.default_billing_address),
-            "shippingAddress": encode_address(customer.default_shipping_address)
+            "billingAddress": encode_address(customer.default_billing_address, tax_number),
+            "shippingAddress": encode_address(customer.default_shipping_address, tax_number)
         }
 
     def dispatch(self, request, *args, **kwargs):
