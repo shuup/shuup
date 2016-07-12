@@ -12,6 +12,9 @@ Unreleased
 Core
 ~~~~
 
+- Fix restocking issues with refunded products
+- Add separate order line types for quantity and amount refunds
+- Add `can_create_shipment` and `can_create_payment` to `Order`
 - Ensure refund amounts are associated with an order line
 - Fix tax handling for refunds
 - Fix bug: Prevent duplicate categories from all_visible-filter
@@ -27,6 +30,9 @@ Localization
 Admin
 ~~~~~
 
+- Prevent shipments from being created for refunded products
+- Add `StockAdjustmentType` Enum
+- Fix payment and shipment visibility in Orders admin
 - Manage category products from category edit view
 - Filter products based on category
 - Add permission check for dashboard blocks
@@ -56,6 +62,8 @@ Classic Gray Theme
 
 Simple Supplier
 ~~~~~~~~~~~~~~~
+
+- Skip refund lines when getting product stock counts
 
 Order Printouts
 ~~~~~~~~~~~~~~~

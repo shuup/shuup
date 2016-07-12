@@ -13,6 +13,7 @@
                         <th class="text-right">{% trans %}To Ship{% endtrans %}</th>
                         <th class="text-right hidden-xs">{% trans %}Ordered{% endtrans %}</th>
                         <th class="text-right hidden-xs">{% trans %}Shipped{% endtrans %}</th>
+                        <th class="text-right hidden-xs">{% trans %}Refunded{% endtrans %}</th>
                         <th class="text-right hidden-xs">{% trans %}Unshipped{% endtrans %}</th>
                         <th class="text-right visible-xs">{% trans %}Ordered{% endtrans %}/&#x200b;{% trans %}Shipped{% endtrans %}/&#x200b;{% trans %}Unshipped{% endtrans %}</th>
                     </tr>
@@ -28,9 +29,11 @@
                         </th>
                         {% set ordered_total=form.product_summary.values()|sum("ordered")|number %}
                         {% set shipped_total=form.product_summary.values()|sum("shipped")|number %}
+                        {% set refunded_total=form.product_summary.values()|sum("refunded")|number %}
                         {% set unshipped_total=form.product_summary.values()|sum("unshipped")|number %}
                         <th class="text-right hidden-xs">{{ ordered_total }}</th>
                         <th class="text-right hidden-xs">{{ shipped_total }}</th>
+                        <th class="text-right hidden-xs">{{ refunded_total }}</th>
                         <th class="text-right hidden-xs">{{ unshipped_total }}</th>
                         <th class="text-right visible-xs">{{ ordered_total }}/{{ shipped_total }}/{{ unshipped_total }}</th>
                     </tr>
@@ -54,6 +57,7 @@
                             </td>
                             <td class="text-right hidden-xs">{{ info.ordered|number }}</td>
                             <td class="text-right hidden-xs">{{ info.shipped|number }}</td>
+                            <td class="text-right hidden-xs">{{ info.refunded|number }}</td>
                             <td class="text-right hidden-xs">{{ info.unshipped|number }}</td>
                             <td class="text-right visible-xs">{{ info.ordered|number }}/{{ info.shipped|number }}/{{ info.unshipped|number }}</td>
                         </tr>

@@ -11,6 +11,8 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.core.models import StockBehavior
 from shuup.core.stocks import ProductStockStatus
 
+from .enums import StockAdjustmentType
+
 
 class BaseSupplierModule(object):
     """
@@ -64,7 +66,7 @@ class BaseSupplierModule(object):
             if quantity > stock_status.logical_count:
                 yield ValidationError(stock_status.message or _(u"Insufficient stock"), code="stock_insufficient")
 
-    def adjust_stock(self, product_id, delta, created_by=None):
+    def adjust_stock(self, product_id, delta, created_by=None, type=StockAdjustmentType.INVENTORY):
         raise NotImplementedError("Not implemented in BaseSupplierModule")
 
     def update_stock(self, product_id):

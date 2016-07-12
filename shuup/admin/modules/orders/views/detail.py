@@ -33,7 +33,7 @@ class OrderDetailView(DetailView):
         order = self.object
         toolbar = Toolbar()
         action_menu_items = []
-        if not (order.is_paid() or order.is_canceled() or order.has_refunds()):
+        if order.can_create_payment():
             action_menu_items.append(
                 DropdownItem(
                     url=reverse("shuup_admin:order.create-payment", kwargs={"pk": order.pk}),
@@ -41,7 +41,7 @@ class OrderDetailView(DetailView):
                     text=_("Create Payment"),
                 )
             )
-        if (order.get_unshipped_products() and not order.is_canceled() and not order.has_refunds()):
+        if order.can_create_shipment():
             action_menu_items.append(
                 DropdownItem(
                     url=reverse("shuup_admin:order.create-shipment", kwargs={"pk": order.pk}),

@@ -12,6 +12,14 @@ shuup.core.suppliers.base module
     :undoc-members:
     :show-inheritance:
 
+shuup.core.suppliers.enums module
+---------------------------------
+
+.. automodule:: shuup.core.suppliers.enums
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

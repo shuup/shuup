@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from shuup.core.stocks import ProductStockStatus
 from shuup.core.suppliers import BaseSupplierModule
+from shuup.core.suppliers.enums import StockAdjustmentType
 from shuup.simple_supplier.utils import get_current_stock_value
 
 from .models import StockAdjustment, StockCount
@@ -35,13 +36,15 @@ class SimpleSupplierModule(BaseSupplierModule):
         ) for product_id in product_ids]
         return dict((pss.product_id, pss) for pss in stati)
 
-    def adjust_stock(self, product_id, delta, purchase_price=0, created_by=None):
+    def adjust_stock(self, product_id, delta, purchase_price=0, created_by=None,
+                     type=StockAdjustmentType.INVENTORY):
         adjustment = StockAdjustment.objects.create(
             supplier=self.supplier,
             product_id=product_id,
             delta=delta,
             purchase_price_value=purchase_price,
-            created_by=created_by
+            created_by=created_by,
+            type=type
         )
         self.update_stock(product_id)
         return adjustment

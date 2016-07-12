@@ -9,6 +9,7 @@ from __future__ import unicode_literals, with_statement
 
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Q, Sum
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
@@ -21,6 +22,7 @@ from shuup.utils.money import Money
 from shuup.utils.properties import MoneyProperty, MoneyPropped, PriceProperty
 
 from ._base import ShuupModel
+from ._shipments import ShipmentProduct
 
 
 class OrderLineType(Enum):
@@ -29,8 +31,9 @@ class OrderLineType(Enum):
     PAYMENT = 3
     DISCOUNT = 4
     OTHER = 5
-    REFUND = 6
+    QUANTITY_REFUND = 6
     ROUNDING = 7
+    AMOUNT_REFUND = 8
 
     class Labels:
         PRODUCT = _('product')
@@ -38,7 +41,8 @@ class OrderLineType(Enum):
         PAYMENT = _('payment')
         DISCOUNT = _('discount')
         OTHER = _('other')
-        REFUND = _('refund')
+        QUANTITY_REFUND = _('quantity refund')
+        AMOUNT_REFUND = _('amount refund')
         ROUNDING = _('rounding')
 
 
@@ -57,7 +61,7 @@ class OrderLineManager(models.Manager):
         return self.filter(type=OrderLineType.DISCOUNT)
 
     def refunds(self):
-        return self.filter(type=OrderLineType.REFUND)
+        return self.filter(Q(type=OrderLineType.QUANTITY_REFUND) | Q(type=OrderLineType.AMOUNT_REFUND))
 
     def other(self):  # pragma: no cover
         return self.filter(type=OrderLineType.OTHER)
@@ -118,9 +122,28 @@ class OrderLine(MoneyPropped, models.Model, Priceful):
         """
         :rtype: shuup.utils.money.Money
         """
-        refunds = self.order.lines.refunds().filter(parent_line=self)
+        refunds = self.child_lines.refunds().filter(parent_line=self)
         refund_total_value = sum(refund.taxful_price.amount.value for refund in refunds)
         return (self.taxful_price.amount + Money(refund_total_value, self.order.currency))
+
+    @property
+    def refunded_quantity(self):
+        return (
+            self.child_lines.filter(type=OrderLineType.QUANTITY_REFUND).aggregate(total=Sum("quantity"))["total"] or 0
+        )
+
+    @property
+    def shipped_quantity(self):
+        if not self.product:
+            return 0
+        return ShipmentProduct.objects.filter(
+            shipment__supplier=self.supplier.id,
+            product_id=self.product.id,
+            shipment__order=self.order
+        ).aggregate(total=Sum("quantity"))["total"] or 0
+
+    def get_refunded_quantity(self):
+        return self.returned_quantity
 
     def save(self, *args, **kwargs):
         if not self.sku:
