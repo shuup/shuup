@@ -141,14 +141,13 @@ class ProductsInBasketCondition(BasketCondition):
     products = models.ManyToManyField(Product, verbose_name=_("products"), blank=True)
 
     def matches(self, basket, lines):
-        product_ids = self.products.values_list("pk", flat=True)
-        for line in basket.get_lines():
-            if not (line.product and (line.product.id in product_ids)):
-                continue
+        product_id_to_qty = get_product_ids_and_quantities(basket)
+        product_ids = self.products.filter(id__in=product_id_to_qty.keys()).values_list("id", flat=True)
+        for product_id in product_ids:
             if self.operator == ComparisonOperator.GTE:
-                return line.quantity >= self.quantity
+                return product_id_to_qty[product_id] >= self.quantity
             elif self.operator == ComparisonOperator.EQUALS:
-                return line.quantity == self.quantity
+                return product_id_to_qty[product_id] == self.quantity
         return False
 
     @property
@@ -172,8 +171,8 @@ class ContactGroupBasketCondition(BasketCondition):
     contact_groups = models.ManyToManyField(ContactGroup, verbose_name=_("contact groups"))
 
     def matches(self, basket, lines=[]):
-        customers_groups = basket.customer.groups.all()
-        return self.contact_groups.filter(pk__in=customers_groups).exists()
+        contact_group_ids = basket.customer.groups.values_list("pk", flat=True)
+        return self.contact_groups.filter(pk__in=contact_group_ids).exists()
 
     @property
     def description(self):
