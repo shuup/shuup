@@ -622,3 +622,42 @@ def test_can_create_refund():
     # But fully refunded orders can't
     order.create_refund([{"line": order.lines.first(), "quantity": 1, "restock": False}])
     assert not order.can_create_refund()
+
+
+def assert_defaultdict_values(default, **kwargs):
+    for key, value in kwargs.items():
+        assert default[key] == value
+
+
+@pytest.mark.django_db
+def test_product_summary():
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product = create_product(
+        "test-sku",
+        shop=get_default_shop(),
+        default_price=10,
+        stock_behavior=StockBehavior.STOCKED
+    )
+
+    # Order with 2 unshipped, non-refunded items
+    order = create_order_with_product(product, supplier, 2, 200, shop=shop)
+    summary = order.get_product_summary()[product.id]
+
+    assert_defaultdict_values(summary, ordered=2, shipped=0, refunded=0, unshipped=2)
+
+    # Create a refund for 1 item
+    order.create_refund([{"line": order.lines.first(), "quantity": 1, "restock": False}])
+    summary = order.get_product_summary()[product.id]
+
+    assert_defaultdict_values(summary, ordered=2, shipped=0, refunded=1, unshipped=1)
+
+    # Create a shipment for the other item, make sure status changes
+    assert order.shipping_status == ShippingStatus.NOT_SHIPPED
+    assert order.can_create_shipment()
+    order.create_shipment(supplier=supplier, product_quantities={product: 1})
+    assert order.shipping_status == ShippingStatus.FULLY_SHIPPED
+    assert not order.can_create_shipment()
+
+    summary = order.get_product_summary()[product.id]
+    assert_defaultdict_values(summary, ordered=2, shipped=1, refunded=1, unshipped=0)
