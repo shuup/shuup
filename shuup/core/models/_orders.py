@@ -636,7 +636,7 @@ class Order(MoneyPropped, models.Model):
             raise NoRefundToCreateException
         self.cache_prices()
         line_data = [
-            {"line": line, "quantity": line.quantity, "restock": restock_products}
+            {"line": line, "quantity": line.quantity, "restock_products": restock_products}
             for line in self.lines.all()
             if (line.taxful_price or (line.type == OrderLineType.PRODUCT))
         ]
