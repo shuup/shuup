@@ -796,10 +796,10 @@ class Order(MoneyPropped, models.Model):
             products[product_id]['unshipped'] -= quantity
 
         refunded_prods = self.lines.refunds().filter(
-            type=OrderLineType.PRODUCT).distinct().values_list("parent_line__product_id", flat=True)
+            type=OrderLineType.QUANTITY_REFUND).distinct().values_list("parent_line__product_id", flat=True)
         for product_id in refunded_prods:
             refunds = self.lines.refunds().filter(parent_line__product_id=product_id)
-            refunded_quantity = refunds.aggregate(total=models.Sum("refunded_quantity"))["total"] or 0
+            refunded_quantity = refunds.aggregate(total=models.Sum("quantity"))["total"] or 0
             products[product_id]["refunded"] = refunded_quantity
             products[product_id]["unshipped"] -= refunded_quantity
 
