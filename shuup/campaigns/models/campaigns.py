@@ -20,6 +20,10 @@ from shuup.campaigns.consts import (
     CAMPAIGNS_CACHE_NAMESPACE, CATALOG_FILTER_CACHE_NAMESPACE,
     CONTEXT_CONDITION_CACHE_NAMESPACE
 )
+from shuup.campaigns.models.basket_conditions import (
+    CategoryProductsBasketCondition, ProductsInBasketCondition
+)
+from shuup.campaigns.utils import get_product_ids_and_quantities
 from shuup.core import cache
 from shuup.core.fields import InternalIdentifierField
 from shuup.core.models import Order, Shop
@@ -179,7 +183,37 @@ class BasketCampaign(Campaign):
     @classmethod
     def get_matching(cls, basket, lines):
         matching = []
-        for campaign in cls.objects.filter(active=True, shop=basket.shop):
+        exclude_condition_ids = set()
+        product_id_to_qty = get_product_ids_and_quantities(basket)
+
+        # Get ProductsInBasketCondition's that can't match with the basket
+        products_in_basket_conditions_to_check = set(
+            ProductsInBasketCondition.objects.filter(
+                products__id__in=product_id_to_qty.keys()
+            ).values_list("id", flat=True)
+        )
+        exclude_condition_ids |= set(
+            ProductsInBasketCondition.objects.exclude(
+                id__in=products_in_basket_conditions_to_check
+            ).values_list("id", flat=True)
+        )
+
+        # Get CategoryProductsBasketCondition's that can't match with the basket
+        category_products_in_basket_to_check = set(
+            CategoryProductsBasketCondition.objects.filter(
+                category__shop_products__product_id__in=product_id_to_qty.keys()
+            ).values_list("id", flat=True)
+        )
+        exclude_condition_ids |= set(
+            CategoryProductsBasketCondition.objects.exclude(
+                id__in=category_products_in_basket_to_check
+            ).values_list("id", flat=True)
+        )
+
+        queryset = cls.objects.filter(active=True, shop=basket.shop)
+        if exclude_condition_ids:
+            queryset = queryset.exclude(conditions__id__in=exclude_condition_ids)
+        for campaign in queryset.prefetch_related("conditions"):
             if campaign.rules_match(basket, lines):
                 matching.append(campaign)
         return matching
@@ -197,14 +231,13 @@ class BasketCampaign(Campaign):
         if not self.is_available():
             return False
 
-        if self.coupon and not self.coupon.active:
+        if self.coupon and not (self.coupon.active and self.coupon.code in basket.codes):
             return False
 
-        matching_rules = [rule.matches(basket, lines) for rule in self.conditions.all()]
-
-        if self.coupon:
-            matching_rules.append((self.coupon.code in basket.codes))
-        return all(matching_rules)
+        for rule in self.conditions.all():
+            if not rule.matches(basket, lines):
+                return False
+        return True
 
 
 class CouponUsage(models.Model):
