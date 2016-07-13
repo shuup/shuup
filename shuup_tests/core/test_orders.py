@@ -25,7 +25,7 @@ from shuup.core.pricing import TaxfulPrice, TaxlessPrice
 from shuup.testing.factories import (
     create_empty_order, create_order_with_product, create_product, get_address,
     get_default_product, get_default_shop, get_default_supplier,
-    get_default_tax, get_initial_order_status
+    get_default_tax, get_initial_order_status, get_shipping_method
 )
 from shuup.utils.money import Money
 from shuup_tests.simple_supplier.utils import get_simple_supplier
@@ -640,24 +640,35 @@ def test_product_summary():
         stock_behavior=StockBehavior.STOCKED
     )
 
-    # Order with 2 unshipped, non-refunded items
+    # Order with 2 unshipped, non-refunded items and a shipping cost
     order = create_order_with_product(product, supplier, 2, 200, shop=shop)
-    summary = order.get_product_summary()[product.id]
+    product_line = order.lines.first()
+    sm = get_shipping_method(name="test", price=10)
+    shipping_line  = order.lines.create(type=OrderLineType.SHIPPING, base_unit_price_value=5, quantity=1)
 
+    # Make sure no invalid entries and check product quantities
+    product_summary = order.get_product_summary()
+    assert all(product_summary.keys())
+    summary = product_summary[product.id]
     assert_defaultdict_values(summary, ordered=2, shipped=0, refunded=0, unshipped=2)
-
-    # Create a refund for 1 item
-    order.create_refund([{"line": order.lines.first(), "quantity": 1, "restock": False}])
-    summary = order.get_product_summary()[product.id]
-
-    assert_defaultdict_values(summary, ordered=2, shipped=0, refunded=1, unshipped=1)
 
     # Create a shipment for the other item, make sure status changes
     assert order.shipping_status == ShippingStatus.NOT_SHIPPED
     assert order.can_create_shipment()
     order.create_shipment(supplier=supplier, product_quantities={product: 1})
-    assert order.shipping_status == ShippingStatus.FULLY_SHIPPED
-    assert not order.can_create_shipment()
+    assert order.shipping_status == ShippingStatus.PARTIALLY_SHIPPED
 
-    summary = order.get_product_summary()[product.id]
-    assert_defaultdict_values(summary, ordered=2, shipped=1, refunded=1, unshipped=0)
+    order.create_refund([{"line": shipping_line, "quantity": 1, "restock": False}])
+
+    product_summary = order.get_product_summary()
+    assert all(product_summary.keys())
+    summary = product_summary[product.id]
+    assert_defaultdict_values(summary, ordered=2, shipped=1, refunded=0, unshipped=1)
+
+    # Create a refund for 2 items, we should get no negative values
+    order.create_refund([{"line": product_line, "quantity": 2, "restock": False}])
+
+    product_summary = order.get_product_summary()
+    assert all(product_summary.keys())
+    summary = product_summary[product.id]
+    assert_defaultdict_values(summary, ordered=2, shipped=1, refunded=2, unshipped=0)
