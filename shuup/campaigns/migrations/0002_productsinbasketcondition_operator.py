@@ -16,6 +16,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='productsinbasketcondition',
             name='operator',
-            field=enumfields.fields.EnumIntegerField(default=1, enum=shuup.campaigns.models.basket_conditions.ProductsInBasketComparisonOperator, verbose_name='operator'),
+            field=enumfields.fields.EnumIntegerField(default=1, enum=shuup.campaigns.models.basket_conditions.ComparisonOperator, verbose_name='operator'),
         ),
     ]

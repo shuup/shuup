@@ -10,8 +10,9 @@ from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from polymorphic.models import PolymorphicModel
 
+from shuup.campaigns.utils import get_product_ids_and_quantities
 from shuup.core.fields import MoneyValueField
-from shuup.core.models import Contact, ContactGroup, Product
+from shuup.core.models import Category, Contact, ContactGroup, Product
 from shuup.utils.properties import MoneyPropped, PriceProperty
 
 
@@ -119,7 +120,7 @@ class BasketMaxTotalAmountCondition(MoneyPropped, BasketCondition):
         self.amount_value = value
 
 
-class ProductsInBasketComparisonOperator(Enum):
+class ComparisonOperator(Enum):
     EQUALS = 0
     GTE = 1
 
@@ -135,19 +136,18 @@ class ProductsInBasketCondition(BasketCondition):
     model = Product
 
     operator = EnumIntegerField(
-        ProductsInBasketComparisonOperator, default=ProductsInBasketComparisonOperator.GTE, verbose_name=_("operator"))
+        ComparisonOperator, default=ComparisonOperator.GTE, verbose_name=_("operator"))
     quantity = models.PositiveIntegerField(default=1, verbose_name=_("quantity"))
     products = models.ManyToManyField(Product, verbose_name=_("products"), blank=True)
 
     def matches(self, basket, lines):
-        product_ids = self.products.values_list("pk", flat=True)
-        for line in basket.get_lines():
-            if not (line.product and (line.product.id in product_ids)):
-                continue
-            if self.operator == ProductsInBasketComparisonOperator.GTE:
-                return line.quantity >= self.quantity
-            elif self.operator == ProductsInBasketComparisonOperator.EQUALS:
-                return line.quantity == self.quantity
+        product_id_to_qty = get_product_ids_and_quantities(basket)
+        product_ids = self.products.filter(id__in=product_id_to_qty.keys()).values_list("id", flat=True)
+        for product_id in product_ids:
+            if self.operator == ComparisonOperator.GTE:
+                return product_id_to_qty[product_id] >= self.quantity
+            elif self.operator == ComparisonOperator.EQUALS:
+                return product_id_to_qty[product_id] == self.quantity
         return False
 
     @property
@@ -171,8 +171,8 @@ class ContactGroupBasketCondition(BasketCondition):
     contact_groups = models.ManyToManyField(ContactGroup, verbose_name=_("contact groups"))
 
     def matches(self, basket, lines=[]):
-        customers_groups = basket.customer.groups.all()
-        return self.contact_groups.filter(pk__in=customers_groups).exists()
+        contact_group_ids = basket.customer.groups.values_list("pk", flat=True)
+        return self.contact_groups.filter(pk__in=contact_group_ids).exists()
 
     @property
     def description(self):
@@ -209,3 +209,30 @@ class ContactBasketCondition(BasketCondition):
     @values.setter
     def values(self, values):
         self.contacts = values
+
+
+class CategoryProductsBasketCondition(BasketCondition):
+    identifier = "basket_category_condition"
+    name = _("Category products in basket")
+
+    operator = EnumIntegerField(
+        ComparisonOperator, default=ComparisonOperator.GTE, verbose_name=_("operator"))
+    quantity = models.PositiveIntegerField(default=1, verbose_name=_("quantity"))
+    category = models.ForeignKey(Category, verbose_name=_("category"), blank=True)
+
+    def matches(self, basket, lines):
+        product_id_to_qty = get_product_ids_and_quantities(basket)
+        category_product_ids = self.category.shop_products.filter(
+            product_id__in=product_id_to_qty.keys()
+        ).values_list(
+            "product_id", flat=True
+        )
+        product_count = sum(product_id_to_qty[product_id] for product_id in category_product_ids)
+        if self.operator == ComparisonOperator.EQUALS:
+            return bool(product_count == self.quantity)
+        else:
+            return bool(product_count >= self.quantity)
+
+    @property
+    def description(self):
+        return _("Limit the campaign to match the products from selected category.")
