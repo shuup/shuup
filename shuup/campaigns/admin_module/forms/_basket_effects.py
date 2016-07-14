@@ -45,7 +45,7 @@ class DiscountFromProductForm(BaseEffectModelForm):
 class DiscountFromCategoryProductsForm(BaseEffectModelForm):
     discount_percentage = PercentageField(
         max_digits=6, decimal_places=5,
-        label=_("discount percentage"),
+        label=_("discount percentage"), required=False,
         help_text=_("The discount percentage for this campaign."))
 
     class Meta(BaseEffectModelForm.Meta):
