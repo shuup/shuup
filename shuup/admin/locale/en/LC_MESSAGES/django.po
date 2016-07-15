@@ -932,12 +932,31 @@ msgstr ""
 msgid "Deactivate User"
 msgstr ""
 
+msgid "Login as User"
+msgstr ""
+
 #, python-format
 msgid "User bound to contact %(contact)s."
 msgstr ""
 
 #, python-format
 msgid "%(user)s is now %(state)s."
+msgstr ""
+
+msgid "No shop configured."
+msgstr ""
+
+msgid "User is not bound to a person contact."
+msgstr ""
+
+msgid "You are already logged in."
+msgstr ""
+
+msgid "This user is not active."
+msgstr ""
+
+#, python-brace-format
+msgid "You're now logged in as {username}"
 msgstr ""
 
 msgid "Username"

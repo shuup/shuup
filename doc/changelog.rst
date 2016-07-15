@@ -36,6 +36,7 @@ Localization
 Admin
 ~~~~~
 
+- Allow superadmins to login as customer
 - Show orderability errors in package product management
 - Show stocks in package product management
 - Add link to order line product detail page in order editor

@@ -7,16 +7,20 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from bs4 import BeautifulSoup
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user, get_user_model
 from django.contrib.auth.models import Group as PermissionGroup
+from django.core.exceptions import PermissionDenied
+from django.core.urlresolvers import reverse
 from django.forms.models import modelform_factory
 from django.utils.encoding import force_text
 
-from shuup.admin.modules.users.views import UserDetailView
+from shuup.admin.modules.users.views import LoginAsUserView, UserDetailView
 from shuup.admin.modules.users.views.permissions import \
     PermissionChangeFormBase
-from shuup.core.models import Contact
-from shuup.testing.factories import create_random_person, get_default_shop
+from shuup.core.models import Contact, get_person_contact
+from shuup.testing.factories import (
+    create_random_person, get_default_shop, UserFactory
+)
 from shuup.testing.soup_utils import extract_form_fields
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.excs import Problem
@@ -104,3 +108,52 @@ def test_user_permission_form_changes_group(rf, admin_user, regular_user):
     form.save()
 
     assert not regular_user.groups.all()
+
+
+@pytest.mark.django_db
+def test_login_as_user_errors(rf, admin_user, regular_user):
+    get_default_shop()
+    view_func = LoginAsUserView.as_view()
+    request = apply_request_middleware(rf.post("/"), user=regular_user)
+
+    # log in as self
+    with pytest.raises(Problem):
+        view_func(request, pk=regular_user.pk)
+
+    user = UserFactory()
+    get_person_contact(user)
+    # non superuser trying to login as someone else
+    with pytest.raises(PermissionDenied):
+        view_func(request, pk=user.pk)
+
+    request = apply_request_middleware(rf.post("/"), user=admin_user)
+    user.is_superuser = True
+    user.save()
+    # user is trying to login as another superuser
+    with pytest.raises(PermissionDenied):
+        view_func(request, pk=user.pk)
+
+    user.is_superuser = False
+    user.is_staff = True
+    user.save()
+    # user is trying to login as a staff user
+    with pytest.raises(PermissionDenied):
+        view_func(request, pk=user.pk)
+
+    user.is_staff = False
+    user.is_active = False
+    user.save()
+    # user is trying to login as an inactive user
+    with pytest.raises(Problem):
+        view_func(request, pk=user.pk)
+
+
+@pytest.mark.django_db
+def test_login_as_user(rf, admin_user, regular_user):
+    get_default_shop()
+    view_func = LoginAsUserView.as_view()
+    request = apply_request_middleware(rf.post("/"), user=admin_user)
+    get_person_contact(regular_user)
+    response = view_func(request, pk=regular_user.pk)
+    assert response["location"] == reverse("shuup:index")
+    assert get_user(request) == regular_user
