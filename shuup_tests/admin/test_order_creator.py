@@ -13,18 +13,21 @@ import json
 import pytest
 from django.test import RequestFactory
 from django.utils import translation
+from django.utils.encoding import force_text
 
 from shuup.admin.modules.orders.views.edit import (
-    encode_address, encode_method,OrderEditView
+    encode_address, encode_method, OrderEditView
 )
 from shuup.core.models import Order, OrderLineType, Tax, TaxClass
 from shuup.default_tax.models import TaxRule
 from shuup.testing.factories import (
-    create_empty_order, create_product, create_random_company, create_random_person,
+    create_empty_order, create_product, create_random_company,
+    create_random_order, create_random_person, get_default_customer_group,
     get_default_payment_method, get_default_shipping_method, get_default_shop,
     get_default_supplier, get_initial_order_status, UserFactory
 )
 from shuup.testing.utils import apply_request_middleware
+from shuup.utils.i18n import format_money
 from shuup_tests.utils import assert_contains, printable_gibberish
 
 TEST_COMMENT = "Hello. Is it me you're looking for?"
@@ -322,13 +325,40 @@ def test_order_creator_view_for_customer(rf, admin_user):
 
 
 def test_order_creator_customer_details(rf, admin_user):
-    get_default_shop()
+    shop = get_default_shop()
     contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
+    company = create_random_company()
+    group = get_default_customer_group()
+    contact.groups.add(group)
+    contact.company_memberships.add(company)
+    contact.save()
+    product = create_product(
+        sku=printable_gibberish(),
+        supplier=get_default_supplier(),
+        shop=shop
+    )
+    order = create_random_order(contact, products=[product])
     request = apply_request_middleware(rf.get("/", {
         "command": "customer_details",
         "id": contact.id
     }), user=admin_user)
     response =OrderEditView.as_view()(request)
-    assert_contains(response, "customer_info")
-    assert_contains(response, "order_summary")
-    assert_contains(response, "recent_orders")
+    data = json.loads(response.content.decode("utf8"))
+
+    assert "customer_info" in data
+    assert "order_summary" in data
+    assert "recent_orders" in data
+    assert data["customer_info"]["name"] == contact.full_name
+    assert data["customer_info"]["phone_no"] == contact.phone
+    assert data["customer_info"]["email"] == contact.email
+    assert company.full_name in data["customer_info"]["companies"]
+    assert group.name in data["customer_info"]["groups"]
+    assert data["customer_info"]["merchant_notes"] == contact.merchant_notes
+    assert len(data["order_summary"]) == 1
+    assert data["order_summary"][0]["year"] == order.order_date.year
+    assert data["order_summary"][0]["total"] == format_money(order.taxful_total_price)
+    assert len(data["recent_orders"]) == 1
+    assert data["recent_orders"][0]["status"] == order.get_status_display()
+    assert data["recent_orders"][0]["total"] == format_money(order.taxful_total_price)
+    assert data["recent_orders"][0]["payment_status"] == force_text(order.payment_status.label)
+    assert data["recent_orders"][0]["shipment_status"] == force_text(order.shipping_status.label)

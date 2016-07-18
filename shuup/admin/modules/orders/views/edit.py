@@ -304,7 +304,7 @@ class OrderEditView(CreateOrUpdateView):
                 "name": customer.full_name,
                 "phone_no": customer.phone,
                 "email": customer.email,
-                "companies": companies if len(companies) else None,
+                "companies": [force_text(company) for company in companies] if len(companies) else None,
                 "groups": [force_text(group) for group in customer.groups.all()],
                 "merchant_notes": customer.merchant_notes
             },
