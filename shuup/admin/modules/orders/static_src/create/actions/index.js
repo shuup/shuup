@@ -38,6 +38,8 @@ export const updateTotals = createAction("updateTotals");
 export const setOrderSource = createAction("setOrderSource");
 export const clearOrderSourceData = createAction("clearOrderSourceData");
 export const setOrderId = createAction("setOrderId");
+const beginCreatingOrder = createAction("beginCreatingOrder");
+const endCreatingOrder = createAction("endCreatingOrder");
 // Comment action
 export const setComment = createAction("setComment");
 
@@ -102,11 +104,14 @@ export const retrieveCustomerDetails = function({id}) {
 
 export const retrieveOrderSourceData = function () {
     return (dispatch, getState) => {
+        dispatch(beginCreatingOrder());
         const state = getState();
         post("source_data", {state}).then((data) => {
             dispatch(receiveOrderSourceData({data}));
             dispatch(setOrderSource(data));
+            dispatch(endCreatingOrder());
         }, (data) => {  // error handler
+            dispatch(endCreatingOrder());
             const {Messages} = window;
             if (Messages) {
                 Messages.enqueue({type: "error", text: data.errorMessage});
@@ -144,6 +149,7 @@ function handleFinalizeResponse(dispatch, data) {
         }
         return;
     }
+    dispatch(endCreatingOrder());
     dispatch(endFinalizingOrder());  // Only flag end if something went awry
     if (errorMessage) {
         const {Messages} = window;
@@ -159,6 +165,7 @@ function handleFinalizeResponse(dispatch, data) {
 
 export const beginFinalizingOrder = function () {
     return (dispatch, getState) => {
+        dispatch(beginCreatingOrder());
         const state = _.assign({}, getState(), {productData: null, order: null}); // We don't care about that substate
         post("finalize", {state}).then((data) => {
             handleFinalizeResponse(dispatch, data);
