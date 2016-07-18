@@ -60,7 +60,7 @@ def create_source_from_state(state, **kwargs):
     return source
 
 
-def encode_address(address, tax_number=None):
+def encode_address(address, tax_number=""):
     if not address:
         return {"tax_number": tax_number}
     address_dict = json.loads(serializers.serialize("json", [address]))[0].get("fields")
@@ -204,7 +204,7 @@ class OrderEditView(CreateOrUpdateView):
             return JsonResponse(
                 {"success": False, "errorMessage": _("Contact %s does not exist.") % customer_id}, status=400
             )
-        tax_number = getattr(customer, "tax_number", None)
+        tax_number = getattr(customer, "tax_number", "")
         return {
             "id": customer.id,
             "name": customer.name,
