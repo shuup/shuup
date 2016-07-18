@@ -44,6 +44,7 @@ class OrderModifier(OrderProcessor):
 
         for line in order.lines.all():
             line.taxes.all().delete()  # Delete all tax lines before OrderLine's
+            line.child_lines.all().delete()  # Ditto for child lines
             line.delete()
 
         return self.finalize_creation(order, order_source)

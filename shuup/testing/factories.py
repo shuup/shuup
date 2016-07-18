@@ -494,6 +494,17 @@ def create_product(sku, shop=None, supplier=None, default_price=None, **attrs):
     return product
 
 
+def create_package_product(sku, shop=None, supplier=None, default_price=None, children=4, **attrs):
+    package_product = create_product(sku, shop, supplier, default_price, **attrs)
+    assert not package_product.get_package_child_to_quantity_map()
+    children = [create_product("PackageChild-%d" % x, shop=shop, supplier=supplier) for x in range(children)]
+    package_def = {child: 1 + i for (i, child) in enumerate(children)}
+    package_product.make_package(package_def)
+    assert package_product.is_package_parent()
+    package_product.save()
+    return package_product
+
+
 def create_empty_order(prices_include_tax=False, shop=None):
     order = Order(
         shop=(shop or get_shop(prices_include_tax=prices_include_tax)),

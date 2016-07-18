@@ -14,8 +14,8 @@ from shuup.core.models import AnonymousContact, OrderLineType, Tax
 from shuup.core.order_creator import OrderCreator
 from shuup.default_tax.models import TaxRule
 from shuup.testing.factories import (
-    create_product, get_default_shop, get_default_supplier,
-    get_default_tax_class, get_initial_order_status
+    create_package_product, create_product, get_default_shop,
+    get_default_supplier, get_default_tax_class, get_initial_order_status
 )
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
 
@@ -34,14 +34,7 @@ def get_package_product():
     """
     shop = get_default_shop()
     supplier = get_default_supplier()
-    package_product = create_product("PackageParent", shop=shop, supplier=supplier)
-    assert not package_product.get_package_child_to_quantity_map()
-    children = [create_product("PackageChild-%d" % x, shop=shop, supplier=supplier) for x in range(4)]
-    package_def = {child: 1 + i for (i, child) in enumerate(children)}
-    package_product.make_package(package_def)
-    assert package_product.is_package_parent()
-    package_product.save()
-    return package_product
+    return create_package_product("PackageParent", shop=shop, supplier=supplier)
 
 
 @pytest.mark.django_db
