@@ -8,17 +8,20 @@
 import pytest
 from django.core.exceptions import ValidationError
 
-from shuup.core.models import Order, MutableAddress, OrderLineType, get_person_contact, Shop, ShopStatus
+from shuup.core.models import (
+    get_person_contact, MutableAddress, Order, OrderLineType, Shop, ShopStatus
+)
 from shuup.core.order_creator import OrderCreator
 from shuup.core.order_creator._modifier import OrderModifier
 from shuup.testing.factories import (
-    get_initial_order_status, get_default_payment_method, get_default_shipping_method,
-    get_default_shop, get_default_product, get_default_supplier
+    create_package_product, get_default_payment_method, get_default_product,
+    get_default_shipping_method, get_default_shop, get_default_supplier,
+    get_initial_order_status
 )
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
 
 
-def get_order_and_source(admin_user):
+def get_order_and_source(admin_user, product):
     # create original source to tamper with
     source = BasketishOrderSource(get_default_shop())
     source.status = get_initial_order_status()
@@ -29,7 +32,7 @@ def get_order_and_source(admin_user):
     source.shipping_method = get_default_shipping_method()
     source.add_line(
         type=OrderLineType.PRODUCT,
-        product=get_default_product(),
+        product=product,
         supplier=get_default_supplier(),
         quantity=1,
         base_unit_price=source.create_price(10),
@@ -50,7 +53,7 @@ def get_order_and_source(admin_user):
 @pytest.mark.django_db
 def test_order_modifier(rf, admin_user):
 
-    order, source = get_order_and_source(admin_user)
+    order, source = get_order_and_source(admin_user, get_default_product())
 
     # get original values
     taxful_total_price = order.taxful_total_price_value
@@ -86,7 +89,7 @@ def test_order_modifier(rf, admin_user):
 
 @pytest.mark.django_db
 def test_shop_change(rf, admin_user):
-    order, source = get_order_and_source(admin_user)
+    order, source = get_order_and_source(admin_user, get_default_product())
 
     shop = Shop.objects.create(
         name="Another shop",
@@ -108,3 +111,20 @@ def test_order_cannot_be_created():
     modifier = OrderModifier()
     with pytest.raises(AttributeError):
         modifier.create_order(None)
+
+
+@pytest.mark.django_db
+def test_modify_order_with_package_product(admin_user):
+    package_children = 4
+    package = create_package_product("parent", get_default_shop(), get_default_supplier(), 100, package_children)
+    order, source = get_order_and_source(admin_user, package)
+    source.add_line(
+        type=OrderLineType.OTHER,
+        quantity=1,
+        base_unit_price=source.create_price(10),
+        require_verification=True,
+    )
+    modifier = OrderModifier()
+    modifier.update_order_from_source(source, order)
+    assert order.lines.products().count() == 1 + package_children  # parent + children
+    assert order.lines.other().count() == 2  # one added here + one from original order
