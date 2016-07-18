@@ -146,7 +146,7 @@ class ProductQuerySet(TranslatableQuerySet):
             else:
                 qs = qs.filter(shop_products__visibility_limit=ProductVisibility.VISIBLE_TO_ALL)
 
-        qs = qs.select_related(*Product.COMMON_SELECT_RELATED)
+        qs = qs.select_related(*Product.COMMON_SELECT_RELATED).distinct()
         return qs
 
     def all_except_deleted(self, language=None):
