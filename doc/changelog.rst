@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Fix bug with duplicates in `Product.objects.list_visible()`
 - Fix restocking issues with refunded products
 - Add separate order line types for quantity and amount refunds
 - Add `can_create_shipment` and `can_create_payment` to `Order`
