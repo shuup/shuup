@@ -39,6 +39,7 @@ function renderAddress(store, shop, customer, address, addressType) {
 
 function customerDetailView(customerInfo) {
     const groups = customerInfo.groups || [];
+    const companies = customerInfo.companies || [];
 
     return (
         m("div.row",
@@ -52,7 +53,7 @@ function customerDetailView(customerInfo) {
             m("div.col-md-6",
                 m("dl.dl-horizontal", [
                     infoRow(gettext("Groups"), groups.join(", ")),
-                    infoRow(gettext("Companies"), customerInfo.companies),
+                    infoRow(gettext("Companies"), companies.join(", ")),
                     infoRow(gettext("Merchant Notes"), customerInfo.merchant_notes)
                 ])
             )
