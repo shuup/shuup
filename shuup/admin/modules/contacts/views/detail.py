@@ -18,7 +18,8 @@ from django.views.generic import DetailView
 
 from shuup.admin.toolbar import PostActionButton, Toolbar, URLActionButton
 from shuup.admin.utils.permissions import get_default_model_permissions
-from shuup.core.models import CompanyContact, Contact, PersonContact
+from shuup.apps.provides import get_provide_objects
+from shuup.core.models import CompanyContact, Contact
 from shuup.utils.excs import Problem
 
 
@@ -84,6 +85,10 @@ class ContactDetailToolbar(Toolbar):
             extra_css_class="btn-gray",
         ))
 
+    def build_provides_buttons(self):
+        for button in get_provide_objects("admin_contact_toolbar_button"):
+            self.append(button(self.contact))
+
     def build(self):
         self.append(URLActionButton(
             url=reverse("shuup_admin:contact.edit", kwargs={"pk": self.contact.pk}),
@@ -95,6 +100,7 @@ class ContactDetailToolbar(Toolbar):
         self.build_new_user_button()
         self.build_deactivate_button()
         self.build_new_order_button()
+        self.build_provides_buttons()
 
 
 class ContactDetailView(DetailView):
@@ -104,19 +110,21 @@ class ContactDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ContactDetailView, self).get_context_data(**kwargs)
-        context["companies"] = []
-        if isinstance(self.object, PersonContact):
-            context["companies"] = sorted(
-                self.object.company_memberships.all(), key=(lambda x: force_text(x))
-            )
-        context["contact_groups"] = sorted(
-            self.object.groups.all(), key=(lambda x: force_text(x)))
-        context["orders"] = self.object.customer_orders.order_by("-id")
         context["toolbar"] = ContactDetailToolbar(contact=self.object, request=self.request)
         context["title"] = "%s: %s" % (
             self.object._meta.verbose_name.title(),
             force_text(self.object)
         )
+        context["contact_sections"] = []
+
+        contact_sections_provides = sorted(get_provide_objects("admin_contact_section"), key=lambda x: x.order)
+        for admin_contact_section in contact_sections_provides:
+            # Check whether the ContactSection should be visible for the current object
+            if admin_contact_section.visible_for_object(self.object):
+                context["contact_sections"].append(admin_contact_section)
+                # add additional context data where the key is the contact_section identifier
+                context[admin_contact_section.identifier] = admin_contact_section.get_context_data(self.object)
+
         return context
 
     def _handle_set_is_active(self):

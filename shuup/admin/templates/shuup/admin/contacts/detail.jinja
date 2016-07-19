@@ -4,94 +4,19 @@
 {% block content %}
     {% call content_with_sidebar(content_id="contact_details") %}
         <div id="contact_details">
-            {% call content_block(_("Basic Information"), "fa-info-circle") %}
-                <dl class="dl-horizontal">
-                    {{ info_row(_("Full Name"), contact.full_name) }}
-                    {{ info_row(_("Phone"), contact.phone, "tel:" ~ contact.phone) }}
-                    {{ info_row(_("Email"), contact.email, "mailto:" ~ contact.email) }}
-                    {% set groups = render_objects(contact_groups) %}
-                    {{ info_row(_("Groups"), groups|default(_("No groups"), True)) }}
-                    {{ info_row(_("Bound User"), contact.user, shuup_admin.model_url(contact.user) if contact.user else None) }}
-                    {% if companies %}
-                        {% set rendered_companies = render_objects(companies) %}
-                        {{ info_row(_("Companies"), rendered_companies) }}
-                    {% endif %}
-                    {{ info_row(
-                        _("Account Manager"),
-                        contact.account_manager,
-                        shuup_admin.model_url(contact.account_manager) if contact.account_manager else None) }}
-                    {{ info_row(_("Merchant Notes"), contact.merchant_notes) }}
-                    </tbody>
-                </dl>
-            {% endcall %}
-
-            {% if contact.default_shipping_address_id or contact.default_billing_address_id %}
-                {% call content_block(_("Addresses"), "fa-map-marker") %}
-                    <div class="row contact-addresses">
-                        <div class="col-md-6 shipping-address">
-                            <h4 class="underline"><i class="fa fa-truck"></i> {% trans %}Shipping address{% endtrans %}</h4>
-                            {% for line in contact.default_shipping_address or [] %}
-                                <p>{{ line }}</p>
-                            {% else %}
-                                <i class="fa fa-warning text-warning"></i> {% trans %}No shipping address defined.{% endtrans %}
-                            {% endfor %}
-                        </div>
-                        <div class="col-md-6 billing-address">
-                            <h4 class="underline"><i class="fa fa-file-text"></i> {% trans %}Billing address{% endtrans %}</h4>
-                            {% for line in contact.default_billing_address or [] %}
-                                <p>{{ line }}</p>
-                            {% else %}
-                                <i class="fa fa-warning text-warning"></i> {% trans %}No billing address defined.{% endtrans %}
-                            {% endfor %}
-                        </div>
-                    </div>
+            {% for contact_section in contact_sections %}
+                {% call content_block(contact_section.name, contact_section.icon) %}
+                    {% include contact_section.template with context %}
                 {% endcall %}
-            {% endif %}
-
-            {% call content_block(_("Orders"), "fa-inbox") %}
-                {% from "shuup/admin/macros/order_view.jinja" import order_view with context %}
-                {{ order_view(orders) }}
-            {% endcall %}
-            {% if contact.members %}
-                {% call content_block(_("Members"), "fa-user") %}
-                    {% if not contact.members.count() %}
-                        {{ _("No members.") }}
-
-                    {% else %}
-                    <table class="table table-condensed table-striped">
-                    <thead>
-                        <tr>
-                            <th>{{ _("Name") }}</th>
-                            <th>{{ _("Email") }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for member in contact.members.all() %}
-                            <tr>
-                                {% set url = shuup_admin.model_url(member) %}
-                                <td>{% if url %}<a href="{{ url }}">{% endif %}{{ member.name }}{% if url %}</a>{% endif %}</td>
-                                <td>{{ member.email }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                    </table>
-                    {% endif %}
-                {% endcall %}
-            {% endif %}
+            {% endfor %}
         </div>
     {% endcall %}
 {% endblock %}
 
-{%- macro render_objects(objs) -%}
-    {%- for obj in objs -%}
-        {{- render_object(obj) -}}
-        {%- if not loop.last %}, {% endif -%}
-    {%- endfor -%}
-{%- endmacro -%}
-
-{%- macro render_object(obj) -%}
-    {% set url = shuup_admin.model_url(obj) %}
-    {% if url %}<a href="{{ url }}">{% endif %}
-        {{- obj -}}
-    {% if url %}</a>{% endif %}
-{%- endmacro -%}
+{% block extra_js %}
+{% for contact_section in contact_sections %}
+    {% if contact_section.extra_js %}
+        {% include contact_section.extra_js with context %}
+    {% endif %}
+{% endfor %}
+{% endblock %}
