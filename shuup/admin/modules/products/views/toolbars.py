@@ -12,7 +12,7 @@ from django.utils.translation import ugettext as _
 
 from shuup.admin.toolbar import (
     DropdownActionButton, DropdownDivider, DropdownHeader, DropdownItem,
-    get_default_edit_toolbar, Toolbar
+    get_default_edit_toolbar, JavaScriptActionButton, Toolbar
 )
 from shuup.admin.utils.urls import get_model_url
 
@@ -33,6 +33,13 @@ class EditProductToolbar(Toolbar):
     def _build_existing_product(self):
         product = self.product
         # :type product: shuup.core.models.Product
+
+        save_as_copy_button = JavaScriptActionButton(
+            onclick="saveAsACopy()",
+            text=_("Save as a copy"),
+            icon="fa fa-clone",
+        )
+        self.append(save_as_copy_button)
 
         cross_sell_button = DropdownItem(
             text=_("Manage Cross-Selling"),
