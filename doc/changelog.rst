@@ -31,6 +31,7 @@ Localization
 Admin
 ~~~~~
 
+- Display shipment form errors as messages
 - Populate tax number from contact for admin order creator
 - Move various dashboard blocks to own admin modules
 - Prevent shipments from being created for refunded products
