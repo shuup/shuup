@@ -18,6 +18,7 @@
                     {{ info_row(_("Tax number"), order.tax_number) }}
                     {{ info_row(_("Total Price (taxless)"), order.taxless_total_price|money) }}
                     {{ info_row(_("Total Price"), order.taxful_total_price|money) }}
+                    {{ info_row(_("Customer Comment"), order.customer_comment|linebreaksbr) }}
                 </dl>
                 <hr>
                 <dl class="dl-horizontal">
