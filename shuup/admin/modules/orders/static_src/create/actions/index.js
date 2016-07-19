@@ -141,6 +141,7 @@ export const endFinalizingOrder = createAction("endFinalizingOrder");
 function handleFinalizeResponse(dispatch, data) {
     const {success, errorMessage, orderIdentifier, url} = data;
     if (success) {
+        window.localStorage.setItem("resetSavedOrder", "true");
         if (url) {
             location.href = url;
         } else {
