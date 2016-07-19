@@ -31,6 +31,7 @@ Localization
 Admin
 ~~~~~
 
+- Redirect to order detail page on order submission
 - Make contact views extendable
 - Make generic Section object for detail view sections
 - Display shipment form errors as messages

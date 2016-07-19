@@ -363,7 +363,7 @@ class OrderEditView(CreateOrUpdateView):
         return JsonResponse({
             "success": True,
             "orderIdentifier": order.identifier,
-            "url": reverse("shuup_admin:order.list")
+            "url": reverse("shuup_admin:order.detail", kwargs={"pk": order.pk})
         })
 
     def handle_source_data(self, request):
