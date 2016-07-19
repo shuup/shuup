@@ -22,6 +22,7 @@ from shuup.admin.utils.urls import get_model_url
 from shuup.apps.provides import get_provide_objects
 from shuup.core.excs import NoProductsToShipException
 from shuup.core.models import Order, Product, Shipment, Supplier
+from shuup.utils.excs import Problem
 
 FORM_MODIFIER_PROVIDER_KEY = "admin_extend_create_shipment_form"
 
@@ -163,13 +164,25 @@ class OrderCreateShipmentView(UpdateView):
         )
 
         unsaved_shipment = Shipment(order=order, supplier=form.cleaned_data["supplier"])
+        has_extension_errors = False
         for extend_class in get_provide_objects(FORM_MODIFIER_PROVIDER_KEY):
-            extend_class().form_valid_hook(form, unsaved_shipment)
+            try:
+                extend_class().form_valid_hook(form, unsaved_shipment)
+            except Problem as problem:
+                has_extension_errors = True
+                messages.error(self.request, problem)
+
+        if has_extension_errors:
+            return self.form_invalid(form)
+
         try:
             shipment = order.create_shipment(
                 product_quantities=products_to_quantities,
                 shipment=unsaved_shipment
             )
+        except Problem as problem:
+            messages.error(self.request, problem)
+            return self.form_invalid(form)
         except NoProductsToShipException:
             messages.error(self.request, _("No products to ship."))
             return self.form_invalid(form)
