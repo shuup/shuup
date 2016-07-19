@@ -256,4 +256,4 @@ class OrderSection(Section):
         """
         Support for the deprecated `visible_for_order` function
         """
-        return cls.visible_for_order(order) or super(OrderSection).visible_for_object(order)
+        return cls.visible_for_order(order) or super(OrderSection, cls).visible_for_object(order)
