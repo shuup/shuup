@@ -36,7 +36,7 @@ class SalesUnit(TranslatableModel):
         verbose_name_plural = _('sales units')
 
     def __str__(self):
-        return str(self.safe_translation_getter("name", default=None))
+        return self.safe_translation_getter("name", default=None)
 
     @property
     def allow_fractions(self):
