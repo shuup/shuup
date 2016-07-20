@@ -34,6 +34,8 @@ Localization
 Admin
 ~~~~~
 
+- Add product line quick add to order creator
+- Add product barcode field to searchable select2 fields
 - Filter out deleted products from Stock Management list view
 - Show newest contacts and users first in admin list views
 - Show list of shipments in order view

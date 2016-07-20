@@ -100,6 +100,7 @@ function updateLineFromProduct(state, {payload}) {
     updates.quantity = product.quantity;
     updates.step = product.purchaseMultiple;
     updates.errors = product.errors;
+    updates.product = product.product;
     updates = _.merge(updates, getFormattedStockCounts(product));
     return setLineProperties(state, id, updates);
 }

@@ -20,8 +20,9 @@ export default function view() {
     const {creating, source, total} = store.getState().order;
     const {choices, selected} = store.getState().shop;
     const {customerDetails} = store.getState();
+    var viewObj;
     if (source) {
-        return m("div.container-fluid",
+        viewObj = m("div.container-fluid",
             confirmView(source),
             m("div", [
                 m("button.btn.btn-danger.btn-lg" + (creating ? ".disabled" : ""), {
@@ -39,7 +40,7 @@ export default function view() {
             ])
         );
     } else {
-        return [
+        viewObj = [
             m("div.container-fluid",
                 m("button.btn.btn-gray.btn-inverse.pull-right", {
                     onclick: () => {
@@ -73,6 +74,8 @@ export default function view() {
                     ])
                 )
             )
-        ]
+        ];
     }
+    activateSelects(); // eslint-disable-line no-undef
+    return viewObj;
 }

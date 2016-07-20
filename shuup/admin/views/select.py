@@ -39,8 +39,9 @@ class MultiselectAjaxView(TemplateView):
         self.search_fields.append(key)
         if issubclass(cls, Contact):
             self.search_fields.append("email")
-        if isinstance(cls, Product):
+        if issubclass(cls, Product):
             self.search_fields.append("sku")
+            self.search_fields.append("barcode")
         user_model = get_user_model()
         if issubclass(cls, user_model):
             if _field_exists(user_model, "username"):

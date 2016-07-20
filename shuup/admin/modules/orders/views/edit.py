@@ -24,6 +24,7 @@ from django_countries import countries
 
 from shuup.admin.modules.orders.json_order_creator import JsonOrderCreator
 from shuup.admin.toolbar import Toolbar
+from shuup.admin.utils.urls import get_model_url
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import (
     AnonymousContact, CompanyContact, Contact, Order, OrderLineType,
@@ -272,6 +273,11 @@ class OrderEditView(CreateOrUpdateView):
             "unitPrice": {
                 "value": price_info.discounted_unit_price.value,
                 "includesTax": price_info.base_unit_price.includes_tax
+            },
+            "product": {
+                "text": product.name,
+                "id": product.id,
+                "url": get_model_url(product)
             }
         }
 
