@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Fix bug in order total price rounding
 - Fix bug with duplicates in `Product.objects.list_visible()`
 - Fix restocking issues with refunded products
 - Add separate order line types for quantity and amount refunds

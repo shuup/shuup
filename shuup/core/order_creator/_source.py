@@ -26,6 +26,7 @@ from shuup.core.pricing import Price, Priceful, TaxfulPrice, TaxlessPrice
 from shuup.core.taxing import should_calculate_taxes_automatically, TaxableItem
 from shuup.utils.decorators import non_reentrant
 from shuup.utils.money import Money
+from shuup.utils.numbers import bankers_round
 
 from ._source_modifier import get_order_source_modifier_modules
 from .signals import post_compute_source_lines
@@ -44,7 +45,10 @@ class _PriceSum(object):
     """
     Property that calculates sum of prices.
 
-    Used to implement various total price proprties to OrderSource.
+    Used to implement various total price properties to OrderSource.
+
+    Calculate the totals same way as for orders which is from rounded
+    line prices.
     """
     def __init__(self, field, line_getter="get_final_lines"):
         self.field = field
@@ -61,7 +65,7 @@ class _PriceSum(object):
         taxful = self.params.get('includes_tax', instance.prices_include_tax)
         zero = (TaxfulPrice if taxful else TaxlessPrice)(0, instance.currency)
         lines = getattr(instance, self.line_getter)()
-        return sum((getattr(x, self.field) for x in lines), zero)
+        return sum((bankers_round(getattr(x, self.field), 2) for x in lines), zero)
 
     @property
     def or_none(self):
