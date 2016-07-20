@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
+from shuup.admin.menu import CONTACTS_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls
@@ -19,7 +20,6 @@ from shuup.core.models import ContactGroup
 
 class ContactGroupModule(AdminModule):
     name = _("Contact Groups")
-    category = _("Contacts")
     breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:contact-group.list")
 
     def get_urls(self):
@@ -43,7 +43,8 @@ class ContactGroupModule(AdminModule):
                 text=self.name,
                 icon="fa fa-asterisk",
                 url="shuup_admin:contact-group.list",
-                category=self.category
+                category=CONTACTS_MENU_CATEGORY,
+                ordering=2
             ),
         ]
 

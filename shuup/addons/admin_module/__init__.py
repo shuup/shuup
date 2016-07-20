@@ -8,6 +8,7 @@
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
+from shuup.admin.menu import ADDONS_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url
 from shuup.core.models import Shop
@@ -15,7 +16,6 @@ from shuup.core.models import Shop
 
 class AddonModule(AdminModule):
     name = _("Addons")
-    category = name
     breadcrumbs_menu_entry = MenuEntry(text=name, url="shuup_admin:addon.list")
 
     def get_urls(self):
@@ -46,16 +46,13 @@ class AddonModule(AdminModule):
             ),
         ]
 
-    def get_menu_category_icons(self):
-        return {self.category: "fa fa-puzzle-piece"}
-
     def get_menu_entries(self, request):
         return [
             MenuEntry(
                 text=_("Addons"),
                 icon="fa fa-puzzle-piece",
                 url="shuup_admin:addon.list",
-                category=self.category
+                category=ADDONS_MENU_CATEGORY
             )
         ]
 

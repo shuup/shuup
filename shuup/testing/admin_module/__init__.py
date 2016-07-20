@@ -7,9 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.utils.translation import ugettext_lazy as _
-
 from shuup.admin.base import AdminModule, MenuEntry
+from shuup.admin.menu import SETTINGS_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url
 from shuup.core.models import Shop
@@ -30,7 +29,7 @@ class TestingAdminModule(AdminModule):
         return [
             MenuEntry(
                 text="Create Mock Objects",
-                category=_("System"),
+                category=SETTINGS_MENU_CATEGORY,
                 url="shuup_admin:mocker",
                 icon="fa fa-star"
             )

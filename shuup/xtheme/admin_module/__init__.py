@@ -12,6 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 from django_jinja.backend import Jinja2
 
 from shuup.admin.base import AdminModule, MenuEntry, Notification
+from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url
 from shuup.xtheme._theme import get_current_theme
@@ -26,7 +27,7 @@ class XthemeAdminModule(AdminModule):
     Allows theme activation/deactivation and further configuration.
     """
     name = _("Shuup Extensible Theme Engine")
-    breadcrumbs_menu_entry = MenuEntry(_("Themes"), "shuup_admin:xtheme.config")
+    breadcrumbs_menu_entry = MenuEntry(_("Themes"), "shuup_admin:xtheme.config", category=STOREFRONT_MENU_CATEGORY)
 
     def get_urls(self):  # doccov: ignore
         return [
@@ -44,15 +45,13 @@ class XthemeAdminModule(AdminModule):
             )
         ]
 
-    def get_menu_category_icons(self):
-        return {self.name: "fa fa-paint-brush"}
-
     def get_menu_entries(self, request):  # doccov: ignore
         return [
             MenuEntry(
                 text=_("Themes"), icon="fa fa-paint-brush",
                 url="shuup_admin:xtheme.config",
-                category=self.name
+                category=STOREFRONT_MENU_CATEGORY,
+                ordering=1
             )
         ]
 

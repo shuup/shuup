@@ -10,6 +10,7 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
+from shuup.admin.menu import CONTACTS_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url, derive_model_url, get_model_url
 from shuup.core.models import CompanyContact, Contact, PersonContact
@@ -17,8 +18,7 @@ from shuup.core.models import CompanyContact, Contact, PersonContact
 
 class ContactModule(AdminModule):
     name = _("Contacts")
-    category = name
-    breadcrumbs_menu_entry = MenuEntry(text=name, url="shuup_admin:contact.list")
+    breadcrumbs_menu_entry = MenuEntry(text=name, url="shuup_admin:contact.list", category=CONTACTS_MENU_CATEGORY)
 
     def get_urls(self):
         return [
@@ -55,14 +55,12 @@ class ContactModule(AdminModule):
             ),
         ]
 
-    def get_menu_category_icons(self):
-        return {self.category: "fa fa-users"}
-
     def get_menu_entries(self, request):
         return [
             MenuEntry(
                 text=_("Contacts"), icon="fa fa-users",
-                url="shuup_admin:contact.list", category=self.category
+                url="shuup_admin:contact.list", category=CONTACTS_MENU_CATEGORY,
+                ordering=1
             )
         ]
 
@@ -84,7 +82,7 @@ class ContactModule(AdminModule):
                 relevance = 100 - i
                 yield SearchResult(
                     text=six.text_type(contact), url=get_model_url(contact),
-                    category=self.category, relevance=relevance
+                    category=_("Contacts"), relevance=relevance
                 )
 
     def get_model_url(self, object, kind):

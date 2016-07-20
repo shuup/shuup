@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-12 00:44+0000\n"
+"POT-Creation-Date: 2016-07-20 22:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
-"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
@@ -31,21 +31,18 @@ msgstr ""
 msgid "New file name?"
 msgstr ""
 
-#, javascript-format
+#, c-format
 msgid "Are you sure you want to delete the file %s?"
 msgstr ""
 
 msgid "New folder name?"
 msgstr ""
 
-#, javascript-format
+#, c-format
 msgid "Are you sure you want to delete the %s folder?"
 msgstr ""
 
 msgid "New folder"
-msgstr ""
-
-msgid "current"
 msgstr ""
 
 msgid "Oldest first"
@@ -95,7 +92,7 @@ msgstr ""
 msgid "Delete folder"
 msgstr ""
 
-#, javascript-format
+#, c-format
 msgid "Order %s created."
 msgstr ""
 
@@ -280,7 +277,7 @@ msgid ""
 "customer first."
 msgstr ""
 
-#, javascript-format
+#, c-format
 msgid "All prices are in %s currency."
 msgstr ""
 
@@ -335,7 +332,7 @@ msgstr ""
 msgid "Identifier"
 msgstr ""
 
-#, javascript-format
+#, c-format
 msgid "Value %s Name"
 msgstr ""
 
@@ -381,20 +378,20 @@ msgstr ""
 msgid "The results could not be loaded"
 msgstr ""
 
-#, javascript-format
+#, c-format
 msgid "Please delete %s character"
 msgid_plural "Please delete %s characters"
 msgstr[0] ""
 msgstr[1] ""
 
-#, javascript-format
+#, c-format
 msgid "Please enter %s or more characters"
 msgstr ""
 
 msgid "Loading more results..."
 msgstr ""
 
-#, javascript-format
+#, c-format
 msgid "You can only select %s item"
 msgid_plural "You can only select %s items"
 msgstr[0] ""
@@ -439,7 +436,7 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-#, javascript-format
+#, c-format
 msgid "Filter by %s"
 msgstr ""
 

@@ -13,6 +13,7 @@ from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry, Notification, SearchResult
+from shuup.admin.menu import ORDERS_MENU_CATEGORY
 from shuup.admin.utils.permissions import (
     get_default_model_permissions, get_permissions_from_urls
 )
@@ -89,17 +90,14 @@ class OrderModule(AdminModule):
             ),
         ]
 
-    def get_menu_category_icons(self):
-        return {self.name: "fa fa-inbox"}
-
     def get_menu_entries(self, request):
-        category = _("Orders")
         return [
             MenuEntry(
                 text=_("Orders"),
                 icon="fa fa-inbox",
                 url="shuup_admin:order.list",
-                category=category,
+                category=ORDERS_MENU_CATEGORY,
+                ordering=1,
                 aliases=[_("Show orders")]
             ),
         ]

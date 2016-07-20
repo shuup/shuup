@@ -32,6 +32,7 @@ Localization
 Admin
 ~~~~~
 
+- Reorganize main menu
 - Show customer comment on order detail page
 - Redirect to order detail page on order submission
 - Make contact views extendable

@@ -16,6 +16,7 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.currencybound import CurrencyBound
 from shuup.admin.dashboard import DashboardMoneyBlock
+from shuup.admin.menu import ORDERS_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url
 from shuup.front.models.stored_basket import StoredBasket
@@ -78,13 +79,12 @@ class CartAdminModule(CurrencyBound, AdminModule):
         return get_default_model_permissions(StoredBasket)
 
     def get_menu_entries(self, request):
-        category = _("Carts")
         return [
             MenuEntry(
                 text=_("Carts"),
                 icon="fa fa-shopping-cart",
                 url="shuup_admin:cart.list",
-                category=category,
+                category=ORDERS_MENU_CATEGORY,
                 aliases=[_("Show carts")]
             ),
         ]
