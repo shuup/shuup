@@ -124,6 +124,9 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
+msgid "Save as a copy"
+msgstr ""
+
 #, python-format
 msgid "%(count)s member added"
 msgid_plural "%(count)s members added"
