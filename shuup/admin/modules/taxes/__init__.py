@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
+from shuup.admin.menu import SETTINGS_MENU_CATEGORY
 from shuup.admin.utils.permissions import (
     get_default_model_permissions, get_permissions_from_urls
 )
@@ -19,7 +20,6 @@ from shuup.core.models import CustomerTaxGroup, Tax, TaxClass
 
 class TaxModule(AdminModule):
     name = _("Taxes")
-    category = name
 
     def get_urls(self):
         # TODO: Add url for tax dashboard?
@@ -43,25 +43,26 @@ class TaxModule(AdminModule):
         )
         return tax_urls + tax_group_urls + tax_class_urls
 
-    def get_menu_category_icons(self):
-        return {self.category: "fa fa-pie-chart"}
-
     def get_menu_entries(self, request):
+        category = SETTINGS_MENU_CATEGORY
         return [
             MenuEntry(
                 text=_("Taxes"), icon="fa fa-pie-chart",
                 url="shuup_admin:tax.list",
-                category=self.category
+                category=category,
+                ordering=7
             ),
             MenuEntry(
                 text=_("Customer Tax Groups"), icon="fa fa-pie-chart",
                 url="shuup_admin:customer_tax_group.list",
-                category=self.category
+                category=category,
+                ordering=5
             ),
             MenuEntry(
                 text=_("Tax Classes"), icon="fa fa-pie-chart",
                 url="shuup_admin:tax_class.list",
-                category=self.category
+                category=category,
+                ordering=6
             )
         ]
 

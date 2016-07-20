@@ -111,7 +111,7 @@ def test_menu_entries(rf, admin_user):
         categories = get_menu_entry_categories(request)
         assert categories
 
-        test_category_menu_entries = categories.get("Test")
+        test_category_menu_entries = [cat for cat in categories if cat.name == "Test"][0]
         assert any(me.text == "OK" for me in test_category_menu_entries)
 
 

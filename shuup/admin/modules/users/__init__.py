@@ -11,13 +11,13 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
+from shuup.admin.menu import SETTINGS_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url, derive_model_url, get_model_url
 
 
 class UserModule(AdminModule):
     name = _("Users")
-    category = _("Contacts")
     breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:user.list")
 
     def get_urls(self):
@@ -63,16 +63,14 @@ class UserModule(AdminModule):
             ),
         ]
 
-    def get_menu_category_icons(self):
-        return {self.category: "fa fa-users"}
-
     def get_menu_entries(self, request):
         return [
             MenuEntry(
                 text=_("Users"),
                 icon="fa fa-users",
                 url="shuup_admin:user.list",
-                category=self.category
+                category=SETTINGS_MENU_CATEGORY,
+                ordering=1
             )
         ]
 
@@ -88,7 +86,7 @@ class UserModule(AdminModule):
                 yield SearchResult(
                     text=six.text_type(user),
                     url=get_model_url(user),
-                    category=self.category,
+                    category=_("Contacts"),
                     relevance=relevance
                 )
 

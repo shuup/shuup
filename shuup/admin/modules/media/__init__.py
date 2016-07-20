@@ -9,6 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from filer.models import File
 
 from shuup.admin.base import AdminModule, MenuEntry
+from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url
 
@@ -31,19 +32,16 @@ class MediaModule(AdminModule):
             ),
         ]
 
-    def get_menu_category_icons(self):
-        return {self.name: "fa fa-image"}
-
     def get_required_permissions(self):
         return get_default_model_permissions(File)
 
     def get_menu_entries(self, request):
-        category = _("Media")
         return [
             MenuEntry(
                 text=_("Media browser"),
                 icon="fa fa-folder-open",
                 url="shuup_admin:media.browse",
-                category=category
+                category=STOREFRONT_MENU_CATEGORY,
+                ordering=2
             ),
         ]

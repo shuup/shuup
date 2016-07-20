@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
+from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shuup.simple_cms.models import Page
@@ -27,16 +28,12 @@ class SimpleCMSAdminModule(AdminModule):
             permissions=get_default_model_permissions(Page)
         )
 
-    def get_menu_category_icons(self):
-        return {self.name: "fa fa-pencil-square-o"}
-
     def get_menu_entries(self, request):
-        category = _("Simple CMS")
         return [
             MenuEntry(
                 text=_("Pages"), icon="fa fa-file-text",
                 url="shuup_admin:simple_cms.page.list",
-                category=category, aliases=[_("Show pages")]
+                category=STOREFRONT_MENU_CATEGORY, ordering=3, aliases=[_("Show pages")]
             )
         ]
 

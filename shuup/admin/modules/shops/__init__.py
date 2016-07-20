@@ -11,6 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from filer.models import File
 
 from shuup.admin.base import AdminModule, MenuEntry
+from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shuup.core.models import Shop
@@ -29,13 +30,13 @@ class ShopModule(AdminModule):
         )
 
     def get_menu_entries(self, request):
-        category = _("System")  # NB: To clutter the menu a little less, shops live under System
         return [
             MenuEntry(
                 text=self.name,
                 icon="fa fa-house",
                 url="shuup_admin:shop.list",
-                category=category
+                category=STOREFRONT_MENU_CATEGORY,
+                ordering=4
             ),
         ]
 

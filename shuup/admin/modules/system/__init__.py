@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry, Notification
+from shuup.admin.menu import SETTINGS_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url
 from shuup.core.models import Shop
@@ -20,7 +21,6 @@ from shuup.core.telemetry import (
 
 class SystemModule(AdminModule):
     name = _("System")
-    category = name
 
     def get_urls(self):
         return [
@@ -32,14 +32,11 @@ class SystemModule(AdminModule):
             ),
         ]
 
-    def get_menu_category_icons(self):
-        return {self.category: "fa fa-wrench"}
-
     def get_menu_entries(self, request):
         return [e for e in [
             MenuEntry(
                 text=_("Telemetry"), icon="fa fa-tachometer", url="shuup_admin:telemetry",
-                category=self.category
+                category=SETTINGS_MENU_CATEGORY
             ) if is_telemetry_enabled() else None,
         ] if e]
 

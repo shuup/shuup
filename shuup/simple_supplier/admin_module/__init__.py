@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
+from shuup.admin.menu import PRODUCTS_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url
 from shuup.simple_supplier.models import StockAdjustment
@@ -17,7 +18,6 @@ from shuup.simple_supplier.models import StockAdjustment
 
 class StocksAdminModule(AdminModule):
     name = _("Stock management")
-    category = _("Products")
 
     def get_urls(self):
         return [
@@ -34,16 +34,16 @@ class StocksAdminModule(AdminModule):
             ),
         ]
 
-    def get_menu_category_icons(self):
-        return {self.name: "fa fa-cubes"}
-
     def get_required_permissions(self):
         return get_default_model_permissions(StockAdjustment)
 
     def get_menu_entries(self, request):
         return [
             MenuEntry(
-                text=self.name, icon="fa fa-cubes",
-                url="shuup_admin:simple_supplier.stocks", category=self.category
+                text=self.name,
+                icon="fa fa-cubes",
+                url="shuup_admin:simple_supplier.stocks",
+                category=PRODUCTS_MENU_CATEGORY,
+                ordering=6
             )
         ]

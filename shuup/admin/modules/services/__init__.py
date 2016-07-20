@@ -11,6 +11,7 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
+from shuup.admin.menu import SETTINGS_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls
@@ -26,6 +27,7 @@ class ServiceModule(AdminModule):
     view_template = None
     name_template = None
     menu_entry_url = None
+    menu_ordering = 999999
     url_name_prefix = None
 
     def get_urls(self):
@@ -49,7 +51,8 @@ class ServiceModule(AdminModule):
             MenuEntry(
                 text=self.name,
                 url=self.menu_entry_url,
-                category=self.category
+                category=SETTINGS_MENU_CATEGORY,
+                ordering=self.menu_ordering
             )
         ]
 
@@ -67,6 +70,7 @@ class ShippingMethodModule(ServiceModule):
     view_template = "shuup.admin.modules.services.views.ShippingMethod%sView"
     name_template = "shipping_methods.%s"
     menu_entry_url = "shuup_admin:shipping_methods.list"
+    menu_ordering = 3
     url_name_prefix = "shuup_admin:shipping_methods"
 
     breadcrumbs_menu_entry = MenuEntry(text=name, url="shuup_admin:shipping_methods.list")
@@ -79,6 +83,7 @@ class PaymentMethodModule(ServiceModule):
     view_template = "shuup.admin.modules.services.views.PaymentMethod%sView"
     name_template = "payment_methods.%s"
     menu_entry_url = "shuup_admin:payment_methods.list"
+    menu_ordering = 4
     url_name_prefix = "shuup_admin:payment_methods"
 
     breadcrumbs_menu_entry = MenuEntry(text=name, url="shuup_admin:payment_methods.list")

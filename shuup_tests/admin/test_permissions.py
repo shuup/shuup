@@ -51,7 +51,7 @@ def test_permissions_for_menu_entries(rf, admin_user):
         assert categories
 
         # Make sure category is displayed if user has correct permissions
-        test_category_menu_entries = categories.get("RestrictedTest")
+        test_category_menu_entries = [cat for cat in categories if cat.name == "RestrictedTest"][0]
         assert any(me.text == "OK" for me in test_category_menu_entries)
 
         # No menu items should be displayed if user has no permissions

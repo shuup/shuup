@@ -1,6 +1,6 @@
 <div class="scroll-inner-content">
     <ul class="menu-list">
-        {% for category in shuup_admin.get_menu_entry_categories().values() %}
+        {% for category in shuup_admin.get_menu_entry_categories() %}
         {% set only_entry = (category.entries|first if category.entries|length == 1 else None) %}
         <li>
             {% if not only_entry %}

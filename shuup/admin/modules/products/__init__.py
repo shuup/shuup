@@ -16,6 +16,7 @@ from django.utils.translation import ugettext_lazy as _
 from filer.models import File
 
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
+from shuup.admin.menu import PRODUCTS_MENU_CATEGORY
 from shuup.admin.utils.permissions import (
     get_default_model_permissions, get_permissions_from_urls
 )
@@ -67,17 +68,14 @@ class ProductModule(AdminModule):
             permissions=get_default_model_permissions(Product),
         )
 
-    def get_menu_category_icons(self):
-        return {self.name: "fa fa-cube"}
-
     def get_menu_entries(self, request):
-        category = _("Products")
         return [
             MenuEntry(
                 text=_("Products"),
                 icon="fa fa-cube",
                 url="shuup_admin:product.list",
-                category=category
+                category=PRODUCTS_MENU_CATEGORY,
+                ordering=1
             )
         ]
 

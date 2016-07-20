@@ -9,13 +9,13 @@ from django.contrib.auth.models import Group as PermissionGroup
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
+from shuup.admin.menu import CONTACTS_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 
 
 class PermissionGroupModule(AdminModule):
     name = _("Permission Groups")
-    category = _("Permission Groups")
     breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:permission_groups.list")
 
     def get_urls(self):
@@ -26,16 +26,14 @@ class PermissionGroupModule(AdminModule):
             permissions=get_default_model_permissions(PermissionGroup),
         )
 
-    def get_menu_category_icons(self):
-        return {self.category: "fa fa-users"}
-
     def get_menu_entries(self, request):
         return [
             MenuEntry(
                 text=self.name,
                 icon="fa fa-users",
                 url="shuup_admin:permission_groups.list",
-                category=_("Contacts")
+                category=CONTACTS_MENU_CATEGORY,
+                ordering=3
             )
         ]
 

@@ -122,11 +122,12 @@ class Resolvable(object):
 
 
 class MenuEntry(Resolvable):
-    def __init__(self, text, url, icon=None, category=None, aliases=()):
+    def __init__(self, text, url, icon=None, category=None, ordering=99999, aliases=()):
         self.text = text
         self._url = url
         self.icon = icon
         self.category = category
+        self.ordering = ordering
         self.aliases = tuple(aliases)
 
     def get_search_query_texts(self):

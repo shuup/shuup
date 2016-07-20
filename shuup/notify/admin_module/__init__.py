@@ -14,6 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
 
 from shuup.admin.base import AdminModule, MenuEntry, Notification
+from shuup.admin.menu import SETTINGS_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls
@@ -55,16 +56,12 @@ class NotifyAdminModule(AdminModule):
             permissions=permissions
         )
 
-    def get_menu_category_icons(self):
-        return {self.name: "fa fa-envelope-o"}
-
     def get_menu_entries(self, request):
-        category = _("Notifications")
         return [
             MenuEntry(
-                text=_("Notification scripts"), icon="fa fa-code",
+                text=_("Notifications"), icon="fa fa-code",
                 url="shuup_admin:notify.script.list",
-                category=category, aliases=[_("Show notification scripts")]
+                category=SETTINGS_MENU_CATEGORY, ordering=9, aliases=[_("Show notification scripts")]
             )
         ]
 

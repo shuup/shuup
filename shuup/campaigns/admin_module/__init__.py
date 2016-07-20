@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
+from shuup.admin.menu import CAMPAIGNS_MENU_CATEGORY
 from shuup.admin.utils.permissions import (
     get_default_model_permissions, get_permissions_from_urls
 )
@@ -46,22 +47,22 @@ class CampaignAdminModule(AdminModule):
         return {self.name: "fa fa-bullhorn"}
 
     def get_menu_entries(self, request):
-        category = self.name
+        category = CAMPAIGNS_MENU_CATEGORY
         return [
             MenuEntry(
                 text=_("Catalog Campaigns"), icon="fa fa-file-text",
                 url="shuup_admin:catalog_campaigns.list",
-                category=category, aliases=[_("Show Catalog Campaigns")]
+                category=category, ordering=1, aliases=[_("Show Catalog Campaigns")]
             ),
             MenuEntry(
                 text=_("Basket Campaigns"), icon="fa fa-file-text",
                 url="shuup_admin:basket_campaigns.list",
-                category=category, aliases=[_("Show Basket Campaigns")]
+                category=category, ordering=2, aliases=[_("Show Basket Campaigns")]
             ),
             MenuEntry(
                 text=_("Coupons"), icon="fa fa-file-text",
                 url="shuup_admin:coupons.list",
-                category=category, aliases=[_("Show Coupons")]
+                category=category, ordering=3, aliases=[_("Show Coupons")]
             )
         ]
 

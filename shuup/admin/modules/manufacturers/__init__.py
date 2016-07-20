@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
+from shuup.admin.menu import PRODUCTS_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shuup.core.models import Manufacturer
@@ -28,13 +29,13 @@ class ManufacturerModule(AdminModule):
         )
 
     def get_menu_entries(self, request):
-        category = _("Products")
         return [
             MenuEntry(
                 text=_("Manufacturers"),
                 icon="fa fa-building",
                 url="shuup_admin:manufacturers.list",
-                category=category
+                category=PRODUCTS_MENU_CATEGORY,
+                ordering=4
             ),
         ]
 
