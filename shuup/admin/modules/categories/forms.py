@@ -78,9 +78,14 @@ class CategoryProductForm(forms.Form):
     @atomic
     def save(self):
         data = self.cleaned_data
+        is_visible = self.category.status == CategoryStatus.VISIBLE
+        visibility_groups = self.category.visibility_groups.all()
         primary_product_ids = [int(product_id) for product_id in data.get("primary_products", [])]
         for shop_product in ShopProduct.objects.filter(shop_id=self.shop.id, product_id__in=primary_product_ids):
             shop_product.primary_category = self.category
+            shop_product.visible = is_visible
+            shop_product.visibility_limit = self.category.visibility.value
+            shop_product.visibility_groups = visibility_groups
             shop_product.save()
             shop_product.categories.add(self.category)
             if data.get("update_product_category", False):

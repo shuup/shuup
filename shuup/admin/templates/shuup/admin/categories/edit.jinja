@@ -11,7 +11,30 @@
         </form>
     {% endcall %}
 {% endblock %}
-
 {% block extra_js %}
     <script src="{{ static("shuup_admin/js/remarkable.js") }}"></script>
+    <script>
+        function copyVisibilityToProducts(event, $el){
+            event.preventDefault();
+            $el.attr("disabled", true);
+            $.ajax({
+                type: "POST",
+                url: "{{ url('shuup_admin:category.copy_visibility', pk=category.pk) }}",
+                data: {csrfmiddlewaretoken: window.ShuupAdminConfig.csrf},
+                success: function(msg) {
+                    window.Messages.enqueue({tags: "info", text: msg.message});
+                },
+                error: function(response) {
+                    var message = _("An unexpected error has occurred.");
+                    if(response.responseJSON && response.responseJSON.message){
+                        message = response.responseJSON.message;
+                    }
+                    window.Messages.enqueue({tags: "error", text: message});
+                },
+                complete: function(){
+                    $el.attr("disabled", false);
+                }
+            });
+        }
+    </script>
 {% endblock %}

@@ -32,6 +32,7 @@ Localization
 Admin
 ~~~~~
 
+- Add ability to copy category visibility settings to products
 - Reorganize main menu
 - Show customer comment on order detail page
 - Redirect to order detail page on order submission
