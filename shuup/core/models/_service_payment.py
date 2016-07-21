@@ -176,4 +176,3 @@ class CustomPaymentProcessor(PaymentProcessor):
                     payment_identifier="Cash-%s" % now().isoformat(),
                     description="Cash Payment"
                 )
-        super(CustomPaymentProcessor, self).process_payment_return_request(service, order, request)

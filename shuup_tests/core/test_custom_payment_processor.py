@@ -25,7 +25,7 @@ from shuup.testing.factories import (
 @pytest.mark.django_db
 @pytest.mark.parametrize('choice_identifier, expected_payment_status', [
     ('cash', PaymentStatus.FULLY_PAID),
-    ('manual', PaymentStatus.DEFERRED)
+    ('manual', PaymentStatus.NOT_PAID)
 ])
 def test_custom_payment_processor_cash_service(choice_identifier, expected_payment_status):
     shop = get_default_shop()

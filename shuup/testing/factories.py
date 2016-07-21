@@ -46,6 +46,7 @@ from shuup.utils.filer import filer_image_from_data
 from shuup.utils.money import Money
 
 from .image_generator import generate_image
+from .models import PaymentWithCheckoutPhase
 
 DEFAULT_IDENTIFIER = "default"
 DEFAULT_NAME = "Default"
@@ -297,6 +298,10 @@ def get_default_tax_class():
 
 def get_custom_payment_processor():
     return _get_service_provider(CustomPaymentProcessor)
+
+
+def get_payment_processor_with_checkout_phase():
+    return _get_service_provider(PaymentWithCheckoutPhase)
 
 
 def get_custom_carrier():
