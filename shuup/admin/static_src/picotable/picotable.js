@@ -217,6 +217,7 @@ const Picotable = (function(m, storage) {
         var setFilterValueFromSelect = function() {
             var valueJS = JSON.parse(this.value);
             ctrl.setFilterValue(col.id, valueJS);
+            ctrl.refreshSoon();
         };
         var select = m("select.form-control", {
             value: JSON.stringify(value),
@@ -252,6 +253,7 @@ const Picotable = (function(m, storage) {
             }
             filterObj[which] = newValue;
             ctrl.setFilterValue(col.id, filterObj);
+            ctrl.refreshSoon();
         };
         var attrs = {"type": col.filter.range.type || "text"};
         Util.map(["min", "max", "step"], function(key) {
@@ -285,14 +287,22 @@ const Picotable = (function(m, storage) {
     }
 
     function buildColumnTextFilter(ctrl, col, value) {
-        var setFilterValueFromInput = function() {
+        var setFilterValueFromInput = function(event) {
             ctrl.setFilterValue(col.id, this.value);
+            if(event.keyCode === 13 || !this.value) {
+                ctrl.refreshSoon();
+            }
         };
+        var refreshAfterFocusOut = function() {
+            ctrl.refreshSoon();
+        };
+
         var input = m("input.form-control", {
             type: col.filter.text.type || "text",
             value: Util.stringValue(value),
             placeholder: col.filter.placeholder || interpolate(gettext("Filter by %s"), [col.title]),
-            onchange: setFilterValueFromInput,
+            onkeyup: setFilterValueFromInput,
+            onfocusout: refreshAfterFocusOut,
             config: debounceChangeConfig(500)
         });
         return m("div.text-filter", input);
@@ -633,7 +643,6 @@ const Picotable = (function(m, storage) {
             filters[colId] = value;
             filters = Util.omitNulls(filters);
             ctrl.vm.filterValues(filters);
-            ctrl.refreshSoon();
         };
         ctrl.resetFilters = function() {
             ctrl.vm.filterValues({});
