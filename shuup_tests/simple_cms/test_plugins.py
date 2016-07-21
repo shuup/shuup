@@ -48,3 +48,15 @@ def test_page_links_plugin_show_all():
 
     plugin = PageLinksPlugin({"show_all_pages": True})
     assert page in plugin.get_context_data(context)["pages"]
+
+
+@pytest.mark.django_db
+def test_plugin_renders_absolute_links():
+    """
+    Test that the plugin renders only absolute links.
+    """
+    context = get_jinja_context()
+    page = create_page(eternal=True, visible_in_menu=True)
+    absolute_link = "/%s" % page.url
+    plugin = PageLinksPlugin({"show_all_pages": True})
+    assert absolute_link in plugin.render(context)
