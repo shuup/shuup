@@ -93,6 +93,8 @@ Discount Pricing
 Simple CMS
 ~~~~~~~~~~
 
+- Fix plugin links
+
 Default Tax
 ~~~~~~~~~~~
 
