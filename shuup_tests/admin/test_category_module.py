@@ -10,10 +10,17 @@ from django.db import transaction
 from django.test import override_settings
 
 from shuup.admin.modules.categories import CategoryModule
-from shuup.admin.modules.categories.views import CategoryEditView
-from shuup.admin.modules.categories.forms import CategoryBaseForm, CategoryProductForm
+from shuup.admin.modules.categories.forms import (
+    CategoryBaseForm, CategoryProductForm
+)
+from shuup.admin.modules.categories.views import (
+    CategoryCopyVisibilityView, CategoryEditView
+)
 from shuup.core.models import Category, CategoryStatus, CategoryVisibility
-from shuup.testing.factories import CategoryFactory, get_default_shop, get_default_category, create_product
+from shuup.testing.factories import (
+    CategoryFactory, create_product, get_default_category,
+    get_default_customer_group, get_default_shop
+)
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import empty_iterable
 from shuup_tests.utils.forms import get_form_data
@@ -52,7 +59,10 @@ def test_category_form_saving(rf):
 def test_products_form_add():
     shop = get_default_shop()
     category = get_default_category()
+    category.visibility = CategoryVisibility.VISIBLE_TO_LOGGED_IN
+    category.status = CategoryStatus.INVISIBLE
     category.shops.add(shop)
+    category.save()
     product = create_product("test_product", shop=shop)
     shop_product = product.get_shop_instance(shop)
     product_category = product.category
@@ -68,6 +78,8 @@ def test_products_form_add():
     product.refresh_from_db(())
     assert (shop_product.primary_category == category)
     assert (category in shop_product.categories.all())
+    assert (shop_product.visibility_limit.value == category.visibility.value)
+    assert (shop_product.visible == False)
     assert (product.category is None)
 
 
@@ -173,3 +185,28 @@ def test_category_create(rf, admin_user):
         assert response.status_code in [200, 302]
         assert Category.objects.count() == 1
         assert Category.objects.first().name == cat_name
+
+
+@pytest.mark.django_db
+def test_category_copy_visibility(rf, admin_user):
+    shop = get_default_shop()
+    group = get_default_customer_group()
+    category = get_default_category()
+    category.status = CategoryStatus.INVISIBLE
+    category.visibility = CategoryVisibility.VISIBLE_TO_GROUPS
+    category.shops.add(shop)
+    category.visibility_groups.add(group)
+    category.save()
+    product = create_product("test_product", shop=shop)
+    shop_product = product.get_shop_instance(shop)
+    shop_product.primary_category = category
+    shop_product.save()
+    view = CategoryCopyVisibilityView.as_view()
+    request = apply_request_middleware(rf.post("/"), user=admin_user)
+    response = view(request, pk=category.pk)
+    shop_product.refresh_from_db()
+    assert response.status_code == 200
+    assert shop_product.visible == False
+    assert shop_product.visibility_limit.value == category.visibility.value
+    assert shop_product.visibility_groups.count() == category.visibility_groups.count()
+    assert set(shop_product.visibility_groups.all()) == set(category.visibility_groups.all())

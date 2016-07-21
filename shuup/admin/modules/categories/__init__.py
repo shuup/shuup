@@ -14,7 +14,7 @@ from shuup.admin.base import AdminModule, MenuEntry, SearchResult
 from shuup.admin.menu import PRODUCTS_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import (
-    derive_model_url, get_edit_and_list_urls, get_model_url
+    admin_url, derive_model_url, get_edit_and_list_urls, get_model_url
 )
 from shuup.core.models import Category
 
@@ -25,7 +25,14 @@ class CategoryModule(AdminModule):
     breadcrumbs_menu_entry = MenuEntry(text=name, url="shuup_admin:category.list", category=PRODUCTS_MENU_CATEGORY)
 
     def get_urls(self):
-        return get_edit_and_list_urls(
+        return [
+            admin_url(
+                "^categories/(?P<pk>\d+)/copy-visibility/$",
+                "shuup.admin.modules.categories.views.CategoryCopyVisibilityView",
+                name="category.copy_visibility",
+                permissions=get_default_model_permissions(Category)
+            )
+        ] + get_edit_and_list_urls(
             url_prefix="^categories",
             view_template="shuup.admin.modules.categories.views.Category%sView",
             name_template="category.%s",

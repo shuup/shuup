@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-20 22:19+0000\n"
+"POT-Creation-Date: 2016-07-21 20:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
@@ -46,7 +46,7 @@ msgstr ""
 msgid "Campaigns"
 msgstr ""
 
-msgid "Store front"
+msgid "Storefront"
 msgstr ""
 
 msgid "Addons"
@@ -107,6 +107,13 @@ msgid "Remove Products"
 msgstr ""
 
 msgid "Remove selected products from this category"
+msgstr ""
+
+msgid "Invalid category"
+msgstr ""
+
+#, python-format
+msgid "Visibility settings copied to %d product(s)"
 msgstr ""
 
 msgid "Status"
@@ -298,9 +305,11 @@ msgstr ""
 msgid "Root"
 msgstr ""
 
+#, python-brace-format
 msgid "{num} subfolders moved to {folder}."
 msgstr ""
 
+#, python-brace-format
 msgid "{num} files moved to {folder}."
 msgstr ""
 
@@ -418,6 +427,7 @@ msgstr ""
 msgid "Unable to set order as completed at this point"
 msgstr ""
 
+#, python-brace-format
 msgid "Order status changed: {old_status} to {new_status}"
 msgstr ""
 
@@ -777,6 +787,7 @@ msgstr ""
 msgid "Edit %(model)s"
 msgstr ""
 
+#, python-brace-format
 msgid "Create {service_name}"
 msgstr ""
 
@@ -1039,6 +1050,9 @@ msgid "Log out"
 msgstr ""
 
 msgid "General Information"
+msgstr ""
+
+msgid "Copy visibility settings to products"
 msgstr ""
 
 msgid "Category Image"
@@ -1426,8 +1440,8 @@ msgstr ""
 
 #, python-format
 msgid ""
-"Telemetry data was last submitted at %(submission_datetime)s - (%"
-"(submission_timesince)s) ago"
+"Telemetry data was last submitted at %(submission_datetime)s - "
+"(%(submission_timesince)s) ago"
 msgstr ""
 
 msgid "See the data that was submitted."
