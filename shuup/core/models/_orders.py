@@ -622,6 +622,7 @@ class Order(MoneyPropped, models.Model):
 
         self.cache_prices()
         self.save()
+        self.update_shipping_status()
         refund_created.send(sender=type(self), order=self, refund_lines=refund_lines)
 
     def create_full_refund(self, restock_products=False):
