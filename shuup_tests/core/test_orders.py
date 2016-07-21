@@ -404,6 +404,7 @@ def test_refund_with_shipment(restock):
     # Shipment should decrease physical count by 2, logical by none
     order.create_shipment({product_line.product: 2}, supplier=supplier)
     check_stock_counts(supplier, product, physical=8, logical=6)
+    assert order.shipping_status ==  ShippingStatus.PARTIALLY_SHIPPED
 
     # Check correct refunded quantities
     assert not product_line.refunded_quantity
@@ -412,6 +413,7 @@ def test_refund_with_shipment(restock):
     check_stock_counts(supplier, product, physical=8, logical=6)
     order.create_refund([{"line": product_line, "quantity": 3, "restock_products": restock}])
     assert product_line.refunded_quantity == 3
+    assert order.shipping_status == ShippingStatus.FULLY_SHIPPED
     if restock:
         check_stock_counts(supplier, product, physical=10, logical=8)
     else:
