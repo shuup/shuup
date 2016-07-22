@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Make payments for `CustomPaymentProcessor` not paid by default
 - Fix shipping status for orders with refunds
 - Fix bug in order total price rounding
 - Fix bug with duplicates in `Product.objects.list_visible()`

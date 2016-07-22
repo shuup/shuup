@@ -16,10 +16,10 @@ from shuup.core.models import (
     WaivingCostBehaviorComponent, WeightLimitsBehaviorComponent
 )
 from shuup.testing.factories import (
-    create_empty_order, create_product, get_address,
+    create_empty_order, create_order_with_product, create_product, get_address,
     get_custom_payment_processor, get_default_product, get_default_shop,
     get_default_supplier, get_default_tax_class, get_payment_method,
-    get_shipping_method
+    get_payment_processor_with_checkout_phase, get_shipping_method
 )
 from shuup.testing.models import ExpensiveSwedenBehaviorComponent
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
@@ -269,26 +269,40 @@ def test_source_lines_with_multiple_fixed_costs():
     assert len(lines) == 2
     assert get_total_price_value(lines) == Decimal("26")
 
-
 @pytest.mark.django_db
-def test_process_payment_return_request(rf):
+@pytest.mark.parametrize('get_payment_processor, expected_final_payment_status', [
+    (get_custom_payment_processor, PaymentStatus.NOT_PAID),
+    (get_payment_processor_with_checkout_phase, PaymentStatus.DEFERRED)
+])
+def test_process_payment_return_request(rf, get_payment_processor, expected_final_payment_status):
     """
     Order payment with default payment method with ``CustomPaymentProcessor``
-    should be deferred.
+    provider should remain NOT_PAID.
+
+    Order payment with default payment method with ``PaymentWithCheckoutPhase``
+    provider should become DEFERRED.
 
     Payment can't be processed if method doesn't have provider or provider
     is not enabled or payment method is not enabled.
     """
+    payment_processor = get_payment_processor()
     pm = PaymentMethod.objects.create(
         shop=get_default_shop(), name="Test method", enabled=False, tax_class=get_default_tax_class())
-    order = create_empty_order()
+    product = create_product(sku="test-sku", shop=get_default_shop(), default_price=100)
+    order = create_order_with_product(
+        product=product,
+        supplier=get_default_supplier(),
+        quantity=1,
+        taxless_base_unit_price=Decimal('5.55'),
+        shop=get_default_shop()
+    )
     order.payment_method = pm
     order.save()
     assert order.payment_status == PaymentStatus.NOT_PAID
     with pytest.raises(ValueError):  # Can't process payment with unusable method
         order.payment_method.process_payment_return_request(order, rf.get("/"))
     assert order.payment_status == PaymentStatus.NOT_PAID
-    pm.payment_processor = get_custom_payment_processor()
+    pm.payment_processor = payment_processor
     pm.payment_processor.enabled = False
     pm.save()
 
@@ -304,8 +318,10 @@ def test_process_payment_return_request(rf):
     pm.enabled = True
     pm.save()
 
+    # Add payment data for checkout phase
+    order.payment_data = {"input_value": True}
     order.payment_method.process_payment_return_request(order, rf.get("/"))
-    assert order.payment_status == PaymentStatus.DEFERRED
+    assert order.payment_status == expected_final_payment_status
 
 
 @pytest.mark.django_db
