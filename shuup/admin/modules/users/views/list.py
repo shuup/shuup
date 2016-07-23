@@ -38,7 +38,11 @@ class UserListView(PicotableListView):
         return get_user_model()
 
     def get_queryset(self):
-        return self.get_model().objects.all()
+        model = self.get_model()
+        qs = self.get_model().objects.all()
+        if "date_joined" in model._meta.get_all_field_names():
+            qs = qs.order_by("-date_joined")
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super(UserListView, self).get_context_data(**kwargs)
