@@ -34,6 +34,7 @@ Localization
 Admin
 ~~~~~
 
+- Fix customer, creator, and ordered by links on order detail page
 - Prevent picotable from reloading after every change
 - Add ability to copy category visibility settings to products
 - Reorganize main menu
