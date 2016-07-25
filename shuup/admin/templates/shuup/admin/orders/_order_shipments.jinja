@@ -1,0 +1,29 @@
+<div id="order-shipments">
+    <table class="table table-striped{% if not shipments %} hidden{% endif %}">
+        <thead>
+            <tr>
+                <th>{% trans %}Supplier{% endtrans %}</th>
+                <th>{% trans %}Status{% endtrans %}</th>
+                <th>{% trans %}Tracking Code{% endtrans %}</th>
+                <th>{% trans %}Description{% endtrans %}</th>
+                <th>{% trans %}Created{% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for shipment in shipments %}
+                <tr>
+                    <td>{{ shipment.supplier.name }}</td>
+                    <td>{{ shipment.status }}</td>
+                    <td>{{ shipment.tracking_code }}</td>
+                    <td>{{ shipment.description }}</td>
+                    <td>{{ shipment.created_on|datetime }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if not shipments %}
+        <div id="no-shipments-text">
+            <p>{% trans %}No shipments have been created yet.{% endtrans %}</p>
+        </div>
+    {% endif %}
+</div>
