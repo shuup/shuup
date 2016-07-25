@@ -38,7 +38,11 @@ class ContactListView(PicotableListView):
     def get_queryset(self):
         groups = self.get_filter().get("groups")
         query = Q(groups__in=groups) if groups else Q()
-        return super(ContactListView, self).get_queryset().filter(query).annotate(n_orders=Count("customer_orders"))
+        return (
+            super(ContactListView, self).get_queryset()
+            .filter(query)
+            .annotate(n_orders=Count("customer_orders"))
+            .order_by("-created_on"))
 
     def get_type_display(self, instance):
         if isinstance(instance, PersonContact):

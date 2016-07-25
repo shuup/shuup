@@ -34,6 +34,7 @@ Localization
 Admin
 ~~~~~
 
+- Show newest contacts and users first in admin list views
 - Show list of shipments in order view
 - Fix customer, creator, and ordered by links on order detail page
 - Prevent picotable from reloading after every change
