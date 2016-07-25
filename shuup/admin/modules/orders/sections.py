@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext as _
 
 from shuup.admin.base import Section
+from shuup.core.models import Shipment
 from shuup.core.models._orders import OrderLogEntry
 
 
@@ -61,3 +62,19 @@ class LogEntriesOrderSection(Section):
     def get_context_data(order):
         return OrderLogEntry.objects.filter(target=order).order_by("-created_on").all()[:12]
         # TODO: We're currently trimming to 12 entries, probably need pagination
+
+
+class ShipmentSection(Section):
+    identifier = "shipments"
+    name = _("Shipments")
+    icon = "fa-check-circle"
+    template = "shuup/admin/orders/_order_shipments.jinja"
+    order = 3
+
+    @staticmethod
+    def visible_for_object(order):
+        return True
+
+    @staticmethod
+    def get_context_data(order):
+        return Shipment.objects.filter(order=order).order_by("-created_on").all()
