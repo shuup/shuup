@@ -134,8 +134,56 @@ export function renderOrderLines(store, shop, lines) {
     }).compact().value();
 }
 
+var select2 = {
+    clear: function() {
+        if (select2.element) {
+            select2.element.select2("val", null);
+        }
+    },
+    view: function(ctrl, attrs) {
+        return m("select", {
+            config: select2.config(attrs), "data-model": "shuup.product"});
+    },
+    config: function(ctrl) {
+        return function(element, isInitialized) {
+            if(typeof jQuery !== "undefined" && typeof jQuery.fn.select2 !== "undefined") {
+                var el = $(element);
+                select2.element = el;
+                if (!isInitialized) {
+                    // This is needed to reset prop when going back from confirmation view
+                    productQuickSelect.currentProduct(null);
+                    el.select2()
+                        .on("change", function() {
+                            ctrl.onchange($(this).val());
+                        });
+                }
+            } else {
+                alert(gettext("Missing JavaScript dependencies detected"));
+            }
+        };
+    }
+};
+
+var productQuickSelect = {
+    clearSelection: function() {
+        productQuickSelect.currentProduct(null);
+        select2.clear();
+    },
+    currentProduct: m.prop(),
+    changeProduct: function(id) {
+        productQuickSelect.currentProduct(id);
+    },
+    view: function() {
+        return m.component(select2, {
+            onchange: this.changeProduct,
+        });
+    }
+};
+
 export function orderLinesView(store, isCreating) {
     const {lines, shop} = store.getState();
+    // This is needed to make select work when going back from confirmation view
+    store.dispatch(updateTotals(store.getState));
     return m("div", [
         m("p", gettext("If your product prices vary based on customer, you might want to select customer first.")),
         m("p", interpolate(gettext("All prices are in %s currency."), [shop.selected.currency])),
@@ -145,13 +193,45 @@ export function orderLinesView(store, isCreating) {
         ),
         m("div.list-group", renderOrderLines(store, shop.selected, lines)),
         m("hr"),
-        m("button.btn.text-success" + (isCreating ? ".disabled": ""), {
-            disabled: isCreating,
-            onclick: () => {
-                if(!isCreating) {
-                    store.dispatch(addLine());
-                }
-            }
-        }, m("i.fa.fa-plus"), " " + gettext("Add new line"))
+        m("div.row", [
+            m("div.col-sm-6",
+                m("button.btn.text-success" + (isCreating ? ".disabled": ""), {
+                    disabled: isCreating,
+                    onclick: () => {
+                        store.dispatch(addLine());
+                        var productId = productQuickSelect.currentProduct();
+                        if (productId){
+                            store.dispatch(retrieveProductData(
+                                {id: productId, forLine: _.last(store.getState().lines).id}
+                            ));
+                        }
+                    }
+                }, m("i.fa.fa-plus"), " " + gettext("Add new line"))
+            ),
+            m("div.col-sm-6", [
+                m("fieldset", [
+                    m("legend", gettext("Quick add product line")),
+                    productQuickSelect,
+                    m("button.btn.text-success" + (isCreating ? ".disabled": ""), {
+                        disabled: isCreating,
+                        onclick: () => {
+                            store.dispatch(addLine());
+                            var productId = productQuickSelect.currentProduct();
+                            if (productId){
+                                store.dispatch(retrieveProductData(
+                                    {id: productId, forLine: _.last(store.getState().lines).id}
+                                ));
+                            }
+                            productQuickSelect.clearSelection();
+                        }
+                    }, m("i.fa.fa-plus")),
+                    m("button.btn.text-success" + (isCreating ? ".disabled": ""), {
+                        disabled: isCreating,
+                        onclick: productQuickSelect.clearSelection,
+                    }, m("i.fa.fa-trash")),
+                    m("span.help-block", gettext("Search product by name, SKU, or barcode and press button to add product line.")),
+                ])
+            ]),
+        ]),
     ]);
 }
