@@ -27,6 +27,15 @@ class PriceDisplayOptions(object):
         self.include_taxes = include_taxes
         self.show_prices = show_prices
 
+    def set_option(self, option, value, caller=None):
+        if option == "include_taxes":
+            self.include_taxes = value
+        elif option == "show_prices":
+            self.show_prices = value
+        else:
+            raise ValueError("Invalid display option")
+        return ""
+
     @property
     def hide_prices(self):
         return not self.show_prices

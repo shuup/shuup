@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add `PriceDisplayOptions.set_option` method for modifying display options
 - Make payments for `CustomPaymentProcessor` not paid by default
 - Fix shipping status for orders with refunds
 - Fix bug in order total price rounding
