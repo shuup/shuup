@@ -34,6 +34,7 @@ Localization
 Admin
 ~~~~~
 
+- Add link to order line product detail page in order editor
 - Add product line quick add to order creator
 - Add product barcode field to searchable select2 fields
 - Filter out deleted products from Stock Management list view

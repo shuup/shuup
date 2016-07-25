@@ -32,6 +32,7 @@ function renderNumberCell(store, line, value, fieldId, canEditPrice, min=null) {
 export function renderOrderLines(store, shop, lines) {
     return _(lines).map((line) => {
         var text = line.text, canEditPrice = true;
+        var editCell = null;
         const showPrice = (line.type !== "text");
         if (line.type === "product") {
             text = m("a", {
@@ -110,6 +111,15 @@ export function renderOrderLines(store, shop, lines) {
                 renderNumberCell(store, line, line.total, "total", canEditPrice)
             ])
         ];
+        if (line.type === "product" && line.product ){
+            editCell = m("div.line-cell.edit",
+                m("button.btn.btn-sm.text-info", {
+                    onclick: function(e) {
+                        e.preventDefault();
+                        window.open(line.product.url, "_blank");
+                    }
+                }, m("i.fa.fa-edit")));
+        }
         return m("div.list-group-item", [
             m("div.cells", [
                 m("div.line-cell.line-type-select", [
@@ -120,6 +130,7 @@ export function renderOrderLines(store, shop, lines) {
                     }, LINE_TYPES)
                 ]),
                 m("div.line-cell", text),
+                editCell,
                 (showPrice ? (line.type === "product" ? productPriceCells : priceCells) : null),
                 m("div.line-cell.delete",
                     m("button.btn.btn-sm.text-danger", {
