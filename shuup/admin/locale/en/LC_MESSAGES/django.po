@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-25 14:17+0000\n"
+"POT-Creation-Date: 2016-07-26 00:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1343,6 +1343,14 @@ msgid "File "
 msgstr ""
 
 msgid "Package Products"
+msgstr ""
+
+#, python-format
+msgid "Logical count: %(logical_count)s %(sales_unit)s"
+msgstr ""
+
+#, python-format
+msgid "Physical count: %(physical_count)s %(sales_unit)s"
 msgstr ""
 
 msgid "This product is not yet a package."

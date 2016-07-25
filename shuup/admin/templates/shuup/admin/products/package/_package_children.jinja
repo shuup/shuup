@@ -21,6 +21,19 @@
                         {% if child_form.DELETE and child_form.initial.child %}{{ bs3.field(child_form.DELETE) }}{% endif %}
                     </div>
                 </div>
+                {% for supplier, stock_status, sales_deciamls, sales_unit in child_form.get_stock_statuses().values() %}
+                    <strong>{{ supplier.name }}:</strong>
+                    <span>
+                    {% trans logical_count=stock_status.logical_count|floatformat(sales_deciamls), sales_unit=sales_unit -%}
+                        Logical count: {{ logical_count }} {{ sales_unit }}
+                    {%- endtrans %}
+                    </span>
+                    <span>
+                    {% trans physical_count=stock_status.physical_count|floatformat(sales_deciamls), sales_unit=sales_unit -%}
+                        Physical count: {{ physical_count }} {{ sales_unit }}
+                    {%- endtrans %}
+                    </span>
+                {% endfor %}
             </div>
         {% endfor %}
     </div>
