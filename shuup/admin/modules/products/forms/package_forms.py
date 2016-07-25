@@ -64,6 +64,27 @@ class PackageChildForm(forms.Form):
                 stocks[supplier] = (supplier, stock_status, sales_decimals, sales_unit_short_name)
         return stocks
 
+    def get_orderability_errors(self):
+        orderability_errors = []
+        if not self.product:
+            return orderability_errors
+        for shop_product in self.shop_products:
+            orderability_errors.extend(
+                ["%s: %s" % (shop_product.shop.name, msg.message)
+                 for msg in shop_product.get_orderability_errors(
+                    supplier=None,
+                    quantity=shop_product.minimum_purchase_quantity,
+                    customer=None)]
+            )
+            for supplier in shop_product.suppliers.all():
+                orderability_errors.extend(
+                    ["%s: %s" % (supplier.name, msg.message)
+                     for msg in supplier.get_orderability_errors(
+                        shop_product=shop_product,
+                        quantity=shop_product.minimum_purchase_quantity,
+                        customer=None)])
+        return orderability_errors
+
 
 class PackageChildFormSet(ProductChildBaseFormSet):
     deletion_label = ""

@@ -34,6 +34,9 @@
                     {%- endtrans %}
                     </span>
                 {% endfor %}
+                {% for error in child_form.get_orderability_errors() %}
+                    <p><small class="text-danger">{{ error }}</small></p>
+                {% endfor %}
             </div>
         {% endfor %}
     </div>
