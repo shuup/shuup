@@ -7,13 +7,16 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import pytest
+import re
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.shortcuts import resolve_url
 
+import pytest
 from shuup.core.models import (
     CompanyContact, get_company_contact, get_person_contact
 )
@@ -185,3 +188,60 @@ def test_user_change_password(regular_user, password_value, new_password_2, expe
 
     assert check_password(REGULAR_USER_PASSWORD, user.password) != expected
     assert check_password(new_password, user.password) == expected
+
+
+@pytest.mark.django_db
+def test_company_tax_number_limitations(regular_user):
+    get_default_shop()
+    person = get_person_contact(regular_user)
+    assert not get_company_contact(regular_user)
+
+    client = SmartClient()
+    client.login(username=REGULAR_USER_USERNAME, password=REGULAR_USER_PASSWORD)
+    company_edit_url = reverse("shuup:company_edit")
+    soup = client.soup(company_edit_url)
+
+    data = default_company_data()
+    data.update(default_address_data("billing"))
+    data.update(default_address_data("shipping"))
+
+    response, soup = client.response_and_soup(company_edit_url, data, "post")
+
+    assert response.status_code == 302
+    assert get_company_contact(regular_user)
+
+    # re-save should work properly
+    response, soup = client.response_and_soup(company_edit_url, data, "post")
+    assert response.status_code == 302
+    client.logout()
+
+    # another company tries to use same tax number
+    new_user_password = "derpy"
+    new_user_username = "derpy"
+    user = User.objects.create_user(new_user_username, "derpy@shuup.com", new_user_password)
+    person = get_person_contact(user=user)
+    assert not get_company_contact(user)
+
+    client = SmartClient()
+    client.login(username=new_user_username, password=new_user_password)
+    company_edit_url = reverse("shuup:company_edit")
+    soup = client.soup(company_edit_url)
+
+    data = default_company_data()
+    data.update(default_address_data("billing"))
+    data.update(default_address_data("shipping"))
+
+    response, soup = client.response_and_soup(company_edit_url, data, "post")
+    assert response.status_code == 200  # this time around, nothing was saved.
+    assert not get_company_contact(user)  # company contact yet
+
+    # change tax number
+    data["contact-tax_number"] = "111111"
+    response, soup = client.response_and_soup(company_edit_url, data, "post")
+    assert response.status_code == 302  # this time around, nothing was saved.
+    assert get_company_contact(user)  # company contact yet
+
+    # go back to normal and try to get tax number approved
+    data["contact-tax_number"] = "111110"
+    response, soup = client.response_and_soup(company_edit_url, data, "post")
+    assert response.status_code == 200  # this time around, nothing was saved.
