@@ -59,7 +59,9 @@ class StocksListView(PicotableListView):
 
     def get_queryset(self):
         return StockCount.objects.filter(
-            supplier__module_identifier="simple_supplier", product__stock_behavior=StockBehavior.STOCKED
+            supplier__module_identifier="simple_supplier",
+            product__stock_behavior=StockBehavior.STOCKED,
+            product__deleted=False
         ).order_by("product__id")
 
     def get_context_data(self, **kwargs):
