@@ -37,7 +37,7 @@ class PackageChildForm(forms.Form):
 
 
 class PackageChildFormSet(ProductChildBaseFormSet):
-    deletion_label = _("Remove")
+    deletion_label = ""
 
     def __init__(self, **kwargs):
         self.parent_product = kwargs.pop("parent_product")
