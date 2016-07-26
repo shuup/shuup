@@ -18,6 +18,9 @@ class AppConfig(shuup.apps.AppConfig):
 
     provides = {
         'front_urls': [__name__ + '.urls:urlpatterns'],
+        "notify_event": [
+            "shuup.front.apps.customer_information.notify_events:CompanyAccountCreated"
+        ]
     }
 
 
