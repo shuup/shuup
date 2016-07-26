@@ -81,6 +81,7 @@ class ShopProductForm(forms.ModelForm):
             "visibility_groups",
             "purchase_multiple",
             "minimum_purchase_quantity",
+            "backorder_maximum",
             "limit_shipping_methods",
             "limit_payment_methods",
             "shipping_methods",
@@ -89,6 +90,10 @@ class ShopProductForm(forms.ModelForm):
             "categories",
             # TODO: "shop_primary_image",
         )
+        help_texts = {
+            "backorder_maximum": _("Number of units that can be purchased after the product is out of stock. "
+                                   "Set to blank for product to be purchasable without limits")
+        }
 
     def __init__(self, **kwargs):
         if not kwargs["instance"].pk:
@@ -101,6 +106,12 @@ class ShopProductForm(forms.ModelForm):
         if minimum_purchase_quantity <= 0:
             raise ValidationError(_("Minimum Purchase Quantity must be greater than 0."))
         return minimum_purchase_quantity
+
+    def clean_backorder_maximum(self):
+        backorder_maximum = self.cleaned_data.get("backorder_maximum")
+        if backorder_maximum is not None and backorder_maximum < 0:
+            raise ValidationError(_("Backorder maximum must be greater than or equal to 0."))
+        return backorder_maximum
 
 
 class ProductAttributesForm(forms.Form):
