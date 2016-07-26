@@ -74,6 +74,8 @@ Addons
 Front
 ~~~~~
 
+- Use home country by default in customer information addresses
+
 Xtheme
 ~~~~~~
 
