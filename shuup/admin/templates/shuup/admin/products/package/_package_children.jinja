@@ -3,29 +3,41 @@
 
 {% call content_block(_("Package Products"), "fa-sitemap") %}
     {% for mf in children_formset.management_form %}{{ mf|safe }}{% endfor %}
-    <table class="table table-striped package-form-table">
-        <thead>
-        <tr>
-            <th>{% trans %}Product{% endtrans %}</th>
-            <th>{% trans %}Quantity{% endtrans %}</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for f in children_formset %}
-            <tr>
-                <td>
-                    {% for fld in f.hidden_fields() %}{{ fld|safe }}{% endfor %}
-                    {{ bs3.field(f.child) }}
-                </td>
-                <td>
-                    {{ bs3.field(f.quantity) }}
-                </td>
-                <td>
-                    {% if f.DELETE and f.initial.child %}{{ bs3.field(f.DELETE) }}{% endif %}
-                </td>
-            </tr>
+    <div class="list-group package-product">
+        {% for child_form in children_formset %}
+            <div class="list-group-item">
+                <div class="cells">
+                    <div class="line-cell">
+                        <label>{% trans %}Product{% endtrans %}</label>
+                        {% for field in child_form.hidden_fields() %}{{ field|safe }}{% endfor %}
+                        {{ bs3.field(child_form.child) }}
+                    </div>
+                    <div class="line-cell">
+                        <label>{% trans %}Quantity{% endtrans %}</label>
+                        {{ bs3.field(child_form.quantity) }}
+                    </div>
+                    <div class="line-cell delete">
+                        <label>{% trans %}Delete{% endtrans %}</label>
+                        {% if child_form.DELETE and child_form.initial.child %}{{ bs3.field(child_form.DELETE) }}{% endif %}
+                    </div>
+                </div>
+                {% for supplier, stock_status, sales_deciamls, sales_unit in child_form.get_stock_statuses().values() %}
+                    <strong>{{ supplier.name }}:</strong>
+                    <span>
+                    {% trans logical_count=stock_status.logical_count|floatformat(sales_deciamls), sales_unit=sales_unit -%}
+                        Logical count: {{ logical_count }} {{ sales_unit }}
+                    {%- endtrans %}
+                    </span>
+                    <span>
+                    {% trans physical_count=stock_status.physical_count|floatformat(sales_deciamls), sales_unit=sales_unit -%}
+                        Physical count: {{ physical_count }} {{ sales_unit }}
+                    {%- endtrans %}
+                    </span>
+                {% endfor %}
+                {% for error in child_form.get_orderability_errors() %}
+                    <p><small class="text-danger">{{ error }}</small></p>
+                {% endfor %}
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
+    </div>
 {% endcall %}
