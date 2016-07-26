@@ -1,28 +1,27 @@
 # English translations for PROJECT.
 # Copyright (C) 2015 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-#
+# 
 # Translators:
 # Aarni Koskela, 2015
 # Heikki Saari <heikki.saari@anders.fi>, 2016
-# Juha Kujala <juha.kujala@shuup.com>, 2015-2016
+# Juha Kujala <juha.kujala@shoop.io>, 2015-2016
 # Shuup Admin <admin@shuup.com>, 2016
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
-# Tuomas Suutari <tuomas.suutari@shuup.com>, 2015-2016
+# Tuomas Suutari <tuomas.suutari@shoop.io>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
-"PO-Revision-Date: 2016-06-28 21:58+0000\n"
-"Last-Translator: Tuomas Suutari <tuomas.suutari@shuup.com>\n"
-"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
-"language/fi_FI/)\n"
-"Language: fi_FI\n"
+"POT-Creation-Date: 2016-07-25 14:18+0000\n"
+"PO-Revision-Date: 2016-07-26 10:03+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Unexpected error while uploading files."
@@ -37,22 +36,19 @@ msgstr "Ladattu:"
 msgid "New file name?"
 msgstr "Uusi tiedostonimi?"
 
-#, javascript-format
+#, c-format
 msgid "Are you sure you want to delete the file %s?"
 msgstr "Oletko varma, että haluat poistaa tiedoston %s?"
 
 msgid "New folder name?"
 msgstr "Uuden kansion nimi?"
 
-#, javascript-format
+#, c-format
 msgid "Are you sure you want to delete the %s folder?"
 msgstr "Oletko varma että haluat poistaa %s kansion?"
 
 msgid "New folder"
 msgstr "Uusi kansio"
-
-msgid "current"
-msgstr "nykyinen"
 
 msgid "Oldest first"
 msgstr "Vanhin ensin"
@@ -82,16 +78,12 @@ msgid "Edit"
 msgstr "Muokkaa"
 
 msgid "Click the <strong>Upload</strong> button to upload files."
-msgstr ""
-"Klikkaa <strong>Lataa</strong> -painiketta ladataksesi tiedostoja "
-"palvelimelle."
+msgstr "Klikkaa <strong>Lataa</strong> -painiketta ladataksesi tiedostoja palvelimelle."
 
 msgid ""
 "<span>Drag and drop</span> files here<br> or click the <span>Upload</span> "
 "button."
-msgstr ""
-"<span>Raahaa ja pudota</span> tiedostot tähän<br> tai klikkaa <span>Lataa</"
-"span> -painiketta."
+msgstr "<span>Raahaa ja pudota</span> tiedostot tähän<br> tai klikkaa <span>Lataa</span> -painiketta."
 
 msgid "Rename file"
 msgstr "Uudelleennimeä tiedosto"
@@ -105,7 +97,7 @@ msgstr "Uudelleennimeä kansio"
 msgid "Delete folder"
 msgstr "Poista kansio"
 
-#, javascript-format
+#, c-format
 msgid "Order %s created."
 msgstr "Tilaus %s luotu."
 
@@ -244,9 +236,7 @@ msgstr "Maksutapa"
 msgid ""
 "Method rules, taxes and possible extra discounts are calculated after "
 "proceeding."
-msgstr ""
-"Tapojen säännöt, verot ja mahdolliset lisäalennukset lasketaan seuraavassa "
-"vaiheessa."
+msgstr "Tapojen säännöt, verot ja mahdolliset lisäalennukset lasketaan seuraavassa vaiheessa."
 
 msgid "Proceed"
 msgstr "Jatka"
@@ -290,10 +280,9 @@ msgstr "Tilausrivin tyyppi"
 msgid ""
 "If your product prices vary based on customer, you might want to select "
 "customer first."
-msgstr ""
-"Jos tuotteidesi hinnat riippuvat asiakkaasta, kannattaa asiakas valita ensin."
+msgstr "Jos tuotteidesi hinnat riippuvat asiakkaasta, kannattaa asiakas valita ensin."
 
-#, javascript-format
+#, c-format
 msgid "All prices are in %s currency."
 msgstr "Kaikki hinnat ovat valuutassa: %s"
 
@@ -348,7 +337,7 @@ msgstr "Tietoja ei löytynyt."
 msgid "Identifier"
 msgstr "Tunniste"
 
-#, javascript-format
+#, c-format
 msgid "Value %s Name"
 msgstr "Arvon %s nimi"
 
@@ -394,20 +383,20 @@ msgstr "Ei tuloksia."
 msgid "The results could not be loaded"
 msgstr "Tulosten lataaminen epäonnistui"
 
-#, javascript-format
+#, c-format
 msgid "Please delete %s character"
 msgid_plural "Please delete %s characters"
 msgstr[0] "Ole hyvä ja poista %s merkki"
 msgstr[1] "Ole hyvä ja poista %s merkkiä"
 
-#, javascript-format
+#, c-format
 msgid "Please enter %s or more characters"
 msgstr "Ole hyvä ja syötä %s tai enemmän merkkejä"
 
 msgid "Loading more results..."
 msgstr "Ladataan lisää tuloksia..."
 
-#, javascript-format
+#, c-format
 msgid "You can only select %s item"
 msgid_plural "You can only select %s items"
 msgstr[0] "Voit valita vain %s kohteen"
@@ -452,7 +441,7 @@ msgstr "Edellinen"
 msgid "Next"
 msgstr "Seuraava"
 
-#, javascript-format
+#, c-format
 msgid "Filter by %s"
 msgstr "Rajaa: %s"
 
