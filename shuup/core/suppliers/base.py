@@ -60,10 +60,11 @@ class BaseSupplierModule(object):
         :rtype: iterable[ValidationError]
         """
         stock_status = self.get_stock_status(shop_product.product_id)
+        backorder_maximum = shop_product.backorder_maximum
         if stock_status.error:
             yield ValidationError(stock_status.error, code="stock_error")
         if shop_product.product.stock_behavior == StockBehavior.STOCKED:
-            if quantity > stock_status.logical_count:
+            if backorder_maximum is not None and quantity > stock_status.logical_count + backorder_maximum:
                 yield ValidationError(stock_status.message or _(u"Insufficient stock"), code="stock_insufficient")
 
     def adjust_stock(self, product_id, delta, created_by=None, type=StockAdjustmentType.INVENTORY):
