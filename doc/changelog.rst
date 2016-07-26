@@ -74,6 +74,7 @@ Addons
 Front
 ~~~~~
 
+- Use contact default addresses for company creation
 - Use home country by default in customer information addresses
 
 Xtheme

@@ -65,15 +65,25 @@ class CompanyEditView(FormView):
     template_name = "shuup/customer_information/edit_company.jinja"
 
     def get_form(self, form_class):
-        contact = get_company_contact(self.request.user)
+        user = self.request.user
+        company = get_company_contact(user)
+        person = get_person_contact(user)
         form_group = FormGroup(**self.get_form_kwargs())
         form_group.add_form_def(
-            "billing", AddressForm, kwargs={"instance": contact.default_billing_address if contact else None}
+            "billing",
+            AddressForm,
+            kwargs={
+                "instance": _get_default_address_for_contact(company, "default_billing_address", person)
+            }
         )
         form_group.add_form_def(
-            "shipping", AddressForm, kwargs={"instance": contact.default_shipping_address if contact else None}
+            "shipping",
+            AddressForm,
+            kwargs={
+                "instance": _get_default_address_for_contact(company, "default_shipping_address", person)
+            }
         )
-        form_group.add_form_def("contact", CompanyContactForm, kwargs={"instance": contact})
+        form_group.add_form_def("contact", CompanyContactForm, kwargs={"instance": company})
         return form_group
 
     def form_valid(self, form):
@@ -96,3 +106,11 @@ class CompanyEditView(FormView):
         company.save()
         messages.success(self.request, _("Company information saved successfully."))
         return redirect("shuup:company_edit")
+
+
+def _get_default_address_for_contact(contact, address_attr, fallback_contact):
+    if contact and getattr(contact, address_attr, None):
+        return getattr(contact, address_attr)
+    if fallback_contact and getattr(fallback_contact, address_attr, None):
+        return getattr(fallback_contact, address_attr)
+    return None
