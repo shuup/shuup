@@ -13,7 +13,7 @@ def combine_refund_types(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shuup', '0002_rounding'),
+        ('shuup', '0003_shopproduct_backorder_maximum'),
     ]
 
     operations = [
