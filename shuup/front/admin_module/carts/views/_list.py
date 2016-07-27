@@ -67,6 +67,8 @@ class CartListView(PicotableListView):
         return get_locally_formatted_datetime(instance.updated_on)
 
     def format_taxful_total_price(self, instance, *args, **kwargs):
+        if not instance.taxful_total_price:
+            return ""
         return escape(format_money(instance.taxful_total_price))
 
     def get_context_data(self, **kwargs):
