@@ -10,14 +10,17 @@ from __future__ import unicode_literals
 import random
 
 from django import forms
+from django.conf import settings as django_settings
 from django.contrib import messages
-from django.contrib.auth import get_user_model
-from django.core.urlresolvers import reverse
+from django.contrib.auth import get_user_model, load_backend, login
+from django.core.exceptions import PermissionDenied
+from django.core.urlresolvers import NoReverseMatch, reverse
 from django.db.transaction import atomic
 from django.forms.models import modelform_factory
 from django.http.response import HttpResponseRedirect
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic.detail import DetailView
 
 from shuup.admin.toolbar import (
     DropdownActionButton, DropdownDivider, DropdownItem,
@@ -28,6 +31,15 @@ from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Contact, PersonContact
 from shuup.utils.excs import Problem
 from shuup.utils.text import flatten
+
+
+def get_front_url():
+    front_url = None
+    try:
+        front_url = reverse("shuup:index")
+    except NoReverseMatch:
+        front_url = None
+    return front_url
 
 
 class BaseUserForm(forms.ModelForm):
@@ -147,6 +159,14 @@ class UserDetailToolbar(Toolbar):
                 text=_(u"Deactivate User"),
                 extra_css_class="btn-gray",
             ))
+
+        if (self.request.user.is_superuser and get_front_url() and
+                user.is_active and not user.is_superuser and not user.is_staff):
+            self.append(PostActionButton(
+                post_url=reverse("shuup_admin:user.login-as", kwargs={"pk": user.pk}),
+                text=_(u"Login as User"),
+                extra_css_class="btn-gray"
+            ))
         # TODO: Add extensibility
 
 
@@ -223,3 +243,36 @@ class UserDetailView(CreateOrUpdateView):
     def dispatch(self, request, *args, **kwargs):
         self.model = get_user_model()
         return super(UserDetailView, self).dispatch(request, *args, **kwargs)
+
+
+class LoginAsUserView(DetailView):
+    model = get_user_model()
+
+    def post(self, request, *args, **kwargs):
+        front_url = get_front_url()
+        user = self.get_object()
+        username_field = self.model.USERNAME_FIELD
+        impersonator_user_id = request.user.pk
+
+        if not front_url:
+            raise Problem(_("No shop configured."))
+        if user == request.user:
+            raise Problem(_("You are already logged in."))
+        if not getattr(request.user, "is_superuser", False):
+            raise PermissionDenied
+        if getattr(user, "is_superuser", False) or getattr(user, "is_staff", False):
+            raise PermissionDenied
+        if not getattr(user, "is_active", False):
+            raise Problem(_("This user is not active."))
+
+        if not hasattr(user, 'backend'):
+            for backend in django_settings.AUTHENTICATION_BACKENDS:
+                if user == load_backend(backend).get_user(user.pk):
+                    user.backend = backend
+                    break
+
+        login(request, user)
+        request.session["impersonator_user_id"] = impersonator_user_id
+        message = _("You're now logged in as {username}").format(username=user.__dict__[username_field])
+        messages.success(request, message)
+        return HttpResponseRedirect(front_url)

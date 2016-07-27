@@ -36,6 +36,7 @@ Localization
 Admin
 ~~~~~
 
+- Allow superadmins to login as customer
 - Show orderability errors in package product management
 - Show stocks in package product management
 - Add link to order line product detail page in order editor
@@ -76,6 +77,7 @@ Addons
 Front
 ~~~~~
 
+- Fix single page checkout for customers not associated with a company
 - Use contact default addresses for company creation
 - Use home country by default in customer information addresses
 

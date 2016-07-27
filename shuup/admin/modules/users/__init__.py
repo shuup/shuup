@@ -61,6 +61,12 @@ class UserModule(AdminModule):
                 name="user.list",
                 permissions=permissions
             ),
+            admin_url(
+                "^users/(?P<pk>\d+)/login/$",
+                "shuup.admin.modules.users.views.LoginAsUserView",
+                name="user.login-as",
+                permissions=permissions
+            )
         ]
 
     def get_menu_entries(self, request):

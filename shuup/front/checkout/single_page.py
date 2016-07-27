@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 from django import forms
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
@@ -92,6 +93,9 @@ class SingleCheckoutPhase(CheckoutPhaseViewMixin, FormView):
         basket.shop = self.request.shop
         basket.orderer = self.request.person
         basket.customer = self.request.customer
+        basket.creator = self.request.user
+        if "impersonator_user_id" in self.request.session:
+            basket.creator = get_user_model().objects.get(pk=self.request.session["impersonator_user_id"])
         basket.shipping_address = form["shipping"].save(commit=False)
         basket.billing_address = form["billing"].save(commit=False)
         basket.shipping_method = order_data.pop("shipping_method")
