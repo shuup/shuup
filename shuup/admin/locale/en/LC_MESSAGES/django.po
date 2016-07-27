@@ -114,6 +114,7 @@ msgstr ""
 
 #, python-format
 msgid "Visibility settings copied to %d product(s)"
+msgstr ""
 
 #, python-format
 msgid "%s has been deleted."
