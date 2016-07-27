@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
+from django.contrib.auth import get_user_model
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
@@ -66,6 +67,8 @@ class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
         basket.orderer = self.request.person
         basket.customer = self.request.customer
         basket.creator = self.request.user
+        if "impersonator_user_id" in self.request.session:
+            basket.creator = get_user_model().objects.get(pk=self.request.session["impersonator_user_id"])
         basket.status = OrderStatus.objects.get_default_initial()
         order_creator = get_basket_order_creator()
         order = order_creator.create_order(basket)
