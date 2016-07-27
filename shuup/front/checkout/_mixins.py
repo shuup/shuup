@@ -26,7 +26,7 @@ class TaxNumberCleanMixin(object):
         tax_number = self.cleaned_data.get("tax_number")
 
         if (not company_name) and (not tax_number):
-            return {}
+            return self.cleaned_data
         elif company_name and not tax_number:
             raise ValidationError(_("Tax number required for companies"))
         elif tax_number and not company_name:

@@ -77,6 +77,7 @@ Addons
 Front
 ~~~~~
 
+- Fix single page checkout for customers not associated with a company
 - Use contact default addresses for company creation
 - Use home country by default in customer information addresses
 
