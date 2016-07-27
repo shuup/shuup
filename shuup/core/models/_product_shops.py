@@ -42,6 +42,7 @@ class ShopProduct(MoneyPropped, models.Model):
     visibility_groups = models.ManyToManyField(
         "ContactGroup", related_name='visible_products', verbose_name=_('visible for groups'), blank=True
     )
+    backorder_maximum = QuantityField(default=0, blank=True, null=True, verbose_name=_('backorder maximum'))
     purchase_multiple = QuantityField(default=0, verbose_name=_('purchase multiple'))
     minimum_purchase_quantity = QuantityField(default=1, verbose_name=_('minimum purchase'))
     limit_shipping_methods = models.BooleanField(default=False, verbose_name=_("limited for shipping methods"))
