@@ -10,8 +10,8 @@
       {% endfor %}
       </select>
     </div>
-    {{ bs3.field(form.quantity, form_group_class="form-group hidden") }}
-    {{ bs3.field(form.amount, form_group_class="form-group hidden") }}
+    {{ bs3.field(form.quantity, form_group_class="form-group hidden", set_disabled=True) }}
+    {{ bs3.field(form.amount, form_group_class="form-group hidden", set_disabled=True) }}
     {{ bs3.field(form.restock_products, form_group_class="form-group hidden") }}
 {% endmacro %}
 

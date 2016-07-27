@@ -26,6 +26,7 @@ def test_create_refund_view(rf, admin_user):
     product = create_product(sku="test-sku", shop=shop, supplier=supplier, default_price=3.33)
     order = create_order_with_product(product, supplier, quantity=1, taxless_base_unit_price=1, shop=shop)
     order.cache_prices()
+    order.save()
 
     assert not order.has_refunds()
     assert len(order.lines.all()) == 1

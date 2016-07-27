@@ -27,8 +27,9 @@ from parler.models import TranslatableModel, TranslatedFields
 
 from shuup.core import taxing
 from shuup.core.excs import (
-    NoPaymentToCreateException, NoProductsToShipException,
-    NoRefundToCreateException, RefundExceedsAmountException
+    InvalidRefundAmountException, NoPaymentToCreateException,
+    NoProductsToShipException, NoRefundToCreateException,
+    RefundExceedsAmountException
 )
 from shuup.core.fields import (
     CurrencyField, InternalIdentifierField, LanguageField, MoneyValueField,
@@ -547,6 +548,8 @@ class Order(MoneyPropped, models.Model):
         index = self.lines.all().aggregate(models.Max("ordering"))["ordering__max"]
         zero = Money(0, self.currency)
         refund_lines = []
+        total_refund_amount = zero
+        order_total = self.taxful_total_price.amount
         product_summary = self.get_product_summary()
         for refund in refund_data:
             index += 1
@@ -555,16 +558,16 @@ class Order(MoneyPropped, models.Model):
             parent_line = refund.get("line")
             restock_products = refund.get("restock_products")
             refund_line = None
-            percent_refunded = 0
 
             assert parent_line
             assert quantity
-            assert amount
 
-            # TODO: Also raise this if the sum amount of refunds exceeds total,
-            #       order amount, and do so before creating any order lines
-            self.cache_prices()
-            if (amount > self.taxful_total_price.amount or amount > parent_line.max_refundable_amount):
+            # ensure the amount to refund and the order line amount have the same signs
+            if ((amount > zero and parent_line.taxful_price.amount < zero) or
+               (amount < zero and parent_line.taxful_price.amount > zero)):
+                raise InvalidRefundAmountException
+
+            if abs(amount) > abs(parent_line.max_refundable_amount):
                 raise RefundExceedsAmountException
 
             # If restocking products, calculate quantity of products to restock
@@ -592,26 +595,32 @@ class Order(MoneyPropped, models.Model):
                         type=StockAdjustmentType.RESTOCK)
                 product_summary[product.pk]["refunded"] += quantity
 
+            base_amount = amount if self.prices_include_tax else amount / (1 + parent_line.tax_rate)
             refund_line = OrderLine.objects.create(
                 text=_("Refund for %s" % parent_line.text),
                 order=self,
                 type=OrderLineType.REFUND,
                 parent_line=parent_line,
                 ordering=index,
-                base_unit_price_value=-(amount / quantity),
+                base_unit_price_value=-(base_amount / quantity),
                 quantity=quantity,
             )
-            percent_refunded = amount / parent_line.price
-            refund_lines.append(refund_line)
-
             for line_tax in parent_line.taxes.all():
+                tax_base_amount = amount / (1 + line_tax.tax.rate)
+                tax_amount = tax_base_amount * line_tax.tax.rate
                 refund_line.taxes.create(
                     tax=line_tax.tax,
                     name=_("Refund for %s" % line_tax.name),
-                    amount_value=-line_tax.amount_value * percent_refunded,
-                    base_amount_value=-line_tax.base_amount_value * percent_refunded,
+                    amount_value=-tax_amount,
+                    base_amount_value=-tax_base_amount,
                     ordering=line_tax.ordering
                 )
+
+            # we round refund lines here since cache_prices does the same
+            total_refund_amount += _round_price(refund_line.taxful_price.amount)
+            refund_lines.append(refund_line)
+        if abs(total_refund_amount) > order_total:
+            raise RefundExceedsAmountException
         self.cache_prices()
         self.save()
         self.update_shipping_status()
@@ -633,11 +642,12 @@ class Order(MoneyPropped, models.Model):
             "quantity": line.quantity,
             "amount": line.taxful_price.amount,
             "restock_products": restock_products
-        } for line in self.lines.all() if (line.taxful_price or line.type == OrderLineType.PRODUCT)]
+        } for line in self.lines.all() if line.type != OrderLineType.REFUND]
         self.create_refund(line_data)
 
     def get_total_refunded_amount(self):
-        total = sum(line.taxful_price.amount.value for line in self.lines.refunds())
+        # rounding here to follow suit with cache_prices
+        total = sum(_round_price(line.taxful_price.amount.value) for line in self.lines.refunds())
         return Money(-total, self.currency)
 
     def get_total_unrefunded_amount(self):

@@ -1,4 +1,4 @@
-# SOME DESCRIPTIVE TITLE.
+OME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-09 01:09+0000\n"
+"POT-Creation-Date: 2016-07-26 00:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -393,10 +393,7 @@ msgstr ""
 msgid "discount"
 msgstr ""
 
-msgid "quantity refund"
-msgstr ""
-
-msgid "amount refund"
+msgid "refund"
 msgstr ""
 
 msgid "rounding"
@@ -1264,6 +1261,15 @@ msgid "Default Pricing"
 msgstr ""
 
 msgid "Insufficient stock"
+msgstr ""
+
+msgid "inventory"
+msgstr ""
+
+msgid "restock"
+msgstr ""
+
+msgid "restock logical"
 msgstr ""
 
 msgid "Untaxed"
