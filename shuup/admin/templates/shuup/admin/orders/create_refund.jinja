@@ -10,8 +10,8 @@
       {% endfor %}
       </select>
     </div>
-    {{ bs3.field(form.quantity, form_group_class="form-group hidden") }}
-    {{ bs3.field(form.amount, form_group_class="form-group hidden") }}
+    {{ bs3.field(form.quantity, form_group_class="form-group hidden", set_disabled=True) }}
+    {{ bs3.field(form.amount, form_group_class="form-group hidden", set_disabled=True) }}
     {{ bs3.field(form.restock_products, form_group_class="form-group hidden") }}
 {% endmacro %}
 
@@ -95,6 +95,8 @@
                     $refund.find("input[id$='amount']"), line && line["amount"] != 0);
                 setFormGroupVisibility(
                     $refund.find("input[id$='restock_products']"), line && line["type"] === "product");
+                $refund.find("input[id$='quantity']").val(line.quantity);
+                $refund.find("input[id$='amount']").val(line.amount);
             });
         }
 

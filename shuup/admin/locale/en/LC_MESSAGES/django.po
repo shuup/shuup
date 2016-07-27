@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-26 00:11+0000\n"
+"POT-Creation-Date: 2016-07-26 00:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -496,6 +496,9 @@ msgstr ""
 msgid "Amount"
 msgstr ""
 
+msgid "Total incl. tax to refund"
+msgstr ""
+
 msgid "Restock products"
 msgstr ""
 
@@ -509,10 +512,13 @@ msgstr ""
 msgid "This order already has existing refunds"
 msgstr ""
 
+msgid "Refund amount cannot be 0"
+msgstr ""
+
 msgid "Refund amount exceeds order amount."
 msgstr ""
 
-msgid "Refund amount cannot be 0"
+msgid "Refund amounts should match sign on parent line."
 msgstr ""
 
 msgid "Refund created."

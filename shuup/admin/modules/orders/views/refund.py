@@ -17,16 +17,18 @@ from django.views.generic import UpdateView
 from shuup.admin.toolbar import PostActionButton, Toolbar, URLActionButton
 from shuup.admin.utils.urls import get_model_url
 from shuup.core.excs import (
-    NoRefundToCreateException, RefundExceedsAmountException
+    InvalidRefundAmountException, NoRefundToCreateException,
+    RefundExceedsAmountException
 )
-from shuup.core.models import Order
+from shuup.core.models import Order, OrderLineType
 from shuup.utils.money import Money
 
 
 class RefundForm(forms.Form):
     line_number = forms.ChoiceField(label=_("Line number"), required=False)
     quantity = forms.DecimalField(required=False, min_value=0, initial=0, label=_("Quantity"))
-    amount = forms.DecimalField(required=False, min_value=0, initial=0, label=_("Amount"))
+    amount = forms.DecimalField(
+        required=False, initial=0, label=_("Amount"), help_text=_("Total incl. tax to refund"))
     restock_products = forms.BooleanField(required=False, initial=True, label=_("Restock products"))
 
     def clean_line_number(self):
@@ -80,11 +82,12 @@ class OrderCreateRefundView(UpdateView):
             "id": line.id,
             "type": "other" if line.quantity else "text",
             "text": line.text,
-            "quantity": line.quantity,
+            "quantity": line.quantity - line.refunded_quantity,
             "sku": line.sku,
             "baseUnitPrice": line.base_unit_price.value,
             "unitPrice": total_price / line.quantity if line.quantity else 0,
             "unitPriceIncludesTax": shop.prices_include_tax,
+            "amount": line.max_refundable_amount.value,
             "errors": "",
             "step": ""
         }
@@ -112,7 +115,9 @@ class OrderCreateRefundView(UpdateView):
         return kwargs
 
     def _get_refundable_line_numbers(self):
-        return [line.ordering for line in self.object.lines.all() if line.max_refundable_amount.value > 0]
+        return [
+            line.ordering for line in self.object.lines.all()
+            if line.max_refundable_amount and line.type != OrderLineType.REFUND]
 
     def _get_line_number_choices(self):
         return [("", "---")] + [((i), (i+1)) for i in self._get_refundable_line_numbers()]
@@ -130,47 +135,35 @@ class OrderCreateRefundView(UpdateView):
 
     def _get_refund_line_info(self, order, data):
         refund_line_info = {}
-        total_amount = Money(0, order.currency)
         amount_value = data.get("amount", 0)
         line_number = data.get("line_number")
         quantity = data.get("quantity", 0)
         restock_products = data.get("restock_products")
 
-        if line_number:
-            line = order.lines.get(ordering=line_number)
-            refund_line_info["line"] = line
+        line = order.lines.filter(ordering=line_number).first()
 
-            if quantity:
-                price = line.discounted_unit_price.amount
-                calculated_refund_amount = price * quantity
-                refund_line_info["quantity"] = quantity
-                total_amount += calculated_refund_amount
+        if not line:
+            return None
 
-            if amount_value:
-                amount = Money(amount_value, order.currency)
-                refund_line_info["amount"] = amount
-                total_amount += amount
+        # TODO: temporary - to be removed once proper rounding is implemented
+        amount_value = line.taxful_price.value
+        quantity = line.quantity
 
-            # Check to make sure total amount isn't more than line total
-            if total_amount > line.max_refundable_amount:
-                raise RefundExceedsAmountException
-
-            refund_line_info["restock_products"] = bool(restock_products)
-
-        return refund_line_info if total_amount else {}
+        refund_line_info["line"] = line
+        refund_line_info["quantity"] = quantity
+        refund_line_info["amount"] = Money(amount_value, order.currency)
+        refund_line_info["restock_products"] = bool(restock_products)
+        return refund_line_info
 
     def form_valid(self, form):
         order = self.object
         refund_lines = []
 
         for refund in form.cleaned_data:
-            try:
-                line = self._get_refund_line_info(order, refund)
-                if line:
-                    refund_lines.append(line)
-            except RefundExceedsAmountException:
-                messages.error(self.request, _("Refund amount exceeds order amount."))
-                return self.form_invalid(form)
+            line = self._get_refund_line_info(order, refund)
+            if line and line["amount"]:
+                refund_lines.append(line)
+
         if not refund_lines:
             messages.error(self.request, _("Refund amount cannot be 0"))
             return self.form_invalid(form)
@@ -180,7 +173,9 @@ class OrderCreateRefundView(UpdateView):
         except RefundExceedsAmountException:
             messages.error(self.request, _("Refund amount exceeds order amount."))
             return self.form_invalid(form)
-
+        except InvalidRefundAmountException:
+            messages.error(self.request, _("Refund amounts should match sign on parent line."))
+            return self.form_invalid(form)
         messages.success(self.request, _("Refund created."))
         return HttpResponseRedirect(get_model_url(order))
 

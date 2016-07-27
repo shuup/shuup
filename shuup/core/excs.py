@@ -28,6 +28,10 @@ class RefundExceedsAmountException(Exception):
     pass
 
 
+class InvalidRefundAmountException(Exception):
+    pass
+
+
 class ProductNotOrderableProblem(Problem):
     pass
 

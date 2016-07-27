@@ -56,8 +56,10 @@ class SimpleSupplierModule(BaseSupplierModule):
         sv, _ = StockCount.objects.get_or_create(supplier_id=supplier_id, product_id=product_id)
         sv.logical_count = values["logical_count"]
         sv.physical_count = values["physical_count"]
-        latest_event = StockAdjustment.objects.filter(
-            supplier=supplier_id, product=product_id).order_by("-created_on").first()
+        latest_event = (
+            StockAdjustment.objects
+            .filter(supplier=supplier_id, product=product_id, type=StockAdjustmentType.INVENTORY)
+            .last())
         if latest_event:
             sv.stock_value_value = latest_event.purchase_price_value * sv.logical_count
         sv.save(update_fields=("logical_count", "physical_count", "stock_value_value"))

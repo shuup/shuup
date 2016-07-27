@@ -12,6 +12,8 @@ Unreleased
 Core
 ~~~~
 
+- Fix refunds for discount lines
+- Fix restocking issue when refunding unshipped products
 - Make payments for `CustomPaymentProcessor` not paid by default
 - Fix shipping status for orders with refunds
 - Fix bug in order total price rounding
