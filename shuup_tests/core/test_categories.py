@@ -12,7 +12,9 @@ from shuup.core.models import (
     AnonymousContact, Category, CategoryStatus, CategoryVisibility,
     ContactGroup, get_person_contact
 )
-from shuup.testing.factories import DEFAULT_NAME
+from shuup.testing.factories import (
+    DEFAULT_NAME, get_default_category, get_default_shop_product
+)
 from shuup_tests.utils.fixtures import regular_user
 
 
@@ -103,3 +105,34 @@ def test_category_wont_be_deleted():
     img.delete()
 
     Category.objects.get(pk=category.pk)
+
+
+@pytest.mark.django_db
+def test_category_deletion(admin_user):
+    admin = get_person_contact(admin_user)
+    category = get_default_category()
+    category.children.create(identifier="foo")
+    shop_product = get_default_shop_product()
+    shop_product.categories.add(category)
+    shop_product.primary_category = category
+    shop_product.product.category = category
+    shop_product.save()
+
+    assert category.status == CategoryStatus.INVISIBLE
+    assert category.children.count() == 1
+
+    with pytest.raises(NotImplementedError):
+        category.delete()
+
+    category.soft_delete()
+    shop_product.refresh_from_db()
+    shop_product.product.refresh_from_db()
+
+    assert shop_product.categories.count() == 0
+    assert shop_product.primary_category is None
+    assert shop_product.product.category is None
+    assert category.status == CategoryStatus.DELETED
+    assert category.children.count() == 0
+    # the child category still exists
+    assert Category.objects.all_visible(customer=admin).count() == 1
+    assert Category.objects.all_except_deleted().count() == 1

@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add soft deletion of categories
 - Add support to sell products after stock is zero
 - Fix refunds for discount lines
 - Fix restocking issue when refunding unshipped products

@@ -9,6 +9,7 @@ from __future__ import with_statement
 
 from django.db import models
 from django.db.models import Q
+from django.db.transaction import atomic
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
@@ -20,8 +21,9 @@ from parler.models import (
 )
 
 from shuup.core.fields import InternalIdentifierField
+from shuup.core.signals import category_deleted
 from shuup.core.utils.slugs import generate_multilanguage_slugs
-from shuup.utils.analog import define_log_model
+from shuup.utils.analog import define_log_model, LogEntryKind
 
 
 class CategoryStatus(Enum):
@@ -47,7 +49,6 @@ class CategoryVisibility(Enum):
 
 
 class CategoryManager(TranslatableManager, TreeManager):
-
     def all_visible(self, customer, shop=None, language=None):
         root = (self.language(language) if language else self).all()
 
@@ -128,6 +129,29 @@ class Category(MPTTModel, TranslatableModel):
         if self.status == CategoryStatus.DELETED:
             return None
         return self.safe_translation_getter("name")
+
+    def delete(self, using=None):
+        raise NotImplementedError("Not implemented: Use `soft_delete()` for categories.")
+
+    @atomic
+    def soft_delete(self, user=None):
+        if not self.status == CategoryStatus.DELETED:
+            for shop_product in self.primary_shop_products.all():
+                shop_product.primary_category = None
+                shop_product.save()
+            for shop_product in self.shop_products.all():
+                shop_product.categories.remove(self)
+                shop_product.save()
+            for product in self.primary_products.all():
+                product.category = None
+                product.save()
+            for child in self.children.all():
+                child.parent = None
+                child.save()
+            self.status = CategoryStatus.DELETED
+            self.add_log_entry("Deleted.", kind=LogEntryKind.DELETION, user=user)
+            self.save()
+            category_deleted.send(sender=type(self), category=self)
 
     def save(self, *args, **kwargs):
         rv = super(Category, self).save(*args, **kwargs)

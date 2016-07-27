@@ -57,7 +57,7 @@ def test_category_removal():
     category = get_default_category()
     product.category = category
     product.save()
-    with pytest.raises(ProtectedError):
+    with pytest.raises(NotImplementedError):
         category.delete()
     assert Product.objects.filter(pk=product.pk).exists()
 
@@ -111,7 +111,7 @@ def test_shopproduct_primary_category_removal():
     sp = product.get_shop_instance(get_default_shop())
     sp.primary_category = category
     sp.save()
-    with pytest.raises(ProtectedError):
+    with pytest.raises(NotImplementedError):
         category.delete()
     assert ShopProduct.objects.filter(pk=sp.pk).exists()
 
