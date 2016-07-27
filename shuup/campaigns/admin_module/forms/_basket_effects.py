@@ -13,6 +13,7 @@ from shuup.campaigns.models.basket_effects import (
 from shuup.campaigns.models.basket_line_effects import (
     DiscountFromCategoryProducts, DiscountFromProduct, FreeProductLine
 )
+from shuup.core.models import Category
 
 from ._base import BaseEffectModelForm
 
@@ -50,6 +51,10 @@ class DiscountFromCategoryProductsForm(BaseEffectModelForm):
 
     class Meta(BaseEffectModelForm.Meta):
         model = DiscountFromCategoryProducts
+
+    def __init__(self, **kwargs):
+        super(DiscountFromCategoryProductsForm, self).__init__(**kwargs)
+        self.fields["category"].queryset = Category.objects.all_except_deleted()
 
     def clean(self):
         data = self.cleaned_data

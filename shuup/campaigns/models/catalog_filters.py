@@ -88,7 +88,7 @@ class CategoryFilter(CatalogFilter):
         return bool([x for x in ids if x in new_ids])
 
     def filter_queryset(self, queryset):
-        return queryset.filter(categories__in=self.categories.all())
+        return queryset.filter(categories__in=self.categories.all_except_deleted())
 
     @property
     def description(self):
