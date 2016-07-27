@@ -5,6 +5,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
@@ -31,6 +32,8 @@ class AddressForm(forms.ModelForm):
         super(AddressForm, self).__init__(*args, **kwargs)
         for field in ("email", "postal_code"):
             self.fields[field].required = True
+        if not kwargs.get("instance"):
+            self.fields["country"].initial = settings.SHUUP_ADDRESS_HOME_COUNTRY
 
 
 class CompanyContactForm(forms.ModelForm):

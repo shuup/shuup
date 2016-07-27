@@ -76,12 +76,16 @@ Addons
 Front
 ~~~~~
 
+- Use contact default addresses for company creation
+- Use home country by default in customer information addresses
+
 Xtheme
 ~~~~~~
 
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 
+- Enable copy between customer information addresses
 - Honor customer group pricing options for services
 - Enable markdown for service description
 
