@@ -37,6 +37,7 @@ Localization
 Admin
 ~~~~~
 
+- Show order line discount percentage in order detail and creator views
 - Allow superadmins to login as customer
 - Show orderability errors in package product management
 - Show stocks in package product management

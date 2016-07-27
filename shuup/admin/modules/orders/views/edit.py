@@ -84,12 +84,19 @@ def encode_method(method):
 
 
 def encode_line(line):
+    if line.base_unit_price.amount.value != 0:
+        discount_percent = (
+            line.discount_amount.amount.value / (line.base_unit_price.amount.value * line.quantity)
+        )
+    else:
+        discount_percent = 0
     return {
         "sku": line.sku,
         "text": line.text,
         "quantity": format_decimal(line.quantity, locale=get_current_babel_locale()),
         "unitPrice": format_money(line.base_unit_price.amount),
         "discountAmount": format_money(line.discount_amount.amount),
+        "discountPercent": format_percent(discount_percent, 2),
         "taxlessTotal": format_money(line.taxless_price.amount),
         "taxPercentage": format_percent(line.tax_rate, 2),
         "taxfulTotal": format_money(line.taxful_price.amount)
