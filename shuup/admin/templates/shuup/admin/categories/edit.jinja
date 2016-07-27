@@ -19,7 +19,7 @@
             $el.attr("disabled", true);
             $.ajax({
                 type: "POST",
-                url: "{{ url('shuup_admin:category.copy_visibility', pk=category.pk) }}",
+                url: "{{ url('shuup_admin:category.copy_visibility', pk=category.pk) if category.pk else ''}}",
                 data: {csrfmiddlewaretoken: window.ShuupAdminConfig.csrf},
                 success: function(msg) {
                     window.Messages.enqueue({tags: "info", text: msg.message});
