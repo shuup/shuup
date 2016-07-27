@@ -106,6 +106,8 @@ Campaigns
 Customer Group Pricing
 ~~~~~~~~~~~~~~~~~~~~~~
 
+- Re-style contactgroup pricing admin form
+
 Discount Pricing
 ~~~~~~~~~~~~~~~~
 
