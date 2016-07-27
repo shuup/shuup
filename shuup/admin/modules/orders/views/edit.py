@@ -66,7 +66,8 @@ def encode_address(address, tax_number=""):
     if not address:
         return {"tax_number": tax_number}
     address_dict = json.loads(serializers.serialize("json", [address]))[0].get("fields")
-    address_dict.setdefault("tax_number", tax_number)
+    if not address_dict.get("tax_number", ""):
+        address_dict["tax_number"] = tax_number
     return address_dict
 
 
@@ -294,6 +295,25 @@ class OrderEditView(CreateOrUpdateView):
     def handle_customer_data(self, request):
         customer_id = request.GET["id"]
         return self.get_customer_data(customer_id)
+
+    def handle_customer_exists(self, request):
+        field = request.GET["field"]
+        value = request.GET["value"]
+
+        if field in Contact._meta.get_all_field_names():
+            contact_model = Contact
+        elif field in CompanyContact._meta.get_all_field_names():
+            contact_model = CompanyContact
+        elif field in PersonContact._meta.get_all_field_names():
+            contact_model = PersonContact
+        else:
+            return {"error": "Invalid field name"}
+
+        customer = contact_model.objects.filter(**{field: value}).first()
+        if customer:
+            return {"id": customer.pk, "name": force_text(customer)}
+        else:
+            return {}
 
     def handle_customer_details(self, request):
         customer_id = request.GET["id"]
