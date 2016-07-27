@@ -538,10 +538,6 @@ class Order(MoneyPropped, models.Model):
         order's supplier the exact amount of the value of the `quantity`
         field.
 
-        If data for a refund line includes both an amount and a
-        quantity to refund, creates a separate refund line for each
-        refund type.
-
         :param refund_data: List of dicts containing refund data.
         :type refund_data: [dict]
         :param created_by: Refund creator's user instance, used for
@@ -562,10 +558,13 @@ class Order(MoneyPropped, models.Model):
             percent_refunded = 0
 
             assert parent_line
+            assert quantity
+            assert amount
+
             # TODO: Also raise this if the sum amount of refunds exceeds total,
             #       order amount, and do so before creating any order lines
             self.cache_prices()
-            if amount > self.taxful_total_price.amount:
+            if (amount > self.taxful_total_price.amount or amount > parent_line.max_refundable_amount):
                 raise RefundExceedsAmountException
 
             # If restocking products, calculate quantity of products to restock
@@ -593,44 +592,26 @@ class Order(MoneyPropped, models.Model):
                         type=StockAdjustmentType.RESTOCK)
                 product_summary[product.pk]["refunded"] += quantity
 
-            # If a quantity provided, add a separate refund line
-            if quantity:
-                unit_price = parent_line.discounted_unit_price.amount
-                refund_line = OrderLine.objects.create(
-                    text=_("Refund for %s" % parent_line.text),
-                    order=self,
-                    type=OrderLineType.QUANTITY_REFUND,
-                    parent_line=parent_line,
-                    ordering=index,
-                    base_unit_price_value=-unit_price,
-                    quantity=quantity,
-                )
-                percent_refunded = quantity / parent_line.quantity
-                refund_lines.append(refund_line)
+            refund_line = OrderLine.objects.create(
+                text=_("Refund for %s" % parent_line.text),
+                order=self,
+                type=OrderLineType.REFUND,
+                parent_line=parent_line,
+                ordering=index,
+                base_unit_price_value=-(amount / quantity),
+                quantity=quantity,
+            )
+            percent_refunded = amount / parent_line.price
+            refund_lines.append(refund_line)
 
-            # If amount is provided, add a separate refund line
-            if amount:
-                refund_line = OrderLine.objects.create(
-                    text=_("Refund for %s" % parent_line.text),
-                    order=self,
-                    type=OrderLineType.AMOUNT_REFUND,
-                    parent_line=parent_line,
-                    ordering=index,
-                    base_unit_price_value=-amount,
-                    quantity=1
+            for line_tax in parent_line.taxes.all():
+                refund_line.taxes.create(
+                    tax=line_tax.tax,
+                    name=_("Refund for %s" % line_tax.name),
+                    amount_value=-line_tax.amount_value * percent_refunded,
+                    base_amount_value=-line_tax.base_amount_value * percent_refunded,
+                    ordering=line_tax.ordering
                 )
-                percent_refunded = amount / parent_line.price
-                refund_lines.append(refund_line)
-
-            if refund_line:
-                for line_tax in parent_line.taxes.all():
-                    refund_line.taxes.create(
-                        tax=line_tax.tax,
-                        name=_("Refund for %s" % line_tax.name),
-                        amount_value=-line_tax.amount_value * percent_refunded,
-                        base_amount_value=-line_tax.base_amount_value * percent_refunded,
-                        ordering=line_tax.ordering
-                    )
         self.cache_prices()
         self.save()
         self.update_shipping_status()
@@ -647,11 +628,12 @@ class Order(MoneyPropped, models.Model):
         if self.has_refunds():
             raise NoRefundToCreateException
         self.cache_prices()
-        line_data = [
-            {"line": line, "quantity": line.quantity, "restock_products": restock_products}
-            for line in self.lines.all()
-            if (line.taxful_price or (line.type == OrderLineType.PRODUCT))
-        ]
+        line_data = [{
+            "line": line,
+            "quantity": line.quantity,
+            "amount": line.taxful_price.amount,
+            "restock_products": restock_products
+        } for line in self.lines.all() if (line.taxful_price or line.type == OrderLineType.PRODUCT)]
         self.create_refund(line_data)
 
     def get_total_refunded_amount(self):
@@ -808,7 +790,7 @@ class Order(MoneyPropped, models.Model):
             products[product_id]['unshipped'] -= quantity
 
         refunded_prods = self.lines.refunds().filter(
-            type=OrderLineType.QUANTITY_REFUND,
+            type=OrderLineType.REFUND,
             parent_line__type=OrderLineType.PRODUCT
         ).distinct().values_list("parent_line__product_id", flat=True)
         for product_id in refunded_prods:

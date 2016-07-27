@@ -44,8 +44,7 @@ def get_current_stock_value(supplier_id, product_id):
         .filter(supplier_id=supplier_id, product_id=product_id)
         .exclude(
             Q(order__status__role=OrderStatusRole.CANCELED) |
-            Q(type=OrderLineType.AMOUNT_REFUND) |
-            Q(type=OrderLineType.QUANTITY_REFUND))
+            Q(type=OrderLineType.REFUND))
         .aggregate(total=Sum("quantity"))["total"] or 0)
     orders_refunded_before_shipment = (
         StockAdjustment.objects

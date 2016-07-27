@@ -11,7 +11,7 @@ import pytest
 from shuup.admin.modules.orders.views.refund import (
     OrderCreateFullRefundView, OrderCreateRefundView
 )
-from shuup.core.models import Order, OrderLineType
+from shuup.core.models import OrderLineType
 from shuup.testing.factories import (
     create_order_with_product, create_product, get_default_shop,
     get_default_supplier
@@ -35,7 +35,7 @@ def test_create_refund_view(rf, admin_user):
     data = {
         "form-0-line_number": 0,
         "form-0-quantity": 1,
-        "form-0-amount": 0,
+        "form-0-amount": 1,
         "form-0-restock_products": False,
         "form-INITIAL_FORMS": 0,
         "form-MAX_NUM_FORMS": 1000,
@@ -50,9 +50,10 @@ def test_create_refund_view(rf, admin_user):
     assert order.has_refunds()
 
     assert len(order.lines.all()) == 2
-    refund_line = order.lines.filter(type=OrderLineType.QUANTITY_REFUND).last()
+    refund_line = order.lines.filter(type=OrderLineType.REFUND).last()
     assert refund_line
     assert refund_line.taxful_price == -product_line.taxful_price
+
 
 @pytest.mark.django_db
 def test_create_full_refund_view(rf, admin_user):
@@ -68,8 +69,6 @@ def test_create_full_refund_view(rf, admin_user):
     assert len(order.lines.all()) == 1
     assert order.taxful_total_price.amount.value != 0
 
-    product_line = order.lines.first()
-
     data = {
         "restock_products": "on",
     }
@@ -82,7 +81,6 @@ def test_create_full_refund_view(rf, admin_user):
     order.cache_prices()
 
     assert order.taxful_total_price.amount.value == 0
-    refund_line = order.lines.filter(type=OrderLineType.QUANTITY_REFUND).last()
+    refund_line = order.lines.filter(type=OrderLineType.REFUND).last()
     assert refund_line
     assert refund_line.taxful_price == -original_total_price
-

@@ -9,7 +9,7 @@ from __future__ import unicode_literals, with_statement
 
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.db.models import Q, Sum
+from django.db.models import Sum
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
@@ -31,9 +31,8 @@ class OrderLineType(Enum):
     PAYMENT = 3
     DISCOUNT = 4
     OTHER = 5
-    QUANTITY_REFUND = 6
+    REFUND = 6
     ROUNDING = 7
-    AMOUNT_REFUND = 8
 
     class Labels:
         PRODUCT = _('product')
@@ -41,8 +40,7 @@ class OrderLineType(Enum):
         PAYMENT = _('payment')
         DISCOUNT = _('discount')
         OTHER = _('other')
-        QUANTITY_REFUND = _('quantity refund')
-        AMOUNT_REFUND = _('amount refund')
+        REFUND = _('refund')
         ROUNDING = _('rounding')
 
 
@@ -61,7 +59,7 @@ class OrderLineManager(models.Manager):
         return self.filter(type=OrderLineType.DISCOUNT)
 
     def refunds(self):
-        return self.filter(Q(type=OrderLineType.QUANTITY_REFUND) | Q(type=OrderLineType.AMOUNT_REFUND))
+        return self.filter(type=OrderLineType.REFUND)
 
     def other(self):  # pragma: no cover
         return self.filter(type=OrderLineType.OTHER)
@@ -129,7 +127,7 @@ class OrderLine(MoneyPropped, models.Model, Priceful):
     @property
     def refunded_quantity(self):
         return (
-            self.child_lines.filter(type=OrderLineType.QUANTITY_REFUND).aggregate(total=Sum("quantity"))["total"] or 0
+            self.child_lines.filter(type=OrderLineType.REFUND).aggregate(total=Sum("quantity"))["total"] or 0
         )
 
     @property
@@ -141,9 +139,6 @@ class OrderLine(MoneyPropped, models.Model, Priceful):
             product_id=self.product.id,
             shipment__order=self.order
         ).aggregate(total=Sum("quantity"))["total"] or 0
-
-    def get_refunded_quantity(self):
-        return self.returned_quantity
 
     def save(self, *args, **kwargs):
         if not self.sku:
