@@ -252,6 +252,7 @@ class LoginAsUserView(DetailView):
         front_url = get_front_url()
         user = self.get_object()
         username_field = self.model.USERNAME_FIELD
+        impersonator_user_id = request.user.pk
 
         if not front_url:
             raise Problem(_("No shop configured."))
@@ -271,7 +272,7 @@ class LoginAsUserView(DetailView):
                     break
 
         login(request, user)
-
+        request.session["impersonator_user_id"] = impersonator_user_id
         message = _("You're now logged in as {username}").format(username=user.__dict__[username_field])
         messages.success(request, message)
         return HttpResponseRedirect(front_url)
