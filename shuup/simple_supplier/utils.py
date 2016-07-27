@@ -14,6 +14,7 @@ from django.template.loader import render_to_string
 from shuup.core.models import (
     OrderLine, OrderLineType, OrderStatusRole, ShipmentProduct
 )
+from shuup.core.suppliers.base import StockAdjustmentType
 from shuup.simple_supplier.forms import StockAdjustmentForm
 from shuup.simple_supplier.models import StockAdjustment, StockCount
 
@@ -36,6 +37,7 @@ def get_current_stock_value(supplier_id, product_id):
     events = (
         StockAdjustment.objects
         .filter(supplier_id=supplier_id, product_id=product_id)
+        .exclude(type=StockAdjustmentType.RESTOCK_LOGICAL)
         .aggregate(total=Sum("delta"))["total"] or 0)
     orders_bought = (
         OrderLine.objects
@@ -43,16 +45,19 @@ def get_current_stock_value(supplier_id, product_id):
         .exclude(
             Q(order__status__role=OrderStatusRole.CANCELED) |
             Q(type=OrderLineType.AMOUNT_REFUND) |
-            Q(type=OrderLineType.QUANTITY_REFUND)
-        )
+            Q(type=OrderLineType.QUANTITY_REFUND))
         .aggregate(total=Sum("quantity"))["total"] or 0)
+    orders_refunded_before_shipment = (
+        StockAdjustment.objects
+        .filter(supplier_id=supplier_id, product_id=product_id, type=StockAdjustmentType.RESTOCK_LOGICAL)
+        .aggregate(total=Sum("delta"))["total"] or 0)
     orders_sent = (
         ShipmentProduct.objects
         .filter(shipment__supplier=supplier_id, product_id=product_id)
         .aggregate(total=Sum("quantity"))["total"] or 0)
 
     return {
-        "logical_count": events - orders_bought,
+        "logical_count": events - orders_bought + orders_refunded_before_shipment,
         "physical_count": events - orders_sent
     }
 

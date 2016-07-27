@@ -551,6 +551,7 @@ class Order(MoneyPropped, models.Model):
         index = self.lines.all().aggregate(models.Max("ordering"))["ordering__max"]
         zero = Money(0, self.currency)
         refund_lines = []
+        product_summary = self.get_product_summary()
         for refund in refund_data:
             index += 1
             amount = refund.get("amount", zero)
@@ -571,15 +572,26 @@ class Order(MoneyPropped, models.Model):
             product = parent_line.product
             if (restock_products and quantity and product and (product.stock_behavior == StockBehavior.STOCKED)):
                 from shuup.core.suppliers.enums import StockAdjustmentType
+                # restock from the unshipped quantity first
+                unshipped_quantity_to_restock = min(quantity, product_summary[product.pk]["unshipped"])
+                shipped_quantity_to_restock = min(
+                    quantity - unshipped_quantity_to_restock,
+                    product_summary[product.pk]["ordered"] - product_summary[product.pk]["refunded"])
 
-                shipped_quantity = parent_line.shipped_quantity
-                refunded_quantity = parent_line.refunded_quantity
-                restockable_quantity = shipped_quantity - refunded_quantity
-                quantity_to_restock = min(quantity, restockable_quantity)
-
-                if quantity_to_restock > 0:
+                if unshipped_quantity_to_restock > 0:
+                    product_summary[product.pk]["unshipped"] -= unshipped_quantity_to_restock
                     parent_line.supplier.adjust_stock(
-                        product.id, quantity_to_restock, created_by=created_by, type=StockAdjustmentType.RESTOCK)
+                        product.id,
+                        unshipped_quantity_to_restock,
+                        created_by=created_by,
+                        type=StockAdjustmentType.RESTOCK_LOGICAL)
+                if shipped_quantity_to_restock > 0:
+                    parent_line.supplier.adjust_stock(
+                        product.id,
+                        shipped_quantity_to_restock,
+                        created_by=created_by,
+                        type=StockAdjustmentType.RESTOCK)
+                product_summary[product.pk]["refunded"] += quantity
 
             # If a quantity provided, add a separate refund line
             if quantity:
@@ -619,7 +631,6 @@ class Order(MoneyPropped, models.Model):
                         base_amount_value=-line_tax.base_amount_value * percent_refunded,
                         ordering=line_tax.ordering
                     )
-
         self.cache_prices()
         self.save()
         self.update_shipping_status()

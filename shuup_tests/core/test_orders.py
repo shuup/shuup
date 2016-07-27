@@ -18,8 +18,8 @@ from shuup.core.excs import (
     RefundExceedsAmountException
 )
 from shuup.core.models import (
-    Order, OrderLine, OrderLineTax, OrderLineType, OrderStatus,
-    PaymentStatus, ShippingStatus, StockBehavior
+    Order, OrderLine, OrderLineTax, OrderLineType, OrderStatus, PaymentStatus,
+    ShippingStatus, StockBehavior
 )
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
 from shuup.testing.factories import (
@@ -375,8 +375,8 @@ def test_refund_entire_order_with_product_restock():
     # Create a full refund with `restock_products` set to True
     order.create_full_refund(restock_products=True)
 
-    # Since no shipments were created, restocking is not possible
-    check_stock_counts(supplier, product, 5, 3)
+    # restock logical count
+    check_stock_counts(supplier, product, 5, 5)
 
 
 
@@ -409,22 +409,22 @@ def test_refund_with_shipment(restock):
     # Check correct refunded quantities
     assert not product_line.refunded_quantity
 
-    # Create a refund greater than restockable quantity, check stocks
+    # Create a refund that refunds from unshipped quantity first, then shipped quantity, check stocks
     check_stock_counts(supplier, product, physical=8, logical=6)
     order.create_refund([{"line": product_line, "quantity": 3, "restock_products": restock}])
     assert product_line.refunded_quantity == 3
     assert order.shipping_status == ShippingStatus.FULLY_SHIPPED
     if restock:
-        check_stock_counts(supplier, product, physical=10, logical=8)
+        check_stock_counts(supplier, product, physical=9, logical=9)
     else:
         check_stock_counts(supplier, product, physical=8, logical=6)
 
-    # Create a second refund greater than restockable quantity, check stocks
+    # Create a second refund that refunds the last shipped quantity, check stocks
     order.create_refund([{"line": product_line, "quantity": 1, "restock_products": restock}])
     assert product_line.refunded_quantity == 4
     if restock:
         # Make sure we're not restocking more than maximum restockable quantity
-        check_stock_counts(supplier, product, physical=10, logical=8)
+        check_stock_counts(supplier, product, physical=10, logical=10)
     else:
         # Make sure maximum restockable quantity is not 0
         check_stock_counts(supplier, product, physical=8, logical=6)
@@ -453,8 +453,10 @@ def test_refund_without_shipment(restock):
     product_line = order.lines.first()
     order.create_refund([{"line": product_line, "quantity": 2, "restock_products": restock}])
 
-    check_stock_counts(supplier, product, physical=10, logical=8)
-
+    if restock:
+        check_stock_counts(supplier, product, physical=10, logical=10)
+    else:
+        check_stock_counts(supplier, product, physical=10, logical=8)
     assert product_line.refunded_quantity == 2
 
 
