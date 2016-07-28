@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-25 14:18+0000\n"
+"POT-Creation-Date: 2016-07-28 02:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
@@ -31,18 +31,21 @@ msgstr ""
 msgid "New file name?"
 msgstr ""
 
-#, c-format
+#, javascript-format
 msgid "Are you sure you want to delete the file %s?"
 msgstr ""
 
 msgid "New folder name?"
 msgstr ""
 
-#, c-format
+#, javascript-format
 msgid "Are you sure you want to delete the %s folder?"
 msgstr ""
 
 msgid "New folder"
+msgstr ""
+
+msgid "current"
 msgstr ""
 
 msgid "Oldest first"
@@ -92,7 +95,7 @@ msgstr ""
 msgid "Delete folder"
 msgstr ""
 
-#, c-format
+#, javascript-format
 msgid "Order %s created."
 msgstr ""
 
@@ -112,6 +115,9 @@ msgid "Unit Price"
 msgstr ""
 
 msgid "Discount amount"
+msgstr ""
+
+msgid "Discount percent"
 msgstr ""
 
 msgid "Total (excluding taxes)"
@@ -272,12 +278,15 @@ msgstr ""
 msgid "Orderline type"
 msgstr ""
 
+msgid "Missing JavaScript dependencies detected"
+msgstr ""
+
 msgid ""
 "If your product prices vary based on customer, you might want to select "
 "customer first."
 msgstr ""
 
-#, c-format
+#, javascript-format
 msgid "All prices are in %s currency."
 msgstr ""
 
@@ -288,6 +297,13 @@ msgid "Taxes not included."
 msgstr ""
 
 msgid "Add new line"
+msgstr ""
+
+msgid "Quick add product line"
+msgstr ""
+
+msgid ""
+"Search product by name, SKU, or barcode and press button to add product line."
 msgstr ""
 
 msgid "No shipping method"
@@ -332,7 +348,7 @@ msgstr ""
 msgid "Identifier"
 msgstr ""
 
-#, c-format
+#, javascript-format
 msgid "Value %s Name"
 msgstr ""
 
@@ -378,20 +394,20 @@ msgstr ""
 msgid "The results could not be loaded"
 msgstr ""
 
-#, c-format
+#, javascript-format
 msgid "Please delete %s character"
 msgid_plural "Please delete %s characters"
 msgstr[0] ""
 msgstr[1] ""
 
-#, c-format
+#, javascript-format
 msgid "Please enter %s or more characters"
 msgstr ""
 
 msgid "Loading more results..."
 msgstr ""
 
-#, c-format
+#, javascript-format
 msgid "You can only select %s item"
 msgid_plural "You can only select %s items"
 msgstr[0] ""
@@ -436,7 +452,7 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-#, c-format
+#, javascript-format
 msgid "Filter by %s"
 msgstr ""
 

@@ -14,6 +14,7 @@ function renderHeaders() {
         m("th", gettext("Quantity")),
         m("th", gettext("Unit Price")),
         m("th", gettext("Discount amount")),
+        m("th", gettext("Discount percent")),
         m("th", gettext("Total (excluding taxes)")),
         m("th", gettext("Tax percent")),
         m("th", gettext("Total"))
@@ -28,6 +29,7 @@ function renderLines(lines) {
             m("td", line.quantity),
             m("td", line.unitPrice),
             m("td", line.discountAmount),
+            m("td", line.discountPercent),
             m("td", line.taxlessTotal),
             m("td", line.taxPercentage),
             m("td", line.taxfulTotal)
@@ -42,6 +44,7 @@ function renderTotals(source) {
         m("td", ""),
         m("td", ""),
         m("td", source.totalDiscountAmount),
+        m("td", ""),
         m("td", source.taxlessTotal),
         m("td", ""),
         m("td", source.taxfulTotal)
