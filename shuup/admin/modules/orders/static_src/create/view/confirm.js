@@ -11,13 +11,14 @@ function renderHeaders() {
     return  m("tr", [
         m("th", gettext("SKU")),
         m("th", gettext("Text")),
-        m("th", gettext("Quantity")),
-        m("th", gettext("Unit Price")),
-        m("th", gettext("Discount amount")),
-        m("th", gettext("Discount percent")),
-        m("th", gettext("Total (excluding taxes)")),
-        m("th", gettext("Tax percent")),
-        m("th", gettext("Total"))
+        m("th.text-right", gettext("Quantity")),
+        m("th.text-right", gettext("Unit Price")),
+        m("th.text-right", gettext("Discounted Unit Price")),
+        m("th.text-right", gettext("Discount amount")),
+        m("th.text-right", gettext("Discount percent")),
+        m("th.text-right", gettext("Total (excluding taxes)")),
+        m("th.text-right", gettext("Tax percent")),
+        m("th.text-right", gettext("Total"))
     ]);
 }
 
@@ -26,13 +27,14 @@ function renderLines(lines) {
         return m("tr", [
             m("td", line.sku),
             m("td", line.text),
-            m("td", line.quantity),
-            m("td", line.unitPrice),
-            m("td", line.discountAmount),
-            m("td", line.discountPercent),
-            m("td", line.taxlessTotal),
-            m("td", line.taxPercentage),
-            m("td", line.taxfulTotal)
+            m("td.text-right", line.quantity),
+            m("td.text-right", line.unitPrice),
+            m("td.text-right", line.discountedUnitPrice),
+            m("td.text-right", line.discountAmount),
+            m("td.text-right", line.discountPercent),
+            m("td.text-right", line.taxlessTotal),
+            m("td.text-right", line.taxPercentage),
+            m("td.text-right", line.taxfulTotal)
         ]);
     }).value();
 }
@@ -43,11 +45,12 @@ function renderTotals(source) {
         m("td", ""),
         m("td", ""),
         m("td", ""),
-        m("td", source.totalDiscountAmount),
         m("td", ""),
-        m("td", source.taxlessTotal),
+        m("td.text-right", source.totalDiscountAmount),
         m("td", ""),
-        m("td", source.taxfulTotal)
+        m("td.text-right", source.taxlessTotal),
+        m("td", ""),
+        m("td.text-right", source.taxfulTotal)
     ]);
 }
 
