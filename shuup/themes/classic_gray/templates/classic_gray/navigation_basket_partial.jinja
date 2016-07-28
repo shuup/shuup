@@ -13,7 +13,7 @@
                     <col style="min-width: 180px;">
                     <col style="min-width: 90px;">
                 </colgroup>
-                <thead>
+                <thead class="hidden-xs hidden-sm">
                     <tr>
                         <th>{% trans %}Items{% endtrans %}</th>
                         {% if show_prices() %}
@@ -33,7 +33,7 @@
                         {% endif %}
                     </tr>
                 </tfoot>
-                <tbody>
+                <tbody class="hidden-xs hidden-sm">
                     {% for line in request.basket.get_lines() %}
                         <tr>
                             <td>

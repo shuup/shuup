@@ -91,6 +91,11 @@
                 @media (min-width: @screen-sm-min) {
                     white-space: nowrap;
                 }
+                @media (max-width: @screen-sm) {
+                    table.table > tfoot > tr > th {
+                    border-top: 0;
+                    }
+                }
                 &:before, &:after {
                     left: auto;
                     right: 12px;
