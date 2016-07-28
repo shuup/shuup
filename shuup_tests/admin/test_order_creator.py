@@ -21,10 +21,11 @@ from shuup.admin.modules.orders.views.edit import (
 from shuup.core.models import Order, OrderLineType, Tax, TaxClass
 from shuup.default_tax.models import TaxRule
 from shuup.testing.factories import (
-    create_empty_order, create_product, create_random_company,
-    create_random_order, create_random_person, get_default_customer_group,
-    get_default_payment_method, get_default_shipping_method, get_default_shop,
-    get_default_supplier, get_initial_order_status, UserFactory
+    create_empty_order, create_order_with_product, create_product,
+    create_random_company, create_random_order, create_random_person,
+    get_default_customer_group, get_default_payment_method,
+    get_default_shipping_method, get_default_shop, get_default_supplier,
+    get_initial_order_status, UserFactory
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.i18n import format_money
@@ -107,7 +108,7 @@ def get_frontend_request_for_command(state, command, user):
 
 def get_order_from_state(state, admin_user):
     request = get_frontend_request_for_command(state, "finalize", admin_user)
-    response =OrderEditView.as_view()(request)
+    response = OrderEditView.as_view()(request)
     assert_contains(response, "orderIdentifier")  # this checks for status codes as a side effect
     data = json.loads(response.content.decode("utf8"))
     return Order.objects.get(identifier=data["orderIdentifier"])
@@ -362,3 +363,19 @@ def test_order_creator_customer_details(rf, admin_user):
     assert data["recent_orders"][0]["total"] == format_money(order.taxful_total_price)
     assert data["recent_orders"][0]["payment_status"] == force_text(order.payment_status.label)
     assert data["recent_orders"][0]["shipment_status"] == force_text(order.shipping_status.label)
+
+
+def test_edit_view_with_anonymous_contact(rf, admin_user):
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product = create_product(
+        sku=printable_gibberish(),
+        supplier=supplier,
+        shop=shop
+    )
+    order = create_order_with_product(product, supplier, 1, 10, shop=shop)
+    order.save()
+    assert not order.customer
+    request = apply_request_middleware(rf.get("/", user=admin_user))
+    response = OrderEditView.as_view()(request=request, pk=order.pk)
+    assert response.status_code == 200
