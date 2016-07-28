@@ -8,19 +8,28 @@
 from __future__ import unicode_literals
 
 import decimal
+import json
 
 import pytest
+from django.core import serializers
 from django.utils import translation
 from django.utils.translation import activate
 
-from shuup.core.models import Tax, TaxClass, CustomPaymentProcessor, PaymentMethod, RoundingMode
+from shuup.core.models import (
+    CustomPaymentProcessor, PaymentMethod, RoundingMode, Tax, TaxClass
+)
 from shuup.default_tax.models import TaxRule
 from shuup.testing.factories import (
-    create_product, create_random_person,
-    get_default_shipping_method, get_default_shop,
-    get_default_supplier, get_initial_order_status, get_default_tax_class)
+    create_product, create_random_person, get_default_shipping_method,
+    get_default_shop, get_default_supplier, get_default_tax_class,
+    get_initial_order_status
+)
 from shuup_tests.admin.test_order_creator import get_order_from_state
 from shuup_tests.utils import printable_gibberish
+
+
+def encode_address(address):
+    return json.loads(serializers.serialize("json", [address]))[0].get("fields")
 
 
 def get_frontend_order_state(contact, payment_method, product_price, valid_lines=True):
@@ -66,7 +75,11 @@ def get_frontend_order_state(contact, payment_method, product_price, valid_lines
         ]
 
     state = {
-        "customer": {"id": contact.id if contact else None},
+        "customer": {
+            "id": contact.id if contact else None,
+            "billingAddress": encode_address(contact.default_billing_address) if contact else {},
+            "shippingAddress": encode_address(contact.default_shipping_address) if contact else {},
+        },
         "lines": lines,
         "methods": {
             "shippingMethod": {"id": get_default_shipping_method().id},

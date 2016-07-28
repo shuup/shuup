@@ -9,20 +9,26 @@ from __future__ import unicode_literals
 
 import decimal
 import json
+
 import pytest
+from django.core import serializers
 
 from shuup.admin.modules.orders.views.edit import OrderEditView
-from shuup.campaigns.models import Coupon, BasketCampaign
-from shuup.campaigns.models.basket_conditions import BasketTotalProductAmountCondition
+from shuup.campaigns.models import BasketCampaign, Coupon
+from shuup.campaigns.models.basket_conditions import \
+    BasketTotalProductAmountCondition
 from shuup.campaigns.models.basket_effects import BasketDiscountAmount
-from shuup.core.order_creator import OrderCreator
 from shuup.core.models import Order, OrderLineType, Tax, TaxClass
+from shuup.core.order_creator import OrderCreator
 from shuup.default_tax.models import TaxRule
 from shuup.front.basket import get_basket
 from shuup.testing.factories import (
-   create_product, get_payment_method, get_shipping_method, get_default_supplier, get_initial_order_status, create_random_person, UserFactory
+    create_product, create_random_person, get_default_supplier,
+    get_initial_order_status, get_payment_method, get_shipping_method,
+    UserFactory
 )
-from shuup_tests.admin.test_order_creator import get_frontend_request_for_command
+from shuup_tests.admin.test_order_creator import \
+    get_frontend_request_for_command
 from shuup_tests.campaigns import initialize_test
 from shuup_tests.utils import assert_contains, printable_gibberish
 
@@ -111,6 +117,8 @@ def _get_order_with_coupon(request, initial_status, condition_product_count=1):
     assert OrderLineType.DISCOUNT in [l.type for l in order.lines.all()]
     return order
 
+def _encode_address(address):
+    return json.loads(serializers.serialize("json", [address]))[0].get("fields")
 
 def _get_frontend_order_state(shop, contact):
     tax = Tax.objects.create(code="test_code", rate=decimal.Decimal("0.20"), name="Default")
@@ -130,7 +138,11 @@ def _get_frontend_order_state(shop, contact):
     ]
 
     state = {
-        "customer": {"id": contact.id if contact else None},
+         "customer": {
+            "id": contact.id if contact else None,
+            "billingAddress": _encode_address(contact.default_billing_address) if contact else {},
+            "shippingAddress": _encode_address(contact.default_shipping_address) if contact else {},
+        },
         "lines": lines,
         "methods": {
             "shippingMethod": {"id": get_shipping_method(shop=shop).id},

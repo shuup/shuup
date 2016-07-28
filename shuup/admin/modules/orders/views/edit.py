@@ -11,6 +11,7 @@ import decimal
 import json
 
 from babel.numbers import format_currency, format_decimal
+from django.conf import settings
 from django.contrib import messages
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
@@ -176,6 +177,7 @@ class OrderEditView(CreateOrUpdateView):
         payment_methods = PaymentMethod.objects.enabled()
         return {
             "shops": shops,
+            "countryDefault": settings.SHUUP_ADDRESS_HOME_COUNTRY,
             "countries": [{"id": code, "name": name} for code, name in list(countries)],
             "shippingMethods": [encode_method(sm) for sm in shipping_methods],
             "paymentMethods": [encode_method(pm) for pm in payment_methods],
