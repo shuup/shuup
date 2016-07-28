@@ -56,6 +56,9 @@ class MultiselectAjaxView(TemplateView):
         if not model_name:
             return []
         cls = apps.get_model(model_name)
+        qs = cls.objects.all()
+        if hasattr(cls.objects, "all_except_deleted"):
+            qs = cls.objects.all_except_deleted()
         self.init_search_fields(cls)
         if not self.search_fields:
             return [{"id": None, "name": _("Couldn't get selections for %s.") % model_name}]
@@ -66,10 +69,8 @@ class MultiselectAjaxView(TemplateView):
                 query |= Q(**{"%s__icontains" % field: keyword})
             if issubclass(cls, Contact) or issubclass(cls, get_user_model()):
                 query &= Q(is_active=True)
-            objects = cls.objects.filter(query).distinct()
-        else:
-            objects = cls.objects.all()
-        return [{"id": obj.id, "name": force_text(obj)} for obj in objects[:self.result_limit]]
+            qs = qs.filter(query).distinct()
+        return [{"id": obj.id, "name": force_text(obj)} for obj in qs[:self.result_limit]]
 
     def get(self, request, *args, **kwargs):
         return JsonResponse({"results": self.get_data(request, *args, **kwargs)})

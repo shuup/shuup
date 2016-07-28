@@ -14,7 +14,7 @@ from django.utils.translation import activate
 
 from shuup.admin.views.select import MultiselectAjaxView
 from shuup.core.models import CompanyContact, get_person_contact, PersonContact
-from shuup.testing.factories import create_product
+from shuup.testing.factories import create_product, get_default_category
 from shuup_tests.utils.fixtures import regular_user
 
 
@@ -59,6 +59,10 @@ def test_ajax_select_view_with_products(rf):
     assert results[0].get("id") == product.id
     assert results[0].get("name") == product_name_fi
 
+    product.soft_delete()
+    results = _get_search_results(rf, view, "shuup.Product", "product")
+    assert len(results) == 0
+
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("contact_cls", [
@@ -87,6 +91,22 @@ def test_ajax_select_view_with_contacts(rf, contact_cls):
     assert results[0].get("name") == customer.name
 
     results = _get_search_results(rf, view, model_name, "random")  # Shouldn't find anything with this
+    assert len(results) == 0
+
+
+@pytest.mark.django_db
+def test_ajax_select_view_with_categories(rf):
+    activate("en")
+    view = MultiselectAjaxView.as_view()
+    results = _get_search_results(rf, view, "shuup.Category", "some str")
+    assert len(results) == 0
+
+    category = get_default_category()
+    results = _get_search_results(rf, view, "shuup.Category", category.name)
+    assert len(results) == 1
+
+    category.soft_delete()
+    results = _get_search_results(rf, view, "shuup.Category", category.name)
     assert len(results) == 0
 
 

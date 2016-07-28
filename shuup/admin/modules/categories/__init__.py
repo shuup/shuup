@@ -31,7 +31,13 @@ class CategoryModule(AdminModule):
                 "shuup.admin.modules.categories.views.CategoryCopyVisibilityView",
                 name="category.copy_visibility",
                 permissions=get_default_model_permissions(Category)
-            )
+            ),
+            admin_url(
+                "^categories/(?P<pk>\d+)/delete/$",
+                "shuup.admin.modules.categories.views.CategoryDeleteView",
+                name="category.delete",
+                permissions=get_default_model_permissions(Category)
+            ),
         ] + get_edit_and_list_urls(
             url_prefix="^categories",
             view_template="shuup.admin.modules.categories.views.Category%sView",

@@ -10,6 +10,7 @@ from shuup.campaigns.models.basket_conditions import (
     CategoryProductsBasketCondition, ContactBasketCondition,
     ContactGroupBasketCondition, ProductsInBasketCondition
 )
+from shuup.core.models import Category
 
 from ._base import BaseRuleModelForm
 
@@ -50,5 +51,9 @@ class BasketMaxTotalAmountConditionForm(BaseRuleModelForm):
 
 
 class CategoryProductsBasketConditionForm(BaseRuleModelForm):
+    def __init__(self, **kwargs):
+        super(CategoryProductsBasketConditionForm, self).__init__(**kwargs)
+        self.fields["category"].queryset = Category.objects.all_except_deleted()
+
     class Meta(BaseRuleModelForm.Meta):
         model = CategoryProductsBasketCondition

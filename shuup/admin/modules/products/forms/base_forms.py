@@ -19,8 +19,8 @@ from filer.models import Image
 
 from shuup.admin.forms.widgets import ImageChoiceWidget, MediaChoiceWidget
 from shuup.core.models import (
-    Attribute, AttributeType, Product, ProductMedia, ProductMediaKind, Shop,
-    ShopProduct
+    Attribute, AttributeType, Category, Product, ProductMedia,
+    ProductMediaKind, Shop, ShopProduct
 )
 from shuup.utils.i18n import get_language_name
 from shuup.utils.multilanguage_model_form import (
@@ -64,6 +64,7 @@ class ProductBaseForm(MultiLanguageModelForm):
     def __init__(self, **kwargs):
         super(ProductBaseForm, self).__init__(**kwargs)
         self.fields["sales_unit"].required = True  # TODO: Move this to model
+        self.fields["category"].queryset = Category.objects.all_except_deleted()
 
 
 class ShopProductForm(forms.ModelForm):
@@ -99,6 +100,9 @@ class ShopProductForm(forms.ModelForm):
         if not kwargs["instance"].pk:
             kwargs["instance"].visible = False
         super(ShopProductForm, self).__init__(**kwargs)
+        category_qs = Category.objects.all_except_deleted()
+        self.fields["primary_category"].queryset = category_qs
+        self.fields["categories"].queryset = category_qs
 
     # TODO: Move this to model
     def clean_minimum_purchase_quantity(self):
