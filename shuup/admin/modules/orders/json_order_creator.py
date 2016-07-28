@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 from copy import deepcopy
 
+from django import forms
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.utils.translation import ugettext as _
 
@@ -160,28 +161,39 @@ class JsonOrderCreator(object):
 
     def _create_contact_from_address(self, billing_address, is_company):
         name = billing_address.get("name", None)
-        if not name:
-            self.add_error(
-                ValidationError(_("Name is required for customer"), code="no_name")
-            )
-            return
-
         phone = billing_address.get("phone", "")
         email = billing_address.get("email", "")
         fields = {"name": name, "phone": phone, "email": email}
         if is_company:
             tax_number = billing_address.get("tax_number", None)
-            if not tax_number:
-                self.add_error(
-                    ValidationError(_("Tax number is not set for company."), code="no_tax_number")
-                )
-                return
-
             fields.update({"tax_number": tax_number})
             customer = CompanyContact(**fields)
         else:
             customer = PersonContact(**fields)
         return customer
+
+    def _get_address(self, address, is_company, save):
+        address_form = forms.modelform_factory(MutableAddress, exclude=[])
+        address_form_instance = address_form(data=address)
+        address_form_instance.full_clean()
+        if not address_form_instance.is_valid():
+            for field_name, errors in address_form_instance.errors.items():
+                field_label = address_form_instance.fields[field_name].label
+                for error_msg in errors:
+                    self.add_error(
+                        ValidationError(
+                            "%(field_label)s: %(error_msg)s",
+                            params={"field_label": field_label, "error_msg": error_msg},
+                            code="invalid_address"
+                        )
+                    )
+            return None
+        if is_company and not address_form_instance.cleaned_data["tax_number"]:
+            self.add_error(ValidationError(_("Tax number is not set for company."), code="no_tax_number"))
+            return None
+        if save:
+            return address_form_instance.save()
+        return MutableAddress.from_data(address_form_instance.cleaned_data)
 
     def _initialize_source_from_state(self, state, creator, ip_address, save, order_to_update=None):
         shop_data = state.pop("shop", None).get("selected", {})
@@ -202,15 +214,17 @@ class JsonOrderCreator(object):
             else customer_data.pop("shippingAddress", {}))
         is_company = customer_data.pop("isCompany", False)
         save_address = customer_data.pop("saveAddress", False)
+
+        billing_address = self._get_address(billing_address_data, is_company, save)
+        if self.errors:
+            return
+        shipping_address = self._get_address(shipping_address_data, is_company, save)
+        if self.errors:
+            return
+
         customer = self._get_customer(customer_data, billing_address_data, is_company, save)
         if not customer:
             return
-
-        billing_address = MutableAddress.from_data(billing_address_data)
-        shipping_address = MutableAddress.from_data(shipping_address_data)
-        if save:
-            billing_address.save()
-            shipping_address.save()
 
         if save and save_address:
             customer.default_billing_address = billing_address

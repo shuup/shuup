@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-28 02:13+0000\n"
+"POT-Creation-Date: 2016-07-28 19:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -368,9 +368,6 @@ msgid "Product %(product)s is not available in the %(shop)s shop."
 msgstr ""
 
 msgid "Please add lines to the order."
-msgstr ""
-
-msgid "Name is required for customer"
 msgstr ""
 
 msgid "Tax number is not set for company."

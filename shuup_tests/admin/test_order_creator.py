@@ -11,6 +11,7 @@ import decimal
 import json
 
 import pytest
+from django.core import serializers
 from django.test import RequestFactory
 from django.utils import translation
 from django.utils.encoding import force_text
@@ -32,6 +33,10 @@ from shuup.utils.i18n import format_money
 from shuup_tests.utils import assert_contains, printable_gibberish
 
 TEST_COMMENT = "Hello. Is it me you're looking for?"
+
+
+def encode_address(address):
+    return json.loads(serializers.serialize("json", [address]))[0].get("fields")
 
 
 def get_frontend_order_state(contact, valid_lines=True):
@@ -76,9 +81,12 @@ def get_frontend_order_state(contact, valid_lines=True):
             {"id": "z", "type": "other", "quantity": 1, "unitPrice": "q"},  # what's that price?
             {"id": "rr", "type": "product", "quantity": 1, "product": {"id": not_visible_product.id}}  # not visible
         ]
-
     state = {
-        "customer": {"id": contact.id if contact else None},
+        "customer": {
+            "id": contact.id if contact else None,
+            "billingAddress": encode_address(contact.default_billing_address) if contact else {},
+            "shippingAddress": encode_address(contact.default_shipping_address) if contact else {},
+        },
         "lines": lines,
         "methods": {
             "shippingMethod": {"id": get_default_shipping_method().id},
@@ -117,6 +125,7 @@ def get_order_from_state(state, admin_user):
 def test_order_creator_valid(rf, admin_user):
     get_initial_order_status()  # Needed for the API
     contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
+
     order = get_order_from_state(get_frontend_order_state(contact), admin_user)
     assert order.lines.count() == 5  # 3 submitted, two for the shipping and payment method
     assert order.creator == admin_user
@@ -138,6 +147,52 @@ def test_order_creator_invalid_base_data(rf, admin_user):
     request = get_frontend_request_for_command(state, "finalize", admin_user)
     response =OrderEditView.as_view()(request)
     assert_contains(response, "errorMessage", status_code=400)
+
+
+def test_order_creator_addresses(rf, admin_user):
+    get_initial_order_status()  # Needed for the API
+    contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
+    state = get_frontend_order_state(contact=contact)
+
+    # company with no tax number
+    state["customer"]["isCompany"] = True
+    request = get_frontend_request_for_command(state, "finalize", admin_user)
+    response =OrderEditView.as_view()(request)
+    assert_contains(response, "Tax number is not set", status_code=400)
+
+    # company with tax number, should work
+    state["customer"]["billingAddress"]["tax_number"] = "123"
+    state["customer"]["shippingAddress"]["tax_number"] = "123"
+    order = get_order_from_state(state, admin_user)
+    assert order.lines.count() == 5
+
+    # person with no shipping address
+    state["customer"]["isCompany"] = False
+    state["customer"]["shippingAddress"] = {}
+    request = get_frontend_request_for_command(state, "finalize", admin_user)
+    response =OrderEditView.as_view()(request)
+    assert_contains(response, "This field is required", status_code=400)
+
+    # ship to billing, should work now
+    state["customer"]["shipToBillingAddress"] = True
+    order = get_order_from_state(state, admin_user)
+    assert order.lines.count() == 5
+
+    # change name and make sure contact address is NOT updated
+    original_name = contact.default_billing_address.name
+    state["customer"]["billingAddress"]["name"] = "foobar"
+    state["customer"]["saveAddress"] = False
+    order = get_order_from_state(state, admin_user)
+    contact.refresh_from_db()
+    assert contact.default_billing_address.name == original_name
+
+    # change name with saveAddress set, contact address should update
+    original_name = contact.default_billing_address.name
+    state["customer"]["billingAddress"]["name"] = "foobar"
+    state["customer"]["saveAddress"] = True
+    order = get_order_from_state(state, admin_user)
+    contact.refresh_from_db()
+    assert contact.default_billing_address.name == "foobar"
 
 
 def test_order_creator_invalid_line_data(rf, admin_user):

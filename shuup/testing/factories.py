@@ -581,6 +581,18 @@ def get_faker(providers, locale=None):
     return fake
 
 
+def get_random_email(fake):
+    while True:
+        email = fake.email()
+        try:  # Faker sometimes generates invalid emails. That's terrible.
+            validate_email(email)
+        except ValidationError:
+            pass
+        else:
+            break
+    return email
+
+
 def create_random_address(fake=None, **values):
     if not fake:
         fake = get_faker(["person", "address"])
@@ -617,15 +629,7 @@ def create_random_person(locale=None, minimum_name_comp_len=0):
         name = "%s %s" % (first_name, last_name)
         if len(first_name) > minimum_name_comp_len and len(last_name) > minimum_name_comp_len:
             break
-    while True:
-        email = fake.email()
-        try:  # Faker sometimes generates invalid emails. That's terrible.
-            validate_email(email)
-        except ValidationError:
-            pass
-        else:
-            break
-
+    email = get_random_email(fake)
     phone = fake.phone_number()
     # `prefix`/`suffix` are broken (see https://github.com/joke2k/faker/issues/202)
     # so better just avoid them.
@@ -659,7 +663,7 @@ def create_random_person(locale=None, minimum_name_comp_len=0):
 def create_random_company():
     fake = get_faker(["company", "person", "internet"])
     name = fake.company()
-    email = fake.email()
+    email = get_random_email(fake)
     phone = fake.phone_number()
     language = random.choice(["en", fake.locale_language])
     address = create_random_address(name=name, email=email, phone=phone)

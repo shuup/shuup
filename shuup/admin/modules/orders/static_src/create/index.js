@@ -19,6 +19,7 @@ import {
     setShippingMethodChoices,
     setPaymentMethodChoices,
     setCustomer,
+    setAddressProperty,
     setShippingMethod,
     setPaymentMethod,
     setLines,
@@ -32,9 +33,15 @@ export function init(config = {}) {
     if (controller !== null) {
         return;
     }
+    var countryDefault = config.countryDefault;
+    if(!countryDefault && config.countries.length > 0){
+        countryDefault = config.countries[0].id;
+    }
     store.dispatch(setShopChoices(config.shops || []));
     store.dispatch(setShop(config.shops[0] || []));
     store.dispatch(setCountries(config.countries || []));
+    store.dispatch(setAddressProperty("billing", "country", countryDefault));
+    store.dispatch(setAddressProperty("shipping", "country", countryDefault));
     store.dispatch(setShippingMethodChoices(config.shippingMethods || []));
     store.dispatch(setPaymentMethodChoices(config.paymentMethods || []));
     const orderId = config.orderId;
