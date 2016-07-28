@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-25 01:12+0000\n"
+"POT-Creation-Date: 2016-07-28 23:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -42,6 +42,9 @@ msgid "%(label)s is required when any %(language)s field is filled."
 msgstr ""
 
 msgid "Please fill at least one language fully."
+msgstr ""
+
+msgid "A page may not be made a child of itself."
 msgstr ""
 
 msgid "Title"
