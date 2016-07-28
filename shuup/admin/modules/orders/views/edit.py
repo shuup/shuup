@@ -198,8 +198,8 @@ class OrderEditView(CreateOrUpdateView):
             "shippingMethodId": (encode_method(order.shipping_method) if order.shipping_method else None),
             "paymentMethodId": (encode_method(order.payment_method) if order.payment_method else None),
             "customer": {
-                "id": order.customer.id,
-                "name": order.customer.name,
+                "id": order.customer.id if order.customer else "",
+                "name": order.customer.name if order.customer else "",
                 "isCompany": bool(isinstance(order.customer, CompanyContact)),
                 "billingAddress": encode_address(order.billing_address, order.tax_number),
                 "shippingAddress": encode_address(order.shipping_address, order.tax_number)
