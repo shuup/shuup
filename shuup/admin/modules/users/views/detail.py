@@ -110,7 +110,7 @@ class UserDetailToolbar(Toolbar):
         )
         permissions_button = DropdownItem(
             url=reverse("shuup_admin:user.change-permissions", kwargs={"pk": user.pk}),
-            text=_(u"Edit Permissions"), icon="fa fa-lock"
+            text=_(u"Edit Permissions"), icon="fa fa-lock", required_permissions=["auth.change_permission"]
         )
         menu_items = [
             change_password_button,

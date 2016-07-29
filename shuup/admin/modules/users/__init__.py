@@ -40,7 +40,7 @@ class UserModule(AdminModule):
                 "^users/(?P<pk>\d+)/change-permissions/$",
                 "shuup.admin.modules.users.views.UserChangePermissionsView",
                 name="user.change-permissions",
-                permissions=permissions
+                permissions=["auth.change_permission"]
             ),
             admin_url(
                 "^users/(?P<pk>\d+)/$",
