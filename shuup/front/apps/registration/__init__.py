@@ -47,6 +47,9 @@ class RegistrationAppConfig(AppConfig):
         "front_urls": [
             "shuup.front.apps.registration.urls:urlpatterns"
         ],
+        "notify_event": [
+            "shuup.front.apps.registration.notify_events:RegistrationReceived"
+        ]
     }
 
     def ready(self):

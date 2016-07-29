@@ -87,6 +87,8 @@ Addons
 Front
 ~~~~~
 
+- Send notify event from company created
+- Send notify event from user registration
 - Fix bug in cart list view with empty taxful total price
 - Fix single page checkout for customers not associated with a company
 - Use contact default addresses for company creation

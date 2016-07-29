@@ -14,6 +14,7 @@ from shuup.core.models import get_company_contact, get_person_contact
 from shuup.utils.form_group import FormGroup
 
 from .forms import AddressForm, CompanyContactForm, PersonContactForm
+from .notify_events import CompanyAccountCreated
 
 
 def change_password(request):
@@ -87,7 +88,9 @@ class CompanyEditView(FormView):
         return form_group
 
     def form_valid(self, form):
-        company = form["contact"].save()
+        company = form["contact"].save(commit=False)
+        is_new = not bool(company.pk)
+        company.save()
         user = self.request.user
         person = get_person_contact(user)
         company.members.add(person)
@@ -104,6 +107,8 @@ class CompanyEditView(FormView):
         user.save()
 
         company.save()
+        if is_new:
+            CompanyAccountCreated(contact=company, customer_email=company.email).run()
         messages.success(self.request, _("Company information saved successfully."))
         return redirect("shuup:company_edit")
 
