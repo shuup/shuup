@@ -122,6 +122,7 @@ Discount Pricing
 Simple CMS
 ~~~~~~~~~~
 
+- Show error when attempting to make a page a child of itself
 - Fix plugin links
 
 Default Tax

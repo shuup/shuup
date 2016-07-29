@@ -77,6 +77,13 @@ class PageForm(MultiLanguageModelForm):
 
         return data
 
+    def clean_parent(self):
+        parent = self.cleaned_data["parent"]
+        if self.instance and parent and self.instance.id == parent.id:
+            self.add_error("parent", _("A page may not be made a child of itself."))
+        else:
+            return parent
+
     def is_url_valid(self, language_code, field_name, url):
         """
         Ensure URL given is unique.

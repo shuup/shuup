@@ -68,6 +68,13 @@ def test_page_form(rf):
     page = form.save()
     assert set(page.get_available_languages()) == {"fi", "en"}  # English GET
 
+    # Try to make page a child of itself
+    data.update({"parent": page.pk})
+    form = form_class(**dict(form_kwargs, data=data, instance=page))
+    form.full_clean()
+    assert form.errors
+    del data["parent"]
+
     # add dummy page with simple url, page is in english
     dummy = create_page(url="test")
 
