@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.encoding import force_text
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, TextFilter, true_or_false_filter
@@ -60,5 +60,5 @@ class UserListView(PicotableListView):
         ])
         return [
             {"text": instance.get_username() or _("User"), "class": "header"},
-            {"text": ", ".join(bits)}
+            {"text": ", ".join([force_text(bit) for bit in bits])}
         ]

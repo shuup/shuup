@@ -8,7 +8,7 @@
 from __future__ import unicode_literals
 
 from django.utils.html import escape
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, DateRangeFilter, MultiFieldTextFilter, RangeFilter,
