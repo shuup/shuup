@@ -66,7 +66,7 @@ class PermissionChangeFormBase(forms.ModelForm):
         old_password = self.cleaned_data["old_password"]
         if not self.changing_user.check_password(old_password):
             raise forms.ValidationError(
-                self.error_messages['password_incorrect'],
+                _("Your old password was entered incorrectly. Please enter it again."),
                 code='password_incorrect',
             )
         return old_password
