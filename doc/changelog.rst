@@ -41,6 +41,7 @@ Localization
 Admin
 ~~~~~
 
+- Fix bug with empty customer names in order list view
 - Add warning when editing order with no customer contact
 - Show account manager info on order detail page
 - Remove "Purchased" checkbox from product images section
