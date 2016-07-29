@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add parameter to `PriceDisplayFilter` to specify tax display mode
 - Add soft deletion of categories
 - Add support to sell products after stock is zero
 - Fix refunds for discount lines

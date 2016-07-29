@@ -67,10 +67,12 @@ class _ContextFunction(_ContextObject):
 
 
 class PriceDisplayFilter(_ContextFilter):
-    def __call__(self, context, item, quantity=1):
+    def __call__(self, context, item, quantity=1, include_taxes=None):
         options = PriceDisplayOptions.from_context(context)
         if options.hide_prices:
             return ""
+        if include_taxes is not None:
+            options.include_taxes = include_taxes
         request = context.get('request')
         orig_priceful = _get_priceful(request, item, quantity)
         if not orig_priceful:
