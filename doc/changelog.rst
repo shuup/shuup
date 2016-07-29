@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Add `get_customer_name` for `Order`
 - Exclude images from product `get_public_media`
 - Add parameter to `PriceDisplayFilter` to specify tax display mode
 - Add soft deletion of categories
