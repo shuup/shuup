@@ -87,6 +87,7 @@ Addons
 Front
 ~~~~~
 
+- Ensure email is not blank prior to sending password recovery email
 - Send notify event from company created
 - Send notify event from user registration
 - Fix bug in cart list view with empty taxful total price
