@@ -35,10 +35,6 @@ from shuup_tests.utils import assert_contains, printable_gibberish
 TEST_COMMENT = "Hello. Is it me you're looking for?"
 
 
-def encode_address(address):
-    return json.loads(serializers.serialize("json", [address]))[0].get("fields")
-
-
 def get_frontend_order_state(contact, valid_lines=True):
     """
     Get a dict structure mirroring what the frontend JavaScript would submit.
@@ -434,3 +430,35 @@ def test_edit_view_with_anonymous_contact(rf, admin_user):
     request = apply_request_middleware(rf.get("/", user=admin_user))
     response = OrderEditView.as_view()(request=request, pk=order.pk)
     assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_encode_address():
+    contact = create_random_company()
+    address = contact.default_billing_address
+    address.save()
+
+    assert not address.tax_number
+
+    encoded = encode_address(address)
+    for field, value in encoded.items():
+        assert getattr(address, field) == value
+
+    # If no tax number, use tax_number argument
+    encoded = encode_address(address, tax_number="12345")
+    for field, value in encoded.items():
+        if field == "tax_number":
+            assert value == "12345"
+        else:
+            assert getattr(address, field) == value
+
+    address.tax_number = "67890"
+    address.save()
+
+    # If tax number exists, use existing tax number
+    encoded = encode_address(address, tax_number="12345")
+    for field, value in encoded.items():
+        if field == "tax_number":
+            assert value == "67890"
+        else:
+            assert getattr(address, field) == value

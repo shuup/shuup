@@ -38,6 +38,7 @@ Localization
 Admin
 ~~~~~
 
+- Add warning to order creator when creating duplicate contacts
 - Show discounted unit price on order confirmation page
 - Add order address validation to admin order creator
 - Fix bug when editing anonymous orders
