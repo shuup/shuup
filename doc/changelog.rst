@@ -39,6 +39,7 @@ Localization
 Admin
 ~~~~~
 
+- Fix bug in permission change form error message
 - Limit change permissions only for superusers
 - Add warning to order creator when creating duplicate contacts
 - Show discounted unit price on order confirmation page
