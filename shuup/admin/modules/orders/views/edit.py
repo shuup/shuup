@@ -96,6 +96,7 @@ def encode_line(line):
         "text": line.text,
         "quantity": format_decimal(line.quantity, locale=get_current_babel_locale()),
         "unitPrice": format_money(line.base_unit_price.amount),
+        "discountedUnitPrice": format_money(line.discounted_unit_price.amount),
         "discountAmount": format_money(line.discount_amount.amount),
         "discountPercent": format_percent(discount_percent, 2),
         "taxlessTotal": format_money(line.taxless_price.amount),

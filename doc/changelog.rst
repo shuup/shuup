@@ -38,6 +38,7 @@ Localization
 Admin
 ~~~~~
 
+- Show discounted unit price on order confirmation page
 - Add order address validation to admin order creator
 - Fix bug when editing anonymous orders
 - Show order line discount percentage in order detail and creator views
