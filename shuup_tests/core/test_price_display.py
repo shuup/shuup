@@ -4,7 +4,6 @@ Tests for utils.price_display and the price filters.
 
 from decimal import Decimal
 
-
 import django.template
 import django_jinja.backend
 import pytest
@@ -13,13 +12,16 @@ from django.test.client import RequestFactory
 
 from shuup.apps.provides import override_provides
 from shuup.core.models import (
-    AnonymousContact, Product, Order, OrderLine, OrderLineType, Shop
+    AnonymousContact, Order, OrderLine, OrderLineType, Product, Shop
 )
 from shuup.core.order_creator import OrderSource
 from shuup.core.pricing import (
     get_pricing_module, PriceInfo, PricingModule, TaxlessPrice
 )
 from shuup.front.basket.objects import BaseBasket
+from shuup.testing.factories import (
+    create_default_tax_rule, get_default_tax, get_default_tax_class
+)
 
 PRICING_MODULE_SPEC = __name__ + ':DummyPricingModule'
 
@@ -93,6 +95,8 @@ TEST_DATA = [
     ('prod|discount_rate', '0.75'),
 
     ('prod|price(quantity=2)', '$12.15'),
+    ('prod|price(quantity=2, include_taxes=False)', '$12.15'),
+    ('prod|price(quantity=2, include_taxes=True)', '$18.22'),
     ('prod|base_price(quantity=2)', '$48.60'),
     ('prod|base_unit_price(quantity=2)', '$24.30'),
     ('prod|discount_amount(quantity=2)', '$36.45'),
@@ -135,6 +139,7 @@ TEST_DATA = [
 
 
 @pytest.mark.parametrize("expr,expected_result", TEST_DATA)
+@pytest.mark.django_db
 def test_filter(expr, expected_result):
     (engine, context) = _get_template_engine_and_context()
     template = engine.from_string('{{ ' + expr + '  }}')
@@ -154,10 +159,13 @@ def _get_template_engine_and_context():
     request.shop = Shop(currency='USD', prices_include_tax=False)
     request.customer = AnonymousContact()
     request.person = request.customer
+    tax = get_default_tax()
+    create_default_tax_rule(tax)
+    tax_class = get_default_tax_class()
 
     context = {
         'request': request,
-        'prod': Product(sku='6.0745'),
+        'prod': Product(sku='6.0745', tax_class=tax_class),
         # TODO: Test also with variant products
         'sline': _get_source_line(request),
         'bline': _get_basket_line(request),
