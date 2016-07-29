@@ -52,7 +52,7 @@ class ProductDiscountAmount(ProductDiscountEffect):
         self.discount_amount = value
 
     def apply_for_product(self, context, product, price_info):
-        return price_info.price.new(self.value)
+        return price_info.price.new(self.value * price_info.quantity)
 
 
 class ProductDiscountPercentage(ProductDiscountEffect):

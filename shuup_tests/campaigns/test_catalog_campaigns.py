@@ -84,8 +84,7 @@ def test_condition_affects_price(rf):
     price = shop.create_price
 
     product = create_product("Just-A-Product-Too", shop, default_price=199)
-
-    assert product.get_price_info(request, quantity=1).price == price(179)
+    assert product.get_price_info(request, quantity=2).price == price(179) * 2
 
 
 @pytest.mark.django_db

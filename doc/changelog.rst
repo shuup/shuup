@@ -109,6 +109,7 @@ Order Printouts
 Campaigns
 ~~~~~~~~~
 
+- Fix bug with campaign discount amounts
 - Add category products basket condition and line effect
 - Enable exact quantity matches for products in basket campaigns
 
