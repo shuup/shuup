@@ -12,7 +12,17 @@ function activateSelects() {
         const select = $(object);
         const model = select.data("model");
         if(model === undefined) {
-            select.select2({language: "xx"});
+            select.select2({
+                language: "xx",
+                matcher: function(search, data) {
+                    const needle = $.trim(search.term || "").toUpperCase();
+                    const haystack = data.text.toUpperCase();
+                    if(haystack.indexOf(needle) == 0) {
+                        return data;
+                    }
+                    return false;
+                }
+            });
             return true;
         }
         select.select2({

@@ -48,6 +48,9 @@ def test_ajax_select_view_with_products(rf):
     results = _get_search_results(rf, view, "shuup.Product", "some str")
     assert len(results) == 0
 
+    results = _get_search_results(rf, view, "shuup.Product", None)
+    assert len(results) == 0
+
     results = _get_search_results(rf, view, "shuup.Product", "product")
     assert len(results) == 1
     assert results[0].get("id") == product.id
@@ -55,6 +58,11 @@ def test_ajax_select_view_with_products(rf):
 
     activate("fi")
     results = _get_search_results(rf, view, "shuup.Product", "product")
+    assert len(results) == 1
+    assert results[0].get("id") == product.id
+    assert results[0].get("name") == product_name_fi
+
+    results = _get_search_results(rf, view, "shuup.Product", "  product  ")
     assert len(results) == 1
     assert results[0].get("id") == product.id
     assert results[0].get("name") == product_name_fi
