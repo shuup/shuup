@@ -162,10 +162,11 @@ export function renderCustomerDetailModal(store) {
     });
 }
 
-export function customerSelectView(store) {
+export function customerSelectView(store, isCreating) {
     const {customer, shop} = store.getState();
     return m("div.form-group", [
-        (!customer.id ? m("p", gettext("A new customer will be created based on billing address.")) : null),
+        ((!customer.id && !isCreating) ? m("p.text-danger", gettext("Warning: No customer account is currently associated with this order.")) : null),
+        (!customer.id ? m("p" + (!isCreating? ".text-danger": ""), gettext("A new customer will be created based on billing address.")) : null),
         m("br"),
         m("div.clearfix", [
             m("label.control-label", gettext("Customer")),
