@@ -39,6 +39,7 @@ Localization
 Admin
 ~~~~~
 
+- Add warning when editing order with no customer contact
 - Fix bug in permission change form error message
 - Limit change permissions only for superusers
 - Add warning to order creator when creating duplicate contacts
