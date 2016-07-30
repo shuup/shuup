@@ -90,6 +90,7 @@ Addons
 Front
 ~~~~~
 
+- Show public images only on the product detail page
 - Add ability for customers to save their cart
 - Ensure email is not blank prior to sending password recovery email
 - Send notify event from company created

@@ -64,14 +64,8 @@ class ProductDetailView(DetailView):
 
         context["shop_product"] = self.shop_product
 
-        primary_image = None
-        if self.shop_product.shop_primary_image_id:
-            primary_image = self.shop_product.shop_primary_image
-        elif product.primary_image_id:
-            primary_image = self.shop_product.primary_image
-
-        context["primary_image"] = primary_image
-        context["images"] = self.shop_product.images.all()
+        context["primary_image"] = self.shop_product.public_primary_image
+        context["images"] = self.shop_product.public_images
 
         # TODO: Maybe add hook for ProductDetailView get_context_data?
         # dispatch_hook("get_context_data", view=self, context=context)
