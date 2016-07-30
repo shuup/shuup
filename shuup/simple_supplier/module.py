@@ -5,6 +5,9 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.conf import settings
+
+from shuup.core.models import Product, StockBehavior
 from shuup.core.stocks import ProductStockStatus
 from shuup.core.suppliers import BaseSupplierModule
 from shuup.core.suppliers.enums import StockAdjustmentType
@@ -62,4 +65,9 @@ class SimpleSupplierModule(BaseSupplierModule):
             .last())
         if latest_event:
             sv.stock_value_value = latest_event.purchase_price_value * sv.logical_count
+        product = Product.objects.get(pk=product_id)
+        if "shuup.notify" in settings.INSTALLED_APPS:
+            if (product.stock_behavior == StockBehavior.STOCKED) and (sv.physical_count < sv.alert_limit):
+                from .notify_events import AlertLimitReached
+                AlertLimitReached(supplier=self.supplier, product=product_id).run()
         sv.save(update_fields=("logical_count", "physical_count", "stock_value_value"))

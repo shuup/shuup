@@ -28,6 +28,12 @@ class StocksAdminModule(AdminModule):
                 permissions=get_default_model_permissions(StockAdjustment)
             ),
             admin_url(
+                "^alert-limit/(?P<supplier_id>\d+)/(?P<product_id>\d+)/",
+                "shuup.simple_supplier.admin_module.views.process_alert_limit",
+                name="simple_supplier.alert_limits",
+                permissions=get_default_model_permissions(StockAdjustment)
+            ),
+            admin_url(
                 "^stocks/",
                 "shuup.simple_supplier.admin_module.views.StocksListView",
                 name="simple_supplier.stocks"

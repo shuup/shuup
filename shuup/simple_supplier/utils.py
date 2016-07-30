@@ -8,14 +8,19 @@
 from decimal import Decimal
 from math import pow
 
+from django.conf import settings
+from django.core.urlresolvers import reverse
 from django.db.models import Q, Sum
 from django.template.loader import render_to_string
 
+from shuup.admin.utils.permissions import (
+    get_default_model_permissions, get_missing_permissions
+)
 from shuup.core.models import (
     OrderLine, OrderLineType, OrderStatusRole, ShipmentProduct
 )
 from shuup.core.suppliers.base import StockAdjustmentType
-from shuup.simple_supplier.forms import StockAdjustmentForm
+from shuup.simple_supplier.forms import AlertLimitForm, StockAdjustmentForm
 from shuup.simple_supplier.models import StockAdjustment, StockCount
 
 
@@ -83,6 +88,8 @@ def get_stock_information_html(supplier, product):
         "sales_unit": product.sales_unit.short_name if product.sales_unit else "",
         "stock": stock
     }
+    if "shuup.notify" in settings.INSTALLED_APPS:
+        context["alert_limit"] = True
     return render_to_string("shuup/simple_supplier/admin/stock_information.jinja", context)
 
 
@@ -108,6 +115,13 @@ def get_stock_adjustment_div(request, supplier, product):
         "product": product,
         "supplier": supplier,
         "delta_step": pow(0.1, product.sales_unit.decimals),
-        "form": StockAdjustmentForm(initial={"purchase_price": purchase_price, "delta": None})
+        "adjustment_form": StockAdjustmentForm(initial={"purchase_price": purchase_price, "delta": None}),
     }
+    if "shuup.notify" in settings.INSTALLED_APPS:
+        from shuup.notify.models import Notification
+        context["alert_limit_form"] = AlertLimitForm(initial={"alert_limit": 0})
+        if not get_missing_permissions(request.user, get_default_model_permissions(Notification)):
+            context["notify_url"] = reverse("shuup_admin:notify.script.list")
+        else:
+            context["notify_url"] = ""
     return render_to_string("shuup/simple_supplier/admin/add_stock_form.jinja", context=context, request=request)

@@ -27,3 +27,7 @@ class StockAdjustmentForm(forms.Form):
             raise ValidationError(_("Only non-zero values can be added to stock."), code="stock_delta_zero")
 
         return delta
+
+
+class AlertLimitForm(forms.Form):
+    alert_limit = forms.DecimalField(label=_("Alert limit"))

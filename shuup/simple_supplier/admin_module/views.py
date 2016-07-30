@@ -14,7 +14,7 @@ from django.utils.translation import ugettext
 from shuup.admin.utils.picotable import ChoicesFilter, Column, TextFilter
 from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import Product, StockBehavior, Supplier
-from shuup.simple_supplier.forms import StockAdjustmentForm
+from shuup.simple_supplier.forms import AlertLimitForm, StockAdjustmentForm
 from shuup.simple_supplier.models import StockCount
 from shuup.simple_supplier.utils import (
     get_stock_adjustment_div, get_stock_information_div_id,
@@ -94,28 +94,61 @@ def get_adjustment_success_message(stock_adjustment):
         ) % arguments
 
 
+def _process_stock_adjustment(form, request, supplier_id, product_id):
+    data = form.cleaned_data
+    supplier = Supplier.objects.get(id=supplier_id)
+    stock_adjustment = supplier.module.adjust_stock(
+        product_id,
+        delta=data.get("delta"),
+        purchase_price=data.get("purchase_price"),
+        created_by=request.user
+    )
+    success_message = {
+        "stockInformationDiv": "#%s" % get_stock_information_div_id(
+            stock_adjustment.supplier, stock_adjustment.product),
+        "updatedStockInformation": get_stock_information_html(
+            stock_adjustment.supplier, stock_adjustment.product),
+        "message": get_adjustment_success_message(stock_adjustment)
+    }
+    return JsonResponse(success_message, status=200)
+
+
 def process_stock_adjustment(request, supplier_id, product_id):
+    return _process_and_catch_errors(
+        _process_stock_adjustment, StockAdjustmentForm, request, supplier_id, product_id)
+
+
+def _process_alert_limit(form, request, supplier_id, product_id):
+    supplier = Supplier.objects.get(id=supplier_id)
+    product = Product.objects.get(id=product_id)
+    sc = StockCount.objects.get(supplier=supplier, product=product)
+    data = form.cleaned_data
+    sc.alert_limit = data.get("alert_limit")
+    sc.save()
+
+    supplier = Supplier.objects.get(id=supplier_id)
+
+    success_message = {
+        "stockInformationDiv": "#%s" % get_stock_information_div_id(supplier, product),
+        "updatedStockInformation": get_stock_information_html(supplier, product),
+        "message": _("Alert limit for product %(product_name)s set to %(value)s.") % {
+            "product_name": product.name, "value": sc.alert_limit},
+    }
+    return JsonResponse(success_message, status=200)
+
+
+def process_alert_limit(request, supplier_id, product_id):
+    return _process_and_catch_errors(
+        _process_alert_limit, AlertLimitForm, request, supplier_id, product_id)
+
+
+def _process_and_catch_errors(process, form_class, request, supplier_id, product_id):
     try:
         if request.method != "POST":
             raise Exception(_("Not allowed"))
-        form = StockAdjustmentForm(request.POST)
+        form = form_class(request.POST)
         if form.is_valid():
-            data = form.cleaned_data
-            supplier = Supplier.objects.get(id=supplier_id)
-            stock_adjustment = supplier.module.adjust_stock(
-                product_id,
-                delta=data.get("delta"),
-                purchase_price=data.get("purchase_price"),
-                created_by=request.user
-            )
-            success_message = {
-                "stockInformationDiv": "#%s" % get_stock_information_div_id(
-                    stock_adjustment.supplier, stock_adjustment.product),
-                "updatedStockInformation": get_stock_information_html(
-                    stock_adjustment.supplier, stock_adjustment.product),
-                "message": get_adjustment_success_message(stock_adjustment)
-            }
-            return JsonResponse(success_message, status=200)
+            return process(form, request, supplier_id, product_id)
 
         error_message = ugettext("Error, please check submitted values and try again.")
         return JsonResponse({"message": error_message}, status=400)

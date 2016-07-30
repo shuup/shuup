@@ -118,6 +118,7 @@ Classic Gray Theme
 Simple Supplier
 ~~~~~~~~~~~~~~~
 
+- Add stock limit notification event
 - Skip refund lines when getting product stock counts
 
 Order Printouts
