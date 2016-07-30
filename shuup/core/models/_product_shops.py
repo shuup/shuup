@@ -104,6 +104,11 @@ class ShopProduct(MoneyPropped, models.Model):
         else:
             return self.product.primary_image
 
+    @property
+    def public_primary_image(self):
+        primary_image = self.primary_image
+        return primary_image if primary_image and primary_image.public else None
+
     def get_visibility_errors(self, customer):
         if self.product.deleted:
             yield ValidationError(_('This product has been deleted.'), code="product_deleted")
@@ -275,3 +280,7 @@ class ShopProduct(MoneyPropped, models.Model):
     @property
     def images(self):
         return self.product.media.filter(shops=self.shop, kind=ProductMediaKind.IMAGE).order_by("ordering")
+
+    @property
+    def public_images(self):
+        return self.images.filter(public=True)

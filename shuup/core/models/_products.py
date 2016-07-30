@@ -24,6 +24,7 @@ from shuup.core.utils.slugs import generate_multilanguage_slugs
 from shuup.utils.analog import define_log_model, LogEntryKind
 
 from ._attributes import AppliedAttribute, AttributableMixin, Attribute
+from ._product_media import ProductMediaKind
 from ._product_packages import ProductPackageLink
 from ._product_variation import (
     get_all_available_combinations, get_combination_hash_from_variable_mapping,
@@ -604,7 +605,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         ))
 
     def get_public_media(self):
-        return self.media.filter(enabled=True, public=True)
+        return self.media.filter(enabled=True, public=True).exclude(kind=ProductMediaKind.IMAGE)
 
     def is_stocked(self):
         return (self.stock_behavior == StockBehavior.STOCKED)
