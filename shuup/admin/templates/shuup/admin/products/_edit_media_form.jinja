@@ -65,7 +65,9 @@
                 <div id="collapse-{{ id }}" class="advanced-container collapse" role="tabpanel" aria-labelledby="media-{{ id }}">
                     <div class="advanced-body">
                         {{ bs3.field(f.public) }}
-                        {{ bs3.field(f.purchased) }}
+                        {% if not is_image_form %}
+                            {{ bs3.field(f.purchased) }}
+                        {% endif %}
                         {{ bs3.field(f.shops) }}
                         {{ bs3.field(f.kind) }}
                         {% set tab_id = id + "-additional-language" %}

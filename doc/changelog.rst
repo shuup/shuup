@@ -40,6 +40,7 @@ Localization
 Admin
 ~~~~~
 
+- Remove "Purchased" checkbox from product images section
 - Trim search criteria when using select2 inputs
 - Fix bug in permission change form error message
 - Limit change permissions only for superusers
