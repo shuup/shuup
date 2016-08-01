@@ -34,6 +34,18 @@ window.showPreview = function showPreview(productId) {
     });
 };
 
+window.singleSubmitForm = function($form) {
+    var canSubmit = true;
+    $form.submit(function() {
+        if(canSubmit) {
+            canSubmit = false;
+        }
+        else {
+            return false;
+        }
+    });
+};
+
 function setProductListViewMode(isInListMode) {
     if (typeof (Storage) !== "undefined") {
         localStorage.setItem("product_list_view_list_mode", (isInListMode ? "list" : "grid"));
