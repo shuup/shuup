@@ -40,6 +40,7 @@ Localization
 Admin
 ~~~~~
 
+- Add warning when editing order with no customer contact
 - Show account manager info on order detail page
 - Remove "Purchased" checkbox from product images section
 - Trim search criteria when using select2 inputs

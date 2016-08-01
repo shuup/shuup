@@ -163,9 +163,10 @@ export function renderCustomerDetailModal(store) {
 }
 
 export function customerSelectView(store) {
-    const {customer, shop} = store.getState();
+    const {customer, order, shop} = store.getState();
     return m("div.form-group", [
-        (!customer.id ? m("p", gettext("A new customer will be created based on billing address.")) : null),
+        ((!customer.id && !(order.id === null)) ? m("p.text-danger", gettext("Warning: No customer account is currently associated with this order.")) : null),
+        (!customer.id ? m("p" + (!(order.id === null)? ".text-danger": ""), gettext("A new customer will be created based on billing address.")) : null),
         m("br"),
         m("div.clearfix", [
             m("label.control-label", gettext("Customer")),

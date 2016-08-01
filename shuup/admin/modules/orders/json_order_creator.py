@@ -256,7 +256,8 @@ class JsonOrderCreator(object):
         return source
 
     def _get_customer(self, customer_data, billing_address_data, is_company, save):
-        customer = self.safe_get_first(Contact, pk=customer_data.get("id")) if customer_data else None
+        pk = customer_data.get("id")
+        customer = self.safe_get_first(Contact, pk=pk) if customer_data and pk else None
         if not customer:
             customer = self._create_contact_from_address(billing_address_data, is_company)
             if not customer:
