@@ -27,7 +27,9 @@ def activation_complete(request):
 
 
 def registration_complete(request):
-    messages.success(request, _("Registration complete. Please follow the instructions sent to your email address."))
+    if settings.SHUUP_REGISTRATION_REQUIRES_ACTIVATION:
+        messages.success(
+            request, _("Registration complete. Please follow the instructions sent to your email address."))
     return redirect(settings.LOGIN_REDIRECT_URL)
 
 
