@@ -4,6 +4,15 @@
 {% set customer_url = shuup_admin.model_url(order.customer, "detail") %}
 {% set orderer_url = shuup_admin.model_url(order.orderer, "detail") %}
 {% set creator_url = shuup_admin.model_url(order.creator, "detail") %}
+{% macro contact_row(label, contact) %}
+    {% set url = shuup_admin.model_url(contact, "detail") %}
+    {% if contact is not none and contact.account_manager is not none %}
+        {{ info_row(label, contact ~ " (" ~ contact.account_manager ~ ")", url) }}
+    {% else %}
+        {{ info_row(label, contact, url) }}
+    {% endif %}
+{% endmacro %}
+
 {% block content %}
     {% call content_with_sidebar(content_id="order_details") %}
         <div id="order_details">
@@ -13,8 +22,8 @@
                     {{ info_row(_("Order Date"), order.order_date|datetime) }}
                     {{ info_row(_("Reference"), order.reference_number) }}
                     {{ info_row(_("Label"), order.label) }}
-                    {{ info_row(_("Customer"), order.customer, customer_url) }}
-                    {{ info_row(_("Ordered by"), order.orderer, orderer_url) }}
+                    {{ contact_row(_("Customer"), order.customer) }}
+                    {{ contact_row(_("Ordered by"), order.orderer) }}
                     {{ info_row(_("Creator"), order.creator, creator_url) }}
                     {{ info_row(_("Phone"), order.phone, "tel:" ~ order.phone) }}
                     {{ info_row(_("Email"), order.email, "mailto:" ~ order.email) }}
