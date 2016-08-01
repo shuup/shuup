@@ -71,14 +71,14 @@ class PriceDisplayFilter(_ContextFilter):
         options = PriceDisplayOptions.from_context(context)
         if options.hide_prices:
             return ""
-        if include_taxes is not None:
-            options.include_taxes = include_taxes
+        if include_taxes is None:
+            include_taxes = options.include_taxes
         request = context.get('request')
         orig_priceful = _get_priceful(request, item, quantity)
         if not orig_priceful:
             return ""
         priceful = convert_taxness(
-            request, item, orig_priceful, options.include_taxes)
+            request, item, orig_priceful, include_taxes)
         price_value = getattr(priceful, self.property_name)
         return money(price_value)
 
@@ -100,7 +100,7 @@ class PricePercentPropertyFilter(_ContextFilter):
 
 
 class TotalPriceDisplayFilter(_ContextFilter):
-    def __call__(self, context, source):
+    def __call__(self, context, source, include_taxes=None):
         """
         :type source: shuup.core.order_creator.OrderSource|
                       shuup.core.models.Order
@@ -108,10 +108,12 @@ class TotalPriceDisplayFilter(_ContextFilter):
         options = PriceDisplayOptions.from_context(context)
         if options.hide_prices:
             return ""
+        if include_taxes is None:
+            include_taxes = options.include_taxes
         try:
-            if options.include_taxes is None:
+            if include_taxes is None:
                 total = source.total_price
-            elif options.include_taxes:
+            elif include_taxes:
                 total = source.taxful_total_price
             else:
                 total = source.taxless_total_price
