@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Exclude images from product `get_public_media`
 - Add parameter to `PriceDisplayFilter` to specify tax display mode
 - Add soft deletion of categories
 - Add support to sell products after stock is zero
@@ -39,6 +40,7 @@ Localization
 Admin
 ~~~~~
 
+- Remove "Purchased" checkbox from product images section
 - Trim search criteria when using select2 inputs
 - Fix bug in permission change form error message
 - Limit change permissions only for superusers
@@ -88,6 +90,7 @@ Addons
 Front
 ~~~~~
 
+- Show public images only on the product detail page
 - Add ability for customers to save their cart
 - Ensure email is not blank prior to sending password recovery email
 - Send notify event from company created
