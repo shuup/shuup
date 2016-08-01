@@ -43,6 +43,14 @@
                             </a>
                         </li>
                         {% endif %}
+                        {% if shuup.urls.has_url("shuup:saved_cart.list") %}
+                        <li>
+                            <a href="{{ url("shuup:saved_cart.list") }}">
+                                <i class="fa fa-shopping-cart fa-fw"></i>
+                                {% trans %}My saved carts{% endtrans %}
+                            </a>
+                        </li>
+                        {% endif %}
                         {% if shuup.urls.has_url("shuup:personal_wishlists") %}
                         <li>
                             <a href="{{ url("shuup:personal_wishlists") }}">
