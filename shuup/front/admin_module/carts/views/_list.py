@@ -54,7 +54,7 @@ class CartListView(PicotableListView):
         Ignore potentially active carts, displaying only those not updated for at least 2 hours.
         """
         cutoff = now() - datetime.timedelta(hours=2)
-        filters = {"updated_on__lt": cutoff, "product_count__gte": 0}
+        filters = {"updated_on__lt": cutoff, "product_count__gte": 0, "persistent": False}
         return super(CartListView, self).get_queryset().filter(**filters)
 
     def format_abandoned_status(self, instance, *args, **kwargs):

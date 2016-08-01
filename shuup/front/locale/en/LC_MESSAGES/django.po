@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 12:52+0000\n"
+"POT-Creation-Date: 2016-08-01 03:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -63,6 +63,61 @@ msgid "Total"
 msgstr ""
 
 msgid "Ordered"
+msgstr ""
+
+msgid "Shuup Frontend - Saved Baskets"
+msgstr ""
+
+msgid "Home"
+msgstr ""
+
+msgid "My Saved Carts"
+msgstr ""
+
+msgid "Add all products to cart"
+msgstr ""
+
+msgid "Delete cart"
+msgstr ""
+
+msgid "Product"
+msgstr ""
+
+msgid "Quantity"
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
+msgid "Saved Carts"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Product Count"
+msgstr ""
+
+msgid "Details"
+msgstr ""
+
+msgid "You haven't saved any carts yet."
+msgstr ""
+
+msgid "Please enter a basket title."
+msgstr ""
+
+msgid "Cannot save an empty basket."
+msgstr ""
+
+msgid "Product not available in this shop"
+msgstr ""
+
+msgid "Invalid supplier"
+msgstr ""
+
+#, python-format
+msgid "%d product(s) added to cart"
 msgstr ""
 
 #, python-format
