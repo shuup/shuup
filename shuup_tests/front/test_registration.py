@@ -141,6 +141,23 @@ def test_password_recovery_user_receives_email_3(client):
 
 
 @pytest.mark.django_db
+def test_password_recovery_user_with_no_email(client):
+    get_default_shop()
+    user = get_user_model().objects.create_user(
+        username="random_person",
+        password="asdfg"
+    )
+    n_outbox_pre = len(mail.outbox)
+    client.post(
+        reverse("shuup:recover_password"),
+        data={
+            "username": user.username
+        }
+    )
+    assert (len(mail.outbox) == n_outbox_pre), "No recovery emails sent"
+
+
+@pytest.mark.django_db
 def test_user_will_be_redirected_to_user_account_page_after_activation(client):
     """
     1. Register user
