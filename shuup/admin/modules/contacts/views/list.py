@@ -8,7 +8,8 @@
 from __future__ import unicode_literals
 
 from django.db.models import Count, Q
-from django.utils.translation import ugettext as _
+from django.utils.encoding import force_text
+from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, RangeFilter, TextFilter
@@ -65,5 +66,5 @@ class ContactListView(PicotableListView):
         ])
         return [
             {"text": instance.name or _("Contact"), "class": "header"},
-            {"text": ", ".join(bits)}
+            {"text": ", ".join([force_text(bit) for bit in bits])}
         ]
