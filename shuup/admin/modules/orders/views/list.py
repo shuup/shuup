@@ -25,7 +25,7 @@ class OrderListView(PicotableListView):
         Column("identifier", _(u"Order"), linked=True, filter_config=TextFilter(operator="startswith")),
         Column("order_date", _(u"Order Date"), display="format_order_date", filter_config=DateRangeFilter()),
         Column(
-            "customer", _(u"Customer"),
+            "customer_name", _(u"Customer"), display="format_customer_name",
             filter_config=MultiFieldTextFilter(filter_fields=("customer__email", "customer__name"))
         ),
         Column("status", _(u"Status"), filter_config=ChoicesFilter(choices=OrderStatus.objects.all())),
@@ -40,6 +40,9 @@ class OrderListView(PicotableListView):
 
     def get_queryset(self):
         return super(OrderListView, self).get_queryset().exclude(deleted=True)
+
+    def format_customer_name(self, instance, *args, **kwargs):
+        return instance.get_customer_name() or ""
 
     def format_order_date(self, instance, *args, **kwargs):
         return get_locally_formatted_datetime(instance.order_date)

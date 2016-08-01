@@ -833,6 +833,12 @@ class Order(MoneyPropped, models.Model):
             self.payment_status == PaymentStatus.NOT_PAID
         )
 
+    def get_customer_name(self):
+        name_attrs = ["customer", "billing_address", "orderer", "shipping_address"]
+        for attr in name_attrs:
+            if getattr(self, "%s_id" % attr):
+                return getattr(self, attr).name
+
 
 OrderLogEntry = define_log_model(Order)
 
