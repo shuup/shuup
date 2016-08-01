@@ -16,7 +16,8 @@ from shuup.core.models import (
 )
 from shuup.core.order_creator import OrderSource
 from shuup.core.pricing import (
-    get_pricing_module, PriceInfo, PricingModule, TaxlessPrice
+    get_pricing_module, PriceDisplayOptions, PriceInfo, PricingModule,
+    TaxfulPrice, TaxlessPrice
 )
 from shuup.front.basket.objects import BaseBasket
 from shuup.testing.factories import (
@@ -135,6 +136,10 @@ TEST_DATA = [
     ('oline|is_discounted', 'True'),
     ('oline|discount_percent', '75%'),
     ('oline|discount_rate', '0.75'),
+
+    ('order|total_price', '$50.00'),
+    ('order|total_price(include_taxes=False)', '$50.00'),
+    ('order|total_price(include_taxes=True)', '$100.00'),
 ]
 
 
@@ -151,6 +156,16 @@ def test_filter(expr, expected_result):
         assert result == expected_result
 
 
+@pytest.mark.django_db
+def test_filter_parameter():
+    (engine, context) = _get_template_engine_and_context()
+    result = engine.from_string("{{ prod|price(quantity=2, include_taxes=True) }}")
+    assert result.render(context) == "$18.22"
+
+    result = engine.from_string("{{ prod|price(quantity=2) }}")
+    assert result.render(context) == "$12.15"
+
+
 def _get_template_engine_and_context():
     engine = django.template.engines['jinja2']
     assert isinstance(engine, django_jinja.backend.Jinja2)
@@ -159,9 +174,11 @@ def _get_template_engine_and_context():
     request.shop = Shop(currency='USD', prices_include_tax=False)
     request.customer = AnonymousContact()
     request.person = request.customer
+    PriceDisplayOptions(include_taxes=False).set_for_request(request)
     tax = get_default_tax()
     create_default_tax_rule(tax)
     tax_class = get_default_tax_class()
+    order, order_line = _get_order_and_order_line(request)
 
     context = {
         'request': request,
@@ -169,7 +186,8 @@ def _get_template_engine_and_context():
         # TODO: Test also with variant products
         'sline': _get_source_line(request),
         'bline': _get_basket_line(request),
-        'oline': _get_order_line(request),
+        'oline': order_line,
+        'order': order
     }
 
     return (engine, context)
@@ -195,16 +213,18 @@ def _create_line(source, product):
     )
 
 
-def _get_order_line(request):
+def _get_order_and_order_line(request):
     order = Order(
         shop=request.shop,
         currency=request.shop.currency,
         prices_include_tax=request.shop.prices_include_tax,
     )
+    order.taxful_total_price = TaxfulPrice("100", request.shop.currency)
+    order.taxless_total_price = TaxlessPrice("50", request.shop.currency)
     pi = _get_price_info(request.shop, Product(sku='6.0745'), quantity=2)
-    return OrderLine(
+    return (order, OrderLine(
         order=order,
         base_unit_price=pi.base_unit_price,
         discount_amount=pi.discount_amount,
         quantity=pi.quantity,
-    )
+    ))
