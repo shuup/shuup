@@ -6,7 +6,6 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
 from shuup.core.utils import tax_numbers
@@ -28,8 +27,8 @@ class TaxNumberCleanMixin(object):
         if (not company_name) and (not tax_number):
             return self.cleaned_data
         elif company_name and not tax_number:
-            raise ValidationError(_("Tax number required for companies"))
+            self.add_error("tax_number", _("Tax number required for companies"))
         elif tax_number and not company_name:
-            raise ValidationError(_("Cannot use tax number without company name"))
+            self.add_error("company_name", _("Cannot use tax number without company name"))
 
         return self.cleaned_data
