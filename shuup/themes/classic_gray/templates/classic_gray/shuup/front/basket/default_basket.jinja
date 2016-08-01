@@ -30,6 +30,24 @@
                 </a>
             {% endif %}
         </div>
+        {% if user.is_authenticated() and shuup.urls.has_url("shuup:saved_cart.save") %}
+        <div class="cart-saver row">
+            <div class="col-sm-6 col-sm-offset-6">
+                <div class="clearfix">
+                    <a class="cart-saver-toggle pull-right" href="#collapseSaveCart" data-toggle="collapse">{% trans %}Save cart{% endtrans %}</a>
+                </div>
+                <div class="collapse" id="collapseSaveCart">
+                    <div class="input-group">
+                        <input type="text" id="cart-title" class="form-control" name="title" placeholder="{% trans %}Cart Title{% endtrans %}">
+                        <span class="input-group-btn">
+                            <button id="save-cart" type="submit" class="btn btn-primary">{% trans %}Save{% endtrans %}</button>
+                        </span>
+                    </div>
+                    <div id="save-cart-status" class="pull-right"></div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     {% endif %}
     {% placeholder "cart_bottom_extra" %}{% endplaceholder %}
 {% endblock %}
@@ -71,6 +89,28 @@
                 });
             }
         });
+
+        {% if shuup.urls.has_url("shuup:saved_cart.save") %}
+        $("#save-cart").click(function(e){
+            e.preventDefault();
+            const title = $("#cart-title").val();
+            $("#save-cart-status").empty();
+            $.ajax({
+                url: "{{ url('shuup:saved_cart.save') }}",
+                method: "POST",
+                data: {
+                    title: title,
+                    csrfmiddlewaretoken: "{{ csrf_token }}"
+                },
+                success: function(response) {
+                    $("#save-cart-status").append("<p>" + gettext("Cart saved!") + "</p>");
+                },
+                error: function(e) {
+                    $("#save-cart-status").append("<p>" + e.responseJSON.error + "</p>");
+                }
+            });
+        });
+        {% endif %}
 
         singleSubmitForm($("#update_basket_form"));
     });

@@ -34,7 +34,7 @@ def get_unfinalized_cart_block(currency, days=14):
     data = (
         StoredBasket.objects.filter(currency=currency)
         .filter(updated_on__range=(early_cutoff, late_cutoff), product_count__gte=0)
-        .exclude(deleted=True, finished=True)
+        .exclude(deleted=True, finished=True, persistent=True)
         .aggregate(count=Count("id"), sum=Sum("taxful_total_price_value"))
     )
     if not data["count"]:

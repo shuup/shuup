@@ -87,6 +87,7 @@ Addons
 Front
 ~~~~~
 
+- Add ability for customers to save their cart
 - Ensure email is not blank prior to sending password recovery email
 - Send notify event from company created
 - Send notify event from user registration
