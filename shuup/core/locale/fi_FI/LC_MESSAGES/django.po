@@ -1,36 +1,36 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
 # Eetu Häivälä <eetu.haivala@anders.fi>, 2015
 # Heikki Saari <heikki.saari@anders.fi>, 2016
-# Janne Tammi <janne.tammi@shuup.com>, 2015
+# Janne Tammi <janne@shuup.com>, 2016
+# Janne Tammi <janne@shuup.com>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
-# Juha Kujala <juha.kujala@shuup.com>, 2015
+# Juha Kujala <juha.kujala@shoop.io>, 2015
 # Juha Louhiranta <charni@gmail.com>, 2015
-# Rauli Laine <rauli.laine@iki.fi>, 2015
+# Panu Tulimäki <panu@shuup.com>, 2016
+# Rauli L. <rauli.laine@iki.fi>, 2015
 # Shuup Admin <admin@shuup.com>, 2015-2016
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # tomijarvi <tomi@jarvi.pro>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
-# Tuomas Suutari <tuomas.suutari@shuup.com>, 2016
+# Tuomas Suutari <tuomas.suutari@shoop.io>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
-"PO-Revision-Date: 2016-06-28 21:59+0000\n"
-"Last-Translator: Tuomas Suutari <tuomas.suutari@shuup.com>\n"
-"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
-"language/fi_FI/)\n"
-"Language: fi_FI\n"
+"POT-Creation-Date: 2016-07-26 01:59+0000\n"
+"PO-Revision-Date: 2016-08-02 19:16+0000\n"
+"Last-Translator: Janne Tammi <janne@shuup.com>\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "internal identifier"
@@ -410,6 +410,9 @@ msgstr "alennus"
 msgid "refund"
 msgstr "hyvitys"
 
+msgid "rounding"
+msgstr "pyöristys"
+
 msgid "order"
 msgstr "tilaus"
 
@@ -616,9 +619,6 @@ msgstr "Lähetys #%d luotu."
 msgid "Refund for %s"
 msgstr "Hyvitys: %s"
 
-msgid "Manual refund"
-msgstr "Käsin tehty hyvitys"
-
 msgid "All rows requiring verification have been verified."
 msgstr "Kaikki hyväksyntää vaativat rivit merkitty hyväksytyksi."
 
@@ -670,9 +670,7 @@ msgstr "laji"
 msgid ""
 "Enter URL to external file. If this field is filled, the selected media "
 "doesn't apply."
-msgstr ""
-"Syötä URL ulkoiseen tiedostoon. Valittu media ei tule voimaan, jos tämä "
-"kenttä on täytetty."
+msgstr "Syötä URL ulkoiseen tiedostoon. Valittu media ei tule voimaan, jos tämä kenttä on täytetty."
 
 msgid "public (shown on product page)"
 msgstr "julkinen (näkyy tuotesivulla)"
@@ -703,6 +701,9 @@ msgstr "listattu"
 
 msgid "purchasable"
 msgstr "ostettavissa"
+
+msgid "backorder maximum"
+msgstr "jälkitilaus maksimi"
 
 msgid "purchase multiple"
 msgstr "tilausmonikerta"
@@ -761,17 +762,13 @@ msgstr "%s ei toimita tuotetta."
 msgid ""
 "The product can only be ordered in multiples of %(package_size)s, for "
 "example %(smaller_p)s %(unit)s."
-msgstr ""
-"Tuotetta voi tilata vain %(package_size)s kerrannaisina (esim. %(smaller_p)s "
-"%(unit)s)."
+msgstr "Tuotetta voi tilata vain %(package_size)s kerrannaisina (esim. %(smaller_p)s %(unit)s)."
 
 #, python-format
 msgid ""
 "The product can only be ordered in multiples of %(package_size)s, for "
 "example %(smaller_p)s or %(larger_p)s %(unit)s."
-msgstr ""
-"Tuotetta voi tilata vain %(package_size)s kerrannaisina (esim. %(smaller_p)s "
-"tai %(larger_p)s %(unit)s)."
+msgstr "Tuotetta voi tilata vain %(package_size)s kerrannaisina (esim. %(smaller_p)s tai %(larger_p)s %(unit)s)."
 
 msgid "variation variable"
 msgstr "variaatiomuuttuja"
@@ -918,11 +915,9 @@ msgid "status text"
 msgstr "tilateksti"
 
 msgid ""
-"This text will be shown alongside the product in the shop. (Ex.: \"Available "
-"in a month\")"
-msgstr ""
-"Tämä teksti näytetään kaupan tuotesivulla. (Esim. \"Saatavilla kuukauden "
-"päästä\")"
+"This text will be shown alongside the product in the shop. (Ex.: \"Available"
+" in a month\")"
+msgstr "Tämä teksti näytetään kaupan tuotesivulla. (Esim. \"Saatavilla kuukauden päästä\")"
 
 msgid "variation name"
 msgstr "variaation nimi"
@@ -931,26 +926,22 @@ msgid "products"
 msgstr "tuotteet"
 
 msgid ""
-"Multilevel parentage hierarchies aren't supported (parent is a child already)"
+"Multilevel parentage hierarchies aren't supported (parent is a child "
+"already)"
 msgstr "Monitasoisia isännyysrakenteita ei tueta (isäntä on jo variaatiolapsi)"
 
 msgid "Parent is a variable variation parent, yet variables were not passed"
-msgstr ""
-"Isäntä on muuttujallisen variaation isäntätuote, mutta muuttujia ei annettu"
+msgstr "Isäntä on muuttujallisen variaation isäntätuote, mutta muuttujia ei annettu"
 
 msgid ""
 "Multilevel parentage hierarchies aren't supported (this product is a simple "
 "variation parent)"
-msgstr ""
-"Monitasoisia isännyysrakenteita ei tueta (tämä tuote on yksinkertaisen "
-"variaation isäntätuote)"
+msgstr "Monitasoisia isännyysrakenteita ei tueta (tämä tuote on yksinkertaisen variaation isäntätuote)"
 
 msgid ""
 "Multilevel parentage hierarchies aren't supported (this product is a "
 "variable variation parent)"
-msgstr ""
-"Monitasoisia isännyysrakenteita ei tueta (tämä tuote on muuttujallisen "
-"variaation isäntätuote)"
+msgstr "Monitasoisia isännyysrakenteita ei tueta (tämä tuote on muuttujallisen variaation isäntätuote)"
 
 msgid "Product is currently not a normal product, can't turn into package"
 msgstr "Tuote ei ole tavallinen tuote, ei voi tehdä pakettia"
@@ -1022,9 +1013,7 @@ msgstr "Häviävä kustannus"
 msgid ""
 "Add cost to price of the service if total price of products is less than a "
 "waive limit."
-msgstr ""
-"Lisää kustannus palvelun hintaan, jos tuotteiden kokonaishinta on alle "
-"annetun rajan."
+msgstr "Lisää kustannus palvelun hintaan, jos tuotteiden kokonaishinta on alle annetun rajan."
 
 msgid "Weight limits"
 msgstr "Painorajat"
@@ -1054,8 +1043,8 @@ msgid "Weight-based pricing"
 msgstr "Painoperusteinen hinnoittelu"
 
 msgid ""
-"Define price based on basket weight. Range minimums is counted in range only "
-"as zero."
+"Define price based on basket weight. Range minimums is counted in range only"
+" as zero."
 msgstr "Määritä painoperusteiset hintapisteet. "
 
 msgid "Weight does not match with any range."
@@ -1097,23 +1086,20 @@ msgstr "pyöristä nollasta poispäin"
 msgid "round towards zero"
 msgstr "pyöristä nollaan päin"
 
-msgid "Rounding"
-msgstr "Pyöristys"
+msgid "payment processor"
+msgstr "Maksupalvelun tarjoaja"
 
-msgid "Round total order price to the nearest quant."
-msgstr "Pyöristä tilauksen hinta lähimpään arvoon."
+msgid "rounding quantize"
+msgstr "pyöristyksen kvantitus"
 
-msgid "rounding quant"
-msgstr "pyöristysarvo"
+msgid "Rounding quantize for cash payment."
+msgstr "Pyöristys käteismaksuille."
 
 msgid "rounding mode"
 msgstr "pyöristystapa"
 
-msgid "rounding"
-msgstr "pyöristys"
-
-msgid "payment processor"
-msgstr "Maksupalvelun tarjoaja"
+msgid "Rounding mode for cash payment."
+msgstr "Pyöritystapa käteismaksuille."
 
 msgid "custom payment processor"
 msgstr "Mukautettu maksupalvelun tarjoaja"
@@ -1294,6 +1280,15 @@ msgstr "Oletushinnoittelu"
 
 msgid "Insufficient stock"
 msgstr "Varastomäärä ei riitä"
+
+msgid "inventory"
+msgstr "varasto"
+
+msgid "restock"
+msgstr "uudelleenvarastoi"
+
+msgid "restock logical"
+msgstr "uudelleenvarastoi looginen"
 
 msgid "Untaxed"
 msgstr "Verottamaton"

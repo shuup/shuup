@@ -1,36 +1,37 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
 # Eetu Häivälä <eetu.haivala@anders.fi>, 2015
 # Heikki Saari <heikki.saari@anders.fi>, 2016
-# Janne Tammi <janne.tammi@shuup.com>, 2015
+# Janne Tammi <janne@shuup.com>, 2016
+# Janne Tammi <janne@shuup.com>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
-# Juha Kujala <juha.kujala@shuup.com>, 2015-2016
+# Juha Kujala <juha.kujala@shoop.io>, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
-# Rauli Laine <rauli.laine@iki.fi>, 2015-2016
-# Shuup Admin <admin@shuup.com>, 2015
+# Rauli L. <rauli.laine@iki.fi>, 2015-2016
+# Shuup Admin <admin@shuup.com>, 2015-2016
+# Shuup Admin <admin@shuup.com>, 2016
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # tomijarvi <tomi@jarvi.pro>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
-# Tuomas Suutari <tuomas.suutari@shuup.com>, 2016
+# Tuomas Suutari <tuomas.suutari@shoop.io>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
-"PO-Revision-Date: 2016-06-29 09:32+0000\n"
-"Last-Translator: Tuomas Suutari <tuomas.suutari@shuup.com>\n"
-"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
-"language/fi_FI/)\n"
-"Language: fi_FI\n"
+"POT-Creation-Date: 2016-08-01 06:01+0000\n"
+"PO-Revision-Date: 2016-08-02 19:10+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Home"
@@ -44,6 +45,30 @@ msgstr "Tyhjennä"
 
 msgid "Select"
 msgstr "Valitse"
+
+msgid "Orders"
+msgstr "Tilaukset"
+
+msgid "Products"
+msgstr "Tuotteet"
+
+msgid "Contacts"
+msgstr "Kontaktit"
+
+msgid "Reports"
+msgstr "Raportit"
+
+msgid "Campaigns"
+msgstr "Kampanjat"
+
+msgid "Storefront"
+msgstr "Kaupan näkymä"
+
+msgid "Addons"
+msgstr "Lisäosat"
+
+msgid "Settings"
+msgstr "Asetukset"
 
 msgid "Attributes"
 msgstr "Attribuutit"
@@ -75,8 +100,40 @@ msgstr "Käytössä # Tuotetyypissä"
 msgid "Categories"
 msgstr "Kategoriat"
 
-msgid "Products"
-msgstr "Tuotteet"
+msgid "Primary Category"
+msgstr "Pääkategoria"
+
+msgid "Set this category as a primary for selected products."
+msgstr "Aseta tämä kategoria ensisijaiseksi valituille tuotteille."
+
+msgid "Default Category"
+msgstr "Oletuskategoria"
+
+msgid "Update product default category while setting primary category."
+msgstr "Päivitä tuotteiden oletuskategoria samalla kun asetat ensisijaisen kategorian."
+
+msgid "Additional Category"
+msgstr "Lisäkategoria"
+
+msgid "Add selected products to this category"
+msgstr "Lisää valitut tuotteet tähän kategoriaan"
+
+msgid "Remove Products"
+msgstr "Poista tuotteet"
+
+msgid "Remove selected products from this category"
+msgstr "Poista valitut tuotteet tästä kategoriasta"
+
+msgid "Invalid category"
+msgstr "Epäkelpo kategoria"
+
+#, python-format
+msgid "Visibility settings copied to %d product(s)"
+msgstr "Näkyvyysasetukset kopioitu %d tuotteelle/tuotteille"
+
+#, python-format
+msgid "%s has been deleted."
+msgstr "%s poistettu."
 
 msgid "Status"
 msgstr "Tila"
@@ -89,9 +146,6 @@ msgstr "Isäntä"
 
 msgid "Contact Groups"
 msgstr "Kontaktiryhmät"
-
-msgid "Contacts"
-msgstr "Kontaktit"
 
 msgid "Price display mode"
 msgstr "Hintojen näyttötapa"
@@ -129,14 +183,17 @@ msgstr[1] "%(count)s jäsentä poistettu"
 msgid "Number of Members"
 msgstr "Jäsenien määrä"
 
-msgid "Active customers"
-msgstr "Aktiivisia asiakkaita"
+msgid "Basic Information"
+msgstr "Perustiedot"
 
-msgid "Based on orders within 30 days"
-msgstr "Perustuen viimeisen 30 päivän tilauksiin"
+msgid "Addresses"
+msgstr "Osoitteet"
+
+msgid "Members"
+msgstr "Jäsenet"
 
 msgid "The Shuup frontend is not enabled."
-msgstr "Shuup-kauppakäyttöliittymä ei ole päällä."
+msgstr "Shuup kauppasi julkista puolta ei ole otettu käyttöön."
 
 msgid "Contact has no associated user."
 msgstr "Kontaktilla ei ole liitettyä käyttäjää."
@@ -152,8 +209,7 @@ msgstr "Lähetä salasananuusintasähköposti."
 
 #, python-format
 msgid "Are you sure you wish to send a password recovery email to %s?"
-msgstr ""
-"Haluatko varmasti lähettää salasananpalautussähköpostin osoitteeseen %s?"
+msgstr "Haluatko varmasti lähettää salasananpalautussähköpostin osoitteeseen %s?"
 
 msgid "New User"
 msgstr "Uusi käyttäjä"
@@ -244,6 +300,15 @@ msgstr "%d tilausta"
 msgid "The contact does not have an associated user."
 msgstr "Kontaktilla ei ole liitettyä käyttäjää."
 
+msgid "Customers Dashboard"
+msgstr "Asiakkaiden ohjausnäkymä"
+
+msgid "Active customers"
+msgstr "Aktiivisia asiakkaita"
+
+msgid "Based on orders within 30 days"
+msgstr "Perustuen viimeisen 30 päivän tilauksiin"
+
 msgid "Demo"
 msgstr "Demo"
 
@@ -288,9 +353,6 @@ msgstr "Tiedosto poistettu."
 msgid "%(file)s moved from %(old)s to %(new)s."
 msgstr "%(file)s siirretty sijainnista %(old)s sijaintiin %(new)s."
 
-msgid "Orders"
-msgstr "Tilaukset"
-
 msgid "Show orders"
 msgstr "Näytä tilaukset"
 
@@ -300,29 +362,6 @@ msgstr "Avoimet tilaukset"
 #, python-format
 msgid "%d outstanding orders"
 msgstr "%d avointa tilausta"
-
-msgid "Sales per Month (last year)"
-msgstr "Myynti/kk (viime vuosi)"
-
-#, python-format
-msgid "Sales (%(currency)s)"
-msgstr "Myynti (%(currency)s)"
-
-#, python-format
-msgid "Based on %d orders"
-msgstr "Perustuen %d tilaukseen"
-
-msgid "Today's Sales"
-msgstr "Päivän myynti"
-
-msgid "Lifetime Sales"
-msgstr "Myynti kautta aikain"
-
-msgid "Average Purchase"
-msgstr "Keskiostos"
-
-msgid "Open Orders Value"
-msgstr "Avoimia tilauksia"
 
 #, python-format
 msgid "The quantity '%(quantity)s' (for line %(text)s) is invalid (%(error)s)"
@@ -334,8 +373,7 @@ msgstr "Hinta '%(price)s' (rivillä %(text)s) ei ole kelvollinen (%(error)s)"
 
 #, python-format
 msgid "The discount '%(discount)s' (for line %(text)s is invalid (%(error)s)"
-msgstr ""
-"Alennus '%(discount)s' (rivillä %(text)s) ei ole kelvollinen (%(error)s)"
+msgstr "Alennus '%(discount)s' (rivillä %(text)s) ei ole kelvollinen (%(error)s)"
 
 msgid "Product line does not have a product set."
 msgstr "Tuoterivillä ei ole asetettua tuotetta."
@@ -348,15 +386,8 @@ msgstr "Tuotetta %s ei ole olemassa"
 msgid "Product %(product)s is not available in the %(shop)s shop."
 msgstr "Tuotetta %(product)s ei ole saatavilla %(shop)s kaupassa."
 
-#, python-format
-msgid "Product %(product)s is not orderable: %(error)s"
-msgstr "Tuote %(product)s ei ole tilattavissa: %(error)s"
-
 msgid "Please add lines to the order."
 msgstr "Lisää rivejä tilaukseen"
-
-msgid "Name is required for customer"
-msgstr "Asiakkaan nimi on pakollinen tieto"
 
 msgid "Tax number is not set for company."
 msgstr "Yritykselle ei ole asetettu veronumeroa ."
@@ -379,23 +410,20 @@ msgstr "Tilauksen sisältö"
 msgid "Log Entries"
 msgstr "Lokimerkinnät"
 
-msgid "Create Refund"
-msgstr "Luo hyvitys"
-
-msgid "This order cannot be refunded"
-msgstr "Tätä tilausta ei voi hyvittää"
+msgid "Shipments"
+msgstr "Lähetykset"
 
 msgid "Create Payment"
 msgstr "Luo maksu"
 
-msgid "This order cannot be paid at this point"
-msgstr "Tilausta ei voida maksaa tällä hetkellä"
-
 msgid "Create Shipment"
 msgstr "Luo lähetys"
 
-msgid "There are no products to ship"
-msgstr "Ei toimitettavia tuotteita"
+msgid "Create Refund"
+msgstr "Luo hyvitys"
+
+msgid "Actions"
+msgstr "Toiminnot"
 
 msgid "Set Complete"
 msgstr "Aseta käsitellyksi"
@@ -487,6 +515,9 @@ msgstr "Lukumäärä"
 msgid "Amount"
 msgstr "Määrä"
 
+msgid "Total incl. tax to refund"
+msgstr ""
+
 msgid "Restock products"
 msgstr "Uudelleenvarastoi tuotteet"
 
@@ -500,11 +531,14 @@ msgstr "Hyvitä koko tilaus"
 msgid "This order already has existing refunds"
 msgstr "Tällä tilauksella on jo hyvityksiä"
 
+msgid "Refund amount cannot be 0"
+msgstr "Hyvityksen määrä ei voi olla 0"
+
 msgid "Refund amount exceeds order amount."
 msgstr "Hyvityksen määrä on suurempi kuin tilauksen summa."
 
-msgid "Refund amount cannot be 0"
-msgstr "Hyvityksen määrä ei voi olla 0"
+msgid "Refund amounts should match sign on parent line."
+msgstr ""
 
 msgid "Refund created."
 msgstr "Hyvitys luotu."
@@ -545,12 +579,7 @@ msgstr "Modulin käyttöoikeudet"
 msgid ""
 "Modules with the same permissions as selected modules will be added "
 "automatically."
-msgstr ""
-"Kaikki moduulit, joilla on samat käyttöoikeudet kuin valituilla, lisätään "
-"automaattisesti"
-
-msgid "Members"
-msgstr "Jäsenet"
+msgstr "Kaikki moduulit, joilla on samat käyttöoikeudet kuin valituilla, lisätään automaattisesti"
 
 msgid "Product Types"
 msgstr "Tuotetyypit"
@@ -569,8 +598,16 @@ msgstr "Luo tuote \"%s\""
 msgid "Create Product with SKU \"%s\""
 msgstr "Luo tuote tuotekoodilla \"%s\""
 
+msgid ""
+"Number of units that can be purchased after the product is out of stock. Set"
+" to blank for product to be purchasable without limits"
+msgstr ""
+
 msgid "Minimum Purchase Quantity must be greater than 0."
 msgstr "Minimiostomäärän tulee olla vähintään 0."
+
+msgid "Backorder maximum must be greater than or equal to 0."
+msgstr ""
 
 #, python-format
 msgid "Thumbnail generation of %(media)s failed: %(error)s"
@@ -661,9 +698,7 @@ msgstr "Paketti tyhjennetty."
 msgid ""
 "Are you sure? This will unlink all children and remove all variation "
 "variables."
-msgstr ""
-"Oletko varma? Tämä toiminto poistaa liitokset kaikkiin lapsiin ja poistaa "
-"kaikki variaatiomuuttujat."
+msgstr "Oletko varma? Tämä toiminto poistaa liitokset kaikkiin lapsiin ja poistaa kaikki variaatiomuuttujat."
 
 msgid "Clear variation"
 msgstr "Tyhjennä variaatio"
@@ -671,9 +706,7 @@ msgstr "Tyhjennä variaatio"
 msgid ""
 "Are you sure? This will remove all variation variables, converting children "
 "to direct links."
-msgstr ""
-"Oletko varma? Tämä toiminto poistaa kaikki variaatiomuuttujat ja muuttaa "
-"lapset suoriksi linkeiksi."
+msgstr "Oletko varma? Tämä toiminto poistaa kaikki variaatiomuuttujat ja muuttaa lapset suoriksi linkeiksi."
 
 msgid "Convert to simple variation"
 msgstr "Muunna yksinkertaiseksi variaatioksi"
@@ -703,17 +736,14 @@ msgstr "Rajaa viivakoodin mukaan"
 msgid "Mode"
 msgstr "Tila"
 
-msgid "Primary Category"
-msgstr "Pääkategoria"
+msgid "Save as a copy"
+msgstr "Tallenna kopiona"
 
 msgid "Manage Cross-Selling"
 msgstr "Hallinnoi ristiinmyyntiä"
 
 msgid "Cross-Selling"
 msgstr "Ristiinmyynti"
-
-msgid "Actions"
-msgstr "Toiminnot"
 
 #, python-format
 msgid "Child: %s"
@@ -744,6 +774,32 @@ msgstr "Muunna paketti-isännäksi"
 
 msgid "Convert to Variation Parent"
 msgstr "Muunna variaatioisännäksi"
+
+msgid "Sales Dashboard"
+msgstr "Myynnin ohjausnäkymä"
+
+msgid "Sales per Month (last year)"
+msgstr "Myynti/kk (viime vuosi)"
+
+#, python-format
+msgid "Sales (%(currency)s)"
+msgstr "Myynti (%(currency)s)"
+
+#, python-format
+msgid "Based on %d orders"
+msgstr "Perustuen %d tilaukseen"
+
+msgid "Today's Sales"
+msgstr "Päivän myynti"
+
+msgid "Lifetime Sales"
+msgstr "Myynti kautta aikain"
+
+msgid "Average Purchase"
+msgstr "Keskiostos"
+
+msgid "Open Orders Value"
+msgstr "Avoimia tilauksia"
 
 msgid "Sales Units"
 msgstr "Myyntiyksiköt"
@@ -810,13 +866,9 @@ msgstr "Painon mukaan määräytyvä hinnoittelu"
 msgid "Shops"
 msgstr "Kaupat"
 
-msgid "System"
-msgstr "Järjestelmä"
-
 msgid ""
 "This field cannot be changed since there are existing orders for this shop."
-msgstr ""
-"Tätä kenttää ei voi muuttaa, koska tälle kaupalle on olemassa tilauksia."
+msgstr "Tätä kenttää ei voi muuttaa, koska tälle kaupalle on olemassa tilauksia."
 
 msgid "Domain"
 msgstr "Verkkotunnus"
@@ -831,15 +883,16 @@ msgstr "Ei %s -moduulia"
 msgid "Module"
 msgstr "Moduuli"
 
+msgid "System"
+msgstr "Järjestelmä"
+
 msgid "Telemetry"
 msgstr "Telemetria"
 
 msgid ""
-"Statistics will be periodically sent to Shuup.com after 24 hours. Click here "
-"for more information."
-msgstr ""
-"Tilastot lähetetään 24 tunnin jälkeen määräajoin shuup.com:iin. Klikkaa "
-"tästä saadaksesi lisää tietoja."
+"Statistics will be periodically sent to Shuup.com after 24 hours. Click here"
+" for more information."
+msgstr "Statistiikat tullaan jaksoittain lähettämään Shuup.com:lle 24 tunnin jälkeen. Paina tästä saadaksesi lisäinformaatiota."
 
 msgid "Taxes"
 msgstr "Verot"
@@ -907,6 +960,9 @@ msgstr "Aktivoi käyttäjä"
 msgid "Deactivate User"
 msgstr "Deaktivoi käyttäjä"
 
+msgid "Login as User"
+msgstr ""
+
 #, python-format
 msgid "User bound to contact %(contact)s."
 msgstr "Käyttäjä liitetty kontaktiin %(contact)s."
@@ -914,6 +970,19 @@ msgstr "Käyttäjä liitetty kontaktiin %(contact)s."
 #, python-format
 msgid "%(user)s is now %(state)s."
 msgstr "%(user)s on nyt %(state)s."
+
+msgid "No shop configured."
+msgstr ""
+
+msgid "You are already logged in."
+msgstr ""
+
+msgid "This user is not active."
+msgstr ""
+
+#, python-brace-format
+msgid "You're now logged in as {username}"
+msgstr ""
 
 msgid "Username"
 msgstr "Käyttäjänimi"
@@ -972,10 +1041,9 @@ msgstr "Käyttäjän %s salasana vaihdettu."
 msgid "Reset User Password"
 msgstr "Nollaa käyttäjän salasana"
 
-msgid "The `shuup.front.apps.auth` app needs to be enabled for password reset."
-msgstr ""
-"Salasanan palautusta varten `shuup.front.apps.auth` sovellus pitää kytkeä "
-"päälle."
+msgid ""
+"The `shuup.front.apps.auth` app needs to be enabled for password reset."
+msgstr "`shuup.front.apps.auth`  sovellus tarvitsee olla otettuna käyttöön palauttaaksesi salasanan."
 
 #, python-format
 msgid "Password recovery email sent to %(email)s"
@@ -1025,9 +1093,6 @@ msgstr "Kojelauta"
 msgid "Search for"
 msgstr "Etsi"
 
-msgid "Settings"
-msgstr "Asetukset"
-
 msgid "Hello"
 msgstr "Hei"
 
@@ -1037,8 +1102,14 @@ msgstr "Kirjaudu ulos"
 msgid "General Information"
 msgstr "Yleiset tiedot"
 
+msgid "Copy visibility settings to products"
+msgstr "Kopioi näkyvyysasetukset tuotteille"
+
 msgid "Category Image"
 msgstr "Kategorian kuva"
+
+msgid "* Products that has this category as a primary category."
+msgstr "* Tuotteet joilla on tämä kategoria ensisijaisena kategoriana."
 
 msgid "General information"
 msgstr "Yleiset tiedot"
@@ -1049,20 +1120,17 @@ msgstr "Lisää jäseniä"
 msgid "Add more"
 msgstr "Lisää enemmän"
 
-msgid "Addresses"
-msgstr "Osoitteet"
+msgid "Shipping address"
+msgstr "Toimitusosoite"
 
-msgid "Billing Address"
-msgstr "Laskutusosoitteet"
+msgid "No shipping address defined."
+msgstr "Toimitusosoitetta ei ole asetettu."
 
-msgid "Shipping Address"
-msgstr "Toimitusosoitteet"
+msgid "Billing address"
+msgstr "Laskutusosoite"
 
-msgid "Basic details"
-msgstr "Perustiedot"
-
-msgid "Basic Information"
-msgstr "Perustiedot"
+msgid "No billing address defined."
+msgstr "Laskutusosoitetta ei ole asetettu."
 
 msgid "Full Name"
 msgstr "Koko nimi"
@@ -1082,20 +1150,17 @@ msgstr "Tilin haltija"
 msgid "Merchant Notes"
 msgstr "Kauppiaan merkinnät"
 
-msgid "Shipping address"
-msgstr "Toimitusosoite"
-
-msgid "No shipping address defined."
-msgstr "Toimitusosoitetta ei ole asetettu."
-
-msgid "Billing address"
-msgstr "Laskutusosoite"
-
-msgid "No billing address defined."
-msgstr "Laskutusosoitetta ei ole asetettu."
-
 msgid "No members."
 msgstr "Ei jäseniä."
+
+msgid "Billing Address"
+msgstr "Laskutusosoite"
+
+msgid "Shipping Address"
+msgstr "Toimitusosoitteet"
+
+msgid "Basic details"
+msgstr "Perustiedot"
 
 msgid "Remove block"
 msgstr "Poista lohko"
@@ -1143,6 +1208,9 @@ msgstr "Veroton yksikköhinta"
 msgid "Taxless Discount"
 msgstr "Veroton alennus"
 
+msgid "Taxless Discount Percentage"
+msgstr ""
+
 msgid "Tax"
 msgstr "Vero"
 
@@ -1173,8 +1241,20 @@ msgstr "Lisää lokiin"
 msgid "There was an error adding the log entry."
 msgstr "Lokimerkinnän lisäämisessä tapahtui virhe."
 
+msgid "Tracking Code"
+msgstr "Seurantakoodi"
+
+msgid "Created"
+msgstr "Luotu"
+
+msgid "No shipments have been created yet."
+msgstr "Toimituksia ei ole vielä luotu."
+
 msgid "Line #"
-msgstr "Rivi"
+msgstr "Rivi #"
+
+msgid "Refunded Quantity"
+msgstr "Hyvitetty määrä"
 
 msgid "Refund Amount"
 msgstr "Hyvityksen määrä"
@@ -1242,6 +1322,9 @@ msgstr "Kokonaishinta (veroton)"
 msgid "Total Price"
 msgstr "Kokonaishinta"
 
+msgid "Customer Comment"
+msgstr "Asiakaskommentti"
+
 msgid "Tracking codes"
 msgstr "Seurantakoodit"
 
@@ -1301,6 +1384,9 @@ msgstr "Ostaminen"
 msgid "Shipping & Payment"
 msgstr "Toimitukset & Maksaminen"
 
+msgid "No orders found"
+msgstr ""
+
 msgid "This product is currently not orderable."
 msgstr "Tämä tuote ei ole tällä hetkellä tilattavissa."
 
@@ -1315,6 +1401,14 @@ msgstr "Tiedosto"
 
 msgid "Package Products"
 msgstr "Pakettituotteet"
+
+#, python-format
+msgid "Logical count: %(logical_count)s %(sales_unit)s"
+msgstr "Looginen luku: %(logical_count)s %(sales_unit)s"
+
+#, python-format
+msgid "Physical count: %(physical_count)s %(sales_unit)s"
+msgstr "Fyysinen luku: %(physical_count)s %(sales_unit)s"
 
 msgid "This product is not yet a package."
 msgstr "Tämä tuote ei ole pakettituote"
@@ -1343,9 +1437,7 @@ msgstr "Valitse alla olevat tuotteet tehdäksesi yksinkertaisen variaation."
 msgid ""
 "To create a variation with multiple variables, create the variables on the "
 "Variables tab and then link them to products here."
-msgstr ""
-"Luodaksesi variaation useammalla muuttujalla, luo muuttujat Muuttujat-"
-"välilehdellä ja linkitä ne sitten täällä tuotteisiin."
+msgstr "Luodaksesi variaation useammalla muuttujalla, luo muuttujat Muuttujat-välilehdellä ja linkitä ne sitten täällä tuotteisiin."
 
 msgid ""
 "Define price based basket weight range. Range minimum is counted in range "
@@ -1371,28 +1463,23 @@ msgid "Contact Address"
 msgstr "Yhteystiedot"
 
 msgid "About Shuup Telemetry"
-msgstr "Tietoja Shuupin telemetriasta"
+msgstr "Lisää Shuup telemetriasta"
 
 msgid "Shuup will occasionally send telemetry data to a Shuup.com server."
-msgstr "Shuup lähettää aina välillä telemetriadataa shuup.com palvelimelle."
+msgstr "Shuup lähettää ajoittain telemetriikkaa Shuup.com palvelimelle."
 
 #, python-format
 msgid ""
-"The data contains an unique installation key, as well as the hostname of the "
-"installation (as sent by the visiting browser; currently <code>%(host)s</"
-"code>)."
-msgstr ""
-"Tiedot sisältävät uniikin asennusavaimen sekä asennuksen osoitteen (selaimen "
-"lähettämänä; tällä hetkellä <code>%(host)s</code>). "
+"The data contains an unique installation key, as well as the hostname of the"
+" installation (as sent by the visiting browser; currently "
+"<code>%(host)s</code>)."
+msgstr "Tiedot sisältävät uniikin asennusavaimen sekä asennuksen osoitteen (selaimen lähettämänä; tällä hetkellä <code>%(host)s</code>). "
 
 msgid ""
 "No business data or other customer information is ever sent. Shuup.com only "
 "uses the telemetry data for statistical purposes and for insights about the "
 "software's installation base."
-msgstr ""
-"Liiketoiminta- tai asiakastietoja ei lähetetä koskaan. Shuup.com käyttää "
-"telemetriatietoja vain tilastointia varten ja kerätäkseen tietoja "
-"ohjelmiston asennuksista."
+msgstr "Mitään liiketoimintadataa tai asiakasinformaatiota ei \nkerätä. Shuup.com käyttää telemetriikkaa ainoastaan tilastollisiin tarpeisiin sekä ohjelmiston asennusasetusten keräämiseen."
 
 msgid "Opt-in / opt-out"
 msgstr "Mukanaolo"
@@ -1400,9 +1487,7 @@ msgstr "Mukanaolo"
 msgid ""
 "You are currently <span class=\"lead label label-success\">opted in</span> "
 "to send telemetry data to Shuup.com."
-msgstr ""
-"Tällä hetkellä  <span class=\"lead label label-success\">lähetät</span> "
-"telemetry-tietoja shuup.com:lle."
+msgstr "Sinä olet tällä hetkellä <span class=\"lead label label-success\">hyväksynyt</span> Shuup telemetriikan."
 
 msgid "Thank you for your valuable contribution."
 msgstr "Kiitos arvokkaasta panostuksestasi."
@@ -1413,9 +1498,7 @@ msgstr "Jättäydy syrjään"
 msgid ""
 "You are currently <span class=\"label label-warning\">opted out</span> of "
 "Shuup telemetry."
-msgstr ""
-"Tällä hetkellä  <span class=\"lead label label-success\">et lähetä</span> "
-"telemetry-tietoja shuup.com:lle."
+msgstr "Sinä olet tällä hetkellä <span class=\"label label-warning\">jättäytynyt pois</span> Shuup telemetriikasta."
 
 msgid "Opt in"
 msgstr "Tule mukaan"
@@ -1424,20 +1507,15 @@ msgid "Last Telemetry"
 msgstr "Viimeisin telemetria"
 
 msgid ""
-"Telemetry submission is currently suspended; data will only be sent 24 hours "
-"after installation if still opted in at that point."
-msgstr ""
-"Telemetrialähetykset ovat tällä hetkellä keskeytetty. Tietoja lähetetään "
-"vasta 24 tunnin kuluessa asennuksesta jollei lähetystä ole siihen mennessä "
-"kytketty pois päältä."
+"Telemetry submission is currently suspended; data will only be sent 24 hours"
+" after installation if still opted in at that point."
+msgstr "Telemetrialähetykset ovat tällä hetkellä keskeytetty. Tietoja lähetetään vasta 24 tunnin kuluessa asennuksesta jollei lähetystä ole siihen mennessä kytketty pois päältä."
 
 #, python-format
 msgid ""
 "Telemetry data was last submitted at %(submission_datetime)s - "
 "(%(submission_timesince)s) ago"
-msgstr ""
-"Telemetry-tiedot lähetettiin viimeksi %(submission_datetime)s - "
-"(%(submission_timesince)s)"
+msgstr "Telemetriatiedot lähetettiin viimeksi %(submission_datetime)s - (%(submission_timesince)s)"
 
 msgid "See the data that was submitted."
 msgstr "Katso data, joka toimitettiin."
@@ -1502,8 +1580,8 @@ msgid "You must be a staff member."
 msgstr "Sinun tulee olla henkilökunnan jäsen."
 
 #, python-format
-msgid "You do not have the required permissions: %r"
-msgstr "Sinulla ei ole tarvittavia oikeuksia: %r"
+msgid "You do not have the required permissions: %s"
+msgstr "Sinulla ei ole riittäviä käyttöoikeuksia: %s"
 
 #, python-format
 msgid "New %s created."

@@ -1,36 +1,36 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
 # Eetu Häivälä <eetu.haivala@anders.fi>, 2015
 # Heikki Saari <heikki.saari@anders.fi>, 2016
-# Janne Tammi <janne.tammi@shuup.com>, 2015
+# Janne Tammi <janne@shuup.com>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
-# Juha Kujala <juha.kujala@shuup.com>, 2015-2016
+# Juha Kujala <juha.kujala@shoop.io>, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
-# Rauli Laine <rauli.laine@iki.fi>, 2015-2016
+# Panu Tulimäki <panu@shuup.com>, 2016
+# Rauli L. <rauli.laine@iki.fi>, 2015-2016
 # Shuup Admin <admin@shuup.com>, 2015
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # tomijarvi <tomi@jarvi.pro>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
-# Tuomas Suutari <tuomas.suutari@shuup.com>, 2016
+# Tuomas Suutari <tuomas.suutari@shoop.io>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
-"PO-Revision-Date: 2016-06-29 09:35+0000\n"
-"Last-Translator: Tuomas Suutari <tuomas.suutari@shuup.com>\n"
-"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
-"language/fi_FI/)\n"
-"Language: fi_FI\n"
+"POT-Creation-Date: 2016-08-01 03:28+0000\n"
+"PO-Revision-Date: 2016-08-02 18:45+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Show Frontpage Welcome Text"
@@ -118,12 +118,6 @@ msgstr "Tallenna muutokset"
 msgid "Company information"
 msgstr "Yrityksen tiedot"
 
-msgid "Billing information"
-msgstr "Laskutustiedot"
-
-msgid "Shipping information"
-msgstr "Toimitustiedot"
-
 msgid "User account information"
 msgstr "Käyttäjätunnuksen tiedot"
 
@@ -136,14 +130,24 @@ msgstr "Linkitä käyttäjätili yritykseen"
 msgid "User information"
 msgstr "Käyttäjätiedot"
 
+msgid "Billing information"
+msgstr "Laskutustiedot"
+
+msgid "Copy to shipping information"
+msgstr "Kopioi toimitustietoihin"
+
+msgid "Shipping information"
+msgstr "Toimitustiedot"
+
+msgid "Copy to billing information"
+msgstr "Kopioi laskutustietoihin"
+
 msgid "Shop is currently in maintenance mode."
 msgstr "Kauppa on tällä hetkellä huoltotilassa."
 
 msgid ""
 "There were errors on submitted form fields. Please check them and try again."
-msgstr ""
-"Lähetetyissä lomakekentissä oli virheitä. Ole hyvä ja tarkista ne ja yritä "
-"uudelleen."
+msgstr "Lähetetyissä lomakekentissä oli virheitä. Ole hyvä ja tarkista ne ja yritä uudelleen."
 
 msgid "Shopping cart"
 msgstr "Ostoskori"
@@ -162,6 +166,15 @@ msgstr "Jatka ostoksia"
 
 msgid "Proceed to checkout"
 msgstr "Jatka kassalle"
+
+msgid "Save cart"
+msgstr "Tallenna ostoskori"
+
+msgid "Cart Title"
+msgstr "Ostoskorin otsikko"
+
+msgid "Save"
+msgstr "Tallenna"
 
 msgid "Coupon is not available."
 msgstr "Kuponki ei ole saatavilla."
@@ -257,8 +270,7 @@ msgid "Bad Request"
 msgstr "Epäkelpo pyyntö"
 
 msgid "Unfortunately the server couldn't process your request."
-msgstr ""
-"Valitettavasti sivulatauksen käsittely ei onnistu juuri tällä hetkellä."
+msgstr "Valitettavasti sivulatauksen käsittely ei onnistu juuri tällä hetkellä."
 
 msgid "Back to Homepage"
 msgstr "Takaisin etusivulle"
@@ -281,9 +293,7 @@ msgstr "Sisäinen palvelinvirhe"
 msgid ""
 "Unfortunately an internal server error occurred. Try refreshing the page or "
 "try again later."
-msgstr ""
-"Valitettavasti sivulataus epäonnistui. Voit uudelleenladata sivun tai "
-"yrittää myöhemmin uudelleen."
+msgstr "Valitettavasti sivulataus epäonnistui. Voit uudelleenladata sivun tai yrittää myöhemmin uudelleen."
 
 msgid "Categories"
 msgstr "Kategoriat"
@@ -296,6 +306,9 @@ msgstr "Muokkaa yrityksen lisätietoja"
 
 msgid "My orders"
 msgstr "Omat tilaukseni"
+
+msgid "My saved carts"
+msgstr "Omat ostoskorit"
 
 msgid "My wishlists"
 msgstr "Toivelistani"
@@ -598,8 +611,7 @@ msgstr "%(n)s tulosta löydettiin haulle \"<strong>%(query)s</strong>\"."
 
 #, python-format
 msgid "You have already logged in as <strong>%(username)s</strong>"
-msgstr ""
-"Olet jo kirjautunut sisään käyttäjätunnuksella <strong>%(username)s</strong>"
+msgstr "Olet jo kirjautunut sisään käyttäjätunnuksella <strong>%(username)s</strong>"
 
 msgid "Go to Homepage"
 msgstr "Etusivulle"
@@ -614,8 +626,7 @@ msgid "Recover your password"
 msgstr "Palauta salasanasi"
 
 msgid "You can recover your password with either username or email."
-msgstr ""
-"Voit palauttaa salasanasi joko käyttäjätunnuksella tai sähköpostiosoitteella."
+msgstr "Voit palauttaa salasanasi joko käyttäjätunnuksella tai sähköpostiosoitteella."
 
 msgid "Send password recovery instructions"
 msgstr "Lähetä salasanan palautusohjeet"

@@ -1,18 +1,20 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
 # Eetu Häivälä <eetu.haivala@anders.fi>, 2015
 # Heikki Saari <heikki.saari@anders.fi>, 2016
-# Janne Tammi <janne.tammi@shuup.com>, 2015
+# Janne Tammi <janne@shuup.com>, 2016
+# Janne Tammi <janne@shuup.com>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
-# Juha Kujala <juha.kujala@shuup.com>, 2015-2016
+# Juha Kujala <juha.kujala@shoop.io>, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
-# Rauli Laine <rauli.laine@iki.fi>, 2015-2016
-# Shuup Admin <admin@shuup.com>, 2015
+# Rauli L. <rauli.laine@iki.fi>, 2015-2016
+# Rauli L. <rauli.laine@iki.fi>, 2016
+# Shuup Admin <admin@shuup.com>, 2015-2016
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # tomijarvi <tomi@jarvi.pro>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
@@ -20,20 +22,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
-"PO-Revision-Date: 2016-06-21 12:40+0000\n"
-"Last-Translator: Heikki Saari <heikki.saari@anders.fi>\n"
-"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
-"language/fi_FI/)\n"
-"Language: fi_FI\n"
+"POT-Creation-Date: 2016-07-04 08:25+0000\n"
+"PO-Revision-Date: 2016-08-02 19:22+0000\n"
+"Last-Translator: Janne Tammi <janne@shuup.com>\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Shuup Extensible Theme Engine"
-msgstr "Shuupin laajennettava teemamoottori"
+msgstr "Shuup laajennettava teemamoottori"
 
 msgid "Themes"
 msgstr "Teemat"
@@ -135,6 +136,12 @@ msgstr "Resurssikoodinpätkä BODY-osion alkuun"
 msgid "Resource for end of body"
 msgstr "Resurssi BODY-osion loppuun"
 
+msgid "URL"
+msgstr "URL"
+
+msgid "Ordering"
+msgstr "Järjestys"
+
 msgid "Social Media Links"
 msgstr "Sosiaalisen median linkit"
 
@@ -144,8 +151,23 @@ msgstr "Aihe"
 msgid "Icon Size"
 msgstr "Ikonin koko"
 
+msgid "Default"
+msgstr "Oletus"
+
+msgid "Large"
+msgstr "Suuri"
+
 msgid "Alignment"
 msgstr "Kohdistus"
+
+msgid "Left"
+msgstr "Vasen"
+
+msgid "Center"
+msgstr "Keskellä"
+
+msgid "Right"
+msgstr "Oikea"
 
 msgid "text"
 msgstr "teksti"
@@ -228,6 +250,12 @@ msgstr "Nykyistä teemaa ei voitu määrittää."
 #, python-format
 msgid "Cannot add more than %d cells in one row."
 msgstr "Rivissä ei voi olla enempää kuin %d solua."
+
+msgid "Published"
+msgstr "Julkaistu"
+
+msgid "Reverted"
+msgstr "Palautettu"
 
 msgid "Full Width"
 msgstr "Täysi leveys"

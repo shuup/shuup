@@ -1,18 +1,20 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
 # Eetu Häivälä <eetu.haivala@anders.fi>, 2015
 # Heikki Saari <heikki.saari@anders.fi>, 2016
-# Janne Tammi <janne.tammi@shuup.com>, 2015
+# Janne Tammi <janne@shuup.com>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
-# Juha Kujala <juha.kujala@shuup.com>, 2015-2016
+# Juha Kujala <juha.kujala@shoop.io>, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
-# Rauli Laine <rauli.laine@iki.fi>, 2015
-# Shuup Admin <admin@shuup.com>, 2015
+# Panu Tulimäki <panu@shuup.com>, 2016
+# Rauli L. <rauli.laine@iki.fi>, 2015
+# Shuup Admin <admin@shuup.com>, 2015-2016
+# Shuup Admin <admin@shuup.com>, 2016
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # tomijarvi <tomi@jarvi.pro>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
@@ -20,16 +22,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
-"PO-Revision-Date: 2016-06-27 07:35+0000\n"
-"Last-Translator: Heikki Saari <heikki.saari@anders.fi>\n"
-"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
-"language/fi_FI/)\n"
-"Language: fi_FI\n"
+"POT-Creation-Date: 2016-08-01 03:28+0000\n"
+"PO-Revision-Date: 2016-08-02 19:21+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Abandoned Cart Value"
@@ -77,6 +78,61 @@ msgstr "Yhteensä"
 
 msgid "Ordered"
 msgstr "Tilattu"
+
+msgid "Shuup Frontend - Saved Baskets"
+msgstr "Shuup Frontend - Tallennetut ostoskorit"
+
+msgid "Home"
+msgstr "Koti"
+
+msgid "My Saved Carts"
+msgstr "Tallennetut ostoskorit"
+
+msgid "Add all products to cart"
+msgstr "Lisää kaikki tuotteet koriin"
+
+msgid "Delete cart"
+msgstr "Poista ostoskori"
+
+msgid "Product"
+msgstr "Tuote"
+
+msgid "Quantity"
+msgstr "Määrä"
+
+msgid "Price"
+msgstr "Hinta"
+
+msgid "Saved Carts"
+msgstr "Tallennetut ostoskorit"
+
+msgid "Title"
+msgstr "Otsikko"
+
+msgid "Product Count"
+msgstr "Tuotteiden määrä"
+
+msgid "Details"
+msgstr "Tiedot"
+
+msgid "You haven't saved any carts yet."
+msgstr "Sinulla ei vielä ole yhtään tallennettua ostoskoria."
+
+msgid "Please enter a basket title."
+msgstr "Ole hyvä ja anna ostoskorin otsikko."
+
+msgid "Cannot save an empty basket."
+msgstr "Et voi tallentaa tyhjää ostoskoria."
+
+msgid "Product not available in this shop"
+msgstr "Tuote ei ole saatavilla tässä kaupassa"
+
+msgid "Invalid supplier"
+msgstr "Virheellinen toimittaja"
+
+#, python-format
+msgid "%d product(s) added to cart"
+msgstr "%d tuote/tuotetta lisätty ostoskoriin"
 
 #, python-format
 msgid "Invalid command %s"
@@ -232,7 +288,7 @@ msgid "Server Error"
 msgstr "Palvelinvirhe"
 
 msgid "Welcome to Shuup!"
-msgstr "Tervetuloa Shuupin pariin!"
+msgstr "Tervetuloa Shuuppiin!"
 
 #, python-format
 msgid "Welcome to %(name)s!"
@@ -255,9 +311,7 @@ msgstr "valitaksesi teeman ja pystyttääksesi kauppasi."
 msgid ""
 "The administration interface does not seem to be available. Use other means "
 "to choose a theme."
-msgstr ""
-"Hallintakäyttöliittymä ei ole saatavilla. Käytä jotain muuta tapaa "
-"valitaksesi teeman."
+msgstr "Hallintakäyttöliittymä ei ole saatavilla. Käytä jotain muuta tapaa teeman valintaan."
 
 msgid "You are not an administrator"
 msgstr "Et ole ylläpitäjä"
