@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-10 16:38+0000\n"
-"PO-Revision-Date: 2016-06-29 01:20+0000\n"
+"POT-Creation-Date: 2016-07-04 08:25+0000\n"
+"PO-Revision-Date: 2016-07-29 16:35+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -69,7 +69,7 @@ msgstr "dados"
 
 #, python-format
 msgid "Theme configuration for %s"
-msgstr "Configuração de tema para %s"
+msgstr "Configuração do tema para %s"
 
 msgid "Plugin"
 msgstr "Plugin"
@@ -90,13 +90,13 @@ msgid "Image"
 msgstr "Imagem"
 
 msgid "Image Link URL"
-msgstr "URL do Link da Imagem"
+msgstr "Link URL da Imagem"
 
 msgid "Full width"
 msgstr "Largura total"
 
 msgid "Set image to full width of cell"
-msgstr "Definir imagem à largura total da célula"
+msgstr "Definir à imagem a largura total da célula"
 
 msgid "Width (px)"
 msgstr "Largura (px)"
@@ -111,16 +111,22 @@ msgid "Snippets"
 msgstr "Snippets"
 
 msgid "In-Place Snippet"
-msgstr "Snippet In-Place"
+msgstr "Snippet Local"
 
 msgid "Resource snippet for end of head"
-msgstr "Trecho de recurso para o fim do cabeçalho"
+msgstr "Snippet de recurso para o final de head"
 
 msgid "Resource snippet for beginning of body"
-msgstr "Trecho de recurso para o início de <body>"
+msgstr "Snippet de recurso para o início de body"
 
 msgid "Resource for end of body"
-msgstr "Recurso para o final de <body>"
+msgstr "Recurso para o final de body"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Ordering"
+msgstr "Ordenação"
 
 msgid "Social Media Links"
 msgstr "Links de Mídias Sociais"
@@ -131,8 +137,23 @@ msgstr "Tópico"
 msgid "Icon Size"
 msgstr "Tamanho do Ícone"
 
+msgid "Default"
+msgstr "Padrão"
+
+msgid "Large"
+msgstr "Grande"
+
 msgid "Alignment"
 msgstr "Alinhamento"
+
+msgid "Left"
+msgstr "Esquerda"
+
+msgid "Center"
+msgstr "Centro"
+
+msgid "Right"
+msgstr "Direita"
 
 msgid "text"
 msgstr "texto"
@@ -166,10 +187,10 @@ msgid "Add new row"
 msgstr "Adicionar nova linha"
 
 msgid "Theme Configuration"
-msgstr "Configuração de Tema"
+msgstr "Configuração do Tema"
 
 msgid "No themes are installed."
-msgstr "Não há temas instalados."
+msgstr "Nenhum tema está instalado."
 
 msgid "Theme"
 msgstr "Tema"
@@ -191,10 +212,10 @@ msgstr " Configurar"
 
 #, python-format
 msgid "Theme Configuration: %(name)s"
-msgstr "Configuração de Tema: %(name)s"
+msgstr "Configuração do Tema: %(name)s"
 
 msgid "There's nothing to configure in this theme."
-msgstr "Não há nada para configurar no âmbito deste tema."
+msgstr "Não há nada para configurar neste tema."
 
 msgid "Revert Changes"
 msgstr "Reverter Alterações"
@@ -210,11 +231,17 @@ msgid "Unknown command %s"
 msgstr "Comando desconhecido %s"
 
 msgid "Unable to determine current theme."
-msgstr "Não é possível determinar o tema atual."
+msgstr "Não foi possível determinar o tema atual."
 
 #, python-format
 msgid "Cannot add more than %d cells in one row."
 msgstr "Não é possível adicionar mais do que %d células em uma linha."
+
+msgid "Published"
+msgstr "Publicado"
+
+msgid "Reverted"
+msgstr "Revertido"
 
 msgid "Full Width"
 msgstr "Largura Total"

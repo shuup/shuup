@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 12:52+0000\n"
-"PO-Revision-Date: 2016-06-28 21:58+0000\n"
-"Last-Translator: Tuomas Suutari <tuomas.suutari@shuup.com>\n"
+"POT-Creation-Date: 2016-07-29 01:21+0000\n"
+"PO-Revision-Date: 2016-07-30 11:35+0000\n"
+"Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -55,10 +55,10 @@ msgid "Newest first"
 msgstr "Mais recente primeiro"
 
 msgid "Smallest first"
-msgstr "Menor primeiro"
+msgstr "Menores primeiro"
 
 msgid "Largest first"
-msgstr "Maior primeiro"
+msgstr "Maiores primeiro"
 
 msgid "Drop your files here"
 msgstr "Solte os seus arquivos aqui"
@@ -76,7 +76,7 @@ msgid "Edit"
 msgstr "Editar"
 
 msgid "Click the <strong>Upload</strong> button to upload files."
-msgstr "Clique no botão <strong>Fazer upload</strong> para fazer o upload de arquivos."
+msgstr "Clique no botão <strong>Fazer upload</strong> para enviar arquivos."
 
 msgid ""
 "<span>Drag and drop</span> files here<br> or click the <span>Upload</span> "
@@ -114,11 +114,17 @@ msgstr "Quantidade"
 msgid "Unit Price"
 msgstr "Preço Unitário"
 
+msgid "Discounted Unit Price"
+msgstr "Preço Unitário com Desconto"
+
 msgid "Discount amount"
-msgstr "Valor de desconto"
+msgstr "Valor do desconto"
+
+msgid "Discount percent"
+msgstr "% de desconto"
 
 msgid "Total (excluding taxes)"
-msgstr "Total (sem impostos)"
+msgstr "Total (excluindo impostos)"
 
 msgid "Tax percent"
 msgstr "Alíquota de imposto"
@@ -132,8 +138,16 @@ msgstr "Endereço de cobrança"
 msgid "Shipping address"
 msgstr "Endereço de entrega"
 
+#, javascript-format
+msgid "Customer with same %s already exists."
+msgstr "Cliente com mesmo %s já existe."
+
+#, javascript-format
+msgid "Click to select user %s."
+msgstr "Clique para selecionar o usuário %s."
+
 msgid "Full Name"
-msgstr ""
+msgstr "Nome Completo"
 
 msgid "Phone"
 msgstr "Telefone"
@@ -142,40 +156,40 @@ msgid "Email"
 msgstr "E-mail"
 
 msgid "Groups"
-msgstr ""
+msgstr "Grupos"
 
 msgid "Companies"
-msgstr ""
+msgstr "Empresas"
 
 msgid "Merchant Notes"
-msgstr ""
+msgstr "Notas do Lojista"
 
 msgid "Year"
-msgstr ""
+msgstr "Ano"
 
 msgid "Total Sales"
-msgstr ""
+msgstr "Vendas Totais"
 
 msgid "Shipment Status"
-msgstr ""
+msgstr "Status da Remessa"
 
 msgid "Payment Status"
-msgstr ""
+msgstr "Status do Pagamento"
 
 msgid "Order Status"
-msgstr ""
+msgstr "Status do Pedido"
 
 msgid "Customer Information"
-msgstr ""
+msgstr "Informações do Cliente"
 
 msgid "Order Summary"
-msgstr ""
+msgstr "Resumo do Pedido"
 
 msgid "Recent Orders"
-msgstr ""
+msgstr "Pedidos Recentes"
 
 msgid "Close"
-msgstr ""
+msgstr "Fechar"
 
 msgid "A new customer will be created based on billing address."
 msgstr "Um novo cliente será criado com base no endereço de cobrança."
@@ -190,7 +204,7 @@ msgid "New Customer"
 msgstr "Novo Cliente"
 
 msgid "View Details"
-msgstr ""
+msgstr "Ver Detalhes"
 
 msgid "Save customer details while creating order"
 msgstr "Salvar detalhes do cliente durante a criação do pedido"
@@ -234,16 +248,16 @@ msgstr "Forma de Pagamento"
 msgid ""
 "Method rules, taxes and possible extra discounts are calculated after "
 "proceeding."
-msgstr "Formas de entrega e pagamento, impostos e possíveis descontos extras serão todos calculados após prosseguir."
+msgstr "Regras das formas de entrega e pagamento, impostos e eventuais descontos extras serão calculados após prosseguir."
 
 msgid "Proceed"
 msgstr "Prosseguir"
 
 msgid "Logical Count"
-msgstr "Contagem Lógica"
+msgstr "Estoque Lógico"
 
 msgid "Physical Count"
-msgstr "Contagem Física"
+msgstr "Estoque Físico"
 
 msgid "Select product"
 msgstr "Selecionar produto"
@@ -260,29 +274,29 @@ msgstr "Preço Total"
 msgid "Base Unit Price"
 msgstr "Preço Unitário Base"
 
-msgid "Discounted Unit Price"
-msgstr "Preço Unitário com Desconto"
-
 msgid "Discount Percent"
 msgstr "% de Desconto"
 
 msgid "Total Discount Amount"
-msgstr "Valor Total do Desconto"
+msgstr "Valor Total de Desconto"
 
 msgid "Line Total"
 msgstr "Total do Item"
 
 msgid "Orderline type"
-msgstr "Tipo do item de pedido"
+msgstr "Tipo de item de pedido"
+
+msgid "Missing JavaScript dependencies detected"
+msgstr "Dependências JavaScript que estão faltando detectadas"
 
 msgid ""
 "If your product prices vary based on customer, you might want to select "
 "customer first."
-msgstr "Se os preços dos produtos variarem de acordo com o cliente, você pode querer selecioná-lo primeiro."
+msgstr "Se os preços de seus produtos variarem de acordo com o cliente, você pode querer selecionar o cliente primeiro."
 
 #, javascript-format
 msgid "All prices are in %s currency."
-msgstr "Todos os preços estão em %s (moeda)."
+msgstr "Todos os preços estão em moeda %s."
 
 msgid "All prices include taxes."
 msgstr "Todos os preços incluem impostos."
@@ -292,6 +306,14 @@ msgstr "Impostos não inclusos."
 
 msgid "Add new line"
 msgstr "Adicionar novo item"
+
+msgid "Quick add product line"
+msgstr "Adição rápida de item de produto"
+
+msgid ""
+"Search product by name, SKU, or barcode and press button to add product "
+"line."
+msgstr "Procure o produto pelo nome, SKU ou código de barras e pressione o botão para adicionar o item de produto."
 
 msgid "No shipping method"
 msgstr "Nenhuma forma de entrega"
@@ -309,7 +331,7 @@ msgid "Other"
 msgstr "Outro"
 
 msgid "Tax number"
-msgstr "CNPJ"
+msgstr "Número de contribuinte"
 
 msgid "Street"
 msgstr "Endereço"
@@ -330,7 +352,7 @@ msgid "Country"
 msgstr "País"
 
 msgid "No records found."
-msgstr ""
+msgstr "Nenhum registro encontrado."
 
 msgid "Identifier"
 msgstr "Identificador"

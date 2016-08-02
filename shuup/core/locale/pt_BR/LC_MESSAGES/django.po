@@ -1,4 +1,3 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # 
@@ -8,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 04:22+0000\n"
-"PO-Revision-Date: 2016-06-28 21:59+0000\n"
-"Last-Translator: Tuomas Suutari <tuomas.suutari@shuup.com>\n"
+"POT-Creation-Date: 2016-07-26 01:59+0000\n"
+"PO-Revision-Date: 2016-07-30 11:40+0000\n"
+"Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -50,13 +49,13 @@ msgid "name suffix"
 msgstr "sufixo do nome"
 
 msgid "name extension"
-msgstr "extensão do nome (razão social)"
+msgstr "extensão do nome"
 
 msgid "company name"
-msgstr "nome da empresa (razão social)"
+msgstr "nome da empresa"
 
 msgid "tax number"
-msgstr "CNPJ"
+msgstr "número de contribuinte"
 
 msgid "phone"
 msgstr "telefone"
@@ -119,7 +118,7 @@ msgid "shown on product page"
 msgstr "mostrado na página do produto"
 
 msgid "searchable metadata"
-msgstr "metadados procuráveis"
+msgstr "metadados pesquisáveis"
 
 msgid "private metadata"
 msgstr "metadados privados"
@@ -140,7 +139,7 @@ msgid "date and time"
 msgstr "data e hora"
 
 msgid "date only"
-msgstr "somente data"
+msgstr "data apenas"
 
 msgid "translated string"
 msgstr "string traduzida"
@@ -149,7 +148,7 @@ msgid "untranslated string"
 msgstr "string não traduzida"
 
 msgid "searchable"
-msgstr "procurável"
+msgstr "pesquisável"
 
 msgid "type"
 msgstr "tipo"
@@ -394,7 +393,10 @@ msgid "discount"
 msgstr "desconto"
 
 msgid "refund"
-msgstr ""
+msgstr "devolução"
+
+msgid "rounding"
+msgstr "arredondamento"
 
 msgid "order"
 msgstr "pedido"
@@ -406,7 +408,7 @@ msgid "parent line"
 msgstr "item pai"
 
 msgid "line type"
-msgstr "tipo do item"
+msgstr "tipo de item"
 
 msgid "line SKU"
 msgstr "SKU do item"
@@ -433,7 +435,7 @@ msgid "unit price amount (undiscounted)"
 msgstr "valor do preço unitário (não descontado)"
 
 msgid "total amount of discount"
-msgstr "valor total do desconto"
+msgstr "valor total de desconto"
 
 msgid "order line"
 msgstr "item de pedido"
@@ -496,10 +498,10 @@ msgid "modified on"
 msgstr "modificado em"
 
 msgid "order identifier"
-msgstr "identificador do pedido"
+msgstr "identificador de pedido"
 
 msgid "label"
-msgstr "etiqueta"
+msgstr "rótulo"
 
 msgid "reference number"
 msgstr "número de referência"
@@ -514,16 +516,16 @@ msgid "email address"
 msgstr "endereço de e-mail"
 
 msgid "creating user"
-msgstr "usuário de criação"
+msgstr "usuário criação"
 
 msgid "modifier user"
-msgstr "usuário de modificação"
+msgstr "usuário modificação"
 
 msgid "payment status"
 msgstr "status do pagamento"
 
 msgid "shipping status"
-msgstr "status da entrega"
+msgstr "status de entrega"
 
 msgid "payment method"
 msgstr "forma de pagamento"
@@ -568,7 +570,7 @@ msgid "order date"
 msgstr "data do pedido"
 
 msgid "payment date"
-msgstr "data do pagamento"
+msgstr "data de pagamento"
 
 msgid "customer comment"
 msgstr "comentário do cliente"
@@ -600,10 +602,7 @@ msgstr "Remessa #%d criada."
 
 #, python-format
 msgid "Refund for %s"
-msgstr ""
-
-msgid "Manual refund"
-msgstr ""
+msgstr "Devolução para %s"
 
 msgid "All rows requiring verification have been verified."
 msgstr "Todas as linhas que necessitam de verificação foram verificadas."
@@ -656,13 +655,13 @@ msgstr "tipo"
 msgid ""
 "Enter URL to external file. If this field is filled, the selected media "
 "doesn't apply."
-msgstr "Digite o URL de um arquivo externo. Se este campo for preenchido, a mídia selecionada não se aplica."
+msgstr "Digite o URL para um arquivo externo. Se este campo for preenchido, a mídia selecionada não se aplica."
 
 msgid "public (shown on product page)"
 msgstr "público (mostrado na página do produto)"
 
 msgid "purchased (shown for finished purchases)"
-msgstr "comprado (mostrado para as compras realizadas)"
+msgstr "comprado (mostrado para compras realizadas)"
 
 msgid "product attachment"
 msgstr "anexo do produto"
@@ -686,7 +685,10 @@ msgid "listed"
 msgstr "listado"
 
 msgid "purchasable"
-msgstr "disponível para compra"
+msgstr "comprável"
+
+msgid "backorder maximum"
+msgstr "máximo de pedidos em espera"
 
 msgid "purchase multiple"
 msgstr "múltiplos de compra"
@@ -695,10 +697,10 @@ msgid "minimum purchase"
 msgstr "compra mínima"
 
 msgid "limited for shipping methods"
-msgstr "limitado para formas de entrega"
+msgstr "limitado para as formas de entrega"
 
 msgid "limited for payment methods"
-msgstr "limitado para formas de pagamento"
+msgstr "limitado para as formas de pagamento"
 
 msgid "shipping methods"
 msgstr "formas de entrega"
@@ -722,20 +724,20 @@ msgid "This product has been deleted."
 msgstr "Este produto foi excluído."
 
 msgid "This product is not visible."
-msgstr "Este produto não está visível."
+msgstr "Este produto não é visível."
 
 msgid "The Product is invisible to users not logged in."
-msgstr "O Produto não está visível para os usuários não autenticados."
+msgstr "O Produto é invisível para os usuários não autenticados."
 
 msgid "This product is not visible to your group."
-msgstr "Este produto não está visível para o seu grupo."
+msgstr "Este produto não é visível para o seu grupo."
 
 msgid "The product has no supplier."
 msgstr "O produto não tem nenhum fornecedor."
 
 #, python-format
 msgid "The purchase quantity needs to be at least %d for this product."
-msgstr "A quantidade de compra, para este produto, tem que ser pelo menos %d."
+msgstr "A quantidade de compra deve ser de pelo menos %d para este produto."
 
 #, python-format
 msgid "The product is not supplied by %s."
@@ -914,17 +916,17 @@ msgid ""
 msgstr "Não há suporte a hierarquias de vários níveis de filiação (pai já é um filho)"
 
 msgid "Parent is a variable variation parent, yet variables were not passed"
-msgstr "Pai é uma variação de variáveis pai, no entanto as variáveis não foram passadas"
+msgstr "Pai é uma variação de variáveis pai, no entanto, as variáveis não foram passadas"
 
 msgid ""
 "Multilevel parentage hierarchies aren't supported (this product is a simple "
 "variation parent)"
-msgstr "Não há suporte a hierarquias de vários níveis de filiação (este produto é pai de uma variação simples)"
+msgstr "Não há suporte a hierarquias de vários níveis de filiação (este produto é um pai de variação simples)"
 
 msgid ""
 "Multilevel parentage hierarchies aren't supported (this product is a "
 "variable variation parent)"
-msgstr "Não há suporte a hierarquias de vários níveis de filiação (este produto é pai de uma variação de variáveis)"
+msgstr "Não há suporte a hierarquias de vários níveis de filiação (este produto é um pai de variação de variáveis)"
 
 msgid "Product is currently not a normal product, can't turn into package"
 msgstr "O produto não é mais um produto comum, não pode ser convertido em pacote"
@@ -978,7 +980,7 @@ msgstr "%s está desabilitado"
 
 #, python-format
 msgid "%s is for different shop"
-msgstr "%s é para outra loja"
+msgstr "%s é para uma loja diferente"
 
 #, python-format
 msgid "%(service_name)s: %(sub_item)s"
@@ -988,7 +990,7 @@ msgid "Fixed cost"
 msgstr "Custo fixo"
 
 msgid "Add fixed cost to price of the service."
-msgstr "Adiciona o custo fixo ao preço do serviço."
+msgstr "Adiciona um custo fixo ao preço do serviço."
 
 msgid "Waiving cost"
 msgstr "Isenção de custo"
@@ -996,7 +998,7 @@ msgstr "Isenção de custo"
 msgid ""
 "Add cost to price of the service if total price of products is less than a "
 "waive limit."
-msgstr "Adiciona o custo ao preço do serviço quando o valor total dos produtos for inferior a um limite de isenção."
+msgstr "Adiciona um custo ao preço do serviço se o preço total dos produtos for inferior a um limite de isenção."
 
 msgid "Weight limits"
 msgstr "Limites de peso"
@@ -1031,7 +1033,7 @@ msgid ""
 msgstr "Define o preço com base no peso do carrinho. Mínimos do intervalo são contabilizados na faixa como zero apenas."
 
 msgid "Weight does not match with any range."
-msgstr "Peso não é compatível com nenhum intervalo."
+msgstr "O peso não é compatível com nenhum intervalo."
 
 msgid "Contact group availability"
 msgstr "Disponibilidade do grupo de contatos"
@@ -1049,19 +1051,19 @@ msgid "Service is not available for any of the customers groups."
 msgstr "Serviço não está disponível para nenhum dos grupos de clientes."
 
 msgid "Staff only availability"
-msgstr ""
+msgstr "Disponibilidade apenas membros da equipe"
 
 msgid "Limit service availability to staff only"
-msgstr ""
+msgstr "Limita a disponibilidade do serviço para membros da equipe apenas"
 
 msgid "Service is only available for staff"
-msgstr ""
+msgstr "Serviço só está disponível para os membros da equipe"
 
 msgid "round to nearest with ties going away from zero"
-msgstr "arredonda para o mais próximo com os meios direcionados para longe de zero"
+msgstr "arredonda para o mais próximo com os intermediários se afastando de zero"
 
 msgid "round to nearest with ties going towards zero"
-msgstr "arredonda para o mais próximo com os meios direcionados em direção a zero"
+msgstr "arredonda para o mais próximo com os intermediários se aproximando a zero"
 
 msgid "round away from zero"
 msgstr "arredonda para longe de zero"
@@ -1069,29 +1071,26 @@ msgstr "arredonda para longe de zero"
 msgid "round towards zero"
 msgstr "arredonda em direção a zero"
 
-msgid "Rounding"
-msgstr "Arredondamento"
+msgid "payment processor"
+msgstr "processador de pagamentos"
 
-msgid "Round total order price to the nearest quant."
-msgstr "Arredonda o preço total do pedido para o quantitativo mais próximo."
+msgid "rounding quantize"
+msgstr "quantize de arredondamento"
 
-msgid "rounding quant"
-msgstr "quantitativo de arredondamento"
+msgid "Rounding quantize for cash payment."
+msgstr "Quantize de arredondamento para pagamentos em dinheiro."
 
 msgid "rounding mode"
 msgstr "modo de arredondamento"
 
-msgid "rounding"
-msgstr "arredondamento"
-
-msgid "payment processor"
-msgstr "processador de pagamentos"
+msgid "Rounding mode for cash payment."
+msgstr "Modo de arredondamento para pagamentos em dinheiro."
 
 msgid "custom payment processor"
 msgstr "processador de pagamentos personalizado"
 
 msgid "custom payment processors"
-msgstr "processadores de pagamento personalizados"
+msgstr "processadores de pagamentos personalizados"
 
 msgid "Manually processed payment"
 msgstr "Pagamento processado manualmente"
@@ -1186,7 +1185,7 @@ msgid "external"
 msgstr "externo"
 
 msgid "supplier type"
-msgstr "tipo do fornecedor"
+msgstr "tipo de fornecedor"
 
 msgid "stock managed"
 msgstr "estoque gerenciado"
@@ -1267,11 +1266,20 @@ msgstr "Preço Padrão"
 msgid "Insufficient stock"
 msgstr "Estoque insuficiente"
 
+msgid "inventory"
+msgstr "inventário"
+
+msgid "restock"
+msgstr "reabastecimento"
+
+msgid "restock logical"
+msgstr "reabastecimento lógico"
+
 msgid "Untaxed"
 msgstr "Não tributado"
 
 msgid "This field cannot be changed since it is protected."
-msgstr "Este campo não pode ser alterado pois está protegido."
+msgstr "Este campo não pode ser alterado uma vez que está protegido."
 
 msgid "First Last"
 msgstr "Primeiro Último"

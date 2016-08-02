@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# christianhess <christianhess.rlz@gmail.com>, 2016
+# Christian Hess <christianhess.rlz@gmail.com>, 2016
 # Jonathan Hess <jhess666@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-30 23:37+0000\n"
-"PO-Revision-Date: 2016-06-29 02:18+0000\n"
+"PO-Revision-Date: 2016-07-30 02:09+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -40,31 +40,31 @@ msgid "Email"
 msgstr "E-mail"
 
 msgid "Please provide either username or email, not both."
-msgstr "Por favor, informe um nome de usuário ou um e-mail, nunca ambos."
+msgstr "Por favor, forneça um nome de usuário ou um e-mail, nunca ambos."
 
 msgid "Please provide either username or email."
-msgstr "Por favor, informe um nome de usuário ou um e-mail."
+msgstr "Por favor, forneça um nome de usuário ou um e-mail."
 
 msgid "shop"
 msgstr "loja"
 
 msgid "Log in"
-msgstr "Fazer login"
+msgstr "Entrar"
 
 msgid "Forgot your password?"
 msgstr "Esqueceu sua senha?"
 
 msgid "Logged out"
-msgstr "Efetuou logout"
+msgstr "Desconectado"
 
 msgid "You have been logged out."
-msgstr "Você foi desautenticado."
+msgstr "Você foi desconectado."
 
 msgid "Recover your password"
 msgstr "Recupere sua senha"
 
 msgid "Send password recovery instructions"
-msgstr "Enviar instruções de recuperação da senha"
+msgstr "Enviar instruções de recuperação de senha"
 
 msgid "Password Changed"
 msgstr "Senha Alterada"
@@ -84,13 +84,13 @@ msgstr "Oi %(fullname)s"
 
 #, python-format
 msgid "In case you've forgotten, your username is %(username)s."
-msgstr "Caso você tenha esquecido, seu nome de usuário é %(username)s."
+msgstr "Caso tenha esquecido, seu nome de usuário é %(username)s."
 
 #, python-format
 msgid ""
 "You're receiving this email because you requested a password reset for your "
 "user account at %(site_name)s."
-msgstr "Você está recebendo este e-mail porque solicitou a redefinição de senha para sua conta de usuário na loja %(site_name)s."
+msgstr "Você está recebendo este e-mail porque solicitou a redefinição de senha para sua conta de usuário em %(site_name)s."
 
 msgid "Please go to the following page and choose a new password:"
 msgstr "Por favor, vá para a seguinte página e escolha uma nova senha:"
@@ -100,7 +100,7 @@ msgid ""
 "    If an user account is associated with the information you entered,\n"
 "    you should receive instructions on how to reset your password shortly.\n"
 "    "
-msgstr "\nSe uma conta de usuário estiver associada às informações digitadas,\nvocê deverá receber instruções sobre como redefinir sua senha muito em breve.\n "
+msgstr "\nSe uma conta de usuário estiver associada às informações digitadas,\nvocê deverá receber instruções sobre como redefinir sua senha logo em breve.\n "
 
 msgid "This recovery link is invalid."
 msgstr "Este link de recuperação é inválido."

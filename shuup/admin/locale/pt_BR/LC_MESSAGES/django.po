@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-27 22:07+0000\n"
-"PO-Revision-Date: 2016-06-28 21:58+0000\n"
-"Last-Translator: Tuomas Suutari <tuomas.suutari@shuup.com>\n"
+"POT-Creation-Date: 2016-07-29 01:21+0000\n"
+"PO-Revision-Date: 2016-07-30 11:38+0000\n"
+"Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,6 +30,30 @@ msgstr "Limpar"
 
 msgid "Select"
 msgstr "Selecionar"
+
+msgid "Orders"
+msgstr "Pedidos"
+
+msgid "Products"
+msgstr "Produtos"
+
+msgid "Contacts"
+msgstr "Contatos"
+
+msgid "Reports"
+msgstr "Relatórios"
+
+msgid "Campaigns"
+msgstr "Campanhas"
+
+msgid "Storefront"
+msgstr "Frente de loja"
+
+msgid "Addons"
+msgstr "Extensões"
+
+msgid "Settings"
+msgstr "Configurações"
 
 msgid "Attributes"
 msgstr "Atributos"
@@ -53,7 +77,7 @@ msgid "Visibility Mode"
 msgstr "Modo de Visibilidade"
 
 msgid "Searchable"
-msgstr "Procurável"
+msgstr "Pesquisável"
 
 msgid "Used in # Product Types"
 msgstr "Utilizado por # Tipos de Produtos"
@@ -61,8 +85,40 @@ msgstr "Utilizado por # Tipos de Produtos"
 msgid "Categories"
 msgstr "Categorias"
 
-msgid "Products"
-msgstr "Produtos"
+msgid "Primary Category"
+msgstr "Categoria Principal"
+
+msgid "Set this category as a primary for selected products."
+msgstr "Define esta categoria como categoria principal para os produtos selecionados."
+
+msgid "Default Category"
+msgstr "Categoria Padrão"
+
+msgid "Update product default category while setting primary category."
+msgstr "Atualiza a categoria de produtos padrão enquanto configura a categoria principal."
+
+msgid "Additional Category"
+msgstr "Categoria Adicional"
+
+msgid "Add selected products to this category"
+msgstr "Adiciona os produtos selecionados a esta categoria"
+
+msgid "Remove Products"
+msgstr "Remover Produtos"
+
+msgid "Remove selected products from this category"
+msgstr "Remove os produtos selecionados desta categoria"
+
+msgid "Invalid category"
+msgstr "Categoria inválida"
+
+#, python-format
+msgid "Visibility settings copied to %d product(s)"
+msgstr "Configurações de visibilidade copiadas para %d produto(s)"
+
+#, python-format
+msgid "%s has been deleted."
+msgstr "%s foi excluído."
 
 msgid "Status"
 msgstr "Status"
@@ -76,9 +132,6 @@ msgstr "Pai"
 msgid "Contact Groups"
 msgstr "Grupos de Contatos"
 
-msgid "Contacts"
-msgstr "Contatos"
-
 msgid "Price display mode"
 msgstr "Modo de exibição do preço"
 
@@ -89,7 +142,7 @@ msgid "show prices with taxes included"
 msgstr "mostrar preços com impostos inclusos"
 
 msgid "show pre-tax prices"
-msgstr "mostrar preços pré-imposto"
+msgstr "mostrar preços sem impostos"
 
 msgid "hide prices"
 msgstr "ocultar preços"
@@ -115,14 +168,17 @@ msgstr[1] "%(count)s membros removidos"
 msgid "Number of Members"
 msgstr "Número de Membros"
 
-msgid "Active customers"
-msgstr "Clientes ativos"
+msgid "Basic Information"
+msgstr "Informações Básicas"
 
-msgid "Based on orders within 30 days"
-msgstr "Baseado em pedidos dos últimos 30 dias"
+msgid "Addresses"
+msgstr "Endereços"
+
+msgid "Members"
+msgstr "Membros"
 
 msgid "The Shuup frontend is not enabled."
-msgstr "O frontend do Shuup não está habilitado."
+msgstr "O front-end do Shuup não está habilitado."
 
 msgid "Contact has no associated user."
 msgstr "Contato não tem nenhum usuário associado."
@@ -185,7 +241,7 @@ msgstr "Empresa"
 
 #, python-format
 msgid "User %(bind_user)s already has a contact"
-msgstr "O usuário %(bind_user)s já possui um contato"
+msgstr "O usuário %(bind_user)s já tem um contato"
 
 msgid "Email"
 msgstr "E-mail"
@@ -229,8 +285,17 @@ msgstr "%d pedidos"
 msgid "The contact does not have an associated user."
 msgstr "O contato não tem um usuário associado."
 
+msgid "Customers Dashboard"
+msgstr "Painel de Clientes"
+
+msgid "Active customers"
+msgstr "Clientes ativos"
+
+msgid "Based on orders within 30 days"
+msgstr "Baseado nos pedidos dos últimos 30 dias"
+
 msgid "Demo"
-msgstr "Demonstração"
+msgstr "Demo"
 
 msgid "Manufacturers"
 msgstr "Fabricantes"
@@ -273,11 +338,8 @@ msgstr "Arquivo excluído."
 msgid "%(file)s moved from %(old)s to %(new)s."
 msgstr "%(file)s movido de %(old)s para %(new)s."
 
-msgid "Orders"
-msgstr "Pedidos"
-
 msgid "Show orders"
-msgstr ""
+msgstr "Mostrar pedidos"
 
 msgid "Outstanding Orders"
 msgstr "Pedidos Pendentes"
@@ -285,29 +347,6 @@ msgstr "Pedidos Pendentes"
 #, python-format
 msgid "%d outstanding orders"
 msgstr "%d pedidos pendentes"
-
-msgid "Sales per Month (last year)"
-msgstr "Vendas por Mês (último ano)"
-
-#, python-format
-msgid "Sales (%(currency)s)"
-msgstr "Vendas (%(currency)s)"
-
-#, python-format
-msgid "Based on %d orders"
-msgstr "Baseado em %d pedidos"
-
-msgid "Today's Sales"
-msgstr "Vendas de Hoje"
-
-msgid "Lifetime Sales"
-msgstr "Vendas Acumuladas"
-
-msgid "Average Purchase"
-msgstr "Ticket Médio"
-
-msgid "Open Orders Value"
-msgstr "Valor dos Pedidos Abertos"
 
 #, python-format
 msgid "The quantity '%(quantity)s' (for line %(text)s) is invalid (%(error)s)"
@@ -322,7 +361,7 @@ msgid "The discount '%(discount)s' (for line %(text)s is invalid (%(error)s)"
 msgstr "O desconto '%(discount)s' (para o item %(text)s) é inválido (%(error)s)"
 
 msgid "Product line does not have a product set."
-msgstr "Produto do item não tem um produto definido."
+msgstr "O item de produto não tem um produto definido."
 
 #, python-format
 msgid "Product %s does not exist."
@@ -330,20 +369,13 @@ msgstr "Produto %s não existe."
 
 #, python-format
 msgid "Product %(product)s is not available in the %(shop)s shop."
-msgstr "Produto %(product)s não está disponível na loja %(shop)s."
-
-#, python-format
-msgid "Product %(product)s is not orderable: %(error)s"
-msgstr ""
+msgstr "O produto %(product)s não está disponível na loja %(shop)s."
 
 msgid "Please add lines to the order."
 msgstr "Por favor, adicione itens ao pedido."
 
-msgid "Name is required for customer"
-msgstr "O nome é obrigatório para o cliente"
-
 msgid "Tax number is not set for company."
-msgstr "CNPJ não está definido para a empresa."
+msgstr "Número de contribuinte não está definido para a empresa."
 
 msgid "Please choose a valid shop."
 msgstr "Por favor, escolha uma loja válida."
@@ -363,23 +395,20 @@ msgstr "Conteúdo do Pedido"
 msgid "Log Entries"
 msgstr "Entradas de Log"
 
-msgid "Create Refund"
-msgstr ""
-
-msgid "This order cannot be refunded"
-msgstr ""
+msgid "Shipments"
+msgstr "Remessas"
 
 msgid "Create Payment"
 msgstr "Criar Pagamento"
 
-msgid "This order cannot be paid at this point"
-msgstr "Este pedido não pode ser pago a esta altura"
-
 msgid "Create Shipment"
 msgstr "Criar Remessa"
 
-msgid "There are no products to ship"
-msgstr "Não existem produtos a enviar"
+msgid "Create Refund"
+msgstr "Criar Devolução"
+
+msgid "Actions"
+msgstr "Ações"
 
 msgid "Set Complete"
 msgstr "Definir como Completo"
@@ -440,7 +469,7 @@ msgid "Payment Status"
 msgstr "Status do Pagamento"
 
 msgid "Shipping Status"
-msgstr "Status da Entrega"
+msgstr "Status de Entrega"
 
 msgid "Total"
 msgstr "Total"
@@ -463,7 +492,7 @@ msgid "Order has already been paid"
 msgstr "Pedido já foi pago"
 
 msgid "Line number"
-msgstr ""
+msgstr "Número do item"
 
 msgid "Quantity"
 msgstr "Quantidade"
@@ -471,40 +500,46 @@ msgstr "Quantidade"
 msgid "Amount"
 msgstr "Valor"
 
+msgid "Total incl. tax to refund"
+msgstr "Total incl. imposto a restituir"
+
 msgid "Restock products"
-msgstr ""
+msgstr "Reabastecer produtos"
 
 #, python-format
 msgid "Create Refund -- %s"
-msgstr ""
+msgstr "Criar Devolução -- %s"
 
 msgid "Refund Entire Order"
-msgstr ""
+msgstr "Devolver Pedido Inteiro"
 
 msgid "This order already has existing refunds"
-msgstr ""
-
-msgid "Refund amount exceeds order amount."
-msgstr ""
+msgstr "Este pedido já tem devoluções existentes"
 
 msgid "Refund amount cannot be 0"
-msgstr ""
+msgstr "Valor da devolução não pode ser 0"
+
+msgid "Refund amount exceeds order amount."
+msgstr "Valor da devolução excede o valor do pedido."
+
+msgid "Refund amounts should match sign on parent line."
+msgstr "Os valores da devolução devem coincidir com o sinal no item pai."
 
 msgid "Refund created."
-msgstr ""
+msgstr "Devolução criada."
 
 #, python-format
 msgid "Create Full Refund -- %s"
-msgstr ""
+msgstr "Criar Devolução Total -- %s"
 
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 msgid "Could not create full refund."
-msgstr ""
+msgstr "Não foi possível criar a devolução total."
 
 msgid "Full refund created."
-msgstr ""
+msgstr "Devolução total criada."
 
 #, python-format
 msgid "Create Shipment -- %s"
@@ -531,9 +566,6 @@ msgid ""
 "automatically."
 msgstr "Módulos com as mesmas permissões dos módulos selecionados serão adicionados automaticamente."
 
-msgid "Members"
-msgstr "Membros"
-
 msgid "Product Types"
 msgstr "Tipos de Produtos"
 
@@ -549,14 +581,22 @@ msgstr "Criar Produto Chamado \"%s\""
 
 #, python-format
 msgid "Create Product with SKU \"%s\""
-msgstr "Criar Produto com o SKU \"%s\""
+msgstr "Criar Produto com a SKU \"%s\""
+
+msgid ""
+"Number of units that can be purchased after the product is out of stock. Set"
+" to blank for product to be purchasable without limits"
+msgstr "Número de unidades que podem ser compradas depois que o produto estiver esgotado. Deixe em branco para que o produto possa ser adquirido sem limites"
 
 msgid "Minimum Purchase Quantity must be greater than 0."
 msgstr "Quantidade Mínima de Compra deve ser maior do que 0."
 
+msgid "Backorder maximum must be greater than or equal to 0."
+msgstr "Máximo de pedidos em espera deve ser maior do que ou igual a 0."
+
 #, python-format
 msgid "Thumbnail generation of %(media)s failed: %(error)s"
-msgstr "A geração de miniaturas para %(media)s falhou: %(error)s"
+msgstr "A geração de miniaturas de %(media)s falhou: %(error)s"
 
 msgid "Use only URL or file, not both"
 msgstr "Use apenas URL ou arquivo, nunca ambos"
@@ -565,7 +605,7 @@ msgid "Is primary"
 msgstr "É principal"
 
 msgid "Only images allowed in this field"
-msgstr "Apenas imagens são permitidas neste campo"
+msgstr "Somente imagens são permitidas neste campo"
 
 #, python-format
 msgid "Unable to make package %(product)s: %(error)s"
@@ -581,7 +621,7 @@ msgstr "Removido: %d"
 
 #, python-format
 msgid "Couldn't add product %s to own package"
-msgstr "Não é possível adicionar o produto %s ao próprio pacote"
+msgstr "Não foi possível adicionar o produto %s ao próprio pacote"
 
 msgid "child"
 msgstr "filho"
@@ -601,7 +641,7 @@ msgid "%s has been marked deleted."
 msgstr "%s foi marcado como excluído."
 
 msgid "Minimum Purchase Quantity has been rounded to match Sales Unit."
-msgstr "Quantidade Mínima de Compra foi arredondada para se adequar à Unidade de Venda."
+msgstr "Quantidade Mínima de Compra foi arredondada para corresponder à Unidade de Venda."
 
 #, python-format
 msgid "Changes to shop instance for %s saved"
@@ -681,17 +721,14 @@ msgstr "Filtrar por código de barras..."
 msgid "Mode"
 msgstr "Modo"
 
-msgid "Primary Category"
-msgstr "Categoria Principal"
+msgid "Save as a copy"
+msgstr "Salvar como uma cópia"
 
 msgid "Manage Cross-Selling"
 msgstr "Gerenciar Vendas Cruzadas"
 
 msgid "Cross-Selling"
 msgstr "Vendas Cruzadas"
-
-msgid "Actions"
-msgstr "Ações"
 
 #, python-format
 msgid "Child: %s"
@@ -722,6 +759,32 @@ msgstr "Converter para Pacote Pai"
 
 msgid "Convert to Variation Parent"
 msgstr "Converter para Variação Pai"
+
+msgid "Sales Dashboard"
+msgstr "Painel de Vendas"
+
+msgid "Sales per Month (last year)"
+msgstr "Vendas por Mês (último ano)"
+
+#, python-format
+msgid "Sales (%(currency)s)"
+msgstr "Vendas (%(currency)s)"
+
+#, python-format
+msgid "Based on %d orders"
+msgstr "Baseado em %d pedidos"
+
+msgid "Today's Sales"
+msgstr "Vendas de Hoje"
+
+msgid "Lifetime Sales"
+msgstr "Vendas ao Longo da Vida"
+
+msgid "Average Purchase"
+msgstr "Ticket Médio"
+
+msgid "Open Orders Value"
+msgstr "Valor de Pedidos Abertos"
 
 msgid "Sales Units"
 msgstr "Unidades de Venda"
@@ -788,9 +851,6 @@ msgstr "Faixa de preços com base no peso"
 msgid "Shops"
 msgstr "Lojas"
 
-msgid "System"
-msgstr "Sistema"
-
 msgid ""
 "This field cannot be changed since there are existing orders for this shop."
 msgstr "Este campo não pode ser alterado pois existem pedidos em aberto para esta loja."
@@ -808,12 +868,15 @@ msgstr "Nenhum módulo %s"
 msgid "Module"
 msgstr "Módulo"
 
+msgid "System"
+msgstr "Sistema"
+
 msgid "Telemetry"
 msgstr "Telemetria"
 
 msgid ""
-"Statistics will be periodically sent to Shuup.com after 24 hours. Click here "
-"for more information."
+"Statistics will be periodically sent to Shuup.com after 24 hours. Click here"
+" for more information."
 msgstr "As estatísticas serão enviadas periodicamente a Shuup.com após 24 horas. Clique aqui para obter mais informações."
 
 msgid "Taxes"
@@ -853,7 +916,7 @@ msgid "No special permissions"
 msgstr "Sem permissões especiais"
 
 msgid "No permission groups"
-msgstr "Nenhum grupo de permissão"
+msgstr "Nenhum grupo de permissões"
 
 msgid "Change Password"
 msgstr "Alterar Senha"
@@ -882,6 +945,9 @@ msgstr "Ativar Usuário"
 msgid "Deactivate User"
 msgstr "Desativar Usuário"
 
+msgid "Login as User"
+msgstr "Entrar como Usuário"
+
 #, python-format
 msgid "User bound to contact %(contact)s."
 msgstr "Usuário vinculado ao contato %(contact)s."
@@ -889,6 +955,19 @@ msgstr "Usuário vinculado ao contato %(contact)s."
 #, python-format
 msgid "%(user)s is now %(state)s."
 msgstr "%(user)s está %(state)s agora."
+
+msgid "No shop configured."
+msgstr "Nenhuma loja configurada."
+
+msgid "You are already logged in."
+msgstr "Você já está conectado."
+
+msgid "This user is not active."
+msgstr "Este usuário não está ativo."
+
+#, python-brace-format
+msgid "You're now logged in as {username}"
+msgstr "Você agora está conectado como {username}"
 
 msgid "Username"
 msgstr "Nome de usuário"
@@ -900,7 +979,7 @@ msgid "Last Name"
 msgstr "Sobrenome"
 
 msgid "Staff"
-msgstr "Membro da Equipe"
+msgstr "Membro da equipe"
 
 msgid "Superuser"
 msgstr "Superusuário"
@@ -949,7 +1028,7 @@ msgstr "Redefinir Senha do Usuário"
 
 msgid ""
 "The `shuup.front.apps.auth` app needs to be enabled for password reset."
-msgstr "O app 'shuup.front.apps.auth' precisa estar habilitado para redefinição de senha."
+msgstr "O app `shuup.front.apps.auth` precisa estar habilitado para a redefinição de senha."
 
 #, python-format
 msgid "Password recovery email sent to %(email)s"
@@ -976,16 +1055,16 @@ msgid "New Attribute"
 msgstr "Novo Atributo"
 
 msgid "Login"
-msgstr "Fazer login"
+msgstr "Entrar"
 
 msgid "Logged out"
-msgstr "Efetuou o logout"
+msgstr "Desconectado"
 
 msgid "You have been logged out. Good bye!"
-msgstr "Você foi desautenticado. Até logo!"
+msgstr "Você foi desconectado. Tchau!"
 
 msgid "Log in again"
-msgstr "Fazer login novamente"
+msgstr "Entrar novamente"
 
 msgid "Visit shop"
 msgstr "Visitar loja"
@@ -999,9 +1078,6 @@ msgstr "Painel de controle"
 msgid "Search for"
 msgstr "Procurar por"
 
-msgid "Settings"
-msgstr "Configurações"
-
 msgid "Hello"
 msgstr "Olá"
 
@@ -1011,8 +1087,14 @@ msgstr "Sair"
 msgid "General Information"
 msgstr "Informações Gerais"
 
+msgid "Copy visibility settings to products"
+msgstr "Copiar configurações de visibilidade para os produtos"
+
 msgid "Category Image"
 msgstr "Imagem da Categoria"
+
+msgid "* Products that has this category as a primary category."
+msgstr "* Produtos que tem esta categoria como categoria principal."
 
 msgid "General information"
 msgstr "Informações gerais"
@@ -1023,20 +1105,17 @@ msgstr "Adicionar Membros"
 msgid "Add more"
 msgstr "Adicionar mais"
 
-msgid "Addresses"
-msgstr "Endereços"
+msgid "Shipping address"
+msgstr "Endereço de entrega"
 
-msgid "Billing Address"
-msgstr "Endereço de Cobrança"
+msgid "No shipping address defined."
+msgstr "Nenhum endereço de entrega definido."
 
-msgid "Shipping Address"
-msgstr "Endereço de Entrega"
+msgid "Billing address"
+msgstr "Endereço de cobrança"
 
-msgid "Basic details"
-msgstr "Detalhes básicos"
-
-msgid "Basic Information"
-msgstr "Informações Básicas"
+msgid "No billing address defined."
+msgstr "Nenhum endereço de cobrança definido."
 
 msgid "Full Name"
 msgstr "Nome Completo"
@@ -1056,20 +1135,17 @@ msgstr "Gerente da Conta"
 msgid "Merchant Notes"
 msgstr "Notas do Lojista"
 
-msgid "Shipping address"
-msgstr "Endereço de entrega"
-
-msgid "No shipping address defined."
-msgstr "Nenhum endereço de entrega definido."
-
-msgid "Billing address"
-msgstr "Endereço de cobrança"
-
-msgid "No billing address defined."
-msgstr "Nenhum endereço de cobrança definido."
-
 msgid "No members."
 msgstr "Nenhum membro."
+
+msgid "Billing Address"
+msgstr "Endereço de Cobrança"
+
+msgid "Shipping Address"
+msgstr "Endereço de Entrega"
+
+msgid "Basic details"
+msgstr "Detalhes básicos"
 
 msgid "Remove block"
 msgstr "Remover bloco"
@@ -1117,6 +1193,9 @@ msgstr "Preço Unitário sem Impostos"
 msgid "Taxless Discount"
 msgstr "Desconto sem Impostos"
 
+msgid "Taxless Discount Percentage"
+msgstr "% de Desconto sem Impostos"
+
 msgid "Tax"
 msgstr "Imposto"
 
@@ -1145,19 +1224,31 @@ msgid "Add to Log"
 msgstr "Adicionar ao Log"
 
 msgid "There was an error adding the log entry."
-msgstr "Ocorreu um erro ao adicionar a entrada de log."
+msgstr "Houve um erro ao adicionar a entrada de log."
+
+msgid "Tracking Code"
+msgstr "Código de Rastreamento"
+
+msgid "Created"
+msgstr "Criado"
+
+msgid "No shipments have been created yet."
+msgstr "Nenhuma remessa foi criada ainda."
 
 msgid "Line #"
-msgstr ""
+msgstr "Item #"
+
+msgid "Refunded Quantity"
+msgstr "Quantidade Devolvida"
 
 msgid "Refund Amount"
-msgstr ""
+msgstr "Valor de Devolução"
 
 msgid "Are you sure you want to create a full refund?"
-msgstr ""
+msgstr "Tem certeza que deseja criar uma devolução total?"
 
 msgid "Confirm Refund"
-msgstr ""
+msgstr "Confirmar Devolução"
 
 msgid "Paid"
 msgstr "Pago"
@@ -1166,10 +1257,10 @@ msgid "Remaining"
 msgstr "Restante"
 
 msgid "Refunded"
-msgstr ""
+msgstr "Devolvido"
 
 msgid "Add More Refunds "
-msgstr ""
+msgstr "Adicionar Mais Devoluções"
 
 msgid "To Ship"
 msgstr "A Enviar"
@@ -1199,7 +1290,7 @@ msgid "Reference"
 msgstr "Referência"
 
 msgid "Label"
-msgstr "Etiqueta"
+msgstr "Rótulo"
 
 msgid "Ordered by"
 msgstr "Comprado por"
@@ -1208,13 +1299,16 @@ msgid "Creator"
 msgstr "Criador"
 
 msgid "Tax number"
-msgstr "CNPJ"
+msgstr "Número de contribuinte"
 
 msgid "Total Price (taxless)"
 msgstr "Preço Total (sem impostos)"
 
 msgid "Total Price"
 msgstr "Preço Total"
+
+msgid "Customer Comment"
+msgstr "Comentário do Cliente"
 
 msgid "Tracking codes"
 msgstr "Códigos de rastreamento"
@@ -1290,6 +1384,14 @@ msgstr "Arquivo"
 msgid "Package Products"
 msgstr "Pacote de Produtos"
 
+#, python-format
+msgid "Logical count: %(logical_count)s %(sales_unit)s"
+msgstr "Estoque lógico: %(logical_count)s %(sales_unit)s"
+
+#, python-format
+msgid "Physical count: %(physical_count)s %(sales_unit)s"
+msgstr "Estoque físico: %(physical_count)s %(sales_unit)s"
+
 msgid "This product is not yet a package."
 msgstr "Este produto ainda não é um pacote."
 
@@ -1328,7 +1430,7 @@ msgid "Behavior"
 msgstr "Comportamento"
 
 msgid "Behavior component type"
-msgstr "Tipo do componente de comportamento"
+msgstr "Tipo de componente de comportamento"
 
 msgid "Add component"
 msgstr "Adicionar componente"
@@ -1346,20 +1448,20 @@ msgid "About Shuup Telemetry"
 msgstr "Sobre a Telemetria do Shuup"
 
 msgid "Shuup will occasionally send telemetry data to a Shuup.com server."
-msgstr "O Shuup ocasionalmente envia dados de telemetria a um servidor Shuup.com."
+msgstr "O Shuup ocasionalmente enviará dados de telemetria a um servidor Shuup.com."
 
 #, python-format
 msgid ""
 "The data contains an unique installation key, as well as the hostname of the"
 " installation (as sent by the visiting browser; currently "
 "<code>%(host)s</code>)."
-msgstr "Os dados contém, além de uma chave de instalação única, o hostname da instalação (como enviado pelo navegador visitante, neste caso <code>%(host)s</code>)."
+msgstr "Os dados contém uma chave de instalação única, bem como o hostname da instalação (como enviado pelo navegador visitante; atualmente é <code>%(host)s</code>)."
 
 msgid ""
 "No business data or other customer information is ever sent. Shuup.com only "
 "uses the telemetry data for statistical purposes and for insights about the "
 "software's installation base."
-msgstr "Nenhum dado de negócio ou outras informações sobre clientes jamais são enviados. Shuup.com utiliza os dados de telemetria apenas para fins estatísticos e para insights sobre a base de instalação do software."
+msgstr "Nenhum dado de negócio ou outras informações de clientes jamais são enviados. Shuup.com utiliza os dados de telemetria apenas para fins estatísticos e para insights sobre a base de instalação do software."
 
 msgid "Opt-in / opt-out"
 msgstr "Optar por / não optar"
@@ -1367,7 +1469,7 @@ msgstr "Optar por / não optar"
 msgid ""
 "You are currently <span class=\"lead label label-success\">opted in</span> "
 "to send telemetry data to Shuup.com."
-msgstr "Você atualmente <span class=\"lead label label-success\">opta por</span> enviar os dados de telemetria a Shuup.com."
+msgstr "Você está atualmente <span class=\"lead label label-success\">optando por</span> enviar os dados de telemetria a Shuup.com."
 
 msgid "Thank you for your valuable contribution."
 msgstr "Obrigado por sua valiosa contribuição."
@@ -1378,7 +1480,7 @@ msgstr "Não optar"
 msgid ""
 "You are currently <span class=\"label label-warning\">opted out</span> of "
 "Shuup telemetry."
-msgstr "Você atualmente <span class=\"label label-warning\">não opta</span> pela telemetria do Shuup."
+msgstr "Você está atualmente <span class=\"label label-warning\">não optando</span> pela telemetria do Shuup."
 
 msgid "Opt in"
 msgstr "Optar por"
@@ -1389,7 +1491,7 @@ msgstr "Última Telemetria"
 msgid ""
 "Telemetry submission is currently suspended; data will only be sent 24 hours"
 " after installation if still opted in at that point."
-msgstr "A transmissão da telemetria está atualmente suspensa; os dados só serão enviados 24 horas após a instalação se ainda optar por enviá-los."
+msgstr "A transmissão da telemetria está atualmente suspensa; os dados só serão enviados 24 horas após a instalação se ainda optar por enviá-los na ocasião."
 
 #, python-format
 msgid ""
@@ -1448,10 +1550,10 @@ msgstr "objetos"
 
 #, python-format
 msgid "Can't view this page. %(reason)s"
-msgstr "Não é possível exibir esta página. %(reason)s"
+msgstr "Não é possível visualizar esta página. %(reason)s"
 
 msgid "Log in with different credentials..."
-msgstr "Fazer login com outras credenciais..."
+msgstr "Entrar com outras credenciais..."
 
 msgid "You must be logged in."
 msgstr "Você precisa estar autenticado."
@@ -1460,8 +1562,8 @@ msgid "You must be a staff member."
 msgstr "Você precisa ser um membro da equipe."
 
 #, python-format
-msgid "You do not have the required permissions: %r"
-msgstr "Você não tem as permissões necessárias: %r"
+msgid "You do not have the required permissions: %s"
+msgstr "Você não tem as permissões necessárias: %s"
 
 #, python-format
 msgid "New %s created."
@@ -1481,7 +1583,7 @@ msgstr "%s sem nome"
 
 #, python-format
 msgid "Only one %(model)s permitted."
-msgstr "Apenas um %(model)s é permitido."
+msgstr "Apenas um %(model)s permitido."
 
 #, python-format
 msgid "Couldn't get selections for %s."
