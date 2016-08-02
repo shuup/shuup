@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-04-11 12:32+0000\n"
-"PO-Revision-Date: 2016-06-29 01:14+0000\n"
+"PO-Revision-Date: 2016-07-25 18:33+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -61,11 +61,11 @@ msgid "Not allowed"
 msgstr "Não permitido"
 
 msgid "Error, please check submitted values and try again."
-msgstr "Erro, por favor, verifique os valores enviados e tente novamente."
+msgstr "Erro, por favor, verifique os valores apresentados e tente novamente."
 
 #, python-format
 msgid "Error, please check submitted values and try again (%(error)s)."
-msgstr "Erro, por favor, verifique os valores enviados e tente novamente (%(error)s)."
+msgstr "Erro, por favor, verifique os valores apresentados e tente novamente (%(error)s)."
 
 #, python-format
 msgid "Purchase price per unit (%(currency_name)s)"
@@ -75,7 +75,7 @@ msgid "Quantity"
 msgstr "Quantidade"
 
 msgid "Only non-zero values can be added to stock."
-msgstr "Apenas valores acima de zero podem ser adicionados ao estoque."
+msgstr "Somente valores acima de zero podem ser adicionados ao estoque."
 
 msgid "product"
 msgstr "produto"
@@ -93,10 +93,10 @@ msgid "delta"
 msgstr "delta"
 
 msgid "logical count"
-msgstr "contagem lógica"
+msgstr "estoque lógico"
 
 msgid "physical count"
-msgstr "contagem física"
+msgstr "estoque físico"
 
 msgid "Add stock"
 msgstr "Adicionar estoque"
@@ -114,10 +114,10 @@ msgstr "Por favor, defina os fornecedores na seção Compras."
 msgid ""
 "Product <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> "
 "is not stocked."
-msgstr "Produto <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> não é estocado."
+msgstr "O produto <a href=\"%(product_url)s\" target=\"_blank\">%(product_name)s</a> não é estocado."
 
 msgid "Please set product stock behavior at Additional Details section."
-msgstr "Por favor, defina o comportamento de estocagem do produto na seção Detalhes Adicionais."
+msgstr "Por favor, defina o comportamento do estoque do produto na seção Detalhes Adicionais."
 
 #, python-format
 msgid "No suppliers with %(module_name)s available."
@@ -127,13 +127,13 @@ msgstr "Não há fornecedores com o módulo %(module_name)s disponível."
 msgid ""
 "Please set %(module_name)s module for at least one of the <a "
 "href=\"%(supplier_url)s\" target=\"_blank\">Suppliers</a>."
-msgstr "Por favor, defina o módulo %(module_name)s para pelo menos um dos seus <a href=\"%(supplier_url)s\" target=\"_blank\">Fornecedores</a>."
+msgstr "Por favor, defina o módulo %(module_name)s para, pelo menos, um de seus <a href=\"%(supplier_url)s\" target=\"_blank\">Fornecedores</a>."
 
 msgid "Physical count"
-msgstr "Contagem física"
+msgstr "Estoque físico"
 
 msgid "Logical count"
-msgstr "Contagem lógica"
+msgstr "Estoque lógico"
 
 msgid "Value per unit"
 msgstr "Valor por unidade"

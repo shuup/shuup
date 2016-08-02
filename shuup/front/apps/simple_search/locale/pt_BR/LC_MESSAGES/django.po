@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# christianhess <christianhess.rlz@gmail.com>, 2016
+# Christian Hess <christianhess.rlz@gmail.com>, 2016
 # Jonathan Hess <jhess666@gmail.com>, 2016
 msgid ""
 msgstr ""

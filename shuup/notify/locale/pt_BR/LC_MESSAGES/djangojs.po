@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PROJECT project.
 # 
 # Translators:
-# christianhess <christianhess.rlz@gmail.com>, 2016
+# Christian Hess <christianhess.rlz@gmail.com>, 2016
 # Jonathan Hess <jhess666@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-30 23:37+0000\n"
-"PO-Revision-Date: 2016-06-25 12:52+0000\n"
+"PO-Revision-Date: 2016-07-19 19:08+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -59,7 +59,7 @@ msgid "Delete"
 msgstr "Excluir"
 
 msgid "Are you sure you wish to delete this step?"
-msgstr "Tem certeza que deseja excluir esta etapa?"
+msgstr "Tem certeza que deseja excluir esta instrução?"
 
 #, javascript-format
 msgid "If %s of these conditions hold..."
@@ -72,4 +72,4 @@ msgid "and then..."
 msgstr "e então..."
 
 msgid "New step"
-msgstr "Nova etapa"
+msgstr "Nova instrução"

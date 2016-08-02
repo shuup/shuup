@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-11-30 23:37+0000\n"
-"PO-Revision-Date: 2016-06-28 20:06+0000\n"
+"PO-Revision-Date: 2016-07-30 11:42+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgid "Shuup Frontend - Personal Order History"
-msgstr "Frontend do Shuup - Histórico Pessoal de Pedidos"
+msgstr "Front-end do Shuup - Histórico Pessoal de Pedidos"
 
 #, python-format
 msgid "Order %(identifier)s"
@@ -43,7 +43,7 @@ msgid "Reference"
 msgstr "Referência"
 
 msgid "Label"
-msgstr "Etiqueta"
+msgstr "Rótulo"
 
 msgid "Customer"
 msgstr "Cliente"
@@ -61,7 +61,7 @@ msgid "Email"
 msgstr "E-mail"
 
 msgid "Tax number"
-msgstr "CNPJ"
+msgstr "Número de contribuinte"
 
 msgid "Total Price"
 msgstr "Preço Total"
@@ -79,7 +79,7 @@ msgid "Payment Status"
 msgstr "Status do Pagamento"
 
 msgid "Shipping Status"
-msgstr "Status da Entrega"
+msgstr "Status de Entrega"
 
 msgid "Shipping Address"
 msgstr "Endereço de Entrega"
@@ -103,13 +103,13 @@ msgid "Quantity"
 msgstr "Quantidade"
 
 msgid "Taxless Discount"
-msgstr "Desconto não Tributado"
+msgstr "Desconto sem Impostos"
 
 msgid "Tax"
 msgstr "Imposto"
 
 msgid "Taxless Total"
-msgstr "Total não Tributado"
+msgstr "Total sem Impostos"
 
 msgid "Total incl. Tax"
 msgstr "Total incl. Imposto"

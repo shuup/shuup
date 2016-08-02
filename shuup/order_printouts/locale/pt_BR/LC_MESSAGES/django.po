@@ -1,0 +1,111 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-11 12:32+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Jonathan Hess <jhess666@gmail.com>, 2016\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/shuup/teams/55306/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Order printouts"
+msgstr "Impressões de pedidos"
+
+msgid "Print"
+msgstr "Imprimir"
+
+#, python-format
+msgid "Get Delivery Slip (Shipment %(id)s)"
+msgstr "Obter Guia de Entrega (Remessa %(id)s)"
+
+msgid "Get Order Confirmation"
+msgstr "Obter Confirmação do Pedido"
+
+msgid "Delivery slip"
+msgstr "Guia de entrega"
+
+msgid "Order"
+msgstr "Pedido"
+
+msgid "Order confirmation"
+msgstr "Confirmação do pedido"
+
+msgid ""
+"Could not create PDF since Weasyprint is not available. Please contact "
+"support."
+msgstr ""
+"Não foi possível criar o PDF uma vez que a biblioteca Weasyprint não está "
+"disponível. Entre em contato com o suporte."
+
+msgid "Shipped products"
+msgstr "Produtos enviados"
+
+msgid "Payment and shipping methods"
+msgstr "Formas de entrega e pagamento"
+
+msgid "Order number"
+msgstr "Número do pedido"
+
+msgid "Total price"
+msgstr "Preço total"
+
+msgid "Payment status"
+msgstr "Status do pagamento"
+
+msgid "Shipping status"
+msgstr "Status de entrega"
+
+msgid "Order date"
+msgstr "Data do pedido"
+
+msgid "Comment"
+msgstr "Comentário"
+
+msgid "Identifier"
+msgstr "Identificador"
+
+msgid "Shipment date"
+msgstr "Data da remessa"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Text"
+msgstr "Texto"
+
+msgid "Quantity"
+msgstr "Quantidade"
+
+msgid "Tax"
+msgstr "Imposto"
+
+msgid "Taxful total"
+msgstr "Total tributável"
+
+msgid "Taxless total"
+msgstr "Total sem impostos"
+
+msgid "Tax percentage"
+msgstr "% de imposto"
+
+msgid "Based on amount"
+msgstr "Baseado na quantia"
+
+msgid "Amount of tax"
+msgstr "Valor do imposto"
+
+msgid "Total including tax"
+msgstr "Total incluindo imposto"
+
+msgid "Billing address"
+msgstr "Endereço de cobrança"

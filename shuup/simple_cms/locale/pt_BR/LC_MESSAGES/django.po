@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-25 01:12+0000\n"
-"PO-Revision-Date: 2016-06-25 22:28+0000\n"
+"POT-Creation-Date: 2016-07-28 23:41+0000\n"
+"PO-Revision-Date: 2016-07-30 12:33+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -43,6 +43,9 @@ msgstr "%(label)s é obrigatório quando qualquer campo em %(language)s for pree
 
 msgid "Please fill at least one language fully."
 msgstr "Por favor, preencha pelo menos um idioma por completo."
+
+msgid "A page may not be made a child of itself."
+msgstr "Uma página não pode ser feita um filho de si mesma."
 
 msgid "Title"
 msgstr "Título"
