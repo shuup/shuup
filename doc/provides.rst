@@ -85,6 +85,9 @@ Core
     Additional ``FormPart`` classes for Product editing.
     (This is used by pricing modules, for instance.)
 
+``admin_product_section``
+    Additional ``Section`` subclasses for Product edit sections.
+
 ``admin_shop_form_part``
     Additional ``FormPart`` classes for Shop editing.
 

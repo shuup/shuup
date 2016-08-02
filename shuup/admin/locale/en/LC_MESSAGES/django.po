@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-29 01:21+0000\n"
+"POT-Creation-Date: 2016-08-01 06:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1366,6 +1366,9 @@ msgid "Purchasing"
 msgstr ""
 
 msgid "Shipping & Payment"
+msgstr ""
+
+msgid "No orders found"
 msgstr ""
 
 msgid "This product is currently not orderable."

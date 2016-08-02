@@ -1,5 +1,5 @@
 {% extends "shuup/admin/base.jinja" %}
-{% from "shuup/admin/macros/general.jinja" import content_with_sidebar %}
+{% from "shuup/admin/macros/general.jinja" import content_with_sidebar, content_block %}
 
 {% block content %}
     {% if orderability_errors %}
@@ -10,13 +10,20 @@
             </p>
         </div>
     {% endif %}
-    {% call content_with_sidebar(content_id="product_form") %}
-        <form method="post" id="product_form">
-            {% csrf_token %}
-            {% for form_def in form.form_defs.values() %}
-                {% include form_def.template_name with context %}
+    {% call content_with_sidebar(content_id="product_details") %}
+        <div id="product_details">
+            <form method="post" id="product_form">
+                {% csrf_token %}
+                {% for form_def in form.form_defs.values() %}
+                    {% include form_def.template_name with context %}
+                {% endfor %}
+            </form>
+            {% for product_section in product_sections %}
+                {% call content_block(product_section.name, product_section.icon) %}
+                    {% include product_section.template with context %}
+                {% endcall %}
             {% endfor %}
-        </form>
+        </div>
     {% endcall %}
 {% endblock %}
 
@@ -28,4 +35,9 @@
             $("#product_form").attr("action", "{{ url('shuup_admin:product.new') }}").submit();
         }
     </script>
+    {% for product_section in product_sections %}
+        {% if product_section.extra_js %}
+            {% include product_section.extra_js with context %}
+        {% endif %}
+    {% endfor %}
 {% endblock %}
