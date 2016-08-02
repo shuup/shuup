@@ -88,7 +88,7 @@ window.VariationVariableEditor = (function(m, _) {
             ).concat([m("td")]))
         );
         bodyRows = bodyRows.concat(
-            _.map(_.reject(variable.values, gettext("DELETE")), _.partial(valueTr, ctrl))
+            _.map(_.reject(variable.values, "DELETE"), _.partial(valueTr, ctrl))
         );
         return m("div.product-variable", {key: variable.pk}, [
             m("div.variable-heading.clearfix", [
@@ -114,7 +114,7 @@ window.VariationVariableEditor = (function(m, _) {
     function view(ctrl) {
         var variablesDiv = m(
             "div.product-variable-wrap",
-            _.map(_.reject(variables, gettext("DELETE")), _.partial(renderVariable, ctrl))
+            _.map(_.reject(variables, "DELETE"), _.partial(renderVariable, ctrl))
         );
         var identifierFieldsCheckbox = m("p", [
             m("label.small", [
