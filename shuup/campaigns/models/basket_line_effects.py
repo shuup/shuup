@@ -107,7 +107,9 @@ class DiscountFromProduct(BasketLineEffect):
             if line.product.pk not in product_ids:
                 continue
             amnt = (self.discount_amount * line.quantity) if not self.per_line_discount else self.discount_amount
-            line.discount_amount = order_source.create_price(amnt)
+            discount_price = order_source.create_price(amnt)
+            if not line.discount_amount or line.discount_amount < discount_price:
+                line.discount_amount = discount_price
         return []
 
 
@@ -145,8 +147,12 @@ class DiscountFromCategoryProducts(BasketLineEffect):
 
             if self.discount_amount:
                 amount = self.discount_amount * line.quantity
-                line.discount_amount = order_source.create_price(amount)
+                discount_price = order_source.create_price(amount)
             elif self.discount_percentage:
                 amount = line.taxless_price * self.discount_percentage
-                line.discount_amount = order_source.create_price(amount)
+                discount_price = order_source.create_price(amount)
+
+            if not line.discount_amount or line.discount_amount < discount_price:
+                line.discount_amount = discount_price
+
         return []
