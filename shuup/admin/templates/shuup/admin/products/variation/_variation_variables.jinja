@@ -1,7 +1,7 @@
 {% from "shuup/admin/macros/general.jinja" import content_block %}
 {% set var_form = form["variables"] %}
 
-{% call content_block(_("Variables"), "fa-clone") %}
+{% call content_block(_("Variables"), "fa-clone", id="variables-section") %}
     <div id="variation-variable-editor"></div>
     {{ var_form["data"]|safe }}
     <script>

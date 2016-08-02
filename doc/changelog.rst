@@ -41,6 +41,9 @@ Localization
 Admin
 ~~~~~
 
+- Fix product variation variable delete for non-english users
+- Fix product "Add new image" link
+- Fix content block styles that are styled by id
 - Add Orders section to product detail page
 - Add `admin_product_section` provide to make product detail extendable
 - Fix bug with empty customer names in order list view
