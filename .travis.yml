@@ -20,6 +20,12 @@ install:
   - pip install -U pip
   - pip install tox
   - pip install coveralls
+before_install:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - "npm install -g selenium-standalone@4.5.3"
+  - "selenium-standalone install"
+  - "selenium-standalone start &"
 script:
   - tox -e $TOX_ENV
 after_success: test $TOX_ENV = py35-nomigrations && coveralls

@@ -5,6 +5,8 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import pytest
+
 from django.core.signals import setting_changed
 
 from shuup.apps.provides import clear_provides_cache
@@ -34,3 +36,7 @@ def pytest_runtest_teardown(item, nextitem):
     if hasattr(item.session, "_theme_overrider"):
         item.session._theme_overrider.__exit__(None, None, None)
         del item.session._theme_overrider
+
+@pytest.fixture(scope="session")
+def splinter_make_screenshot_on_failure():
+    return False
