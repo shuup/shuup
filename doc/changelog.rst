@@ -94,6 +94,7 @@ Addons
 Front
 ~~~~~
 
+- Checkout show company form validation errors for fields
 - Do not show messages in registration if activation is not required
 - Show public images only on the product detail page
 - Add ability for customers to save their cart
