@@ -41,6 +41,7 @@ Localization
 Admin
 ~~~~~
 
+- Add Orders section to product detail page
 - Add `admin_product_section` provide to make product detail extendable
 - Fix bug with empty customer names in order list view
 - Add warning when editing order with no customer contact
