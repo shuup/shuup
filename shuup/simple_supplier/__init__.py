@@ -21,6 +21,9 @@ class ShuupSimpleSupplierAppConfig(AppConfig):
         ],
         "admin_module": [
             "shuup.simple_supplier.admin_module:StocksAdminModule"
+        ],
+        "notify_event": [
+            "shuup.simple_supplier.notify_events:AlertLimitReached"
         ]
     }
 

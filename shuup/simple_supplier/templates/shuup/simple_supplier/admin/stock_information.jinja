@@ -1,9 +1,12 @@
 <div id="{{ div_id }}">
     {% if stock %}
-        <p>{% trans %}Physical count{% endtrans %}: {{ stock.physical_count|floatformat(sales_decimals) }} {{ sales_unit }}</p>
-        <p>{% trans %}Logical count{% endtrans %}: {{ stock.logical_count|floatformat(sales_decimals) }} {{ sales_unit }}</p>
-        <p>{% trans %}Value per unit{% endtrans %}: {{ stock.stock_unit_price|money }}</p>
-        <p>{% trans %}Total value{% endtrans %}: {{ stock.stock_value|money }}</p>
+        <p>{% trans count=stock.physical_count|floatformat(sales_decimals) %}Physical count: {{ count }} {{ sales_unit }}{% endtrans %}</p>
+        <p>{% trans count=stock.logical_count|floatformat(sales_decimals) %}Logical count: {{ count }} {{ sales_unit }}{% endtrans %}</p>
+        <p>{% trans value=stock.stock_unit_price|money %}Value per unit: {{ value }}{% endtrans %}</p>
+        <p>{% trans value=stock.stock_value|money %}Total value: {{ value }}{% endtrans %}</p>
+    {% if alert_limit %}
+        <p>{% trans limit=stock.alert_limit|floatformat %}Alert limit: {{ limit }}{% endtrans %}</p>
+    {% endif %}
     {% else %}
         {% trans %}No stock information available.{% endtrans %}
     {% endif %}

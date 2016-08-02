@@ -12,7 +12,10 @@ import random
 from shuup.admin.modules.products.views.edit import ProductEditView
 from shuup.core.models import StockBehavior, Supplier
 from shuup.simple_supplier.admin_module.forms import SimpleSupplierForm
-from shuup.simple_supplier.admin_module.views import process_stock_adjustment
+from shuup.simple_supplier.admin_module.views import (
+    process_alert_limit, process_stock_adjustment
+)
+from shuup.simple_supplier.models import StockCount
 
 from shuup.testing.factories import (
     create_order_with_product, create_product, get_default_shop
@@ -144,3 +147,24 @@ def test_new_product_admin_form_renders(rf, client, admin_user):
 
     # Nor should this
     view(request).render()
+
+
+def test_alert_limit_view(rf, admin_user):
+    supplier = get_simple_supplier()
+    shop = get_default_shop()
+    product = create_product("simple-test-product", shop, supplier)
+    sc = StockCount.objects.get(supplier=supplier, product=product)
+    assert not sc.alert_limit
+
+    test_alert_limit = decimal.Decimal(10)
+    request = rf.get("/")
+    request.user = admin_user
+    request.method = "POST"
+    request.POST = {
+        "alert_limit": test_alert_limit,
+    }
+    response = process_alert_limit(request, supplier.id, product.id)
+    assert response.status_code == 200
+
+    sc = StockCount.objects.get(supplier=supplier, product=product)
+    assert sc.alert_limit == test_alert_limit

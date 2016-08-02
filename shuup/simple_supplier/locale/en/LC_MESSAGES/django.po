@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-11 12:32+0000\n"
+"POT-Creation-Date: 2016-08-02 18:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,9 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "Stock management"
-msgstr ""
-
-msgid "Products"
 msgstr ""
 
 msgid "SKU"
@@ -56,6 +53,10 @@ msgid ""
 "(%(supplier_name)s)"
 msgstr ""
 
+#, python-format
+msgid "Alert limit for product %(product_name)s set to %(value)s."
+msgstr ""
+
 msgid "Not allowed"
 msgstr ""
 
@@ -76,6 +77,9 @@ msgstr ""
 msgid "Only non-zero values can be added to stock."
 msgstr ""
 
+msgid "Alert limit"
+msgstr ""
+
 msgid "product"
 msgstr ""
 
@@ -91,6 +95,12 @@ msgstr ""
 msgid "delta"
 msgstr ""
 
+msgid "type"
+msgstr ""
+
+msgid "alert limit"
+msgstr ""
+
 msgid "logical count"
 msgstr ""
 
@@ -98,6 +108,15 @@ msgid "physical count"
 msgstr ""
 
 msgid "Add stock"
+msgstr ""
+
+#, python-format
+msgid ""
+"Alert limit <a href=\"%(notify_url)s\" target=\"_blank\">notification "
+"scripts</a> are executed when product stock falls below set quantity."
+msgstr ""
+
+msgid "Change alert limit"
 msgstr ""
 
 #, python-format
@@ -128,16 +147,24 @@ msgid ""
 "\"%(supplier_url)s\" target=\"_blank\">Suppliers</a>."
 msgstr ""
 
-msgid "Physical count"
+#, python-format
+msgid "Physical count: %(count)s %(sales_unit)s"
 msgstr ""
 
-msgid "Logical count"
+#, python-format
+msgid "Logical count: %(count)s %(sales_unit)s"
 msgstr ""
 
-msgid "Value per unit"
+#, python-format
+msgid "Value per unit: %(value)s"
 msgstr ""
 
-msgid "Total value"
+#, python-format
+msgid "Total value: %(value)s"
+msgstr ""
+
+#, python-format
+msgid "Alert limit: %(limit)s"
 msgstr ""
 
 msgid "No stock information available."
