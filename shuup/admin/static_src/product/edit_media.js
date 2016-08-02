@@ -45,8 +45,9 @@ $(function() {
 
     $(".media-add-new-panel").on("click", function(e) {
         e.preventDefault();
-        const panelCount = $("#" + $(this).data("target-panels") + " .panel").length;
-        const $source = $("#placeholder-panel");
+        const section = $(this).data("target-panels");
+        const panelCount = $("#" + section + " .panel").length;
+        const $source = $("#" + section + "-placeholder-panel");
         const html = $source.html().replace(/__prefix__/g, panelCount - 1).replace(/__prefix_name__/g, panelCount);
 
         $(html).insertBefore($source);
