@@ -1,7 +1,7 @@
 {% from "shuup/admin/macros/general.jinja" import content_block %}
 {% set children_formset = form["children"] %}
 
-{% call content_block(_("Simple Variation Children"), "fa-sitemap") %}
+{% call content_block(_("Simple Variation Children"), "fa-sitemap", id="simple-variation-children-section") %}
     {% for mf in children_formset.management_form %}{{ mf|safe }}{% endfor %}
     <table class="table table-striped">
         <thead>
