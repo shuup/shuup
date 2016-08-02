@@ -65,9 +65,11 @@ class SimpleSupplierModule(BaseSupplierModule):
             .last())
         if latest_event:
             sv.stock_value_value = latest_event.purchase_price_value * sv.logical_count
-        product = Product.objects.get(pk=product_id)
+
         if "shuup.notify" in settings.INSTALLED_APPS:
-            if (product.stock_behavior == StockBehavior.STOCKED) and (sv.physical_count < sv.alert_limit):
-                from .notify_events import AlertLimitReached
-                AlertLimitReached(supplier=self.supplier, product=product_id).run()
+            if sv.alert_limit and sv.physical_count < sv.alert_limit:
+                product = Product.objects.filter(id=product_id).first()
+                if product and product.stock_behavior == StockBehavior.STOCKED:
+                    from .notify_events import AlertLimitReached
+                    AlertLimitReached(supplier=self.supplier, product=product).run()
         sv.save(update_fields=("logical_count", "physical_count", "stock_value_value"))
