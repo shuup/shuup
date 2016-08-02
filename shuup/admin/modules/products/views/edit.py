@@ -22,6 +22,7 @@ from shuup.admin.modules.products.forms import (
     ProductMediaFormSet, ShopProductForm
 )
 from shuup.admin.utils.views import CreateOrUpdateView
+from shuup.apps.provides import get_provide_objects
 from shuup.core.models import (
     Product, ProductType, Shop, ShopProduct, ShopStatus, TaxClass
 )
@@ -190,4 +191,11 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
                 except ObjectDoesNotExist:
                     orderability_errors.extend(["%s: %s" % (shop.name, _("Product is not available."))])
         context["orderability_errors"] = orderability_errors
+        context["product_sections"] = []
+        product_sections_provides = sorted(get_provide_objects("admin_product_section"), key=lambda x: x.order)
+        for admin_product_section in product_sections_provides:
+            if admin_product_section.visible_for_object(self.object):
+                context["product_sections"].append(admin_product_section)
+                context[admin_product_section.identifier] = admin_product_section.get_context_data(self.object)
+
         return context
