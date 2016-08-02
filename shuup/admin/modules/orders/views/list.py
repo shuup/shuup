@@ -25,8 +25,13 @@ class OrderListView(PicotableListView):
         Column("identifier", _(u"Order"), linked=True, filter_config=TextFilter(operator="startswith")),
         Column("order_date", _(u"Order Date"), display="format_order_date", filter_config=DateRangeFilter()),
         Column(
-            "customer_name", _(u"Customer"), display="format_customer_name",
-            filter_config=MultiFieldTextFilter(filter_fields=("customer__email", "customer__name"))
+            "customer", _(u"Customer"), display="format_customer_name",
+            filter_config=MultiFieldTextFilter(
+                filter_fields=(
+                    "customer__email", "customer__name", "billing_address__name",
+                    "shipping_address__name", "orderer__name"
+                )
+            )
         ),
         Column("status", _(u"Status"), filter_config=ChoicesFilter(choices=OrderStatus.objects.all())),
         Column("payment_status", _(u"Payment Status"), filter_config=ChoicesFilter(choices=PaymentStatus.choices)),
