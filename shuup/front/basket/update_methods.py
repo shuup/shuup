@@ -35,7 +35,8 @@ class BasketUpdateMethods(object):
         }
 
     def delete_line(self, line, **kwargs):
-        return self.basket.delete_line(line["line_id"])
+        if line:
+            return self.basket.delete_line(line["line_id"])
 
     def _get_orderability_errors(self, basket_line, new_quantity):
         product = Product.objects.get(pk=basket_line["product_id"])
