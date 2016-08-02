@@ -57,7 +57,7 @@ class ProductFilter(CatalogFilter):
     products = models.ManyToManyField(Product, verbose_name=_("product"))
 
     def matches(self, shop_product):
-        return (shop_product.pk in self.values.values_list("pk", flat=True))
+        return (shop_product.product.pk in self.values.values_list("pk", flat=True))
 
     def filter_queryset(self, queryset):
         return queryset.filter(product_id__in=self.products.values_list("id", flat=True))
