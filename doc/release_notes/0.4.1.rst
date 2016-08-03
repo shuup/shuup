@@ -1,0 +1,8 @@
+Shuup 0.4.1 Release Notes
+=========================
+
+Released on 2016-08-02 07:30pm -0800.
+
+List of changes see
+:doc:`../shoop-changelog` or `Git commit log
+<https://github.com/shuup/shuup/commits/v0.4.1>`__.
