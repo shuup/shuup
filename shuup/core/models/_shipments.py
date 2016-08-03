@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from decimal import Decimal
 
 from django.db import models
+from django.db.transaction import atomic
 from django.utils.crypto import get_random_string
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
@@ -18,6 +19,7 @@ from enumfields import Enum, EnumIntegerField
 from shuup.core.fields import (
     InternalIdentifierField, MeasurementField, QuantityField
 )
+from shuup.core.signals import shipment_deleted
 
 __all__ = ("Shipment", "ShipmentProduct")
 
@@ -30,12 +32,20 @@ class ShipmentStatus(Enum):
     SENT = 1
     RECEIVED = 2  # if the customer deigns to tell us
     ERROR = 10
+    DELETED = 20
 
     class Labels:
         NOT_SENT = _("not sent")
         SENT = _("sent")
         RECEIVED = _("received")
         ERROR = _("error")
+        DELETED = _("deleted")
+
+
+class ShipmentManager(models.Manager):
+
+    def all_except_deleted(self):
+        return self.exclude(status=ShipmentStatus.DELETED)
 
 
 class Shipment(models.Model):
@@ -50,6 +60,8 @@ class Shipment(models.Model):
     weight = MeasurementField(unit="kg", verbose_name=_("weight"))
     identifier = InternalIdentifierField(unique=True)
     # TODO: documents = models.ManyToManyField(FilerFile)
+
+    objects = ShipmentManager()
 
     class Meta:
         verbose_name = _('shipment')
@@ -73,6 +85,23 @@ class Shipment(models.Model):
         super(Shipment, self).save(*args, **kwargs)
         for product_id in self.products.values_list("product_id", flat=True):
             self.supplier.module.update_stock(product_id=product_id)
+
+    def delete(self, using=None):
+        raise NotImplementedError("Not implemented: Use `soft_delete()` for shipments.")
+
+    @atomic
+    def soft_delete(self, user=None):
+        if self.status == ShipmentStatus.DELETED:
+            return
+        self.status = ShipmentStatus.DELETED
+        self.save(update_fields=["status"])
+        for product_id in self.products.values_list("product_id", flat=True):
+            self.supplier.module.update_stock(product_id=product_id)
+        self.order.update_shipping_status()
+        shipment_deleted.send(sender=type(self), shipment=self)
+
+    def is_deleted(self):
+        return bool(self.status == ShipmentStatus.DELETED)
 
     def cache_values(self):
         """

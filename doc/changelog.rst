@@ -12,6 +12,8 @@ Unreleased
 Core
 ~~~~
 
+- Enable soft delete for shipments
+
 Localization
 ~~~~~~~~~~~~
 
