@@ -34,10 +34,10 @@
         <div class="cart-saver row">
             <div class="col-sm-6 col-sm-offset-6">
                 <div class="clearfix">
-                    <a class="cart-saver-toggle pull-right" href="#collapseSaveCart" data-toggle="collapse">{% trans %}Save cart{% endtrans %}</a>
+                    <a class="btn btn-primary cart-saver-toggle pull-right btn-save-cart" href="#collapseSaveCart" data-toggle="collapse">{% trans %}Save cart{% endtrans %}</a>
                 </div>
                 <div class="collapse" id="collapseSaveCart">
-                    <div class="input-group">
+                    <div class="input-group input-save-cart">
                         <input type="text" id="cart-title" class="form-control" name="title" placeholder="{% trans %}Cart Title{% endtrans %}">
                         <span class="input-group-btn">
                             <button id="save-cart" type="submit" class="btn btn-primary">{% trans %}Save{% endtrans %}</button>
