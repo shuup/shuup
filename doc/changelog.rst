@@ -1,13 +1,10 @@
 Shuup Change Log
 ================
 
-Unreleased
-----------
+SHUUP 0.4.1
+-----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2016-08-02 07:30pm -0800.
 
 Core
 ~~~~
@@ -34,9 +31,6 @@ Core
 - Allow refund only for non editable orders
 - Create separate refund lines for quantities and amounts
 - Fix handling of refunds for discounted lines
-
-Localization
-~~~~~~~~~~~~
 
 Admin
 ~~~~~
@@ -93,9 +87,6 @@ Admin
 - Remove orderability checks from order editor
 - Replace buttons with dropdown in Orders admin
 
-Addons
-~~~~~~
-
 Front
 ~~~~~
 
@@ -111,8 +102,6 @@ Front
 - Use contact default addresses for company creation
 - Use home country by default in customer information addresses
 
-Xtheme
-~~~~~~
 
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
@@ -127,8 +116,6 @@ Simple Supplier
 - Add stock limit notification event
 - Skip refund lines when getting product stock counts
 
-Order Printouts
-~~~~~~~~~~~~~~~
 
 Campaigns
 ~~~~~~~~~
@@ -142,8 +129,6 @@ Customer Group Pricing
 
 - Re-style contactgroup pricing admin form
 
-Discount Pricing
-~~~~~~~~~~~~~~~~
 
 Simple CMS
 ~~~~~~~~~~
@@ -151,16 +136,10 @@ Simple CMS
 - Show error when attempting to make a page a child of itself
 - Fix plugin links
 
-Default Tax
-~~~~~~~~~~~
-
 Guide
 ~~~~~
 
 - Fix admin search for invalid API URL settings
-
-General/miscellaneous
-~~~~~~~~~~~~~~~~~~~~~
 
 
 Shuup 0.4.0
