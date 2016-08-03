@@ -16,7 +16,6 @@ from shuup.core.excs import ProductNotOrderableProblem
 from shuup.core.models import OrderLineType, Product
 from shuup.core.utils.users import real_user_or_none
 from shuup.front.models import StoredBasket
-from shuup.utils.i18n import format_money
 
 
 class CartViewMixin(object):
@@ -52,11 +51,9 @@ class CartDetailView(CartViewMixin, DetailView):
                 continue
             product = product_dict[line["product_id"]]
             quantity = line.get("quantity", 0)
-            price_info = product.get_price_info(self.request, quantity=quantity)
             lines.append({
                 "product": product,
                 "quantity": quantity,
-                "price": format_money(price_info.price)
             })
         context["lines"] = lines
         return context

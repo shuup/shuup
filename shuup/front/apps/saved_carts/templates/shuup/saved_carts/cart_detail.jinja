@@ -45,11 +45,11 @@
                     {% set product = line.product %}
                     {% set thumbnail = product.primary_image | thumbnail(size=(70, 70)) %}
                     <tr>
-                        <td><img src="{{ thumbnail }}" alt="{{ product.name }}"></td>
+                        <td>{% if thumbnail %}<img src="{{ thumbnail }}" alt="{{ product.name }}">{% endif %}</td>
                         <td><a href="{{ shuup.urls.model_url(line.product) }}">{{ product.name }}</a></td>
                         <td class="text-right">{{ line.quantity }}</td>
                         {% if show_prices() %}
-                        <td class="text-right">{{ line.price }}</td>
+                        <td class="text-right">{{ line.product|price }}</td>
                         {% endif %}
                     </tr>
                 {% endfor %}
