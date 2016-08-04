@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-04 08:25+0000\n"
+"POT-Creation-Date: 2016-08-04 20:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -105,6 +105,21 @@ msgid "Leave blank for default width"
 msgstr ""
 
 msgid "Height (px)"
+msgstr ""
+
+msgid "Product Highlights"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Count"
+msgstr ""
+
+msgid "Only show in-stock and orderable items"
+msgstr ""
+
+msgid "Product Cross Sells"
 msgstr ""
 
 msgid "Snippets"

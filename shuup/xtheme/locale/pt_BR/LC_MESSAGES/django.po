@@ -1,23 +1,25 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Jonathan Hess <jhess666@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-04 08:25+0000\n"
-"PO-Revision-Date: 2016-07-29 16:35+0000\n"
+"POT-Creation-Date: 2016-08-04 20:11+0000\n"
+"PO-Revision-Date: 2016-08-04 13:14-0700\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/"
+"language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
 "Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.8.8\n"
 
 msgid "Shuup Extensible Theme Engine"
 msgstr "Motor de Temas Extensíveis do Shuup"
@@ -106,6 +108,21 @@ msgstr "Deixe em branco para largura padrão"
 
 msgid "Height (px)"
 msgstr "Altura (px)"
+
+msgid "Product Highlights"
+msgstr "Produtos em Destaque"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Count"
+msgstr "Contagem"
+
+msgid "Only show in-stock and orderable items"
+msgstr "Mostrar apenas itens em estoque e que possam ser comprados"
+
+msgid "Product Cross Sells"
+msgstr "Vendas Cruzadas de Produtos"
 
 msgid "Snippets"
 msgstr "Snippets"
