@@ -19,15 +19,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"POT-Creation-Date: 2016-08-04 18:53+0000\n"
 "PO-Revision-Date: 2016-06-28 03:11+0000\n"
 "Last-Translator: Shuup Admin <admin@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
 "language/fi_FI/)\n"
-"Language: fi_FI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fi_FI\n"
 "Generated-By: Babel 2.1.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
@@ -65,17 +65,34 @@ msgstr "kauppa"
 msgid "Log in"
 msgstr "Kirjaudu sisään"
 
+#, python-format
+msgid "You have already logged in as <strong>%(username)s</strong>"
+msgstr ""
+
+msgid "Go to Homepage"
+msgstr ""
+
 msgid "Forgot your password?"
 msgstr "Unohditko salasanasi?"
+
+msgid "New user? Register here!"
+msgstr ""
 
 msgid "Logged out"
 msgstr "Kirjaudu ulos"
 
-msgid "You have been logged out."
+#, fuzzy
+#| msgid "You have been logged out."
+msgid "You have been logged out. Thank you for visiting!"
 msgstr "Olet kirjautunut ulos."
 
 msgid "Recover your password"
 msgstr "Palauta salasanasi"
+
+#, fuzzy
+#| msgid "Please provide either username or email."
+msgid "You can recover your password with either username or email."
+msgstr "Syötäthän joko käyttäjätunnuksen tai sähköpostin"
 
 msgid "Send password recovery instructions"
 msgstr "Lähetä salasanan palautusohjeet"
@@ -105,8 +122,8 @@ msgid ""
 "You're receiving this email because you requested a password reset for your "
 "user account at %(site_name)s."
 msgstr ""
-"Sait tämän sähköpostin koska pyysit salasananpalautusta sivustolla "
-"%(site_name)s."
+"Sait tämän sähköpostin koska pyysit salasananpalautusta sivustolla %"
+"(site_name)s."
 
 msgid "Please go to the following page and choose a new password:"
 msgstr "Siirry oheiselle sivulle ja valitse uusi salasana:"

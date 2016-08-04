@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Christian Hess <christianhess.rlz@gmail.com>, 2016
 # Jonathan Hess <jhess666@gmail.com>, 2016
@@ -9,10 +9,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-30 23:37+0000\n"
+"POT-Creation-Date: 2016-08-04 19:11+0000\n"
 "PO-Revision-Date: 2016-07-30 02:09+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/"
+"language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,7 +26,11 @@ msgid ""
 "Please enter a correct %(username)s and password. Note that both fields may "
 "be case-sensitive. In case of multiple accounts with same email only "
 "username can be used to login."
-msgstr "Por favor, digite um %(username)s e senha corretos. Note que ambos os campos podem ser sensíveis a maiúsculas e minúsculas. No caso de múltiplas contas com o mesmo e-mail somente o nome de usuário poderá ser usado para fazer o login."
+msgstr ""
+"Por favor, digite um %(username)s e senha corretos. Note que ambos os campos "
+"podem ser sensíveis a maiúsculas e minúsculas. No caso de múltiplas contas "
+"com o mesmo e-mail somente o nome de usuário poderá ser usado para fazer o "
+"login."
 
 msgid "This account is inactive."
 msgstr "Esta conta está inativa."
@@ -51,17 +56,34 @@ msgstr "loja"
 msgid "Log in"
 msgstr "Entrar"
 
+#, python-format
+msgid "You have already logged in as <strong>%(username)s</strong>"
+msgstr ""
+
+msgid "Go to Homepage"
+msgstr ""
+
 msgid "Forgot your password?"
 msgstr "Esqueceu sua senha?"
+
+msgid "New user? Register here!"
+msgstr ""
 
 msgid "Logged out"
 msgstr "Desconectado"
 
-msgid "You have been logged out."
+#, fuzzy
+#| msgid "You have been logged out."
+msgid "You have been logged out. Thank you for visiting!"
 msgstr "Você foi desconectado."
 
 msgid "Recover your password"
 msgstr "Recupere sua senha"
+
+#, fuzzy
+#| msgid "Please provide either username or email."
+msgid "You can recover your password with either username or email."
+msgstr "Por favor, forneça um nome de usuário ou um e-mail."
 
 msgid "Send password recovery instructions"
 msgstr "Enviar instruções de recuperação de senha"
@@ -90,7 +112,9 @@ msgstr "Caso tenha esquecido, seu nome de usuário é %(username)s."
 msgid ""
 "You're receiving this email because you requested a password reset for your "
 "user account at %(site_name)s."
-msgstr "Você está recebendo este e-mail porque solicitou a redefinição de senha para sua conta de usuário em %(site_name)s."
+msgstr ""
+"Você está recebendo este e-mail porque solicitou a redefinição de senha para "
+"sua conta de usuário em %(site_name)s."
 
 msgid "Please go to the following page and choose a new password:"
 msgstr "Por favor, vá para a seguinte página e escolha uma nova senha:"
@@ -100,7 +124,12 @@ msgid ""
 "    If an user account is associated with the information you entered,\n"
 "    you should receive instructions on how to reset your password shortly.\n"
 "    "
-msgstr "\nSe uma conta de usuário estiver associada às informações digitadas,\nvocê deverá receber instruções sobre como redefinir sua senha logo em breve.\n "
+msgstr ""
+"\n"
+"Se uma conta de usuário estiver associada às informações digitadas,\n"
+"você deverá receber instruções sobre como redefinir sua senha logo em "
+"breve.\n"
+" "
 
 msgid "This recovery link is invalid."
 msgstr "Este link de recuperação é inválido."
