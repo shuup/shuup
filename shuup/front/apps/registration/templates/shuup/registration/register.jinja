@@ -1,7 +1,9 @@
 {% extends "shuup/front/base.jinja" %}
 {% from "shuup/front/macros.jinja" import render_field %}
-{% block content %}
 
+{% block title %}{% trans %}Register{% endtrans %}{% endblock %}
+
+{% block content %}
     <div class="row">
         <div class="col-sm-8 col-sm-push-2 col-md-6 col-md-push-3">
             <h1 class="page-header text-center">
@@ -16,10 +18,9 @@
                     {% csrf_token %}
                     {% for field in form.hidden_fields() %}{{ field|safe }}{% endfor %}
                     {% for field in form.visible_fields() %}{{ render_field(field) }}{% endfor %}
-                    <button type="submit" class="btn btn-primary btn-block"><i class="glyphicon glyphicon-ok"></i> {% trans %}Register{% endtrans %}</button>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="fa fa-check"></i> {% trans %}Register{% endtrans %}</button>
                 </form>
             </div>
         </div>
     </div>
-
 {% endblock %}
