@@ -1,44 +1,59 @@
 {% extends "shuup/front/base.jinja" %}
+{% from "shuup/customer_information/macros.jinja" import render_address_forms, render_address_forms_js %}
 {% block title %}{% trans %}User account information{% endtrans %}{% endblock %}
 {% block content_title %}{% trans %}User account information{% endtrans %}{% endblock %}
 
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li><a href="/">{% trans %}Home{% endtrans %}</a></li>
+        <li class="active">{% trans %}User account information{% endtrans %}</li>
+    </ol>
+{% endblock %}
+
 {% block content %}
-    <form role="form" method="post" action="">
-        {% csrf_token %}
-        {% for field in form.contact.hidden_fields() %}{{ field|safe }}{% endfor %}
-        {% for field in form.billing.hidden_fields() %}{{ field|safe }}{% endfor %}
-        {% for field in form.shipping.hidden_fields() %}{{ field|safe }}{% endfor %}
-        <div class="well">
-            <fieldset>
-                <legend>{% trans %}User information{% endtrans %}</legend>
-                {% for field in form.contact.visible_fields() %}
-                    {{ macros.render_field(field) }}
-                {% endfor %}
-            </fieldset>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="well">
-                    <fieldset>
-                        <legend>{% trans %}Billing information{% endtrans %}</legend>
-                        {% for field in form.billing.visible_fields() %}
-                            {{ macros.render_field(field) }}
-                        {% endfor %}
-                    </fieldset>
+    <div class="user-account">
+        <form role="form" method="post" action="">
+            <div class="btn-toolbar pull-right" role="toolbar">
+                <div class="btn-group" role="group">
+                    <a class="btn btn-info" href="{{ url("shuup:company_edit") }}">
+                        {% if request.is_company_member %}
+                            <i class="fa fa-users"></i> {% trans %}Edit company information{% endtrans %}
+                        {% else %}
+                            <i class="fa fa-link"></i> {% trans %}Link account to company{% endtrans %}
+                        {% endif %}
+                    </a>
+                </div>
+                <div class="btn-group" role="group">
+                    <a class="btn btn-info" href="{{ url("shuup:change_password") }}">
+                        <i class="fa fa-cog"></i> {% trans %}Change password{% endtrans %}
+                    </a>
+                </div>
+                <div class="btn-group" role="group">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> {% trans %}Save changes{% endtrans %}</button>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="well">
-                    <fieldset>
-                        <legend>{% trans %}Shipping information{% endtrans %}</legend>
-                        {% for field in form.shipping.visible_fields() %}
-                            {{ macros.render_field(field) }}
-                        {% endfor %}
-                    </fieldset>
+            <div class="clearfix"></div>
+            {% csrf_token %}
+            {% for field in form.contact.hidden_fields() %}{{ field|safe }}{% endfor %}
+            <div class="well">
+                <fieldset>
+                    <legend>{% trans %}User information{% endtrans %}</legend>
+                    {% for field in form.contact.visible_fields() %}
+                        {{ macros.render_field(field) }}
+                    {% endfor %}
+                </fieldset>
+            </div>
+            {{ render_address_forms(form.billing, form.shipping) }}
+            <div class="btn-toolbar pull-right" role="toolbar">
+                <div class="btn-group" role="group">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> {% trans %}Save changes{% endtrans %}</button>
                 </div>
             </div>
-        </div>
-        <hr>
-        <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-ok"></i> {% trans %}Save changes{% endtrans %}</button>
-    </form>
+            <div class="clearfix"></div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block extrajs %}
+    {{ render_address_forms_js() }}
 {% endblock %}

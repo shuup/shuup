@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-25 13:15+0000\n"
+"POT-Creation-Date: 2016-08-04 18:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -31,28 +31,49 @@ msgstr ""
 msgid "Change Password"
 msgstr ""
 
+msgid "Home"
+msgstr ""
+
+msgid "Change password"
+msgstr ""
+
+msgid "Edit user account information"
+msgstr ""
+
 msgid "Save password"
 msgstr ""
 
 msgid "Company account information"
 msgstr ""
 
-msgid "Company information"
-msgstr ""
-
-msgid "Billing information"
-msgstr ""
-
-msgid "Shipping information"
-msgstr ""
-
 msgid "Save changes"
+msgstr ""
+
+msgid "Company information"
 msgstr ""
 
 msgid "User account information"
 msgstr ""
 
+msgid "Edit company information"
+msgstr ""
+
+msgid "Link account to company"
+msgstr ""
+
 msgid "User information"
+msgstr ""
+
+msgid "Billing information"
+msgstr ""
+
+msgid "Copy to shipping information"
+msgstr ""
+
+msgid "Shipping information"
+msgstr ""
+
+msgid "Copy to billing information"
 msgstr ""
 
 msgid "Password successfully changed."
