@@ -3,26 +3,25 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-01 03:28+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2016-08-04 18:52+0000\n"
+"PO-Revision-Date: 2016-08-04 10:51-0700\n"
+"Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
-"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.1.1\n"
+"X-Generator: Poedit 1.8.8\n"
 
 msgid "Abandoned Cart Value"
 msgstr ""
 
-#, python-brace-format
 msgid "Based on {b} carts over the last {d} days"
 msgstr ""
 
@@ -255,60 +254,372 @@ msgstr ""
 msgid "products"
 msgstr ""
 
+msgid "Shop is currently in maintenance mode."
+msgstr ""
+
+msgid ""
+"There were errors on submitted form fields. Please check them and try again."
+msgstr ""
+
+msgid "Product added to cart"
+msgstr ""
+
+msgid "There was an error adding the product to the basket"
+msgstr ""
+
+msgid "Shopping cart"
+msgstr ""
+
+msgid "Your shopping cart is empty."
+msgstr ""
+
+msgid "Back to Products"
+msgstr ""
+
+msgid "There were errors on following items"
+msgstr ""
+
+msgid "You are unable to proceed to checkout!"
+msgstr ""
+
+msgid "Continue Shopping"
+msgstr ""
+
+msgid "Proceed to checkout"
+msgstr ""
+
+msgid "Save cart"
+msgstr ""
+
+msgid "Cart Title"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Coupon is not available."
+msgstr ""
+
+msgid "Error when adding coupon."
+msgstr ""
+
+msgid "Cart"
+msgstr ""
+
+msgid "Items"
+msgstr ""
+
+msgid "View cart"
+msgstr ""
+
+msgid "Qty"
+msgstr ""
+
+msgid "Remove product from basket"
+msgstr ""
+
+msgid "Have a coupon code? Enter it here"
+msgstr ""
+
+msgid "Coupon Code"
+msgstr ""
+
+msgid "Submit Code"
+msgstr ""
+
+msgid "Checkout"
+msgstr ""
+
+msgid "Continue"
+msgstr ""
+
+msgid "excl. tax"
+msgstr ""
+
+msgid "Billing address"
+msgstr ""
+
+msgid "Ordering for a company?"
+msgstr ""
+
+msgid "Please fill out these fields if you are ordering for a company."
+msgstr ""
+
+msgid "Shipping address"
+msgstr ""
+
+msgid "Ship to my billing address"
+msgstr ""
+
+msgid "Delivery"
+msgstr ""
+
+msgid "Delivery method"
+msgstr ""
+
+msgid "Billing"
+msgstr ""
+
+msgid "Add comment"
+msgstr ""
+
+msgid "Place Order"
+msgstr ""
+
+msgid "There are errors"
+msgstr ""
+
+msgid "Choose Shipping Method"
+msgstr ""
+
+msgid "Choose Payment Method"
+msgstr ""
+
+msgid "Errors"
+msgstr ""
+
+msgid "Ordering for a company"
+msgstr ""
+
+msgid "Other information"
+msgstr ""
+
+msgid "Place the order"
+msgstr ""
+
 msgid "Bad Request"
 msgstr ""
 
-msgid "Back to home"
+msgid "Unfortunately the server couldn't process your request."
+msgstr ""
+
+msgid "Back to Homepage"
 msgstr ""
 
 msgid "Permission Denied"
 msgstr ""
 
+msgid "Unfortunately you didn't have permission to display this page."
+msgstr ""
+
 msgid "Page not Found"
+msgstr ""
+
+msgid "Unfortunately the page you were looking for does not exist."
 msgstr ""
 
 msgid "Internal Server Error"
 msgstr ""
 
-msgid "Server Error"
+msgid ""
+"Unfortunately an internal server error occurred. Try refreshing the page or "
+"try again later."
 msgstr ""
 
-msgid "Welcome to Shuup!"
+msgid "Categories"
+msgstr ""
+
+msgid "Edit account details"
+msgstr ""
+
+msgid "Edit company details"
+msgstr ""
+
+msgid "My orders"
+msgstr ""
+
+msgid "My saved carts"
+msgstr ""
+
+msgid "My wishlists"
+msgstr ""
+
+msgid "Admin panel"
+msgstr ""
+
+msgid "Log out"
+msgstr ""
+
+msgid "Log in"
+msgstr ""
+
+msgid "Username or email address"
+msgstr ""
+
+msgid "Password"
+msgstr ""
+
+msgid "Forgot your password?"
+msgstr ""
+
+msgid "New user? Register here!"
+msgstr ""
+
+msgid "Menu"
+msgstr ""
+
+msgid "Products"
 msgstr ""
 
 #, python-format
-msgid "Welcome to %(name)s!"
+msgid "Welcome to %(shop_name)s!"
 msgstr ""
 
-msgid "your shop"
+msgid "Preview"
 msgstr ""
 
-msgid ""
-"You are seeing this page because there is no theme selected for the default "
-"frontend."
+msgid "Files"
 msgstr ""
 
-msgid "Log in to the administration interface"
+msgid "Products ordered"
 msgstr ""
 
-msgid "to choose a theme and set up your shop."
+msgid "Tax breakdown"
 msgstr ""
 
-msgid ""
-"The administration interface does not seem to be available. Use other means "
-"to choose a theme."
+msgid "Payment"
 msgstr ""
 
-msgid "You are not an administrator"
+msgid "Company"
 msgstr ""
 
-msgid "ask an administrator to select a theme."
+msgid "Previous"
+msgstr ""
+
+msgid "Next"
 msgstr ""
 
 msgid "Maintenance mode"
 msgstr ""
 
 msgid "Shop is currently down for maintenance."
+msgstr ""
+
+msgid "Thank you for your order!"
+msgstr ""
+
+msgid ""
+"Your order has been received. You can see the details of your order below."
+msgstr ""
+
+msgid "User account activation"
+msgstr ""
+
+msgid ""
+"If you want to be able to see your order history, please create a password "
+"for your account: "
+msgstr ""
+
+msgid "Send"
+msgstr ""
+
+msgid "Tax"
+msgstr ""
+
+msgid "Tax percentage"
+msgstr ""
+
+msgid "Based on amount"
+msgstr ""
+
+msgid "Amount of tax"
+msgstr ""
+
+msgid "Total including tax"
+msgstr ""
+
+msgid "Payment canceled"
+msgstr ""
+
+msgid "You have canceled payment"
+msgstr ""
+
+msgid "Retry payment"
+msgstr ""
+
+msgid "SKU"
+msgstr ""
+
+msgid "Barcode"
+msgstr ""
+
+msgid "Manufacturer"
+msgstr ""
+
+msgid "Package Size"
+msgstr ""
+
+msgid "Width"
+msgstr ""
+
+msgid "Height"
+msgstr ""
+
+msgid "Depth"
+msgstr ""
+
+msgid "Net Weight"
+msgstr ""
+
+msgid "Gross Weight"
+msgstr ""
+
+msgid "External link"
+msgstr ""
+
+msgid "Add to cart"
+msgstr ""
+
+msgid "Product is not orderable."
+msgstr ""
+
+msgid "Select"
+msgstr ""
+
+msgid "Select product"
+msgstr ""
+
+msgid "Combination not available"
+msgstr ""
+
+msgid "Show Grid/List"
+msgstr ""
+
+msgid "Grid/list view"
+msgstr ""
+
+#, python-format
+msgid "Save %(discount_percent)s"
+msgstr ""
+
+msgid "Product Information"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Attributes"
+msgstr ""
+
+msgid "Includes these products"
+msgstr ""
+
+msgid "No product description available"
+msgstr ""
+
+msgid "Also available in"
+msgstr ""
+
+msgid "Open product page"
+msgstr ""
+
+msgid "Newest products"
+msgstr ""
+
+msgid "Show Frontpage Welcome Text"
+msgstr ""
+
+msgid "This product is not available in this shop."
 msgstr ""
 
 msgid "Name - A-Z"
@@ -324,10 +635,4 @@ msgid "Price - High to Low"
 msgstr ""
 
 msgid "Sort"
-msgstr ""
-
-msgid "Manufacturer"
-msgstr ""
-
-msgid "This product is not available in this shop."
 msgstr ""

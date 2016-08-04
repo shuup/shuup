@@ -1,0 +1,13 @@
+{% if LANGUAGES|length > 1 %}
+<li class="dropdown" id="language-changer">
+    <a aria-expanded="false" href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="menu-icon fa fa-globe hidden-xs"></i> {{ LANGUAGE_CODE|upper }}
+        <i class="dropdown-icon fa fa-angle-down"></i>
+    </a>
+    <ul class="dropdown-menu languages" role="menu">
+        {% for (code, name, local_name) in get_language_choices() %}
+        <li><a href="#" class="language" data-value="{{ code }}">{{ name }} ({{ local_name }})</a></li>
+        {% endfor %}
+    </ul>
+</li>
+{% endif %}

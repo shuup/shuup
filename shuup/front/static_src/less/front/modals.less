@@ -1,0 +1,118 @@
+.search-modal {
+    display: none;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: @zindex-modal;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+
+    .search-modal-dialog {
+        padding: 30px;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    &.fade .search-modal-dialog {
+        .translate(0, 30%);
+        .transition-transform(~"0.3s ease-out");
+    }
+
+    &.in .search-modal-dialog {
+        .translate(0, 10%);
+        @media (min-width: @screen-md-min) {
+            .translate(0, 20%);
+        }
+    }
+
+    .search-modal-title {
+        margin-bottom: 40px;
+        font-weight: bold;
+        color: @brand-primary;
+    }
+    .search-input {
+        position: relative;
+        .form-control {
+            border-width: 0px 0px 2px 0px;
+            padding-right: 30px;
+            border-radius: 0;
+            background: transparent;
+            box-shadow: none;
+            font-size: 1.6rem;
+        }
+        .btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            background: transparent;
+            &:hover, &:focus {
+                color: @brand-primary;
+            }
+        }
+    }
+}
+
+.product-preview-modal {
+    display: none;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: @zindex-modal;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+
+    &.fade .product-preview-modal-dialog {
+        .translate(0, 25%);
+        .transition-transform(~"0.3s ease-out");
+    }
+
+    &.in .product-preview-modal-dialog {
+        .translate(0, 0);
+        @media (min-width: @screen-md-min) {
+            .translate(0, 15%);
+        }
+    }
+
+    .modal-open & {
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .product-preview-modal-dialog {
+        padding: 30px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    .close {
+        padding: 10px 15px;
+    }
+    .content {
+        background: #fff;
+        border:  1px solid @border-color;
+        padding: 30px;
+        .image {
+            background-position: 50%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-bottom: 15px;
+            display: block;
+            &:before {
+                content: "";
+                display: block;
+                position: relative;
+                padding-top: 100%;
+            }
+        }
+    }
+    .discount {
+        position: absolute;
+        left: 15px;
+        top: 0px;
+    }
+}

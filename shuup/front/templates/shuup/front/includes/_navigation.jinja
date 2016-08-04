@@ -1,0 +1,154 @@
+{% from "shuup/front/macros.jinja" import render_field with context %}
+<div class="top-nav">
+    <div class="container">
+        <ul class="pull-left">
+            {% if shuup.simple_search %}
+                <li>
+                    {% block searchform %}
+                        {{ shuup.simple_search.get_search_form() }}
+                    {% endblock %}
+                </li>
+            {% endif %}
+            {% if user.is_authenticated() %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="menu-icon fa fa-user"></i>
+                        <span class="hidden-xs">
+                        {% if user.first_name or user.last_name %}
+                            {{ user.get_full_name() }}
+                        {% else %}
+                            {{ user }}
+                        {% endif %}
+                        </span>
+                        <i class="dropdown-icon fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="{{ url("shuup:customer_edit") }}">
+                                <i class="fa fa-user fa-fw"></i> {% trans %}Edit account details{% endtrans %}
+                            </a>
+                        </li>
+                        {% if request.is_company_member %}
+                        <li>
+                            <a href="{{ url("shuup:company_edit") }}">
+                                <i class="fa fa-users fa-fw"></i> {% trans %}Edit company details{% endtrans %}
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if shuup.urls.has_url("shuup:personal-orders") %}
+                        <li>
+                            <a href="{{ url("shuup:personal-orders") }}">
+                                <i class="fa fa-list-alt fa-fw"></i>
+                                {% trans %}My orders{% endtrans %}
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if shuup.urls.has_url("shuup:saved_cart.list") %}
+                        <li>
+                            <a href="{{ url("shuup:saved_cart.list") }}">
+                                <i class="fa fa-shopping-cart fa-fw"></i>
+                                {% trans %}My saved carts{% endtrans %}
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if shuup.urls.has_url("shuup:personal_wishlists") %}
+                        <li>
+                            <a href="{{ url("shuup:personal_wishlists") }}">
+                                <i class="fa fa-star fa-fw"></i>
+                                {% trans %}My wishlists{% endtrans %}
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if user.is_superuser %}
+                            <li><a href="{{ url("shuup_admin:dashboard") }}"><i class="fa fa-dashboard fa-fw"></i> {% trans %}Admin panel{% endtrans %}</a></li>
+                        {% endif %}
+                        {% if shuup.urls.has_url("shuup:logout") %}
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="{{ url("shuup:logout") }}">
+                                <i class="fa fa-sign-out fa-fw"></i> {% trans %}Log out{% endtrans %}
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </li>
+            {% else %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="menu-icon fa fa-user"></i> <span class="hidden-xs">{% trans %}Log in{% endtrans %}</span>
+                        <i class="dropdown-icon fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu login" role="dropdown-menu">
+                        <li>
+                            <form role="form" method="post" action="{{ url("shuup:login") }}">
+                                {% csrf_token %}
+                                {% if request.resolver_match.url_name == "logout" %}{% set next="/" %}{% endif %}
+                                <input type="hidden" name="next" value="{{ next or request.path }}">
+                                <div class="form-group">
+                                    <label for="username">{% trans %}Username or email address{% endtrans %}</label>
+                                    <input type="text" name="username" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">{% trans %}Password{% endtrans %}</label>
+                                    <input type="password" name="password" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    {% trans %}Log in{% endtrans %}
+                                </button>
+                            </form>
+                        </li>
+                        <li class="divider"></li>
+                        {% if shuup.urls.has_url("shuup:recover_password") %}
+                        <li>
+                            <a href="{{ url("shuup:recover_password") }}">
+                                <i class="fa fa-question fa-fw"></i> {% trans %}Forgot your password?{% endtrans %}
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if shuup.urls.has_url("shuup:registration_register") %}
+                        <li>
+                            <a href="{{ url("shuup:registration_register") }}{% if next %}?next={{next}}{% endif %}">
+                                <i class="fa fa-edit fa-fw"></i> {% trans %}New user? Register here!{% endtrans %}
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </li>
+            {% endif %}
+            {% include "shuup/front/includes/language_changer.jinja" %}
+        </ul>
+        {% if show_prices() %}
+        <ul class="pull-right" id="navigation-basket-partial">
+            {% include "shuup/front/basket/navigation_basket_partial.jinja" with context %}
+        </ul>
+        {% endif %}
+    </div>
+</div>
+<div class="bottom-nav">
+    <div class="container">
+        {% set cropped_logo = request.shop.logo|thumbnail(size=(500,500)) %}
+        <div class="logo {% if not cropped_logo %}no-image{% endif %}">
+            {% if cropped_logo %}
+                <a href="/" class="image" style="background-image:url('{{ cropped_logo }}')"></a>
+            {% else %}
+                <a href="/" class="text"><h4>{{ request.shop.public_name }}</h4></a>
+            {% endif %}
+        </div>
+        <button class="toggle-mobile-nav">
+            <span class="sr-only">{% trans %}Menu{% endtrans %}</span>
+            <span class="hamburger"></span>
+        </button>
+        <div class="pages">
+            <ul class="nav-collapse">
+                <li{% if request.path == "/" %} class="current"{% endif %}><a href="/">{% trans %}Home{% endtrans %}</a></li>
+                {% set products_url = url('shuup:xtheme_extra_view', view='products') %}
+                <li{% if request.path == products_url %} class="current"{% endif %}><a href="{{ products_url }}">{% trans %}Products{% endtrans %}</a></li>
+                {% if shuup.simple_cms %}
+                    {% for link in xtheme.get_cms_navigation_links() %}
+                        <li{% if request.path == "%s/" % link.url %} class="current"{% endif %}><a href="{{ link.url }}">{{ link.text }}</a></li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
