@@ -27,7 +27,7 @@ def pytest_configure(config):
 def pytest_runtest_call(item):
     # All tests are run with a theme override `shuup.themes.classic_gray.ClassicGrayTheme`.
     # To un-override, use `with override_current_theme_class()` (no arguments to re-enable database lookup)
-    from shuup.themes.classic_gray import ClassicGrayTheme
+    from shuup.themes.classic_gray.theme import ClassicGrayTheme
     item.session._theme_overrider = override_current_theme_class(ClassicGrayTheme)
     item.session._theme_overrider.__enter__()
 
