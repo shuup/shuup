@@ -174,7 +174,13 @@ class UserDetailView(CreateOrUpdateView):
     # Model set during dispatch because it's swappable
     template_name = "shuup/admin/users/detail.jinja"
     context_object_name = "user"
-    fields = ("username", "email", "first_name", "last_name")
+    _fields = ["username", "email", "first_name", "last_name"]
+
+    @property
+    def fields(self):
+        # check whether these fields exists in the model or it has the attribute
+        model_fields = self.model._meta.get_all_field_names()
+        return [field for field in self._fields if field in model_fields or hasattr(self.model, field)]
 
     def get_form_class(self):
         return modelform_factory(self.model, form=BaseUserForm, fields=self.fields)
