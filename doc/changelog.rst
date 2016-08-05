@@ -12,12 +12,15 @@ Unreleased
 Core
 ~~~~
 
+- Enable soft delete for shipments
+
 Localization
 ~~~~~~~~~~~~
 
 Admin
 ~~~~~
 
+- Add option to delete shipments
 - Apply picotable text filters on change rather than on enter/on focus out
 
 Addons

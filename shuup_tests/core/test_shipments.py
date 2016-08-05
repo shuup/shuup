@@ -30,6 +30,7 @@ def test_shipment_identifier():
     assert order.shipping_status == ShippingStatus.FULLY_SHIPPED  # Check that order is now fully shipped
     assert not order.can_edit()
 
+
 @pytest.mark.django_db
 def test_shipment_creation_from_unsaved_shipment():
     shop = get_default_shop()
@@ -86,6 +87,26 @@ def test_partially_shipped_order_status():
     order.create_shipment({first_product_line.product: 1}, supplier=supplier)
     assert order.shipping_status == ShippingStatus.PARTIALLY_SHIPPED
     assert not order.can_edit()
+
+
+@pytest.mark.django_db
+def test_shipment_delete():
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    order = _get_order(shop, supplier)
+    assert order.can_edit()
+    first_product_line = order.lines.exclude(product_id=None).first()
+    assert first_product_line.quantity > 1
+    shipment = order.create_shipment({first_product_line.product: 1}, supplier=supplier)
+    assert order.shipping_status == ShippingStatus.PARTIALLY_SHIPPED
+    assert order.shipments.all().count() == 1
+
+    # Test shipment delete
+    shipment.soft_delete()
+    assert order.shipments.all().count() == 1
+    assert order.shipments.all_except_deleted().count() == 0
+    # Check the shipping status update
+    assert order.shipping_status == ShippingStatus.NOT_SHIPPED
 
 
 def _get_order(shop, supplier):

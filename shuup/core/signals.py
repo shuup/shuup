@@ -13,3 +13,4 @@ get_orderability_errors = Signal(providing_args=["shop_product", "customer", "su
 shipment_created = Signal(providing_args=["order", "shipment"], use_caching=True)
 refund_created = Signal(providing_args=["order", "refund_lines"], use_caching=True)
 category_deleted = Signal(providing_args=["category"], use_caching=True)
+shipment_deleted = Signal(providing_args=["shipment"], use_caching=True)

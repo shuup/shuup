@@ -34,6 +34,12 @@ class OrderModule(AdminModule):
                 permissions=["shuup.add_shipment"]
             ),
             admin_url(
+                "^shipments/(?P<pk>\d+)/delete/$",
+                "shuup.admin.modules.orders.views.ShipmentDeleteView",
+                name="order.delete-shipment",
+                permissions=["shuup.delete_shipment"]
+            ),
+            admin_url(
                 "^orders/(?P<pk>\d+)/create-payment/$",
                 "shuup.admin.modules.orders.views.OrderCreatePaymentView",
                 name="order.create-payment",

@@ -17,7 +17,7 @@ from shuup.admin.utils.permissions import (
     get_default_model_permissions, get_missing_permissions
 )
 from shuup.core.models import (
-    OrderLine, OrderLineType, OrderStatusRole, ShipmentProduct
+    OrderLine, OrderLineType, OrderStatusRole, ShipmentProduct, ShipmentStatus
 )
 from shuup.core.suppliers.base import StockAdjustmentType
 from shuup.simple_supplier.forms import AlertLimitForm, StockAdjustmentForm
@@ -58,6 +58,7 @@ def get_current_stock_value(supplier_id, product_id):
     products_sent = (
         ShipmentProduct.objects
         .filter(shipment__supplier=supplier_id, product_id=product_id)
+        .exclude(shipment__status=ShipmentStatus.DELETED)
         .aggregate(total=Sum("quantity"))["total"] or 0)
 
     return {

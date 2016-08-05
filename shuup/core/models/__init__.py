@@ -55,7 +55,7 @@ from ._service_payment import (
     CustomPaymentProcessor, PaymentMethod, PaymentProcessor, PaymentUrls
 )
 from ._service_shipping import Carrier, CustomCarrier, ShippingMethod
-from ._shipments import Shipment, ShipmentProduct
+from ._shipments import Shipment, ShipmentProduct, ShipmentStatus
 from ._shops import Shop, ShopStatus
 from ._supplied_products import SuppliedProduct
 from ._suppliers import Supplier, SupplierType
@@ -131,6 +131,7 @@ __all__ = [
     "ServiceProvider",
     "Shipment",
     "ShipmentProduct",
+    "ShipmentStatus",
     "ShippingMethod",
     "ShippingMode",
     "ShippingStatus",

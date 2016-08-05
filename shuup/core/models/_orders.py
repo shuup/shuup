@@ -748,15 +748,19 @@ class Order(MoneyPropped, models.Model):
         return not (canceled or paid or shipped)
 
     def update_shipping_status(self):
-        if self.shipping_status == ShippingStatus.FULLY_SHIPPED:
-            return
-
+        status_before_update = self.shipping_status
         if not self.get_unshipped_products():
             self.shipping_status = ShippingStatus.FULLY_SHIPPED
-            self.add_log_entry(_(u"All products have been shipped. Fully Shipped status set."))
-            self.save(update_fields=("shipping_status",))
-        elif self.shipments.count():
+        elif self.shipments.all_except_deleted().count():
             self.shipping_status = ShippingStatus.PARTIALLY_SHIPPED
+        else:
+            self.shipping_status = ShippingStatus.NOT_SHIPPED
+        if status_before_update != self.shipping_status:
+            self.add_log_entry(
+                _("New shipping status set: %(shipping_status)s" % {
+                    "shipping_status": self.shipping_status
+                })
+            )
             self.save(update_fields=("shipping_status",))
 
     def get_known_additional_data(self):
@@ -789,11 +793,12 @@ class Order(MoneyPropped, models.Model):
             products[product_id]['ordered'] += quantity
             products[product_id]['unshipped'] += quantity
 
-        from ._shipments import ShipmentProduct
+        from ._shipments import ShipmentProduct, ShipmentStatus
 
         shipment_prods = (
             ShipmentProduct.objects
             .filter(shipment__order=self)
+            .exclude(shipment__status=ShipmentStatus.DELETED)
             .values_list("product_id", "quantity"))
         for product_id, quantity in shipment_prods:
             products[product_id]['shipped'] += quantity
@@ -822,7 +827,7 @@ class Order(MoneyPropped, models.Model):
         return force_text(self.status)
 
     def get_tracking_codes(self):
-        return [shipment.tracking_code for shipment in self.shipments.all() if shipment.tracking_code]
+        return [shipment.tracking_code for shipment in self.shipments.all_except_deleted() if shipment.tracking_code]
 
     def can_edit(self):
         return (
