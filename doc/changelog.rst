@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Exclude deleted orders from valid queryset
 - Enable soft delete for shipments
 
 Localization

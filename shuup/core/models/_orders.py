@@ -148,7 +148,7 @@ class OrderQuerySet(models.QuerySet):
         return self.filter(status__role=OrderStatusRole.COMPLETE)
 
     def valid(self):
-        return self.exclude(status__role=OrderStatusRole.CANCELED)
+        return self.exclude(deleted=True, status__role=OrderStatusRole.CANCELED)
 
     def since(self, days):
         return self.filter(
