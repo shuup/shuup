@@ -14,7 +14,7 @@ from django import forms
 from django.contrib import messages
 from django.http.response import HttpResponseRedirect
 from django.utils.translation import ugettext as _
-from django.views.generic import UpdateView
+from django.views.generic import DetailView, UpdateView
 
 from shuup.admin.toolbar import PostActionButton, Toolbar
 from shuup.admin.utils.forms import add_form_errors_as_messages
@@ -189,3 +189,18 @@ class OrderCreateShipmentView(UpdateView):
         else:
             messages.success(self.request, _("Shipment %s created.") % shipment.id)
             return HttpResponseRedirect(get_model_url(order))
+
+
+class ShipmentDeleteView(DetailView):
+    model = Shipment
+    context_object_name = "shipment"
+
+    def get(self, request, *args, **kwargs):
+        shipment = self.get_object()
+        return HttpResponseRedirect(get_model_url(shipment.order))
+
+    def post(self, request, *args, **kwargs):
+        shipment = self.get_object()
+        shipment.soft_delete()
+        messages.success(request, _("Shipment %s has been deleted.") % shipment.pk)
+        return HttpResponseRedirect(get_model_url(shipment.order))
