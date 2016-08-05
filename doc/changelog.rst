@@ -21,6 +21,7 @@ Localization
 Admin
 ~~~~~
 
+- Hide cancelled orders by default from orders lists
 - Add option to delete shipments
 - Apply picotable text filters on change rather than on enter/on focus out
 
