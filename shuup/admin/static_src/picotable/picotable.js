@@ -64,30 +64,43 @@ const Picotable = (function(m, storage) {
             return outputObject;
         }
 
-        function debounce(func, wait, immediate) {
-            var timeout;
+        function debounce(func, wait, immediate=false) {
+            let context, args, timestamp, timeout, result;
 
-            function cancel() {
-                clearTimeout(timeout);
-                timeout = null;
+            function debounced() {
+                context = this;
+                args = arguments;
+                timestamp = new Date().getTime();
+
+                if (!timeout) {
+                    m.startComputation();
+
+                    timeout = setTimeout(later, wait);
+
+                    if (immediate) {
+                        result = func.apply(context, args);
+                        context = args = null;
+                    }
+                }
+                return result;
             }
 
-            const debounced = function() {
-                const context = this, args = arguments;
-                const later = function() {
-                    cancel();
+            function later() {
+                const elapsed = new Date().getTime() - timestamp;
+
+                if (elapsed < wait && elapsed > 0) {
+                    timeout = setTimeout(later, wait - elapsed);
+                } else {
+                    timeout = null;
+
                     if (!immediate) {
-                        func.apply(context, args);
+                        result = func.apply(context, args);
+                        context = args = null;
                     }
-                };
-                const callNow = immediate && !timeout;
-                cancel();
-                timeout = setTimeout(later, wait);
-                if (callNow) {
-                    func.apply(context, args);
+                    m.endComputation();
                 }
-            };
-            debounced.cancel = cancel;
+            }
+
             return debounced;
         }
 
@@ -203,12 +216,6 @@ const Picotable = (function(m, storage) {
         return function(el, isInit, context) {
             if (!isInit) {
                 el.oninput = context.debouncedOnInput = Util.debounce(el.onchange, timeout);
-                context.onunload = function() {
-                    if (context.debouncedOnInput) {
-                        context.debouncedOnInput.cancel();
-                        context.debouncedOnInput = null;
-                    }
-                };
             }
         };
     }
@@ -217,7 +224,6 @@ const Picotable = (function(m, storage) {
         var setFilterValueFromSelect = function() {
             var valueJS = JSON.parse(this.value);
             ctrl.setFilterValue(col.id, valueJS);
-            ctrl.refreshSoon();
         };
         var select = m("select.form-control", {
             value: JSON.stringify(value),
@@ -253,7 +259,6 @@ const Picotable = (function(m, storage) {
             }
             filterObj[which] = newValue;
             ctrl.setFilterValue(col.id, filterObj);
-            ctrl.refreshSoon();
         };
         var attrs = {"type": col.filter.range.type || "text"};
         Util.map(["min", "max", "step"], function(key) {
@@ -287,22 +292,15 @@ const Picotable = (function(m, storage) {
     }
 
     function buildColumnTextFilter(ctrl, col, value) {
-        var setFilterValueFromInput = function(event) {
+        var setFilterValueFromInput = function() {
             ctrl.setFilterValue(col.id, this.value);
-            if(event.keyCode === 13 || !this.value) {
-                ctrl.refreshSoon();
-            }
-        };
-        var refreshAfterFocusOut = function() {
-            ctrl.refreshSoon();
         };
 
         var input = m("input.form-control", {
             type: col.filter.text.type || "text",
             value: Util.stringValue(value),
             placeholder: col.filter.placeholder || interpolate(gettext("Filter by %s"), [col.title]),
-            onkeyup: setFilterValueFromInput,
-            onfocusout: refreshAfterFocusOut,
+            onchange: setFilterValueFromInput,
             config: debounceChangeConfig(500)
         });
         return m("div.text-filter", input);
@@ -464,7 +462,7 @@ const Picotable = (function(m, storage) {
                 value: (ctrl.vm.sort() || ""),
                 onchange: m.withAttr("value", function(value) {
                     ctrl.setSortColumn(value);
-                    ctrl.refreshSoon();
+                    ctrl.refresh();
                 })
             },
             Util.map(sortOptions, function(so) {
@@ -557,7 +555,7 @@ const Picotable = (function(m, storage) {
                         value: ctrl.vm.perPage(),
                         onchange: m.withAttr("value", function(value) {
                             ctrl.vm.perPage(value);
-                            ctrl.refreshSoon();
+                            ctrl.refresh();
                         })
                     },
                     Util.map(ctrl.vm.perPageChoices(), function(value) {
@@ -606,7 +604,7 @@ const Picotable = (function(m, storage) {
         ctrl.setRenderMode = function(mode) {
             var oldMode = ctrl.vm.renderMode();
             ctrl.vm.renderMode(mode);
-            if (mode !== oldMode) ctrl.refreshSoon();
+            if (mode !== oldMode) ctrl.refresh();
         };
         ctrl.adaptRenderMode = function() {
             var width = window.innerWidth;
@@ -614,7 +612,7 @@ const Picotable = (function(m, storage) {
         };
         ctrl.setSource = function(url) {
             ctrl.vm.url(url);
-            ctrl.refreshSoon();
+            ctrl.refresh();
         };
         ctrl.setSortColumn = function(colId) {
             var sortValue = null;
@@ -629,7 +627,7 @@ const Picotable = (function(m, storage) {
                 }
             }
             ctrl.vm.sort(sortValue);
-            ctrl.refreshSoon();
+            ctrl.refresh();
         };
         ctrl.getFilterValue = function(colId) {
             return ctrl.vm.filterValues()[colId];
@@ -643,21 +641,19 @@ const Picotable = (function(m, storage) {
             filters[colId] = value;
             filters = Util.omitNulls(filters);
             ctrl.vm.filterValues(filters);
+            ctrl.refresh();
         };
         ctrl.resetFilters = function() {
             ctrl.vm.filterValues({});
-            ctrl.refreshSoon();
+            ctrl.refresh();
         };
         ctrl.setPage = function(newPage) {
             newPage = 0 | newPage;
             if (isNaN(newPage) || newPage < 1) newPage = 1;
             ctrl.vm.page(newPage);
-            ctrl.refreshSoon();
+            ctrl.refresh();
         };
-        var refreshTimer = null;
         ctrl.refresh = function() {
-            clearTimeout(refreshTimer);
-            refreshTimer = null;
             var url = ctrl.vm.url();
             if (!url) return;
             var data = {
@@ -676,12 +672,6 @@ const Picotable = (function(m, storage) {
                 alert("An error occurred.");
             });
             ctrl.saveSettings();
-        };
-        ctrl.refreshSoon = function() {
-            if (refreshTimer) return;
-            refreshTimer = setTimeout(function() {
-                ctrl.refresh();
-            }, 20);
         };
         ctrl.saveSettings = function() {
             if (!storage) return;

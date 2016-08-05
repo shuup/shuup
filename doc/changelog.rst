@@ -18,6 +18,8 @@ Localization
 Admin
 ~~~~~
 
+- Apply picotable text filters on change rather than on enter/on focus out
+
 Addons
 ~~~~~~
 
