@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Combine `TreeManager` and `TranslatableManager` querysets for categories
 - Exclude deleted orders from valid queryset
 - Enable soft delete for shipments
 
@@ -21,6 +22,8 @@ Localization
 Admin
 ~~~~~
 
+- Improve category list view parent/child representation and filtering
+- Add picotable select2 and MPTT filters
 - Hide cancelled orders by default from orders lists
 - Add option to delete shipments
 - Apply picotable text filters on change rather than on enter/on focus out

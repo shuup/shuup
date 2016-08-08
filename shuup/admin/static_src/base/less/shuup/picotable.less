@@ -73,6 +73,31 @@
                 }
             }
         }
+
+        .select2 {
+            width: 100% !important;
+            outline: none;
+
+            .select2-selection {
+                border: 0;
+                background-color: #fff;
+                min-height: 32px;
+                padding: 0;
+                outline: none;
+
+                .select2-selection__rendered {
+                    line-height: 32px;
+                }
+
+                .select2-selection__arrow {
+                    height: 32px;
+                }
+            }
+        }
+
+        .select2-dropdown {
+            z-index: 2000 !important;
+        }
     }
 
     tbody {

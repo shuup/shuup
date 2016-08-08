@@ -76,7 +76,7 @@ class ChoicesFilter(Filter):
         choices = maybe_call(self.choices, context=context)
         if isinstance(choices, QuerySet):
             choices = [(c.pk, c) for c in choices]
-        return [("_all", "")] + [
+        return [("_all", "---------")] + [
             (force_text(value, strings_only=True), force_text(display))
             for (value, display)
             in choices
@@ -92,6 +92,23 @@ class ChoicesFilter(Filter):
         if value == "_all":
             return queryset
         return queryset.filter(**{(self.filter_field or column.id): value})
+
+
+class Select2Filter(ChoicesFilter):
+    type = "select2"
+
+    def to_json(self, context):
+        json_dict = super(Select2Filter, self).to_json(context)
+        json_dict["select2"] = True
+        return json_dict
+
+
+class MPTTFilter(Select2Filter):
+    type = "mptt"
+
+    def filter_queryset(self, queryset, column, value):
+        qs = super(MPTTFilter, self).filter_queryset(queryset, column, value)
+        return qs.get_descendants(include_self=True)
 
 
 class RangeFilter(Filter):

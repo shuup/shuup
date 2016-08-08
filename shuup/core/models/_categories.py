@@ -16,6 +16,8 @@ from enumfields import Enum, EnumIntegerField
 from filer.fields.image import FilerImageField
 from mptt.managers import TreeManager
 from mptt.models import MPTTModel, TreeForeignKey
+from mptt.querysets import TreeQuerySet
+from parler.managers import TranslatableQuerySet
 from parler.models import (
     TranslatableManager, TranslatableModel, TranslatedFields
 )
@@ -48,7 +50,16 @@ class CategoryVisibility(Enum):
         VISIBLE_TO_GROUPS = _('visible to certain customer groups')
 
 
-class CategoryManager(TranslatableManager, TreeManager):
+class CategoryQuerySet(TranslatableQuerySet, TreeQuerySet):
+    pass
+
+
+class CategoryManager(TreeManager, TranslatableManager):
+    queryset_class = CategoryQuerySet
+
+    def get_queryset(self):
+        return self.queryset_class(self.model, using=self._db).order_by(self.tree_id_attr, self.left_attr)
+
     def all_visible(self, customer, shop=None, language=None):
         root = (self.language(language) if language else self).all()
 

@@ -12,9 +12,9 @@ from django.contrib.auth import get_user_model
 
 from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, DateRangeFilter, Filter, MultiFieldTextFilter,
-    Picotable, RangeFilter, TextFilter
+    Picotable, RangeFilter, TextFilter, MPTTFilter
 )
-from shuup.core.models import Product
+from shuup.core.models import Product, Category
 from shuup.testing.mock_population import populate_if_required
 from shuup_tests.utils import empty_iterable
 from shuup_tests.utils.fixtures import regular_user
@@ -207,3 +207,25 @@ def test_picotable_correctly_sorts_translated_fields(rf, admin_user, regular_use
     sorted_products = pico.get_data({"perPage": 100, "page": 1, "sort": "-name"})
     sorted_names = [p["name"] for p in sorted_products["items"]]
     assert sorted_names == sorted(sorted_names, reverse=True)
+
+
+@pytest.mark.django_db
+def test_mptt_filter(rf):
+    parent_category = Category.objects.create(name="parent")
+    child_category = Category.objects.create(name="child")
+    parent_category.children.add(child_category)
+    columns = [
+        Column(
+            "name", "name",
+            filter_config=MPTTFilter(
+                choices=Category.objects.all(),
+                filter_field="id"
+            )
+        )
+    ]
+    pico = get_pico(rf, model=Category, columns=columns)
+    data = pico.get_data({"perPage": 100, "page": 1, "filters": {"id": parent_category.id}})
+    assert len(data["items"]) == 2
+
+    data = pico.get_data({"perPage": 100, "page": 1, "filters": {"name": child_category.id}})
+    assert len(data["items"]) == 1
