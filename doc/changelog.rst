@@ -22,6 +22,7 @@ Localization
 Admin
 ~~~~~
 
+- Add ``admin_order_toolbar_action_item`` provider for order toolbar
 - Improve category list view parent/child representation and filtering
 - Add picotable select2 and MPTT filters
 - Hide cancelled orders by default from orders lists

@@ -67,6 +67,11 @@ class ShuupAdminAppConfig(AppConfig):
         ],
         "admin_product_section": [
             "shuup.admin.modules.products.sections:ProductOrdersSection"
+        ],
+        "admin_order_toolbar_action_item": [
+            "shuup.admin.modules.orders.toolbar:CreatePaymentAction",
+            "shuup.admin.modules.orders.toolbar:CreateShipmentAction",
+            "shuup.admin.modules.orders.toolbar:CreateRefundAction",
         ]
     }
 
