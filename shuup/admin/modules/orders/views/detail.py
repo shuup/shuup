@@ -7,6 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import warnings
+
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
@@ -15,8 +17,7 @@ from django.utils.translation import ugettext as _
 from django.views.generic import DetailView
 
 from shuup.admin.toolbar import (
-    DropdownActionButton, DropdownItem, PostActionButton, Toolbar,
-    URLActionButton
+    DropdownActionButton, PostActionButton, Toolbar, URLActionButton
 )
 from shuup.admin.utils.urls import get_model_url
 from shuup.apps.provides import get_provide_objects
@@ -33,39 +34,20 @@ class OrderDetailView(DetailView):
         order = self.object
         toolbar = Toolbar()
         action_menu_items = []
-        if order.can_create_payment():
-            action_menu_items.append(
-                DropdownItem(
-                    url=reverse("shuup_admin:order.create-payment", kwargs={"pk": order.pk}),
-                    icon="fa fa-money",
-                    text=_("Create Payment"),
-                )
-            )
-        if order.can_create_shipment():
-            action_menu_items.append(
-                DropdownItem(
-                    url=reverse("shuup_admin:order.create-shipment", kwargs={"pk": order.pk}),
-                    icon="fa fa-truck",
-                    text=_("Create Shipment"),
-                )
-            )
-        if order.can_create_refund():
-            action_menu_items.append(
-                DropdownItem(
-                    url=reverse("shuup_admin:order.create-refund", kwargs={"pk": order.pk}),
-                    icon="fa fa-dollar",
-                    text=_("Create Refund"),
-                )
-            )
 
-        toolbar.append(
-            DropdownActionButton(
-                action_menu_items,
-                icon="fa fa-star",
-                text=_(u"Actions"),
-                extra_css_class="btn-info",
+        for button in get_provide_objects("admin_order_toolbar_action_item"):
+            if button.visible_for_object(order):
+                action_menu_items.append(button(order))
+
+        if action_menu_items:
+            toolbar.append(
+                DropdownActionButton(
+                    action_menu_items,
+                    icon="fa fa-star",
+                    text=_(u"Actions"),
+                    extra_css_class="btn-info",
+                )
             )
-        )
         toolbar.append(PostActionButton(
             post_url=reverse("shuup_admin:order.set-status", kwargs={"pk": order.pk}),
             name="status",
@@ -102,6 +84,9 @@ class OrderDetailView(DetailView):
         ))
 
         for button in get_provide_objects("admin_order_toolbar_button"):
+            warnings.warn(
+                "admin_order_toolbar_button provider is deprecated, use admin_order_toolbar_action_item instead",
+                DeprecationWarning, stacklevel=2)
             toolbar.append(button(order))
 
         return toolbar
