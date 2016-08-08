@@ -75,7 +75,7 @@ class OrdersContactSection(Section):
 
     @staticmethod
     def get_context_data(contact):
-        return contact.customer_orders.order_by("-id")
+        return contact.customer_orders.valid().order_by("-id")
 
 
 class MembersContactSection(Section):

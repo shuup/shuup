@@ -27,4 +27,4 @@ class ProductOrdersSection(Section):
     @staticmethod
     def get_context_data(product):
         # TODO: restrict to first 100 orders - do pagination later
-        return Order.objects.filter(lines__product_id=product.id).distinct()[:100]
+        return Order.objects.valid().filter(lines__product_id=product.id).distinct()[:100]

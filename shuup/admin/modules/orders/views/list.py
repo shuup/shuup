@@ -15,8 +15,27 @@ from shuup.admin.utils.picotable import (
     TextFilter
 )
 from shuup.admin.utils.views import PicotableListView
-from shuup.core.models import Order, OrderStatus, PaymentStatus, ShippingStatus
+from shuup.core.models import (
+    Order, OrderStatus, OrderStatusRole, PaymentStatus, ShippingStatus
+)
 from shuup.utils.i18n import format_money, get_locally_formatted_datetime
+
+
+class OrderStatusChoicesFilter(ChoicesFilter):
+    """
+    Custom choices filter for order statuses
+
+    Sets default choice to initial order status if status
+    exists. Default order status can not be passed for init
+    since it would cause database queries and in all cases
+    the order status table might not even be in the database
+    when init is called.
+    """
+    def to_json(self, context):
+        return {
+            "choices": self._flatten_choices(context),
+            "defaultChoice": getattr(OrderStatus.objects.filter(role=OrderStatusRole.INITIAL).first(), "pk", None)
+        }
 
 
 class OrderListView(PicotableListView):
@@ -33,7 +52,9 @@ class OrderListView(PicotableListView):
                 )
             )
         ),
-        Column("status", _(u"Status"), filter_config=ChoicesFilter(choices=OrderStatus.objects.all())),
+        Column(
+            "status", _(u"Status"), filter_config=OrderStatusChoicesFilter(choices=OrderStatus.objects.all()),
+        ),
         Column("payment_status", _(u"Payment Status"), filter_config=ChoicesFilter(choices=PaymentStatus.choices)),
         Column("shipping_status", _(u"Shipping Status"), filter_config=ChoicesFilter(choices=ShippingStatus.choices)),
         Column(

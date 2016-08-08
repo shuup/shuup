@@ -321,10 +321,10 @@ class OrderEditView(CreateOrUpdateView):
         companies = []
         if isinstance(customer, PersonContact):
             companies = sorted(customer.company_memberships.all(), key=(lambda x: force_text(x)))
-        recent_orders = customer.customer_orders.order_by('-id')[:10]
+        recent_orders = customer.customer_orders.valid().order_by('-id')[:10]
 
         order_summary = []
-        for dt in customer.customer_orders.datetimes('order_date', 'year'):
+        for dt in customer.customer_orders.valid().datetimes('order_date', 'year'):
             summary = customer.customer_orders.filter(order_date__year=dt.year).aggregate(
                 total=Sum('taxful_total_price_value')
             )
