@@ -22,6 +22,7 @@ Localization
 Admin
 ~~~~~
 
+- Improve category list view parent/child representation and filtering
 - Add picotable select2 and MPTT filters
 - Hide cancelled orders by default from orders lists
 - Add option to delete shipments
