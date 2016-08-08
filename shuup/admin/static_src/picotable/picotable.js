@@ -225,14 +225,22 @@ const Picotable = (function(m, storage) {
             var valueJS = JSON.parse(this.value);
             ctrl.setFilterValue(col.id, valueJS);
         };
+        var select2Config = function() {
+            return function(el, isInit) {
+                if(!isInit) {
+                    $(el).select2();
+                }
+            };
+        };
+
         var select = m("select.form-control", {
+            config: col.filter.select2? select2Config(): null,
             value: JSON.stringify(value),
             onchange: setFilterValueFromSelect
         }, Util.map(col.filter.choices, function(choice) {
             return m("option", {value: JSON.stringify(choice[0]), key: choice[0]}, choice[1]);
         }));
         return m("div.choice-filter", select);
-
     }
 
     function getDefaultValues(ctrl) {
