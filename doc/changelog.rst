@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Combine `TreeManager` and `TranslatableManager` querysets for categories
 - Exclude deleted orders from valid queryset
 - Enable soft delete for shipments
 
