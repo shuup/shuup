@@ -277,6 +277,23 @@ class DropdownHeader(BaseActionButton):
             yield '<li class="dropdown-header">%s</li>' % self.text
 
 
+class ProvideActionItem(DropdownItem):
+    """
+    An item to be shown in a `DropdownActionButton` through provides
+    """
+
+    def __init__(self, object, **kwargs):
+        super(ProvideActionItem, self).__init__(**kwargs)
+
+    @staticmethod
+    def visible_for_object(object):
+        """
+        :return whether this item must be shown
+        :rtype: bool
+        """
+        return False
+
+
 # -----------
 
 class ButtonGroup(list):

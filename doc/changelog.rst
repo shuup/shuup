@@ -20,6 +20,7 @@ Localization
 Admin
 ~~~~~
 
+- Add ``admin_order_toolbar_action_item`` provider for order toolbar
 - Add option to delete shipments
 - Apply picotable text filters on change rather than on enter/on focus out
 
