@@ -22,6 +22,7 @@ Localization
 Admin
 ~~~~~
 
+- Add ``admin_product_toolbar_action_item`` provider for product edit toolbar
 - Add deprecation warning for ``admin_contact_toolbar_button`` usages
 - Add ``admin_contact_toolbar_action_item`` provider for contact toolbar
 - Use last product id + 1 as default SKU when creating new products

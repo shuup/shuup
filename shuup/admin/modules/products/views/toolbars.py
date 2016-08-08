@@ -15,6 +15,7 @@ from shuup.admin.toolbar import (
     get_default_edit_toolbar, JavaScriptActionButton, Toolbar
 )
 from shuup.admin.utils.urls import get_model_url
+from shuup.apps.provides import get_provide_objects
 
 
 class EditProductToolbar(Toolbar):
@@ -54,12 +55,17 @@ class EditProductToolbar(Toolbar):
         for item in self._get_variation_and_package_menu_items(product):
             menu_items.append(item)
 
-        self.append(DropdownActionButton(
-            menu_items,
-            icon="fa fa-star",
-            text=_(u"Actions"),
-            extra_css_class="btn-info",
-        ))
+        for button in get_provide_objects("admin_product_toolbar_action_item"):
+            if button.visible_for_object(product):
+                menu_items.append(button(product))
+
+        if menu_items:
+            self.append(DropdownActionButton(
+                menu_items,
+                icon="fa fa-star",
+                text=_(u"Actions"),
+                extra_css_class="btn-info",
+            ))
 
     def _get_header_item(self, header):
         yield DropdownDivider()

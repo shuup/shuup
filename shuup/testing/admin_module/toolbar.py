@@ -35,3 +35,11 @@ class MockContactToolbarActionItem(DropdownItem):
     @staticmethod
     def visible_for_object(object):
         return True
+
+
+class MockProductToolbarActionItem(DropdownItem):
+    def __init__(self, object, **kwargs):
+        kwargs["icon"] = "fa fa-female"
+        kwargs["text"] = _("This is %(sku)s") % {"sku": object.sku}
+        kwargs["url"] = "#%(sku)s" % {"sku": object.sku}
+        super(MockProductToolbarActionItem, self).__init__(**kwargs)
