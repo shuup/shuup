@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.toolbar import URLActionButton
+from shuup.admin.toolbar import DropdownItem, URLActionButton
 
 
 class MockContactToolbarButton(URLActionButton):
@@ -23,3 +23,15 @@ class MockContactToolbarButton(URLActionButton):
         self.contact = contact
 
         super(MockContactToolbarButton, self).__init__(**kwargs)
+
+
+class MockContactToolbarActionItem(DropdownItem):
+    def __init__(self, object, **kwargs):
+        kwargs["icon"] = "fa fa-hand-peace-o"
+        kwargs["text"] = _("Hello %(name)s") % {"name": object.full_name}
+        kwargs["url"] = "/#mocktoolbaractionitem"
+        super(MockContactToolbarActionItem, self).__init__(**kwargs)
+
+    @staticmethod
+    def visible_for_object(object):
+        return True

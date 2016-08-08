@@ -64,6 +64,9 @@ Core
 ``admin_contact_group_form_part``
     Additional ``FormPart`` classes for ContactGroup editing
 
+``admin_contact_toolbar_action_item``
+    Additional ``DropdownItem`` subclass for Contact detail action buttons.
+
 ``admin_contact_toolbar_button``
     Additional ``BaseActionButton`` subclasses for Contact detail.
     Subclass init should take current contact as a parameter.
