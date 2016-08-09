@@ -37,7 +37,7 @@ def test_browser_checkout(browser, live_server, settings):
     get_default_shop()
     pm = get_default_payment_method()
     sm = get_default_shipping_method()
-    create_orderable_product(product_name, "test-123", price=100)
+    product = create_orderable_product(product_name, "test-123", price=100)
     OrderStatus.objects.create(
         identifier="initial",
         role=OrderStatusRole.INITIAL,
@@ -53,7 +53,7 @@ def test_browser_checkout(browser, live_server, settings):
     assert browser.is_text_present("Newest Products")
     assert browser.is_text_present(product_name)
 
-    browser.find_by_id("product-1").click()  # open product from product list
+    browser.find_by_id("product-%s" % product.pk).click()  # open product from product list
     browser.find_by_id("add-to-cart-button").click()  # add product to basket
 
     wait_until_appeared(browser, css_class=".cover-wrap")

@@ -87,6 +87,9 @@ Core
 ``admin_product_section``
     Additional ``Section`` subclasses for Product edit sections.
 
+``admin_product_toolbar_action_item``
+    Additional ``DropdownItem`` subclass for Product edit action buttons.
+
 ``admin_shop_form_part``
     Additional ``FormPart`` classes for Shop editing.
 
