@@ -58,4 +58,8 @@ def initialize_admin_browser_test(browser, live_server, username="admin", passwo
     browser.fill('username', username)
     browser.fill('password', password)
     browser.find_by_css(".btn.btn-primary.btn-lg.btn-block").first.click()
+    # set shop language to eng
+    browser.find_by_id("dropdownMenu").click()
+    browser.find_by_xpath('//a[@data-value="en"]').first.click()
+
     return browser
