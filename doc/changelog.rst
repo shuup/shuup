@@ -22,6 +22,7 @@ Localization
 Admin
 ~~~~~
 
+- Use last product id + 1 as default SKU when creating new products
 - Add deprecation warning for ``admin_order_toolbar_button`` usages
 - Add ``admin_order_toolbar_action_item`` provider for order toolbar
 - Improve category list view parent/child representation and filtering
