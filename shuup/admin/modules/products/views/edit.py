@@ -50,13 +50,20 @@ class ProductBaseFormPart(FormPart):
         self.object = form["base"].save()
         return self.object
 
+    def get_sku(self):
+        sku = self.request.GET.get("sku", "")
+        if not sku:
+            last_id = Product.objects.values_list('id', flat=True).first()
+            sku = last_id + 1 if last_id else 1
+        return sku
+
     def get_initial(self):
         if not self.object.pk:
             # Sane defaults...
             name_field = "name__%s" % get_language()
             return {
                 name_field: self.request.GET.get("name", ""),
-                "sku": self.request.GET.get("sku", ""),
+                "sku": self.get_sku(),
                 "type": ProductType.objects.first(),
                 "tax_class": TaxClass.objects.first()
             }
