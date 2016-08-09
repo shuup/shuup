@@ -25,17 +25,19 @@ class OrderStatusChoicesFilter(ChoicesFilter):
     """
     Custom choices filter for order statuses
 
-    Sets default choice to initial order status if status
+    Sets filter default choice to initial order status if status
     exists. Default order status can not be passed for init
     since it would cause database queries and in all cases
     the order status table might not even be in the database
     when init is called.
     """
-    def to_json(self, context):
-        return {
-            "choices": self._flatten_choices(context),
-            "defaultChoice": getattr(OrderStatus.objects.filter(role=OrderStatusRole.INITIAL).first(), "pk", None)
-        }
+    @property
+    def default(self):
+        return getattr(OrderStatus.objects.filter(role=OrderStatusRole.INITIAL).first(), "pk", None)
+
+    @default.setter
+    def default(self, value):
+        pass
 
 
 class OrderListView(PicotableListView):
