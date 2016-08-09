@@ -5,10 +5,12 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-
 from django.conf import settings
 from django.core.exceptions import MiddlewareNotUsed
 from django.utils.module_loading import import_string
+from django.utils.translation import activate
+
+from shuup.testing.factories import get_default_shop
 
 
 def apply_request_middleware(request, **attrs):
@@ -35,3 +37,25 @@ def apply_request_middleware(request, **attrs):
     for key, value in attrs.items():
         setattr(request, key, value)
     return request
+
+
+def initialize_front_browser_test(browser, live_server):
+    activate("en")
+    get_default_shop()
+    url = live_server + "/"
+    browser.visit(url)
+    # set shop language to eng
+    browser.find_by_id("language-changer").click()
+    browser.find_by_xpath('//a[@class="language"]').first.click()
+    return browser
+
+
+def initialize_admin_browser_test(browser, live_server, username="admin", password="password"):
+    activate("en")
+    get_default_shop()
+    url = live_server + "/sa"
+    browser.visit(url)
+    browser.fill('username', username)
+    browser.fill('password', password)
+    browser.find_by_css(".btn.btn-primary.btn-lg.btn-block").first.click()
+    return browser

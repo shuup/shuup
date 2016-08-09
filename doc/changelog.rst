@@ -70,6 +70,7 @@ Guide
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
+- Add browser testing capability
 
 SHUUP 0.4.1
 -----------

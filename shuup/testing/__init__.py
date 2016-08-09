@@ -26,13 +26,13 @@ class ShuupTestingAppConfig(AppConfig):
             "shuup.testing.simple_checkout_phase.ShipmentPhaseProvider",
         ],
         "admin_contact_toolbar_button": [
-             "shuup.testing.admin_module.toolbar:MockContactToolbarButton",
+            "shuup.testing.admin_module.toolbar:MockContactToolbarButton",
         ],
         "admin_contact_edit_toolbar_button": [
-             "shuup.testing.admin_module.toolbar:MockContactToolbarButton",
+            "shuup.testing.admin_module.toolbar:MockContactToolbarButton",
         ],
         "admin_contact_section": [
-             "shuup.testing.admin_module.sections:MockContactSection",
+            "shuup.testing.admin_module.sections:MockContactSection",
         ]
     }
 

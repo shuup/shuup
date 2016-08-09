@@ -10,8 +10,7 @@ from django.test import override_settings
 
 from shuup.core.models import get_person_contact
 from shuup.front.checkout.addresses import AddressesPhase, AddressForm
-from shuup.front.checkout.single_page import \
-    AddressForm as SinglePageAddressForm
+from shuup.front.checkout.single_page import AddressForm as SinglePageAddressForm
 from shuup.testing.factories import get_default_shop
 from shuup.testing.utils import apply_request_middleware
 
@@ -71,4 +70,3 @@ def test_address_phase_anonymous_user(rf):
     view_func = AddressesPhase.as_view()
     resp = view_func(request)
     assert 'company' in resp.context_data['form'].form_defs
-
