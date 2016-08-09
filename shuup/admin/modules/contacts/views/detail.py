@@ -7,6 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import warnings
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
@@ -16,7 +18,9 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 
-from shuup.admin.toolbar import PostActionButton, Toolbar, URLActionButton
+from shuup.admin.toolbar import (
+    DropdownActionButton, PostActionButton, Toolbar, URLActionButton
+)
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import CompanyContact, Contact
@@ -86,7 +90,25 @@ class ContactDetailToolbar(Toolbar):
         ))
 
     def build_provides_buttons(self):
+        action_menu_items = []
+        for button in get_provide_objects("admin_contact_toolbar_action_item"):
+            if button.visible_for_object(self.contact):
+                action_menu_items.append(button(object=self.contact))
+
+        if action_menu_items:
+            self.append(
+                DropdownActionButton(
+                    action_menu_items,
+                    icon="fa fa-star",
+                    text=_(u"Actions"),
+                    extra_css_class="btn-info",
+                )
+            )
+
         for button in get_provide_objects("admin_contact_toolbar_button"):
+            warnings.warn(
+                "admin_contact_toolbar_button provider is deprecated, use admin_contact_toolbar_action_item instead",
+                DeprecationWarning)
             self.append(button(self.contact))
 
     def build(self):

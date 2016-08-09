@@ -22,6 +22,8 @@ Localization
 Admin
 ~~~~~
 
+- Add deprecation warning for ``admin_contact_toolbar_button`` usages
+- Add ``admin_contact_toolbar_action_item`` provider for contact toolbar
 - Use last product id + 1 as default SKU when creating new products
 - Add deprecation warning for ``admin_order_toolbar_button`` usages
 - Add ``admin_order_toolbar_action_item`` provider for order toolbar
