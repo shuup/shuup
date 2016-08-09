@@ -8,16 +8,12 @@
 from __future__ import unicode_literals
 
 from django.contrib import messages
-from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
 from django.views.generic import DetailView
 
-from shuup.admin.toolbar import (
-    DropdownActionButton, DropdownItem, PostActionButton, Toolbar,
-    URLActionButton
-)
+from shuup.admin.modules.orders.toolbar import OrderDetailToolbar
 from shuup.admin.utils.urls import get_model_url
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Order, OrderStatus, OrderStatusRole
@@ -30,81 +26,7 @@ class OrderDetailView(DetailView):
     context_object_name = "order"
 
     def get_toolbar(self):
-        order = self.object
-        toolbar = Toolbar()
-        action_menu_items = []
-        if order.can_create_payment():
-            action_menu_items.append(
-                DropdownItem(
-                    url=reverse("shuup_admin:order.create-payment", kwargs={"pk": order.pk}),
-                    icon="fa fa-money",
-                    text=_("Create Payment"),
-                )
-            )
-        if order.can_create_shipment():
-            action_menu_items.append(
-                DropdownItem(
-                    url=reverse("shuup_admin:order.create-shipment", kwargs={"pk": order.pk}),
-                    icon="fa fa-truck",
-                    text=_("Create Shipment"),
-                )
-            )
-        if order.can_create_refund():
-            action_menu_items.append(
-                DropdownItem(
-                    url=reverse("shuup_admin:order.create-refund", kwargs={"pk": order.pk}),
-                    icon="fa fa-dollar",
-                    text=_("Create Refund"),
-                )
-            )
-
-        toolbar.append(
-            DropdownActionButton(
-                action_menu_items,
-                icon="fa fa-star",
-                text=_(u"Actions"),
-                extra_css_class="btn-info",
-            )
-        )
-        toolbar.append(PostActionButton(
-            post_url=reverse("shuup_admin:order.set-status", kwargs={"pk": order.pk}),
-            name="status",
-            value=OrderStatus.objects.get_default_complete().pk,
-            text=_("Set Complete"),
-            icon="fa fa-check-circle",
-            disable_reason=(
-                _("This order can not be set as complete at this point")
-                if not order.can_set_complete()
-                else None
-            ),
-            extra_css_class="btn-success"
-        ))
-
-        toolbar.append(PostActionButton(
-            post_url=reverse("shuup_admin:order.set-status", kwargs={"pk": order.pk}),
-            name="status",
-            value=OrderStatus.objects.get_default_canceled().pk,
-            text=_("Cancel Order"),
-            icon="fa fa-trash",
-            disable_reason=(
-                _("Paid, shipped, or canceled orders cannot be canceled")
-                if not order.can_set_canceled()
-                else None
-            ),
-            extra_css_class="btn-danger btn-inverse"
-        ))
-        toolbar.append(URLActionButton(
-            text=_("Edit order"),
-            icon="fa fa-money",
-            disable_reason=_("This order cannot modified at this point") if not order.can_edit() else None,
-            url=reverse("shuup_admin:order.edit", kwargs={"pk": order.pk}),
-            extra_css_class="btn-info"
-        ))
-
-        for button in get_provide_objects("admin_order_toolbar_button"):
-            toolbar.append(button(order))
-
-        return toolbar
+        return OrderDetailToolbar(self.object)
 
     def get_context_data(self, **kwargs):
         context = super(OrderDetailView, self).get_context_data(**kwargs)

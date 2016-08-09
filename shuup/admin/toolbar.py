@@ -255,6 +255,16 @@ class DropdownItem(BaseActionButton):
             yield '</a>'
             yield '</li>'
 
+    @staticmethod
+    def visible_for_object(object):
+        """
+        Used when dropdown item is added through provides
+
+        :return whether this item must be shown
+        :rtype: bool
+        """
+        return True
+
 
 class DropdownDivider(BaseActionButton):
     """

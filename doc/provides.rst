@@ -108,9 +108,10 @@ Core
     template contexts.
     .. seealso:: :ref:`custom-template-helper-functions`
 
-``admin_order_toolbar_button``
-    Additional ``BaseActionButton`` subclasses for Order detail.
-    Subclass init should take current order as a parameter.
+``admin_order_toolbar_action_item``
+    Additional ``DropdownItem`` subclass for Order detail action buttons.
+    Current order is passed to subclass init and static method ``visible_for_object``
+    is called for the subclass to check whether to actually show the item.
 
 ``admin_order_section``
     Additional ``Section`` subclasses for Order detail sections.
