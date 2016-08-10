@@ -18,12 +18,19 @@ span.select2.select2-container {
     }
 
     span.selection span.select2-selection {
-        min-height: 38px;
-        padding: 5px 0 5px 0;
         border-width: 2px;
         background: #F3F3F3;
         font-weight: normal;
         font-size: 1.3rem;
+        min-height: 38px;
+
+        &.select2-selection--single {
+            padding: 5px 0 5px 0;
+        }
+
+        &.select2-selection--multiple {
+            padding: 2px 0 2px 0;
+        }
 
         span.select2-selection__rendered {
             color: #555555;
