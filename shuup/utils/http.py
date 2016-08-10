@@ -8,6 +8,8 @@
 import time
 
 import requests
+from django.conf import settings
+from ipware.ip import get_ip, get_real_ip
 
 
 def retry_request(n_retries=5, **kwargs):
@@ -39,3 +41,11 @@ def retry_request(n_retries=5, **kwargs):
         resp.raise_for_status()
 
     raise Exception("An unknown problem occurred with a request.")
+
+
+def get_request_ip(request):
+
+    if settings.DEBUG:
+        return get_ip(request)
+    else:
+        return get_real_ip(request)

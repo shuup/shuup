@@ -20,6 +20,7 @@ from shuup.core.models import OrderLineType, PaymentMethod, ShippingMethod
 from shuup.core.order_creator import OrderSource, SourceLine
 from shuup.core.order_creator._source import LineSource
 from shuup.front.basket.storage import BasketCompatibilityError, get_storage
+from shuup.utils.http import get_request_ip
 from shuup.utils.numbers import parse_decimal_string
 from shuup.utils.objects import compare_partial_dicts
 
@@ -90,7 +91,7 @@ class BaseBasket(OrderSource):
         self.basket_name = basket_name
         self.request = request
         if request:
-            self.ip_address = request.META.get("REMOTE_ADDR")
+            self.ip_address = get_request_ip(request)
         self.storage = get_storage()
         self._data = None
         self.dirty = False
