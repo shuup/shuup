@@ -39,6 +39,9 @@ class ContactGroupQuerySet(TranslatableQuerySet):
             models.Q(show_prices_including_taxes__isnull=False) |
             models.Q(hide_prices__isnull=False))
 
+    def all_except_defaults(self):
+        return self.exclude(identifier__in=PROTECTED_CONTACT_GROUP_IDENTIFIERS)
+
 
 class ContactGroup(TranslatableShuupModel):
     identifier = InternalIdentifierField(unique=True)

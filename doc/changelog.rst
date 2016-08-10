@@ -23,6 +23,7 @@ Localization
 Admin
 ~~~~~
 
+- Split person contact and company contact creation into separate actions
 - Rearrange product creation and edit pages so that all pertinent info is
   visible simultaneously
 - Allow content blocks to be initialized as collapsed

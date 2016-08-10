@@ -6,20 +6,21 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from django.contrib.auth import get_user_model
 
 from shuup.admin.forms.fields import Select2MultipleField
-from shuup.admin.modules.contacts.views.edit import ContactBaseForm
+from shuup.admin.modules.contacts.forms import (
+    CompanyContactBaseForm, PersonContactBaseForm
+)
 from shuup.core.models import (
     CompanyContact, Gender, get_person_contact, PersonContact
 )
-from shuup.testing.factories import create_random_company
+from shuup.testing.factories import create_random_company, create_random_person
 from shuup_tests.utils import printable_gibberish
 
 
 @pytest.mark.django_db
-def test_contact_edit_form():
+def test_person_contact_create_form():
     user = get_user_model().objects.create_user(
         username=printable_gibberish(),
         first_name=printable_gibberish(),
@@ -27,13 +28,11 @@ def test_contact_edit_form():
     )
     test_first_name = printable_gibberish()
     test_last_name = printable_gibberish()
-    contact_base_form = ContactBaseForm(bind_user=user, data={
+    contact_base_form = PersonContactBaseForm(data={
         "first_name": test_first_name,
         "last_name": test_last_name,
         "gender": Gender.UNDISCLOSED.value
-    })
-    assert contact_base_form.bind_user == user
-    assert contact_base_form.contact_class == PersonContact
+    }, user=user)
     assert contact_base_form.is_valid(), contact_base_form.errors
     contact = contact_base_form.save()
     assert isinstance(contact, PersonContact)
@@ -43,29 +42,43 @@ def test_contact_edit_form():
 
 
 @pytest.mark.django_db
-def test_company_contact_edit_form():
-    company = create_random_company()
-    contact_base_form = ContactBaseForm(instance=company, data={
-        "name": company.name,
-    })
-    assert not contact_base_form.bind_user
-    assert contact_base_form.contact_class == CompanyContact
-    assert contact_base_form.is_valid(), contact_base_form.errors
-    contact = contact_base_form.save()
-    assert isinstance(contact, CompanyContact)
-    assert isinstance(contact_base_form.fields["members"], Select2MultipleField)
-
-
-@pytest.mark.django_db
-def test_creating_contact():
-    persons_count = PersonContact.objects.count()
-    contact_base_form = ContactBaseForm(data={
-        "type": "PersonContact",
-        "name": printable_gibberish(),
-        "gender": Gender.UNDISCLOSED.value
+def test_person_contact_edit_form():
+    person = create_random_person()
+    new_first_name = "test first name"
+    new_name = "%s %s" % (new_first_name, person.last_name)
+    contact_base_form = PersonContactBaseForm(instance=person, data={
+        "first_name": "test first name",
+        "last_name": person.last_name,
+        "gender": person.gender.value
     })
     assert contact_base_form.is_valid(), contact_base_form.errors
     contact = contact_base_form.save()
     assert isinstance(contact, PersonContact)
-    assert contact.pk is not None
-    assert PersonContact.objects.count() == (persons_count + 1)
+    assert contact.first_name == new_first_name
+    assert contact.name == new_name
+
+
+@pytest.mark.django_db
+def test_company_contact_create_form():
+    company_name = "test company"
+    contact_base_form = CompanyContactBaseForm(data={
+        "name": company_name,
+    })
+    assert contact_base_form.is_valid(), contact_base_form.errors
+    contact = contact_base_form.save()
+    assert isinstance(contact, CompanyContact)
+    assert contact.name == company_name
+
+
+@pytest.mark.django_db
+def test_company_contact_edit_form():
+    company = create_random_company()
+    new_company_name = "test company"
+    contact_base_form = CompanyContactBaseForm(instance=company, data={
+        "name": new_company_name,
+    })
+    assert contact_base_form.is_valid(), contact_base_form.errors
+    contact = contact_base_form.save()
+    assert isinstance(contact, CompanyContact)
+    assert isinstance(contact_base_form.fields["members"], Select2MultipleField)
+    assert contact.name == new_company_name

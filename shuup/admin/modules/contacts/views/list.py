@@ -7,10 +7,12 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django.core.urlresolvers import reverse
 from django.db.models import Count, Q
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.toolbar import NewActionButton, Toolbar
 from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, RangeFilter, TextFilter
 )
@@ -35,6 +37,14 @@ class ContactListView(PicotableListView):
         Column("n_orders", _(u"# Orders"), class_name="text-right", filter_config=RangeFilter(step=1)),
         Column("groups", _("Groups"), filter_config=ChoicesFilter(ContactGroup.objects.all(), "groups"))
     ]
+
+    def get_toolbar(self):
+        return Toolbar([
+            NewActionButton.for_model(
+                PersonContact, url=reverse("shuup_admin:contact.new") + "?type=person"),
+            NewActionButton.for_model(
+                CompanyContact, extra_css_class="btn-info", url=reverse("shuup_admin:contact.new") + "?type=company")
+        ])
 
     def get_queryset(self):
         groups = self.get_filter().get("groups")
