@@ -4,21 +4,19 @@
 {% block content_title %}{% endblock %}
 
 {% block content %}
-
     {% if xtheme.get("show_welcome_text", True) %}
         <h1 class="page-header">{{ _("Welcome to %(shop_name)s!", shop_name=request.shop.public_name) }}</h1>
     {% endif %}
 
     {% placeholder "front_content" %}
         {% row %}
-            {% plugin "classic_gray.product_highlight" %}
+            {% plugin "product_highlight" %}
                 type = "newest"
                 title = "Newest Products"
             {% endplugin %}
         {% endrow %}
         {% row %}
-            {% plugin "classic_gray.product_highlight" %}type = "best_selling"{% endplugin %}
+            {% plugin "product_highlight" %}type = "best_selling"{% endplugin %}
         {% endrow %}
     {% endplaceholder %}
-
 {% endblock %}

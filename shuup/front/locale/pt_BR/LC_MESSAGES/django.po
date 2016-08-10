@@ -1,28 +1,29 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Jonathan Hess <jhess666@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-28 12:52+0000\n"
-"PO-Revision-Date: 2016-07-30 11:40+0000\n"
+"POT-Creation-Date: 2016-08-04 19:11+0000\n"
+"PO-Revision-Date: 2016-08-04 12:57-0700\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/"
+"language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
 "Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.8.8\n"
 
 msgid "Abandoned Cart Value"
 msgstr "Valor de Carrinhos Abandonados"
 
-#, python-brace-format
 msgid "Based on {b} carts over the last {d} days"
 msgstr "Baseado em {b} carrinhos nos últimos {d} dias"
 
@@ -64,6 +65,61 @@ msgstr "Total"
 
 msgid "Ordered"
 msgstr "Comprado"
+
+msgid "Shuup Frontend - Saved Baskets"
+msgstr ""
+
+msgid "Home"
+msgstr "Início"
+
+msgid "My Saved Carts"
+msgstr ""
+
+msgid "Add all products to cart"
+msgstr ""
+
+msgid "Delete cart"
+msgstr ""
+
+msgid "Product"
+msgstr "Produto"
+
+msgid "Quantity"
+msgstr "Quantidade"
+
+msgid "Price"
+msgstr "Preço"
+
+msgid "Saved Carts"
+msgstr "Carrinhos"
+
+msgid "Title"
+msgstr "Título"
+
+msgid "Product Count"
+msgstr "Estoque do produto"
+
+msgid "Details"
+msgstr "Detalhes"
+
+msgid "You haven't saved any carts yet."
+msgstr ""
+
+msgid "Please enter a basket title."
+msgstr ""
+
+msgid "Cannot save an empty basket."
+msgstr ""
+
+msgid "Product not available in this shop"
+msgstr "Este produto não está disponível nesta loja."
+
+msgid "Invalid supplier"
+msgstr ""
+
+#, python-format
+msgid "%d product(s) added to cart"
+msgstr ""
 
 #, python-format
 msgid "Invalid command %s"
@@ -200,61 +256,381 @@ msgstr "estoque do produto"
 msgid "products"
 msgstr "produtos"
 
+msgid "Shop is currently in maintenance mode."
+msgstr "A loja está em modo de manutenção."
+
+msgid ""
+"There were errors on submitted form fields. Please check them and try again."
+msgstr ""
+"Houve erros em alguns campos do formulário enviado. Por favor, verifique-os "
+"e tente novamente."
+
+msgid "Product added to cart"
+msgstr "O produto foi adicionado ao carrinho"
+
+msgid "There was an error adding the product to the basket"
+msgstr "Houve um erro ao adicionar o produto no carrinho"
+
+msgid "Shopping cart"
+msgstr "Carrinho de compras"
+
+msgid "Your shopping cart is empty."
+msgstr "Seu carrinho de compras está vazio."
+
+msgid "Back to Products"
+msgstr "Voltar aos Produtos"
+
+msgid "There were errors on following items"
+msgstr "Houve erros nos seguintes itens"
+
+msgid "You are unable to proceed to checkout!"
+msgstr "Você está impossibilitado de avançar para o check-out!"
+
+msgid "Continue Shopping"
+msgstr "Continuar Comprando"
+
+msgid "Proceed to checkout"
+msgstr "Fazer o check-out"
+
+msgid "Save cart"
+msgstr "Mostrar carrinhos"
+
+msgid "Cart Title"
+msgstr "título"
+
+msgid "Save"
+msgstr ""
+
+msgid "Coupon is not available."
+msgstr "Cupom não está disponível."
+
+msgid "Error when adding coupon."
+msgstr "Erro ao adicionar cupom."
+
+msgid "Cart"
+msgstr "Carrinho"
+
+msgid "Items"
+msgstr "Itens"
+
+msgid "View cart"
+msgstr "Ver carrinho"
+
+msgid "Qty"
+msgstr "Qtd."
+
+msgid "Remove product from basket"
+msgstr "Remover produto do carrinho"
+
+msgid "Have a coupon code? Enter it here"
+msgstr "Tem um código de cupom? Insira-o aqui"
+
+msgid "Coupon Code"
+msgstr "Código do Cupom"
+
+msgid "Submit Code"
+msgstr "Enviar Código"
+
+msgid "Checkout"
+msgstr "Check-out"
+
+msgid "Continue"
+msgstr "Continuar"
+
+msgid "excl. tax"
+msgstr "excl. imposto"
+
+msgid "Billing address"
+msgstr "Endereço de cobrança"
+
+msgid "Ordering for a company?"
+msgstr "Comprando para uma empresa?"
+
+msgid "Please fill out these fields if you are ordering for a company."
+msgstr "Por favor, preencha estes campos se está comprando para uma empresa."
+
+msgid "Shipping address"
+msgstr "Endereço de entrega"
+
+msgid "Ship to my billing address"
+msgstr "Enviar para o meu endereço de cobrança"
+
+msgid "Delivery"
+msgstr "Entrega"
+
+msgid "Delivery method"
+msgstr "Forma de entrega"
+
+msgid "Billing"
+msgstr "Cobrança"
+
+msgid "Add comment"
+msgstr "Adicionar comentário"
+
+msgid "Place Order"
+msgstr "Fazer Pedido"
+
+msgid "There are errors"
+msgstr "Existem erros"
+
+msgid "Choose Shipping Method"
+msgstr "Escolha a Forma de Entrega"
+
+msgid "Choose Payment Method"
+msgstr "Escolha a Forma de Pagamento"
+
+msgid "Errors"
+msgstr "Erros"
+
+msgid "Ordering for a company"
+msgstr "Comprando para uma empresa"
+
+msgid "Other information"
+msgstr "Outras informações"
+
+msgid "Place the order"
+msgstr "Fazer o pedido"
+
 msgid "Bad Request"
 msgstr "Requisição Inválida"
 
-msgid "Back to home"
-msgstr "Voltar à página inicial"
+msgid "Unfortunately the server couldn't process your request."
+msgstr "Infelizmente, o servidor não pôde processar sua solicitação."
+
+msgid "Back to Homepage"
+msgstr "Voltar à Página Inicial"
 
 msgid "Permission Denied"
 msgstr "Permissão Negada"
 
+msgid "Unfortunately you didn't have permission to display this page."
+msgstr "Infelizmente você não tem permissão para visualizar esta página."
+
 msgid "Page not Found"
 msgstr "Página não Encontrada"
+
+msgid "Unfortunately the page you were looking for does not exist."
+msgstr "Infelizmente, a página que você estava procurando não existe."
 
 msgid "Internal Server Error"
 msgstr "Erro Interno do Servidor"
 
-msgid "Server Error"
-msgstr "Erro do Servidor"
+msgid ""
+"Unfortunately an internal server error occurred. Try refreshing the page or "
+"try again later."
+msgstr ""
+"Infelizmente ocorreu um erro interno do servidor. Experimente atualizar a "
+"página ou tente novamente mais tarde."
 
-msgid "Welcome to Shuup!"
-msgstr "Bem-vindo ao Shuup!"
+msgid "Categories"
+msgstr "Categorias"
+
+msgid "Edit account details"
+msgstr "Editar detalhes da conta"
+
+msgid "Edit company details"
+msgstr "Editar detalhes da empresa"
+
+msgid "My orders"
+msgstr "Meus pedidos"
+
+msgid "My saved carts"
+msgstr ""
+
+msgid "My wishlists"
+msgstr "Minhas listas de desejos"
+
+msgid "Admin panel"
+msgstr "Painel de administração"
+
+msgid "Log out"
+msgstr "Sair"
+
+msgid "Log in"
+msgstr "Entrar"
+
+msgid "Username or email address"
+msgstr "Nome de usuário ou endereço de e-mail"
+
+msgid "Password"
+msgstr "Senha"
+
+msgid "Forgot your password?"
+msgstr "Esqueceu sua senha?"
+
+msgid "New user? Register here!"
+msgstr "Novo usuário? Cadastre-se aqui!"
+
+msgid "Menu"
+msgstr "Menu"
+
+msgid "Products"
+msgstr "Produtos"
 
 #, python-format
-msgid "Welcome to %(name)s!"
-msgstr "Bem-vindo à %(name)s!"
+msgid "Welcome to %(shop_name)s!"
+msgstr "Bem-vindo à %(shop_name)s!"
 
-msgid "your shop"
-msgstr "sua loja"
+msgid "Preview"
+msgstr "Pré-visualizar"
 
-msgid ""
-"You are seeing this page because there is no theme selected for the default "
-"frontend."
-msgstr "Você está visualizando esta página porque não existe nenhum tema selecionado para o front-end padrão."
+msgid "Files"
+msgstr "Arquivos"
 
-msgid "Log in to the administration interface"
-msgstr "Autentique-se na interface de administração"
+msgid "Products ordered"
+msgstr "Produtos comprados"
 
-msgid "to choose a theme and set up your shop."
-msgstr "para escolher um tema e configurar a sua loja."
+msgid "Tax breakdown"
+msgstr "Detalhamento de impostos"
 
-msgid ""
-"The administration interface does not seem to be available. Use other means "
-"to choose a theme."
-msgstr "A interface de administração parece não estar disponível. Utilize outros meios para escolher um tema."
+msgid "Payment"
+msgstr "Pagamento"
 
-msgid "You are not an administrator"
-msgstr "Você não é um administrador"
+msgid "Company"
+msgstr "Empresa"
 
-msgid "ask an administrator to select a theme."
-msgstr "solicite a um administrador para selecionar um tema."
+msgid "Previous"
+msgstr "Anterior"
+
+msgid "Next"
+msgstr "Próximo"
 
 msgid "Maintenance mode"
 msgstr "Modo de manutenção"
 
 msgid "Shop is currently down for maintenance."
 msgstr "A loja está atualmente indisponível para manutenção."
+
+msgid "Thank you for your order!"
+msgstr "Obrigado pela sua preferência!"
+
+msgid ""
+"Your order has been received. You can see the details of your order below."
+msgstr ""
+"Seu pedido foi recebido. Você pode ver os detalhes do seu pedido logo "
+"abaixo."
+
+msgid "User account activation"
+msgstr "Ativação da conta de usuário"
+
+msgid ""
+"If you want to be able to see your order history, please create a password "
+"for your account: "
+msgstr ""
+"Se você quer ter a possibilidade de acompanhar o seu histórico de pedidos, "
+"por favor, crie uma senha para sua conta:"
+
+msgid "Send"
+msgstr "Enviar"
+
+msgid "Tax"
+msgstr "Imposto"
+
+msgid "Tax percentage"
+msgstr "Alíquota de imposto"
+
+msgid "Based on amount"
+msgstr "Baseado na quantia"
+
+msgid "Amount of tax"
+msgstr "Valor do imposto"
+
+msgid "Total including tax"
+msgstr "Total incluindo imposto"
+
+msgid "Payment canceled"
+msgstr "Pagamento cancelado"
+
+msgid "You have canceled payment"
+msgstr "Você cancelou o pagamento"
+
+msgid "Retry payment"
+msgstr "Repetir pagamento"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Barcode"
+msgstr "Código de barras"
+
+msgid "Manufacturer"
+msgstr "Fabricante"
+
+msgid "Package Size"
+msgstr "Tamanho do Pacote"
+
+msgid "Width"
+msgstr "Largura"
+
+msgid "Height"
+msgstr "Altura"
+
+msgid "Depth"
+msgstr "Profundidade"
+
+msgid "Net Weight"
+msgstr "Peso Líquido"
+
+msgid "Gross Weight"
+msgstr "Peso Bruto"
+
+msgid "External link"
+msgstr "Link externo"
+
+msgid "Add to cart"
+msgstr "Adicionar ao carrinho"
+
+msgid "Product is not orderable."
+msgstr "O produto não pode ser comprado."
+
+msgid "Select"
+msgstr "Selecionar"
+
+msgid "Select product"
+msgstr "Selecionar produto"
+
+msgid "Combination not available"
+msgstr "Combinação não disponível"
+
+msgid "Show Grid/List"
+msgstr "Mostrar Grade/Lista"
+
+msgid "Grid/list view"
+msgstr "View de grade/lista"
+
+#, python-format
+msgid "Save %(discount_percent)s"
+msgstr "Economizar %(discount_percent)s"
+
+msgid "Product Information"
+msgstr "Informações do Produto"
+
+msgid "Description"
+msgstr "Descrição"
+
+msgid "Attributes"
+msgstr "Atributos"
+
+msgid "Includes these products"
+msgstr "Inclui estes produtos"
+
+msgid "No product description available"
+msgstr "Nenhuma descrição do produto disponível"
+
+msgid "Also available in"
+msgstr "Também disponível em"
+
+msgid "Open product page"
+msgstr "Abrir a página do produto"
+
+msgid "Newest products"
+msgstr "Produtos mais recentes"
+
+msgid "Show Frontpage Welcome Text"
+msgstr "Mostrar Texto de Boas-vindas na Primeira Página"
+
+msgid "This product is not available in this shop."
+msgstr "Este produto não está disponível nesta loja."
 
 msgid "Name - A-Z"
 msgstr "Nome - A-Z"
@@ -270,9 +646,3 @@ msgstr "Preço - Maior até Menor"
 
 msgid "Sort"
 msgstr "Ordenar"
-
-msgid "Manufacturer"
-msgstr "Fabricante"
-
-msgid "This product is not available in this shop."
-msgstr "Este produto não está disponível nesta loja."

@@ -1,6 +1,12 @@
-<form method="get" action="{{ url("shuup:product_search") }}" class="navbar-form navbar-left" role="search">
-    <div class="form-group">
-        <input type="search" name="q" class="form-control" placeholder="{% trans %}Search for products{% endtrans %}" value="{{ q or "" }}">
+<button id="search-modal-toggler" type="button" data-toggle="modal" data-target="#search-modal"><i class="fa fa-search menu-icon"></i> <span class="hidden-xs">{% trans %}Search{% endtrans %}</span></button>
+<div class="search-modal fade" id="search-modal" tabindex="-1" role="dialog" aria-labelledby="search-modal-label">
+    <div class="search-modal-dialog" role="document">
+        <h2 class="search-modal-title" id="search-modal-label">{% trans %}Search for products{% endtrans %}</h2>
+        <form method="get" class="search-input" action="{{ url("shuup:product_search") }}" role="search" value="{{ q or "" }}">
+            <input id="site-search" name="q" type="search" class="form-control" placeholder="{% trans %}Search for products{% endtrans %}">
+            <button class="btn" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
     </div>
-    <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-</form>
+</div>

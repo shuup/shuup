@@ -8,17 +8,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
-"PO-Revision-Date: 2016-04-19 08:32+0000\n"
+"POT-Creation-Date: 2016-08-04 20:11+0000\n"
+"PO-Revision-Date: 2016-08-04 13:14-0700\n"
 "Last-Translator: Shuup Admin <admin@shuup.com>\n"
 "Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/"
 "language/cmn/)\n"
-"Language: cmn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: cmn\n"
 "Generated-By: Babel 2.1.1\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 1.8.8\n"
 
 msgid "Shuup Extensible Theme Engine"
 msgstr "Shuup可扩展主题引擎"
@@ -79,7 +80,7 @@ msgid "Category Links"
 msgstr ""
 
 msgid "Title"
-msgstr ""
+msgstr "名称"
 
 msgid "Show all categories"
 msgstr ""
@@ -108,6 +109,21 @@ msgstr ""
 msgid "Height (px)"
 msgstr ""
 
+msgid "Product Highlights"
+msgstr "产品特点"
+
+msgid "Type"
+msgstr "类型"
+
+msgid "Count"
+msgstr "总数"
+
+msgid "Only show in-stock and orderable items"
+msgstr ""
+
+msgid "Product Cross Sells"
+msgstr ""
+
 msgid "Snippets"
 msgstr ""
 
@@ -123,6 +139,12 @@ msgstr ""
 msgid "Resource for end of body"
 msgstr ""
 
+msgid "URL"
+msgstr ""
+
+msgid "Ordering"
+msgstr ""
+
 msgid "Social Media Links"
 msgstr ""
 
@@ -132,7 +154,22 @@ msgstr ""
 msgid "Icon Size"
 msgstr ""
 
+msgid "Default"
+msgstr ""
+
+msgid "Large"
+msgstr ""
+
 msgid "Alignment"
+msgstr ""
+
+msgid "Left"
+msgstr ""
+
+msgid "Center"
+msgstr ""
+
+msgid "Right"
 msgstr ""
 
 msgid "text"
@@ -216,6 +253,16 @@ msgstr ""
 #, python-format
 msgid "Cannot add more than %d cells in one row."
 msgstr "无法在同一行添加 %d 以上的单元格。"
+
+#, fuzzy
+#| msgid "Publish Changes"
+msgid "Published"
+msgstr "发布更改"
+
+#, fuzzy
+#| msgid "Revert Changes"
+msgid "Reverted"
+msgstr "还原改变"
 
 msgid "Full Width"
 msgstr "最大化"

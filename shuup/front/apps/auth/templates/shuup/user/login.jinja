@@ -6,31 +6,47 @@
 
 {% block content %}
 
-    {% for error in form.non_field_errors() %}
-        {{ macros.alert(error, mode="danger") }}
-    {% endfor %}
-
-    <div class="row">
-        <div class="col-sm-8 col-sm-push-2 col-md-6 col-md-push-3">
-            <h1 class="page-header text-center">
-                {% trans %}Log in{% endtrans %}
-            </h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-8 col-sm-push-2 col-md-6 col-md-push-3">
-            <div class="well">
-                <form role="form" method="post" action="{{ request.path }}">
-                    {% csrf_token %}
-                    {% for f in form.hidden_fields() %}{{ f }}{% endfor %}
-                    {{ render_field(form.username) }}
-                    {{ render_field(form.password) }}
-                    <button type="submit" class="btn btn-primary btn-block"><i class="glyphicon glyphicon-log-in"></i> {% trans %}Log in{% endtrans %}</button>
-                    <hr>
-                    <a href="{{ url("shuup:recover_password") }}">{% trans %}Forgot your password?{% endtrans %}</a>
-                </form>
+    {% if user.is_authenticated() %}
+        <h1 class="page-header">
+            {% trans %}Log in{% endtrans %}
+        </h1>
+        <p class="lead">
+            {% trans username = user.get_full_name() if (user.first_name or user.last_name) else user %}You have already logged in as <strong>{{ username }}</strong>{% endtrans %}
+        </p>
+        <a href="/" class="btn btn-primary"><i class="fa fa-angle-double-left"></i> {% trans %}Go to Homepage{% endtrans %}</a>
+    {% else %}
+        <div class="row">
+            <div class="col-sm-8 col-sm-push-2 col-md-6 col-md-push-3">
+                <h1 class="page-header text-center">
+                    {% trans %}Log in{% endtrans %}
+                </h1>
             </div>
         </div>
-    </div>
+        <div class="row">
+            <div class="col-sm-8 col-sm-push-2 col-md-6 col-md-push-3">
+                <div class="well">
+                    {% for error in form.non_field_errors() %}
+                        {{ macros.alert(error, mode="danger") }}
+                    {% endfor %}
+                    <form role="form" method="post" action="{{ request.path }}">
+                        {% csrf_token %}
+                        {% for f in form.hidden_fields() %}{{ f }}{% endfor %}
+                        {{ render_field(form.username) }}
+                        {{ render_field(form.password) }}
+                        <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-sign-in"></i> {% trans %}Log in{% endtrans %}</button>
+                        <hr>
+                        <a href="{{ url("shuup:recover_password") }}">
+                            {% trans %}Forgot your password?{% endtrans %}
+                        </a>
+                    </form>
+                </div>
+                {% if shuup.urls.has_url("shuup:registration_register") %}
+                    <a class="col-sm-12 text-center text-muted" href="{{ url("shuup:registration_register") }}{% if next %}?next={{next}}{% endif %}">
+                        {% trans %}New user? Register here!{% endtrans %}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
 
 {% endblock %}

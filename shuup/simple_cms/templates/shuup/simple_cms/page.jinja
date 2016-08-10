@@ -5,7 +5,7 @@
 
 {% block breadcrumb %}
     <ol class="breadcrumb">
-        <li><a href="/"><i class="glyphicon glyphicon-home"></i></a></li>
+        <li><a href="/">{% trans %}Home{% endtrans %}</a></li>
         {% for ancestor in page.get_ancestors() if ancestor.is_visible() %}
             <li><a href="/{{ ancestor.url }}">{{ ancestor.title }}</a></li>
         {% endfor %}
@@ -15,13 +15,14 @@
 {% block content %}
     {{ page.get_html()|safe }}
     {% if page.list_children_on_page %}
-        {% for child in page.children.visible().order_by("-available_from")  %}
+        {# TODO: add pagination for children list #}
+        {% for child in page.children.visible().order_by("-available_from") %}
             <div class="row">
                 <a href="/{{ child.url }}"><h2>{{ child.title }}</h2></a>
                 {% if child.available_from %}
                     <small>{{ child.available_from|datetime }}</small>
                 {% endif %}
-                <p>{{ child.get_html()|striptags|truncate(256) }}</p>
+                <p>{{ child.get_html()|safe|striptags|truncate(256) }}</p>
             </div>
         {% endfor %}
     {% endif %}

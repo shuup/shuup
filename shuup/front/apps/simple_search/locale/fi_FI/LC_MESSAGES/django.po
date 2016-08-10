@@ -19,27 +19,32 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"POT-Creation-Date: 2016-08-04 18:53+0000\n"
 "PO-Revision-Date: 2016-03-17 11:01+0000\n"
 "Last-Translator: Rauli Laine <rauli.laine@iki.fi>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
 "language/fi_FI/)\n"
-"Language: fi_FI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fi_FI\n"
 "Generated-By: Babel 2.1.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Search"
 msgstr "Haku"
 
+msgid "Search for products"
+msgstr "Etsi tuotteita"
+
 #, python-format
 msgid "No results found for \"<strong>%(query)s</strong>\"."
 msgstr "Ei tuloksia kyselylle \"<strong>%(query)s</strong>\"."
 
-msgid "Search for products"
-msgstr "Etsi tuotteita"
+#, fuzzy, python-format
+#| msgid "No results found for \"<strong>%(query)s</strong>\"."
+msgid "%(n)s results found for \"<strong>%(query)s</strong>\"."
+msgstr "Ei tuloksia kyselylle \"<strong>%(query)s</strong>\"."
 
 msgid "Sort"
 msgstr "Järjestä"

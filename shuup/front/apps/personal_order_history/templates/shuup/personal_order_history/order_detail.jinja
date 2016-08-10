@@ -1,8 +1,17 @@
 {% extends "shuup/front/base.jinja" %}
+{% from "shuup/front/macros.jinja" import render_ordered_files %}
 
 {% block title -%}
     {{ _("Order %(identifier)s", identifier=order.identifier) }}
 {%- endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li><a href="/">{% trans %}Home{% endtrans %}</a></li>
+        <li><a href="{{ url("shuup:personal-orders") }}">{% trans %}Order History{% endtrans %}</a></li>
+        <li class="active">{{ _("Details of order %(identifier)s", identifier=order.identifier) }}</li>
+    </ol>
+{% endblock %}
 
 {% block content %}
     <h1 class="page-header">
@@ -25,6 +34,9 @@
         <div class="col-sm-12">
             {{ _rows() }}
         </div>
+        <div class="col-sm-12">
+            {{ render_ordered_files(order) }}
+        </div>
     </div>
 {% endblock %}
 
@@ -40,9 +52,13 @@
             {{ info_row(_("Creator"), order.creator) }}
             {{ info_row(_("Phone"), order.phone, "tel:" ~ order.phone) }}
             {{ info_row(_("Email"), order.email, "mailto:" ~ order.email) }}
-            {{ info_row(_("Tax number"), order.tax_number) }}
+            {{ info_row(_("Tax Number"), order.tax_number) }}
             {{ price_row(_("Total Price"), order.taxful_total_price) }}
             {{ price_row(_("Total Price (taxless)"), order.taxless_total_price) }}
+            {% set tracking_codes = order.get_tracking_codes() %}
+            {% if tracking_codes %}
+                {{ info_row(_("Tracking codes"), render_objects(tracking_codes)) }}
+            {% endif %}
         </table>
     {% endcall %}
 {% endmacro %}
@@ -164,3 +180,11 @@
         {{ number_cell("", elem) }}
     {%- endif -%}
 {% endmacro %}
+
+{%- macro render_objects(objs) -%}
+    {%- for obj in objs -%}
+        {{- obj -}}
+        {%- if not loop.last %}, {% endif -%}
+    {%- endfor -%}
+{%- endmacro -%}
+

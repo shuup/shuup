@@ -1,0 +1,104 @@
+{%- import "shuup/front/macros.jinja" as macros with context -%}
+<div class="basket-items">
+    <form method="post" action="{{ url("shuup:basket") }}" id="update_basket_form">
+        <input name="command" type="hidden" value="update">
+        {% csrf_token %}
+        {% for line in basket.get_final_lines() %}
+            {% set product = line.product %}
+            {% set shop_product = line.shop_product %}
+            <div class="single-item">
+                {% if product %}
+                <div class="product-image">
+                    {% set image = product.primary_image %}
+                    {% if image %}
+                        <a class="product-name" href="{{ shuup.urls.model_url(product) }}">
+                            <img class="img-responsive" src="{{ image|thumbnail(size=(200, 200)) }}" alt="{{ line.text }}">
+                        </a>
+                    {% else %}
+                        <a class="product-name" href="{{ shuup.urls.model_url(product) }}">
+                            <img class="img-responsive" src="{{ STATIC_URL }}shuup/front/img/no_image_thumbnail.png">
+                        </a>
+                    {% endif %}
+                </div>
+                {% endif %}
+                <div class="product-details">
+                    <h4 class="name">
+                        {% if product %}
+                            <a class="product-name" href="{{ shuup.urls.model_url(product) }}">{{ line.text }}</a>
+                        {% else %}
+                            {{ line.text }}
+                        {% endif %}
+                    </h4>
+                    {% if product and product.is_package_parent() %}
+                        {{ macros.render_package_children(product) }}
+                    {% endif %}
+                    <div class="quantity">
+                        {% if product %}
+                            {% if line.can_change_quantity %}
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    {% trans %}Qty{% endtrans %}
+                                </div>
+                                <input
+                                    id="qty_{{ line.line_id }}"
+                                    type="number"
+                                    name="q_{{ line.line_id }}"
+                                    size="2"
+                                    class="line_quantity form-control"
+                                    step="{{ shop_product.quantity_step }}"
+                                    value="{{ line.quantity }}"
+                                    min="{{ shop_product.rounded_minimum_purchase_quantity }}">
+                            </div>
+                            {% else %}
+                                <div class="">{{ _("Quantity") }}: {{ line.quantity }}</div>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+                {% if show_prices() %}
+                <div class="product-sum">
+                    <h4 class="price text-right">
+                        <small>{% trans %}Total{% endtrans %}: </small>{{ line|price }}
+                        {% if line.is_discounted and line.base_price.value > 0 %}
+                            <br><small><s class="text-muted">{{ line|base_price }}</s></small>
+                        {% endif %}
+                    </h4>
+                </div>
+                {% endif %}
+                <div class="delete">
+                    {% if line.can_delete %}
+                    <button type="submit" class="btn btn-sm" name="delete_{{ line.line_id }}" title="{% trans %}Remove product from basket{% endtrans %}">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+        <div class="basket-summary">
+            <div class="row basket-discount-code">
+                <div class="col-sm-6 pull-right">
+                    <a class="coupon-toggler" role="button" data-toggle="collapse" href="#collapseCoupon" aria-expanded="false" aria-controls="collapseCoupon">{% trans %}Have a coupon code? Enter it here{% endtrans %}</a>
+                    <div class="collapse" id="collapseCoupon">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="code" id="discount-code" placeholder="{% trans %}Coupon Code{% endtrans %}">
+                            <span class="input-group-btn">
+                                <button type="submit" id="submit-code" class="btn btn-primary">{% trans %}Submit Code{% endtrans %}</button>
+                            </span>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            {% if show_prices() %}
+            <div class="row">
+                <div class="col-sm-6 pull-right">
+                    <div class="row">
+                        <div class="col-xs-6"><h4><strong>{% trans %}Total{% endtrans %}</strong></h4></div>
+                        <div class="total-price text-right col-xs-6"><h2>{{ basket|total_price }}</h2></div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </form>
+</div>
