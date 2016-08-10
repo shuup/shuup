@@ -23,6 +23,7 @@ Localization
 Admin
 ~~~~~
 
+- Add contact type filter to contact list view
 - Allow billing address to be used as shipping address on contact creation
 - Split person contact and company contact creation into separate actions
 - Rearrange product creation and edit pages so that all pertinent info is

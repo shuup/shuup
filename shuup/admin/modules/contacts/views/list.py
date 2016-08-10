@@ -22,11 +22,24 @@ from shuup.core.models import (
 )
 
 
+class ContactTypeFilter(ChoicesFilter):
+    def __init__(self):
+        super(ContactTypeFilter, self).__init__(choices=[("person", _("Person")), ("company", _("Company"))])
+
+    def filter_queryset(self, queryset, column, value):
+        if value == "_all":
+            return queryset
+        model_class = PersonContact
+        if value == "company":
+            model_class = CompanyContact
+        return queryset.instance_of(model_class)
+
+
 class ContactListView(PicotableListView):
     model = Contact
     columns = [
         Column("name", _(u"Name"), linked=True, filter_config=TextFilter()),
-        Column("type", _(u"Type"), display="get_type_display", sortable=False),  # TODO: Add a filter
+        Column("type", _(u"Type"), display="get_type_display", sortable=False, filter_config=ContactTypeFilter()),
         Column("email", _(u"Email"), filter_config=TextFilter()),
         Column("phone", _(u"Phone"), filter_config=TextFilter()),
         Column(
