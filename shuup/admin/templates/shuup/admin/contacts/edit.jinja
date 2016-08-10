@@ -13,3 +13,36 @@
         </form>
     {% endcall %}
 {% endblock %}
+
+{% block extra_js %}
+<script>
+(function(){
+    var shouldCopyFields = false;
+
+    function copyFieldValue() {
+        if(!shouldCopyFields) {
+            return;
+        }
+        var targetName = $(this).attr("id").split("-")[1];
+        var $target = $("#id_shipping_address-"+targetName);
+        $target.val($(this).val());
+        if($target.is('select')) {
+            $target.select2().val($(this).select2().val())
+        }
+    }
+
+    $('#billing-to-shipping').click(function(){
+        if($(this).is(':checked')){
+            shouldCopyFields = true;
+            $('.shipping-address :input').attr('readonly', true);
+            $('.billing-address :input').change();
+        } else {
+            shouldCopyFields = false;
+            $('.shipping-address :input').attr('readonly', false);
+        }
+    });
+
+    $('.billing-address :input').on("input change", copyFieldValue);
+}());
+</script>
+{% endblock %}
