@@ -72,6 +72,9 @@ class ShipmentFormModifier(six.with_metaclass(abc.ABCMeta)):
 
 
 class ShipmentForm(forms.Form):
+    description = forms.CharField(required=False)
+    tracking_code = forms.CharField(required=False)
+
     def clean(self):
         cleaned_data = super(ShipmentForm, self).clean()
         for extend_class in get_provide_objects(FORM_MODIFIER_PROVIDER_KEY):
@@ -163,7 +166,10 @@ class OrderCreateShipmentView(UpdateView):
             in six.iteritems(product_ids_to_quantities)
         )
 
-        unsaved_shipment = Shipment(order=order, supplier=form.cleaned_data["supplier"])
+        unsaved_shipment = Shipment(order=order,
+                                    supplier=form.cleaned_data["supplier"],
+                                    tracking_code=form.cleaned_data.get("tracking_code"),
+                                    description=form.cleaned_data.get("description"),)
         has_extension_errors = False
         for extend_class in get_provide_objects(FORM_MODIFIER_PROVIDER_KEY):
             try:
