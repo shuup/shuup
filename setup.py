@@ -96,6 +96,7 @@ REQUIRES = [
     'pytz>=2015.4',
     'requests>=2.7,<3',
     'six>=1.9,<2',
+    'django-ipware>=1.1.5,<2'
 ]
 
 REQUIRES_FOR_PYTHON2_ONLY = [
