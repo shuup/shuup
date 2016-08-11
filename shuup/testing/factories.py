@@ -555,6 +555,8 @@ def create_order_with_product(
         add_product_to_order(order, supplier, product, quantity, taxless_base_unit_price, tax_rate, pricing_context)
 
     assert order.get_product_ids_and_quantities()[product.pk] == (quantity * n_lines), "Things got added"
+    order.cache_prices()
+    order.save()
     return order
 
 
