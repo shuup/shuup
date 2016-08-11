@@ -201,3 +201,9 @@ Campaigns Provide Categories
     Form for handling line effects of a basket campaign. Should be a
     ModelForm with its model being a subclass of
     `~shuup.campaigns.models.BasketLineEffect`.
+
+Reports Provide Categories
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``reports``
+    Class to handle report data collection. Should be a subclass of `~shuup.reports.report.ShuupReportBase`.

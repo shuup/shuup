@@ -87,6 +87,11 @@ General/miscellaneous
 
 - Add browser testing capability
 
+Reporting
+~~~~~~~~~
+
+- Add Reporting core
+
 SHUUP 0.4.1
 -----------
 
