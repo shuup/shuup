@@ -62,6 +62,8 @@ Simple Supplier
 Order Printouts
 ~~~~~~~~~~~~~~~
 
+- Move ``shuup/order_printouts/pdf_export.py`` to ``shuup/utils/pdf.py``
+
 Campaigns
 ~~~~~~~~~
 
