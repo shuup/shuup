@@ -81,3 +81,14 @@ def test_formatted_decimal_field_overridden_step():
     rendered_field = force_text(TestForm()['f'])
     rendered_step = re.search('step="(.*?)"', rendered_field).group(1)
     assert rendered_step == '0.1'
+
+
+def test_formatted_decimal_field_default():
+    class TestModelForm(ModelForm):
+        class Meta:
+            model = Product
+            fields = ["width"]
+
+    rendered_form = force_text(TestModelForm(instance=Product()))
+    rendered_value = re.search('value="(.*)"', rendered_form).group(1)
+    assert rendered_value == "0"

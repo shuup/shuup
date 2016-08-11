@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import decimal
+import numbers
 
 import babel
 from django import forms
@@ -86,8 +87,8 @@ class FormattedDecimalField(models.DecimalField):
     """
     def value_from_object(self, obj):
         value = super(FormattedDecimalField, self).value_from_object(obj)
-        if isinstance(value, decimal.Decimal):
-            return self.format_decimal(value)
+        if isinstance(value, numbers.Number):
+            return self.format_decimal(decimal.Decimal(str(value)))
 
     def format_decimal(self, value, max_digits=100, exponent_limit=100):
         assert isinstance(value, decimal.Decimal)

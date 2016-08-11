@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Fix `FormattedDecimalField` default value for form fields
 - Combine `TreeManager` and `TranslatableManager` querysets for categories
 - Exclude deleted orders from valid queryset
 - Enable soft delete for shipments
