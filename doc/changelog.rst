@@ -23,6 +23,8 @@ Localization
 Admin
 ~~~~~
 
+- Rearrange product creation and edit pages so that all pertinent info is
+  visible simultaneously
 - Allow content blocks to be initialized as collapsed
 - Add ``admin_product_toolbar_action_item`` provider for product edit toolbar
 - Add deprecation warning for ``admin_contact_toolbar_button`` usages

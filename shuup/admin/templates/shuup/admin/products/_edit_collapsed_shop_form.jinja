@@ -1,0 +1,13 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{# use the base form #}
+{% set base_form_name = form_def.name.split('_')[0] %}
+{% set shop_product_form = form[base_form_name] %}
+{% set shop_name = shop_product_form.instance.shop.name %}
+{% set shop_name_prefix = shop_product_form.instance.shop.name ~ " - " %}
+
+{% call content_block(shop_name_prefix ~ _("Shipping & Payment"), "fa-truck", collapsed=True) %}
+    {{ bs3.field(shop_product_form.limit_payment_methods) }}
+    {{ bs3.field(shop_product_form.limit_shipping_methods) }}
+    {{ bs3.field(shop_product_form.payment_methods) }}
+    {{ bs3.field(shop_product_form.shipping_methods) }}
+{% endcall %}

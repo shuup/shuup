@@ -10,21 +10,24 @@
             </p>
         </div>
     {% endif %}
-    {% call content_with_sidebar(content_id="product_details") %}
-        <div id="product_details">
-            <form method="post" id="product_form">
-                {% csrf_token %}
-                {% for form_def in form.form_defs.values() %}
+    <form method="post" id="product_form">
+        {% csrf_token %}
+        {% for form_def in form.form_defs.values() %}
+            {% if form_def.required %}
+                {% include form_def.template_name with context %}
+            {% endif %}
+        {% endfor %}
+        {% for form_def in form.form_defs.values() %}
+            {% if not form_def.required %}
                     {% include form_def.template_name with context %}
-                {% endfor %}
-            </form>
-            {% for product_section in product_sections %}
-                {% call content_block(product_section.name, product_section.icon) %}
-                    {% include product_section.template with context %}
-                {% endcall %}
-            {% endfor %}
-        </div>
-    {% endcall %}
+            {% endif %}
+        {% endfor %}
+    </form>
+    {% for product_section in product_sections %}
+        {% call content_block(product_section.name, product_section.icon, collapsed=True) %}
+            {% include product_section.template with context %}
+        {% endcall %}
+    {% endfor %}
 {% endblock %}
 
 {% block extra_js %}

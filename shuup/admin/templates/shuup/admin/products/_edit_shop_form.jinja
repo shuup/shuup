@@ -21,10 +21,3 @@
     {{ bs3.field(shop_product_form.minimum_purchase_quantity) }}
     {{ bs3.field(shop_product_form.backorder_maximum) }}
 {% endcall %}
-
-{% call content_block(shop_name_prefix ~ _("Shipping & Payment"), "fa-truck") %}
-    {{ bs3.field(shop_product_form.limit_payment_methods) }}
-    {{ bs3.field(shop_product_form.limit_shipping_methods) }}
-    {{ bs3.field(shop_product_form.payment_methods) }}
-    {{ bs3.field(shop_product_form.shipping_methods) }}
-{% endcall %}

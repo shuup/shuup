@@ -87,12 +87,10 @@
     </div>
 {% endmacro %}
 
-
 {%- set is_image_form = media_form.prefix == "images" %}
 {%- set id = "product-images-section" if is_image_form else "product-media-section" %}
 {%- set name = _("Product Images") if is_image_form else _("Product Media") %}
-
-{% call content_block(name, "fa-camera", id=id) %}
+{% call content_block(name, "fa-camera", id=id, collapsed=True) %}
     {{ media_form.management_form }}
     {% for f in media_form %}
         {{ render_media_form(f, media_form, loop.index, is_image_form) }}
@@ -103,6 +101,4 @@
     <hr>
 {%- set target_id = "id_images" if is_image_form else "id_media" %}
 <a class="btn btn-lg btn-text media-add-new-panel" href="#" data-target-id="{{ target_id }}" data-target-panels="{{ id }}">+ {% if is_image_form %}{% trans %}Add new image{% endtrans %}{% else %}{% trans %}Add new media{% endtrans %}{% endif %}</a>
-
 {% endcall %}
-

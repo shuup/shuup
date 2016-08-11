@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django import forms
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
@@ -24,7 +25,8 @@ from shuup.admin.modules.products.forms import (
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import (
-    Product, ProductType, Shop, ShopProduct, ShopStatus, TaxClass
+    Product, ProductType, SalesUnit, Shop, ShopProduct, ShopStatus, Supplier,
+    TaxClass
 )
 
 from .toolbars import EditProductToolbar
@@ -46,6 +48,13 @@ class ProductBaseFormPart(FormPart):
             }
         )
 
+        yield TemplatedFormDef(
+            "base_collapsed",
+            forms.Form,
+            template_name="shuup/admin/products/_edit_collapsed_base_form.jinja",
+            required=False
+        )
+
     def form_valid(self, form):
         self.object = form["base"].save()
         return self.object
@@ -65,7 +74,8 @@ class ProductBaseFormPart(FormPart):
                 name_field: self.request.GET.get("name", ""),
                 "sku": self.get_sku(),
                 "type": ProductType.objects.first(),
-                "tax_class": TaxClass.objects.first()
+                "tax_class": TaxClass.objects.first(),
+                "sales_unit": SalesUnit.objects.first()
             }
 
 
@@ -86,13 +96,20 @@ class ShopProductFormPart(FormPart):
     def get_form_defs(self):
         for shop in self.shops:
             shop_product = self.get_shop_instance(shop)
-
             yield TemplatedFormDef(
                 "shop%d" % shop.pk,
                 ShopProductForm,
                 template_name="shuup/admin/products/_edit_shop_form.jinja",
-                required=False,
-                kwargs={"instance": shop_product}
+                required=True,
+                kwargs={"instance": shop_product, "initial": self.get_initial()}
+            )
+
+            # the collapsed form template uses ShopProductForm
+            yield TemplatedFormDef(
+                "shop%d_collapsed" % shop.pk,
+                forms.Form,
+                template_name="shuup/admin/products/_edit_collapsed_shop_form.jinja",
+                required=False
             )
 
     def form_valid(self, form):
@@ -112,6 +129,13 @@ class ShopProductFormPart(FormPart):
 
             inst = shop_product_form.save()
             messages.success(self.request, _("Changes to shop instance for %s saved") % inst.shop)
+
+    def get_initial(self):
+        if not self.object.pk:
+            return {
+                "visible": True,
+                "suppliers": [Supplier.objects.first()]
+            }
 
 
 class ProductAttributeFormPart(FormPart):
@@ -163,8 +187,8 @@ class ProductImageMediaFormPart(BaseProductMediaFormPart):
 
 class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):
     model = Product
-    template_name = "shuup/admin/products/edit.jinja"
     context_object_name = "product"
+    template_name = "shuup/admin/products/edit.jinja"
     base_form_part_classes = [
         ProductBaseFormPart,
         ShopProductFormPart,
