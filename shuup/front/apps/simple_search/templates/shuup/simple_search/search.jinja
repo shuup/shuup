@@ -1,5 +1,7 @@
 {% extends "shuup/front/base.jinja" %}
+
 {% block title %}{% trans %}Search{% endtrans %}{% endblock %}
+
 {% block content %}
     <h1 class="page-header">{% trans %}Search{% endtrans %}</h1>
     <form method="get" id="product_search" role="form" action="">
@@ -8,9 +10,16 @@
                 <div class="form-group">
                     <label for="id_q">{% trans %}Search for products{% endtrans %}</label>
                     <div class="input-group">
-                        <input class="form-control" id="id_q" name="q" placeholder="Search" type="text" value="{{ form.q.value() or "" }}">
+                        <input class="form-control"
+                               id="id_q"
+                               name="q"
+                               placeholder="Search"
+                               type="text"
+                               value="{{ form.q.value() or "" }}">
                         <div class="input-group-btn">
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> {% trans %}Search{% endtrans %}</button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-search"></i> {% trans %}Search{% endtrans %}
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -20,7 +29,9 @@
         <hr>
     </form>
     {% if no_results %}
-        <p class="lead">{% trans query=form.cleaned_data.q %}No results found for "<strong>{{ query }}</strong>".{% endtrans %}</p>
+        <p class="lead">
+            {% trans query=form.cleaned_data.q %}No results found for "<strong>{{ query }}</strong>".{% endtrans %}
+        </p>
     {% elif products %}
         {% if products|count == 150 %}
         <p class="lead">{% trans %}Limiting results to first 150 products. Refine search terms for better results.{% endtrans %}</p>
@@ -29,7 +40,7 @@
         <div class="row">
         {% for product in products %}
             <div class="col-sm-4 col-md-3">
-                {{ macros.product_box(product, show_description=True, class="product-card box") }}
+                {{ product_macros.product_box(product, show_description=True, class="product-card box") }}
             </div>
         {% endfor %}
         </div>
