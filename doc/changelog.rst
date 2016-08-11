@@ -90,6 +90,9 @@ General/miscellaneous
 Reporting
 ~~~~~~~~~
 
+- Add Sales Report
+- Add Total Sales Report
+- Add Sales Per Hour Report
 - Add Reporting core
 
 SHUUP 0.4.1
