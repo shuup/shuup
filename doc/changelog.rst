@@ -23,6 +23,7 @@ Localization
 Admin
 ~~~~~
 
+- Allow content blocks to be initialized as collapsed
 - Add ``admin_product_toolbar_action_item`` provider for product edit toolbar
 - Add deprecation warning for ``admin_contact_toolbar_button`` usages
 - Add ``admin_contact_toolbar_action_item`` provider for contact toolbar
