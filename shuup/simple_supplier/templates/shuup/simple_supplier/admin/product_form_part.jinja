@@ -30,34 +30,40 @@
     {% for product in form.products %}
         {% set product_url = shuup_admin.model_url(product) %}
         <div class="row">
-        {% if product.is_stocked() %}
-            {{ render_product(form.get_suppliers(product), product, product_url, product_qty) }}
-        {% else %}
-            <p>
-                {% trans product_name=product.name, product_url=product_url -%}
-                    Product <a href="{{ product_url }}" target="_blank">{{ product_name }}</a> is not stocked.
-                {%- endtrans %}
-                {% trans -%}
-                    Please set product stock behavior at Additional Details section.
-                {%- endtrans %}
-            </p>
-        {% endif %}
+            <div class="col-sm-12">
+                {% if product.is_stocked() %}
+                    {{ render_product(form.get_suppliers(product), product, product_url, product_qty) }}
+                {% else %}
+                    <p>
+                        {% trans product_name=product.name, product_url=product_url -%}
+                            Product <a href="{{ product_url }}" target="_blank">{{ product_name }}</a> is not stocked.
+                        {%- endtrans %}
+                        {% trans -%}
+                            Please set product stock behavior at Additional Details section.
+                        {%- endtrans %}
+                    </p>
+                {% endif %}
+            </div>
         </div>
     {% endfor %}
 {% endmacro %}
 
-{% call content_block(_("Stock management"), "fa-cubes") %}
+{% call content_block(_("Stock management"), "fa-cubes", collapsed=True) %}
     {% if ss_form.can_manage_stock() %}
         {{ render_products(ss_form) }}
     {% else %}
-        <p>
-            {% trans module_name=ss_form.module_name -%}
-                No suppliers with {{ module_name }} available.
-            {%- endtrans %}
-            {% trans module_name=ss_form.module_name, supplier_url=shuup_admin.model_url(ss_form.supplier_model, kind="list", default="#") -%}
-                Please set {{ module_name }} module for at least one of the <a href="{{ supplier_url }}" target="_blank">Suppliers</a>.
-            {%- endtrans %}
-        </p>
+        <div class="row">
+            <div class="col-sm-12">
+                <p>
+                    {% trans module_name=ss_form.module_name -%}
+                        No suppliers with {{ module_name }} available.
+                    {%- endtrans %}
+                    {% trans module_name=ss_form.module_name, supplier_url=shuup_admin.model_url(ss_form.supplier_model, kind="list", default="#") -%}
+                        Please set {{ module_name }} module for at least one of the <a href="{{ supplier_url }}" target="_blank">Suppliers</a>.
+                    {%- endtrans %}
+                </p>
+            </div>
+        </div>
     {% endif %}
 {% endcall %}
 
