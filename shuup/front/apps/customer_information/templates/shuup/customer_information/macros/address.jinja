@@ -1,4 +1,5 @@
-{%- import "shuup/front/macros.jinja" as macros with context -%}
+{% from "shuup/front/macros/general.jinja" import render_field %}
+
 {% macro render_address_forms(billing_form, shipping_form) %}
     {% for field in billing_form.hidden_fields() %}{{ field|safe }}{% endfor %}
     {% for field in shipping_form.hidden_fields() %}{{ field|safe }}{% endfor %}
@@ -8,7 +9,7 @@
                 <fieldset>
                     <legend>{% trans %}Billing information{% endtrans %}</legend>
                     {% for field in billing_form.visible_fields() %}
-                        {{ macros.render_field(field) }}
+                        {{ render_field(field) }}
                     {% endfor %}
                 </fieldset>
                 <button class="btn btn-info" type="button" onclick="copyAddress('billing', 'shipping')">
@@ -21,7 +22,7 @@
                 <fieldset>
                     <legend>{% trans %}Shipping information{% endtrans %}</legend>
                     {% for field in shipping_form.visible_fields() %}
-                        {{ macros.render_field(field) }}
+                        {{ render_field(field) }}
                     {% endfor %}
                 </fieldset>
                 <button class="btn btn-info" type="button" onclick="copyAddress('shipping', 'billing')">
@@ -32,15 +33,14 @@
     </div>
 {% endmacro %}
 
-
 {% macro render_address_forms_js() %}
-<script>
-    function copyAddress(from, to) {
-        $("[id^=id_" + from + "]").each(function() {
-            var targetName = $(this).attr("id").split("-")[1];
-            var $target = $("#id_" + to + "-" + targetName);
-            $target.val($(this).val());
-        });
-    }
-</script>
+    <script>
+        function copyAddress(from, to) {
+            $("[id^=id_" + from + "]").each(function() {
+                var targetName = $(this).attr("id").split("-")[1];
+                var $target = $("#id_" + to + "-" + targetName);
+                $target.val($(this).val());
+            });
+        }
+    </script>
 {% endmacro %}
