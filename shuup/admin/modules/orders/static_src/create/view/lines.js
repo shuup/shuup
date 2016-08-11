@@ -146,6 +146,11 @@ export function renderOrderLines(store, shop, lines) {
 }
 
 var select2 = {
+    focus: function() {
+        if (select2.element) {
+            select2.element.select2("open");
+        }
+    },
     clear: function() {
         if (select2.element) {
             select2.element.select2("val", null);
@@ -165,7 +170,9 @@ var select2 = {
                     productQuickSelect.currentProduct(null);
                     el.select2()
                         .on("change", function() {
-                            ctrl.onchange($(this).val());
+                            if ($(this).val()){
+                                ctrl.onchange($(this).val());
+                            }
                         });
                 }
             } else {
@@ -175,16 +182,39 @@ var select2 = {
     }
 };
 
+
 var productQuickSelect = {
+    controller: function(store) {
+      this.store = store;
+    },
     clearSelection: function() {
         productQuickSelect.currentProduct(null);
         select2.clear();
     },
+    autoAdd: m.prop(true),
+    quickAddProduct: function (store, productId) {
+        const {lines} = store.getState();
+        var line = _.find(lines, function(o) { return (o.product.id === parseInt(productId));});
+        if (line === undefined || !productQuickSelect.autoAdd()) {
+            store.dispatch(addLine());
+            store.dispatch(retrieveProductData({id: productId, forLine: _.last(store.getState().lines).id}));
+        }
+        else {
+            store.dispatch(setLineProperty(line.id, "quantity", parseFloat(line.quantity) + 1));
+        }
+        select2.focus();
+    },
     currentProduct: m.prop(),
     changeProduct: function(id) {
         productQuickSelect.currentProduct(id);
+        if (id){
+            productQuickSelect.quickAddProduct(productQuickSelect.store,id);
+        }
+        productQuickSelect.currentProduct(null);
+        select2.clear();
     },
-    view: function() {
+    view: function(ctrl, args) {
+        productQuickSelect.store = args.store;
         return m.component(select2, {
             onchange: this.changeProduct,
         });
@@ -222,7 +252,7 @@ export function orderLinesView(store, isCreating) {
             m("div.col-sm-6", [
                 m("fieldset", [
                     m("legend", gettext("Quick add product line")),
-                    productQuickSelect,
+                    m.component(productQuickSelect, {store: store}),
                     m("button.btn.text-success" + (isCreating ? ".disabled": ""), {
                         disabled: isCreating,
                         onclick: () => {
@@ -241,6 +271,12 @@ export function orderLinesView(store, isCreating) {
                         onclick: productQuickSelect.clearSelection,
                     }, m("i.fa.fa-trash")),
                     m("span.help-block", gettext("Search product by name, SKU, or barcode and press button to add product line.")),
+                    m("input", {
+                        type: "checkbox",
+                        checked: productQuickSelect.autoAdd,
+                        onchange: function () { productQuickSelect.autoAdd(this.checked); }
+                    }),
+                    m("span.quick-add-check-text", gettext("Automatically add selected product")),
                 ])
             ]),
         ]),

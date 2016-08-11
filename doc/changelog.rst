@@ -22,6 +22,8 @@ Localization
 Admin
 ~~~~~
 
+- Increment quantity when quick adding products with existing lines in order creator
+- Add option for automatically adding product lines
 - Add ``admin_product_toolbar_action_item`` provider for product edit toolbar
 - Add deprecation warning for ``admin_contact_toolbar_button`` usages
 - Add ``admin_contact_toolbar_action_item`` provider for contact toolbar
