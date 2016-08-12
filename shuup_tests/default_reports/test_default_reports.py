@@ -17,7 +17,9 @@ from shuup.core.models import get_person_contact, Order
 from shuup.reports.forms import DateRangeChoices
 from shuup.reports.writer import get_writer_instance
 from shuup.default_reports.reports import SalesReport, TotalSales, SalesPerHour
-from shuup.testing.factories import get_default_shop, get_default_product, UserFactory
+from shuup.testing.factories import (
+    create_random_person, get_default_shop, get_default_product, UserFactory
+)
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.core.test_basic_order import create_order
 from shuup_tests.reports.test_reports import initialize_report_test
@@ -33,7 +35,8 @@ def initialize_simple_report(cls, data_overrides={}):
     product_count = 2
     tax_rate = Decimal("0.10")
     line_count = 1
-    expected_taxful_total, expected_taxless_total, shop, order = initialize_report_test(product_price, product_count, tax_rate, line_count)
+    expected_taxful_total, expected_taxless_total, shop, order = initialize_report_test(
+        product_price, product_count, tax_rate, line_count)
     data = {
         "report": cls.get_name(),
         "shop": shop.pk,
@@ -88,7 +91,19 @@ def test_total_sales_report(rf):
 
 
 @pytest.mark.django_db
-def test_total_sales_report(rf):
+def test_total_sales_report_with_zero_total(rf):
+    new_customer = create_random_person()  # This customer shouldn't have any sales
+    test_info = initialize_simple_report(TotalSales, data_overrides={"customer": [new_customer]})
+    assert force_text(TotalSales.title) in test_info.json_data.get("heading")
+    return_data = test_info.json_data.get("tables")[0].get("data")[0]
+    assert return_data.get("currency") == test_info.shop.currency
+    assert return_data.get("name") == test_info.shop.name
+    assert int(return_data.get("order_amount")) == 0
+    assert str(test_info.shop.create_price(0)) in return_data.get("total_sales")
+
+
+@pytest.mark.django_db
+def test_total_sales_per_hour_report(rf):
     test_info = initialize_simple_report(SalesPerHour)
     assert force_text(SalesPerHour.title) in test_info.json_data.get("heading")
     return_data = test_info.json_data.get("tables")[0].get("data")
@@ -136,7 +151,7 @@ def test_contact_filters(rf, admin_user):
     expected_order_count = 2
     test_info = initialize_simple_report(SalesReport, data_overrides={"creator": [admin_user.pk]})
     return_data = test_info.json_data.get("tables")[0].get("data")
-    assert_expected_values(expected_order_count, expected_taxful_total_price, expected_taxless_total_price, products_per_order, return_data)
+    _assert_expected_values(expected_order_count, expected_taxful_total_price, expected_taxless_total_price, products_per_order, return_data)
 
     # test that new admin user gets one order
     expected_taxful_total_price = order_three.taxful_total_price
@@ -144,7 +159,7 @@ def test_contact_filters(rf, admin_user):
     expected_order_count = 1
     test_info = initialize_simple_report(SalesReport, data_overrides={"creator": [user.pk]})
     return_data = test_info.json_data.get("tables")[0].get("data")
-    assert_expected_values(expected_order_count, expected_taxful_total_price, expected_taxless_total_price,products_per_order, return_data)
+    _assert_expected_values(expected_order_count, expected_taxful_total_price, expected_taxless_total_price,products_per_order, return_data)
 
     # test that new admin user and second_customer gets one order
     expected_taxful_total_price = order_three.taxful_total_price
@@ -152,7 +167,7 @@ def test_contact_filters(rf, admin_user):
     expected_order_count = 1
     test_info = initialize_simple_report(SalesReport, data_overrides={"creator": [user.pk], "customer": [second_customer.pk]})
     return_data = test_info.json_data.get("tables")[0].get("data")
-    assert_expected_values(expected_order_count, expected_taxful_total_price, expected_taxless_total_price, products_per_order, return_data)
+    _assert_expected_values(expected_order_count, expected_taxful_total_price, expected_taxless_total_price, products_per_order, return_data)
 
     # test that second_customer gets two orders
     expected_taxful_total_price = order_three.taxful_total_price + order_two.taxful_total_price
@@ -160,7 +175,7 @@ def test_contact_filters(rf, admin_user):
     expected_order_count = 2
     test_info = initialize_simple_report(SalesReport, data_overrides={"customer": [second_customer.pk]})
     return_data = test_info.json_data.get("tables")[0].get("data")
-    assert_expected_values(expected_order_count, expected_taxful_total_price, expected_taxless_total_price, products_per_order, return_data)
+    _assert_expected_values(expected_order_count, expected_taxful_total_price, expected_taxless_total_price, products_per_order, return_data)
 
     # test that second_customer gets two orders
     expected_taxful_total_price = order_three.taxful_total_price
@@ -168,10 +183,10 @@ def test_contact_filters(rf, admin_user):
     expected_order_count = 1
     test_info = initialize_simple_report(SalesReport, data_overrides={"customer": [second_customer.pk], "orderer": [customer.pk]})
     return_data = test_info.json_data.get("tables")[0].get("data")
-    assert_expected_values(expected_order_count, expected_taxful_total_price, expected_taxless_total_price, products_per_order, return_data)
+    _assert_expected_values(expected_order_count, expected_taxful_total_price, expected_taxless_total_price, products_per_order, return_data)
 
 
-def assert_expected_values(expected_order_count, expected_taxful_total_price, expected_taxless_total_price,
+def _assert_expected_values(expected_order_count, expected_taxful_total_price, expected_taxless_total_price,
                          products_per_order, return_data):
     assert len(return_data) == 1  # only one row since both are on same day
     assert int(return_data[0].get("order_count")) == expected_order_count
