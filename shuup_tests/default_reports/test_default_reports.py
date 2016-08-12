@@ -109,7 +109,9 @@ def test_total_sales_per_hour_report(rf):
     return_data = test_info.json_data.get("tables")[0].get("data")
     order_hour = test_info.order.order_date.strftime("%H")
 
-    assert len(return_data) == 23 # all hours present
+    assert len(return_data) == 24 # all hours present
+    assert min([int(data_item.get("hour")) for data_item in return_data]) == 0
+    assert max([int(data_item.get("hour")) for data_item in return_data]) == 23
     for hour_data in return_data:
         if int(hour_data.get("hour")) == int(order_hour):
             assert str(test_info.expected_taxful_total) in hour_data.get("total_sales")
