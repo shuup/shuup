@@ -36,14 +36,14 @@ class SalesPerHour(OrderReportMixin, ShuupReportBase):
         groups = itertools.groupby(orders, lambda x: self.date_hour(x.order_date))
         data = []
         hour_data = {}
-        for base_hour in range(0, 23):
-            hour_data[base_hour] = {"hour": base_hour, "amount": 0, "total_sales": 0}
+        for base_hour in range(0, 24):
+            hour_data[base_hour] = {"hour": base_hour, "order_amount": 0, "total_sales": 0}
         for hour, matches in groups:
             total = 0
             amount = 0
             for match in matches:
                 amount += 1
-                total = total + match.taxful_total_price_value
+                total += match.taxful_total_price_value
 
             hour = int(hour)
             hour_data[hour]["order_amount"] = amount

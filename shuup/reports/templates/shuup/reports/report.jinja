@@ -1,16 +1,16 @@
 {% extends "shuup/admin/base.jinja" %}
-
 {% from "shuup/admin/macros/general.jinja" import content_with_sidebar, content_block %}
-{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
+{% from "shuup/admin/macros/multilanguage.jinja" import render_monolingual_fields %}
 
 {% block title %}{% trans %}Reports{% endtrans %}{% endblock %}
+
 {% block content %}
     {% call content_block(_("Reports"), "fa-info-circle") %}
         <form method="post" id="service_provider_form">
             {% csrf_token %}
-            {{ bs3.field(form["report"]) }}
+            {{ render_monolingual_fields(form, field_names="report") }}
             <div{% if result %} class="collapse"{% endif %} id="collapse">
-                {{ bs3.form(form, exclude="report") }}
+                {{ render_monolingual_fields(form, exclude="report") }}
             </div>
             {% if result %}
             <div class="row">

@@ -28,10 +28,11 @@ class TotalSales(OrderReportMixin, ShuupReportBase):
 
     def get_data(self):
         orders = self.get_objects()
+        total_sales_value = orders.aggregate(total=Sum("taxful_total_price_value"))["total"] or 0
         data = [{
             "name": self.shop.name,
             "order_amount": orders.count(),
-            "total_sales": self.shop.create_price(orders.aggregate(total=Sum("taxful_total_price_value"))["total"]),
+            "total_sales": self.shop.create_price(total_sales_value),
             "currency": self.shop.currency
         }]
         return self.get_return_data(data)
