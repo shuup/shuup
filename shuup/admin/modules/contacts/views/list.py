@@ -7,10 +7,12 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django.core.urlresolvers import reverse
 from django.db.models import Count, Q
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.toolbar import NewActionButton, Toolbar
 from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, RangeFilter, TextFilter
 )
@@ -20,11 +22,24 @@ from shuup.core.models import (
 )
 
 
+class ContactTypeFilter(ChoicesFilter):
+    def __init__(self):
+        super(ContactTypeFilter, self).__init__(choices=[("person", _("Person")), ("company", _("Company"))])
+
+    def filter_queryset(self, queryset, column, value):
+        if value == "_all":
+            return queryset
+        model_class = PersonContact
+        if value == "company":
+            model_class = CompanyContact
+        return queryset.instance_of(model_class)
+
+
 class ContactListView(PicotableListView):
     model = Contact
     columns = [
         Column("name", _(u"Name"), linked=True, filter_config=TextFilter()),
-        Column("type", _(u"Type"), display="get_type_display", sortable=False),  # TODO: Add a filter
+        Column("type", _(u"Type"), display="get_type_display", sortable=False, filter_config=ContactTypeFilter()),
         Column("email", _(u"Email"), filter_config=TextFilter()),
         Column("phone", _(u"Phone"), filter_config=TextFilter()),
         Column(
@@ -35,6 +50,14 @@ class ContactListView(PicotableListView):
         Column("n_orders", _(u"# Orders"), class_name="text-right", filter_config=RangeFilter(step=1)),
         Column("groups", _("Groups"), filter_config=ChoicesFilter(ContactGroup.objects.all(), "groups"))
     ]
+
+    def get_toolbar(self):
+        return Toolbar([
+            NewActionButton.for_model(
+                PersonContact, url=reverse("shuup_admin:contact.new") + "?type=person"),
+            NewActionButton.for_model(
+                CompanyContact, extra_css_class="btn-info", url=reverse("shuup_admin:contact.new") + "?type=company")
+        ])
 
     def get_queryset(self):
         groups = self.get_filter().get("groups")

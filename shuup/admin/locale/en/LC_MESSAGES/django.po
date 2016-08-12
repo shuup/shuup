@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-05 18:54+0000\n"
+"POT-Creation-Date: 2016-08-10 17:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
@@ -126,9 +126,6 @@ msgstr ""
 msgid "Visibility"
 msgstr ""
 
-msgid "Parent"
-msgstr ""
-
 msgid "Contact Groups"
 msgstr ""
 
@@ -214,6 +211,9 @@ msgstr ""
 msgid "Activate Contact"
 msgstr ""
 
+msgid "Actions"
+msgstr ""
+
 msgid "Edit..."
 msgstr ""
 
@@ -233,14 +233,14 @@ msgstr ""
 msgid "inactive"
 msgstr ""
 
+#, python-format
+msgid "User %(bind_user)s already has a contact"
+msgstr ""
+
 msgid "Person"
 msgstr ""
 
 msgid "Company"
-msgstr ""
-
-#, python-format
-msgid "User %(bind_user)s already has a contact"
 msgstr ""
 
 msgid "Email"
@@ -309,9 +309,11 @@ msgstr ""
 msgid "Root"
 msgstr ""
 
+#, python-brace-format
 msgid "{num} subfolders moved to {folder}."
 msgstr ""
 
+#, python-brace-format
 msgid "{num} files moved to {folder}."
 msgstr ""
 
@@ -396,18 +398,6 @@ msgstr ""
 msgid "Shipments"
 msgstr ""
 
-msgid "Create Payment"
-msgstr ""
-
-msgid "Create Shipment"
-msgstr ""
-
-msgid "Create Refund"
-msgstr ""
-
-msgid "Actions"
-msgstr ""
-
 msgid "Set Complete"
 msgstr ""
 
@@ -426,9 +416,19 @@ msgstr ""
 msgid "This order cannot modified at this point"
 msgstr ""
 
+msgid "Create Payment"
+msgstr ""
+
+msgid "Create Shipment"
+msgstr ""
+
+msgid "Create Refund"
+msgstr ""
+
 msgid "Unable to set order as completed at this point"
 msgstr ""
 
+#, python-brace-format
 msgid "Order status changed: {old_status} to {new_status}"
 msgstr ""
 
@@ -806,6 +806,7 @@ msgstr ""
 msgid "Edit %(model)s"
 msgstr ""
 
+#, python-brace-format
 msgid "Create {service_name}"
 msgstr ""
 
@@ -965,6 +966,7 @@ msgstr ""
 msgid "This user is not active."
 msgstr ""
 
+#, python-brace-format
 msgid "You're now logged in as {username}"
 msgstr ""
 
@@ -1103,16 +1105,16 @@ msgstr ""
 msgid "Add more"
 msgstr ""
 
-msgid "Shipping address"
-msgstr ""
-
-msgid "No shipping address defined."
-msgstr ""
-
 msgid "Billing address"
 msgstr ""
 
 msgid "No billing address defined."
+msgstr ""
+
+msgid "Shipping address"
+msgstr ""
+
+msgid "No shipping address defined."
 msgstr ""
 
 msgid "Full Name"
@@ -1134,6 +1136,9 @@ msgid "Merchant Notes"
 msgstr ""
 
 msgid "No members."
+msgstr ""
+
+msgid "Use billing address as shipping address"
 msgstr ""
 
 msgid "Billing Address"
@@ -1501,8 +1506,8 @@ msgstr ""
 
 #, python-format
 msgid ""
-"Telemetry data was last submitted at %(submission_datetime)s - (%"
-"(submission_timesince)s) ago"
+"Telemetry data was last submitted at %(submission_datetime)s - "
+"(%(submission_timesince)s) ago"
 msgstr ""
 
 msgid "See the data that was submitted."

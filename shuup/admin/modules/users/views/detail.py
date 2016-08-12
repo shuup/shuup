@@ -128,7 +128,7 @@ class UserDetailToolbar(Toolbar):
                 text=_(u"Contact Details"),
             ))
         else:
-            contact_url = reverse("shuup_admin:contact.new") + "?user_id=%s" % user.pk
+            contact_url = reverse("shuup_admin:contact.new") + "?type=person&user_id=%s" % user.pk
             menu_items.append(DropdownItem(
                 url=contact_url,
                 icon="fa fa-plus",

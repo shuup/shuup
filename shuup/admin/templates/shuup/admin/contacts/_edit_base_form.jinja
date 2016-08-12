@@ -1,27 +1,46 @@
 {% from "shuup/admin/macros/general.jinja" import content_block %}
 {% set contact_form = form["base"] %}
 
-{% call content_block(_("Basic details"), "fa-info-circle") %}
-    {{ bs3.field(contact_form.type) }}
+{% macro render_contact_fields() %}
     {{ bs3.field(contact_form.is_active) }}
-    {{ bs3.field(contact_form.groups) }}
-    {{ bs3.field(contact_form.name) }}
-    {{ bs3.field(contact_form.first_name) }}
-    {{ bs3.field(contact_form.last_name) }}
     {{ bs3.field(contact_form.name_ext) }}
-    {{ bs3.field(contact_form.email) }}
+    {{ bs3.field(contact_form["prefix"]) }}
+    {{ bs3.field(contact_form.suffix) }}
     {{ bs3.field(contact_form.phone) }}
+    {{ bs3.field(contact_form.email) }}
+    {{ bs3.field(contact_form.marketing_permission) }}
     {{ bs3.field(contact_form.language) }}
     {{ bs3.field(contact_form.timezone) }}
     {{ bs3.field(contact_form.www) }}
-    {{ bs3.field(contact_form.marketing_permission) }}
-    {{ bs3.field(contact_form.gender) }}
-    {{ bs3.field(contact_form.birth_date) }}
-    {{ bs3.field(contact_form["prefix"]) }}
-    {{ bs3.field(contact_form.suffix) }}
-    {{ bs3.field(contact_form.tax_number) }}
     {{ bs3.field(contact_form.tax_group) }}
     {{ bs3.field(contact_form.merchant_notes) }}
-    {{ bs3.field(contact_form.members) }}
     {{ bs3.field(contact_form.account_manager) }}
+{% endmacro %}
+
+{% macro render_person_contact_fields(is_new) %}
+    {{ bs3.field(contact_form.first_name) }}
+    {{ bs3.field(contact_form.last_name) }}
+    {{ bs3.field(contact_form.gender) }}
+    {% if not is_new %}
+        {{ bs3.field(contact_form.birth_date) }}
+        {{ render_contact_fields() }}
+    {% endif %}
+{% endmacro %}
+
+{% macro render_company_contact_fields(is_new) %}
+    {{ bs3.field(contact_form.name) }}
+    {{ bs3.field(contact_form.tax_number) }}
+    {{ bs3.field(contact_form.members) }}
+    {% if not is_new %}
+        {{ render_contact_fields() }}
+    {% endif %}
+{% endmacro %}
+
+{% call content_block(_("Basic details"), "fa-info-circle") %}
+    {{ bs3.field(contact_form.groups) }}
+    {% if contact_type == "person" %}
+        {{ render_person_contact_fields(is_new) }}
+    {% else %}
+        {{ render_company_contact_fields(is_new) }}
+    {% endif %}
 {% endcall %}
