@@ -1,13 +1,7 @@
 Shuup Change Log
 ================
 
-Unreleased
-----------
-
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2016-08-12 03:00pm -0800.
 
 Core
 ~~~~
@@ -16,9 +10,6 @@ Core
 - Combine `TreeManager` and `TranslatableManager` querysets for categories
 - Exclude deleted orders from valid queryset
 - Enable soft delete for shipments
-
-Localization
-~~~~~~~~~~~~
 
 Admin
 ~~~~~
@@ -41,46 +32,16 @@ Admin
 - Add option to delete shipments
 - Apply picotable text filters on change rather than on enter/on focus out
 
-Addons
-~~~~~~
-
-Front
-~~~~~
-
-Xtheme
-~~~~~~
-
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 
 - Move plugins to Xtheme. Move static_resources, templates and views under
   front and front apps.
 
-Simple Supplier
-~~~~~~~~~~~~~~~
-
 Order Printouts
 ~~~~~~~~~~~~~~~
 
 - Move ``shuup/order_printouts/pdf_export.py`` to ``shuup/utils/pdf.py``
-
-Campaigns
-~~~~~~~~~
-
-Customer Group Pricing
-~~~~~~~~~~~~~~~~~~~~~~
-
-Discount Pricing
-~~~~~~~~~~~~~~~~
-
-Simple CMS
-~~~~~~~~~~
-
-Default Tax
-~~~~~~~~~~~
-
-Guide
-~~~~~
 
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~

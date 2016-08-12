@@ -1,0 +1,9 @@
+Shuup 0.4.2 Release Notes
+=========================
+
+Released on 2016-08-11 03:00pm -0800.
+
+Focus on this version was admin usability, testing and reporting core.
+
+See full list of changes :doc:`../shoop-changelog` or
+`Git commit log <https://github.com/shuup/shuup/commits/v0.4.2>`__.
