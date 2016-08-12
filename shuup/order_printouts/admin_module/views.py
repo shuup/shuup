@@ -11,7 +11,7 @@ from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.models import Order, OrderLine, OrderLineType, Shipment
-from shuup.order_printouts import pdf_export
+from shuup.utils.pdf import render_html_to_pdf
 
 
 def get_footer_information(shop):
@@ -42,7 +42,7 @@ def get_delivery_pdf(request, shipment_pk):
         "footer": get_footer_information(order.shop)
     }
     html = render_to_string("shuup/order_printouts/admin/delivery_pdf.jinja", context=context, request=request)
-    return pdf_export.render_html_to_pdf(html, stylesheet_paths=["order_printouts/css/extra.css"])
+    return render_html_to_pdf(html, stylesheet_paths=["order_printouts/css/extra.css"])
 
 
 def get_confirmation_pdf(request, order_pk):
@@ -54,4 +54,4 @@ def get_confirmation_pdf(request, order_pk):
         "footer": get_footer_information(order.shop)
     }
     html = render_to_string("shuup/order_printouts/admin/confirmation_pdf.jinja", context=context, request=request)
-    return pdf_export.render_html_to_pdf(html, stylesheet_paths=["order_printouts/css/extra.css"])
+    return render_html_to_pdf(html, stylesheet_paths=["order_printouts/css/extra.css"])

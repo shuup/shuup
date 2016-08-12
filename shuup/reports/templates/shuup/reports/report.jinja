@@ -1,0 +1,43 @@
+{% extends "shuup/admin/base.jinja" %}
+
+{% from "shuup/admin/macros/general.jinja" import content_with_sidebar, content_block %}
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
+
+{% block title %}{% trans %}Reports{% endtrans %}{% endblock %}
+{% block content %}
+    {% call content_block(_("Reports"), "fa-info-circle") %}
+        <form method="post" id="service_provider_form">
+            {% csrf_token %}
+            {{ bs3.field(form["report"]) }}
+            <div{% if result %} class="collapse"{% endif %} id="collapse">
+                {{ bs3.form(form, exclude="report") }}
+            </div>
+            {% if result %}
+            <div class="row">
+                <div class="col-md-6">
+                <button class="btn btn-primary btn-block" type="button" data-target="#collapse" data-toggle="collapse" aria-expanded="false" aria-controls="collapse">{% trans %}Toggle Filters{% endtrans %}</button>
+                </div>
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary btn-block">{% trans %}Get Report{% endtrans %}</button>
+                </div>
+            </div>
+            {% else %}
+                <button type="submit" class="btn btn-primary btn-block">{% trans %}Get Report{% endtrans %}</button>
+            {% endif %}
+        </form>
+    {% endcall %}
+    {% if result %}
+        <div class="content-block">{{ result }}</div>
+    {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+    {{ super() }}
+    <script>
+        $(function () {
+            $("#id_report").on("change", function() {
+                location.href = "{{ url('shuup_admin:reports.list') }}?report=" + $(this).val();
+            });
+        });
+    </script>
+{% endblock %}

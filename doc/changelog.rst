@@ -62,6 +62,8 @@ Simple Supplier
 Order Printouts
 ~~~~~~~~~~~~~~~
 
+- Move ``shuup/order_printouts/pdf_export.py`` to ``shuup/utils/pdf.py``
+
 Campaigns
 ~~~~~~~~~
 
@@ -84,6 +86,14 @@ General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
 - Add browser testing capability
+
+Reporting
+~~~~~~~~~
+
+- Add Sales Report
+- Add Total Sales Report
+- Add Sales Per Hour Report
+- Add Reporting core
 
 SHUUP 0.4.1
 -----------
