@@ -31,6 +31,7 @@ def test_product_detail(browser, admin_user, live_server):
     # Test product save
     new_sku = "some-new-sku"
     browser.find_by_id("id_base-sku").fill(new_sku)
+    browser.execute_script("window.scrollTo(0,0)")
     browser.find_by_xpath('//button[@form="product_form"]').first.click()
 
     product.refresh_from_db()

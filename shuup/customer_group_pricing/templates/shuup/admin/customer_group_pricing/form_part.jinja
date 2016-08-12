@@ -1,6 +1,6 @@
 {% from "shuup/admin/macros/general.jinja" import content_block with context %}
 {% set sp_form = form["customer_group_pricing"] %}
-{% call content_block(_("Customer Group Pricing"), "fa-money") %}
+{% call content_block(_("Customer Group Pricing"), "fa-money", collapsed=True) %}
     <div class="panel panel-default">
         <div class="panel-heading">
             <h2 class="panel-title">

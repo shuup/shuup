@@ -8,10 +8,6 @@
     border: solid #ededed;
     border-width: 3px 1px;
 
-    @media (max-width: @screen-sm-max) {
-        display: block !important;
-    }
-
     @media (min-width: @screen-md-min) {
         padding: 30px;
         margin-bottom: 30px;
@@ -74,7 +70,6 @@
         @media (min-width: @screen-md-min) {
             display: block;
             visibility: visible;
-            height: auto !important;
         }
 
         .content {
@@ -124,6 +119,33 @@
         @media (min-width: @screen-sm-min) {
             dd { margin-left: 220px; }
             dt { width: 200px; }
+        }
+    }
+
+    &.collapsed {
+        .title {
+            &.open {
+                .block-title {
+                    border-color: @brand-primary;
+                    padding-bottom: 15px;
+                }
+            }
+
+            .block-title {
+                border-color: #fff;
+                padding-bottom: 0;
+            }
+        }
+
+        .toggle-contents {
+            display: block;
+        }
+        .collapse {
+            display: none;
+        }
+
+        .collapse.in {
+            display: block;
         }
     }
 }
