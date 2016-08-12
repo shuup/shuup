@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 from django.db.transaction import atomic
+from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.form_part import FormPartsViewMixin, SaveFormPartsMixin
 from shuup.admin.modules.contacts.form_parts import (
@@ -63,5 +64,7 @@ class ContactEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
 
     def get_context_data(self, **kwargs):
         context = super(ContactEditView, self).get_context_data(**kwargs)
-        context["contact_type"] = self.get_contact_type()
+        contact_type = self.get_contact_type()
+        context["contact_type"] = contact_type
+        context["title"] = _("New Company") if contact_type == "company" else _("New Contact")
         return context
