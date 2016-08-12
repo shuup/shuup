@@ -37,6 +37,16 @@
         function saveAsACopy(){
             $("#product_form").attr("action", "{{ url('shuup_admin:product.new') }}").submit();
         }
+
+        (function() {
+            if($(".has-error").length) {
+                var $elem = $(".has-error:first");
+                $elem.closest(".content-wrap").addClass("in");
+                $('html, body').animate({
+                    scrollTop: $elem.offset().top - $("#top-header").height() - 50
+                }, 100);
+            }
+        })();
     </script>
     {% for product_section in product_sections %}
         {% if product_section.extra_js %}
