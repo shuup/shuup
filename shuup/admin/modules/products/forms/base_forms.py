@@ -101,6 +101,7 @@ class ShopProductForm(forms.ModelForm):
             kwargs["instance"].visible = False
         super(ShopProductForm, self).__init__(**kwargs)
         category_qs = Category.objects.all_except_deleted()
+        self.fields["default_price_value"].required = True
         self.fields["primary_category"].queryset = category_qs
         self.fields["categories"].queryset = category_qs
 
