@@ -39,6 +39,8 @@ Order Printouts
 Campaigns
 ~~~~~~~~~
 
+- Campaigns affecting a product are now shown on product page in admin
+
 Customer Group Pricing
 ~~~~~~~~~~~~~~~~~~~~~~
 

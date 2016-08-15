@@ -9,20 +9,25 @@ import decimal
 import json
 from decimal import Decimal
 
-import pytest
-from django.core.exceptions import ValidationError
 from django.utils.timezone import now
 from django.utils.translation import activate
 
+import pytest
 from shuup.admin.modules.orders.views.edit import OrderEditView
 from shuup.campaigns.models.campaigns import CatalogCampaign
-from shuup.campaigns.models.catalog_filters import CategoryFilter
+from shuup.campaigns.models.catalog_filters import (
+    CategoryFilter, ProductFilter, ProductTypeFilter
+)
 from shuup.campaigns.models.context_conditions import ContactGroupCondition
 from shuup.campaigns.models.product_effects import (
     ProductDiscountAmount, ProductDiscountPercentage
 )
-from shuup.core.models import Category
-from shuup.testing.factories import create_product, get_default_customer_group
+from shuup.core.models import (
+    Category, ProductType, Shop, ShopProduct, ShopStatus
+)
+from shuup.testing.factories import (
+    create_product, get_default_customer_group, get_default_shop
+)
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.campaigns import initialize_test
 
@@ -394,3 +399,102 @@ def test_admin_order_with_campaign(rf, admin_user):
     response = OrderEditView.as_view()(request)
     data = json.loads(response.content.decode("utf8"))
     assert decimal.Decimal(data['unitPrice']['value']) == shop.create_price(10).value
+
+
+@pytest.mark.django_db
+def test_product_catalog_campaigns():
+    shop = get_default_shop()
+    product = create_product("test", shop, default_price=20)
+    shop_product = product.get_shop_instance(shop)
+
+    cat = Category.objects.create(name="test")
+    campaign = CatalogCampaign.objects.create(shop=shop, name="test", active=True)
+
+    # no rules
+    assert CatalogCampaign.get_for_product(shop_product).count() == 0
+
+    # category filter that doesn't match
+    cat_filter = CategoryFilter.objects.create()
+    cat_filter.categories.add(cat)
+    campaign.filters.add(cat_filter)
+    assert CatalogCampaign.get_for_product(shop_product).count() == 0
+
+    shop_product.primary_category = cat
+    shop_product.save()
+    assert CatalogCampaign.get_for_product(shop_product).count() == 1
+    shop_product.primary_category = None
+    shop_product.save()
+    assert CatalogCampaign.get_for_product(shop_product).count() == 0
+    # category filter that matches
+    shop_product.categories.add(cat)
+    assert CatalogCampaign.get_for_product(shop_product).count() == 1
+
+
+    # create other shop
+    shop1 = Shop.objects.create(name="testshop", identifier="testshop", status=ShopStatus.ENABLED, public_name="testshop")
+    sp = ShopProduct.objects.create(product=product, shop=shop1, default_price=shop1.create_price(200))
+
+    assert product.get_shop_instance(shop1) == sp
+
+    campaign2 = CatalogCampaign.objects.create(shop=shop1, name="test1", active=True)
+    cat_filter2 = CategoryFilter.objects.create()
+    cat_filter2.categories.add(cat)
+    campaign2.filters.add(cat_filter2)
+    assert CatalogCampaign.get_for_product(sp).count() == 0
+
+    # add product to this category
+    sp.primary_category = cat
+    sp.save()
+
+    assert CatalogCampaign.get_for_product(sp).count() == 1  # matches now
+    sp.primary_category = None
+    sp.save()
+    assert CatalogCampaign.get_for_product(sp).count() == 0  # no match
+    sp.categories.add(cat)
+
+    assert CatalogCampaign.get_for_product(sp).count() == 1  # matches now
+
+    campaign3 = CatalogCampaign.objects.create(shop=shop1, name="test1", active=True)
+    cat_filter3 = CategoryFilter.objects.create()
+    cat_filter3.categories.add(cat)
+    campaign3.filters.add(cat_filter3)
+
+    assert CatalogCampaign.get_for_product(sp).count() == 2  # there are now two matching campaigns in same shop
+    assert CatalogCampaign.get_for_product(shop_product).count() == 1  # another campaign matches only once
+
+@pytest.mark.django_db
+def test_product_catalog_campaigns2():
+    shop = get_default_shop()
+    product = create_product("test", shop, default_price=20)
+    product_type = ProductType.objects.create(name="asdf")
+    shop_product = product.get_shop_instance(shop)
+
+    campaign = CatalogCampaign.objects.create(shop=shop, name="test", active=True)
+    assert CatalogCampaign.get_for_product(shop_product).count() == 0
+
+    type_filter = ProductTypeFilter.objects.create()
+    type_filter.product_types.add(product_type)
+    campaign.filters.add(type_filter)
+    assert CatalogCampaign.get_for_product(shop_product).count() == 0
+    type_filter.product_types.add(product.type)
+    assert CatalogCampaign.get_for_product(shop_product).count() == 1
+    product.type = product_type
+    product.save()
+    assert CatalogCampaign.get_for_product(shop_product).count() == 1
+    type_filter.product_types.remove(product_type)
+    assert CatalogCampaign.get_for_product(shop_product).count() == 0
+
+
+@pytest.mark.django_db
+def test_product_catalog_campaigns3():
+    shop = get_default_shop()
+    product = create_product("test", shop, default_price=20)
+    shop_product = product.get_shop_instance(shop)
+
+    campaign = CatalogCampaign.objects.create(shop=shop, name="test", active=True)
+    assert CatalogCampaign.get_for_product(shop_product).count() == 0
+
+    type_filter = ProductFilter.objects.create()
+    type_filter.products.add(product)
+    campaign.filters.add(type_filter)
+    assert CatalogCampaign.get_for_product(shop_product).count() == 1

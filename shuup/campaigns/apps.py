@@ -39,6 +39,9 @@ class CampaignAppConfig(AppConfig):
         "admin_module": [
             "shuup.campaigns.admin_module:CampaignAdminModule",
         ],
+        "admin_product_section": [
+            "shuup.campaigns.admin_module.sections:ProductCampaignsSection"
+        ],
         "campaign_basket_condition": [
             "shuup.campaigns.admin_module.forms:BasketTotalProductAmountConditionForm",
             "shuup.campaigns.admin_module.forms:BasketTotalAmountConditionForm",
