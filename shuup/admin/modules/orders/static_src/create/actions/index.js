@@ -42,6 +42,10 @@ const beginCreatingOrder = createAction("beginCreatingOrder");
 const endCreatingOrder = createAction("endCreatingOrder");
 // Comment action
 export const setComment = createAction("setComment");
+// Quick add actions
+export const setAutoAdd = createAction("setAutoAdd");
+export const clearQuickAddProduct = createAction("clearQuickAddProduct");
+export const setQuickAddProduct = createAction("setQuickAddProduct");
 
 export const retrieveProductData = function ({id, forLine, quantity}) {
     return (dispatch, getState) => {
@@ -167,12 +171,27 @@ function handleFinalizeResponse(dispatch, data) {
 export const beginFinalizingOrder = function () {
     return (dispatch, getState) => {
         dispatch(beginCreatingOrder());
-        const state = _.assign({}, getState(), {productData: null, order: null}); // We don't care about that substate
+        const state = _.assign({}, getState(), {productData: null, order: null, quickAdd: null}); // We don't care about that substate
         post("finalize", {state}).then((data) => {
             handleFinalizeResponse(dispatch, data);
         }, (data) => {  // error handler
             handleFinalizeResponse(dispatch, data);
         });
         dispatch(createAction("beginFinalizingOrder")());
+    };
+};
+
+
+export const addProduct = function(product) {
+    return (dispatch, getState) => {
+        const {lines, quickAdd} = getState();
+        var line = _.find(lines, function(o) { return (o.product && o.product.id === parseInt(product.id));});
+        if (line === undefined) {
+            dispatch(addLine());
+            dispatch(retrieveProductData({id: product.id, forLine: _.last(getState().lines).id}));
+        }
+        else {
+            dispatch(setLineProperty(line.id, "quantity", parseFloat(line.quantity) + 1));
+        }
     };
 };

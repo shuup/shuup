@@ -16,6 +16,7 @@ import customerDetails from "./customerDetails";
 import methods from "./methods";
 import order from "./order";
 import comment from "./comment";
+import quickAdd from "./quickAdd";
 
 const childReducer = combineReducers({
     lines,
@@ -26,7 +27,8 @@ const childReducer = combineReducers({
     customerDetails,
     methods,
     order,
-    comment
+    comment,
+    quickAdd
 });
 
 export default function(state, action) {
