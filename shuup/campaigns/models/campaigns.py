@@ -10,6 +10,7 @@ import string
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Q
 from django.utils.encoding import force_text
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
@@ -35,6 +36,18 @@ class CampaignType(Enum):
     BASKET = 2
 
 
+class CampaignQueryset(models.QuerySet):
+    def available(self, shop=None):
+        query = Q(
+            Q(active=True) &
+            (Q(start_datetime__isnull=True) | Q(start_datetime__lte=now())) &
+            (Q(end_datetime__isnull=True) | Q(end_datetime__gte=now()))
+        )
+        if shop:
+            query &= Q(shop=shop)
+        return self.filter(query)
+
+
 class Campaign(MoneyPropped, TranslatableModel):
     admin_url_suffix = None
 
@@ -57,6 +70,8 @@ class Campaign(MoneyPropped, TranslatableModel):
         verbose_name=_("modified by"))
     created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_("created on"))
     modified_on = models.DateTimeField(auto_now=True, editable=False, verbose_name=_("modified on"))
+
+    objects = CampaignQueryset.as_manager()
 
     class Meta:
         abstract = True
