@@ -20,6 +20,8 @@ Localization
 Admin
 ~~~~~
 
+- Order editing: Tax number is now shown for Company Contacts
+
 Addons
 ~~~~~~
 
