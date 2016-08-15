@@ -23,7 +23,7 @@ from shuup.campaigns.consts import (
 from shuup.campaigns.models.basket_conditions import (
     CategoryProductsBasketCondition, ProductsInBasketCondition
 )
-from shuup.campaigns.utils import get_product_ids_and_quantities
+from shuup.campaigns.utils.campaigns import get_product_ids_and_quantities
 from shuup.core import cache
 from shuup.core.fields import InternalIdentifierField
 from shuup.core.models import Order, Shop

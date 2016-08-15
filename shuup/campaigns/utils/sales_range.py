@@ -5,11 +5,8 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from collections import Counter
-
 from django.db.models import Q, Sum
 
-from shuup.admin.base import MenuEntry
 from shuup.core.models import Payment
 
 
@@ -57,17 +54,3 @@ def get_contacts_in_sales_range(shop, min_value, max_value):
         if min_value <= total_sales and (max_value is None or max_value > total_sales):
             results.add(result.get("order__customer_id"))
     return results
-
-
-def get_product_ids_and_quantities(basket):
-    q_counter = Counter()
-    for line in basket.get_lines():
-        if not line.product:
-            continue
-        q_counter[line.product.id] += line.quantity
-    return dict(q_counter.most_common())
-
-
-class _Breadcrumbed(object):
-    def get_breadcrumb_parents(self):
-        return [MenuEntry(text=self.parent_name, url=self.parent_url)]
