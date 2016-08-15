@@ -12,6 +12,8 @@ Unreleased
 Core
 ~~~~
 
+- ``CompanyContact.full_name`` now returns name and name extension (if available)
+
 Localization
 ~~~~~~~~~~~~
 

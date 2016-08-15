@@ -216,6 +216,10 @@ class CompanyContact(Contact):
         verbose_name = _('company')
         verbose_name_plural = _('companies')
 
+    @property
+    def full_name(self):
+        return self.name + (" / %s" % self.name_ext if self.name_ext else "")
+
 
 class Gender(Enum):
     UNDISCLOSED = "u"
