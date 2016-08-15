@@ -12,6 +12,7 @@ import BrowseAPI from "BrowseAPI";
 
 function renderNumberCell(store, line, value, fieldId, canEditPrice, min=null) {
     return m("input.form-control", {
+            name: fieldId,
             type: "number",
             step: line.step,
             min: min != null ? min : "",
@@ -30,7 +31,7 @@ function renderNumberCell(store, line, value, fieldId, canEditPrice, min=null) {
 }
 
 export function renderOrderLines(store, shop, lines) {
-    return _(lines).map((line) => {
+    return _(lines).map((line, idx) => {
         var text = line.text, canEditPrice = true;
         var editCell = null;
         const showPrice = (line.type !== "text");
@@ -149,6 +150,7 @@ export function renderOrderLines(store, shop, lines) {
 var Select2 = {
     view: function(ctrl, attrs) {
         return m("select", {
+            name: attrs.name,
             config: Select2.config(attrs)
         });
     },
@@ -187,6 +189,7 @@ var ProductQuickSelect = {
         const {store} = attrs;
 
         return m.component(Select2, {
+            name: "product-quick-select",
             model: "shuup.product",
             attrs: {
                 ajax: {
@@ -234,7 +237,7 @@ export function orderLinesView(store, isCreating) {
             "p",
             shop.selected.pricesIncludeTaxes ? gettext("All prices include taxes.") : gettext("Taxes not included.")
         ),
-        m("div.list-group", renderOrderLines(store, shop.selected, lines)),
+        m("div.list-group", {id: "lines"}, renderOrderLines(store, shop.selected, lines)),
         m("hr"),
         m("div.row", [
             m("div.col-sm-6",
@@ -250,11 +253,12 @@ export function orderLinesView(store, isCreating) {
                     }
                 }, m("i.fa.fa-plus"), " " + gettext("Add new line"))
             ),
-            m("div.col-sm-6", [
+            m("div.col-sm-6", {id: "quick-add"}, [
                 m("fieldset", [
                     m("legend", gettext("Quick add product line")),
                     m.component(ProductQuickSelect, {store: store}),
                     m("button.btn.text-success" + (isCreating ? ".disabled": ""), {
+                        id: "add-product",
                         disabled: isCreating,
                         onclick: () => {
                             if (quickAdd.product.id){
@@ -264,6 +268,7 @@ export function orderLinesView(store, isCreating) {
                         }
                     }, m("i.fa.fa-plus")),
                     m("button.btn.text-success" + (isCreating ? ".disabled": ""), {
+                        id: "clear-quick-add",
                         disabled: isCreating,
                         onclick: () => {
                             store.dispatch(clearQuickAddProduct());
@@ -271,6 +276,7 @@ export function orderLinesView(store, isCreating) {
                     }, m("i.fa.fa-trash")),
                     m("span.help-block", gettext("Search product by name, SKU, or barcode and press button to add product line.")),
                     m("input", {
+                        name: "auto-add",
                         type: "checkbox",
                         checked: quickAdd.autoAdd,
                         onchange: function() {

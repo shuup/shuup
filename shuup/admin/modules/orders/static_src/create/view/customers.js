@@ -48,7 +48,7 @@ function renderAddress(store, shop, customer, address, addressType) {
                 m("label.control-label", field.label),
                 selectBox(_.get(address, field.key, ""), function () {
                     store.dispatch(setAddressProperty(addressType, field.key, this.value));
-                }, shop.countries)
+                }, shop.countries, "id", "name", addressType + "-" + field.key)
             ]);
         }
         var onchange = function () {
@@ -71,6 +71,7 @@ function renderAddress(store, shop, customer, address, addressType) {
             m("label.control-label", field.label),
             m("input.form-control", {
                 type: "text",
+                name: addressType + "-" + field.key,
                 placeholder: field.label,
                 required: isRequired,
                 value: _.get(address, field.key, ""),
@@ -207,6 +208,7 @@ export function customerSelectView(store) {
         m("hr"),
         m("label", [
             m("input", {
+                name: "save-address",
                 type: "checkbox",
                 checked: customer.saveAddress,
                 onchange: function() {
@@ -217,6 +219,7 @@ export function customerSelectView(store) {
         ]),
         m("label", [
             m("input", {
+                name: "ship-to-billing-address",
                 type: "checkbox",
                 checked: customer.shipToBillingAddress,
                 onchange: function() {
@@ -227,6 +230,7 @@ export function customerSelectView(store) {
         ]),
         m("label", [
             m("input", {
+                name: "order-for-company",
                 type: "checkbox",
                 checked: customer.isCompany,
                 onchange: function() {

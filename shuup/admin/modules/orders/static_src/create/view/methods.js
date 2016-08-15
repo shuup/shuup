@@ -18,7 +18,7 @@ function renderMethod(store, mode, title, selectedMethod, choices, emptyChoice) 
                     (mode === "shipping" ?
                         store.dispatch(setShippingMethod(newMethod)) : store.dispatch(setPaymentMethod(newMethod)));
                     store.dispatch(updateTotals(store.getState));
-                }, [].concat({id: 0, name: emptyChoice}, choices || []))
+                }, [].concat({id: 0, name: emptyChoice}, choices || []), "id", "name", mode)
             ]
         )
     ];

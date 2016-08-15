@@ -28,14 +28,14 @@ export const ADDRESS_FIELDS = [
     {key: "country", label: gettext("Country"), "required": true}
 ];
 
-export function selectBox(value, onchange, choices, valueGetter = "id", nameGetter = "name") {
+export function selectBox(value, onchange, choices, valueGetter = "id", nameGetter = "name", name = "") {
     if (_.isString(valueGetter)) {
         valueGetter = _.partialRight(_.get, valueGetter);
     }
     if (_.isString(nameGetter)) {
         nameGetter = _.partialRight(_.get, nameGetter);
     }
-    return m("select.form-control", {value, onchange}, choices.map(
+    return m("select.form-control", {value, onchange, name}, choices.map(
         (obj) => m("option", {value: valueGetter(obj)}, nameGetter(obj))
     ));
 }
