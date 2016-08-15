@@ -11,21 +11,23 @@ from django.db import IntegrityError
 
 from shuup.campaigns.admin_module.forms import BasketCampaignForm
 from shuup.campaigns.models.basket_conditions import (
-    BasketTotalAmountCondition, BasketTotalProductAmountCondition
+    BasketTotalAmountCondition, BasketTotalProductAmountCondition,
+    CategoryProductsBasketCondition
 )
+from shuup.campaigns.models.basket_line_effects import DiscountFromCategoryProducts
 from shuup.campaigns.models.basket_effects import (
     BasketDiscountAmount, BasketDiscountPercentage
 )
 from shuup.campaigns.models.campaigns import (
     BasketCampaign, Coupon, CouponUsage
 )
-from shuup.core.models import OrderLineType
+from shuup.core.models import OrderLineType, ShopProduct
 from shuup.core.order_creator import OrderCreator
 from shuup.front.basket import get_basket
 from shuup.front.basket.commands import handle_add_campaign_code
 from shuup.testing.factories import (
     create_product, get_default_product, get_default_supplier,
-    get_shipping_method
+    get_shipping_method, CategoryFactory
 )
 from shuup_tests.campaigns import initialize_test
 from shuup_tests.core.test_order_creator import seed_source
@@ -77,6 +79,57 @@ def test_basket_campaign_module_case1(rf):
     assert basket.product_count == 2
     assert basket.total_price == (price(single_product_price) * basket.product_count - price(discount_amount_value))
     assert OrderLineType.DISCOUNT in [l.type for l in basket.get_final_lines()]
+
+
+@pytest.mark.django_db
+def test_basket_category_discount(rf):
+    """
+    Test that discounting based on product category works.
+    """
+
+    request, shop, group = initialize_test(rf, False)
+    price = shop.create_price
+
+    basket = get_basket(request)
+    supplier = get_default_supplier()
+
+    category = CategoryFactory()
+
+    discount_amount_value = 6
+    single_product_price = 10
+
+    def create_category_product(category):
+        product = create_product(printable_gibberish(), shop, supplier, single_product_price)
+        product.primary_category = category
+
+        sp = ShopProduct.objects.get(product=product, shop=shop)
+        sp.primary_category = category
+        sp.categories.add(category)
+
+        return product
+
+    basket_condition = CategoryProductsBasketCondition.objects.create(quantity=2, category=category)
+
+    campaign = BasketCampaign.objects.create(
+        shop=shop, public_name="test", name="test", active=True
+    )
+    campaign.conditions.add(basket_condition)
+    campaign.save()
+
+    DiscountFromCategoryProducts.objects.create(
+        campaign=campaign, discount_amount=discount_amount_value, category=category
+    )
+    basket.save()
+
+    products = [create_category_product(category) for i in range(2)]
+    for product in products:
+        basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
+        basket.save()
+
+    assert basket.product_count == 2
+    assert basket_condition.matches(basket=basket, lines=basket.get_lines())
+    assert campaign.rules_match(basket, basket.get_lines())
+    assert basket.total_price == price(single_product_price * 2) - price(discount_amount_value * 2)
 
 
 @pytest.mark.django_db
