@@ -7,42 +7,48 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+function activateSelect($select, model, attrs={}) {
+    if(model === undefined) {
+        return $select.select2($.extend(true, {
+            language: "xx",
+            matcher: function(search, data) {
+                const needle = $.trim(search.term || "").toUpperCase();
+                const haystack = data.text.toUpperCase();
+                if(haystack.indexOf(needle) == 0) {
+                    return data;
+                }
+                return false;
+            }
+        }, attrs));
+    }
+    return $select.select2($.extend(true, {
+        language: "xx",
+        minimumInputLength: 3,
+        ajax: {
+            url: "/sa/select",
+            dataType: "json",
+            data: function(params) {
+                return {model: model, search: params.term};
+            },
+            processResults: function (data) {
+                return {
+                    results: $.map(data.results, function (item) {
+                        return {text: item.name, id: item.id};
+                    })
+                };
+            }
+        }
+    }, attrs));
+}
+
 function activateSelects() {
     $("select").each(function(idx, object) {
         const select = $(object);
-        const model = select.data("model");
-        if(model === undefined) {
-            select.select2({
-                language: "xx",
-                matcher: function(search, data) {
-                    const needle = $.trim(search.term || "").toUpperCase();
-                    const haystack = data.text.toUpperCase();
-                    if(haystack.indexOf(needle) == 0) {
-                        return data;
-                    }
-                    return false;
-                }
-            });
-            return true;
+        // only activate selects that aren't already select2 inputs
+        if(!select.hasClass("select2-hidden-accessible")){
+            const model = select.data("model");
+            activateSelect(select, model);
         }
-        select.select2({
-            language: "xx",
-            minimumInputLength: 3,
-            ajax: {
-                url: "/sa/select",
-                dataType: "json",
-                data: function(params) {
-                    return {model: model, search: params.term};
-                },
-                processResults: function (data) {
-                    return {
-                        results: $.map(data.results, function (item) {
-                            return {text: item.name, id: item.id};
-                        })
-                    };
-                }
-            }
-        });
     });
 }
 
@@ -83,5 +89,6 @@ $(function(){
             }
         };
     });
+
     activateSelects();
 });
