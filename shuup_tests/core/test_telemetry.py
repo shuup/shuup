@@ -8,25 +8,28 @@
 import datetime
 import json
 
-import pytest
 import requests
 from django.test.utils import override_settings
 from django.utils.timezone import now
-from mock import patch
 from requests.models import Response
 
+import pytest
+from mock import patch
 from shuup.admin.modules.system import SystemModule
+from shuup.admin.views.dashboard import DashboardView
 from shuup.core.models import PersistentCacheEntry
 from shuup.core.telemetry import (
-    get_installation_key, get_telemetry_data, INSTALLATION_KEY_KWARGS,
-    is_opt_out, LAST_DATA_KWARGS, set_opt_out, TelemetryNotSent,
-    try_send_telemetry
+    get_installation_key, get_last_submission_time, get_telemetry_data,
+    INSTALLATION_KEY_KWARGS, is_opt_out, LAST_DATA_KWARGS, set_opt_out,
+    TelemetryNotSent, try_send_telemetry
 )
+from shuup.testing.factories import get_default_shop
+from shuup.testing.utils import apply_request_middleware
 
 
-def _backdate_installation_key():
+def _backdate_installation_key(days=24):
     get_installation_key()
-    PersistentCacheEntry.objects.filter(**INSTALLATION_KEY_KWARGS).update(time=now() - datetime.timedelta(days=24))
+    PersistentCacheEntry.objects.filter(**INSTALLATION_KEY_KWARGS).update(time=now() - datetime.timedelta(days=days))
 
 
 def _clear_telemetry_submission():
@@ -46,6 +49,7 @@ def test_optin_optout(rf):
             _clear_telemetry_submission()
             assert not set_opt_out(False)  # Not opted out
             assert not is_opt_out()
+            try_send_telemetry()
             with pytest.raises(TelemetryNotSent) as ei:
                 try_send_telemetry(raise_on_error=True)  # Still gracey
             assert ei.value.code == "grace"
@@ -60,7 +64,6 @@ def test_optin_optout(rf):
             assert len(requestor.mock_calls) == 2
             assert set_opt_out(True)
             assert is_opt_out()
-            _clear_telemetry_submission()
             with pytest.raises(TelemetryNotSent) as ei:
                 try_send_telemetry(max_age_hours=0, raise_on_error=True)
             assert ei.value.code == "optout"
@@ -97,3 +100,23 @@ def test_disabling_telemetry_hides_menu_item(rf):
         assert any(me.original_url == "shuup_admin:telemetry" for me in SystemModule().get_menu_entries(request))
     with override_settings(SHUUP_TELEMETRY_ENABLED=False):
         assert not any(me.original_url == "shuup_admin:telemetry" for me in SystemModule().get_menu_entries(request))
+
+
+@pytest.mark.django_db
+def test_telemetry_is_sent_on_login(rf, admin_user):
+    shop = get_default_shop()
+    with patch.object(requests, "post", return_value=Response()) as requestor:
+        with override_settings(SHUUP_TELEMETRY_ENABLED=True):
+            _backdate_installation_key(days=0)  # instance was created today
+            request = apply_request_middleware(rf.get("/"), user=admin_user)
+            view_func = DashboardView.as_view()
+            response = view_func(request)
+            sent = get_last_submission_time()
+
+            response = view_func(request)
+            assert get_last_submission_time() == sent
+
+            response = view_func(request)
+            assert get_last_submission_time() == sent
+
+            assert len(requestor.mock_calls) == 1

@@ -141,15 +141,16 @@ class TelemetryNotSent(Exception):
         super(TelemetryNotSent, self).__init__(message, code)
 
 
-def _send_telemetry(request, max_age_hours):
+def _send_telemetry(request, max_age_hours, force_send=False):
     if not is_telemetry_enabled():
         raise TelemetryNotSent("Telemetry not enabled", "disabled")
 
-    if is_opt_out():
-        raise TelemetryNotSent("Telemetry is opted-out", "optout")
+    if not force_send:
+        if is_opt_out():
+            raise TelemetryNotSent("Telemetry is opted-out", "optout")
 
-    if is_in_grace_period():
-        raise TelemetryNotSent("Telemetry in grace period", "grace")
+        if is_in_grace_period():
+            raise TelemetryNotSent("Telemetry in grace period", "grace")
 
     if max_age_hours is not None:
         last_send_time = get_last_submission_time()
@@ -179,6 +180,8 @@ def try_send_telemetry(request=None, max_age_hours=72, raise_on_error=False):
     """
     Send telemetry information (unless opted-out, in grace period or disabled).
 
+    Telemetry will be always sent if there is no prior sending information.
+
     :param request: HTTP request. Optional.
     :type request: django.http.HttpRequest|None
     :param max_age_hours: How many hours must have passed since the
@@ -193,8 +196,9 @@ def try_send_telemetry(request=None, max_age_hours=72, raise_on_error=False):
              not sent.
     :rtype: dict|bool
     """
+    force_send = True if not get_last_submission_time() else False
     try:
-        return _send_telemetry(request=request, max_age_hours=max_age_hours)
+        return _send_telemetry(request=request, max_age_hours=max_age_hours, force_send=force_send)
     except TelemetryNotSent:
         if raise_on_error:
             raise
