@@ -156,7 +156,7 @@ class OrderCreateShipmentView(UpdateView):
             (int(key.replace("q_", "")), value)
             for (key, value)
             in six.iteritems(form.cleaned_data)
-            if key.startswith("q_") and value > 0
+            if key.startswith("q_") and (value > 0 if value else False)
         )
         order = self.object
         product_map = Product.objects.in_bulk(set(product_ids_to_quantities.keys()))
