@@ -12,7 +12,7 @@ from shuup.front.views.product import ProductDetailView
 
 
 class ProductPriceView(ProductDetailView):
-    template_name = "shuup/front/product/_detail_order_section.jinja"
+    template_name = "shuup/front/product/detail_order_section.jinja"
 
     def get_context_data(self, **kwargs):
         context = super(ProductPriceView, self).get_context_data(**kwargs)
@@ -20,7 +20,7 @@ class ProductPriceView(ProductDetailView):
         if vars:  # complex variation variables detected
             context["product"] = ProductVariationResult.resolve(context["product"], vars)
             if not context["product"]:
-                self.template_name = "shuup/front/product/_detail_order_section_no_product.jinja"
+                self.template_name = "shuup/front/product/detail_order_section_no_product.jinja"
         context["quantity"] = self.request.GET.get("quantity")
 
         if context["product"]:  # Might be null from ProductVariationResult resolution

@@ -1,0 +1,245 @@
+{% extends "shuup/front/macros/theme/checkout.jinja" %}
+{% from "shuup/front/macros/general.jinja" import render_field %}
+{% from "shuup/front/macros/order.jinja" import render_lines_table, service_panel with context%}
+
+{% macro buttons_container() %}
+    <div class="clearfix">
+        {{ caller() }}
+    </div>
+{% endmacro %}
+
+{% macro next_button() %}
+    <button type="submit" class="btn btn-primary btn-lg pull-right">
+        <i class="fa fa-check"></i> {% trans %}Continue{% endtrans %}
+    </button>
+{% endmacro %}
+
+{% macro default_buttons() %}
+    {% call buttons_container() %}
+        {{ next_button() }}
+    {% endcall %}
+{% endmacro %}
+
+{% macro address_phase_billing_well(billing_form, company_form=None) %}
+    <div class="well">
+        <fieldset>
+            {{ render_address_form(_("Billing address"), billing_form) }}
+            {% if company_form %}
+                {{ render_company_form(
+                    _("Ordering for a company?"),
+                    _("Please fill out these fields if you are ordering for a company."),
+                    company_form.name, company_form.tax_number) }}
+            {% endif %}
+        </fieldset>
+    </div>
+{% endmacro %}
+
+{% macro address_phase_shipping_well(shipping_form, ship_to_billing_checkbox=True) %}
+    <div class="well">
+        <fieldset>
+            {{ render_address_form(_("Shipping address"), shipping_form, ship_to_billing_checkbox) }}
+        </fieldset>
+    </div>
+{% endmacro %}
+
+{% macro render_address_form(title, form, ship_to_billing_checkbox=False) %}
+    <div class="row">
+        <div class="order-for-company col-md-9 col-md-offset-3">
+            <legend>{{ title }}</legend>
+            {% if ship_to_billing_checkbox %}
+                {{ ship_to_billing_address_checkbox() }}
+            {% endif %}
+        </div>
+    </div>
+    <div id="billing" class="form-horizontal">
+        {% for field in form %}
+            {{ bs3.field(field, layout="horizontal") }}
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+{% macro ship_to_billing_address_checkbox() %}
+    <div class="custom-checkbox">
+        <input type="checkbox" name="same_as_billing" id="same_as_billing" value="1"{% if request.POST.get("same_as_billing", false) %} checked{% endif %}>
+        <label for="same_as_billing">{% trans %}Ship to my billing address{% endtrans %}</label>
+    </div>
+    <hr>
+{% endmacro %}
+
+{% macro render_company_form(title, help_text, name_field, tax_number_field) %}
+    {% if form %}
+        <div class="row">
+            <div class="order-for-company col-md-9 col-md-offset-3">
+                <hr>
+                <h4>{{ title }}</h4>
+                <p>{{ help_text }}</p>
+            </div>
+        </div>
+        <div class="form-horizontal">
+            {{ bs3.field(name_field, layout="horizontal") }}
+            {{ bs3.field(tax_number_field, layout="horizontal") }}
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro render_company_form_well(title, help_text, name_field, tax_number_field) %}
+    <div class="well">
+        <fieldset>
+            <legend>{{ title }}</legend>
+            <p>{{ help_text }}</p>
+            <div class="row">
+                <div class="col-sm-6">
+                    {{ render_field(name_field) }}
+                </div>
+                <div class="col-sm-6">
+                    {{ render_field(tax_number_field) }}
+                </div>
+            </div>
+        </fieldset>
+    </div>
+{% endmacro %}
+
+{% macro address_phase_extrajs() %}
+    <script type="text/javascript">
+        $(function(){
+            function activateCheckoutAddressCopy() {
+                var shouldCopyFields = false;
+
+                function toggleFieldDisability($field) {
+                    $field.toggleClass("disabled", shouldCopyFields);
+                }
+
+                function toggleCopyFields() {
+                    shouldCopyFields = $("#same_as_billing").is(":checked");
+                    $("#shipping :input").each(function() {
+                        $(this).attr("readonly", shouldCopyFields);
+                        toggleFieldDisability($(this));
+                    });
+
+                    $("#id_shipping-country").attr("readonly", shouldCopyFields);
+
+                    $target = $("#id_shipping-country");
+                    toggleFieldDisability($target);
+                    if(shouldCopyFields) {
+                        $("#billing :input").change();
+                    }
+                }
+
+                function copyFieldValue() {
+                    if(!shouldCopyFields)
+                        return;
+                    var targetName = $(this).attr("id").split("-")[1];
+                    var $target = $("#id_shipping-"+targetName);
+                    $target.val($(this).val());
+                }
+
+                $("#id_shipping-country").attr("readonly", true);
+                toggleCopyFields();
+                $(document).on("input change", "#billing :input", copyFieldValue);
+                $("#same_as_billing").on("change", toggleCopyFields);
+            }
+            activateCheckoutAddressCopy();
+        });
+    </script>
+{% endmacro %}
+
+{% macro method_phase_shipping_panel(form) %}
+    {{ method_phase_service_panel(_("Choose Shipping Method"), form.shipping_method) }}
+{% endmacro %}
+
+{% macro method_phase_payment_panel(form) %}
+    {{ method_phase_service_panel(_("Choose Payment Method"), form.payment_method) }}
+{% endmacro %}
+
+{% macro method_phase_service_panel(panel_title, field) %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">{{ panel_title }}</h2>
+        </div>
+        <div class="panel-body">
+            {{ field }}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro confirm_phase_order_information(basket) %}
+    <div class="well">
+        {% set lines = basket.get_final_lines() %}
+        {{ render_lines_table(
+            lines, basket.taxful_total_price, basket.taxless_total_price, show_product_package_info=True) }}
+    </div>
+{% endmacro %}
+
+{% macro confirm_phase_address_information(basket) %}
+    <div class="row">
+        <div class="col-sm-6">
+            {{ service_panel(
+                _("Delivery"), _("Delivery method"), _("Shipping address"),
+                basket.shipping_method, basket.shipping_address) }}
+        </div>
+        <div class="col-sm-6">
+            {{ service_panel(
+                _("Billing"), _("Payment method"), _("Billing address"),
+                basket.payment_method, basket.billing_address) }}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro render_confirm_form(form) %}
+    <form role="form" method="post">
+        {% csrf_token %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">
+                    {% trans %}Add comment{% endtrans %}
+                </h2>
+            </div>
+            <div class="panel-body">
+                {{ bs3.field(form.comment) }}
+            </div>
+        </div>
+        <hr>
+        <input type="hidden" name="product_ids" value="{{ product_ids }}" />
+        {{ render_field(form.marketing) }}
+        {{ render_field(form.accept_terms) }}
+        <hr>
+        {{ place_order_button() }}
+    </form>
+{% endmacro %}
+
+{% macro render_confirm_form_single_page(form) %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="well">
+                <fieldset>
+                    <legend>{% trans %}Other information{% endtrans %}</legend>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            {{ render_field(form.shipping_method) }}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ render_field(form.payment_method) }}
+                        </div>
+                    </div>
+                    <div class="row" id="shipping-options-container">
+                        {{ shipping_method_ui_html|default("")|safe }}
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            {{ render_field(form.comment) }}
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    <hr>
+    {{ render_field(form.accept_terms) }}
+    {{ place_order_button() }}
+{% endmacro %}
+
+{% macro place_order_button() %}
+    <button type="submit" class="btn btn-primary btn-lg">
+        <i class="fa fa-check"></i> {% trans %}Place Order{% endtrans %}
+    </button>
+{% endmacro %}

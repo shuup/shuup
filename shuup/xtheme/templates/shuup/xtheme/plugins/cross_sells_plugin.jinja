@@ -1,4 +1,4 @@
-{%- import "shuup/front/macros.jinja" as macros with context -%}
+{%- from "shuup/front/macros/product.jinja" import product_box with context -%}
 {%- set cross_sell_products = shuup.product.get_product_cross_sells(product, type, count=count, orderable_only=orderable_only) %}
 {% if cross_sell_products %}
     <hr>
@@ -6,7 +6,7 @@
     <div class="row">
         {% for product in cross_sell_products %}
             <div class="col-md-3">
-                {{ macros.product_box(product) }}
+                {{ product_box(product) }}
             </div>
         {% endfor %}
     </div>

@@ -1,0 +1,148 @@
+{% extends "shuup/front/macros/theme/category.jinja" %}
+{%- from "shuup/front/macros/general.jinja" import render_field, render_pagination -%}
+{%- from "shuup/front/macros/product.jinja" import product_box with context -%}
+
+{% macro render_information() %}
+    {% if category.description %}
+        <div class="category-description">
+            <p class="lead">{{ category.description|safe }}</p>
+        </div>
+    {% endif %}
+    {% set category_image = category.image|thumbnail(size=(1140,350), crop="smart", upscale=True) %}
+    {% if category_image %}
+        <div class="category-image">
+            <img src="{{ category_image }}" alt="{{ category.name }}">
+        </div>
+    {% endif %}
+    <hr>
+{% endmacro %}
+
+{% macro render_products_section() %}
+    <div class="row">
+        <div class="col-md-3 categories-nav">
+            {{ render_category_menu() }}
+        </div>
+        <div class="col-md-9 products-wrap">
+            {{ render_product_list() }}
+        </div>
+    </div>
+    {% placeholder "category_bottom_extra" %}{% endplaceholder %}
+{% endmacro %}
+
+{% macro render_category_menu() %}
+    <a href="#collapse-categories"
+       role="button"
+       data-toggle="collapse"
+       class="category-title collapsed"
+       aria-expanded="false"
+       aria-controls="collapse-categories">
+        {% trans %}Categories{% endtrans %} <i class="collapse-icon fa fa-chevron-up"></i>
+    </a>
+    <div class="category-wrap collapse" id="collapse-categories">
+        <ul>
+            {% for c in shuup.general.get_root_categories() recursive %}
+                {% set children = c.get_children() %}
+                <li{% if category and c == category %} class="current-page"{% endif %}>
+                    {% if children %}
+                        <a href="{{ url("shuup:category", pk=c.pk, slug=c.slug) }}">
+                            <i class="fa menu-arrow"></i> {{ c }}
+                        </a>
+                        <ul>{{ loop(children) }}</ul>
+                    {% else %}
+                        <a href="{{ url("shuup:category", pk=c.pk, slug=c.slug) }}">{{ c }}</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endmacro %}
+
+{% macro render_product_list() %}
+    {% placeholder "category_top_extra" %}{% endplaceholder %}
+    <div class="row product-list-actions">
+        <div class="col-sm-4">
+            <form role="form" method="get" action="" id="sorter">
+                {{ render_field(form.sort) }}
+            </form>
+        </div>
+        <div class="col-sm-8">
+            {{ render_toggle_view() }}
+        </div>
+    </div>
+    <hr class="visible-sm visible-xs">
+    <div id="ajax_content">
+        {% block ajax_content %}
+            {%  set pagination = shuup.general.get_pagination_variables(products, 12) %}
+            <div class="row product-list-view grid">
+                {% for product in pagination.objects if shuup.product.is_visible(product) %}
+                    <div class="single-product">
+                        {{ product_box(product, show_description=True, class="product-card category-view box") }}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="clearfix">
+                {% if pagination.is_paginated %}
+                    {{ render_pagination(pagination.page, pagination.paginator) }}
+                {% endif %}
+            </div>
+        {% endblock %}
+    </div>
+{% endmacro %}
+
+{% macro render_toggle_view() %}
+    <div class="toggle-view">
+        <span class="control-label">{% trans %}Show Grid/List{% endtrans %}</span>
+        <input id="product-list-view-type" type="checkbox">
+        <label data-original-title="{% trans %}Grid/list view{% endtrans %}"
+               for="product-list-view-type"
+               data-toggle="tooltip"
+               title="">
+            <i class="grid fa fa-th"></i>
+            <i class="list fa fa-list"></i>
+        </label>
+    </div>
+{% endmacro %}
+
+{% macro render_extrajs() %}
+    <script>
+        {{ render_category_list_view_type_js() }}
+        $(function() {
+            {{ initialize_sorter() }}
+        });
+    </script>
+{% endmacro %}
+
+{% macro render_category_list_view_type_js() %}
+    function setProductListViewMode(isInListMode) {
+        if (typeof (Storage) !== "undefined") {
+            localStorage.setItem("product_list_view_list_mode", (isInListMode ? "list" : "grid"));
+        }
+    }
+
+    function getProductListViewMode() {
+        if (typeof (Storage) !== "undefined") {
+            return localStorage.getItem("product_list_view_list_mode");
+        }
+        return "grid";
+    }
+    $(function() {
+        var $productListViewType = $("#product-list-view-type");
+        var $productListView = $(".product-list-view");
+        $productListViewType.on("change", function() {
+            $productListView.toggleClass("list");
+            setProductListViewMode($productListView.hasClass("list"));
+        });
+
+        // By default product list view is in grid mode
+        if ($productListView.length > 0 && getProductListViewMode() === "list") {
+            $productListView.addClass("list");
+            $productListViewType.prop("checked", true);
+        }
+    });
+{% endmacro %}
+
+{% macro initialize_sorter() %}
+    $("#sorter :input").change(function() {
+        $("#sorter").submit();
+    });
+{% endmacro %}

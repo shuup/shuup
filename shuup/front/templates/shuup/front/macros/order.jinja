@@ -1,0 +1,229 @@
+{% extends "shuup/front/macros/theme/order.jinja" %}
+{% from "shuup/front/macros/general.jinja" import render_field %}
+
+{% macro print_order_detail(order, show_attachments=False) %}
+    {{ render_lines_information(order) }}
+    {{ render_tax_information(order) }}
+    {% if show_attachments %}
+        {{ render_ordered_files(order) }}
+    {% endif %}
+    {{ render_service_information(order) }}
+    {{ render_company_information(order) }}
+{% endmacro %}
+
+{% macro render_ordered_files(order) %}
+    {% set attachments = order.get_purchased_attachments() %}
+    {% if attachments %}
+        <h2>{% trans %}Files{% endtrans %}</h2>
+        <table class="table">
+            {% for attachment in attachments %}
+                <tr>
+                    <td><a href="{{ attachment.url }}" target="_blank">{{ attachment.title }}</a></td>
+                    <td>
+                        {% if attachment.description %}
+                            {{ attachment.description|linebreaksbr }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endmacro %}
+
+{% macro service_panel(panel_title, method_title, address_title, method, address) %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">{{ panel_title }}</h2>
+        </div>
+        <div class="panel-body">
+            <dl class="dl-horizontal">
+                <dt>{{ method_title }}</dt>
+                <dd>{{ method.name }}</dd>
+                <dt>{{ address_title }}:</dt>
+                <dd>{{ format_address(address) }}</dd>
+            </dl>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro format_address(address) %}
+    <address>
+        {% for line in address.as_string_list() %}
+            {% if loop.first %}
+                <strong>{{ line }}</strong>
+            {% else %}
+                {{ line }}
+            {% endif %}
+            {% if not loop.last %}<br>{% endif %}
+        {% endfor %}
+    </address>
+{% endmacro %}
+
+{% macro render_lines_table(lines, taxful_total_price, taxless_total_price, show_product_package_info=False) %}
+    <div class="table-responsive">
+        <table class="basket-table table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th class="text-left">{% trans %}Product{% endtrans %}</th>
+                    <th class="text-right">{% trans %}Price{% endtrans %}</th>
+                    <th class="text-right">{% trans %}Quantity{% endtrans %}</th>
+                    <th class="text-right">{% trans %}Total{% endtrans %}</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <td colspan="5" class="text-right">
+                        <strong>{% trans %}Total{% endtrans %}:
+                        <span class="total-price">{{ taxful_total_price|money }}</span></strong>
+                        {% if taxless_total_price != taxful_total_price %}
+                        <br>
+                        <span class="total-price text-muted">({{ taxless_total_price|money }} {{ _("excl. tax") }})</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            </tfoot>
+            <tbody>
+                {% for line in lines %}
+                    {% set product = line.product %}
+                    <tr>
+                        <td>
+                            {% if product %}
+                                {% set image = product.primary_image %}
+                                {% if image %}
+                                    <img class="img-responsive"
+                                         src="{{ image|thumbnail(size=(70, 70)) }}"
+                                         width="70" height="70">
+                                {% else %}
+                                    <img class="img-responsive"
+                                         src="{{ STATIC_URL }}shuup/front/img/no_image_thumbnail.png"
+                                         width="70" height="70">
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ line.text }}
+                            {% if show_product_package_info and product and product.is_package_parent() %}
+                                {{ macros.render_package_children(product) }}
+                            {% endif %}
+                        </td>
+                        <td class="text-right">
+                            {{ line.taxful_discounted_unit_price|money }}
+                            {% if line.tax_amount %}
+                                <br>
+                                <small class="text-muted">
+                                    ({{ line.taxless_discounted_unit_price|money }} {% trans %}excl. tax{% endtrans %})
+                                </small>
+                            {% endif %}
+                            {% if line.is_discounted %}
+                                <br>
+                                <small class="text-muted">
+                                    <del>{{ line.taxful_base_unit_price|money }}</del>
+                                </small>
+                            {% endif %}
+                        </td>
+                        <td class="text-right">
+                            {{ line.quantity|number }}
+                        </td>
+                        <td class="text-right">
+                            <span class="line-total">{{ line.taxful_price|money }}</span>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endmacro %}
+
+{% macro render_package_children(product) %}
+    {% set package_children = product.get_all_package_children().translated().order_by("translations__name") %}
+    {% set quantity_map = product.get_package_child_to_quantity_map() %}
+    <ul class="package-children">
+        {% for child in package_children %}
+            <li><small><em>{{ quantity_map[child]|int }} &times; {{ child }}</em></small></li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+{% macro render_lines_information(order) %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">{% trans %}Products ordered{% endtrans %}</h2>
+        </div>
+        <div class="panel-body">
+            {% set lines = order.lines.order_by("ordering") %}
+            {{ render_lines_table(lines, order.taxful_total_price, order.taxless_total_price) }}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro render_tax_information(order) %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">{% trans %}Tax breakdown{% endtrans %}</h2>
+        </div>
+        <div class="panel-body">
+            {{ render_taxes_table(order) }}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro render_taxes_table(order) %}
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th class="text-right">{% trans %}Tax{% endtrans %}</th>
+                <th class="text-right">{% trans %}Tax percentage{% endtrans %}</th>
+                <th class="text-right">{% trans %}Based on amount{% endtrans %}</th>
+                <th class="text-right">{% trans %}Amount of tax{% endtrans %}</th>
+                <th class="text-right">{% trans %}Total including tax{% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set tax_summary = order.get_tax_summary() %}
+            {% if tax_summary %}
+                {% for item in tax_summary %}
+                    <tr>
+                        <td class="text-right">{{ item.tax_name }}</td>
+                        <td class="text-right">
+                            {%- if item.tax_rate is not none -%}
+                                {{ item.tax_rate|percent(ndigits=3) }}
+                            {%- endif -%}
+                        </td>
+                        <td class="text-right">{{ item.based_on|money }}</td>
+                        <td class="text-right">{{ item.tax_amount|money }}</td>
+                        <td class="text-right">{{ item.taxful|money }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+{% endmacro %}
+
+{% macro render_service_information(order) %}
+    <div class="row">
+        <div class="col-sm-6">
+            {{ service_panel(
+                _("Delivery"), _("Delivery method"), _("Shipping address"),
+                order.shipping_method, order.shipping_address) }}
+        </div>
+        <div class="col-sm-6">
+            {{ service_panel(
+                _("Billing"), _("Payment method"), _("Billing address"),
+                order.payment_method, order.billing_address) }}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro render_company_information(order) %}
+    {% if order.company %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">{% trans %}Company{% endtrans %}</h2>
+            </div>
+            <div class="panel-body">
+                <p>{{ order.company.name }} ({% trans %}Tax number{% endtrans %}: {{ order.company.tax_number }})</p>
+            </div>
+        </div>
+    {% endif %}
+{% endmacro %}
