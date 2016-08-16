@@ -21,7 +21,7 @@
         position: relative;
 
         &.open {
-            .block-title {
+            .block-title, .block-subtitle {
                 @media (max-width: @screen-sm-max) {
                     border-color: @brand-primary;
                     padding-bottom: 15px;
@@ -30,7 +30,7 @@
             .toggle-contents i { transform: rotate(90deg); }
         }
 
-        .block-title {
+        .block-title, .block-subtitle {
             border-bottom: 3px solid @brand-primary;
             padding-bottom: 15px;
             margin-bottom: 0px;
@@ -129,13 +129,13 @@
     &.collapsed {
         .title {
             &.open {
-                .block-title {
+                .block-title, .block-subtitle {
                     border-color: @brand-primary;
                     padding-bottom: 15px;
                 }
             }
 
-            .block-title {
+            .block-title, .block-subtitle {
                 border-color: #fff;
                 padding-bottom: 0;
             }

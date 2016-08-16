@@ -22,6 +22,7 @@ Localization
 Admin
 ~~~~~
 
+- Product edit: Convert collapsed sections into tabs
 - Increment quantity when quick adding products with existing lines in order creator
 - Add option for automatically adding product lines when creating order
 - Order editing: Tax number is now shown for Company Contacts

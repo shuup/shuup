@@ -48,7 +48,7 @@
     {% endfor %}
 {% endmacro %}
 
-{% call content_block(_("Stock management"), "fa-cubes", collapsed=True) %}
+{% call content_block(_("Stock management"), "fa-cubes") %}
     {% if ss_form.can_manage_stock() %}
         {{ render_products(ss_form) }}
     {% else %}
