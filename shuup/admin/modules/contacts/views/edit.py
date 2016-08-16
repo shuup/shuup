@@ -12,7 +12,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.form_part import FormPartsViewMixin, SaveFormPartsMixin
 from shuup.admin.modules.contacts.form_parts import (
-    CompanyContactBaseFormPart, PersonContactBaseFormPart
+    CompanyContactBaseFormPart, ContactAddressesFormPart,
+    PersonContactBaseFormPart
 )
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.urls import get_model_url
@@ -44,6 +45,8 @@ class ContactEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
         else:
             form_part_classes.append(CompanyContactBaseFormPart)
         form_part_classes += list(get_provide_objects(self.form_part_class_provide_key))
+        if self.object.pk:
+            form_part_classes.append(ContactAddressesFormPart)
         return form_part_classes
 
     @atomic
@@ -66,5 +69,6 @@ class ContactEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
         context = super(ContactEditView, self).get_context_data(**kwargs)
         contact_type = self.get_contact_type()
         context["contact_type"] = contact_type
-        context["title"] = _("New Company") if contact_type == "company" else _("New Contact")
+        if not self.object.pk:
+            context["title"] = _("New Company") if contact_type == "company" else _("New Contact")
         return context
