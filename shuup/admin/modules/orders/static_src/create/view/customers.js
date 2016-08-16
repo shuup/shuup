@@ -90,7 +90,8 @@ function customerDetailView(customerInfo) {
                 m("dl.dl-horizontal", [
                     infoRow(gettext("Full Name"), customerInfo.name),
                     infoRow(gettext("Phone"), customerInfo.phone_no),
-                    infoRow(gettext("Email"), customerInfo.email)
+                    infoRow(gettext("Email"), customerInfo.email),
+                    infoRow(gettext("Tax Number"), customerInfo.tax_number)
                 ])
             ),
             m("div.col-md-6",

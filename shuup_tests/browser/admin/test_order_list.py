@@ -6,15 +6,15 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
-import pytest
 import time
 
 from django.core.urlresolvers import reverse
 
+import pytest
 from shuup.core.models import Order, OrderStatus
+from shuup.testing.browser_utils import wait_until_appeared
 from shuup.testing.factories import create_empty_order, get_default_shop
 from shuup.testing.utils import initialize_admin_browser_test
-
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
@@ -39,7 +39,7 @@ def _visit_orders_list_view(browser, live_server):
     url = reverse("shuup_admin:order.list")
     browser.visit("%s%s" % (live_server, url))
     assert browser.is_text_present("Orders")
-    time.sleep(0.5)  # Wait mithril for a sec
+    wait_until_appeared(browser, css_class=".picotable-item-info")
 
 
 def _test_status_filter(browser):

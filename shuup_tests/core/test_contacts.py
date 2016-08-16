@@ -135,6 +135,17 @@ def test_person_name_init_by_first_and_last_name():
 
 
 @pytest.mark.django_db
+def test_company_contact_name_ext():
+    company = CompanyContact(name="TestCompany")
+    assert company.name == "TestCompany"
+    assert company.full_name == "TestCompany"
+    company.name_ext = "California"
+    company.save()
+    assert company.name == "TestCompany"
+    assert company.full_name == "TestCompany / California"
+
+
+@pytest.mark.django_db
 def test_person_name_gets_saved():
     john = PersonContact.objects.create(first_name="John", last_name="Smith")
     assert john.name == "John Smith"

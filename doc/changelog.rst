@@ -12,11 +12,15 @@ Unreleased
 Core
 ~~~~
 
+- ``CompanyContact.full_name`` now returns name and name extension (if available)
+
 Localization
 ~~~~~~~~~~~~
 
 Admin
 ~~~~~
+
+- Order editing: Tax number is now shown for Company Contacts
 
 Addons
 ~~~~~~
