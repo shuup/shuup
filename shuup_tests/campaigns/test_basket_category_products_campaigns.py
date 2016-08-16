@@ -25,7 +25,7 @@ def test_category_product_in_basket_condition(rf):
     basket = get_basket(request)
     supplier = get_default_supplier()
     category = get_default_category()
-    product = create_product("The Product", shop=shop, default_price="200")
+    product = create_product("The Product", shop=shop, default_price="200", supplier=supplier)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
 
     shop_product = product.get_shop_instance(shop)

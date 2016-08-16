@@ -18,9 +18,20 @@ from shuup.front.checkout import CheckoutPhaseViewMixin
 
 
 class ConfirmForm(forms.Form):
+    product_ids = forms.CharField(widget=forms.HiddenInput(), required=True)
     accept_terms = forms.BooleanField(required=True, label=_(u"I accept the terms and conditions"))
     marketing = forms.BooleanField(required=False, label=_(u"I want to subscribe to your newsletter"), initial=True)
     comment = forms.CharField(widget=forms.Textarea(), required=False, label=_(u"Comment"))
+
+    def __init__(self, *args, **kwargs):
+        self.current_product_ids = kwargs.pop("current_product_ids", "")
+        super(ConfirmForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        product_ids = set(self.cleaned_data['product_ids'].split(','))
+        if product_ids != self.current_product_ids:
+            raise forms.ValidationError(
+                _("There has been a change in product availability. Please review your cart and reconfirm your order."))
 
 
 class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
@@ -37,6 +48,14 @@ class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
     def is_valid(self):
         return bool(self.storage.get("accept_terms"))
 
+    def _get_product_ids(self):
+        return [str(product_id) for product_id in self.request.basket.get_product_ids_and_quantities().keys()]
+
+    def get_form_kwargs(self):
+        kwargs = super(ConfirmPhase, self).get_form_kwargs()
+        kwargs["current_product_ids"] = set(self._get_product_ids())
+        return kwargs
+
     def get_context_data(self, **kwargs):
         context = super(ConfirmPhase, self).get_context_data(**kwargs)
         basket = self.request.basket
@@ -46,6 +65,7 @@ class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
         context["basket"] = basket
         context["errors"] = errors
         context["orderable"] = (not errors)
+        context["product_ids"] = ','.join(self._get_product_ids())
         return context
 
     def form_valid(self, form):

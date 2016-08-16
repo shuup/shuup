@@ -36,11 +36,20 @@
                     </div>
                 {% endfor %}
             {% endif %}
-            {% if form and form.errors %}
-                <div class="alert alert-dismissible alert-danger" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <i class="fa fa-exclamation-circle"></i> {% trans %}There were errors on submitted form fields. Please check them and try again.{% endtrans %}
-                </div>
+            {% if form %}
+                {% if form.non_field_errors and form.non_field_errors() %}
+                    {% for error in form.non_field_errors() %}
+                    <div class="alert alert-dismissible alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <i class="fa fa-exclamation-circle"></i> {{ error }}
+                    </div>
+                    {% endfor %}
+                {% elif form.errors %}
+                    <div class="alert alert-dismissible alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <i class="fa fa-exclamation-circle"></i> {% trans %}There were errors on submitted form fields. Please check them and try again.{% endtrans %}
+                    </div>
+                {% endif %}
             {% endif %}
             {% block before_content_title %}{% endblock %}
             {% if self.content_title() %}

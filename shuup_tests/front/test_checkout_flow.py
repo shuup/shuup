@@ -10,11 +10,11 @@ import random
 import pytest
 from django.core.urlresolvers import reverse
 
-from shuup.core.models import Order, PaymentStatus
+from shuup.core.models import Order, PaymentStatus, Product
 from shuup.testing.factories import (
     create_default_order_statuses, get_address, get_default_payment_method,
     get_default_shipping_method, get_default_shop, get_default_supplier,
-    get_default_tax_class
+    get_default_tax_class, create_product
 )
 from shuup.testing.mock_population import populate_if_required
 from shuup.testing.models import (
@@ -50,15 +50,16 @@ def fill_address_inputs(soup, with_company=False):
 
 
 def _populate_client_basket(client):
+    product_ids = []
     index = client.soup("/")
     product_links = index.find_all("a", rel="product-detail")
     assert product_links
-    product_detail_path = product_links[0]["href"]
-    assert product_detail_path
-    product_detail_soup = client.soup(product_detail_path)
-    inputs = extract_form_fields(product_detail_soup)
-    basket_path = reverse("shuup:basket")
-    for i in range(3):  # Add the same product thrice
+    for i in range(3): # add three different products
+        product_detail_path = product_links[i]["href"]
+        assert product_detail_path
+        product_detail_soup = client.soup(product_detail_path)
+        inputs = extract_form_fields(product_detail_soup)
+        basket_path = reverse("shuup:basket")
         add_to_basket_resp = client.post(basket_path, data={
             "command": "add",
             "product_id": inputs["product_id"],
@@ -66,9 +67,10 @@ def _populate_client_basket(client):
             "supplier": get_default_supplier().pk
         })
         assert add_to_basket_resp.status_code < 400
+        product_ids.append(inputs["product_id"])
     basket_soup = client.soup(basket_path)
     assert b'no such element' not in basket_soup.renderContents(), 'All product details are not rendered correctly'
-
+    return product_ids
 
 def _get_payment_method_with_phase():
     processor = PaymentWithCheckoutPhase.objects.create(
@@ -103,7 +105,7 @@ def test_basic_order_flow(with_company):
     n_orders_pre = Order.objects.count()
     populate_if_required()
     c = SmartClient()
-    _populate_client_basket(c)
+    product_ids = _populate_client_basket(c)
 
     addresses_path = reverse("shuup:checkout", kwargs={"phase": "addresses"})
     addresses_soup = c.soup(addresses_path)
@@ -117,7 +119,11 @@ def test_basic_order_flow(with_company):
 
     confirm_path = reverse("shuup:checkout", kwargs={"phase": "confirm"})
     confirm_soup = c.soup(confirm_path)
-    assert c.post(confirm_path, data=extract_form_fields(confirm_soup)).status_code == 302  # Should redirect forth
+    Product.objects.get(pk=product_ids[0]).soft_delete()
+    assert c.post(confirm_path, data=extract_form_fields(confirm_soup)).status_code == 200  # user needs to reconfirm
+    data = extract_form_fields(confirm_soup)
+    data['product_ids'] = ','.join(product_ids[1:])
+    assert c.post(confirm_path, data=data).status_code == 302  # Should redirect forth
 
     n_orders_post = Order.objects.count()
     assert n_orders_post > n_orders_pre, "order was created"
@@ -181,6 +187,7 @@ def test_order_flow_with_phases(get_shipping_method, shipping_data, get_payment_
     # Phase: Confirm
     assert Order.objects.count() == 0
     confirm_soup = c.soup(confirm_path)
+
     response = c.post(confirm_path, data=extract_form_fields(confirm_soup))
     assert response.status_code == 302, "Confirm should redirect forth"
 
@@ -220,3 +227,20 @@ def test_order_flow_with_phases(get_shipping_method, shipping_data, get_payment_
         # Check payment status has changed to DEFERRED
         order = Order.objects.get(pk=order.pk)  # reload
         assert order.payment_status == PaymentStatus.DEFERRED
+
+
+@pytest.mark.django_db
+def test_checkout_empty_basket(rf):
+    create_default_order_statuses()
+    n_orders_pre = Order.objects.count()
+    populate_if_required()
+    c = SmartClient()
+    product_ids = _populate_client_basket(c)
+    addresses_path = reverse("shuup:checkout", kwargs={"phase": "addresses"})
+    addresses_soup = c.soup(addresses_path)
+    inputs = fill_address_inputs(addresses_soup)
+    for product_id in product_ids:
+        Product.objects.get(pk=product_id).soft_delete()
+    response, soup = c.response_and_soup(addresses_path, data=inputs, method="post")
+    assert response.status_code == 200  # Should redirect forth
+    assert b"Your shopping cart is empty." in soup.renderContents()

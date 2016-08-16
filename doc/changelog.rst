@@ -24,6 +24,8 @@ Addons
 Front
 ~~~~~
 
+- Show order reconfirmation error if product orderability changes on order
+  confirmation
 - Exclude unorderable line items from basket
 
 Xtheme

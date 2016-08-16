@@ -146,4 +146,5 @@ def test_basket_orderability_change(rf):
     )
     assert len(basket.get_lines()) == 1
     product.soft_delete()
+    assert basket.dirty
     assert len(basket.get_lines()) == 0

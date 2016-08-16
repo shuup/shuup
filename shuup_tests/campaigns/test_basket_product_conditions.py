@@ -24,7 +24,7 @@ def test_product_in_basket_condition(rf):
     basket = get_basket(request)
     supplier = get_default_supplier()
 
-    product = create_product("Just-A-Product-Too", shop, default_price="200")
+    product = create_product("Just-A-Product-Too", shop, default_price="200", supplier=supplier)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
 
     condition = ProductsInBasketCondition.objects.create()
@@ -32,7 +32,6 @@ def test_product_in_basket_condition(rf):
     condition.save()
 
     assert condition.values.first() == product
-
     assert condition.matches(basket, [])
 
     condition.quantity = 2
@@ -59,7 +58,7 @@ def test_basket_total_amount_conditions(rf):
     basket = get_basket(request)
     supplier = get_default_supplier()
 
-    product = create_product("Just-A-Product-Too", shop, default_price="200")
+    product = create_product("Just-A-Product-Too", shop, default_price="200", supplier=supplier)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
 
     condition = BasketTotalAmountCondition.objects.create()
@@ -88,7 +87,7 @@ def test_basket_total_value_conditions(rf):
     basket = get_basket(request)
     supplier = get_default_supplier()
 
-    product = create_product("Just-A-Product-Too", shop, default_price="200")
+    product = create_product("Just-A-Product-Too", shop, default_price="200", supplier=supplier)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
 
     condition = BasketTotalProductAmountCondition.objects.create()
