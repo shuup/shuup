@@ -24,6 +24,8 @@ Addons
 Front
 ~~~~~
 
+- Exclude unorderable line items from basket
+
 Xtheme
 ~~~~~~
 

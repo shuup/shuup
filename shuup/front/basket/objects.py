@@ -222,7 +222,14 @@ class BaseBasket(OrderSource):
         return modified
 
     def get_lines(self):
-        return [BasketLine.from_dict(self, line) for line in self._data_lines]
+        lines = [BasketLine.from_dict(self, line) for line in self._data_lines]
+        orderable_lines = []
+        for line in lines:
+            if line.type != OrderLineType.PRODUCT:
+                orderable_lines.append(line)
+            elif line.shop_product.is_orderable(line.supplier, self.customer, line.quantity):
+                orderable_lines.append(line)
+        return orderable_lines
 
     def _initialize_product_line_data(self, product, supplier, shop, quantity=0):
         if product.variation_children.count():
