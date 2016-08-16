@@ -10,7 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from polymorphic.models import PolymorphicModel
 
-from shuup.campaigns.utils import get_product_ids_and_quantities
+from shuup.campaigns.utils.campaigns import get_product_ids_and_quantities
 from shuup.core.fields import MoneyValueField
 from shuup.core.models import Category, Contact, ContactGroup, Product
 from shuup.utils.properties import MoneyPropped, PriceProperty

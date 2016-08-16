@@ -10,6 +10,7 @@ import string
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Q
 from django.utils.encoding import force_text
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
@@ -23,7 +24,8 @@ from shuup.campaigns.consts import (
 from shuup.campaigns.models.basket_conditions import (
     CategoryProductsBasketCondition, ProductsInBasketCondition
 )
-from shuup.campaigns.utils import get_product_ids_and_quantities
+from shuup.campaigns.utils.campaigns import get_product_ids_and_quantities
+from shuup.campaigns.utils.matcher import get_matching_for_product
 from shuup.core import cache
 from shuup.core.fields import InternalIdentifierField
 from shuup.core.models import Order, Shop
@@ -33,6 +35,18 @@ from shuup.utils.properties import MoneyPropped
 class CampaignType(Enum):
     CATALOG = 1
     BASKET = 2
+
+
+class CampaignQueryset(models.QuerySet):
+    def available(self, shop=None):
+        query = Q(
+            Q(active=True) &
+            (Q(start_datetime__isnull=True) | Q(start_datetime__lte=now())) &
+            (Q(end_datetime__isnull=True) | Q(end_datetime__gte=now()))
+        )
+        if shop:
+            query &= Q(shop=shop)
+        return self.filter(query)
 
 
 class Campaign(MoneyPropped, TranslatableModel):
@@ -57,6 +71,8 @@ class Campaign(MoneyPropped, TranslatableModel):
         verbose_name=_("modified by"))
     created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_("created on"))
     modified_on = models.DateTimeField(auto_now=True, editable=False, verbose_name=_("modified on"))
+
+    objects = CampaignQueryset.as_manager()
 
     class Meta:
         abstract = True
@@ -115,6 +131,13 @@ class CatalogCampaign(Campaign):
             if condition_pk not in matching_context_conditions:
                 return False
         return True
+
+    @classmethod
+    def get_for_product(cls, shop_product):
+        matching_filters = get_matching_for_product(shop_product, provide_category="campaign_catalog_filter")
+        matching_conditions = get_matching_for_product(shop_product, provide_category="campaign_context_condition")
+        query_filter = Q(Q(filters__in=matching_filters) | Q(conditions__in=matching_conditions))
+        return cls.objects.available(shop=shop_product.shop).filter(query_filter).distinct()
 
     @classmethod
     def get_matching(cls, context, shop_product):
@@ -179,6 +202,18 @@ class BasketCampaign(Campaign):
 
     def __str__(self):
         return force_text(_("Basket Campaign: %(name)s" % dict(name=self.name)))
+
+    @classmethod
+    def get_for_product(cls, shop_product):
+        matching_conditions = get_matching_for_product(
+            shop_product, provide_category="campaign_basket_condition")
+        matching_effects = get_matching_for_product(
+            shop_product, provide_category="campaign_basket_discount_effect_form")
+        matching_line_effects = get_matching_for_product(
+            shop_product, provide_category="campaign_basket_line_effect_form")
+        effects_q = Q(Q(line_effects__id__in=matching_line_effects) | Q(discount_effects__id__in=matching_effects))
+        matching_q = Q(Q(conditions__in=matching_conditions) | effects_q)
+        return cls.objects.available(shop=shop_product.shop).filter(matching_q).distinct()
 
     @classmethod
     def get_matching(cls, basket, lines):

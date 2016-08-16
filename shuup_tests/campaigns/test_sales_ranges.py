@@ -11,9 +11,7 @@ from django.core.exceptions import ValidationError
 
 from shuup.campaigns.models import ContactGroupSalesRange
 from shuup.campaigns.signal_handlers import update_customers_groups
-from shuup.campaigns.utils import (
-    assign_to_group_based_on_sales, get_total_sales
-)
+from shuup.campaigns.utils.sales_range import assign_to_group_based_on_sales, get_total_sales
 from shuup.core.models import AnonymousContact, ContactGroup, Payment
 from shuup.testing.factories import (
     create_order_with_product, create_product, create_random_company,

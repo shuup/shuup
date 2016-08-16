@@ -13,7 +13,7 @@ from shuup.campaigns.models.contact_group_sales_ranges import \
     ContactGroupSalesRange
 from shuup.core import cache
 
-from .utils import assign_to_group_based_on_sales
+from .utils.sales_range import assign_to_group_based_on_sales
 
 
 def update_customers_groups(sender, instance, **kwargs):

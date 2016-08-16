@@ -6,16 +6,11 @@
 # LICENSE file in the root directory of this source tree.
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.base import MenuEntry
+from shuup.admin.breadcrumbs import BreadcrumbedView
 from shuup.admin.forms.fields import PercentageField
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import CustomerTaxGroup, Tax, TaxClass
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
-
-
-class _Breadcrumbed(object):
-    def get_breadcrumb_parents(self):
-        return [MenuEntry(text=self.parent_name, url=self.parent_url)]
 
 
 class TaxForm(MultiLanguageModelForm):
@@ -38,7 +33,7 @@ class TaxClassForm(MultiLanguageModelForm):
         fields = ["name", "enabled"]
 
 
-class TaxEditView(_Breadcrumbed, CreateOrUpdateView):
+class TaxEditView(BreadcrumbedView, CreateOrUpdateView):
     model = Tax
     form_class = TaxForm
     template_name = "shuup/admin/taxes/edit_tax.jinja"
@@ -48,7 +43,7 @@ class TaxEditView(_Breadcrumbed, CreateOrUpdateView):
     parent_url = "shuup_admin:tax.list"
 
 
-class CustomerTaxGroupEditView(_Breadcrumbed, CreateOrUpdateView):
+class CustomerTaxGroupEditView(BreadcrumbedView, CreateOrUpdateView):
     model = CustomerTaxGroup
     form_class = CustomerTaxGroupForm
     template_name = "shuup/admin/taxes/edit_customer_tax_group.jinja"
@@ -57,7 +52,7 @@ class CustomerTaxGroupEditView(_Breadcrumbed, CreateOrUpdateView):
     parent_url = "shuup_admin:customer_tax_group.list"
 
 
-class TaxClassEditView(_Breadcrumbed, CreateOrUpdateView):
+class TaxClassEditView(BreadcrumbedView, CreateOrUpdateView):
     model = TaxClass
     template_name = "shuup/admin/taxes/edit_tax_class.jinja"
     form_class = TaxClassForm

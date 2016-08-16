@@ -7,6 +7,7 @@
 from django.db.transaction import atomic
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.breadcrumbs import BreadcrumbedView
 from shuup.admin.form_part import FormPartsViewMixin, SaveFormPartsMixin
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.views import CreateOrUpdateView
@@ -21,7 +22,6 @@ from shuup.campaigns.admin_module.forms import CouponForm
 from shuup.campaigns.models.campaigns import (
     BasketCampaign, CatalogCampaign, Coupon
 )
-from shuup.campaigns.utils import _Breadcrumbed
 
 
 class CampaignEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):
@@ -63,7 +63,7 @@ class CampaignEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateVie
         return get_default_edit_toolbar(self, save_form_id)
 
 
-class CatalogCampaignEditView(_Breadcrumbed, CampaignEditView):
+class CatalogCampaignEditView(BreadcrumbedView, CampaignEditView):
     model = CatalogCampaign
     condition_key = "campaign_context_condition"
     filter_key = "campaign_catalog_filter"
@@ -89,7 +89,7 @@ class CatalogCampaignEditView(_Breadcrumbed, CampaignEditView):
             self.request, form, "filters_%s" % form._meta.model.__name__.lower(), object)
 
 
-class BasketCampaignEditView(_Breadcrumbed, CampaignEditView):
+class BasketCampaignEditView(BreadcrumbedView, CampaignEditView):
     model = BasketCampaign
     condition_key = "campaign_basket_condition"
     effects = [
@@ -103,7 +103,7 @@ class BasketCampaignEditView(_Breadcrumbed, CampaignEditView):
     parent_url = "shuup_admin:basket_campaigns.list"
 
 
-class CouponEditView(_Breadcrumbed, CreateOrUpdateView):
+class CouponEditView(BreadcrumbedView, CreateOrUpdateView):
     model = Coupon
     template_name = "shuup/campaigns/admin/edit_coupons.jinja"
     form_class = CouponForm
