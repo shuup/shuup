@@ -1,0 +1,80 @@
+{% macro render_action_buttons() %}
+    <div class="pull-right inline">
+        {{ add_all_products_to_cart_button() }}
+        {{ delete_cart() }}
+    </div>
+{% endmacro %}
+
+{% macro add_all_products_to_cart_button() %}
+    {% if cart.products %}
+        <button class="btn btn-success" onclick="addAllProductsToCart()">
+            <i class="fa fa-plus"></i> {% trans %}Add all products to cart{% endtrans %}
+        </button>
+    {% endif %}
+{% endmacro %}
+
+{% macro delete_cart() %}
+    <button class="btn btn-danger" onclick="deleteCart()">
+        <i class="fa fa-trash"></i> {% trans %}Delete cart{% endtrans %}
+    </button>
+{% endmacro %}
+
+{% macro render_extra_js() %}
+    <script>
+        {{ dismissable_alert_js() }}
+        {{ delete_cart_js() }}
+        {{ add_all_products_to_cart_js() }}
+    </script>
+{% endmacro %}
+
+{% macro dismissable_alert_js() %}
+    function dismissableAlert(alertClass, strongMessage, message) {
+        var alertHtml = '<div class="alert alert-dismissable ' + alertClass + '" role="alert">';
+        alertHtml += '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+        alertHtml += '<span aria-hidden="true">&times;</span></button>';
+        if(strongMessage) {
+            alertHtml += '<strong>' + strongMessage + '</strong> ';
+        }
+        alertHtml += message;
+        alertHtml += '</div>';
+        return alertHtml;
+    }
+{% endmacro %}
+
+{% macro delete_cart_js() %}
+    function deleteCart() {
+        $.ajax({
+            method: "POST",
+            url: "{{ url('shuup:saved_cart.delete', pk=cart.pk) }}",
+            data: {
+                csrfmiddlewaretoken: "{{ csrf_token }}"
+            },
+            success: function() {
+                window.location = "{{ url("shuup:saved_cart.list") }}";
+            }
+        });
+    }
+{% endmacro %}
+
+{% macro add_all_products_to_cart_js() %}
+    function addAllProductsToCart() {
+        var $messageContainer = $("#message-container");
+        $messageContainer.empty();
+        $.ajax({
+            method: "POST",
+            url: "{{ url('shuup:saved_cart.add_all', pk=cart.pk) }}",
+            data: {
+                csrfmiddlewaretoken: "{{ csrf_token }}"
+            },
+            success: function(data) {
+                var i, alerts = "";
+                updateNavigationBasket();
+                alerts = dismissableAlert("alert-success", null, data.success);
+                for(i = 0; i < data.errors.length; i++) {
+                    alerts += dismissableAlert("alert-danger", data.errors[i].product, data.errors[i].message);
+                }
+                $messageContainer.append(alerts);
+            }
+        });
+    }
+{% endmacro %}
