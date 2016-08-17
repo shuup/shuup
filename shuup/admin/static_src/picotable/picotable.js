@@ -194,7 +194,7 @@ const Picotable = (function(m, storage) {
             return m("a", {rel: page, href: "#", onclick: callback}, title || page);
         };
         for (var page = 1; page <= paginationData.nPages; page++) {
-            if (page === 1 || page === paginationData.nPages || Math.abs(page - currentPage) <= 4 || page % 10 === 0) {
+            if (page === 1 || page === paginationData.nPages || Math.abs(page - currentPage) <= 2) {
                 var li = m("li", {key: page, className: cx({active: currentPage === page})}, pageLink(page));
                 li._page = page;
                 pageLinks.push(li);
