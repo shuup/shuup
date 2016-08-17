@@ -5,29 +5,36 @@
     {% if orderability_errors %}
         <div class="container-fluid">
             {# TODO: FIX THIS FOR MOBILE SCREEN SIZES #}
-            <p class="pull-right" data-toggle="tooltip" data-title="{% for error in orderability_errors %}{{ error }} {% endfor %}" data-placement="bottom">
+            <p class="pull-right"
+               data-toggle="tooltip"
+               data-title="{% for error in orderability_errors %}{{ error }} {% endfor %}"
+               data-placement="bottom">
                 <i class="fa fa-info-circle text-info"></i> {% trans %}This product is currently not orderable.{% endtrans %}
             </p>
         </div>
     {% endif %}
-    <form method="post" id="product_form">
-        {% csrf_token %}
-        {% for form_def in form.form_defs.values() %}
-            {% if form_def.required %}
-                {% include form_def.template_name with context %}
-            {% endif %}
-        {% endfor %}
-        {% for form_def in form.form_defs.values() %}
-            {% if not form_def.required %}
+    {% call content_with_sidebar(content_id="product_form") %}
+        <form method="post" id="product_form">
+            {% csrf_token %}
+            {% call content_block(_("General Information"), "fa-info-circle") %}
+                {% for form_def in form.form_defs.values() %}
+                    {% if form_def.required %}
+                        {% include form_def.template_name with context %}
+                    {% endif %}
+                {% endfor %}
+            {% endcall %}
+            {% for form_def in form.form_defs.values() %}
+                {% if not form_def.required %}
                     {% include form_def.template_name with context %}
-            {% endif %}
-        {% endfor %}
-    </form>
-    {% for product_section in product_sections %}
-        {% call content_block(product_section.name, product_section.icon, collapsed=True) %}
-            {% include product_section.template with context %}
-        {% endcall %}
-    {% endfor %}
+                {% endif %}
+            {% endfor %}
+            {% for product_section in product_sections %}
+                {% call content_block(product_section.name, product_section.icon) %}
+                    {% include product_section.template with context %}
+                {% endcall %}
+            {% endfor %}
+        </form>
+    {% endcall %}
 {% endblock %}
 
 {% block extra_js %}

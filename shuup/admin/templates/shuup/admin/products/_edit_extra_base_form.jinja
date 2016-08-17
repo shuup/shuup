@@ -2,7 +2,7 @@
 {% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs %}
 {% set product_form = form["base"] %}
 
-{% call content_block(_("Additional Details"), "fa-file-text", collapsed=True) %}
+{% call content_block(_("Additional Details"), "fa-file-text") %}
     {{ bs3.field(product_form.barcode) }}
     {{ bs3.field(product_form.gtin) }}
     {{ bs3.field(product_form.category) }}
@@ -13,12 +13,6 @@
     {% endcall %}
 {% endcall %}
 
-{% call content_block(_("Accounting"), "fa-book", collapsed=True) %}
-    {{ bs3.field(product_form.accounting_identifier) }}
-    {{ bs3.field(product_form.profit_center) }}
-    {{ bs3.field(product_form.cost_center) }}
-{% endcall %}
-
-{% call content_block(_("Manufacturer"), "fa-building", collapsed=True) %}
+{% call content_block(_("Manufacturer"), "fa-building") %}
     {{ bs3.field(product_form.manufacturer) }}
 {% endcall %}

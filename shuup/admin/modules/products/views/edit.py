@@ -49,9 +49,9 @@ class ProductBaseFormPart(FormPart):
         )
 
         yield TemplatedFormDef(
-            "base_collapsed",
+            "base_extra",
             forms.Form,
-            template_name="shuup/admin/products/_edit_collapsed_base_form.jinja",
+            template_name="shuup/admin/products/_edit_extra_base_form.jinja",
             required=False
         )
 
@@ -104,11 +104,11 @@ class ShopProductFormPart(FormPart):
                 kwargs={"instance": shop_product, "initial": self.get_initial()}
             )
 
-            # the collapsed form template uses ShopProductForm
+            # the hidden extra form template that uses ShopProductForm
             yield TemplatedFormDef(
-                "shop%d_collapsed" % shop.pk,
+                "shop%d_extra" % shop.pk,
                 forms.Form,
-                template_name="shuup/admin/products/_edit_collapsed_shop_form.jinja",
+                template_name="shuup/admin/products/_edit_extra_shop_form.jinja",
                 required=False
             )
 
