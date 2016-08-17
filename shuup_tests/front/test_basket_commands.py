@@ -161,12 +161,12 @@ def test_basket_update_errors():
     basket = request.basket
     product = get_default_product()
     basket_commands.handle_add(request, basket, product_id=product.pk, quantity=1)
+    line_id = basket.get_lines()[0].line_id
 
     # Hide product and now updating quantity should give errors
     shop_product = product.get_shop_instance(request.shop)
     shop_product.suppliers.clear()
 
-    line_id = basket.get_lines()[0].line_id
     basket_commands.handle_update(request, basket, **{"q_%s" % line_id: "2"})
     error_messages = messages.get_messages(request)
     # One warning is added to messages

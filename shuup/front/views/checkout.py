@@ -23,12 +23,14 @@ class BaseCheckoutView(View):
     def dispatch(self, request, *args, **kwargs):
         if request.basket.is_empty and self.empty_phase_spec:
             self.phase_specs = [self.empty_phase_spec]
+            phase_identifier = "empty"
+        else:
+            phase_identifier = kwargs.get("phase")
 
         process = CheckoutProcess(
             phase_specs=self.phase_specs,
             phase_kwargs=dict(request=self.request, args=self.args, kwargs=self.kwargs)
         )
-        phase_identifier = kwargs.get("phase")
         if phase_identifier == "reset":
             process.reset()
             return redirect("shuup:checkout")

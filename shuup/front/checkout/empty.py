@@ -19,3 +19,6 @@ class EmptyPhase(CheckoutPhaseViewMixin, TemplateView):
 
     def process(self):
         pass
+
+    def post(self, request, *args, **kwargs):
+        return self.get(request, *args, **kwargs)
