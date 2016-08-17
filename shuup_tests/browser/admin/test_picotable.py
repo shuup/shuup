@@ -35,7 +35,7 @@ def _visit_contacts_list_view(browser, live_server):
     url = reverse("shuup_admin:contact.list")
     browser.visit("%s%s" % (live_server, url))
     assert browser.is_text_present("Contacts")
-    wait_until_appeared(browser, css_class=".picotable-item-info")
+    wait_until_appeared(browser, ".picotable-item-info")
 
 
 def _test_pagination(browser):
