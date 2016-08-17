@@ -174,6 +174,7 @@ export function customerSelectView(store) {
             m("label.control-label", gettext("Customer")),
             m("div.btn-group", [
                 m("button.btn.btn-default" + (customer.id ? " active" : ""), {
+                    id: "select-existing-customer",
                     onclick: () => {
                         BrowseAPI.openBrowseWindow({
                             kind: "contact",
@@ -186,6 +187,7 @@ export function customerSelectView(store) {
                     }, (customer.id ? [m("i.fa.fa-user"), " ", customer.name] : gettext("Select Existing Customer"))
                 ),
                 m("button.btn.btn-default" + (!customer.id ? " active" : ""), {
+                    id: "new-customer",
                     onclick: () => {
                         store.dispatch(clearExistingCustomer());
                     }
