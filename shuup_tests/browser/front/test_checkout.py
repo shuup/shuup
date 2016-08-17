@@ -56,8 +56,8 @@ def test_browser_checkout(browser, live_server, settings):
     browser.find_by_id("product-%s" % product.pk).click()  # open product from product list
     browser.find_by_id("add-to-cart-button").click()  # add product to basket
 
-    wait_until_appeared(browser, css_class=".cover-wrap")
-    wait_until_disappeared(browser, css_class=".cover-wrap")
+    wait_until_appeared(browser, ".cover-wrap")
+    wait_until_disappeared(browser, ".cover-wrap")
 
     browser.find_by_id("navigation-basket-partial").click()  # open upper basket navigation menu
     browser.find_link_by_href("/basket/").first.click()  # click the link to basket in dropdown

@@ -600,7 +600,7 @@ def create_random_address(fake=None, **values):
         fake = get_faker(["person", "address"])
     empty = str  # i.e. constructor for empty string
     values.setdefault("name", fake.name())
-    values.setdefault("street", fake.address())
+    values.setdefault("street", fake.address().replace('\n', ' '))
     values.setdefault("city", fake.city())
     values.setdefault("region", getattr(fake, "state", empty)())
     values.setdefault("country", random.choice(COUNTRY_CODES))

@@ -242,6 +242,7 @@ export function orderLinesView(store, isCreating) {
         m("div.row", [
             m("div.col-sm-6",
                 m("button.btn.text-success" + (isCreating ? ".disabled": ""), {
+                    id: "add-line",
                     disabled: isCreating,
                     onclick: () => {
                         store.dispatch(addLine());
