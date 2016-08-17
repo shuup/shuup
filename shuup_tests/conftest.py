@@ -5,10 +5,10 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-import pytest
-
+from django.conf import settings
 from django.core.signals import setting_changed
 
+import pytest
 from shuup.apps.provides import clear_provides_cache
 from shuup.utils.importing import clear_load_cache
 from shuup.xtheme.testing import override_current_theme_class
@@ -22,6 +22,7 @@ def clear_caches(setting, **kwargs):
 
 def pytest_configure(config):
     setting_changed.connect(clear_caches, dispatch_uid="shuup_test_clear_caches")
+    settings.SHUUP_TELEMETRY_ENABLED = False
 
 
 def pytest_runtest_call(item):
@@ -36,6 +37,7 @@ def pytest_runtest_teardown(item, nextitem):
     if hasattr(item.session, "_theme_overrider"):
         item.session._theme_overrider.__exit__(None, None, None)
         del item.session._theme_overrider
+
 
 @pytest.fixture(scope="session")
 def splinter_make_screenshot_on_failure():
