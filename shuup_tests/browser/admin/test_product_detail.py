@@ -43,3 +43,8 @@ def test_product_detail(browser, admin_user, live_server):
         if "Actions" in dropdown.text:
             dropdown.click()
     browser.find_by_xpath('//a[@href="#%s"]' % product.sku).first.click()
+
+    # Make sure that the tabs is clickable in small devices
+    browser.driver.set_window_size(480, 960)
+    browser.find_by_id("product-images-section").first.click()
+    browser.find_by_id("additional-details-section").first.click()
