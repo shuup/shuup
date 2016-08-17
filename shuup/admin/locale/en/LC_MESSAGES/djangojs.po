@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-15 21:35+0000\n"
+"POT-Creation-Date: 2016-08-17 00:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -320,6 +320,9 @@ msgid ""
 "Search product by name, SKU, or barcode and press button to add product line."
 msgstr ""
 
+msgid "Automatically add selected product"
+msgstr ""
+
 msgid "No shipping method"
 msgstr ""
 
@@ -379,9 +382,6 @@ msgid "Add new value"
 msgstr ""
 
 msgid "Variable Name"
-msgstr ""
-
-msgid "DELETE"
 msgstr ""
 
 msgid "Variable"

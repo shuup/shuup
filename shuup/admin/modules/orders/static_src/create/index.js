@@ -49,7 +49,7 @@ export function init(config = {}) {
     const customerData = config.customerData;
 
     const persistor = persistStore(store);
-    persistor.purge(["customerDetails"]);
+    persistor.purge(["customerDetails", "quickAdd"]);
     const resetOrder = window.localStorage.getItem("resetSavedOrder") || "false";
     var savedOrder = {id: null};
     if (resetOrder === "true") {

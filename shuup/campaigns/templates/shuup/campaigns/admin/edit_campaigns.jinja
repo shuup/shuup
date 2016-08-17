@@ -79,6 +79,7 @@
 
             // Remove activated select2 spans from placeholder
             $source.find("span.select2.select2-container").remove();
+            $source.find("select.select2-hidden-accessible").removeClass("select2-hidden-accessible");
             var targetID = $selection.data("target-id");
             var $totalFormsField = $("#" + targetID + "-TOTAL_FORMS");
             var componentCount = parseInt($totalFormsField.val());

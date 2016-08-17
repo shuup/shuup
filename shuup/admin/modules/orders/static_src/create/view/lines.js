@@ -6,12 +6,13 @@
  * This source code is licensed under the AGPLv3 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import {addLine, deleteLine, retrieveProductData, setLineProperty, updateTotals} from "../actions";
+import {addLine, deleteLine, retrieveProductData, setLineProperty, updateTotals, setQuickAddProduct, clearQuickAddProduct, setAutoAdd, addProduct} from "../actions";
 import {LINE_TYPES, selectBox} from "./utils";
 import BrowseAPI from "BrowseAPI";
 
 function renderNumberCell(store, line, value, fieldId, canEditPrice, min=null) {
     return m("input.form-control", {
+            name: fieldId,
             type: "number",
             step: line.step,
             min: min != null ? min : "",
@@ -30,7 +31,7 @@ function renderNumberCell(store, line, value, fieldId, canEditPrice, min=null) {
 }
 
 export function renderOrderLines(store, shop, lines) {
-    return _(lines).map((line) => {
+    return _(lines).map((line, idx) => {
         var text = line.text, canEditPrice = true;
         var editCell = null;
         const showPrice = (line.type !== "text");
@@ -145,29 +146,36 @@ export function renderOrderLines(store, shop, lines) {
     }).compact().value();
 }
 
-var select2 = {
-    clear: function() {
-        if (select2.element) {
-            select2.element.select2("val", null);
-        }
-    },
+
+var Select2 = {
     view: function(ctrl, attrs) {
         return m("select", {
-            config: select2.config(attrs), "data-model": "shuup.product"});
+            name: attrs.name,
+            config: Select2.config(attrs)
+        });
     },
     config: function(ctrl) {
         return function(element, isInitialized) {
             if(typeof jQuery !== "undefined" && typeof jQuery.fn.select2 !== "undefined") {
-                var el = $(element);
-                select2.element = el;
+                let $el = $(element);
                 if (!isInitialized) {
-                    // This is needed to reset prop when going back from confirmation view
-                    productQuickSelect.currentProduct(null);
-                    el.select2()
-                        .on("change", function() {
-                            ctrl.onchange($(this).val());
-                        });
+                    activateSelect($el, ctrl.model, ctrl.attrs).on("change", () => {
+                        // note: data is only populated when an element is actually clicked or enter is pressed
+                        const data = $el.select2("data");
+                        ctrl.onchange(data);
+                        if(ctrl.focus()){
+                            // close it first to clear the search box...
+                            $el.select2("close");
+                            $el.select2("open");
+                        }
+                    });
+                } else {
+                    // this doesn't actually set the value for ajax autoadd
+                    $el.val(ctrl.value().id).trigger("change");
+                    // trigger select2 dropdown repositioning
+                    $(window).scroll();
                 }
+
             } else {
                 alert(gettext("Missing JavaScript dependencies detected"));
             }
@@ -175,24 +183,51 @@ var select2 = {
     }
 };
 
-var productQuickSelect = {
-    clearSelection: function() {
-        productQuickSelect.currentProduct(null);
-        select2.clear();
-    },
-    currentProduct: m.prop(),
-    changeProduct: function(id) {
-        productQuickSelect.currentProduct(id);
-    },
-    view: function() {
-        return m.component(select2, {
-            onchange: this.changeProduct,
+
+var ProductQuickSelect = {
+    view: function(ctrl, attrs) {
+        const {store} = attrs;
+
+        return m.component(Select2, {
+            name: "product-quick-select",
+            model: "shuup.product",
+            attrs: {
+                ajax: {
+                    processResults: function (data) {
+                        const {quickAdd} = store.getState();
+                        const results = {
+                            results: $.map(data.results, function (item) {
+                                return {text: item.name, id: item.id};
+                            })
+                        };
+                        if(quickAdd.autoAdd && results.results.length === 1) {
+                            store.dispatch(setQuickAddProduct(results.results[0]));
+                            store.dispatch(addProduct(results.results[0]));
+                            store.dispatch(clearQuickAddProduct());
+                            return {results: []};
+                        }
+                        return results;
+                    }
+                }
+            },
+            value: () => store.getState().quickAdd.product,
+            focus: () => store.getState().quickAdd.autoAdd && store.getState().quickAdd.product.id,
+            onchange: (product) => {
+                const {quickAdd} = store.getState();
+                if(product && product.length) {
+                    if(quickAdd.autoAdd) {
+                        store.dispatch(addProduct(product[0]));
+                    } else {
+                        store.dispatch(setQuickAddProduct(product[0]));
+                    }
+                }
+            }
         });
     }
 };
 
 export function orderLinesView(store, isCreating) {
-    const {lines, shop} = store.getState();
+    const {lines, shop, quickAdd} = store.getState();
     // This is needed to make select work when going back from confirmation view
     store.dispatch(updateTotals(store.getState));
     return m("div", [
@@ -202,7 +237,7 @@ export function orderLinesView(store, isCreating) {
             "p",
             shop.selected.pricesIncludeTaxes ? gettext("All prices include taxes.") : gettext("Taxes not included.")
         ),
-        m("div.list-group", renderOrderLines(store, shop.selected, lines)),
+        m("div.list-group", {id: "lines"}, renderOrderLines(store, shop.selected, lines)),
         m("hr"),
         m("div.row", [
             m("div.col-sm-6",
@@ -210,37 +245,46 @@ export function orderLinesView(store, isCreating) {
                     disabled: isCreating,
                     onclick: () => {
                         store.dispatch(addLine());
-                        var productId = productQuickSelect.currentProduct();
-                        if (productId){
+                        if (quickAdd.product.id){
                             store.dispatch(retrieveProductData(
-                                {id: productId, forLine: _.last(store.getState().lines).id}
+                                {id: quickAdd.product.id, forLine: _.last(store.getState().lines).id}
                             ));
                         }
                     }
                 }, m("i.fa.fa-plus"), " " + gettext("Add new line"))
             ),
-            m("div.col-sm-6", [
+            m("div.col-sm-6", {id: "quick-add"}, [
                 m("fieldset", [
                     m("legend", gettext("Quick add product line")),
-                    productQuickSelect,
+                    m.component(ProductQuickSelect, {store: store}),
                     m("button.btn.text-success" + (isCreating ? ".disabled": ""), {
+                        id: "add-product",
                         disabled: isCreating,
                         onclick: () => {
-                            store.dispatch(addLine());
-                            var productId = productQuickSelect.currentProduct();
-                            if (productId){
-                                store.dispatch(retrieveProductData(
-                                    {id: productId, forLine: _.last(store.getState().lines).id}
-                                ));
+                            if (quickAdd.product.id){
+                                store.dispatch(addProduct(quickAdd.product));
+                                store.dispatch(clearQuickAddProduct());
                             }
-                            productQuickSelect.clearSelection();
                         }
                     }, m("i.fa.fa-plus")),
                     m("button.btn.text-success" + (isCreating ? ".disabled": ""), {
+                        id: "clear-quick-add",
                         disabled: isCreating,
-                        onclick: productQuickSelect.clearSelection,
+                        onclick: () => {
+                            store.dispatch(clearQuickAddProduct());
+                        }
                     }, m("i.fa.fa-trash")),
                     m("span.help-block", gettext("Search product by name, SKU, or barcode and press button to add product line.")),
+                    m("input", {
+                        name: "auto-add",
+                        type: "checkbox",
+                        checked: quickAdd.autoAdd,
+                        onchange: function() {
+                            store.dispatch(clearQuickAddProduct());
+                            store.dispatch(setAutoAdd(this.checked));
+                        }
+                    }),
+                    m("span.quick-add-check-text", " " + gettext("Automatically add selected product")),
                 ])
             ]),
         ]),
