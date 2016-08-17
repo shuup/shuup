@@ -28,7 +28,7 @@ class ConfirmForm(forms.Form):
         super(ConfirmForm, self).__init__(*args, **kwargs)
 
     def clean(self):
-        product_ids = set(self.cleaned_data['product_ids'].split(','))
+        product_ids = set(self.cleaned_data.get('product_ids', "").split(','))
         if product_ids != self.current_product_ids:
             raise forms.ValidationError(
                 _("There has been a change in product availability. Please review your cart and reconfirm your order."))
