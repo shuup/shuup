@@ -14,6 +14,7 @@ from django.core.urlresolvers import reverse
 
 from shuup.core.models import PersonContact
 from shuup.testing.factories import get_default_shop
+from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils.fixtures import regular_user, REGULAR_USER_PASSWORD
 
 regular_user = regular_user  # noqa
@@ -207,3 +208,15 @@ def test_login_inactive_user_fails(client, regular_user, rf):
     request = rf.get("/")
     request.session = client.session
     assert get_user(request).is_anonymous(), "User is still anonymous"
+
+
+@pytest.mark.django_db
+def test_recover_password_form_with_invalid_email():
+    if "shuup.front.apps.auth" not in settings.INSTALLED_APPS:
+        pytest.skip("Need shuup.front.apps.auth in INSTALLED_APPS")
+
+    from shuup.front.apps.auth.forms import RecoverPasswordForm
+
+    form = RecoverPasswordForm({"username": "fake_username", "email": "invalid_email"})
+
+    assert (len(form.errors) == 1) and form.errors["email"]
