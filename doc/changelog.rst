@@ -22,6 +22,7 @@ Localization
 Admin
 ~~~~~
 
+- Show fewer pagination links for picotable list views
 - Product edit: Convert collapsed sections into tabs
 - Increment quantity when quick adding products with existing lines in order creator
 - Add option for automatically adding product lines when creating order
