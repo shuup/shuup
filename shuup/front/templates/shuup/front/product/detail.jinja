@@ -13,6 +13,7 @@
 {% block title %}{{ product.name }}{% endblock %}
 {% block content_title %}{% endblock %}
 
+{% set price_info = shuup.general.get_price_info(product) %}
 {% block breadcrumb %}
     <ol class="breadcrumb">
         <li><a href="/">{% trans %}Home{% endtrans %}</a></li>
@@ -39,18 +40,17 @@
                 {% endif %}
                 {% if show_prices() %}
                 <div class="product-price">
-                    {{ macros.render_product_price(product) }}
+                    {{ macros.render_product_price(product, price_info) }}
                 </div>
                 {% endif %}
                 <hr>
             </div>
         </div>
         <div class="product-image col-sm-6 col-md-5">
-            {% if product|is_discounted %}
+            {% if price_info.is_discounted %}
                 <div class="discount">
                   <span class="label label-danger">
-                    {% set discount_percent = product|discount_percent %}
-                    {{- _("Save %(discount_percent)s", discount_percent=discount_percent) -}}
+                    {{- _("Save %(discount_percent)s", discount_percent=price_info.discount_percent) -}}
                   </span>
                 </div>
             {% endif %}
@@ -65,7 +65,7 @@
                 {% endif %}
                 {% if show_prices() %}
                 <div class="product-price">
-                    {{ macros.render_product_price(product) }}
+                    {{ macros.render_product_price(product, price_info) }}
                 </div>
                 {% endif %}
             </div>
@@ -84,7 +84,7 @@
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">{% trans %}Description{% endtrans %}</a></li>
             <li role="presentation"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">{% trans %}Details{% endtrans %}</a></li>
-            {% if shuup.product.get_visible_attributes(product) %}
+            {% if attributes %}
                 <li role="presentation"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">{% trans %}Attributes{% endtrans %}</a></li>
             {% endif %}
             {% if media_files %}
@@ -113,7 +113,7 @@
             <div role="tabpanel" class="product-attributes tab-pane fade" id="tab2">
                 {% include "shuup/front/product/_detail_details_section.jinja" %}
             </div>
-            {% if shuup.product.get_visible_attributes(product) %}
+            {% if attributes %}
                 <div role="tabpanel" class="product-attributes tab-pane fade" id="tab3">
                     {% include "shuup/front/product/_detail_attributes_section.jinja" %}
                 </div>
@@ -137,7 +137,7 @@
             {% endif %}
         </div>
     </div>
-    
+
     {% placeholder "product_bottom" %}
         {% row %}
             {% plugin "product_cross_sells" %}

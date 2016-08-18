@@ -1,10 +1,11 @@
 {% macro product_box(product, show_image=True, show_description=True, class="product-box", thumbnail_size=(500,500)) %}
     {% set u = url("shuup:product", pk=product.pk, slug=product.slug) %}
+    {% set price_info = shuup.general.get_price_info(product) %}
     <div class="product-card {{ class }}" id="product-{{ product.id }}">
         <a href="{{ u }}" rel="product-detail" title="{{ product.name }}">
-            {% if product|is_discounted %}
+            {% if price_info.is_discounted %}
                 <div class="labels">
-                    <span class="label label-sale">{{ -(product|discount_rate)|percent }}</span>
+                    <span class="label label-sale">{{ -(product.discount_rate)|percent }}</span>
                 </div>
             {% endif %}
             {% if show_image %}
@@ -20,7 +21,7 @@
                 {% endif %}
                 {% if show_prices() %}
                     <div class="price">
-                        {{ render_product_price(product, show_units=False) }}
+                        {{ render_product_price(product, price_info, show_units=False) }}
                     </div>
                 {% endif %}
             </div>
@@ -273,7 +274,7 @@
 {% endmacro %}
 
 
-{% macro render_product_price(product, show_units=True) %}
+{% macro render_product_price(product, price_info, show_units=True) %}
 {% if show_prices() %}
 <div class="price-line">
     <span class="lead">
@@ -285,12 +286,12 @@
                 <strong>{{ min_price }} &ndash; {{ max_price }}</strong>
             {% endif %}
         {%- else -%}
-            {% if product|is_discounted -%}
+            {% if price_info.is_discounted -%}
                 <small class="text-muted original-price original"><s>
-                    {{- product|base_price -}}
+                    {{- price_info.base_price|money -}}
                 </s></small>
             {%- endif %}
-            <strong>{{ product|price }}</strong>
+            <strong>{{ price_info.price|money }}</strong>
         {%- endif -%}
         {%- if show_units -%}
             <small> / {{ product.sales_unit.short_name }}</small>
