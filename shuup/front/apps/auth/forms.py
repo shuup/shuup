@@ -75,8 +75,8 @@ class RecoverPasswordForm(forms.Form):
 
     def clean(self):
         data = self.cleaned_data
-        username = data["username"]
-        email = data["email"]
+        username = data.get("username")
+        email = data.get("email")
         if username and email:
             msg = _("Please provide either username or email, not both.")
             self.add_error("username", msg)

@@ -34,6 +34,7 @@ Addons
 Front
 ~~~~~
 
+- Fix password recovery form bug with invalid email
 - Show order reconfirmation error if product orderability changes on order
   confirmation
 - Exclude unorderable line items from basket
