@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-26 01:59+0000\n"
+"POT-Creation-Date: 2016-08-18 18:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -597,6 +597,15 @@ msgid "Order marked as partially paid."
 msgstr ""
 
 #, python-format
+msgid "%(name)s (physical stock: %(quantity)s)"
+msgstr ""
+
+#, python-format
+msgid ""
+"Insufficient physical stock count for following products: %(product_counts)s"
+msgstr ""
+
+#, python-format
 msgid "Shipment #%d created."
 msgstr ""
 
@@ -607,7 +616,8 @@ msgstr ""
 msgid "All rows requiring verification have been verified."
 msgstr ""
 
-msgid "All products have been shipped. Fully Shipped status set."
+#, python-format
+msgid "New shipping status set: %(shipping_status)s"
 msgstr ""
 
 msgid "gateway ID"

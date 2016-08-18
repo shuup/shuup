@@ -38,6 +38,7 @@ from shuup.core.fields import (
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
 from shuup.core.signals import refund_created, shipment_created
 from shuup.utils.analog import define_log_model, LogEntryKind
+from shuup.utils.excs import Problem
 from shuup.utils.money import Money
 from shuup.utils.numbers import bankers_round
 from shuup.utils.properties import (
@@ -488,7 +489,6 @@ class Order(MoneyPropped, models.Model):
         :param product_quantities: a dict mapping Product instances to quantities to ship
         :type product_quantities: dict[shuup.shop.models.Product, decimal.Decimal]
         :param supplier: Optional Supplier for this product. No validation is made
-                         as to whether the given supplier supplies the products.
         :param shipment: Optional unsaved Shipment for ShipmentProduct's. If not given
                          Shipment is created based on supplier parameter.
         :raises: NoProductsToShipException
@@ -499,20 +499,37 @@ class Order(MoneyPropped, models.Model):
             raise NoProductsToShipException("No products to ship (`quantities` is empty or has no quantity over 0).")
 
         assert (supplier or shipment)
+        from ._shipments import ShipmentProduct
         if shipment:
             assert shipment.order == self
-
-        from ._shipments import ShipmentProduct
-        if not shipment:
+        else:
             from ._shipments import Shipment
             shipment = Shipment(order=self, supplier=supplier)
         shipment.save()
 
+        if not supplier:
+            supplier = shipment.supplier
+
+        insufficient_stocks = {}
         for product, quantity in product_quantities.items():
             if quantity > 0:
+                stock_status = supplier.get_stock_status(product.pk)
+                if (product.stock_behavior == StockBehavior.STOCKED) and (stock_status.physical_count < quantity):
+                    insufficient_stocks[product] = stock_status.physical_count
                 sp = ShipmentProduct(shipment=shipment, product=product, quantity=quantity)
                 sp.cache_values()
                 sp.save()
+
+        if insufficient_stocks:
+            formatted_counts = [_("%(name)s (physical stock: %(quantity)s)") % {
+                    "name": force_text(name),
+                    "quantity": force_text(quantity)
+                }
+                for (name, quantity) in insufficient_stocks.items()]
+            raise Problem(
+                _("Insufficient physical stock count for following products: %(product_counts)s") % {
+                    "product_counts": ", ".join(formatted_counts)
+                })
 
         shipment.cache_values()
         shipment.save()

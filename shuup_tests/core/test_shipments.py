@@ -8,11 +8,14 @@
 import decimal
 import pytest
 
-from shuup.core.models import Shipment, ShippingStatus
+from django.conf import settings
+
+from shuup.core.models import Shipment, ShippingStatus, StockBehavior
 from shuup.testing.factories import (
     add_product_to_order, create_empty_order, create_product,
     get_default_shop, get_default_supplier
 )
+from shuup.utils.excs import Problem
 
 
 @pytest.mark.django_db
@@ -109,11 +112,41 @@ def test_shipment_delete():
     assert order.shipping_status == ShippingStatus.NOT_SHIPPED
 
 
-def _get_order(shop, supplier):
+@pytest.mark.django_db
+def test_shipment_with_insufficient_stock():
+    if "shuup.simple_supplier" not in settings.INSTALLED_APPS:
+        pytest.skip("Need shuup.simple_supplier in INSTALLED_APPS")
+
+    from shuup_tests.simple_supplier.utils import get_simple_supplier
+
+    shop = get_default_shop()
+    supplier = get_simple_supplier()
+    order = _get_order(shop, supplier, stocked=True)
+    product_line = order.lines.products().first()
+    product = product_line.product
+    assert product_line.quantity == 15
+
+    supplier.adjust_stock(product.pk, delta=10)
+    stock_status = supplier.get_stock_status(product.pk)
+    assert stock_status.physical_count == 10
+
+    order.create_shipment({product: 5}, supplier=supplier)
+    assert order.shipping_status == ShippingStatus.PARTIALLY_SHIPPED
+    assert order.shipments.all().count() == 1
+
+    with pytest.raises(Problem):
+        order.create_shipment({product: 10}, supplier=supplier)
+
+    # Should be fine after adding more stock
+    supplier.adjust_stock(product.pk, delta=5)
+    order.create_shipment({product: 10}, supplier=supplier)
+
+
+def _get_order(shop, supplier, stocked=False):
     order = create_empty_order(shop=shop)
     order.full_clean()
     order.save()
-    for product_data in _get_product_data():
+    for product_data in _get_product_data(stocked):
         quantity = product_data.pop("quantity")
         product = create_product(
             sku=product_data.pop("sku"),
@@ -128,12 +161,13 @@ def _get_order(shop, supplier):
     return order
 
 
-def _get_product_data():
+def _get_product_data(stocked=False):
     return [
         {
             "sku": "sku1234",
             "net_weight": decimal.Decimal("1"),
             "gross_weight": decimal.Decimal("43.34257"),
-            "quantity": decimal.Decimal("15")
+            "quantity": decimal.Decimal("15"),
+            "stock_behavior": StockBehavior.STOCKED if stocked else StockBehavior.UNSTOCKED
         }
     ]

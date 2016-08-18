@@ -543,13 +543,14 @@ def test_refunds_for_discounted_order_lines():
 @pytest.mark.django_db
 def test_can_create_shipment():
     shop = get_default_shop()
-    supplier = get_default_supplier()
+    supplier = get_simple_supplier()
     product = create_product(
         "test-sku",
         shop=get_default_shop(),
         default_price=10,
         stock_behavior=StockBehavior.STOCKED
     )
+    supplier.adjust_stock(product.id, 10)
 
     order = create_order_with_product(product, supplier, 1, 200, shop=shop)
     assert order.can_create_shipment()
@@ -648,13 +649,14 @@ def assert_defaultdict_values(default, **kwargs):
 @pytest.mark.django_db
 def test_product_summary():
     shop = get_default_shop()
-    supplier = get_default_supplier()
+    supplier = get_simple_supplier()
     product = create_product(
         "test-sku",
         shop=get_default_shop(),
         default_price=10,
         stock_behavior=StockBehavior.STOCKED
     )
+    supplier.adjust_stock(product.id, 5)
 
     # Order with 2 unshipped, non-refunded items and a shipping cost
     order = create_order_with_product(product, supplier, 2, 200, shop=shop)
