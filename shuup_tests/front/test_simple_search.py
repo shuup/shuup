@@ -43,6 +43,46 @@ def test_simple_search_view_works(rf):
 
 
 @pytest.mark.django_db
+def test_simple_search_word_finder(rf):
+    view = SearchView.as_view()
+    name = "Savage Garden"
+    sku = UNLIKELY_STRING
+    prod = create_product(
+        sku=sku,
+        name=name,
+        keywords="truly, madly, deeply",
+        description="Descriptive text",
+        shop=get_default_shop()
+    )
+
+    resp = view(apply_request_middleware(rf.get("/")))
+    assert prod not in resp.context_data["object_list"]
+
+    partial_sku = sku[:int(len(sku)/2)]
+    valid_searches = ["Savage", "savage", "truly", "madly", "truly madly", "truly garden", "text", sku, partial_sku]
+    for query in valid_searches:
+        resp = view(apply_request_middleware(rf.get("/", {"q": query})))
+        assert name in resp.rendered_content
+
+    invalid_searches = ["saavage", "", sku[::-1]]
+    for query in invalid_searches:
+        resp = view(apply_request_middleware(rf.get("/", {"q": query})))
+        assert name not in resp.rendered_content
+
+
+@pytest.mark.django_db
+def test_normalize_spaces(rf):
+    view = SearchView.as_view()
+    prod = create_product(sku=UNLIKELY_STRING, name="Savage Garden", shop=get_default_shop())
+    query = "\t Savage \t \t \n \r Garden \n"
+
+    resp = view(apply_request_middleware(rf.get("/")))
+    assert query not in resp.rendered_content
+    resp = view(apply_request_middleware(rf.get("/", {"q": query})))
+    assert query in resp.rendered_content
+
+
+@pytest.mark.django_db
 def test_simple_search_no_results(rf):
     with translation.override("xx"):  # use built-in translation
         get_default_shop()

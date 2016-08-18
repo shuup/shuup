@@ -60,14 +60,14 @@ def get_compiled_query(query_string, needles):
     return compiled_query
 
 
-def get_search_product_ids(request, query):
+def get_search_product_ids(request, query, limit=150):
     query = query.strip().lower()
     cache_key = "simple_search:%s" % hashlib.sha1(force_bytes(query)).hexdigest()
     product_ids = cache.get(cache_key)
     if product_ids is None:
         entry_query = get_compiled_query(
-            query, ['translations__name', 'translations__description', 'translations__keywords'])
-        product_ids = Product.objects.filter(entry_query).distinct().values_list("pk", flat=True)
+            query, ['sku', 'translations__name', 'translations__description', 'translations__keywords'])
+        product_ids = Product.objects.filter(entry_query).distinct().values_list("pk", flat=True)[:limit]
         cache.set(cache_key, product_ids, 60 * 5)
     return product_ids
 

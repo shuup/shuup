@@ -34,6 +34,8 @@ Addons
 Front
 ~~~~~
 
+- Add product SKU to searchable fields for simple search
+- Limit search results for simple search
 - Fix password recovery form bug with invalid email
 - Show order reconfirmation error if product orderability changes on order
   confirmation
