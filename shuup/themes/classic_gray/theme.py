@@ -18,7 +18,7 @@ class ClassicGrayTheme(Theme):
     identifier = "shuup.themes.classic_gray"
     name = "Shuup Classic Gray Theme"
     author = "Shuup Team"
-    template_dir = "classic_gray/"
+    template_dir = "classic_gray"
 
     fields = [
         ("show_welcome_text", forms.BooleanField(required=False, initial=True, label=_("Show Frontpage Welcome Text"))),

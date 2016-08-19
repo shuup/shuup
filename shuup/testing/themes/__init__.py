@@ -14,7 +14,16 @@ from shuup.xtheme import Theme
 class ShuupTestingTheme(Theme):
     identifier = "shuup_testing"
     name = _("Shuup Testing Theme")
-    author = "Shuup"
-    template_dir = "testing/"
+    author = "Shuup Team"
+    template_dir = "shuup_testing"
 
     plugins = [__name__ + ".plugins.TestHighlightPlugin"]
+
+    def get_cms_navigation_links(self):  # This is expected for front default templates
+        return []
+
+
+class ShuupTestingThemeWithCustomBase(ShuupTestingTheme):
+    identifier = "shuup_testing_with_custom_base_template"
+    name = _("Shuup Testing Theme With Custom Base Template")
+    default_template_dir = "default_templates"

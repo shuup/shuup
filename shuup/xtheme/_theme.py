@@ -44,6 +44,10 @@ class Theme(object):
     # If `None`, the `identifier` is used instead
     template_dir = None
 
+    # Directory prefix for this theme's default template files.
+    # If `None`, the default `shuup.front` templates is used instead.
+    default_template_dir = None
+
     # List of global placeholder names.
     # TODO: (These could be ignored in per-view editing, or something?)
     # TODO: Document this
