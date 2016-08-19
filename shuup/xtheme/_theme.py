@@ -8,15 +8,17 @@
 import logging
 from contextlib import contextmanager
 
+from django.utils.translation import ugettext_lazy as _
+
 from shuup.apps.provides import (
     get_identifier_to_object_map, get_provide_objects
 )
+from shuup.utils.importing import load
 
 log = logging.getLogger(__name__)
 
 
 # TODO: Document how to create Xthemes
-
 class Theme(object):
     """
     Base class for all Xtheme themes.
@@ -51,6 +53,9 @@ class Theme(object):
     # This might not be used if you override `get_configuration_form`.
     # TODO: Document this
     fields = []
+
+    # List of plugin specs used in this template
+    plugins = []
 
     def __init__(self, settings_obj=None):
         """
@@ -160,6 +165,72 @@ class Theme(object):
         :rtype: dict[str, View|callable]|None
         """
         return None
+
+    def get_all_plugin_choices(self, empty_label=None):
+        """
+        Get grouped list of 2-tuples (identifier and name) of all available Xtheme plugins.
+
+        Super handy for `<select>` boxes.
+
+        :param empty_label: Label for the "empty" choice. If falsy, no empty choice is prepended
+        :type empty_label: str|None
+        :return: List of 2-tuples
+        :rtype: Iterable[tuple[str, str]]
+        """
+        choices = []
+        if empty_label:
+            choices.append(("", empty_label))
+        choices += [(_("Global plugins"), self.get_global_plugin_choices())]
+        choices += [(_("Theme plugins"), self.get_theme_plugin_choices())]
+        return choices
+
+    def get_theme_plugin_choices(self, empty_label=None):
+        """
+        Get a sorted list of 2-tuples (identifier and name) of available theme specific Xtheme plugins.
+
+        Handy for `<select>` boxes.
+
+        :param empty_label: Label for the "empty" choice. If falsy, no empty choice is prepended
+        :type empty_label: str|None
+        :return: List of 2-tuples
+        :rtype: Iterable[tuple[str, str]]
+        """
+        choices = []
+        if empty_label:
+            choices.append(("", empty_label))
+
+        for plugin_spec in self.plugins:
+            plugin = load(plugin_spec)
+            choices.append((
+                plugin.identifier,
+                getattr(plugin, "name", None) or plugin.identifier
+            ))
+        choices.sort()
+        return choices
+
+    def get_global_plugin_choices(self, empty_label=None):
+        """
+        Get a sorted list of 2-tuples (identifier and name) of available global Xtheme plugins.
+
+        Handy for `<select>` boxes.
+
+        :param empty_label: Label for the "empty" choice. If falsy, no empty choice is prepended
+        :type empty_label: str|None
+        :return: List of 2-tuples
+        :rtype: Iterable[tuple[str, str]]
+        """
+        choices = []
+        if empty_label:
+            choices.append(("", empty_label))
+
+        for plugin in get_provide_objects("xtheme_plugin"):
+            if plugin.identifier:
+                choices.append((
+                    plugin.identifier,
+                    getattr(plugin, "name", None) or plugin.identifier
+                ))
+        choices.sort()
+        return choices
 
 
 _not_set = object()  # Can't use `None` here.

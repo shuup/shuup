@@ -10,7 +10,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.utils.form_group import FormGroup
 from shuup.xtheme.layout import LayoutCell
-from shuup.xtheme.plugins._base import Plugin
 
 
 class LayoutCellGeneralInfoForm(forms.Form):
@@ -29,6 +28,7 @@ class LayoutCellGeneralInfoForm(forms.Form):
 
     def __init__(self, **kwargs):
         self.layout_cell = kwargs.pop("layout_cell")
+        self.theme = kwargs.pop("theme")
         super(LayoutCellGeneralInfoForm, self).__init__(**kwargs)
         self.populate()
 
@@ -42,10 +42,11 @@ class LayoutCellGeneralInfoForm(forms.Form):
         self.fields["cell_width"] = forms.ChoiceField(
             label=_("Cell width"), choices=self.CELL_WIDTH_CHOICES, initial=initial_cell_width)
 
-        plugin_choices = Plugin.get_plugin_choices(empty_label=_("No Plugin"))
-        plugin_field = self.fields["plugin"]
-        plugin_field.choices = plugin_field.widget.choices = plugin_choices
-        plugin_field.initial = self.layout_cell.plugin_identifier
+        if self.theme:
+            plugin_choices = self.theme.get_all_plugin_choices(empty_label=_("No Plugin"))
+            plugin_field = self.fields["plugin"]
+            plugin_field.choices = plugin_field.widget.choices = plugin_choices
+            plugin_field.initial = self.layout_cell.plugin_identifier
 
     def save(self):
         """
@@ -68,12 +69,14 @@ class LayoutCellFormGroup(FormGroup):
     """
     def __init__(self, **kwargs):
         self.layout_cell = kwargs.pop("layout_cell")
+        self.theme = kwargs.pop("theme")
         assert isinstance(self.layout_cell, LayoutCell)
         super(LayoutCellFormGroup, self).__init__(**kwargs)
         self.add_form_def("general", LayoutCellGeneralInfoForm, kwargs={
-            "layout_cell": self.layout_cell
+            "layout_cell": self.layout_cell,
+            "theme": self.theme
         })
-        plugin = self.layout_cell.instantiate_plugin()
+        plugin = self.layout_cell.instantiate_plugin(theme=self.theme)
         if plugin:
             form_class = plugin.get_editor_form_class()
             if form_class:

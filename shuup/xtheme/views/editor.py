@@ -96,6 +96,7 @@ class EditorView(TemplateView):
             draft=True,
             global_type=global_type,
         )
+
         self.placeholder_name = self.request.GET["ph"]
         self.default_layout = self._get_default_layout()
         self.layout = self.view_config.get_placeholder_layout(
@@ -114,7 +115,8 @@ class EditorView(TemplateView):
             self.form = None
             return
         kwargs = {
-            "layout_cell": self.current_cell
+            "layout_cell": self.current_cell,
+            "theme": self.view_config.theme
         }
         if self.request.method == "POST":
             kwargs["data"] = self.request.POST

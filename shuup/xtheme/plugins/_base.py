@@ -14,6 +14,7 @@ from django.utils.translation import get_language
 from shuup.apps.provides import (
     get_identifier_to_object_map, get_provide_objects
 )
+from shuup.utils.importing import load
 from shuup.utils.text import space_case
 from shuup.xtheme.plugins.consts import FALLBACK_LANGUAGE_CODE
 from shuup.xtheme.plugins.forms import GenericPluginForm
@@ -118,7 +119,7 @@ class Plugin(object):
         return value  # Return the value itself; it's probably just something untranslated.
 
     @classmethod
-    def load(cls, identifier):
+    def load(cls, identifier, theme=None):
         """
         Get a plugin class based on the identifier from the `xtheme_plugin` provides registry.
 
@@ -127,14 +128,20 @@ class Plugin(object):
         :return: A plugin class, or None
         :rtype: class[Plugin]|None
         """
-        return get_identifier_to_object_map("xtheme_plugin").get(identifier)
+        loaded_plugin = get_identifier_to_object_map("xtheme_plugin").get(identifier)
+        if not loaded_plugin and theme is not None:
+            for plugin_spec in theme.plugins:
+                plugin = load(plugin_spec)
+                if plugin.identifier == identifier:
+                    return plugin
+        return loaded_plugin
 
     @classmethod
     def get_plugin_choices(cls, empty_label=None):
         """
         Get a sorted list of 2-tuples (identifier and name) of available Xtheme plugins.
 
-        Handy for `<select>` boxen.
+        Handy for `<select>` boxes.
 
         :param empty_label: Label for the "empty" choice. If falsy, no empty choice is prepended
         :type empty_label: str|None

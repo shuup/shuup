@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-from shuup.xtheme import Plugin, templated_plugin_factory, TemplatedPlugin
+from shuup.testing.theme import ShuupTestingTheme
+from shuup.testing.theme.plugins import TestHighlightPlugin
+from shuup.xtheme import templated_plugin_factory, TemplatedPlugin
 from shuup.xtheme.testing import override_current_theme_class
 from shuup_tests.utils import printable_gibberish
 from shuup_tests.xtheme.utils import get_jinja2_engine, plugin_override
@@ -7,8 +9,12 @@ from shuup_tests.xtheme.utils import get_jinja2_engine, plugin_override
 
 def test_plugin_choices():
     with plugin_override():
-        choice_identifiers = set(c[0] for c in Plugin.get_plugin_choices())
-        assert choice_identifiers == set(("inject", "text"))
+        theme = ShuupTestingTheme()
+        choice_identifiers = set()
+        for identifier, data in theme.get_all_plugin_choices():
+            for choice in data:
+                choice_identifiers.add(choice[0])
+        assert choice_identifiers == set(("inject", "text", TestHighlightPlugin.identifier))
 
 
 def test_templated_plugin():
