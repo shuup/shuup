@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
 import six
 
-from shuup.xtheme import XTHEME_GLOBAL_VIEW_NAME
 from shuup.xtheme.layout import Layout, LayoutCell
 from shuup.xtheme.plugins.text import TextPlugin
 from shuup.xtheme.rendering import get_view_config, render_placeholder
 from shuup.xtheme.testing import override_current_theme_class
 from shuup_tests.utils import printable_gibberish
 from shuup_tests.xtheme.utils import (
-    close_enough, FauxView, get_jinja2_engine, get_request,
-    get_test_template_bits, plugin_override
-)
+    close_enough, get_jinja2_engine, get_request,
+    get_test_template_bits, plugin_override,
+    FauxTheme)
 
 
 def test_layout_serialization():
+    theme = FauxTheme
     with plugin_override():
-        l = Layout("test")
+        l = Layout(theme, "test")
         l.begin_column({"md": 8})
         l.add_plugin("text", {"text": "yes"})
         serialized = l.serialize()
@@ -30,7 +30,7 @@ def test_layout_serialization():
             ]
         }
         assert serialized == expected
-        assert Layout.unserialize(serialized).serialize() == expected
+        assert Layout.unserialize(theme, serialized).serialize() == expected
 
 
 def test_layout_rendering(rf):
@@ -96,14 +96,14 @@ def test_view_config_caches_into_context(rf):
 
 def test_missing_plugin_render():
     plugin_id = printable_gibberish()
-    cell = LayoutCell(plugin_identifier=plugin_id)
+    cell = LayoutCell(FauxTheme, plugin_identifier=plugin_id)
     assert not cell.plugin_class
     assert not cell.instantiate_plugin()
     assert ("%s?" % plugin_id) in cell.render(None)  # Should render a "whut?" comment
 
 
 def test_null_cell_render():
-    cell = LayoutCell(None)
+    cell = LayoutCell(FauxTheme, None)
     assert not cell.plugin_class
     assert not cell.instantiate_plugin()
     assert not cell.render(None)  # Should render nothing whatsoever!
@@ -111,12 +111,12 @@ def test_null_cell_render():
 
 def test_plugin_naming():
     with plugin_override():
-        cell = LayoutCell(TextPlugin.identifier)
+        cell = LayoutCell(FauxTheme, TextPlugin.identifier)
         assert cell.plugin_name == TextPlugin.name
 
 
 def test_layout_api():
-    l = Layout("test")
+    l = Layout(FauxTheme, "test")
     l.begin_column({"md": 8})
     px0y0 = l.add_plugin("text", {"text": "yes"})
     l.begin_column({"md": 4})

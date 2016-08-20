@@ -76,7 +76,7 @@ class LayoutCellFormGroup(FormGroup):
             "layout_cell": self.layout_cell,
             "theme": self.theme
         })
-        plugin = self.layout_cell.instantiate_plugin(theme=self.theme)
+        plugin = self.layout_cell.instantiate_plugin()
         if plugin:
             form_class = plugin.get_editor_form_class()
             if form_class:
