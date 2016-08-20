@@ -29,6 +29,7 @@ class LayoutCell(object):
         :param sizes: Size dict
         :type sizes: dict|None
         """
+        self.theme = None
         self.sizes = dict(sizes or {})
         self.plugin_identifier = plugin_identifier
         self.config = config or {}
@@ -41,7 +42,7 @@ class LayoutCell(object):
         :return: Plugin or None.
         :rtype: Plugin|None
         """
-        return Plugin.load(self.plugin_identifier)
+        return Plugin.load(self.plugin_identifier, self.theme)
 
     @property
     def plugin_name(self):
@@ -54,13 +55,14 @@ class LayoutCell(object):
         plugin_class = self.plugin_class
         return getattr(plugin_class, "name", "None")
 
-    def instantiate_plugin(self):
+    def instantiate_plugin(self, theme=None):
         """
         Instantiate the plugin with the current config.
 
         :return: Instantiated plugin (if a class is available)
         :rtype: Plugin|None
         """
+        self.theme = theme
         plugin_class = self.plugin_class
         if callable(plugin_class):
             return plugin_class(config=self.config)
