@@ -60,16 +60,17 @@
 {% endmacro %}
 
 {% macro product_price_div(product, quantity) %}
+    {% set price_info = shuup.general.get_price_info(product, quantity) %}
     <div class="price text-right" id="product-price-div">
         <h2>
             <small class="text-muted">{% trans %}Total{% endtrans %}:</small>
-            <span id="product-price"><strong>{{ product|price(quantity) }}</strong></span>
+            <span id="product-price"><strong>{{ price_info.price|money }}</strong></span>
         </h2>
         <span class="small text-muted">
-            {% if product|is_discounted(quantity) %}
-            (<s>{{ product|base_unit_price(quantity) }}</s>)
+            {% if price_info.is_discounted %}
+            (<s>{{ price_info.base_unit_price|money }}</s>)
             {% endif %}
-            {{ product|discounted_unit_price(quantity) }}/{{ product.sales_unit.short_name }}
+            {{ price_info.discounted_unit_price|money }}/{{ product.sales_unit.short_name }}
         </span>
     </div>
 {% endmacro %}

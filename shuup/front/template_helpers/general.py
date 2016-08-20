@@ -44,13 +44,14 @@ def get_visible_products(context, n_products, ordering=None, filter_dict=None, o
     if ordering:
         products_qs = products_qs.order_by(ordering)
 
+    suppliers = Supplier.objects.all()
     if orderable_only:
         products = []
         for product in products_qs[:(n_products * 4)]:
             if len(products) == n_products:
                 break
             shop_product = product.get_shop_instance(shop)
-            for supplier in Supplier.objects.all():
+            for supplier in suppliers:
                 if shop_product.is_orderable(supplier, customer, shop_product.minimum_purchase_quantity):
                     products.append(product)
                     break
@@ -68,10 +69,11 @@ def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_
     product_ids = [d[0] for d in data][:n_products]
 
     products = []
+    suppliers = Supplier.objects.all()
     for product in Product.objects.filter(id__in=product_ids):
         shop_product = product.get_shop_instance(request.shop)
         if orderable_only:
-            for supplier in Supplier.objects.all():
+            for supplier in suppliers:
                 if shop_product.is_orderable(supplier, request.customer, shop_product.minimum_purchase_quantity):
                     products.append(product)
                     break
@@ -151,3 +153,12 @@ def get_pagination_variables(context, objects, limit):
     variables["objects"] = page.object_list
 
     return variables
+
+
+@contextfunction
+def get_price_info(context, product, quantity=1):
+    request = context["request"]
+    if product.is_variation_parent():
+        return product.get_cheapest_child_price_info(request, quantity)
+    else:
+        return product.get_price_info(request, quantity)

@@ -66,6 +66,10 @@ class XthemeEnvironment(Environment):
 
     template_class = XthemeTemplate
 
+    def __init__(self, *args, **kwargs):
+        super(XthemeEnvironment, self).__init__(*args, **kwargs)
+        self.theme = get_current_theme()
+
     def get_template(self, name, parent=None, globals=None):
         """
         Load a template from the loader.  If a loader is configured this
@@ -122,10 +126,9 @@ class XthemeEnvironment(Environment):
         """
         if name.startswith("shuup/admin"):  # Ignore the admin.
             return name
-        theme = get_current_theme()
-        if not theme:
+        if not self.theme:
             return name
         return [
-            "%s/%s" % ((theme.template_dir or theme.identifier), name),
+            "%s/%s" % ((self.theme.template_dir or self.theme.identifier), name),
             name
         ]
