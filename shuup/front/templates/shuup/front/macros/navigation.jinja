@@ -1,0 +1,240 @@
+{% extends "shuup/front/macros/theme/navigation.jinja" %}
+
+{% macro render_navigation() %}
+    <div class="top-nav">
+        <div class="container">
+            <ul class="pull-left">
+                {{ render_search() }}
+                {{ render_info_dropdown() }}
+                {{ render_language_changer() }}
+            </ul>
+            <ul class="pull-right" id="navigation-basket-partial">
+                {{ render_basket_partial(request.basket) }}
+            </ul>
+        </div>
+    </div>
+    <div class="bottom-nav">
+        <div class="container">
+            {{ render_logo() }}
+            {{ render_menu_items() }}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro render_search() %}
+    {% if shuup.simple_search %}
+        <li>
+            {% block searchform %}
+                {{ shuup.simple_search.get_search_form() }}
+            {% endblock %}
+        </li>
+    {% endif %}
+{% endmacro %}
+
+{% macro render_info_dropdown() %}
+    {% if user.is_authenticated() %}
+        {% call _render_info_for_authenticated_users() %}
+            {{ _render_dropdown_item(url("shuup:customer_edit"), "fa fa-user fa-fw", _("Edit account details")) }}
+            {% if request.is_company_member %}
+                {{ _render_dropdown_item(url("shuup:company_edit"), "fa fa-users fa-fw", _("Edit company details")) }}
+            {% endif %}
+            {% if shuup.urls.has_url("shuup:personal-orders") %}
+                {{ _render_dropdown_item(url("shuup:personal-orders"), "fa fa-list-alt fa-fw", _("My orders")) }}
+            {% endif %}
+            {% if shuup.urls.has_url("shuup:saved_cart.list") %}
+                {{ _render_dropdown_item(url("shuup:saved_cart.list"), "fa fa-shopping-cart fa-fw", _("My saved carts")) }}
+            {% endif %}
+            {% if shuup.urls.has_url("shuup:personal_wishlists") %}
+                {{ _render_dropdown_item(url("shuup:personal_wishlists"), "fa fa-star fa-fw", _("My wishlists")) }}
+            {% endif %}
+            {% if user.is_superuser %}
+                {{ _render_dropdown_item(url("shuup_admin:dashboard"), "fa fa-dashboard fa-fw", _("Admin panel")) }}
+            {% endif %}
+            {% if shuup.urls.has_url("shuup:logout") %}
+                {{ _render_dropdown_item(url("shuup:logout"), "fa fa-sign-out fa-fw", _("Log out"), True) }}
+            {% endif %}
+        {% endcall %}
+    {% else %}
+        {% call _render_info_for_anonymous_users() %}
+            <li>
+                <form role="form" method="post" action="{{ url("shuup:login") }}">
+                    {% csrf_token %}
+                    {% if request.resolver_match.url_name == "logout" %}{% set next="/" %}{% endif %}
+                    <input type="hidden" name="next" value="{{ next or request.path }}">
+                    <div class="form-group">
+                        <label for="username">{% trans %}Username or email address{% endtrans %}</label>
+                        <input type="text" name="username" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">{% trans %}Password{% endtrans %}</label>
+                        <input type="password" name="password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        {% trans %}Log in{% endtrans %}
+                    </button>
+                </form>
+            </li>
+            <li class="divider"></li>
+            {% if shuup.urls.has_url("shuup:recover_password") %}
+                <li>
+                    <a href="{{ url("shuup:recover_password") }}">
+                        <i class="fa fa-question fa-fw"></i> {% trans %}Forgot your password?{% endtrans %}
+                    </a>
+                </li>
+            {% endif %}
+            {% if shuup.urls.has_url("shuup:registration_register") %}
+                <li>
+                    <a href="{{ url("shuup:registration_register") }}{% if next %}?next={{next}}{% endif %}">
+                        <i class="fa fa-edit fa-fw"></i> {% trans %}New user? Register here!{% endtrans %}
+                    </a>
+                </li>
+            {% endif %}
+        {% endcall %}
+    {% endif %}
+{% endmacro %}
+
+{% macro _render_info_for_authenticated_users() %}
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="menu-icon fa fa-user"></i>
+            <span class="hidden-xs">
+            {% if user.first_name or user.last_name %}
+                {{ user.get_full_name() }}
+            {% else %}
+                {{ user }}
+            {% endif %}
+            </span>
+            <i class="dropdown-icon fa fa-angle-down"></i>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+            {{ caller() }}
+        </ul>
+    </li>
+{% endmacro %}
+
+{% macro _render_dropdown_item(url, icon, title, pre_separator=False) %}
+    {% if pre_separator %}
+        <li role="separator" class="divider"></li>
+    {% endif %}
+    <li>
+        <a href="{{ url }}">
+            <i class="{{ icon_class }}"></i> {{ title }}
+        </a>
+    </li>
+{% endmacro %}
+
+{% macro _render_info_for_anonymous_users() %}
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="menu-icon fa fa-user"></i> <span class="hidden-xs">{% trans %}Log in{% endtrans %}</span>
+            <i class="dropdown-icon fa fa-angle-down"></i>
+        </a>
+        <ul class="dropdown-menu login" role="dropdown-menu">
+            {{ caller() }}
+        </ul>
+    </li>
+{% endmacro %}
+
+{% macro render_language_changer() %}
+    {% if LANGUAGES|length > 1 %}
+        <li class="dropdown" id="language-changer">
+            <a aria-expanded="false" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="menu-icon fa fa-globe hidden-xs"></i> {{ LANGUAGE_CODE|upper }}
+                <i class="dropdown-icon fa fa-angle-down"></i>
+            </a>
+            <ul class="dropdown-menu languages" role="menu">
+                {% for (code, name, local_name) in get_language_choices() %}
+                <li><a href="#" class="language" data-value="{{ code }}">{{ name }} ({{ local_name }})</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endif %}
+{% endmacro %}
+
+{% macro render_basket_partial(basket, id=None) %}
+    {% if show_prices() %}
+        {% set lines = request.basket.get_lines() %}
+        <li class="dropdown cart"{% if id %} id="{{ id }}"{% endif %}>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="menu-icon fa fa-shopping-cart"></i>
+                <span class="hidden-xs">{% trans %}Cart{% endtrans %}</span>
+                <span>({{ basket.product_count }})</span>
+                <i class="dropdown-icon fa fa-angle-down"></i>
+            </a>
+            <div class="dropdown-menu cart">
+                {% if lines %}
+                    <table class="table">
+                        <colgroup>
+                            <col style="min-width: 180px;">
+                            <col style="min-width: 90px;">
+                        </colgroup>
+                        <thead class="hidden-xs hidden-sm">
+                            <tr>
+                                <th>{% trans %}Items{% endtrans %}</th>
+                                <th class="text-right">{% trans %}Price{% endtrans %}</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>{% trans %}Total{% endtrans %}</th>
+                                <th class="text-right">{{ basket|total_price }}</th>
+                            </tr>
+                        </tfoot>
+                        <tbody class="hidden-xs hidden-sm">
+                            {% for line in lines %}
+                                <tr>
+                                    <td>
+                                        {% set line_url = shuup.urls.get_url(line.product) %}
+                                        {{ line.quantity|number }} &times;
+                                        {% if line_url %}
+                                            <a href="{{ line_url }}">{{ line.text }}</a>
+                                        {% else %}
+                                            {{ line.text }}
+                                        {% endif %}
+                                    </td>
+                                    {% if show_prices() %}
+                                        <td class="text-right">{{ line|price }}</td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <a href="{{ url("shuup:basket") }}" class="btn btn-block btn-primary btn-view-cart">
+                        {% trans %}View cart{% endtrans %} <i class="fa fa-angle-double-right"></i>
+                    </a>
+                {% else %}
+                    <span class="empty-cart">
+                        <i class="fa fa-exclamation-circle text-warning"></i>
+                        {% trans %}Your shopping cart is empty.{% endtrans %}
+                    </span>
+                {% endif %}
+            </div>
+        </li>
+    {% endif %}
+{% endmacro %}
+
+{% macro render_logo() %}
+    {% set cropped_logo = request.shop.logo|thumbnail(size=(500,500)) %}
+    <div class="logo {% if not cropped_logo %}no-image{% endif %}">
+        {% if cropped_logo %}
+            <a href="/" class="image" style="background-image:url('{{ cropped_logo }}')"></a>
+        {% else %}
+            <a href="/" class="text"><h4>{{ request.shop.public_name }}</h4></a>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro render_menu_items() %}
+    <button class="toggle-mobile-nav">
+        <span class="sr-only">{% trans %}Menu{% endtrans %}</span>
+        <span class="hamburger"></span>
+    </button>
+    <div class="pages">
+        <ul class="nav-collapse">
+            <li{% if request.path == "/" %} class="current"{% endif %}><a href="/">{% trans %}Home{% endtrans %}</a></li>
+            {% set products_url = url('shuup:xtheme_extra_view', view='products') %}
+            <li{% if request.path == products_url %} class="current"{% endif %}><a href="{{ products_url }}">{% trans %}Products{% endtrans %}</a></li>
+            {# See Classic Gray navigation.jinja for a example to rendering navigation links here #}
+        </ul>
+    </div>
+{% endmacro %}

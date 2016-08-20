@@ -1,0 +1,176 @@
+{% extends "shuup/front/macros/theme/general.jinja" %}
+
+{% macro alert(message, title=None, mode="") %}
+    <div class="alert{% if mode %} alert-{{ mode }}{% endif %}">
+        {% if title %}
+            <strong>{{ title }}</strong>
+        {% endif %}
+        {% if not caller %}
+            {{ message|safe }}
+        {% else %}
+            {{ caller() }}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro breadcrumb() %}
+    <ol class="breadcrumb">
+        {{ caller() }}
+    </ol>
+{% endmacro %}
+
+{% macro render_breadcrumb_item(url, name, active=False) %}
+    <li{% if active %} class="active"{% endif %}>
+        {% if url %}<a href="{{ url }}">{{ name }}</a>{% else %}{{ name }}{% endif %}
+    </li>
+{% endmacro %}
+
+{% macro render_field(field, classes="") %}
+    {% if field.field.widget.is_hidden %}
+        {{ field.as_widget()|safe }}
+    {% else %}
+        {% set widget_name = field.field.widget.__class__.__name__|lower %}
+        {% if widget_name == "checkboxinput" %}
+            <div class="custom-checkbox {{ widget_name }}{% if field.field.required %} required{% endif %}{% if field.errors %} has-error{% endif %} {{ classes }}">
+                {{ field.as_widget()|safe }}
+                <label for="{{ field.auto_id }}">
+                    {{ field.label }}
+                </label>
+                {% if field.errors %}
+                    <p class="help-block">
+                        {% for error in field.errors %}
+                            {{ error}}
+                        {% endfor %}
+                    </p>
+                {% endif %}
+            </div>
+        {% elif widget_name == "radio" %}
+            <div class="custom-radio {{ widget_name }}{% if field.field.required %} required{% endif %}{% if field.errors %} has-error{% endif %} {{ classes }}">
+                {{ field.as_widget()|safe }}
+                <label for="{{ field.auto_id }}">
+                    {{ field.label }}
+                </label>
+            </div>
+        {% elif widget_name == "select" %}
+            <div class="form-group {{ widget_name }}{% if field.field.required %} required{% endif %}{% if field.errors %} has-error{% endif %} {{ classes }}">
+                <label for="{{ field.auto_id }}" class="control-label">{{ field.label }}</label>
+                {{ field.as_widget(attrs={"class": "form-control selectpicker"})|safe }}
+                {% if field.help_text %}
+                    <p class="help-block">{{ field.help_text }}</p>
+                {% endif %}
+                {% if field.errors %}
+                    <p class="help-block">
+                        {% for error in field.errors %}
+                            {{ error}}
+                        {% endfor %}
+                    </p>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="form-group {{ widget_name }}{% if field.field.required %} required{% endif %}{% if field.errors %} has-error{% endif %} {{ classes }}">
+                <label class="control-label" for="{{ field.auto_id }}">{{ field.label }}</label>
+                {{ field.as_widget(attrs={"class": "form-control"})|safe }}
+                {% if field.help_text %}
+                    <p class="help-block">{{ field.help_text }}</p>
+                {% endif %}
+                {% if field.errors %}
+                    <p class="help-block">
+                        {% for error in field.errors %}
+                            {{ error}}
+                        {% endfor %}
+                    </p>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endif %}
+{% endmacro %}
+
+{% macro render_pagination(page, paginator) %}
+    <script>
+        window.PAGE_NUMBER = "{{ page.number }}";
+    </script>
+    <nav>
+        <ul class="pagination text-center">
+            {% if page.has_previous() %}
+                <li id="previous_page">
+                    <a href="#"
+                       onclick="moveToPage({{ page.previous_page_number()}}); return false;"
+                       aria-label="{% trans %}Previous{% endtrans %}">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                </li>
+            {% else %}
+                <li id="previous_page" class="disabled">
+                    <span aria-label="{% trans %}Previous{% endtrans %}">
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    </span>
+                </li>
+            {% endif %}
+            {% for i in paginator.page_range %}
+                <li id="pagination_page_{{ i }}" class="{% if i == page.number %}active{% endif %}">
+                    <a href="#" onclick="moveToPage({{ i }}); return false;">{{ i }}</a>
+                </li>
+            {% endfor %}
+            {% if page.has_next() %}
+                <li id="next_page">
+                    <a href="#"
+                       onclick="moveToPage({{ page.next_page_number() }}); return false;"
+                       aria-label="{% trans %}Next{% endtrans %}">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </li>
+            {% else %}
+                <li id="next_page" class="disabled">
+                    <span aria-label="{% trans %}Next{% endtrans %}">
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </span>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endmacro %}
+
+{% macro render_maintenance_mode_notification() %}
+    {% if request.shop.maintenance_mode %}
+        <div class="alert alert-warning alert-top text-center alert-dismissible">
+            <button type="button"
+                    class="close"
+                    data-dismiss="alert"
+                    aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {% trans %}Shop is currently in maintenance mode.{% endtrans %}
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro render_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-dismissible alert-{{ message.tags }}" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endmacro %}
+
+{% macro render_errors() %}
+    {% if form %}
+        {% if form.non_field_errors and form.non_field_errors() %}
+            {% for error in form.non_field_errors() %}
+            <div class="alert alert-dismissible alert-danger" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <i class="fa fa-exclamation-circle"></i> {{ error }}
+            </div>
+            {% endfor %}
+        {% elif form.errors %}
+            <div class="alert alert-dismissible alert-danger" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <i class="fa fa-exclamation-circle"></i> {% trans %}There were errors on submitted form fields. Please check them and try again.{% endtrans %}
+            </div>
+        {% endif %}
+    {% endif %}
+{% endmacro %}

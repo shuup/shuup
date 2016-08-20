@@ -100,7 +100,6 @@ class XthemeEnvironment(Environment):
         :return: Template object
         :rtype: shuup.xtheme.engine.XthemeTemplate
         """
-
         # Overridden to redirect calls to super.
         if isinstance(template_name_or_list, six.string_types):
             return super(XthemeEnvironment, self).get_template(template_name_or_list, parent, globals)
@@ -113,7 +112,11 @@ class XthemeEnvironment(Environment):
         Get theme-prefixed paths for the given template name.
 
         For instance, if the template_dir or identifier of the current theme is `mystery` and we're looking up
-        `shuup/front/bar.jinja`, we'll look at `mystery/shuup/front/bar.jinja`, then at `shuup/front/bar.jinja`.
+        `shuup/front/bar.jinja`, we'll look at `mystery/shuup/front/bar.jinja`, finally at `shuup/front/bar.jinja`.
+
+        Mystery theme also can define default template dir let's say `pony`. In this scenario we're looking up
+        `shuup/front/bar.jinja` from `mystery/shuup/front/bar.jinja` then at `pony/shuup/front/bar.jinja` and
+        finally at the default `shuup/front/bar.jinja`.
 
         :param name: Template name
         :type name: str
@@ -125,7 +128,6 @@ class XthemeEnvironment(Environment):
         theme = get_current_theme()
         if not theme:
             return name
-        return [
-            "%s/%s" % ((theme.template_dir or theme.identifier), name),
-            name
-        ]
+        theme_template = "%s/%s" % ((theme.template_dir or theme.identifier), name)
+        default_template = (("%s/%s" % (theme.default_template_dir, name)) if theme.default_template_dir else None)
+        return [theme_template, default_template, name] if default_template else [theme_template, name]

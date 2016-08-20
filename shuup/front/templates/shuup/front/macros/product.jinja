@@ -1,0 +1,139 @@
+{#
+Product macros is splitted to multiple files and are extended together.
+
+Inheritance order for product macors:
+    product_image.jinja
+    product_information.jinja
+    product_ordering.jinja
+    theme/product.jinja
+#}
+{% extends "shuup/front/macros/product_image.jinja" %}
+
+{% macro product_box(product, show_image=True, show_description=True, class="product-box", thumbnail_size=(500,500)) %}
+    {% set u = url("shuup:product", pk=product.pk, slug=product.slug) %}
+    <div class="product-card {{ class }}" id="product-{{ product.id }}">
+        <a href="{{ u }}" rel="product-detail" title="{{ product.name }}">
+            {% if product|is_discounted %}
+                <div class="labels">
+                    <span class="label label-sale">{{ -(product|discount_rate)|percent }}</span>
+                </div>
+            {% endif %}
+            {% if show_image %}
+                {% set primary_image_thumb = product.primary_image|thumbnail(size=thumbnail_size) %}
+                <div class="image-wrap">
+                    {% if product.primary_image %}
+                        {% set image_url = primary_image_thumb %}
+                    {% else %}
+                        {% set image_url = STATIC_URL ~ "shuup/front/img/no_image.png" %}
+                    {% endif %}
+                    <div class="image" style="background-image:url('{{ image_url }}')"></div>
+                </div>
+            {% endif %}
+            <div class="detail-wrap">
+                <div class="name">{{ product.name }}</div>
+                {% if show_description and product.description %}
+                    <p class="description">{{ product.description|striptags|truncate(180)|safe }}</p>
+                {% endif %}
+                {% if show_prices() %}
+                    <div class="price">
+                        {{ render_product_price(product, show_units=False) }}
+                    </div>
+                {% endif %}
+            </div>
+        </a>
+        <div class="actions clearfix">
+            <button type="button"
+                    class="btn btn-block text-muted"
+                    onclick="showPreview('{{ product.id }}');">
+                <i class="fa fa-eye"></i> {% trans %}Preview{% endtrans %}
+            </button>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro render_product_price(product, show_units=True) %}
+    {% if show_prices() %}
+        <div class="price-line">
+            <span class="lead">
+                {%- if product.is_variation_parent() -%}
+                    {% set (min_price, max_price) = product|price_range %}
+                    {% if min_price == max_price %}
+                        <strong>{{ min_price }}</strong>
+                    {% else %}
+                        <strong>{{ min_price }} &ndash; {{ max_price }}</strong>
+                    {% endif %}
+                {%- else -%}
+                    {% if product|is_discounted -%}
+                        <small class="text-muted original-price original"><s>
+                            {{- product|base_price -}}
+                        </s></small>
+                    {%- endif %}
+                    <strong>{{ product|price }}</strong>
+                {%- endif -%}
+                {%- if show_units -%}
+                    <small> / {{ product.sales_unit.short_name }}</small>
+                {%- endif -%}
+            </span>
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro render_open_graph_metadata(product) %}
+    <meta property="og:site_name" content="{{ request.shop }}">
+    <meta property="og:type" content="product">
+    <meta property="og:url" content="{{ shuup.urls.model_url(product, absolute=True) }}">
+    <meta property="og:title" content="{{ product.name }}">
+    {% if primary_image %}
+        <meta property="og:image" content="{{ request.build_absolute_uri(primary_image.url) }}">
+    {% endif %}
+{% endmacro %}
+
+{% macro render_product_placeholder_section() %}
+    {% placeholder "product_bottom" %}
+        {% row %}
+            {% plugin "product_cross_sells" %}
+                type = "related"
+                title = "Related Products"
+            {% endplugin %}
+        {% endrow %}
+        {% row %}
+            {% plugin "product_cross_sells" %}
+                type = "recommended"
+                title = "We recommend these products"
+            {% endplugin %}
+        {% endrow %}
+        {% row %}
+            {% plugin "product_cross_sells" %}
+                type = "computed"
+                title = "Users who bought this product also bought"
+            {% endplugin %}
+        {% endrow %}
+    {% endplaceholder %}
+{% endmacro %}
+
+{% macro render_also_available_products(product) %}
+    {% if package_parents %}
+        <hr>
+        <h3>{% trans %}Also available in{% endtrans %}</h3>
+        <div class="row">
+            {% for parent in package_parents %}
+                <div class="col-md-3">
+                    {{ product_box(parent) }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro render_product_detail_ready(product) %}
+    <script>
+        $(function() {
+            updatePrice("{{ product.id }}");
+        });
+    </script>
+{% endmacro %}
+
+{% macro render_extrajs() %}
+    {{ render_product_image_js() }}
+    {{ render_product_detail_ready(product) }}
+{% endmacro %}

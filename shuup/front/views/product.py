@@ -10,7 +10,7 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import get_language
 from django.views.generic import DetailView
 
-from shuup.core.models import Product, ProductMode
+from shuup.core.models import AttributeVisibility, Product, ProductMode
 from shuup.front.utils.views import cache_product_things
 from shuup.utils.excs import extract_messages, Problem
 from shuup.utils.numbers import get_string_sort_order
@@ -63,7 +63,8 @@ class ProductDetailView(DetailView):
             context["package_children"] = cache_product_things(self.request, children)
 
         context["shop_product"] = self.shop_product
-
+        context["attributes"] = product.attributes.filter(
+            attribute__visibility_mode=AttributeVisibility.SHOW_ON_PRODUCT_PAGE)
         context["primary_image"] = self.shop_product.public_primary_image
         context["images"] = self.shop_product.public_images
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from shuup.testing.theme import ShuupTestingTheme
-from shuup.testing.theme.plugins import TestHighlightPlugin
+from shuup.testing.themes import ShuupTestingTheme
+from shuup.testing.themes.plugins import TestHighlightPlugin
 from shuup.xtheme import templated_plugin_factory, TemplatedPlugin
 from shuup.xtheme.testing import override_current_theme_class
 from shuup_tests.utils import printable_gibberish

@@ -1,31 +1,18 @@
 {% extends "shuup/front/base.jinja" %}
+{% from "shuup/saved_carts/macros/cart_detail.jinja" import render_action_buttons, render_extra_js with context %}
 
-{% block title -%}
-    {{ cart.title }}
-{%- endblock %}
+{% block title -%}{{ cart.title }}{%- endblock %}
 
 {% block breadcrumb %}
-    <ol class="breadcrumb">
-        <li><a href="/">{% trans %}Home{% endtrans %}</a></li>
-        <li><a href="{{ url("shuup:saved_cart.list") }}">{% trans %}My Saved Carts{% endtrans %}</a></li>
-        <li class="active">{{ cart.title }}</li>
-    </ol>
+    {% call macros.breadcrumb() %}
+        {{ macros.render_breadcrumb_item("/", _("Home")) }}
+        {{ macros.render_breadcrumb_item(url("shuup:saved_cart.list"), _("My Saved Carts")) }}
+        {{ macros.render_breadcrumb_item(None,  cart.title, True) }}
+    {% endcall %}
 {% endblock %}
 
 {% block content %}
-    <h1 class="page-header">
-        {{ cart.title }}
-        <div class="pull-right inline">
-            {% if cart.products %}
-                <button class="btn btn-success" onclick="addAllProductsToCart()">
-                    <i class="fa fa-plus"></i> {% trans %}Add all products to cart{% endtrans %}
-                </button>
-            {% endif %}
-            <button class="btn btn-danger" onclick="deleteCart()">
-                <i class="fa fa-trash"></i> {% trans %}Delete cart{% endtrans %}
-            </button>
-        </div>
-    </h1>
+    <h1 class="page-header">{{ cart.title }}{{ render_action_buttons() }}</h1>
     <div id="message-container"></div>
     <div class="well">
         <div class="table-responsive">
@@ -60,51 +47,5 @@
 {% endblock %}
 
 {% block extrajs %}
-<script>
-    function dismissableAlert(alertClass, strongMessage, message) {
-        var alertHtml = '<div class="alert alert-dismissable ' + alertClass + '" role="alert">';
-        alertHtml += '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
-        alertHtml += '<span aria-hidden="true">&times;</span></button>';
-        if(strongMessage) {
-            alertHtml += '<strong>' + strongMessage + '</strong> ';
-        }
-        alertHtml += message;
-        alertHtml += '</div>';
-        return alertHtml;
-    }
-
-    function deleteCart() {
-        $.ajax({
-            method: "POST",
-            url: "{{ url('shuup:saved_cart.delete', pk=cart.pk) }}",
-            data: {
-                csrfmiddlewaretoken: "{{ csrf_token }}"
-            },
-            success: function() {
-                window.location = "{{ url("shuup:saved_cart.list") }}";
-            }
-        });
-    }
-
-    function addAllProductsToCart() {
-        var $messageContainer = $("#message-container");
-        $messageContainer.empty();
-        $.ajax({
-            method: "POST",
-            url: "{{ url('shuup:saved_cart.add_all', pk=cart.pk) }}",
-            data: {
-                csrfmiddlewaretoken: "{{ csrf_token }}"
-            },
-            success: function(data) {
-                var i, alerts = "";
-                updateNavigationBasket();
-                alerts = dismissableAlert("alert-success", null, data.success);
-                for(i = 0; i < data.errors.length; i++) {
-                    alerts += dismissableAlert("alert-danger", data.errors[i].product, data.errors[i].message);
-                }
-                $messageContainer.append(alerts);
-            }
-        });
-    }
-</script>
+    {{ render_extra_js() }}
 {% endblock %}

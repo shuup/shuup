@@ -1,20 +1,24 @@
 {% extends "shuup/front/base.jinja" %}
 
-{% block title -%}
-    {{ _("Saved Carts") }}
-{%- endblock %}
+{% block title -%}{% trans %}Saved Carts{% endtrans %}{%- endblock %}
+
+{% block breadcrumb %}
+    {% call macros.breadcrumb() %}
+        {{ macros.render_breadcrumb_item("/", _("Home")) }}
+        {{ macros.render_breadcrumb_item(None, _("My Saved Carts"), True) }}
+    {% endcall %}
+{% endblock %}
+
 
 {% block content %}
-    <h1 class="page-header">
-        {{ _("Saved Carts") }}
-    </h1>
+    <h1 class="page-header">{% trans %}Saved Carts{% endtrans %}</h1>
 
     {% if carts %}
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
                 <tr>
-                    <th>{{ _('Title') }}</th>
-                    <th class="text-right">{{ _('Product Count') }}</th>
+                    <th>{% trans %}Title{% endtrans %}</th>
+                    <th class="text-right">{% trans %}Product Count{% endtrans %}</th>
                     <th></th>
                 </tr>
                 {% for cart in carts %}

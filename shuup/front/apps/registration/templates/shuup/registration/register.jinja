@@ -18,7 +18,9 @@
                     {% csrf_token %}
                     {% for field in form.hidden_fields() %}{{ field|safe }}{% endfor %}
                     {% for field in form.visible_fields() %}{{ render_field(field) }}{% endfor %}
-                    <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="fa fa-check"></i> {% trans %}Register{% endtrans %}</button>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">
+                        <i class="fa fa-check"></i> {% trans %}Register{% endtrans %}
+                    </button>
                 </form>
             </div>
         </div>

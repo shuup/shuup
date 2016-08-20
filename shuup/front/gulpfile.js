@@ -42,6 +42,11 @@ gulp.task("js", function() {
         "bower_components/jquery.easing/js/jquery.easing.js",
         "bower_components/owl.carousel/dist/owl.carousel.js",
         "static_src/js/vendor/imagelightbox.js",
+        "static_src/js/language_changer.js",
+        "static_src/js/navigation.js",
+        "static_src/js/pagination.js",
+        "static_src/js/product_preview.js",
+        "static_src/js/update_price.js",
         "static_src/js/custom.js"
     ])
         .pipe(plumber({}))

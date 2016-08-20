@@ -18,15 +18,11 @@ class ClassicGrayTheme(Theme):
     identifier = "shuup.themes.classic_gray"
     name = "Shuup Classic Gray Theme"
     author = "Shuup Team"
-    template_dir = "classic_gray/"
+    template_dir = "classic_gray"
 
     fields = [
         ("show_welcome_text", forms.BooleanField(required=False, initial=True, label=_("Show Frontpage Welcome Text"))),
     ]
-
-    def get_configuration_form(self, form_kwargs):
-        from shuup.xtheme.forms import GenericThemeForm
-        return GenericThemeForm(theme=self, **form_kwargs)
 
     def get_view(self, view_name):
         import shuup.front.themes.views as views

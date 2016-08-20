@@ -49,12 +49,20 @@
                         {% if user.is_superuser or user.is_anonymous %}
                             {% set admin_url=shuup.urls.get_url("shuup_admin:dashboard") %}
                             {% if admin_url %}
-                                <p><a href="{{ admin_url }}">{% trans %}Log in to the administration interface{% endtrans %}</a> {% trans %}to choose a theme and set up your shop.{% endtrans %}</p>
+                                <p>
+                                    <a href="{{ admin_url }}">
+                                        {% trans %}Log in to the administration interface{% endtrans %}
+                                    </a> {% trans %}to choose a theme and set up your shop.{% endtrans %}
+                                </p>
                             {% else %}
-                                <p>{% trans %}The administration interface does not seem to be available. Use other means to choose a theme.{% endtrans %}</p>
+                                <p>
+                                    {% trans %}The administration interface does not seem to be available. Use other means to choose a theme.{% endtrans %}
+                                </p>
                             {% endif %}
                         {% else %}
-                            <p>{% trans %}You are not an administrator{% endtrans %} &ndash; {% trans %}ask an administrator to select a theme.{% endtrans %}</p>
+                            <p>
+                                {% trans %}You are not an administrator{% endtrans %} &ndash; {% trans %}ask an administrator to select a theme.{% endtrans %}
+                            </p>
                         {% endif %}
                     </p>
                 </div>
