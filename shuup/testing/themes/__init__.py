@@ -19,9 +19,6 @@ class ShuupTestingTheme(Theme):
 
     plugins = [__name__ + ".plugins.TestHighlightPlugin"]
 
-    def get_cms_navigation_links(self):  # This is expected for front default templates
-        return []
-
 
 class ShuupTestingThemeWithCustomBase(ShuupTestingTheme):
     identifier = "shuup_testing_with_custom_base_template"

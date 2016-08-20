@@ -234,11 +234,7 @@
             <li{% if request.path == "/" %} class="current"{% endif %}><a href="/">{% trans %}Home{% endtrans %}</a></li>
             {% set products_url = url('shuup:xtheme_extra_view', view='products') %}
             <li{% if request.path == products_url %} class="current"{% endif %}><a href="{{ products_url }}">{% trans %}Products{% endtrans %}</a></li>
-            {% if shuup.simple_cms %}
-                {% for link in xtheme.get_cms_navigation_links() %}
-                    <li{% if request.path == "%s/" % link.url %} class="current"{% endif %}><a href="{{ link.url }}">{{ link.text }}</a></li>
-                {% endfor %}
-            {% endif %}
+            {# See Classic Gray navigation.jinja for a example to rendering navigation links here #}
         </ul>
     </div>
 {% endmacro %}

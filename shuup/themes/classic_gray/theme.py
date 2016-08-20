@@ -24,10 +24,6 @@ class ClassicGrayTheme(Theme):
         ("show_welcome_text", forms.BooleanField(required=False, initial=True, label=_("Show Frontpage Welcome Text"))),
     ]
 
-    def get_configuration_form(self, form_kwargs):
-        from shuup.xtheme.forms import GenericThemeForm
-        return GenericThemeForm(theme=self, **form_kwargs)
-
     def get_view(self, view_name):
         import shuup.front.themes.views as views
         return getattr(views, view_name, None)
