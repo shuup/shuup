@@ -22,6 +22,9 @@
     {% if no_results %}
         <p class="lead">{% trans query=form.cleaned_data.q %}No results found for "<strong>{{ query }}</strong>".{% endtrans %}</p>
     {% elif products %}
+        {% if products|count == 150 %}
+        <p class="lead">{% trans %}Limiting results to first 150 products. Refine search terms for better results.{% endtrans %}</p>
+        {% endif %}
         <p class="lead">{% trans query=form.cleaned_data.q, n=products|count %}{{ n }} results found for "<strong>{{ query }}</strong>".{% endtrans %}</p>
         <div class="row">
         {% for product in products %}
