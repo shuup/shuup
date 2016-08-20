@@ -44,7 +44,7 @@ def get_test_layout_and_svc():
         view_name=printable_gibberish(),
         status=SavedViewConfigStatus.CURRENT_DRAFT
     )
-    layout = Layout("ph")
+    layout = Layout(FauxTheme, "ph")
     layout.add_plugin("text", {"text": "hello"})
     svc.set_layout_data(layout.placeholder_name, layout)
     svc.save()

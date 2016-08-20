@@ -135,7 +135,7 @@ class _PlaceholderManagingExtension(Extension):
                     placeholder_name
                 )
             )
-        layout = Layout(placeholder_name=placeholder_name)
+        layout = Layout(None, placeholder_name=placeholder_name)
         parser._xtheme_placeholder_layout = layout
         return self._get_layout(parser)
 

@@ -18,7 +18,7 @@ class LayoutCell(object):
     A single cell in a layout. Maps to Bootstrap's `col-XX-XX` classes.
     """
 
-    def __init__(self, plugin_identifier, config=None, sizes=None):
+    def __init__(self, theme, plugin_identifier, config=None, sizes=None):
         """
         Initialize a layout cell with a given plugin, config and sizing configuration.
 
@@ -29,7 +29,7 @@ class LayoutCell(object):
         :param sizes: Size dict
         :type sizes: dict|None
         """
-        self.theme = None
+        self.theme = theme
         self.sizes = dict(sizes or {})
         self.plugin_identifier = plugin_identifier
         self.config = config or {}
@@ -55,14 +55,13 @@ class LayoutCell(object):
         plugin_class = self.plugin_class
         return getattr(plugin_class, "name", "None")
 
-    def instantiate_plugin(self, theme=None):
+    def instantiate_plugin(self):
         """
         Instantiate the plugin with the current config.
 
         :return: Instantiated plugin (if a class is available)
         :rtype: Plugin|None
         """
-        self.theme = theme
         plugin_class = self.plugin_class
         if callable(plugin_class):
             return plugin_class(config=self.config)
@@ -88,7 +87,7 @@ class LayoutCell(object):
             return ""
 
     @classmethod
-    def unserialize(cls, data):
+    def unserialize(cls, theme, data):
         """
         Unserialize a dict of layout cell data into a new cell.
 
@@ -98,9 +97,10 @@ class LayoutCell(object):
         :rtype: LayoutCell
         """
         return cls(
+            theme,
             plugin_identifier=data.get("plugin"),
             config=data.get("config"),
-            sizes=data.get("sizes")
+            sizes=data.get("sizes"),
         )
 
     def serialize(self):
@@ -123,11 +123,12 @@ class LayoutRow(object):
     """
     # TODO: Add responsive hiding to full rows?
 
-    def __init__(self, cells=None):
+    def __init__(self, theme, cells=None):
         """
         :param cells: Optional iterable of LayoutCells to populate this LayoutRow with.
         :type rows: Iterable[LayoutCell]|None
         """
+        self.theme = theme
         self.cells = []
         if cells:
             self.cells.extend(cells)
@@ -150,7 +151,7 @@ class LayoutRow(object):
         return len(self.cells)
 
     @classmethod
-    def unserialize(cls, data):
+    def unserialize(cls, theme, data):
         """
         Unserialize a dict of layout row data into a new row, along with all cell children.
 
@@ -159,8 +160,8 @@ class LayoutRow(object):
         :return: New row
         :rtype: LayoutRow
         """
-        cells = [LayoutCell.unserialize(cell_data) for cell_data in data["cells"]]
-        return cls(cells=cells)
+        cells = [LayoutCell.unserialize(theme, cell_data) for cell_data in data["cells"]]
+        return cls(theme, cells=cells)
 
     def serialize(self):
         """
@@ -182,7 +183,7 @@ class LayoutRow(object):
         :return: The new layout cell
         :rtype: LayoutCell
         """
-        cell = LayoutCell(plugin_identifier=None, sizes=sizes)
+        cell = LayoutCell(self.theme, plugin_identifier=None, sizes=sizes)
         self.cells.append(cell)
         return cell
 
@@ -196,20 +197,21 @@ class Layout(object):
     cell_class_template = "col-%(breakpoint)s-%(width)s"
     hide_cell_class_template = "hidden-%(breakpoint)s"
 
-    def __init__(self, placeholder_name, rows=None):
+    def __init__(self, theme, placeholder_name, rows=None):
         """
         :param placeholder_name: The name of the placeholder. Could be None.
         :type placeholder_name: str|None
         :param rows: Optional iterable of LayoutRows to populate this Layout with.
         :type rows: Iterable[LayoutRow]|None
         """
+        self.theme = theme
         self.placeholder_name = placeholder_name
         self.rows = []
         if rows:
             self.rows.extend(rows)
 
     @classmethod
-    def unserialize(cls, data, placeholder_name=None):
+    def unserialize(cls, theme, data, placeholder_name=None):
         """
         Unserialize a dict of layout data into a new layout, with all rows and cells.
 
@@ -220,8 +222,9 @@ class Layout(object):
         :return: New layout
         :rtype: Layout
         """
-        rows = [LayoutRow.unserialize(row_data) for row_data in data["rows"]]
+        rows = [LayoutRow.unserialize(theme, row_data) for row_data in data["rows"]]
         return cls(
+            theme,
             placeholder_name=data.get("name") or placeholder_name,
             rows=rows
         )
@@ -347,7 +350,7 @@ class Layout(object):
         y = int(y)
         if not (0 <= y <= len(self.rows)):
             return
-        row = LayoutRow()
+        row = LayoutRow(self.theme)
         self.rows.insert(y, row)
         return row
 

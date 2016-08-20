@@ -72,15 +72,16 @@ class ViewConfig(object):
         :rtype: Layout
         """
         svc = self.saved_view_config
+        layout = Layout(self.theme, placeholder_name=placeholder_name)
         if svc:
             placeholder_data = svc.get_layout_data(placeholder_name)
             if placeholder_data:
-                return Layout.unserialize(data=placeholder_data, placeholder_name=placeholder_name)
+                return layout.unserialize(self.theme, placeholder_data, placeholder_name=placeholder_name)
         if default_layout:
             if isinstance(default_layout, Layout):
                 return default_layout
-            return Layout.unserialize(default_layout)
-        return Layout(placeholder_name=placeholder_name)
+            return layout.unserialize(self.theme, default_layout)
+        return layout
 
     def save_default_placeholder_layout(self, placeholder_name, layout):
         """
