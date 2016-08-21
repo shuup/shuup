@@ -94,6 +94,7 @@ class BaseBasket(OrderSource):
         self.storage = get_storage()
         self._data = None
         self.dirty = False
+        self._lines_cache = None
         self.customer = getattr(request, "customer", None)
         self.orderer = getattr(request, "person", None)
         self.creator = getattr(request, "user", None)
@@ -222,14 +223,16 @@ class BaseBasket(OrderSource):
         return modified
 
     def get_lines(self):
-        lines = [BasketLine.from_dict(self, line) for line in self._data_lines]
-        orderable_lines = []
-        for line in lines:
-            if line.type != OrderLineType.PRODUCT:
-                orderable_lines.append(line)
-            elif line.shop_product.is_orderable(line.supplier, self.customer, line.quantity):
-                orderable_lines.append(line)
-        return orderable_lines
+        if self.dirty or not self._lines_cache:
+            lines = [BasketLine.from_dict(self, line) for line in self._data_lines]
+            orderable_lines = []
+            for line in lines:
+                if line.type != OrderLineType.PRODUCT:
+                    orderable_lines.append(line)
+                elif line.shop_product.is_orderable(line.supplier, self.request.customer, line.quantity):
+                    orderable_lines.append(line)
+            self._lines_cache = orderable_lines
+        return self._lines_cache
 
     def _initialize_product_line_data(self, product, supplier, shop, quantity=0):
         if product.variation_children.count():

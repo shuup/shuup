@@ -45,12 +45,13 @@ def get_visible_products(context, n_products, ordering=None, filter_dict=None, o
         products_qs = products_qs.order_by(ordering)
 
     if orderable_only:
+        suppliers = Supplier.objects.all()
         products = []
         for product in products_qs[:(n_products * 4)]:
             if len(products) == n_products:
                 break
             shop_product = product.get_shop_instance(shop)
-            for supplier in Supplier.objects.all():
+            for supplier in suppliers:
                 if shop_product.is_orderable(supplier, customer, shop_product.minimum_purchase_quantity):
                     products.append(product)
                     break
@@ -68,10 +69,13 @@ def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_
     product_ids = [d[0] for d in data][:n_products]
 
     products = []
+    if orderable_only:
+        # get suppliers for later use
+        suppliers = Supplier.objects.all()
     for product in Product.objects.filter(id__in=product_ids):
         shop_product = product.get_shop_instance(request.shop)
         if orderable_only:
-            for supplier in Supplier.objects.all():
+            for supplier in suppliers:
                 if shop_product.is_orderable(supplier, request.customer, shop_product.minimum_purchase_quantity):
                     products.append(product)
                     break
