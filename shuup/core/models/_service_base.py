@@ -256,7 +256,7 @@ class Service(TranslatableShuupModel):
         if not self.provider or not self.provider.enabled or not self.enabled:
             yield ValidationError(_("%s is disabled") % self, code='disabled')
 
-        if source.shop != self.shop:
+        if source.shop.id != self.shop_id:
             yield ValidationError(
                 _("%s is for different shop") % self, code='wrong_shop')
 
