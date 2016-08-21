@@ -32,6 +32,10 @@ class InvalidRefundAmountException(Exception):
     pass
 
 
+class MissingSettingException(Exception):
+    pass
+
+
 class ProductNotOrderableProblem(Problem):
     pass
 
