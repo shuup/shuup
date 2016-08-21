@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Prevent Shuup from loading if Parler related settings are missing
 - Prevent shipping products with insufficient physical stock
 - Telemetry is now being sent if there is no previous submission
 - ``CompanyContact.full_name`` now returns name and name extension (if available)
