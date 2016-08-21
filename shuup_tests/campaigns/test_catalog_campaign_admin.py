@@ -116,7 +116,6 @@ def test_campaign_edit_save(rf, admin_user):
         new_end_datetime = datetime.datetime(year=2016, month=6, day=20)
         assert object.name != new_name
         assert object.end_datetime is None
-        print(new_end_datetime)
         data = {
             "base-name": new_name,
             "base-public_name__en": "Test Campaign",
