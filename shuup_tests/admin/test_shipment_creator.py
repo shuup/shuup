@@ -16,13 +16,14 @@ from shuup.admin.modules.orders.views.shipment import (
     FORM_MODIFIER_PROVIDER_KEY, OrderCreateShipmentView, ShipmentFormModifier
 )
 from shuup.apps.provides import override_provides
+from shuup.core.excs import NoShippingAddressException
+
 from shuup.core.models import Order
 from shuup.testing.factories import (
     create_order_with_product, create_product, get_default_shop,
     get_default_supplier
 )
 from shuup.testing.utils import apply_request_middleware
-
 
 @pytest.mark.django_db
 def test_shipment_creating_view_get(rf, admin_user):
@@ -165,3 +166,21 @@ class ShipmentFormModifierTest(ShipmentFormModifier):
             shipping_data[shipment.identifier] = {"phone": data.get("phone")}
             shipment.order.shipping_data = shipping_data
             shipment.order.save()
+
+
+@pytest.mark.django_db
+def test_shipment_creating_with_no_shipping_address(rf, admin_user):
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product = create_product(sku="test-sku", shop=shop, supplier=supplier, default_price=3.33)
+    order = create_order_with_product(product, supplier, quantity=1, taxless_base_unit_price=1, shop=shop)
+    
+    # remove shipping address 
+    order.shipping_address = None
+    order.save()
+
+    with pytest.raises(NoShippingAddressException):
+        order.create_shipment_of_all_products()
+    
+    # order should not have any shipments since it should have thrown an exception
+    assert order.shipments.count() == 0

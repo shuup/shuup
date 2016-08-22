@@ -20,7 +20,9 @@ from shuup.admin.toolbar import PostActionButton, Toolbar
 from shuup.admin.utils.forms import add_form_errors_as_messages
 from shuup.admin.utils.urls import get_model_url
 from shuup.apps.provides import get_provide_objects
-from shuup.core.excs import NoProductsToShipException
+from shuup.core.excs import (
+    NoProductsToShipException, NoShippingAddressException
+)
 from shuup.core.models import Order, Product, Shipment, Supplier
 from shuup.utils.excs import Problem
 
@@ -192,6 +194,8 @@ class OrderCreateShipmentView(UpdateView):
         except NoProductsToShipException:
             messages.error(self.request, _("No products to ship."))
             return self.form_invalid(form)
+        except NoShippingAddressException:
+            messages.error(self.request, _("Shipping address is not set."))
         else:
             messages.success(self.request, _("Shipment %s created.") % shipment.id)
             return HttpResponseRedirect(get_model_url(order))

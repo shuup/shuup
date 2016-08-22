@@ -18,6 +18,8 @@ Localization
 Admin
 ~~~~~
 
+- Prevent shipping orders without a defined shipping address
+
 Addons
 ~~~~~~
 

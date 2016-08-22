@@ -29,7 +29,7 @@ from shuup.core import taxing
 from shuup.core.excs import (
     InvalidRefundAmountException, NoPaymentToCreateException,
     NoProductsToShipException, NoRefundToCreateException,
-    RefundExceedsAmountException
+    NoShippingAddressException, RefundExceedsAmountException
 )
 from shuup.core.fields import (
     CurrencyField, InternalIdentifierField, LanguageField, MoneyValueField,
@@ -475,7 +475,7 @@ class Order(MoneyPropped, models.Model):
         return payment
 
     def can_create_shipment(self):
-        return (self.get_unshipped_products() and not self.is_canceled())
+        return (self.get_unshipped_products() and not self.is_canceled() and self.shipping_address)
 
     @atomic
     def create_shipment(self, product_quantities, supplier=None, shipment=None):
@@ -486,17 +486,22 @@ class Order(MoneyPropped, models.Model):
         Only quantities over 0 are taken into account, and if the mapping is empty or has no quantity value
         over 0, `NoProductsToShipException` will be raised.
 
+        Orders without a shipping address defined, will raise `NoShippingAddressException`.
+
         :param product_quantities: a dict mapping Product instances to quantities to ship
         :type product_quantities: dict[shuup.shop.models.Product, decimal.Decimal]
         :param supplier: Optional Supplier for this product. No validation is made
         :param shipment: Optional unsaved Shipment for ShipmentProduct's. If not given
                          Shipment is created based on supplier parameter.
-        :raises: NoProductsToShipException
+        :raises: NoProductsToShipException, NoShippingAddressException
         :return: Saved, complete Shipment object
         :rtype: shuup.core.models.Shipment
         """
         if not product_quantities or not any(quantity > 0 for quantity in product_quantities.values()):
             raise NoProductsToShipException("No products to ship (`quantities` is empty or has no quantity over 0).")
+
+        if self.shipping_address is None:
+            raise NoShippingAddressException("Shipping address is not set on this order")
 
         assert (supplier or shipment)
         from ._shipments import ShipmentProduct
