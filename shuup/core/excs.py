@@ -12,6 +12,10 @@ class ImmutabilityError(ValueError):
     pass
 
 
+class NoShippingAddressException(Exception):
+    pass
+
+
 class NoProductsToShipException(Exception):
     pass
 
