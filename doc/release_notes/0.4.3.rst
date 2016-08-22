@@ -1,0 +1,12 @@
+Shuup 0.4.1 Release Notes
+=========================
+
+Released on 2016-08-21 22:40pm -0800.
+
+Refactored front templates will probably cause some issues with
+existing themes. Some macros might be moved and all included
+templates are removed and moved under macros.
+
+List of changes see
+:doc:`../shoop-changelog` or `Git commit log
+<https://github.com/shuup/shuup/commits/v0.4.3>`__.

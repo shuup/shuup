@@ -1,13 +1,10 @@
 Shuup Change Log
 ================
 
-Unreleased
-----------
+SHUUP 0.4.3
+-----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2016-08-21 22:40pm -0800.
 
 Core
 ~~~~
@@ -16,10 +13,6 @@ Core
 - Prevent shipping products with insufficient physical stock
 - Telemetry is now being sent if there is no previous submission
 - ``CompanyContact.full_name`` now returns name and name extension (if available)
-
-
-Localization
-~~~~~~~~~~~~
 
 Admin
 ~~~~~
@@ -30,12 +23,10 @@ Admin
 - Add option for automatically adding product lines when creating order
 - Order editing: Tax number is now shown for Company Contacts
 
-Addons
-~~~~~~
-
 Front
 ~~~~~
 
+- Refactor default templates to allow better extensibility
 - Add product SKU to searchable fields for simple search
 - Limit search results for simple search
 - Fix password recovery form bug with invalid email
@@ -43,40 +34,10 @@ Front
   confirmation
 - Exclude unorderable line items from basket
 
-Xtheme
-~~~~~~
-
-Classic Gray Theme
-~~~~~~~~~~~~~~~~~~
-
-Simple Supplier
-~~~~~~~~~~~~~~~
-
-Order Printouts
-~~~~~~~~~~~~~~~
-
 Campaigns
 ~~~~~~~~~
 
 - Campaigns affecting a product are now shown on product page in admin
-
-Customer Group Pricing
-~~~~~~~~~~~~~~~~~~~~~~
-
-Discount Pricing
-~~~~~~~~~~~~~~~~
-
-Simple CMS
-~~~~~~~~~~
-
-Default Tax
-~~~~~~~~~~~
-
-Guide
-~~~~~
-
-General/miscellaneous
-~~~~~~~~~~~~~~~~~~~~~
 
 
 SHUUP 0.4.2
