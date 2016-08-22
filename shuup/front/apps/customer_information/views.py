@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
 # Copyright (c) 2012-2016, Shoop Ltd. All rights reserved.

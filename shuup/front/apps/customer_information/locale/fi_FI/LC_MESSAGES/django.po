@@ -47,12 +47,10 @@ msgstr "Vaihda salasana"
 msgid "Home"
 msgstr ""
 
-#, fuzzy
 #| msgid "Change Password"
 msgid "Change password"
 msgstr "Vaihda salasana"
 
-#, fuzzy
 #| msgid "User account information"
 msgid "Edit user account information"
 msgstr "Käyttäjätunnuksen tiedot"
@@ -72,7 +70,6 @@ msgstr "Yrityksen tiedot"
 msgid "User account information"
 msgstr "Käyttäjätunnuksen tiedot"
 
-#, fuzzy
 #| msgid "Company information"
 msgid "Edit company information"
 msgstr "Yrityksen tiedot"
@@ -86,18 +83,16 @@ msgstr "Käyttäjätiedot"
 msgid "Billing information"
 msgstr "Laskutustiedot"
 
-#, fuzzy
 #| msgid "Shipping information"
 msgid "Copy to shipping information"
-msgstr "Toimitustiedot"
+msgstr "Kopioi toimitustiedot"
 
 msgid "Shipping information"
 msgstr "Toimitustiedot"
 
-#, fuzzy
 #| msgid "Billing information"
 msgid "Copy to billing information"
-msgstr "Laskutustiedot"
+msgstr "Kopioi laskutustiedot"
 
 msgid "Password successfully changed."
 msgstr "Salasana vaihdettu."
