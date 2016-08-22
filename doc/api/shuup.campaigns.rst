@@ -9,6 +9,7 @@ Subpackages
     shuup.campaigns.admin_module
     shuup.campaigns.models
     shuup.campaigns.templates
+    shuup.campaigns.utils
 
 Submodules
 ----------
@@ -17,6 +18,14 @@ shuup.campaigns.apps module
 ---------------------------
 
 .. automodule:: shuup.campaigns.apps
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.campaigns.consts module
+-----------------------------
+
+.. automodule:: shuup.campaigns.consts
     :members:
     :undoc-members:
     :show-inheritance:
@@ -33,14 +42,6 @@ shuup.campaigns.signal_handlers module
 --------------------------------------
 
 .. automodule:: shuup.campaigns.signal_handlers
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-shuup.campaigns.utils module
-----------------------------
-
-.. automodule:: shuup.campaigns.utils
     :members:
     :undoc-members:
     :show-inheritance:

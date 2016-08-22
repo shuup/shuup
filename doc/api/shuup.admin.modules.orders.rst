@@ -35,6 +35,14 @@ shuup.admin.modules.orders.sections module
     :undoc-members:
     :show-inheritance:
 
+shuup.admin.modules.orders.toolbar module
+-----------------------------------------
+
+.. automodule:: shuup.admin.modules.orders.toolbar
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

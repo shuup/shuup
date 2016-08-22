@@ -12,6 +12,14 @@ Subpackages
 Submodules
 ----------
 
+shuup.admin.modules.products.sections module
+--------------------------------------------
+
+.. automodule:: shuup.admin.modules.products.sections
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.admin.modules.products.utils module
 -----------------------------------------
 

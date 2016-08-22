@@ -8,18 +8,6 @@ Subpackages
 
     shuup.order_printouts.admin_module
 
-Submodules
-----------
-
-shuup.order_printouts.pdf_export module
----------------------------------------
-
-.. automodule:: shuup.order_printouts.pdf_export
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
 Module contents
 ---------------
 

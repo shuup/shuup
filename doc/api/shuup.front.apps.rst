@@ -10,6 +10,7 @@ Subpackages
     shuup.front.apps.customer_information
     shuup.front.apps.personal_order_history
     shuup.front.apps.registration
+    shuup.front.apps.saved_carts
     shuup.front.apps.simple_order_notification
     shuup.front.apps.simple_search
 

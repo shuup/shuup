@@ -8,6 +8,26 @@ Subpackages
 
     shuup.admin.modules.categories.views
 
+Submodules
+----------
+
+shuup.admin.modules.categories.form_parts module
+------------------------------------------------
+
+.. automodule:: shuup.admin.modules.categories.form_parts
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.admin.modules.categories.forms module
+-------------------------------------------
+
+.. automodule:: shuup.admin.modules.categories.forms
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 Module contents
 ---------------
 

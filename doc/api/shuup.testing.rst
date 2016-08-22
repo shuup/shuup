@@ -9,9 +9,18 @@ Subpackages
     shuup.testing.admin_module
     shuup.testing.management
     shuup.testing.models
+    shuup.testing.themes
 
 Submodules
 ----------
+
+shuup.testing.browser_utils module
+----------------------------------
+
+.. automodule:: shuup.testing.browser_utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
 shuup.testing.factories module
 ------------------------------

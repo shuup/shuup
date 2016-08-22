@@ -12,6 +12,22 @@ shuup.testing.admin_module.mocker_view module
     :undoc-members:
     :show-inheritance:
 
+shuup.testing.admin_module.sections module
+------------------------------------------
+
+.. automodule:: shuup.testing.admin_module.sections
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.testing.admin_module.toolbar module
+-----------------------------------------
+
+.. automodule:: shuup.testing.admin_module.toolbar
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

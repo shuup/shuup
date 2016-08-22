@@ -13,6 +13,7 @@ Subpackages
     shuup.front.models
     shuup.front.template_helpers
     shuup.front.templatetags
+    shuup.front.themes
     shuup.front.utils
     shuup.front.views
 
