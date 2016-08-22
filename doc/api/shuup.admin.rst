@@ -6,6 +6,7 @@ Subpackages
 
 .. toctree::
 
+    shuup.admin.breadcrumbs
     shuup.admin.dashboard
     shuup.admin.forms
     shuup.admin.modules
@@ -21,14 +22,6 @@ shuup.admin.base module
 -----------------------
 
 .. automodule:: shuup.admin.base
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-shuup.admin.breadcrumbs module
-------------------------------
-
-.. automodule:: shuup.admin.breadcrumbs
     :members:
     :undoc-members:
     :show-inheritance:

@@ -148,6 +148,14 @@ shuup.utils.patterns module
     :undoc-members:
     :show-inheritance:
 
+shuup.utils.pdf module
+----------------------
+
+.. automodule:: shuup.utils.pdf
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.utils.properties module
 -----------------------------
 

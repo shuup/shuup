@@ -1,20 +1,21 @@
 shuup.themes.classic_gray package
 =================================
 
-Subpackages
------------
-
-.. toctree::
-
-    shuup.themes.classic_gray.views
-
 Submodules
 ----------
 
-shuup.themes.classic_gray.plugins module
-----------------------------------------
+shuup.themes.classic_gray.apps module
+-------------------------------------
 
-.. automodule:: shuup.themes.classic_gray.plugins
+.. automodule:: shuup.themes.classic_gray.apps
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.themes.classic_gray.theme module
+--------------------------------------
+
+.. automodule:: shuup.themes.classic_gray.theme
     :members:
     :undoc-members:
     :show-inheritance:

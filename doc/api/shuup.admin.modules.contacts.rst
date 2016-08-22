@@ -11,10 +11,18 @@ Subpackages
 Submodules
 ----------
 
-shuup.admin.modules.contacts.dashboard module
----------------------------------------------
+shuup.admin.modules.contacts.form_parts module
+----------------------------------------------
 
-.. automodule:: shuup.admin.modules.contacts.dashboard
+.. automodule:: shuup.admin.modules.contacts.form_parts
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.admin.modules.contacts.forms module
+-----------------------------------------
+
+.. automodule:: shuup.admin.modules.contacts.forms
     :members:
     :undoc-members:
     :show-inheritance:

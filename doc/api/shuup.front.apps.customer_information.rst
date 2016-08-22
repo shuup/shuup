@@ -12,6 +12,14 @@ shuup.front.apps.customer_information.forms module
     :undoc-members:
     :show-inheritance:
 
+shuup.front.apps.customer_information.notify_events module
+----------------------------------------------------------
+
+.. automodule:: shuup.front.apps.customer_information.notify_events
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.front.apps.customer_information.urls module
 -------------------------------------------------
 

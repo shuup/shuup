@@ -4,6 +4,22 @@ shuup.admin.modules.categories.views package
 Submodules
 ----------
 
+shuup.admin.modules.categories.views.copy module
+------------------------------------------------
+
+.. automodule:: shuup.admin.modules.categories.views.copy
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.admin.modules.categories.views.delete module
+--------------------------------------------------
+
+.. automodule:: shuup.admin.modules.categories.views.delete
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.admin.modules.categories.views.edit module
 ------------------------------------------------
 

@@ -28,6 +28,14 @@ shuup.campaigns.admin_module.form_sets module
     :undoc-members:
     :show-inheritance:
 
+shuup.campaigns.admin_module.sections module
+--------------------------------------------
+
+.. automodule:: shuup.campaigns.admin_module.sections
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

@@ -36,6 +36,14 @@ shuup.xtheme.plugins.image module
     :undoc-members:
     :show-inheritance:
 
+shuup.xtheme.plugins.products module
+------------------------------------
+
+.. automodule:: shuup.xtheme.plugins.products
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.xtheme.plugins.snippets module
 ------------------------------------
 

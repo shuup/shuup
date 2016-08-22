@@ -60,6 +60,14 @@ shuup.campaigns.models.context_conditions module
     :undoc-members:
     :show-inheritance:
 
+shuup.campaigns.models.matching module
+--------------------------------------
+
+.. automodule:: shuup.campaigns.models.matching
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.campaigns.models.product_effects module
 ---------------------------------------------
 
