@@ -24,6 +24,8 @@ Addons
 Front
 ~~~~~
 
+- Define simple search result list column width in less instead of template
+
 Xtheme
 ~~~~~~
 

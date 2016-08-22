@@ -39,9 +39,7 @@
         <p class="lead">{% trans query=form.cleaned_data.q, n=products|count %}{{ n }} results found for "<strong>{{ query }}</strong>".{% endtrans %}</p>
         <div class="row">
         {% for product in products %}
-            <div class="col-sm-4 col-md-3">
-                {{ product_macros.product_box(product, show_description=True, class="product-card box") }}
-            </div>
+            {{ product_macros.product_box(product, show_description=True, class="product-card box search-view") }}
         {% endfor %}
         </div>
     {% endif %}
