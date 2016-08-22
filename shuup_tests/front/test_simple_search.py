@@ -9,6 +9,7 @@
 import pytest
 from django.utils import translation
 
+from shuup.core import cache
 from shuup.front.apps.simple_search.views import (
     get_search_product_ids, SearchView
 )
@@ -22,6 +23,7 @@ NO_RESULTS_FOUND_STRING = "No results found"
 
 @pytest.mark.django_db
 def test_simple_search_get_ids_works(rf):
+    cache.clear()
     prod = get_default_product()
     bit = prod.name[:5]
     request = rf.get("/")
@@ -31,6 +33,7 @@ def test_simple_search_get_ids_works(rf):
 
 @pytest.mark.django_db
 def test_simple_search_view_works(rf):
+    cache.clear()
     view = SearchView.as_view()
     prod = create_product(sku=UNLIKELY_STRING, shop=get_default_shop())
     query = prod.name[:8]
@@ -44,6 +47,7 @@ def test_simple_search_view_works(rf):
 
 @pytest.mark.django_db
 def test_simple_search_word_finder(rf):
+    cache.clear()
     view = SearchView.as_view()
     name = "Savage Garden"
     sku = UNLIKELY_STRING
@@ -72,8 +76,9 @@ def test_simple_search_word_finder(rf):
 
 @pytest.mark.django_db
 def test_normalize_spaces(rf):
+    cache.clear()
     view = SearchView.as_view()
-    prod = create_product(sku=UNLIKELY_STRING, name="Savage Garden", shop=get_default_shop())
+    create_product(sku=UNLIKELY_STRING, name="Savage Garden", shop=get_default_shop())
     query = "\t Savage \t \t \n \r Garden \n"
 
     resp = view(apply_request_middleware(rf.get("/")))
@@ -84,6 +89,7 @@ def test_normalize_spaces(rf):
 
 @pytest.mark.django_db
 def test_simple_search_no_results(rf):
+    cache.clear()
     with translation.override("xx"):  # use built-in translation
         get_default_shop()
         view = SearchView.as_view()

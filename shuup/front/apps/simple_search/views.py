@@ -48,7 +48,7 @@ def get_compiled_query(query_string, needles):
     """
     Get compiled query
 
-    Complile query string into `Q` objects and return it
+    Compile query string into `Q` objects and return it
     """
     compiled_query = None
     for word in get_query_words(query_string):
@@ -67,7 +67,7 @@ def get_search_product_ids(request, query, limit=150):
     if product_ids is None:
         entry_query = get_compiled_query(
             query, ['sku', 'translations__name', 'translations__description', 'translations__keywords'])
-        product_ids = Product.objects.filter(entry_query).distinct().values_list("pk", flat=True)[:limit]
+        product_ids = list(Product.objects.filter(entry_query).distinct().values_list("pk", flat=True))[:limit]
         cache.set(cache_key, product_ids, 60 * 5)
     return product_ids
 
