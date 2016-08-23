@@ -28,6 +28,7 @@ Addons
 Front
 ~~~~~
 
+- Fix product search to only show searchable products
 - Rename `get_visible_products` to `get_listed_products`
 - Define simple search result list column width in less instead of template
 
