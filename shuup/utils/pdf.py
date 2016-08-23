@@ -23,7 +23,7 @@ except ImportError:
 
 def _fetch_static_resource_str(resource_file):
     resource_path = os.path.realpath(os.path.join(settings.STATIC_ROOT, resource_file))
-    if not resource_path.startswith(settings.STATIC_ROOT):
+    if not resource_path.startswith(os.path.realpath(settings.STATIC_ROOT)):
         raise ValueError(
             "Possible file system traversal shenanigan detected with %(path)s" % {"path": resource_file})
 

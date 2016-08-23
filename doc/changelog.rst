@@ -59,6 +59,7 @@ Guide
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
+* Fix bug in pdf utils while fetching static resources
 
 SHUUP 0.4.3
 -----------
