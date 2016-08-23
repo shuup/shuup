@@ -128,6 +128,8 @@ Released on 2016-08-12 03:00pm -0800.
 Core
 ~~~~
 
+- Fix `MultiLanguageModelForm` to overwrite empty language fields with default value
+- Add datamigration to add missing translations from default values 
 - Fix `FormattedDecimalField` default value for form fields
 - Combine `TreeManager` and `TranslatableManager` querysets for categories
 - Exclude deleted orders from valid queryset
