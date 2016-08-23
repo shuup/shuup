@@ -40,7 +40,7 @@ All the template files are always included in the app folder ``shuup/APP/templat
 Within this template folder the folder structure is: ``APP/MODULE/TEMPLATE.jinja``.
 For example, this could be converted into ``shuup/product/detail.jinja``
 
-The default frontend theme can be found in ``shuup/front/apps/default_theme/``.
+The default frontend theme can be found in ``shuup/themes/classic_gray``.
 
 .. topic:: Example
 
@@ -109,8 +109,8 @@ This does not apply to shops using multi-phase checkout.
 
 **Default Basket** ``shuup/front/basket/default_basket.jinja``
     The structure of shopping basket. It includes the shopping basket's
-    contents as a table from a separate file in the partials folder.
-    The ordering form is also displayed in this file.
+    contents as a table from a separate macro in ``shuup/front/templates/shuup/front/macros/basket.jinja``.
+    The ordering form macro is also being rendered in this file.
 
 Orders
 ^^^^^^

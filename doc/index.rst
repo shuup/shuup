@@ -28,6 +28,7 @@ Developer documentation
    services
    notify_specification
    templates
+   themes
    api/modules
    web_api
 
