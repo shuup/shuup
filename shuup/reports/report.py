@@ -32,8 +32,8 @@ class ShuupReportBase(object):
             self.options = kwargs["initial"]
         else:
             self.options = kwargs
-        self.start_date = None
-        self.end_date = None
+        self.start_date = kwargs.get("start_date", None)
+        self.end_date = kwargs.get("end_date", None)
         if self.options.get("date_range"):
             self.start_date, self.end_date = parse_date_range(self.options["date_range"])
         if self.options.get("shop"):
