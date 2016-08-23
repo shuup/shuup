@@ -10,7 +10,9 @@ from django.http.response import JsonResponse
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 
-from shuup.core.models import Category, CategoryStatus, ShopProduct
+from shuup.core.models import (
+    Category, CategoryStatus, ShopProduct, ShopProductVisibility
+)
 
 
 class CategoryCopyVisibilityView(View):
@@ -29,7 +31,9 @@ class CategoryCopyVisibilityView(View):
         category_shops = category.shops.all()
         category_visibility_groups = category.visibility_groups.all()
         for product in ShopProduct.objects.filter(shop__in=category_shops, primary_category__pk=category.pk):
-            product.visible = is_visible
+            product.visibility = (
+                ShopProductVisibility.ALWAYS_VISIBLE if is_visible else ShopProductVisibility.NOT_VISIBLE
+            )
             product.visibility_limit = category.visibility.value
             product.visibility_groups = category_visibility_groups
             product.save()

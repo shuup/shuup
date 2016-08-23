@@ -12,6 +12,8 @@ Unreleased
 Core
 ~~~~
 
+- Add visibility field to ShopProduct
+
 Localization
 ~~~~~~~~~~~~
 
@@ -26,6 +28,7 @@ Addons
 Front
 ~~~~~
 
+- Rename `get_visible_products` to `get_listed_products`
 - Define simple search result list column width in less instead of template
 
 Xtheme

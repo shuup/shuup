@@ -32,7 +32,9 @@ from ._payments import Payment
 from ._persistent_cache import PersistentCacheEntry
 from ._product_media import ProductMedia, ProductMediaKind
 from ._product_packages import ProductPackageLink
-from ._product_shops import ProductVisibility, ShopProduct
+from ._product_shops import (
+    ProductVisibility, ShopProduct, ShopProductVisibility
+)
 from ._product_variation import (
     ProductVariationLinkStatus, ProductVariationResult,
     ProductVariationVariable, ProductVariationVariableValue
@@ -138,6 +140,7 @@ __all__ = [
     "ShuupModel",
     "Shop",
     "ShopProduct",
+    "ShopProductVisibility",
     "ShopStatus",
     "StaffOnlyBehaviorComponent",
     "StockBehavior",

@@ -74,10 +74,8 @@ class ShopProductForm(forms.ModelForm):
             "default_price_value",
             "minimum_price_value",
             "suppliers",
-            "visible",
-            "listed",
+            "visibility",
             "purchasable",
-            "searchable",
             "visibility_limit",
             "visibility_groups",
             "purchase_multiple",
@@ -97,8 +95,6 @@ class ShopProductForm(forms.ModelForm):
         }
 
     def __init__(self, **kwargs):
-        if not kwargs["instance"].pk:
-            kwargs["instance"].visible = False
         super(ShopProductForm, self).__init__(**kwargs)
         category_qs = Category.objects.all_except_deleted()
         self.fields["default_price_value"].required = True

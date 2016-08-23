@@ -17,8 +17,11 @@ from shuup.utils.translation import cache_translations_for_tree
 
 
 @contextfunction
-def get_visible_products(context, n_products, ordering=None, filter_dict=None, orderable_only=True):
+def get_listed_products(context, n_products, ordering=None, filter_dict=None, orderable_only=True):
     """
+    Returns all products marked as listed that are determined to be
+    visible based on the current context.
+
     :param context: Rendering context
     :type context: jinja2.runtime.Context
     :param n_products: Number of products to return
@@ -36,7 +39,7 @@ def get_visible_products(context, n_products, ordering=None, filter_dict=None, o
     shop = request.shop
     if not filter_dict:
         filter_dict = {}
-    products_qs = Product.objects.list_visible(
+    products_qs = Product.objects.listed(
         shop=shop,
         customer=customer,
         language=get_language(),
@@ -89,7 +92,7 @@ def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_
 @contextfunction
 def get_newest_products(context, n_products=6, orderable_only=True):
     request = context["request"]
-    products = get_visible_products(
+    products = get_listed_products(
         context,
         n_products,
         ordering="-pk",
@@ -102,7 +105,7 @@ def get_newest_products(context, n_products=6, orderable_only=True):
 @contextfunction
 def get_random_products(context, n_products=6, orderable_only=True):
     request = context["request"]
-    products = get_visible_products(
+    products = get_listed_products(
         context,
         n_products,
         ordering="?",
@@ -115,7 +118,7 @@ def get_random_products(context, n_products=6, orderable_only=True):
 @contextfunction
 def get_all_manufacturers(context):
     request = context["request"]
-    products = Product.objects.list_visible(shop=request.shop, customer=request.customer)
+    products = Product.objects.listed(shop=request.shop, customer=request.customer)
     manufacturers_ids = products.values_list("manufacturer__id").distinct()
     manufacturers = Manufacturer.objects.filter(pk__in=manufacturers_ids)
     return manufacturers

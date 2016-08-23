@@ -41,7 +41,7 @@ class ProductViewSet(ModelViewSet):
     def get_queryset(self):
         if getattr(self.request.user, 'is_superuser', False):
             return Product.objects.all_except_deleted()
-        return Product.objects.list_visible(
+        return Product.objects.listed(
             customer=self.request.customer,
             shop=self.request.shop
         )
@@ -55,7 +55,7 @@ class ShopProductViewSet(ModelViewSet):
         if getattr(self.request.user, 'is_superuser', False):
             products = Product.objects.all_except_deleted()
         else:
-            products = Product.objects.list_visible(
+            products = Product.objects.listed(
                 customer=self.request.customer,
                 shop=self.request.shop
             )

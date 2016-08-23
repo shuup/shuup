@@ -11,7 +11,7 @@ from django.core.exceptions import ValidationError
 from django.http.response import HttpResponseRedirect, JsonResponse
 
 from shuup.core.models import (
-    ProductVariationVariable, ProductVariationVariableValue
+    ProductVariationVariable, ProductVariationVariableValue, ShopProductVisibility
 )
 from shuup.front.basket import commands as basket_commands
 from shuup.front.basket import get_basket_command_dispatcher
@@ -173,7 +173,7 @@ def test_basket_update_errors():
     assert len(error_messages) == 1
     assert any("not supplied" in msg.message for msg in error_messages)
 
-    shop_product.visible = False
+    shop_product.visibility = ShopProductVisibility.NOT_VISIBLE
     shop_product.save()
 
     basket_commands.handle_update(request, basket, **{"q_%s" % line_id: "2"})

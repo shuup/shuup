@@ -16,7 +16,10 @@ from shuup.admin.modules.categories.forms import (
 from shuup.admin.modules.categories.views import (
     CategoryCopyVisibilityView, CategoryEditView
 )
-from shuup.core.models import Category, CategoryStatus, CategoryVisibility
+from shuup.core.models import (
+    Category, CategoryStatus, CategoryVisibility,
+    ShopProductVisibility
+)
 from shuup.testing.factories import (
     CategoryFactory, create_product, get_default_category,
     get_default_customer_group, get_default_shop
@@ -79,7 +82,7 @@ def test_products_form_add():
     assert (shop_product.primary_category == category)
     assert (category in shop_product.categories.all())
     assert (shop_product.visibility_limit.value == category.visibility.value)
-    assert (shop_product.visible == False)
+    assert (shop_product.visibility == ShopProductVisibility.NOT_VISIBLE)
     assert (product.category is None)
 
 
@@ -206,7 +209,7 @@ def test_category_copy_visibility(rf, admin_user):
     response = view(request, pk=category.pk)
     shop_product.refresh_from_db()
     assert response.status_code == 200
-    assert shop_product.visible == False
+    assert shop_product.visibility == ShopProductVisibility.NOT_VISIBLE
     assert shop_product.visibility_limit.value == category.visibility.value
     assert shop_product.visibility_groups.count() == category.visibility_groups.count()
     assert set(shop_product.visibility_groups.all()) == set(category.visibility_groups.all())

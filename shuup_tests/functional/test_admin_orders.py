@@ -16,7 +16,8 @@ from django.utils import translation
 from django.utils.translation import activate
 
 from shuup.core.models import (
-    CustomPaymentProcessor, PaymentMethod, RoundingMode, Tax, TaxClass
+    CustomPaymentProcessor, PaymentMethod, RoundingMode, ShopProductVisibility,
+    Tax, TaxClass
 )
 from shuup.default_tax.models import TaxRule
 from shuup.testing.factories import (
@@ -64,7 +65,7 @@ def get_frontend_order_state(contact, payment_method, product_price, valid_lines
             shop=shop
         )
         not_visible_shop_product = not_visible_product.get_shop_instance(shop)
-        not_visible_shop_product.visible = False
+        not_visible_shop_product.visibility = ShopProductVisibility.NOT_VISIBLE
         not_visible_shop_product.save()
         lines = [
             {"id": "x", "type": "product"},  # no product?

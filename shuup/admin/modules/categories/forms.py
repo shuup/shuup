@@ -12,7 +12,9 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.forms.widgets import MediaChoiceWidget
 from shuup.admin.utils.forms import filter_form_field_choices
-from shuup.core.models import Category, CategoryStatus, Product, ShopProduct
+from shuup.core.models import (
+    Category, CategoryStatus, Product, ShopProduct, ShopProductVisibility
+)
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 
 
@@ -83,7 +85,9 @@ class CategoryProductForm(forms.Form):
         primary_product_ids = [int(product_id) for product_id in data.get("primary_products", [])]
         for shop_product in ShopProduct.objects.filter(shop_id=self.shop.id, product_id__in=primary_product_ids):
             shop_product.primary_category = self.category
-            shop_product.visible = is_visible
+            shop_product.visibility = (
+                ShopProductVisibility.ALWAYS_VISIBLE if is_visible else ShopProductVisibility.NOT_VISIBLE
+            )
             shop_product.visibility_limit = self.category.visibility.value
             shop_product.visibility_groups = visibility_groups
             shop_product.save()

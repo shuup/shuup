@@ -11,7 +11,7 @@ import six
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from enumfields import EnumIntegerField
+from enumfields import Enum, EnumIntegerField
 
 from shuup.core.excs import (
     ProductNotOrderableProblem, ProductNotVisibleProblem
@@ -24,6 +24,19 @@ from ._product_media import ProductMediaKind
 from ._products import ProductVisibility, StockBehavior
 
 
+class ShopProductVisibility(Enum):
+    NOT_VISIBLE = 0
+    SEARCHABLE = 1
+    LISTED = 2
+    ALWAYS_VISIBLE = 3
+
+    class Labels:
+        NOT_VISIBLE = _("not visible")
+        SEARCHABLE = _("searchable")
+        LISTED = _("listed")
+        ALWAYS_VISIBLE = _("always visible")
+
+
 class ShopProduct(MoneyPropped, models.Model):
     shop = models.ForeignKey("Shop", related_name="shop_products", on_delete=models.CASCADE, verbose_name=_("shop"))
     product = UnsavedForeignKey(
@@ -31,10 +44,11 @@ class ShopProduct(MoneyPropped, models.Model):
     suppliers = models.ManyToManyField(
         "Supplier", related_name="shop_products", blank=True, verbose_name=_("suppliers"))
 
-    visible = models.BooleanField(default=True, db_index=True, verbose_name=_("visible"))
-    listed = models.BooleanField(default=True, db_index=True, verbose_name=_("listed"))
+    visibility = EnumIntegerField(
+        ShopProductVisibility, default=ShopProductVisibility.NOT_VISIBLE, db_index=True,
+        verbose_name=_("visibility")
+    )
     purchasable = models.BooleanField(default=True, db_index=True, verbose_name=_("purchasable"))
-    searchable = models.BooleanField(default=True, db_index=True, verbose_name=_("searchable"))
     visibility_limit = EnumIntegerField(
         ProductVisibility, db_index=True, default=ProductVisibility.VISIBLE_TO_ALL,
         verbose_name=_('visibility limitations')
@@ -89,8 +103,6 @@ class ShopProduct(MoneyPropped, models.Model):
         """
         if self.product.deleted:
             return False
-        if not self.visible:
-            return False
         if not self.listed:
             return False
         if self.product.is_variation_child():
@@ -103,6 +115,18 @@ class ShopProduct(MoneyPropped, models.Model):
             return self.shop_primary_image
         else:
             return self.product.primary_image
+
+    @property
+    def searchable(self):
+        return self.visibility in (ShopProductVisibility.SEARCHABLE, ShopProductVisibility.ALWAYS_VISIBLE)
+
+    @property
+    def listed(self):
+        return self.visibility in (ShopProductVisibility.LISTED, ShopProductVisibility.ALWAYS_VISIBLE)
+
+    @property
+    def visible(self):
+        return not (self.visibility == ShopProductVisibility.NOT_VISIBLE)
 
     @property
     def public_primary_image(self):

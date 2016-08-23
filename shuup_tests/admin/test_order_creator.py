@@ -19,7 +19,9 @@ from django.utils.encoding import force_text
 from shuup.admin.modules.orders.views.edit import (
     encode_address, encode_method, OrderEditView
 )
-from shuup.core.models import Order, OrderLineType, Tax, TaxClass
+from shuup.core.models import (
+    Order, OrderLineType, ShopProductVisibility, Tax, TaxClass
+)
 from shuup.default_tax.models import TaxRule
 from shuup.testing.factories import (
     create_empty_order, create_order_with_product, create_product,
@@ -68,7 +70,7 @@ def get_frontend_order_state(contact, valid_lines=True):
             shop=shop
         )
         not_visible_shop_product = not_visible_product.get_shop_instance(shop)
-        not_visible_shop_product.visible = False
+        not_visible_shop_product.visibility = ShopProductVisibility.NOT_VISIBLE
         not_visible_shop_product.save()
         lines = [
             {"id": "x", "type": "product"},  # no product?
