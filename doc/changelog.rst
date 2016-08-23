@@ -86,6 +86,14 @@ Front
 ~~~~~
 
 - Refactor default templates to allow better extensibility
+  - Split up templates to small parts to allow small changes to template without
+    overriding the whole template
+  - Move included files to macros
+  - Split up macros and enable overriding individual macros
+  - Update front apps and xtheme plugins based on these changes in macros
+  - This change will probably cause issues with existing themes and
+    all existing themes should be tested over this change before updating
+    to live environment.
 - Add product SKU to searchable fields for simple search
 - Limit search results for simple search
 - Fix password recovery form bug with invalid email
