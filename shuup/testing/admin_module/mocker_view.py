@@ -14,7 +14,8 @@ from django.utils.encoding import force_text
 from django.views.generic import FormView
 
 from shuup.testing.factories import (
-    create_random_company, create_random_order, create_random_person
+    create_random_company, create_random_contact_group, create_random_order,
+    create_random_person, create_random_product_attribute
 )
 
 
@@ -36,6 +37,14 @@ class Mockers(object):
     def mock_company(self):
         """ Create a random company """
         return create_random_company()
+
+    def mock_customer_group(self):
+        """ Create a random contact group """
+        return create_random_contact_group()
+
+    def mock_product_attribute(self):
+        """ Create a random product attribute """
+        return create_random_product_attribute()
 
 
 class MockerForm(forms.Form):
