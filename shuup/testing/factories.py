@@ -29,8 +29,8 @@ from six import BytesIO
 
 from shuup.core.defaults.order_statuses import create_default_order_statuses
 from shuup.core.models import (
-    AnonymousContact, Attribute, AttributeType, Category, CategoryStatus,
-    CompanyContact, Contact, ContactGroup, CustomCarrier,
+    AnonymousContact, Attribute, AttributeType, AttributeVisibility, Category,
+    CategoryStatus, CompanyContact, Contact, ContactGroup, CustomCarrier,
     CustomPaymentProcessor, FixedCostBehaviorComponent, MutableAddress, Order,
     OrderLine, OrderLineTax, OrderLineType, OrderStatus, PaymentMethod,
     PersonContact, Product, ProductMedia, ProductMediaKind, ProductType,
@@ -662,6 +662,19 @@ def create_random_person(locale=None, minimum_name_comp_len=0):
     )
 
 
+def create_random_contact_group():
+    fake = get_faker(["job"])
+    name = fake.job()
+    identifier = "%s-%s" % (ContactGroup.objects.count() + 1, name.lower().replace(" ", "-"))
+    return ContactGroup.objects.create(
+        identifier=identifier,
+        name=name,
+        show_pricing=random.choice([True, False]),
+        show_prices_including_taxes=random.choice([True, False]),
+        hide_prices=random.choice([True, False]),
+    )
+
+
 def create_random_company():
     fake = get_faker(["company", "person", "internet"])
     name = fake.company()
@@ -736,6 +749,23 @@ def create_random_order(customer=None, products=(), completion_probability=0, sh
             order.status = OrderStatus.objects.get_default_complete()
             order.save(update_fields=("status",))
         return order
+
+
+def create_random_product_attribute():
+    type_choices = [a.value for a in AttributeType]
+    vis_choices = [a.value for a in AttributeVisibility]
+
+    last_id = Attribute.objects.count() + 1
+    fake = get_faker(["color"])
+    name = "%s %d" % (fake.safe_color_name(), last_id)
+    identifier = name.lower().replace(" ", "-")
+
+    return Attribute.objects.create(
+        identifier=identifier,
+        type=random.choice(type_choices),
+        visibility_mode=random.choice(vis_choices),
+        name=name,
+    )
 
 
 def _get_pricing_context(shop, customer=None):

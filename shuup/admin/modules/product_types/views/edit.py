@@ -8,20 +8,35 @@
 
 from __future__ import unicode_literals
 
-from django import forms
-
+from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.utils.views import CreateOrUpdateView
-from shuup.core.models import ProductType
+from shuup.core.models import Attribute, ProductType
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 
 
 class ProductTypeForm(MultiLanguageModelForm):
+    attributes = Select2MultipleField(model=Attribute, required=False)
+
     class Meta:
         model = ProductType
-        exclude = ()  # All the fields!
-        widgets = {
-            "attributes": forms.CheckboxSelectMultiple
-        }
+        exclude = ()
+
+    def __init__(self, **kwargs):
+        super(ProductTypeForm, self).__init__(**kwargs)
+        if self.instance.pk:
+            choices = [(a.pk, a.name) for a in self.instance.attributes.all()]
+            self.fields["attributes"].widget.choices = choices
+            self.fields["attributes"].initial = [pk for pk, name in choices]
+
+    def clean_attributes(self):
+        attributes = [int(a_id) for a_id in self.cleaned_data.get("attributes", [])]
+        return Attribute.objects.filter(pk__in=attributes).all()
+
+    def save(self, commit=True):
+        obj = super(ProductTypeForm, self).save(commit=commit)
+        obj.attributes.clear()
+        obj.attributes = self.cleaned_data["attributes"]
+        return self.instance
 
 
 class ProductTypeEditView(CreateOrUpdateView):
