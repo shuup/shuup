@@ -31,6 +31,8 @@ Front
 Xtheme
 ~~~~~~
 
+- Add multiple stylesheet option for themes
+
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 

@@ -58,6 +58,9 @@ class Theme(object):
     # TODO: Document this
     fields = []
 
+    # List of tuples(path, name) for stylesheets provided by this theme.
+    stylesheets = []
+
     # List of plugin specs used in this template
     plugins = []
 
