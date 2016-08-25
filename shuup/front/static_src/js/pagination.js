@@ -8,7 +8,11 @@
  */
 window.moveToPage = function moveToPage(pageNumber) {
     var pagination = $("ul.pagination");
-
+    var state = {
+        sort: $("#id_sort").val(),
+        page: pageNumber
+    };
+    var filterString = getFilterString(state);
     // Prevent double clicking when ajax is loading
     if (pagination.prop("disabled")) {
         return false;
@@ -22,11 +26,34 @@ window.moveToPage = function moveToPage(pageNumber) {
         }
     }
     window.PAGE_NUMBER = pageNumber;
+    reloadProducts(filterString);
 
-    reloadProducts();
+    if(window.history && window.history.pushState) {
+        history.pushState(state, null, filterString);
+    }
+    // prevent scroll to page buttons
+    return false;
 };
 
-function reloadProducts() {
-    var filterString = "?sort=" + $("#id_sort").val() + "&page=" + window.PAGE_NUMBER;
+function getFilterString(state) {
+    var filterString = "";
+    if(state !== null) {
+        filterString = "?sort=" + state.sort + "&page=" + state.page;
+    }
+    return filterString;
+}
+
+function reloadProducts(filterString) {
+    // this is to ensure browser back/forward from different domain does a full refresh
+    filterString += (filterString == "")? "?" : "&";
+    filterString += "ajax=1";
+
+    window.scrollTo(0, 0);
     $("#ajax_content").load(location.pathname + filterString);
 }
+
+$(function() {
+    window.addEventListener('popstate', function(e) {
+        reloadProducts(getFilterString(e.state));
+    });
+});
