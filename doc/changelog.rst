@@ -126,6 +126,7 @@ Core
 Admin
 ~~~~~
 
+- Fix missing shipping_address on orders views
 - Add contact type filter to contact list view
 - Allow billing address to be used as shipping address on contact creation
 - Split person contact and company contact creation into separate actions
