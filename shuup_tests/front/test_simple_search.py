@@ -10,6 +10,7 @@ import pytest
 from django.utils import translation
 
 from shuup.core import cache
+from shuup.core.models import ShopProductVisibility
 from shuup.front.apps.simple_search.views import (
     get_search_product_ids, SearchView
 )
@@ -26,7 +27,7 @@ def test_simple_search_get_ids_works(rf):
     cache.clear()
     prod = get_default_product()
     bit = prod.name[:5]
-    request = rf.get("/")
+    request = apply_request_middleware(rf.get("/"))
     assert prod.pk in get_search_product_ids(request, bit)
     assert prod.pk in get_search_product_ids(request, bit)  # Should use cache
 
@@ -72,6 +73,30 @@ def test_simple_search_word_finder(rf):
     for query in invalid_searches:
         resp = view(apply_request_middleware(rf.get("/", {"q": query})))
         assert name not in resp.rendered_content
+
+
+@pytest.mark.parametrize("visibility,show_in_search", [
+    (ShopProductVisibility.NOT_VISIBLE, False),
+    (ShopProductVisibility.LISTED, False),
+    (ShopProductVisibility.SEARCHABLE, True),
+    (ShopProductVisibility.ALWAYS_VISIBLE, True),
+])
+@pytest.mark.django_db
+def test_product_searchability(rf, visibility, show_in_search):
+    cache.clear()
+    view = SearchView.as_view()
+    name = "Savage Garden"
+    sku = UNLIKELY_STRING
+
+    shop = get_default_shop()
+    product = create_product(sku, name=name, shop=shop)
+    shop_product = product.get_shop_instance(shop)
+
+    shop_product.visibility = visibility
+    shop_product.save()
+
+    resp = view(apply_request_middleware(rf.get("/", {"q": "savage"})))
+    assert (name in resp.rendered_content) == show_in_search
 
 
 @pytest.mark.django_db

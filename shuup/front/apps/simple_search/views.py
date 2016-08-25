@@ -67,7 +67,9 @@ def get_search_product_ids(request, query, limit=150):
     if product_ids is None:
         entry_query = get_compiled_query(
             query, ['sku', 'translations__name', 'translations__description', 'translations__keywords'])
-        product_ids = list(Product.objects.filter(entry_query).distinct().values_list("pk", flat=True))[:limit]
+        product_ids = list(
+            Product.objects.searchable(shop=request.shop).filter(entry_query).distinct().values_list("pk", flat=True)
+        )[:limit]
         cache.set(cache_key, product_ids, 60 * 5)
     return product_ids
 
@@ -105,7 +107,7 @@ class SearchView(ListView):
         query = self.form.cleaned_data["q"]
         if not query:  # pragma: no cover
             return Product.objects.none()
-        return Product.objects.list_visible(self.request.shop, self.request.customer).filter(
+        return Product.objects.searchable(self.request.shop, self.request.customer).filter(
             pk__in=get_search_product_ids(self.request, query))
 
     def get_context_data(self, **kwargs):

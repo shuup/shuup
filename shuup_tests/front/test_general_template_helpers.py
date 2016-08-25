@@ -28,7 +28,7 @@ def test_get_root_categories():
 
 
 @pytest.mark.django_db
-def test_get_visible_products_orderable_only():
+def test_get_listed_products_orderable_only():
     context = get_jinja_context()
     shop = get_default_shop()
     simple_supplier = get_simple_supplier()
@@ -41,23 +41,23 @@ def test_get_visible_products_orderable_only():
         shop=shop,
         stock_behavior=StockBehavior.STOCKED
     )
-    assert len(general.get_visible_products(context, n_products, orderable_only=True)) == 0
-    assert len(general.get_visible_products(context, n_products, orderable_only=False)) == 1
+    assert len(general.get_listed_products(context, n_products, orderable_only=True)) == 0
+    assert len(general.get_listed_products(context, n_products, orderable_only=False)) == 1
 
     # Increase stock on product
     quantity = product.get_shop_instance(shop).minimum_purchase_quantity
     simple_supplier.adjust_stock(product.id, quantity)
-    assert len(general.get_visible_products(context, n_products, orderable_only=True)) == 1
-    assert len(general.get_visible_products(context, n_products, orderable_only=False)) == 1
+    assert len(general.get_listed_products(context, n_products, orderable_only=True)) == 1
+    assert len(general.get_listed_products(context, n_products, orderable_only=False)) == 1
 
     # Decrease stock on product
     simple_supplier.adjust_stock(product.id, -quantity)
-    assert len(general.get_visible_products(context, n_products, orderable_only=True)) == 0
-    assert len(general.get_visible_products(context, n_products, orderable_only=False)) == 1
+    assert len(general.get_listed_products(context, n_products, orderable_only=True)) == 0
+    assert len(general.get_listed_products(context, n_products, orderable_only=False)) == 1
 
 
 @pytest.mark.django_db
-def test_get_visible_products_filter():
+def test_get_listed_products_filter():
     context = get_jinja_context()
     shop = get_default_shop()
     supplier = get_default_supplier()
@@ -73,12 +73,12 @@ def test_get_visible_products_filter():
         shop=shop,
     )
     filter_dict = {"id": product_1.id}
-    product_list = general.get_visible_products(context, n_products=2, filter_dict=filter_dict)
+    product_list = general.get_listed_products(context, n_products=2, filter_dict=filter_dict)
     assert product_1 in product_list
     assert product_2 not in product_list
 
     # Test also with orderable_only False
-    product_list = general.get_visible_products(context, n_products=2, filter_dict=filter_dict, orderable_only=False)
+    product_list = general.get_listed_products(context, n_products=2, filter_dict=filter_dict, orderable_only=False)
     assert product_1 in product_list
     assert product_2 not in product_list
 

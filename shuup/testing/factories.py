@@ -34,8 +34,9 @@ from shuup.core.models import (
     CustomPaymentProcessor, FixedCostBehaviorComponent, MutableAddress, Order,
     OrderLine, OrderLineTax, OrderLineType, OrderStatus, PaymentMethod,
     PersonContact, Product, ProductMedia, ProductMediaKind, ProductType,
-    SalesUnit, ShippingMethod, Shop, ShopProduct, ShopStatus, StockBehavior,
-    Supplier, SupplierType, Tax, TaxClass, WaivingCostBehaviorComponent
+    SalesUnit, ShippingMethod, Shop, ShopProduct, ShopProductVisibility,
+    ShopStatus, StockBehavior, Supplier, SupplierType, Tax, TaxClass,
+    WaivingCostBehaviorComponent
 )
 from shuup.core.order_creator import OrderCreator, OrderSource
 from shuup.core.pricing import get_pricing_module
@@ -143,10 +144,13 @@ class ShopProductFactory(DjangoModelFactory):
     class Meta:
         model = ShopProduct
 
-    visible = FuzzyBoolean(probability=0.7)
-    listed = FuzzyBoolean(probability=0.7)
     purchasable = FuzzyBoolean(probability=0.7)
-    searchable = FuzzyBoolean(probability=0.7)
+    visibility = fuzzy.FuzzyChoice([
+        ShopProductVisibility.NOT_VISIBLE,
+        ShopProductVisibility.LISTED,
+        ShopProductVisibility.SEARCHABLE,
+        ShopProductVisibility.ALWAYS_VISIBLE
+    ])
     default_price_value = fuzzy.FuzzyDecimal(0, 500)
 
 
@@ -422,7 +426,9 @@ def get_default_product():
         product.primary_image = media
         product.save()
         assert product.primary_image_id
-        sp = ShopProduct.objects.create(product=product, shop=get_default_shop())
+        sp = ShopProduct.objects.create(
+            product=product, shop=get_default_shop(), visibility=ShopProductVisibility.ALWAYS_VISIBLE
+        )
         sp.suppliers.add(get_default_supplier())
     return product
 
@@ -431,6 +437,8 @@ def get_default_shop_product():
     shop = get_default_shop()
     product = get_default_product()
     shop_product = product.get_shop_instance(shop)
+    shop_product.visibility = ShopProductVisibility.ALWAYS_VISIBLE
+    shop_product.save()
     return shop_product
 
 
@@ -491,7 +499,10 @@ def create_product(sku, shop=None, supplier=None, default_price=None, **attrs):
     product.full_clean()
     product.save()
     if shop:
-        sp = ShopProduct.objects.create(product=product, shop=shop, default_price=default_price)
+        sp = ShopProduct.objects.create(
+            product=product, shop=shop, default_price=default_price,
+            visibility=ShopProductVisibility.ALWAYS_VISIBLE
+        )
         if supplier:
             sp.suppliers.add(supplier)
         sp.save()
@@ -721,7 +732,7 @@ def create_random_order(customer=None, products=(), completion_probability=0, sh
     source.status = get_initial_order_status()
 
     if not products:
-        products = list(Product.objects.list_visible(source.shop, customer).order_by("?")[:40])
+        products = list(Product.objects.listed(source.shop, customer).order_by("?")[:40])
 
     for i in range(random.randint(3, 10)):
         product = random.choice(products)

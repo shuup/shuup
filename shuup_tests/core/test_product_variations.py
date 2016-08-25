@@ -10,7 +10,7 @@ import pytest
 
 from shuup.core.models import (
     ProductMode, ProductVariationResult, ProductVariationVariable,
-    ProductVariationVariableValue, ShopProduct
+    ProductVariationVariableValue, ShopProduct, ShopProductVisibility
 )
 from shuup.testing.factories import create_product, get_default_shop
 
@@ -22,7 +22,9 @@ def test_simple_variation():
     children = [create_product("SimpleVarChild-%d" % x) for x in range(10)]
     for child in children:
         child.link_to_parent(parent)
-        sp = ShopProduct.objects.create(shop=shop, product=child, listed=True)
+        sp = ShopProduct.objects.create(
+            shop=shop, product=child, visibility=ShopProductVisibility.ALWAYS_VISIBLE
+        )
         assert child.is_variation_child()
         assert not sp.is_list_visible()  # Variation children are not list visible
 

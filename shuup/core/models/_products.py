@@ -119,17 +119,17 @@ class ProductType(TranslatableModel):
 
 
 class ProductQuerySet(TranslatableQuerySet):
-    def list_visible(self, shop, customer, language=None):
+    def _visible(self, shop, customer, language=None):
         root = (self.language(language) if language else self)
 
         if customer and customer.is_all_seeing:
-            exclude_q = Q(deleted=True) | Q(mode=ProductMode.VARIATION_CHILD)
-            qs = root.all().exclude(exclude_q).filter(shop_products__shop=shop)
+            qs = root.all().exclude(mode=ProductMode.VARIATION_CHILD).filter(shop_products__shop=shop)
         else:
-            qs = root.all().exclude(deleted=True).filter(
-                shop_products__shop=shop,
-                shop_products__visible=True,
-                shop_products__listed=True,
+            from ._product_shops import ShopProductVisibility
+            qs = root.all().exclude(Q(
+                        shop_products__shop=shop,
+                        shop_products__visibility=ShopProductVisibility.NOT_VISIBLE
+                    )).filter(
                 mode__in=(
                     ProductMode.NORMAL, ProductMode.PACKAGE_PARENT,
                     ProductMode.SIMPLE_VARIATION_PARENT, ProductMode.VARIABLE_VARIATION_PARENT
@@ -148,7 +148,29 @@ class ProductQuerySet(TranslatableQuerySet):
                 qs = qs.filter(shop_products__visibility_limit=ProductVisibility.VISIBLE_TO_ALL)
 
         qs = qs.select_related(*Product.COMMON_SELECT_RELATED).distinct()
-        return qs
+        return qs.exclude(deleted=True)
+
+    def _get_qs(self, shop, customer, language, visibility_type):
+        root = (self.language(language) if language else self)
+        qs = root.all()._visible(shop=shop, customer=customer, language=language)
+        if customer and customer.is_all_seeing:
+            return qs
+        else:
+            from ._product_shops import ShopProductVisibility
+            return qs.filter(
+                shop_products__shop=shop,
+                shop_products__visibility__in=(
+                    visibility_type, ShopProductVisibility.ALWAYS_VISIBLE
+                ),
+            )
+
+    def listed(self, shop, customer=None, language=None):
+        from ._product_shops import ShopProductVisibility
+        return self._get_qs(shop, customer, language, ShopProductVisibility.LISTED)
+
+    def searchable(self, shop, customer=None, language=None):
+        from ._product_shops import ShopProductVisibility
+        return self._get_qs(shop, customer, language, ShopProductVisibility.SEARCHABLE)
 
     def all_except_deleted(self, language=None):
         qs = (self.language(language) if language else self).exclude(deleted=True)

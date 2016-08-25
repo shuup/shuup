@@ -55,7 +55,7 @@ class CategoryView(DetailView):
         if manufacturers:
             filters["manufacturer__in"] = manufacturers
 
-        products = Product.objects.list_visible(
+        products = Product.objects.listed(
             customer=self.request.customer,
             shop=self.request.shop
         ).filter(**filters).distinct()

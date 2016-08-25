@@ -15,7 +15,8 @@ from shuup.core.excs import (
     ProductNotOrderableProblem, ProductNotVisibleProblem
 )
 from shuup.core.models import (
-    AnonymousContact, get_person_contact, ProductVisibility, Supplier
+    AnonymousContact, get_person_contact, ProductVisibility,
+    ShopProductVisibility, Supplier
 )
 from shuup.testing.factories import (
     get_default_customer_group, get_default_product, get_default_shop,
@@ -101,28 +102,22 @@ def test_product_visibility(rf, admin_user, regular_user):
             shop_product.raise_if_not_visible(anon_contact)
         assert not shop_product.is_list_visible()
 
-    with modify(shop_product, visibility_limit=ProductVisibility.VISIBLE_TO_ALL, visible=False):
+    with modify(shop_product, visibility_limit=ProductVisibility.VISIBLE_TO_ALL, visibility=ShopProductVisibility.NOT_VISIBLE):
         assert error_exists(shop_product.get_visibility_errors(customer=anon_contact), "product_not_visible")
         assert error_does_not_exist(shop_product.get_visibility_errors(customer=admin_contact), "product_not_visible")
         assert not shop_product.is_list_visible()
 
-    with modify(shop_product, visibility_limit=ProductVisibility.VISIBLE_TO_LOGGED_IN, visible=True):
+    with modify(shop_product, visibility_limit=ProductVisibility.VISIBLE_TO_LOGGED_IN, visibility=ShopProductVisibility.ALWAYS_VISIBLE):
         assert error_exists(shop_product.get_visibility_errors(customer=anon_contact), "product_not_visible_to_anonymous")
         assert error_does_not_exist(shop_product.get_visibility_errors(customer=admin_contact), "product_not_visible_to_anonymous")
 
     customer_group = get_default_customer_group()
     grouped_user = get_user_model().objects.create_user(username=printable_gibberish(20))
     grouped_contact = get_person_contact(grouped_user)
-    with modify(shop_product, visibility_limit=ProductVisibility.VISIBLE_TO_GROUPS, visible=True):
+    with modify(shop_product, visibility_limit=ProductVisibility.VISIBLE_TO_GROUPS, visibility=ShopProductVisibility.ALWAYS_VISIBLE):
         shop_product.visibility_groups.add(customer_group)
         customer_group.members.add(grouped_contact)
         customer_group.members.remove(get_person_contact(regular_user))
         assert error_does_not_exist(shop_product.get_visibility_errors(customer=grouped_contact), "product_not_visible_to_group")
         assert error_does_not_exist(shop_product.get_visibility_errors(customer=admin_contact), "product_not_visible_to_group")
         assert error_exists(shop_product.get_visibility_errors(customer=regular_contact), "product_not_visible_to_group")
-
-    with modify(shop_product, listed=False):
-        assert not shop_product.is_list_visible()
-
-    with modify(shop_product, listed=True):
-        assert shop_product.is_list_visible()

@@ -133,7 +133,6 @@ class ShopProductFormPart(FormPart):
     def get_initial(self):
         if not self.object.pk:
             return {
-                "visible": True,
                 "suppliers": [Supplier.objects.first()]
             }
 
