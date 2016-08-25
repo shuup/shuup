@@ -22,7 +22,11 @@
     {# Include Fonts #}
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
     {# Include Styles #}
-    <link rel="stylesheet" href="{{ static("shuup/front/css/style.css") }}">
+    {% if xtheme.get("stylesheet") %}
+        <link rel="stylesheet" href="{{ STATIC_URL }}{{ xtheme.get("stylesheet") }}">
+    {% else %}
+        <link rel="stylesheet" href="{{ static("shuup/front/css/style.css") }}">
+    {% endif %}
 </head>
 <body>
     {{ macros.render_maintenance_mode_notification() }}

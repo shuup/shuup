@@ -182,6 +182,19 @@ Your goal is change the way products are being rendered. In this case you
 create a file in ``templates/mytheme/shuup/front/macros/theme/category.jinja``
 and define the ``{% macro render_products_section() %}`` there with the changes you want.
 
+
+Styles
+------
+
+Theme can define multiple stylesheets. This helps theme designers to use the
+same base ``.less`` and just overwrite colors from it or make small changes to template.
+
+See ``shuup/themes/classic_gray/`` for examples on how to define multiple styles and
+``shuup/front/templates/shuup/front/base.jinja`` for how to use them in your own `base.jinja`
+
+These styles can then be selected by merchant in theme configuration.
+For Classic Gray, these are defined in ``shuup/themes/classic_gray/theme.py``.
+
 Simple real life examples
 -------------------------
 

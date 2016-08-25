@@ -8,6 +8,7 @@
 from copy import deepcopy
 
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 
 from shuup.xtheme.models import ThemeSettings
 
@@ -24,6 +25,11 @@ class GenericThemeForm(forms.ModelForm):
     def __init__(self, **kwargs):
         self.theme = kwargs.pop("theme")
         super(GenericThemeForm, self).__init__(**kwargs)
+        if self.theme.stylesheets:
+            self.fields["stylesheet"] = forms.ChoiceField(
+                label=_("Stylesheets"), choices=self.theme.stylesheets,
+                initial=self.theme.stylesheets[0], required=True)
+
         fields = self.theme.fields
         if hasattr(fields, "items"):  # Quacks like a dict; that's fine too
             fields = fields.items()

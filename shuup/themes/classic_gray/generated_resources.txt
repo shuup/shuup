@@ -1,0 +1,2 @@
+static/shuup/classic_gray/pink/style.css
+static/shuup/classic_gray/blue/style.css

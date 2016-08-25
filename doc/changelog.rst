@@ -31,8 +31,12 @@ Front
 Xtheme
 ~~~~~~
 
+- Add multiple stylesheet option for themes
+
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
+
+- Add blue and pink color schemes for the theme
 
 Simple Supplier
 ~~~~~~~~~~~~~~~
