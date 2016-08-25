@@ -36,6 +36,8 @@ Xtheme
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 
+- Add blue and pink color schemes for the theme
+
 Simple Supplier
 ~~~~~~~~~~~~~~~
 

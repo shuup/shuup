@@ -24,6 +24,12 @@ class ClassicGrayTheme(Theme):
         ("show_welcome_text", forms.BooleanField(required=False, initial=True, label=_("Show Frontpage Welcome Text"))),
     ]
 
+    stylesheets = [
+        ("shuup/front/css/style.css", _("Default")),
+        ("shuup/classic_gray/blue/style.css", _("Midnight Blue")),
+        ("shuup/classic_gray/pink/style.css", _("Candy Pink"))
+    ]
+
     def get_view(self, view_name):
         import shuup.front.themes.views as views
         return getattr(views, view_name, None)

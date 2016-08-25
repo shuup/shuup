@@ -193,6 +193,7 @@ See ``shuup/themes/classic_gray/`` for examples on how to define multiple styles
 ``shuup/front/templates/shuup/front/base.jinja`` for how to use them in your own `base.jinja`
 
 These styles can then be selected by merchant in theme configuration.
+For Classic Gray, these are defined in ``shuup/themes/classic_gray/theme.py``.
 
 Simple real life examples
 -------------------------
