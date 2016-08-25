@@ -1,6 +1,6 @@
 {% macro user_account_button() %}
     <div class="btn-group" role="group">
-        <a class="btn btn-info" href="{{ url("shuup:customer_edit") }}">
+        <a class="btn btn-primary" href="{{ url("shuup:customer_edit") }}">
             <i class="fa fa-user"></i> {% trans %}Edit user account information{% endtrans %}
         </a>
     </div>
@@ -23,7 +23,7 @@
 
 {% macro company_account_button(request) %}
     <div class="btn-group" role="group">
-        <a class="btn btn-info" href="{{ url("shuup:company_edit") }}">
+        <a class="btn btn-primary" href="{{ url("shuup:company_edit") }}">
             {% if request.is_company_member %}
                 <i class="fa fa-users"></i> {% trans %}Edit company information{% endtrans %}
             {% else %}
@@ -35,7 +35,7 @@
 
 {% macro change_password_button() %}
     <div class="btn-group" role="group">
-        <a class="btn btn-info" href="{{ url("shuup:change_password") }}">
+        <a class="btn btn-primary" href="{{ url("shuup:change_password") }}">
             <i class="fa fa-cog"></i> {% trans %}Change password{% endtrans %}
         </a>
     </div>
