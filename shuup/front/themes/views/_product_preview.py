@@ -18,8 +18,7 @@ class ProductPreviewView(ProductDetailView):
         # preview, we cannot redirect back to `/xtheme/product_preview`.
 
         context = super(ProductPreviewView, self).get_context_data(**kwargs)
-        # Add `return_url` to context to avoid usage of `request.path` in
-        # `classic_gray/shuup/front/product/_detail_order_section.jinja`
+        # Add `return_url` to context to avoid usage of `request.path`
         context["return_url"] = "/xtheme/products"
         return context
 
