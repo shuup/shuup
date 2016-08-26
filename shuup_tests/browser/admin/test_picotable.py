@@ -11,7 +11,7 @@ import time
 import pytest
 from django.core.urlresolvers import reverse
 
-from shuup.testing.browser_utils import wait_until_appeared
+from shuup.testing.browser_utils import click_element, wait_until_appeared
 from shuup.testing.factories import create_random_person, get_default_shop
 from shuup.testing.utils import initialize_admin_browser_test
 
@@ -44,26 +44,26 @@ def _test_pagination(browser):
     items = _get_pagination_content(browser)
     _assert_pagination_content(items, ["Previous", "1", "2", "3", ellipses, "11", "Next"])
 
-    _click_item(items, "3")
+    _goto_page(browser, 3)
     items = _get_pagination_content(browser)
     _assert_pagination_content(items, ["Previous", "1", "2", "3", "4", "5",  ellipses, "11", "Next"])
 
-    _click_item(items, "5")
+    _goto_page(browser, 5)
     items = _get_pagination_content(browser)
     _assert_pagination_content(items, ["Previous", "1", ellipses, "3", "4", "5", "6", "7", ellipses, "11", "Next"])
 
 
-    _click_item(items, "7")
+    _goto_page(browser, 7)
     items = _get_pagination_content(browser)
     _assert_pagination_content(items, ["Previous", "1", ellipses, "5", "6", "7", "8", "9", ellipses, "11", "Next"])
 
 
-    _click_item(items, "9")
+    _goto_page(browser, 9)
     items = _get_pagination_content(browser)
     _assert_pagination_content(items, ["Previous", "1", ellipses, "7", "8", "9", "10", "11", "Next"])
 
 
-    _click_item(items, "11")
+    _goto_page(browser, 11)
     items = _get_pagination_content(browser)
     _assert_pagination_content(items, ["Previous", "1", ellipses, "9", "10", "11", "Next"])
 
@@ -77,7 +77,6 @@ def _assert_pagination_content(items, content):
     assert [item.text for item in items] == content
 
 
-def _click_item(items, value):
-    index = [item.text for item in items].index(value)
-    items[index].click()
-    time.sleep(0.5)  # Wait mithril for a half sec
+def _goto_page(browser, page_number):
+    click_element(browser, "a[rel='%s']" % page_number)
+    wait_until_appeared(browser, "li.active a[rel='%s']" % page_number)

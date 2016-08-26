@@ -14,7 +14,8 @@ from django.core.urlresolvers import reverse
 
 from shuup.core.models import Order, OrderStatus
 from shuup.testing.browser_utils import (
-    move_to_element, wait_until_appeared, wait_until_disappeared
+    click_element, move_to_element, wait_until_appeared, wait_until_condition,
+    wait_until_disappeared
 )
 from shuup.testing.factories import (
     create_empty_order, create_product, create_random_person,
@@ -66,7 +67,7 @@ def _test_customer_data(browser, person):
     assert browser.find_by_css("input[name='billing-tax_number']").first['required'], "tax number is required"
 
     browser.uncheck("order-for-company")
-    browser.find_by_id("select-existing-customer").click()
+    click_element(browser, "#select-existing-customer")
     browser.windows.current = browser.windows[1]
     wait_until_appeared(browser, "a")
     # click second row - first row is admin
@@ -81,61 +82,61 @@ def _test_customer_data(browser, person):
 
 def _test_add_lines(browser):
     line_items_before = browser.find_by_id("lines").find_by_css('.list-group-item')
-    move_to_element(browser, "#lines")
-    browser.find_by_id("add-line").click()
-    line_items_after = browser.find_by_id("lines").find_by_css('.list-group-item')
-    assert len(line_items_after) == len(line_items_before) + 1, "new line added"
-    last_line_item = line_items_after[len(line_items_after) - 1]
-
+    click_element(browser, "#add-line")
+    wait_until_condition(
+        browser, lambda x: len(x.find_by_css("#lines .list-group-item")) == len(line_items_before) + 1)
     # select product
-    last_line_item.find_by_tag('a').click()
+    click_element(browser, "#lines .list-group-item:last-child a")
     browser.windows.current = browser.windows[1]
     wait_until_appeared(browser, "a")
-    browser.find_by_css("tbody a").first.click()
+    click_element(browser, "tbody a:first-of-type")
     browser.windows.current = browser.windows[0]
-    wait_until_appeared(browser, ".text-info")
+    wait_until_condition(browser, lambda x: x.find_by_css('#lines input[name="total"]').first.value == '10')
+    last_line_item = browser.find_by_css("#lines .list-group-item:last-child")
     assert last_line_item.find_by_css('input[name="quantity"]').first.value == "1", "1 piece added"
     assert last_line_item.find_by_css('input[name="total"]').first.value == "10", "line item total is 10"
-    last_line_item.find_by_css(".delete button").click()
-    line_items_after = browser.find_by_id("lines").find_by_css('.list-group-item')
-    assert len(line_items_before) == len(line_items_after), "line item removed"
+    click_element(browser, "#lines .list-group-item:last-child .delete button")
+    wait_until_condition(
+        browser,
+        lambda x: len(x.find_by_css("#lines .list-group-item")) == len(line_items_before))
 
 
 def _test_quick_add_lines(browser):
     assert browser.find_by_css("input[name='auto-add']").first.checked == True
     # add line automatically just by searching and finding direct match
-    #browser.execute_script("window.scrollTo(0, $('#quick-add').offset().top)")
-    move_to_element(browser, "#quick-add")
-    browser.find_by_id("quick-add").find_by_css('.select2').click()
-
-    assert len(browser.find_by_id("quick-add").find_by_css('.select2-container--open')) == 1, "select is open"
+    click_element(browser, "#quick-add .select2")
+    wait_until_condition(
+        browser, lambda x: len(browser.find_by_css("#quick-add .select2-container--open")) == 1)
     browser.find_by_css("input.select2-search__field").first.value = "test-sku1"
-    wait_until_disappeared(browser, "select2-results__message")
-    line_items = browser.find_by_id("lines").find_by_css('.list-group-item')
-    assert len(line_items) == 1, "one line item added"
-    assert len(browser.find_by_id("quick-add").find_by_css('.select2-container--open')) == 1, "select is open after add"
+    wait_until_condition(browser, lambda x: len(x.find_by_css("#lines .list-group-item")) == 1)
+    line_items = browser.find_by_css("#lines .list-group-item")
+    assert len(browser.find_by_css("#quick-add .select2-container--open")) == 1, "select is open after add"
     assert line_items.first.find_by_css('input[name="quantity"]').first.value == '1', "one piece added"
 
     browser.find_by_css("input.select2-search__field").first.value = "test-sku1"
-    wait_until_disappeared(browser, "select2-results__message")
+    wait_until_condition(browser, lambda x: x.find_by_css('#lines input[name="quantity"]').first.value == '2')
     line_items = browser.find_by_id("lines").find_by_css('.list-group-item')
     assert len(line_items) == 1, "only one line item exists"
     assert line_items.first.find_by_css('input[name="quantity"]').first.value == '2', "two pieces added"
 
     # add line automatically by searching and clicking on match
     browser.find_by_css("input.select2-search__field").first.value = "test-sku"
-    wait_until_disappeared(browser, "select2-results__message")
+    wait_until_appeared(browser, ".select2-results__option:not([aria-live='assertive'])")
     browser.execute_script('$($(".select2-results__option")[0]).trigger({type: "mouseup"})')
-    wait_until_disappeared(browser, '.select2-container--open')
+    wait_until_condition(browser, lambda x: x.find_by_css('#lines input[name="quantity"]').first.value == '3')
     assert line_items.first.find_by_css('input[name="quantity"]').first.value == '3', "three pieces added"
 
     # add line manually
     browser.uncheck("auto-add")
-    browser.find_by_id("quick-add").find_by_css('.select2').click()
+    click_element(browser, "#quick-add .select2")
+    wait_until_appeared(browser, "input.select2-search__field")
     browser.find_by_css("input.select2-search__field").first.value = "test-sku0"
-    wait_until_disappeared(browser, "select2-results__message")
+    wait_until_appeared(browser, ".select2-results__option:not([aria-live='assertive'])")
     browser.execute_script('$($(".select2-results__option")[0]).trigger({type: "mouseup"})')
-    browser.find_by_id("add-product").first.click()
+    wait_until_condition(
+        browser, lambda x: x.find_by_css("#quick-add .select2-selection__rendered").text == "Test-Sku0")
+    click_element(browser, "#add-product")
+    wait_until_condition(browser, lambda x: len(x.find_by_css('#lines .list-group-item')) == 2)
     line_items = browser.find_by_id("lines").find_by_css('.list-group-item')
     assert len(line_items) == 2, "two line items exist"
 
@@ -151,10 +152,10 @@ def _test_methods(browser):
 def _test_confirm(browser):
     total = sum([decimal.Decimal(total_el.value) for total_el in browser.find_by_css("input[name='total']")])
     assert str(total) in browser.find_by_css(".order-footer h2").text, "order total is correct"
-    browser.find_by_css(".order-footer button").click()
-    wait_until_appeared(browser, "table")
+    click_element(browser, ".order-footer button")
+    wait_until_appeared(browser, ".btn-danger")  # wait until the back button appears
     assert len(browser.find_by_css("table tbody tr")) == 5, "2 line items, 2 methods, 1 total line shown in confirmation table"
     # click confirm
-    browser.find_by_css(".btn-success").click()
+    click_element(browser, ".btn-success")
     wait_until_appeared(browser, "#details-status-section")
     assert Order.objects.count() == 1, "order created"
