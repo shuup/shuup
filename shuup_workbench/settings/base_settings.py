@@ -38,6 +38,7 @@ INSTALLED_APPS = add_enabled_addons(SHUUP_ENABLED_ADDONS_FILE, [
     'shuup.default_tax',
     'shuup.front',
     'shuup.front.apps.auth',
+    'shuup.front.apps.carousel',
     'shuup.front.apps.customer_information',
     'shuup.front.apps.personal_order_history',
     'shuup.front.apps.saved_carts',
