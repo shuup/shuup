@@ -20,6 +20,7 @@ Localization
 Admin
 ~~~~~
 
+- Make currency field a dropdown in Shops admin
 - Add possibility to select visible fields in most list views
 - Prevent shipping orders without a defined shipping address
 
