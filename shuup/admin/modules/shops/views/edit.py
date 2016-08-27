@@ -22,6 +22,7 @@ from shuup.admin.utils.views import (
 )
 from shuup.core.models import MutableAddress, Shop
 from shuup.core.utils.form_mixins import ProtectedFieldsMixin
+from shuup.utils.i18n import get_current_babel_locale
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 
 
@@ -35,6 +36,13 @@ class ShopBaseForm(ProtectedFieldsMixin, MultiLanguageModelForm):
     def __init__(self, **kwargs):
         super(ShopBaseForm, self).__init__(**kwargs)
         self.fields["logo"].widget = MediaChoiceWidget(clearable=True)
+        locale = get_current_babel_locale()
+        currencies = sorted(dict(locale.currencies).keys())
+        self.fields["currency"] = forms.ChoiceField(
+            choices=[(currency, currency) for currency in currencies],
+            required=True,
+            label=_("Currency")
+        )
 
 
 class ShopBaseFormPart(FormPart):
