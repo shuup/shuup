@@ -16,7 +16,7 @@ from shuup.core.models import SalesUnit
 
 class SalesUnitListView(PicotableListView):
     model = SalesUnit
-    columns = [
+    default_columns = [
         Column("name", _(u"Name"), sort_field="translations__name", display="name", filter_config=TextFilter(
             filter_field="translations__name",
             placeholder=_("Filter by name...")
