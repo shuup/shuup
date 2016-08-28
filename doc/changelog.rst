@@ -71,6 +71,7 @@ Guide
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
+* Fix bug in importing macro in registration app
 * Fix bug in pdf utils while fetching static resources
 
 SHUUP 0.4.3
