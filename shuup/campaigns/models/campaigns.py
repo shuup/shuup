@@ -108,7 +108,7 @@ class Campaign(MoneyPropped, TranslatableModel):
 class CatalogCampaign(Campaign):
     _queryset = None
 
-    admin_url_suffix = "catalog_campaigns"
+    admin_url_suffix = "catalog_campaign"
     conditions = models.ManyToManyField('ContextCondition', blank=True, related_name='campaign')
     filters = models.ManyToManyField('CatalogFilter', blank=True, related_name='campaign')
 
@@ -188,7 +188,7 @@ class CatalogCampaign(Campaign):
 
 
 class BasketCampaign(Campaign):
-    admin_url_suffix = "basket_campaigns"
+    admin_url_suffix = "basket_campaign"
 
     basket_line_text = models.CharField(
         max_length=120, verbose_name=_("basket line text"), help_text=_("This text will be shown in basket."))
@@ -297,7 +297,7 @@ class CouponUsage(models.Model):
 
 
 class Coupon(models.Model):
-    admin_url_suffix = "coupons"
+    admin_url_suffix = "coupon"
 
     code = models.CharField(max_length=12)
 
