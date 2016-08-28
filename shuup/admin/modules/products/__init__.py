@@ -59,13 +59,13 @@ class ProductModule(AdminModule):
             admin_url(
                 "^products/(?P<pk>\d+)/package/$", "shuup.admin.modules.products.views.ProductPackageView",
                 name="product.edit_package",
-                permissions=get_default_model_permissions(ProductPackageLink),
-            ),
+                permissions=get_default_model_permissions(ProductPackageLink)
+            )
         ] + get_edit_and_list_urls(
             url_prefix="^products",
             view_template="shuup.admin.modules.products.views.Product%sView",
             name_template="product.%s",
-            permissions=get_default_model_permissions(Product),
+            permissions=get_default_model_permissions(Product)
         )
 
     def get_menu_entries(self, request):

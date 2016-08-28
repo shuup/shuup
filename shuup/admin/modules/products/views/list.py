@@ -17,7 +17,7 @@ from shuup.core.models import Category, Product, ProductMode
 
 class ProductListView(PicotableListView):
     model = Product
-    columns = [
+    default_columns = [
         Column("sku", _(u"SKU"), display="sku", filter_config=TextFilter(placeholder=_("Filter by SKU..."))),
         Column("name", _(u"Name"), sort_field="translations__name", display="name", filter_config=TextFilter(
             filter_field="translations__name",
@@ -47,8 +47,8 @@ class ProductListView(PicotableListView):
     def get_object_abstract(self, instance, item):
         return [
             {"text": "%s" % instance, "class": "header"},
-            {"title": _(u"Barcode"), "text": item["barcode"]},
-            {"title": _(u"SKU"), "text": item["sku"]},
-            {"title": _(u"Type"), "text": item["type"]},
-            {"title": _(u"Primary Category"), "text": item["category"]}
+            {"title": _(u"Barcode"), "text": item.get("barcode")},
+            {"title": _(u"SKU"), "text": item.get("sku")},
+            {"title": _(u"Type"), "text": item.get("type")},
+            {"title": _(u"Primary Category"), "text": item.get("category")}
         ]
