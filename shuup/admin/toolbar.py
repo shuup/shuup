@@ -18,6 +18,7 @@ from django.utils.translation import ugettext as _
 
 from shuup.admin.utils.forms import flatatt_filter
 from shuup.admin.utils.permissions import get_missing_permissions
+from shuup.admin.utils.str_utils import camelcase_to_snakecase
 from shuup.admin.utils.urls import get_model_url, NoModelUrl
 
 
@@ -99,6 +100,39 @@ class URLActionButton(BaseActionButton):
             })
             yield self.render_label()
             yield '</a>'
+
+
+class SettingsActionButton(URLActionButton):
+    """
+    A generic settings button meant to be used across many modules
+    """
+    def __init__(self, url, **kwargs):
+        kwargs.setdefault("icon", "fa fa-cog")
+        kwargs.setdefault("text", _("Settings"))
+        kwargs.setdefault("extra_css_class", "btn-default btn-inverse")
+        kwargs.pop("return_url")
+        super(SettingsActionButton, self).__init__(url, **kwargs)
+
+    @classmethod
+    def for_model(cls, model, **kwargs):
+        """
+        Generate a SettingsActionButton for a model, auto-wiring the URL.
+
+        :param model: Model class
+        :rtype: shuup.admin.toolbar.SettingsActionButton|None
+        """
+        if "url" not in kwargs:
+            try:
+                url = get_model_url(model, kind="list_settings")
+            except NoModelUrl:
+                return None
+            return_url = kwargs.get("return_url")
+            if not return_url:
+                return_url = camelcase_to_snakecase(model.__name__)
+            kwargs["url"] = url + "?module=%s&model=%s&return_url=%s" % (
+                model.__module__, model.__name__, return_url)
+
+        return cls(**kwargs)
 
 
 class NewActionButton(URLActionButton):
