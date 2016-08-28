@@ -17,11 +17,13 @@ from shuup.core.models import ProductType
 
 class ProductTypeListView(PicotableListView):
     model = ProductType
-    columns = [
-        Column("name", _(u"Name"), sort_field="translations__name", display="name", filter_config=TextFilter(
-            filter_field="translations__name",
-            placeholder=_("Filter by name...")
-        )),
+    default_columns = [
+        Column(
+            "name",
+            _(u"Name"),
+            sort_field="translations__name",
+            display="name",
+            filter_config=TextFilter(filter_field="translations__name", placeholder=_("Filter by name..."))),
         Column("n_attributes", _(u"Number of Attributes")),
     ]
 

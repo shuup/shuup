@@ -18,13 +18,13 @@ from shuup.core.models import ProductType
 
 class ProductTypeModule(AdminModule):
     name = _("Product Types")
-    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:product-type.list")
+    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:product_type.list")
 
     def get_urls(self):
         return get_edit_and_list_urls(
             url_prefix="^product-types",
             view_template="shuup.admin.modules.product_types.views.ProductType%sView",
-            name_template="product-type.%s",
+            name_template="product_type.%s",
             permissions=get_default_model_permissions(ProductType),
         )
 
@@ -33,7 +33,7 @@ class ProductTypeModule(AdminModule):
             MenuEntry(
                 text=_("Product types"),
                 icon="fa fa-asterisk",
-                url="shuup_admin:product-type.list",
+                url="shuup_admin:product_type.list",
                 category=PRODUCTS_MENU_CATEGORY,
                 ordering=3
             )
@@ -43,4 +43,4 @@ class ProductTypeModule(AdminModule):
         return get_default_model_permissions(ProductType)
 
     def get_model_url(self, object, kind):
-        return derive_model_url(ProductType, "shuup_admin:product-type", object, kind)
+        return derive_model_url(ProductType, "shuup_admin:product_type", object, kind)
