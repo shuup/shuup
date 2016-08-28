@@ -38,6 +38,12 @@ class StocksAdminModule(AdminModule):
                 "shuup.simple_supplier.admin_module.views.StocksListView",
                 name="simple_supplier.stocks"
             ),
+            admin_url(
+                "^list-settings/",
+                "shuup.admin.modules.settings.views.ListSettingsView",
+                name="simple_supplier.list_settings",
+                permissions=get_default_model_permissions(StockAdjustment),
+            )
         ]
 
     def get_required_permissions(self):

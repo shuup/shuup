@@ -25,7 +25,7 @@ from shuup.simple_supplier.utils import (
 class StocksListView(PicotableListView):
     template_name = "shuup/simple_supplier/admin/base_picotable.jinja"
     model = Product
-    columns = [
+    default_columns = [
         Column(
             "sku", _("SKU"), sort_field="product__sku", display="product__sku", linked=True,
             filter_config=TextFilter(filter_field="product__sku", placeholder=_("Filter by SKU..."))
@@ -51,10 +51,10 @@ class StocksListView(PicotableListView):
     def get_object_abstract(self, instance, item):
         item.update({"_linked_in_mobile": False, "_url": self.get_object_url(instance.product)})
         return [
-            {"text": item["name"], "class": "header"},
-            {"title": "", "text": item["sku"]},
-            {"title": "", "text": " ", "raw": item["stock_information"]},
-            {"title": "", "text": " ", "raw": item["adjust_stock"]},
+            {"text": item.get("name"), "class": "header"},
+            {"title": "", "text": item.get("sku")},
+            {"title": "", "text": " ", "raw": item.get("stock_information")},
+            {"title": "", "text": " ", "raw": item.get("adjust_stock")},
         ]
 
     def get_queryset(self):
