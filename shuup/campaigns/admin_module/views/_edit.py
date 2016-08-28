@@ -72,7 +72,7 @@ class CatalogCampaignEditView(BreadcrumbedView, CampaignEditView):
     rules_form_part_class = CatalogConditionsFormPart
 
     parent_name = _("Catalog Campaign")
-    parent_url = "shuup_admin:catalog_campaigns.list"
+    parent_url = "shuup_admin:catalog_campaign.list"
 
     def get_form_parts(self, object):
         form_parts = super(CatalogCampaignEditView, self).get_form_parts(object)
@@ -100,7 +100,7 @@ class BasketCampaignEditView(BreadcrumbedView, CampaignEditView):
     rules_form_part_class = BasketConditionsFormPart
 
     parent_name = _("Basket Campaign")
-    parent_url = "shuup_admin:basket_campaigns.list"
+    parent_url = "shuup_admin:basket_campaign.list"
 
 
 class CouponEditView(BreadcrumbedView, CreateOrUpdateView):
@@ -110,4 +110,4 @@ class CouponEditView(BreadcrumbedView, CreateOrUpdateView):
     context_object_name = "coupon"
     add_form_errors_as_messages = True
     parent_name = _("Coupon")
-    parent_url = "shuup_admin:coupons.list"
+    parent_url = "shuup_admin:coupon.list"
