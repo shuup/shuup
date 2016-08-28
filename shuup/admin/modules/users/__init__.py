@@ -66,6 +66,12 @@ class UserModule(AdminModule):
                 "shuup.admin.modules.users.views.LoginAsUserView",
                 name="user.login-as",
                 permissions=permissions
+            ),
+            admin_url(
+                "^list-settings/",
+                "shuup.admin.modules.settings.views.ListSettingsView",
+                name="user.list_settings",
+                permissions=permissions,
             )
         ]
 
