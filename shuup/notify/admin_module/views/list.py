@@ -19,7 +19,7 @@ from shuup.notify.models.script import Script
 
 class ScriptListView(PicotableListView):
     model = Script
-    columns = [
+    default_columns = [
         Column("name", _(u"Name"), linked=True, filter_config=TextFilter(operator="startswith")),
         Column("event_identifier", _(u"Event"), display="get_event_identifier_text"),
         Column("enabled", _(u"Enabled")),
@@ -44,6 +44,6 @@ class ScriptListView(PicotableListView):
     def get_object_abstract(self, instance, item):
         return [
             {"text": "%s" % instance, "class": "header"},
-            {"title": _(u"Event"), "text": item["event_identifier"]},
-            {"title": _(u"Enabled"), "text": item["enabled"]}
+            {"title": _(u"Event"), "text": item.get("event_identifier")},
+            {"title": _(u"Enabled"), "text": item.get("enabled")}
         ]

@@ -43,7 +43,7 @@ def test_contact_group_members_formset(rf):
 
 
 def check_for_delete(request, contact_group, can_delete):
-    delete_url = reverse("shuup_admin:contact-group.delete", kwargs={"pk": contact_group.pk})
+    delete_url = reverse("shuup_admin:contact_group.delete", kwargs={"pk": contact_group.pk})
     view = ContactGroupEditView.as_view()
     response = view(request, pk=contact_group.pk).render()
     assert bool(delete_url in force_text(response.content)) == can_delete

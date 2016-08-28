@@ -15,6 +15,7 @@ from shuup.testing.browser_utils import click_element, wait_until_appeared
 from shuup.testing.factories import create_random_person, get_default_shop
 from shuup.testing.utils import initialize_admin_browser_test
 
+
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
 
@@ -25,10 +26,10 @@ def test_list_view(browser, admin_user, live_server):
     for i in range(0, 200):
         contact = create_random_person()
         contact.save()
-
     initialize_admin_browser_test(browser, live_server)
     _visit_contacts_list_view(browser, live_server)
     _test_pagination(browser)
+    _set_settings(browser)
 
 
 def _visit_contacts_list_view(browser, live_server):
@@ -80,3 +81,19 @@ def _assert_pagination_content(items, content):
 def _goto_page(browser, page_number):
     click_element(browser, "a[rel='%s']" % page_number)
     wait_until_appeared(browser, "li.active a[rel='%s']" % page_number)
+
+
+def _click_item(items, value):
+    index = [item.text for item in items].index(value)
+    items[index].click()
+    time.sleep(0.5)  # Wait mithril for a half sec
+
+
+def _set_settings(browser):
+    assert not browser.is_text_present("Internal Identifier")
+    browser.find_by_css(".btn.btn-default.btn-inverse").click()
+    browser.find_by_id("id_view_configuration_contact_identifier").click()
+    browser.find_by_css(".btn.btn-success").click()
+    wait_until_appeared(browser, ".picotable-item-info")
+    assert browser.is_text_present("Internal Identifier")
+

@@ -66,24 +66,24 @@ class ServiceModule(AdminModule):
 class ShippingMethodModule(ServiceModule):
     model = ShippingMethod
     name = _("Shipping Methods")
-    url_prefix = "^shipping_methods"
+    url_prefix = "^shipping_method"
     view_template = "shuup.admin.modules.services.views.ShippingMethod%sView"
-    name_template = "shipping_methods.%s"
-    menu_entry_url = "shuup_admin:shipping_methods.list"
+    name_template = "shipping_method.%s"
+    menu_entry_url = "shuup_admin:shipping_method.list"
     menu_ordering = 3
-    url_name_prefix = "shuup_admin:shipping_methods"
+    url_name_prefix = "shuup_admin:shipping_method"
 
-    breadcrumbs_menu_entry = MenuEntry(text=name, url="shuup_admin:shipping_methods.list")
+    breadcrumbs_menu_entry = MenuEntry(text=name, url="shuup_admin:shipping_method.list")
 
 
 class PaymentMethodModule(ServiceModule):
     model = PaymentMethod
     name = _("Payment Methods")
-    url_prefix = "^payment_methods"
+    url_prefix = "^payment_method"
     view_template = "shuup.admin.modules.services.views.PaymentMethod%sView"
-    name_template = "payment_methods.%s"
-    menu_entry_url = "shuup_admin:payment_methods.list"
+    name_template = "payment_method.%s"
+    menu_entry_url = "shuup_admin:payment_method.list"
     menu_ordering = 4
-    url_name_prefix = "shuup_admin:payment_methods"
+    url_name_prefix = "shuup_admin:payment_method"
 
-    breadcrumbs_menu_entry = MenuEntry(text=name, url="shuup_admin:payment_methods.list")
+    breadcrumbs_menu_entry = MenuEntry(text=name, url="shuup_admin:payment_method.list")

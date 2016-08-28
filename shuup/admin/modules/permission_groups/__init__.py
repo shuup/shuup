@@ -16,13 +16,13 @@ from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 
 class PermissionGroupModule(AdminModule):
     name = _("Permission Groups")
-    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:permission_groups.list")
+    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:permission_group.list")
 
     def get_urls(self):
         return get_edit_and_list_urls(
             url_prefix="^permission-groups",
             view_template="shuup.admin.modules.permission_groups.views.PermissionGroup%sView",
-            name_template="permission_groups.%s",
+            name_template="permission_group.%s",
             permissions=get_default_model_permissions(PermissionGroup),
         )
 
@@ -31,7 +31,7 @@ class PermissionGroupModule(AdminModule):
             MenuEntry(
                 text=self.name,
                 icon="fa fa-users",
-                url="shuup_admin:permission_groups.list",
+                url="shuup_admin:permission_group.list",
                 category=CONTACTS_MENU_CATEGORY,
                 ordering=3
             )
@@ -41,4 +41,4 @@ class PermissionGroupModule(AdminModule):
         return get_default_model_permissions(PermissionGroup)
 
     def get_model_url(self, object, kind):
-        return derive_model_url(PermissionGroup, "shuup_admin:permission_groups", object, kind)
+        return derive_model_url(PermissionGroup, "shuup_admin:permission_group", object, kind)

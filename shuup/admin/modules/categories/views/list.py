@@ -16,7 +16,7 @@ from shuup.core.models import Category, CategoryStatus, CategoryVisibility
 
 class CategoryListView(PicotableListView):
     model = Category
-    columns = [
+    default_columns = [
         Column(
             "name", _(u"Name"), sortable=False, display="format_name", linked=True,
             filter_config=MPTTFilter(
@@ -51,5 +51,5 @@ class CategoryListView(PicotableListView):
     def get_object_abstract(self, instance, item):
         return [
             {"text": "%s" % instance, "class": "header"},
-            {"title": _(u"Status"), "text": item["status"]},
+            {"title": _(u"Status"), "text": item.get("status")},
         ]

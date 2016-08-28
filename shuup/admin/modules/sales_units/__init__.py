@@ -18,13 +18,13 @@ from shuup.core.models import SalesUnit
 
 class SalesUnitModule(AdminModule):
     name = _("Sales Units")
-    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:sales-unit.list")
+    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:sales_unit.list")
 
     def get_urls(self):
         return get_edit_and_list_urls(
             url_prefix="^sales-units",
             view_template="shuup.admin.modules.sales_units.views.SalesUnit%sView",
-            name_template="sales-unit.%s",
+            name_template="sales_unit.%s",
             permissions=get_default_model_permissions(SalesUnit)
         )
 
@@ -33,7 +33,7 @@ class SalesUnitModule(AdminModule):
             MenuEntry(
                 text=self.name,
                 icon="fa fa-asterisk",
-                url="shuup_admin:sales-unit.list",
+                url="shuup_admin:sales_unit.list",
                 category=PRODUCTS_MENU_CATEGORY,
                 ordering=5
             ),
@@ -43,4 +43,4 @@ class SalesUnitModule(AdminModule):
         return get_default_model_permissions(SalesUnit)
 
     def get_model_url(self, object, kind):
-        return derive_model_url(SalesUnit, "shuup_admin:sales-unit", object, kind)
+        return derive_model_url(SalesUnit, "shuup_admin:sales_unit", object, kind)

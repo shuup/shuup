@@ -42,7 +42,7 @@ class OrderStatusChoicesFilter(ChoicesFilter):
 
 class OrderListView(PicotableListView):
     model = Order
-    columns = [
+    default_columns = [
         Column("identifier", _(u"Order"), linked=True, filter_config=TextFilter(operator="startswith")),
         Column("order_date", _(u"Order Date"), display="format_order_date", filter_config=DateRangeFilter()),
         Column(
@@ -60,7 +60,7 @@ class OrderListView(PicotableListView):
         Column("payment_status", _(u"Payment Status"), filter_config=ChoicesFilter(choices=PaymentStatus.choices)),
         Column("shipping_status", _(u"Shipping Status"), filter_config=ChoicesFilter(choices=ShippingStatus.choices)),
         Column(
-            "taxful_total_price", _(u"Total"), sort_field="taxful_total_price_value",
+            "taxful_total_price_value", _(u"Total"), sort_field="taxful_total_price_value",
             display="format_taxful_total_price", class_name="text-right",
             filter_config=RangeFilter(field_type="number", filter_field="taxful_total_price_value")
         ),
@@ -81,6 +81,6 @@ class OrderListView(PicotableListView):
     def get_object_abstract(self, instance, item):
         return [
             {"text": "%s" % instance, "class": "header"},
-            {"title": _(u"Total"), "text": item["taxful_total_price"]},
-            {"title": _(u"Status"), "text": item["status"]}
+            {"title": _(u"Total"), "text": item.get("taxful_total_price_value")},
+            {"title": _(u"Status"), "text": item.get("status")}
         ]

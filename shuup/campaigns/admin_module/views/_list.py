@@ -8,7 +8,7 @@ from babel.dates import format_datetime
 from django.utils.timezone import localtime
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.toolbar import NewActionButton, Toolbar
+from shuup.admin.toolbar import NewActionButton, SettingsActionButton, Toolbar
 from shuup.admin.utils.picotable import ChoicesFilter, Column, TextFilter
 from shuup.admin.utils.views import PicotableListView
 from shuup.campaigns.models.campaigns import (
@@ -18,7 +18,7 @@ from shuup.utils.i18n import get_current_babel_locale
 
 
 class CampaignListView(PicotableListView):
-    columns = [
+    default_columns = [
         Column(
             "name", _(u"Title"), sort_field="name", display="name", linked=True,
             filter_config=TextFilter(operator="startswith")
@@ -41,21 +41,6 @@ class CampaignListView(PicotableListView):
     def _formatted_datetime(self, dt):
         return format_datetime(localtime(dt), locale=get_current_babel_locale())
 
-    def add_columns(self, column_id, columns, after=True):
-        # TODO: Make better
-        added = False
-        for idx, column in enumerate(self.columns):
-            if column.id == column_id:
-                found_idx = idx + 1 if after else idx
-                start = self.columns[:found_idx]
-                end = self.columns[found_idx:]
-                self.columns = start + columns + end
-                added = True
-                break
-
-        if not added:
-            self.columns += columns
-
     def get_object_abstract(self, instance, item):
         return [
             {"text": "%s" % (instance or _("CatalogCampaign")), "class": "header"},
@@ -65,18 +50,11 @@ class CampaignListView(PicotableListView):
 class CatalogCampaignListView(CampaignListView):
     model = CatalogCampaign
 
-    def __init__(self, **kwargs):
-        new_columns = [
-            Column("conditions", _("Used Conditions")),
-            Column("filters", _("Used filters")),
-        ]
-        self.add_columns("name", new_columns)
-        super(CatalogCampaignListView, self).__init__(**kwargs)
-
     def get_context_data(self, **kwargs):
         context = super(CampaignListView, self).get_context_data(**kwargs)
         context["toolbar"] = Toolbar([
-            NewActionButton("shuup_admin:catalog_campaigns.new", text=_("Create new Catalog Campaign")),
+            NewActionButton("shuup_admin:catalog_campaign.new", text=_("Create new Catalog Campaign")),
+            SettingsActionButton.for_model(self.model, return_url="catalog-campaign")
         ])
         return context
 
@@ -84,25 +62,18 @@ class CatalogCampaignListView(CampaignListView):
 class BasketCampaignListView(CampaignListView):
     model = BasketCampaign
 
-    def __init__(self, **kwargs):
-        new_columns = [
-            Column("conditions", _("Used Conditions")),
-            Column("coupon", _("Discount Code")),
-        ]
-        self.add_columns("name", new_columns)
-        super(BasketCampaignListView, self).__init__(**kwargs)
-
     def get_context_data(self, **kwargs):
         context = super(CampaignListView, self).get_context_data(**kwargs)
         context["toolbar"] = Toolbar([
-            NewActionButton("shuup_admin:basket_campaigns.new", text=_("Create new Basket Campaign")),
+            NewActionButton("shuup_admin:basket_campaign.new", text=_("Create new Basket Campaign")),
+            SettingsActionButton.for_model(self.model, return_url="basket-campaign")
         ])
         return context
 
 
 class CouponListView(PicotableListView):
     model = Coupon
-    columns = [
+    default_columns = [
         Column(
             "code", _(u"Code"), sort_field="code", display="code", linked=True,
             filter_config=TextFilter(operator="startswith")
@@ -121,6 +92,8 @@ class CouponListView(PicotableListView):
     def get_context_data(self, **kwargs):
         context = super(CouponListView, self).get_context_data(**kwargs)
         context["toolbar"] = Toolbar([
-            NewActionButton("shuup_admin:coupons.new", text=_("Create new Coupon")),
+            NewActionButton("shuup_admin:coupon.new", text=_("Create new Coupon")),
+            SettingsActionButton.for_model(self.model, return_url="coupon")
         ])
+        print(context["toolbar"])
         return context

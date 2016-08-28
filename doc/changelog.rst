@@ -20,6 +20,7 @@ Localization
 Admin
 ~~~~~
 
+- Add possibility to select visible fields in most list views
 - Prevent shipping orders without a defined shipping address
 
 Addons

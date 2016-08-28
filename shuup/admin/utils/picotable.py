@@ -287,6 +287,9 @@ class Column(object):
 
         return force_text(value)
 
+    def __repr__(self):
+        return "<Column: %s> %s" % (self.title, self.id)
+
 
 class Picotable(object):
     def __init__(self, request, columns, queryset, context):
@@ -377,6 +380,8 @@ class Picotable(object):
 
 
 class PicotableViewMixin(object):
+    url_identifier = None
+    default_columns = []
     columns = []
     picotable_class = Picotable
     template_name = "shuup/admin/base_picotable.jinja"

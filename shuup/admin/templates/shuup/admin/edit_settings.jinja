@@ -1,0 +1,15 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_with_sidebar, content_block %}
+{% from "shuup/admin/macros/multilanguage.jinja" import render_monolingual_fields %}
+{% block title %}{% trans %}Settings{% endtrans %}{% endblock %}
+
+{% block content %}
+    {% call content_with_sidebar(content_id="settings_form") %}
+        <form method="post" id="settings_form">
+        {% call content_block(_("Table Columns"), "fa-table") %}
+            {% csrf_token %}
+            {{ render_monolingual_fields(form) }}
+        {% endcall %}
+        </form>
+    {% endcall %}
+{% endblock %}

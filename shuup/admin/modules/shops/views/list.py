@@ -18,7 +18,7 @@ from shuup.core.models import Shop, ShopStatus
 
 class ShopListView(PicotableListView):
     model = Shop
-    columns = [
+    default_columns = [
         Column("name", _(u"Name"), sort_field="translations__name", display="name", filter_config=TextFilter(
             filter_field="translations__name",
             placeholder=_("Filter by name...")

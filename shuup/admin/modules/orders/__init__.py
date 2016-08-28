@@ -94,6 +94,12 @@ class OrderModule(AdminModule):
                 permissions=get_default_model_permissions(Order),
 
             ),
+            admin_url(
+                "^list-settings/",
+                "shuup.admin.modules.settings.views.ListSettingsView",
+                name="order.list_settings",
+                permissions=get_default_model_permissions(Order),
+            )
         ]
 
     def get_menu_entries(self, request):

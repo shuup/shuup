@@ -135,8 +135,9 @@ class PageEditView(CreateOrUpdateView):
 
 
 class PageListView(PicotableListView):
+    url_identifier = "simple_cms.page"
     model = Page
-    columns = [
+    default_columns = [
         Column(
             "title", _(u"Title"), sort_field="translations__title", display="title", linked=True,
             filter_config=TextFilter(operator="startswith")
@@ -150,6 +151,6 @@ class PageListView(PicotableListView):
     def get_object_abstract(self, instance, item):
         return [
             {"text": "%s" % (instance or _("Page")), "class": "header"},
-            {"title": _(u"Available from"), "text": item["available_from"]},
-            {"title": _(u"Available to"), "text": item["available_to"]} if instance.available_to else None
+            {"title": _(u"Available from"), "text": item.get("available_from")},
+            {"title": _(u"Available to"), "text": item.get("available_to")} if instance.available_to else None
         ]

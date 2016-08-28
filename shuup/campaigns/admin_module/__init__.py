@@ -25,21 +25,21 @@ class CampaignAdminModule(AdminModule):
         basket_campaign_urls = get_edit_and_list_urls(
             url_prefix="^campaigns/basket",
             view_template="shuup.campaigns.admin_module.views.BasketCampaign%sView",
-            name_template="basket_campaigns.%s",
+            name_template="basket_campaign.%s",
             permissions=get_default_model_permissions(BasketCampaign)
         )
 
         coupon_urls = get_edit_and_list_urls(
             url_prefix="^campaigns/coupons",
             view_template="shuup.campaigns.admin_module.views.Coupon%sView",
-            name_template="coupons.%s",
+            name_template="coupon.%s",
             permissions=get_default_model_permissions(Coupon)
         )
 
         return basket_campaign_urls + coupon_urls + get_edit_and_list_urls(
             url_prefix="^campaigns/catalog",
             view_template="shuup.campaigns.admin_module.views.CatalogCampaign%sView",
-            name_template="catalog_campaigns.%s",
+            name_template="catalog_campaign.%s",
             permissions=get_default_model_permissions(CatalogCampaign)
         )
 
@@ -51,17 +51,17 @@ class CampaignAdminModule(AdminModule):
         return [
             MenuEntry(
                 text=_("Catalog Campaigns"), icon="fa fa-file-text",
-                url="shuup_admin:catalog_campaigns.list",
+                url="shuup_admin:catalog_campaign.list",
                 category=category, ordering=1, aliases=[_("Show Catalog Campaigns")]
             ),
             MenuEntry(
                 text=_("Basket Campaigns"), icon="fa fa-file-text",
-                url="shuup_admin:basket_campaigns.list",
+                url="shuup_admin:basket_campaign.list",
                 category=category, ordering=2, aliases=[_("Show Basket Campaigns")]
             ),
             MenuEntry(
                 text=_("Coupons"), icon="fa fa-file-text",
-                url="shuup_admin:coupons.list",
+                url="shuup_admin:coupon.list",
                 category=category, ordering=3, aliases=[_("Show Coupons")]
             )
         ]

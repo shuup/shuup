@@ -16,16 +16,13 @@ from shuup.admin.utils.views import PicotableListView
 
 class PermissionGroupListView(PicotableListView):
     model = PermissionGroup
-    columns = [
+    default_columns = [
         Column(
             "name",
             _(u"Name"),
             sort_field="name",
             display="name",
-            filter_config=TextFilter(
-                filter_field="name",
-                placeholder=_("Filter by name...")
-            )
+            filter_config=TextFilter(filter_field="name", placeholder=_("Filter by name..."))
         ),
     ]
 

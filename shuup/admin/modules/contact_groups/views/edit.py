@@ -33,5 +33,5 @@ class ContactGroupEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdat
     def get_toolbar(self):
         save_form_id = self.get_save_form_id()
         object = self.get_object()
-        delete_url = reverse_lazy("shuup_admin:contact-group.delete", kwargs={"pk": object.pk})
+        delete_url = reverse_lazy("shuup_admin:contact_group.delete", kwargs={"pk": object.pk})
         return get_default_edit_toolbar(self, save_form_id, delete_url=delete_url if object.can_delete() else None)

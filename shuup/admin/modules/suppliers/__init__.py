@@ -24,7 +24,7 @@ class SupplierModule(AdminModule):
         return get_edit_and_list_urls(
             url_prefix="^suppliers",
             view_template="shuup.admin.modules.suppliers.views.Supplier%sView",
-            name_template="suppliers.%s",
+            name_template="supplier.%s",
             permissions=get_default_model_permissions(Supplier)
         )
 
@@ -33,7 +33,7 @@ class SupplierModule(AdminModule):
             MenuEntry(
                 text=_("Suppliers"),
                 icon="fa fa-truck",
-                url="shuup_admin:suppliers.list",
+                url="shuup_admin:supplier.list",
                 category=PRODUCTS_MENU_CATEGORY,
                 ordering=7
             ),

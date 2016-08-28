@@ -12,7 +12,7 @@ from django.db.models import Count, Q
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.toolbar import NewActionButton, Toolbar
+from shuup.admin.toolbar import NewActionButton, SettingsActionButton, Toolbar
 from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, RangeFilter, TextFilter
 )
@@ -37,7 +37,7 @@ class ContactTypeFilter(ChoicesFilter):
 
 class ContactListView(PicotableListView):
     model = Contact
-    columns = [
+    default_columns = [
         Column("name", _(u"Name"), linked=True, filter_config=TextFilter()),
         Column("type", _(u"Type"), display="get_type_display", sortable=False, filter_config=ContactTypeFilter()),
         Column("email", _(u"Email"), filter_config=TextFilter()),
@@ -56,7 +56,8 @@ class ContactListView(PicotableListView):
             NewActionButton.for_model(
                 PersonContact, url=reverse("shuup_admin:contact.new") + "?type=person"),
             NewActionButton.for_model(
-                CompanyContact, extra_css_class="btn-info", url=reverse("shuup_admin:contact.new") + "?type=company")
+                CompanyContact, extra_css_class="btn-info", url=reverse("shuup_admin:contact.new") + "?type=company"),
+            SettingsActionButton.for_model(Contact, return_url="contact")
         ])
 
     def get_queryset(self):
@@ -81,7 +82,7 @@ class ContactListView(PicotableListView):
         :type instance: shuup.core.models.Contact
         """
         bits = filter(None, [
-            item["type"],
+            item.get("type"),
             _("Active") if instance.is_active else _("Inactive"),
             _("Email: %s") % (instance.email or "\u2014"),
             _("Phone: %s") % (instance.phone or "\u2014"),

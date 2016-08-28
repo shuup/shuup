@@ -17,7 +17,7 @@ from shuup.core.models import Attribute, AttributeType, AttributeVisibility
 
 class AttributeListView(PicotableListView):
     model = Attribute
-    columns = [
+    default_columns = [
         Column("identifier", _("Identifier"), filter_config=TextFilter(
             filter_field="identifier",
             placeholder=_("Filter by identifier...")
