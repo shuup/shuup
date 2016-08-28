@@ -24,7 +24,7 @@ from shuup.utils.i18n import format_money, get_locally_formatted_datetime
 
 class CartListView(PicotableListView):
     model = StoredBasket
-    columns = [
+    default_columns = [
         Column("created_on", _(u"Created on"), display="format_created_date", filter_config=DateRangeFilter()),
         Column("updated_on", _(u"Last updated on"), display="format_updated_date", filter_config=DateRangeFilter()),
         Column(
@@ -79,8 +79,8 @@ class CartListView(PicotableListView):
     def get_object_abstract(self, instance, item):
         return [
             {"text": "%s" % instance, "class": "header"},
-            {"title": _(u"Created on"), "text": item["created_on"]},
-            {"title": _(u"Last updated on"), "text": item["updated_on"]},
-            {"title": _(u"Ordered"), "text": item["finished"]},
-            {"title": _(u"Total"), "text": item["taxful_total_price"]},
+            {"title": _(u"Created on"), "text": item.get("created_on")},
+            {"title": _(u"Last updated on"), "text": item.get("updated_on")},
+            {"title": _(u"Ordered"), "text": item.get("finished")},
+            {"title": _(u"Total"), "text": item.get("taxful_total_price")},
         ]
