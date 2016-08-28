@@ -6,13 +6,13 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
-import pytest
 
+import pytest
 from django.core.urlresolvers import reverse
 
+from shuup.testing.browser_utils import click_element
 from shuup.testing.factories import create_product, get_default_shop
 from shuup.testing.utils import initialize_admin_browser_test
-
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
@@ -32,7 +32,7 @@ def test_product_detail(browser, admin_user, live_server):
     new_sku = "some-new-sku"
     browser.find_by_id("id_base-sku").fill(new_sku)
     browser.execute_script("window.scrollTo(0,0)")
-    browser.find_by_xpath('//button[@form="product_form"]').first.click()
+    click_element(browser, "button[form='product_form']")
 
     product.refresh_from_db()
     assert product.sku == new_sku
@@ -42,9 +42,10 @@ def test_product_detail(browser, admin_user, live_server):
     for dropdown in dropdowns:
         if "Actions" in dropdown.text:
             dropdown.click()
-    browser.find_by_xpath('//a[@href="#%s"]' % product.sku).first.click()
+    click_element(browser, "a[href='#%s']" % product.sku)
 
     # Make sure that the tabs is clickable in small devices
     browser.driver.set_window_size(480, 960)
-    browser.find_by_id("product-images-section").first.click()
-    browser.find_by_id("additional-details-section").first.click()
+
+    click_element(browser, "#product-images-section")
+    click_element(browser, "#additional-details-section")

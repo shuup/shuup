@@ -8,16 +8,17 @@
 import os
 
 import pytest
+
 from shuup.core.models import OrderStatus, OrderStatusRole
 from shuup.testing.browser_utils import (
-    wait_until_appeared, wait_until_disappeared
+    click_element, move_to_element, wait_until_appeared,
+    wait_until_disappeared
 )
 from shuup.testing.factories import (
     create_product, get_default_payment_method, get_default_shipping_method,
     get_default_shop, get_default_supplier
 )
 from shuup.testing.utils import initialize_front_browser_test
-
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
 
@@ -53,18 +54,18 @@ def test_browser_checkout(browser, live_server, settings):
     assert browser.is_text_present("Newest Products")
     assert browser.is_text_present(product_name)
 
-    browser.find_by_id("product-%s" % product.pk).click()  # open product from product list
-    browser.find_by_id("add-to-cart-button").click()  # add product to basket
+    click_element(browser, "#product-%s" % product.pk)  # open product from product list
+    click_element(browser, "#add-to-cart-button")  # add product to basket
 
     wait_until_appeared(browser, ".cover-wrap")
     wait_until_disappeared(browser, ".cover-wrap")
 
-    browser.find_by_id("navigation-basket-partial").click()  # open upper basket navigation menu
-    browser.find_link_by_href("/basket/").first.click()  # click the link to basket in dropdown
+    click_element(browser, "#navigation-basket-partial")  # open upper basket navigation menu
+    click_element(browser, "a[href='/basket/']")  # click the link to basket in dropdown
     assert browser.is_text_present("Shopping cart")  # we are in basket page
     assert browser.is_text_present(product_name)  # product is in basket
 
-    browser.find_link_by_href("/checkout/").first.click()  # click link that leads to checkout
+    click_element(browser, "a[href='/checkout/']") # click link that leads to checkout
 
     customer_name = "Test Tester"
     customer_street = "Test Street"
@@ -77,7 +78,7 @@ def test_browser_checkout(browser, live_server, settings):
     browser.fill("billing-city", customer_city)
     browser.select("billing-country", customer_country)
 
-    browser.find_by_css("#addresses button[type='submit']").first.click()  # click "continue"
+    click_element(browser, "#addresses button[type='submit']")
 
     assert browser.is_text_present("There were errors on submitted form fields. Please check them and try again.")
 
@@ -87,13 +88,13 @@ def test_browser_checkout(browser, live_server, settings):
     browser.fill("shipping-city", customer_city)
     browser.select("shipping-country", customer_country)
 
-    browser.find_by_css("#addresses button[type='submit']").first.click()  # click "continue"
+    click_element(browser, "#addresses button[type='submit']")
     assert browser.is_text_present("Checkout: Shipping & Payment")
 
     assert browser.is_text_present(sm.name)  # shipping method name is present
     assert browser.is_text_present(pm.name)  # payment method name is present
 
-    browser.find_by_css(".btn.btn-primary.btn-lg.pull-right").first.click()  # click "continue" on methods page
+    click_element(browser, ".btn.btn-primary.btn-lg.pull-right")  # click "continue" on methods page
 
     assert browser.is_text_present("Checkout: Confirmation")  # we are indeed in confirmation page
 
@@ -111,6 +112,6 @@ def test_browser_checkout(browser, live_server, settings):
     assert browser.is_text_present("United States")
 
     browser.execute_script('document.getElementById("id_accept_terms").checked=true')  # click accept terms
-    browser.find_by_css(".btn.btn-primary.btn-lg").first.click()  # click "place order"
+    click_element(browser, ".btn.btn-primary.btn-lg")  # click "place order"
 
-    browser.is_text_present("Thank you for your order!")  # order succeeded
+    assert browser.is_text_present("Thank you for your order!")  # order succeeded
