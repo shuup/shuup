@@ -16,7 +16,7 @@ from shuup.core.models import ServiceProvider
 
 class ServiceProviderListView(PicotableListView):
     model = ServiceProvider
-    columns = [
+    default_columns = [
         Column(
             "name", _("Name"), sort_field="base_translations__name",
             filter_config=TextFilter(
