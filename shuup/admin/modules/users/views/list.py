@@ -20,7 +20,7 @@ from shuup.admin.utils.views import PicotableListView
 
 class UserListView(PicotableListView):
     model = settings.AUTH_USER_MODEL
-    columns = [
+    default_columns = [
         Column("username", _(u"Username"), filter_config=TextFilter()),
         Column("email", _(u"Email"), filter_config=TextFilter()),
         Column("first_name", _(u"First Name"), filter_config=TextFilter()),
