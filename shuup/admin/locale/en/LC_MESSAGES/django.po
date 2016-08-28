@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-12 17:22+0000\n"
+"POT-Creation-Date: 2016-08-28 21:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
@@ -551,6 +551,9 @@ msgstr ""
 msgid "No products to ship."
 msgstr ""
 
+msgid "Shipping address is not set."
+msgstr ""
+
 #, python-format
 msgid "Shipment %s created."
 msgstr ""
@@ -849,6 +852,9 @@ msgid "Payment Processor"
 msgstr ""
 
 msgid "Weight-based pricing range"
+msgstr ""
+
+msgid "Settings saved"
 msgstr ""
 
 msgid "Shops"
@@ -1170,6 +1176,9 @@ msgstr ""
 msgid "Shuup %(version)s"
 msgstr ""
 
+msgid "Table Columns"
+msgstr ""
+
 msgid "Date"
 msgstr ""
 
@@ -1325,13 +1334,7 @@ msgstr ""
 msgid "Error!"
 msgstr ""
 
-msgid "Physical Properties"
-msgstr ""
-
 msgid "Additional Details"
-msgstr ""
-
-msgid "Accounting"
 msgstr ""
 
 msgid "Manufacturer"
@@ -1370,9 +1373,6 @@ msgid "Add new image"
 msgstr ""
 
 msgid "Add new media"
-msgstr ""
-
-msgid "Purchasing"
 msgstr ""
 
 msgid "No orders found"
