@@ -18,13 +18,13 @@ from shuup.core.models import Manufacturer
 
 class ManufacturerModule(AdminModule):
     name = _("Manufacturers")
-    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:manufacturers.list")
+    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:manufacturer.list")
 
     def get_urls(self):
         return get_edit_and_list_urls(
             url_prefix="^Manufacturers",
             view_template="shuup.admin.modules.manufacturers.views.Manufacturer%sView",
-            name_template="manufacturers.%s",
+            name_template="manufacturer.%s",
             permissions=get_default_model_permissions(Manufacturer),
         )
 
@@ -33,7 +33,7 @@ class ManufacturerModule(AdminModule):
             MenuEntry(
                 text=_("Manufacturers"),
                 icon="fa fa-building",
-                url="shuup_admin:manufacturers.list",
+                url="shuup_admin:manufacturer.list",
                 category=PRODUCTS_MENU_CATEGORY,
                 ordering=4
             ),
@@ -43,4 +43,4 @@ class ManufacturerModule(AdminModule):
         return get_default_model_permissions(Manufacturer)
 
     def get_model_url(self, object, kind):
-        return derive_model_url(Manufacturer, "shuup_admin:manufacturers", object, kind)
+        return derive_model_url(Manufacturer, "shuup_admin:manufacturer", object, kind)
