@@ -26,7 +26,7 @@ def _format_rate(tax_rule):
 class TaxListView(PicotableListView):
     model = Tax
 
-    columns = [
+    default_columns = [
         Column(
             "name", _("Name"), sort_field="translations__name",
             filter_config=TextFilter(
@@ -44,7 +44,7 @@ class TaxListView(PicotableListView):
 class CustomerTaxGroupListView(PicotableListView):
     model = CustomerTaxGroup
 
-    columns = [
+    default_columns = [
         Column(
             "name", _("Name"), sort_field="translations__name",
             filter_config=TextFilter(
@@ -58,7 +58,7 @@ class CustomerTaxGroupListView(PicotableListView):
 class TaxClassListView(PicotableListView):
     model = TaxClass
 
-    columns = [
+    default_columns = [
         Column(
             "name", _("Name"), sort_field="translations__name",
             filter_config=TextFilter(
