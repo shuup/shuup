@@ -18,7 +18,7 @@ from shuup.core.models import Supplier
 
 class SupplierListView(PicotableListView):
     model = Supplier
-    columns = [
+    default_columns = [
         Column(
             "name",
             _(u"Name"),
