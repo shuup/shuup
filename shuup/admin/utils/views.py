@@ -15,8 +15,9 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView, UpdateView
 
+from shuup.admin.modules.settings import ViewSettings
 from shuup.admin.toolbar import (
-    get_default_edit_toolbar, NewActionButton, Toolbar
+    get_default_edit_toolbar, NewActionButton, SettingsActionButton, Toolbar
 )
 from shuup.admin.utils.forms import add_form_errors_as_messages
 from shuup.admin.utils.picotable import PicotableViewMixin
@@ -146,6 +147,12 @@ def check_and_raise_if_only_one_allowed(setting_name, obj):
 
 
 class PicotableListView(PicotableViewMixin, ListView):
+
+    def __init__(self):
+        super(PicotableListView, self).__init__()
+        self.settings = ViewSettings(self.model, self.default_columns)
+        self.columns = self.settings.columns
+
     def get_toolbar(self):
         buttons = []
         model = self.model
@@ -154,6 +161,12 @@ class PicotableListView(PicotableViewMixin, ListView):
         new_button = NewActionButton.for_model(model)
         if new_button:
             buttons.append(new_button)
+
+        return_url = self.url_identifier if self.url_identifier else None
+        settings_button = SettingsActionButton.for_model(model, return_url=return_url)
+        if settings_button:
+            buttons.append(settings_button)
+
         return Toolbar(buttons)
 
     def get_context_data(self, **kwargs):
