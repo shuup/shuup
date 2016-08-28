@@ -9,16 +9,16 @@ from __future__ import unicode_literals
 
 from django.db.models import Count
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import ListView
 
-from shuup.admin.toolbar import NewActionButton, Toolbar
-from shuup.admin.utils.picotable import Column, PicotableViewMixin, TextFilter
+from shuup.admin.toolbar import NewActionButton, SettingsActionButton, Toolbar
+from shuup.admin.utils.picotable import Column, TextFilter
+from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import ContactGroup
 
 
-class ContactGroupListView(PicotableViewMixin, ListView):
+class ContactGroupListView(PicotableListView):
     model = ContactGroup
-    columns = [
+    default_columns = [
         Column("name", _(u"Name"), sort_field="translations__name", display="name", filter_config=TextFilter(
             filter_field="translations__name",
             placeholder=_("Filter by name...")
@@ -31,5 +31,8 @@ class ContactGroupListView(PicotableViewMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ContactGroupListView, self).get_context_data(**kwargs)
-        context["toolbar"] = Toolbar([NewActionButton("shuup_admin:contact-group.new")])
+        context["toolbar"] = Toolbar([
+            NewActionButton("shuup_admin:contact_group.new"),
+            SettingsActionButton.for_model(ContactGroup, return_url="contact_group")
+        ])
         return context
