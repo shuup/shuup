@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+# This file is part of Shuup.
+#
+# Copyright (c) 2012-2016, Shoop Ltd. All rights reserved.
+#
+# This source code is licensed under the AGPLv3 license found in the
+# LICENSE file in the root directory of this source tree.
 from shuup.xtheme._theme import override_current_theme_class, get_current_theme
 from shuup.xtheme.layout import LayoutCell
 from shuup.xtheme.plugins.consts import FALLBACK_LANGUAGE_CODE
