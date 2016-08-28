@@ -59,9 +59,10 @@ class TaxRuleEditView(CreateOrUpdateView):
 
 
 class TaxRuleListView(PicotableListView):
+    url_identifier = "default_tax.tax_rule"
     model = TaxRule
 
-    columns = [
+    default_columns = [
         Column("id", _("Tax Rule")),
         Column("tax", _("Tax")),
         Column("tax_classes", _("Tax Classes")),
