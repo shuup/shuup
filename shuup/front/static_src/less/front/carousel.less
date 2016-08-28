@@ -125,3 +125,60 @@
         }
     }
 }
+
+.carousel-plugin {
+    .fa {
+        font-size: 30px;
+        z-index: 10;
+        position: absolute;
+        top: 50%;
+        margin-top: -15px;
+    }
+    .fa-angle-left {
+        left: -25px;
+        z-index: 1000;
+    }
+    .fa-angle-right {
+        right: -25px;
+    }
+
+    &.one {
+        .fa-angle-left {
+            left: 40px;
+        }
+        .fa-angle-right {
+            right: 40px;
+        }
+        .owl-dots {
+            position: absolute;
+            bottom: 0 !important;
+            left: 50%;
+            z-index: 15;
+            width: 60%;
+            margin-left: -30%;
+            padding-left: 0;
+            list-style: none;
+            text-align: center;
+        }
+        .owl-dot {
+            background: transparent;
+            border-radius: 10px;
+            border: 1px solid #6f6f6f;
+            display: inline-block;
+            height: 10px;
+            margin: 1px;
+            width: 10px;
+            &.active {
+                margin: 0;
+                width:  12px;
+                height: 12px;
+                background-color: #6f6f6f;
+            }
+        }
+    }
+}
+.carousel-banner-section {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    padding: 0 30px;
+}

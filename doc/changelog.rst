@@ -29,6 +29,7 @@ Addons
 Front
 ~~~~~
 
+- Move Shuup Carousel addon to Front
 - Fix category view pagination
 - Fix category view rendering for ajax requests
 - Fix product search to only show searchable products
