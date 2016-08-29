@@ -1,0 +1,12 @@
+Shuup 0.4.4 Release Notes
+=========================
+
+Released on 2016-08-28 6:40pm -0800.
+
+Admin list views now have configurable columns. Product visibility
+is simpler than before. It's now possible to select currency from
+shop settings. A lot of bug fixes.
+
+For the list of changes see
+:doc:`../shoop-changelog` or `Git commit log
+<https://github.com/shuup/shuup/commits/v0.4.4>`__.

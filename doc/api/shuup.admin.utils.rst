@@ -44,6 +44,14 @@ shuup.admin.utils.search module
     :undoc-members:
     :show-inheritance:
 
+shuup.admin.utils.str_utils module
+----------------------------------
+
+.. automodule:: shuup.admin.utils.str_utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.admin.utils.urls module
 -----------------------------
 
