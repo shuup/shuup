@@ -196,6 +196,7 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
         ProductMediaFormPart
     ]
     form_part_class_provide_key = "admin_product_form_part"
+    add_form_errors_as_messages = True
 
     @atomic
     def form_valid(self, form):

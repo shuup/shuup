@@ -19,6 +19,8 @@ Localization
 Admin
 ~~~~~
 
+- Allow form group edit views to show errors as messages
+
 Addons
 ~~~~~~
 
