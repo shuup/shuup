@@ -10,6 +10,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.fields import CurrencyField, MoneyValueField
+from shuup.utils.analog import define_log_model
 from shuup.utils.properties import MoneyProperty, MoneyPropped
 
 __all__ = ("Payment",)
@@ -34,3 +35,6 @@ class Payment(MoneyPropped, models.Model):
     class Meta:
         verbose_name = _('payment')
         verbose_name_plural = _('payments')
+
+
+PaymentLogEntry = define_log_model(Payment)

@@ -20,6 +20,7 @@ from shuup.core.fields import (
     InternalIdentifierField, MeasurementField, QuantityField
 )
 from shuup.core.signals import shipment_deleted
+from shuup.utils.analog import define_log_model
 
 __all__ = ("Shipment", "ShipmentProduct")
 
@@ -149,3 +150,7 @@ class ShipmentProduct(models.Model):
         prod = self.product
         self.unit_volume = (prod.width * prod.height * prod.depth) / CUBIC_MM_TO_CUBIC_METERS_DIVISOR
         self.unit_weight = prod.gross_weight
+
+
+ShipmentLogEntry = define_log_model(Shipment)
+ShipmentProductLogEntry = define_log_model(ShipmentProduct)

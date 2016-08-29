@@ -16,6 +16,7 @@ from django_countries.fields import CountryField
 from enumfields import Enum, EnumIntegerField
 
 from shuup.core.utils.name_mixin import NameMixin
+from shuup.utils.analog import define_log_model
 from shuup.utils.i18n import get_current_babel_locale
 from shuup.utils.models import get_data_dict
 
@@ -239,3 +240,6 @@ class SavedAddress(ShuupModel):
         directly when displaying `SavedAddress` objects.
         """
         return self.title.strip() if self.title else six.text_type(self.address)
+
+
+SavedAddressLogEntry = define_log_model(SavedAddress)

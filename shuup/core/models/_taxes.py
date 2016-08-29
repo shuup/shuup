@@ -15,6 +15,7 @@ from parler.models import TranslatedFields
 from shuup.core.fields import (
     CurrencyField, InternalIdentifierField, MoneyValueField
 )
+from shuup.utils.analog import define_log_model
 from shuup.utils.i18n import format_money, format_percent
 from shuup.utils.properties import MoneyProperty, MoneyPropped
 
@@ -126,3 +127,8 @@ class CustomerTaxGroup(TranslatableShuupModel):
             "name": _("Company Customers")
         })
         return obj
+
+
+TaxLogEntry = define_log_model(Tax)
+TaxClassLogEntry = define_log_model(TaxClass)
+CustomerTaxGroupLogEntry = define_log_model(CustomerTaxGroup)

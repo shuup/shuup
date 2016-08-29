@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Most models are now loggable
 - Add visibility field to ShopProduct
 
 Localization

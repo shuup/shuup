@@ -16,6 +16,8 @@ from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumField
 from parler.models import TranslatedFields
 
+from shuup.utils.analog import define_log_model
+
 from ._order_lines import OrderLineType
 from ._orders import Order, PaymentStatus
 from ._service_base import Service, ServiceChoice, ServiceProvider
@@ -176,3 +178,7 @@ class CustomPaymentProcessor(PaymentProcessor):
                     payment_identifier="Cash-%s" % now().isoformat(),
                     description="Cash Payment"
                 )
+
+
+PaymentMethodLogEntry = define_log_model(PaymentMethod)
+PaymentProcessorLogEntry = define_log_model(PaymentProcessor)
