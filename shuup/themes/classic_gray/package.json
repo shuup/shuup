@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build-front-packages": "cd ../../front && npm i && bower install --config.interactive=false && cd ../themes/classic_gray",
+    "build-front-packages": "cd ../../front && npm run build && cd ../themes/classic_gray",
     "build-theme": "npm i && bower install --config.interactive=false && gulp",
     "build": "npm run build-front-packages && npm run build-theme"
   },
