@@ -11,6 +11,7 @@ import copy
 from collections import defaultdict
 
 import six
+from django.conf import settings
 from django.forms.models import model_to_dict, ModelForm
 from django.utils.translation import get_language
 from parler.forms import TranslatableModelForm
@@ -33,7 +34,8 @@ class MultiLanguageModelForm(TranslatableModelForm):
     def __init__(self, **kwargs):
         self.languages = to_language_codes(kwargs.pop("languages", ()))
 
-        self.default_language = kwargs.pop("default_language", getattr(self, 'language', get_language()))
+        self.default_language = kwargs.pop(
+            "default_language", getattr(self, 'language', getattr(settings, "PARLER_DEFAULT_LANGUAGE_CODE")))
         if self.default_language not in self.languages:
             raise ValueError("Language %r not in %r" % (self.default_language, self.languages))
 
