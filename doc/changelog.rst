@@ -55,6 +55,8 @@ Order Printouts
 Campaigns
 ~~~~~~~~~
 
+- Campaigns are now loggable
+
 Customer Group Pricing
 ~~~~~~~~~~~~~~~~~~~~~~
 
