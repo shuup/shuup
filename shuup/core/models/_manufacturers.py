@@ -12,6 +12,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.fields import InternalIdentifierField
+from shuup.utils.analog import define_log_model
 
 __all__ = ("Manufacturer",)
 
@@ -30,3 +31,6 @@ class Manufacturer(models.Model):
 
     def __str__(self):  # pragma: no cover
         return u'%s' % (self.name)
+
+
+ManufacturerLogEntry = define_log_model(Manufacturer)

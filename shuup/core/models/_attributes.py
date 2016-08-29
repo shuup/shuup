@@ -30,6 +30,7 @@ from parler.models import TranslatableModel, TranslatedFields
 from shuup.core.fields import InternalIdentifierField
 from shuup.core.templatetags.shuup_common import datetime as format_datetime
 from shuup.core.templatetags.shuup_common import number as format_number
+from shuup.utils.analog import define_log_model
 from shuup.utils.dates import parse_date
 from shuup.utils.numbers import parse_decimal_string
 from shuup.utils.text import flatten
@@ -508,3 +509,6 @@ class AttributableMixin(object):
         applied_attr.value = value
         applied_attr.save()
         return applied_attr
+
+
+AttributeLogEntry = define_log_model(Attribute)

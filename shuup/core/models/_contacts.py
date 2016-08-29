@@ -18,6 +18,7 @@ from timezone_field.fields import TimeZoneField
 
 from shuup.core.fields import InternalIdentifierField, LanguageField
 from shuup.core.pricing import PriceDisplayOptions
+from shuup.utils.analog import define_log_model
 
 from ._base import PolymorphicShuupModel, TranslatableShuupModel
 from ._taxes import CustomerTaxGroup
@@ -387,3 +388,8 @@ def get_company_contact(user):
     if not contact:
         return None
     return contact.company_memberships.filter(is_active=True).first()
+
+
+CompanyContactLogEntry = define_log_model(CompanyContact)
+PersonContactLogEntry = define_log_model(PersonContact)
+ContactGroupLogEntry = define_log_model(ContactGroup)

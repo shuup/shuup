@@ -18,6 +18,7 @@ from parler.models import TranslatedFields
 
 from shuup.core.fields import CurrencyField, InternalIdentifierField
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
+from shuup.utils.analog import define_log_model
 
 from ._base import ChangeProtected, TranslatableShuupModel
 from ._orders import Order
@@ -79,3 +80,6 @@ class Shop(ChangeProtected, TranslatableShuupModel):
 
     def _are_changes_protected(self):
         return Order.objects.filter(shop=self).exists()
+
+
+ShopLogEntry = define_log_model(Shop)

@@ -11,6 +11,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from parler.models import TranslatedFields
 
+from shuup.utils.analog import define_log_model
 from shuup.utils.dates import DurationRange
 
 from ._order_lines import OrderLineType
@@ -96,3 +97,7 @@ class CustomCarrier(Carrier):
 
     def get_service_choices(self):
         return [ServiceChoice('manual', _("Manually processed shipment"))]
+
+
+ShippingMethodLogEntry = define_log_model(ShippingMethod)
+CarrierLogEntry = define_log_model(Carrier)

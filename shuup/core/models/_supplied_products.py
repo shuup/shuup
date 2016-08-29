@@ -9,6 +9,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.fields import QuantityField
+from shuup.utils.analog import define_log_model
 
 
 class SuppliedProduct(models.Model):
@@ -21,3 +22,6 @@ class SuppliedProduct(models.Model):
 
     class Meta:
         unique_together = (("supplier", "product", ), )
+
+
+SuppliedProductLogEntry = define_log_model(SuppliedProduct)

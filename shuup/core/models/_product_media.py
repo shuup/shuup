@@ -16,6 +16,7 @@ from filer.fields.file import FilerFileField
 from parler.models import TranslatableModel, TranslatedFields
 
 from shuup.core.fields import InternalIdentifierField
+from shuup.utils.analog import define_log_model
 
 
 class ProductMediaKind(Enum):
@@ -126,3 +127,6 @@ class ProductMedia(TranslatableModel):
             return None
 
         return thumbnailer.get_thumbnail(thumbnail_options=kwargs)
+
+
+ProductMediaLogEntry = define_log_model(ProductMedia)
