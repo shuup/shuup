@@ -10,15 +10,7 @@
 function activateSelect($select, model, attrs={}) {
     if(model === undefined) {
         return $select.select2($.extend(true, {
-            language: "xx",
-            matcher: function(search, data) {
-                const needle = $.trim(search.term || "").toUpperCase();
-                const haystack = data.text.toUpperCase();
-                if(haystack.indexOf(needle) == 0) {
-                    return data;
-                }
-                return false;
-            }
+            language: "xx"
         }, attrs));
     }
     return $select.select2($.extend(true, {
