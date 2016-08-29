@@ -29,6 +29,7 @@ from shuup.campaigns.utils.matcher import get_matching_for_product
 from shuup.core import cache
 from shuup.core.fields import InternalIdentifierField
 from shuup.core.models import Order, Shop
+from shuup.utils.analog import define_log_model
 from shuup.utils.properties import MoneyPropped
 
 
@@ -397,3 +398,9 @@ class Coupon(models.Model):
 
     def __str__(self):
         return self.code
+
+
+CatalogCampaignLogEntry = define_log_model(CatalogCampaign)
+BasketCampaignLogEntry = define_log_model(BasketCampaign)
+CouponLogEntry = define_log_model(Coupon)
+CouponUsageLogEntry = define_log_model(CouponUsage)
