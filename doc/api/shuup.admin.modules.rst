@@ -22,6 +22,7 @@ Subpackages
     shuup.admin.modules.sales_units
     shuup.admin.modules.service_providers
     shuup.admin.modules.services
+    shuup.admin.modules.settings
     shuup.admin.modules.shops
     shuup.admin.modules.suppliers
     shuup.admin.modules.system
