@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ImproperlyConfigured
+from django.forms import BaseFormSet
 from django.http import HttpResponseRedirect
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
@@ -25,6 +26,7 @@ from shuup.admin.utils.urls import (
     get_model_front_url, get_model_url, NoModelUrl
 )
 from shuup.utils.excs import Problem
+from shuup.utils.form_group import FormGroup
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 
 
@@ -101,7 +103,17 @@ class CreateOrUpdateView(UpdateView):
 
     def form_invalid(self, form):
         if self.add_form_errors_as_messages:
-            add_form_errors_as_messages(self.request, form)
+            # If form is a form group, add form part errors individually
+            if isinstance(form, FormGroup):
+                for name, form_part in form.forms.items():
+                    # If child form is a formset, add errors for each form in formset
+                    if isinstance(form_part, BaseFormSet):
+                        for formset_form in form_part:
+                            add_form_errors_as_messages(self.request, formset_form)
+                    elif form_part.errors:
+                        add_form_errors_as_messages(self.request, form_part)
+            else:
+                add_form_errors_as_messages(self.request, form)
         return super(CreateOrUpdateView, self).form_invalid(form)
 
 

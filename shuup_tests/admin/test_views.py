@@ -8,11 +8,15 @@
 import json
 
 import pytest
+from bs4 import BeautifulSoup
+from django.utils.encoding import force_text
 
+from shuup.admin.modules.products.views import ProductEditView
 from shuup.testing.factories import (
     create_random_order, create_random_person, get_default_category,
     get_default_product, get_default_shop
 )
+from shuup.testing.soup_utils import extract_form_fields
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.importing import load
 
@@ -57,3 +61,35 @@ def test_detail_view(rf, admin_user, model_and_class):
     if hasattr(response, "render"):
         response.render()
     assert 200 <= response.status_code < 300
+
+
+@pytest.mark.django_db
+def test_edit_view_adding_messages_to_form_group(rf, admin_user):
+    get_default_shop()  # obvious prerequisite
+    product = get_default_product()
+    view = ProductEditView.as_view()
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
+    response = view(request, pk=product.pk)
+    response.render()
+    assert 200 <= response.status_code < 300
+
+    assert ProductEditView.add_form_errors_as_messages
+
+    content = force_text(response.content)
+    post = extract_form_fields(BeautifulSoup(content))
+    post_data = {
+        # Error in the base form part
+        "base-name__en": "",
+        # Error in the media formset form part
+        "media-1-external_url": "invalid_url"
+    }
+    post.update(post_data)
+    request = apply_request_middleware(rf.post("/", post), user=admin_user)
+    response = view(request, pk=product.pk)
+
+    errors = response.context_data["form"].errors
+    assert "media" in errors
+    assert "external_url" in errors["media"][0]
+
+    assert "base" in errors
+    assert "name__en" in errors["base"]
