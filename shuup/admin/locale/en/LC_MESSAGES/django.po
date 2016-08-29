@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-28 21:37+0000\n"
+"POT-Creation-Date: 2016-08-27 01:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -315,9 +315,11 @@ msgstr ""
 msgid "Root"
 msgstr ""
 
+#, python-brace-format
 msgid "{num} subfolders moved to {folder}."
 msgstr ""
 
+#, python-brace-format
 msgid "{num} files moved to {folder}."
 msgstr ""
 
@@ -432,6 +434,7 @@ msgstr ""
 msgid "Unable to set order as completed at this point"
 msgstr ""
 
+#, python-brace-format
 msgid "Order status changed: {old_status} to {new_status}"
 msgstr ""
 
@@ -812,6 +815,7 @@ msgstr ""
 msgid "Edit %(model)s"
 msgstr ""
 
+#, python-brace-format
 msgid "Create {service_name}"
 msgstr ""
 
@@ -862,6 +866,9 @@ msgstr ""
 
 msgid ""
 "This field cannot be changed since there are existing orders for this shop."
+msgstr ""
+
+msgid "Currency"
 msgstr ""
 
 msgid "Domain"
@@ -971,6 +978,7 @@ msgstr ""
 msgid "This user is not active."
 msgstr ""
 
+#, python-brace-format
 msgid "You're now logged in as {username}"
 msgstr ""
 
@@ -1504,8 +1512,8 @@ msgstr ""
 
 #, python-format
 msgid ""
-"Telemetry data was last submitted at %(submission_datetime)s - (%"
-"(submission_timesince)s) ago"
+"Telemetry data was last submitted at %(submission_datetime)s - "
+"(%(submission_timesince)s) ago"
 msgstr ""
 
 msgid "See the data that was submitted."

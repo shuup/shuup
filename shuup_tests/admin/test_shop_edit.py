@@ -44,7 +44,7 @@ def test_protected_fields():
     assert order.shop == shop
 
     # And try again...
-    data["currency"] = "XBT"  # Bitcoins!
+    data["currency"] = "USD"
     shop_form = ShopBaseForm(data=data, instance=shop, languages=settings.LANGUAGES)
     assert shop_form._get_protected_fields()  # So protected!
     _test_cleanliness(shop_form)

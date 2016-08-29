@@ -20,6 +20,8 @@ Localization
 Admin
 ~~~~~
 
+- Match everywhere in Select2 when no model set
+- Make currency field a dropdown in Shops admin
 - Add possibility to select visible fields in most list views
 - Prevent shipping orders without a defined shipping address
 
