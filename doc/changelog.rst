@@ -12,6 +12,7 @@ Unreleased
 Core
 ~~~~
 
+- Most models are now loggable
 - Add visibility field to ShopProduct
 
 Localization
@@ -55,6 +56,8 @@ Order Printouts
 
 Campaigns
 ~~~~~~~~~
+
+- Campaigns are now loggable
 
 Customer Group Pricing
 ~~~~~~~~~~~~~~~~~~~~~~

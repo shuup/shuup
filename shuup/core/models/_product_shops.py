@@ -18,6 +18,7 @@ from shuup.core.excs import (
 )
 from shuup.core.fields import MoneyValueField, QuantityField, UnsavedForeignKey
 from shuup.core.signals import get_orderability_errors, get_visibility_errors
+from shuup.utils.analog import define_log_model
 from shuup.utils.properties import MoneyPropped, PriceProperty
 
 from ._product_media import ProductMediaKind
@@ -308,3 +309,6 @@ class ShopProduct(MoneyPropped, models.Model):
     @property
     def public_images(self):
         return self.images.filter(public=True)
+
+
+ShopProductLogEntry = define_log_model(ShopProduct)

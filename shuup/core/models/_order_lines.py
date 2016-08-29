@@ -18,6 +18,7 @@ from jsonfield import JSONField
 from shuup.core.fields import MoneyValueField, QuantityField, UnsavedForeignKey
 from shuup.core.pricing import Priceful
 from shuup.core.taxing import LineTax
+from shuup.utils.analog import define_log_model
 from shuup.utils.money import Money
 from shuup.utils.properties import MoneyProperty, MoneyPropped, PriceProperty
 
@@ -182,3 +183,7 @@ class OrderLineTax(MoneyPropped, ShuupModel, LineTax):
 
     def __str__(self):
         return "%s: %s on %s" % (self.name, self.amount, self.base_amount)
+
+
+OrderLineLogEntry = define_log_model(OrderLine)
+OrderLineTaxLogEntry = define_log_model(OrderLineTax)

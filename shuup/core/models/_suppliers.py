@@ -13,6 +13,7 @@ from jsonfield import JSONField
 
 from shuup.core.fields import InternalIdentifierField
 from shuup.core.modules import ModuleInterface
+from shuup.utils.analog import define_log_model
 
 from ._base import ShuupModel
 
@@ -94,3 +95,6 @@ class Supplier(ModuleInterface, ShuupModel):
 
     def update_stocks(self, product_ids):
         return self.module.update_stocks(product_ids)
+
+
+SupplierLogEntry = define_log_model(Supplier)
