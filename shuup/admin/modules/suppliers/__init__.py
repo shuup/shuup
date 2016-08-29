@@ -18,7 +18,7 @@ from shuup.core.models import Supplier
 
 class SupplierModule(AdminModule):
     name = _("Suppliers")
-    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:suppliers.list")
+    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:supplier.list")
 
     def get_urls(self):
         return get_edit_and_list_urls(
@@ -43,4 +43,4 @@ class SupplierModule(AdminModule):
         return get_default_model_permissions(Supplier)
 
     def get_model_url(self, object, kind):
-        return derive_model_url(Supplier, "shuup_admin:suppliers", object, kind)
+        return derive_model_url(Supplier, "shuup_admin:supplier", object, kind)
