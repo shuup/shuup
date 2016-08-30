@@ -104,7 +104,7 @@
                         <td>
                             {{ line.text }}
                             {% if show_product_package_info and product and product.is_package_parent() %}
-                                {{ macros.render_package_children(product) }}
+                                {{ render_package_children(product) }}
                             {% endif %}
                         </td>
                         <td class="text-right">
