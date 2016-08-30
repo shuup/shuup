@@ -105,7 +105,7 @@ class CreateOrUpdateView(UpdateView):
         if self.add_form_errors_as_messages:
             # If form is a form group, add form part errors individually
             if isinstance(form, FormGroup):
-                for name, form_part in form.forms.items():
+                for form_part in form.forms.values():
                     # If child form is a formset, add errors for each form in formset
                     if isinstance(form_part, BaseFormSet):
                         for formset_form in form_part:
