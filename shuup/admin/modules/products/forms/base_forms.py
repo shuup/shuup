@@ -54,6 +54,7 @@ class ProductBaseForm(MultiLanguageModelForm):
             "description",
             "keywords",
             "name",
+            "slug",
             "status_text",
             "variation_name",
         )

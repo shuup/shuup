@@ -13,6 +13,8 @@ Unreleased
 Core
 ~~~~
 
+- Fix bug in product and category slug generation
+
 Localization
 ~~~~~~~~~~~~
 

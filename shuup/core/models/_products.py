@@ -237,7 +237,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
     translations = TranslatedFields(
         name=models.CharField(max_length=256, verbose_name=_('name')),
         description=models.TextField(blank=True, verbose_name=_('description')),
-        slug=models.SlugField(verbose_name=_('slug'), max_length=255, null=True),
+        slug=models.SlugField(verbose_name=_('slug'), max_length=255, blank=True, null=True),
         keywords=models.TextField(blank=True, verbose_name=_('keywords')),
         status_text=models.CharField(
             max_length=128, blank=True,
@@ -439,10 +439,10 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         self.save()
 
     @staticmethod
-    def _get_slug_name(self):
+    def _get_slug_name(self, translation=None):
         if self.deleted:
             return None
-        return (self.safe_translation_getter("name") or self.sku)
+        return getattr(translation, "name", self.sku)
 
     def save(self, *args, **kwargs):
         if self.net_weight and self.net_weight > 0:
