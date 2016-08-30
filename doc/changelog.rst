@@ -61,6 +61,10 @@ Guide
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
+- MultiLanguageModelForm: Avoid partially/empty translation objects
+   - Delete untranslated objects from database
+   - Only set translation object to database if it is translated
+   - Ensure required fields if language is partially translated
 - MultiLanguageModelForm: Use Parler default as a default
 
 SHUUP 0.4.4
