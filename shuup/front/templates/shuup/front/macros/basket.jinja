@@ -1,4 +1,5 @@
 {% extends "shuup/front/macros/theme/basket.jinja" %}
+{%- import "shuup/front/macros/order.jinja" as order_macros with context -%}
 
 {% macro render_basket_content(basket) %}
     <div class="basket-items">
@@ -45,7 +46,7 @@
                     {% endif %}
                 </h4>
                 {% if product and product.is_package_parent() %}
-                    {{ render_package_children(product) }}
+                    {{ order_macros.render_package_children(product) }}
                 {% endif %}
                 <div class="quantity">
                     {% if product %}
