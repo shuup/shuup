@@ -136,10 +136,10 @@ class Category(MPTTModel, TranslatableModel):
         return True
 
     @staticmethod
-    def _get_slug_name(self):
+    def _get_slug_name(self, translation):
         if self.status == CategoryStatus.DELETED:
             return None
-        return self.safe_translation_getter("name")
+        return getattr(translation, "name", self.pk)
 
     def delete(self, using=None):
         raise NotImplementedError("Not implemented: Use `soft_delete()` for categories.")
