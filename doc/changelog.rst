@@ -32,6 +32,8 @@ Addons
 Front
 ~~~~~
 
+- Load JS catalog for superusers
+
 Xtheme
 ~~~~~~
 
