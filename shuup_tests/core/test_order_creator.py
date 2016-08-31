@@ -7,13 +7,17 @@
 # LICENSE file in the root directory of this source tree.
 
 import pytest
+from django.conf import settings
+from django.core.exceptions import ValidationError
 
-from shuup.core.models import get_person_contact, Order, OrderLineType, Shop
+from shuup.core.models import (
+    get_person_contact, Order, OrderLineType, Shop, StockBehavior
+)
 from shuup.core.order_creator import OrderCreator, OrderSource, SourceLine
 from shuup.testing.factories import (
-    get_address, get_default_payment_method, get_default_product,
-    get_default_shipping_method, get_default_shop, get_default_supplier,
-    get_initial_order_status
+    create_package_product, get_address, get_default_payment_method,
+    get_default_product, get_default_shipping_method, get_default_shop,
+    get_default_supplier, get_initial_order_status
 )
 from shuup.utils.models import get_data_dict
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
@@ -96,6 +100,69 @@ def test_order_creator(rf, admin_user):
     assert source.payment_method == order.payment_method
     assert source.shipping_method == order.shipping_method
     assert order.pk
+
+
+@pytest.mark.django_db
+def test_order_creator_with_package_product(rf, admin_user):
+    if "shuup.simple_supplier" not in settings.INSTALLED_APPS:
+        pytest.skip("Need shuup.simple_supplier in INSTALLED_APPS")
+    from shuup_tests.simple_supplier.utils import get_simple_supplier
+
+    shop = get_default_shop()
+    supplier = get_simple_supplier()
+    package_product = create_package_product("Package-Product-Test", shop=shop, supplier=supplier,
+                                             children=2)
+    shop_product =  package_product.get_shop_instance(shop)
+    quantity_map = package_product.get_package_child_to_quantity_map()
+    product_1, product_2 = quantity_map.keys()
+    product_1.stock_behavior = StockBehavior.STOCKED
+    product_1.save()
+    product_2.stock_behavior = StockBehavior.STOCKED
+    product_2.save()
+
+    assert quantity_map[product_1] == 1
+    assert quantity_map[product_2] == 2
+
+    supplier.adjust_stock(product_1.pk, 1)
+    supplier.adjust_stock(product_2.pk, 2)
+
+    assert supplier.get_stock_status(product_1.pk).logical_count == 1
+    assert supplier.get_stock_status(product_2.pk).logical_count == 2
+
+    creator = OrderCreator()
+
+    # There should be no exception when creating order with only package product
+    source = seed_source(admin_user)
+    source.add_line(
+        type=OrderLineType.PRODUCT,
+        product=package_product,
+        supplier=supplier,
+        quantity=1,
+        base_unit_price=source.create_price(10),
+    )
+    order = creator.create_order(source)
+
+    # However, there should not be enough stock for both package and child products
+    source = seed_source(admin_user)
+    source.add_line(
+        type=OrderLineType.PRODUCT,
+        product=package_product,
+        supplier=supplier,
+        quantity=1,
+        base_unit_price=source.create_price(10),
+    )
+    source.add_line(
+        type=OrderLineType.PRODUCT,
+        product=product_1,
+        supplier=supplier,
+        quantity=1,
+        base_unit_price=source.create_price(10),
+    )
+
+    # And a validation error should be raised
+    with pytest.raises(ValidationError):
+        order = creator.create_order(source)
+
 
 @pytest.mark.django_db
 def test_order_creator_supplierless_product_line_conversion_should_fail(rf, admin_user):
