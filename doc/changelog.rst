@@ -21,6 +21,7 @@ Localization
 Admin
 ~~~~~
 
+- Add lang parameter for JS catalog load
 - Add key prefix to JavaScript catalog cache
 - Allow shop language to be set via admin
 - Allow form group edit views to show errors as messages
