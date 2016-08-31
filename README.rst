@@ -40,11 +40,18 @@ We have a Gitter chat room for Shuup.  Come chat with us!  |Join chat|
 .. |Join chat| image:: https://badges.gitter.im/Join%20Chat.svg
    :target: https://gitter.im/shuup/shuup
 
-Getting started with Shuup development
+Getting Started with Shuup development
 --------------------------------------
 
 See `Getting Started with Shuup Development
 <http://shuup.readthedocs.org/en/latest/getting_started_dev.html>`__.
+
+
+Contributing to Shuup
+---------------------
+
+Interested in contributing to Shuup? Please see our `Contribution Guide
+<https://www.shuup.com/en/shuup/contribution-guide/>`__.
 
 Documentation
 -------------
