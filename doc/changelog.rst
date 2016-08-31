@@ -13,6 +13,8 @@ Unreleased
 Core
 ~~~~
 
+- Fix issue with package product validation errors in order creator
+
 Localization
 ~~~~~~~~~~~~
 
