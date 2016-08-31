@@ -7,6 +7,11 @@ Getting Started with Shuup Development
    read the :doc:`Getting Started with Shuup guide <getting_started>`
    instead.
 
+.. note::
+
+   Interested in contributing to Shuup? Take a look at our `Contribution
+   Guide <https://www.shuup.com/en/shuup/contribution-guide>`__.
+
 Requirements
 ------------
 * Python 2.7.9+/3.4+. https://www.python.org/download/.
