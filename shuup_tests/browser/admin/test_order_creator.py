@@ -41,6 +41,7 @@ def test_order_creator_view(browser, admin_user, live_server):
 
     initialize_admin_browser_test(browser, live_server)
     _visit_order_creator_view(browser, live_server)
+    _test_language_change(browser)
     _test_customer_data(browser, person)
     _test_add_lines(browser)
     _test_quick_add_lines(browser)
@@ -53,6 +54,32 @@ def _visit_order_creator_view(browser, live_server):
     url = reverse("shuup_admin:order.new")
     browser.visit("%s%s" % (live_server, url))
     assert browser.is_element_present_by_css("h1.main-header")
+
+def _test_language_change(browser):
+    assert browser.is_element_present_by_css("h2[class='block-title']")
+    # By default the initialization the admin should be in English
+    found_customer_details_en = False
+    for block_title in browser.find_by_css("h2[class='block-title']"):
+        if "Customer Details" in block_title.text:
+            found_customer_details_en = True
+    assert found_customer_details_en
+
+    # Make sure that the translations is handled correctly and change to Finnish
+    browser.find_by_id("dropdownMenu").click()
+    browser.find_by_xpath('//a[@data-value="fi"]').first.click()
+
+    wait_until_appeared(browser, "h2[class='block-title']")
+    found_customer_details_fi = False
+    for block_title in browser.find_by_css("h2[class='block-title']"):
+        if "Asiakkaan tiedot" in block_title.text:
+            found_customer_details_fi = True
+
+    assert found_customer_details_fi
+
+    # And back in English
+    browser.find_by_id("dropdownMenu").click()
+    browser.find_by_xpath('//a[@data-value="en"]').first.click()
+    wait_until_appeared(browser, "h2[class='block-title']")
 
 
 def _test_customer_data(browser, person):
