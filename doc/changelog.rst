@@ -13,6 +13,8 @@ Unreleased
 Core
 ~~~~
 
+- Fix issue with package product validation errors in order creator
+
 Localization
 ~~~~~~~~~~~~
 
@@ -26,6 +28,8 @@ Addons
 
 Front
 ~~~~~
+
+- Improve handling of basket validation errors in middleware
 
 Xtheme
 ~~~~~~
