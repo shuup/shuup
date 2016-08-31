@@ -29,6 +29,8 @@ Addons
 Front
 ~~~~~
 
+- Improve handling of basket validation errors in middleware
+
 Xtheme
 ~~~~~~
 

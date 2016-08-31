@@ -10,10 +10,12 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.signals import user_logged_in, user_logged_out
-from django.core.exceptions import ImproperlyConfigured
+from django.core.exceptions import ImproperlyConfigured, ValidationError
 from django.http import HttpResponse
+from django.http.response import JsonResponse
 from django.template import loader
 from django.utils import timezone
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.middleware import ExceptionMiddleware
@@ -108,7 +110,10 @@ class ShuupFrontMiddleware(object):
 
     def process_response(self, request, response):
         if hasattr(request, "basket") and request.basket.dirty:
-            request.basket.save()
+            try:
+                request.basket.save()
+            except ValidationError as error:
+                response = JsonResponse({"error": force_text(error.message), "code": error.code}, status=200)
 
         return response
 
