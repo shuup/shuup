@@ -488,6 +488,11 @@ class OrderSource(object):
 
             if supplier and line.supplier != supplier:
                 continue
+
+            package_children = line.product.get_package_child_to_quantity_map()
+            for product, quantity in iteritems(package_children):
+                q_counter[product] += quantity
+
             product = line.product
             q_counter[product] += line.quantity
 

@@ -216,8 +216,9 @@ class ShopProduct(MoneyPropped, models.Model):
                         customer=customer,
                         ignore_minimum=ignore_minimum
                 ):
+                    message = getattr(error, "message", "")
                     code = getattr(error, "code", None)
-                    yield ValidationError("%s: %s" % (child_product, error), code=code)
+                    yield ValidationError("%s: %s" % (child_product, message), code=code)
 
         if supplier and self.product.stock_behavior == StockBehavior.STOCKED:
             for error in supplier.get_orderability_errors(self, quantity, customer=customer):
