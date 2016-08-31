@@ -38,15 +38,28 @@ class BasketUpdateMethods(object):
         if line:
             return self.basket.delete_line(line["line_id"])
 
-    def _get_orderability_errors(self, basket_line, new_quantity):
-        product = Product.objects.get(pk=basket_line["product_id"])
+    def _get_orderability_errors(self, product, supplier, delta):
+        basket_quantities = self.basket.get_product_ids_and_quantities()
+        product_basket_quantity = basket_quantities.get(product.id, 0)
+        total_product_quantity = delta + product_basket_quantity
         shop_product = product.get_shop_instance(shop=self.request.shop)
-        supplier = Supplier.objects.filter(pk=basket_line.get("supplier_id", 0)).first()
-        return shop_product.get_orderability_errors(
+        errors = list(shop_product.get_orderability_errors(
             supplier=supplier,
             customer=self.basket.customer,
-            quantity=new_quantity
-        )
+            quantity=total_product_quantity
+        ))
+        if product.is_package_parent():
+            for child_product, child_quantity in six.iteritems(product.get_package_child_to_quantity_map()):
+                child_basket_quantity = basket_quantities.get(child_product.id, 0)
+                total_child_quantity = (delta * child_quantity) + child_basket_quantity
+                shop_product = child_product.get_shop_instance(shop=self.request.shop)
+                child_errors = list(shop_product.get_orderability_errors(
+                    supplier=supplier,
+                    customer=self.basket.customer,
+                    quantity=total_child_quantity
+                ))
+                errors.extend(child_errors)
+        return errors
 
     def update_quantity(self, line, value, **kwargs):
         new_quantity = int(parse_decimal_string(value))  # TODO: The quantity could be a non-integral value
@@ -60,16 +73,28 @@ class BasketUpdateMethods(object):
 
         # Ensure sub-lines also get changed accordingly
         linked_lines = [line] + list(self.basket.find_lines_by_parent_line_id(line["line_id"]))
+        orderable_line_ids = [basket_line.line_id for basket_line in self.basket.get_lines()]
+
         for linked_line in linked_lines:
-            errors = list(self._get_orderability_errors(linked_line, new_quantity))
-            if errors:
-                for error in errors:
-                    error_texts = ", ".join(six.text_type(sub_error) for sub_error in error)
-                    message = u"%s: %s" % (linked_line.get("text") or linked_line.get("name"), error_texts)
-                    messages.warning(self.request, message)
-                continue
-            self.basket.update_line(linked_line, quantity=new_quantity)
-            linked_line["quantity"] = new_quantity
-            changed = True
+            if linked_line["line_id"] not in orderable_line_ids:
+                # Customer can change quantity in non-orderable lines regardless
+                linked_line["quantity"] = new_quantity
+                changed = True
+            else:
+                product = Product.objects.get(pk=linked_line["product_id"])
+                supplier = Supplier.objects.filter(pk=linked_line.get("supplier_id", 0)).first()
+
+                # Basket quantities already contain current quantities for orderable lines
+                quantity_delta = new_quantity - line["quantity"]
+                errors = self._get_orderability_errors(product, supplier, quantity_delta)
+                if errors:
+                    for error in errors:
+                        error_texts = ", ".join(six.text_type(sub_error) for sub_error in error)
+                        message = u"%s: %s" % (linked_line.get("text") or linked_line.get("name"), error_texts)
+                        messages.warning(self.request, message)
+                    continue
+                self.basket.update_line(linked_line, quantity=new_quantity)
+                linked_line["quantity"] = new_quantity
+                changed = True
 
         return changed
