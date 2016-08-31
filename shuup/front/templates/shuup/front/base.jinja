@@ -27,6 +27,9 @@
     {% else %}
         <link rel="stylesheet" href="{{ static("shuup/front/css/style.css") }}">
     {% endif %}
+    {% if user.is_superuser %}
+        <script type="text/javascript" src="{{ url("shuup_admin:js-catalog") }}?lang={{ LANGUAGE_CODE }}"></script>
+    {% endif %}
 </head>
 <body>
     {{ macros.render_maintenance_mode_notification() }}
