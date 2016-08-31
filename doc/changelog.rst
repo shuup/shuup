@@ -37,6 +37,8 @@ Front
 Xtheme
 ~~~~~~
 
+- Skip adding JS-catalog for editing
+
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 
