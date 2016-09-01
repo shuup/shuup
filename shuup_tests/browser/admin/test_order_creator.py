@@ -74,6 +74,8 @@ def _test_customer_data(browser, person):
     browser.find_by_css("tbody tr")[1].find_by_css("a").click()
     browser.windows.current = browser.windows[0]
     # check fields were set
+    wait_until_condition(
+        browser, lambda x: x.find_by_name("billing-name").value == person.name)
     assert browser.find_by_name("billing-name").value == person.name
     assert browser.find_by_name("billing-street").value == person.default_billing_address.street
     assert browser.find_by_name("billing-city").value == person.default_billing_address.city
