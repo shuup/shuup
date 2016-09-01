@@ -84,6 +84,7 @@ def move_to_element(browser, css_selector):
     :param css_selector: String representation of the css selector
     :type css_selector: str
     """
+    wait_until_condition(browser, lambda x: x.is_element_present_by_css(css_selector))
     element = browser.driver.find_element_by_css_selector(css_selector)
     # may need to be parameterized in the future...
     y = element.location["y"] - FIXED_HEADER_HEIGHT
