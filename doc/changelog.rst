@@ -33,6 +33,7 @@ Addons
 Front
 ~~~~~
 
+- Notify customer of unorderable basket lines
 - Load JS catalog for superusers
 
 Xtheme
