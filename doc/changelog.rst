@@ -19,6 +19,7 @@ Localization
 Admin
 ~~~~~
 
+- Allow shop language to be set via admin
 - Allow form group edit views to show errors as messages
 
 Addons
