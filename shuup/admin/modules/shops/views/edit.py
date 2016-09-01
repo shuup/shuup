@@ -12,6 +12,7 @@ from django.conf import settings
 from django.db.transaction import atomic
 from django.utils.translation import ugettext_lazy as _
 
+from shuup import configuration
 from shuup.admin.form_part import (
     FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
 )
@@ -34,6 +35,7 @@ class ShopBaseForm(ProtectedFieldsMixin, MultiLanguageModelForm):
         exclude = ("owner", "options", "contact_address")
 
     def __init__(self, **kwargs):
+        initial_languages = [i[0] for i in kwargs.get("languages", [])]
         super(ShopBaseForm, self).__init__(**kwargs)
         self.fields["logo"].widget = MediaChoiceWidget(clearable=True)
         locale = get_current_babel_locale()
@@ -42,7 +44,20 @@ class ShopBaseForm(ProtectedFieldsMixin, MultiLanguageModelForm):
             required=True,
             label=_("Currency")
         )
+        self.fields["languages"] = forms.MultipleChoiceField(
+            choices=settings.LANGUAGES,
+            initial=initial_languages,
+            required=True,
+            label=_("Languages")
+        )
         self.disable_protected_fields()
+
+    def save(self):
+        obj = super(ShopBaseForm, self).save()
+        languages = set(self.cleaned_data.get("languages"))
+        shop_languages = [(code, name) for code, name in settings.LANGUAGES if code in languages]
+        configuration.set(obj, "languages", shop_languages)
+        return obj
 
 
 class ShopBaseFormPart(FormPart):
@@ -54,7 +69,10 @@ class ShopBaseFormPart(FormPart):
             ShopBaseForm,
             template_name="shuup/admin/shops/_edit_base_shop_form.jinja",
             required=True,
-            kwargs={"instance": self.object, "languages": settings.LANGUAGES}
+            kwargs={
+                "instance": self.object,
+                "languages": configuration.get(self.object, "languages", settings.LANGUAGES)
+            }
         )
 
     def form_valid(self, form):

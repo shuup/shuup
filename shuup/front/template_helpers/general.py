@@ -5,11 +5,13 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.conf import settings
 from django.core.paginator import Paginator
-from django.utils.translation import get_language
+from django.utils.translation import get_language, get_language_info, ugettext
 from jinja2.utils import contextfunction
 from mptt.templatetags.mptt_tags import cache_tree_children
 
+from shuup import configuration
 from shuup.core.models import Category, Manufacturer, Product, Supplier
 from shuup.front.utils.product_statistics import get_best_selling_product_info
 from shuup.front.utils.views import cache_product_things
@@ -158,3 +160,15 @@ def get_pagination_variables(context, objects, limit):
     variables["objects"] = page.object_list
 
     return variables
+
+
+@contextfunction
+def get_shop_language_choices(context):
+    request = context["request"]
+    languages = []
+    for code, name in configuration.get(request.shop, "languages", settings.LANGUAGES):
+        lang_info = get_language_info(code)
+        name_in_current_lang = ugettext(name)
+        local_name = lang_info["name_local"]
+        languages.append((code, name_in_current_lang, local_name))
+    return languages

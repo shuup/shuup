@@ -9,7 +9,7 @@ from django.conf import settings
 from django.utils.translation import activate
 
 from shuup.admin.modules.shops.views.edit import ShopBaseForm
-from shuup.core.models import Shop, ShopStatus
+from shuup.core.models import ConfigurationItem, Shop, ShopStatus
 from shuup.testing.factories import (
     create_product, create_random_order, create_random_person,
     get_default_supplier
@@ -31,12 +31,14 @@ def test_protected_fields():
     )
     assert shop.name == "testshop"
     assert shop.currency == "EUR"
+    assert not ConfigurationItem.objects.filter(shop=shop, key="languages").exists()
     shop_form = ShopBaseForm(instance=shop, languages=settings.LANGUAGES)
     assert not shop_form._get_protected_fields()  # No protected fields just yet, right?
     data = get_form_data(shop_form, prepared=True)
     shop_form = ShopBaseForm(data=data, instance=shop, languages=settings.LANGUAGES)
     _test_cleanliness(shop_form)
     shop_form.save()
+    assert ConfigurationItem.objects.filter(shop=shop, key="languages").first().value == list(map(list, settings.LANGUAGES))
 
     # Now let's make it protected!
     create_product(printable_gibberish(), shop=shop, supplier=get_default_supplier())
