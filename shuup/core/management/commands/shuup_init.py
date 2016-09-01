@@ -6,11 +6,13 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.db.models import Model
 from django.db.transaction import atomic
 from six import print_
 
+from shuup import configuration
 from shuup.core.defaults.order_statuses import create_default_order_statuses
 from shuup.core.models import (
     Category, CustomCarrier, CustomerTaxGroup, CustomPaymentProcessor,
@@ -75,6 +77,9 @@ class Initializer(object):
             print_("Creating order statuses...", end=" ")
             create_default_order_statuses()
             print_("done.")
+        for shop in Shop.objects.all():
+            if not configuration.get(shop, "languages"):
+                configuration.set(shop, "languages", settings.LANGUAGES)
         print_("Initialization done.")
 
 
