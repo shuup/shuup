@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
+from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.http.response import HttpResponseRedirect, JsonResponse
@@ -22,6 +23,8 @@ from shuup.testing.factories import (
     get_default_supplier
 )
 from shuup_tests.front.fixtures import get_request_with_basket
+
+from .utils import get_unstocked_package_product_and_stocked_child
 
 
 class ReturnUrlBasketCommandDispatcher(BasketCommandDispatcher):
@@ -156,33 +159,56 @@ def test_basket_update():
 
 
 @pytest.mark.django_db
-def test_basket_update_errors():
+def test_basket_update_with_package_product():
+    if "shuup.simple_supplier" not in settings.INSTALLED_APPS:
+        pytest.skip("Need shuup.simple_supplier in INSTALLED_APPS")
+    from shuup_tests.simple_supplier.utils import get_simple_supplier
+
     request = get_request_with_basket()
     basket = request.basket
-    product = get_default_product()
-    basket_commands.handle_add(request, basket, product_id=product.pk, quantity=1)
-    line_id = basket.get_lines()[0].line_id
+    shop = get_default_shop()
+    supplier = get_simple_supplier()
+    parent, child = get_unstocked_package_product_and_stocked_child(shop, supplier, child_logical_quantity=2)
 
-    # Hide product and now updating quantity should give errors
-    shop_product = product.get_shop_instance(request.shop)
-    shop_product.suppliers.clear()
+    # There should be enough stock for 1 parent and 1 extra child, each of quantity 1
+    basket_commands.handle_add(request, basket, product_id=parent.pk, quantity=1)
+    assert basket.product_count == 1
+    basket_commands.handle_add(request, basket, product_id=child.pk, quantity=1)
+    assert basket.product_count == 2
+    assert not messages.get_messages(request)
 
-    basket_commands.handle_update(request, basket, **{"q_%s" % line_id: "2"})
-    error_messages = messages.get_messages(request)
-    # One warning is added to messages
-    assert len(error_messages) == 1
-    assert any("not supplied" in msg.message for msg in error_messages)
+    basket_lines = {line.product.id: line for line in basket.get_lines()}
+    package_line = basket_lines[parent.id]
+    extra_child_line = basket_lines[child.id]
 
-    shop_product.visibility = ShopProductVisibility.NOT_VISIBLE
-    shop_product.save()
+    # Trying to increase package product line quantity should fail, with error message
+    basket_commands.handle_update(request, basket, **{"q_%s" % package_line.line_id: "2"})
+    assert basket.product_count == 2
+    assert len(messages.get_messages(request)) == 1
 
-    basket_commands.handle_update(request, basket, **{"q_%s" % line_id: "2"})
+    # So should increasing the extra child line quantity
+    basket_commands.handle_update(request, basket, **{"q_%s" % extra_child_line.line_id: "2"})
+    assert basket.product_count == 2
+    assert len(messages.get_messages(request)) == 2
 
-    error_messages = messages.get_messages(request)
-    # Two warnings is added to messages
-    assert len(error_messages) == 3
-    assert any("not visible" in msg.message for msg in error_messages)
-    assert all("[" not in msg.message for msg in error_messages)
+    # However, if we delete the parent line, we can increase the extra child
+    basket_commands.handle_update(request, basket, **{"delete_%s" % package_line.line_id: "1"})
+    assert basket.product_count == 1
+    basket_commands.handle_update(request, basket, **{"q_%s" % extra_child_line.line_id: "2"})
+    assert basket.product_count == 2
+
+    # Resetting to original basket contents
+    basket_commands.handle_update(request, basket, **{"q_%s" % extra_child_line.line_id: "1"})
+    basket_commands.handle_add(request, basket, product_id=parent.pk, quantity=1)
+    basket_lines = {line.product.id: line for line in basket.get_lines()}
+    package_line = basket_lines[parent.id]  # Package line will have a new ID
+    assert basket.product_count == 2
+
+    # Like above, delete the child line and we can now increase the parent
+    basket_commands.handle_update(request, basket, **{"delete_%s" % extra_child_line.line_id: "1"})
+    assert basket.product_count == 1
+    basket_commands.handle_update(request, basket, **{"q_%s" % package_line.line_id: "2"})
+    assert basket.product_count == 2
 
 
 @pytest.mark.django_db

@@ -20,7 +20,8 @@ from shuup.utils.importing import cached_load
 from shuup.utils.numbers import parse_decimal_string
 
 
-def handle_add(request, basket, product_id, quantity=1, supplier_id=None, **kwargs):
+# TODO: Refactor handle_add, it's too complex
+def handle_add(request, basket, product_id, quantity=1, supplier_id=None, **kwargs):  # noqa (C901)
     """
     Handle adding a product to the basket.
 
@@ -66,6 +67,18 @@ def handle_add(request, basket, product_id, quantity=1, supplier_id=None, **kwar
         quantity=(already_in_basket_qty + quantity),
         customer=basket.customer
     )
+
+    # If the product is a package parent, also check child products
+    if product.is_package_parent():
+        for child_product, child_quantity in six.iteritems(product.get_package_child_to_quantity_map()):
+            already_in_basket_qty = product_ids_and_quantities.get(child_product.id, 0)
+            total_child_quantity = (quantity * child_quantity)
+            sp = child_product.get_shop_instance(shop=request.shop)
+            sp.raise_if_not_orderable(
+                supplier=supplier,
+                quantity=(already_in_basket_qty + total_child_quantity),
+                customer=basket.customer
+            )
 
     # TODO: Hook/extension point
     # if product.form:

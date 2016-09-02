@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
+from django.conf import settings
 from django.db.models import Sum
 from django.test.utils import override_settings
 
@@ -18,6 +19,8 @@ from shuup.testing.factories import (
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import printable_gibberish
+
+from .utils import get_unstocked_package_product_and_stocked_child
 
 
 @pytest.mark.django_db
@@ -145,6 +148,63 @@ def test_basket_orderability_change(rf):
         extra={"foo": "foo"}
     )
     assert len(basket.get_lines()) == 1
+    assert len(basket.get_unorderable_lines()) == 0
     product.soft_delete()
     assert basket.dirty
     assert len(basket.get_lines()) == 0
+    assert len(basket.get_unorderable_lines()) == 1
+
+
+@pytest.mark.django_db
+def test_basket_package_product_orderability_change(rf):
+    if "shuup.simple_supplier" not in settings.INSTALLED_APPS:
+        pytest.skip("Need shuup.simple_supplier in INSTALLED_APPS")
+    from shuup_tests.simple_supplier.utils import get_simple_supplier
+
+    StoredBasket.objects.all().delete()
+    shop = get_default_shop()
+    supplier = get_simple_supplier()
+    product, child = get_unstocked_package_product_and_stocked_child(shop, supplier, child_logical_quantity=2)
+    request = rf.get("/")
+    request.session = {}
+    request.shop = shop
+    apply_request_middleware(request)
+    basket = get_basket(request)
+
+    # Add the package parent
+    basket.add_product(
+        supplier=supplier,
+        shop=shop,
+        product=product,
+        quantity=1,
+        force_new_line=True,
+        extra={"foo": "foo"}
+    )
+
+    # Also add the child product separately
+    basket.add_product(
+        supplier=supplier,
+        shop=shop,
+        product=child,
+        quantity=1,
+        force_new_line=True,
+        extra={"foo": "foo"}
+    )
+
+    # Should be stock for both
+    assert len(basket.get_lines()) == 2
+    assert len(basket.get_unorderable_lines()) == 0
+
+    supplier.adjust_stock(child.id, -1)
+    assert basket.dirty
+
+    # After reducing stock to 1, should only be stock for one
+    assert len(basket.get_lines()) == 1
+    assert len(basket.get_unorderable_lines()) == 1
+
+    supplier.adjust_stock(child.id, -1)
+    assert basket.dirty
+
+    # After reducing stock to 0, should be stock for neither
+    assert len(basket.get_lines()) == 0
+    assert len(basket.get_unorderable_lines()) == 2

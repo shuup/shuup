@@ -13,6 +13,7 @@ Unreleased
 Core
 ~~~~
 
+- Fix issue with package product validation errors in order creator
 - Fix bug in product and category slug generation
 
 Localization
@@ -32,6 +33,8 @@ Addons
 Front
 ~~~~~
 
+- Fix handling of package products in basket
+- Notify customer of unorderable basket lines
 - Load JS catalog for superusers
 
 Xtheme

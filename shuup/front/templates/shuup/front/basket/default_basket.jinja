@@ -5,7 +5,7 @@
 {% block content_title %}{% trans %}Shopping cart{% endtrans %}{% endblock %}
 
 {% block content %}
-    {% if basket.is_empty %}
+    {% if basket.is_empty and not basket.get_unorderable_lines() %}
         <p class="lead">
             <i class="fa fa-exclamation-circle text-danger"></i>
             {% trans %}Your shopping cart is empty.{% endtrans %}

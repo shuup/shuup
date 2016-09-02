@@ -94,7 +94,9 @@ class BaseBasket(OrderSource):
         self.storage = get_storage()
         self._data = None
         self.dirty = False
-        self._lines_cache = None
+        self._orderable_lines_cache = None
+        self._unorderable_lines_cache = None
+        self._lines_cached = False
         self.customer = getattr(request, "customer", None)
         self.orderer = getattr(request, "person", None)
         self.creator = getattr(request, "user", None)
@@ -222,17 +224,52 @@ class BaseBasket(OrderSource):
         self.dirty = bool(self.dirty or modified)
         return modified
 
+    def _cache_lines(self):
+        lines = [BasketLine.from_dict(self, line) for line in self._data_lines]
+        orderable_counter = Counter()
+        orderable_lines = []
+        for line in lines:
+            if line.type != OrderLineType.PRODUCT:
+                orderable_lines.append(line)
+            else:
+                product = line.product
+                quantity = line.quantity + orderable_counter[product.id]
+                if line.shop_product.is_orderable(line.supplier, self.request.customer, quantity):
+                    if product.is_package_parent():
+                        quantity_map = product.get_package_child_to_quantity_map()
+                        orderable = True
+                        for child_product, child_quantity in six.iteritems(quantity_map):
+                            sp = child_product.get_shop_instance(shop=self.shop)
+                            in_basket_child_qty = orderable_counter[child_product.id]
+                            total_child_qty = ((quantity * child_quantity) + in_basket_child_qty)
+                            if not sp.is_orderable(line.supplier, self.request.customer, total_child_qty):
+                                orderable = False
+                                break
+                        if orderable:
+                            orderable_lines.append(line)
+                            orderable_counter[product.id] += quantity
+                            for child_product, child_quantity in six.iteritems(quantity_map):
+                                orderable_counter[child_product.id] += child_quantity * line.quantity
+                    else:
+                        orderable_lines.append(line)
+                        orderable_counter[product.id] += line.quantity
+        self._orderable_lines_cache = orderable_lines
+        self._unorderable_lines_cache = [line for line in lines if line not in orderable_lines]
+        self._lines_cached = True
+
+    @property
+    def is_empty(self):
+        return not bool(self.get_lines())
+
+    def get_unorderable_lines(self):
+        if self.dirty or not self._lines_cached:
+            self._cache_lines()
+        return self._unorderable_lines_cache
+
     def get_lines(self):
-        if self.dirty or not self._lines_cache:
-            lines = [BasketLine.from_dict(self, line) for line in self._data_lines]
-            orderable_lines = []
-            for line in lines:
-                if line.type != OrderLineType.PRODUCT:
-                    orderable_lines.append(line)
-                elif line.shop_product.is_orderable(line.supplier, self.request.customer, line.quantity):
-                    orderable_lines.append(line)
-            self._lines_cache = orderable_lines
-        return self._lines_cache
+        if self.dirty or not self._lines_cached:
+            self._cache_lines()
+        return self._orderable_lines_cache
 
     def _initialize_product_line_data(self, product, supplier, shop, quantity=0):
         if product.variation_children.count():
@@ -403,10 +440,12 @@ class BaseBasket(OrderSource):
     def get_product_ids_and_quantities(self):
         q_counter = Counter()
         for line in self.get_lines():
-            product_id = line.product.id if line.product else None
-            if product_id:
-                q_counter[product_id] += line.quantity
+            if line.product:
+                quantity_map = line.product.get_package_child_to_quantity_map()
+                for child_product, child_quantity in six.iteritems(quantity_map):
+                    q_counter[child_product.id] += line.quantity * child_quantity
 
+                q_counter[line.product.id] += line.quantity
         return dict(q_counter)
 
     def get_available_shipping_methods(self):
