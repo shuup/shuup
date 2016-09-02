@@ -155,7 +155,7 @@ def get_edit_and_list_urls(url_prefix, view_template, name_template, permissions
             permissions=permissions
         ),
         admin_url(
-            "^list-settings/",
+            "%s/list-settings/" % url_prefix,
             "shuup.admin.modules.settings.views.ListSettingsView",
             name=name_template % "list_settings",
             permissions=permissions,

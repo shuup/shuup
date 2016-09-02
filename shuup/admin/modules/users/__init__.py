@@ -68,7 +68,7 @@ class UserModule(AdminModule):
                 permissions=permissions
             ),
             admin_url(
-                "^list-settings/",
+                "^contacts/list-settings/",
                 "shuup.admin.modules.settings.views.ListSettingsView",
                 name="user.list_settings",
                 permissions=permissions,
