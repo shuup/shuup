@@ -123,6 +123,8 @@ Classic Gray Theme
 Simple Supplier
 ~~~~~~~~~~~~~~~
 
+- Make stock management columns static
+
 Order Printouts
 ~~~~~~~~~~~~~~~
 
