@@ -163,7 +163,7 @@ class PicotableListView(PicotableViewMixin, ListView):
     def __init__(self):
         super(PicotableListView, self).__init__()
         self.settings = ViewSettings(self.model, self.default_columns)
-        self.columns = self.settings.columns
+        self.columns = (self.settings.columns or self.default_columns)
 
     def get_toolbar(self):
         buttons = []
