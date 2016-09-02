@@ -320,7 +320,7 @@ function generateItemOptions(nameMap) {
 }
 
 function itemInfosToNameMap(itemInfos) {
-    return _(itemInfos).map((itemInfo, identifier) => [identifier, itemInfo.name]).zipObject().value();
+    return _(itemInfos).map(function (itemInfo, identifier){ return [identifier, itemInfo.name]; }).zipObject().value();
 }
 
 function init(iSettings) {
