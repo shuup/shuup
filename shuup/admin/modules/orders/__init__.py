@@ -95,7 +95,7 @@ class OrderModule(AdminModule):
 
             ),
             admin_url(
-                "^list-settings/",
+                "^orders/list-settings/",
                 "shuup.admin.modules.settings.views.ListSettingsView",
                 name="order.list_settings",
                 permissions=get_default_model_permissions(Order),

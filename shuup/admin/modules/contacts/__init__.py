@@ -54,7 +54,7 @@ class ContactModule(AdminModule):
                 permissions=get_default_model_permissions(Contact),
             ),
             admin_url(
-                "^list-settings/",
+                "^contacts/list-settings/",
                 "shuup.admin.modules.settings.views.ListSettingsView",
                 name="contact.list_settings",
                 permissions=get_default_model_permissions(Contact),
