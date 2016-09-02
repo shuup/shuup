@@ -13,12 +13,16 @@ Unreleased
 Core
 ~~~~
 
+- Fix bug in product and category slug generation
+
 Localization
 ~~~~~~~~~~~~
 
 Admin
 ~~~~~
 
+- Add lang parameter for JS catalog load
+- Add key prefix to JavaScript catalog cache
 - Allow shop language to be set via admin
 - Allow form group edit views to show errors as messages
 
@@ -28,8 +32,12 @@ Addons
 Front
 ~~~~~
 
+- Load JS catalog for superusers
+
 Xtheme
 ~~~~~~
+
+- Skip adding JS-catalog for editing
 
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
@@ -60,6 +68,12 @@ Guide
 
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
+
+- MultiLanguageModelForm: Avoid partially/empty translation objects
+   - Delete untranslated objects from database
+   - Only set translation object to database if it is translated
+   - Ensure required fields if language is partially translated
+- MultiLanguageModelForm: Use Parler default as a default
 
 SHUUP 0.4.4
 -----------

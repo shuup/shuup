@@ -14,6 +14,7 @@ from django.apps import apps
 from django.utils import translation
 from django.utils.lru_cache import lru_cache
 from django.utils.timezone import localtime
+from django.utils.translation import get_language
 from django.views.decorators.cache import cache_page
 from django.views.i18n import javascript_catalog
 
@@ -131,7 +132,7 @@ def get_language_name(language_code):
     return language_code
 
 
-@cache_page(3600)
+@cache_page(3600, key_prefix="js18n-%s" % get_language())
 def javascript_catalog_all(request, domain='djangojs'):
     """
     Get JavaScript message catalog for all apps in INSTALLED_APPS.

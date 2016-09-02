@@ -14,7 +14,7 @@
         {% block extra_css %}{% endblock -%}
         {% block extra_head %}{% endblock -%}
         <script>var ShuupAdminConfig = {{ shuup_admin.get_config()|json }};</script>
-        <script type="text/javascript" src="{{ url("shuup_admin:js-catalog") }}"></script>
+        <script type="text/javascript" src="{{ url("shuup_admin:js-catalog") }}?lang={{ LANGUAGE_CODE }}"></script>
     </head>
     <body class="{% block body_class %}{% endblock %} {{ "popup" if request.GET.popup else "" }}">
         {% block top %}

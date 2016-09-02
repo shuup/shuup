@@ -7,7 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.staticfiles.storage import staticfiles_storage
-from django.core.urlresolvers import reverse
 from django.middleware.csrf import get_token
 
 from shuup.xtheme.resources import add_resource, InlineScriptResource
@@ -98,5 +97,4 @@ def add_edit_resources(context):
         "edit": is_edit_mode(request),
         "csrfToken": get_token(request),
     }))
-    add_resource(context, "head_end", reverse("shuup_admin:js-catalog"))
     add_resource(context, "body_end", staticfiles_storage.url("xtheme/editor-injection.js"))
