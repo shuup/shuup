@@ -14,3 +14,4 @@ shipment_created = Signal(providing_args=["order", "shipment"], use_caching=True
 refund_created = Signal(providing_args=["order", "refund_lines"], use_caching=True)
 category_deleted = Signal(providing_args=["category"], use_caching=True)
 shipment_deleted = Signal(providing_args=["shipment"], use_caching=True)
+payment_created = Signal(providing_args=["order", "payment"], use_caching=True)
