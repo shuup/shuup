@@ -36,7 +36,9 @@ from shuup.core.fields import (
     UnsavedForeignKey
 )
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
-from shuup.core.signals import refund_created, shipment_created
+from shuup.core.signals import (
+    payment_created, refund_created, shipment_created
+)
 from shuup.utils.analog import define_log_model, LogEntryKind
 from shuup.utils.excs import Problem
 from shuup.utils.money import Money
@@ -472,6 +474,7 @@ class Order(MoneyPropped, models.Model):
         else:
             self._set_partially_paid()
 
+        payment_created.send(sender=type(self), order=self, payment=payment)
         return payment
 
     def can_create_shipment(self):
