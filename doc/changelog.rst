@@ -67,6 +67,8 @@ Simple CMS
 Default Tax
 ~~~~~~~~~~~
 
+- Change postal codes pattern to textfield
+
 Guide
 ~~~~~
 

@@ -40,9 +40,8 @@ class TaxRule(models.Model):
     region_codes_pattern = models.CharField(
         max_length=500, blank=True,
         verbose_name=_("region codes pattern"))
-    postal_codes_pattern = models.CharField(
-        max_length=500, blank=True,
-        verbose_name=_("postal codes pattern"))
+    postal_codes_pattern = models.TextField(
+        blank=True, verbose_name=_("postal codes pattern"))
 
     _postal_codes_min = models.CharField(max_length=100, blank=True, null=True)
     _postal_codes_max = models.CharField(max_length=100, blank=True, null=True)
