@@ -33,7 +33,7 @@ class Tax(MoneyPropped, ChangeProtected, TranslatableShuupModel):
         unique=True, editable=True, verbose_name=_("code"), help_text="")
 
     translations = TranslatedFields(
-        name=models.CharField(max_length=64, verbose_name=_("name")),
+        name=models.CharField(max_length=124, verbose_name=_("name")),
     )
 
     rate = models.DecimalField(
