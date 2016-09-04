@@ -21,11 +21,18 @@ class ShuupFrontAppConfig(AppConfig):
             "shuup.front.admin_module.CartAdminModule",
         ],
         "notify_event": [
-            "shuup.front.notify_events:OrderReceived"
+            "shuup.front.notify_events:OrderReceived",
+            "shuup.front.notify_events:ShipmentCreated",
+            "shuup.front.notify_events:ShipmentDeleted",
+            "shuup.front.notify_events:PaymentCreated",
+            "shuup.front.notify_events:RefundCreated",
         ]
     }
 
     def ready(self):
+        # connect signals
+        import shuup.front.notify_events  # noqa: F401
+
         validate_templates_configuration()
         if django.conf.settings.SHUUP_FRONT_INSTALL_ERROR_HANDLERS:
             from .error_handling import install_error_handlers

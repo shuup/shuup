@@ -22,7 +22,7 @@ class PaymentOrderSection(Section):
     order = 1
 
     @staticmethod
-    def visible_for_order(order):
+    def visible_for_object(order):
         return order.payments.count() > 0
 
     @staticmethod
