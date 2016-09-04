@@ -13,6 +13,7 @@ Unreleased
 Core
 ~~~~
 
+- Update tax name max length to 124 characters
 - Fix issue with package product validation errors in order creator
 - Fix bug in product and category slug generation
 
