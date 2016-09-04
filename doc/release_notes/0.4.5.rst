@@ -1,0 +1,17 @@
+Shuup 0.4.5 Release Notes
+=========================
+
+Released on 2016-09-04 14:45pm -0800.
+
+Smaller version release with mostly bug fixes and small
+enhancements for existing features.
+
+Most notably fixes for multi language support. Translation should
+now fallback based on django-parler settings. Old instances with old
+translated objects is not migrated. Main issue with translations was
+generating empty values for every language even if the language weren't
+translated.
+
+List of changes see
+:doc:`../shoop-changelog` or `Git commit log
+<https://github.com/shuup/shuup/commits/v0.4.5>`__.
