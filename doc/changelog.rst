@@ -2,13 +2,10 @@ Shuup Change Log
 ================
 
 
-Unreleased
-----------
+SHUUP 0.4.5
+-----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2016-09-04 3:45pm -0800.
 
 Core
 ~~~~
@@ -17,9 +14,6 @@ Core
 - Fix issue with package product validation errors in order creator
 - Fix bug in product and category slug generation
 
-Localization
-~~~~~~~~~~~~
-
 Admin
 ~~~~~
 
@@ -27,9 +21,6 @@ Admin
 - Add key prefix to JavaScript catalog cache
 - Allow shop language to be set via admin
 - Allow form group edit views to show errors as messages
-
-Addons
-~~~~~~
 
 Front
 ~~~~~
@@ -43,34 +34,10 @@ Xtheme
 
 - Skip adding JS-catalog for editing
 
-Classic Gray Theme
-~~~~~~~~~~~~~~~~~~
-
-Simple Supplier
-~~~~~~~~~~~~~~~
-
-Order Printouts
-~~~~~~~~~~~~~~~
-
-Campaigns
-~~~~~~~~~
-
-Customer Group Pricing
-~~~~~~~~~~~~~~~~~~~~~~
-
-Discount Pricing
-~~~~~~~~~~~~~~~~
-
-Simple CMS
-~~~~~~~~~~
-
 Default Tax
 ~~~~~~~~~~~
 
 - Change postal codes pattern to textfield
-
-Guide
-~~~~~
 
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
