@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-01 22:20+0000\n"
+"POT-Creation-Date: 2016-09-05 11:58+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -258,6 +258,52 @@ msgid "product_count"
 msgstr ""
 
 msgid "products"
+msgstr ""
+
+msgid "Order Received"
+msgstr ""
+
+msgid "Order"
+msgstr ""
+
+msgid "Customer Email"
+msgstr ""
+
+msgid "Customer Phone"
+msgstr ""
+
+msgid "Language"
+msgstr ""
+
+msgid "Shipment Created"
+msgstr ""
+
+msgid "Shipment"
+msgstr ""
+
+msgid "Order Shipping Status"
+msgstr ""
+
+#, python-brace-format
+msgid "Possible values: {0}"
+msgstr ""
+
+msgid "Shipment Status"
+msgstr ""
+
+msgid "Shipment Deleted"
+msgstr ""
+
+msgid "Payment Created"
+msgstr ""
+
+msgid "Order Payment Status"
+msgstr ""
+
+msgid "Payment"
+msgstr ""
+
+msgid "Refund Created"
 msgstr ""
 
 msgid "Shopping cart"
