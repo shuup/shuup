@@ -19,79 +19,79 @@ from shuup.notify.typology import Email, Enum, Language, Model, Phone
 
 class OrderReceived(Event):
     identifier = "order_received"
+    name = _("Order Received")
 
-    order = Variable("Order", type=Model("shuup.Order"))
-    customer_email = Variable("Customer Email", type=Email)
-    customer_phone = Variable("Customer Phone", type=Phone)
-    language = Variable("Language", type=Language)
+    order = Variable(_("Order"), type=Model("shuup.Order"))
+    customer_email = Variable(_("Customer Email"), type=Email)
+    customer_phone = Variable(_("Customer Phone"), type=Phone)
+    language = Variable(_("Language"), type=Language)
 
 
 class ShipmentCreated(Event):
     identifier = "shipment_created"
+    name = _("Shipment Created")
 
-    order = Variable("Order", type=Model("shuup.Order"))
-    customer_email = Variable("Customer Email", type=Email)
-    customer_phone = Variable("Customer Phone", type=Phone)
-    language = Variable("Language", type=Language)
+    order = Variable(_("Order"), type=Model("shuup.Order"))
+    customer_email = Variable(_("Customer Email"), type=Email)
+    customer_phone = Variable(_("Customer Phone"), type=Phone)
+    language = Variable(_("Language"), type=Language)
 
-    shipment = Variable("Shipment", type=Model("shuup.Shipment"))
-    shipping_status = Variable("Order Shipping Status",
+    shipment = Variable(_("Shipment"), type=Model("shuup.Shipment"))
+    shipping_status = Variable(_("Order Shipping Status"),
                                type=Enum(ShippingStatus),
                                help_text=_("Possible values: {0}").format(", ".join(
-                                    ["{0}".format(choice) for choice in ShippingStatus]))
-                               )
-    shippment_status = Variable("Shipment Status",
-                                type=Enum(ShipmentStatus),
-                                help_text=_("Possible values: {0}").format(", ".join(
-                                    ["{0}".format(choice) for choice in ShipmentStatus]))
-                                )
+                                    ["{0}".format(choice) for choice in ShippingStatus])))
+    shipment_status = Variable(_("Shipment Status"),
+                               type=Enum(ShipmentStatus),
+                               help_text=_("Possible values: {0}").format(", ".join(
+                                   ["{0}".format(choice) for choice in ShipmentStatus])))
 
 
 class ShipmentDeleted(Event):
     identifier = "shipment_deleted"
+    name = _("Shipment Deleted")
 
-    order = Variable("Order", type=Model("shuup.Order"))
-    customer_email = Variable("Customer Email", type=Email)
-    customer_phone = Variable("Customer Phone", type=Phone)
-    language = Variable("Language", type=Language)
+    order = Variable(_("Order"), type=Model("shuup.Order"))
+    customer_email = Variable(_("Customer Email"), type=Email)
+    customer_phone = Variable(_("Customer Phone"), type=Phone)
+    language = Variable(_("Language"), type=Language)
 
-    shipment = Variable("Shipment", type=Model("shuup.Shipment"))
-    shipping_status = Variable("Order Shipping Status",
+    shipment = Variable(_("Shipment"), type=Model("shuup.Shipment"))
+    shipping_status = Variable(_("Order Shipping Status"),
                                type=Enum(ShippingStatus),
                                help_text=_("Possible values: {0}").format(", ".join(
-                                    ["{0}".format(choice) for choice in ShippingStatus]))
-                               )
+                                    ["{0}".format(choice) for choice in ShippingStatus])))
 
 
 class PaymentCreated(Event):
     identifier = "payment_created"
+    name = _("Payment Created")
 
-    order = Variable("Order", type=Model("shuup.Order"))
-    customer_email = Variable("Customer Email", type=Email)
-    customer_phone = Variable("Customer Phone", type=Phone)
-    language = Variable("Language", type=Language)
+    order = Variable(_("Order"), type=Model("shuup.Order"))
+    customer_email = Variable(_("Customer Email"), type=Email)
+    customer_phone = Variable(_("Customer Phone"), type=Phone)
+    language = Variable(_("Language"), type=Language)
 
-    payment_status = Variable("Order Payment Status",
+    payment_status = Variable(_("Order Payment Status"),
                               type=Enum(PaymentStatus),
                               help_text=_("Possible values: {0}").format(", ".join(
-                                    ["{0}".format(choice) for choice in PaymentStatus]))
-                              )
-    payment = Variable("Order", type=Model("shuup.Payment"))
+                                    ["{0}".format(choice) for choice in PaymentStatus])))
+    payment = Variable(_("Payment"), type=Model("shuup.Payment"))
 
 
 class RefundCreated(Event):
     identifier = "refund_created"
+    name = _("Refund Created")
 
-    order = Variable("Order", type=Model("shuup.Order"))
-    customer_email = Variable("Customer Email", type=Email)
-    customer_phone = Variable("Customer Phone", type=Phone)
-    language = Variable("Language", type=Language)
+    order = Variable(_("Order"), type=Model("shuup.Order"))
+    customer_email = Variable(_("Customer Email"), type=Email)
+    customer_phone = Variable(_("Customer Phone"), type=Phone)
+    language = Variable(_("Language"), type=Language)
 
-    payment_status = Variable("Order Payment Status",
+    payment_status = Variable(_("Order Payment Status"),
                               type=Enum(PaymentStatus),
                               help_text=_("Possible values: {0}").format(", ".join(
-                                    ["{0}".format(choice) for choice in PaymentStatus]))
-                              )
+                                    ["{0}".format(choice) for choice in PaymentStatus])))
 
 
 @receiver(order_creator_finished)
@@ -113,7 +113,7 @@ def send_shipment_created_notification(order, shipment, **kwargs):
         language=order.language,
         shipment=shipment,
         shipping_status=order.shipping_status,
-        shippment_status=shipment.status
+        shipment_status=shipment.status
     ).run()
 
 
