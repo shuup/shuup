@@ -153,3 +153,8 @@ SHUUP_CACHE_DURATIONS = {}
 
 #: Whether taxes should be calculated automatically in TaxModule
 SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE = True
+
+#: Spec which defines an address formatter used to
+#: format ouput string of an Address model instances
+SHUUP_ADDRESS_FORMATTER_SPEC = (
+    "shuup.core.formatters:DefaultAddressFormatter")

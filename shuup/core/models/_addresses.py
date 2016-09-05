@@ -10,14 +10,13 @@ from __future__ import unicode_literals
 import six
 from django.conf import settings
 from django.db import models
-from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django_countries.fields import CountryField
 from enumfields import Enum, EnumIntegerField
 
 from shuup.core.utils.name_mixin import NameMixin
 from shuup.utils.analog import define_log_model
-from shuup.utils.i18n import get_current_babel_locale
+from shuup.utils.importing import cached_load
 from shuup.utils.models import get_data_dict
 
 from ._base import ChangeProtected, ShuupModel
@@ -97,23 +96,8 @@ class Address(NameMixin, ShuupModel):
         return " / ".join(self.as_string_list())
 
     def as_string_list(self, locale=None):
-        locale = locale or get_current_babel_locale()
-        country = self.country.code.upper()
-
-        base_lines = [
-            self.company_name,
-            self.full_name,
-            self.name_ext,
-            self.street,
-            self.street2,
-            self.street3,
-            "%s %s %s" % (self.region_code, self.postal_code, self.city),
-            self.region,
-            locale.territories.get(country, country) if not self.is_home else None
-        ]
-
-        stripped_lines = [force_text(line).strip() for line in base_lines if line]
-        return [s for s in stripped_lines if (s and len(s) > 1)]
+        formatter = cached_load("SHUUP_ADDRESS_FORMATTER_SPEC")
+        return formatter().address_as_string_list(self, locale)
 
     def __iter__(self):
         return iter(self.as_string_list())
