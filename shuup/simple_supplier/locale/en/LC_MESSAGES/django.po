@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-02 18:56+0000\n"
+"POT-Creation-Date: 2016-09-05 11:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,6 +105,12 @@ msgid "logical count"
 msgstr ""
 
 msgid "physical count"
+msgstr ""
+
+msgid "Alert Limit Reached"
+msgstr ""
+
+msgid "Product"
 msgstr ""
 
 msgid "Add stock"
