@@ -23,7 +23,11 @@ from ._mixins import TaxNumberCleanMixin
 class AddressForm(forms.ModelForm):
     class Meta:
         model = MutableAddress
-        fields = ("name", "phone", "email", "street", "street2", "postal_code", "city", "region", "country")
+        fields = (
+            "name", "phone", "email", "street", "street2", "postal_code", "city", "region", "region_code", "country")
+        labels = {
+            "region_code": _("Region"),
+        }
 
     def __init__(self, **kwargs):
         super(AddressForm, self).__init__(**kwargs)

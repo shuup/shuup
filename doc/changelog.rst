@@ -27,6 +27,8 @@ Addons
 Front
 ~~~~~
 
+- Enable region codes for checkout addresses
+
 Xtheme
 ~~~~~~
 
