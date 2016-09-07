@@ -7,20 +7,19 @@
 # LICENSE file in the root directory of this source tree.
 import decimal
 import os
-import time
 
 import pytest
 from django.core.urlresolvers import reverse
+from splinter.exceptions import ElementDoesNotExist
 
-from shuup.core.models import Order, OrderStatus
+from shuup.core.models import Order
 from shuup.testing.browser_utils import (
-    click_element, move_to_element, wait_until_appeared, wait_until_condition,
-    wait_until_disappeared
+    click_element, wait_until_appeared, wait_until_condition
 )
 from shuup.testing.factories import (
-    create_empty_order, create_product, create_random_person,
-    get_default_payment_method, get_default_shipping_method, get_default_shop,
-    get_default_supplier, get_initial_order_status
+    create_product, create_random_person, get_default_payment_method,
+    get_default_shipping_method, get_default_shop, get_default_supplier,
+    get_initial_order_status
 )
 from shuup.testing.utils import initialize_admin_browser_test
 
@@ -43,6 +42,7 @@ def test_order_creator_view(browser, admin_user, live_server):
     _visit_order_creator_view(browser, live_server)
     _test_language_change(browser)
     _test_customer_data(browser, person)
+    _test_regions(browser, person)
     _test_add_lines(browser)
     _test_quick_add_lines(browser)
     _test_methods(browser)
@@ -107,6 +107,20 @@ def _test_customer_data(browser, person):
     assert browser.find_by_name("billing-street").value == person.default_billing_address.street
     assert browser.find_by_name("billing-city").value == person.default_billing_address.city
     assert browser.find_by_name("billing-country").value == person.default_billing_address.country
+
+
+def _test_regions(browser, person):
+    with pytest.raises(ElementDoesNotExist):
+        browser.find_by_css("input[name='billing-region_code']").first
+    assert browser.find_by_css("input[name='billing-region']").first
+    browser.select("billing-country", "US")
+    wait_until_appeared(browser, "select[name='billing-region_code']")
+    with pytest.raises(ElementDoesNotExist):
+        browser.find_by_css("input[name='billing-region']").first
+    browser.select("billing-region_code", "CA")
+    browser.select("billing-country", "CG")  # Congo does not have regions defined
+    wait_until_appeared(browser, "input[name='billing-region']")
+    browser.select("billing-country", person.default_billing_address.country)
 
 
 def _test_add_lines(browser):

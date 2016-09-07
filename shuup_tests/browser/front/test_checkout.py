@@ -70,6 +70,7 @@ def test_browser_checkout(browser, live_server, settings):
     customer_name = "Test Tester"
     customer_street = "Test Street"
     customer_city = "Test City"
+    customer_region = "CA"
     customer_country = "US"
 
     # Fill all necessary information
@@ -77,6 +78,8 @@ def test_browser_checkout(browser, live_server, settings):
     browser.fill("billing-street", customer_street)
     browser.fill("billing-city", customer_city)
     browser.select("billing-country", customer_country)
+    wait_until_appeared(browser, "select[name='billing-region_code']")
+    browser.select("billing-region_code", customer_region)
 
     click_element(browser, "#addresses button[type='submit']")
 
