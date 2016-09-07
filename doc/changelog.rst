@@ -59,6 +59,14 @@ Default Tax
 Guide
 ~~~~~
 
+Regions
+~~~~~~~
+
+- Initial version of region app
+   - Stores the information about country regions
+   - Will populate region code fields in front checkout,
+     admin contact and admin order creator addresses
+
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
