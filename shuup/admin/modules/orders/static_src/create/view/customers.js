@@ -67,6 +67,32 @@ function renderAddress(store, shop, customer, address, addressType) {
                 });
             };
         }
+        if (window.REGIONS) {
+            const country = _.get(address, "country", "");
+            let regionsData = window.REGIONS[country];
+            if (regionsData) {
+                if (field.key === "region_code") {
+                    return m("div.form-group" + (isRequired ? " required-field" : ""), [
+                        m("label.control-label", field.label),
+                        selectBox(
+                            _.get(address, field.key, ""), onchange, regionsData,
+                            "code", "name", addressType + "-" + field.key, {code: "", name: "---------"})
+                    ]);
+                }
+                if (field.key === "region") {
+                    return null;
+                }
+            } else {
+                if (field.key === "region_code") {
+                    return null;
+                }
+            }
+        } else {
+            if (field.key === "region_code") {
+                return null;
+            }
+        }
+
         return m("div.form-group" + (isRequired ? " required-field" : ""), [
             m("label.control-label", field.label),
             m("input.form-control", {

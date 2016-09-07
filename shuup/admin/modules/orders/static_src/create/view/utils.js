@@ -25,19 +25,24 @@ export const ADDRESS_FIELDS = [
     {key: "postal_code", label: gettext("ZIP / Postal code"), "required": false},
     {key: "city", label: gettext("City"), "required": true},
     {key: "region", label: gettext("Region"), "required": false},
+    {key: "region_code", label: gettext("Region"), "required": false},
     {key: "country", label: gettext("Country"), "required": true}
 ];
 
-export function selectBox(value, onchange, choices, valueGetter = "id", nameGetter = "name", name = "") {
+export function selectBox(
+    value, onchange, choices, valueGetter = "id", nameGetter = "name", name = "", emptyValue = null) {
     if (_.isString(valueGetter)) {
         valueGetter = _.partialRight(_.get, valueGetter);
     }
     if (_.isString(nameGetter)) {
         nameGetter = _.partialRight(_.get, nameGetter);
     }
-    return m("select.form-control", {value, onchange, name}, choices.map(
-        (obj) => m("option", {value: valueGetter(obj)}, nameGetter(obj))
-    ));
+    return m("select.form-control.no-select2", {value, onchange, name}, [
+        emptyValue ? m("option", {value: valueGetter(emptyValue)}, nameGetter(emptyValue)) : null,
+        choices.map(
+            (obj) => m("option", {value: valueGetter(obj)}, nameGetter(obj))
+        )
+    ]);
 }
 
 export function contentBlock(icon, title, view, header = "h2") {
