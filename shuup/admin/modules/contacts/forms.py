@@ -100,6 +100,9 @@ class AddressForm(forms.ModelForm):
             "phone", "email",
             "street", "street2", "street3",
             "postal_code", "city",
-            "region_code", "region",
+            "region", "region_code",
             "country"
         )
+        labels = {
+            "region_code": _("Region")
+        }
