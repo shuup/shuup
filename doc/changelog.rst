@@ -18,6 +18,7 @@ Localization
 Admin
 ~~~~~
 
+- Enable region codes for contact addresses
 - Enable region codes for order editor
 
 Addons
