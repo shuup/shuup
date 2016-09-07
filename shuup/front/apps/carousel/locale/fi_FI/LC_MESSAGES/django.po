@@ -1,0 +1,173 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-07 18:59+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Carousels"
+msgstr "Karusellit"
+
+#, python-format
+msgid "%s has been deleted."
+msgstr "%s on poistettu."
+
+msgid "Name"
+msgstr "Nimi"
+
+msgid "Filter by name..."
+msgstr "Rajaa nimellä..."
+
+msgid "Carousel"
+msgstr "Karuselli"
+
+msgid "Slide"
+msgstr "Kuva"
+
+msgid "Fade"
+msgstr "Häivytys"
+
+msgid "Current"
+msgstr "Nykyinen"
+
+msgid "New"
+msgstr "Uusi"
+
+msgid "name"
+msgstr "nimi"
+
+msgid "Name is only used to configure carousels."
+msgstr "Nimeä käytetään vain karusellien konfiguroinnissa."
+
+msgid "animation"
+msgstr "animaatio"
+
+msgid "Animation type for cycling slides."
+msgstr "Animaation tyyppi vaihtuviin kuviin."
+
+msgid "interval"
+msgstr "aikaväli"
+
+msgid "Slide interval in seconds."
+msgstr "Kuvien aikaväli sekunneissa."
+
+msgid "pause on hover"
+msgstr "pysäytä hiiren alle"
+
+msgid "Pauses the cycling of the carousel on mouse over."
+msgstr "Pysäyttää kuvien vaihtumisen kun hiiri viedään kuvan päälle."
+
+msgid "show navigation arrows"
+msgstr "näytä siirtymisnuolet"
+
+msgid "show navigation dots"
+msgstr "näytä siirtymispisteet"
+
+msgid "image width"
+msgstr "kuvan leveys"
+
+msgid "Slide images will be cropped to this width."
+msgstr "Kuvat rajataan tähän leveyteen."
+
+msgid "image height"
+msgstr "kuvan korkeus"
+
+msgid "Slide images will be cropped to this height."
+msgstr "Kuvat rajataan tähän korkeuteen."
+
+msgid "Name is only used to configure slides."
+msgstr "Nimeä käytetään vain kuvien konfigurointiin."
+
+msgid "product link"
+msgstr "tuotelinkki"
+
+msgid "category link"
+msgstr "kategorialinkki"
+
+msgid "cms page link"
+msgstr "sisältösivulinkki"
+
+msgid "ordering"
+msgstr "järjestys"
+
+msgid "link target"
+msgstr "linkin kohde"
+
+msgid "available from"
+msgstr "saatavilla alkaen"
+
+msgid "available to"
+msgstr "saatavilla asti"
+
+msgid "caption"
+msgstr "kuvateksti"
+
+msgid "caption text"
+msgstr "kuvateksti"
+
+msgid "When displayed in banner box mode, caption text is shown as a tooltip"
+msgstr ""
+"Kun tämä näytetään bannerilaatikko-tilassa, kuvateksti näytetään "
+"vinkkitekstinä"
+
+msgid "external link"
+msgstr "ulkoinen linkki"
+
+msgid "image"
+msgstr "kuva"
+
+msgid "Slides"
+msgstr "Kuvat"
+
+msgid "Carousel Plugin"
+msgstr "Karusellilaajennus"
+
+msgid "Banner Box"
+msgstr "Bannerilaatikko"
+
+msgid "Title"
+msgstr "Otsikko"
+
+msgid "Slides can be added after saving the Carousel."
+msgstr "Kuvia voi lisätä karusellin tallentamisen jälkeen."
+
+msgid ""
+"This form is also used to define banner boxes. Marked fields only apply to "
+"banner boxes."
+msgstr ""
+"Tätä lomaketta käytetään myös bannerilaatikoiden määrittelyyn. Merkatut "
+"kentät vaikuttavat vain bannerilaatikoihin."
+
+msgid "Basic details"
+msgstr "Perustiedot"
+
+msgid "Advanced options"
+msgstr "Edistyneet asetukset"
+
+msgid "Only image for default language is required."
+msgstr "Ainoastaan peruskielen kuva vaaditaan."
+
+msgid ""
+"If external link is not set link will fallback to product link, category "
+"link or cms page link in this order."
+msgstr ""
+"Mikäli ulkoista linkkiä ei ole määritelty, käytetään tuote-, kategoria- tai "
+"sisältösivulinkkiä tässä järjestyksessä."
+
+msgid "Add new slide"
+msgstr "Lisää uusi kuva"
+
+msgid "New Carousel"
+msgstr "Uusi karuselli"
