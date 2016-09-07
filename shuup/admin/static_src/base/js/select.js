@@ -37,7 +37,7 @@ function activateSelects() {
     $("select").each(function(idx, object) {
         const select = $(object);
         // only activate selects that aren't already select2 inputs
-        if(!select.hasClass("select2-hidden-accessible")){
+        if (!select.hasClass("select2-hidden-accessible") && !select.hasClass("no-select2")) {
             const model = select.data("model");
             activateSelect(select, model);
         }
