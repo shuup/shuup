@@ -18,6 +18,8 @@ Localization
 Admin
 ~~~~~
 
+- Enable region codes for order editor
+
 Addons
 ~~~~~~
 
