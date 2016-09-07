@@ -1,0 +1,167 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-07 18:58+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Carousels"
+msgstr ""
+
+#, python-format
+msgid "%s has been deleted."
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Filter by name..."
+msgstr ""
+
+msgid "Carousel"
+msgstr ""
+
+msgid "Slide"
+msgstr ""
+
+msgid "Fade"
+msgstr ""
+
+msgid "Current"
+msgstr ""
+
+msgid "New"
+msgstr ""
+
+msgid "name"
+msgstr ""
+
+msgid "Name is only used to configure carousels."
+msgstr ""
+
+msgid "animation"
+msgstr ""
+
+msgid "Animation type for cycling slides."
+msgstr ""
+
+msgid "interval"
+msgstr ""
+
+msgid "Slide interval in seconds."
+msgstr ""
+
+msgid "pause on hover"
+msgstr ""
+
+msgid "Pauses the cycling of the carousel on mouse over."
+msgstr ""
+
+msgid "show navigation arrows"
+msgstr ""
+
+msgid "show navigation dots"
+msgstr ""
+
+msgid "image width"
+msgstr ""
+
+msgid "Slide images will be cropped to this width."
+msgstr ""
+
+msgid "image height"
+msgstr ""
+
+msgid "Slide images will be cropped to this height."
+msgstr ""
+
+msgid "Name is only used to configure slides."
+msgstr ""
+
+msgid "product link"
+msgstr ""
+
+msgid "category link"
+msgstr ""
+
+msgid "cms page link"
+msgstr ""
+
+msgid "ordering"
+msgstr ""
+
+msgid "link target"
+msgstr ""
+
+msgid "available from"
+msgstr ""
+
+msgid "available to"
+msgstr ""
+
+msgid "caption"
+msgstr ""
+
+msgid "caption text"
+msgstr ""
+
+msgid "When displayed in banner box mode, caption text is shown as a tooltip"
+msgstr ""
+
+msgid "external link"
+msgstr ""
+
+msgid "image"
+msgstr ""
+
+msgid "Slides"
+msgstr ""
+
+msgid "Carousel Plugin"
+msgstr ""
+
+msgid "Banner Box"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Slides can be added after saving the Carousel."
+msgstr ""
+
+msgid ""
+"This form is also used to define banner boxes. Marked fields only apply to "
+"banner boxes."
+msgstr ""
+
+msgid "Basic details"
+msgstr ""
+
+msgid "Advanced options"
+msgstr ""
+
+msgid "Only image for default language is required."
+msgstr ""
+
+msgid ""
+"If external link is not set link will fallback to product link, category "
+"link or cms page link in this order."
+msgstr ""
+
+msgid "Add new slide"
+msgstr ""
+
+msgid "New Carousel"
+msgstr ""

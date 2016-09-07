@@ -27,6 +27,11 @@ Addons
 Front
 ~~~~~
 
+- Add carousel app
+   - Note! Instances using shuup-carousel addon should be updated to use
+     this new app. There is no migration tools for old carousel and the old
+     carousels and slides needs to be copied manually to new app before
+     removing shuup-carousel addon from installed apps.
 - Enable region codes for checkout addresses
 
 Xtheme

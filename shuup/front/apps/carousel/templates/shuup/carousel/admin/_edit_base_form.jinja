@@ -1,0 +1,29 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% from "shuup/admin/macros/multilanguage.jinja" import render_monolingual_fields %}
+
+{% macro save_warning(carousel) %}
+    {% if not carousel.pk %}
+        <div class="container-fluid">
+            <i class="fa fa-info-circle text-info"></i>
+            {% trans %}Slides can be added after saving the Carousel.{% endtrans %}
+        </div>
+        <div class="container-fluid">
+            <i class="fa fa-info-circle text-info"></i>
+            {% trans %}This form is also used to define banner boxes. Marked fields only apply to banner boxes.{% endtrans %}
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% set basic_fields = ["name", "interval"]%}
+{% set base_form = form["base"] %}
+{% set carousel = base_form.instance %}
+
+{% call content_block(_("Basic details"), "fa-info-circle") %}
+    {{ save_warning(carousel) }}
+    {{ render_monolingual_fields(base_form, field_names=basic_fields) }}
+{% endcall %}
+
+{% call content_block(_("Advanced options"), "fa-cog") %}
+    {{ save_warning(carousel) }}
+    {{ render_monolingual_fields(base_form, exclude=basic_fields) }}
+{% endcall %}
