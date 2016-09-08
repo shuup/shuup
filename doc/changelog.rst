@@ -47,6 +47,7 @@ Simple Supplier
 Order Printouts
 ~~~~~~~~~~~~~~~
 
+- Add options to send printouts as email attachments
 - Move printouts to tab from toolbar
 
 Campaigns

@@ -46,17 +46,21 @@ def _custom_url_fetcher(url):
 
 
 def render_html_to_pdf(html, stylesheet_paths=[]):
+
+    return wrap_pdf_in_response(html_to_pdf(html, stylesheet_paths))
+
+
+def html_to_pdf(html, stylesheet_paths=[]):
     if not weasyprint:
         raise Problem(_("Could not create PDF since Weasyprint is not available. Please contact support."))
     stylesheets = []
     for stylesheet_path in stylesheet_paths:
         stylesheets.append(weasyprint.CSS(string=_fetch_static_resource_str(stylesheet_path)))
-    pdf = weasyprint.HTML(
+    return weasyprint.HTML(
         string=html, url_fetcher=_custom_url_fetcher
     ).write_pdf(
         stylesheets=stylesheets
     )
-    return wrap_pdf_in_response(pdf)
 
 
 def wrap_pdf_in_response(pdf_data):

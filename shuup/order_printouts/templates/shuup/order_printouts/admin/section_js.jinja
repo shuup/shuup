@@ -1,0 +1,23 @@
+<script>
+    function sendPrintoutsAsEmail(event, button) {
+        event.preventDefault();
+        data = $("#printouts-email-form").serialize();
+        $.ajax({
+            type: "POST",
+            url: $(button).data("url"),
+            data: data,
+            success: function() {
+                Messages.enqueue({
+                    tags: "success",
+                    text: "{% trans %}Email sent successfully!{% endtrans %}"
+                });
+            },
+            error: function() {
+                Messages.enqueue({
+                    tags: "error",
+                    text: "{% trans %}Could not sent the email, please try again.{% endtrans %}"
+                });
+            }
+        })
+    }
+</script>
