@@ -24,6 +24,7 @@ from django.utils.translation import ugettext as _
 from django_countries import countries
 
 from shuup.admin.modules.orders.json_order_creator import JsonOrderCreator
+from shuup.admin.signals import object_created
 from shuup.admin.toolbar import Toolbar
 from shuup.admin.utils.urls import get_model_url
 from shuup.admin.utils.views import CreateOrUpdateView
@@ -396,6 +397,7 @@ class OrderEditView(CreateOrUpdateView):
                 creator=request.user,
                 ip_address=request.META.get("REMOTE_ADDR"),
             )
+            object_created.send(sender=Order, object=order)
             messages.success(request, _("Order %(identifier)s created.") % vars(order))
         return JsonResponse({
             "success": True,

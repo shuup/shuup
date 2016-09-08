@@ -18,6 +18,7 @@ Localization
 Admin
 ~~~~~
 
+- Add object created signal
 - Enable region codes for contact addresses
 - Enable region codes for order editor
 
