@@ -7,12 +7,10 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import hashlib
 import re
 
 from django import forms
 from django.db.models import Q
-from django.utils.encoding import force_bytes
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView
 
@@ -62,14 +60,20 @@ def get_compiled_query(query_string, needles):
 
 def get_search_product_ids(request, query, limit=150):
     query = query.strip().lower()
-    cache_key = "simple_search:%s" % hashlib.sha1(force_bytes(query)).hexdigest()
+    cache_key_elements = {
+        "query": query,
+        "shop": request.shop.pk,
+        "customer": request.customer.pk
+    }
+    cache_key = "simple_search:%s" % hash(frozenset(cache_key_elements.items()))
     product_ids = cache.get(cache_key)
     if product_ids is None:
         entry_query = get_compiled_query(
             query, ['sku', 'translations__name', 'translations__description', 'translations__keywords'])
-        product_ids = list(
-            Product.objects.searchable(shop=request.shop).filter(entry_query).distinct().values_list("pk", flat=True)
-        )[:limit]
+        product_ids = list(Product.objects.searchable(
+            shop=request.shop,
+            customer=request.customer
+        ).filter(entry_query).distinct().values_list("pk", flat=True))[:limit]
         cache.set(cache_key, product_ids, 60 * 5)
     return product_ids
 
@@ -107,8 +111,7 @@ class SearchView(ListView):
         query = self.form.cleaned_data["q"]
         if not query:  # pragma: no cover
             return Product.objects.none()
-        return Product.objects.searchable(self.request.shop, self.request.customer).filter(
-            pk__in=get_search_product_ids(self.request, query))
+        return Product.objects.filter(pk__in=get_search_product_ids(self.request, query))
 
     def get_context_data(self, **kwargs):
         context = super(SearchView, self).get_context_data(**kwargs)
