@@ -151,8 +151,7 @@ class ProductQuerySet(TranslatableQuerySet):
         return qs.exclude(deleted=True)
 
     def _get_qs(self, shop, customer, language, visibility_type):
-        root = (self.language(language) if language else self)
-        qs = root.all()._visible(shop=shop, customer=customer, language=language)
+        qs = self._visible(shop=shop, customer=customer, language=language)
         if customer and customer.is_all_seeing:
             return qs
         else:
