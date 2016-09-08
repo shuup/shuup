@@ -10,12 +10,12 @@ import pytest
 from django.utils import translation
 
 from shuup.core import cache
-from shuup.core.models import ShopProductVisibility
+from shuup.core.models import ShopProductVisibility, ProductVisibility
 from shuup.front.apps.simple_search.views import (
     get_search_product_ids, SearchView
 )
 from shuup.testing.factories import (
-    create_product, get_default_product, get_default_shop
+    create_random_person, create_product, get_default_product, get_default_shop
 )
 from shuup.testing.utils import apply_request_middleware
 
@@ -122,3 +122,21 @@ def test_simple_search_no_results(rf):
         assert NO_RESULTS_FOUND_STRING in resp.rendered_content
         resp = view(apply_request_middleware(rf.get("/")))
         assert NO_RESULTS_FOUND_STRING not in resp.rendered_content
+
+
+@pytest.mark.django_db
+def test_simple_search_with_non_public_products(rf):
+    cache.clear()
+    shop = get_default_shop()
+    name = "Some Test Name For Product"
+    product = create_product("sku", name=name, shop=shop)
+    shop_product = product.get_shop_instance(shop)
+    shop_product.visibility = ShopProductVisibility.SEARCHABLE
+    shop_product.visibility_limit = ProductVisibility.VISIBLE_TO_LOGGED_IN
+    shop_product.save()
+
+    view = SearchView.as_view()
+    request = apply_request_middleware(rf.get("/", {"q": "Test name"}))
+    request.customer = create_random_person()
+    resp = view(request)
+    assert bool(name in resp.rendered_content)
