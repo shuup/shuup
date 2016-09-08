@@ -17,6 +17,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView, UpdateView
 
 from shuup.admin.modules.settings import ViewSettings
+from shuup.admin.signals import object_created
 from shuup.admin.toolbar import (
     get_default_edit_toolbar, NewActionButton, SettingsActionButton, Toolbar
 )
@@ -94,6 +95,8 @@ class CreateOrUpdateView(UpdateView):
         # * django.views.generic.edit.FormMixin#form_valid
         is_new = (not self.object.pk)
         self.save_form(form)
+        if is_new:
+            object_created.send(sender=type(self.object), object=self.object)
         add_create_or_change_message(self.request, self.object, is_new=is_new)
         return HttpResponseRedirect(self.get_success_url())
 
