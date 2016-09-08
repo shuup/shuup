@@ -47,6 +47,8 @@ Simple Supplier
 Order Printouts
 ~~~~~~~~~~~~~~~
 
+- Move printouts to tab from toolbar
+
 Campaigns
 ~~~~~~~~~
 

@@ -32,18 +32,3 @@ def test_printouts(rf):
     assert response.status_code == 200
     response = get_confirmation_pdf(request, order.id)
     assert response.status_code == 200
-
-
-@pytest.mark.django_db
-def test_toolbar_button(rf, admin_user):
-    shop = get_default_shop()
-    supplier = get_default_supplier()
-    product = create_product("simple-test-product", shop)
-    order = create_order_with_product(product, supplier, 6, 6, shop=shop)
-    view = load("shuup.admin.modules.orders.views.OrderDetailView").as_view()
-    request = apply_request_middleware(rf.get("/"), user=admin_user)
-    response = view(request, pk=order.pk)
-    expected_button_class = "SimplePrintoutsToolbarButton"
-    toolbar = response.context_data.get("toolbar")
-    assert any(button.__class__.__name__ == expected_button_class for button in toolbar)
-    assert response.status_code == 200
