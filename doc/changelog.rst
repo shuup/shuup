@@ -27,6 +27,7 @@ Addons
 Front
 ~~~~~
 
+- Fix bug in simple search with non public products
 - Add carousel app
    - Note! Instances using shuup-carousel addon should be updated to use
      this new app. There is no migration tools for old carousel and the old
