@@ -25,6 +25,8 @@ from shuup.utils.i18n import get_current_babel_locale
 
 IdentifierValidator = RegexValidator("[a-z][a-z_]+")
 
+MONEY_FIELD_DECIMAL_PLACES = 9
+
 
 class InternalIdentifierField(models.CharField):
 
@@ -109,7 +111,7 @@ class FormattedDecimalField(models.DecimalField):
 
 class MoneyValueField(FormattedDecimalField):
     def __init__(self, **kwargs):
-        kwargs.setdefault("decimal_places", 9)
+        kwargs.setdefault("decimal_places", MONEY_FIELD_DECIMAL_PLACES)
         kwargs.setdefault("max_digits", 36)
         super(MoneyValueField, self).__init__(**kwargs)
 

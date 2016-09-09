@@ -42,7 +42,6 @@ from shuup.core.signals import (
 from shuup.utils.analog import define_log_model, LogEntryKind
 from shuup.utils.excs import Problem
 from shuup.utils.money import Money
-from shuup.utils.numbers import bankers_round
 from shuup.utils.properties import (
     MoneyPropped, TaxfulPriceProperty, TaxlessPriceProperty
 )
@@ -303,8 +302,8 @@ class Order(MoneyPropped, models.Model):
         taxful_total = TaxfulPrice(0, self.currency)
         taxless_total = TaxlessPrice(0, self.currency)
         for line in self.lines.all():
-            taxful_total += _round_price(line.taxful_price)
-            taxless_total += _round_price(line.taxless_price)
+            taxful_total += line.taxful_price
+            taxless_total += line.taxless_price
         self.taxful_total_price = taxful_total
         self.taxless_total_price = taxless_total
 
@@ -641,8 +640,7 @@ class Order(MoneyPropped, models.Model):
                     ordering=line_tax.ordering
                 )
 
-            # we round refund lines here since cache_prices does the same
-            total_refund_amount += _round_price(refund_line.taxful_price.amount)
+            total_refund_amount += refund_line.taxful_price.amount
             refund_lines.append(refund_line)
         if abs(total_refund_amount) > order_total:
             raise RefundExceedsAmountException
@@ -671,8 +669,7 @@ class Order(MoneyPropped, models.Model):
         self.create_refund(line_data)
 
     def get_total_refunded_amount(self):
-        # rounding here to follow suit with cache_prices
-        total = sum(_round_price(line.taxful_price.amount.value) for line in self.lines.refunds())
+        total = sum([line.taxful_price.amount.value for line in self.lines.refunds()])
         return Money(-total, self.currency)
 
     def get_total_unrefunded_amount(self):
@@ -871,7 +868,3 @@ class Order(MoneyPropped, models.Model):
 
 
 OrderLogEntry = define_log_model(Order)
-
-
-def _round_price(value):
-    return bankers_round(value, 2)  # TODO: To be fixed in SHUUP-1912

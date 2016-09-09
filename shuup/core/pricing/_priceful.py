@@ -6,6 +6,9 @@
 # LICENSE file in the root directory of this source tree.
 import decimal
 
+from shuup.core.fields.utils import ensure_decimal_places
+from shuup.utils.numbers import bankers_round
+
 from ._price import TaxfulPrice, TaxlessPrice
 from ._priceful_properties import TaxfulFrom, TaxlessFrom
 
@@ -53,9 +56,15 @@ class Priceful(object):
         """
         Total price for the specified quantity with discount.
 
+        For scenarios like below quantize the returned price.
+
+        base_unit_price      *        quantity -  discount_amount
+        940.234529877 EUR (excl. tax) 1.000000000 0E-9 EUR (excl. tax)
+        return 40.234529877000000000 EUR (excl. tax)
+
         :rtype: shuup.core.pricing.Price
         """
-        return self.base_unit_price * self.quantity - self.discount_amount
+        return ensure_decimal_places(self.base_unit_price * self.quantity - self.discount_amount)
 
     @property
     def base_price(self):
@@ -172,10 +181,7 @@ class Priceful(object):
         :rtype: TaxfulPrice
         """
         price = self.price
-        if price.includes_tax:
-            return price
-        else:
-            return TaxfulPrice(price.amount + self.tax_amount)
+        return bankers_round((price if price.includes_tax else TaxfulPrice(price.amount + self.tax_amount)), 2)
 
     @property
     def taxless_price(self):
@@ -183,10 +189,7 @@ class Priceful(object):
         :rtype: TaxlessPrice
         """
         price = self.price
-        if price.includes_tax:
-            return TaxlessPrice(price.amount - self.tax_amount)
-        else:
-            return price
+        return bankers_round((TaxlessPrice(price.amount - self.tax_amount) if price.includes_tax else price), 2)
 
     taxful_base_price = TaxfulFrom('base_price')
     taxless_base_price = TaxlessFrom('base_price')
