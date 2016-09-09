@@ -47,6 +47,11 @@ file_filter = shuup/front/apps/auth/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
+[shuup.front-apps.carousel]
+file_filter = shuup/front/apps/carousel/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
 [shuup.front-apps-customer-information]
 file_filter = shuup/front/apps/customer_information/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en

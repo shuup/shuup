@@ -1,0 +1,47 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
+
+{% macro render_slide_form(f, form, idx) %}
+    <div class="panel panel-default panel-slide">
+        <div class="panel-heading" role="tab" id="heading{{ idx }}">
+            <a class="panel-title" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ idx }}" aria-expanded="true" aria-controls="collapse{{ idx }}">
+                <span class="title">
+                {% trans %}Slide{% endtrans %} {%  if f.instance.name %}{{ idx }} {{ f.instance.name }}{% else %}{{ idx }}{% endif %}
+                </span>
+                <i class="fa fa-angle-down pull-right"></i>
+            </a>
+        </div>
+        <div id="collapse{{ idx }}" class="panel-collapse collapse{% if  idx == "__prefix__" or f.errors %} in{% endif %}" role="tabpanel" aria-labelledby="heading{{ idx }}">
+            {{ language_dependent_content_tabs(f, tab_id_prefix=idx) }}
+            <div class="form-divider"></div>
+            {{ render_monolingual_fields(f) }}
+        </div>
+    </div>
+{% endmacro %}
+
+{% set slides_form = form["slides"] %}
+{{ slides_form.management_form }}
+{% if slides_form.carousel.pk %}
+    {% call content_block(_("Slides"), "fa-image") %}
+        <div id="slides-section-wrapper-div">
+            <p class="text-muted small">
+                {% trans -%}
+                    Only image for default language is required.
+                {%- endtrans %}
+                {% trans -%}
+                    If external link is not set link will fallback to product link, category link or cms page link in this order.
+                {%- endtrans %}
+            </p>
+            <a class="btn btn-lg btn-text slide-add-new-panel" href="#" data-target-id="id_slides" data-target-panels="slides-section-wrapper-div">+ {% trans %}Add new slide{% endtrans %}</a>
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="hide" id="placeholder-panel">
+                    {{ render_slide_form(slides_form.empty_form, slides_form, "__prefix__") }}
+                </div>
+                {% for f in slides_form %}
+                    {{ render_slide_form(f, slides_form, loop.index) }}
+                {% endfor %}
+            </div>
+        </div>
+    {% endcall %}
+{% endif %}
