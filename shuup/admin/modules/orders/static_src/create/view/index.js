@@ -76,6 +76,5 @@ export default function view() {
             )
         ];
     }
-    activateSelects(); // eslint-disable-line no-undef
     return viewObj;
 }

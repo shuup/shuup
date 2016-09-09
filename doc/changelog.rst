@@ -18,11 +18,16 @@ Localization
 Admin
 ~~~~~
 
+- Enable region codes for contact addresses
+- Enable region codes for order editor
+
 Addons
 ~~~~~~
 
 Front
 ~~~~~
+
+- Enable region codes for checkout addresses
 
 Xtheme
 ~~~~~~
@@ -53,6 +58,14 @@ Default Tax
 
 Guide
 ~~~~~
+
+Regions
+~~~~~~~
+
+- Initial version of region app
+   - Stores the information about country regions
+   - Will populate region code fields in front checkout,
+     admin contact and admin order creator addresses
 
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
