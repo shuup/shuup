@@ -18,6 +18,7 @@ from enumfields import Enum
 from six import iteritems
 
 from shuup.core import taxing
+from shuup.core.fields.utils import ensure_decimal_places
 from shuup.core.models import (
     AnonymousContact, OrderStatus, PaymentMethod, Product, ShippingMethod,
     ShippingMode, Shop, Supplier, TaxClass
@@ -26,7 +27,6 @@ from shuup.core.pricing import Price, Priceful, TaxfulPrice, TaxlessPrice
 from shuup.core.taxing import should_calculate_taxes_automatically, TaxableItem
 from shuup.utils.decorators import non_reentrant
 from shuup.utils.money import Money
-from shuup.utils.numbers import bankers_round
 
 from ._source_modifier import get_order_source_modifier_modules
 from .signals import post_compute_source_lines
@@ -65,7 +65,7 @@ class _PriceSum(object):
         taxful = self.params.get('includes_tax', instance.prices_include_tax)
         zero = (TaxfulPrice if taxful else TaxlessPrice)(0, instance.currency)
         lines = getattr(instance, self.line_getter)()
-        return sum((bankers_round(getattr(x, self.field), 2) for x in lines), zero)
+        return sum([getattr(x, self.field) for x in lines], zero)
 
     @property
     def or_none(self):
@@ -569,9 +569,8 @@ class SourceLine(TaxableItem, Priceful):
             self.tax_class = tax_class
         self.supplier = kwargs.pop("supplier", None)
         self.quantity = kwargs.pop("quantity", 0)
-        self.base_unit_price = kwargs.pop("base_unit_price", source.zero_price)
-        self.discount_amount = (kwargs.pop("discount_amount", None) or
-                                source.zero_price)
+        self.base_unit_price = ensure_decimal_places(kwargs.pop("base_unit_price", source.zero_price))
+        self.discount_amount = ensure_decimal_places(kwargs.pop("discount_amount", source.zero_price))
         self.sku = kwargs.pop("sku", "")
         self.text = kwargs.pop("text", "")
         self.require_verification = kwargs.pop("require_verification", False)

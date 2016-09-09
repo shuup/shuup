@@ -541,6 +541,27 @@ def test_refunds_for_discounted_order_lines():
 
 
 @pytest.mark.django_db
+def test_refunds_rounding_multiple_partial_refund():
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product = create_product(
+        "test-sku",
+        shop=get_default_shop(),
+        default_price=29.264,
+    )
+    order = create_order_with_product(product, supplier, 2, 29.264, shop=shop)
+    order.cache_prices()
+    assert len(order.lines.all()) == 1
+
+    line = order.lines.first()
+    order.create_refund([{"line": line, "quantity": 1, "amount": Money("29.26", order.currency)}])
+    assert order.taxful_total_price == order.shop.create_price("29.27")
+    order.create_refund([{"line": line, "quantity": 1, "amount": Money("29.27", order.currency)}])
+    assert line.max_refundable_amount == Money("0", order.currency)
+    assert order.taxful_total_price == order.shop.create_price(0)
+
+
+@pytest.mark.django_db
 def test_can_create_shipment():
     shop = get_default_shop()
     supplier = get_simple_supplier()

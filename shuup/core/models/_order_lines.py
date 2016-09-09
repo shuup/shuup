@@ -20,6 +20,7 @@ from shuup.core.pricing import Priceful
 from shuup.core.taxing import LineTax
 from shuup.utils.analog import define_log_model
 from shuup.utils.money import Money
+from shuup.utils.numbers import bankers_round
 from shuup.utils.properties import MoneyProperty, MoneyPropped, PriceProperty
 
 from ._base import ShuupModel
@@ -114,7 +115,7 @@ class OrderLine(MoneyPropped, models.Model, Priceful):
         :rtype: shuup.utils.money.Money
         """
         zero = Money(0, self.order.currency)
-        return sum((x.amount for x in self.taxes.all()), zero)
+        return sum((x.rounded_amount for x in self.taxes.all()), zero)
 
     @property
     def max_refundable_amount(self):
@@ -183,6 +184,10 @@ class OrderLineTax(MoneyPropped, ShuupModel, LineTax):
 
     def __str__(self):
         return "%s: %s on %s" % (self.name, self.amount, self.base_amount)
+
+    @property
+    def rounded_amount(self):
+        return bankers_round(self.amount, 2)
 
 
 OrderLineLogEntry = define_log_model(OrderLine)
