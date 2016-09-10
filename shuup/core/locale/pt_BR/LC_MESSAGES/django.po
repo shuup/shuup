@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-26 01:59+0000\n"
-"PO-Revision-Date: 2016-07-30 11:40+0000\n"
+"POT-Creation-Date: 2016-08-23 21:46+0000\n"
+"PO-Revision-Date: 2016-08-26 11:35+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -297,7 +297,7 @@ msgid "merchant notes"
 msgstr "notas do lojista"
 
 msgid "account manager"
-msgstr "gerente da conta"
+msgstr "administrador da conta"
 
 msgid "contact"
 msgstr "contato"
@@ -498,7 +498,7 @@ msgid "modified on"
 msgstr "modificado em"
 
 msgid "order identifier"
-msgstr "identificador de pedido"
+msgstr "identificador do pedido"
 
 msgid "label"
 msgstr "rótulo"
@@ -597,6 +597,15 @@ msgid "Order marked as partially paid."
 msgstr "Pedido marcado como parcialmente pago."
 
 #, python-format
+msgid "%(name)s (physical stock: %(quantity)s)"
+msgstr "%(name)s (estoque físico: %(quantity)s)"
+
+#, python-format
+msgid ""
+"Insufficient physical stock count for following products: %(product_counts)s"
+msgstr "Contagem de estoque físico insuficiente para os seguintes produtos: %(product_counts)s"
+
+#, python-format
 msgid "Shipment #%d created."
 msgstr "Remessa #%d criada."
 
@@ -607,8 +616,9 @@ msgstr "Devolução para %s"
 msgid "All rows requiring verification have been verified."
 msgstr "Todas as linhas que necessitam de verificação foram verificadas."
 
-msgid "All products have been shipped. Fully Shipped status set."
-msgstr "Todos os produtos foram enviados. Status Totalmente Enviado definido."
+#, python-format
+msgid "New shipping status set: %(shipping_status)s"
+msgstr "Novo status de entrega definido: %(shipping_status)s"
 
 msgid "gateway ID"
 msgstr "ID do gateway"
@@ -678,11 +688,17 @@ msgstr "produto pai"
 msgid "child product"
 msgstr "produto filho"
 
-msgid "suppliers"
-msgstr "fornecedores"
+msgid "not visible"
+msgstr "não visível"
 
 msgid "listed"
 msgstr "listado"
+
+msgid "always visible"
+msgstr "sempre visível"
+
+msgid "suppliers"
+msgstr "fornecedores"
 
 msgid "purchasable"
 msgstr "comprável"
@@ -1173,10 +1189,10 @@ msgid "alert limit"
 msgstr "limite de alerta"
 
 msgid "physical stock count"
-msgstr "contagem do estoque físico"
+msgstr "contagem de estoque físico"
 
 msgid "logical stock count"
-msgstr "contagem do estoque lógico"
+msgstr "contagem de estoque lógico"
 
 msgid "internal"
 msgstr "interno"
@@ -1212,7 +1228,7 @@ msgid "The flat amount of the tax. Mutually exclusive with percentage rates."
 msgstr "O valor fixo do imposto. Mutuamente exclusivo com as taxas percentuais."
 
 msgid "currency of tax amount"
-msgstr "moeda do valor de imposto"
+msgstr "moeda do valor do imposto"
 
 msgid "Either rate or amount is required"
 msgstr "Ou taxa ou valor é obrigatório"
@@ -1248,10 +1264,10 @@ msgid "short name"
 msgstr "nome abreviado"
 
 msgid "sales unit"
-msgstr "unidade de venda"
+msgstr "unidade de vendas"
 
 msgid "sales units"
-msgstr "unidades de venda"
+msgstr "unidades de vendas"
 
 msgid "No Choice"
 msgstr "Nenhuma Escolha"
