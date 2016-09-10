@@ -12,7 +12,8 @@ import pytest
 from django.core.urlresolvers import reverse
 from splinter.exceptions import ElementDoesNotExist
 
-from shuup.core.models import Order
+from shuup.admin.signals import object_created
+from shuup.core.models import Order, OrderStatus
 from shuup.testing.browser_utils import (
     click_element, wait_until_appeared, wait_until_condition
 )
@@ -24,6 +25,7 @@ from shuup.testing.factories import (
 from shuup.testing.utils import initialize_admin_browser_test
 
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
+OBJECT_CREATED_LOG_IDENTIFIER = "object_created_signal_handled"
 
 
 @pytest.mark.browser
@@ -37,7 +39,7 @@ def test_order_creator_view(browser, admin_user, live_server):
     person = create_random_person()
     product0 = create_product("test-sku0", shop=shop, default_price=10, supplier=supplier)
     product1 = create_product("test-sku1", shop=shop, default_price=10, supplier=supplier)
-
+    object_created.connect(_add_custom_order_created_message, sender=Order, dispatch_uid="object_created_signal_test")
     initialize_admin_browser_test(browser, live_server)
     _visit_order_creator_view(browser, live_server)
     _test_language_change(browser)
@@ -47,6 +49,13 @@ def test_order_creator_view(browser, admin_user, live_server):
     _test_quick_add_lines(browser)
     _test_methods(browser)
     _test_confirm(browser)
+    assert Order.objects.first().log_entries.filter(identifier=OBJECT_CREATED_LOG_IDENTIFIER).count() == 1
+    object_created.disconnect(sender=Order, dispatch_uid="object_created_signal_test")
+
+
+def _add_custom_order_created_message(sender, object, **kwargs):
+    assert sender == Order
+    object.add_log_entry("Custom object created signal handled", identifier=OBJECT_CREATED_LOG_IDENTIFIER)
 
 
 def _visit_order_creator_view(browser, live_server):
