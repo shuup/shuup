@@ -11,9 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.forms.widgets import PersonContactChoiceWidget
-from shuup.core.models import (
-    CompanyContact, ContactGroup, MutableAddress, PersonContact
-)
+from shuup.core.models import CompanyContact, ContactGroup, PersonContact
 
 FIELDS_BY_MODEL_NAME = {
     "Contact": (
@@ -90,19 +88,3 @@ class CompanyContactBaseForm(ContactBaseFormMixin, forms.ModelForm):
                 (object.pk, force_text(object)) for object in self.instance.members.all()
             ]
         self.fields["members"] = members_field
-
-
-class AddressForm(forms.ModelForm):
-    class Meta:
-        model = MutableAddress
-        fields = (
-            "prefix", "name", "suffix", "name_ext",
-            "phone", "email",
-            "street", "street2", "street3",
-            "postal_code", "city",
-            "region", "region_code",
-            "country"
-        )
-        labels = {
-            "region_code": _("Region")
-        }

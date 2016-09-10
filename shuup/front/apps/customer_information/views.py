@@ -13,8 +13,9 @@ from django.views.generic import FormView
 
 from shuup.core.models import get_company_contact, get_person_contact
 from shuup.utils.form_group import FormGroup
+from shuup.utils.importing import cached_load
 
-from .forms import AddressForm, CompanyContactForm, PersonContactForm
+from .forms import CompanyContactForm, PersonContactForm
 from .notify_events import CompanyAccountCreated
 
 
@@ -37,8 +38,9 @@ class CustomerEditView(FormView):
     def get_form(self, form_class):
         contact = get_person_contact(self.request.user)
         form_group = FormGroup(**self.get_form_kwargs())
-        form_group.add_form_def("billing", AddressForm, kwargs={"instance": contact.default_billing_address})
-        form_group.add_form_def("shipping", AddressForm, kwargs={"instance": contact.default_shipping_address})
+        address_form_class = cached_load("SHUUP_ADDRESS_MODEL_FORM")
+        form_group.add_form_def("billing", address_form_class, kwargs={"instance": contact.default_billing_address})
+        form_group.add_form_def("shipping", address_form_class, kwargs={"instance": contact.default_shipping_address})
         form_group.add_form_def("contact", PersonContactForm, kwargs={"instance": contact})
         return form_group
 
@@ -71,16 +73,17 @@ class CompanyEditView(FormView):
         company = get_company_contact(user)
         person = get_person_contact(user)
         form_group = FormGroup(**self.get_form_kwargs())
+        address_form_class = cached_load("SHUUP_ADDRESS_MODEL_FORM")
         form_group.add_form_def(
             "billing",
-            AddressForm,
+            address_form_class,
             kwargs={
                 "instance": _get_default_address_for_contact(company, "default_billing_address", person)
             }
         )
         form_group.add_form_def(
             "shipping",
-            AddressForm,
+            address_form_class,
             kwargs={
                 "instance": _get_default_address_for_contact(company, "default_shipping_address", person)
             }

@@ -158,3 +158,20 @@ SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE = True
 #: format output string of an Address model instances
 SHUUP_ADDRESS_FORMATTER_SPEC = (
     "shuup.core.utils.formatters:DefaultAddressFormatter")
+
+#: Spec which defines an default address model form
+SHUUP_ADDRESS_MODEL_FORM = (
+    "shuup.core.utils.forms.MutableAddressForm")
+
+#: A dictionary defining properties to override the default field properties of the
+#: checkout address form. Should map the field name (as a string) to a dictionary
+#: containing the overriding Django form field properties, as in the following
+#: example which makes the postal code a required field:
+#:
+#: SHUUP_ADDRESS_FIELD_PROPERTIES = {
+#:    "postal_code": {"required": True}
+#: }
+#:
+#: It should be noted, however, that overriding some settings (such as making a
+#: required field non-required) could create other validation issues.
+SHUUP_ADDRESS_FIELD_PROPERTIES = {}
