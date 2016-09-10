@@ -155,6 +155,6 @@ SHUUP_CACHE_DURATIONS = {}
 SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE = True
 
 #: Spec which defines an address formatter used to
-#: format ouput string of an Address model instances
+#: format output string of an Address model instances
 SHUUP_ADDRESS_FORMATTER_SPEC = (
-    "shuup.core.formatters:DefaultAddressFormatter")
+    "shuup.core.utils.formatters:DefaultAddressFormatter")
