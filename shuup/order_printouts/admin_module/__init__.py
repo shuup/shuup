@@ -20,6 +20,11 @@ class PrintoutsAdminModule(AdminModule):
                 name="printouts.delivery_pdf"
             ),
             admin_url(
+                "^printouts/delivery/html/(?P<shipment_pk>\d+)/$",
+                "shuup.order_printouts.admin_module.views.get_delivery_html",
+                name="printouts.delivery_html"
+            ),
+            admin_url(
                 "^printouts/delivery/email/(?P<shipment_pk>\d+)/$",
                 "shuup.order_printouts.admin_module.views.send_delivery_email",
                 name="printouts.delivery_email"
@@ -28,6 +33,11 @@ class PrintoutsAdminModule(AdminModule):
                 "^printouts/confirmation/(?P<order_pk>\d+)/$",
                 "shuup.order_printouts.admin_module.views.get_confirmation_pdf",
                 name="printouts.confirmation_pdf"
+            ),
+            admin_url(
+                "^printouts/confirmation/html/(?P<order_pk>\d+)/$",
+                "shuup.order_printouts.admin_module.views.get_confirmation_html",
+                name="printouts.confirmation_html"
             ),
             admin_url(
                 "^printouts/confirmation/email/(?P<order_pk>\d+)/$",

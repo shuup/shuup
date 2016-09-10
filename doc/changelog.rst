@@ -47,6 +47,7 @@ Simple Supplier
 Order Printouts
 ~~~~~~~~~~~~~~~
 
+- Add option to render printouts as HTML
 - Add options to send printouts as email attachments
 - Move printouts to tab from toolbar
 
