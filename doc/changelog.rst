@@ -12,6 +12,8 @@ Unreleased
 Core
 ~~~~
 
+- At default address model form. Force resave if address is assigned
+   multiple times
 - Provide default address form for mutable addresses
 
 Localization

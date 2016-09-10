@@ -10,7 +10,7 @@ from django.conf import settings
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.core.models import ImmutableAddress, MutableAddress
+from shuup.core.models import Contact, ImmutableAddress, MutableAddress
 
 
 class MutableAddressForm(forms.ModelForm):
@@ -37,6 +37,17 @@ class MutableAddressForm(forms.ModelForm):
                 setattr(self.fields[field], prop, properties[prop])
 
     def save(self, commit=True):
-        if self.instance.pk and isinstance(self.instance, ImmutableAddress):
-            self.instance.pk = None  # Force resave
+        if self.instance.pk:
+            if isinstance(self.instance, ImmutableAddress) or _is_assigned_multiple_times(self.instance):
+                self.instance.pk = None  # Force resave
         return super(MutableAddressForm, self).save(commit)
+
+
+def _is_assigned_multiple_times(address):
+    contacts_assigned_to_count = Contact.objects.filter(
+        Q(default_billing_address_id=address.id) | Q(default_shipping_address_id=address.id)).count()
+    if contacts_assigned_to_count != 1:
+        return bool(contacts_assigned_to_count)
+    contact_assigned_to = Contact.objects.filter(
+        Q(default_billing_address_id=address.id) | Q(default_shipping_address_id=address.id)).first()
+    return bool(contact_assigned_to.default_billing_address_id == contact_assigned_to.default_shipping_address_id)
