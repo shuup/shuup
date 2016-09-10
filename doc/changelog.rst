@@ -12,12 +12,15 @@ Unreleased
 Core
 ~~~~
 
+- Provide default address form for mutable addresses
+
 Localization
 ~~~~~~~~~~~~
 
 Admin
 ~~~~~
 
+- Use default address form from core in contact address edit
 - Add object created signal
 - Enable region codes for contact addresses
 - Enable region codes for order editor
@@ -28,6 +31,10 @@ Addons
 Front
 ~~~~~
 
+- Use default address form from core for customer information and
+   checkout address.
+- Move SHUUP_FRONT_ADDRESS_FIELD_PROPERTIES to core and rename it to
+   SHUUP_ADDRESS_FIELD_PROPERTIES.
 - Fix bug in simple search with non public products
 - Add carousel app
    - Note! Instances using shuup-carousel addon should be updated to use

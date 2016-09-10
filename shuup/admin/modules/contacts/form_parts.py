@@ -11,11 +11,12 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.form_part import FormPart, TemplatedFormDef
 from shuup.admin.modules.contacts.forms import (
-    AddressForm, CompanyContactBaseForm, PersonContactBaseForm
+    CompanyContactBaseForm, PersonContactBaseForm
 )
-from shuup.core.models import ImmutableAddress, PersonContact
+from shuup.core.models import PersonContact
 from shuup.utils.excs import Problem
 from shuup.utils.form_group import FormDef
+from shuup.utils.importing import cached_load
 
 
 class CompanyContactBaseFormPart(FormPart):
@@ -67,12 +68,13 @@ class ContactAddressesFormPart(FormPart):
 
     def get_form_defs(self):
         initial = {}  # TODO: should we do this? model_to_dict(self.object, AddressForm._meta.fields)
+        address_form_class = cached_load("SHUUP_ADDRESS_MODEL_FORM")
         yield FormDef(
-            name="shipping_address", form_class=AddressForm,
+            name="shipping_address", form_class=address_form_class,
             required=False, kwargs={"instance": self.object.default_shipping_address, "initial": initial}
         )
         yield FormDef(
-            name="billing_address", form_class=AddressForm,
+            name="billing_address", form_class=address_form_class,
             required=False, kwargs={"instance": self.object.default_billing_address, "initial": initial}
         )
         # Using a pseudo formdef to group the two actual formdefs...
@@ -88,8 +90,6 @@ class ContactAddressesFormPart(FormPart):
         ]:
             addr_form = form[form_name]
             if addr_form.changed_data:
-                if addr_form.instance.pk and isinstance(addr_form.instance, ImmutableAddress):
-                    addr_form.instance.pk = None  # Force resave
                 addr = addr_form.save()
                 setattr(self.object, obj_key, addr)
                 self.object.save()

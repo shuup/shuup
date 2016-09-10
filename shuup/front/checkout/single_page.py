@@ -22,9 +22,9 @@ from shuup.front.basket.objects import BaseBasket
 from shuup.front.checkout import CheckoutPhaseViewMixin
 from shuup.utils.fields import RelaxedModelChoiceField
 from shuup.utils.form_group import FormGroup
+from shuup.utils.importing import cached_load
 
 from ._mixins import TaxNumberCleanMixin
-from .addresses import AddressForm
 
 
 def _to_choices(objects):
@@ -58,15 +58,14 @@ class SingleCheckoutPhase(CheckoutPhaseViewMixin, FormView):
     identifier = "checkout"
     final = True
     template_name = "shuup/front/checkout/single_phase.jinja"
-    billing_address_form_class = AddressForm
-    shipping_address_form_class = AddressForm
     order_form_class = OrderForm
 
     def get_form(self, form_class):
         kwargs = self.get_form_kwargs()
         fg = FormGroup(data=kwargs.get("data"), files=kwargs.get("files"))
-        fg.add_form_def("billing", self.billing_address_form_class)
-        fg.add_form_def("shipping", self.shipping_address_form_class)
+        default_address_form_class = cached_load("SHUUP_ADDRESS_MODEL_FORM")
+        fg.add_form_def("billing", default_address_form_class)
+        fg.add_form_def("shipping", default_address_form_class)
         fg.add_form_def("order", self.order_form_class, kwargs={
             "basket": self.request.basket,
             "shop": self.request.shop

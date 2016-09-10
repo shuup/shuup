@@ -9,48 +9,37 @@ import pytest
 from django.test import override_settings
 
 from shuup.core.models import get_person_contact
-from shuup.front.checkout.addresses import AddressesPhase, AddressForm
-from shuup.front.checkout.single_page import AddressForm as SinglePageAddressForm
+from shuup.core.utils.forms import MutableAddressForm
+from shuup.front.checkout.addresses import AddressesPhase
 from shuup.testing.factories import get_default_shop
 from shuup.testing.utils import apply_request_middleware
 
 
 def test_checkout_addresses_has_no_default_country():
-    form = AddressForm()
+    form =MutableAddressForm()
     assert form.fields["country"].initial is None
 
 
 @override_settings(SHUUP_ADDRESS_HOME_COUNTRY="FI")
 def test_checkout_addresses_has_default_country():
-    form = AddressForm()
-    assert form.fields["country"].initial == "FI"
-
-
-def test_checkout_singlepage_addresses_has_no_default_country():
-    form = SinglePageAddressForm()
-    assert form.fields["country"].initial is None
-
-
-@override_settings(SHUUP_ADDRESS_HOME_COUNTRY="FI")
-def test_checkout_singlepage_addresses_has_default_country():
-    form = SinglePageAddressForm()
+    form = MutableAddressForm()
     assert form.fields["country"].initial == "FI"
 
 
 def test_required_address_fields():
-    with override_settings(SHUUP_FRONT_ADDRESS_FIELD_PROPERTIES={}):
-        form = SinglePageAddressForm()
+    with override_settings(SHUUP_ADDRESS_FIELD_PROPERTIES={}):
+        form = MutableAddressForm()
         assert form.fields["email"].required == False
         assert form.fields["email"].help_text != "Enter email"
         assert form.fields["phone"].help_text != "Enter phone"
 
     with override_settings(
-        SHUUP_FRONT_ADDRESS_FIELD_PROPERTIES={
+        SHUUP_ADDRESS_FIELD_PROPERTIES={
             "email": {"required": True, "help_text": "Enter email"},
             "phone": {"help_text": "Enter phone"}
         }
     ):
-        form = SinglePageAddressForm()
+        form = MutableAddressForm()
         assert form.fields["email"].required == True
         assert form.fields["email"].help_text == "Enter email"
         assert form.fields["phone"].help_text == "Enter phone"

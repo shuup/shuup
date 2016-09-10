@@ -2,11 +2,8 @@
 
 {% macro address_form(form) %}
     {{ bs3.field(form["name"]) }}
-    {{ bs3.field(form["prefix"]) }}
-    {{ bs3.field(form["suffix"]) }}
     {{ bs3.field(form["street"]) }}
     {{ bs3.field(form["street2"]) }}
-    {{ bs3.field(form["street3"]) }}
     {{ bs3.field(form["postal_code"]) }}
     {{ bs3.field(form["city"]) }}
     {{ bs3.field(form["region_code"]) }}

@@ -6,11 +6,10 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
-from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.core.models import CompanyContact, MutableAddress, PersonContact
+from shuup.core.models import CompanyContact, PersonContact
 
 
 class PersonContactForm(forms.ModelForm):
@@ -22,19 +21,6 @@ class PersonContactForm(forms.ModelForm):
         super(PersonContactForm, self).__init__(*args, **kwargs)
         for field in ("first_name", "last_name", "email"):
             self.fields[field].required = True
-
-
-class AddressForm(forms.ModelForm):
-    class Meta:
-        model = MutableAddress
-        fields = ("name", "phone", "email", "street", "street2", "postal_code", "city", "region", "country")
-
-    def __init__(self, *args, **kwargs):
-        super(AddressForm, self).__init__(*args, **kwargs)
-        for field in ("email", "postal_code"):
-            self.fields[field].required = True
-        if not kwargs.get("instance"):
-            self.fields["country"].initial = settings.SHUUP_ADDRESS_HOME_COUNTRY
 
 
 class CompanyContactForm(forms.ModelForm):
