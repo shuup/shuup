@@ -8,7 +8,7 @@
 import datetime
 
 from django.core.mail import EmailMessage
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
@@ -28,6 +28,16 @@ def get_confirmation_pdf(request, order_pk):
     order = Order.objects.get(pk=order_pk)
     html = _get_confirmation_html(request, order)
     return render_html_to_pdf(html, stylesheet_paths=["order_printouts/css/extra.css"])
+
+
+def get_delivery_html(request, shipment_pk):
+    shipment = Shipment.objects.get(pk=shipment_pk)
+    return HttpResponse(_get_delivery_html(request, shipment.order, shipment, True))
+
+
+def get_confirmation_html(request, order_pk):
+    order = Order.objects.get(pk=order_pk)
+    return HttpResponse(_get_confirmation_html(request, order, True))
 
 
 def send_delivery_email(request, shipment_pk):
@@ -56,7 +66,7 @@ def send_confirmation_email(request, order_pk):
     return JsonResponse({"success": "OK!"})
 
 
-def _get_delivery_html(request, order, shipment):
+def _get_delivery_html(request, order, shipment, html_mode=False):
     context = {
         "shipment": shipment,
         "order": order,
@@ -64,17 +74,19 @@ def _get_delivery_html(request, order, shipment):
             order_id=order.id, type__in=[OrderLineType.PAYMENT, OrderLineType.SHIPPING]).order_by("ordering"),
         "today": datetime.date.today(),
         "header": "%s | %s | %s %s" % (_("Delivery slip"), order.shop.name, _("Order"), order.pk),
-        "footer": _get_footer_information(order.shop)
+        "footer": _get_footer_information(order.shop),
+        "html_mode": html_mode
     }
     return render_to_string("shuup/order_printouts/admin/delivery_pdf.jinja", context=context, request=request)
 
 
-def _get_confirmation_html(request, order):
+def _get_confirmation_html(request, order, html_mode=False):
     context = {
         "order": order,
         "today": datetime.date.today(),
         "header": "%s | %s | %s %s" % (_("Order confirmation"), order.shop.name, _("Order"), order.pk),
-        "footer": _get_footer_information(order.shop)
+        "footer": _get_footer_information(order.shop),
+        "html_mode": html_mode
     }
     return render_to_string("shuup/order_printouts/admin/confirmation_pdf.jinja", context=context, request=request)
 

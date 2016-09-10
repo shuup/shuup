@@ -11,6 +11,11 @@ from shuup.admin.base import Section
 
 from .forms import PrintoutsEmailForm
 
+try:
+    import weasyprint
+except ImportError:
+    weasyprint = None
+
 
 EMAIL_DEFAULT_BODY = _("""Important information regarding your order, see attachment.
 
@@ -42,4 +47,4 @@ class PrintoutsSection(Section):
             "subject": _("%(shop)s: Order %(pk)s") % {"shop": obj.shop.name, "pk": obj.pk},
             "body": (EMAIL_DEFAULT_BODY % {"shop": obj.shop.name}).strip()
         }
-        return {"email_form": PrintoutsEmailForm(initial=data)}
+        return {"email_form": PrintoutsEmailForm(initial=data), "can_create_pdf": bool(weasyprint)}
