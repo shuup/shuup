@@ -1,0 +1,159 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_with_sidebar, content_block %}
+
+{% block content %}
+    {% call content_block(_("Import Data - process"), "fa-info-circle") %}
+    <form method="post" id="import">
+        {% csrf_token %}
+        <h2>{% trans %}Data Import{% endtrans %}</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table">
+                    <tr>
+                        <td>{% trans count=data.rows|count %}Amount if items being imported{% endtrans %}</td>
+                        <td>{{ data.rows|count }}</td>
+                    </tr>
+                    <tr>
+                        <td>{% trans %}The following fields were automatically mapped{% endtrans %}</td>
+                        <td>{% for key in importer.data_map.keys() %}
+                            <span class="badge">{{ key }}</span>
+                        {% endfor %}</td>
+                    </tr>
+                    <tr>
+                        {% if importer.unique_fields %}
+                            {% set tooltip = _("The following fields in the file are being used a s possible connection keys:") %}
+                        {% else %}
+                            {% set tooltip = _("Not a single connection key was found, File cannot be imported.") %}
+                        {% endif %}
+                        <td>{% trans %}Connection Keys{% endtrans %} <span data-toggle="tooltip" title="{{ tooltip }}"><i class="fa fa-question"></i></span></td>
+                        <td>
+                            {% for k in importer.unique_fields %}
+                            <span class="badge">{{ k }}</span>
+                            {% endfor %}
+                        </td>
+                    </tr>
+
+                    {% if importer.unwritable_fields %}
+                    <tr>
+                        <td>{% trans %}Read only fields{% endtrans %} <span data-toggle="tooltip" title="{% trans %}The following fields are Read Only and changes for those fields will be ignored.{% endtrans %}"><i class="fa fa-question"></i></span></td>
+                        <td>
+                            {% for uw in importer.unwritable_fields %}
+                            <span class="badge">{{ uw }}</span>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    <tr>
+                        <td>{% trans %}Import method{% endtrans %}</td>
+                        <td class="selector-td">{{ bs3.field(form.import_mode, render_label=False) }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h2>{% trans %}Automatically mapped{% endtrans %}</h2>
+                <table class="table table-responsive table-striped">
+                    <tbody>
+                    {% for column, mapping in importer.data_map.items()|sort %}
+                        <tr>
+                            <td>{{ column }}</td>
+                            <td>{{ mapping.id }}</td>
+                            <td>
+                                 {% for row in visible_rows %}
+                                    {% set value = row[column] %}
+                                    {% if value %}
+                                        <span class="badge">{{ ("%s" % value)|truncate(40, True) }}</span>
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {%- endfor %}
+                    </tbody>
+                    <thead>
+                    <tr>
+                        <th>{% trans %}Original field{% endtrans %}</th>
+                        <th>{% trans %}Shuup field{% endtrans %}</th>
+                        <th>{% trans %}Sample values{% endtrans %}</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        {% if importer.unmatched_fields %}
+        <div class="row">
+            <div class="col-md-9">
+                <h2>{% trans %}The following fields must be manually tied{% endtrans %}</h2>
+                <table class="table table-condensed table-striped">
+                    {% for field in importer.unmatched_fields %}
+                    <tr>
+                        <td>{{ field }}</td>
+                        <td class="selector-td">
+                            <select id="field_{{ field }}" name="remap[{{ field }}]">
+                                <option value="0">{% trans %}Don't import{% endtrans %}</option>
+                                {% for k, v in model_fields %}
+                                    <option value="{{ k }}">{{ v }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                            <td>
+                                {% for row in visible_rows %}
+                                    {% set value = row[field] %}
+                                    {% if value %}
+                                        <span class="badge">{{ ("%s" % value)|truncate(90, True) }}</span>
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                    </tr>
+                    {% endfor %}
+                    <thead>
+                    <tr>
+                        <th>{% trans %}Field name{% endtrans %}</th>
+                        <th>{% trans %}Target field{% endtrans %}</th>
+                        <th>{% trans %}Sample values{% endtrans %}</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+
+            {% if not importer.unique_fields %}
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <h2 class="text red">{% trans %}We may not be able to import the file.{% endtrans %}</h2>
+                    <p>{% trans %}File may not be imported because no connection keys were found. Connection keys are unique keys that are used to map results.{% endtrans %}</p>
+                    <p>{% trans %}Please consider adding some of the following fields to your import file:{% endtrans %}</p>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>{% trans %}Products{% endtrans %}</td>
+                                <td>{% trans %}SKU{% endtrans %}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans %}Customers{% endtrans %}</td>
+                                <td>{% trans %}email{% endtrans %}</td>
+                            </tr>
+                        </tbody>
+                        <thead>
+                            <tr>
+                                <th>{% trans %}Importer type{% endtrans %}</th>
+                                <th>{% trans %}Field(s) to add{% endtrans %}</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <p>{% trans %}You can continue importing, but it might end up in error{% endtrans %}</p>
+                    <p>{% trans %}If you are importing customers this might be a false alarm if you have email key set{% endtrans %}</p>
+                </div>
+            </div>
+            {% endif %}
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="submit" name="submit" value="{% trans %}Start Import{% endtrans %}" class="btn btn-large btn-primary btn-block">
+                </div>
+            </div>
+    </form>
+    {% endcall %}
+{% endblock %}
