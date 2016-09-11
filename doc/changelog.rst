@@ -73,6 +73,8 @@ Guide
 Importer
 ~~~~~~~~
 
+- Add Customer Importer
+- Add Product Importer
 - Add Importer
 
 Regions
