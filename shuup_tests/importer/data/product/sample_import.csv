@@ -1,0 +1,3 @@
+SKU,Name,Description,Price,Tax Class,Primary Category,Categories,Primary image
+test-product,Product English,Description English,150,Default Tax Class,Test Category,"Test Category, Test Category 2",1280x720
+test-product-2,Product 2 English,Description English 2,150,1,1,"1,2",1280x720
