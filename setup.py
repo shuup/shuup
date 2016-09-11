@@ -92,10 +92,13 @@ REQUIRES = [
     'Jinja2>=2.8,<3',
     'jsonfield>=1.0,<2',
     'Markdown>=2.6,<3',
+    'openpyxl==2.3.5',
     'pytoml>=0.1.0,<0.2',
     'pytz>=2015.4',
     'requests>=2.7,<3',
     'six>=1.9,<2',
+    'unicodecsv==0.14.1',
+    'xlrd==1.0.0'
 ]
 
 REQUIRES_FOR_PYTHON2_ONLY = [

@@ -1,0 +1,31 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_with_sidebar, content_block %}
+
+{% block content %}
+    {% call content_block(_("Data Import"), "fa-info-circle") %}
+        <form method="post" enctype="multipart/form-data" action="" id="import_form">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ url("shuup_admin:importer.import_process") }}">
+            {{ bs3.field(form.language) }}
+            {{ bs3.field(form.shop) }}
+            {{ bs3.field(form.importer) }}
+            {{ bs3.field(form.file) }}
+
+            <div class="col-md-6 col-md-offset-3">
+                <h2>{% trans %}Note{% endtrans %}</h2>
+                <p>{% trans %}If you are importing products with quantities, ensure the following:{% endtrans %}</p>
+                <ul>
+                    {% if not supplier %}
+                        {% set url = shuup_admin.model_url(supplier, "list") %}
+                        <li>{% trans url=url %}You have atleast one <a href="{{ url }}">supplier</a> with "Stock Managed" <b>on</b>.{% endtrans %}</li>
+                    {% elif not supplier.stock_managed  %}
+                        {% set url = shuup_admin.model_url(supplier, "detail") %}
+                        <li>{% trans url=url %}your <a href="{{ url }}">supplier</a> has "Stock Managed" <b>on</b>. (Currently <b>off</b>){% endtrans %}</li>
+                    {% endif %}
+                    <li>{% trans %}your import file has <b>supplier</b> field{% endtrans %}</li>
+                </ul>
+            </div>
+            <input type="submit" value="{% trans %}Continue{% endtrans %}" id="basic-form-save" class="btn btn-primary btn-block">
+        </form>
+    {% endcall %}
+{% endblock %}

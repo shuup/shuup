@@ -82,6 +82,11 @@ file_filter = shuup/guide/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
+[shuup.importer]
+file_filter = shuup/importer/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
 [shuup.notify]
 file_filter = shuup/notify/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
