@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-29 01:21+0000\n"
-"PO-Revision-Date: 2016-07-30 11:38+0000\n"
+"POT-Creation-Date: 2016-09-01 23:27+0000\n"
+"PO-Revision-Date: 2016-09-02 11:39+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -126,9 +126,6 @@ msgstr "Status"
 msgid "Visibility"
 msgstr "Visibilidade"
 
-msgid "Parent"
-msgstr "Pai"
-
 msgid "Contact Groups"
 msgstr "Grupos de Contatos"
 
@@ -167,6 +164,10 @@ msgstr[1] "%(count)s membros removidos"
 
 msgid "Number of Members"
 msgstr "Número de Membros"
+
+#, python-format
+msgid "User %(bind_user)s already has a contact"
+msgstr "O usuário %(bind_user)s já tem um contato"
 
 msgid "Basic Information"
 msgstr "Informações Básicas"
@@ -214,6 +215,9 @@ msgstr "Desativar Contato"
 msgid "Activate Contact"
 msgstr "Ativar Contato"
 
+msgid "Actions"
+msgstr "Ações"
+
 msgid "Edit..."
 msgstr "Editar..."
 
@@ -233,15 +237,17 @@ msgstr "ativo"
 msgid "inactive"
 msgstr "inativo"
 
+msgid "New Company"
+msgstr "Nova Empresa"
+
+msgid "New Contact"
+msgstr "Novo Contato"
+
 msgid "Person"
 msgstr "Pessoa"
 
 msgid "Company"
 msgstr "Empresa"
-
-#, python-format
-msgid "User %(bind_user)s already has a contact"
-msgstr "O usuário %(bind_user)s já tem um contato"
 
 msgid "Email"
 msgstr "E-mail"
@@ -398,18 +404,6 @@ msgstr "Entradas de Log"
 msgid "Shipments"
 msgstr "Remessas"
 
-msgid "Create Payment"
-msgstr "Criar Pagamento"
-
-msgid "Create Shipment"
-msgstr "Criar Remessa"
-
-msgid "Create Refund"
-msgstr "Criar Devolução"
-
-msgid "Actions"
-msgstr "Ações"
-
 msgid "Set Complete"
 msgstr "Definir como Completo"
 
@@ -427,6 +421,15 @@ msgstr "Editar pedido"
 
 msgid "This order cannot modified at this point"
 msgstr "Este pedido não pode ser modificado neste momento"
+
+msgid "Create Payment"
+msgstr "Criar Pagamento"
+
+msgid "Create Shipment"
+msgstr "Criar Remessa"
+
+msgid "Create Refund"
+msgstr "Criar Devolução"
 
 msgid "Unable to set order as completed at this point"
 msgstr "Não é possível definir o pedido como completo a esta altura"
@@ -523,7 +526,7 @@ msgid "Refund amount exceeds order amount."
 msgstr "Valor da devolução excede o valor do pedido."
 
 msgid "Refund amounts should match sign on parent line."
-msgstr "Os valores da devolução devem coincidir com o sinal no item pai."
+msgstr "Os valores de devolução devem coincidir com o sinal no item pai."
 
 msgid "Refund created."
 msgstr "Devolução criada."
@@ -551,9 +554,16 @@ msgstr "Fornecedor"
 msgid "No products to ship."
 msgstr "Nenhum produto a enviar."
 
+msgid "Shipping address is not set."
+msgstr "Endereço de entrega não está definido."
+
 #, python-format
 msgid "Shipment %s created."
 msgstr "Remessa %s criada."
+
+#, python-format
+msgid "Shipment %s has been deleted."
+msgstr "A remessa %s foi excluída."
 
 msgid "Permission Groups"
 msgstr "Grupos de Permissões"
@@ -641,7 +651,7 @@ msgid "%s has been marked deleted."
 msgstr "%s foi marcado como excluído."
 
 msgid "Minimum Purchase Quantity has been rounded to match Sales Unit."
-msgstr "Quantidade Mínima de Compra foi arredondada para corresponder à Unidade de Venda."
+msgstr "Quantidade Mínima de Compra foi arredondada para corresponder à Unidade de Vendas."
 
 #, python-format
 msgid "Changes to shop instance for %s saved"
@@ -778,7 +788,7 @@ msgid "Today's Sales"
 msgstr "Vendas de Hoje"
 
 msgid "Lifetime Sales"
-msgstr "Vendas ao Longo da Vida"
+msgstr "Vendas Acumuladas"
 
 msgid "Average Purchase"
 msgstr "Ticket Médio"
@@ -787,7 +797,7 @@ msgid "Open Orders Value"
 msgstr "Valor de Pedidos Abertos"
 
 msgid "Sales Units"
-msgstr "Unidades de Venda"
+msgstr "Unidades de Vendas"
 
 msgid "Short Name"
 msgstr "Nome Abreviado"
@@ -848,12 +858,21 @@ msgstr "Processador de Pagamentos"
 msgid "Weight-based pricing range"
 msgstr "Faixa de preços com base no peso"
 
+msgid "Settings saved"
+msgstr "Configurações salvas"
+
 msgid "Shops"
 msgstr "Lojas"
 
 msgid ""
 "This field cannot be changed since there are existing orders for this shop."
 msgstr "Este campo não pode ser alterado pois existem pedidos em aberto para esta loja."
+
+msgid "Currency"
+msgstr "Moeda"
+
+msgid "Languages"
+msgstr "Idiomas"
 
 msgid "Domain"
 msgstr "Domínio"
@@ -932,9 +951,6 @@ msgstr "Editar Permissões"
 
 msgid "Contact Details"
 msgstr "Detalhes do Contato"
-
-msgid "New Contact"
-msgstr "Novo Contato"
 
 msgid "Create a new contact and associate it with this user"
 msgstr "Criar um novo contato e associá-lo a este usuário"
@@ -1105,17 +1121,17 @@ msgstr "Adicionar Membros"
 msgid "Add more"
 msgstr "Adicionar mais"
 
-msgid "Shipping address"
-msgstr "Endereço de entrega"
-
-msgid "No shipping address defined."
-msgstr "Nenhum endereço de entrega definido."
-
 msgid "Billing address"
 msgstr "Endereço de cobrança"
 
 msgid "No billing address defined."
 msgstr "Nenhum endereço de cobrança definido."
+
+msgid "Shipping address"
+msgstr "Endereço de entrega"
+
+msgid "No shipping address defined."
+msgstr "Nenhum endereço de entrega definido."
 
 msgid "Full Name"
 msgstr "Nome Completo"
@@ -1130,13 +1146,16 @@ msgid "Companies"
 msgstr "Empresas"
 
 msgid "Account Manager"
-msgstr "Gerente da Conta"
+msgstr "Administrador da Conta"
 
 msgid "Merchant Notes"
 msgstr "Notas do Lojista"
 
 msgid "No members."
 msgstr "Nenhum membro."
+
+msgid "Use billing address as shipping address"
+msgstr "Usar o endereço de cobrança como endereço de entrega"
 
 msgid "Billing Address"
 msgstr "Endereço de Cobrança"
@@ -1169,6 +1188,9 @@ msgstr "Feed de Atividades"
 msgid "Shuup %(version)s"
 msgstr "Shuup %(version)s"
 
+msgid "Table Columns"
+msgstr "Colunas da Tabela"
+
 msgid "Date"
 msgstr "Data"
 
@@ -1194,7 +1216,7 @@ msgid "Taxless Discount"
 msgstr "Desconto sem Impostos"
 
 msgid "Taxless Discount Percentage"
-msgstr "% de Desconto sem Impostos"
+msgstr "%% de Desconto sem Impostos"
 
 msgid "Tax"
 msgstr "Imposto"
@@ -1232,8 +1254,16 @@ msgstr "Código de Rastreamento"
 msgid "Created"
 msgstr "Criado"
 
+msgid "Delete"
+msgstr "Excluir"
+
 msgid "No shipments have been created yet."
 msgstr "Nenhuma remessa foi criada ainda."
+
+msgid ""
+"Shipped shipments should not be deleted. Deletion will affect products "
+"physical stock count. Delete anyway?"
+msgstr "Remessas enviadas não devem ser excluídas. A exclusão afetará a contagem de estoque físico dos produtos. Excluir assim mesmo?"
 
 msgid "Line #"
 msgstr "Item #"
@@ -1319,14 +1349,11 @@ msgstr "Erro!"
 msgid "Additional Details"
 msgstr "Detalhes Adicionais"
 
-msgid "Accounting"
-msgstr "Contabilidade"
-
-msgid "Physical Properties"
-msgstr "Propriedades Físicas"
-
 msgid "Manufacturer"
 msgstr "Fabricante"
+
+msgid "Shipping & Payment"
+msgstr "Entrega & Pagamento"
 
 #, python-format
 msgid "Product image %(index)s"
@@ -1345,9 +1372,6 @@ msgstr "Definir como imagem principal"
 msgid "No image"
 msgstr "Nenhuma imagem"
 
-msgid "Delete"
-msgstr "Excluir"
-
 msgid "Advanced options"
 msgstr "Opções avançadas"
 
@@ -1363,14 +1387,11 @@ msgstr "Adicionar nova imagem"
 msgid "Add new media"
 msgstr "Adicionar nova mídia"
 
-msgid "Purchasing"
-msgstr "Compras"
-
-msgid "Shipping & Payment"
-msgstr "Entrega & Pagamento"
+msgid "No orders found"
+msgstr "Nenhum pedido encontrado"
 
 msgid "This product is currently not orderable."
-msgstr "Este produto está atualmente indisponível para compra."
+msgstr "Este produto está indisponível para compra no momento."
 
 msgid "Cross-sells"
 msgstr "Vendas cruzadas"
@@ -1430,7 +1451,7 @@ msgid "Behavior"
 msgstr "Comportamento"
 
 msgid "Behavior component type"
-msgstr "Tipo de componente de comportamento"
+msgstr "Tipo do componente de comportamento"
 
 msgid "Add component"
 msgstr "Adicionar componente"
@@ -1455,7 +1476,7 @@ msgid ""
 "The data contains an unique installation key, as well as the hostname of the"
 " installation (as sent by the visiting browser; currently "
 "<code>%(host)s</code>)."
-msgstr "Os dados contém uma chave de instalação única, bem como o hostname da instalação (como enviado pelo navegador visitante; atualmente é <code>%(host)s</code>)."
+msgstr "Os dados contém uma chave de instalação única, bem como o hostname da instalação (como enviado pelo navegador visitante; atualmente <code>%(host)s</code>)."
 
 msgid ""
 "No business data or other customer information is ever sent. Shuup.com only "
@@ -1491,7 +1512,7 @@ msgstr "Última Telemetria"
 msgid ""
 "Telemetry submission is currently suspended; data will only be sent 24 hours"
 " after installation if still opted in at that point."
-msgstr "A transmissão da telemetria está atualmente suspensa; os dados só serão enviados 24 horas após a instalação se ainda optar por enviá-los na ocasião."
+msgstr "A transmissão da telemetria está suspensa no momento; os dados só serão enviados 24 horas após a instalação se ainda optar por enviá-los na ocasião."
 
 #, python-format
 msgid ""

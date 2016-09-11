@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-29 01:21+0000\n"
-"PO-Revision-Date: 2016-07-30 11:35+0000\n"
+"POT-Creation-Date: 2016-08-17 00:26+0000\n"
+"PO-Revision-Date: 2016-08-17 12:33+0000\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -121,7 +121,7 @@ msgid "Discount amount"
 msgstr "Valor do desconto"
 
 msgid "Discount percent"
-msgstr "% de desconto"
+msgstr "%% de desconto"
 
 msgid "Total (excluding taxes)"
 msgstr "Total (excluindo impostos)"
@@ -154,6 +154,9 @@ msgstr "Telefone"
 
 msgid "Email"
 msgstr "E-mail"
+
+msgid "Tax Number"
+msgstr "Número de Contribuinte"
 
 msgid "Groups"
 msgstr "Grupos"
@@ -190,6 +193,9 @@ msgstr "Pedidos Recentes"
 
 msgid "Close"
 msgstr "Fechar"
+
+msgid "Warning: No customer account is currently associated with this order."
+msgstr "Aviso: Nenhuma conta de cliente está associada a este pedido atualmente."
 
 msgid "A new customer will be created based on billing address."
 msgstr "Um novo cliente será criado com base no endereço de cobrança."
@@ -248,7 +254,7 @@ msgstr "Forma de Pagamento"
 msgid ""
 "Method rules, taxes and possible extra discounts are calculated after "
 "proceeding."
-msgstr "Regras das formas de entrega e pagamento, impostos e eventuais descontos extras serão calculados após prosseguir."
+msgstr "Regras das formas de entrega e pagamento, impostos e eventuais descontos extras são calculados após prosseguir."
 
 msgid "Proceed"
 msgstr "Prosseguir"
@@ -275,7 +281,7 @@ msgid "Base Unit Price"
 msgstr "Preço Unitário Base"
 
 msgid "Discount Percent"
-msgstr "% de Desconto"
+msgstr "%% de Desconto"
 
 msgid "Total Discount Amount"
 msgstr "Valor Total de Desconto"
@@ -284,7 +290,7 @@ msgid "Line Total"
 msgstr "Total do Item"
 
 msgid "Orderline type"
-msgstr "Tipo de item de pedido"
+msgstr "Tipo do item de pedido"
 
 msgid "Missing JavaScript dependencies detected"
 msgstr "Dependências JavaScript que estão faltando detectadas"
@@ -314,6 +320,9 @@ msgid ""
 "Search product by name, SKU, or barcode and press button to add product "
 "line."
 msgstr "Procure o produto pelo nome, SKU ou código de barras e pressione o botão para adicionar o item de produto."
+
+msgid "Automatically add selected product"
+msgstr "Adicionar o produto selecionado automaticamente"
 
 msgid "No shipping method"
 msgstr "Nenhuma forma de entrega"
@@ -375,9 +384,6 @@ msgstr "Adicionar novo valor"
 
 msgid "Variable Name"
 msgstr "Nome da Variável"
-
-msgid "DELETE"
-msgstr "EXCLUIR"
 
 msgid "Variable"
 msgstr "Variável"

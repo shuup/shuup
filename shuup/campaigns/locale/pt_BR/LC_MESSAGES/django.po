@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-27 23:53+0000\n"
+"POT-Creation-Date: 2016-08-15 17:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Jonathan Hess <jhess666@gmail.com>, 2016\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/shuup/teams/55306/pt_BR/)\n"
@@ -58,7 +58,7 @@ msgid "Coupon"
 msgstr "Cupom"
 
 msgid "discount percentage"
-msgstr "% de desconto"
+msgstr "%% de desconto"
 
 msgid "The discount percentage for this campaign."
 msgstr "O percentual de desconto para esta campanha."
@@ -71,6 +71,9 @@ msgstr "Gerar código automaticamente"
 
 msgid "Discount Code already in use."
 msgstr "Código de Desconto já em uso."
+
+msgid "Active Campaigns"
+msgstr "Campanhas Ativas"
 
 msgid "Catalog Campaign"
 msgstr "Campanha de Catálogo"
@@ -136,7 +139,7 @@ msgid "Create new Coupon"
 msgstr "Criar Novo Cupom"
 
 msgid "Basket condition"
-msgstr "Condição de carrinho"
+msgstr "Condição do carrinho"
 
 msgid "Basket product count"
 msgstr "Número de produtos do carrinho"
@@ -251,16 +254,16 @@ msgid "discount amount"
 msgstr "valor do desconto"
 
 msgid "Flat amount of discount."
-msgstr "Valor fixo de desconto."
+msgstr "Valor fixo do desconto."
 
 msgid "Give discount amount."
 msgstr "Dar valor de desconto."
 
 msgid "Discount amount percentage"
-msgstr "% de valor de desconto"
+msgstr "%% do valor de desconto"
 
 msgid "Give percentage discount."
-msgstr "Dar % de desconto."
+msgstr "Dar %% de desconto."
 
 msgid "Free Product(s)"
 msgstr "Produto(s) Gratuito(s)"
@@ -417,19 +420,22 @@ msgid "Context Condition"
 msgstr "Condições de Contexto"
 
 msgid "Campaign Basket Discounts"
-msgstr "Descontos de Campanhas de Carrinho"
+msgstr "Descontos das Campanhas de Carrinho"
 
 msgid "Coupon Code:"
 msgstr "Código do Cupom:"
 
-msgid "Category is used in the rules of an active basket campaign."
-msgstr "Categoria é utilizada nas regras de uma campanha de carrinho ativa."
-
-msgid "Category is used in the rules of an active catalog campaign."
-msgstr "Categoria é utilizada nas regras de uma campanha de catálogo ativa."
-
 msgid "General Information"
 msgstr "Informações Gerais"
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "Not set"
+msgstr "Não configurado"
+
+msgid "No campaigns found"
+msgstr "Não foram encontradas campanhas"
 
 msgid "Rules"
 msgstr "Regras"
@@ -463,9 +469,9 @@ msgid "%(coupons)s used"
 msgstr "%(coupons)s usados"
 
 msgid "Sales Ranges"
-msgstr "Intervalos de Venda"
+msgstr "Intervalos de Vendas"
 
 msgid "Customers within this sales range are assigned to this contact group."
 msgstr ""
-"Clientes dentro deste intervalo de venda serão atribuídos a este grupo de "
+"Clientes dentro deste intervalo de vendas são atribuídos a este grupo de "
 "contatos."
