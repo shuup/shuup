@@ -7,6 +7,7 @@ Subpackages
 .. toctree::
 
     shuup.front.apps.auth
+    shuup.front.apps.carousel
     shuup.front.apps.customer_information
     shuup.front.apps.personal_order_history
     shuup.front.apps.registration

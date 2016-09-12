@@ -4,10 +4,18 @@ shuup.order_printouts.admin_module package
 Submodules
 ----------
 
-shuup.order_printouts.admin_module.toolbar module
+shuup.order_printouts.admin_module.forms module
+-----------------------------------------------
+
+.. automodule:: shuup.order_printouts.admin_module.forms
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.order_printouts.admin_module.section module
 -------------------------------------------------
 
-.. automodule:: shuup.order_printouts.admin_module.toolbar
+.. automodule:: shuup.order_printouts.admin_module.section
     :members:
     :undoc-members:
     :show-inheritance:

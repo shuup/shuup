@@ -58,6 +58,14 @@ shuup.admin.module_registry module
     :undoc-members:
     :show-inheritance:
 
+shuup.admin.signals module
+--------------------------
+
+.. automodule:: shuup.admin.signals
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.admin.toolbar module
 --------------------------
 
