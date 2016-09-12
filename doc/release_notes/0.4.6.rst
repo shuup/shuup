@@ -1,0 +1,38 @@
+Shuup 0.4.6 Release Notes
+=========================
+
+Released on 2016-09-11 8:00pm -0800.
+
+This version is packed with new features again.
+
+Regions
+~~~~~~~
+
+Regions are now easily selectable in frontend and
+in admin and are properly shown for countries using them.
+
+Importer
+~~~~~~~~
+
+Importer is added to allow merchants easily import
+csv and excel files. Product and customer importers
+are now available and more will be added later.
+
+Carousel
+~~~~~~~~
+
+Carousel is now part of Shuup. The reason this was moved
+into the base distribution was because it's so heavily
+used it makes no sense to have it in separate addon.
+
+**Note!** Instances using shuup-carousel addon should be updated to use
+this new app. There is no migration tools for old carousel and the old
+carousels and slides needs to be copied manually to new app before
+removing shuup-carousel addon from installed apps.
+
+Bigger fixes include a fix to the way pricing is being handled in
+Shuup. We also unified the address forms.
+
+For all changes see the full changelog:
+:doc:`../shoop-changelog` or `Git commit log
+<https://github.com/shuup/shuup/commits/v0.4.6>`__.
