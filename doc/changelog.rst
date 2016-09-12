@@ -60,6 +60,8 @@ Importer
 Regions
 ~~~~~~~
 
+- Fix bug in regions encoding for Python 2
+
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 

@@ -5,6 +5,8 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import json
+
 from shuup.xtheme.resources import add_resource, InlineScriptResource
 
 from .data import regions_data
@@ -82,13 +84,13 @@ def add_front_resources(context, content):
         add_resource(context, "body_end", InlineScriptResource(REGION_CHANGER_JS % {
             "billing_field_prefix": "#id_billing",
             "shipping_field_prefix": "#id_shipping",
-            "regions": regions_data
+            "regions": json.dumps(regions_data)
         }))
     if getattr(view_class, "__name__", "") == "ContactEditView":  # For admin contact edit
         add_resource(context, "body_end", InlineScriptResource(REGION_CHANGER_JS % {
             "billing_field_prefix": "#id_billing_address",
             "shipping_field_prefix": "#id_shipping_address",
-            "regions": regions_data
+            "regions": json.dumps(regions_data)
         }))
     if getattr(view_class, "__name__", "") == "OrderEditView":  # For admin order editor only regions is enough
-        add_resource(context, "body_end", InlineScriptResource(REGIONS % {"regions": regions_data}))
+        add_resource(context, "body_end", InlineScriptResource(REGIONS % {"regions": json.dumps(regions_data)}))
