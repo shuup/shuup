@@ -24,6 +24,8 @@ Addons
 Front
 ~~~~~
 
+- Fix unicode decode errors in notify events
+
 Xtheme
 ~~~~~~
 
