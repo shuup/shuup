@@ -32,6 +32,16 @@ file_filter = shuup/customer_group_pricing/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
+[shuup.default-importer]
+file_filter = shuup/default_importer/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[shuup.default-reports]
+file_filter = shuup/default_reports/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
 [shuup.default-tax]
 file_filter = shuup/default_tax/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
@@ -82,6 +92,11 @@ file_filter = shuup/guide/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 
+[shuup.importer]
+file_filter = shuup/importer/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
 [shuup.notify]
 file_filter = shuup/notify/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
@@ -94,6 +109,11 @@ type = PO
 
 [shuup.order-printouts]
 file_filter = shuup/order_printouts/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
+[shuup.reports]
+file_filter = shuup/reports/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en
 type = PO
 

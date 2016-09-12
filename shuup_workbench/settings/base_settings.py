@@ -57,6 +57,8 @@ INSTALLED_APPS = add_enabled_addons(SHUUP_ENABLED_ADDONS_FILE, [
     'shuup.reports',
     'shuup.default_reports',
     'shuup.regions',
+    'shuup.importer',
+    'shuup.default_importer',
     # external apps
     'bootstrap3',
     'django_jinja',
