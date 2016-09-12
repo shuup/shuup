@@ -88,7 +88,7 @@ def test_stacked_tax_taxful_price():
             assert isinstance(line, SourceLine)
             assert line.taxes
             assert line.taxful_price == TaxfulPrice(20, 'EUR')
-            assert_almost_equal(line.taxless_price, TaxlessPrice("18.518518", 'EUR'))
+            assert_almost_equal(line.taxless_price, TaxlessPrice("18.52", 'EUR'))
             source.uncache()
 
             # Let's move out to a taxless location.

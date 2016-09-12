@@ -20,7 +20,6 @@ from shuup.core.pricing import TaxfulPrice
 from shuup.core.utils.query import group_by_period
 from shuup.utils.dates import get_year_and_month_format
 from shuup.utils.i18n import get_current_babel_locale
-from shuup.utils.numbers import bankers_round
 
 
 def get_orders_by_currency(currency):
@@ -47,10 +46,7 @@ class OrderValueChartDashboardBlock(DashboardChartBlock):
         ])
         bar_chart.add_data(
             _("Sales (%(currency)s)") % {"currency": self.currency},
-            [
-                bankers_round(v["sum"], 2)  # TODO: To be fixed in SHUUP-1912
-                for v in aggregate_data.values()
-            ]
+            [v["sum"] for v in aggregate_data.values()]
         )
         return bar_chart
 
