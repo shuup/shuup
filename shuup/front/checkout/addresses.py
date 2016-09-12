@@ -8,37 +8,16 @@
 from __future__ import unicode_literals
 
 from django import forms
-from django.conf import settings
 from django.forms.models import model_to_dict
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import FormView
 
-from shuup.core.models import CompanyContact, MutableAddress
+from shuup.core.models import CompanyContact
 from shuup.front.checkout import CheckoutPhaseViewMixin
 from shuup.utils.form_group import FormGroup
+from shuup.utils.importing import cached_load
 
 from ._mixins import TaxNumberCleanMixin
-
-
-class AddressForm(forms.ModelForm):
-    class Meta:
-        model = MutableAddress
-        fields = (
-            "name", "phone", "email", "street", "street2", "postal_code", "city", "region", "region_code", "country")
-        labels = {
-            "region_code": _("Region"),
-        }
-
-    def __init__(self, **kwargs):
-        super(AddressForm, self).__init__(**kwargs)
-        if not kwargs.get("instance"):
-            # Set default country
-            self.fields["country"].initial = settings.SHUUP_ADDRESS_HOME_COUNTRY
-
-        field_properties = settings.SHUUP_FRONT_ADDRESS_FIELD_PROPERTIES
-        for field, properties in field_properties.items():
-            for prop in properties:
-                setattr(self.fields[field], prop, properties[prop])
 
 
 class CompanyForm(TaxNumberCleanMixin, forms.ModelForm):
@@ -57,14 +36,14 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
 
     # When adding to this, you'll naturally have to edit the template too
     address_kinds = ("shipping", "billing")
-    address_form_class = AddressForm
     address_form_classes = {}  # Override by `address_kind` if required
     company_form_class = CompanyForm
 
     def get_form(self, form_class):
         fg = FormGroup(**self.get_form_kwargs())
+        default_address_form_class = cached_load("SHUUP_ADDRESS_MODEL_FORM")
         for kind in self.address_kinds:
-            fg.add_form_def(kind, form_class=self.address_form_classes.get(kind, self.address_form_class))
+            fg.add_form_def(kind, form_class=self.address_form_classes.get(kind, default_address_form_class))
         if self.company_form_class and not self.request.customer:
             fg.add_form_def("company", self.company_form_class, required=False)
         return fg
