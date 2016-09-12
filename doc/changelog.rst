@@ -12,6 +12,8 @@ Unrealeased
 Core
 ~~~~
 
+- Do not render region twice in default address formatter
+
 Localization
 ~~~~~~~~~~~~
 
@@ -59,6 +61,8 @@ Importer
 
 Regions
 ~~~~~~~
+
+- Fix bug in regions encoding for Python 2
 
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
