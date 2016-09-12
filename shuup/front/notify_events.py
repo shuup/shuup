@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.dispatch import receiver
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.models import PaymentStatus, ShipmentStatus, ShippingStatus
@@ -40,11 +41,11 @@ class ShipmentCreated(Event):
     shipping_status = Variable(_("Order Shipping Status"),
                                type=Enum(ShippingStatus),
                                help_text=_("Possible values: {0}").format(", ".join(
-                                    ["{0}".format(choice) for choice in ShippingStatus])))
+                                    [force_text(choice) for choice in ShippingStatus])))
     shipment_status = Variable(_("Shipment Status"),
                                type=Enum(ShipmentStatus),
                                help_text=_("Possible values: {0}").format(", ".join(
-                                   ["{0}".format(choice) for choice in ShipmentStatus])))
+                                   [force_text(choice) for choice in ShipmentStatus])))
 
 
 class ShipmentDeleted(Event):
@@ -60,7 +61,7 @@ class ShipmentDeleted(Event):
     shipping_status = Variable(_("Order Shipping Status"),
                                type=Enum(ShippingStatus),
                                help_text=_("Possible values: {0}").format(", ".join(
-                                    ["{0}".format(choice) for choice in ShippingStatus])))
+                                    [force_text(choice) for choice in ShippingStatus])))
 
 
 class PaymentCreated(Event):
@@ -75,7 +76,7 @@ class PaymentCreated(Event):
     payment_status = Variable(_("Order Payment Status"),
                               type=Enum(PaymentStatus),
                               help_text=_("Possible values: {0}").format(", ".join(
-                                    ["{0}".format(choice) for choice in PaymentStatus])))
+                                    [force_text(choice) for choice in PaymentStatus])))
     payment = Variable(_("Payment"), type=Model("shuup.Payment"))
 
 
@@ -91,7 +92,7 @@ class RefundCreated(Event):
     payment_status = Variable(_("Order Payment Status"),
                               type=Enum(PaymentStatus),
                               help_text=_("Possible values: {0}").format(", ".join(
-                                    ["{0}".format(choice) for choice in PaymentStatus])))
+                                    [force_text(choice) for choice in PaymentStatus])))
 
 
 @receiver(order_creator_finished)
