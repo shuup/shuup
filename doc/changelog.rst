@@ -12,6 +12,8 @@ Unrealeased
 Core
 ~~~~
 
+- Do not render region twice in default address formatter
+
 Localization
 ~~~~~~~~~~~~
 
