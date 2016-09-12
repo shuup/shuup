@@ -154,6 +154,7 @@ class DataImporter(object):
         self.other_log_messages = []
         self.new_objects = []
         self.updated_objects = []
+        self.log_messages = []
 
         for row in self.data:
             self.process_row(row)
