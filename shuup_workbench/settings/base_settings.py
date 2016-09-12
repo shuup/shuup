@@ -99,6 +99,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/'
 SOUTH_TESTS_MIGRATE = False  # Makes tests that much faster.
+DEFAULT_FROM_EMAIL = 'no-reply@example.com'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 LOGGING = {

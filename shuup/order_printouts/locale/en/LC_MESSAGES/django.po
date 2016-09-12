@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-11 12:32+0000\n"
+"POT-Creation-Date: 2016-09-09 23:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,17 +17,31 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "Order printouts"
+msgid "To"
 msgstr ""
 
-msgid "Print"
+msgid "Email Subject"
+msgstr ""
+
+msgid "Email Body"
 msgstr ""
 
 #, python-format
-msgid "Get Delivery Slip (Shipment %(id)s)"
+msgid ""
+"Important information regarding your order, see attachment.\n"
+"\n"
+"Best Regards,\n"
+"%(shop)s"
 msgstr ""
 
-msgid "Get Order Confirmation"
+msgid "Printouts"
+msgstr ""
+
+#, python-format
+msgid "%(shop)s: Order %(pk)s"
+msgstr ""
+
+msgid "Not allowed"
 msgstr ""
 
 msgid "Delivery slip"
@@ -39,9 +53,7 @@ msgstr ""
 msgid "Order confirmation"
 msgstr ""
 
-msgid ""
-"Could not create PDF since Weasyprint is not available. Please contact "
-"support."
+msgid "Order printouts"
 msgstr ""
 
 msgid "Shipped products"
@@ -105,4 +117,40 @@ msgid "Total including tax"
 msgstr ""
 
 msgid "Billing address"
+msgstr ""
+
+msgid "Confirmation"
+msgstr ""
+
+msgid "Get Order Confirmation PDF"
+msgstr ""
+
+msgid "Get Order Confirmation HTML"
+msgstr ""
+
+msgid "Shipments"
+msgstr ""
+
+#, python-format
+msgid "Get Delivery Slip PDF (Shipment %(id)s)"
+msgstr ""
+
+#, python-format
+msgid "Get Delivery Slip HTML (Shipment %(id)s)"
+msgstr ""
+
+msgid "Send Email"
+msgstr ""
+
+msgid "Send Order Confirmation"
+msgstr ""
+
+#, python-format
+msgid "Send Delivery Slip (Shipment %(id)s)"
+msgstr ""
+
+msgid "Email sent successfully!"
+msgstr ""
+
+msgid "Could not sent the email, please try again."
 msgstr ""
