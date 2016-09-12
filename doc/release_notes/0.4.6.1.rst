@@ -1,0 +1,15 @@
+Shuup 0.4.6.1 Release Notes
+===========================
+
+Released on 2016-09-12 3:45pm -0800.
+
+Contains some bug fixes for v0.4.6.
+
+* Core: Do not render region twice in default address formatter
+* Front: Fix unicode decode errors in notify events
+* Importer: Fix critical bug in app log_messages
+* Regions: Fix bug in regions encoding for Python 2
+
+For all changes see the full changelog:
+:doc:`../shoop-changelog` or `Git commit log
+<https://github.com/shuup/shuup/commits/v0.4.6.1>`__.

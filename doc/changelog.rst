@@ -1,73 +1,30 @@
 Shuup Change Log
 ================
 
-Unrealeased
------------
+SHUUP 0.4.6.1
+-------------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2016-09-12 3:45pm -0800.
 
 Core
 ~~~~
 
 - Do not render region twice in default address formatter
 
-Localization
-~~~~~~~~~~~~
-
-Admin
-~~~~~
-
-Addons
-~~~~~~
-
 Front
 ~~~~~
 
 - Fix unicode decode errors in notify events
 
-Xtheme
-~~~~~~
-
-Classic Gray Theme
-~~~~~~~~~~~~~~~~~~
-
-Simple Supplier
-~~~~~~~~~~~~~~~
-
-Order Printouts
-~~~~~~~~~~~~~~~
-
-Campaigns
-~~~~~~~~~
-
-Customer Group Pricing
-~~~~~~~~~~~~~~~~~~~~~~
-
-Discount Pricing
-~~~~~~~~~~~~~~~~
-
-Simple CMS
-~~~~~~~~~~
-
-Default Tax
-~~~~~~~~~~~
-
-Guide
-~~~~~
-
 Importer
 ~~~~~~~~
+
+- Fix critical bug with log messages
 
 Regions
 ~~~~~~~
 
 - Fix bug in regions encoding for Python 2
-
-General/miscellaneous
-~~~~~~~~~~~~~~~~~~~~~
 
 SHUUP 0.4.6
 -----------
