@@ -115,7 +115,7 @@ class ImportMetaBase(object):
             if field_name in fields:
                 return True
             for field in fields:
-                for alias_field in self.aliases.get(field):
+                for alias_field in self.aliases.get(field, []):
                     if field_name == alias_field:
                         return True
         return False
