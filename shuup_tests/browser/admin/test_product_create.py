@@ -48,7 +48,8 @@ def test_product_create(browser, admin_user, live_server):
 
     click_element(browser, "button[form='product_form']")
     wait_until_appeared(browser, "div[class='message success']")
-    Product.objects.filter(sku=sku).first().log_entries.filter(identifier=OBJECT_CREATED_LOG_IDENTIFIER).count() == 1
+    product = Product.objects.filter(sku=sku).first()
+    assert product.log_entries.filter(identifier=OBJECT_CREATED_LOG_IDENTIFIER).count() == 1
     object_created.disconnect(sender=Product, dispatch_uid="object_created_signal_test")
 
 

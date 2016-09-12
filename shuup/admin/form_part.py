@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.http import HttpResponseRedirect
 
+from shuup.admin.signals import object_created
 from shuup.admin.utils.urls import get_model_url
 from shuup.admin.utils.views import add_create_or_change_message
 from shuup.apps.provides import get_provide_objects
@@ -88,7 +89,8 @@ class SaveFormPartsMixin(object):
                 self.object = retval
                 for form_part in form_parts:
                     form_part.object = self.object
-
+        if is_new:
+            object_created.send(sender=type(self.object), object=self.object)
         add_create_or_change_message(self.request, self.object, is_new)
 
         if hasattr(self, "get_success_url"):
