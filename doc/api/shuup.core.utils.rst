@@ -12,6 +12,22 @@ shuup.core.utils.form_mixins module
     :undoc-members:
     :show-inheritance:
 
+shuup.core.utils.formatters module
+----------------------------------
+
+.. automodule:: shuup.core.utils.formatters
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.core.utils.forms module
+-----------------------------
+
+.. automodule:: shuup.core.utils.forms
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.core.utils.maintenance module
 -----------------------------------
 

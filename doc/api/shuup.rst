@@ -13,12 +13,15 @@ Subpackages
     shuup.campaigns
     shuup.core
     shuup.customer_group_pricing
+    shuup.default_importer
     shuup.default_reports
     shuup.default_tax
     shuup.front
     shuup.guide
+    shuup.importer
     shuup.notify
     shuup.order_printouts
+    shuup.regions
     shuup.reports
     shuup.simple_cms
     shuup.simple_supplier

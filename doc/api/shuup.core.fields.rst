@@ -12,6 +12,14 @@ shuup.core.fields.tagged_json module
     :undoc-members:
     :show-inheritance:
 
+shuup.core.fields.utils module
+------------------------------
+
+.. automodule:: shuup.core.fields.utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------
