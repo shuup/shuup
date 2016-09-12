@@ -37,14 +37,8 @@ class ShipmentCreated(Event):
     language = Variable(_("Language"), type=Language)
 
     shipment = Variable(_("Shipment"), type=Model("shuup.Shipment"))
-    shipping_status = Variable(_("Order Shipping Status"),
-                               type=Enum(ShippingStatus),
-                               help_text=_("Possible values: {0}").format(", ".join(
-                                    ["{0}".format(choice) for choice in ShippingStatus])))
-    shipment_status = Variable(_("Shipment Status"),
-                               type=Enum(ShipmentStatus),
-                               help_text=_("Possible values: {0}").format(", ".join(
-                                   ["{0}".format(choice) for choice in ShipmentStatus])))
+    shipping_status = Variable(_("Order Shipping Status"), type=Enum(ShippingStatus))
+    shipment_status = Variable(_("Shipment Status"), type=Enum(ShipmentStatus))
 
 
 class ShipmentDeleted(Event):
@@ -57,10 +51,7 @@ class ShipmentDeleted(Event):
     language = Variable(_("Language"), type=Language)
 
     shipment = Variable(_("Shipment"), type=Model("shuup.Shipment"))
-    shipping_status = Variable(_("Order Shipping Status"),
-                               type=Enum(ShippingStatus),
-                               help_text=_("Possible values: {0}").format(", ".join(
-                                    ["{0}".format(choice) for choice in ShippingStatus])))
+    shipping_status = Variable(_("Order Shipping Status"), type=Enum(ShippingStatus))
 
 
 class PaymentCreated(Event):
@@ -72,10 +63,7 @@ class PaymentCreated(Event):
     customer_phone = Variable(_("Customer Phone"), type=Phone)
     language = Variable(_("Language"), type=Language)
 
-    payment_status = Variable(_("Order Payment Status"),
-                              type=Enum(PaymentStatus),
-                              help_text=_("Possible values: {0}").format(", ".join(
-                                    ["{0}".format(choice) for choice in PaymentStatus])))
+    payment_status = Variable(_("Order Payment Status"), type=Enum(PaymentStatus))
     payment = Variable(_("Payment"), type=Model("shuup.Payment"))
 
 
@@ -88,10 +76,7 @@ class RefundCreated(Event):
     customer_phone = Variable(_("Customer Phone"), type=Phone)
     language = Variable(_("Language"), type=Language)
 
-    payment_status = Variable(_("Order Payment Status"),
-                              type=Enum(PaymentStatus),
-                              help_text=_("Possible values: {0}").format(", ".join(
-                                    ["{0}".format(choice) for choice in PaymentStatus])))
+    payment_status = Variable(_("Order Payment Status"), type=Enum(PaymentStatus))
 
 
 @receiver(order_creator_finished)
