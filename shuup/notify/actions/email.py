@@ -19,11 +19,19 @@ from shuup.notify.typology import Email, Language, Text
 
 
 class SendEmail(Action):
+    EMAIL_CONTENT_TYPE_CHOICES = (
+        ('plain', _('Plain text')),
+        ('html', _('HTML'))
+    )
+
     identifier = "send_email"
     template_use = TemplateUse.MULTILINGUAL
     template_fields = {
         "subject": forms.CharField(required=True, label=_(u"Subject")),
         "body": forms.CharField(required=True, label=_(u"Email Body"), widget=forms.Textarea()),
+        "content_type": forms.ChoiceField(required=True,
+                                          label=_(u"Content type"),
+                                          choices=EMAIL_CONTENT_TYPE_CHOICES)
     }
 
     recipient = Binding(_("Recipient"), type=Email, constant_use=ConstantUse.VARIABLE_OR_CONSTANT, required=True)
@@ -67,6 +75,7 @@ class SendEmail(Action):
 
         subject = strings.get("subject")
         body = strings.get("body")
+        content_type = strings.get("content_type")
         if not (subject and body):
             context.log(
                 logging.INFO,
@@ -78,6 +87,7 @@ class SendEmail(Action):
 
         subject = " ".join(subject.splitlines())  # Email headers may not contain newlines
         message = EmailMessage(subject=subject, body=body, to=[recipient])
+        message.content_subtype = content_type
         message.send()
         context.log(logging.INFO, "%s: Mail sent to %s :)", self.identifier, recipient)
 
