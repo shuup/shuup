@@ -49,7 +49,7 @@ class ShippingMethodListView(ServiceListView):
     model = ShippingMethod
 
     def __init__(self, **kwargs):
-        self.columns = self.base_columns + [Column("carrier", _("Carrier"))]
+        self.default_columns = self.base_columns + [Column("carrier", _("Carrier"))]
         super(ShippingMethodListView, self).__init__(**kwargs)
 
 
@@ -57,5 +57,5 @@ class PaymentMethodListView(ServiceListView):
     model = PaymentMethod
 
     def __init__(self, **kwargs):
-        self.columns = self.base_columns + [Column("payment_processor", _("Payment Processor"))]
+        self.default_columns = self.base_columns + [Column("payment_processor", _("Payment Processor"))]
         super(PaymentMethodListView, self).__init__(**kwargs)
