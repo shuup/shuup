@@ -1,16 +1,9 @@
 {% from "shuup/admin/macros/general.jinja" import content_block %}
 
 {% macro address_form(form) %}
-    {{ bs3.field(form["name"]) }}
-    {{ bs3.field(form["street"]) }}
-    {{ bs3.field(form["street2"]) }}
-    {{ bs3.field(form["postal_code"]) }}
-    {{ bs3.field(form["city"]) }}
-    {{ bs3.field(form["region_code"]) }}
-    {{ bs3.field(form["region"]) }}
-    {{ bs3.field(form["country"]) }}
-    {{ bs3.field(form["email"]) }}
-    {{ bs3.field(form["phone"]) }}
+    {% for field in form %}
+    {{ bs3.field(field) }}
+    {% endfor %}
 {% endmacro %}
 
 {% call content_block(_("Addresses"), "fa-map-marker") %}
