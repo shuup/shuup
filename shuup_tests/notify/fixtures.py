@@ -52,23 +52,27 @@ TEST_TEMPLATE_DATA = {
     "en": {
         # English
         "subject": "Hello, {{ name }}!",
-        "body": "Hi, {{ name }}. This is a test."
+        "body": "Hi, {{ name }}. This is a test.",
+        "content_type": "plain"
     },
     "ja": {
         # Japanese
         "subject": u"こんにちは、{{ name|upper }}！",
-        "body": u"こんにちは、{{ name|upper }}.これはテストです。"
+        "body": u"こんにちは、{{ name|upper }}.これはテストです。",
+        "content_type": "html"
     },
     "sw": {
         # Swahili
-        "body": "Hi, {{ name }}. Hii ni mtihani."
+        "body": "Hi, {{ name }}. Hii ni mtihani.",
+        "content_type": "plain"
     }
 }
 
 TEST_UNI_TEMPLATE_DATA = {
     UNILINGUAL_TEMPLATE_LANGUAGE: {
         "subject": u"This is a kokeilu {{ name }}",
-        "body": u"tämä on a test"
+        "body": u"tämä on a test",
+        "content_type": "plain"
     }
 }
 
@@ -89,7 +93,8 @@ class ATestTemplateUsingAction(Action):
     template_use = TemplateUse.MULTILINGUAL
     template_fields = {
         "subject": forms.CharField(),
-        "body": forms.CharField()
+        "body": forms.CharField(),
+        "content_type": forms.CharField()
     }
 
 
@@ -98,7 +103,8 @@ class ATestUnilingualTemplateUsingAction(Action):
     template_use = TemplateUse.UNILINGUAL
     template_fields = {
         "subject": forms.CharField(),
-        "body": forms.CharField()
+        "body": forms.CharField(),
+        "content_type": forms.CharField()
     }
 
 
