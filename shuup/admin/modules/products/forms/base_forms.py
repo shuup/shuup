@@ -67,6 +67,14 @@ class ProductBaseForm(MultiLanguageModelForm):
         self.fields["sales_unit"].required = True  # TODO: Move this to model
         self.fields["category"].queryset = Category.objects.all_except_deleted()
 
+    def clean_sku(self):
+        sku = self.cleaned_data["sku"]
+        # Make sure sku is unique and raise proper validation error if not
+        if Product.objects.filter(sku=sku).exists():
+            raise ValidationError(
+                _("Given value is already in use, please use unique SKU and try again."), code="sku_not_unique")
+        return sku
+
 
 class ShopProductForm(forms.ModelForm):
     class Meta:
