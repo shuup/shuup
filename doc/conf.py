@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2016, Shoop Ltd. All rights reserved.
+# Copyright (c) 2012-2016, Shoop Commerce Ltd. All rights reserved.
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -48,7 +48,7 @@ patch_for_introspection()
 # -- General configuration ------------------------------------------------
 
 project = 'Shuup'
-copyright = '2016, Shoop Ltd.'
+copyright = '2016, Shoop Commerce Ltd.'
 
 extensions = [
     'djangodocs',
@@ -240,7 +240,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
   ('index', 'Shuup.tex', 'Shuup Documentation',
-   'Shoop Ltd.', 'manual'),
+   'Shoop Commerce Ltd.', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -270,7 +270,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'shuup', 'Shuup Documentation',
-     ['Shoop Ltd.'], 1)
+     ['Shoop Commerce Ltd.'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -284,7 +284,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'Shuup', 'Shuup Documentation',
-   'Shoop Ltd.', 'Shuup', 'One line description of project.',
+   'Shoop Commerce Ltd.', 'Shuup', 'One line description of project.',
    'Miscellaneous'),
 ]
 
