@@ -18,6 +18,7 @@ Localization
 Admin
 ~~~~~
 
+- Fix bug in Picotable sorting with translated models
 - Fix bug in services list views columns
 
 Addons
