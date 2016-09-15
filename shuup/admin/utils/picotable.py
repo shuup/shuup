@@ -16,7 +16,6 @@ from django.http.response import JsonResponse
 from django.template.defaultfilters import yesno
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import get_language
 
 from shuup.admin.utils.urls import get_model_url, NoModelUrl
 from shuup.utils.dates import try_parse_date
@@ -259,8 +258,6 @@ class Column(object):
 
     def sort_queryset(self, queryset, desc=False):
         order_by = ("-" if desc else "") + self.sort_field
-        if "translations__" in self.sort_field:
-            queryset = queryset.translated(get_language())
         return queryset.order_by(order_by)
 
     def filter_queryset(self, queryset, value):
