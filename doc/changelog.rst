@@ -18,6 +18,7 @@ Localization
 Admin
 ~~~~~
 
+- Give proper error message when saving product with duplicate SKU
 - Fix bug in Picotable sorting with translated models
 - Fix bug in services list views columns
 
