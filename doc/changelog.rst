@@ -18,6 +18,8 @@ Localization
 Admin
 ~~~~~
 
+- Fix bug in services list views columns
+
 Addons
 ~~~~~~
 
