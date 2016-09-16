@@ -1,6 +1,6 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2016, Shoop Ltd. All rights reserved.
+# Copyright (c) 2012-2016, Shoop Commerce Ltd. All rights reserved.
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
@@ -42,7 +42,7 @@ VERSION_FILE = os.path.join(TOPDIR, 'shuup', '_version.py')
 NAME = 'shuup'
 VERSION = '0.4.6.1.post0.dev'
 DESCRIPTION = 'E-Commerce Platform'
-AUTHOR = 'Shoop Ltd.'
+AUTHOR = 'Shoop Commerce Ltd.'
 AUTHOR_EMAIL = 'shuup@shuup.com'
 URL = 'http://shuup.com/'
 LICENSE = 'AGPL-3.0'  # https://spdx.org/licenses/
