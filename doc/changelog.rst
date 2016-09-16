@@ -28,6 +28,8 @@ Addons
 Front
 ~~~~~
 
+- Enhance default footer
+
 Xtheme
 ~~~~~~
 
