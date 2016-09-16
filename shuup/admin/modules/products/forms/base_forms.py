@@ -69,8 +69,13 @@ class ProductBaseForm(MultiLanguageModelForm):
 
     def clean_sku(self):
         sku = self.cleaned_data["sku"]
+        sku_unique_qs = Product.objects.filter(sku=sku)
+
+        if self.instance:
+            sku_unique_qs = sku_unique_qs.exclude(pk=self.instance.pk)
+
         # Make sure sku is unique and raise proper validation error if not
-        if Product.objects.filter(sku=sku).exists():
+        if sku_unique_qs.exists():
             raise ValidationError(
                 _("Given value is already in use, please use unique SKU and try again."), code="sku_not_unique")
         return sku
