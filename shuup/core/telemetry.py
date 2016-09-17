@@ -8,17 +8,21 @@
 import json
 import platform
 import sys
+from datetime import date, datetime, time, timedelta
 
 import requests
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.serializers.json import DjangoJSONEncoder
+from django.db.models import Q, Sum
 from django.utils.crypto import get_random_string
 from django.utils.encoding import force_text
 from django.utils.timezone import now
 
 import shuup
-from shuup.core.models import PersistentCacheEntry
+from shuup.core.models import (
+    Contact, Order, Payment, PersistentCacheEntry, Product
+)
 
 OPT_OUT_KWARGS = dict(module="telemetry", key="opt_out")
 INSTALLATION_KEY_KWARGS = dict(module="telemetry", key="installation_key")
@@ -113,6 +117,55 @@ def save_telemetry_submission(data):
     pce.save()
 
 
+def daterange(start_date, end_date):
+    if start_date == end_date:
+        yield start_date
+
+    for n in range(int((end_date - start_date).days)):
+        yield start_date + timedelta(n)
+
+
+def get_daily_data_for_day(date):
+    data = {"date": date.strftime("%Y-%m-%d")}
+    data["methods"] = {}
+
+    today_min = datetime.combine(date, time.min)
+    today_max = datetime.combine(date, time.max)
+    order_date_filter = Q(order_date__range=(today_min, today_max))
+    data["orders"] = Order.objects.filter(order_date_filter).count()
+    total_sales = Order.objects.filter(order_date_filter).aggregate(total_sales=Sum("taxful_total_price_value"))
+    data["total_sales"] = float(total_sales["total_sales"]) if total_sales["total_sales"] else 0
+
+    created_on_filter = Q(created_on__range=(today_min, today_max))
+    total_paid_sales = Payment.objects.filter(created_on_filter).aggregate(total_paid=Sum("amount_value"))
+    data["total_paid_sales"] = (
+        float(total_paid_sales["total_paid"]) if total_paid_sales["total_paid"] else 0)
+    for service_identifier in ["stripe", "checkoutfi", "paytrail"]:
+        payment_query = created_on_filter & Q(order__payment_method__choice_identifier=service_identifier)
+        total_sales = Payment.objects.filter(payment_query).aggregate(total_sales=Sum("amount_value"))
+        data["methods"][service_identifier] = float(total_sales["total_sales"]) if total_sales["total_sales"] else 0
+
+    data["products"] = Product.objects.filter(created_on_filter).count()
+    data["contacts"] = Contact.objects.filter(created_on_filter).count()
+
+    return data
+
+
+def get_daily_data(today):
+    last_time = get_last_submission_time()
+    if not last_time:
+        return []
+
+    data = []
+    data_start_date = date(last_time.year, last_time.month, last_time.day)
+    data_end_date = date(today.year, today.month, today.day) - timedelta(days=1)
+    for i, day in enumerate(daterange(data_start_date, data_end_date)):
+        if i > settings.SHUUP_MAX_DAYS_IN_TELEMETRY:
+            break
+        data.append(get_daily_data_for_day(day))
+    return data
+
+
 def get_telemetry_data(request, indent=None):
     """
     Get the telemetry data that would be sent.
@@ -123,7 +176,9 @@ def get_telemetry_data(request, indent=None):
     :rtype: str
     """
     data_dict = {
+        "daily_data": get_daily_data(now()),
         "apps": settings.INSTALLED_APPS,
+        "debug": settings.DEBUG,
         "host": (request.get_host() if request else None),
         "key": get_installation_key(),
         "machine": platform.machine(),
@@ -176,7 +231,7 @@ def _send_telemetry(request, max_age_hours, force_send=False):
     return data
 
 
-def try_send_telemetry(request=None, max_age_hours=72, raise_on_error=False):
+def try_send_telemetry(request=None, max_age_hours=24, raise_on_error=False):
     """
     Send telemetry information (unless opted-out, in grace period or disabled).
 
@@ -196,7 +251,7 @@ def try_send_telemetry(request=None, max_age_hours=72, raise_on_error=False):
              not sent.
     :rtype: dict|bool
     """
-    force_send = True if not get_last_submission_time() else False
+    force_send = bool(not get_last_submission_time() or not settings.DEBUG)
     try:
         return _send_telemetry(request=request, max_age_hours=max_age_hours, force_send=force_send)
     except TelemetryNotSent:

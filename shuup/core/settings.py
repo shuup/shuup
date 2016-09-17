@@ -175,3 +175,6 @@ SHUUP_ADDRESS_MODEL_FORM = (
 #: It should be noted, however, that overriding some settings (such as making a
 #: required field non-required) could create other validation issues.
 SHUUP_ADDRESS_FIELD_PROPERTIES = {}
+
+#: Indicates maximum days for daily data included to one telemetry request
+SHUUP_MAX_DAYS_IN_TELEMETRY = 180
