@@ -95,8 +95,11 @@ class RecoverPasswordForm(forms.Form):
 
         username = self.cleaned_data["username"]
         email = self.cleaned_data["email"]
+
+        username_filter = {"{0}__iexact".format(user_model.USERNAME_FIELD): username}
+
         active_users = user_model.objects.filter(
-            Q(username__iexact=username) | Q(email__iexact=email), Q(is_active=True)
+            Q(**username_filter) | Q(email__iexact=email), Q(is_active=True)
         )
 
         for user in active_users:
