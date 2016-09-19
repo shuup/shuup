@@ -6,11 +6,12 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
-from django.core.mail import send_mail
+from django.core.mail.message import EmailMessage
 from django.db.models import Q
 from django.template import loader
 from django.utils.encoding import force_bytes
@@ -120,6 +121,8 @@ class RecoverPasswordForm(forms.Form):
         }
         subject = loader.render_to_string(self.subject_template_name, context)
         subject = ''.join(subject.splitlines())  # Email subject *must not* contain newlines
-        email = loader.render_to_string(self.email_template_name, context, request=self.request)
-        send_mail(subject, email, self.from_email, [user_to_recover.email])
+        body = loader.render_to_string(self.email_template_name, context, request=self.request)
+        email = EmailMessage(from_email=self.from_email, subject=subject, body=body, to=[user_to_recover.email])
+        email.content_subtype = settings.SHUUP_AUTH_EMAIL_CONTENT_SUBTYPE
+        email.send()
         return True
