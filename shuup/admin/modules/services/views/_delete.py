@@ -13,9 +13,9 @@ from shuup.core.models import PaymentMethod, ShippingMethod
 
 class PaymentMethodDeleteView(DeleteView):
     model = PaymentMethod
-    success_url = reverse_lazy("shuup_admin:payment_methods.list")
+    success_url = reverse_lazy("shuup_admin:payment_method.list")
 
 
 class ShippingMethodDeleteView(DeleteView):
     model = ShippingMethod
-    success_url = reverse_lazy("shuup_admin:shipping_methods.list")
+    success_url = reverse_lazy("shuup_admin:shipping_method.list")
