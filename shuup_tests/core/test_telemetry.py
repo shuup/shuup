@@ -19,17 +19,26 @@ from shuup.admin.modules.system import SystemModule
 from shuup.admin.views.dashboard import DashboardView
 from shuup.core.models import PersistentCacheEntry
 from shuup.core.telemetry import (
-    get_installation_key, get_last_submission_time, get_telemetry_data,
-    INSTALLATION_KEY_KWARGS, is_opt_out, LAST_DATA_KWARGS, set_opt_out,
-    TelemetryNotSent, try_send_telemetry
+    get_daily_data, get_daily_data_for_day, get_installation_key,
+    get_last_submission_time, get_telemetry_data, INSTALLATION_KEY_KWARGS,
+    is_opt_out, LAST_DATA_KWARGS, set_opt_out,TelemetryNotSent,
+    try_send_telemetry
 )
-from shuup.testing.factories import get_default_shop
+from shuup.testing.factories import (
+    create_empty_order, create_order_with_product,
+    create_product, create_random_company,
+    get_default_shop, get_default_supplier
+)
 from shuup.testing.utils import apply_request_middleware
 
 
 def _backdate_installation_key(days=24):
     get_installation_key()
     PersistentCacheEntry.objects.filter(**INSTALLATION_KEY_KWARGS).update(time=now() - datetime.timedelta(days=days))
+
+
+def _backdate_telemetry_submission(days=24):
+    PersistentCacheEntry.objects.filter(**LAST_DATA_KWARGS).update(time=now() - datetime.timedelta(days=days))
 
 
 def _clear_telemetry_submission():
@@ -44,7 +53,7 @@ def test_get_telemetry_data(rf):
 
 @pytest.mark.django_db
 def test_optin_optout(rf):
-    with override_settings(SHUUP_TELEMETRY_ENABLED=True):
+    with override_settings(SHUUP_TELEMETRY_ENABLED=True, DEBUG=True):
         with patch.object(requests, "post", return_value=Response()) as requestor:
             _clear_telemetry_submission()
             assert not set_opt_out(False)  # Not opted out
@@ -120,3 +129,67 @@ def test_telemetry_is_sent_on_login(rf, admin_user):
             assert get_last_submission_time() == sent
 
             assert len(requestor.mock_calls) == 1
+
+
+def _create_order_for_day(shop, day):
+    order = create_empty_order(shop)
+    order.order_date = day
+    order.save()
+
+
+def _create_product_for_day(shop, day):
+    product = create_product("test_product")
+    product.created_on = day
+    product.save()
+
+
+def _create_customer_for_day(shop, day):
+    company = create_random_company()
+    company.created_on = day
+    company.save()
+
+
+def _create_total_sales(shop, day):
+    product = create_product("test", shop=shop)
+    supplier = get_default_supplier()
+    order = create_order_with_product(product, supplier, 1, 10, shop=shop)
+    order.order_date = day
+    order.save()
+
+
+def _create_total_paid_sales(shop, day):
+    product = create_product("test", shop=shop)
+    supplier = get_default_supplier()
+    order = create_order_with_product(product, supplier, 1, 10, shop=shop)
+    order.order_date = day
+    order.save()
+    order.create_payment(order.taxful_total_price)
+    assert order.is_paid()
+
+
+@pytest.mark.parametrize("data_key, data_value, create_object", [
+    ("orders", 1, _create_order_for_day),
+    ("products", 1, _create_product_for_day),
+    ("contacts", 1, _create_customer_for_day),
+    ("total_sales", 10, _create_total_sales),
+    ("total_paid_sales", 10, _create_total_paid_sales),
+])
+@pytest.mark.django_db
+def test_telemetry_daily_data_components(data_key, data_value, create_object):
+    shop = get_default_shop()
+    datetime_now = now()
+    today = datetime.date(datetime_now.year, datetime_now.month, datetime_now.day)
+    create_object(shop, today)
+    assert get_daily_data_for_day(today)[data_key] == data_value
+
+
+@pytest.mark.django_db
+def test_telemetry_multiple_days(rf):
+    with override_settings(SHUUP_TELEMETRY_ENABLED=True, DEBUG=True):
+        with patch.object(requests, "post", return_value=Response()) as requestor:
+            try_send_telemetry()
+            day = now()
+            _backdate_telemetry_submission(days=0)
+            assert not get_daily_data(day)
+            _backdate_telemetry_submission(days=20)
+            assert len(get_daily_data(now())) == 19  # Since current day is not added to telemetry
