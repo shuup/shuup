@@ -12,6 +12,14 @@ shuup.front.apps.auth.forms module
     :undoc-members:
     :show-inheritance:
 
+shuup.front.apps.auth.settings module
+-------------------------------------
+
+.. automodule:: shuup.front.apps.auth.settings
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.front.apps.auth.urls module
 ---------------------------------
 
