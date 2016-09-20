@@ -1,0 +1,15 @@
+Shuup 0.4.7 Release Notes
+=========================
+
+Released on 2016-09-20 3:45pm -0800.
+
+Minor bug fixes for v0.4.6.
+
+- Admin: Give proper error message when saving product with duplicate SKU
+- Admin: Fix bug in Picotable sorting with translated models
+- Admin: Fix bug in services list views columns
+- Front: Enhance default footer
+
+For all changes see the full changelog:
+:doc:`../shoop-changelog` or `Git commit log
+<https://github.com/shuup/shuup/commits/v0.4.7>`__.

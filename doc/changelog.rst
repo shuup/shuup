@@ -1,19 +1,10 @@
 Shuup Change Log
 ================
 
-Unrealeased
+SHUUP 0.4.7
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
-
-Core
-~~~~
-
-Localization
-~~~~~~~~~~~~
+Released on 2016-09-20 3:45pm -0800.
 
 Admin
 ~~~~~
@@ -22,52 +13,10 @@ Admin
 - Fix bug in Picotable sorting with translated models
 - Fix bug in services list views columns
 
-Addons
-~~~~~~
-
 Front
 ~~~~~
 
 - Enhance default footer
-
-Xtheme
-~~~~~~
-
-Classic Gray Theme
-~~~~~~~~~~~~~~~~~~
-
-Simple Supplier
-~~~~~~~~~~~~~~~
-
-Order Printouts
-~~~~~~~~~~~~~~~
-
-Campaigns
-~~~~~~~~~
-
-Customer Group Pricing
-~~~~~~~~~~~~~~~~~~~~~~
-
-Discount Pricing
-~~~~~~~~~~~~~~~~
-
-Simple CMS
-~~~~~~~~~~
-
-Default Tax
-~~~~~~~~~~~
-
-Guide
-~~~~~
-
-Importer
-~~~~~~~~
-
-Regions
-~~~~~~~
-
-General/miscellaneous
-~~~~~~~~~~~~~~~~~~~~~
 
 SHUUP 0.4.6.1
 -------------
