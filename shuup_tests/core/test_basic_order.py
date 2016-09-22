@@ -58,11 +58,13 @@ def create_order(request, creator, customer, product):
 
     line_tax = get_line_taxes_for(product_order_line)[0]
 
-    product_order_line.taxes.add(OrderLineTax.from_tax(
+    order_line_tax = OrderLineTax.from_tax(
         tax=line_tax.tax,
         base_amount=line_tax.base_amount,
         order_line=product_order_line,
-    ))
+    )
+    order_line_tax.save()  # Save order_line_tax before linking to order_line.tax
+    product_order_line.taxes.add(order_line_tax)
 
     discount_order_line = OrderLine(order=order, quantity=1, type=OrderLineType.OTHER)
     discount_order_line.discount_amount = shop.create_price(30)

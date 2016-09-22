@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 
-from shuup.notify import Context
+from shuup.notify.script import Context
 from shuup_tests.notify.fixtures import get_initialized_test_event
 
 

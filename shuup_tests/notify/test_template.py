@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 
 import pytest
 
-from shuup.notify import Context
+from shuup.notify.script import Context
 from shuup.notify.template import NoLanguageMatches
 from shuup_tests.notify.fixtures import (
     ATestTemplateUsingAction, ATestUnilingualTemplateUsingAction,

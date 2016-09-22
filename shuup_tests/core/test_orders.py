@@ -85,8 +85,10 @@ def test_line_discount():
     ol.discount_amount = order.shop.create_price(50)
     ol.base_unit_price = order.shop.create_price(40)
     ol.save()
-    ol.taxes.add(OrderLineTax.from_tax(
-        get_default_tax(), ol.taxless_price.amount, order_line=ol))
+    order_line_tax = OrderLineTax.from_tax(
+        get_default_tax(), ol.taxless_price.amount, order_line=ol)
+    order_line_tax.save()
+    ol.taxes.add(order_line_tax)
     assert ol.taxless_discount_amount == order.shop.create_price(50)
     assert ol.taxful_discount_amount == TaxfulPrice(75, currency)
     assert ol.taxless_price == order.shop.create_price(150)
@@ -109,8 +111,10 @@ def test_line_discount_more():
     assert ol.taxless_base_unit_price == TaxlessPrice(30, currency)
     assert ol.taxless_discount_amount == TaxlessPrice(50, currency)
     assert ol.taxless_price == TaxlessPrice(5 * 30 - 50, currency)
-    ol.taxes.add(OrderLineTax.from_tax(
-        get_default_tax(), ol.taxless_price.amount, order_line=ol))
+    order_line_tax = OrderLineTax.from_tax(
+        get_default_tax(), ol.taxless_price.amount, order_line=ol)
+    order_line_tax.save()
+    ol.taxes.add(order_line_tax)
     assert ol.taxless_discount_amount == TaxlessPrice(50, currency)
     assert ol.taxful_discount_amount == TaxfulPrice(75, currency)
     assert ol.taxless_price == TaxlessPrice(100, currency)
@@ -495,7 +499,9 @@ def test_refunds_for_discounted_order_lines():
     )
 
     order = create_order_with_product(product, supplier, 2, 200, shop=shop)
-    discount_line = OrderLine(type=OrderLineType.DISCOUNT, quantity=1, discount_amount_value=Decimal("0.54321"))
+    discount_line = OrderLine(
+        order_id=order.id, type=OrderLineType.DISCOUNT, quantity=1, discount_amount_value=Decimal("0.54321"))
+    discount_line.save()
     order.lines.add(discount_line)
 
     product_line = order.lines.filter(type=OrderLineType.PRODUCT).first()
@@ -528,7 +534,9 @@ def test_refunds_for_discounted_order_lines():
     assert order.taxful_total_price.value == 0
 
     order = create_order_with_product(product, supplier, 2, 200, shop=shop)
-    discount_line = OrderLine(type=OrderLineType.DISCOUNT, quantity=1, discount_amount_value=Decimal("0.54321"))
+    discount_line = OrderLine(
+        order_id=order.id, type=OrderLineType.DISCOUNT, quantity=1, discount_amount_value=Decimal("0.54321"))
+    discount_line.save()
     order.lines.add(discount_line)
     product_line = order.lines.filter(type=OrderLineType.PRODUCT).first()
     product_line.discount_amount = TaxfulPrice(100, order.currency)

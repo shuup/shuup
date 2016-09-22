@@ -13,7 +13,7 @@ from shuup.core.order_creator.signals import order_creator_finished
 from shuup.core.signals import (
     payment_created, refund_created, shipment_created, shipment_deleted
 )
-from shuup.notify import Event, Variable
+from shuup.notify.base import Event, Variable
 from shuup.notify.typology import Email, Enum, Language, Model, Phone
 
 

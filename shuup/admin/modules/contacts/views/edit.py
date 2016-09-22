@@ -29,7 +29,7 @@ class ContactEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
     form_part_class_provide_key = "admin_contact_form_part"
 
     def get_contact_type(self):
-        contact_type = self.request.REQUEST.get("type", "")
+        contact_type = self.request.GET.get("type", "")
         if self.object.pk:
             if type(self.object) is PersonContact:
                 contact_type = "person"

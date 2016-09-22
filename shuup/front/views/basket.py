@@ -23,7 +23,7 @@ class DefaultBasketView(TemplateView):
 
 class BasketView(View):
     def dispatch(self, request, *args, **kwargs):
-        command = request.REQUEST.get("command")
+        command = request.POST.get("command")
         if command:
             return get_basket_command_dispatcher(request).handle(command)
         else:

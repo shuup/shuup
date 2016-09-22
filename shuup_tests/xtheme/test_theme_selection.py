@@ -9,7 +9,7 @@
 from contextlib import contextmanager
 
 import pytest
-from django.template.base import TemplateDoesNotExist
+from django.template import TemplateDoesNotExist
 
 from shuup.apps.provides import get_provide_objects, override_provides
 from shuup.xtheme import set_current_theme

@@ -186,7 +186,7 @@ class UserDetailView(CreateOrUpdateView):
         return modelform_factory(self.model, form=BaseUserForm, fields=self.fields)
 
     def _get_bind_contact(self):
-        contact_id = self.request.REQUEST.get("contact_id")
+        contact_id = self.request.GET.get("contact_id")
         if contact_id:
             return Contact.objects.get(pk=contact_id)
         return None

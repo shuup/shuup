@@ -9,7 +9,7 @@ import pytest
 from django.contrib.auth.models import AnonymousUser
 from django.core.urlresolvers import reverse, set_urlconf
 
-from shuup.notify import Context
+from shuup.notify.script import Context
 from shuup.notify.actions.notification import AddNotification
 from shuup.notify.enums import Priority, RecipientType
 from shuup.notify.models.notification import Notification
