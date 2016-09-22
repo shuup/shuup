@@ -550,11 +550,14 @@ def add_product_to_order(order, supplier, product, quantity, taxless_base_unit_p
         base_unit_price *= (1 + tax_rate)
     product_order_line.base_unit_price = order.shop.create_price(base_unit_price)
     product_order_line.save()
-    product_order_line.taxes.add(OrderLineTax.from_tax(
+
+    order_line_tax = OrderLineTax.from_tax(
         get_test_tax(tax_rate),
         Money(quantity * taxless_base_unit_price, order.currency),
         order_line=product_order_line,
-    ))
+    )
+    order_line_tax.save()  # Save order line tax before linking to order_line.taxes
+    product_order_line.taxes.add(order_line_tax)
 
 
 def create_order_with_product(

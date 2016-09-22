@@ -5,21 +5,7 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-
-from django.db.models.signals import m2m_changed, post_save
-
 from shuup.apps import AppConfig
-from shuup.campaigns.models.catalog_filters import (
-    CategoryFilter, ProductFilter
-)
-from shuup.campaigns.models.context_conditions import (
-    ContactCondition, ContactGroupCondition
-)
-from shuup.campaigns.signal_handlers import (
-    invalidate_context_condition_cache, invalidate_context_filter_cache,
-    update_customers_groups
-)
-from shuup.core.models import ContactGroup, Payment, ShopProduct
 
 
 class CampaignAppConfig(AppConfig):
@@ -77,6 +63,14 @@ class CampaignAppConfig(AppConfig):
     }
 
     def ready(self):
+        from django.db.models.signals import m2m_changed, post_save
+        from shuup.campaigns.models import CategoryFilter, ProductFilter
+        from shuup.campaigns.models import ContactCondition, ContactGroupCondition
+        from shuup.campaigns.signal_handlers import (
+            invalidate_context_condition_cache, invalidate_context_filter_cache,
+            update_customers_groups
+        )
+        from shuup.core.models import ContactGroup, Payment, ShopProduct
         post_save.connect(
             update_customers_groups,
             sender=Payment,

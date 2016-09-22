@@ -25,5 +25,5 @@ class TemplateHelpers(object):
         :type template_name: str
         """
         request = context["request"]
-        env = dict(context.items(), q=request.REQUEST.get("q"))
+        env = dict(context.items(), q=request.GET.get("q"))
         return mark_safe(loader.render_to_string(template_name, context=env, request=request))

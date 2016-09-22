@@ -40,7 +40,7 @@ class PersonContactBaseFormPart(FormPart):
     priority = -1000
 
     def get_user(self):
-        bind_user_id = self.request.REQUEST.get("user_id")
+        bind_user_id = self.request.GET.get("user_id")
         if bind_user_id:
             bind_user = get_user_model().objects.get(pk=bind_user_id)
             if PersonContact.objects.filter(user=bind_user).exists():

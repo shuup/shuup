@@ -97,11 +97,14 @@ class SearchView(ListView):
     context_object_name = "products"
 
     def dispatch(self, request, *args, **kwargs):
-        q = self.request.REQUEST.get("q")
+        q = self.request.GET.get("q")
         if q:
-            data = dict(self.request.REQUEST)
+            data = {"q": q}
         else:
             data = None
+        sort = self.request.GET.get("sort")
+        if sort:
+            data.update({"sort": sort})
         self.form = SearchForm(data=data)
         return super(SearchView, self).dispatch(request, *args, **kwargs)
 

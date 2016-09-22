@@ -9,7 +9,7 @@ from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 from registration.signals import user_registered
 
-from shuup.notify import Event, Variable
+from shuup.notify.base import Event, Variable
 from shuup.notify.typology import Email
 
 

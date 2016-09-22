@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 
 from django import forms
 
-from shuup.notify import Context
+from shuup.notify.script import Context
 from shuup.notify.base import Action, Event, Variable
 from shuup.notify.enums import (
     StepConditionOperator, TemplateUse, UNILINGUAL_TEMPLATE_LANGUAGE
