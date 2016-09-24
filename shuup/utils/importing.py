@@ -7,10 +7,11 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from importlib import import_module
+
 import six
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
-from django.utils import importlib
 
 _LOAD_CACHE = {}
 
@@ -19,7 +20,7 @@ def load(specification, context_explanation="Load"):
     delimiter = (":" if ":" in specification else ".")
     module_name, object_name = specification.rsplit(delimiter, 1)
     try:
-        module = importlib.import_module(module_name)
+        module = import_module(module_name)
     except ImportError as ie:  # pragma: no cover
         exc = ImproperlyConfigured(
             "%s: Could not import module %r to load %r from. (%r)" %

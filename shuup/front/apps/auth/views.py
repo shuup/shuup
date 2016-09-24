@@ -32,7 +32,7 @@ class LoginView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super(LoginView, self).get_context_data(**kwargs)
-        context[REDIRECT_FIELD_NAME] = self.request.REQUEST.get(REDIRECT_FIELD_NAME)
+        context[REDIRECT_FIELD_NAME] = self.request.GET.get(REDIRECT_FIELD_NAME)
         return context
 
     def get_form(self, form_class=None):
@@ -40,7 +40,7 @@ class LoginView(FormView):
         form.fields[REDIRECT_FIELD_NAME] = forms.CharField(
             widget=forms.HiddenInput,
             required=False,
-            initial=self.request.REQUEST.get(REDIRECT_FIELD_NAME)
+            initial=self.request.GET.get(REDIRECT_FIELD_NAME)
         )
         return form
 
@@ -50,7 +50,7 @@ class LoginView(FormView):
         return super(LoginView, self).form_valid(form)
 
     def get_success_url(self):
-        url = self.request.REQUEST.get(REDIRECT_FIELD_NAME)
+        url = self.request.POST.get(REDIRECT_FIELD_NAME)
         if url and is_safe_url(url, self.request.get_host()):
             return url
         return settings.LOGIN_REDIRECT_URL

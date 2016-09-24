@@ -21,6 +21,9 @@ class Color(Enum):
 class Colored(models.Model):
     color = EnumIntegerField(Color, default=Color.RED)
 
+    class Meta:
+        app_label = 'colored_test'
+
 
 class ColoredForm(forms.ModelForm):
     class Meta:

@@ -41,7 +41,7 @@ def test_with_one_matching_range(admin_user, get_service, service_attr):
     source = _get_source_for_weight(admin_user, service, service_attr, decimal.Decimal("32.45678"), "mid")
     _test_service_ranges_against_source(source, service, decimal.Decimal("10.000000"), "Mid range")
 
-    source = _get_source_for_weight(admin_user, service, service_attr, decimal.Decimal("32.4567800001"), "high")
+    source = _get_source_for_weight(admin_user, service, service_attr, decimal.Decimal("32.456780001"), "high")
     _test_service_ranges_against_source(source, service, decimal.Decimal("23.567"), "High range")
 
 

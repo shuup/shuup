@@ -10,7 +10,6 @@ from __future__ import unicode_literals
 import random
 
 from babel.dates import format_date
-from django.conf.urls import url
 from django.http.response import HttpResponse
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
@@ -21,6 +20,7 @@ from shuup.admin.base import (
 from shuup.admin.dashboard import (
     DashboardMoneyBlock, DashboardNumberBlock, DashboardValueBlock
 )
+from shuup.admin.utils.urls import admin_url
 from shuup.testing.text_data import random_title
 from shuup.utils.i18n import get_current_babel_locale
 
@@ -30,7 +30,7 @@ class DemoModule(AdminModule):
 
     def get_urls(self):
         return [
-            url("test/$", lambda request: HttpResponse("herrrp %s" % request)),
+            admin_url("test/$", lambda request: HttpResponse("herrrp %s" % request)),
         ]
 
     def check_demo_optin(self, request):

@@ -28,6 +28,8 @@ INSTALLED_APPS = add_enabled_addons(SHUUP_ENABLED_ADDONS_FILE, [
     'django.contrib.messages',
     'django.contrib.sessions',
     'django.contrib.staticfiles',
+    # external apps that needs to be loaded before Shuup
+    'easy_thumbnails',
     # shuup themes
     'shuup.themes.classic_gray',
     # shuup
@@ -62,7 +64,6 @@ INSTALLED_APPS = add_enabled_addons(SHUUP_ENABLED_ADDONS_FILE, [
     # external apps
     'bootstrap3',
     'django_jinja',
-    'easy_thumbnails',
     'filer',
     'registration',
     'rest_framework',

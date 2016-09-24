@@ -12,9 +12,7 @@ from django.contrib.auth import (
 )
 from django.core.urlresolvers import reverse
 
-from shuup.core.models import PersonContact
 from shuup.testing.factories import get_default_shop
-from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils.fixtures import regular_user, REGULAR_USER_PASSWORD
 
 regular_user = regular_user  # noqa

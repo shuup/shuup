@@ -123,7 +123,7 @@ def test_new_service_provider_form_fields(rf, admin_user, type, extra_inputs):
     an language.
     """
     with override_settings(LANGUAGES=[("en", "en")]):
-        base_inputs = ["name__en", "enabled", "logo"]
+        base_inputs = ["csrfmiddlewaretoken", "name__en", "enabled", "logo"]
         get_default_shop()
         view = ServiceProviderEditView.as_view()
         soup = get_bs_object_for_view(rf.get("?type=%s" % type), view, admin_user)
@@ -149,7 +149,7 @@ def test_service_provide_edit_view(rf, admin_user, sp_model, extra_inputs):
     an language.
     """
     with override_settings(LANGUAGES=[("en", "en")]):
-        base_inputs = ["name__en", "enabled", "logo"]
+        base_inputs = ["csrfmiddlewaretoken", "name__en", "enabled", "logo"]
         get_default_shop()
         view = ServiceProviderEditView.as_view()
         provider_name = "some name"

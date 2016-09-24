@@ -73,7 +73,7 @@ class AddonUploadConfirmView(FormView):
     title = "Upload Addon"
 
     def get_addon_path(self):
-        filename = os.path.basename(self.request.REQUEST.get("file"))
+        filename = os.path.basename(self.request.FILES.get("file"))
         path = os.path.join(tempfile.gettempdir(), filename)
         if not os.path.isfile(path):
             raise ValueError("File not found")

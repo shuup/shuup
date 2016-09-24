@@ -85,16 +85,16 @@ class MediaBrowserView(TemplateView):
         return context
 
     def get(self, request, *args, **kwargs):
-        self.filter = request.REQUEST.get("filter")
+        self.filter = request.GET.get("filter")
 
-        action = request.REQUEST.get("action")
+        action = request.GET.get("action")
         handler = getattr(self, "handle_get_%s" % action, None)
         if handler:
-            return handler(request.REQUEST)
+            return handler(request.GET)
         return super(MediaBrowserView, self).get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        if request.REQUEST.get("action") == "upload":
+        if request.POST.get("action") == "upload":
             return self.handle_upload()
 
         # Instead of normal POST variables, the Mithril `m.request()`
@@ -167,7 +167,7 @@ class MediaBrowserView(TemplateView):
         request = self.request
 
         try:
-            folder_id = int(request.REQUEST.get("folder_id", 0))
+            folder_id = int(request.POST.get("folder_id", 0))
             if folder_id != 0:
                 folder = Folder.objects.get(pk=folder_id)
             else:

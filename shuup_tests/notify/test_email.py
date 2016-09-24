@@ -9,12 +9,11 @@ import django.core.mail as mail
 import pytest
 from django.conf import settings
 
-from shuup.notify import Context
+from shuup.notify.script import Context
 from shuup.notify.actions.email import SendEmail
 from shuup_tests.notify.fixtures import (
     get_initialized_test_event, TEST_TEMPLATE_DATA
 )
-from shuup_tests.utils import prepare_logger_for_stdout, printable_gibberish
 
 
 @pytest.mark.django_db

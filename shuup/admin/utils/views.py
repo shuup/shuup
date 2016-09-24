@@ -63,7 +63,7 @@ class CreateOrUpdateView(UpdateView):
         return get_model_url(self.object, kind="new")
 
     def get_success_url(self):
-        next = self.request.REQUEST.get("__next")
+        next = self.request.GET.get("__next")
         try:
             if next == "return":
                 return self.get_return_url()
