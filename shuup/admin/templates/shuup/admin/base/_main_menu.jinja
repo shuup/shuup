@@ -3,30 +3,26 @@
         {% for category in shuup_admin.get_menu_entry_categories() %}
         {% set only_entry = (category.entries|first if category.entries|length == 1 else None) %}
         <li>
-            {% if not only_entry %}
-                <a href="#">
-                    <i class="{{ category.icon }}"></i>
-                    <span class="item-name parent">{{ category.name }}</span>
-                    <span class="menu-toggle-icon"></span>
-                </a>
-                <ul>
-                    {% for entry in category %}
-                    <li>
-                        <a href="{{ entry.url }}">
-                            {{ entry.text }}
-                        </a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                {% for entry in category %}
-                <a href="{{ entry.url }}">
-                    {% if entry.icon %}<i class="{{ entry.icon }}"></i>{% endif %}
-                    <span class="item-name">{{ entry.text }}</span>
-                </a>
-                {% endfor %}
-            {% endif %}
+            <a href="{% if not only_entry %}#{% else %}{{ only_entry.url }}{% endif %}" data-target-id="category-{{ category.name }}">
+                <i class="{{ category.icon }}"></i>
+                <span class="item-name parent">{{ category.name }}</span>
+            </a>
         </li>
         {% endfor %}
     </ul>
 </div>
+{% for category in shuup_admin.get_menu_entry_categories() %}
+<div class="category-submenu" id="category-{{ category.name }}">
+    <div class="category-menu-title">{{ category.name }}</div>
+    <a href="#" class="category-menu-close"><i class="fa fa-close"></i></a>
+    <div class="category-menu-content">
+        <ul>
+        {% for entry in category %}
+            <li>
+                <a href="{{ entry.url }}">{{ entry.text }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endfor %}
