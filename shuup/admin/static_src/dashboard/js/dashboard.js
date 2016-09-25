@@ -17,7 +17,8 @@ $(function() {
 
         const msnry = new Masonry(document.getElementById("dashboard-wrapper"), {
             itemSelector: ".block",
-            columnWidth: ".block"
+            columnWidth: ".block",
+            percentPosition: true
         });
     }
     $(document).on("click", "button.dismiss-button", function() {
@@ -43,5 +44,4 @@ $(function() {
             }
         });
     });
-
 });
