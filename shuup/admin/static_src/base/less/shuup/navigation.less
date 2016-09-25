@@ -206,7 +206,9 @@
             position: relative;
             height: 60px;
             width: 60px;
-
+            @media (min-width: @screen-sm-min) {
+                display: none;
+            }
             span, span:before, span:after {
                 background: #fff;
                 border-radius: 1px;
@@ -262,7 +264,7 @@
                 display: none;
                 height: 60px;
                 width: 175px;
-                padding: 10px;
+                padding: 10px 10px 10px 18px;
                 @media (min-width: @screen-sm-min) {
                     display: inline-block;
                 }
