@@ -33,13 +33,8 @@ $(function() {
         }
     }
 
-    $(document).click(function(e) {
-        if (mainNavIsOpen() && !$(e.target).closest("#main-menu").length) {
-            closeMainNav();
-        }
-    });
-
     $("#menu-button").click(function(event) {
+        closeAllSubmenus();
         loadMenu();
         $("#site-search.mobile").removeClass("open"); // Close search if open on mobile
         event.stopPropagation();
@@ -53,15 +48,41 @@ $(function() {
         loadMenu();
     });
 
+    function closeAllSubmenus() {
+        $(".category-submenu").each(function(idx, elem){
+            $(elem).removeClass("open");
+        });
+    }
     $(document).on("click", "#main-menu ul.menu-list > li a", function(e) {
-        if (!$(this).siblings("ul").length) {
+        e.preventDefault();
+        const target_id = $(this).data("target-id");
+        $(".category-submenu").each(function(idx, elem){
+            if($(elem).attr("id") != target_id) {
+                $(elem).removeClass("open");
+            }
+        });
+        const $target = $("#" + target_id);
+        if (!$target.length) {
             return;
         }
-        e.preventDefault();
-        const $currentListItem = $(this).parent("li");
-        const isOpen = $currentListItem.hasClass("open");
-        $(this).siblings("ul").slideToggle();
-        $currentListItem.toggleClass("open", !isOpen);
+        const isOpen = $target.hasClass("open");
+        $target.toggleClass("open", !isOpen);
     });
-
+    $(document).ready(function(){
+        loadMenu();
+        if($(window).width() > 768) {
+            openMainNav();
+        }
+    });
+    $(document).on("click", ".category-menu-close", function(e){
+        closeAllSubmenus();
+    });
+    window.onresize = (function() {
+        if($(window).width() > 768) {
+            openMainNav();
+        }
+        else {
+            closeMainNav();
+        }
+    });
 });
