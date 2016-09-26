@@ -27,14 +27,14 @@ OBJECT_CREATED_LOG_IDENTIFIER = "object_created_signal_handled"
 
 @pytest.mark.browser
 @pytest.mark.djangodb
-def test_product_create(browser, admin_user, live_server):
+def test_product_create(browser, admin_user, live_server, settings):
     activate("en")
     shop = get_default_shop()
     get_default_product_type()
     get_default_sales_unit()
     get_default_tax_class()
     object_created.connect(_add_custom_product_created_message, sender=Product, dispatch_uid="object_created_signal_test")
-    initialize_admin_browser_test(browser, live_server)
+    initialize_admin_browser_test(browser, live_server, settings)
 
     url = reverse("shuup_admin:product.new")
     browser.visit("%s%s" % (live_server, url))

@@ -22,7 +22,7 @@ pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1
 
 @pytest.mark.browser
 @pytest.mark.djangodb
-def test_orders_list_view(browser, admin_user, live_server):
+def test_orders_list_view(browser, admin_user, live_server, settings):
     shop = get_default_shop()
     for i in range(0, 10):
         order = create_empty_order(shop=shop)
@@ -31,7 +31,7 @@ def test_orders_list_view(browser, admin_user, live_server):
     # Set last one canceled
     Order.objects.last().set_canceled()
 
-    initialize_admin_browser_test(browser, live_server)
+    initialize_admin_browser_test(browser, live_server, settings)
     _visit_orders_list_view(browser, live_server)
     _test_status_filter(browser)  # Will set three orders from end canceled
 

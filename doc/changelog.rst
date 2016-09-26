@@ -18,6 +18,8 @@ Localization
 Admin
 ~~~~~
 
+- Add shop setup wizard for admins to configure the shop, services available,
+  and themes
 - Add admin comment section to order module
 
 Addons
@@ -157,7 +159,7 @@ SHUUP 0.4.6
 -----------
 
 Released on 2016-09-11 8:00pm -0800.
-    
+
 Core
 ~~~~
 
