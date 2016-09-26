@@ -50,7 +50,8 @@ def initialize_front_browser_test(browser, live_server):
     return browser
 
 
-def initialize_admin_browser_test(browser, live_server, username="admin", password="password"):
+def initialize_admin_browser_test(browser, live_server, settings, username="admin", password="password"):
+    settings.SHUUP_SETUP_WIZARD_PANE_SPEC = []
     activate("en")
     get_default_shop()
     url = live_server + "/sa"

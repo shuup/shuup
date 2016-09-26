@@ -21,12 +21,12 @@ pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1
 
 @pytest.mark.browser
 @pytest.mark.djangodb
-def test_list_view(browser, admin_user, live_server):
+def test_list_view(browser, admin_user, live_server, settings):
     shop = get_default_shop()
     for i in range(0, 200):
         contact = create_random_person()
         contact.save()
-    initialize_admin_browser_test(browser, live_server)
+    initialize_admin_browser_test(browser, live_server, settings)
     _visit_contacts_list_view(browser, live_server)
     _test_pagination(browser)
     _set_settings(browser)
@@ -96,4 +96,3 @@ def _set_settings(browser):
     browser.find_by_css(".btn.btn-success").click()
     wait_until_appeared(browser, ".picotable-item-info")
     assert browser.is_text_present("Internal Identifier")
-

@@ -19,10 +19,10 @@ pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1
 
 @pytest.mark.browser
 @pytest.mark.djangodb
-def test_product_detail(browser, admin_user, live_server):
+def test_product_detail(browser, admin_user, live_server, settings):
     shop = get_default_shop()
     product = create_product("test_sku", shop, default_price=10)
-    initialize_admin_browser_test(browser, live_server)
+    initialize_admin_browser_test(browser, live_server, settings)
 
     url = reverse("shuup_admin:product.edit", kwargs={"pk": product.pk})
     browser.visit("%s%s" % (live_server, url))

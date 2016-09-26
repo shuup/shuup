@@ -830,6 +830,18 @@ msgstr ""
 msgid "Payment and Shipping"
 msgstr ""
 
+msgid "Service name"
+msgstr ""
+
+msgid "The name shown in the shop checkout process."
+msgstr ""
+
+msgid "Instructions"
+msgstr ""
+
+msgid "additional instructions shown in the shop checkout process."
+msgstr ""
+
 #, python-format
 msgid "Edit %(model)s"
 msgstr ""
@@ -838,10 +850,25 @@ msgstr ""
 msgid "Create {service_name}"
 msgstr ""
 
-msgid "Shipping Methods"
+msgid "Provider"
+msgstr ""
+
+msgid "Please add shipping methods for your shop"
+msgstr ""
+
+msgid "Carrier"
 msgstr ""
 
 msgid "Payment Methods"
+msgstr ""
+
+msgid "Please add payment methods for your shop"
+msgstr ""
+
+msgid "Payment Processor"
+msgstr ""
+
+msgid "Shipping Methods"
 msgstr ""
 
 msgid "Service"
@@ -868,12 +895,6 @@ msgstr ""
 msgid "Shop"
 msgstr ""
 
-msgid "Carrier"
-msgstr ""
-
-msgid "Payment Processor"
-msgstr ""
-
 msgid "Weight-based pricing range"
 msgstr ""
 
@@ -893,7 +914,36 @@ msgstr ""
 msgid "Languages"
 msgstr ""
 
+msgid "Supported Languages"
+msgstr ""
+
+msgid "Shop name"
+msgstr ""
+
+msgid ""
+"Show storefront products with tax pre-calculated into the price. Note this "
+"behavior can be overridden for customer groups."
+msgstr ""
+
+msgid "Shop Owner Name"
+msgstr ""
+
+msgid "Zip/Postal code"
+msgstr ""
+
+msgid "State/Province"
+msgstr ""
+
 msgid "Domain"
+msgstr ""
+
+msgid "Please select the languages supported by your shop"
+msgstr ""
+
+msgid "Please enter your shop details"
+msgstr ""
+
+msgid "Default Tax Class"
 msgstr ""
 
 msgid "Suppliers"
@@ -1469,6 +1519,24 @@ msgid ""
 "Variables tab and then link them to products here."
 msgstr ""
 
+msgid "Manually process payments"
+msgstr ""
+
+msgid "Manage payments outside of Shuup"
+msgstr ""
+
+msgid "Manual"
+msgstr ""
+
+msgid "Manual process shipping"
+msgstr ""
+
+msgid "Handle shipping outside of Shuup"
+msgstr ""
+
+msgid "Activate"
+msgstr ""
+
 msgid ""
 "Define price based basket weight range. Range minimum is counted in range "
 "only as zero."
@@ -1567,6 +1635,16 @@ msgid "Send a password reset email to %(email)s?"
 msgstr ""
 
 msgid "Send Reset Email"
+msgstr ""
+
+msgid "Welcome to Shuup!"
+msgstr ""
+
+msgid ""
+"Please fill out the following information to get your store up and running"
+msgstr ""
+
+msgid "Setup can be continued later from the admin dashboard"
 msgstr ""
 
 msgid "Create new"
