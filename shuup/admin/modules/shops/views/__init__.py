@@ -8,5 +8,6 @@
 
 from .edit import ShopEditView
 from .list import ShopListView
+from .wizard import ShopLanguagesWizardPane, ShopWizardPane
 
-__all__ = ["ShopEditView", "ShopListView"]
+__all__ = ["ShopEditView", "ShopLanguagesWizardPane", "ShopListView", "ShopWizardPane"]

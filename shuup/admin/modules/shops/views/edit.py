@@ -7,57 +7,19 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django import forms
 from django.conf import settings
 from django.db.transaction import atomic
-from django.utils.translation import ugettext_lazy as _
 
 from shuup import configuration
 from shuup.admin.form_part import (
     FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
 )
-from shuup.admin.forms.widgets import MediaChoiceWidget
+from shuup.admin.modules.shops.forms import ContactAddressForm, ShopBaseForm
 from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.views import (
     check_and_raise_if_only_one_allowed, CreateOrUpdateView
 )
-from shuup.core.models import MutableAddress, Shop
-from shuup.core.utils.form_mixins import ProtectedFieldsMixin
-from shuup.utils.i18n import get_current_babel_locale
-from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
-
-
-class ShopBaseForm(ProtectedFieldsMixin, MultiLanguageModelForm):
-    change_protect_field_text = _("This field cannot be changed since there are existing orders for this shop.")
-
-    class Meta:
-        model = Shop
-        exclude = ("owner", "options", "contact_address")
-
-    def __init__(self, **kwargs):
-        initial_languages = [i[0] for i in kwargs.get("languages", [])]
-        super(ShopBaseForm, self).__init__(**kwargs)
-        self.fields["logo"].widget = MediaChoiceWidget(clearable=True)
-        locale = get_current_babel_locale()
-        self.fields["currency"] = forms.ChoiceField(
-            choices=sorted(locale.currencies.items()),
-            required=True,
-            label=_("Currency")
-        )
-        self.fields["languages"] = forms.MultipleChoiceField(
-            choices=settings.LANGUAGES,
-            initial=initial_languages,
-            required=True,
-            label=_("Languages")
-        )
-        self.disable_protected_fields()
-
-    def save(self):
-        obj = super(ShopBaseForm, self).save()
-        languages = set(self.cleaned_data.get("languages"))
-        shop_languages = [(code, name) for code, name in settings.LANGUAGES if code in languages]
-        configuration.set(obj, "languages", shop_languages)
-        return obj
+from shuup.core.models import Shop
 
 
 class ShopBaseFormPart(FormPart):
@@ -77,19 +39,6 @@ class ShopBaseFormPart(FormPart):
 
     def form_valid(self, form):
         self.object = form["base"].save()
-
-
-class ContactAddressForm(forms.ModelForm):
-    class Meta:
-        model = MutableAddress
-        fields = (
-            "prefix", "name", "suffix", "name_ext",
-            "phone", "email",
-            "street", "street2", "street3",
-            "postal_code", "city",
-            "region_code", "region",
-            "country"
-        )
 
 
 class ContactAddressFormPart(FormPart):
