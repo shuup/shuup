@@ -14,6 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import FormView
 
 from shuup.admin.utils.views import CreateOrUpdateView
+from shuup.admin.views.wizard import TemplatedWizardFormDef, WizardPane
 from shuup.apps.provides import get_provide_objects
 from shuup.xtheme._theme import (
     get_current_theme, get_theme_by_identifier, set_current_theme
@@ -21,11 +22,48 @@ from shuup.xtheme._theme import (
 from shuup.xtheme.models import ThemeSettings
 
 
+def get_theme_context():
+    return {
+        "theme_classes": sorted(
+            [t for t in get_provide_objects("xtheme") if t.identifier],
+            key=lambda t: (t.name or t.identifier)
+        ),
+        "current_theme": get_current_theme()
+    }
+
+
 class ActivationForm(forms.Form):
     """
     A very simple form for activating a theme.
     """
     activate = forms.CharField(label=_("activate"))
+
+
+class ThemeWizardPane(WizardPane):
+    identifier = "theme"
+    icon = "xtheme/theme.png"
+    text = _("Choose a theme for your shop")
+
+    def visible(self):
+        return not get_current_theme()
+
+    def get_form_defs(self):
+        context = get_theme_context()
+        if not context["current_theme"] and len(context["theme_classes"]) > 0:
+            context["current_theme"] = context["theme_classes"][0]
+
+        return [
+            TemplatedWizardFormDef(
+                template_name="shuup/xtheme/admin/wizard.jinja",
+                name="theme",
+                form_class=ActivationForm,
+                context=context
+            )
+        ]
+
+    def form_valid(self, form):
+        identifier = form["theme"].cleaned_data["activate"]
+        set_current_theme(identifier)
 
 
 class ThemeConfigView(FormView):
@@ -37,11 +75,7 @@ class ThemeConfigView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super(ThemeConfigView, self).get_context_data(**kwargs)
-        context["theme_classes"] = sorted(
-            [t for t in get_provide_objects("xtheme") if t.identifier],
-            key=lambda t: (t.name or t.identifier)
-        )
-        context["current_theme"] = get_current_theme()
+        context.update(get_theme_context())
         return context
 
     def form_valid(self, form):
