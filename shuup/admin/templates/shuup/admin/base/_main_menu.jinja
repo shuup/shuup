@@ -3,7 +3,7 @@
         {% for category in shuup_admin.get_menu_entry_categories() %}
         {% set only_entry = (category.entries|first if category.entries|length == 1 else None) %}
         <li>
-            <a href="{% if not only_entry %}#{% else %}{{ only_entry.url }}{% endif %}" data-target-id="category-{{ category.name }}">
+            <a href="{% if not only_entry %}#{% else %}{{ only_entry.url }}{% endif %}" data-target-id="category-{{ category.identifier }}">
                 <i class="{{ category.icon }}"></i>
                 <span class="item-name parent">{{ category.name }}</span>
             </a>
@@ -12,7 +12,7 @@
     </ul>
 </div>
 {% for category in shuup_admin.get_menu_entry_categories() %}
-<div class="category-submenu" id="category-{{ category.name }}">
+<div class="category-submenu" id="category-{{ category.identifier }}">
     <div class="category-menu-title">{{ category.name }}</div>
     <a href="#" class="category-menu-close"><i class="fa fa-close"></i></a>
     <div class="category-menu-content">

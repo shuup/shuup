@@ -9,11 +9,17 @@
 
     body.menu-open & {
         left: 0px;
+
+        @media (max-width: @screen-sm-max) {
+            overflow: hidden;
+        }
     }
+
     .scroll-wrapper {
         background: @nav-bg;
         z-index: 1001;
     }
+
     ul.menu-list {
         padding: 0px 0px 25px 0px;
         margin: 0;
