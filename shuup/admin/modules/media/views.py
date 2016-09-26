@@ -166,9 +166,8 @@ class MediaBrowserView(TemplateView):
 
     def handle_upload(self):
         request = self.request
-
         try:
-            folder_id = int(request.POST.get("folder_id", 0))
+            folder_id = int(request.POST.get("folder_id") or request.GET.get("folder_id") or 0)
             if folder_id != 0:
                 folder = Folder.objects.get(pk=folder_id)
             else:
