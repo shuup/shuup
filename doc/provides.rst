@@ -168,6 +168,14 @@ Core
     <shuup.core.models.PaymentProcessor>`), provide a form for it via
     this provide.
 
+``carrier_wizard_form_def``
+    `Formdefs <shuup.utils.form_group.FormDef>` for creating carriers
+    (and their service(s)) through the shop setup wizard.
+
+``payment_processor_wizard_form_def``
+    `Formdefs <shuup.utils.form_group.FormDef>` for creating payment processors
+    (and their service(s)) through the shop setup wizard.
+
 ``supplier_module``
     Supplier module classes (deriving from `~shuup.core.suppliers.base.BaseSupplierModule`),
     as used by `~shuup.core.models.Supplier`.

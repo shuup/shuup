@@ -1,0 +1,18 @@
+{% macro service_provider_section(identifier, header, description) %}
+    <div class="form-def" data-name="{{ identifier }}">
+        <div class="row">
+            <div class="service-provider-form col-sm-6 col-sm-offset-3">
+                <div class="clearfix">
+                    <div class="pull-left">
+                        <p class="lead">{{ header }}</p>
+                        <p>{{ description|safe }}</p>
+                    </div>
+                    <button type="button" name="activate" class="btn btn-primary pull-right">{% trans %}Activate{% endtrans %}</button>
+                </div>
+                <div class="service-detail-form hidden">
+                    {{ caller() }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
