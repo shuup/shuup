@@ -1,0 +1,26 @@
+{% from "shuup/xtheme/admin/macros.jinja" import theme_table %}
+
+<input type="hidden" name="theme-activate" value="{{ form_def.context["current_theme"].identifier }}">
+{{ theme_table(form_def.context["theme_classes"], form_def.context["current_theme"], "chooseTheme(this)", True) }}
+
+<script>
+function toggleRowState($tr) {
+    var $title = $tr.find(".title");
+    var $action = $($tr.find("td")[1]);
+    if($tr.hasClass("active-row")) {
+        $title.replaceWith("<span class='title'>" + $title.text() + "</span>");
+    } else {
+        $title.replaceWith("<strong class='title'>" + $title.text() + "</strong>");
+    }
+    $action.find("button").toggleClass("hidden");
+    $action.find(".active").toggleClass("hidden");
+    $tr.toggleClass("active-row");
+}
+
+function chooseTheme(button) {
+    $(".wizard-pane.active form input[name='theme-activate']").val(button.value);
+    toggleRowState($(".theme-table .active-row"));
+    toggleRowState($(button).parents("tr"));
+    // actual submission happens when user clicks next in wizard
+}
+</script>

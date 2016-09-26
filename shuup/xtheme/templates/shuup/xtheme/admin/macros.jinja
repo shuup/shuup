@@ -1,0 +1,42 @@
+{% macro theme_table(theme_classes, current_theme, on_activate="", new_tab=False) %}
+    <table class="table table-striped table-bordered table-shuup theme-table">
+        <thead>
+            <tr>
+                <th>{% trans %}Theme{% endtrans %}</th>
+                <th colspan="2">{% trans %}Actions{% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for theme in theme_classes %}
+            {% set active_theme = current_theme and theme.identifier == current_theme.identifier %}
+            <tr {% if active_theme %} class="active-row" {% endif %}>
+                <td>
+                    {% if current_theme and theme.identifier == current_theme.identifier %}
+                        <strong class="title">{{ theme.name or theme.identifier }}</strong>
+                    {% else %}
+                        <span class="title">{{ theme.name or theme.identifier }}</span>
+                    {% endif %}
+                    {% if theme.author %}
+                        <br><small class="text-muted">{% trans %}Author{% endtrans %}: {{ theme.author }}</small>
+                    {% endif %}
+                </td>
+                <td>
+                    <span class="active {% if not active_theme %} hidden {% endif %}"><i class="fa fa-check text-success"></i> {% trans %}Currently active{% endtrans %}</span>
+                    <button
+                        name="activate"
+                        value="{{ theme.identifier }}"
+                        {% if on_activate != "" %} type="button" onclick="{{ on_activate }}" {% else %} type="submit" {% endif %}
+                        class="btn btn-sm btn-success {% if active_theme %} hidden {% endif %}">
+                        <i class="fa fa-check-circle"></i> {% trans %}Activate{% endtrans %}
+                    </button>
+                </td>
+                <td>
+                    <a {% if new_tab %} target="_blank" {% endif %} href="{{ url("shuup_admin:xtheme.config_detail", theme_identifier=theme.identifier) }}" class="btn btn-sm btn-gray">
+                        <i class="fa fa-cogs"></i> {% trans %}Configure{% endtrans %}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}
