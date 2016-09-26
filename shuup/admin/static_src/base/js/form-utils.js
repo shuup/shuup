@@ -24,6 +24,46 @@ window.setNextActionAndSubmit = function(formId, nextAction) {
     $form.submit();
 };
 
+function serializeForm($form) {
+    const arrayData = $form.serializeArray();
+    let objectData = {};
+    for(let i = 0; i < arrayData.length; i++) {
+        let obj = arrayData[i];
+        var value;
+        if(obj.value !== null) {
+            value = obj.value;
+        } else {
+            value = "";
+        }
+
+        if(typeof objectData[obj.name] !== "undefined") {
+            if(!$.isArray(objectData[obj.name])) {
+                objectData[obj.name] = [objectData[obj.name]];
+            }
+            objectData[obj.name].push(value);
+        } else {
+            objectData[obj.name] = value;
+        }
+    }
+    return objectData;
+}
+
+function renderFormErrors($form, errors) {
+    for(let formName in errors) {
+        let formErrors = errors[formName];
+        for(let fieldName in formErrors) {
+            let fieldErrors = formErrors[fieldName].join(" ");
+            let $field = $form.find(":input[name='" + formName + "-" + fieldName + "']").parent(".form-group");
+            $field.append("<span class='help-block error-block'>" + fieldErrors + "</span>").addClass("has-error");
+        }
+    }
+}
+
+function clearErrors($form) {
+    $form.find(".has-error").removeClass("has-error");
+    $form.find(".error-block").remove();
+}
+
 $(function() {
     $(".language-dependent-content").each(function() {
         const $ctr = $(this);

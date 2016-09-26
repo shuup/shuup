@@ -32,5 +32,12 @@ module.exports = {
     "select2": {
          "base": "./static_src/vendor/css",
          "entrypoint": "select2.css"
+     },
+     "wizard": {
+         "base": "./static_src/wizard",
+         "entrypoint": "less/wizard.less",
+         "watches": [
+             "less/**/*.less"
+         ]
      }
 };
