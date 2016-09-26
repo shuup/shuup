@@ -94,7 +94,8 @@ class MediaBrowserView(TemplateView):
         return super(MediaBrowserView, self).get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        if request.POST.get("action") == "upload":
+        action = request.POST.get("action") or request.GET.get("action")
+        if action == "upload":
             return self.handle_upload()
 
         # Instead of normal POST variables, the Mithril `m.request()`
