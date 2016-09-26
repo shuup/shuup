@@ -39,7 +39,8 @@ class _MenuCategory(object):
     """
     Internal menu category object.
     """
-    def __init__(self, name, icon):
+    def __init__(self, identifier, name, icon):
+        self.identifier = identifier
         self.name = name
         self.icon = icon
         self.entries = []
@@ -52,7 +53,7 @@ def get_menu_entry_categories(request):
     menu_categories = OrderedDict()
     menu_category_icons = {}
     for identifier, category_name, icon in MENU_CATEGORIES:
-        menu_categories[identifier] = _MenuCategory(category_name, icon)
+        menu_categories[identifier] = _MenuCategory(identifier, category_name, icon)
         menu_category_icons[identifier] = icon
 
     modules = list(get_modules())
@@ -74,6 +75,7 @@ def get_menu_entry_categories(request):
                 category = menu_categories.get(category_identifier)
                 if not category:
                     menu_categories[category_identifier] = category = _MenuCategory(
+                        identifier=category_identifier,
                         name=category_identifier,
                         icon=menu_category_icons.get(category_identifier, "fa fa-circle")
                     )
