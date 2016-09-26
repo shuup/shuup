@@ -12,6 +12,10 @@ Unrealeased
 Core
 ~~~~
 
+- Remove shop languages, category, tax class, service provider and services
+  default record creation from `shuup_init` management command
+
+
 Localization
 ~~~~~~~~~~~~
 
