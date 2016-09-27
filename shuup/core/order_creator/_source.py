@@ -689,7 +689,7 @@ class SourceLine(TaxableItem, Priceful):
             for line in self.source.get_final_lines():
                 if line.line_id == self.line_id and line.price == self.price:
                     taxes = line.taxes
-        return sum((x.amount for x in taxes), zero)
+        return sum((ensure_decimal_places(x.amount) for x in taxes), zero)
 
     def _serialize_field(self, key):
         value = getattr(self, key)

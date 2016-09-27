@@ -20,8 +20,8 @@ class PriceRate(object):
         """
         if instance is None:
             return self
-        taxful = instance.taxful_price
-        taxless = instance.taxless_price
+        taxful = instance.raw_taxful_price
+        taxless = instance.raw_taxless_price
         price = getattr(instance, self.price_field)
         return self._convert(taxful, taxless, price)
 
