@@ -21,6 +21,7 @@ from shuup.default_tax.models import TaxRule
 from shuup.testing.factories import (
     create_product, get_payment_method, get_shipping_method, get_shop
 )
+from shuup.utils.numbers import bankers_round
 
 
 def setup_module(module):
@@ -159,9 +160,9 @@ def test_3prods_with_services(taxes):
     if taxes == 'taxful':
         #    Name    Rate    Base amount     Tax amount         Taxful
         assert get_pretty_tax_summary(source) == [
-            'Tax-C   0.30   34.615384615   10.384615385   45.000000000',
+            'Tax-C   0.30   34.610000000   10.384615385   45.000000000',
             'Tax-A   0.25   12.000000000    3.000000000   15.000000000',
-            'Tax-B   0.15   26.086956522    3.913043478   30.000000000',
+            'Tax-B   0.15   26.080000000    3.913043478   30.000000000',
             'Total   0.24   72.700000000   17.297658863   90.000000000']
         assert get_pretty_line_taxes_of_discount_lines(source) == [[
             'Tax-A   0.25   -4.000000000   -1.000000000   -5.000000000',
@@ -195,6 +196,8 @@ def test_3prods_services_2discounts(taxes):
         tax_rates={'A': ['0.25'], 'B': ['0.20'], 'C': ['0.50']})
     source.calculate_taxes()
 
+    _check_taxful_price(source)
+    _check_taxless_price(source)
     assert source.total_price.value == Decimal('194.65')
     assert get_price_by_tax_class(source) == {
         'TC-A': 24, 'TC-B': 125, 'TC-C': 80, '': Decimal('-34.35')}
@@ -202,10 +205,10 @@ def test_3prods_services_2discounts(taxes):
     if taxes == 'taxful':
         #    Name    Rate    Base amount     Tax amount         Taxful
         assert get_pretty_tax_summary(source) == [
-            'Tax-C   0.50   45.333333333   22.666666667   68.000000000',
+            'Tax-C   0.50   45.330000000   22.666666667   68.000000000',
             'Tax-A   0.25   16.320000000    4.080000000   20.400000000',
-            'Tax-B   0.20   88.541666667   17.708333333  106.250000000',
-            'Total   0.30  150.190000000   44.455000000  194.650000000']
+            'Tax-B   0.20   88.530000000   17.708333333  106.250000000',
+            'Total   0.30  150.180000000   44.455000000  194.650000000']
         assert get_pretty_line_taxes_of_discount_lines(source) == [
             ['Tax-A   0.25   -1.920000000   -0.480000000   -2.400000000',
              'Tax-B   0.20  -10.416666667   -2.083333333  -12.500000000',
@@ -244,6 +247,8 @@ def test_3prods_services_2discounts2(taxes):
         tax_rates={'A': ['0.25'], 'B': ['0.20'], 'C': ['0.50']})
     source.calculate_taxes()
 
+    _check_taxful_price(source)
+    _check_taxless_price(source)
     assert source.total_price.value == 255
     assert get_price_by_tax_class(source) == {
         'TC-A': 30, 'TC-B': 150, 'TC-C': 120, '': -45}
@@ -265,7 +270,7 @@ def test_3prods_services_2discounts2(taxes):
     else:
         assert get_pretty_tax_summary(source) == [
             'Tax-C   0.50  102.000000000   51.000000000  153.000000000',
-            'Tax-A   0.25   25.500000000    6.375000000   31.875000000',
+            'Tax-A   0.25   25.500000000    6.375000000   31.880000000',
             'Tax-B   0.20  127.500000000   25.500000000  153.000000000',
             'Total   0.32  255.000000000   82.875000000  337.870000000']
         assert get_pretty_line_taxes_of_discount_lines(source) == [
@@ -289,6 +294,8 @@ def test_all_discounted(taxes):
         tax_rates={'A': ['0.20'], 'B': ['0.10']})
     source.calculate_taxes()
 
+    _check_taxful_price(source)
+    _check_taxless_price(source)
     assert source.total_price.value == 0
     assert get_price_by_tax_class(source) == {'TC-A': 30, 'TC-B': 60, '': -90}
 
@@ -323,6 +330,8 @@ def test_zero_priced_products(taxes):
         tax_rates={'A': ['0.25'], 'B': ['0.20']})
     source.calculate_taxes()
 
+    _check_taxful_price(source)
+    _check_taxless_price(source)
     assert source.total_price.value == 10
     assert get_price_by_tax_class(source) == {'TC-A': 0, 'TC-B': 0, '': 10}
 
@@ -346,6 +355,8 @@ def test_no_products(taxes):
         tax_rates={})
     source.calculate_taxes()
 
+    _check_taxful_price(source)
+    _check_taxless_price(source)
     assert source.total_price.value == 40
     assert get_price_by_tax_class(source) == {'': 40}
 
@@ -510,7 +521,7 @@ def get_pretty_tax_summary(source):
         for line in summary]
     total_base = source.taxless_total_price.value
     total_taxful = source.taxful_total_price.value
-    total_tax_amount = sum(x.tax_amount.value for x in summary)
+    total_tax_amount = sum(x.tax_amount.value for x in summary)  # Like it was read from db
     total_line = TAX_DISTRIBUTION_LINE_FORMAT.format(
         n="Total",
         r=((total_tax_amount / total_base)
@@ -551,3 +562,30 @@ def prettify_line_taxes(line):
             ba=line_tax.base_amount, a=line_tax.amount,
             t=(line_tax.base_amount + line_tax.amount))
         for line_tax in sorted(line.taxes, key=(lambda x: x.name))]
+
+
+def _check_taxless_price(source):
+    for line in source.get_lines():
+        from_components = bankers_round(line.taxless_base_unit_price*line.quantity - line.taxless_discount_amount, 2)
+        assert from_components == line.taxless_price
+        assert line.price == line.base_unit_price * line.quantity - line.discount_amount
+        assert line.price == line.base_unit_price * line.quantity - line.discount_amount
+        assert line.discount_amount == line.base_price - line.price
+        if line.base_price:
+            assert line.discount_rate == (1 - (line.price / line.base_price))
+            assert line.discount_percentage == 100 * (1 - (line.price / line.base_price))
+        if line.quantity:
+            assert line.unit_discount_amount == line.discount_amount / line.quantity
+
+
+def _check_taxful_price(source):
+    for line in source.get_lines():
+        from_components = bankers_round(line.taxful_base_unit_price*line.quantity - line.taxful_discount_amount, 2)
+        assert from_components == line.taxful_price
+        assert line.price == line.base_unit_price * line.quantity - line.discount_amount
+        assert line.discount_amount == line.base_price - line.price
+        if line.base_price:
+            assert line.discount_rate == (1 - (line.price / line.base_price))
+            assert line.discount_percentage == 100 * (1 - (line.price / line.base_price))
+        if line.quantity:
+            assert line.unit_discount_amount == line.discount_amount / line.quantity

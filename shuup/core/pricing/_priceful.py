@@ -6,7 +6,6 @@
 # LICENSE file in the root directory of this source tree.
 import decimal
 
-from shuup.core.fields.utils import ensure_decimal_places
 from shuup.utils.numbers import bankers_round
 
 from ._price import TaxfulPrice, TaxlessPrice
@@ -47,8 +46,8 @@ class Priceful(object):
       * ``discount_rate = 1 - (price / base_price)``
       * ``discount_percentage = 100 * discount_rate``
       * ``unit_discount_amount = discount_amount / quantity``
-      * ``taxful_price = taxless_price + tax_amount``
-      * ``tax_rate = (taxful_price.amount / taxless_price.amount) - 1``
+      * ``taxful_price = raw_taxless_price + tax_amount``
+      * ``tax_rate = (raw_taxful_price.amount / raw_taxless_price.amount) - 1``
       * ``tax_percentage = 100 * tax_rate``
     """
     @property
@@ -64,7 +63,7 @@ class Priceful(object):
 
         :rtype: shuup.core.pricing.Price
         """
-        return ensure_decimal_places(self.base_unit_price * self.quantity - self.discount_amount)
+        return self.base_unit_price * self.quantity - self.discount_amount
 
     @property
     def base_price(self):
@@ -162,8 +161,8 @@ class Priceful(object):
         """
         :rtype: decimal.Decimal
         """
-        taxless = self.taxless_price
-        taxful = self.taxful_price
+        taxless = self.raw_taxless_price
+        taxful = self.raw_taxful_price
         if not taxless.amount:
             return decimal.Decimal(0)
         return (taxful.amount / taxless.amount) - 1
@@ -174,6 +173,16 @@ class Priceful(object):
         :rtype: decimal.Decimal
         """
         return self.tax_rate * 100
+
+    @property
+    def raw_taxful_price(self):
+        price = self.price
+        return price if price.includes_tax else TaxfulPrice(price.amount + self.tax_amount)
+
+    @property
+    def raw_taxless_price(self):
+        price = self.price
+        return TaxlessPrice(price.amount - self.tax_amount) if price.includes_tax else price
 
     @property
     def taxful_price(self):
