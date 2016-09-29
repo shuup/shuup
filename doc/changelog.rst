@@ -1,69 +1,29 @@
 Shuup Change Log
 ================
 
-Unrealeased
+SHUUP 0.5.0
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
-
-Core
-~~~~
-
-Localization
-~~~~~~~~~~~~
+Released on 2016-09-29 12:20pm -0800.
 
 Admin
 ~~~~~
 
 - Enable login with email
+- Update menu
 
-Addons
-~~~~~~
+Core
+~~~~
 
-Front
-~~~~~
-
-Xtheme
-~~~~~~
-
-Classic Gray Theme
-~~~~~~~~~~~~~~~~~~
-
-Simple Supplier
-~~~~~~~~~~~~~~~
-
-Order Printouts
-~~~~~~~~~~~~~~~
-
-Campaigns
-~~~~~~~~~
-
-Customer Group Pricing
-~~~~~~~~~~~~~~~~~~~~~~
-
-Discount Pricing
-~~~~~~~~~~~~~~~~
-
-Simple CMS
-~~~~~~~~~~
-
-Default Tax
-~~~~~~~~~~~
-
-Guide
-~~~~~
-
-Importer
-~~~~~~~~
-
-Regions
-~~~~~~~
+- Fix bug in prices
+   - Avoid calculations based on rounded values
+   - Round tax summary values so that the prices shown in
+     summary matches with order totals
 
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
+
+- Add support for Django 1.9.x
 
 SHUUP 0.4.7
 -----------

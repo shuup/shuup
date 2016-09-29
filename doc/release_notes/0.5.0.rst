@@ -1,0 +1,13 @@
+Shuup 0.5.0 Release Notes
+=========================
+
+Released on 2016-09-29 12:20pm -0800.
+
+Add support for Django 1.9.x
+
+Admin: Enable login with email and Update menu
+Core: Fix bug in rounding priceful attributes
+
+For all changes see the full changelog:
+:doc:`../shoop-changelog` or `Git commit log
+<https://github.com/shuup/shuup/commits/v0.5.0>`__.
