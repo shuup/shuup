@@ -16,6 +16,7 @@ from django.contrib.auth import logout as do_logout
 from django.views.decorators.csrf import csrf_exempt
 from django.views.i18n import set_language
 
+from shuup.admin.forms import EmailAuthenticationForm
 from shuup.admin.module_registry import get_module_urls
 from shuup.admin.utils.urls import admin_url, AdminRegexURLPattern
 from shuup.admin.views.dashboard import DashboardView
@@ -29,7 +30,7 @@ def login(request, **kwargs):
     if not request.user.is_anonymous() and request.method == "POST":  # We're logging in, so log out first
         do_logout(request)
     kwargs.setdefault("extra_context", {})["error"] = request.GET.get("error")
-    return auth_views.login(request, **kwargs)
+    return auth_views.login(request, authentication_form=EmailAuthenticationForm, **kwargs)
 
 
 def get_urls():

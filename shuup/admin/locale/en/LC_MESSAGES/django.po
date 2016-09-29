@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-15 20:44+0000\n"
+"POT-Creation-Date: 2016-09-29 00:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -20,6 +20,19 @@ msgstr ""
 "Generated-By: Babel 2.1.1\n"
 
 msgid "Home"
+msgstr ""
+
+#, python-format
+msgid ""
+"Please enter a correct %(username)s and password. Note that both fields may "
+"be case-sensitive. In case of multiple accounts with same email only "
+"username can be used to login."
+msgstr ""
+
+msgid "This account is inactive."
+msgstr ""
+
+msgid "Username or email address"
 msgstr ""
 
 msgid "Browse"
