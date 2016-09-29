@@ -5,8 +5,10 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from ._auth import EmailAuthenticationForm
 from ._base import ShuupAdminForm
 
 __all__ = [
+    "EmailAuthenticationForm",
     "ShuupAdminForm",
 ]

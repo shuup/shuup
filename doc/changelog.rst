@@ -18,6 +18,8 @@ Localization
 Admin
 ~~~~~
 
+- Enable login with email
+
 Addons
 ~~~~~~
 
