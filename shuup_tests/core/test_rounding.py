@@ -13,7 +13,10 @@ from shuup.core.models import OrderLine
 from shuup.core.models import OrderLineType
 from shuup.core.models import Shop
 from shuup.core.models import ShopStatus
-from shuup.testing.factories import create_empty_order
+from shuup.testing.factories import (
+    add_product_to_order, create_empty_order, create_product,
+    get_default_shop, get_default_supplier
+)
 from shuup.utils.numbers import bankers_round
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
 
@@ -39,7 +42,6 @@ def test_rounding(prices):
 
     order = create_empty_order(prices_include_tax=False)
     order.save()
-    currency = order.shop.currency
     for x, price in enumerate(prices):
         ol = OrderLine(
             order=order,
@@ -59,6 +61,10 @@ def test_rounding(prices):
 
         # make sure the line taxless price is rounded
         assert order_line.taxless_price == order.shop.create_price(bankers_round(price, 2))
+
+        # Check that total prices calculated from priceful parts still matches
+        assert _get_taxless_price(order_line) == order_line.taxless_price
+        assert _get_taxful_price(order_line) == order_line.taxful_price
 
         # make sure the line price is rounded
         assert order_line.price == order.shop.create_price(price)
@@ -100,8 +106,42 @@ def test_order_source_rounding(prices):
         # make sure the line taxless price is rounded
         assert order_source.taxless_price == source.shop.create_price(bankers_round(price, 2))
 
+        # Check that total prices calculated from priceful parts still matches
+        assert _get_taxless_price(order_source) == order_source.taxless_price
+        assert _get_taxful_price(order_source) == order_source.taxful_price
+
         # make sure the line price is rounded
         assert order_source.price == source.shop.create_price(price)
 
     # make sure order total is rounded
     assert source.taxless_total_price == source.shop.create_price(bankers_round(expected, 2))
+
+
+@pytest.mark.parametrize("prices", PRICE_SPEC)
+@pytest.mark.django_db
+def test_rounding_with_taxes(prices):
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+
+    order = create_empty_order(shop=shop)
+    order.save()
+    product = create_product("test_sku",  shop=shop, supplier=supplier)
+    tax_rate = Decimal("0.22222")
+    for x, price in enumerate(prices):
+        add_product_to_order(
+            order, supplier, product, quantity=Decimal("2.22"),
+            taxless_base_unit_price=Decimal(price), tax_rate=tax_rate)
+    order.cache_prices()
+    for x, order_line in enumerate(order.lines.all().order_by("ordering")):
+        # Check that total prices calculated from priceful parts still matches
+        assert _get_taxless_price(order_line) == order_line.taxless_price
+        assert _get_taxful_price(order_line) == order_line.taxful_price
+        assert order_line.price == (order_line.base_unit_price * order_line.quantity - order_line.discount_amount)
+
+
+def _get_taxless_price(line):
+    return bankers_round(line.taxless_base_unit_price*line.quantity - line.taxless_discount_amount, 2)
+
+
+def _get_taxful_price(line):
+    return bankers_round(line.taxful_base_unit_price*line.quantity - line.taxful_discount_amount, 2)
