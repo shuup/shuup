@@ -7,6 +7,7 @@
 import django.views.generic
 
 import shuup.core.models
+from shuup.front.views.dashboard import DashboardViewMixin
 
 
 class OrderViewMixin(object):
@@ -17,11 +18,11 @@ class OrderViewMixin(object):
         return qs.filter(customer=self.request.customer)
 
 
-class OrderListView(OrderViewMixin, django.views.generic.ListView):
+class OrderListView(DashboardViewMixin, OrderViewMixin, django.views.generic.ListView):
     template_name = 'shuup/personal_order_history/order_list.jinja'
     context_object_name = 'orders'
 
 
-class OrderDetailView(OrderViewMixin, django.views.generic.DetailView):
+class OrderDetailView(DashboardViewMixin, OrderViewMixin, django.views.generic.DetailView):
     template_name = 'shuup/personal_order_history/order_detail.jinja'
     context_object_name = 'order'
