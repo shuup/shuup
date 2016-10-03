@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from itertools import chain
 
 from django.conf.urls import url
+from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.i18n import set_language
@@ -20,6 +21,7 @@ from shuup.utils.i18n import javascript_catalog_all
 from .views.basket import BasketView
 from .views.category import CategoryView
 from .views.checkout import get_checkout_view
+from .views.dashboard import DashboardView
 from .views.index import IndexView
 from .views.order import OrderCompleteView
 from .views.payment import ProcessPaymentView
@@ -44,6 +46,7 @@ urlpatterns = [
     url(r'^checkout/$', checkout_view, name='checkout'),
     url(r'^checkout/(?P<phase>.+)/$', checkout_view, name='checkout'),
     url(r'^basket/$', csrf_exempt(BasketView.as_view()), name='basket'),
+    url(r'^dashboard/$', login_required(DashboardView.as_view()), name="dashboard"),
     url(r'^order/payment/(?P<pk>.+?)/(?P<key>.+?)/$',
         csrf_exempt(ProcessPaymentView.as_view()),
         kwargs={"mode": "payment"},

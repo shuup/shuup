@@ -1,0 +1,65 @@
+.section-content {
+    background: @dashboard-section-background;
+    padding: 15px;
+}
+.section-navigation {
+    margin-top: 4px;
+
+    .sidebar-list {
+        &-item {
+            border: solid @border-color;
+            border-width: 1px 0px;
+            display: block;
+            font-size: 1.6rem;
+            padding: 12px 15px;
+            margin-bottom: -1px;
+            color: @text-color;
+            position: relative;
+            &:hover, &:focus {
+                color: @brand-primary;
+                text-decoration: none;
+                background: rgba(0,0,0,0.03);
+            }
+            &.active {
+                background: #fff;
+                color: @brand-primary;
+                font-weight: normal;
+            }
+            &.errors {
+                padding-right: 35px;
+            }
+            i {
+                width: 30px;
+                text-align: center;
+            }
+        }
+    }
+}
+
+.dashboard-item {
+    padding: 15px;
+    margin-bottom: 30px;
+    border: 1px solid transparent;
+    &:hover, &:focus {
+        color: @brand-primary;
+        text-decoration: none;
+        background: rgba(0,0,0,0.03);
+        border: 1px solid rgba(0,0,0,0.08);
+
+    }
+    .dashboard-title {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+    .dashboard-content {
+        .title {
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+    }
+}
+
+.page-header-dashboard {
+    margin-top: 0;
+}
