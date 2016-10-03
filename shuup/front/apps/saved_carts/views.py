@@ -16,6 +16,7 @@ from shuup.core.excs import ProductNotOrderableProblem
 from shuup.core.models import OrderLineType, Product
 from shuup.core.utils.users import real_user_or_none
 from shuup.front.models import StoredBasket
+from shuup.front.views.dashboard import DashboardViewMixin
 
 
 class CartViewMixin(object):
@@ -26,12 +27,12 @@ class CartViewMixin(object):
         return qs.filter(persistent=True, deleted=False, customer=self.request.customer, shop=self.request.shop)
 
 
-class CartListView(CartViewMixin, ListView):
+class CartListView(DashboardViewMixin, CartViewMixin, ListView):
     template_name = 'shuup/saved_carts/cart_list.jinja'
     context_object_name = 'carts'
 
 
-class CartDetailView(CartViewMixin, DetailView):
+class CartDetailView(DashboardViewMixin, CartViewMixin, DetailView):
     template_name = 'shuup/saved_carts/cart_detail.jinja'
     context_object_name = 'cart'
 

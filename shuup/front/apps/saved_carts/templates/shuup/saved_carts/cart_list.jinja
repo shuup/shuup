@@ -1,18 +1,18 @@
-{% extends "shuup/front/base.jinja" %}
+{% extends "shuup/front/dashboard/dashboard.jinja" %}
 
 {% block title -%}{% trans %}Saved Carts{% endtrans %}{%- endblock %}
+{% block content_title -%}{% trans %}Saved Carts{% endtrans %}{%- endblock %}
 
 {% block breadcrumb %}
     {% call macros.breadcrumb() %}
         {{ macros.render_breadcrumb_item("/", _("Home")) }}
+        {{ macros.render_breadcrumb_item(url("shuup:dashboard"), _("Dashboard")) }}
         {{ macros.render_breadcrumb_item(None, _("My Saved Carts"), True) }}
     {% endcall %}
 {% endblock %}
 
 
-{% block content %}
-    <h1 class="page-header">{% trans %}Saved Carts{% endtrans %}</h1>
-
+{% block dashboard_content %}
     {% if carts %}
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
