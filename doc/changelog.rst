@@ -24,6 +24,7 @@ Addons
 Front
 ~~~~~
 
+- Add Saved Carts to Dashboard
 - Add Order History to Dashboard
 - Add Customer Information to Dashboard
 - Add Dashboard for customers

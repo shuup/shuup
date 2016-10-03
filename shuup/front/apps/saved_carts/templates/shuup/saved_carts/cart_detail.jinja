@@ -1,17 +1,19 @@
-{% extends "shuup/front/base.jinja" %}
+{% extends "shuup/front/dashboard/dashboard.jinja" %}
 {% from "shuup/saved_carts/macros/cart_detail.jinja" import render_action_buttons, render_extra_js with context %}
 
 {% block title -%}{{ cart.title }}{%- endblock %}
+{% block content_title %}{{ cart.title }}{% endblock %}
 
 {% block breadcrumb %}
     {% call macros.breadcrumb() %}
         {{ macros.render_breadcrumb_item("/", _("Home")) }}
+        {{ macros.render_breadcrumb_item(url("shuup:dashboard"), _("Dashboard")) }}
         {{ macros.render_breadcrumb_item(url("shuup:saved_cart.list"), _("My Saved Carts")) }}
         {{ macros.render_breadcrumb_item(None,  cart.title, True) }}
     {% endcall %}
 {% endblock %}
 
-{% block content %}
+{% block dashboard_content %}
     <h1 class="page-header">{{ cart.title }}{{ render_action_buttons() }}</h1>
     <div id="message-container"></div>
     <div class="well">
