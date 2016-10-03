@@ -97,6 +97,10 @@ Core
     Admin module classes. Practically all of the functionality in the admin is built
     via admin modules.
 
+``customer_dashboard_items``
+    Classes to parse customer dashboard items from. These are subclasses of
+    ``shuup.front.utils.dashboard.DashboardItem``
+
 ``discount_module``
     `~shuup.core.pricing.DiscountModule` for pricing system.
 

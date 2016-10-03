@@ -23,6 +23,7 @@ Addons
 
 Front
 ~~~~~
+- Add Dashboard for customers
 
 Xtheme
 ~~~~~~

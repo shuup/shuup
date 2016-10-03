@@ -1,0 +1,38 @@
+{% extends "shuup/front/base.jinja" %}
+{% block title %}{% trans %}My Dashboard{% endtrans %}{% endblock %}
+
+{% block content_title %}{% trans %}Dashboard{% endtrans %}{% endblock %}
+
+{% block breadcrumb %}
+    {% call macros.breadcrumb() %}
+        {{ macros.render_breadcrumb_item("/", _("Home")) }}
+        {{ macros.render_breadcrumb_item(None,  _("Dashboard"), True) }}
+    {% endcall %}
+{% endblock %}
+
+{% block content %}
+<div class="container customer-dashboard">
+    <div class="row">
+        <div class="col-md-3 section-navigation">
+            <div class="sidebar-list">
+                <a class="sidebar-list-item{% if not selected_item %} active{% endif %}" href="{{ url("shuup:dashboard") }}"><i class="fa fa-tachometer"></i> {% trans %}Dashboard{% endtrans %}</a>
+                {% for menu_obj in menu_items %}
+                {% set active = (menu_obj == selected_item) %}
+                <a class="sidebar-list-item{% if active %} active{% endif %}" href="{{ menu_obj.url }}"><i class="{{ menu_obj.icon }}"></i> {{ menu_obj.title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-9 section-content">
+            {% block dashboard_content %}
+                <div class="row">
+                {% for menu_obj in menu_items %}
+                    {% if menu_obj.show_on_dashboard() %}
+                    {{ menu_obj.render() }}
+                    {% endif %}
+                {% endfor %}
+                </div>
+            {% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}
