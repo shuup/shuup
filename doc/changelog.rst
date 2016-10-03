@@ -23,6 +23,8 @@ Addons
 
 Front
 ~~~~~
+
+- Add Customer Information to Dashboard
 - Add Dashboard for customers
 
 Xtheme

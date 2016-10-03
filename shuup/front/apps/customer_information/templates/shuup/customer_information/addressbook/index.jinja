@@ -1,0 +1,64 @@
+{% extends "shuup/front/dashboard/dashboard.jinja" %}
+{%- from "shuup/front/macros/dashboard.jinja" import content_block -%}
+{% from "shuup/customer_information/macros/address.jinja" import render_address_forms, render_address_forms_js %}
+{% from "shuup/customer_information/macros/buttons.jinja" import user_account_button, save_changes_button %}
+{% from "shuup/customer_information/macros/contact.jinja" import render_company_contact_form %}
+{%- from "shuup/customer_information/macros/address.jinja" import render_address -%}
+
+{% block title %}{% trans %}Address Book{% endtrans %}{% endblock %}
+{% block content_title %}{% trans %}Address Book{% endtrans %}{% endblock %}
+
+{% block breadcrumb %}
+    {% call macros.breadcrumb() %}
+        {{ macros.render_breadcrumb_item("/", _("Home")) }}
+        {{ macros.render_breadcrumb_item(url("shuup:dashboard"), _("Dashboard")) }}
+        {{ macros.render_breadcrumb_item(None,  _("Address Book"), True) }}
+    {% endcall %}
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="user-account-address">
+    <h1>{% trans %}Default Addresses{% endtrans %}
+    <a class="btn btn-primary pull-right" role="button" href="{{ url("shuup:customer_edit") }}">{% trans %}Edit{% endtrans %}</a>
+    </h1>
+    <div class="col-md-6">
+        {% call content_block(_("Default Billing Address")) %}
+            {% set address = customer.default_billing_address %}
+            {% if address %}
+            {{ render_address(address) }}
+            {% else %}
+            {% trans %}No Default Billing Address set.{% endtrans %}
+            {% endif %}
+        {% endcall %}
+    </div>
+    <div class="col-md-6">
+    {% call content_block(_("Default Shipping Address")) %}
+        {% set address = customer.default_shipping_address %}
+        {% if address %}
+        {{ render_address(address) }}
+        {% else %}
+        {% trans %}No Default Shipping Address set.{% endtrans %}
+        {% endif %}
+    {% endcall %}
+    </div>
+    <h1 class="">{% trans %}Additional Addresses{% endtrans %}
+    <a class="btn btn-primary pull-right" role="button" href="{{ url("shuup:address_book_new") }}">{% trans %}Create new{% endtrans %}</a>
+    </h1>
+    {% if addresses %}
+        {% for saved_address in addresses %}
+        <div class="col-md-4">
+            {% call content_block(saved_address.title) %}
+                <p><b>{% trans %}Role{% endtrans %}:</b> {{ saved_address.role }}</p>
+                <p><b>{% trans %}Status{% endtrans %}:</b> {{ saved_address.status }}</p>
+                {{ render_address(saved_address.address) }}
+                <a class="btn btn-danger" role="button" href="{{ url("shuup:address_book_delete", pk=saved_address.pk) }}">{% trans %}Delete{% endtrans %}</a>
+                <a class="btn btn-primary" role="button" href="{{ url("shuup:address_book_edit", pk=saved_address.pk) }}">{% trans %}Edit{% endtrans %}</a>
+            {% endcall %}
+        </div>
+        {% endfor %}
+
+    {% else %}
+        {% trans %}You don't have any additional addresses{% endtrans %}
+    {% endif %}
+</div>
+{% endblock %}
