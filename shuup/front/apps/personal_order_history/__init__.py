@@ -18,6 +18,9 @@ class AppConfig(shuup.apps.AppConfig):
 
     provides = {
         'front_urls': [__name__ + '.urls:urlpatterns'],
+        'customer_dashboard_items': [
+            __name__ + '.dashboard_items:OrderHistoryItem'
+        ],
     }
 
 

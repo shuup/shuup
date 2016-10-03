@@ -24,6 +24,7 @@ Addons
 Front
 ~~~~~
 
+- Add Order History to Dashboard
 - Add Customer Information to Dashboard
 - Add Dashboard for customers
 
@@ -65,6 +66,8 @@ Regions
 
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
+
+- Personal Order history: URL has now been changed from ``/orders`` to ``/order-history``
 
 SHUUP 0.5.0
 -----------

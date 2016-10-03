@@ -1,0 +1,38 @@
+{% extends "shuup/front/dashboard/dashboard_base.jinja" %}
+
+{% block dashboard_item_content %}
+{% if orders %}
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{{ _('Identifier') }}</th>
+                <th>{{ _('Order date') }}</th>
+                <th>{{ _('Status') }}</th>
+                <th class="text-right">{{ _('Total price') }}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td>{{- order.identifier -}}</td>
+                    <td>{{ order.order_date|datetime }}</td>
+                    <td>{{ order.get_status_display() }}</td>
+                    <td class="text-right">{{ order.taxful_total_price|money }}</td>
+                    <td class="text-right">
+                        <a href="{{ url("shuup:show-order", pk=order.pk) }}">
+                            <i class="fa fa-search"></i> {% trans %}Details{% endtrans %}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+    <p class="lead">
+        <i class="fa fa-info-circle text-info"></i> {{ _("You haven't made any orders yet.") }}
+    </p>
+{% endif %}
+{% endblock %}
