@@ -203,6 +203,15 @@
             clear: both;
         }
     }
+
+    .form-lg {
+        .form-group {
+            label, .control-label {
+                font-size: 1.6rem;
+                padding-top: 11px;
+            }
+        }
+    }
 }
 
 label, .radio label, .checkbox label {
@@ -232,6 +241,23 @@ label, .radio label, .checkbox label {
 fieldset[disabled] .form-control {
     background-color: @input-bg-color;
     opacity: 0.6;
+}
+
+.form-lg {
+    padding: 10px 16px;
+    font-size: 1.6rem;
+    line-height: 1.333333;
+    border-radius: 6px;
+
+    input.form-control,
+    select.form-control {
+        height: 46px;
+        font-size: 1.6rem;
+    }
+
+    textarea.form-control {
+        font-size: 1.6rem;
+    }
 }
 
 .input-group-addon {
