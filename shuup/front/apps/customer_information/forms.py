@@ -8,8 +8,11 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
+from enumfields import EnumField
 
-from shuup.core.models import CompanyContact, PersonContact
+from shuup.core.models import (
+    CompanyContact, PersonContact, SavedAddressRole, SavedAddressStatus
+)
 
 
 class PersonContactForm(forms.ModelForm):
@@ -50,3 +53,9 @@ class CompanyContactForm(forms.ModelForm):
             elif company.pk != self.instance.pk:
                 raise ValidationError(error_message, code="existing_tax_number")
         return tax_number
+
+
+class SavedAddressForm(forms.Form):
+    title = forms.CharField(max_length=255, label=_("Address Title"))
+    role = EnumField(SavedAddressRole, default=SavedAddressRole.SHIPPING).formfield(label=_("Address Type"))
+    status = EnumField(SavedAddressStatus, default=SavedAddressStatus.ENABLED).formfield(label=_("Address Status"))
