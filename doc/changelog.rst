@@ -47,6 +47,7 @@ Order Printouts
 Campaigns
 ~~~~~~~~~
 
+- Fix bug in product type catalog filter matching
 - Avoid matching inactive filters and conditions
 
 Customer Group Pricing

@@ -470,6 +470,7 @@ def test_product_catalog_campaigns():
     assert CatalogCampaign.get_for_product(sp).count() == 2  # there are now two matching campaigns in same shop
     assert CatalogCampaign.get_for_product(shop_product).count() == 1  # another campaign matches only once
 
+
 @pytest.mark.django_db
 def test_product_catalog_campaigns2():
     shop = get_default_shop()
@@ -485,11 +486,14 @@ def test_product_catalog_campaigns2():
     campaign.filters.add(type_filter)
     assert CatalogCampaign.get_for_product(shop_product).count() == 0
     type_filter.product_types.add(product.type)
+    assert type_filter.matches(shop_product)
     assert CatalogCampaign.get_for_product(shop_product).count() == 1
     product.type = product_type
     product.save()
+    assert type_filter.matches(shop_product)
     assert CatalogCampaign.get_for_product(shop_product).count() == 1
     type_filter.product_types.remove(product_type)
+    assert not type_filter.matches(shop_product)
     assert CatalogCampaign.get_for_product(shop_product).count() == 0
 
 
