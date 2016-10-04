@@ -14,7 +14,7 @@ from django.test.client import RequestFactory
 from django.utils.translation import activate
 
 from shuup.admin.modules.services.forms import PaymentMethodForm
-from shuup.admin.modules.shops.views.edit import ShopBaseForm
+from shuup.admin.modules.shops.forms import ShopBaseForm, ShopWizardForm
 from shuup.testing.factories import get_default_shop, get_default_payment_method
 from shuup_tests.utils.forms import get_form_data
 
@@ -128,3 +128,16 @@ def test_model_form_partially_translated():
     with pytest.raises(ObjectDoesNotExist):
         translation = payment_method.get_translation("fi")
         translation.refresh_from_db()  # Just in case if the translation object comes from cache or something
+
+
+def test_form_labels():
+    shop_form = ShopBaseForm(languages=[("en", "en")])
+    assert shop_form.base_fields["name__en"].label == "Name"
+
+    shop_form = ShopBaseForm(languages=[("en", "en"), ("fi", "fi")])
+    assert shop_form.base_fields["name__en"].label == "Name [English]"
+    assert shop_form.base_fields["name__fi"].label == "Name [Finnish]"
+
+    shop_form = ShopWizardForm(languages=[("en", "en"), ("fi", "fi")])
+    assert shop_form.base_fields["public_name__en"].label == "Shop name [English]"
+    assert shop_form.base_fields["public_name__fi"].label == "Shop name [Finnish]"
