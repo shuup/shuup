@@ -47,6 +47,8 @@ Order Printouts
 Campaigns
 ~~~~~~~~~
 
+- Avoid matching inactive filters and conditions
+
 Customer Group Pricing
 ~~~~~~~~~~~~~~~~~~~~~~
 

@@ -57,6 +57,14 @@ def test_campaign_creation(rf):
     campaign.save()
     ProductDiscountAmount.objects.create(campaign=campaign, discount_amount=20)
 
+    # Make sure disabling campaign disables it filters and conditions
+    assert campaign.filters.filter(active=True).exists()
+    assert campaign.conditions.filter(active=True).exists()
+    campaign.active = False
+    campaign.save()
+    assert not campaign.filters.filter(active=True).exists()
+    assert not campaign.conditions.filter(active=True).exists()
+
 
 @pytest.mark.django_db
 def test_condition_doesnt_match(rf):

@@ -14,7 +14,6 @@ from shuup.campaigns.models.basket_conditions import (
     BasketTotalAmountCondition, BasketTotalProductAmountCondition,
     CategoryProductsBasketCondition, ProductsInBasketCondition
 )
-from shuup.campaigns.models.basket_line_effects import DiscountFromCategoryProducts
 from shuup.campaigns.models.basket_effects import (
     BasketDiscountAmount, BasketDiscountPercentage
 )
@@ -82,6 +81,12 @@ def test_basket_campaign_module_case1(rf):
     assert basket.product_count == 2
     assert basket.total_price == (price(single_product_price) * basket.product_count - price(discount_amount_value))
     assert OrderLineType.DISCOUNT in [l.type for l in basket.get_final_lines()]
+
+    # Make sure disabling campaign disables it conditions
+    assert campaign.conditions.filter(active=True).exists()
+    campaign.active = False
+    campaign.save()
+    assert not campaign.conditions.filter(active=True).exists()
 
 
 @pytest.mark.django_db

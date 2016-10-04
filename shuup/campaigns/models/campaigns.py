@@ -118,6 +118,11 @@ class CatalogCampaign(Campaign):
     def __str__(self):
         return force_text(_("Catalog Campaign: %(name)s" % dict(name=self.name)))
 
+    def save(self, *args, **kwargs):
+        super(CatalogCampaign, self).save(*args, **kwargs)
+        self.filters.update(active=self.active)
+        self.conditions.update(active=self.active)
+
     def rules_match(self, context, shop_product, matching_catalog_filters, matching_context_conditions):
         if not self.is_available():
             return False
@@ -203,6 +208,10 @@ class BasketCampaign(Campaign):
 
     def __str__(self):
         return force_text(_("Basket Campaign: %(name)s" % dict(name=self.name)))
+
+    def save(self, *args, **kwargs):
+        super(BasketCampaign, self).save(*args, **kwargs)
+        self.conditions.update(active=self.active)
 
     @classmethod
     def get_for_product(cls, shop_product):

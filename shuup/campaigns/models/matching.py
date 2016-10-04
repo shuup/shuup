@@ -21,7 +21,7 @@ def get_matching_context_conditions(context):
     matching_context_conditions = cache.get(conditions_cache_key, None)
     if matching_context_conditions is None:
         matching_context_conditions = set()
-        for condition in ContextCondition.objects.all():
+        for condition in ContextCondition.objects.filter(active=True):
             if condition.matches(context):
                 matching_context_conditions.add(condition.pk)
         cache.set(conditions_cache_key, matching_context_conditions, timeout=None)
@@ -34,7 +34,7 @@ def get_matching_catalog_filters(shop_product):
     matching_catalog_filters = cache.get(catalog_filters_cache_key, None)
     if matching_catalog_filters is None:
         matching_catalog_filters = set()
-        for filter in CatalogFilter.objects.all():
+        for filter in CatalogFilter.objects.filter(active=True):
             if filter.matches(shop_product):
                 matching_catalog_filters.add(filter.pk)
         cache.set(catalog_filters_cache_key, matching_catalog_filters, timeout=None)
