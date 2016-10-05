@@ -68,6 +68,8 @@ Importer
 Regions
 ~~~~~~~
 
+- Make backend more modular to allow more specific resource distribution
+
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
