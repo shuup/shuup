@@ -35,6 +35,8 @@ Xtheme
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 
+- Fix issue with footer padding
+
 Simple Supplier
 ~~~~~~~~~~~~~~~
 
