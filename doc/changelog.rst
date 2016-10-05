@@ -24,6 +24,7 @@ Addons
 Front
 ~~~~~
 
+- Fix macro name in Single Page Checkout
 - Add Saved Carts to Dashboard
 - Add Order History to Dashboard
 - Add Customer Information to Dashboard
