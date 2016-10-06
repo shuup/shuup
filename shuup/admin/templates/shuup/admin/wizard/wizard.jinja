@@ -55,7 +55,7 @@
     (function(){
         $(".wizard").wizard({
             hidePrevious: true,
-            redirectOnLastPane: "{{ url("shuup_admin:dashboard") }}",
+            redirectOnLastPane: "{{ url("shuup_admin:home") }}",
             skipTooltip: "{% trans %}Setup can be continued later from the admin dashboard{% endtrans %}",
             skip: function() {
                 $.ajax({
@@ -65,7 +65,7 @@
                         csrfmiddlewaretoken: ShuupAdminConfig.csrf
                     },
                     success: function() {
-                        window.location = "{{ url("shuup_admin:dashboard") }}";
+                        window.location = "{{ url("shuup_admin:home") }}";
                     }
                 });
             }

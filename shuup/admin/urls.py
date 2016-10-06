@@ -20,6 +20,7 @@ from shuup.admin.forms import EmailAuthenticationForm
 from shuup.admin.module_registry import get_module_urls
 from shuup.admin.utils.urls import admin_url, AdminRegexURLPattern
 from shuup.admin.views.dashboard import DashboardView
+from shuup.admin.views.home import HomeView
 from shuup.admin.views.menu import MenuView
 from shuup.admin.views.search import SearchView
 from shuup.admin.views.select import MultiselectAjaxView
@@ -40,6 +41,7 @@ def get_urls():
 
     urls.extend([
         admin_url(r'^$', DashboardView.as_view(), name='dashboard'),
+        admin_url(r'^home/$', HomeView.as_view(), name='home'),
         admin_url(r'^wizard/$', WizardView.as_view(), name='wizard'),
         admin_url(r'^search/$', SearchView.as_view(), name='search'),
         admin_url(r'^select/$', MultiselectAjaxView.as_view(), name='select'),
