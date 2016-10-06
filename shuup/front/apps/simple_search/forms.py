@@ -1,0 +1,93 @@
+# -*- coding: utf-8 -*-
+# This file is part of Shuup.
+#
+# Copyright (c) 2012-2016, Shoop Commerce Ltd. All rights reserved.
+#
+# This source code is licensed under the AGPLv3 license found in the
+# LICENSE file in the root directory of this source tree.
+from __future__ import unicode_literals
+
+import re
+
+from django import forms
+from django.db.models import Q
+from django.utils.translation import ugettext_lazy as _
+
+from shuup.core import cache
+from shuup.core.models import Product
+from shuup.front.utils.sorts_and_filters import ProductListFormModifier
+
+
+def get_query_words(query):
+    """
+    Get query words
+
+    Split the query into words and return a list of strings.
+
+    :type query_string: str
+    :return: List of strings
+    :rtype: list
+    """
+    word_finder = re.compile(r'"([^"]+)"|(\S+)').findall
+    normalize_spaces = re.compile(r'\s{2,}').sub
+    words = []
+    for word in word_finder(query):
+        found_word = word[0] or word[1]
+        words.append(normalize_spaces(" ", found_word.strip()))
+    return words
+
+
+def get_compiled_query(query_string, needles):
+    """
+    Get compiled query
+
+    Compile query string into `Q` objects and return it
+    """
+    compiled_query = None
+    for word in get_query_words(query_string):
+        inner_query = None
+        for needle in needles:
+            q = Q(**{"%s__icontains" % needle: word})
+            inner_query = q if inner_query is None else inner_query | q
+        compiled_query = inner_query if compiled_query is None else compiled_query & inner_query
+    return compiled_query
+
+
+def get_search_product_ids(request, query, limit=150):
+    query = query.strip().lower()
+    cache_key_elements = {
+        "query": query,
+        "shop": request.shop.pk,
+        "customer": request.customer.pk
+    }
+    cache_key = "simple_search:%s" % hash(frozenset(cache_key_elements.items()))
+    product_ids = cache.get(cache_key)
+    if product_ids is None:
+        entry_query = get_compiled_query(
+            query, ['sku', 'translations__name', 'translations__description', 'translations__keywords'])
+        product_ids = list(Product.objects.searchable(
+            shop=request.shop,
+            customer=request.customer
+        ).filter(entry_query).distinct().values_list("pk", flat=True))[:limit]
+        cache.set(cache_key, product_ids, 60 * 5)
+    return product_ids
+
+
+class FilterProductListByQuery(ProductListFormModifier):
+    def should_use(self, configuration):
+        return True
+
+    def get_ordering(self, configuration):
+        return 0
+
+    def get_fields(self, category=None):
+        return [("q", forms.CharField(label=_("Search"), required=False))]
+
+    def get_filters(self, request, data):
+        if not data.get("q"):
+            return Q()
+        return Q(pk__in=get_search_product_ids(request, data.get("q")))
+
+    def clean_hook(self, form):
+        if form.cleaned_data.get("q"):
+            form.cleaned_data["q"] = form.cleaned_data["q"].strip()

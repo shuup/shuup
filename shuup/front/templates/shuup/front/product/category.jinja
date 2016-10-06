@@ -19,6 +19,7 @@
     {% endblock %}
 
     {% block content %}
+        <script>window.PRODUCT_LIST_FILTERS = {{ form_fields|safe }};</script>
         {{ category_macros.render_information() }}
         {{ category_macros.render_products_section() }}
     {% endblock %}

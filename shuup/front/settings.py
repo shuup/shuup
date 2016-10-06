@@ -63,3 +63,13 @@ SHUUP_CHECKOUT_VIEW_SPEC = (
 #:
 #: Handled error cases are: 400, 403, 404, and 500
 SHUUP_FRONT_INSTALL_ERROR_HANDLERS = True
+
+#: Default product lists facet configuration
+#:
+#: This configuration will be used if the configuration is not set from admin
+SHUUP_FRONT_DEFAULT_SORT_CONFIGURATION = {
+    "sort_products_by_name": True,
+    "sort_products_by_name_ordering": 1,
+    "sort_products_by_price": True,
+    "sort_products_by_price_ordering": 2
+}

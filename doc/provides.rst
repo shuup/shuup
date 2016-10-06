@@ -104,9 +104,14 @@ Core
 ``discount_module``
     `~shuup.core.pricing.DiscountModule` for pricing system.
 
+``front_extend_product_list_form``
+    Allows providing extension for product list form. Should implement the 
+    `~shuup.front.utils.sorts_and_filters.ProductListFormModifier`
+    interface.
+
 ``front_service_checkout_phase_provider``
     Allows providing a custom checkout phase for a service (e.g. payment
-    method or shipping method).  Should implement the
+    method or shipping method). Should implement the
     `~shuup.front.checkout.ServiceCheckoutPhaseProvider` interface.
 
 ``front_template_helper_namespace``

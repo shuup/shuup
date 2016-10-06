@@ -21,10 +21,12 @@
     <div class="row">
         <div class="col-md-3 categories-nav">
             {{ render_category_menu() }}
+            <br>
+            {{ render_product_filters_left_side() }}
         </div>
         <div class="col-md-9 products-wrap">
             {% placeholder "category_top_extra" %}{% endplaceholder %}
-            {{ render_product_filters() }}
+            {{ render_product_filters_top() }}
             {{ render_product_list() }}
         </div>
     </div>
@@ -59,12 +61,12 @@
     </div>
 {% endmacro %}
 
-{% macro render_product_filters() %}
+{% macro render_product_filters_top() %}
     <div class="row product-list-actions">
         <div class="col-sm-4">
-            <form role="form" method="get" action="" id="sorter">
+            {% if "sort" in form_fields %}
                 {{ render_field(form.sort) }}
-            </form>
+            {% endif %}
         </div>
         <div class="col-sm-8">
             {{ render_toggle_view() }}
@@ -72,6 +74,24 @@
     </div>
     <hr class="visible-sm visible-xs">
 {% endmacro %}
+
+
+{% macro render_product_filters_left_side() %}
+    {% for field in form %}
+        {% if field.name not in ["sort", "q"] %}
+            <div class="filter-block">
+                <a href="#{{ field.name }}"
+                   class="block-title"
+                   data-toggle="collapse"
+                   aria-expanded="true"
+                   aria-controls="categories">{{ field.label }}</a>
+                <br>
+                {{ bs3.field(field, render_label=False) }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
 
 {% macro render_product_list() %}
     <div id="ajax_content">

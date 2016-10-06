@@ -24,7 +24,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-md-4">{{ macros.render_field(form.sort) }}</div>
+            <div class="col-sm-6 col-md-4">
+                {% if "sort" in form.fields.keys() %}{{ macros.render_field(form.sort) }}{% endif %}
+            </div>
         </div>
         <hr>
     </form>
