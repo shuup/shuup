@@ -83,3 +83,11 @@ def test_product_blocks(rf, admin_user, settings):
     settings.INSTALLED_APPS.remove("shuup.importer")
     blocks = get_blocks(rf, admin_user)
     assert not any(["Import products" in action["text"] for b in blocks for action in b.actions])
+
+
+@pytest.mark.django_db
+def test_product_category_block(rf, admin_user):
+    shop = get_default_shop()
+    blocks = get_blocks(rf, admin_user)
+    new_category_url = reverse("shuup_admin:category.new")
+    assert any([new_category_url in action["url"] for b in blocks for action in b.actions])

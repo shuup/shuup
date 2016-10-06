@@ -16,6 +16,7 @@ from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls, get_model_url
 )
+from shuup.admin.views.home import SimpleHelpBlock
 from shuup.core.models import Category
 
 
@@ -68,6 +69,18 @@ class CategoryModule(AdminModule):
                     category=self.category,
                     relevance=relevance
                 )
+
+    def get_help_blocks(self, request, kind):
+        yield SimpleHelpBlock(
+            text=_("Add a product category to organize your products"),
+            actions=[{
+                "text": _("Add a category"),
+                "url": get_model_url(Category, "new")
+            }],
+            icon_url="shuup_admin/img/category.png",
+            priority=0,
+            done=Category.objects.exists() if kind == "setup" else False
+        )
 
     def get_required_permissions(self):
         return get_default_model_permissions(Category) | get_default_model_permissions(File)
