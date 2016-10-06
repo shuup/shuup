@@ -81,3 +81,12 @@ def get_menu_entry_categories(request):
                     )
             category.entries.append(entry)
     return [c for identifier, c in six.iteritems(menu_categories) if len(c.entries) > 0]
+
+
+def get_quicklinks(request):
+    quicklinks = []
+    for module in get_modules():
+        if get_missing_permissions(request.user, module.get_required_permissions()):
+            continue
+        quicklinks.extend(module.get_help_blocks(request, kind="quicklink"))
+    return quicklinks

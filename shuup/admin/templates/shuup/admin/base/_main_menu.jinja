@@ -1,6 +1,18 @@
+{% from "shuup/admin/macros/block.jinja" import link_block %}
+
+{% set categories = shuup_admin.get_menu_entry_categories() %}
+{% set quicklinks = shuup_admin.get_quicklinks() %}
 <div class="scroll-inner-content">
     <ul class="menu-list">
-        {% for category in shuup_admin.get_menu_entry_categories() %}
+        {% if quicklinks %}
+        <li class="quicklinks">
+            <a href="#" data-target-id="quicklinks">
+                <i class="fa fa-bolt"></i>
+                <span class="item-name parent">{% trans %}Quicklinks{% endtrans %}</span>
+            </a>
+        </li>
+        {% endif %}
+        {% for category in categories %}
         {% set only_entry = (category.entries|first if category.entries|length == 1 else None) %}
         <li>
             <a href="{% if not only_entry %}#{% else %}{{ only_entry.url }}{% endif %}" data-target-id="category-{{ category.identifier }}">
@@ -11,7 +23,7 @@
         {% endfor %}
     </ul>
 </div>
-{% for category in shuup_admin.get_menu_entry_categories() %}
+{% for category in categories %}
 <div class="category-submenu" id="category-{{ category.identifier }}">
     <div class="category-menu-title">{{ category.name }}</div>
     <a href="#" class="category-menu-close"><i class="fa fa-close"></i></a>
@@ -26,3 +38,12 @@
     </div>
 </div>
 {% endfor %}
+<div class="category-submenu quicklink-submenu" id="quicklinks">
+    <div class="category-menu-title">{% trans %}Quicklinks{% endtrans %}</div>
+    <a href="#" class="category-menu-close"><i class="fa fa-close"></i></a>
+    <div class="quicklink-menu-content">
+        {% for quicklink in quicklinks %}
+            {{ link_block(quicklink) }}
+        {% endfor %}
+    </div>
+</div>

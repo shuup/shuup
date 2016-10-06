@@ -22,6 +22,7 @@ Localization
 Admin
 ~~~~~
 
+- Add quicklink menu for frequently accessed actions
 - Add shop home page that shows steps required to set up a shop for deployment
 - Add shop setup wizard for admins to configure the shop, services available,
   and themes

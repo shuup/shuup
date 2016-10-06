@@ -132,6 +132,20 @@
                 }
             }
         }
+
+        li.quicklinks {
+            background: @brand-primary;
+
+            a {
+                &:hover {
+                    background: darken(@brand-primary, 7%);
+
+                    i {
+                        color: white;
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -140,7 +154,8 @@
     position: absolute;
     background: @nav-bg;
     box-shadow: 0 0 3px #000;
-    min-height: calc(7.5rem + 2rem + 100%);
+    height: 100%;
+    overflow: auto;
     padding: 2rem 0 0;
     transform: translateX(-100%);
     transition-duration: .3s;
@@ -187,6 +202,30 @@
                     background: darken(@nav-bg-hover, 4%);
                     text-decoration: none;
                 }
+            }
+        }
+    }
+}
+
+.quicklink-submenu {
+    background: white;
+
+    .category-menu-title {
+        color: @text-color;
+    }
+
+    .quicklink-menu-content {
+        padding: 10px 30px;
+
+        .link-block {
+            margin: 0 auto 10px auto;
+
+            h3 {
+                font-size: 1.6rem;
+            }
+
+            .btn {
+                display: block;
             }
         }
     }
