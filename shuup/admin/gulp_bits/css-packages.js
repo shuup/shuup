@@ -21,6 +21,13 @@ module.exports = {
             "less/**/*.less"
         ]
     },
+    "home": {
+        "base": "./static_src/home",
+        "entrypoint": "less/home.less",
+        "watches": [
+            "less/**/*.less"
+        ]
+    },
     "datatables": {
         "base": "./static_src/datatables",
         "entrypoint": "dataTables.bootstrap.less"

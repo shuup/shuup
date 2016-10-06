@@ -13,7 +13,9 @@ from filer.models import File
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
-from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
+from shuup.admin.utils.urls import (
+    admin_url, derive_model_url, get_edit_and_list_urls
+)
 from shuup.core.models import Shop
 
 
@@ -22,7 +24,14 @@ class ShopModule(AdminModule):
     breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:shop.list")
 
     def get_urls(self):
-        return get_edit_and_list_urls(
+        return [
+            admin_url(
+                "^shops/(?P<pk>\d+)/enable/$",
+                "shuup.admin.modules.shops.views.ShopEnablerView",
+                name="shop.enable",
+                permissions=get_default_model_permissions(Shop)
+            ),
+        ] + get_edit_and_list_urls(
             url_prefix="^shops",
             view_template="shuup.admin.modules.shops.views.Shop%sView",
             name_template="shop.%s",

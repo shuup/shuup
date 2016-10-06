@@ -8,7 +8,12 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
+from django.contrib import messages
+from django.core.urlresolvers import reverse
 from django.db.transaction import atomic
+from django.http import HttpResponseRedirect
+from django.utils.translation import ugettext as _
+from django.views.generic import View
 
 from shuup import configuration
 from shuup.admin.form_part import (
@@ -19,6 +24,7 @@ from shuup.admin.toolbar import get_default_edit_toolbar
 from shuup.admin.utils.views import (
     check_and_raise_if_only_one_allowed, CreateOrUpdateView
 )
+from shuup.admin.utils.wizard import onboarding_complete
 from shuup.core.models import Shop
 
 
@@ -60,6 +66,22 @@ class ContactAddressFormPart(FormPart):
             addr = addr_form.save()
             setattr(self.object, "contact_address", addr)
             self.object.save()
+
+
+class ShopEnablerView(View):
+    def post(self, request, *args, **kwargs):
+        if not onboarding_complete(request):
+            messages.error(request, _("There are still some pending actions to complete!"))
+            return HttpResponseRedirect(reverse("shuup_admin:home"))
+        enable = request.POST.get("enable", True)
+        if kwargs.get("pk") == str(request.shop.pk):
+            shop = request.shop
+        else:
+            shop = Shop.objects.filter(pk=kwargs.get("pk")).first()
+        shop.maintenance_mode = not enable
+        shop.save()
+        messages.info(request, _("Your store is now live!"))
+        return HttpResponseRedirect(request.POST.get("redirect"))
 
 
 class ShopEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):

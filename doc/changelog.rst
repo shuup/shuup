@@ -22,6 +22,7 @@ Localization
 Admin
 ~~~~~
 
+- Add shop home page that shows steps required to set up a shop for deployment
 - Add shop setup wizard for admins to configure the shop, services available,
   and themes
 - Add admin comment section to order module

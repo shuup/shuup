@@ -125,5 +125,8 @@ class WizardView(TemplateView):
     @atomic
     def get(self, request, *args, **kwargs):
         if len(self.panes) == 0:
-            return HttpResponseRedirect(reverse("shuup_admin:dashboard"))
+            if request.shop.maintenance_mode:
+                return HttpResponseRedirect(reverse("shuup_admin:home"))
+            else:
+                return HttpResponseRedirect(reverse("shuup_admin:dashboard"))
         return super(WizardView, self).get(request, *args, **kwargs)

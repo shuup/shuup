@@ -8,6 +8,7 @@
 from django.conf import settings
 
 from shuup import configuration
+from shuup.admin.module_registry import get_modules
 from shuup.core.models import Shop
 from shuup.utils.importing import load
 
@@ -47,3 +48,26 @@ def setup_wizard_visible_panes(shop):
     :rtype: Boolean
     """
     return len(load_setup_wizard_panes(shop)) > 0
+
+
+def setup_blocks_complete(request):
+    """
+    Check if any incomplete setup blocks remain.
+
+    :return: whether all setup blocks are complete
+    :rtype: Boolean
+    """
+    for module in get_modules():
+        if len([block for block in module.get_help_blocks(request=request, kind="setup") if not block.done]) > 0:
+            return False
+    return True
+
+
+def onboarding_complete(request):
+    """
+    Check if the shop wizard and all setup blocks are complete
+
+    :return: whether onboarding is complete
+    :rtype: Boolean
+    """
+    return setup_wizard_complete() and setup_blocks_complete(request)

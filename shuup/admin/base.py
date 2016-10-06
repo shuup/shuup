@@ -51,6 +51,16 @@ class AdminModule(object):
         """
         return ()
 
+    def get_help_blocks(self, request, kind):
+        """
+        :param request: Request
+        :type request: django.http.request.HttpRequest
+        :param kind: block kind. Currently "setup" or "quicklink"
+        :type kind: str
+        :rtype: list[shuup.admin.views.home.HelpBlock]
+        """
+        return ()
+
     def get_required_permissions(self):
         """
         :rtype: list[str]
