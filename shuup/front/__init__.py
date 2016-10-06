@@ -17,8 +17,14 @@ class ShuupFrontAppConfig(AppConfig):
     label = "shuup_front"
 
     provides = {
+        "admin_category_form_part": [
+            "shuup.front.admin_module.sorts_and_filters.form_parts.ConfigurationCategoryFormPart"
+        ],
         "admin_module": [
             "shuup.front.admin_module.CartAdminModule",
+        ],
+        "admin_shop_form_part": [
+            "shuup.front.admin_module.sorts_and_filters.form_parts.ConfigurationShopFormPart"
         ],
         "notify_event": [
             "shuup.front.notify_events:OrderReceived",
@@ -26,7 +32,7 @@ class ShuupFrontAppConfig(AppConfig):
             "shuup.front.notify_events:ShipmentDeleted",
             "shuup.front.notify_events:PaymentCreated",
             "shuup.front.notify_events:RefundCreated",
-        ]
+        ],
     }
 
     def ready(self):
