@@ -80,7 +80,7 @@ class FilterProductListByQuery(ProductListFormModifier):
     def get_ordering(self, configuration):
         return 0
 
-    def get_fields(self, category=None):
+    def get_fields(self, request, category=None):
         return [("q", forms.CharField(label=_("Search"), required=False))]
 
     def get_filters(self, request, data):

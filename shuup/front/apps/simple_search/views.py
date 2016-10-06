@@ -24,7 +24,8 @@ class SearchView(ListView):
     context_object_name = "products"
 
     def dispatch(self, request, *args, **kwargs):
-        self.form = ProductListForm(shop=self.request.shop, category=None, data=self.request.GET)
+        self.form = ProductListForm(
+            request=self.request, shop=self.request.shop, category=None, data=self.request.GET)
         return super(SearchView, self).dispatch(request, *args, **kwargs)
 
     def get_queryset(self):

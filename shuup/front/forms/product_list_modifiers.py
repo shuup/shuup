@@ -59,7 +59,7 @@ class SortProductListByName(SimpleProductListModifier):
     ordering_key = "sort_products_by_name_ordering"
     ordering_label = _("Ordering for sort by name")
 
-    def get_fields(self, category=None):
+    def get_fields(self, request, category=None):
         return [("sort", forms.CharField(required=False, widget=forms.Select(), label=_('Sort')))]
 
     def get_choices_for_fields(self):
@@ -91,7 +91,7 @@ class SortProductListByPrice(SimpleProductListModifier):
     ordering_key = "sort_products_by_price_ordering"
     ordering_label = _("Ordering for sort by price")
 
-    def get_fields(self, category=None):
+    def get_fields(self, request, category=None):
         return [("sort", forms.CharField(required=False, widget=forms.Select(), label=_('Sort')))]
 
     def get_choices_for_fields(self):
@@ -125,7 +125,7 @@ class ManufacturerProductListFilter(SimpleProductListModifier):
     ordering_key = "filter_products_by_manufacturer_ordering"
     ordering_label = _("Ordering for filter by manufacturer")
 
-    def get_fields(self, category=None):
+    def get_fields(self, request, category=None):
         if not Manufacturer.objects.exists():
             return
         if category:
