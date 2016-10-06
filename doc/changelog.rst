@@ -24,6 +24,12 @@ Addons
 Front
 ~~~~~
 
+- Configure category and search sorts and filters.
+    - Add option to configure category sorts and filters
+    - Enable option to configure sorts and filters for search.
+    - Activate option for manufacturer filter
+    - This change should be noted when updating latest
+      front for projects using `shuup.front`
 - Fix macro name in Single Page Checkout
 - Add Saved Carts to Dashboard
 - Add Order History to Dashboard

@@ -11,9 +11,8 @@ from django.utils import translation
 
 from shuup.core import cache
 from shuup.core.models import ShopProductVisibility, ProductVisibility
-from shuup.front.apps.simple_search.views import (
-    get_search_product_ids, SearchView
-)
+from shuup.front.apps.simple_search.forms import get_search_product_ids
+from shuup.front.apps.simple_search.views import SearchView
 from shuup.testing.factories import (
     create_random_person, create_product, get_default_product, get_default_shop
 )
@@ -61,7 +60,7 @@ def test_simple_search_word_finder(rf):
     )
 
     resp = view(apply_request_middleware(rf.get("/")))
-    assert prod not in resp.context_data["object_list"]
+    assert prod not in resp.context_data["object_list"], "No query no results"
 
     partial_sku = sku[:int(len(sku)/2)]
     valid_searches = ["Savage", "savage", "truly", "madly", "truly madly", "truly garden", "text", sku, partial_sku]
@@ -121,7 +120,7 @@ def test_simple_search_no_results(rf):
         resp = view(apply_request_middleware(rf.get("/", {"q": UNLIKELY_STRING})))
         assert NO_RESULTS_FOUND_STRING in resp.rendered_content
         resp = view(apply_request_middleware(rf.get("/")))
-        assert NO_RESULTS_FOUND_STRING not in resp.rendered_content
+        assert NO_RESULTS_FOUND_STRING in resp.rendered_content, "No query string no results"
 
 
 @pytest.mark.django_db

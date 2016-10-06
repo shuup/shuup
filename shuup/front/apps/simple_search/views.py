@@ -7,122 +7,43 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import re
-
-from django import forms
-from django.db.models import Q
-from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView
 
-from shuup.core import cache
 from shuup.core.models import Product
 from shuup.front.template_helpers.product import is_visible
-from shuup.front.utils.product_sorting import (
-    PRODUCT_SORT_CHOICES, sort_products
+from shuup.front.utils.sorts_and_filters import (
+    get_query_filters, post_filter_products, ProductListForm, sort_products
 )
 from shuup.front.utils.views import cache_product_things
 
 
-def get_query_words(query):
-    """
-    Get query words
-
-    Split the query into words and return a list of strings.
-
-    :type query_string: str
-    :return: List of strings
-    :rtype: list
-    """
-    word_finder = re.compile(r'"([^"]+)"|(\S+)').findall
-    normalize_spaces = re.compile(r'\s{2,}').sub
-    words = []
-    for word in word_finder(query):
-        found_word = word[0] or word[1]
-        words.append(normalize_spaces(" ", found_word.strip()))
-    return words
-
-
-def get_compiled_query(query_string, needles):
-    """
-    Get compiled query
-
-    Compile query string into `Q` objects and return it
-    """
-    compiled_query = None
-    for word in get_query_words(query_string):
-        inner_query = None
-        for needle in needles:
-            q = Q(**{"%s__icontains" % needle: word})
-            inner_query = q if inner_query is None else inner_query | q
-        compiled_query = inner_query if compiled_query is None else compiled_query & inner_query
-    return compiled_query
-
-
-def get_search_product_ids(request, query, limit=150):
-    query = query.strip().lower()
-    cache_key_elements = {
-        "query": query,
-        "shop": request.shop.pk,
-        "customer": request.customer.pk
-    }
-    cache_key = "simple_search:%s" % hash(frozenset(cache_key_elements.items()))
-    product_ids = cache.get(cache_key)
-    if product_ids is None:
-        entry_query = get_compiled_query(
-            query, ['sku', 'translations__name', 'translations__description', 'translations__keywords'])
-        product_ids = list(Product.objects.searchable(
-            shop=request.shop,
-            customer=request.customer
-        ).filter(entry_query).distinct().values_list("pk", flat=True))[:limit]
-        cache.set(cache_key, product_ids, 60 * 5)
-    return product_ids
-
-
-class SearchForm(forms.Form):
-    q = forms.CharField(label=_("Search"))
-    sort = forms.CharField(
-        required=False,
-        widget=forms.Select(choices=PRODUCT_SORT_CHOICES),
-        label=_("Sort")
-    )
-
-    def clean(self):
-        self.cleaned_data["q"] = self.cleaned_data["q"].strip()
-
-
 class SearchView(ListView):
-    form_class = SearchForm
+    form_class = ProductListForm
     template_name = "shuup/simple_search/search.jinja"
     model = Product
     context_object_name = "products"
 
     def dispatch(self, request, *args, **kwargs):
-        q = self.request.GET.get("q")
-        if q:
-            data = {"q": q}
-        else:
-            data = None
-        sort = self.request.GET.get("sort")
-        if sort:
-            data.update({"sort": sort})
-        self.form = SearchForm(data=data)
+        self.form = ProductListForm(shop=self.request.shop, category=None, data=self.request.GET)
         return super(SearchView, self).dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
         if not self.form.is_valid():
             return Product.objects.none()
-        query = self.form.cleaned_data["q"]
-        if not query:  # pragma: no cover
+        data = self.form.cleaned_data
+        if not (data and data.get("q")):  # pragma: no cover
             return Product.objects.none()
-        return Product.objects.filter(pk__in=get_search_product_ids(self.request, query))
+        return Product.objects.filter(get_query_filters(self.request, None, data=data))
 
     def get_context_data(self, **kwargs):
         context = super(SearchView, self).get_context_data(**kwargs)
         context["form"] = self.form
         products = context["products"]
         if products:
+            data = self.request.GET
+            products = post_filter_products(self.request, None, products, data)
             products = cache_product_things(self.request, products)
-            products = sort_products(self.request, products, self.form.cleaned_data.get("sort"))
+            products = sort_products(self.request, None, products, data)
             products = [p for p in products if is_visible({"request": self.request}, p)]
             context["products"] = products
         context["no_results"] = (self.form.is_valid() and not products)

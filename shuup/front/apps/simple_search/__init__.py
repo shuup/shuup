@@ -19,6 +19,9 @@ class SimpleSearchAppConfig(AppConfig):
         "front_urls": [
             "shuup.front.apps.simple_search.urls:urlpatterns"
         ],
+        "front_extend_product_list_form": [
+            "shuup.front.apps.simple_search.forms.FilterProductListByQuery",
+        ],
         "front_template_helper_namespace": [
             "shuup.front.apps.simple_search.template_helpers:TemplateHelpers"
         ]
