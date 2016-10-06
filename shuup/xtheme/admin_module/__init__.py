@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django.core.urlresolvers import reverse
 from django.template import engines
 from django.utils.translation import ugettext_lazy as _
 from django_jinja.backend import Jinja2
@@ -15,6 +16,7 @@ from shuup.admin.base import AdminModule, MenuEntry, Notification
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url
+from shuup.admin.views.home import SimpleHelpBlock
 from shuup.xtheme._theme import get_current_theme
 from shuup.xtheme.engine import XthemeEnvironment
 from shuup.xtheme.models import ThemeSettings
@@ -54,6 +56,18 @@ class XthemeAdminModule(AdminModule):
                 ordering=1
             )
         ]
+
+    def get_help_blocks(self, request, kind):
+        theme = get_current_theme(request)
+        if kind == "quicklink" and theme:
+            yield SimpleHelpBlock(
+                text=_("Customize the look and feel of your shop"),
+                actions=[{
+                    "text": _("Customize theme"),
+                    "url": reverse("shuup_admin:xtheme.config_detail", kwargs={"theme_identifier": theme.identifier})
+                }],
+                icon_url="xtheme/theme.png"
+            )
 
     def get_required_permissions(self):
         return get_default_model_permissions(ThemeSettings)
