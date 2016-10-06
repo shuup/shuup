@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 from collections import Counter
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.utils.encoding import force_text
@@ -25,6 +26,7 @@ from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls, get_model_url,
     manipulate_query_string
 )
+from shuup.admin.views.home import SimpleHelpBlock
 from shuup.core.models import (
     Product, ProductCrossSell, ProductPackageLink, ProductVariationResult
 )
@@ -117,6 +119,25 @@ class ProductModule(AdminModule):
                         url=manipulate_query_string(url, sku=query),
                         is_action=True
                     )
+
+    def get_help_blocks(self, request, kind):
+        actions = [{
+            "text": _("Add a product"),
+            "url": self.get_model_url(Product, "new")
+        }]
+
+        if "shuup.importer" in settings.INSTALLED_APPS:
+            actions.append({
+                "text": _("Import products"),
+                "url": reverse("shuup_admin:importer.import")
+            })
+
+        yield SimpleHelpBlock(
+            text=_("Add a product to see it in your store"),
+            actions=actions,
+            icon_url="shuup_admin/img/product.png",
+            done=Product.objects.exists() if kind == "setup" else False
+        )
 
     def get_required_permissions(self):
         return (
