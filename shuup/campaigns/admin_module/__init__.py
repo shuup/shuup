@@ -15,6 +15,7 @@ from shuup.admin.utils.permissions import (
     get_default_model_permissions, get_permissions_from_urls
 )
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
+from shuup.admin.views.home import SimpleHelpBlock
 from shuup.campaigns.models import BasketCampaign, CatalogCampaign, Coupon
 
 
@@ -65,6 +66,23 @@ class CampaignAdminModule(AdminModule):
                 category=category, ordering=3, aliases=[_("Show Coupons")]
             )
         ]
+
+    def get_help_blocks(self, request, kind):
+        if kind == "quicklink":
+            yield SimpleHelpBlock(
+                text=_("Set up a sales campaign"),
+                actions=[{
+                    "text": _("Add a basket campaign"),
+                    "url": self.get_model_url(BasketCampaign, "new")
+                }, {
+                    "text": _("Add a catalog campaign"),
+                    "url": self.get_model_url(CatalogCampaign, "new")
+                }, {
+                    "text": _("Add a coupon"),
+                    "url": self.get_model_url(Coupon, "new")
+                }],
+                icon_url="shuup/campaigns/img/campaign.png"
+            )
 
     def get_required_permissions(self):
         return get_permissions_from_urls(self.get_urls())

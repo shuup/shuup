@@ -91,3 +91,9 @@ def test_product_category_block(rf, admin_user):
     blocks = get_blocks(rf, admin_user)
     new_category_url = reverse("shuup_admin:category.new")
     assert any([new_category_url in action["url"] for b in blocks for action in b.actions])
+
+
+@pytest.mark.django_db
+def test_campaign_block(rf, admin_user):
+    shop = get_default_shop()
+    assert not has_block_with_text("campaign", rf, admin_user)
