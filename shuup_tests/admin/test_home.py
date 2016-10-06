@@ -103,3 +103,11 @@ def test_campaign_block(rf, admin_user):
 def test_users_block(rf, admin_user):
     shop = get_default_shop()
     assert not has_block_with_text("users", rf, admin_user)
+
+
+@pytest.mark.django_db
+def test_cms_block(rf, admin_user):
+    shop = get_default_shop()
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
+    response = HomeView.as_view()(request)
+    assert not any("web page" in b.text for b in response.context_data["blocks"])
