@@ -14,6 +14,7 @@ from shuup.admin.base import AdminModule, MenuEntry, SearchResult
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url, derive_model_url, get_model_url
+from shuup.admin.views.home import SimpleHelpBlock
 
 
 class UserModule(AdminModule):
@@ -101,6 +102,17 @@ class UserModule(AdminModule):
                     category=_("Contacts"),
                     relevance=relevance
                 )
+
+    def get_help_blocks(self, request, kind):
+        if kind == "quicklink":
+            yield SimpleHelpBlock(
+                text=_("Add some users to help manage your shop"),
+                actions=[{
+                    "text": _("Add a user"),
+                    "url": self.get_model_url(get_user_model(), "new")
+                }],
+                icon_url="shuup_admin/img/users.png"
+            )
 
     def get_required_permissions(self):
         return get_default_model_permissions(get_user_model())
