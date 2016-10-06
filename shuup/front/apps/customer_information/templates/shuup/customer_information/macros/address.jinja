@@ -1,24 +1,37 @@
 {% from "shuup/front/macros/general.jinja" import render_field %}
 
+{% macro render_address(addr) %}
+    {% set region = (addr.region_code or addr.region) %}
+    <p><b>{% trans %}Name{% endtrans %}:</b> {{ addr.name }}</p>
+    <p><b>{% trans %}Email{% endtrans %}:</b> {{ addr.email or "Not specified" }}</p>
+    <p><b>{% trans %}Phone{% endtrans %}:</b> {{ addr.phone or "Not specified" }}</p>
+    {% if addr.postal_code and addr.city and region %}
+        <p><b>{% trans %}Address{% endtrans %}:</b><br>{{ addr.street or "Not specified" }}</p>
+        <p>{{ addr.postal_code }} {{ addr.city }}, {{ region }}</p>
+    {% else %}
+        <p><b>{% trans %}Street{% endtrans %}:</b> {{ addr.street or "Not specified" }}</p>
+        <p><b>{% trans %}Postal code{% endtrans %}:</b> {{ addr.postal_code or "Not specified" }}</p>
+        <p><b>{% trans %}City{% endtrans %}:</b> {{ addr.city or "Not specified" }}</p>
+        <p><b>{% trans %}Region{% endtrans %}:</b> {{ region }}</p>
+    {% endif %}
+{% endmacro %}
+
 {% macro render_address_forms(billing_form, shipping_form) %}
     {% for field in billing_form.hidden_fields() %}{{ field|safe }}{% endfor %}
     {% for field in shipping_form.hidden_fields() %}{{ field|safe }}{% endfor %}
     <div class="row">
         <div class="col-md-6">
-            <div class="well">
-                <fieldset>
-                    <legend>{% trans %}Billing information{% endtrans %}</legend>
-                    {% for field in billing_form.visible_fields() %}
-                        {{ render_field(field) }}
-                    {% endfor %}
-                </fieldset>
-                <button class="btn btn-primary" type="button" onclick="copyAddress('billing', 'shipping')">
-                    {% trans %}Copy to shipping information{% endtrans %}
-                </button>
-            </div>
+            <fieldset>
+                <legend>{% trans %}Billing information{% endtrans %}</legend>
+                {% for field in billing_form.visible_fields() %}
+                    {{ render_field(field) }}
+                {% endfor %}
+            </fieldset>
+            <button class="btn btn-primary" type="button" onclick="copyAddress('billing', 'shipping')">
+                {% trans %}Copy to shipping information{% endtrans %}
+            </button>
         </div>
         <div class="col-md-6">
-            <div class="well">
                 <fieldset>
                     <legend>{% trans %}Shipping information{% endtrans %}</legend>
                     {% for field in shipping_form.visible_fields() %}
@@ -28,7 +41,6 @@
                 <button class="btn btn-primary" type="button" onclick="copyAddress('shipping', 'billing')">
                     {% trans %}Copy to billing information{% endtrans %}
                 </button>
-            </div>
         </div>
     </div>
 {% endmacro %}

@@ -5,34 +5,45 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import six
 from django.contrib import messages
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.views import password_change
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import FormView
+from django.views.generic import FormView, TemplateView
 
-from shuup.core.models import get_company_contact, get_person_contact
+from shuup.core.models import (
+    get_company_contact, get_person_contact, MutableAddress, SavedAddress
+)
+from shuup.front.views.dashboard import DashboardViewMixin
 from shuup.utils.form_group import FormGroup
 from shuup.utils.importing import cached_load
 
-from .forms import CompanyContactForm, PersonContactForm
+from .forms import CompanyContactForm, PersonContactForm, SavedAddressForm
 from .notify_events import CompanyAccountCreated
 
 
-def change_password(request):
+class PasswordChangeView(DashboardViewMixin, TemplateView):
     template_name = "shuup/customer_information/change_password.jinja"
 
-    response = password_change(
-        request,
-        post_change_redirect="shuup:customer_edit",
-        template_name=template_name
-    )
-    if response.status_code == 302:
-        messages.success(request, _("Password successfully changed."))
-    return response
+    def post(self, *args, **kwargs):
+        response = password_change(
+            self.request,
+            post_change_redirect="shuup:customer_edit",
+            template_name=self.template_name
+        )
+        if response.status_code == 302:
+            messages.success(self.request, _("Password successfully changed."))
+        return response
+
+    def get_context_data(self, **kwargs):
+        context = super(PasswordChangeView, self).get_context_data(**kwargs)
+        context["form"] = PasswordChangeForm(user=self.request.user)
+        return context
 
 
-class CustomerEditView(FormView):
+class CustomerEditView(DashboardViewMixin, FormView):
     template_name = "shuup/customer_information/edit_customer.jinja"
 
     def get_form(self, form_class):
@@ -65,7 +76,7 @@ class CustomerEditView(FormView):
         return redirect("shuup:customer_edit")
 
 
-class CompanyEditView(FormView):
+class CompanyEditView(DashboardViewMixin, FormView):
     template_name = "shuup/customer_information/edit_company.jinja"
 
     def get_form(self, form_class):
@@ -115,6 +126,81 @@ class CompanyEditView(FormView):
             CompanyAccountCreated(contact=company, customer_email=company.email).run()
         messages.success(self.request, _("Company information saved successfully."))
         return redirect("shuup:company_edit")
+
+
+class AddressBookView(DashboardViewMixin, TemplateView):
+    template_name = "shuup/customer_information/addressbook/index.jinja"
+
+    def get_context_data(self, **kwargs):
+        context = super(AddressBookView, self).get_context_data(**kwargs)
+        context["addresses"] = SavedAddress.objects.filter(owner=self.request.customer)
+        context["customer"] = self.request.customer
+        return context
+
+
+class AddressBookEditView(DashboardViewMixin, FormView):
+    template_name = "shuup/customer_information/addressbook/edit.jinja"
+    form_class = SavedAddressForm
+    instance = None
+
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            self.instance = SavedAddress.objects.get(pk=kwargs.get("pk", 0), owner=self.request.customer)
+        except:
+            self.instance = None
+        return super(AddressBookEditView, self).dispatch(request, *args, **kwargs)
+
+    def get_form(self, form_class):
+        form_group = FormGroup(**self.get_form_kwargs())
+        address_kwargs = {}
+        saved_address_kwargs = {}
+        if self.instance:
+            address_kwargs["instance"] = self.instance.address
+            saved_address_kwargs["initial"] = {
+                "role": self.instance.role,
+                "status": self.instance.status,
+                "title": self.instance.title,
+            }
+
+        form_group.add_form_def("address", cached_load("SHUUP_ADDRESS_MODEL_FORM"), kwargs=address_kwargs)
+        form_group.add_form_def(
+            "saved_address",
+            SavedAddressForm,
+            kwargs=saved_address_kwargs
+        )
+        return form_group
+
+    def form_valid(self, form):
+        address_form = form["address"]
+        if self.instance:
+            # expect old
+            address = MutableAddress.objects.get(pk=self.instance.address.pk)
+            for k, v in six.iteritems(address_form.cleaned_data):
+                setattr(address, k, v)
+            address.save()
+        else:
+            address = address_form.save()
+        owner = self.request.customer
+        saf = form["saved_address"]
+        saved_address, updated = SavedAddress.objects.update_or_create(
+            owner=owner,
+            address=address,
+            defaults={
+                "title": saf.cleaned_data.get("title"),
+                "role": saf.cleaned_data.get("role"),
+                "status": saf.cleaned_data.get("status")
+            }
+        )
+        messages.success(self.request, _("Address information saved successfully."))
+        return redirect("shuup:address_book_edit", pk=saved_address.pk)
+
+
+def delete_address(request, pk):
+    try:
+        SavedAddress.objects.get(pk=pk, owner=request.customer).delete()
+    except SavedAddress.DoesNotExist:
+        messages.error(request, _("Cannot remove address"))
+    return redirect("shuup:address_book")
 
 
 def _get_default_address_for_contact(contact, address_attr, fallback_contact):

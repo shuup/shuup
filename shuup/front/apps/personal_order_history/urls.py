@@ -11,8 +11,8 @@ from . import views
 
 urlpatterns = patterns(
     '',
-    url(r'^orders/$', views.OrderListView.as_view(),
+    url(r'^order-history/$', views.OrderListView.as_view(),
         name='personal-orders'),
-    url(r'^order/(?P<pk>.+)/$', views.OrderDetailView.as_view(),
+    url(r'^order-history/(?P<pk>.+)/$', views.OrderDetailView.as_view(),
         name='show-order'),
 )

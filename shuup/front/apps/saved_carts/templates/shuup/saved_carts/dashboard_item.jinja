@@ -1,0 +1,30 @@
+{% extends "shuup/front/dashboard/dashboard_base.jinja" %}
+
+{% block dashboard_item_content %}
+{% if carts %}
+<div class="table-responsive">
+    <table class="table table-striped">
+        <tr>
+            <th>{% trans %}Title{% endtrans %}</th>
+            <th class="text-right">{% trans %}Product Count{% endtrans %}</th>
+            <th></th>
+        </tr>
+        {% for cart in carts %}
+            <tr>
+                <td>{{ cart.title }}</td>
+                <td class="text-right">{{ cart.product_count }}</td>
+                <td class="text-right">
+                    <a href="{{ url("shuup:saved_cart.detail", pk=cart.pk) }}">
+                        <i class="fa fa-search"></i> {% trans %}Details{% endtrans %}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% else %}
+<p class="lead">
+    <i class="fa fa-info-circle text-info"></i> {% trans %}You haven't saved any carts yet.{% endtrans %}
+</p>
+{% endif %}
+{% endblock %}

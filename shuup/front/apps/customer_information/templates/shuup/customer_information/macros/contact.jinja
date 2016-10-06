@@ -9,12 +9,11 @@
 {% endmacro %}
 
 {% macro render_contact_form(title, form) %}
-    <div class="well">
-        <fieldset>
-            <legend>{{ title }}</legend>
-            {% for field in form.visible_fields() %}
-                {{ render_field(field) }}
-            {% endfor %}
-        </fieldset>
-    </div>
+    <fieldset>
+        <legend>{{ title }}</legend>
+        {% for field in form.visible_fields() %}
+            {{ render_field(field) }}
+        {% endfor %}
+    </fieldset>
+
 {% endmacro %}

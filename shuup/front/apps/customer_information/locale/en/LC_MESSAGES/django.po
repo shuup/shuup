@@ -8,18 +8,30 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-04 18:52+0000\n"
+"POT-Creation-Date: 2016-10-05 21:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
 msgid "Shuup Frontend - Customer Information Editing"
+msgstr ""
+
+msgid "Customer Information"
+msgstr ""
+
+msgid "Company Information"
+msgstr ""
+
+msgid "Edit Company Information."
+msgstr ""
+
+msgid "Address Book"
 msgstr ""
 
 msgid "Will become default user email when linked"
@@ -28,40 +40,118 @@ msgstr ""
 msgid "Given Tax Number already exists. Please contact support."
 msgstr ""
 
-msgid "Change Password"
+msgid "Address Title"
+msgstr ""
+
+msgid "Address Type"
+msgstr ""
+
+msgid "Address Status"
 msgstr ""
 
 msgid "Home"
 msgstr ""
 
+msgid "Dashboard"
+msgstr ""
+
+msgid "General Information"
+msgstr ""
+
+msgid "Contact Information"
+msgstr ""
+
+msgid "Address"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "Street"
+msgstr ""
+
+msgid "Postal code"
+msgstr ""
+
+msgid "City"
+msgstr ""
+
+msgid "Region"
+msgstr ""
+
+msgid "Default Addresses"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Default Billing Address"
+msgstr ""
+
+msgid "No Default Billing Address set."
+msgstr ""
+
+msgid "Default Shipping Address"
+msgstr ""
+
+msgid "No Default Shipping Address set."
+msgstr ""
+
+msgid "Additional Addresses"
+msgstr ""
+
+msgid "Create new"
+msgstr ""
+
+msgid "Role"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "You don't have any additional addresses"
+msgstr ""
+
+msgid "Change Password"
+msgstr ""
+
 msgid "Change password"
 msgstr ""
 
-msgid "Edit user account information"
+msgid "Basic Information"
 msgstr ""
 
-msgid "Save password"
+msgid "Tax Number"
+msgstr ""
+
+msgid "Birth Date"
+msgstr ""
+
+msgid "Gender"
+msgstr ""
+
+msgid "Marketing Permission"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "No"
 msgstr ""
 
 msgid "Company account information"
 msgstr ""
 
-msgid "Save changes"
-msgstr ""
-
-msgid "Company information"
-msgstr ""
-
 msgid "User account information"
-msgstr ""
-
-msgid "Edit company information"
-msgstr ""
-
-msgid "Link account to company"
-msgstr ""
-
-msgid "User information"
 msgstr ""
 
 msgid "Billing information"
@@ -76,6 +166,27 @@ msgstr ""
 msgid "Copy to billing information"
 msgstr ""
 
+msgid "Edit user account information"
+msgstr ""
+
+msgid "Save password"
+msgstr ""
+
+msgid "Save changes"
+msgstr ""
+
+msgid "Edit company information"
+msgstr ""
+
+msgid "Link account to company"
+msgstr ""
+
+msgid "Company information"
+msgstr ""
+
+msgid "User information"
+msgstr ""
+
 msgid "Password successfully changed."
 msgstr ""
 
@@ -83,4 +194,10 @@ msgid "Account information saved successfully."
 msgstr ""
 
 msgid "Company information saved successfully."
+msgstr ""
+
+msgid "Address information saved successfully."
+msgstr ""
+
+msgid "Cannot remove address"
 msgstr ""

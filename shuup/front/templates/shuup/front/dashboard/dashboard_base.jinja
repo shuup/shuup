@@ -1,0 +1,10 @@
+{%- from "shuup/front/macros/dashboard.jinja" import content_block -%}
+<div class="{{ item.css_class }}">
+    {% call content_block(item.title, item.icon, item.url, item.view_text) %}
+        <div class="dashboard-content">
+        {% block dashboard_item_content %}
+            {{ item.content }}
+        {% endblock %}
+        </div>
+    {% endcall %}
+</div>

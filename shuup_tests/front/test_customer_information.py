@@ -7,25 +7,18 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import re
-
+import pytest
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.shortcuts import resolve_url
-
-import pytest
 from shuup.core.models import (
     CompanyContact, get_company_contact, get_person_contact
 )
-from shuup.front.apps.customer_information.views import (
-    change_password, CompanyEditView, CustomerEditView
-)
 from shuup.testing.factories import get_default_shop
 from shuup.testing.soup_utils import extract_form_fields
-from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import SmartClient
 from shuup_tests.utils.fixtures import (
     regular_user, REGULAR_USER_PASSWORD, REGULAR_USER_USERNAME
