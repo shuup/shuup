@@ -26,6 +26,14 @@ __all__ = ["get_menu_entry_categories", "get_front_url", "get_config", "model_ur
 
 
 @contextfunction
+def get_quicklinks(context):
+    request = context["request"]
+    if request.GET.get("context") == "home":
+        return []
+    return menu.get_quicklinks(request=context["request"])
+
+
+@contextfunction
 def get_menu_entry_categories(context):
     return menu.get_menu_entry_categories(request=context["request"])
 
