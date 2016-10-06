@@ -111,3 +111,10 @@ def test_cms_block(rf, admin_user):
     request = apply_request_middleware(rf.get("/"), user=admin_user)
     response = HomeView.as_view()(request)
     assert not any("web page" in b.text for b in response.context_data["blocks"])
+
+
+@pytest.mark.django_db
+def test_xtheme_block(rf, admin_user):
+    shop = get_default_shop()
+    blocks = get_blocks(rf, admin_user)
+    assert not has_done_block_with_text("look and feel", rf, admin_user)
