@@ -44,7 +44,7 @@ gulp.task("js", function() {
         "static_src/js/vendor/imagelightbox.js",
         "static_src/js/language_changer.js",
         "static_src/js/navigation.js",
-        "static_src/js/pagination.js",
+        "static_src/js/category.js",
         "static_src/js/carousel.js",
         "static_src/js/product_preview.js",
         "static_src/js/update_price.js",

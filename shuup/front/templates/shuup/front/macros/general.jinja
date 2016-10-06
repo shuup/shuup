@@ -94,7 +94,7 @@
             {% if page.has_previous() %}
                 <li id="previous_page">
                     <a href="#"
-                       onclick="moveToPage({{ page.previous_page_number()}}); return false;"
+                       onclick="refreshFilters({{ page.previous_page_number()}}); return false;"
                        aria-label="{% trans %}Previous{% endtrans %}">
                         <i class="fa fa-angle-left"></i>
                     </a>
@@ -108,13 +108,13 @@
             {% endif %}
             {% for i in paginator.page_range %}
                 <li id="pagination_page_{{ i }}" class="{% if i == page.number %}active{% endif %}">
-                    <a href="#" onclick="moveToPage({{ i }}); return false;">{{ i }}</a>
+                    <a href="#" onclick="refreshFilters({{ i }}); return false;">{{ i }}</a>
                 </li>
             {% endfor %}
             {% if page.has_next() %}
                 <li id="next_page">
                     <a href="#"
-                       onclick="moveToPage({{ page.next_page_number() }}); return false;"
+                       onclick="refreshFilters({{ page.next_page_number() }}); return false;"
                        aria-label="{% trans %}Next{% endtrans %}">
                         <i class="fa fa-angle-right"></i>
                     </a>
