@@ -98,6 +98,12 @@ msgstr ""
 msgid "Categories"
 msgstr ""
 
+msgid "Add a product category to organize your products"
+msgstr ""
+
+msgid "Add a category"
+msgstr ""
+
 msgid "Primary Category"
 msgstr ""
 
@@ -609,6 +615,15 @@ msgstr ""
 msgid "Create Product with SKU \"%s\""
 msgstr ""
 
+msgid "Add a product"
+msgstr ""
+
+msgid "Import products"
+msgstr ""
+
+msgid "Add a product to see it in your store"
+msgstr ""
+
 msgid "Given value is already in use, please use unique SKU and try again."
 msgstr ""
 
@@ -830,6 +845,18 @@ msgstr ""
 msgid "Payment and Shipping"
 msgstr ""
 
+msgid "Service name"
+msgstr ""
+
+msgid "The name shown in the shop checkout process."
+msgstr ""
+
+msgid "Instructions"
+msgstr ""
+
+msgid "additional instructions shown in the shop checkout process."
+msgstr ""
+
 #, python-format
 msgid "Edit %(model)s"
 msgstr ""
@@ -838,10 +865,25 @@ msgstr ""
 msgid "Create {service_name}"
 msgstr ""
 
-msgid "Shipping Methods"
+msgid "Provider"
+msgstr ""
+
+msgid "Please add shipping methods for your shop"
+msgstr ""
+
+msgid "Carrier"
 msgstr ""
 
 msgid "Payment Methods"
+msgstr ""
+
+msgid "Please add payment methods for your shop"
+msgstr ""
+
+msgid "Payment Processor"
+msgstr ""
+
+msgid "Shipping Methods"
 msgstr ""
 
 msgid "Service"
@@ -868,12 +910,6 @@ msgstr ""
 msgid "Shop"
 msgstr ""
 
-msgid "Carrier"
-msgstr ""
-
-msgid "Payment Processor"
-msgstr ""
-
 msgid "Weight-based pricing range"
 msgstr ""
 
@@ -893,7 +929,42 @@ msgstr ""
 msgid "Languages"
 msgstr ""
 
+msgid "Supported Languages"
+msgstr ""
+
+msgid "Shop name"
+msgstr ""
+
+msgid ""
+"Show storefront products with tax pre-calculated into the price. Note this "
+"behavior can be overridden for customer groups."
+msgstr ""
+
+msgid "Shop Owner Name"
+msgstr ""
+
+msgid "Zip/Postal code"
+msgstr ""
+
+msgid "State/Province"
+msgstr ""
+
+msgid "There are still some pending actions to complete!"
+msgstr ""
+
+msgid "Your store is now live!"
+msgstr ""
+
 msgid "Domain"
+msgstr ""
+
+msgid "Please select the languages supported by your shop"
+msgstr ""
+
+msgid "Please enter your shop details"
+msgstr ""
+
+msgid "Default Tax Class"
 msgstr ""
 
 msgid "Suppliers"
@@ -933,6 +1004,12 @@ msgid "Rate"
 msgstr ""
 
 msgid "Users"
+msgstr ""
+
+msgid "Add some users to help manage your shop"
+msgstr ""
+
+msgid "Add a user"
 msgstr ""
 
 msgid "Password"
@@ -1103,6 +1180,9 @@ msgstr ""
 msgid "Visit shop"
 msgstr ""
 
+msgid "Quicklinks"
+msgstr ""
+
 msgid "Menu"
 msgstr ""
 
@@ -1207,6 +1287,13 @@ msgid "Shuup %(version)s"
 msgstr ""
 
 msgid "Table Columns"
+msgstr ""
+
+msgid "Welcome to Shuup!"
+msgstr ""
+
+msgid ""
+"You're almost done! Complete the following steps to sell your products online"
 msgstr ""
 
 msgid "Date"
@@ -1469,6 +1556,24 @@ msgid ""
 "Variables tab and then link them to products here."
 msgstr ""
 
+msgid "Manually process payments"
+msgstr ""
+
+msgid "Manage payments outside of Shuup"
+msgstr ""
+
+msgid "Manual"
+msgstr ""
+
+msgid "Manual process shipping"
+msgstr ""
+
+msgid "Handle shipping outside of Shuup"
+msgstr ""
+
+msgid "Activate"
+msgstr ""
+
 msgid ""
 "Define price based basket weight range. Range minimum is counted in range "
 "only as zero."
@@ -1569,6 +1674,13 @@ msgstr ""
 msgid "Send Reset Email"
 msgstr ""
 
+msgid ""
+"Please fill out the following information to get your store up and running"
+msgstr ""
+
+msgid "Setup can be continued later from the admin dashboard"
+msgstr ""
+
 msgid "Create new"
 msgstr ""
 
@@ -1631,6 +1743,21 @@ msgstr ""
 
 #, python-format
 msgid "Only one %(model)s permitted."
+msgstr ""
+
+msgid "Complete the setup wizard"
+msgstr ""
+
+msgid "Complete wizard"
+msgstr ""
+
+msgid "Publish your store"
+msgstr ""
+
+msgid "Let customers browse your store and make purchases"
+msgstr ""
+
+msgid "Publish shop"
 msgstr ""
 
 #, python-format

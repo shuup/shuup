@@ -1,0 +1,25 @@
+<script>
+// hide language tabs in all panes if only one language is chosen
+$("select[name='shop_languages-languages']").on("change", function(){
+    var languages = $(this).val();
+    var $tabContainer = $(".wizard .language-tabs");
+    if(languages.length == 1){
+        $tabContainer.addClass("hidden");
+        $tabContainer.parent(".language-dependent-content").find(".form-group").each(function(idx, el){
+            var labelText = $(el).find("label").text();
+            labelText = labelText.substring(0, labelText.indexOf("[") - 1);
+            $(el).find("label").text(labelText);
+            $(el).find("input").attr("placeholder", labelText);
+        });
+    } else {
+        $tabContainer.removeClass("hidden");
+        $tabContainer.find("li").each(function(idx, el){
+            if(languages.indexOf($(el).attr("data-lang")) < 0) {
+                $(el).addClass("hidden");
+            } else {
+                $(el).removeClass("hidden");
+            }
+        });
+    }
+}).trigger("change");
+</script>

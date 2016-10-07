@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-25 04:44+0000\n"
+"POT-Creation-Date: 2016-10-07 03:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -31,6 +31,12 @@ msgstr ""
 msgid "Themes"
 msgstr ""
 
+msgid "Customize the look and feel of your shop"
+msgstr ""
+
+msgid "Customize theme"
+msgstr ""
+
 msgid "No theme is active. Click here to activate one."
 msgstr ""
 
@@ -38,6 +44,9 @@ msgid "Theming"
 msgstr ""
 
 msgid "activate"
+msgstr ""
+
+msgid "Choose a theme for your shop"
 msgstr ""
 
 msgid "Theme activated."
@@ -216,6 +225,13 @@ msgstr ""
 msgid "No themes are installed."
 msgstr ""
 
+#, python-format
+msgid "Theme Configuration: %(name)s"
+msgstr ""
+
+msgid "There's nothing to configure in this theme."
+msgstr ""
+
 msgid "Theme"
 msgstr ""
 
@@ -232,13 +248,6 @@ msgid "Activate"
 msgstr ""
 
 msgid "Configure"
-msgstr ""
-
-#, python-format
-msgid "Theme Configuration: %(name)s"
-msgstr ""
-
-msgid "There's nothing to configure in this theme."
 msgstr ""
 
 msgid "Revert Changes"

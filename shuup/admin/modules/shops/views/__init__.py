@@ -6,7 +6,8 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from .edit import ShopEditView
+from .edit import ShopEditView, ShopEnablerView
 from .list import ShopListView
+from .wizard import ShopLanguagesWizardPane, ShopWizardPane
 
-__all__ = ["ShopEditView", "ShopListView"]
+__all__ = ["ShopEditView", "ShopEnablerView", "ShopLanguagesWizardPane", "ShopListView", "ShopWizardPane"]

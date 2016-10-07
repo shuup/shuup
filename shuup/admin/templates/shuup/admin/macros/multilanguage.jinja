@@ -10,6 +10,7 @@ When using multiple language_dependent_content_tabs in a single page, do remembe
 #}
 {% macro language_dependent_content_tabs(form, field_names=[], exclude=[], tab_id_prefix="language") %}
 <div class="language-dependent-content">
+    {% if form.languages|length > 1 %}
     <div class="row language-tabs">
         <div class="col-sm-8 col-sm-push-4 col-lg-6 col-lg-push-3">
             <ul class="nav nav-tabs">
@@ -21,6 +22,7 @@ When using multiple language_dependent_content_tabs in a single page, do remembe
             </ul>
         </div>
     </div>
+    {% endif %}
     <div class="tab-content">
         {% for language in form.languages %}
             <div class="tab-pane fade {% if loop.first %}in active{% endif %}" id="{{ tab_id_prefix }}-{{ language }}" data-lang="{{ language }}">

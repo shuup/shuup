@@ -6,18 +6,15 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.db.models import Model
 from django.db.transaction import atomic
 from six import print_
 
-from shuup import configuration
 from shuup.core.defaults.order_statuses import create_default_order_statuses
 from shuup.core.models import (
-    Category, CustomCarrier, CustomerTaxGroup, CustomPaymentProcessor,
-    OrderStatus, PaymentMethod, ProductType, SalesUnit, ShippingMethod, Shop,
-    ShopStatus, Supplier, TaxClass
+    CustomerTaxGroup, OrderStatus, ProductType, SalesUnit, Shop, ShopStatus,
+    Supplier
 )
 
 
@@ -27,23 +24,11 @@ def schema(model, identifier, **info):
 
 class Initializer(object):
     schemata = [
-        schema(Shop, "default", name="Default Shop", status=ShopStatus.ENABLED),
+        schema(Shop, "default", name="Default Shop", status=ShopStatus.ENABLED, maintenance_mode=True),
         schema(ProductType, "default", name="Standard Product"),
-        schema(ProductType, "download", name="Download Product"),
-        schema(TaxClass, "default", name="Default Tax Class"),
-        schema(
-            CustomPaymentProcessor, CustomPaymentProcessor.__name__,
-            name="Manual payment processing"),
-        schema(
-            PaymentMethod, identifier="default_payment_method", name="Default Payment Method",
-            payment_processor=CustomPaymentProcessor, shop=Shop, tax_class=TaxClass),
-        schema(CustomCarrier, CustomCarrier.__name__, name="Carrier"),
-        schema(
-            ShippingMethod, identifier="default_shipping_method", name="Default Shipping Method",
-            carrier=CustomCarrier, shop=Shop, tax_class=TaxClass),
+        schema(ProductType, "digital", name="Digital Product"),
         schema(Supplier, "default", name="Default Supplier"),
         schema(SalesUnit, "pcs", name="Pieces"),
-        schema(Category, "default", name="Default Category"),
         schema(CustomerTaxGroup, "default_person_customers", name="Retail Customers"),
         schema(CustomerTaxGroup, "default_company_customers", name="Company Customers")
     ]
@@ -77,9 +62,6 @@ class Initializer(object):
             print_("Creating order statuses...", end=" ")
             create_default_order_statuses()
             print_("done.")
-        for shop in Shop.objects.all():
-            if not configuration.get(shop, "languages"):
-                configuration.set(shop, "languages", settings.LANGUAGES)
         print_("Initialization done.")
 
 

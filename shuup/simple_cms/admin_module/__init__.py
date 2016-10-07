@@ -13,6 +13,7 @@ from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
+from shuup.admin.views.home import SimpleHelpBlock
 from shuup.simple_cms.models import Page
 
 
@@ -36,6 +37,17 @@ class SimpleCMSAdminModule(AdminModule):
                 category=STOREFRONT_MENU_CATEGORY, ordering=3, aliases=[_("Show pages")]
             )
         ]
+
+    def get_help_blocks(self, request, kind):
+        if kind == "quicklink":
+            yield SimpleHelpBlock(
+                text=_("Add a web page"),
+                actions=[{
+                    "text": _("Add a page"),
+                    "url": self.get_model_url(Page, "new")
+                }],
+                icon_url="simple_cms/page.png"
+            )
 
     def get_required_permissions(self):
         return get_default_model_permissions(Page)

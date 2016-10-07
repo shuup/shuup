@@ -30,7 +30,7 @@ OBJECT_CREATED_LOG_IDENTIFIER = "object_created_signal_handled"
 
 @pytest.mark.browser
 @pytest.mark.djangodb
-def test_order_creator_view(browser, admin_user, live_server):
+def test_order_creator_view(browser, admin_user, live_server, settings):
     shop = get_default_shop()
     pm = get_default_payment_method()
     sm = get_default_shipping_method()
@@ -40,7 +40,7 @@ def test_order_creator_view(browser, admin_user, live_server):
     product0 = create_product("test-sku0", shop=shop, default_price=10, supplier=supplier)
     product1 = create_product("test-sku1", shop=shop, default_price=10, supplier=supplier)
     object_created.connect(_add_custom_order_created_message, sender=Order, dispatch_uid="object_created_signal_test")
-    initialize_admin_browser_test(browser, live_server)
+    initialize_admin_browser_test(browser, live_server, settings)
     _visit_order_creator_view(browser, live_server)
     _test_language_change(browser)
     _test_customer_data(browser, person)

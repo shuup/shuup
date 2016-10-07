@@ -70,7 +70,7 @@ class MultiLanguageModelForm(TranslatableModelForm):
                 if language_field.required:
                     self.required_translated_field_names.append(language_field_name)
                 language_field.required = language_field.required and (lang in self.required_languages)
-                language_field.label = "%s [%s]" % (language_field.label, self.language_names.get(lang))
+                language_field.label = self._get_label(f.name, language_field, lang)
                 self.base_fields[language_field_name] = language_field
                 self.trans_field_map[lang][language_field_name] = f
                 self.trans_name_map[lang][f.name] = language_field_name
@@ -187,3 +187,11 @@ class MultiLanguageModelForm(TranslatableModelForm):
         return dict(
             (k, v) for (k, v) in six.iteritems(self.cleaned_data)
             if k not in translated_field_names)
+
+    def _get_label(self, field_name, field, lang):
+        label = field.label
+        if self._meta.labels:
+            label = self._meta.labels.get(field_name, field.label)
+        if len(self.languages) > 1:
+            return "%s [%s]" % (label, self.language_names.get(lang))
+        return label

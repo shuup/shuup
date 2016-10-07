@@ -108,3 +108,5 @@ def add_front_resources(context, content):
         add_resource(context, "body_end", InlineScriptResource(REGIONS % {"regions": json.dumps(regions_data)}))
     elif view_name in ["AddressBookEditView"]:
         add_resources(context, fields=["#id_address"])
+    elif view_name in ["WizardView"]:
+        add_resource(context, "body_end", InlineScriptResource(REGIONS % {"regions": json.dumps(regions_data)}))

@@ -82,5 +82,12 @@ module.exports = {
         "watch": [
             root + "/modules/orders/static_src/create/**/*.js"
         ]
+    },
+    "wizard": {
+        "base": "./static_src/wizard",
+        "es6": true,
+        "files": [
+            "js/wizard.js"
+        ]
     }
 };
