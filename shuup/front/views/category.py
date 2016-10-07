@@ -51,5 +51,6 @@ class CategoryView(DetailView):
         products = post_filter_products(self.request, category, products, data)
         products = cache_product_things(self.request, products)
         products = sort_products(self.request, category, products, data)
+        context["page_size"] = data.get("limit", 12)
         context["products"] = products
         return context

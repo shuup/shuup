@@ -213,3 +213,18 @@ class CategoryProductListFilter(SimpleProductListModifier):
         categories = data.get("categories")
         if categories:
             return Q(shop_products__categories__in=list(categories))
+
+
+class LimitProductListPageSize(SimpleProductListModifier):
+    is_active_key = "limit_product_list_page_size"
+    is_active_label = _("Limit page size")
+    ordering_key = "limit_product_list_page_size_ordering"
+    ordering_label = _("Ordering for limit page size")
+
+    def get_fields(self, request, category=None):
+        return [("limit", forms.IntegerField(required=False, widget=forms.Select(), label=_("Products per page")))]
+
+    def get_choices_for_fields(self):
+        return [
+            ("limit", [(12, 12), (24, 24), (36, 36), (48, 48)]),
+        ]
