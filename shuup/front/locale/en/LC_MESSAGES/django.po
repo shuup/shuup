@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-06 05:45+0000\n"
+"POT-Creation-Date: 2016-10-07 01:15+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -239,6 +239,15 @@ msgid "Ordering for filter by manufacturer"
 msgstr ""
 
 msgid "Manufacturers"
+msgstr ""
+
+msgid "Filter products by category"
+msgstr ""
+
+msgid "Ordering for filter by category"
+msgstr ""
+
+msgid "Categories"
 msgstr ""
 
 msgid "Logged out since this account is inactive."
@@ -482,9 +491,6 @@ msgid "Coupon is not available."
 msgstr ""
 
 msgid "Error when adding coupon."
-msgstr ""
-
-msgid "Categories"
 msgstr ""
 
 msgid "Show Grid/List"
@@ -736,4 +742,7 @@ msgid "Newest products"
 msgstr ""
 
 msgid "This product is not available in this shop."
+msgstr ""
+
+msgid "Edit"
 msgstr ""
