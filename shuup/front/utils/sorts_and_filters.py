@@ -53,10 +53,11 @@ class ProductListFormModifier(six.with_metaclass(abc.ABCMeta)):
         """
         pass
 
-    def get_fields(self, category=None):
+    def get_fields(self, request, category=None):
         """
         Extra fields for product list form.
 
+        :param request: Current request
         :param category: Current category
         :type category: shuup.core.models.Category|None
         :return: List of extra fields that should be added to form.
@@ -155,10 +156,10 @@ class ProductListFormModifier(six.with_metaclass(abc.ABCMeta)):
 
 
 class ProductListForm(forms.Form):
-    def __init__(self, shop, category, *args, **kwargs):
+    def __init__(self, request, shop, category, *args, **kwargs):
         super(ProductListForm, self).__init__(*args, **kwargs)
         for extend_obj in _get_active_modifiers(shop, category):
-            for field_key, field in extend_obj.get_fields(category) or []:
+            for field_key, field in extend_obj.get_fields(request, category) or []:
                 if field_key not in self.fields:
                     self.fields[field_key] = field
 

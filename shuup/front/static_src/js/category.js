@@ -50,13 +50,13 @@ window.refreshFilters = function refreshFilters(pageNumber) {
 function getFilterString(state) {
     var filterString = "";
     if(state !== null) {
-        filterString= "?";
+        filterString = "?";
         $.each(state, function(key, value) {
-            filterString = (filterString.endsWith("?") ? filterString : filterString + "&");
+            filterString += (filterString.endsWith("?") || filterString.endsWith("&") ? "" : "&");
             if (value.constructor === Array) {
-                filterString += key + "=" + value.join("&" + key + "=");
+                filterString += (value.length > 0 ? (key + "=" + value.join("&" + key + "=")) : "");
             } else {
-                filterString += key + "=" + value;
+                filterString += (value ? key + "=" + value: "");
             }
         });
     }

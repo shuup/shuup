@@ -31,9 +31,10 @@ class CategoryView(DetailView):
         context = super(CategoryView, self).get_context_data(**kwargs)
         category = self.object
         data = self.request.GET
-
-        context["form"] = form = ProductListForm(shop=self.request.shop, category=category, data=data)
+        context["form"] = form = ProductListForm(
+            request=self.request, shop=self.request.shop, category=category, data=data)
         form.full_clean()
+        data = form.cleaned_data
 
         products = Product.objects.listed(
             customer=self.request.customer,

@@ -13,7 +13,7 @@ from django.core.urlresolvers import reverse
 
 from shuup.core import cache
 from shuup.core.models import (
-    Category, CategoryStatus, Manufacturer, Product
+    Category, CategoryStatus, Manufacturer, Product, ShopProduct
 )
 from shuup.front.utils.sorts_and_filters import (
     set_configuration
@@ -34,6 +34,7 @@ pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1
 CATEGORY_DATA = [
     ("First Category", "cat-1"),
     ("Second Category", "cat-2"),
+    ("Third Category", "cat-3"),
 ]
 
 
@@ -74,14 +75,16 @@ def test_category_product_list(browser, live_server, settings):
     for name, identifier in MANUFACTURER_DATA:
         Manufacturer.objects.create(name=name, identifier=identifier)
 
-    first_cat = Category.objects.first()
-    second_cat = Category.objects.last()
+    first_cat = Category.objects.filter(identifier="cat-1").first()
+    second_cat = Category.objects.filter(identifier="cat-2").first()
+    third_cat = Category.objects.filter(identifier="cat-3").first()
     assert first_cat.pk != second_cat.pk
     for name, sku, price in FIRST_CATEGORY_PRODUCT_DATA:
         product = create_orderable_product(name, sku, price=price)
         shop_product = product.get_shop_instance(shop)
         cat = Category.objects.first()
         shop_product.primary_category = first_cat
+        shop_product.save()
         shop_product.categories.add(first_cat)
 
     for i in range(1, 14):
@@ -89,6 +92,7 @@ def test_category_product_list(browser, live_server, settings):
         shop_product = product.get_shop_instance(shop)
         cat = Category.objects.first()
         shop_product.primary_category = second_cat
+        shop_product.save()
         shop_product.categories.add(second_cat)
 
 
@@ -114,6 +118,7 @@ def test_category_product_list(browser, live_server, settings):
     sort_category_products_test(browser)
 
     manufacturer_filter_test(browser, first_cat, first_manufacturer)
+    categories_filter_test(browser, first_cat, second_cat, third_cat)
 
     second_category_sort_test(browser, live_server, second_cat)
 
@@ -192,6 +197,35 @@ def manufacturer_filter_test(browser, category, manufacturer):
     assert browser.is_text_present("Manufacturers")
     browser.execute_script("$('#manufacturers-%s').click();" % manufacturer.id)
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 1)
+
+
+def categories_filter_test(browser, first_cat, second_cat, third_cat):
+    # Add all products in second category to also in first category
+    for shop_product in ShopProduct.objects.filter(primary_category=second_cat):
+        shop_product.categories.add(first_cat)
+    # Add one product including first_cat also to third_cat
+    shop_product = ShopProduct.objects.filter(primary_category=first_cat).last()
+    shop_product.categories.add(third_cat)
+
+    # Activate categories filter for current category which is the first one
+    set_configuration(
+        category=first_cat,
+        data={
+            "sort_products_by_name": True,
+            "sort_products_by_name_ordering": 1,
+            "sort_products_by_price": True,
+            "sort_products_by_price_ordering": 2,
+            "filter_products_by_category": True
+        }
+    )
+    browser.reload()
+    browser.execute_script("$('#categories-%s').click();" % third_cat.id)
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 1)
+    browser.execute_script("$('#categories-%s').click();" % second_cat.id)
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 1)
+    browser.execute_script("$('#categories-%s').click();" % third_cat.id)
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 12)
+
 
 
 def second_category_sort_test(browser, live_server, category):

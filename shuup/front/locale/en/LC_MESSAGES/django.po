@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-06 05:45+0000\n"
+"POT-Creation-Date: 2016-10-07 01:48+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.1.1\n"
 "X-Generator: Poedit 1.8.8\n"
@@ -22,6 +22,7 @@ msgstr ""
 msgid "Abandoned Cart Value"
 msgstr ""
 
+#, python-brace-format
 msgid "Based on {b} carts over the last {d} days"
 msgstr ""
 
@@ -239,6 +240,15 @@ msgid "Ordering for filter by manufacturer"
 msgstr ""
 
 msgid "Manufacturers"
+msgstr ""
+
+msgid "Filter products by category"
+msgstr ""
+
+msgid "Ordering for filter by category"
+msgstr ""
+
+msgid "Categories"
 msgstr ""
 
 msgid "Logged out since this account is inactive."
@@ -484,7 +494,7 @@ msgstr ""
 msgid "Error when adding coupon."
 msgstr ""
 
-msgid "Categories"
+msgid "Filter Products"
 msgstr ""
 
 msgid "Show Grid/List"
@@ -736,4 +746,7 @@ msgid "Newest products"
 msgstr ""
 
 msgid "This product is not available in this shop."
+msgstr ""
+
+msgid "Edit"
 msgstr ""
