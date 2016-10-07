@@ -58,6 +58,7 @@ class ShuupAdminAppConfig(AppConfig):
             "shuup.admin.modules.orders.sections:PaymentOrderSection",
             "shuup.admin.modules.orders.sections:LogEntriesOrderSection",
             "shuup.admin.modules.orders.sections:ShipmentSection",
+            "shuup.admin.modules.orders.sections:AdminCommentSection",
         ],
         "admin_contact_section": [
             "shuup.admin.modules.contacts.sections:BasicInfoContactSection",

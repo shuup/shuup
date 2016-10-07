@@ -21,6 +21,7 @@ from django.db.models import Sum
 from django.http.response import HttpResponse, JsonResponse
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
+from django.views.generic import View
 from django_countries import countries
 
 from shuup.admin.modules.orders.json_order_creator import JsonOrderCreator
@@ -410,6 +411,21 @@ class OrderEditView(CreateOrUpdateView):
 
     def handle_finalize(self, request):
         return _handle_or_return_error(self._handle_finalize, request, _("Could not finalize order:"))
+
+
+class UpdateAdminCommentView(View):
+    """
+    Update order's admin comment
+    """
+    def post(self, request, *args, **kwargs):
+        order = Order.objects.get(pk=kwargs["pk"])
+        comment = request.POST["comment"]
+        order.admin_comment = comment
+        order.save()
+
+        return JsonResponse({
+            "comment": order.admin_comment,
+        })
 
 
 def _handle_or_return_error(func, request, error_message):
