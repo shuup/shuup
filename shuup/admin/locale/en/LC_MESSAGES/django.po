@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-29 00:14+0000\n"
+"POT-Creation-Date: 2016-10-07 20:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -415,6 +415,9 @@ msgid "Log Entries"
 msgstr ""
 
 msgid "Shipments"
+msgstr ""
+
+msgid "Admin comment/notes"
 msgstr ""
 
 msgid "Set Complete"
@@ -1216,6 +1219,15 @@ msgid "Edit"
 msgstr ""
 
 msgid "Upload"
+msgstr ""
+
+msgid "Comment"
+msgstr ""
+
+msgid "Save comment"
+msgstr ""
+
+msgid "There was an error updating the admin comment."
 msgstr ""
 
 msgid "Description"
