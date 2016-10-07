@@ -34,6 +34,7 @@ class CategoryView(DetailView):
         context["form"] = form = ProductListForm(
             request=self.request, shop=self.request.shop, category=category, data=data)
         form.full_clean()
+        data = form.cleaned_data
 
         products = Product.objects.listed(
             customer=self.request.customer,
