@@ -5,7 +5,9 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-from selenium.common.exceptions import ElementNotVisibleException
+from selenium.common.exceptions import (
+    ElementNotVisibleException, StaleElementReferenceException
+)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC  # noqa: N812
 from selenium.webdriver.support.wait import WebDriverWait
@@ -71,7 +73,7 @@ def wait_until_condition(browser, condition, timeout=10, frequency=1.0):
         browser.driver,
         timeout=timeout,
         poll_frequency=frequency,
-        ignored_exceptions=(ElementNotVisibleException)
+        ignored_exceptions=(ElementNotVisibleException, StaleElementReferenceException)
     ).until(lambda x: condition(browser))
 
 
