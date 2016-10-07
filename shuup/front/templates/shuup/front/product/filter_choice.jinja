@@ -8,7 +8,7 @@
                     id="{{ name }}-{{ choice_key}}"
                     class="product-filter"
                     value="{{ choice_key }}"
-                    {% if choice_key in values %} checked{% endif %}>
+                    {% if choice_key|string in values %} checked{% endif %}>
                 <label for="{{ name }}-{{ choice_key }}">{{ choice_label }}</label>
             </div>
         {% endfor %}
