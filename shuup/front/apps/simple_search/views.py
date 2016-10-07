@@ -41,7 +41,7 @@ class SearchView(ListView):
         context["form"] = self.form
         products = context["products"]
         if products:
-            data = self.request.GET
+            data = self.form.cleaned_data
             products = post_filter_products(self.request, None, products, data)
             products = cache_product_things(self.request, products)
             products = sort_products(self.request, None, products, data)
