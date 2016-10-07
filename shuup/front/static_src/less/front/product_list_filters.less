@@ -1,0 +1,82 @@
+.sidebar-filters {
+    @media (max-width: @screen-sm-max) {
+        margin-bottom: 15px;
+    }
+
+    .filters {
+        padding: 0px 15px;
+        @media (min-width: @screen-md-min) {
+            display: block !important;
+            visibility: visible !important;
+            height: auto !important;
+        }
+    }
+
+
+    .mobile-filter-toggle {
+        @media (min-width: @screen-md-min) {
+            display: none;
+        }
+
+        a.toggle-btn {
+            color: #fff;
+            font-weight: bold;
+            font-size: 14px;
+            padding: 10px 15px;
+            display: block;
+            width: 100%;
+            border-bottom: 1px solid @border-color;
+            background: darken(@gray-light, 5%);
+            transition: background 0.2s;
+            &.collapsed {
+                color: @gray-light;
+                border: none;
+                background: transparent;
+                i {
+                    transform: rotate(180deg);
+                    margin-top: 0;
+                }
+            }
+            &:hover, &:focus {
+                text-decoration: none;
+            }
+            i {
+                margin-top: -4px;
+                transition: transform 0.2s;
+                float: right;
+                line-height: inherit;
+                font-size: 2rem;
+            }
+        }
+    }
+
+    .filter-block {
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid @border-color;
+        &:first-child {
+            padding-top: 15px;
+        }
+        &:last-child {
+            margin: 0;
+            border: 0;
+        }
+        .collapsible-content {
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+    }
+
+    .block-title {
+        display: block;
+        padding: 5px 0px;
+        font-size: 1.6rem;
+        font-weight: 500;
+        color: @gray-light;
+
+        &:hover, &:focus {
+            text-decoration: none;
+            &:after { color: @brand-primary; }
+        }
+    }
+}
