@@ -18,6 +18,8 @@ Localization
 Admin
 ~~~~~
 
+- Add admin comment section to order module
+
 Addons
 ~~~~~~
 
