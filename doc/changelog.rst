@@ -24,6 +24,7 @@ Addons
 Front
 ~~~~~
 
+- Add option to filter product lists by category
 - Configure category and search sorts and filters.
     - Add option to configure category sorts and filters
     - Enable option to configure sorts and filters for search.

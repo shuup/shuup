@@ -12,8 +12,9 @@ from django.db.models import Q
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import get_language
 
-from shuup.core.models import Manufacturer, ShopProduct
+from shuup.core.models import Category, Manufacturer, ShopProduct
 from shuup.front.utils.sorts_and_filters import ProductListFormModifier
 
 
@@ -150,3 +151,34 @@ class ManufacturerProductListFilter(SimpleProductListModifier):
         manufacturers = data.get("manufacturers")
         if manufacturers:
             return Q(manufacturer__in=manufacturers)
+
+
+class CategoryProductListFilter(SimpleProductListModifier):
+    is_active_key = "filter_products_by_category"
+    is_active_label = _("Filter products by category")
+    ordering_key = "filter_products_by_category_ordering"
+    ordering_label = _("Ordering for filter by category")
+
+    def get_fields(self, request, category=None):
+        if not Category.objects.exists():
+            return
+
+        language = get_language()
+        base_queryset = Category.objects.all_visible(request.customer, request.shop, language=language)
+        if category:
+            queryset = base_queryset.filter(shop_products__categories=category).exclude(pk=category.pk).distinct()
+        else:
+            # Show only first level when there is no category selected
+            queryset = base_queryset.filter(parent=None)
+        return [
+            (
+                "categories",
+                forms.ModelMultipleChoiceField(
+                    queryset=queryset, required=False, label=_('Categories'), widget=FilterWidget())
+            ),
+        ]
+
+    def get_filters(self, request, data):
+        categories = data.get("categories")
+        if categories:
+            return Q(shop_products__categories__in=list(categories))
