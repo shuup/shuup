@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-07 01:48+0000\n"
+"POT-Creation-Date: 2016-10-11 16:58+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
-"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.1.1\n"
 "X-Generator: Poedit 1.8.8\n"
@@ -22,7 +22,6 @@ msgstr ""
 msgid "Abandoned Cart Value"
 msgstr ""
 
-#, python-brace-format
 msgid "Based on {b} carts over the last {d} days"
 msgstr ""
 
@@ -231,6 +230,15 @@ msgid "Price - Low to High"
 msgstr ""
 
 msgid "Price - High to Low"
+msgstr ""
+
+msgid "Sort products by date created"
+msgstr ""
+
+msgid "Ordering for sort by date created"
+msgstr ""
+
+msgid "Date created"
 msgstr ""
 
 msgid "Filter products by manufacturer"

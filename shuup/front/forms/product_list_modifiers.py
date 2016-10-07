@@ -120,6 +120,37 @@ class SortProductListByPrice(SimpleProductListModifier):
         return products
 
 
+class SortProductListByCreatedDate(SimpleProductListModifier):
+    is_active_key = "sort_products_by_date_created"
+    is_active_label = _("Sort products by date created")
+    ordering_key = "sort_products_by_date_created_ordering"
+    ordering_label = _("Ordering for sort by date created")
+
+    def get_fields(self, request, category=None):
+        return [("sort", forms.CharField(required=False, widget=forms.Select(), label=_('Sort')))]
+
+    def get_choices_for_fields(self):
+        return [
+            ("sort", [
+                ("created_date_d", _("Date created")),
+            ]),
+        ]
+
+    def sort_products(self, request, products, sort):
+        def _get_product_created_on_datetime(product):
+            return product.created_on
+
+        if not sort:
+            sort = ""
+
+        key = (sort[:-2] if sort.endswith(('_a', '_d')) else sort)
+        if key == "created_date":
+            sorter = _get_product_created_on_datetime
+            reverse = bool(sort.endswith('_d'))
+            products = sorted(products, key=sorter, reverse=reverse)
+        return products
+
+
 class ManufacturerProductListFilter(SimpleProductListModifier):
     is_active_key = "filter_products_by_manufacturer"
     is_active_label = _("Filter products by manufacturer")
