@@ -8,7 +8,7 @@
 import pytest
 
 from shuup.admin.modules.orders.views import (
-    NewLogEntryView, OrderSetStatusView
+    NewLogEntryView, OrderSetStatusView, UpdateAdminCommentView
 )
 from shuup.core.models import (
     Order, OrderLogEntry, OrderStatus, OrderStatusRole, ShippingStatus
@@ -60,3 +60,16 @@ def test_add_order_log_entry(admin_user, rf):
     assert response.status_code < 400
     assert OrderLogEntry.objects.filter(target=order).exists()
     assert OrderLogEntry.objects.filter(target=order).first().message == test_message
+
+
+@pytest.mark.django_db
+def test_update_order_admin_comment(admin_user, rf):
+    order = create_random_order(customer=create_random_person(), products=(get_default_product(),))
+    assert order.admin_comment == ""
+    view = UpdateAdminCommentView.as_view()
+    comment = "updated admin comment"
+    request = apply_request_middleware(rf.post("/", {"comment": comment}), user=admin_user)
+    response = view(request, pk=order.pk)
+    assert response.status_code < 400
+    order.refresh_from_db()
+    assert order.admin_comment == comment

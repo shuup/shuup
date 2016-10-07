@@ -58,6 +58,12 @@ class OrderModule(AdminModule):
                 permissions=get_default_model_permissions(Order)
             ),
             admin_url(
+                "^orders/(?P<pk>\d+)/update-admin-comment/$",
+                "shuup.admin.modules.orders.views.UpdateAdminCommentView",
+                name="order.update-admin-comment",
+                permissions=get_default_model_permissions(Order)
+            ),
+            admin_url(
                 "^orders/(?P<pk>\d+)/create-refund/$",
                 "shuup.admin.modules.orders.views.OrderCreateRefundView",
                 name="order.create-refund",

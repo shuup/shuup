@@ -78,3 +78,20 @@ class ShipmentSection(Section):
     @staticmethod
     def get_context_data(order):
         return Shipment.objects.filter(order=order).order_by("-created_on").all()
+
+
+class AdminCommentSection(Section):
+    identifier = "admin_comment"
+    name = _("Admin comment/notes")
+    icon = "fa-comment-o"
+    template = "shuup/admin/orders/_admin_comment.jinja"
+    extra_js = "shuup/admin/orders/_admin_comment_extra_js.jinja"
+    order = 4
+
+    @staticmethod
+    def visible_for_object(order):
+        return True
+
+    @staticmethod
+    def get_context_data(order):
+        return None
