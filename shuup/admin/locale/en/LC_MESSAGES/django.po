@@ -98,6 +98,12 @@ msgstr ""
 msgid "Categories"
 msgstr ""
 
+msgid "Add a product category to organize your products"
+msgstr ""
+
+msgid "Add a category"
+msgstr ""
+
 msgid "Primary Category"
 msgstr ""
 
@@ -609,6 +615,15 @@ msgstr ""
 msgid "Create Product with SKU \"%s\""
 msgstr ""
 
+msgid "Add a product"
+msgstr ""
+
+msgid "Import products"
+msgstr ""
+
+msgid "Add a product to see it in your store"
+msgstr ""
+
 msgid "Given value is already in use, please use unique SKU and try again."
 msgstr ""
 
@@ -934,6 +949,12 @@ msgstr ""
 msgid "State/Province"
 msgstr ""
 
+msgid "There are still some pending actions to complete!"
+msgstr ""
+
+msgid "Your store is now live!"
+msgstr ""
+
 msgid "Domain"
 msgstr ""
 
@@ -983,6 +1004,12 @@ msgid "Rate"
 msgstr ""
 
 msgid "Users"
+msgstr ""
+
+msgid "Add some users to help manage your shop"
+msgstr ""
+
+msgid "Add a user"
 msgstr ""
 
 msgid "Password"
@@ -1153,6 +1180,9 @@ msgstr ""
 msgid "Visit shop"
 msgstr ""
 
+msgid "Quicklinks"
+msgstr ""
+
 msgid "Menu"
 msgstr ""
 
@@ -1257,6 +1287,13 @@ msgid "Shuup %(version)s"
 msgstr ""
 
 msgid "Table Columns"
+msgstr ""
+
+msgid "Welcome to Shuup!"
+msgstr ""
+
+msgid ""
+"You're almost done! Complete the following steps to sell your products online"
 msgstr ""
 
 msgid "Date"
@@ -1637,9 +1674,6 @@ msgstr ""
 msgid "Send Reset Email"
 msgstr ""
 
-msgid "Welcome to Shuup!"
-msgstr ""
-
 msgid ""
 "Please fill out the following information to get your store up and running"
 msgstr ""
@@ -1709,6 +1743,21 @@ msgstr ""
 
 #, python-format
 msgid "Only one %(model)s permitted."
+msgstr ""
+
+msgid "Complete the setup wizard"
+msgstr ""
+
+msgid "Complete wizard"
+msgstr ""
+
+msgid "Publish your store"
+msgstr ""
+
+msgid "Let customers browse your store and make purchases"
+msgstr ""
+
+msgid "Publish shop"
 msgstr ""
 
 #, python-format

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-07 01:58+0000\n"
+"POT-Creation-Date: 2016-10-07 03:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -29,6 +29,12 @@ msgid "Shuup Extensible Theme Engine"
 msgstr ""
 
 msgid "Themes"
+msgstr ""
+
+msgid "Customize the look and feel of your shop"
+msgstr ""
+
+msgid "Customize theme"
 msgstr ""
 
 msgid "No theme is active. Click here to activate one."

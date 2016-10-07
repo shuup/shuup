@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-28 23:41+0000\n"
+"POT-Creation-Date: 2016-10-07 03:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -26,6 +26,12 @@ msgid "Pages"
 msgstr ""
 
 msgid "Show pages"
+msgstr ""
+
+msgid "Add a web page"
+msgstr ""
+
+msgid "Add a page"
 msgstr ""
 
 msgid "Available from"
@@ -129,4 +135,7 @@ msgid "Availability"
 msgstr ""
 
 msgid "Extras"
+msgstr ""
+
+msgid "Home"
 msgstr ""
