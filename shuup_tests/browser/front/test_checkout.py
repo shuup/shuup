@@ -55,7 +55,7 @@ def test_browser_checkout(browser, live_server, settings):
     assert browser.is_text_present(product_name)
 
     click_element(browser, "#product-%s" % product.pk)  # open product from product list
-    click_element(browser, "#add-to-cart-button")  # add product to basket
+    click_element(browser, "#add-to-cart-button-%s" % product.pk)  # add product to basket
 
     wait_until_appeared(browser, ".cover-wrap")
     wait_until_disappeared(browser, ".cover-wrap")

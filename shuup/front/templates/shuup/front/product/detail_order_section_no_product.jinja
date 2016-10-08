@@ -1,8 +1,8 @@
-<div class="price text-right" id="product-price-div">
-    <h2 id="no-price">
+<div class="price text-right product-price-div" id="product-price-div-{{ product.pk }}">
+    <h2 id="no-price-{{ product.pk }}">
         {% if show_prices() %}
         <small class="text-muted">{% trans %}Total{% endtrans %}:</small>
-        <span id="product-price"><strong>--</strong></span>
+        <span class="product-price"><strong>--</strong></span>
         {% endif %}
     </h2>
     <span class="small text-muted">{% trans %}Combination not available{% endtrans %}</span>
