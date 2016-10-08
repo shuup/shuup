@@ -17,11 +17,9 @@
                 <div class="row">
                     <div class="preview-image">
                         {% if product|is_discounted %}
-                            <div class="discount">
-                              <span class="label label-danger">
+                            <div class="badge product-badge sale">
                                 {% set discount_percent = product|discount_percent %}
                                 {{- _("Save %(discount_percent)s", discount_percent=discount_percent) -}}
-                              </span>
                             </div>
                         {% endif %}
                         {% set image = product.primary_image|thumbnail(size=(360, 360), crop="scale", upscale=True) %}
