@@ -34,6 +34,9 @@ Addons
 Front
 ~~~~~
 
+- Change the way product order boxes are being rendered in front.
+  Note: This causes backwards incompatibility with templates, so
+  fix your templates before upgrading into this version. 
 - Add option to filter product lists by category
 - Configure category and search sorts and filters.
     - Add option to configure category sorts and filters

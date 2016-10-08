@@ -1,6 +1,10 @@
 {% extends "shuup/front/macros/theme/product.jinja" %}
 
-{% macro render_product_order_section(product) %}
+{% macro render_product_order_section(product, variation_variables, variation_children, unorderability_reason, orderable_variation_children) %}
+    {%- set shop_product = product.get_shop_instance(request.shop) -%}
+    {% if not quantity %}
+        {%- set quantity = shop_product.rounded_minimum_purchase_quantity -%}
+    {% endif %}
     <div id="product-price-section">
         {% if request.is_ajax() %}
             <script type="text/javascript">
@@ -13,58 +17,63 @@
                 });
             </script>
         {% endif %}
-
-        {% if not quantity %}
-            {% set quantity = shop_product.rounded_minimum_purchase_quantity %}
-        {% endif %}
-
         <form role="form" method="post" action="{{ url("shuup:basket") }}" class="add-to-basket">
             {% set return_path = return_url if return_url else request.path %}
             <input type="hidden" name="return" value="{{ return_path }}">
             {% if unorderability_reason %}
                 <p class="text-warning not-orderable">{{ unorderability_reason }}</p>
             {% elif variation_variables %}
-                {{ variable_variation_form(product, quantity) }}
+                {{ variable_variation_form(shop_product, quantity, variation_variables) }}
             {% elif variation_children %}
-                {{ simple_variation_form(product, quantity) }}
+                {{ simple_variation_form(shop_product, quantity, orderable_variation_children) }}
             {% else %}
-                {{ simple_product_form(product, quantity) }}
+                {{ simple_product_form(shop_product, quantity) }}
             {% endif %}
         </form>
     </div>
 {% endmacro %}
 
-{% macro variable_variation_form(product, quantity) %}
+{% macro variable_variation_form(shop_product, quantity, variation_variables) %}
+    {% if shop_product.product.variation_parent %}
+        {%- set product_id = shop_product.product.variation_parent.pk -%}
+    {% else %}
+        {%- set product_id = shop_product.product.pk -%}
+    {% endif %}
     <input type="hidden" name="command" value="add_var">
-    <input type="hidden" name="product_id" id="product_id" value="{{ product.id }}">
+    <input type="hidden" name="product_id" id="product_id" value="{{ shop_product.product.id }}">
     <div class="product-variations">
         {% for var in variation_variables %}
             <div class="form-group">
                 <label for="var_{{ var.pk }}">{% trans %}Select{% endtrans %} {{ var.name }}</label>
                 <select name="var_{{ var.pk }}"
                         id="var_{{ var.pk }}"
-                        class="form-control selectpicker variable-variation"
-                        onchange="updatePrice('{{ product.id }}');">
+                        class="form-control selectpicker variable-variation variable-variation-{{ product_id }}"
+                        onchange="updatePrice('{{ product_id }}')">
                     {% for pvvv in var.values.all() %}
                         <option value="{{ pvvv.pk }}">{{ pvvv.value }}</option>
                     {% endfor %}
                 </select>
             </div>
         {% endfor %}
-        {{ product_order_section(product, quantity, True) }}
+        {{ product_order_section(shop_product, quantity, True) }}
     </div>
 {% endmacro %}
 
-{% macro simple_variation_form(product, quantity) %}
+{% macro simple_variation_form(shop_product, quantity, orderable_variation_children) %}
     {% set is_orderable = (orderable_variation_children|length > 0) %}
+    {% if shop_product.product.variation_parent %}
+        {%- set product_id = shop_product.product.variation_parent.pk -%}
+    {% else %}
+        {%- set product_id = shop_product.product.pk -%}
+    {% endif %}
     <div class="product-variations">
         <input type="hidden" name="command" value="add">
         <div class="form-group">
             <label for="product-variations">{% trans %}Select product{% endtrans %}</label>
             <select name="product_id"
-                    id="product-variations"
+                    id="product-variations-{{ product_id }}"
                     class="form-control selectpicker"
-                    onchange="updatePrice('{{ product.id }});')">
+                    onchange="updatePrice('{{ product_id }}')">
                 {% for p in orderable_variation_children %}
                     <option value="{{ p.id }}"{% if selected_child and selected_child == p.id %} selected{% endif %}>
                         {{ p.variation_name or p.name }}
@@ -72,57 +81,68 @@
                 {% endfor %}
             </select>
         </div>
-        {{ product_order_section(product, quantity, is_orderable) }}
+        {{ product_order_section(shop_product, quantity, is_orderable) }}
     </div>
 {% endmacro %}
 
-{% macro simple_product_form(product, quantity) %}
+{% macro simple_product_form(shop_product, quantity) %}
     <input type="hidden" name="command" value="add">
-    <input type="hidden" name="product_id" value="{{ product.id }}">
-    {% set is_orderable=shop_product.is_orderable(supplier=None, customer=request.customer, quantity=quantity) %}
+    <input type="hidden" name="product_id" value="{{ shop_product.product.id }}">
+    {% set is_orderable = shop_product.is_orderable(supplier=None, customer=request.customer, quantity=quantity) %}
     <div class="prices">
-        {{ product_order_section(product, quantity, is_orderable) }}
+        {{ product_order_section(shop_product, quantity, is_orderable) }}
     </div>
 {% endmacro %}
 
-{% macro product_order_section(product, quantity, is_orderable) %}
+{% macro product_order_section(shop_product, quantity, is_orderable) %}
     {% if show_prices() %}
         <div class="row">
             <div class="col-sm-6">
-                {{ quantity_box(quantity) }}
+                {{ quantity_box(shop_product, quantity) }}
             </div>
             <div class="col-sm-6">
-                {{ product_price_div(product, quantity) }}
+                {{ product_price_div(shop_product, quantity) }}
             </div>
         </div>
-        {{ add_to_cart_btn(is_orderable) }}
+        {{ add_to_cart_btn(shop_product, is_orderable) }}
     {% endif %}
 {% endmacro %}
 
-{% macro quantity_box(quantity) %}
+{% macro quantity_box(shop_product, quantity) %}
+    {% if shop_product.product.variation_parent %}
+        {%- set product_id = shop_product.product.variation_parent.pk -%}
+    {% else %}
+        {%- set product_id = shop_product.product.pk -%}
+    {% endif %}
     <div class="form-group amount">
-        <label for="product-quantity">{% trans %}Quantity{% endtrans %}</label>
+        <label for="product-quantity-{{ product_id }}">{% trans %}Quantity{% endtrans %}</label>
         <div class="input-group">
             <input
             type="number"
             class="form-control"
             name="quantity"
-            id="product-quantity"
+            id="product-quantity-{{ product_id }}"
             step="{{ shop_product.quantity_step }}"
             value="{{ quantity }}"
             min="{{ shop_product.rounded_minimum_purchase_quantity }}"
-            onchange="updatePrice('{{ product.id }}')"
+            onchange="updatePrice('{{ product_id }}')"
             >
-            <span class="input-group-addon sales-unit">{{ product.sales_unit.short_name }}</span>
+            <span class="input-group-addon sales-unit">{{ shop_product.product.sales_unit.short_name }}</span>
         </div>
     </div>
 {% endmacro %}
 
-{% macro product_price_div(product, quantity) %}
-    <div class="price text-right" id="product-price-div">
+{% macro product_price_div(shop_product, quantity) %}
+    {% if shop_product.product.variation_parent %}
+        {%- set product_id = shop_product.product.variation_parent.pk -%}
+    {% else %}
+        {%- set product_id = shop_product.product.pk -%}
+    {% endif %}
+    {% set product = shop_product.product %}
+    <div class="price text-right product-price-div" id="product-price-div-{{ product_id }}">
         <h2>
             <small class="text-muted">{% trans %}Total{% endtrans %}:</small>
-            <span id="product-price"><strong>{{ product|price(quantity) }}</strong></span>
+            <span class="product-price"><strong>{{ product|price(quantity) }}</strong></span>
         </h2>
         <span class="small text-muted">
             {% if product|is_discounted(quantity) %}
@@ -133,25 +153,18 @@
     </div>
 {% endmacro %}
 
-{% macro add_to_cart_btn(is_orderable) %}
-    {% if is_orderable and show_prices() %}
-        <div class="clearfix btn-add-to-cart">
-            <button type="submit"
-                    class="btn btn-primary btn-block btn-lg"
-                    id="add-to-cart-button">
-                <i class="fa fa-shopping-cart"></i> {% trans %}Add to cart{% endtrans %}
-            </button>
-        </div>
-        {% else %}
-        <div class="clearfix btn-add-to-cart">
-            <button type="submit"
-                    class="btn btn-primary btn-block btn-lg not-orderable"
-                    id="add-to-cart-button" disabled>
-                <i class="fa fa-shopping-cart"></i> {% trans %}Add to cart{% endtrans %}
-            </button>
+{% macro add_to_cart_btn(shop_product, is_orderable) %}
+    {%- set orderable = (is_orderable and show_prices()) %}
+    <div class="clearfix btn-add-to-cart">
+        <button type="submit"
+                class="btn btn-primary btn-block btn-lg{% if not orderable %} not-orderable{% endif %}"
+                id="add-to-cart-button-{{ shop_product.product.id }}"{% if not orderable %} disabled{% endif %}>
+            <i class="fa fa-shopping-cart"></i> {% trans %}Add to cart{% endtrans %}
+        </button>
+        {% if not orderable %}
             <p class="text-right text-muted">
                 <i class="fa fa-info-circle text-info"></i> {% trans %}Product is not orderable.{% endtrans %}
             </p>
-        </div>
-    {% endif %}
+        {% endif %}
+    </div>
 {% endmacro %}
