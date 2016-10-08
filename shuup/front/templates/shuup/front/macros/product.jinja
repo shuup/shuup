@@ -14,9 +14,7 @@ Inheritance order for product macors:
     <div class="product-card {{ class }}" id="product-{{ product.id }}">
         <a href="{{ u }}" rel="product-detail" title="{{ product.name }}">
             {% if product|is_discounted %}
-                <div class="labels">
-                    <span class="label label-sale">{{ -(product|discount_rate)|percent }}</span>
-                </div>
+                <span class="badge product-badge sale">{{ -(product|discount_rate)|percent }}</span>
             {% endif %}
             {% if show_image %}
                 {% set primary_image_thumb = product.primary_image|thumbnail(size=thumbnail_size) %}
