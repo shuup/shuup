@@ -35,7 +35,7 @@ def test_formless_plugin_in_lcfg():
 
             cell = LayoutCell(theme, "inject")
             assert cell.instantiate_plugin()
-            lcfg = LayoutCellFormGroup(data={"general-cell_width": "%d" % two_thirds}, layout_cell=cell, theme=theme)
+            lcfg = LayoutCellFormGroup(data={"general-cell_width": "%d" % two_thirds, "general-cell_align": "pull-right"}, layout_cell=cell, theme=theme)
 
             assert "plugin" not in lcfg.forms
             assert lcfg.is_valid()
@@ -57,6 +57,7 @@ def test_lcfg():
             assert not lcfg.is_valid()  # Oh, we must've forgotten the text...
             lcfg = LayoutCellFormGroup(data={
                 "general-cell_width": "%d" % two_thirds,
+                "general-cell_align": " ",
                 "plugin-text": "Hello, world!"
             }, layout_cell=cell, theme=theme)
             assert lcfg.is_valid()  # Let's see now!
