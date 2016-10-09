@@ -17,6 +17,7 @@
     <div class="row">
         <div class="col-md-3 categories-nav">
             {{ category_macros.render_category_menu() }}
+            {% placeholder "category_menu_extras" %}{% endplaceholder %}
         </div>
         <div class="col-md-9 products-wrap">
             <div class="clearfix product-list-actions">
