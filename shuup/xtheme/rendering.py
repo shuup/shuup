@@ -182,6 +182,9 @@ class PlaceholderRenderer(object):
                 classes.append(self.layout.hide_cell_class_template % {"breakpoint": breakpoint, "width": width})
             else:
                 classes.append(self.layout.cell_class_template % {"breakpoint": breakpoint, "width": width})
+
+        classes.append(cell.align)
+
         cell_attrs = {
             "class": classes
         }
