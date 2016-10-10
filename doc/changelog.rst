@@ -71,6 +71,7 @@ Released on 2016-10-12 09:30pm -0800.
 Core
 ~~~~
 
+- Fetch support id for shops sending telemetry
 - Remove shop languages, category, tax class, service provider and services
   default record creation from `shuup_init` management command
 
