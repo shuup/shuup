@@ -31,6 +31,9 @@
     <div id="site-search-results" class="site-search-results"></div>
 </div>
 
+{% set support_id=shuup_admin.get_support_id() %}
+{% if support_id %}<p class="nav-text hidden-xs">{% trans %}Support ID: {% endtrans %}{{ support_id }}</p>{% endif %}
+
 {% set front_url=shuup_admin.get_front_url() %}
 {% if front_url %}<a class="nav-btn shop-btn" href="{{ front_url }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}Visit shop{% endtrans %}"><i class="fa fa-shopping-cart"></i></a>{% endif %}
 
