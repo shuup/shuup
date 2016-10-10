@@ -229,7 +229,7 @@ class Order(MoneyPropped, models.Model):
     payment_data = JSONField(blank=True, null=True, verbose_name=_('payment data'))
 
     shipping_method = UnsavedForeignKey(
-        "ShippingMethod", related_name='shipping_orders',  blank=True, null=True,
+        "ShippingMethod", related_name='shipping_orders', blank=True, null=True,
         default=None, on_delete=models.PROTECT,
         verbose_name=_('shipping method'))
     shipping_method_name = models.CharField(
@@ -529,10 +529,9 @@ class Order(MoneyPropped, models.Model):
 
         if insufficient_stocks:
             formatted_counts = [_("%(name)s (physical stock: %(quantity)s)") % {
-                    "name": force_text(name),
-                    "quantity": force_text(quantity)
-                }
-                for (name, quantity) in insufficient_stocks.items()]
+                "name": force_text(name),
+                "quantity": force_text(quantity)
+            } for (name, quantity) in insufficient_stocks.items()]
             raise Problem(
                 _("Insufficient physical stock count for following products: %(product_counts)s") % {
                     "product_counts": ", ".join(formatted_counts)

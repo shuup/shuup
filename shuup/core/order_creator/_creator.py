@@ -222,7 +222,12 @@ class OrderProcessor(object):
 
         # Then do all the caching one more time!
         order.cache_prices()
-        order.save()
+
+        if order.get_total_paid_amount() >= order.taxful_total_price.amount:
+            order._set_paid()  # also calls save
+        else:
+            order.save()
+
         return order
 
     def _assign_code_usages(self, order_source, order):
