@@ -6,16 +6,22 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import json
+
+import requests
+from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.db.models import Model
 from django.db.transaction import atomic
 from six import print_
 
+from shuup import configuration
 from shuup.core.defaults.order_statuses import create_default_order_statuses
 from shuup.core.models import (
     CustomerTaxGroup, OrderStatus, ProductType, SalesUnit, Shop, ShopStatus,
     Supplier
 )
+from shuup.core.telemetry import get_installation_key, is_telemetry_enabled
 
 
 def schema(model, identifier, **info):
@@ -62,6 +68,16 @@ class Initializer(object):
             print_("Creating order statuses...", end=" ")
             create_default_order_statuses()
             print_("done.")
+        if not settings.DEBUG and is_telemetry_enabled():
+            try:
+                data = json.dumps({
+                    "key": get_installation_key()
+                })
+                resp = requests.get(url=settings.SHUUP_SUPPORT_ID_URL, data=data, timeout=5)
+                if resp.json().get("support_id"):
+                    configuration.set(None, "shuup_support_id", resp.json().get("support_id"))
+            except Exception:
+                print_("Failed to get support id")
         print_("Initialization done.")
 
 

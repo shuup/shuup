@@ -20,6 +20,7 @@ from django.utils.encoding import force_text
 from django.utils.timezone import now
 
 import shuup
+from shuup import configuration
 from shuup.core.models import (
     Contact, Order, Payment, PersistentCacheEntry, Product
 )
@@ -209,13 +210,19 @@ def _send_telemetry(request, max_age_hours, force_send=False):
 
     if max_age_hours is not None:
         last_send_time = get_last_submission_time()
-        if last_send_time:
-            if (now() - last_send_time).total_seconds() <= max_age_hours * 60 * 60:
+        if last_send_time and (now() - last_send_time).total_seconds() <= max_age_hours * 60 * 60:
                 raise TelemetryNotSent("Trying to resend too soon", "age")
 
     data = get_telemetry_data(request)
     try:
         resp = requests.post(url=settings.SHUUP_TELEMETRY_URL, data=data, timeout=5)
+        if (
+            not settings.DEBUG and
+            resp.status_code == 200 and
+            resp.json().get("support_id") and
+            not configuration.get(None, "shuup_support_id")
+        ):
+            configuration.set(None, "shuup_support_id", resp.json().get("support_id"))
     except Exception as exc:
         data = {
             "data": data,
