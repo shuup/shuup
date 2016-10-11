@@ -77,6 +77,10 @@ $(function() {
     });
 
     $.each(window.PRODUCT_LIST_FILTERS, function(idx, key) {
+        if($("#id_" + key).parent(".form-group").hasClass("has-error")) {
+            const host_str = '//' + location.host + location.pathname;
+            window.location.href = host_str;
+        }
         $("#id_" + key).on("change", function() {
             window.refreshFilters(window.PAGE_NUMBER);
         });
