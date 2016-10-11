@@ -90,7 +90,12 @@ class ShopWizardForm(MultiLanguageModelForm):
 
     def save(self):
         obj = super(ShopWizardForm, self).save()
-        obj.name = obj.public_name
+        languages = configuration.get(obj, "languages", [])
+        for language in languages:
+            public_name = self.cleaned_data.get("public_name__%s" % language[0])
+            if public_name:
+                obj.set_current_language(language[0])
+                obj.name = obj.public_name
         obj.save()
 
 
