@@ -115,7 +115,7 @@ def test_category_product_list(browser, live_server, settings):
     show_sorts_for_the_category_only(browser, first_cat)
 
     # All sorts for first_cat is available test sorting
-    sort_category_products_test(browser)
+    sort_category_products_test(browser, first_cat)
 
     manufacturer_filter_test(browser, first_cat, first_manufacturer)
     categories_filter_test(browser, first_cat, second_cat, third_cat)
@@ -143,22 +143,16 @@ def show_sorts_for_the_category_only(browser, category):
             "sort_products_by_name": True,
             "sort_products_by_name_ordering": 1,
             "sort_products_by_price": True,
-            "sort_products_by_price_ordering": 2
+            "sort_products_by_price_ordering": 2,
+            "sort_products_by_date_created": True,
+            "sort_products_by_date_created_ordering": 3
         }
     )
     browser.reload()
-    wait_until_condition(browser, lambda x: len(x.find_by_css("#id_sort option")) == 4)
+    wait_until_condition(browser, lambda x: len(x.find_by_css("#id_sort option")) == 5)
     
 
-def sort_category_products_test(browser):
-    # Highest price first
-    click_element(browser, "button[data-id='id_sort']")
-    click_element(browser, "li[data-original-index='3'] a")
-    expected_first_prod_id = "product-%s" % Product.objects.filter(sku="test-sku-2").first().id
-    wait_until_condition(
-        browser, lambda x: x.find_by_css(".product-card").first["id"] == expected_first_prod_id)
-    
-
+def sort_category_products_test(browser, category):
     # Lowest price first
     click_element(browser, "button[data-id='id_sort']")
     click_element(browser, "li[data-original-index='2'] a")
@@ -177,6 +171,22 @@ def sort_category_products_test(browser):
     click_element(browser, "button[data-id='id_sort']")
     click_element(browser, "li[data-original-index='1'] a")
     expected_first_prod_id = "product-%s" % Product.objects.filter(sku="test-sku-3").first().id
+    wait_until_condition(
+        browser, lambda x: x.find_by_css(".product-card").first["id"] == expected_first_prod_id)
+
+
+    # Highest price first
+    click_element(browser, "button[data-id='id_sort']")
+    click_element(browser, "li[data-original-index='3'] a")
+    expected_first_prod_id = "product-%s" % Product.objects.filter(sku="test-sku-2").first().id
+    wait_until_condition(
+        browser, lambda x: x.find_by_css(".product-card").first["id"] == expected_first_prod_id)
+
+    # Date created
+    click_element(browser, "button[data-id='id_sort']")
+    click_element(browser, "li[data-original-index='4'] a")
+    expected_first_prod_id = "product-%s" % Product.objects.filter(
+        shop_products__primary_category=category).order_by("-created_on").first().id
     wait_until_condition(
         browser, lambda x: x.find_by_css(".product-card").first["id"] == expected_first_prod_id)
 

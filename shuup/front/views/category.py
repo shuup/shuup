@@ -35,6 +35,9 @@ class CategoryView(DetailView):
             request=self.request, shop=self.request.shop, category=category, data=data)
         form.full_clean()
         data = form.cleaned_data
+        if "sort" in form.fields and not data.get("sort"):
+            # Use first choice by default
+            data["sort"] = form.fields["sort"].widget.choices[0][0]
 
         products = Product.objects.listed(
             customer=self.request.customer,
