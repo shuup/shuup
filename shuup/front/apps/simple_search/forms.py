@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import re
+from difflib import SequenceMatcher
 
 from django import forms
 from django.db.models import Q
@@ -53,6 +54,19 @@ def get_compiled_query(query_string, needles):
     return compiled_query
 
 
+def get_product_ids_for_query_str(request, query_str, limit, product_ids=[]):
+    if not query_str:
+        return []
+    entry_query = get_compiled_query(
+        query_str, ['sku', 'translations__name', 'translations__description', 'translations__keywords'])
+    return list(Product.objects.searchable(
+        shop=request.shop,
+        customer=request.customer
+    ).exclude(
+        id__in=product_ids
+    ).filter(entry_query).distinct().values_list("pk", flat=True))[:(limit-len(product_ids))]
+
+
 def get_search_product_ids(request, query, limit=150):
     query = query.strip().lower()
     cache_key_elements = {
@@ -63,13 +77,15 @@ def get_search_product_ids(request, query, limit=150):
     cache_key = "simple_search:%s" % hash(frozenset(cache_key_elements.items()))
     product_ids = cache.get(cache_key)
     if product_ids is None:
-        entry_query = get_compiled_query(
-            query, ['sku', 'translations__name', 'translations__description', 'translations__keywords'])
-        product_ids = list(Product.objects.searchable(
-            shop=request.shop,
-            customer=request.customer
-        ).filter(entry_query).distinct().values_list("pk", flat=True))[:limit]
-        cache.set(cache_key, product_ids, 60 * 5)
+        product_ids = get_product_ids_for_query_str(request, query, limit)
+        for word in query.split(" ") or []:
+            if word == query:
+                break
+            prod_count = len(product_ids)
+            if prod_count >= limit:
+                break
+            product_ids += get_product_ids_for_query_str(request, word.strip(), limit, product_ids)
+        cache.set(cache_key, product_ids[:limit], 60 * 5)
     return product_ids
 
 
@@ -91,3 +107,20 @@ class FilterProductListByQuery(ProductListFormModifier):
     def clean_hook(self, form):
         if form.cleaned_data.get("q"):
             form.cleaned_data["q"] = form.cleaned_data["q"].strip()
+
+    def sort_products(self, request, products, data):
+        sort = data.get("sort")
+        if sort:  # Sort only if not sort available
+            return products
+
+        query_str = data.get("q")
+        if not query_str:  # Do not sort if no query string
+            return products
+
+        def _get_product_distance_to_query_str(product):
+            ratio = SequenceMatcher(None, product.name, query_str).quick_ratio()
+            return (1/ratio if ratio else 0)
+
+        sorter = _get_product_distance_to_query_str
+        products = sorted(products, key=sorter)
+        return products
