@@ -3,11 +3,9 @@
 
 {% macro render_product_image_section(product) %}
     {% if product|is_discounted %}
-        <div class="discount">
-          <span class="label label-danger">
+        <div class="badge product-badge sale">
             {% set discount_percent = product|discount_percent %}
             {{- _("Save %(discount_percent)s", discount_percent=discount_percent) -}}
-          </span>
         </div>
     {% endif %}
     <div id="carousel_product_{{ product.id }}" class="product-carousel carousel fade" data-ride="carousel" data-interval="false">

@@ -26,6 +26,12 @@ class LayoutCellGeneralInfoForm(forms.Form):
         (int(CELL_FULL_WIDTH / 4), _("One Fourth (1/4)")),
     ]
 
+    CELL_ALIGN_CHOICES = [
+        (" ", _("Auto")),
+        ("pull-left", _("Left")),
+        ("pull-right", _("Right"))
+    ]
+
     def __init__(self, **kwargs):
         self.layout_cell = kwargs.pop("layout_cell")
         self.theme = kwargs.pop("theme")
@@ -41,6 +47,9 @@ class LayoutCellGeneralInfoForm(forms.Form):
 
         self.fields["cell_width"] = forms.ChoiceField(
             label=_("Cell width"), choices=self.CELL_WIDTH_CHOICES, initial=initial_cell_width)
+
+        self.fields["cell_align"] = forms.ChoiceField(
+            label=_("Cell align"), choices=self.CELL_ALIGN_CHOICES, initial=" ")
 
         if self.theme:
             plugin_choices = self.theme.get_all_plugin_choices(empty_label=_("No Plugin"))
@@ -61,6 +70,8 @@ class LayoutCellGeneralInfoForm(forms.Form):
         sizes = ["sm", "md"]  # TODO: Parametrize? Currently Bootstrap dependent.
         for size in sizes:
             self.layout_cell.sizes[size] = int(data["cell_width"])
+
+        self.layout_cell.align = data["cell_align"]
 
 
 class LayoutCellFormGroup(FormGroup):

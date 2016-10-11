@@ -10,10 +10,9 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import get_language
 from django.views.generic import DetailView
 
-from shuup.core.models import AttributeVisibility, Product, ProductMode
-from shuup.front.utils.views import cache_product_things
+from shuup.core.models import Product, ProductMode
+from shuup.front.utils.product import get_product_context
 from shuup.utils.excs import extract_messages, Problem
-from shuup.utils.numbers import get_string_sort_order
 
 
 class ProductDetailView(DetailView):
@@ -27,50 +26,10 @@ class ProductDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ProductDetailView, self).get_context_data(**kwargs)
         language = self.language = get_language()
-        product = self.object
-        context["category"] = self.shop_product.primary_category
-        context["orderability_errors"] = list(self.shop_product.get_orderability_errors(
-            supplier=None,
-            quantity=1,
-            customer=self.request.customer,
-            ignore_minimum=True
-        ))
-        context["variation_children"] = []
-        if product.mode == ProductMode.SIMPLE_VARIATION_PARENT:
-            context["variation_children"] = cache_product_things(
-                self.request,
-                sorted(
-                    product.variation_children.language(language).all(),
-                    key=lambda p: get_string_sort_order(p.variation_name or p.name)
-                )
-            )
-            context["orderable_variation_children"] = [
-                p for p in context["variation_children"]
-                if p.get_shop_instance(self.request.shop).is_orderable(
-                    supplier=None,
-                    customer=self.request.customer,
-                    quantity=1
-                )
-            ]
-        elif product.mode == ProductMode.VARIABLE_VARIATION_PARENT:
-            context["variation_variables"] = product.variation_variables.all().prefetch_related("values")
-        elif product.mode == ProductMode.PACKAGE_PARENT:
-            children = (
-                product.get_all_package_children()
-                .translated()
-                .order_by("translations__name")
-            )
-            context["package_children"] = cache_product_things(self.request, children)
 
-        context["shop_product"] = self.shop_product
-        context["attributes"] = product.attributes.filter(
-            attribute__visibility_mode=AttributeVisibility.SHOW_ON_PRODUCT_PAGE)
-        context["primary_image"] = self.shop_product.public_primary_image
-        context["images"] = self.shop_product.public_images
-
+        context.update(get_product_context(self.request, self.object, language))
         # TODO: Maybe add hook for ProductDetailView get_context_data?
         # dispatch_hook("get_context_data", view=self, context=context)
-
         return context
 
     def get(self, request, *args, **kwargs):

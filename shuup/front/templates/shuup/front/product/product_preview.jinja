@@ -17,11 +17,9 @@
                 <div class="row">
                     <div class="preview-image">
                         {% if product|is_discounted %}
-                            <div class="discount">
-                              <span class="label label-danger">
+                            <div class="badge product-badge sale">
                                 {% set discount_percent = product|discount_percent %}
                                 {{- _("Save %(discount_percent)s", discount_percent=discount_percent) -}}
-                              </span>
                             </div>
                         {% endif %}
                         {% set image = product.primary_image|thumbnail(size=(360, 360), crop="scale", upscale=True) %}
@@ -44,7 +42,7 @@
                             </div>
                         {% endif %}
                         <hr>
-                        {{ render_product_order_section(product) }}
+                        {{ render_product_order_section(product, variation_variables, variation_children, unorderability_reason, orderable_variation_children) }}
                         {% set product_url = url("shuup:product", pk=product.pk, slug=product.slug) %}
                         <a href="{{ product_url }}"
                            class="btn-open-page btn btn-default btn-block">
