@@ -109,6 +109,19 @@ class ProductListFormModifier(six.with_metaclass(abc.ABCMeta)):
         """
         pass
 
+    def get_queryset(self, queryset, data):
+        """
+        Modify product queryset
+
+        Modify current queryset and return the new one. This
+        can be used when there is need for stacking multiple
+        filters for one queryset.
+
+        :return: Updated product queryset
+        :rtype: Product.queryset
+        """
+        pass
+
     def filter_products(self, request, products, data):
         """
         Filter product objects
@@ -207,6 +220,12 @@ def sort_products(request, category, products, data):
     for extend_obj in _get_active_modifiers(request.shop, category):
         products = extend_obj.sort_products(request, products, sort)
     return products
+
+
+def get_product_queryset(queryset, request, category, data):
+    for extend_obj in _get_active_modifiers(request.shop, category):
+        queryset = extend_obj.get_queryset(queryset, data) or queryset
+    return queryset
 
 
 def _get_category_configuration_key(category):

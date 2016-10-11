@@ -34,6 +34,8 @@ Addons
 Front
 ~~~~~
 
+- Enable option to modify products queryset in category
+  and search views
 - Add option to limit product list page size
 - Add option to sort products by date created
 - Change the way product order boxes are being rendered in front.
