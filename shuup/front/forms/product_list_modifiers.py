@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import decimal
 from collections import defaultdict
 from itertools import chain
 
@@ -20,7 +21,10 @@ from django.utils.translation import get_language
 from shuup.core.models import (
     Category, Manufacturer, ProductVariationVariable, ShopProduct
 )
-from shuup.front.utils.sorts_and_filters import ProductListFormModifier
+from shuup.front.utils.sorts_and_filters import (
+    get_configuration, ProductListFormModifier
+)
+from shuup.utils.i18n import format_money
 
 
 class FilterWidget(forms.SelectMultiple):
@@ -272,3 +276,87 @@ class ProductVariationFilter(SimpleProductListModifier):
                     variation_query |= Q(variation_variables__values__translations__value__iexact=value)
                 queryset = queryset.filter(variation_query)
         return queryset
+
+
+class ProductPriceFilter(SimpleProductListModifier):
+    is_active_key = "filter_products_by_price"
+    is_active_label = _("Filter products by price")
+    ordering_key = "filter_products_by_price_ordering"
+    ordering_label = _("Ordering for filter by price")
+    range_min_key = "filter_products_by_price_range_min"
+    range_max_key = "filter_products_by_price_range_max"
+    range_size_key = "filter_products_by_price_range_size"
+
+    def get_fields(self, request, category=None):
+        if not category:
+            return
+
+        configuration = get_configuration(request.shop, category)
+
+        min_price = configuration.get(self.range_min_key)
+        max_price = configuration.get(self.range_max_key)
+        range_size = configuration.get(self.range_size_key)
+        if not (min_price and max_price and range_size):
+            return
+
+        choices = [(None, "-------")] + get_price_ranges(
+            request.shop, min_price, max_price, range_size)
+        return [
+            ("price_range", forms.ChoiceField(required=False, choices=choices, label=_("Price"))),
+        ]
+
+    def filter_products(self, request, products, data):
+        selected_range = data.get("price_range")
+        if not selected_range:
+            return products
+
+        min_price, max_price = selected_range.split("-", 1)
+        min_price_value = decimal.Decimal(min_price or 0)
+        max_price_value = decimal.Decimal(max_price or 0)
+        filtered_products = []
+        for product in products:
+            price_value = product.get_price(request).amount.value
+            if price_value >= min_price_value and (max_price == "" or price_value < max_price_value):
+                filtered_products.append(product)
+        return filtered_products
+
+    def get_admin_fields(self):
+        default_fields = super(ProductPriceFilter, self).get_admin_fields()
+        min_field = forms.IntegerField(
+            label=_("Price range minimum"), min_value=0, required=False,
+            help_text=_("Set minimum price for filter. First range will be from zero to this value.")
+        )
+        max_field = forms.IntegerField(
+            label=_("Price range maximum"), min_value=0, required=False,
+            help_text=_("Set maximum price for filter. Last range will include this value and above.")
+        )
+        range_step = forms.IntegerField(
+            label=_("Price range step"), min_value=0, required=False,
+            help_text=_("Set step for ranges. The second range is from min price to this value.")
+        )
+        return default_fields + [
+            (self.range_min_key, min_field),
+            (self.range_max_key, max_field),
+            (self.range_size_key, range_step),
+        ]
+
+
+def get_price_ranges(shop, min_price, max_price, range_step):
+    if range_step == 0:
+        return
+
+    ranges = []
+    min_price_value = format_money(shop.create_price(min_price))
+    ranges.append(("-%s" % min_price, _("Under %(min_limit)s") % {"min_limit": min_price_value}))
+
+    for range_min in range(min_price, max_price, range_step):
+        range_min_price = format_money(shop.create_price(range_min))
+        range_max = range_min + range_step
+        if range_max < max_price:
+            range_max_price = format_money(shop.create_price(range_max))
+            ranges.append(
+                ("%s-%s" % (range_min, range_max), "%s to %s" % (range_min_price, range_max_price)))
+
+    max_price_value = format_money(shop.create_price(max_price))
+    ranges.append(("%s-" % max_price, _("%(max_limit)s & Above") % {"max_limit": max_price_value}))
+    return ranges

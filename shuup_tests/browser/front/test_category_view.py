@@ -142,6 +142,7 @@ def test_category_product_list(browser, live_server, settings):
     categories_filter_test(browser, first_cat, second_cat, third_cat)
 
     second_category_sort_test(browser, live_server, shop, second_cat)
+    second_category_sort_with_price_filter(browser, second_cat)
 
 
 def hide_sorts_for_shop(browser, shop):
@@ -351,3 +352,23 @@ def add_variations(shop, parent, colors, sizes):
         child = create_product(sku="%s-xyz-%s" % (parent.sku, combo["sku_part"]), shop=shop)
         child.link_to_parent(parent, combination_hash=combo["hash"])
     assert parent.mode == ProductMode.VARIABLE_VARIATION_PARENT
+
+
+def second_category_sort_with_price_filter(browser, category):
+    set_configuration(
+        category=category,
+        data={
+            "filter_products_by_price": True,
+            "filter_products_by_price_range_min": 5,
+            "filter_products_by_price_range_max": 12,
+            "filter_products_by_price_range_size": 3
+        }
+    )
+    browser.reload()
+    wait_until_condition(browser, lambda x: len(x.find_by_css("#id_price_range option")) == 5)
+    browser.select("price_range", "-5")
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 4)
+    browser.select("price_range", "12-")
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 2)
+    browser.select("price_range", "8-11")
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 3)
