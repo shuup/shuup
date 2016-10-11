@@ -5,16 +5,21 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from collections import defaultdict
 from itertools import chain
 
+import six
 from django import forms
 from django.db.models import Q
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
+from django.utils.text import capfirst, slugify
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import get_language
 
-from shuup.core.models import Category, Manufacturer, ShopProduct
+from shuup.core.models import (
+    Category, Manufacturer, ProductVariationVariable, ShopProduct
+)
 from shuup.front.utils.sorts_and_filters import ProductListFormModifier
 
 
@@ -228,3 +233,42 @@ class LimitProductListPageSize(SimpleProductListModifier):
         return [
             ("limit", [(12, 12), (24, 24), (36, 36), (48, 48)]),
         ]
+
+
+class ProductVariationFilter(SimpleProductListModifier):
+    is_active_key = "filter_products_by_variation_value"
+    is_active_label = _("Filter products by variation")
+    ordering_key = "filter_products_by_variation_value_ordering"
+    ordering_label = _("Ordering for filter by variation")
+
+    def get_fields(self, request, category=None):
+        if not category:
+            return
+
+        variation_values = defaultdict(set)
+        for variation in ProductVariationVariable.objects.filter(product__shop_products__categories=category):
+            for value in variation.values.all():
+                variation_values[slugify(variation.name)].add(value.value)
+
+        fields = []
+        for variation_key, variation_values in six.iteritems(variation_values):
+            choices = [(value.lower(), value) for value in variation_values]
+
+            fields.append((
+                "variation_%s" % variation_key,
+                forms.MultipleChoiceField(
+                    choices=choices, required=False, label=capfirst(variation_key), widget=FilterWidget())
+            ))
+        return fields
+
+    def get_queryset(self, queryset, data):
+        if not any([key for key in data.keys() if key.startswith("variation")]):
+            return
+
+        for key, values in six.iteritems(data):
+            if key.startswith("variation"):
+                variation_query = Q()
+                for value in list(values):
+                    variation_query |= Q(variation_variables__values__translations__value__iexact=value)
+                queryset = queryset.filter(variation_query)
+        return queryset
