@@ -12,7 +12,8 @@ from django.views.generic import ListView
 from shuup.core.models import Product
 from shuup.front.template_helpers.product import is_visible
 from shuup.front.utils.sorts_and_filters import (
-    get_query_filters, post_filter_products, ProductListForm, sort_products
+    get_product_queryset, get_query_filters, post_filter_products,
+    ProductListForm, sort_products
 )
 from shuup.front.utils.views import cache_product_things
 
@@ -34,7 +35,8 @@ class SearchView(ListView):
         data = self.form.cleaned_data
         if not (data and data.get("q")):  # pragma: no cover
             return Product.objects.none()
-        return Product.objects.filter(get_query_filters(self.request, None, data=data))
+        products = Product.objects.filter(get_query_filters(self.request, None, data=data))
+        return get_product_queryset(products, self.request, None, data)
 
     def get_context_data(self, **kwargs):
         context = super(SearchView, self).get_context_data(**kwargs)

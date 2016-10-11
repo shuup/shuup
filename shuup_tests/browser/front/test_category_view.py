@@ -10,10 +10,12 @@ import os
 import pytest
 
 from django.core.urlresolvers import reverse
+from django.utils.translation import activate
 
 from shuup.core import cache
 from shuup.core.models import (
-    Category, CategoryStatus, Manufacturer, Product, ShopProduct
+    Category, CategoryStatus, Manufacturer, Product, ProductMode,
+    ProductVariationVariable, ProductVariationVariableValue, ShopProduct
 )
 from shuup.front.utils.sorts_and_filters import (
     set_configuration
@@ -50,6 +52,7 @@ FIRST_CATEGORY_PRODUCT_DATA = [
 ]
 
 
+
 def create_orderable_product(name, sku, price):
     supplier = get_default_supplier()
     shop = get_default_shop()
@@ -60,6 +63,7 @@ def create_orderable_product(name, sku, price):
 @pytest.mark.browser
 @pytest.mark.djangodb
 def test_category_product_list(browser, live_server, settings):
+    activate("en")
     # initialize
     cache.clear()
     shop = get_default_shop()
@@ -86,6 +90,22 @@ def test_category_product_list(browser, live_server, settings):
         shop_product.primary_category = first_cat
         shop_product.save()
         shop_product.categories.add(first_cat)
+
+    # Add some variation products
+    add_variations(
+        shop, Product.objects.filter(sku="test-sku-1").first(),
+        ["Black", "Yellow"], ["Big", "Small"]
+    )
+
+    add_variations(
+        shop, Product.objects.filter(sku="test-sku-2").first(),
+        ["Brown", "Pink"], ["S", "L", "XL"]
+    )
+
+    add_variations(
+        shop, Product.objects.filter(sku="test-sku-3").first(),
+        ["Brown", "Black"], ["S", "L", "XL", "Big"]
+    )
 
     for i in range(1, 14):
         product = create_orderable_product("Test product", "sku-%s" % i, price=i)
@@ -118,6 +138,7 @@ def test_category_product_list(browser, live_server, settings):
     sort_category_products_test(browser, first_cat)
 
     manufacturer_filter_test(browser, first_cat, first_manufacturer)
+    variations_filter_test(browser, first_cat)
     categories_filter_test(browser, first_cat, second_cat, third_cat)
 
     second_category_sort_test(browser, live_server, shop, second_cat)
@@ -209,6 +230,52 @@ def manufacturer_filter_test(browser, category, manufacturer):
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 1)
 
 
+def variations_filter_test(browser, category):
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 1)
+    # Activate categories filter for current category which is the first one
+    set_configuration(
+        category=category,
+        data={
+            "sort_products_by_name": True,
+            "sort_products_by_name_ordering": 1,
+            "sort_products_by_price": True,
+            "sort_products_by_price_ordering": 2,
+            "filter_products_by_variation_value": True,
+            "filter_products_by_variation_value_ordering": 1
+        }
+    )
+    browser.reload()
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 3)
+
+    # Two brown products
+    browser.execute_script("$('#variation_color-brown').click();")
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 2)
+
+    # Two brown L sized products
+    browser.execute_script("$('#variation_size-l').click();")
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 2)
+
+    # One brown big
+    browser.execute_script("$('#variation_size-big').click();")
+    browser.execute_script("$('#variation_size-l').click();")
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 1)
+
+    # Two Big or Black products
+    browser.execute_script("$('#variation_color-brown').click();")
+    browser.execute_script("$('#variation_color-black').click();")
+    
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 2)
+
+    # Three Big or Pink products
+    browser.execute_script("$('#variation_color-pink').click();")
+    browser.execute_script("$('#variation_color-black').click();")
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 3)
+
+    # One pink product
+    browser.execute_script("$('#variation_size-big').click();")
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 1)
+
+
 def categories_filter_test(browser, first_cat, second_cat, third_cat):
     # Add all products in second category to also in first category
     for shop_product in ShopProduct.objects.filter(primary_category=second_cat):
@@ -237,7 +304,6 @@ def categories_filter_test(browser, first_cat, second_cat, third_cat):
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 12)
 
 
-
 def second_category_sort_test(browser, live_server, shop, category):
     url = reverse("shuup:category", kwargs={"pk": category.pk, "slug": category.slug})
     browser.visit("%s%s" % (live_server, url))
@@ -263,3 +329,25 @@ def second_category_sort_test(browser, live_server, shop, category):
     # Set limit to 24
     browser.select("limit", 24)
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 13)
+
+
+def add_variations(shop, parent, colors, sizes):
+    color_var = ProductVariationVariable.objects.create(
+        product_id=parent.id, identifier="color", name="Color")
+    size_var = ProductVariationVariable.objects.create(
+        product_id=parent.id, identifier="size", name="Size")
+
+    for color in colors:
+        var_value = ProductVariationVariableValue.objects.create(
+            variable_id=color_var.id, value=color)
+    for size in sizes:
+        var_value = ProductVariationVariableValue.objects.create(
+            variable_id=size_var.id, value=size)
+
+    combinations = list(parent.get_all_available_combinations())
+    assert len(combinations) == (len(sizes) * len(colors))
+    for combo in combinations:
+        assert not combo["result_product_pk"]
+        child = create_product(sku="%s-xyz-%s" % (parent.sku, combo["sku_part"]), shop=shop)
+        child.link_to_parent(parent, combination_hash=combo["hash"])
+    assert parent.mode == ProductMode.VARIABLE_VARIATION_PARENT

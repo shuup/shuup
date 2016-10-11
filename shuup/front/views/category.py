@@ -11,7 +11,8 @@ from django.views.generic import DetailView
 
 from shuup.core.models import Category, Product
 from shuup.front.utils.sorts_and_filters import (
-    get_query_filters, post_filter_products, ProductListForm, sort_products
+    get_product_queryset, get_query_filters, post_filter_products,
+    ProductListForm, sort_products
 )
 from shuup.front.utils.views import cache_product_things
 
@@ -46,7 +47,8 @@ class CategoryView(DetailView):
             shop_products__shop=self.request.shop,
             variation_parent__isnull=True,
             shop_products__categories=category
-        ).filter(get_query_filters(self.request, category, data=data)).distinct()
+        ).filter(get_query_filters(self.request, category, data=data))
+        products = get_product_queryset(products, self.request, category, data).distinct()
 
         products = post_filter_products(self.request, category, products, data)
         products = cache_product_things(self.request, products)
