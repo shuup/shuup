@@ -108,7 +108,7 @@
 
 {% macro render_product_list() %}
     <div id="ajax_content">
-            {%  set pagination = shuup.general.get_pagination_variables(products, 12) %}
+            {%  set pagination = shuup.general.get_pagination_variables(products, page_size or 12) %}
             <div class="row product-list-view grid">
                 {% for product in pagination.objects if shuup.product.is_visible(product) %}
                     <div class="single-product">

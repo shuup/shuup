@@ -120,7 +120,7 @@ def test_category_product_list(browser, live_server, settings):
     manufacturer_filter_test(browser, first_cat, first_manufacturer)
     categories_filter_test(browser, first_cat, second_cat, third_cat)
 
-    second_category_sort_test(browser, live_server, second_cat)
+    second_category_sort_test(browser, live_server, shop, second_cat)
 
 
 def hide_sorts_for_shop(browser, shop):
@@ -238,7 +238,7 @@ def categories_filter_test(browser, first_cat, second_cat, third_cat):
 
 
 
-def second_category_sort_test(browser, live_server, category):
+def second_category_sort_test(browser, live_server, shop, category):
     url = reverse("shuup:category", kwargs={"pk": category.pk, "slug": category.slug})
     browser.visit("%s%s" % (live_server, url))
     assert not browser.is_text_present("Sort")  # Sort shouldn't be available since default configurations
@@ -247,3 +247,19 @@ def second_category_sort_test(browser, live_server, category):
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 1, timeout=30)
     click_element(browser, "#previous_page a")
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 12, timeout=30)
+
+    # Activate limit page size changer
+    set_configuration(
+        shop=shop,
+        data={
+            "sort_products_by_name": True,
+            "sort_products_by_name_ordering": 1,
+            "sort_products_by_price": True,
+            "sort_products_by_price_ordering": 2,
+            "limit_product_list_page_size": True
+        }
+    )
+    browser.reload()
+    # Set limit to 24
+    browser.select("limit", 24)
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 13)

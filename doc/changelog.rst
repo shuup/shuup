@@ -34,6 +34,7 @@ Addons
 Front
 ~~~~~
 
+- Add option to limit product list page size
 - Add option to sort products by date created
 - Change the way product order boxes are being rendered in front.
   Note: This causes backwards incompatibility with templates, so
