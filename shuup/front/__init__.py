@@ -36,6 +36,7 @@ class ShuupFrontAppConfig(AppConfig):
         "front_extend_product_list_form": [
             "shuup.front.forms.product_list_modifiers.CategoryProductListFilter",
             "shuup.front.forms.product_list_modifiers.LimitProductListPageSize",
+            "shuup.front.forms.product_list_modifiers.ProductPriceFilter",
             "shuup.front.forms.product_list_modifiers.ProductVariationFilter",
             "shuup.front.forms.product_list_modifiers.SortProductListByCreatedDate",
             "shuup.front.forms.product_list_modifiers.SortProductListByName",

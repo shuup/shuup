@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-11 16:58+0000\n"
+"POT-Creation-Date: 2016-10-11 17:42+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -257,6 +257,40 @@ msgid "Ordering for filter by category"
 msgstr ""
 
 msgid "Categories"
+msgstr ""
+
+msgid "Filter products by price"
+msgstr ""
+
+msgid "Ordering for filter by price"
+msgstr ""
+
+msgid "Price range minimum"
+msgstr ""
+
+msgid ""
+"Set minimum price for filter. First range will be from zero to this value."
+msgstr ""
+
+msgid "Price range maximum"
+msgstr ""
+
+msgid ""
+"Set maximum price for filter. Last range will include this value and above."
+msgstr ""
+
+msgid "Price range step"
+msgstr ""
+
+msgid "Set step for ranges. The second range is from min price to this value."
+msgstr ""
+
+#, python-format
+msgid "Under %(min_limit)s"
+msgstr ""
+
+#, python-format
+msgid "%(max_limit)s & Above"
 msgstr ""
 
 msgid "Logged out since this account is inactive."

@@ -34,6 +34,7 @@ Addons
 Front
 ~~~~~
 
+- Enable filtering product lists by price
 - Enable option to filter products with variation values
 - Enable option to modify products queryset in category
   and search views
