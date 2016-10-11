@@ -34,6 +34,9 @@ Addons
 Front
 ~~~~~
 
+- For search add default sorting based on distance between product 
+  name and query string
+- Add results from words in query to the search until the limit is reached
 - Enable filtering product lists by price
 - Enable option to filter products with variation values
 - Enable option to modify products queryset in category
