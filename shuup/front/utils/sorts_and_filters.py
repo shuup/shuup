@@ -224,7 +224,9 @@ def sort_products(request, category, products, data):
 
 def get_product_queryset(queryset, request, category, data):
     for extend_obj in _get_active_modifiers(request.shop, category):
-        queryset = extend_obj.get_queryset(queryset, data) or queryset
+        new_queryset = extend_obj.get_queryset(queryset, data)
+        if new_queryset is not None:
+            queryset = new_queryset
     return queryset
 
 
