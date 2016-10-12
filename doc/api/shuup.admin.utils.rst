@@ -68,6 +68,14 @@ shuup.admin.utils.views module
     :undoc-members:
     :show-inheritance:
 
+shuup.admin.utils.wizard module
+-------------------------------
+
+.. automodule:: shuup.admin.utils.wizard
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

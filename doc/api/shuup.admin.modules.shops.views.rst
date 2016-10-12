@@ -20,6 +20,14 @@ shuup.admin.modules.shops.views.list module
     :undoc-members:
     :show-inheritance:
 
+shuup.admin.modules.shops.views.wizard module
+---------------------------------------------
+
+.. automodule:: shuup.admin.modules.shops.views.wizard
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------
