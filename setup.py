@@ -45,6 +45,9 @@ DESCRIPTION = 'E-Commerce Platform'
 AUTHOR = 'Shoop Commerce Ltd.'
 AUTHOR_EMAIL = 'shuup@shuup.com'
 URL = 'http://shuup.com/'
+DOWNLOAD_URL_TEMPLATE = (
+    'https://github.com/shuup/shuup/releases/download/'
+    'v{version}/shuup-{version}-py2.py3-none-any.whl')
 LICENSE = 'AGPL-3.0'  # https://spdx.org/licenses/
 CLASSIFIERS = """
 Development Status :: 4 - Beta
@@ -125,8 +128,8 @@ EXTRAS_REQUIRE['everything'] = list(
 
 
 if __name__ == '__main__':
-    if 'register' in sys.argv or 'upload' in sys.argv:
-        raise EnvironmentError('Registering and uploading is blacklisted')
+    if 'upload' in sys.argv:
+        raise EnvironmentError('Uploading is blacklisted')
 
     version = utils.get_version(VERSION, TOPDIR, VERSION_FILE)
     utils.write_version_to_file(version, VERSION_FILE)
@@ -137,6 +140,7 @@ if __name__ == '__main__':
         description=DESCRIPTION,
         long_description=utils.get_long_description(LONG_DESCRIPTION_FILE),
         url=URL,
+        download_url=DOWNLOAD_URL_TEMPLATE.format(version=version),
         author=AUTHOR,
         author_email=AUTHOR_EMAIL,
         license=LICENSE,
