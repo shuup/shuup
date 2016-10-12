@@ -1,23 +1,16 @@
 Shuup Change Log
 ================
 
-Unrealeased
+SHUUP 0.5.1
 -----------
 
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
+Released on 2016-10-12 09:30pm -0800.
 
 Core
 ~~~~
 
 - Remove shop languages, category, tax class, service provider and services
   default record creation from `shuup_init` management command
-
-
-Localization
-~~~~~~~~~~~~
 
 Admin
 ~~~~~
@@ -27,9 +20,6 @@ Admin
 - Add shop setup wizard for admins to configure the shop, services available,
   and themes
 - Add admin comment section to order module
-
-Addons
-~~~~~~
 
 Front
 ~~~~~
@@ -56,43 +46,16 @@ Front
 - Add Customer Information to Dashboard
 - Add Dashboard for customers
 
-Xtheme
-~~~~~~
-
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 
 - Fix issue with footer padding
-
-Simple Supplier
-~~~~~~~~~~~~~~~
-
-Order Printouts
-~~~~~~~~~~~~~~~
 
 Campaigns
 ~~~~~~~~~
 
 - Fix bug in product type catalog filter matching
 - Avoid matching inactive filters and conditions
-
-Customer Group Pricing
-~~~~~~~~~~~~~~~~~~~~~~
-
-Discount Pricing
-~~~~~~~~~~~~~~~~
-
-Simple CMS
-~~~~~~~~~~
-
-Default Tax
-~~~~~~~~~~~
-
-Guide
-~~~~~
-
-Importer
-~~~~~~~~
 
 Regions
 ~~~~~~~

@@ -1,0 +1,29 @@
+Shuup 0.5.1 Release Notes
+=========================
+
+Released on 2016-10-12 09:30pm -0800.
+
+Introduce admin wizard for initializing the shop. This means that the
+`shuup_init` management command will no longer generate all the necessary
+objects for enabled shop by default.
+
+Add order comment section for admins.
+
+Add options to filter category view with category, manufacturer, price or
+variation values. Also enable option to sort by date created and changing
+the limit of products shown in one page. In case of custom themes this will
+not be available automatically.
+
+Change the way product order boxes are being rendered in front. This
+causes backwards incompatibility with custom themes.
+
+Add customer information dashboard for front. This way the end customer
+can manage his/hers customer details all from one dashboard. Like the
+previous front changes this will also cause some issues with custom
+themes. Also Personal Order history: URL has now been changed from
+``/orders`` to ``/order-history`` in case this is hardcoded for example
+in some email notification please adjust accordingly.
+
+For all changes see the full changelog:
+:doc:`../shoop-changelog` or `Git commit log
+<https://github.com/shuup/shuup/commits/v0.5.1>`__.
