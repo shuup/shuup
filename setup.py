@@ -128,8 +128,8 @@ EXTRAS_REQUIRE['everything'] = list(
 
 
 if __name__ == '__main__':
-    if 'register' in sys.argv or 'upload' in sys.argv:
-        raise EnvironmentError('Registering and uploading is blacklisted')
+    if 'upload' in sys.argv:
+        raise EnvironmentError('Uploading is blacklisted')
 
     version = utils.get_version(VERSION, TOPDIR, VERSION_FILE)
     utils.write_version_to_file(version, VERSION_FILE)
