@@ -261,16 +261,18 @@ def variations_filter_test(browser, category):
     browser.execute_script("$('#variation_size-l').click();")
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 1)
 
+    browser.execute_script("$('#variation_color-brown').click();")  # unselect brown
+
     # Two Big or Black products
-    browser.execute_script("$('#variation_color-brown').click();")
     browser.execute_script("$('#variation_color-black').click();")
     
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 2)
 
+    browser.execute_script("$('#variation_color-black').click();")  # unselect black
+
     # Three Big or Pink products
     browser.execute_script("$('#variation_color-pink').click();")
-    browser.execute_script("$('#variation_color-black').click();")
-    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 3)
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 0)
 
     # One pink product
     browser.execute_script("$('#variation_size-big').click();")
