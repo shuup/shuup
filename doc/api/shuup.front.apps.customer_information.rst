@@ -4,6 +4,14 @@ shuup.front.apps.customer_information package
 Submodules
 ----------
 
+shuup.front.apps.customer_information.dashboard_items module
+------------------------------------------------------------
+
+.. automodule:: shuup.front.apps.customer_information.dashboard_items
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.front.apps.customer_information.forms module
 --------------------------------------------------
 

@@ -7,6 +7,7 @@ Subpackages
 .. toctree::
 
     shuup.front.admin_module.carts
+    shuup.front.admin_module.sorts_and_filters
 
 Module contents
 ---------------

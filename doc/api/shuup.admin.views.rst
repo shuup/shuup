@@ -12,6 +12,14 @@ shuup.admin.views.dashboard module
     :undoc-members:
     :show-inheritance:
 
+shuup.admin.views.home module
+-----------------------------
+
+.. automodule:: shuup.admin.views.home
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.admin.views.menu module
 -----------------------------
 
@@ -32,6 +40,14 @@ shuup.admin.views.select module
 -------------------------------
 
 .. automodule:: shuup.admin.views.select
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.admin.views.wizard module
+-------------------------------
+
+.. automodule:: shuup.admin.views.wizard
     :members:
     :undoc-members:
     :show-inheritance:

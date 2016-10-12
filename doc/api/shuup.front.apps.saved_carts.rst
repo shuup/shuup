@@ -4,6 +4,14 @@ shuup.front.apps.saved_carts package
 Submodules
 ----------
 
+shuup.front.apps.saved_carts.dashboard_items module
+---------------------------------------------------
+
+.. automodule:: shuup.front.apps.saved_carts.dashboard_items
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.front.apps.saved_carts.urls module
 ----------------------------------------
 

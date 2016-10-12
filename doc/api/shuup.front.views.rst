@@ -28,6 +28,14 @@ shuup.front.views.checkout module
     :undoc-members:
     :show-inheritance:
 
+shuup.front.views.dashboard module
+----------------------------------
+
+.. automodule:: shuup.front.views.dashboard
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.front.views.index module
 ------------------------------
 
