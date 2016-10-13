@@ -22,7 +22,7 @@ from shuup.admin.toolbar import (
     get_default_edit_toolbar, NewActionButton, SettingsActionButton, Toolbar
 )
 from shuup.admin.utils.forms import add_form_errors_as_messages
-from shuup.admin.utils.picotable import PicotableViewMixin
+from shuup.admin.utils.picotable import PicotableViewMixin, Column
 from shuup.admin.utils.urls import (
     get_model_front_url, get_model_url, NoModelUrl
 )
@@ -166,7 +166,10 @@ class PicotableListView(PicotableViewMixin, ListView):
     def __init__(self):
         super(PicotableListView, self).__init__()
         self.settings = ViewSettings(self.model, self.default_columns)
-        self.columns = (self.settings.columns or self.default_columns)
+
+        self.columns = [
+           Column("select", "", display="", sortable=False),  # empty column for selects
+        ] + (self.settings.columns or self.default_columns)
 
     def get_toolbar(self):
         buttons = []

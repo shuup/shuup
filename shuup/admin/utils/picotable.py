@@ -366,6 +366,7 @@ class Picotable(object):
         }
         for column in self.columns:
             out[column.id] = column.get_display_value(context=self.context, object=object)
+        out["type"] = type(object).__name__
         out["_abstract"] = (self.get_object_abstract(object, item=out) if callable(self.get_object_abstract) else None)
         return out
 
