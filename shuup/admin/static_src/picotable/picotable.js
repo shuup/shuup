@@ -394,8 +394,18 @@ const Picotable = (function(m, storage) {
         // Build body
         var isPick = !!ctrl.vm.pickId();
         var rows = Util.map(data.items, function(item) {
-            return m("tr", {key: "item-" + item._id}, Util.map(data.columns, function(col) {
-                var content = item[col.id] || "";
+            return m("tr", {key: "item-" + item._id}, Util.map(data.columns, function(col, idx) {
+                if (idx == 0) {
+                    var content = m("input[type=checkbox]", {
+                        value: item.type + "-" + item._id,
+                        class: "row-selection",
+                        onclick: Util.boundPartial(ctrl, ctrl.saveCheck, item),
+                        checked: ctrl.isChecked(item)
+                    });
+                }
+                else {
+                    var content = item[col.id] || "";
+                }
                 if (col.raw) content = m.trust(content);
                 if (col.linked) {
                     if (isPick) {
@@ -600,6 +610,7 @@ const Picotable = (function(m, storage) {
             sort: m.prop(null),
             filterEnabled: m.prop({}),
             filterValues: m.prop({}),
+            checkboxes: m.prop([]),
             page: m.prop(1),
             perPage: m.prop(20),
             perPageChoices: m.prop([20, 50, 100, 200]),
@@ -655,6 +666,26 @@ const Picotable = (function(m, storage) {
             ctrl.vm.filterValues({});
             ctrl.refresh();
         };
+        ctrl.resetCheckboxes = function() {
+            ctrl.vm.checkboxes();
+        };
+        ctrl.saveCheck = function(object) {
+            var originalValues = ctrl.vm.checkboxes();
+            var items = originalValues.filter(function(i) { return i !== object._id; });
+
+            if (items.length < originalValues.length) {
+                ctrl.vm.checkboxes(items);
+            }
+            else {
+                originalValues.push(object._id);
+                ctrl.vm.checkboxes(originalValues);
+            }
+        };
+        ctrl.isChecked = function(object) {
+            var originalValues = ctrl.vm.checkboxes();
+            const checked = originalValues.filter(function(i) { return i === object._id; });
+            return checked.length > 0;
+        };
         ctrl.setPage = function(newPage) {
             newPage = 0 | newPage;
             if (isNaN(newPage) || newPage < 1) newPage = 1;
@@ -688,7 +719,9 @@ const Picotable = (function(m, storage) {
         ctrl.loadSettings = function() {
             if (!storage) return;
             var perPage = 0 | storage.getItem("picotablePerPage");
-            if (perPage > 1) ctrl.vm.perPage(perPage);
+            if (perPage > 1) {
+                ctrl.vm.perPage(perPage);
+            }
 
             // See if we're in pick mode...
             var pickMatch = /pick=([^&]+)/.exec(location.search);
