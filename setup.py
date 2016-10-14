@@ -118,6 +118,7 @@ EXTRAS_REQUIRE = {
     'testing': utils.get_test_requirements_from_tox_ini(TOPDIR),
     'coding-style': [
         'flake8>=2.4,<3',
+        'flake8-print>=2.0.2,<3',
         'pep8-naming>=0.2,<1',
     ],
 }
