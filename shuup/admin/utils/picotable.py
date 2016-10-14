@@ -12,13 +12,14 @@ import json
 import six
 from django.core.paginator import EmptyPage, Paginator
 from django.db.models import Manager, Q, QuerySet
-from django.http.response import JsonResponse
+from django.http.response import HttpResponse, JsonResponse
 from django.template.defaultfilters import yesno
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.utils.urls import get_model_url, NoModelUrl
 from shuup.utils.dates import try_parse_date
+from shuup.utils.importing import load
 from shuup.utils.objects import compact
 from shuup.utils.serialization import ExtendedJSONEncoder
 
@@ -289,9 +290,10 @@ class Column(object):
 
 
 class Picotable(object):
-    def __init__(self, request, columns, queryset, context):
+    def __init__(self, request, columns, mass_actions, queryset, context):
         self.request = request
         self.columns = columns
+        self.mass_actions = mass_actions
         self.queryset = queryset
         self.context = context
         self.columns_by_id = dict((c.id, c) for c in self.columns)
@@ -348,6 +350,7 @@ class Picotable(object):
                 "nItems": paginator.count,
                 "pageNum": page.number,
             },
+            "massActions": self.mass_actions,
             "items": [self.process_item(item) for item in page],
             "itemInfo": _("Showing %(per_page)s of %(n_items)s %(verbose_name_plural)s") % {
                 "per_page": min(paginator.per_page, paginator.count),
@@ -381,13 +384,16 @@ class PicotableViewMixin(object):
     url_identifier = None
     default_columns = []
     columns = []
+    mass_actions = []
     picotable_class = Picotable
     template_name = "shuup/admin/base_picotable.jinja"
 
     def process_picotable(self, query_json):
+        mass_actions = self.load_mass_actions()
         pico = self.picotable_class(
             request=self.request,
             columns=self.columns,
+            mass_actions=mass_actions,
             queryset=self.get_queryset(),
             context=self
         )
@@ -398,6 +404,31 @@ class PicotableViewMixin(object):
         if query:
             return self.process_picotable(query)
         return super(PicotableViewMixin, self).get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        """
+        Post action is where Mass Actions post their data
+        """
+        data = request.body.decode("utf-8")
+        data = json.loads(data)
+        action_identifier = data.get("action", None)
+        ids = data.get("values", [])
+
+        mass_action = self._get_mass_action(action_identifier)
+        if mass_action is None:
+            return JsonResponse({"error": force_text(_("Unknown error"))})
+        if isinstance(mass_action, PicotableFileMassAction):
+            return mass_action.process(request, ids)
+
+        mass_action.process(request, ids)
+        return JsonResponse({"ok": True})
+
+    def _get_mass_action(self, action_identifier):
+        for mass_action in self.mass_actions:
+            loaded_action = load(mass_action)()
+            if loaded_action.identifier == action_identifier:
+                return loaded_action
+        return None
 
     def get_object_url(self, instance):
         try:
@@ -427,3 +458,95 @@ class PicotableViewMixin(object):
     def get_filter(self):
         filter_string = self.request.GET.get("filter")
         return json.loads(filter_string) if filter_string else {}
+
+    def load_mass_actions(self):
+        # TODO: Make extendable through provides in near future
+        actions = []
+        for action in self.mass_actions:
+            obj = load(action)()
+            redirects = isinstance(obj, PicotableRedirectMassAction)
+            actions.append({
+                "key": obj.identifier,
+                "value": obj.label,
+                "redirects": redirects,
+                "redirect_url": obj.redirect_url if redirects else None
+            })
+        return actions
+
+
+class PicotableMassAction(object):
+    """
+    Simple Mass Action
+
+    This action only processes the given id's in subclass.
+
+    Examples:
+    * `shuup.admin.modules.orders.mass_actions.CancelOrderAction`
+    * `shuup.admin.modules.products.mass_actions.VisibleMassAction`
+    """
+    label = _("Mass Action")
+    identifier = "mass_action"
+
+    def __repr__(self):
+        return "Mass Action: %s" % force_text(self.label)
+
+    def process(self, request, ids):
+        """
+        Process the given ids in masses
+
+        :param request: `WSGIRequest`
+        :param ids: list of ids
+        :return: None
+        """
+        pass
+
+
+class PicotableFileMassAction(PicotableMassAction):
+    """
+    File Mass Action
+
+    This action returns file as a response.
+
+    Examples:
+    * `shuup.admin.modules.orders.mass_actions.OrderConfirmationPdfAction`
+    * `shuup.admin.modules.products.mass_actions.FileResponseAction`
+    """
+    def process(self, request, ids):
+        """
+        Process and return `HttpResponse`
+
+        Example:
+            response = HttpResponse(content_type="text/csv")
+            response['Content-Disposition'] = 'attachment; filename="mass_action.csv"'
+            writer = csv.writer(response)
+            writer.writerow(['First row', 'Foo', 'Bar', 'Baz'])
+            return response
+
+        :param request: `WSGIRequest`
+        :param ids: list of ids
+        :return: `HttpResponse`
+        """
+        pass
+
+
+class PicotableRedirectMassAction(PicotableMassAction):
+    """
+    Redirect Mass Action
+
+    This view saves selected id's into session which are then
+    further processed in the mass action view.
+
+    Redirect of this view is handled in `picotable.js`
+
+    To use this action, your admin module must supply admin_url
+    and a view for the action.
+
+    Examples:
+    * `shuup.admin.modules.contacts.mass_actions.EditContactsAction`
+    * `shuup.admin.modules.products.mass_actions.EditProductAttributesAction`
+    """
+    redirect_url = None
+
+    def process(self, request, ids):
+        request.session["mass_action_ids"] = ids
+        return HttpResponse("ok")

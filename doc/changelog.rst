@@ -20,6 +20,8 @@ Localization
 Admin
 ~~~~~
 
+- Picotable lists now support mass actions.
+
 Addons
 ~~~~~~
 
