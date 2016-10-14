@@ -62,6 +62,11 @@ class ProductModule(AdminModule):
                 "^products/(?P<pk>\d+)/package/$", "shuup.admin.modules.products.views.ProductPackageView",
                 name="product.edit_package",
                 permissions=get_default_model_permissions(ProductPackageLink)
+            ),
+            admin_url(
+                "^products/mass-edit/$", "shuup.admin.modules.products.views.ProductMassEditView",
+                name="product.mass_edit",
+                permissions=get_default_model_permissions(Product)
             )
         ] + get_edit_and_list_urls(
             url_prefix="^products",
