@@ -20,6 +20,7 @@ Localization
 Admin
 ~~~~~
 
+- Add mass actions to orders list
 - Add mass actions to contacts list
 - Picotable lists now support mass actions.
 
