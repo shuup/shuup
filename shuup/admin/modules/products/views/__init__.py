@@ -13,6 +13,7 @@ from .edit_media import ProductMediaEditView
 from .edit_package import ProductPackageView
 from .edit_variation import ProductVariationView
 from .list import ProductListView
+from .mass_edit import ProductMassEditView
 
 __all__ = [
     "ProductCrossSellEditView",
@@ -22,4 +23,5 @@ __all__ = [
     "ProductPackageView",
     "ProductVariationView",
     "ProductMediaEditView",
+    "ProductMassEditView",
 ]
