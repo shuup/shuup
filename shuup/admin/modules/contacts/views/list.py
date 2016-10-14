@@ -51,6 +51,11 @@ class ContactListView(PicotableListView):
         Column("groups", _("Groups"), filter_config=ChoicesFilter(ContactGroup.objects.all(), "groups"))
     ]
 
+    mass_actions = [
+        "shuup.admin.modules.contacts.mass_actions:EditContactsAction",
+        "shuup.admin.modules.contacts.mass_actions:EditContactGroupsAction",
+    ]
+
     def get_toolbar(self):
         return Toolbar([
             NewActionButton.for_model(
