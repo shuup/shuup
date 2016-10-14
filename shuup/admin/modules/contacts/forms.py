@@ -8,10 +8,15 @@
 from django import forms
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
+from django_countries import countries
+from django_countries.fields import LazyTypedChoiceField
+from enumfields import EnumField
 
 from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.forms.widgets import PersonContactChoiceWidget
-from shuup.core.models import CompanyContact, ContactGroup, PersonContact
+from shuup.core.models import (
+    CompanyContact, Contact, ContactGroup, Gender, PersonContact
+)
 
 FIELDS_BY_MODEL_NAME = {
     "Contact": (
@@ -88,3 +93,19 @@ class CompanyContactBaseForm(ContactBaseFormMixin, forms.ModelForm):
                 (object.pk, force_text(object)) for object in self.instance.members.all()
             ]
         self.fields["members"] = members_field
+
+
+class MassEditForm(forms.Form):
+    gender = EnumField(Gender).formfield(default=Gender.UNDISCLOSED, label=_('Gender'), required=False)
+    merchant_notes = forms.CharField(label=_('Merchant Notes'), widget=forms.Textarea, required=False)
+    www = forms.URLField(required=False, label=_("Website URL"))
+    account_manager = forms.ModelChoiceField(PersonContact.objects.all(), label=_("Account Manager"), required=False)
+    tax_number = forms.CharField(label=_("Company: Tax Number"), max_length=32, required=False)
+    members = forms.ModelMultipleChoiceField(Contact.objects.all(), label=_("Company: Members"), required=False)
+    language = LazyTypedChoiceField(
+        choices=[("", _("Select Language"))] + list(countries), label=_('Language'), required=False)
+
+
+class GroupMassEditForm(forms.Form):
+    contact_group = forms.ModelMultipleChoiceField(
+        ContactGroup.objects.all(), label=_("Contact Group"), required=False)

@@ -1,0 +1,48 @@
+# This file is part of Shuup.
+#
+# Copyright (c) 2012-2016, Shoop Commerce Ltd. All rights reserved.
+#
+# This source code is licensed under the AGPLv3 license found in the
+# LICENSE file in the root directory of this source tree.
+import six
+from django.contrib import messages
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
+from django.utils.translation import ugettext_lazy as _
+from django.views.generic import FormView
+
+from shuup.admin.modules.contacts.forms import GroupMassEditForm, MassEditForm
+from shuup.admin.utils.views import MassEditMixin
+from shuup.core.models import Contact
+
+
+class ContactMassEditView(MassEditMixin, FormView):
+    title = _("Mass Edit: Contacts")
+    form_class = MassEditForm
+
+    def form_valid(self, form):
+        for contact in Contact.objects.filter(id__in=self.ids):
+            for k, v in six.iteritems(form.cleaned_data):
+                if not v:
+                    continue
+                if hasattr(contact, k):
+                    setattr(contact, k, v)
+            contact.save()
+
+        messages.success(self.request, _("Contacts changed successfully"))
+        self.request.session["mass_action_ids"] = []
+        return HttpResponseRedirect(reverse("shuup_admin:contact.list"))
+
+
+class ContactGroupMassEditView(MassEditMixin, FormView):
+    title = _("Mass Edit: Contact Groups")
+    form_class = GroupMassEditForm
+
+    def form_valid(self, form):
+        groups = form.cleaned_data.get("contact_group", [])
+        for group in groups:
+            group.members.add(*self.ids)
+
+        messages.success(self.request, _("Contacts Groups changed successfully"))
+        self.request.session["mass_action_ids"] = []
+        return HttpResponseRedirect(reverse("shuup_admin:contact.list"))
