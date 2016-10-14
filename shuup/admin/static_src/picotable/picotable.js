@@ -149,6 +149,7 @@ const Picotable = (function(m, storage) {
     }());
 
     const lang = {
+        "MASS_ACTIONS": gettext("Mass actions"),
         "RANGE_FROM": gettext("From"),
         "RANGE_TO": gettext("To"),
         "ITEMS_PER_PAGE": gettext("Items per page"),
@@ -391,11 +392,13 @@ const Picotable = (function(m, storage) {
         var footCell = m("td", {colspan: footColspan}, paginator(data.pagination, ctrl.setPage));
         var tfoot = m("tfoot", [m("tr", footCell)]);
 
+        var massActions = (ctrl.vm.data() ? ctrl.vm.data().massActions : null);
+
         // Build body
         var isPick = !!ctrl.vm.pickId();
         var rows = Util.map(data.items, function(item) {
             return m("tr", {key: "item-" + item._id}, Util.map(data.columns, function(col, idx) {
-                if (idx == 0) {
+                if (idx == 0 && massActions.length) {
                     var content = m("input[type=checkbox]", {
                         value: item.type + "-" + item._id,
                         class: "row-selection",
@@ -562,9 +565,49 @@ const Picotable = (function(m, storage) {
         ]);
     }
 
+    function renderMassActions(ctrl) {
+        if (ctrl.vm.checkboxes().length == 0) {
+            return "";
+        }
+        var massActions = (ctrl.vm.data() ? ctrl.vm.data().massActions : null);
+        if (massActions == null) {
+            return "";
+        }
+        var select2Config = function() {
+            return function(el, isInit) {
+                if(!isInit) {
+                    $(el).select2();
+                }
+            };
+        };
+
+        massActions = [{key: 0, value: gettext("Select Action")}].concat(massActions);  // add empty
+        return m("div.picotable-mass-actions", [
+            m("select.picotable-mass-action-select.form-control",
+                {
+                    id: "mass-action-select" + ctrl.id,
+                    config: select2Config(),
+                    value: 0,
+                    onchange: m.withAttr("value", function(value) {
+                        ctrl.doMassAction(value);
+                    })
+                },
+                Util.map(massActions, function(obj) {
+                    return m("option", {
+                        value: obj.key,
+                        "data-redirects": obj.redirects,
+                        "data-redirect-url": obj.redirect_url
+                    }, obj.value);
+                })
+            )
+            ]
+        );
+    }
+
     function renderHeader(ctrl) {
         var itemInfo = (ctrl.vm.data() ? ctrl.vm.data().itemInfo : null);
         return m("div.picotable-header", [
+            renderMassActions(ctrl),
             m("div.picotable-items-per-page-ctr", [
                 m("label", {"for": "pipps" + ctrl.id}, lang.ITEMS_PER_PAGE),
                 m("select.picotable-items-per-page-select.form-control",
@@ -667,7 +710,7 @@ const Picotable = (function(m, storage) {
             ctrl.refresh();
         };
         ctrl.resetCheckboxes = function() {
-            ctrl.vm.checkboxes();
+            ctrl.vm.checkboxes([]);
         };
         ctrl.saveCheck = function(object) {
             var originalValues = ctrl.vm.checkboxes();
@@ -685,6 +728,80 @@ const Picotable = (function(m, storage) {
             var originalValues = ctrl.vm.checkboxes();
             const checked = originalValues.filter(function(i) { return i === object._id; });
             return checked.length > 0;
+        };
+        ctrl.getMassActionResponse = function(xhr) {
+            if (xhr.status === 200) {
+                var filename = "";
+                var disposition = xhr.getResponseHeader('Content-Disposition');
+                if (disposition && disposition.indexOf('attachment') !== -1) {
+                    var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                    var matches = filenameRegex.exec(disposition);
+                    if (matches != null && matches[1]) filename = matches[1].replace(/['"]/g, '');
+                }
+                var type = xhr.getResponseHeader('Content-Type');
+
+                var blob = new Blob([xhr.response], { type: type });
+                if (typeof window.navigator.msSaveBlob !== 'undefined') {
+                    // IE workaround for "HTML7007: One or more blob URLs were revoked by closing the blob for which they were created. These URLs will no longer resolve as the data backing the URL has been freed."
+                    window.navigator.msSaveBlob(blob, filename);
+                }
+                else {
+                    var URL = window.URL || window.webkitURL;
+                    var downloadUrl = URL.createObjectURL(blob);
+
+                    if (filename) {
+                        // use HTML5 a[download] attribute to specify filename
+                        var a = document.createElement("a");
+                        // safari doesn't support this yet
+                        if (typeof a.download === 'undefined') {
+                            window.location = downloadUrl;
+                        } else {
+                            a.href = downloadUrl;
+                            a.download = filename;
+                            document.body.appendChild(a);
+                            a.click();
+                        }
+                    }
+                    else {
+                        var redirects = $("option[value="+window.savedValue+"]").data("redirects");
+                        if (redirects) {
+                            window.location = $("option[value="+window.savedValue+"]").data("redirect-url");
+                        }
+                        ctrl.resetCheckboxes();
+                        $(".picotable-mass-action-select").val(0);
+                        ctrl.refresh();
+                        window.Messages.enqueue({tags: "success", text: gettext("Mass Action complete.")});
+                    }
+                    setTimeout(function () { URL.revokeObjectURL(downloadUrl); }, 100); // cleanup
+                }
+            }
+        };
+        ctrl.doMassAction = function(value) {
+            var originalValues = ctrl.vm.checkboxes();
+            window.savedValue = value;
+            if (originalValues.length == 0) {
+                alert(gettext("You haven't selected anything"));
+            }
+            if(value == 0) {
+                return;
+            }
+
+            
+            var xhrConfig = function(xhr) {
+                xhr.setRequestHeader("X-CSRFToken", window.ShuupAdminConfig.csrf);
+                xhr.setRequestHeader('Content-type', 'application/json');
+            };
+            var payload = {     
+                "action": value,
+                "values": originalValues
+            };
+            m.request({
+                method: "POST", 
+                url: window.location.pathname, 
+                data: payload, 
+                extract:ctrl.getMassActionResponse,
+                config: xhrConfig
+            });
         };
         ctrl.setPage = function(newPage) {
             newPage = 0 | newPage;

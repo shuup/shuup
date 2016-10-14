@@ -22,7 +22,7 @@ from shuup.admin.toolbar import (
     get_default_edit_toolbar, NewActionButton, SettingsActionButton, Toolbar
 )
 from shuup.admin.utils.forms import add_form_errors_as_messages
-from shuup.admin.utils.picotable import PicotableViewMixin, Column
+from shuup.admin.utils.picotable import Column, PicotableViewMixin
 from shuup.admin.utils.urls import (
     get_model_front_url, get_model_url, NoModelUrl
 )
@@ -165,11 +165,23 @@ class PicotableListView(PicotableViewMixin, ListView):
 
     def __init__(self):
         super(PicotableListView, self).__init__()
+        if self.mass_actions:
+            self.default_columns = [
+                Column("select", "", display="", sortable=False, linked=False, class_name="text-center"),
+            ] + self.default_columns
+
         self.settings = ViewSettings(self.model, self.default_columns)
 
-        self.columns = [
-           Column("select", "", display="", sortable=False),  # empty column for selects
-        ] + (self.settings.columns or self.default_columns)
+        if self.mass_actions:
+            if self.settings.columns:
+                # settings.columns never have this empty one
+                self.columns = [
+                    Column("select", "", display="", sortable=False, linked=False),  # empty column for selects
+                ] + self.settings.columns
+            else:
+                self.columns = self.default_columns
+        else:
+            self.columns = (self.settings.columns or self.default_columns)
 
     def get_toolbar(self):
         buttons = []
@@ -196,3 +208,19 @@ class PicotableListView(PicotableViewMixin, ListView):
         return [
             {"text": "%s" % instance, "class": "header"},
         ]
+
+
+class MassEditMixin(object):
+    template_name = "shuup/admin/mass_action/mass_edit.jinja"
+    title = _("Mass Edit")
+
+    def dispatch(self, request, *args, **kwargs):
+        self.ids = request.session["mass_action_ids"]
+        return super(MassEditMixin, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(MassEditMixin, self).get_context_data(**kwargs)
+        context["form"] = self.get_form()
+        context["edit_title"] = self.title
+        context["item_count"] = len(self.ids)
+        return context
