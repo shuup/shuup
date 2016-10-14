@@ -65,6 +65,11 @@ class OrderListView(PicotableListView):
             filter_config=RangeFilter(field_type="number", filter_field="taxful_total_price_value")
         ),
     ]
+    mass_actions = [
+        "shuup.admin.modules.orders.mass_actions:CancelOrderAction",
+        "shuup.admin.modules.orders.mass_actions:OrderConfirmationPdfAction",
+        "shuup.admin.modules.orders.mass_actions:OrderDeliveryPdfAction",
+    ]
 
     def get_queryset(self):
         return super(OrderListView, self).get_queryset().exclude(deleted=True)
