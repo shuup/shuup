@@ -16,6 +16,9 @@ table tfoot {
 table td {
     vertical-align: top;
 }
+table th {
+    text-align: left;
+}
 .align-right {
     text-align: right;
 }
