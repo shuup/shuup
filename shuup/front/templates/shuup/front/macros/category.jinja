@@ -143,6 +143,7 @@
         {{ render_category_list_view_type_js() }}
         $(function() {
             {{ initialize_sorter() }}
+            $(".selectpicker").selectpicker();
         });
     </script>
 {% endmacro %}

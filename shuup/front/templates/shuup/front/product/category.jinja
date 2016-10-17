@@ -23,8 +23,8 @@
         {{ category_macros.render_information() }}
         {{ category_macros.render_products_section() }}
     {% endblock %}
-
-    {% block extrajs %}
-        {{ category_macros.render_extrajs() }}
-    {% endblock %}
 {% endif %}
+
+{% block extrajs %}
+    {{ category_macros.render_extrajs() }}
+{% endblock %}
