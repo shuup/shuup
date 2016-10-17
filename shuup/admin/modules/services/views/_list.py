@@ -8,6 +8,7 @@
 
 from __future__ import unicode_literals
 
+from django.utils.text import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.utils.picotable import (
@@ -42,7 +43,7 @@ class ServiceListView(PicotableListView):
         if instance.provider:
             for choice in instance.provider.get_service_choices():
                 if choice.identifier == instance.choice_identifier:
-                    return str(choice.name)
+                    return force_text(choice.name)
 
 
 class ShippingMethodListView(ServiceListView):
