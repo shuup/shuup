@@ -16,6 +16,8 @@ class CheckoutPhaseViewMixin(object):
     title = None  # User-visible
     final = False  # Should be set for final steps (those that may be accessed via the previous step's URL)
 
+    horizontal_template = True  # Set this to False if you want to use single page checkout
+
     checkout_process = None  # set as an instance variable
     phases = ()  # set as an instance variable; likely accessed via template (`view.phases`)
     next_phase = None  # set as an instance variable

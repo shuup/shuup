@@ -10,7 +10,7 @@ from django.shortcuts import redirect
 from django.views.generic import View
 from six.moves import urllib
 
-from shuup.front.checkout import CheckoutProcess
+from shuup.front.checkout import CheckoutProcess, VerticalCheckoutProcess
 from shuup.utils.importing import cached_load
 
 __all__ = ["BaseCheckoutView"]
@@ -19,15 +19,17 @@ __all__ = ["BaseCheckoutView"]
 class BaseCheckoutView(View):
     phase_specs = []
     empty_phase_spec = None
+    initial_phase = None
+    process_class = CheckoutProcess
 
     def dispatch(self, request, *args, **kwargs):
         if request.basket.is_empty and self.empty_phase_spec:
             self.phase_specs = [self.empty_phase_spec]
             phase_identifier = "empty"
         else:
-            phase_identifier = kwargs.get("phase")
+            phase_identifier = kwargs.get("phase", self.initial_phase)
 
-        process = CheckoutProcess(
+        process = self.process_class(
             phase_specs=self.phase_specs,
             phase_kwargs=dict(request=self.request, args=self.args, kwargs=self.kwargs)
         )
@@ -54,11 +56,9 @@ class DefaultCheckoutView(BaseCheckoutView):
     empty_phase_spec = "shuup.front.checkout.empty:EmptyPhase"
 
 
-class SinglePhaseCheckoutView(BaseCheckoutView):
-    phase_specs = [
-        "shuup.front.checkout.single_page.SingleCheckoutPhase"
-    ]
-    empty_phase_spec = None  # Use the same phase specs when the basket is empty
+class SinglePageCheckoutView(DefaultCheckoutView):
+    initial_phase = "addresses"
+    process_class = VerticalCheckoutProcess
 
 
 def get_checkout_view():
