@@ -11,5 +11,6 @@
 {% endblock %}
 
 {% block extrajs %}
+    {{ super() }}
     {{ checkout_macros.address_phase_extrajs() }}
 {% endblock %}

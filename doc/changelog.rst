@@ -24,6 +24,8 @@ Addons
 Front
 ~~~~~
 
+- Fix/refactor single page checkout view
+
 Xtheme
 ~~~~~~
 

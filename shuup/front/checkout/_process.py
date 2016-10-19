@@ -15,10 +15,11 @@ from shuup.utils.importing import load
 
 
 class CheckoutProcess(object):
+    horizontal_template = True
+
     def __init__(self, phase_specs, phase_kwargs):
         self.phase_specs = phase_specs
         self.phase_kwargs = phase_kwargs
-        self.current_phase = None
 
     @property
     def phases(self):
@@ -36,6 +37,7 @@ class CheckoutProcess(object):
         kwargs.update(self.phase_kwargs)
         kwargs.update(extra_kwargs)
         phase = phase_class(**kwargs)
+        phase.horizontal_template = self.horizontal_template
         phase.checkout_process = self
         return phase
 
@@ -118,3 +120,7 @@ class CheckoutProcess(object):
         To be called from a phase (`self.checkout_process.complete()`) when the checkout process is complete.
         """
         self.reset()
+
+
+class VerticalCheckoutProcess(CheckoutProcess):
+    horizontal_template = False
