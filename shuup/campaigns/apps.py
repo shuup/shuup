@@ -64,11 +64,11 @@ class CampaignAppConfig(AppConfig):
 
     def ready(self):
         from django.db.models.signals import m2m_changed, post_save
-        from shuup.campaigns.models import CategoryFilter, ProductFilter
+        from shuup.campaigns.models import CategoryFilter, ProductFilter, ProductTypeFilter
         from shuup.campaigns.models import ContactCondition, ContactGroupCondition
         from shuup.campaigns.signal_handlers import (
-            invalidate_context_condition_cache, invalidate_context_filter_cache,
-            update_customers_groups
+            invalidate_context_condition_cache,
+            update_customers_groups, update_filter_cache
         )
         from shuup.core.models import ContactGroup, Payment, ShopProduct
         post_save.connect(
@@ -96,22 +96,27 @@ class CampaignAppConfig(AppConfig):
 
         # Invalidate context filter caches
         m2m_changed.connect(
-            invalidate_context_filter_cache,
+            update_filter_cache,
             sender=CategoryFilter.categories.through,
             dispatch_uid="campaigns:invalidate_caches_for_category_filter_m2m_change"
         )
         m2m_changed.connect(
-            invalidate_context_filter_cache,
+            update_filter_cache,
             sender=ProductFilter.products.through,
             dispatch_uid="campaigns:invalidate_caches_for_product_filter_m2m_change"
         )
+        m2m_changed.connect(
+            update_filter_cache,
+            sender=ProductTypeFilter.product_types.through,
+            dispatch_uid="campaigns:invalidate_caches_for_product_type_filter_m2m_change"
+        )
         post_save.connect(
-            invalidate_context_filter_cache,
+            update_filter_cache,
             sender=ShopProduct,
             dispatch_uid="campaigns:invalidate_caches_for_shop_product_save"
         )
         m2m_changed.connect(
-            invalidate_context_filter_cache,
+            update_filter_cache,
             sender=ShopProduct.categories.through,
             dispatch_uid="campaigns:invalidate_caches_for_shop_product_m2m_change"
         )
