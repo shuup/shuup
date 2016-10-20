@@ -8,7 +8,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from polymorphic.models import PolymorphicModel
 
-from shuup.core.models import Category, Product, ProductType
+from shuup.core.models import Category, Product, ProductType, ShopProduct
 
 
 class CatalogFilter(PolymorphicModel):
@@ -29,6 +29,10 @@ class ProductTypeFilter(CatalogFilter):
     name = _("Product type")
 
     product_types = models.ManyToManyField(ProductType, verbose_name=_("product Types"))
+
+    def get_matching_shop_products(self):
+        ids = self.values.values_list("id", flat=True)
+        return ShopProduct.objects.filter(product__type_id__in=ids)
 
     def matches(self, shop_product):
         return (shop_product.product.type_id in self.values.values_list("id", flat=True))
@@ -56,6 +60,10 @@ class ProductFilter(CatalogFilter):
 
     products = models.ManyToManyField(Product, verbose_name=_("product"))
 
+    def get_matching_shop_products(self):
+        ids = self.values.values_list("pk", flat=True)
+        return ShopProduct.objects.filter(product__id__in=ids)
+
     def matches(self, shop_product):
         return (shop_product.product.pk in self.values.values_list("pk", flat=True))
 
@@ -82,8 +90,11 @@ class CategoryFilter(CatalogFilter):
 
     categories = models.ManyToManyField(Category, verbose_name=_("categories"))
 
+    def get_matching_shop_products(self):
+        return ShopProduct.objects.filter(categories__in=self.categories.all_except_deleted())
+
     def matches(self, shop_product):
-        ids = shop_product.categories.values_list("id", flat=True)
+        ids = shop_product.categories.all_except_deleted().values_list("id", flat=True)
         new_ids = self.values.values_list("id", flat=True)
         return bool([x for x in ids if x in new_ids])
 

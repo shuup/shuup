@@ -25,12 +25,12 @@ def get_matching_for_product(shop_product, provide_category):
     :return: list of collected item ids
     :rtype: list[int]
     """
-    collected = []
+    collected = set()
     matcher = ProductCampaignMatcher(shop_product)
     for item in get_provide_objects(provide_category):
         for obj in item._meta.model.objects.all():
             if matcher.matches(obj):
-                collected.append(obj.pk)
+                collected.add(obj.pk)
     return collected
 
 
