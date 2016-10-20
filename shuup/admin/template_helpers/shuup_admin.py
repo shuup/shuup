@@ -16,11 +16,13 @@ from django.core.urlresolvers import NoReverseMatch, reverse
 from django.middleware.csrf import get_token
 from jinja2.utils import contextfunction
 
+from shuup import configuration
 from shuup.admin import menu
 from shuup.admin.breadcrumbs import Breadcrumbs
 from shuup.admin.utils.urls import (
     get_model_url, manipulate_query_string, NoModelUrl
 )
+from shuup.core.telemetry import is_telemetry_enabled
 
 __all__ = ["get_menu_entry_categories", "get_front_url", "get_config", "model_url"]
 
@@ -56,6 +58,14 @@ def get_front_url(context):
         except NoReverseMatch:
             front_url = None
     return front_url
+
+
+@contextfunction
+def get_support_id(context):
+    support_id = None
+    if is_telemetry_enabled():
+        support_id = configuration.get(None, "shuup_support_id")
+    return support_id
 
 
 # TODO: Figure out a more extensible way to deal with this

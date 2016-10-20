@@ -141,8 +141,14 @@ SHUUP_ORDER_KNOWN_EXTRA_DATA_KEYS = []
 #: A flag to enable/disable the telemetry system
 SHUUP_TELEMETRY_ENABLED = True
 
+#: The host URL for Shuup's telemetry (statistics) system
+SHUUP_TELEMETRY_HOST_URL = "http://telemetry.shuup.com"
+
 #: The submission URL for Shuup's telemetry (statistics) system
-SHUUP_TELEMETRY_URL = "https://telemetry.shuup.com/collect/"
+SHUUP_TELEMETRY_URL = "%s/collect/" % SHUUP_TELEMETRY_HOST_URL
+
+#: The URL to fetch the Shuup installation support id
+SHUUP_SUPPORT_ID_URL = "%s/support-id" % SHUUP_TELEMETRY_HOST_URL
 
 #: Default cache duration for various caches in seconds
 SHUUP_DEFAULT_CACHE_DURATION = 60 * 30
