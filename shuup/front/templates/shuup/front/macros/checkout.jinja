@@ -186,7 +186,7 @@
 {% endmacro %}
 
 {% macro render_confirm_form(form) %}
-    <form role="form" method="post">
+    <form role="form" method="post" action="{{ url('shuup:checkout', phase="confirm") }}">
         {% csrf_token %}
         <div class="panel panel-default">
             <div class="panel-heading">
