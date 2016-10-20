@@ -76,7 +76,7 @@ class ProductListFormModifier(six.with_metaclass(abc.ABCMeta)):
         """
         pass
 
-    def sort_products(self, request, products, sort):
+    def sort_products(self, request, products, data):
         """
         Sort products in case sort choices is provided
 
@@ -86,8 +86,8 @@ class ProductListFormModifier(six.with_metaclass(abc.ABCMeta)):
         :param request: Current request
         :param products: Products to sort
         :type products: list[shuup.code.models.Product]
-        :param sort: Key to sort with
-        :type sort: str
+        :param data: product list form data
+        :type data: dict
         :return: List of products that might be sorted
         :rtype: list[shuup.code.models.Product]
         """
@@ -216,9 +216,8 @@ def post_filter_products(request, category, products, data):
 
 
 def sort_products(request, category, products, data):
-    sort = data.get("sort", "name_a")
     for extend_obj in _get_active_modifiers(request.shop, category):
-        products = extend_obj.sort_products(request, products, sort)
+        products = extend_obj.sort_products(request, products, data)
     return products
 
 

@@ -80,7 +80,9 @@ class SortProductListByName(SimpleProductListModifier):
             ]),
         ]
 
-    def sort_products(self, request, products, sort):
+    def sort_products(self, request, products, data):
+        sort = data.get("sort", "name_a")
+
         def _get_product_name_lowered_stripped(product):
             return product.name.lower().strip()
 
@@ -112,7 +114,9 @@ class SortProductListByPrice(SimpleProductListModifier):
             ]),
         ]
 
-    def sort_products(self, request, products, sort):
+    def sort_products(self, request, products, data):
+        sort = data.get("sort")
+
         def _get_product_price_getter_for_request(request):
             def _get_product_price(product):
                 return product.get_price(request)
@@ -145,7 +149,9 @@ class SortProductListByCreatedDate(SimpleProductListModifier):
             ]),
         ]
 
-    def sort_products(self, request, products, sort):
+    def sort_products(self, request, products, data):
+        sort = data.get("sort")
+
         def _get_product_created_on_datetime(product):
             return product.created_on
 
