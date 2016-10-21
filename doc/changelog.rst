@@ -26,6 +26,8 @@ Addons
 Front
 ~~~~~
 
+- Enable option to use login and regiser checkout phases 
+  with vertical checkout process
 - Add checkout view with option to login and register
 - Add is_visible_for_user method for checkout view phase
 - Add recently viewed products app
