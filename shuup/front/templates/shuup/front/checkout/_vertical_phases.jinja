@@ -16,7 +16,7 @@
                  id="accordion"
                  role="tablist"
                  aria-multiselectable="true">
-                {% for phase in view.phases if phase.title %}
+                {% for phase in view.phases if phase.is_visible_for_user() %}
                 <div class="panel panel-primary">
                     <div class="panel-heading" role="tab" id="headingOne">
                         <h4 class="panel-title">

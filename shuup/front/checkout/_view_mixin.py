@@ -24,6 +24,9 @@ class CheckoutPhaseViewMixin(object):
     previous_phase = None  # set as an instance variable
     request = None  # exists via being a view
 
+    def is_visible_for_user(self):
+        return bool(self.title)
+
     def is_valid(self):
         return True
 
