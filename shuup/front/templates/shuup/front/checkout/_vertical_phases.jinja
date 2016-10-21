@@ -1,4 +1,5 @@
 {% if request.is_ajax() %}
+    {%- import "shuup/front/macros/general.jinja" as macros with context -%}
     {%- import "shuup/front/macros/checkout.jinja" as checkout_macros with context -%}
 {% else %}
     {% extends "shuup/front/base.jinja" %}
@@ -57,12 +58,16 @@
             if (!data.includes("csrfmiddlewaretoken")) {  // no csrftoken no post
                 return false;
             }
+            const currentPhase = window.currentPhase;
             $.ajax({
                 type: "post",
                 url: "/checkout/" + window.currentPhase + "/",
                 data: data,
                 success: function (response) {
                     $("#ajax_content").html(response);
+                    if (currentPhase != window.currentPhase && form.hasClass("single-page-refresh-after")) {
+                        location.reload();
+                    }
                 }
             });
         };
@@ -82,7 +87,7 @@
             $("form").on("submit", function(e) {
                 if (window.currentPhase !== "confirm") {
                     e.preventDefault();
-                    window.submitCheckoutPhaseForm($("#" + window.currentPhase));
+                    window.submitCheckoutPhaseForm($(this));
                 }
             });
             $("a[href^='#phase']").on("click", function(e) {

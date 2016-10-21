@@ -72,6 +72,40 @@ def test_checkout_with_login_and_register(browser, live_server, settings):
     login_and_finish_up_the_checkout(browser, live_server, test_username, test_email, test_password)
 
 
+@override_settings(SHUUP_REGISTRATION_REQUIRES_ACTIVATION=False)
+@pytest.mark.urls('shuup.testing.single_page_checkout_with_login_and_register_conf')
+@pytest.mark.browser
+@pytest.mark.djangodb
+def test_single_page_checkout_with_login_and_register(browser, live_server, settings):
+    # initialize
+    product_name = "Test Product"
+    get_default_shop()
+    pm = get_default_payment_method()
+    sm = get_default_shipping_method()
+    product = create_orderable_product(product_name, "test-123", price=100)
+    OrderStatus.objects.create(
+        identifier="initial",
+        role=OrderStatusRole.INITIAL,
+        name="initial",
+        default=True
+    )
+
+    # Initialize test and go to front page
+    browser = initialize_front_browser_test(browser, live_server)
+
+    assert browser.is_text_present("Welcome to Default!")
+    navigate_to_checkout(browser, product)
+
+    # Let's assume that after addresses the checkout is normal
+    assert browser.is_text_present("Choose Checkout Method")
+    test_username = "test_username"
+    test_email = "test@example.com"
+    test_password = "test_password"
+    register_test(browser, live_server, test_username, test_email, test_password)
+
+    login_and_finish_up_the_checkout(browser, live_server, test_username, test_email, test_password)
+
+
 def navigate_to_checkout(browser, product):
     assert browser.is_text_present("Newest Products")
     assert browser.is_text_present(product.name)
