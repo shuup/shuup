@@ -35,7 +35,7 @@ class EmailAuthenticationForm(AuthenticationForm):
         self.fields['username'].label = _("Username or email address")
 
     def clean_username(self):
-        username = self.data['username']
+        username = self.cleaned_data['username']
         user_model = get_user_model()
 
         # Note: Always search by username AND by email prevent timing attacks

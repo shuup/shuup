@@ -26,6 +26,7 @@ Addons
 Front
 ~~~~~
 
+- Add checkout view with option to login and register
 - Add is_visible_for_user method for checkout view phase
 - Add recently viewed products app
 - Fix/refactor single page checkout view
