@@ -5,10 +5,10 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from shuup.campaigns.consts import (
-    CATALOG_FILTER_CACHE_NAMESPACE, CONTEXT_CONDITION_CACHE_NAMESPACE
+from shuup.campaigns.consts import CONTEXT_CONDITION_CACHE_NAMESPACE
+from shuup.campaigns.models import (
+    CatalogFilterCachedShopProduct, ContextCondition
 )
-from shuup.campaigns.models import CatalogFilter, ContextCondition
 from shuup.core import cache
 
 
@@ -28,14 +28,14 @@ def get_matching_context_conditions(context):
     return matching_context_conditions
 
 
+def update_matching_catalog_filters(filter):
+    # first, invalidate existing cache
+    CatalogFilterCachedShopProduct.objects.filter(filter=filter).delete()
+
+    # then add new items in
+    for matching_product in filter.get_matching_shop_products():
+        CatalogFilterCachedShopProduct.objects.create(filter=filter, shop_product=matching_product)
+
+
 def get_matching_catalog_filters(shop_product):
-    namespace = CATALOG_FILTER_CACHE_NAMESPACE
-    catalog_filters_cache_key = "%s:%s" % (namespace, shop_product.pk)
-    matching_catalog_filters = cache.get(catalog_filters_cache_key, None)
-    if matching_catalog_filters is None:
-        matching_catalog_filters = set()
-        for filter in CatalogFilter.objects.filter(active=True):
-            if filter.matches(shop_product):
-                matching_catalog_filters.add(filter.pk)
-        cache.set(catalog_filters_cache_key, matching_catalog_filters, timeout=None)
-    return matching_catalog_filters
+    return shop_product.cached_catalog_campaign_filters.values_list('filter__id', flat=True)
