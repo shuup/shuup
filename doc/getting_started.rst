@@ -95,6 +95,8 @@ several sub-applications that may be used to toggle functionality on and off.
    email notifications to the customer upon order completion.
 * ``shuup.front.apps.simple_search`` provides basic product search
   functionality.
+* ``shuup.front.apps.recently_viewed_products`` can be used to display the last
+  five products viewed by the customer.
 
 ``shuup.admin`` provides a fully featured administration dashboard.
 
