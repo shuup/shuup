@@ -61,6 +61,19 @@ class SinglePageCheckoutView(DefaultCheckoutView):
     process_class = VerticalCheckoutProcess
 
 
+class CheckoutViewWithLoginAndRegister(BaseCheckoutView):
+    phase_specs = [
+        "shuup.front.checkout.checkout_method:CheckoutMethodPhase",
+        "shuup.front.checkout.checkout_method:RegisterPhase",
+        "shuup.front.checkout.addresses:AddressesPhase",
+        "shuup.front.checkout.methods:MethodsPhase",
+        "shuup.front.checkout.methods:ShippingMethodPhase",
+        "shuup.front.checkout.methods:PaymentMethodPhase",
+        "shuup.front.checkout.confirm:ConfirmPhase",
+    ]
+    empty_phase_spec = "shuup.front.checkout.empty:EmptyPhase"
+
+
 def get_checkout_view():
     view = cached_load("SHUUP_CHECKOUT_VIEW_SPEC")
     if hasattr(view, "as_view"):  # pragma: no branch
