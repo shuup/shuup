@@ -23,7 +23,14 @@
             {{ render_category_menu() }}
             <br>
             {{ render_product_filters_left_side() }}
-            {% placeholder "category_menu_extras" %}{% endplaceholder %}
+            {% placeholder "category_menu_extras" %}
+                {% row %}
+                    {% column {"md": 12} %}
+                        {% plugin "recently_viewed_products" %}
+                        {% endplugin %}
+                    {% endcolumn %}
+                {% endrow %}
+            {% endplaceholder %}
         </div>
         <div class="col-md-9 products-wrap">
             {% placeholder "category_top_extra" %}{% endplaceholder %}

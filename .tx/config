@@ -72,6 +72,11 @@ file_filter = shuup/front/apps/personal_order_history/locale/<lang>/LC_MESSAGES/
 source_lang = en
 type = PO
 
+[shuup.front-apps-recently-viewed-products]
+file_filter = shuup/front/apps/recently_viewed_products/locale/<lang>/LC_MESSAGES/django.po
+source_lang = en
+type = PO
+
 [shuup.front-apps-registration]
 file_filter = shuup/front/apps/registration/locale/<lang>/LC_MESSAGES/django.po
 source_lang = en

@@ -1,0 +1,17 @@
+<div class="recently-viewed">
+    {% if products %}
+        <a href="#collapse-recently-viewed" role="button" data-toggle="collapse" class="title collapsed">
+            {% trans %}Recently viewed products{% endtrans %}
+            <i class="collapse-icon fa fa-chevron-up"></i>
+        </a>
+        <div class="collapse-wrap collapse" id="collapse-recently-viewed">
+            <ul class="list-unstyled">
+                {% for product in products %}
+                <li>
+                    <a href="{{ url("shuup:product", pk=product.pk, slug=product.slug) }}">{{ product.name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</div>
