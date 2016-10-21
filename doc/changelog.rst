@@ -26,6 +26,7 @@ Addons
 Front
 ~~~~~
 
+- Add is_visible_for_user method for checkout view phase
 - Add recently viewed products app
 - Fix/refactor single page checkout view
 
