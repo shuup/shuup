@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-11 17:42+0000\n"
+"POT-Creation-Date: 2016-10-21 01:41+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -161,6 +161,18 @@ msgstr ""
 msgid "Addresses"
 msgstr ""
 
+msgid "Checkout as Guest"
+msgstr ""
+
+msgid "Register"
+msgstr ""
+
+msgid "Register with us for future convenience"
+msgstr ""
+
+msgid "Checkout Method Choice"
+msgstr ""
+
 msgid "I accept the terms and conditions"
 msgstr ""
 
@@ -188,21 +200,6 @@ msgid "payment method"
 msgstr ""
 
 msgid "Shipping & Payment"
-msgstr ""
-
-msgid "Company name"
-msgstr ""
-
-msgid "Tax number"
-msgstr ""
-
-msgid "Shipping method"
-msgstr ""
-
-msgid "Payment method"
-msgstr ""
-
-msgid "Please send me marketing correspondence"
 msgstr ""
 
 msgid "Sort products by name"
@@ -257,6 +254,21 @@ msgid "Ordering for filter by category"
 msgstr ""
 
 msgid "Categories"
+msgstr ""
+
+msgid "Limit page size"
+msgstr ""
+
+msgid "Ordering for limit page size"
+msgstr ""
+
+msgid "Products per page"
+msgstr ""
+
+msgid "Filter products by variation"
+msgstr ""
+
+msgid "Ordering for filter by variation"
 msgstr ""
 
 msgid "Filter products by price"
@@ -413,16 +425,19 @@ msgstr ""
 msgid "Checkout"
 msgstr ""
 
+msgid "Checkout: Choose Checkout Method"
+msgstr ""
+
+msgid "Log in"
+msgstr ""
+
+msgid "Forgot your password?"
+msgstr ""
+
 msgid "There are errors"
 msgstr ""
 
-msgid "Errors"
-msgstr ""
-
-msgid "Ordering for a company?"
-msgstr ""
-
-msgid "Please fill out these fields if you are ordering for a company."
+msgid "Checkout: Register"
 msgstr ""
 
 msgid "My Dashboard"
@@ -551,6 +566,12 @@ msgstr ""
 msgid "Billing address"
 msgstr ""
 
+msgid "Ordering for a company?"
+msgstr ""
+
+msgid "Please fill out these fields if you are ordering for a company."
+msgstr ""
+
 msgid "Shipping address"
 msgstr ""
 
@@ -570,6 +591,9 @@ msgid "Delivery method"
 msgstr ""
 
 msgid "Billing"
+msgstr ""
+
+msgid "Payment method"
 msgstr ""
 
 msgid "Add comment"
@@ -621,12 +645,6 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-msgid "Log in"
-msgstr ""
-
-msgid "Forgot your password?"
-msgstr ""
-
 msgid "New user? Register here!"
 msgstr ""
 
@@ -673,6 +691,9 @@ msgid "Total including tax"
 msgstr ""
 
 msgid "Company"
+msgstr ""
+
+msgid "Tax number"
 msgstr ""
 
 msgid "Preview"

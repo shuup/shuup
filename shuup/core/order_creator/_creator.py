@@ -211,10 +211,7 @@ class OrderProcessor(object):
         order.cache_prices()
         order.save()
 
-        if order.customer and order.customer.marketing_permission != order.marketing_permission:
-            order.customer.marketing_permission = order.marketing_permission
-            order.customer.save(update_fields=["marketing_permission"])
-
+        self._update_customer_info_if_needed(order)
         self._assign_code_usages(order_source, order)
 
         order.save()
@@ -224,6 +221,33 @@ class OrderProcessor(object):
         order.cache_prices()
         order.save()
         return order
+
+    def _update_customer_info_if_needed(self, order):
+        if not order.customer:
+            return
+
+        changed_fields = []
+        if not order.customer.name and order.billing_address:
+            order.customer.name = order.billing_address.name
+            changed_fields.append("name")
+
+        for address_kind in ["billing_address", "shipping_address"]:
+            order_addr = getattr(order, address_kind, None)
+            if not order_addr:
+                continue
+            customer_address_field = "default_%s" % address_kind
+            if not getattr(order.customer, customer_address_field, None):
+                new_customer_address = order_addr.to_mutable()
+                new_customer_address.save()
+                setattr(order.customer, customer_address_field, new_customer_address)
+                changed_fields.append(customer_address_field)
+
+        if order.customer.marketing_permission != order.marketing_permission:
+            order.customer.marketing_permission = order.marketing_permission
+            changed_fields.append("marketing_permission")
+
+        if changed_fields:
+            order.customer.save()
 
     def _assign_code_usages(self, order_source, order):
         order.codes = order_source.codes

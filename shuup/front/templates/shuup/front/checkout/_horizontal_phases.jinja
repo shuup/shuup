@@ -7,7 +7,7 @@
     {% block checkout_phase_bar %}
         {% if view and view.phases %}
         <ul class="nav nav-pills nav-justified">
-            {% for phase in view.phases if phase.title %}
+            {% for phase in view.phases if phase.is_visible_for_user() %}
             <li {% if phase.is_current %}class="active"{% endif %}>
                 <a href="{{ url("shuup:checkout", phase=phase.identifier) }}">{{ loop.index }}. {{ phase.title }}</a>
             </li>
