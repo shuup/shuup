@@ -12,6 +12,8 @@ Unrealeased
 Core
 ~~~~
 
+- Populate some unfilled customer fields from order
+
 Localization
 ~~~~~~~~~~~~
 
