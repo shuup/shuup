@@ -23,7 +23,7 @@
 {% macro address_phase_billing_well(billing_form, company_form=None) %}
     <div class="well">
         <fieldset>
-            {{ render_address_form(_("Billing address"), billing_form) }}
+            {{ render_address_form(_("Billing address"), billing_form, "billing") }}
             {% if company_form %}
                 {{ render_company_form(
                     _("Ordering for a company?"),
@@ -37,12 +37,12 @@
 {% macro address_phase_shipping_well(shipping_form, ship_to_billing_checkbox=True) %}
     <div class="well">
         <fieldset>
-            {{ render_address_form(_("Shipping address"), shipping_form, ship_to_billing_checkbox) }}
+            {{ render_address_form(_("Shipping address"), shipping_form, "shpping", ship_to_billing_checkbox) }}
         </fieldset>
     </div>
 {% endmacro %}
 
-{% macro render_address_form(title, form, ship_to_billing_checkbox=False) %}
+{% macro render_address_form(title, form, div_id, ship_to_billing_checkbox=False) %}
     <div class="row">
         <div class="order-for-company col-md-9 col-md-offset-3">
             <legend>{{ title }}</legend>
@@ -51,7 +51,7 @@
             {% endif %}
         </div>
     </div>
-    <div id="billing" class="form-horizontal">
+    <div id="{{ div_id }}" class="form-horizontal">
         {% for field in form %}
             {{ bs3.field(field, layout="horizontal") }}
         {% endfor %}
