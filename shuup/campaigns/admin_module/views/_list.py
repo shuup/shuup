@@ -95,5 +95,4 @@ class CouponListView(PicotableListView):
             NewActionButton("shuup_admin:coupon.new", text=_("Create new Coupon")),
             SettingsActionButton.for_model(self.model, return_url="coupon")
         ])
-        print(context["toolbar"])
         return context

@@ -122,6 +122,29 @@
             display: flex;
             margin-bottom: 25px;
         }
+
+        .picotable-mass-actions {
+            @media (max-width: @screen-xs-max) {
+                text-align: center;
+            }
+            @media (max-width: @screen-sm-max) {
+                .make-sm-column(6);
+            }
+            @media (min-width: @screen-md-min) {
+                display: block;
+                flex: 1;
+                width: 240px !important;
+            }
+            .picotable-items-per-page-select, .select2.select2-container {
+                @media (min-width: @screen-md-min) {
+                    width: 240px !important;
+                }
+                margin-left: 0px;
+                max-width: 240px;
+                display: inline-block;
+            }
+        }
+
         .picotable-items-per-page-ctr {
             @media (max-width: @screen-xs-max) {
                 text-align: center;

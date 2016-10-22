@@ -58,6 +58,16 @@ class ContactModule(AdminModule):
                 "shuup.admin.modules.settings.views.ListSettingsView",
                 name="contact.list_settings",
                 permissions=get_default_model_permissions(Contact),
+            ),
+            admin_url(
+                "^contacts/mass-edit/$", "shuup.admin.modules.contacts.views.ContactMassEditView",
+                name="contact.mass_edit",
+                permissions=get_default_model_permissions(Contact)
+            ),
+            admin_url(
+                "^contacts/mass-edit-group/$", "shuup.admin.modules.contacts.views.ContactGroupMassEditView",
+                name="contact.mass_edit_group",
+                permissions=get_default_model_permissions(Contact)
             )
         ]
 

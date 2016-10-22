@@ -29,6 +29,13 @@ class ProductListView(PicotableListView):
         Column("category", _(u"Primary Category"), filter_config=ChoicesFilter(Category.objects.all(), "category")),
     ]
 
+    mass_actions = [
+        "shuup.admin.modules.products.mass_actions:VisibleMassAction",
+        "shuup.admin.modules.products.mass_actions:InvisibleMassAction",
+        "shuup.admin.modules.products.mass_actions:FileResponseAction",
+        "shuup.admin.modules.products.mass_actions:EditProductAttributesAction",
+    ]
+
     def get_queryset(self):
         filter = self.get_filter()
         shop_id = filter.get("shop")

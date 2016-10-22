@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-07 20:57+0000\n"
+"POT-Creation-Date: 2016-10-21 18:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -188,6 +188,39 @@ msgstr ""
 msgid "User %(bind_user)s already has a contact"
 msgstr ""
 
+msgid "Gender"
+msgstr ""
+
+msgid "Merchant Notes"
+msgstr ""
+
+msgid "Website URL"
+msgstr ""
+
+msgid "Account Manager"
+msgstr ""
+
+msgid "Company: Tax Number"
+msgstr ""
+
+msgid "Company: Members"
+msgstr ""
+
+msgid "Select Language"
+msgstr ""
+
+msgid "Language"
+msgstr ""
+
+msgid "Contact Group"
+msgstr ""
+
+msgid "Edit Contacts"
+msgstr ""
+
+msgid "Set Contact Groups"
+msgstr ""
+
 msgid "Basic Information"
 msgstr ""
 
@@ -307,6 +340,18 @@ msgstr ""
 msgid "%d orders"
 msgstr ""
 
+msgid "Mass Edit: Contacts"
+msgstr ""
+
+msgid "Contacts changed successfully"
+msgstr ""
+
+msgid "Mass Edit: Contact Groups"
+msgstr ""
+
+msgid "Contacts Groups changed successfully"
+msgstr ""
+
 msgid "The contact does not have an associated user."
 msgstr ""
 
@@ -409,6 +454,15 @@ msgid "Please select shipping method."
 msgstr ""
 
 msgid "Please select payment method."
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Print Confirmation PDF(s)"
+msgstr ""
+
+msgid "Print Delivery PDF(s)"
 msgstr ""
 
 msgid "Payments"
@@ -557,9 +611,6 @@ msgstr ""
 msgid "Create Full Refund -- %s"
 msgstr ""
 
-msgid "Cancel"
-msgstr ""
-
 msgid "Could not create full refund."
 msgstr ""
 
@@ -680,6 +731,18 @@ msgstr ""
 msgid "variable combination"
 msgstr ""
 
+msgid "Set visible"
+msgstr ""
+
+msgid "Set invisible"
+msgstr ""
+
+msgid "Export CSV"
+msgstr ""
+
+msgid "Edit products"
+msgstr ""
+
 #, python-format
 msgid "%s has been marked deleted."
 msgstr ""
@@ -763,6 +826,15 @@ msgid "Filter by barcode..."
 msgstr ""
 
 msgid "Mode"
+msgstr ""
+
+msgid "Purchasable"
+msgstr ""
+
+msgid "Mass Edit: Products"
+msgstr ""
+
+msgid "Products changed successfully"
 msgstr ""
 
 msgid "Save as a copy"
@@ -1192,6 +1264,9 @@ msgstr ""
 msgid "Search for"
 msgstr ""
 
+msgid "Support ID: "
+msgstr ""
+
 msgid "Hello"
 msgstr ""
 
@@ -1241,12 +1316,6 @@ msgid "Bound User"
 msgstr ""
 
 msgid "Companies"
-msgstr ""
-
-msgid "Account Manager"
-msgstr ""
-
-msgid "Merchant Notes"
 msgstr ""
 
 msgid "No members."
@@ -1300,6 +1369,9 @@ msgid "Date"
 msgstr ""
 
 msgid "Order Status"
+msgstr ""
+
+msgid "Save and Exit"
 msgstr ""
 
 msgid "Edit"
@@ -1691,9 +1763,6 @@ msgstr ""
 msgid "Discard Changes"
 msgstr ""
 
-msgid "Save and Exit"
-msgstr ""
-
 msgid "Save and Create New"
 msgstr ""
 
@@ -1706,6 +1775,12 @@ msgid "Showing %(per_page)s of %(n_items)s %(verbose_name_plural)s"
 msgstr ""
 
 msgid "objects"
+msgstr ""
+
+msgid "Unknown error"
+msgstr ""
+
+msgid "Mass Action"
 msgstr ""
 
 #, python-format
@@ -1743,6 +1818,9 @@ msgstr ""
 
 #, python-format
 msgid "Only one %(model)s permitted."
+msgstr ""
+
+msgid "Mass Edit"
 msgstr ""
 
 msgid "Complete the setup wizard"

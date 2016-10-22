@@ -46,7 +46,6 @@ def _custom_url_fetcher(url):
 
 
 def render_html_to_pdf(html, stylesheet_paths=[]):
-
     return wrap_pdf_in_response(html_to_pdf(html, stylesheet_paths))
 
 

@@ -44,6 +44,7 @@ def get_pico(rf, model=None, columns=None):
     return Picotable(
         request=rf.get("/"),
         columns=columns,
+        mass_actions=[],
         queryset=model.objects.all(),
         context=PicoContext()
     )

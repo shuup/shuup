@@ -52,7 +52,7 @@ def test_view_default_columns(rf):
 
 @pytest.mark.django_db
 def test_view_saved_columns(rf):
-    visible_fields = sorted(["id", "name"])
+    visible_fields = sorted(["id", "name", "select"])
     configuration.set(None, "view_configuration_product_saved", True)
     for field in visible_fields:
         configuration.set(None, "view_configuration_product_%s" % field, True)
