@@ -94,6 +94,12 @@
                 e.preventDefault();
                 window.moveToPhase($(this).data("phase"));
             });
+            if (typeof window.initializeBillingRegion === "function") {
+                window.initializeBillingRegion();
+            }
+            if (typeof window.initializeShippingRegion === "function") {
+                window.initializeShippingRegion();
+            }
         });
     </script>
 {% endblock %}
