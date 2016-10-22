@@ -7,8 +7,6 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import abc
-
 import six
 from django import forms
 from django.contrib import messages
@@ -16,75 +14,25 @@ from django.http.response import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 from django.views.generic import DetailView, UpdateView
 
+from shuup.admin.form_modifier import ModifiableFormMixin, ModifiableViewMixin
 from shuup.admin.toolbar import PostActionButton, Toolbar
 from shuup.admin.utils.forms import add_form_errors_as_messages
 from shuup.admin.utils.urls import get_model_url
-from shuup.apps.provides import get_provide_objects
 from shuup.core.excs import (
     NoProductsToShipException, NoShippingAddressException
 )
 from shuup.core.models import Order, Product, Shipment, Supplier
 from shuup.utils.excs import Problem
 
-FORM_MODIFIER_PROVIDER_KEY = "admin_extend_create_shipment_form"
 
+class ShipmentForm(ModifiableFormMixin, forms.Form):
+    form_modifier_provide_key = "admin_extend_create_shipment_form"
 
-class ShipmentFormModifier(six.with_metaclass(abc.ABCMeta)):
-    def get_extra_fields(self, order):
-        """
-        Extra fields for shipment creation view.
-
-        :param order: Order linked to form
-        :type order: shuup.core.models.Order
-        :return: List of extra fields that should be added to form.
-        Tuple should contain field name and Django form field.
-        :rtype: list[(str,django.forms.Field)]
-        """
-        pass
-
-    def clean_hook(self, form):
-        """
-        Extra clean for shipment creation form.
-
-        This hook will be called in `~Django.forms.Form.clean` method of
-        the form, after calling parent clean.  Implementor of this hook
-        may call `~Django.forms.Form.add_error` to add errors to form or
-        modify the ``form.cleaned_data`` dictionary.
-
-        :param form: Form that is currently cleaned
-        :type form: ShipmentForm
-        :rtype: None
-        """
-        pass
-
-    def form_valid_hook(self, form, shipment):
-        """
-        Extra form valid handler for shipment creation view.
-
-        This is called from ``OrderCreateShipmentView`` just
-        before the ``Order.create_shipment``
-
-        :param form: Form that is currently handled
-        :type form: ShipmentForm
-        :param shipment: Unsaved shipment
-        :type shipment: shuup.core.models.Shipment
-        :rtype: None
-        """
-        pass
-
-
-class ShipmentForm(forms.Form):
     description = forms.CharField(required=False)
     tracking_code = forms.CharField(required=False)
 
-    def clean(self):
-        cleaned_data = super(ShipmentForm, self).clean()
-        for extend_class in get_provide_objects(FORM_MODIFIER_PROVIDER_KEY):
-            extend_class().clean_hook(self)
-        return cleaned_data
 
-
-class OrderCreateShipmentView(UpdateView):
+class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
     model = Order
     template_name = "shuup/admin/orders/create_shipment.jinja"
     context_object_name = "order"
@@ -108,9 +56,9 @@ class OrderCreateShipmentView(UpdateView):
         kwargs.pop("instance")
         return kwargs
 
-    def get_form(self, form_class):
+    def get_form(self):
         default_field_keys = set()
-        form = super(OrderCreateShipmentView, self).get_form(form_class)
+        form = super(OrderCreateShipmentView, self).get_form()
         order = self.object
         form.fields["supplier"] = forms.ModelChoiceField(
             queryset=Supplier.objects.all(),
@@ -142,10 +90,6 @@ class OrderCreateShipmentView(UpdateView):
             form.fields[field_key] = field
             default_field_keys.add(field_key)
 
-        for extend_class in get_provide_objects(FORM_MODIFIER_PROVIDER_KEY):
-            for field_key, field in extend_class().get_extra_fields(order) or []:
-                form.fields[field_key] = field
-
         form.default_field_keys = default_field_keys
         return form
 
@@ -172,13 +116,7 @@ class OrderCreateShipmentView(UpdateView):
                                     supplier=form.cleaned_data["supplier"],
                                     tracking_code=form.cleaned_data.get("tracking_code"),
                                     description=form.cleaned_data.get("description"),)
-        has_extension_errors = False
-        for extend_class in get_provide_objects(FORM_MODIFIER_PROVIDER_KEY):
-            try:
-                extend_class().form_valid_hook(form, unsaved_shipment)
-            except Problem as problem:
-                has_extension_errors = True
-                messages.error(self.request, problem)
+        has_extension_errors = self.form_valid_hook(form, unsaved_shipment)
 
         if has_extension_errors:
             return self.form_invalid(form)
