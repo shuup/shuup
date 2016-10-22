@@ -20,6 +20,7 @@ Localization
 Admin
 ~~~~~
 
+- Allow product attribute form extension through provides
 - Make form modifiers reusable. Users of `ShipmentFormModifier`
   should update any references to implement the
   `shuup.admin.form_modifier.FormModifier` interface instead
