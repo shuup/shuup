@@ -13,6 +13,7 @@ from shuup.front.views.checkout import SinglePageCheckoutView
 
 
 class SinglePageCheckoutViewWithLoginAndRegister(SinglePageCheckoutView):
+    initial_phase = "checkout_method"
     phase_specs = [
         "shuup.front.checkout.checkout_method:CheckoutMethodPhase",
         "shuup.front.checkout.checkout_method:RegisterPhase",
