@@ -59,16 +59,16 @@ def test_checkout_with_login_and_register(browser, live_server, settings):
     navigate_to_checkout(browser, product)
 
     # Let's assume that after addresses the checkout is normal
-    assert browser.is_text_present("Checkout: Choose Checkout Method")
+    assert browser.is_text_present("Checkout Method")
     guest_ordering_test(browser, live_server)
 
     test_username = "test_username"
     test_email = "test@example.com"
     test_password = "test_password"
-    assert browser.is_text_present("Checkout: Choose Checkout Method")
+    assert browser.is_text_present("Checkout Method")
     register_test(browser, live_server, test_username, test_email, test_password)
 
-    assert browser.is_text_present("Checkout: Choose Checkout Method")
+    assert browser.is_text_present("Checkout Method")
     login_and_finish_up_the_checkout(browser, live_server, test_username, test_email, test_password)
 
 
@@ -97,7 +97,7 @@ def test_single_page_checkout_with_login_and_register(browser, live_server, sett
     navigate_to_checkout(browser, product)
 
     # Let's assume that after addresses the checkout is normal
-    assert browser.is_text_present("Choose Checkout Method")
+    assert browser.is_text_present("Checkout Method")
     test_username = "test_username"
     test_email = "test@example.com"
     test_password = "test_password"
@@ -208,7 +208,9 @@ def login_and_finish_up_the_checkout(browser, live_server, test_username, test_e
     browser.fill("billing-name", customer_name)
     browser.fill("billing-street", customer_street)
     browser.fill("billing-city", customer_city)
+    wait_until_appeared(browser, "#id_billing-region")
     browser.select("billing-country", customer_country)
+    wait_until_disappeared(browser, "#id_billing-region")
     wait_until_appeared(browser, "select[name='billing-region_code']")
     browser.select("billing-region_code", customer_region)
 
@@ -219,7 +221,10 @@ def login_and_finish_up_the_checkout(browser, live_server, test_username, test_e
     browser.fill("shipping-name", customer_name)
     browser.fill("shipping-street", customer_street)
     browser.fill("shipping-city", customer_city)
+    wait_until_appeared(browser, "#id_shipping-region")
     browser.select("shipping-country", customer_country)
+    wait_until_disappeared(browser, "#id_shipping-region")
+    wait_until_appeared(browser, "select[name='shipping-region_code']")
 
     click_element(browser, "#addresses button[type='submit']")
     assert browser.is_text_present("Shipping & Payment")

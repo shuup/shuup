@@ -18,7 +18,7 @@ window.REGIONS = %(regions)s;
 
 
 REGION_CHANGER_JS = """
-function handleRegionFields(regionSelector, regionCodeSelector, regionsData) {
+window.handleRegionFields = function handleRegionFields(regionSelector, regionCodeSelector, regionsData) {
     var $regionField = $(regionSelector);
     var $regionCodeField = $(regionCodeSelector);
     if (regionsData) {
@@ -53,9 +53,9 @@ function handleRegionFields(regionSelector, regionCodeSelector, regionsData) {
         $regionField.val("");
         $regionCodeField.closest("div.form-group").hide();
     }
-}
+};
 
-function updateRegion(field) {
+window.updateRegion = function updateRegion(field) {
     var countryField = field + "-country";
     var regionField = field + "-region";
     var regionCode = field + "-region_code";
@@ -66,33 +66,42 @@ function updateRegion(field) {
     }
     var country = $(countryField).val();
     var regionsData = window.REGIONS[country];
-    handleRegionFields(regionField, regionCode, regionsData);
-}
+    window.handleRegionFields(regionField, regionCode, regionsData);
+};
 """
 
 
 CHANGER_FUNCTIONS = """
-$(function(){
-    updateRegion("%(region_field_prefix)s");
+window.%(initialize_function)s = function %(initialize_function)s() {
+    window.updateRegion("%(region_field_prefix)s");
     if("%(region_field_prefix)s" != "") {
         $("%(region_field_prefix)s-country").on("change", function() {
-            updateRegion("%(region_field_prefix)s");
+            window.updateRegion("%(region_field_prefix)s");
         });
     }
     else {
         $("#id_country").on("change", function() {
-            updateRegion("");
+            window.updateRegion("");
         });
     }
+};
+
+$(function(){
+    window.%(initialize_function)s();
 });
 """
 
 
-def add_resources(context, placement="body_end", fields=[""]):
+def add_resources(context, placement="body_end", fields=None):
     add_resource(context, placement, InlineScriptResource(REGIONS % {"regions": json.dumps(regions_data)}))
     add_resource(context, placement, InlineScriptResource(REGION_CHANGER_JS))
-    for field in fields:
-        add_resource(context, placement, InlineScriptResource(CHANGER_FUNCTIONS % {"region_field_prefix": field}))
+    for function_name, field in fields or []:
+        add_resource(
+            context,
+            placement,
+            InlineScriptResource(
+                CHANGER_FUNCTIONS % {"initialize_function": function_name, "region_field_prefix": field})
+        )
 
 
 def add_front_resources(context, content):
@@ -100,13 +109,25 @@ def add_front_resources(context, content):
     if not view_class:
         return
     view_name = getattr(view_class, "__name__", "")
-    if view_name in ["AddressesPhase", "SingleCheckoutPhase"]:  # For front
-        add_resources(context, fields=["#id_billing", "#id_shipping"])
+    if view_name in ["AddressesPhase", "CheckoutMethodPhase"]:  # For front
+        add_resources(
+            context,
+            fields=[
+                ("initializeBillingRegion", "#id_billing"),
+                ("initializeShippingRegion", "#id_shipping")
+            ]
+        )
     elif view_name == "ContactEditView":  # For admin contact edit
-        add_resources(context, fields=["#id_billing_address", "#id_shipping_address"])
+        add_resources(
+            context,
+            fields=[
+                ("initializeBillingRegion", "#id_billing_address"),
+                ("initializeShippingRegion", "#id_shipping_address")
+            ]
+        )
     elif view_name == "OrderEditView":  # For admin order editor only regions is enough
         add_resource(context, "body_end", InlineScriptResource(REGIONS % {"regions": json.dumps(regions_data)}))
     elif view_name in ["AddressBookEditView"]:
-        add_resources(context, fields=["#id_address"])
+        add_resources(context, fields=[("initializeRegion", "#id_address")])
     elif view_name in ["WizardView"]:
         add_resource(context, "body_end", InlineScriptResource(REGIONS % {"regions": json.dumps(regions_data)}))
