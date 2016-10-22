@@ -142,7 +142,7 @@ SHUUP_ORDER_KNOWN_EXTRA_DATA_KEYS = []
 SHUUP_TELEMETRY_ENABLED = True
 
 #: The host URL for Shuup's telemetry (statistics) system
-SHUUP_TELEMETRY_HOST_URL = "http://telemetry.shuup.com"
+SHUUP_TELEMETRY_HOST_URL = "https://telemetry.shuup.com"
 
 #: The submission URL for Shuup's telemetry (statistics) system
 SHUUP_TELEMETRY_URL = "%s/collect/" % SHUUP_TELEMETRY_HOST_URL
