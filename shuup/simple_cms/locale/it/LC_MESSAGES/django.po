@@ -1,0 +1,142 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
+# Marco Badan <marco.badan@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-07 03:24+0000\n"
+"PO-Revision-Date: 2016-10-09 13:04+0000\n"
+"Last-Translator: Marco Badan <marco.badan@gmail.com>\n"
+"Language-Team: Italian (http://www.transifex.com/shuup/shuup/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Simple CMS"
+msgstr "Shoop CMS"
+
+msgid "Pages"
+msgstr "Pagine"
+
+msgid "Show pages"
+msgstr "Mostra Pagine"
+
+msgid "Add a web page"
+msgstr "Aggiungi una pagina web"
+
+msgid "Add a page"
+msgstr "Aggiungi una pagina"
+
+msgid "Available from"
+msgstr "Disponibile da"
+
+msgid "Available to"
+msgstr "Disponibile fino a"
+
+msgid "URL already exists."
+msgstr "L'URL è già esistente."
+
+#, python-format
+msgid "%(label)s is required when any %(language)s field is filled."
+msgstr "%(label)s è richiesta quando un campo %(language)s è compilato."
+
+msgid "Please fill at least one language fully."
+msgstr "Inserire almeno una lingua."
+
+msgid "A page may not be made a child of itself."
+msgstr "Una pagina non può essere figlia di sè stessa"
+
+msgid "Title"
+msgstr "Titol"
+
+msgid "Created by"
+msgstr "Creato da"
+
+msgid "Date created"
+msgstr "Data creazione"
+
+msgid "Page"
+msgstr "Pagina"
+
+msgid "available from"
+msgstr "disponibile da"
+
+msgid "available to"
+msgstr "disponibile fino "
+
+msgid "created by"
+msgstr "creato da"
+
+msgid "modified by"
+msgstr "modificato da"
+
+msgid "created on"
+msgstr "creato i"
+
+msgid "modified on"
+msgstr "modificato il"
+
+msgid "This identifier can be used in templates to create URLs"
+msgstr "Questo identificativo può essere usato nei template per generare gli URL"
+
+msgid "visible in menu"
+msgstr "visibile nel menu"
+
+msgid "parent"
+msgstr "genitore"
+
+msgid "list children on page"
+msgstr "mostra i figli nella pagina"
+
+msgid "title"
+msgstr "titolo"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "content"
+msgstr "contenuto"
+
+msgid "page"
+msgstr "pagina"
+
+msgid "pages"
+msgstr "pagine"
+
+msgid "Untitled"
+msgstr "Senza titolo"
+
+msgid "CMS Page Links"
+msgstr "Link di Pagina CMS"
+
+msgid "Show all pages"
+msgstr "Mostra tutte le pagine"
+
+msgid "All pages are shown, even if not selected"
+msgstr "Tutte le pagine sono mostrate, anche quelle non selezionate"
+
+msgid "Hide expired pages"
+msgstr "Nascondi le pagine scadute"
+
+msgid "New Page"
+msgstr "Nuova pagina"
+
+msgid "General Information"
+msgstr "Informazioni Generali"
+
+msgid "Availability"
+msgstr "Disponibilità"
+
+msgid "Extras"
+msgstr "Extra"
+
+msgid "Home"
+msgstr "Pagina Iniziale"

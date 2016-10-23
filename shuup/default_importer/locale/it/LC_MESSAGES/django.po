@@ -1,0 +1,37 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Marco Badan <marco.badan@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-12 00:45+0000\n"
+"PO-Revision-Date: 2016-10-23 10:14+0000\n"
+"Last-Translator: Marco Badan <marco.badan@gmail.com>\n"
+"Language-Team: Italian (http://www.transifex.com/shuup/shuup/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Contact Importer"
+msgstr "Importazione Contatti"
+
+msgid "Company Contact Importer"
+msgstr "Importazione Contatti Aziendali"
+
+msgid "Please add supplier to row before importing stock quantities."
+msgstr "Aggiungi la colonna fornitore (supplier) prima di importare le quantità a magazzino."
+
+msgid "No supplier found, please check the supplier exists."
+msgstr "Nessun fornitore trovato, controlla che il fornitore esista."
+
+msgid "This supplier doesn't handle stocks, please set Stock Managed on."
+msgstr "Questo fornitore non gestisce le scorte, attiva la gestione magazzino."
+
+msgid "Product Importer"
+msgstr "Importazione Prodotti"

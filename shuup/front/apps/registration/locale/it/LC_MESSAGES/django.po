@@ -1,0 +1,47 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
+# Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-05 11:58+0000\n"
+"PO-Revision-Date: 2016-09-07 07:46+0000\n"
+"Last-Translator: Fabrizio Arzeni <fabrizio.arz@gmail.com>\n"
+"Language-Team: Italian (http://www.transifex.com/shuup/shuup/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Registration Received"
+msgstr "Registrazione Ricevuta"
+
+msgid "Customer Email"
+msgstr "Email Cliente"
+
+msgid "Account activation"
+msgstr "Attivazione Account"
+
+msgid "Account activation failed."
+msgstr "Attivazione account fallita."
+
+msgid "Register"
+msgstr "Registra"
+
+msgid "Registration"
+msgstr "Registrazione"
+
+msgid "Activation successful!"
+msgstr "Attivazione avvenuta!"
+
+msgid ""
+"Registration complete. Please follow the instructions sent to your email "
+"address."
+msgstr "Registrazione completata. Segui le istruzioni che ti sono state inviate al tuo indirizzo email."

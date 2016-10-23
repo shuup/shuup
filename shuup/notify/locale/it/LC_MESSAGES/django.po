@@ -1,0 +1,243 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
+# Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
+# Marco Badan <marco.badan@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-13 19:41+0000\n"
+"PO-Revision-Date: 2016-10-09 12:55+0000\n"
+"Last-Translator: Marco Badan <marco.badan@gmail.com>\n"
+"Language-Team: Italian (http://www.transifex.com/shuup/shuup/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Plain text"
+msgstr "Testo semplice"
+
+msgid "HTML"
+msgstr "HTML"
+
+msgid "Subject"
+msgstr "Titolo"
+
+msgid "Email Body"
+msgstr "Testo Email"
+
+msgid "Content type"
+msgstr "Tipo di contenuto"
+
+msgid "Recipient"
+msgstr "Destinatario"
+
+msgid "Language"
+msgstr "Lingua"
+
+msgid "Fallback language"
+msgstr "Lingua predefinita"
+
+msgid "Send Identifier"
+msgstr "Invia identificativo"
+
+msgid ""
+"If set, this identifier will be logged into the event's log target. If the "
+"identifier has already been logged, the e-mail won't be sent again."
+msgstr "Se configurato, l'identificativo sarà segnato nel log degli eventi. Se l'identificativo è già presente nei log, l'email non sarà spedita due volte."
+
+msgid "Notifications"
+msgstr "Notifiche"
+
+msgid "Show notification scripts"
+msgstr "Mostra script di notifica"
+
+msgid "Event"
+msgstr "Evento"
+
+msgid "Choose which event to bind this script to."
+msgstr "Scegli quale evento collegare a questo script."
+
+msgid "Script Name"
+msgstr "Nome dello Script"
+
+msgid "Type in a descriptive name for your new script."
+msgstr "Inserisci un nome descrittivo per il tuo nuovo script"
+
+msgid "Enable Script"
+msgstr "Attiva Script"
+
+msgid "Choose whether this script should be activated when its event fires."
+msgstr "Scegli se lo script deve essere lanciato quando si scatena l'evento."
+
+msgid ""
+"Warning: Changing the event for an existing script may have unexpected "
+"effects."
+msgstr "Attenzione: Modificare l'evento a cui è collegato uno script potrebbe scatenare conseguenze inattese."
+
+msgid "Template"
+msgstr "Modello"
+
+msgid "Bind to Variable"
+msgstr "Collega all Variabile"
+
+msgid "Edit Script Contents..."
+msgstr "Modifica Contenuro dell Script..."
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "Enabled"
+msgstr "Attivo"
+
+msgid ""
+"Check whether the bound value `value` exists and is non-empty and non-zero."
+msgstr "Controlla se il valore collegato esiste e se non è vuoto o non è zero."
+
+msgid "Non-Empty"
+msgstr "Non-Vuoto"
+
+msgid "Check whether the bound value `value` is empty or zero."
+msgstr "Controlla se il valore collegato è vuoto o zero."
+
+msgid "Empty"
+msgstr "Vuoto"
+
+msgid "none"
+msgstr "Nessuno"
+
+msgid "unilingual"
+msgstr "monolingua"
+
+msgid "multilingual"
+msgstr "multilingua"
+
+msgid "variable only"
+msgstr "solo variabile"
+
+msgid "constant only"
+msgstr "solo costante"
+
+msgid "variable or constant"
+msgstr "variabile o costante"
+
+msgid "continue to the next step"
+msgstr "vai al prossimo passo"
+
+msgid "stop processing"
+msgstr "interrompi l'elaborazione"
+
+msgid "all"
+msgstr "tutto"
+
+msgid "any"
+msgstr "ogni"
+
+msgid "any shop administrator"
+msgstr "ogni amministratore di negozio"
+
+msgid "a specific user"
+msgstr "un utente specifico"
+
+msgid "low"
+msgstr "basso"
+
+msgid "normal"
+msgstr "normale"
+
+msgid "high"
+msgstr "alto"
+
+msgid "critical"
+msgstr "critico"
+
+msgid "recipient type"
+msgstr "tipo di destinatario"
+
+msgid "recipient"
+msgstr "destinatario"
+
+msgid "created on"
+msgstr "creato il"
+
+msgid "message"
+msgstr "messaggio"
+
+msgid "priority"
+msgstr "priorità"
+
+msgid "marked read"
+msgstr "segna come letto"
+
+msgid "marked read by"
+msgstr "segna come letto da"
+
+msgid "marked read on"
+msgstr "segna come letto il"
+
+msgid "event identifier"
+msgstr "identificativo evento"
+
+msgid "name"
+msgstr "nome"
+
+msgid "enabled"
+msgstr "attivo"
+
+msgid "Edit Script Information"
+msgstr "Modifica Informazioni Script"
+
+msgid "Create a new script"
+msgstr "Crea nuovo script"
+
+msgid "Script Details"
+msgstr "Dettagli Scripot"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Edit Script"
+msgstr "Modifica Script"
+
+msgid "Edit Step"
+msgstr "Modifica Passo"
+
+msgid "Done"
+msgstr "Fatto"
+
+msgid "Please correct the errors below."
+msgstr "Correggi i seguenti errori."
+
+msgid "Variables"
+msgstr "Variabil"
+
+msgid "Save changes"
+msgstr "Salva le modifiche"
+
+msgid "Boolean"
+msgstr "Booleano"
+
+msgid "Integer Number"
+msgstr "Numero Intero"
+
+msgid "Decimal Number"
+msgstr "Numero Decimale"
+
+msgid "Text"
+msgstr "Testo"
+
+msgid "Email Address"
+msgstr "Indirizzo Email"
+
+msgid "URL Address"
+msgstr "Indirizzo URL"
+
+msgid "Phone Number"
+msgstr "Numero Telefono"

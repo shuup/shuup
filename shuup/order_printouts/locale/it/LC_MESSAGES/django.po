@@ -1,0 +1,162 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-09 23:57+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Marco Badan <marco.badan@gmail.com>, 2016\n"
+"Language-Team: Italian (https://www.transifex.com/shuup/teams/55306/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "To"
+msgstr "A"
+
+msgid "Email Subject"
+msgstr "Oggetto Email"
+
+msgid "Email Body"
+msgstr "Testo Email"
+
+#, python-format
+msgid ""
+"Important information regarding your order, see attachment.\n"
+"\n"
+"Best Regards,\n"
+"%(shop)s"
+msgstr ""
+"Important information regarding your order, see attachment.\n"
+"Importanti informazioni riguardanti il tuo ordine, leggi l'allegato.\n"
+"\n"
+"Distinti saluti,\n"
+"%(shop)s"
+
+msgid "Printouts"
+msgstr "Stampe"
+
+#, python-format
+msgid "%(shop)s: Order %(pk)s"
+msgstr "%(shop)s: Ordine %(pk)s"
+
+msgid "Not allowed"
+msgstr "Non consentito"
+
+msgid "Delivery slip"
+msgstr "Documento di trasporto"
+
+msgid "Order"
+msgstr "Ordine"
+
+msgid "Order confirmation"
+msgstr "Conferma ordine"
+
+msgid "Order printouts"
+msgstr "Stampe ordine"
+
+msgid "Shipped products"
+msgstr "Prodotti spediti"
+
+msgid "Payment and shipping methods"
+msgstr "Metodi di pagamento e spedizione"
+
+msgid "Order number"
+msgstr "Numero Ordine"
+
+msgid "Total price"
+msgstr "Prezzo totale"
+
+msgid "Payment status"
+msgstr "Stato pagamento"
+
+msgid "Shipping status"
+msgstr "Stato spedizione"
+
+msgid "Order date"
+msgstr "Data ordine"
+
+msgid "Comment"
+msgstr "Commento"
+
+msgid "Identifier"
+msgstr "Identificativo"
+
+msgid "Shipment date"
+msgstr "Data spedizione"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Text"
+msgstr "Testo"
+
+msgid "Quantity"
+msgstr "Quantità"
+
+msgid "Tax"
+msgstr "IVA"
+
+msgid "Taxful total"
+msgstr "Totale ivato"
+
+msgid "Taxless total"
+msgstr "Totale IVA esclusa"
+
+msgid "Tax percentage"
+msgstr "Aliquota iva"
+
+msgid "Based on amount"
+msgstr "Basato sull'ammontare"
+
+msgid "Amount of tax"
+msgstr "IVA"
+
+msgid "Total including tax"
+msgstr "Totale IVA inclusa"
+
+msgid "Billing address"
+msgstr "Indirizzo di fatturazione"
+
+msgid "Confirmation"
+msgstr "Conferma"
+
+msgid "Get Order Confirmation PDF"
+msgstr "Ottieni PDF Conferma Ordine"
+
+msgid "Get Order Confirmation HTML"
+msgstr "Ottieni Html Conferna d'ordine"
+
+msgid "Shipments"
+msgstr "Spedizioni"
+
+#, python-format
+msgid "Get Delivery Slip PDF (Shipment %(id)s)"
+msgstr "Ottieni PDF documento di trasporto (Spedizione: %(id)s) "
+
+#, python-format
+msgid "Get Delivery Slip HTML (Shipment %(id)s)"
+msgstr "Ottieni HTML documento di trasporto (Spedizione: %(id)s) "
+
+msgid "Send Email"
+msgstr "Invia Email"
+
+msgid "Send Order Confirmation"
+msgstr "Invia Conferma d'ordine"
+
+#, python-format
+msgid "Send Delivery Slip (Shipment %(id)s)"
+msgstr "Invia Documento di Trasporto (Spedizione %(id)s)"
+
+msgid "Email sent successfully!"
+msgstr "Email inviata con successo!"
+
+msgid "Could not sent the email, please try again."
+msgstr "Impossibile inviare l'email, riprova ancora."
