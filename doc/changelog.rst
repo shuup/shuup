@@ -31,7 +31,8 @@ Addons
 Front
 ~~~~~
 
-- Enable option to use login and regiser checkout phases 
+- Restrict the paginator to show at most five pages
+- Enable option to use login and register checkout phases
   with vertical checkout process
 - Add checkout view with option to login and register
 - Add is_visible_for_user method for checkout view phase
