@@ -16,6 +16,7 @@ Core
 
 Localization
 ~~~~~~~~~~~~
+- Add Italian translations
 
 Admin
 ~~~~~
