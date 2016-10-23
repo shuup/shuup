@@ -160,25 +160,33 @@ def test_get_pagination_variables():
     vars = {"products": products}
 
     context = get_jinja_context(**vars)
-    variables = general.get_pagination_variables(context, context["products"], limit=4)
+    variables = general.get_pagination_variables(context, context["products"], limit=2)
     assert variables["page"].number == 1
-    assert len(variables["objects"]) == 4
+    assert len(variables["objects"]) == 2
+    assert variables["page_range"][0] == 1
+    assert variables["page_range"][-1] == 5
 
     context = get_jinja_context(path="/?page=5", **vars)
-    variables = general.get_pagination_variables(context, context["products"], limit=4)
+    variables = general.get_pagination_variables(context, context["products"], limit=2)
     assert variables["page"].number == 5
-    assert len(variables["objects"]) == 3
+    assert len(variables["objects"]) == 2
+    assert variables["page_range"][0] == 3
+    assert variables["page_range"][-1] == 7
 
     variables = general.get_pagination_variables(context, context["products"], limit=20)
     assert not variables["is_paginated"]
     assert variables["page"].number == 1
+    assert variables["page_range"][0] == variables["page_range"][-1] == 1
 
     context = get_jinja_context(path="/?page=42", **vars)
     variables = general.get_pagination_variables(context, context["products"], limit=4)
     assert variables["page"].number == 5
     assert len(variables["objects"]) == 3
+    assert variables["page_range"][0] == 1
+    assert variables["page_range"][-1] == 5
 
     vars = {"products": []}
     context = get_jinja_context(path="/", **vars)
     variables = general.get_pagination_variables(context, context["products"], limit=4)
     assert not variables["is_paginated"]
+    assert variables["page_range"][0] == variables["page_range"][-1] == 1
