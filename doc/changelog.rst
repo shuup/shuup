@@ -31,6 +31,7 @@ Addons
 Front
 ~~~~~
 
+- Fix search result styling for products with long names
 - Restrict the paginator to show at most five pages
 - Enable option to use login and register checkout phases
   with vertical checkout process
