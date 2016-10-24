@@ -125,7 +125,7 @@
             </div>
             <div class="clearfix">
                 {% if pagination.is_paginated %}
-                    {{ render_pagination(pagination.page, pagination.paginator) }}
+                    {{ render_pagination(pagination.page, pagination.paginator, pagination.page_range) }}
                 {% endif %}
             </div>
     </div>

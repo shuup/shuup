@@ -5,6 +5,9 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import math
+
+import six
 from django.conf import settings
 from django.core.paginator import Paginator
 from django.utils.translation import get_language, get_language_info, ugettext
@@ -157,9 +160,24 @@ def get_pagination_variables(context, objects, limit):
         current_page = 1
     page = paginator.page(min((current_page or 1), paginator.num_pages))
     variables["page"] = page
+    variables["page_range"] = _get_page_range(current_page, paginator.num_pages)
     variables["objects"] = page.object_list
 
     return variables
+
+
+def _get_page_range(current_page, num_pages, range_gap=5):
+    current_page = min(current_page, num_pages + 1)
+    if current_page <= math.ceil(range_gap / 2):
+        start = 1
+        end = range_gap + 1
+    elif num_pages - math.ceil(range_gap / 2) < current_page:
+        start = num_pages - range_gap + 1
+        end = num_pages + 1
+    else:
+        start = current_page - range_gap // 2
+        end = current_page + range_gap // 2 + 1
+    return six.moves.range(start, min(end, num_pages + 1))
 
 
 @contextfunction

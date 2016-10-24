@@ -85,7 +85,7 @@
     {% endif %}
 {% endmacro %}
 
-{% macro render_pagination(page, paginator) %}
+{% macro render_pagination(page, paginator, page_range=None) %}
     <script>
         window.PAGE_NUMBER = "{{ page.number }}";
     </script>
@@ -106,7 +106,7 @@
                     </span>
                 </li>
             {% endif %}
-            {% for i in paginator.page_range %}
+            {% for i in page_range or paginator.page_range %}
                 <li id="pagination_page_{{ i }}" class="{% if i == page.number %}active{% endif %}">
                     <a href="#" onclick="refreshFilters({{ i }}); return false;">{{ i }}</a>
                 </li>
