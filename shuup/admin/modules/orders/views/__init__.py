@@ -10,13 +10,13 @@ from .detail import OrderDetailView, OrderSetStatusView
 from .edit import OrderEditView, UpdateAdminCommentView
 from .list import OrderListView
 from .log import NewLogEntryView
-from .payment import OrderCreatePaymentView
+from .payment import OrderCreatePaymentView, OrderSetPaidView
 from .refund import OrderCreateFullRefundView, OrderCreateRefundView
 from .shipment import OrderCreateShipmentView, ShipmentDeleteView
 
 __all__ = [
     "NewLogEntryView", "OrderDetailView", "OrderEditView", "OrderListView",
     "OrderCreatePaymentView", "OrderCreateFullRefundView", "OrderCreateRefundView",
-    "OrderCreateShipmentView", "OrderSetStatusView", "ShipmentDeleteView",
-    "UpdateAdminCommentView"
+    "OrderCreateShipmentView", "OrderSetPaidView", "OrderSetStatusView",
+    "ShipmentDeleteView", "UpdateAdminCommentView"
 ]
