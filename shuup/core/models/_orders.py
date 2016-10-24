@@ -407,6 +407,9 @@ class Order(MoneyPropped, models.Model):
     def is_paid(self):
         return (self.payment_status == PaymentStatus.FULLY_PAID)
 
+    def is_not_paid(self):
+        return (self.payment_status == PaymentStatus.NOT_PAID)
+
     def get_total_paid_amount(self):
         amounts = self.payments.values_list('amount_value', flat=True)
         return Money(sum(amounts, Decimal(0)), self.currency)
