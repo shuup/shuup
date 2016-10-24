@@ -46,6 +46,12 @@ class OrderModule(AdminModule):
                 permissions=["shuup.add_payment"]
             ),
             admin_url(
+                "^orders/(?P<pk>\d+)/set-paid/$",
+                "shuup.admin.modules.orders.views.OrderSetPaidView",
+                name="order.set-paid",
+                permissions=["shuup.add_payment"]
+            ),
+            admin_url(
                 "^orders/(?P<pk>\d+)/set-status/$",
                 "shuup.admin.modules.orders.views.OrderSetStatusView",
                 name="order.set-status",

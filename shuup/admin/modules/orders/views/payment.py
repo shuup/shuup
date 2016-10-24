@@ -11,7 +11,7 @@ from django import forms
 from django.contrib import messages
 from django.http.response import HttpResponseRedirect
 from django.utils.translation import ugettext as _
-from django.views.generic import UpdateView
+from django.views.generic import DetailView, UpdateView
 
 from shuup.admin.toolbar import PostActionButton, Toolbar
 from shuup.admin.utils.forms import add_form_errors_as_messages
@@ -75,3 +75,25 @@ class OrderCreatePaymentView(UpdateView):
             return self.form_invalid(form)
         else:
             return HttpResponseRedirect(get_model_url(order))
+
+
+class OrderSetPaidView(DetailView):
+    model = Order
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponseRedirect(get_model_url(self.get_object()))
+
+    def post(self, request, *args, **kwargs):
+        order = self.object = self.get_object()
+        error = False
+        if not order.is_not_paid():
+            error = True
+            messages.error(self.request, _("Only orders which are not paid can be set as paid."))
+        if order.taxful_total_price:
+            error = True
+            messages.error(self.request, _("Only zero price orders can be set as paid without creating a payment."))
+        if not error:
+            amount = Money(0, order.shop.currency)
+            order.create_payment(amount, description=_("Zero amount payment"))
+            messages.success(self.request, _("Order marked as paid."))
+        return HttpResponseRedirect(get_model_url(self.get_object()))

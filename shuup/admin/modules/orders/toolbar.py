@@ -13,8 +13,8 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
 from shuup.admin.toolbar import (
-    DropdownActionButton, DropdownItem, PostActionButton, Toolbar,
-    URLActionButton
+    DropdownActionButton, DropdownItem, PostActionButton,
+    PostActionDropdownItem, Toolbar, URLActionButton
 )
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import OrderStatus
@@ -106,7 +106,19 @@ class CreatePaymentAction(DropdownItem):
 
     @staticmethod
     def visible_for_object(object):
-        return object.can_create_payment()
+        return (object.can_create_payment() and not (object.is_not_paid() and not object.taxful_total_price))
+
+
+class SetPaidAction(PostActionDropdownItem):
+    def __init__(self, object, **kwargs):
+        kwargs["post_url"] = reverse("shuup_admin:order.set-paid", kwargs={"pk": object.pk})
+        kwargs["icon"] = "fa fa-exclamation-circle"
+        kwargs["text"] = _("Set Paid")
+        super(SetPaidAction, self).__init__(**kwargs)
+
+    @staticmethod
+    def visible_for_object(object):
+        return (object.is_not_paid() and not object.taxful_total_price)
 
 
 class CreateShipmentAction(DropdownItem):
