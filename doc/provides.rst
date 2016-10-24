@@ -76,9 +76,11 @@ Core
 
 ``admin_extend_create_shipment_form``
     Allows providing extension for shipment creation in admin.
-    Should implement the
-    `~shuup.admin.modules.orders.views.shipment.ShipmentFormModifier`
-    interface.
+    Should implement the `~shuup.admin.form_modifier.FormModifier` interface.
+
+``admin_extend_attribute_form``
+    Allows providing extension for the product attribute form in admin.
+    Should implement the `~shuup.admin.form_modifier.FormModifier` interface.
 
 ``admin_product_form_part``
     Additional ``FormPart`` classes for Product editing.
@@ -105,7 +107,7 @@ Core
     `~shuup.core.pricing.DiscountModule` for pricing system.
 
 ``front_extend_product_list_form``
-    Allows providing extension for product list form. Should implement the 
+    Allows providing extension for product list form. Should implement the
     `~shuup.front.utils.sorts_and_filters.ProductListFormModifier`
     interface.
 

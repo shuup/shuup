@@ -20,6 +20,10 @@ Localization
 Admin
 ~~~~~
 
+- Allow product attribute form extension through provides
+- Make form modifiers reusable. Users of `ShipmentFormModifier`
+  should update any references to implement the
+  `shuup.admin.form_modifier.FormModifier` interface instead
 - Add mass actions to products list
 - Add mass actions to orders list
 - Add mass actions to contacts list
