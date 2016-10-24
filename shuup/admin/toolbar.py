@@ -300,6 +300,34 @@ class DropdownItem(BaseActionButton):
         return True
 
 
+class PostActionDropdownItem(PostActionButton):
+    """
+    A POST action item to be shown in a `DropdownActionButton`.
+    """
+    base_css_classes = ()
+
+    def __init__(self, **kwargs):
+        super(PostActionDropdownItem, self).__init__(**kwargs)
+
+    def render(self, request):
+        if not get_missing_permissions(request.user, self.required_permissions):
+            yield '<li>'
+            button = super(PostActionDropdownItem, self).render(request)
+            for bit in button:
+                yield bit
+            yield '</li>'
+
+    @staticmethod
+    def visible_for_object(object):
+        """
+        Used when dropdown item is added through provides
+
+        :return whether this item must be shown
+        :rtype: bool
+        """
+        return True
+
+
 class DropdownDivider(BaseActionButton):
     """
     A Divider for DropdownActionButtons.

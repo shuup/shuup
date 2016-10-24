@@ -135,7 +135,8 @@
                 left: auto;
                 right: 0;
             }
-            a {
+            a,
+            button {
                 color: @text-color;
                 transition: all 0.1s;
                 text-overflow: ellipsis;
@@ -156,6 +157,16 @@
                     overflow: visible;
                     white-space: normal;
                     max-width: 300px;
+                }
+            }
+            button {
+                width: 100%;
+                padding: 3px 20px;
+                text-align: left;
+                font-weight: normal;
+                border: 0;
+                &:hover, &:focus {
+                    background-color: @dropdown-link-hover-bg;
                 }
             }
             i {
