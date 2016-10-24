@@ -1,0 +1,303 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
+# Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
+# Marco Badan <marco.badan@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-07 03:24+0000\n"
+"PO-Revision-Date: 2016-10-16 08:46+0000\n"
+"Last-Translator: Marco Badan <marco.badan@gmail.com>\n"
+"Language-Team: Italian (http://www.transifex.com/shuup/shuup/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Global plugins"
+msgstr "Plugin globali"
+
+msgid "Theme plugins"
+msgstr "Plugin del Tema Grafico"
+
+msgid "Shuup Extensible Theme Engine"
+msgstr "Motore di Temi Estendibile Shuup"
+
+msgid "Themes"
+msgstr "Temi"
+
+msgid "Customize the look and feel of your shop"
+msgstr "Personalizza l'aspetto grafico del tuo negozio"
+
+msgid "Customize theme"
+msgstr "Personalizza tema"
+
+msgid "No theme is active. Click here to activate one."
+msgstr "Nessuna tema è stato selezionato. Clicca qui per attivarne uno."
+
+msgid "Theming"
+msgstr "Aspetto"
+
+msgid "activate"
+msgstr "attiva"
+
+msgid "Choose a theme for your shop"
+msgstr "Scegli un tema per il tuo negozio"
+
+msgid "Theme activated."
+msgstr "Tema attivato."
+
+msgid "Stylesheets"
+msgstr "Fogli di stile"
+
+msgid "current draft"
+msgstr "bozza corrente"
+
+msgid "old version"
+msgstr "vecchia versione"
+
+msgid "public"
+msgstr "pubblico"
+
+msgid "theme identifier"
+msgstr "identificativo del tema"
+
+msgid "view name"
+msgstr "nome vista"
+
+msgid "created on"
+msgstr "creato il"
+
+msgid "status"
+msgstr "stato"
+
+msgid "internal data"
+msgstr "dati interni"
+
+msgid "active"
+msgstr "attivo"
+
+msgid "data"
+msgstr "dati"
+
+#, python-format
+msgid "Theme configuration for %s"
+msgstr "Configurazione tema per %s"
+
+msgid "Plugin"
+msgstr "Plugin"
+
+msgid "Category Links"
+msgstr "Link Categorie"
+
+msgid "Title"
+msgstr "Titolo"
+
+msgid "Show all categories"
+msgstr "Mostra tutte le categorie"
+
+msgid "All categories are shown, even if not selected"
+msgstr "Tutte le categorie sono visibili, anche quelle non selezionate"
+
+msgid "Image"
+msgstr "Immagine"
+
+msgid "Image Link URL"
+msgstr "URL esterno immagine"
+
+msgid "Full width"
+msgstr "Intera larghezza"
+
+msgid "Set image to full width of cell"
+msgstr "Imposta l'immagine a larghezza intera per la cella"
+
+msgid "Width (px)"
+msgstr "Larghezza (px)"
+
+msgid "Leave blank for default width"
+msgstr "Lascia bianco per la larghezza predefinita"
+
+msgid "Height (px)"
+msgstr "Altezza (px)"
+
+msgid "Product Highlights"
+msgstr "Prodotti in Evidenza"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Count"
+msgstr "Numero"
+
+msgid "Only show in-stock and orderable items"
+msgstr "Mostra solo i prodotti a magazzino e i prodotti ordinabili"
+
+msgid "Product Cross Sells"
+msgstr "Prodotto Cross-selling"
+
+msgid "Snippets"
+msgstr "Snippet"
+
+msgid "In-Place Snippet"
+msgstr "In-Place Snippet"
+
+msgid "Resource snippet for end of head"
+msgstr "Snippet da mettere alla fine del tag head"
+
+msgid "Resource snippet for beginning of body"
+msgstr "Snippet da mettere all'inizio del tag body"
+
+msgid "Resource for end of body"
+msgstr "Snippet da mettere prima della chiusura del tag body"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Ordering"
+msgstr "Ordinamento"
+
+msgid "Social Media Links"
+msgstr "Collegamenti ai Social Media "
+
+msgid "Topic"
+msgstr "Argomento"
+
+msgid "Icon Size"
+msgstr "Dimensioni icona"
+
+msgid "Default"
+msgstr "Predefinito"
+
+msgid "Large"
+msgstr "Grande"
+
+msgid "Alignment"
+msgstr "Allineamento"
+
+msgid "Left"
+msgstr "Sinistra"
+
+msgid "Center"
+msgstr "Centro"
+
+msgid "Right"
+msgstr "Destra"
+
+msgid "text"
+msgstr "testo"
+
+msgid "(Untranslated)"
+msgstr "(Non tradotto)"
+
+#, python-format
+msgid "Click to edit placeholder: %s"
+msgstr "Clicca per modificare il segnaposto: %s"
+
+msgid "Delete This Cell"
+msgstr "Cancella questa cella"
+
+msgid "There's nothing to configure in this plugin."
+msgstr "Non c'è niente da configurare in questo plugin"
+
+msgid "Save Plugin"
+msgstr "Salva Plugin"
+
+msgid "Edit Placeholder"
+msgstr "Modifica Segnaposto"
+
+msgid "Add new cell"
+msgstr "Aggiungi nuova cella"
+
+msgid "Delete row"
+msgstr "Cancella riga"
+
+msgid "Add new row"
+msgstr "Aggiungi nuova riga"
+
+msgid "Theme Configuration"
+msgstr "Configurazione Tema"
+
+msgid "No themes are installed."
+msgstr "Nessun tema installato."
+
+#, python-format
+msgid "Theme Configuration: %(name)s"
+msgstr "Configurazione Tema: %(name)s "
+
+msgid "There's nothing to configure in this theme."
+msgstr "Non c'è niente da configurare in questo tema."
+
+msgid "Theme"
+msgstr "Tema"
+
+msgid "Actions"
+msgstr "Azioni"
+
+msgid "Author"
+msgstr "Autore"
+
+msgid "Currently active"
+msgstr "Ora Attivo"
+
+msgid "Activate"
+msgstr "Attiva"
+
+msgid "Configure"
+msgstr "Configura"
+
+msgid "Revert Changes"
+msgstr "Annulla le modifiche"
+
+msgid "Publish Changes"
+msgstr "Pubblica le modifiche"
+
+msgid "No access to editing"
+msgstr "Non hai accesso alle modifiche"
+
+#, python-format
+msgid "Unknown command %s"
+msgstr "Comando sconosciuto %s"
+
+msgid "Unable to determine current theme."
+msgstr "Non è stato possibile determinare il tema in uso"
+
+#, python-format
+msgid "Cannot add more than %d cells in one row."
+msgstr "Non si possono aggiungere più di %d celle a una riga"
+
+msgid "Published"
+msgstr "Pubblicato"
+
+msgid "Reverted"
+msgstr "Rispristinato"
+
+msgid "Full Width"
+msgstr "Larghezza Intera"
+
+msgid "Three Fourths (3/4)"
+msgstr "Tre Quarti (3/4)"
+
+msgid "Two Thirds (2/3)"
+msgstr "Due terzi (2/3)"
+
+msgid "Half (1/2)"
+msgstr "Metà (1/2)"
+
+msgid "One Third (1/3)"
+msgstr "Un Terzo (1/3)"
+
+msgid "One Fourth (1/4)"
+msgstr "Un Quarto (1/4)"
+
+msgid "Cell width"
+msgstr "Larghezza cella"
+
+msgid "No Plugin"
+msgstr "Nessun Plugin"

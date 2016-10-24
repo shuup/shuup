@@ -1,0 +1,153 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
+# Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
+# Marco Badan <marco.badan@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-05 21:27+0000\n"
+"PO-Revision-Date: 2016-10-22 08:45+0000\n"
+"Last-Translator: Marco Badan <marco.badan@gmail.com>\n"
+"Language-Team: Italian (http://www.transifex.com/shuup/shuup/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Shuup Frontend - Personal Order History"
+msgstr "Shuup Frontend - Storico Ordini Personali"
+
+msgid "Order history"
+msgstr "Storico ordini"
+
+msgid "Show all"
+msgstr "Mostra tutti"
+
+msgid "Identifier"
+msgstr "Identificativo"
+
+msgid "Order date"
+msgstr "Data ordine"
+
+msgid "Status"
+msgstr "Stato"
+
+msgid "Total price"
+msgstr "Prezzo Totale"
+
+msgid "Details"
+msgstr "Dettagli"
+
+msgid "You haven't made any orders yet."
+msgstr "Non hai ancora effettuato alcun ordine."
+
+msgid "Basic Information"
+msgstr "Informazioni Base"
+
+msgid "Order Number"
+msgstr "Numero Ordine"
+
+msgid "Order Date"
+msgstr "Data Ordine"
+
+msgid "Reference"
+msgstr "Riferimento"
+
+msgid "Label"
+msgstr "Etichetta"
+
+msgid "Customer"
+msgstr "Cliente"
+
+msgid "Ordered by"
+msgstr "Ordinato da"
+
+msgid "Creator"
+msgstr "Creatore"
+
+msgid "Phone"
+msgstr "Telefono"
+
+msgid "Email"
+msgstr "Emai"
+
+msgid "Tax Number"
+msgstr "Partita IVA"
+
+msgid "Total Price"
+msgstr "Prezzo Totale"
+
+msgid "Total Price (taxless)"
+msgstr "Prezzo Totale (iva esclusa)"
+
+msgid "Tracking codes"
+msgstr "Codici di Tracking"
+
+msgid "Order Status"
+msgstr "Stato Ordine"
+
+msgid "Payment Status"
+msgstr "Stato Pagamento"
+
+msgid "Shipping Status"
+msgstr "Stato Spedizione"
+
+msgid "Shipping Address"
+msgstr "Indirizzo Spedizione"
+
+msgid "Billing Address"
+msgstr "Indirizzo di Fatturazione"
+
+msgid "Order Contents"
+msgstr "Contenuto dell'Ordine"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Text"
+msgstr "Testo"
+
+msgid "Taxless Unit Price"
+msgstr "Prezzo Unitario tasse escluse"
+
+msgid "Quantity"
+msgstr "Quantità"
+
+msgid "Taxless Discount"
+msgstr "Sconto tasse escluse"
+
+msgid "Tax"
+msgstr "Tasse"
+
+msgid "Taxless Total"
+msgstr "Totale tasse escluse"
+
+msgid "Total incl. Tax"
+msgstr "Totale tasse incluse"
+
+msgid "Total"
+msgstr "Totale"
+
+#, python-format
+msgid "Order %(identifier)s"
+msgstr "Ordine %(identifier)s "
+
+#, python-format
+msgid "Details of order %(identifier)s"
+msgstr "Dettagli dell'ordine %(identifier)s"
+
+msgid "Home"
+msgstr "Pagina Iniziale"
+
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "Order History"
+msgstr "Storico Ordini"

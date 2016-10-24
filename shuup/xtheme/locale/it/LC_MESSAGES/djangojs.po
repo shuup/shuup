@@ -1,0 +1,52 @@
+# English translations for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# 
+# Translators:
+# Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-04 20:07+0000\n"
+"PO-Revision-Date: 2016-06-30 07:23+0000\n"
+"Last-Translator: Fabrizio Arzeni <fabrizio.arz@gmail.com>\n"
+"Language-Team: Italian (http://www.transifex.com/shuup/shuup/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#, c-format
+msgid "Edit %s"
+msgstr "Modifica %s"
+
+#, c-format
+msgid "Error: Cannot add more than %s cells to one row."
+msgstr "Errore: Non è possibile aggiungere più di %s celle a una riga."
+
+msgid "Are you sure you wish to delete this row?"
+msgstr "Sei sicuro di voler cancellare questa riga?"
+
+msgid "Are you sure you wish to delete this cell?"
+msgstr "Sei sicuro di voler cacellare questa cella?"
+
+msgid "Are you sure you wish to publish changes made to this view?"
+msgstr "Sei sicuro di voler pubblicare le modificche apportate a questa vista?"
+
+msgid ""
+"Are you sure you wish to revert all changes made since the last published "
+"version?"
+msgstr "Sei sicuro di voler ripristinare le modifiche apportate dall'ultima versione pubblicata?"
+
+msgid ""
+"Changing plugins will cause other changes made on this form to be lost."
+msgstr "Le modifiche ai plugin causeranno la perdita delle altre modifiche apportate a questo form."
+
+msgid "Exit Edit"
+msgstr "Esci da Modifica"
+
+msgid "Edit Page"
+msgstr "Modifica Pagina"

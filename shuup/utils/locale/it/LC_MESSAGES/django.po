@@ -1,0 +1,83 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-19 08:56+0000\n"
+"PO-Revision-Date: 2016-07-09 15:06+0000\n"
+"Last-Translator: Fabrizio Arzeni <fabrizio.arz@gmail.com>\n"
+"Language-Team: Italian (http://www.transifex.com/shuup/shuup/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Shuup Utilities"
+msgstr "Utilità Shuup"
+
+msgid "other"
+msgstr "altri"
+
+msgid "audit"
+msgstr "revisione"
+
+msgid "edit"
+msgstr "modifica"
+
+msgid "deletion"
+msgstr "rimozione"
+
+msgid "note"
+msgstr "nota"
+
+msgid "email"
+msgstr "emai"
+
+msgid "warning"
+msgstr "attenzione"
+
+msgid "error"
+msgstr "errore"
+
+msgid "created on"
+msgstr "creato i"
+
+msgid "user"
+msgstr "utente"
+
+msgid "message"
+msgstr "messaggio"
+
+msgid "identifier"
+msgstr "identificativo"
+
+msgid "log entry kind"
+msgstr "tipo di log"
+
+msgid "extra data"
+msgstr "dati extra"
+
+msgid "target"
+msgstr "obiettivo"
+
+#, python-format
+msgid "%s day"
+msgid_plural "%s days"
+msgstr[0] "%s giorno"
+msgstr[1] "%s giorni"
+
+#, python-format
+msgid "%(min)s--%(max)s days"
+msgstr "%(min)s--%(max)s giorni"
+
+msgid ""
+"Comma-separated values or ranges, e.g. A-Z,10000-19000. Use exclamation "
+"marks to negate (A-Z,!G will not match G)."
+msgstr "Valori o intervalli separati da virgola, es A-Z,10000-19000. Usa il punto esclamativo per negare (A-Z,!G escluderà G)."
