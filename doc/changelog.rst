@@ -29,6 +29,8 @@ Admin
 - Add mass actions to orders list
 - Add mass actions to contacts list
 - Picotable lists now support mass actions.
+- Add `PostActionDropdownItem` baseclass for toolbar so actions requiring
+  a POST request do not have to have a toolbar button of its own.
 
 Addons
 ~~~~~~
