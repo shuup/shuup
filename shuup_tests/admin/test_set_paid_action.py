@@ -8,11 +8,8 @@
 import decimal
 import pytest
 
-from bs4 import BeautifulSoup
-from django.core.urlresolvers import reverse
-
-from shuup.admin.modules.orders.views.detail import OrderDetailView
-from shuup.apps.provides import override_provides
+from shuup.admin.modules.orders.views import OrderSetPaidView
+from shuup.core.models import Order, PaymentStatus
 from shuup.testing.factories import (
     add_product_to_order, create_empty_order, create_product,
     get_default_shop, get_default_supplier
@@ -22,43 +19,18 @@ from shuup.testing.utils import apply_request_middleware
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("has_price", (True, False))
-def test_order_detail_has_default_toolbar_action_items(rf, admin_user, has_price):
+def test_order_set_paid_action(rf, admin_user, has_price):
     shop = get_default_shop()
     supplier = get_default_supplier()
     order = _get_order(shop, supplier, has_price)
-    request = apply_request_middleware(rf.get("/"), user=admin_user)
-    view_func = OrderDetailView.as_view()
-    create_payment_url = reverse("shuup_admin:order.create-payment", kwargs={"pk": order.pk})
-    set_paid_url = reverse("shuup_admin:order.set-paid", kwargs={"pk": order.pk})
-    with override_provides("admin_order_toolbar_action_item", [
-        "shuup.admin.modules.orders.toolbar:CreatePaymentAction",
-        "shuup.admin.modules.orders.toolbar:SetPaidAction",
-    ]):
-        if has_price:
-            assert _check_if_link_exists(view_func, request, order, create_payment_url)
-        else:
-            assert _check_if_button_exists(view_func, request, order, set_paid_url)
-
-    with override_provides("admin_order_toolbar_action_item", []):
-        assert not _check_if_link_exists(view_func, request, order, create_payment_url)
-
-
-def _check_if_button_exists(view_func, request, order, url):
-    response = view_func(request, pk=order.pk)
-    soup = BeautifulSoup(response.render().content)
-    for dropdown_btn in soup.find_all("button", {"class": "btn-default"}):
-        if dropdown_btn.get("formaction", "") == url:
-            return True
-    return False
-
-
-def _check_if_link_exists(view_func, request, order, url):
-    response = view_func(request, pk=order.pk)
-    soup = BeautifulSoup(response.render().content)
-    for dropdown_link in soup.find_all("a", {"class": "btn-default"}):
-        if dropdown_link.get("href", "") == url:
-            return True
-    return False
+    view = OrderSetPaidView.as_view()
+    request = apply_request_middleware(rf.post("/"), user=admin_user)
+    response = view(request, pk=order.pk)
+    order = Order.objects.get(id=order.id)  # Reload order object
+    if has_price:
+        assert order.payment_status == PaymentStatus.NOT_PAID
+    else:
+        assert order.payment_status == PaymentStatus.FULLY_PAID
 
 
 def _get_order(shop, supplier, has_price):
