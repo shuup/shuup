@@ -1,8 +1,5 @@
 {% extends "shuup/front/checkout/_base.jinja" %}
 
-{% block title %}Register{% endblock %}
-{% block content_title %}{% trans %}Checkout: Register{% endtrans %}{% endblock %}
-
 {% block checkout_phase_content %}
     <form class="single-page-refresh-after" role="form" method="post" action="" id="register">
         {% csrf_token %}

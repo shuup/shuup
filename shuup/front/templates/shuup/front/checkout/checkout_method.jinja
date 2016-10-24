@@ -1,8 +1,5 @@
 {% extends "shuup/front/checkout/_base.jinja" %}
 
-{% block title %}Checkout Method{% endblock %}
-{% block content_title %}{% trans %}Checkout: Choose Checkout Method{% endtrans %}{% endblock %}
-
 {% block checkout_phase_content %}
     <div class="row">
         {% set forms = form.forms %}
@@ -36,4 +33,13 @@
         </div>
     </div>
     {% placeholder "checkout_method_choice_bottom" %}{% endplaceholder %}
+{% endblock %}
+
+{% block extrajs %}
+    {{ super() }}
+    <script>
+        $(function() {
+            $(".selectpicker").selectpicker();
+        });
+    </script>
 {% endblock %}
