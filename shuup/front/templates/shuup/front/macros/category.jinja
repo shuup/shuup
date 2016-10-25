@@ -76,7 +76,12 @@
                 {{ render_field(form.sort) }}
             {% endif %}
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-4">
+            {% if "limit" in form.fields.keys() %}
+                {{ render_field(form.limit) }}
+            {% endif %}
+        </div>
+        <div class="col-sm-4">
             {{ render_toggle_view() }}
         </div>
     </div>
@@ -96,7 +101,7 @@
 
         <div id="filters" class="filters collapse" aria-expanded="false">
             {% for field in form %}
-                {% if field.name not in ["sort", "q"] %}
+                {% if field.name not in ["sort", "q", "limit"] %}
                     <div class="filter-block">
                         <a href="#{{ field.name }}"
                            class="block-title"
