@@ -85,12 +85,12 @@
     {% endif %}
 {% endmacro %}
 
-{% macro render_pagination(page, paginator, page_range=None) %}
+{% macro render_pagination(page, paginator, page_range=None, show_details=True) %}
     <script>
         window.PAGE_NUMBER = "{{ page.number }}";
     </script>
-    <nav>
-        <ul class="pagination text-center">
+    <nav class="text-center">
+        <ul class="pagination">
             {% if page.has_previous() %}
                 <li id="previous_page">
                     <a href="#"
@@ -127,6 +127,11 @@
                 </li>
             {% endif %}
         </ul>
+        {% if show_details %}
+            <p class="text-muted">
+                {{ gettext("Items %(start_index)d of %(end_index)d of %(count)d total", start_index=page.start_index(), end_index=page.end_index(), count=paginator.count) }}
+            <p>
+        {% endif %}
     </nav>
 {% endmacro %}
 
