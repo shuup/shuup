@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-21 18:42+0000\n"
+"POT-Creation-Date: 2016-10-25 05:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -501,6 +501,9 @@ msgstr ""
 msgid "Create Payment"
 msgstr ""
 
+msgid "Set Paid"
+msgstr ""
+
 msgid "Create Shipment"
 msgstr ""
 
@@ -568,6 +571,18 @@ msgid "Payment %s created."
 msgstr ""
 
 msgid "Order has already been paid"
+msgstr ""
+
+msgid "Only orders which are not paid can be set as paid."
+msgstr ""
+
+msgid "Only zero price orders can be set as paid without creating a payment."
+msgstr ""
+
+msgid "Zero amount payment"
+msgstr ""
+
+msgid "Order marked as paid."
 msgstr ""
 
 msgid "Line number"
