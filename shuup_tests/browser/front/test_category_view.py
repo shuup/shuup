@@ -67,7 +67,7 @@ def test_category_product_list(browser, live_server, settings):
     # initialize
     cache.clear()
     shop = get_default_shop()
-    
+
     for name, identifier in CATEGORY_DATA:
         category = Category()
         category.name = name
@@ -172,7 +172,7 @@ def show_sorts_for_the_category_only(browser, category):
     )
     browser.reload()
     wait_until_condition(browser, lambda x: len(x.find_by_css("#id_sort option")) == 5)
-    
+
 
 def sort_category_products_test(browser, category):
     # Lowest price first
@@ -265,7 +265,7 @@ def variations_filter_test(browser, category):
 
     # Two Big or Black products
     browser.execute_script("$('#variation_color-black').click();")
-    
+
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 2)
 
     browser.execute_script("$('#variation_color-black').click();")  # unselect black
@@ -330,7 +330,8 @@ def second_category_sort_test(browser, live_server, shop, category):
     )
     browser.reload()
     # Set limit to 24
-    browser.select("limit", 24)
+    click_element(browser, "button[data-id='id_limit']")
+    click_element(browser, "button[data-id='id_limit'] + .dropdown-menu li[data-original-index='1'] a")
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 13)
 
 
