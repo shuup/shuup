@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-05 21:27+0000\n"
+"POT-Creation-Date: 2016-10-25 18:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
-"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
@@ -64,27 +64,6 @@ msgstr ""
 msgid "Address"
 msgstr ""
 
-msgid "Name"
-msgstr ""
-
-msgid "Email"
-msgstr ""
-
-msgid "Phone"
-msgstr ""
-
-msgid "Street"
-msgstr ""
-
-msgid "Postal code"
-msgstr ""
-
-msgid "City"
-msgstr ""
-
-msgid "Region"
-msgstr ""
-
 msgid "Default Addresses"
 msgstr ""
 
@@ -130,6 +109,15 @@ msgstr ""
 msgid "Basic Information"
 msgstr ""
 
+msgid "Name"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
 msgid "Tax Number"
 msgstr ""
 
@@ -152,6 +140,18 @@ msgid "Company account information"
 msgstr ""
 
 msgid "User account information"
+msgstr ""
+
+msgid "Street"
+msgstr ""
+
+msgid "Postal code"
+msgstr ""
+
+msgid "City"
+msgstr ""
+
+msgid "Region"
 msgstr ""
 
 msgid "Billing information"
