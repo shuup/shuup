@@ -1,11 +1,11 @@
+# -*- coding: utf-8 -*-
 # This file is part of Shuup.
 #
 # Copyright (c) 2012-2016, Shoop Commerce Ltd. All rights reserved.
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-import csv
-
+import unicodecsv as csv
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.utils.translation import ugettext_lazy as _
@@ -41,7 +41,7 @@ class FileResponseAction(PicotableFileMassAction):
         view_settings = ViewSettings(Product, [])
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="products.csv"'
-        writer = csv.writer(response, delimiter=";")
+        writer = csv.writer(response, delimiter=";", encoding='utf-8')
         writer.writerow([col.title for col in view_settings.columns])
         for product in Product.objects.filter(id__in=ids):
             row = []
