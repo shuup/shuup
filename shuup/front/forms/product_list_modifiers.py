@@ -166,6 +166,20 @@ class SortProductListByCreatedDate(SimpleProductListModifier):
         return products
 
 
+class SortProductListByAscendingCreatedDate(SortProductListByCreatedDate):
+    is_active_key = "sort_products_by_ascending_created_date"
+    is_active_label = _("Sort products by date created - oldest first")
+    ordering_key = "sort_products_by_ascending_created_date_ordering"
+    ordering_label = _("Ordering for sort by date created - oldest first")
+
+    def get_choices_for_fields(self):
+        return [
+            ("sort", [
+                ("created_date_a", _("Date created - oldest first")),
+            ]),
+        ]
+
+
 class ManufacturerProductListFilter(SimpleProductListModifier):
     is_active_key = "filter_products_by_manufacturer"
     is_active_label = _("Filter products by manufacturer")
