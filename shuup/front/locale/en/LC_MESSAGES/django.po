@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-21 01:41+0000\n"
+"POT-Creation-Date: 2016-10-25 00:49+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.1.1\n"
 "X-Generator: Poedit 1.8.8\n"
@@ -22,6 +22,7 @@ msgstr ""
 msgid "Abandoned Cart Value"
 msgstr ""
 
+#, python-brace-format
 msgid "Based on {b} carts over the last {d} days"
 msgstr ""
 
@@ -238,6 +239,15 @@ msgstr ""
 msgid "Date created"
 msgstr ""
 
+msgid "Sort products by date created - oldest first"
+msgstr ""
+
+msgid "Ordering for sort by date created - oldest first"
+msgstr ""
+
+msgid "Date created - oldest first"
+msgstr ""
+
 msgid "Filter products by manufacturer"
 msgstr ""
 
@@ -425,9 +435,6 @@ msgstr ""
 msgid "Checkout"
 msgstr ""
 
-msgid "Checkout: Choose Checkout Method"
-msgstr ""
-
 msgid "Log in"
 msgstr ""
 
@@ -435,9 +442,6 @@ msgid "Forgot your password?"
 msgstr ""
 
 msgid "There are errors"
-msgstr ""
-
-msgid "Checkout: Register"
 msgstr ""
 
 msgid "My Dashboard"
@@ -609,6 +613,10 @@ msgid "Previous"
 msgstr ""
 
 msgid "Next"
+msgstr ""
+
+#, python-format
+msgid "Items %(start_index)d of %(end_index)d of %(count)d total"
 msgstr ""
 
 msgid "Shop is currently in maintenance mode."
