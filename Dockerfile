@@ -7,6 +7,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends python3-minimal python3-virtualenv python3-pip python3-dev python3-pil && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+RUN echo '{ "allow_root": true }' > /root/.bowerrc
 RUN python3 -m virtualenv -p /usr/bin/python3 --system-site-packages /var/www/shuup/venv && \
     /var/www/shuup/venv/bin/pip install -U pip setuptools
 RUN /var/www/shuup/venv/bin/pip install /var/www/shuup/working_copy
