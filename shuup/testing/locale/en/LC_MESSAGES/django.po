@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-30 23:37+0000\n"
+"POT-Creation-Date: 2016-10-25 05:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -19,5 +19,25 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
-msgid "System"
+msgid "mock section title"
+msgstr ""
+
+msgid "Hello"
+msgstr ""
+
+#, python-format
+msgid "Hello %(name)s"
+msgstr ""
+
+#, python-format
+msgid "This is %(sku)s"
+msgstr ""
+
+msgid "Shuup Testing Theme"
+msgstr ""
+
+msgid "Shuup Testing Theme With Custom Base Template"
+msgstr ""
+
+msgid "Shuup Test Theme Product Highlights"
 msgstr ""
