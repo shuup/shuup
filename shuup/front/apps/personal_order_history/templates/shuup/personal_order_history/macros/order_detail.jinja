@@ -1,3 +1,5 @@
+{% from "shuup/front/macros/order.jinja" import render_lines_table with context%}
+
 {% macro basic_info() %}
     {% call content_block(_("Basic Information")) %}
         <table class="table table-condensed">
@@ -53,43 +55,7 @@
 
 {% macro order_contents() %}
     {% call content_block(_("Order Contents")) %}
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>{{ _("SKU") }}</th>
-                    <th>{{ _("Text") }}</th>
-                    <th class="text-right">{{ _("Taxless Unit Price") }}</th>
-                    <th class="text-right">{{ _("Quantity") }}</th>
-                    <th class="text-right">{{ _("Taxless Discount") }}</th>
-                    <th class="text-right">{{ _("Tax") }}</th>
-                    <th class="text-right">{{ _("Taxless Total") }}</th>
-                    <th class="text-right">{{ _("Total incl. Tax") }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for line in order.lines.order_by("ordering") %}
-                    <tr>
-                        <td>{{ line.sku }}</td>
-                        <td>{{ line.text }}</td>
-                        {{ price_cell(line.taxless_base_unit_price) }}
-                        {{ number_cell(line.quantity) }}
-                        {{ price_or_empty_cell(line.taxless_discount_amount) }}
-                        {{ number_cell(line.tax_rate|percent) }}
-                        {{ price_cell(line.taxless_price) }}
-                        {{ price_cell(line.taxful_price) }}
-                    </tr>
-                {% endfor %}
-                </tbody>
-                <tfoot>
-                <tr>
-                    <th colspan="6">{{ _("Total") }}</th>
-                    {{ price_cell(order.taxless_total_price, 'th') }}
-                    {{ price_cell(order.taxful_total_price, 'th') }}
-                </tr>
-                </tfoot>
-            </table>
-        </div>
+        {{ render_lines_table(order.lines.order_by("ordering"), order.taxful_total_price, order.taxless_total_price) }}
     {% endcall %}
 {% endmacro %}
 
