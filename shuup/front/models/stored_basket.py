@@ -70,3 +70,5 @@ class StoredBasket(MoneyPropped, models.Model):
 
     class Meta:
         app_label = "shuup_front"
+        verbose_name = _('stored basket')
+        verbose_name_plural = _('stored baskets')

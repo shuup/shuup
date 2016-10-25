@@ -277,7 +277,7 @@
                     csrfmiddlewaretoken: "{{ csrf_token }}"
                 },
                 success: function(response) {
-                    $("#save-cart-status").append("<p>" + gettext("Cart saved!") + "</p>");
+                    $("#save-cart-status").append("<p>" + "{% trans %}Cart saved!{% endtrans %}" + "</p>");
                 },
                 error: function(e) {
                     $("#save-cart-status").append("<p>" + e.responseJSON.error + "</p>");
