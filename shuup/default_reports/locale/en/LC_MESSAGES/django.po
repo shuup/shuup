@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-11 19:53+0000\n"
+"POT-Creation-Date: 2016-10-25 18:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,6 +40,15 @@ msgstr ""
 msgid "Taxful Total"
 msgstr ""
 
+msgid "Sales Per Hour"
+msgstr ""
+
+msgid "Hour"
+msgstr ""
+
+msgid "Order Amount"
+msgstr ""
+
 msgid "Total Sales"
 msgstr ""
 
@@ -47,10 +56,4 @@ msgid "Shop Name"
 msgstr ""
 
 msgid "Currency"
-msgstr ""
-
-msgid "Order Amount"
-msgstr ""
-
-msgid "Sales Per Hour"
 msgstr ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-11 19:52+0000\n"
+"POT-Creation-Date: 2016-10-25 18:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,12 +20,6 @@ msgid "Reports"
 msgstr ""
 
 msgid "Type"
-msgstr ""
-
-msgid "Shop"
-msgstr ""
-
-msgid "Date Range"
 msgstr ""
 
 msgid "Custom"
@@ -47,6 +41,12 @@ msgid "This Year"
 msgstr ""
 
 msgid "All Time"
+msgstr ""
+
+msgid "Shop"
+msgstr ""
+
+msgid "Date Range"
 msgstr ""
 
 msgid "Start Date"
