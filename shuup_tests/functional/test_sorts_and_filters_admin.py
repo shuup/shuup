@@ -28,7 +28,7 @@ DEFAULT_FORM_MODIFIERS = [
 
 
 @pytest.mark.django_db
-def test_sorts_and_filter_in_shop_edit(rf, admin_user):
+def test_sorts_and_filter_in_shop_edit(rf, admin_user, settings):
     cache.clear()
     activate("en")
     with override_provides("front_extend_product_list_form", DEFAULT_FORM_MODIFIERS):
@@ -84,7 +84,10 @@ def test_sorts_and_filter_in_category_edit(rf, admin_user):
             "product_list_facets-sort_products_by_price": False,
             "product_list_facets-sort_products_by_price_ordering": 32,
             "product_list_facets-filter_products_by_manufacturer": True,
-            "product_list_facets-filter_products_by_manufacturer_ordering": 1
+            "product_list_facets-filter_products_by_manufacturer_ordering": 1,
+            "attribute_populator-attribute": "",
+            "attribute_populator-product_attr_name": "",
+            "attribute_populator-operator": 1
         }
         request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
         response = view(request, pk=category.pk)
