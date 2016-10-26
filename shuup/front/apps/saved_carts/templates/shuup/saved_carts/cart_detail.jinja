@@ -32,7 +32,11 @@
                 <tbody>
                 {% for line in lines %}
                     {% set product = line.product %}
-                    {% set thumbnail = product.primary_image | thumbnail(size=(70, 70)) %}
+                    {% set image = product.primary_image %}
+                    {% if not image and product.variation_parent %}
+                        {% set image = product.variation_parent.primary_image %}
+                    {% endif %}
+                    {% set thumbnail = image|thumbnail(size=(70, 70), crop="smart", upscale=True) %}
                     <tr>
                         <td>{% if thumbnail %}<img src="{{ thumbnail }}" alt="{{ product.name }}">{% endif %}</td>
                         <td><a href="{{ shuup.urls.model_url(line.product) }}">{{ product.name }}</a></td>
