@@ -26,13 +26,13 @@ def get_best_selling_product_info(shop_ids, cutoff_days=30):
             OrderLine.objects
             .filter(
                 order__shop_id__in=shop_ids,
-                order__order_date__gte=cutoff_date
+                order__order_date__gte=cutoff_date,
+                type=OrderLineType.PRODUCT
             )
-            .exclude(product=None)
             .values("product")
             .annotate(n=Sum("quantity"))
             .order_by("-n")[:100]
-            .values_list("product", "n")
+            .values_list("product", "product__variation_parent_id", "n")
         )
         cache.set(cache_key, sales_data, 3 * 60 * 60)  # three hours
     return sales_data
