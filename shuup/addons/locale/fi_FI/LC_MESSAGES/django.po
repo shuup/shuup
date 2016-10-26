@@ -1,16 +1,16 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
 # Eetu Häivälä <eetu.haivala@anders.fi>, 2015
-# Janne Tammi <janne.tammi@shuup.com>, 2015
+# Janne Tammi <janne@shuup.com>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
-# Juha Kujala <juha.kujala@shuup.com>, 2015-2016
+# Juha Kujala <juha.kujala@shoop.io>, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
-# Rauli Laine <rauli.laine@iki.fi>, 2015-2016
+# Rauli L. <rauli.laine@iki.fi>, 2015-2016
 # Shuup Admin <admin@shuup.com>, 2015-2016
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # tomijarvi <tomi@jarvi.pro>, 2015
@@ -19,16 +19,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
-"PO-Revision-Date: 2016-06-28 03:27+0000\n"
+"POT-Creation-Date: 2016-04-11 12:32+0000\n"
+"PO-Revision-Date: 2016-10-25 22:43+0000\n"
 "Last-Translator: Shuup Admin <admin@shuup.com>\n"
-"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
-"language/fi_FI/)\n"
-"Language: fi_FI\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
+"Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Addons"
@@ -61,9 +60,7 @@ msgstr "Lataa sovellus uudelleen"
 msgid ""
 "There are no viable reload methods available. Please contact your system "
 "administrator."
-msgstr ""
-"Järjestelmän käynnistäminen uudelleen ei ole mahdollista. Ole hyvä ja ota "
-"yhteys järjestelmän ylläpitäjään."
+msgstr "Järjestelmän käynnistäminen uudelleen ei ole mahdollista. Ole hyvä ja ota yhteys järjestelmän ylläpitäjään."
 
 msgid "Reload Method"
 msgstr "Lataa menetelmä uudelleen"
@@ -110,10 +107,7 @@ msgid ""
 "In addition, there is always a chance for the server to not properly "
 "initialize at all, in which case you may need to troubleshoot the problem "
 "yourself (or have a system administrator handy)."
-msgstr ""
-"On aina mahdollisuus, että sovelluspalvelin ei uudelleenkäynnisty, jolloin "
-"joudut tutkimaan ongelmaa itse (tai ottamaan yhteyttä "
-"järjestelmäylläpitäjään)."
+msgstr "On aina mahdollisuus, että sovelluspalvelin ei uudelleenkäynnisty, jolloin joudut tutkimaan ongelmaa itse (tai ottamaan yhteyttä järjestelmäylläpitäjään)."
 
 msgid "Reload steps"
 msgstr "Lataa askeleet uudelleen"
@@ -136,10 +130,10 @@ msgid "Finalizing installations."
 msgstr "Viimeistellään asennuksia."
 
 msgid "Your Shuup seems to be back up!"
-msgstr "Shuup näyttää olevan taas käytössä!"
+msgstr "Shuup on jälleen toiminnassa!"
 
 msgid "Your Shuup is not up yet. Trying again soon."
-msgstr "Shuup ei ole vielä käynnissä. Yritetään pian uudelleen."
+msgstr "Shuup ei ole vielä toiminnassa. Kokeilen hetken kuluttua uudestaan."
 
 msgid "Select file"
 msgstr "Valitse tiedosto"
@@ -155,14 +149,10 @@ msgstr "Onnistui"
 
 #, python-format
 msgid ""
-"Next, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activate "
-"the newly installed addon</strong></a> and <a href=\"%(addon_reload_url)s\" "
-"class=\"text-success\"><strong>reload your application server</strong></a>."
-msgstr ""
-"Seuraavaksi: <a href=\"%(addon_list_url)s\" class=\"text-success"
-"\"><strong>aktivoi asennettu laajennus</strong></a> ja<a href="
-"\"%(addon_reload_url)s\" class=\"text-success\"><strong>käynnistä "
-"järjestelmä uudelleen</strong></a>."
+"Next, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activate"
+" the newly installed addon</strong></a> and <a href=\"%(addon_reload_url)s\""
+" class=\"text-success\"><strong>reload your application server</strong></a>."
+msgstr "Seuraavaksi: <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>aktivoi asennettu laajennus</strong></a> ja<a href=\"%(addon_reload_url)s\" class=\"text-success\"><strong>käynnistä järjestelmä uudelleen</strong></a>."
 
 msgid "Error"
 msgstr "Virhe"
