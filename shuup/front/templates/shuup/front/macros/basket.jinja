@@ -21,6 +21,9 @@
         {% if product %}
         <div class="product-image">
             {% set image = product.primary_image %}
+            {% if not image and product.variation_parent %}
+                {% set image = product.variation_parent.primary_image %}
+            {% endif %}
             {% if image %}
                 <a class="product-name"
                    href="{{ shuup.urls.model_url(product) }}">
