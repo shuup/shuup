@@ -90,6 +90,9 @@
                         <td>
                             {% if product %}
                                 {% set image = product.primary_image %}
+                                {% if not image and product.variation_parent %}
+                                    {% set image = product.variation_parent.primary_image %}
+                                {% endif %}
                                 {% if image %}
                                     <img class="img-responsive"
                                          src="{{ image|thumbnail(size=(70, 70)) }}"
