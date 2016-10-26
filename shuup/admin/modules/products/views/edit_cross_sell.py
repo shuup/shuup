@@ -18,9 +18,7 @@ from shuup.admin.base import MenuEntry
 from shuup.admin.forms.widgets import ProductChoiceWidget
 from shuup.admin.toolbar import PostActionButton, Toolbar
 from shuup.admin.utils.urls import get_model_url
-from shuup.core.models import (
-    Product, ProductCrossSell, ProductCrossSellType, ProductMedia
-)
+from shuup.core.models import Product, ProductCrossSell, ProductCrossSellType
 
 
 class ProductCrossSellForm(ModelForm):
@@ -49,7 +47,7 @@ class ProductCrossSellFormSet(BaseModelFormSet):
     validate_max = False
     max_num = DEFAULT_MAX_NUM
     absolute_max = DEFAULT_MAX_NUM
-    model = ProductMedia
+    model = ProductCrossSell
     can_delete = True
     can_order = False
     extra = 5

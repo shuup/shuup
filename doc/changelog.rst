@@ -21,6 +21,7 @@ Localization
 Admin
 ~~~~~
 
+- Fix bug in product cross-sell editview
 - Allow product attribute form extension through provides
 - Make form modifiers reusable. Users of `ShipmentFormModifier`
   should update any references to implement the
