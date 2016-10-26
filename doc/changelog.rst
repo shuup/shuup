@@ -37,6 +37,7 @@ Addons
 Front
 ~~~~~
 
+- Show variation parents in highlight plugins
 - Fallback to variation parent image for variation children
   in basket, checkout and saved carts.
 - Fix search result styling for products with long names
