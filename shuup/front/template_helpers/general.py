@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import math
+from collections import defaultdict
 
 import six
 from django.conf import settings
@@ -49,6 +50,7 @@ def get_listed_products(context, n_products, ordering=None, filter_dict=None, or
         customer=customer,
         language=get_language(),
     ).filter(**filter_dict)
+
     if ordering:
         products_qs = products_qs.order_by(ordering)
 
@@ -74,8 +76,14 @@ def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_
         shop_ids=[request.shop.pk],
         cutoff_days=cutoff_days
     )
-    product_ids = [d[0] for d in data][:n_products]
-
+    combined_variation_products = defaultdict(int)
+    for product_id, parent_id, qty in data:
+        if parent_id:
+            combined_variation_products[parent_id] += qty
+        else:
+            combined_variation_products[product_id] += qty
+    product_ids = [
+        d[0] for d in sorted(six.iteritems(combined_variation_products), key=lambda i: i[1], reverse=True)][:n_products]
     products = []
     if orderable_only:
         # get suppliers for later use
@@ -101,6 +109,9 @@ def get_newest_products(context, n_products=6, orderable_only=True):
         context,
         n_products,
         ordering="-pk",
+        filter_dict={
+            "variation_parent": None
+        },
         orderable_only=orderable_only,
     )
     products = cache_product_things(request, products)
@@ -114,6 +125,9 @@ def get_random_products(context, n_products=6, orderable_only=True):
         context,
         n_products,
         ordering="?",
+        filter_dict={
+            "variation_parent": None
+        },
         orderable_only=orderable_only,
     )
     products = cache_product_things(request, products)

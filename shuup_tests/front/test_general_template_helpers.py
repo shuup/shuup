@@ -128,19 +128,39 @@ def test_best_selling_products_with_multiple_orders():
     # Third product outsold by first two products
     assert product_3 not in general.get_best_selling_products(context, n_products=n_products)
 
+    children = [create_product("SimpleVarChild-%d" % x, supplier=supplier, shop=shop) for x in range(5)]
+    for child in children:
+        child.link_to_parent(product_3)
+        create_order_with_product(child, supplier, quantity=1, taxless_base_unit_price=price, shop=shop)
+    cache.clear()
+    # Third product now sold in greatest quantity
+    assert product_3 == general.get_best_selling_products(context, n_products=n_products)[0]
+
 
 @pytest.mark.django_db
 def test_get_newest_products():
-    populate_if_required()
+    supplier = get_default_supplier()
+    shop = get_default_shop()
+    products = [create_product("sku-%d" % x, supplier=supplier, shop=shop) for x in range(2)]
+    children = [create_product("SimpleVarChild-%d" % x, supplier=supplier, shop=shop) for x in range(2)]
+    for child in children:
+        child.link_to_parent(products[0])
     context = get_jinja_context()
-    assert len(list(general.get_newest_products(context, n_products=4))) == 4
+    # only 2 parent products exist
+    assert len(list(general.get_newest_products(context, n_products=10))) == 2
 
 
 @pytest.mark.django_db
 def test_get_random_products():
-    populate_if_required()
+    supplier = get_default_supplier()
+    shop = get_default_shop()    
+    products = [create_product("sku-%d" % x, supplier=supplier, shop=shop) for x in range(2)]
+    children = [create_product("SimpleVarChild-%d" % x, supplier=supplier, shop=shop) for x in range(2)]
+    for child in children:
+        child.link_to_parent(products[0])
     context = get_jinja_context()
-    assert len(list(general.get_random_products(context, n_products=4))) == 4
+    # only 2 parent products exist
+    assert len(list(general.get_random_products(context, n_products=10))) == 2
 
 
 @pytest.mark.django_db
