@@ -12,7 +12,9 @@
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
 # Juha Kujala <juha.kujala@shoop.io>, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
+# Panu Tulimäki <panu@shuup.com>, 2016
 # Rauli L. <rauli.laine@iki.fi>, 2015-2016
+# Sami Haltia <sami.haltia@anders.fi>, 2016
 # Shuup Admin <admin@shuup.com>, 2015-2016
 # Shuup Admin <admin@shuup.com>, 2016
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
@@ -23,9 +25,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-01 06:01+0000\n"
-"PO-Revision-Date: 2016-08-02 19:10+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"POT-Creation-Date: 2016-10-21 18:42+0000\n"
+"PO-Revision-Date: 2016-10-26 02:14+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,6 +38,19 @@ msgstr ""
 
 msgid "Home"
 msgstr "Koti"
+
+#, python-format
+msgid ""
+"Please enter a correct %(username)s and password. Note that both fields may "
+"be case-sensitive. In case of multiple accounts with same email only "
+"username can be used to login."
+msgstr "Syötä oikea %(username)s ja salasana. Huomaathan, että molemmissa kentissä voi olla isoja ja pieniä kirjaimia. Jos teillä on useita tilejä samalla sähköpostilla, niin vain käyttäjätunnusta voidaan käyttää kirjautumiseen."
+
+msgid "This account is inactive."
+msgstr "Tämä tili ei ole aktiivinen"
+
+msgid "Username or email address"
+msgstr "Käyttäjänimi tai sähköpostiosoite"
 
 msgid "Browse"
 msgstr "Selaa"
@@ -100,6 +115,12 @@ msgstr "Käytössä # Tuotetyypissä"
 msgid "Categories"
 msgstr "Kategoriat"
 
+msgid "Add a product category to organize your products"
+msgstr "Lisää tuotekategoria järjestääksesi tuotteet"
+
+msgid "Add a category"
+msgstr "Lisää kategoria"
+
 msgid "Primary Category"
 msgstr "Pääkategoria"
 
@@ -141,9 +162,6 @@ msgstr "Tila"
 msgid "Visibility"
 msgstr "Näkyvyys"
 
-msgid "Parent"
-msgstr "Isäntä"
-
 msgid "Contact Groups"
 msgstr "Kontaktiryhmät"
 
@@ -182,6 +200,43 @@ msgstr[1] "%(count)s jäsentä poistettu"
 
 msgid "Number of Members"
 msgstr "Jäsenien määrä"
+
+#, python-format
+msgid "User %(bind_user)s already has a contact"
+msgstr "Käyttäjällä %(bind_user)s on jo kontakti"
+
+msgid "Gender"
+msgstr "Sukupuoli"
+
+msgid "Merchant Notes"
+msgstr "Kauppiaan merkinnät"
+
+msgid "Website URL"
+msgstr "Verkkosivun osoite"
+
+msgid "Account Manager"
+msgstr "Tilin haltija"
+
+msgid "Company: Tax Number"
+msgstr "Yritys: Y-tunnus"
+
+msgid "Company: Members"
+msgstr "Yritys: Jäsenet"
+
+msgid "Select Language"
+msgstr "Valitse kieli"
+
+msgid "Language"
+msgstr "Kieli"
+
+msgid "Contact Group"
+msgstr "Kontaktiryhmä"
+
+msgid "Edit Contacts"
+msgstr "Muokkaa kontakteja"
+
+msgid "Set Contact Groups"
+msgstr "Aseta kontaktiryhmät"
 
 msgid "Basic Information"
 msgstr "Perustiedot"
@@ -229,6 +284,9 @@ msgstr "Deaktivoi kontakti"
 msgid "Activate Contact"
 msgstr "Aktivoi kontakti"
 
+msgid "Actions"
+msgstr "Toiminnot"
+
 msgid "Edit..."
 msgstr "Muokkaa..."
 
@@ -248,15 +306,17 @@ msgstr "aktiivinen"
 msgid "inactive"
 msgstr "passiivinen"
 
+msgid "New Company"
+msgstr "Lisää yritys"
+
+msgid "New Contact"
+msgstr "Uusi kontakti"
+
 msgid "Person"
 msgstr "Henkilö"
 
 msgid "Company"
 msgstr "Yritys"
-
-#, python-format
-msgid "User %(bind_user)s already has a contact"
-msgstr "Käyttäjällä %(bind_user)s on jo kontakti"
 
 msgid "Email"
 msgstr "Sähköposti"
@@ -296,6 +356,18 @@ msgstr "Puhelin: %s"
 #, python-format
 msgid "%d orders"
 msgstr "%d tilausta"
+
+msgid "Mass Edit: Contacts"
+msgstr "Massamuokkaus: Kontaktit"
+
+msgid "Contacts changed successfully"
+msgstr "Kontaktien muokkaus onnistui"
+
+msgid "Mass Edit: Contact Groups"
+msgstr "Massamuokkaus: Kontaktiryhmät"
+
+msgid "Contacts Groups changed successfully"
+msgstr "Kontaktiryhmien muokkaus onnistui"
 
 msgid "The contact does not have an associated user."
 msgstr "Kontaktilla ei ole liitettyä käyttäjää."
@@ -401,6 +473,15 @@ msgstr "Valitse toimitustapa."
 msgid "Please select payment method."
 msgstr "Valitse maksutapa."
 
+msgid "Cancel"
+msgstr "Peruuta"
+
+msgid "Print Confirmation PDF(s)"
+msgstr "Tulosta tilausvahvistus PDF:t"
+
+msgid "Print Delivery PDF(s)"
+msgstr "Tulosta lähete PDF:t"
+
 msgid "Payments"
 msgstr "Maksut"
 
@@ -413,17 +494,8 @@ msgstr "Lokimerkinnät"
 msgid "Shipments"
 msgstr "Lähetykset"
 
-msgid "Create Payment"
-msgstr "Luo maksu"
-
-msgid "Create Shipment"
-msgstr "Luo lähetys"
-
-msgid "Create Refund"
-msgstr "Luo hyvitys"
-
-msgid "Actions"
-msgstr "Toiminnot"
+msgid "Admin comment/notes"
+msgstr "Pääkäyttäjän kommentti/muistiinpanot"
 
 msgid "Set Complete"
 msgstr "Aseta käsitellyksi"
@@ -442,6 +514,15 @@ msgstr "Muokkaa tilausta"
 
 msgid "This order cannot modified at this point"
 msgstr "Tätä tilausta ei voi muokata tällä hetkellä"
+
+msgid "Create Payment"
+msgstr "Luo maksu"
+
+msgid "Create Shipment"
+msgstr "Luo lähetys"
+
+msgid "Create Refund"
+msgstr "Luo hyvitys"
 
 msgid "Unable to set order as completed at this point"
 msgstr "Tilausta ei voi asettaa käsitellyksi tällä hetkellä"
@@ -516,7 +597,7 @@ msgid "Amount"
 msgstr "Määrä"
 
 msgid "Total incl. tax to refund"
-msgstr ""
+msgstr "Hyvityksen verollinen kokonaissumma"
 
 msgid "Restock products"
 msgstr "Uudelleenvarastoi tuotteet"
@@ -538,7 +619,7 @@ msgid "Refund amount exceeds order amount."
 msgstr "Hyvityksen määrä on suurempi kuin tilauksen summa."
 
 msgid "Refund amounts should match sign on parent line."
-msgstr ""
+msgstr "Hyvitysten summan tulee täsmätä isäntä rivin kanssa."
 
 msgid "Refund created."
 msgstr "Hyvitys luotu."
@@ -546,9 +627,6 @@ msgstr "Hyvitys luotu."
 #, python-format
 msgid "Create Full Refund -- %s"
 msgstr "Luo kokonaishyvitys -- %s"
-
-msgid "Cancel"
-msgstr "Peruuta"
 
 msgid "Could not create full refund."
 msgstr "Ei voitu luoda hyvitystä."
@@ -566,9 +644,16 @@ msgstr "Toimittaja"
 msgid "No products to ship."
 msgstr "Ei toimitettavia tuotteita."
 
+msgid "Shipping address is not set."
+msgstr "Toimitusosoitetta ei ole asetettu."
+
 #, python-format
 msgid "Shipment %s created."
 msgstr "Lähetys %s luotu."
+
+#, python-format
+msgid "Shipment %s has been deleted."
+msgstr "Toimitus %s on poistettu."
 
 msgid "Permission Groups"
 msgstr "Käyttöoikeusryhmät"
@@ -598,16 +683,28 @@ msgstr "Luo tuote \"%s\""
 msgid "Create Product with SKU \"%s\""
 msgstr "Luo tuote tuotekoodilla \"%s\""
 
+msgid "Add a product"
+msgstr "Lisää tuote"
+
+msgid "Import products"
+msgstr "Tuo tuotteita"
+
+msgid "Add a product to see it in your store"
+msgstr "Lisää tuote kauppaan"
+
+msgid "Given value is already in use, please use unique SKU and try again."
+msgstr "Annettu arvon on jo käytössä, ole hyvä ja tarkista että tuotenumero ei ole käytössä."
+
 msgid ""
 "Number of units that can be purchased after the product is out of stock. Set"
 " to blank for product to be purchasable without limits"
-msgstr ""
+msgstr "Tuotemäärä joka voidaan vielä ostaa kun tuotetta ei ole varastossa. Aseta tyhjäksi mikäli jälkimyyntiä ei haluta rajoittaa."
 
 msgid "Minimum Purchase Quantity must be greater than 0."
 msgstr "Minimiostomäärän tulee olla vähintään 0."
 
 msgid "Backorder maximum must be greater than or equal to 0."
-msgstr ""
+msgstr "Jälkimyynniin maksimi. Arvon täytää olla positivinen tai 0."
 
 #, python-format
 msgid "Thumbnail generation of %(media)s failed: %(error)s"
@@ -650,6 +747,18 @@ msgstr "Tuotteiden %(product)s  linkittäminen epäonnistui: %(error)s"
 
 msgid "variable combination"
 msgstr "muuttujayhdistelmä"
+
+msgid "Set visible"
+msgstr "Aseta näkyväksi"
+
+msgid "Set invisible"
+msgstr "Aseta pois näkyvistä"
+
+msgid "Export CSV"
+msgstr "Tuo CSV"
+
+msgid "Edit products"
+msgstr "Muokkaa tuotteita"
 
 #, python-format
 msgid "%s has been marked deleted."
@@ -736,6 +845,15 @@ msgstr "Rajaa viivakoodin mukaan"
 msgid "Mode"
 msgstr "Tila"
 
+msgid "Purchasable"
+msgstr "Tilattavissa"
+
+msgid "Mass Edit: Products"
+msgstr "Massamuokkaus: Tuotteet"
+
+msgid "Products changed successfully"
+msgstr "Tuotteiden muokkaus onnistui"
+
 msgid "Save as a copy"
 msgstr "Tallenna kopiona"
 
@@ -816,6 +934,18 @@ msgstr "Palveluntarjoajat"
 msgid "Payment and Shipping"
 msgstr "Maksaminen ja toimitus"
 
+msgid "Service name"
+msgstr "Palvelun nimi"
+
+msgid "The name shown in the shop checkout process."
+msgstr "Nimi näytetään kassalla."
+
+msgid "Instructions"
+msgstr "Ohjeet"
+
+msgid "additional instructions shown in the shop checkout process."
+msgstr "lisätiedot näytetään kassalla."
+
 #, python-format
 msgid "Edit %(model)s"
 msgstr "Muokkaa %(model)s"
@@ -824,11 +954,26 @@ msgstr "Muokkaa %(model)s"
 msgid "Create {service_name}"
 msgstr "Luo {service_name}"
 
-msgid "Shipping Methods"
-msgstr "Toimitustavat"
+msgid "Provider"
+msgstr "Palveluntarjoaja"
+
+msgid "Please add shipping methods for your shop"
+msgstr "Ole hyvä ja aseta toimitustavat"
+
+msgid "Carrier"
+msgstr "Kuljetusliike"
 
 msgid "Payment Methods"
 msgstr "Maksutavat"
+
+msgid "Please add payment methods for your shop"
+msgstr "Ole hyvä ja aseta maksutavat"
+
+msgid "Payment Processor"
+msgstr "Maksupalvelun tarjoaja"
+
+msgid "Shipping Methods"
+msgstr "Toimitustavat"
 
 msgid "Service"
 msgstr "Palvelu"
@@ -854,14 +999,11 @@ msgstr "Käytössä"
 msgid "Shop"
 msgstr "Kauppa"
 
-msgid "Carrier"
-msgstr "Kuljetusliike"
-
-msgid "Payment Processor"
-msgstr "Maksupalvelun tarjoaja"
-
 msgid "Weight-based pricing range"
 msgstr "Painon mukaan määräytyvä hinnoittelu"
+
+msgid "Settings saved"
+msgstr "Asetukset tallennettu"
 
 msgid "Shops"
 msgstr "Kaupat"
@@ -870,8 +1012,49 @@ msgid ""
 "This field cannot be changed since there are existing orders for this shop."
 msgstr "Tätä kenttää ei voi muuttaa, koska tälle kaupalle on olemassa tilauksia."
 
+msgid "Currency"
+msgstr "Valuutta"
+
+msgid "Languages"
+msgstr "Kielet"
+
+msgid "Supported Languages"
+msgstr "Tuetut kielet"
+
+msgid "Shop name"
+msgstr "Kaupan nimi"
+
+msgid ""
+"Show storefront products with tax pre-calculated into the price. Note this "
+"behavior can be overridden for customer groups."
+msgstr "Näytä kaupan hinnat verottomina (hallinta). Kontaktiryhmillä voi erikseen säätää loppukäyttäjälle näytettävät hinnat."
+
+msgid "Shop Owner Name"
+msgstr "Kaupan omistajan nimi"
+
+msgid "Zip/Postal code"
+msgstr "Postinumero"
+
+msgid "State/Province"
+msgstr "Osavaltio"
+
+msgid "There are still some pending actions to complete!"
+msgstr "Et ole vielä suorittanut kaikki vaiheita!"
+
+msgid "Your store is now live!"
+msgstr "Kauppasi on nyt auki!"
+
 msgid "Domain"
 msgstr "Verkkotunnus"
+
+msgid "Please select the languages supported by your shop"
+msgstr "Ole hyvä ja valitse kielet kaupallesi"
+
+msgid "Please enter your shop details"
+msgstr "Ole hyvä ja aseta kaupan tiedot"
+
+msgid "Default Tax Class"
+msgstr "Perus veroluokka"
 
 msgid "Suppliers"
 msgstr "Toimittajat"
@@ -912,6 +1095,12 @@ msgstr "Määrä"
 msgid "Users"
 msgstr "Käyttäjät"
 
+msgid "Add some users to help manage your shop"
+msgstr "Lisää käyttäjiä kaupan hallintaan"
+
+msgid "Add a user"
+msgstr "Lisää käyttäjä"
+
 msgid "Password"
 msgstr "Salasana"
 
@@ -948,9 +1137,6 @@ msgstr "Muokkaa oikeuksia"
 msgid "Contact Details"
 msgstr "Yhteystiedot"
 
-msgid "New Contact"
-msgstr "Uusi kontakti"
-
 msgid "Create a new contact and associate it with this user"
 msgstr "Luo uusi kontakti ja liitä se tähän käyttäjään"
 
@@ -961,7 +1147,7 @@ msgid "Deactivate User"
 msgstr "Deaktivoi käyttäjä"
 
 msgid "Login as User"
-msgstr ""
+msgstr "Kirjaudu käyttäjänä"
 
 #, python-format
 msgid "User bound to contact %(contact)s."
@@ -972,17 +1158,17 @@ msgid "%(user)s is now %(state)s."
 msgstr "%(user)s on nyt %(state)s."
 
 msgid "No shop configured."
-msgstr ""
+msgstr "Kauppaa ei ole konfiguroitu."
 
 msgid "You are already logged in."
-msgstr ""
+msgstr "Olet jo kirjautunut sisään."
 
 msgid "This user is not active."
-msgstr ""
+msgstr "Tämä käyttäjä ei ole aktiivinen."
 
 #, python-brace-format
 msgid "You're now logged in as {username}"
-msgstr ""
+msgstr "Olet nyt kirjautunut käyttäjänä {username}"
 
 msgid "Username"
 msgstr "Käyttäjänimi"
@@ -1084,6 +1270,9 @@ msgstr "Kirjaudu uudelleen"
 msgid "Visit shop"
 msgstr "Vieraile kaupassa."
 
+msgid "Quicklinks"
+msgstr "Pikalinkit"
+
 msgid "Menu"
 msgstr "Valikko"
 
@@ -1092,6 +1281,9 @@ msgstr "Kojelauta"
 
 msgid "Search for"
 msgstr "Etsi"
+
+msgid "Support ID: "
+msgstr "Tukinumero: "
 
 msgid "Hello"
 msgstr "Hei"
@@ -1120,17 +1312,17 @@ msgstr "Lisää jäseniä"
 msgid "Add more"
 msgstr "Lisää enemmän"
 
-msgid "Shipping address"
-msgstr "Toimitusosoite"
-
-msgid "No shipping address defined."
-msgstr "Toimitusosoitetta ei ole asetettu."
-
 msgid "Billing address"
 msgstr "Laskutusosoite"
 
 msgid "No billing address defined."
 msgstr "Laskutusosoitetta ei ole asetettu."
+
+msgid "Shipping address"
+msgstr "Toimitusosoite"
+
+msgid "No shipping address defined."
+msgstr "Toimitusosoitetta ei ole asetettu."
 
 msgid "Full Name"
 msgstr "Koko nimi"
@@ -1144,14 +1336,11 @@ msgstr "Sidottu käyttäjä"
 msgid "Companies"
 msgstr "Yritykset"
 
-msgid "Account Manager"
-msgstr "Tilin haltija"
-
-msgid "Merchant Notes"
-msgstr "Kauppiaan merkinnät"
-
 msgid "No members."
 msgstr "Ei jäseniä."
+
+msgid "Use billing address as shipping address"
+msgstr "Käytä laskutusosoitetta toimitusosoitteena"
 
 msgid "Billing Address"
 msgstr "Laskutusosoite"
@@ -1184,17 +1373,40 @@ msgstr "Syöte"
 msgid "Shuup %(version)s"
 msgstr "Shuup %(version)s"
 
+msgid "Table Columns"
+msgstr "Taulun sarakkeet"
+
+msgid "Welcome to Shuup!"
+msgstr "Tervetuloa Shuuppiin!"
+
+msgid ""
+"You're almost done! Complete the following steps to sell your products "
+"online"
+msgstr "Olet melkein valmis! Suorita seuraavat vaiheet aloittaaksesi kaupanteon."
+
 msgid "Date"
 msgstr "Päivämäärä"
 
 msgid "Order Status"
 msgstr "Tilauksen tila"
 
+msgid "Save and Exit"
+msgstr "Tallenna ja poistu"
+
 msgid "Edit"
 msgstr "Muokkaa"
 
 msgid "Upload"
 msgstr "Lataa"
+
+msgid "Comment"
+msgstr "Kommentti"
+
+msgid "Save comment"
+msgstr "Tallenna kommentti"
+
+msgid "There was an error updating the admin comment."
+msgstr "Kommentin päivitys ei onnistunut."
 
 msgid "Description"
 msgstr "Kuvaus"
@@ -1209,7 +1421,7 @@ msgid "Taxless Discount"
 msgstr "Veroton alennus"
 
 msgid "Taxless Discount Percentage"
-msgstr ""
+msgstr "Veroton alennusprosentti"
 
 msgid "Tax"
 msgstr "Vero"
@@ -1247,8 +1459,16 @@ msgstr "Seurantakoodi"
 msgid "Created"
 msgstr "Luotu"
 
+msgid "Delete"
+msgstr "Poista"
+
 msgid "No shipments have been created yet."
 msgstr "Toimituksia ei ole vielä luotu."
+
+msgid ""
+"Shipped shipments should not be deleted. Deletion will affect products "
+"physical stock count. Delete anyway?"
+msgstr "Toimitettuja toimituksia ei tule poistaa. Poistaminen vaikuttaa tuotteet fyysiseen saldoon. Vahvista poisto."
 
 msgid "Line #"
 msgstr "Rivi #"
@@ -1334,14 +1554,11 @@ msgstr "Virhe!"
 msgid "Additional Details"
 msgstr "Lisätietoja"
 
-msgid "Accounting"
-msgstr "Kirjanpito"
-
-msgid "Physical Properties"
-msgstr "Fyysiset ominaisuudet"
-
 msgid "Manufacturer"
 msgstr "Valmistaja"
+
+msgid "Shipping & Payment"
+msgstr "Toimitukset & Maksaminen"
 
 #, python-format
 msgid "Product image %(index)s"
@@ -1360,9 +1577,6 @@ msgstr "Aseta pääkuvaksi"
 msgid "No image"
 msgstr "Ei kuvaa"
 
-msgid "Delete"
-msgstr "Poista"
-
 msgid "Advanced options"
 msgstr "Edistyneet asetukset"
 
@@ -1378,14 +1592,8 @@ msgstr "Lisää uusi kuva"
 msgid "Add new media"
 msgstr "Lisää uusi media"
 
-msgid "Purchasing"
-msgstr "Ostaminen"
-
-msgid "Shipping & Payment"
-msgstr "Toimitukset & Maksaminen"
-
 msgid "No orders found"
-msgstr ""
+msgstr "Tilauksia ei löytynyt"
 
 msgid "This product is currently not orderable."
 msgstr "Tämä tuote ei ole tällä hetkellä tilattavissa."
@@ -1438,6 +1646,24 @@ msgid ""
 "To create a variation with multiple variables, create the variables on the "
 "Variables tab and then link them to products here."
 msgstr "Luodaksesi variaation useammalla muuttujalla, luo muuttujat Muuttujat-välilehdellä ja linkitä ne sitten täällä tuotteisiin."
+
+msgid "Manually process payments"
+msgstr "Käsittele maksut käsin"
+
+msgid "Manage payments outside of Shuup"
+msgstr "Hallitse maksuja Shuupin ulkopuolella"
+
+msgid "Manual"
+msgstr "Käsin"
+
+msgid "Manual process shipping"
+msgstr "Käsittele maksu käsin"
+
+msgid "Handle shipping outside of Shuup"
+msgstr "Hallitse toimituksia Shuupin ulkopuolella"
+
+msgid "Activate"
+msgstr "Aktivoi"
 
 msgid ""
 "Define price based basket weight range. Range minimum is counted in range "
@@ -1539,6 +1765,13 @@ msgstr "Lähetä salasananpalautussähköposti osoitteeseen %(email)s?"
 msgid "Send Reset Email"
 msgstr "Lähetä palautussähköposti"
 
+msgid ""
+"Please fill out the following information to get your store up and running"
+msgstr "Ole hyvä ja täytä seuraavat tiedot avataksesi kaupan"
+
+msgid "Setup can be continued later from the admin dashboard"
+msgstr "Asennusta voidaan jatkaa myöhemmin hallinnasta"
+
 msgid "Create new"
 msgstr "Luo uusi"
 
@@ -1548,9 +1781,6 @@ msgstr "Uusi %(model)s"
 
 msgid "Discard Changes"
 msgstr "Hylkää muutokset"
-
-msgid "Save and Exit"
-msgstr "Tallenna ja poistu"
 
 msgid "Save and Create New"
 msgstr "Tallenna ja luo uusi"
@@ -1565,6 +1795,12 @@ msgstr "Näytetään %(per_page)s/%(n_items)s %(verbose_name_plural)s-kohdetta"
 
 msgid "objects"
 msgstr "esineet"
+
+msgid "Unknown error"
+msgstr "Tuntematon virhe"
+
+msgid "Mass Action"
+msgstr "Massatoiminto"
 
 #, python-format
 msgid "Can't view this page. %(reason)s"
@@ -1602,6 +1838,24 @@ msgstr "Nimeämätön %s"
 #, python-format
 msgid "Only one %(model)s permitted."
 msgstr "Vain yksi %(model)s sallittu"
+
+msgid "Mass Edit"
+msgstr "Massamuokkaus"
+
+msgid "Complete the setup wizard"
+msgstr "Viimeistele kaupan asennus"
+
+msgid "Complete wizard"
+msgstr "Viimeistele asennus"
+
+msgid "Publish your store"
+msgstr "Julkaise kauppa"
+
+msgid "Let customers browse your store and make purchases"
+msgstr "Salli käyttäjän selata kauppaa ja tehdä tilauksia"
+
+msgid "Publish shop"
+msgstr "Julkaise kauppa"
 
 #, python-format
 msgid "Couldn't get selections for %s."

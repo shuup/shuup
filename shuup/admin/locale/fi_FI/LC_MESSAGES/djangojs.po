@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-29 18:55+0000\n"
-"PO-Revision-Date: 2016-08-02 18:58+0000\n"
+"POT-Creation-Date: 2016-10-21 18:42+0000\n"
+"PO-Revision-Date: 2016-10-25 23:31+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
@@ -160,6 +160,9 @@ msgstr "Puhelin"
 
 msgid "Email"
 msgstr "Sähköposti"
+
+msgid "Tax Number"
+msgstr "Y-tunnus"
 
 msgid "Groups"
 msgstr "Ryhmät"
@@ -324,6 +327,9 @@ msgid ""
 "line."
 msgstr "Hae tuotetta nimellä, tuotenumerolla tai viivakoodilla ja paina nappia lisätäksesi tuoterivin."
 
+msgid "Automatically add selected product"
+msgstr "Lisää valitut tuotteet automaattisesti"
+
 msgid "No shipping method"
 msgstr "Ei toimitustapaa"
 
@@ -385,9 +391,6 @@ msgstr "Lisää uusi arvo"
 msgid "Variable Name"
 msgstr "Muuttujan nimi"
 
-msgid "DELETE"
-msgstr "POISTA"
-
 msgid "Variable"
 msgstr "Muuttuja"
 
@@ -437,6 +440,9 @@ msgstr "Ei tuloksia."
 msgid "Searching..."
 msgstr "Haetaan..."
 
+msgid "Mass actions"
+msgstr "Massatoiminnot"
+
 msgid "From"
 msgstr "Mistä"
 
@@ -477,6 +483,15 @@ msgstr "Rajaa: %s"
 msgid "Filters"
 msgstr "Suodattimet"
 
+msgid "Select Action"
+msgstr "Valitse toiminto"
+
+msgid "Mass Action complete."
+msgstr "Massatoiminto valmis."
+
+msgid "You haven't selected anything"
+msgstr "Et ole tehnyt valintaa."
+
 msgid "Are you sure you want to delete this media?"
 msgstr "Oletko varma, että haluat poistaa tämän median?"
 
@@ -506,3 +521,6 @@ msgstr "Editori"
 
 msgid "Done"
 msgstr "Valmis"
+
+msgid "Skip Setup"
+msgstr "Ohita asennus"
