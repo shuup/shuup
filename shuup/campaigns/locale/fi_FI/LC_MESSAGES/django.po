@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-27 23:53+0000\n"
+"POT-Creation-Date: 2016-10-07 03:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>, 2016\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2016\n"
 "Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/teams/55306/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,6 +38,18 @@ msgstr "Kupongit"
 
 msgid "Show Coupons"
 msgstr "Näytä kupongit"
+
+msgid "Set up a sales campaign"
+msgstr "Aseta myyntikampanja"
+
+msgid "Add a basket campaign"
+msgstr "Lisää korikampanja"
+
+msgid "Add a catalog campaign"
+msgstr "Lisää katalogikampanja"
+
+msgid "Add a coupon"
+msgstr "Lisää kuponki"
 
 msgid "Minimum value"
 msgstr "Minimiarvo"
@@ -72,6 +84,9 @@ msgstr "Tee koodi"
 msgid "Discount Code already in use."
 msgstr "Alennuskoodi on jo käytössä."
 
+msgid "Active Campaigns"
+msgstr "Aktivoi kampanjat"
+
 msgid "Catalog Campaign"
 msgstr "Katalogikampanja"
 
@@ -99,17 +114,8 @@ msgstr "Kyllä"
 msgid "CatalogCampaign"
 msgstr "Katalogikampanja"
 
-msgid "Used Conditions"
-msgstr "Käytetyt ehdot"
-
-msgid "Used filters"
-msgstr "Käytetyt suodattimet"
-
 msgid "Create new Catalog Campaign"
 msgstr "Luo uusi katalogikampanja"
-
-msgid "Discount Code"
-msgstr "Alennuskoodi"
 
 msgid "Create new Basket Campaign"
 msgstr "Luo uusi korikampanja"
@@ -417,14 +423,17 @@ msgstr "Kampanjakorialennukset"
 msgid "Coupon Code:"
 msgstr "Kuponkikoodi:"
 
-msgid "Category is used in the rules of an active basket campaign."
-msgstr ""
-
-msgid "Category is used in the rules of an active catalog campaign."
-msgstr ""
-
 msgid "General Information"
 msgstr "Yleiset tiedot"
+
+msgid "Name"
+msgstr "Nimi"
+
+msgid "Not set"
+msgstr "Ei asetettu"
+
+msgid "No campaigns found"
+msgstr "Kampanjoita ei löytynyt"
 
 msgid "Rules"
 msgstr "Säännöt"

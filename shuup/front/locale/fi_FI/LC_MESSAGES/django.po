@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
@@ -22,11 +22,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-04 18:53+0000\n"
-"PO-Revision-Date: 2016-08-04 12:57-0700\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
-"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
-"language/fi_FI/)\n"
+"POT-Creation-Date: 2016-10-25 00:49+0000\n"
+"PO-Revision-Date: 2016-10-26 02:19+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -38,6 +37,7 @@ msgstr ""
 msgid "Abandoned Cart Value"
 msgstr "Hylättyjen ostoskorien arvo"
 
+#, python-brace-format
 msgid "Based on {b} carts over the last {d} days"
 msgstr "Perustuen {b} koriin viimeisen {d} päivän aikana"
 
@@ -83,17 +83,17 @@ msgstr "Tilattu"
 msgid "Shuup Frontend - Saved Baskets"
 msgstr "Shuup Frontend - Tallennetut ostoskorit"
 
+msgid "Saved Carts"
+msgstr "Tallennetut ostoskorit"
+
 msgid "Home"
 msgstr "Koti"
 
+msgid "Dashboard"
+msgstr "Kojelauta"
+
 msgid "My Saved Carts"
 msgstr "Tallennetut ostoskorit"
-
-msgid "Add all products to cart"
-msgstr "Lisää kaikki tuotteet koriin"
-
-msgid "Delete cart"
-msgstr "Poista ostoskori"
 
 msgid "Product"
 msgstr "Tuote"
@@ -103,9 +103,6 @@ msgstr "Määrä"
 
 msgid "Price"
 msgstr "Hinta"
-
-msgid "Saved Carts"
-msgstr "Tallennetut ostoskorit"
 
 msgid "Title"
 msgstr "Otsikko"
@@ -118,6 +115,12 @@ msgstr "Tiedot"
 
 msgid "You haven't saved any carts yet."
 msgstr "Sinulla ei vielä ole yhtään tallennettua ostoskoria."
+
+msgid "Add all products to cart"
+msgstr "Lisää kaikki tuotteet koriin"
+
+msgid "Delete cart"
+msgstr "Poista ostoskori"
 
 msgid "Please enter a basket title."
 msgstr "Ole hyvä ja anna ostoskorin otsikko."
@@ -174,6 +177,18 @@ msgstr "Ei voi käyttää veronumeroa ilman yrityksen nimeä"
 msgid "Addresses"
 msgstr "Osoitteet"
 
+msgid "Checkout as Guest"
+msgstr "Tilaa vieraana"
+
+msgid "Register"
+msgstr "Rekisteröidy"
+
+msgid "Register with us for future convenience"
+msgstr "Rekisteröidy verkkokauppamme ja helpota tulevaa asiointia"
+
+msgid "Checkout Method Choice"
+msgstr "Tilaustavan valinta"
+
 msgid "I accept the terms and conditions"
 msgstr "Hyväksyn ehdot"
 
@@ -182,6 +197,11 @@ msgstr "Haluan tilata uutiskirjeen"
 
 msgid "Comment"
 msgstr "Kommentti"
+
+msgid ""
+"There has been a change in product availability. Please review your cart and"
+" reconfirm your order."
+msgstr "Tuotteen saatavuus on muuttunut. Ole hyvä ja tarkista ostoskori ennen tilauksen vahvistamista."
 
 msgid "Confirmation"
 msgstr "Vahvistus"
@@ -198,20 +218,117 @@ msgstr "maksutapa"
 msgid "Shipping & Payment"
 msgstr "Toimitukset & Maksaminen"
 
-msgid "Company name"
-msgstr "Yrityksen nimi"
+msgid "Sort products by name"
+msgstr "Järjestä tuotteet nimen mukaan"
 
-msgid "Tax number"
-msgstr "veronumero"
+msgid "Ordering for sort by name"
+msgstr "Järjestysnumero nimen mukaan valinnalle"
 
-msgid "Shipping method"
-msgstr "Toimitustapa"
+msgid "Sort"
+msgstr "Järjestä"
 
-msgid "Payment method"
-msgstr "Maksutapa"
+msgid "Name - A-Z"
+msgstr "Nimet - A-Z"
 
-msgid "Please send me marketing correspondence"
-msgstr "Lähettäkää minulle markkinointimateriaalia, kiitos"
+msgid "Name - Z-A"
+msgstr "Nimet - Z-A"
+
+msgid "Sort products by price"
+msgstr "Järjestä tuotteet hinnan mukaan"
+
+msgid "Ordering for sort by price"
+msgstr "Järjestysnumero hinnan mukaan valinnalle"
+
+msgid "Price - Low to High"
+msgstr "Hinta - Pienimmästä suurimpaan"
+
+msgid "Price - High to Low"
+msgstr "Hinta - Suurimmasta pienimpään"
+
+msgid "Sort products by date created"
+msgstr "Järjestä tuotteet luontipäivän mukaan"
+
+msgid "Ordering for sort by date created"
+msgstr "Järjestysnumero uusin ensin valinnalle"
+
+msgid "Date created"
+msgstr "Luontipäivä"
+
+msgid "Sort products by date created - oldest first"
+msgstr "Järjestä tuotteet luontipäivän mukaan - vanhin ensin"
+
+msgid "Ordering for sort by date created - oldest first"
+msgstr "Järjestysnumero vanhin ensin valinnalle"
+
+msgid "Date created - oldest first"
+msgstr "Luontipäivä - vanhin ensin"
+
+msgid "Filter products by manufacturer"
+msgstr "Suodata tuotteet valmistajan mukaan"
+
+msgid "Ordering for filter by manufacturer"
+msgstr "Järjestysnumero valmistajan mukaan järjestämiselle"
+
+msgid "Manufacturers"
+msgstr "Valmistajat"
+
+msgid "Filter products by category"
+msgstr "Suodata tuotteet kategorian mukaan"
+
+msgid "Ordering for filter by category"
+msgstr "Järjestysnumero kategorian mukana järjestämiselle"
+
+msgid "Categories"
+msgstr "Kategoriat"
+
+msgid "Limit page size"
+msgstr "Rajaa sivun kokoa"
+
+msgid "Ordering for limit page size"
+msgstr "Järjestysnumero sivun koon rajoitukselle"
+
+msgid "Products per page"
+msgstr "Tuotteita sivulla"
+
+msgid "Filter products by variation"
+msgstr "Suodata variaatioiden mukaan"
+
+msgid "Ordering for filter by variation"
+msgstr "Järjestysnumero variaation mukaan järjestämiselle"
+
+msgid "Filter products by price"
+msgstr "Suodata tuotteita hinnan mukaan"
+
+msgid "Ordering for filter by price"
+msgstr "Järjestysnumero hinnan mukaan järjestämiselle"
+
+msgid "Price range minimum"
+msgstr "Hintavälin alaraja"
+
+msgid ""
+"Set minimum price for filter. First range will be from zero to this value."
+msgstr "Aseta suodattimsen minimihinta. Ensimmäisen hintaväli on nollasta tähän arvoon."
+
+msgid "Price range maximum"
+msgstr "Hintavälin yläraja"
+
+msgid ""
+"Set maximum price for filter. Last range will include this value and above."
+msgstr "Aseta suodattamisen maksimihinta. Viimeinen hintaväli on tästä arvosta ylöspäin."
+
+msgid "Price range step"
+msgstr "Hintavälin koko"
+
+msgid "Set step for ranges. The second range is from min price to this value."
+msgstr "Aseta hintavälin koko. Toinen hintaväli on minimihinnasta tähän arvoon."
+
+#, python-format
+msgid "Under %(min_limit)s"
+msgstr "Alle %(min_limit)s"
+
+#, python-format
+msgid "%(max_limit)s & Above"
+msgstr "%(max_limit)s & Yli"
 
 msgid "Logged out since this account is inactive."
 msgstr "Tämä tili ei ole aktiivinen"
@@ -270,41 +387,173 @@ msgstr "tuotteiden_määrä"
 msgid "products"
 msgstr "tuotteet"
 
-msgid "Shop is currently in maintenance mode."
-msgstr "Kauppa on tällä hetkellä huoltotilassa."
+msgid "Order Received"
+msgstr "Tilaus vastaanotettu"
 
-msgid ""
-"There were errors on submitted form fields. Please check them and try again."
-msgstr ""
-"Lähetetyissä lomakekentissä oli virheitä. Ole hyvä ja tarkista ne ja yritä "
-"uudelleen."
+msgid "Order"
+msgstr "Tilaus"
 
-msgid "Product added to cart"
-msgstr "Tuote lisätty koriin"
+msgid "Customer Email"
+msgstr "Asiakkaan sähköposti"
 
-msgid "There was an error adding the product to the basket"
-msgstr "Tuotteen lisääminen ostoskoriin epäonnistui"
+msgid "Customer Phone"
+msgstr "Asiakkaan puhelinnumero"
+
+msgid "Language"
+msgstr "Kieli"
+
+msgid "Shipment Created"
+msgstr "Toimitus luotu"
+
+msgid "Shipment"
+msgstr "Toimitus"
+
+msgid "Order Shipping Status"
+msgstr "Tilauksen toimituksen tila"
+
+msgid "Shipment Status"
+msgstr "Toimituksen tila"
+
+msgid "Shipment Deleted"
+msgstr "Toimitus poistettu"
+
+msgid "Payment Created"
+msgstr "Maksusuoritus luotu"
+
+msgid "Order Payment Status"
+msgstr "Tilauksen maksun tila"
+
+msgid "Payment"
+msgstr "Maksu"
+
+msgid "Refund Created"
+msgstr "Hyvitys luotu"
+
+msgid "Product list sorts and filters"
+msgstr "Tuotelistojen järjestäminen ja suodatus"
 
 msgid "Shopping cart"
 msgstr "Ostoskori"
 
 msgid "Your shopping cart is empty."
-msgstr "Ostoskorisi on tyhjä"
+msgstr "Ostoskorisi on tyhjä."
 
 msgid "Back to Products"
-msgstr "Takaisin tuotelistaukseen"
+msgstr "Takaisin tuotteisiin"
 
 msgid "There were errors on following items"
-msgstr "Seuraavissa kohdissa oli virheitä"
+msgstr "Seuraavien tuotteiden kohdalla tapahtui virhe."
 
 msgid "You are unable to proceed to checkout!"
-msgstr "Et voi jatkaa kassalle!"
+msgstr "Et voi siirtyä kassalle!"
+
+msgid "Checkout"
+msgstr "Kassa"
+
+msgid "Log in"
+msgstr "Kirjaudu sisään"
+
+msgid "Forgot your password?"
+msgstr "Unohditko salasanasi?"
+
+msgid "There are errors"
+msgstr "Virhe"
+
+msgid "My Dashboard"
+msgstr "Kojelauta"
+
+msgid "Bad Request"
+msgstr "Epäkelpo pyyntö"
+
+msgid "Unfortunately the server couldn't process your request."
+msgstr "Valitettavasti sivulatauksen käsittely ei onnistu juuri tällä hetkellä."
+
+msgid "Back to Homepage"
+msgstr "Takaisin etusivulle"
+
+msgid "Permission Denied"
+msgstr "Pääsy evätty"
+
+msgid "Unfortunately you didn't have permission to display this page."
+msgstr "Valitettavasti käyttöoikeutesi eivät riitä tämän sivun katseluun."
+
+msgid "Page not Found"
+msgstr "Sivua ei löytynyt"
+
+msgid "Unfortunately the page you were looking for does not exist."
+msgstr "Etsimääsi sivua ei valitettavasti löytynyt."
+
+msgid "Internal Server Error"
+msgstr "Sisäinen palvelinvirhe"
+
+msgid ""
+"Unfortunately an internal server error occurred. Try refreshing the page or "
+"try again later."
+msgstr "Valitettavasti sivulataus epäonnistui. Voit uudelleenladata sivun tai yrittää myöhemmin uudelleen."
+
+msgid "Welcome to Shuup!"
+msgstr "Tervetuloa Shuuppiin!"
+
+#, python-format
+msgid "Welcome to %(name)s!"
+msgstr "Tervetuloa %(name)s!"
+
+msgid "your shop"
+msgstr "kauppasi"
+
+msgid ""
+"You are seeing this page because there is no theme selected for the default "
+"frontend."
+msgstr "Näet tämän sivun, koska kaupalle ei ole vielä valittu teemaa."
+
+msgid "Log in to the administration interface"
+msgstr "Kirjaudu kaupan hallintaan"
+
+msgid "to choose a theme and set up your shop."
+msgstr "valitaksesi teeman ja pystyttääksesi kauppasi."
+
+msgid ""
+"The administration interface does not seem to be available. Use other means "
+"to choose a theme."
+msgstr "Hallintakäyttöliittymä ei ole saatavilla. Käytä jotain muuta tapaa valitaksesi teeman."
+
+msgid "You are not an administrator"
+msgstr "Et ole ylläpitäjä"
+
+msgid "ask an administrator to select a theme."
+msgstr "pyydä ylläpitäjää valitsemaan teema."
+
+msgid "Product added to cart"
+msgstr "Tuote lisätty koriin"
+
+msgid "There was an error adding the product to the basket"
+msgstr "Virhe lisättäessä tuotetta koriin"
+
+msgid "Qty"
+msgstr "Määrä"
+
+msgid "Remove product from basket"
+msgstr "Poista tuote ostoskorista"
+
+msgid ""
+"The following items are not currently available (or are not available in the"
+" desired quantity) and cannot be included in your order."
+msgstr "Seuraavat tuotteet ei ole juuri nyt saatavilla (tai tilattava määrä ei ole sallittu)."
 
 msgid "Continue Shopping"
 msgstr "Jatka ostoksia"
 
 msgid "Proceed to checkout"
 msgstr "Jatka kassalle"
+
+msgid "Have a coupon code? Enter it here"
+msgstr "Onko sinulla kuponkikoodi? Syötä se tähän"
+
+msgid "Coupon Code"
+msgstr "Kuponkikoodi"
+
+msgid "Submit Code"
+msgstr "Lisää koodi"
 
 msgid "Save cart"
 msgstr "Tallenna ostoskori"
@@ -321,38 +570,17 @@ msgstr "Kuponki ei ole saatavilla."
 msgid "Error when adding coupon."
 msgstr "Kupongin lisäämisessä tapahtui virhe."
 
-msgid "Cart"
-msgstr "Ostoskori"
+msgid "Filter Products"
+msgstr "Suodata tuotteita"
 
-msgid "Items"
-msgstr "Tuotteet"
+msgid "Show Grid/List"
+msgstr "Näytä ruudukko/lista"
 
-msgid "View cart"
-msgstr "Näytä ostoskori"
-
-msgid "Qty"
-msgstr "Kpl"
-
-msgid "Remove product from basket"
-msgstr "Poista tuote ostoskorista"
-
-msgid "Have a coupon code? Enter it here"
-msgstr "Onko sinulla kuponkikoodi? Syötä se tähän"
-
-msgid "Coupon Code"
-msgstr "Kuponkikoodi"
-
-msgid "Submit Code"
-msgstr "Lisää koodi"
-
-msgid "Checkout"
-msgstr "Kassa"
+msgid "Grid/list view"
+msgstr "Ruudukko-/listanäkymä"
 
 msgid "Continue"
 msgstr "Jatka"
-
-msgid "excl. tax"
-msgstr "ei sis. veroja"
 
 msgid "Billing address"
 msgstr "Laskutusosoite"
@@ -361,13 +589,19 @@ msgid "Ordering for a company?"
 msgstr "Oletko tilaamassa yritykselle?"
 
 msgid "Please fill out these fields if you are ordering for a company."
-msgstr "Tilataksesi yrityksen nimissä, täytä nämä kentät"
+msgstr "Tilataksesi yrityksen nimissä, täytä nämä kentät."
 
 msgid "Shipping address"
 msgstr "Toimitusosoite"
 
 msgid "Ship to my billing address"
 msgstr "Toimita laskutusosoitteeseeni"
+
+msgid "Choose Shipping Method"
+msgstr "Valitse toimitustapa"
+
+msgid "Choose Payment Method"
+msgstr "Valitse maksutapa"
 
 msgid "Delivery"
 msgstr "Toimitus"
@@ -378,67 +612,34 @@ msgstr "Toimitustapa"
 msgid "Billing"
 msgstr "Laskutus"
 
+msgid "Payment method"
+msgstr "Maksutapa"
+
 msgid "Add comment"
 msgstr "Lisää kommentti"
-
-msgid "Place Order"
-msgstr "Tilaa"
-
-msgid "There are errors"
-msgstr "Virhe"
-
-msgid "Choose Shipping Method"
-msgstr "Valitse toimitustapa"
-
-msgid "Choose Payment Method"
-msgstr "Valitse maksutapa"
-
-msgid "Errors"
-msgstr "Virheet"
-
-msgid "Ordering for a company"
-msgstr "Tilaan yrityksen nimissä"
 
 msgid "Other information"
 msgstr "Lisätiedot"
 
-msgid "Place the order"
-msgstr "Aseta tilaus"
+msgid "Place Order"
+msgstr "Tee tilaus"
 
-msgid "Bad Request"
-msgstr "Epäkelpo pyyntö"
+msgid "Previous"
+msgstr "Edellinen"
 
-msgid "Unfortunately the server couldn't process your request."
-msgstr ""
-"Valitettavasti sivulatauksen käsittely ei onnistu juuri tällä hetkellä."
+msgid "Next"
+msgstr "Seuraava"
 
-msgid "Back to Homepage"
-msgstr "Takaisin etusivulle"
+#, python-format
+msgid "Items %(start_index)d of %(end_index)d of %(count)d total"
+msgstr "Tuotteet %(start_index)d - %(end_index)d Yhteensä %(count)d"
 
-msgid "Permission Denied"
-msgstr "Pääsy evätty"
-
-msgid "Unfortunately you didn't have permission to display this page."
-msgstr "Valitettavasti käyttöoikeutesi eivät riitä tämän sivun katseluun."
-
-msgid "Page not Found"
-msgstr "Sivua ei löytynyt"
-
-msgid "Unfortunately the page you were looking for does not exist."
-msgstr "Valitettavasti etsimääsi sivua ei löytynyt."
-
-msgid "Internal Server Error"
-msgstr "Sisäinen palvelinvirhe"
+msgid "Shop is currently in maintenance mode."
+msgstr "Kauppa on parhaillaan huoltotilassa."
 
 msgid ""
-"Unfortunately an internal server error occurred. Try refreshing the page or "
-"try again later."
-msgstr ""
-"Valitettavasti sivulataus epäonnistui. Voit uudelleenladata sivun tai "
-"yrittää myöhemmin uudelleen."
-
-msgid "Categories"
-msgstr "Kategoriat"
+"There were errors on submitted form fields. Please check them and try again."
+msgstr "Lähetetyn lomakkeen kentät sisältävät virheitä. Ole hyvä, korjaa ne ja kokeile uudelleen."
 
 msgid "Edit account details"
 msgstr "Muokkaa tilin tietoja"
@@ -461,20 +662,23 @@ msgstr "Hallintapaneeli"
 msgid "Log out"
 msgstr "Kirjaudu ulos"
 
-msgid "Log in"
-msgstr "Kirjaudu sisään"
-
 msgid "Username or email address"
 msgstr "Käyttäjänimi tai sähköpostiosoite"
 
 msgid "Password"
 msgstr "Salasana"
 
-msgid "Forgot your password?"
-msgstr "Unohditko salasanasi?"
-
 msgid "New user? Register here!"
 msgstr "Uusi käyttäjä? Rekisteröidy täältä!"
+
+msgid "Cart"
+msgstr "Ostoskori"
+
+msgid "Items"
+msgstr "Tuotteet"
+
+msgid "View cart"
+msgstr "Näytä ostoskori"
 
 msgid "Menu"
 msgstr "Valikko"
@@ -482,57 +686,17 @@ msgstr "Valikko"
 msgid "Products"
 msgstr "Tuotteet"
 
-#, python-format
-msgid "Welcome to %(shop_name)s!"
-msgstr "%(shop_name)s, tervetuloa!"
-
-msgid "Preview"
-msgstr "Esikatselu"
-
 msgid "Files"
 msgstr "Tiedostot"
+
+msgid "excl. tax"
+msgstr "ei sis. veroja"
 
 msgid "Products ordered"
 msgstr "Tilatut tuotteet"
 
 msgid "Tax breakdown"
 msgstr "Verojen erittely"
-
-msgid "Payment"
-msgstr "Maksu"
-
-msgid "Company"
-msgstr "Yritys"
-
-msgid "Previous"
-msgstr "Edellinen"
-
-msgid "Next"
-msgstr "Seuraava"
-
-msgid "Maintenance mode"
-msgstr "Huoltotila"
-
-msgid "Shop is currently down for maintenance."
-msgstr "Kauppa on tällä hetkellä huoltotilassa."
-
-msgid "Thank you for your order!"
-msgstr "Kiitos tilauksesta!"
-
-msgid ""
-"Your order has been received. You can see the details of your order below."
-msgstr "Tilauksesi on vastaanotettu. Näet tilauksen tiedot alla."
-
-msgid "User account activation"
-msgstr "Käyttäjätunnuksen aktivointi"
-
-msgid ""
-"If you want to be able to see your order history, please create a password "
-"for your account: "
-msgstr "Jos haluat nähdä tilaushistoriasi, luo käyttäjätilillesi salasana:"
-
-msgid "Send"
-msgstr "Lähetä"
 
 msgid "Tax"
 msgstr "Vero"
@@ -549,14 +713,36 @@ msgstr "Veron määrä"
 msgid "Total including tax"
 msgstr "Verollinen"
 
-msgid "Payment canceled"
-msgstr "Maksu peruttu"
+msgid "Company"
+msgstr "Yritys"
 
-msgid "You have canceled payment"
-msgstr "Peruit maksun"
+msgid "Tax number"
+msgstr "veronumero"
 
-msgid "Retry payment"
-msgstr "Yritä maksua uudelleen"
+msgid "Preview"
+msgstr "Esikatselu"
+
+msgid "Also available in"
+msgstr "Saatavilla myös"
+
+#, python-format
+msgid "Save %(discount_percent)s"
+msgstr "Säästä %(discount_percent)s"
+
+msgid "Product Information"
+msgstr "Tuotetiedot"
+
+msgid "Description"
+msgstr "Kuvaus"
+
+msgid "Attributes"
+msgstr "Attribuutit"
+
+msgid "Includes these products"
+msgstr "Sisältää nämä tuotteet"
+
+msgid "No product description available"
+msgstr "Tuotekuvausta ei ole saatavilla"
 
 msgid "SKU"
 msgstr "Tuotekoodi"
@@ -588,48 +774,56 @@ msgstr "Bruttopaino"
 msgid "External link"
 msgstr "Ulkoinen linkki"
 
-msgid "Add to cart"
-msgstr "Lisää ostoskoriin"
-
-msgid "Product is not orderable."
-msgstr "Tuote ei ole tilattavissa"
-
 msgid "Select"
 msgstr "Valitse"
 
 msgid "Select product"
 msgstr "Valitse tuote"
 
+msgid "Add to cart"
+msgstr "Lisää ostoskoriin"
+
+msgid "Product is not orderable."
+msgstr "Tuote ei ole tilattavissa"
+
+msgid "Maintenance mode"
+msgstr "Huoltotila"
+
+msgid "Shop is currently down for maintenance."
+msgstr "Kauppa on tällä hetkellä huoltotilassa."
+
+msgid "Thank you for your order!"
+msgstr "Kiitos tilauksesta!"
+
+msgid ""
+"Your order has been received. You can see the details of your order below."
+msgstr "Tilauksesi on vastaanotettu. Näet tilauksen tiedot alla."
+
+msgid "User account activation"
+msgstr "Käyttäjätunnuksen aktivointi"
+
+msgid ""
+"If you want to be able to see your order history, please create a password "
+"for your account: "
+msgstr "Jos haluat nähdä tilaushistoriasi, luo käyttäjätilillesi salasana:"
+
+msgid "Send"
+msgstr "Lähetä"
+
+msgid "Payment canceled"
+msgstr "Maksu peruttu"
+
+msgid "You have canceled payment"
+msgstr "Peruit maksun"
+
+msgid "Retry payment"
+msgstr "Yritä maksua uudelleen"
+
+msgid "Error"
+msgstr "Virhe"
+
 msgid "Combination not available"
 msgstr "Yhdistelmä ei ole saatavilla"
-
-msgid "Show Grid/List"
-msgstr "Näytä ruudukko/lista"
-
-msgid "Grid/list view"
-msgstr "Ruudukko-/listanäkymä"
-
-#, python-format
-msgid "Save %(discount_percent)s"
-msgstr "Säästä %(discount_percent)s"
-
-msgid "Product Information"
-msgstr "Tuotetiedot"
-
-msgid "Description"
-msgstr "Kuvaus"
-
-msgid "Attributes"
-msgstr "Attribuutit"
-
-msgid "Includes these products"
-msgstr "Sisältää nämä tuotteet"
-
-msgid "No product description available"
-msgstr "Tuotekuvausta ei ole saatavilla"
-
-msgid "Also available in"
-msgstr "Saatavilla myös"
 
 msgid "Open product page"
 msgstr "Avaa tuotesivu"
@@ -637,23 +831,8 @@ msgstr "Avaa tuotesivu"
 msgid "Newest products"
 msgstr "Uusimmat tuotteet"
 
-msgid "Show Frontpage Welcome Text"
-msgstr "Näytä tervetulotoivotus etusivulla"
-
 msgid "This product is not available in this shop."
 msgstr "Tuote ei ole saatavilla tässä kaupassa."
 
-msgid "Name - A-Z"
-msgstr "Nimet - A-Z"
-
-msgid "Name - Z-A"
-msgstr "Nimet - Z-A"
-
-msgid "Price - Low to High"
-msgstr "Hinta - Pienimmästä suurimpaan"
-
-msgid "Price - High to Low"
-msgstr "Hinta - Suurimmasta pienimpään"
-
-msgid "Sort"
-msgstr "Järjestä"
+msgid "Edit"
+msgstr "Muokkaa"
