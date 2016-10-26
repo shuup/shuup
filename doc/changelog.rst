@@ -1,8 +1,8 @@
 Shuup Change Log
 ================
 
-Unrealeased
------------
+Unreleased
+----------
 
 - List all changes after last release here (newer on top).  Each change
   on a separate bullet point line.  Wrap the file at 79 columns or so.
@@ -60,6 +60,11 @@ Order Printouts
 
 Campaigns
 ~~~~~~~~~
+
+Category Extensions
+~~~~~~~~~~~~~~~~~~~
+
+- Add new app which supports rule-based category population
 
 Customer Group Pricing
 ~~~~~~~~~~~~~~~~~~~~~~

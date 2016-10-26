@@ -16,9 +16,9 @@ from shuup.admin.modules.categories.forms import (
 from shuup.admin.modules.categories.views import (
     CategoryCopyVisibilityView, CategoryEditView
 )
+from shuup.apps.provides import override_provides
 from shuup.core.models import (
-    Category, CategoryStatus, CategoryVisibility,
-    ShopProductVisibility
+    Category, CategoryStatus, CategoryVisibility, ShopProductVisibility
 )
 from shuup.testing.factories import (
     CategoryFactory, create_product, get_default_category,
@@ -178,7 +178,10 @@ def test_category_create(rf, admin_user):
             "base-name__en": cat_name,
             "base-status": CategoryStatus.VISIBLE.value,
             "base-visibility": CategoryVisibility.VISIBLE_TO_ALL.value,
-            "base-ordering": 1
+            "base-ordering": 1,
+            "attribute_populator-attribute": "",
+            "attribute_populator-product_attr_name": "",
+            "attribute_populator-operator": 1
         }
         assert Category.objects.count() == 0
         request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
