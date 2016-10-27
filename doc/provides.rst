@@ -226,10 +226,3 @@ Reports Provide Categories
 
 ``reports``
     Class to handle report data collection. Should be a subclass of `~shuup.reports.report.ShuupReportBase`.
-
-
-Category Extensions Categories
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-``category_populator_rule``
-   Forms for automatically populating categories.

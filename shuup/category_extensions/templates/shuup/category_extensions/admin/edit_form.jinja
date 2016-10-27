@@ -1,9 +1,0 @@
-{% from "shuup/admin/macros/general.jinja" import content_block %}
-{% set form = form[form_def.name] %}
-{% call content_block(form.title, icon="fa-th-list") %}
-<div class="row content">
-    <div class="col-md-12">
-        {{ bs3.form(form) }}
-    </div>
-</div>
-{% endcall %}
