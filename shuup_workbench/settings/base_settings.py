@@ -52,7 +52,6 @@ INSTALLED_APPS = add_enabled_addons(SHUUP_ENABLED_ADDONS_FILE, [
     'shuup.simple_cms',
     'shuup.customer_group_pricing',
     'shuup.campaigns',
-    'shuup.category_extensions',
     'shuup.simple_supplier',
     'shuup.order_printouts',
     'shuup.testing',
