@@ -29,13 +29,14 @@ window.updatePrice = function updatePrice(productId) {
         });
     }
     jQuery.ajax({url: "/xtheme/product_price", dataType: "html", data: data}).done(function(responseText) {
+        const $content = $("<div>").append($.parseHTML(responseText));
         const priceDiv = "#product-price-div-" + productId;
-        var $content = jQuery("<div>").append(jQuery.parseHTML(responseText)).find(priceDiv);
-        jQuery(priceDiv).replaceWith($content);
-        if ($content.find("#no-price-" + productId).length > 0) {
+
+        if ($content.find("[id^='no-price']").length > 0) {
             $("#add-to-cart-button-" + productId).prop("disabled", true);
         } else {
             $("#add-to-cart-button-" + productId).not(".not-orderable").prop("disabled", false);
         }
+        $(priceDiv).replaceWith($content.find(priceDiv));
     });
 };
