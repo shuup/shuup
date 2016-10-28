@@ -407,6 +407,9 @@ class Order(MoneyPropped, models.Model):
     def is_paid(self):
         return (self.payment_status == PaymentStatus.FULLY_PAID)
 
+    def is_not_paid(self):
+        return (self.payment_status == PaymentStatus.NOT_PAID)
+
     def get_total_paid_amount(self):
         amounts = self.payments.values_list('amount_value', flat=True)
         return Money(sum(amounts, Decimal(0)), self.currency)
@@ -423,7 +426,8 @@ class Order(MoneyPropped, models.Model):
         Create a payment with given amount for this order.
 
         If the order already has payments and sum of their amounts is
-        equal or greater than self.taxful_total_price, an exception is raised.
+        equal or greater than self.taxful_total_price and the order is not
+        a zero price order, an exception is raised.
 
         If the end sum of all payments is equal or greater than
         self.taxful_total_price, then the order is marked as paid.
@@ -450,7 +454,7 @@ class Order(MoneyPropped, models.Model):
         payments = self.payments.order_by('created_on')
 
         total_paid_amount = self.get_total_paid_amount()
-        if total_paid_amount >= self.taxful_total_price.amount:
+        if total_paid_amount >= self.taxful_total_price.amount and self.taxful_total_price:
             raise NoPaymentToCreateException(
                 "Order %s has already been fully paid (%s >= %s)." %
                 (

@@ -13,6 +13,8 @@ Core
 ~~~~
 
 - Populate some unfilled customer fields from order
+- Add `is_not_paid` function for `Order` model.
+- Allow zero price payments for zero price orders.
 
 Localization
 ~~~~~~~~~~~~
@@ -30,6 +32,9 @@ Admin
 - Add mass actions to orders list
 - Add mass actions to contacts list
 - Picotable lists now support mass actions.
+- Add `PostActionDropdownItem` baseclass for toolbar so actions requiring
+  a POST request do not have to have a toolbar button of its own.
+- Add option to set zero price orders as paid without creating a payment manually.
 
 Addons
 ~~~~~~
