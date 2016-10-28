@@ -18,6 +18,7 @@ from django.utils.text import capfirst, slugify
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import get_language
 
+from shuup.core import cache
 from shuup.core.models import (
     Category, Manufacturer, ProductVariationVariable, ShopProduct
 )
@@ -230,6 +231,7 @@ class CategoryProductListFilter(SimpleProductListModifier):
         else:
             # Show only first level when there is no category selected
             queryset = base_queryset.filter(parent=None)
+
         return [
             (
                 "categories",
@@ -269,6 +271,11 @@ class ProductVariationFilter(SimpleProductListModifier):
         if not category:
             return
 
+        cache_key = "productvariationfilter:%s" % category.pk
+        cached_fields = cache.get(cache_key)
+        if cached_fields:
+            return cached_fields
+
         variation_values = defaultdict(set)
         for variation in ProductVariationVariable.objects.filter(product__shop_products__categories=category):
             for value in variation.values.all():
@@ -283,6 +290,7 @@ class ProductVariationFilter(SimpleProductListModifier):
                 forms.MultipleChoiceField(
                     choices=choices, required=False, label=capfirst(variation_key), widget=FilterWidget())
             ))
+        cache.set(cache_key, fields, 60 * 15)
         return fields
 
     def get_queryset(self, queryset, data):
