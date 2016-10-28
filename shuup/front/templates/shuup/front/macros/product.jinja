@@ -19,7 +19,7 @@ Inheritance order for product macors:
             {% if show_image %}
                 {% set primary_image_thumb = product.primary_image|thumbnail(size=thumbnail_size) %}
                 <div class="image-wrap">
-                    {% if product.primary_image %}
+                    {% if product.primary_image and primary_image_thumb %}
                         {% set image_url = primary_image_thumb %}
                     {% else %}
                         {% set image_url = STATIC_URL ~ "shuup/front/img/no_image.png" %}
