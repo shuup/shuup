@@ -54,7 +54,7 @@ class CatalogCampaignListView(CampaignListView):
         context = super(CampaignListView, self).get_context_data(**kwargs)
         context["toolbar"] = Toolbar([
             NewActionButton("shuup_admin:catalog_campaign.new", text=_("Create new Catalog Campaign")),
-            SettingsActionButton.for_model(self.model, return_url="catalog-campaign")
+            SettingsActionButton.for_model(self.model, return_url="catalog_campaign")
         ])
         return context
 
@@ -66,7 +66,7 @@ class BasketCampaignListView(CampaignListView):
         context = super(CampaignListView, self).get_context_data(**kwargs)
         context["toolbar"] = Toolbar([
             NewActionButton("shuup_admin:basket_campaign.new", text=_("Create new Basket Campaign")),
-            SettingsActionButton.for_model(self.model, return_url="basket-campaign")
+            SettingsActionButton.for_model(self.model, return_url="basket_campaign")
         ])
         return context
 
