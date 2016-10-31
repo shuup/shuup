@@ -17,6 +17,7 @@ from shuup.testing.factories import (
     add_product_to_order, create_empty_order, create_product,
     get_default_shop, get_default_supplier
 )
+from shuup.utils.i18n import format_percent
 from shuup.utils.numbers import bankers_round
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
 
@@ -118,15 +119,17 @@ def test_order_source_rounding(prices):
 
 
 @pytest.mark.parametrize("prices", PRICE_SPEC)
+@pytest.mark.parametrize("tax_rate", ["0.2222", "0.99123", "0.19765"])
+@pytest.mark.parametrize("tax_rate_digits", [0, 2, 5])
 @pytest.mark.django_db
-def test_rounding_with_taxes(prices):
+def test_rounding_with_taxes(prices, tax_rate, tax_rate_digits):
     shop = get_default_shop()
     supplier = get_default_supplier()
 
     order = create_empty_order(shop=shop)
     order.save()
     product = create_product("test_sku",  shop=shop, supplier=supplier)
-    tax_rate = Decimal("0.22222")
+    tax_rate = Decimal(tax_rate)
     for x, price in enumerate(prices):
         add_product_to_order(
             order, supplier, product, quantity=Decimal("2.22"),
@@ -137,6 +140,7 @@ def test_rounding_with_taxes(prices):
         assert _get_taxless_price(order_line) == order_line.taxless_price
         assert _get_taxful_price(order_line) == order_line.taxful_price
         assert order_line.price == (order_line.base_unit_price * order_line.quantity - order_line.discount_amount)
+        assert format_percent(order_line.tax_rate, tax_rate_digits) == format_percent(tax_rate, tax_rate_digits)
 
 
 def _get_taxless_price(line):
