@@ -8,41 +8,13 @@
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
-from shuup import configuration
 from shuup.admin.modules.shops.forms import (
-    ShopAddressWizardForm, ShopLanguagesWizardForm, ShopWizardForm
+    ShopAddressWizardForm, ShopWizardForm
 )
 from shuup.admin.views.wizard import (
     TemplatedWizardFormDef, WizardFormDef, WizardPane
 )
 from shuup.core.models import TaxClass
-
-
-class ShopLanguagesWizardPane(WizardPane):
-    identifier = "languages"
-    text = _("Please select the languages supported by your shop")
-
-    def visible(self):
-        return not configuration.get(self.object, "languages", None)
-
-    def get_form_defs(self):
-        return [
-            WizardFormDef(
-                name="shop_languages",
-                extra_js="shuup/admin/shops/_change_languages_script.jinja",
-                form_class=ShopLanguagesWizardForm,
-                kwargs={
-                    "initial": {
-                        "languages": configuration.get(self.object, "languages", [settings.LANGUAGE_CODE])
-                    }
-                }
-            )
-        ]
-
-    def form_valid(self, form):
-        languages = form["shop_languages"].cleaned_data.get("languages")
-        shop_languages = [(code, name) for code, name in settings.LANGUAGES if code in languages]
-        configuration.set(self.object, "languages", shop_languages)
 
 
 class ShopWizardPane(WizardPane):
@@ -62,7 +34,7 @@ class ShopWizardPane(WizardPane):
                 form_class=ShopWizardForm,
                 kwargs={
                     "instance": self.object,
-                    "languages": configuration.get(self.object, "languages", settings.LANGUAGES)
+                    "languages": settings.LANGUAGES
                 }
             ),
             WizardFormDef(
