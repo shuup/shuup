@@ -27,7 +27,6 @@ from faker.utils.loading import find_available_locales
 from filer.models import imagemodels
 from six import BytesIO
 
-from shuup import configuration
 from shuup.core.defaults.order_statuses import create_default_order_statuses
 from shuup.core.models import (
     AnonymousContact, Attribute, AttributeType, AttributeVisibility, Category,
@@ -401,8 +400,6 @@ def get_default_shop():
             public_name=DEFAULT_NAME
         )
         assert str(shop) == DEFAULT_NAME
-    if not configuration.get(shop, "languages"):
-        configuration.set(shop, "languages", settings.LANGUAGES)
     return shop
 
 
