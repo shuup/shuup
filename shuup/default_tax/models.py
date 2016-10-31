@@ -17,7 +17,7 @@ from shuup.utils.patterns import Pattern, pattern_matches
 
 class TaxRuleQuerySet(models.QuerySet):
     def may_match_postal_code(self, postalcode):
-        null = Q(_postal_codes_min__isnull=True)
+        null = Q(Q(_postal_codes_min__isnull=True) | Q(_postal_codes_min=""))
         in_range = Q()
         if postalcode:
             in_range = Q(_postal_codes_min__lte=postalcode, _postal_codes_max__gte=postalcode)
@@ -86,10 +86,9 @@ class TaxRule(models.Model):
         return True
 
     def save(self, *args, **kwargs):
-        if self.postal_codes_pattern:
-            min_value, max_value = Pattern(self.postal_codes_pattern).get_alphabetical_limits()
-            self._postal_codes_min = min_value
-            self._postal_codes_max = max_value
+        min_value, max_value = Pattern(self.postal_codes_pattern).get_alphabetical_limits()
+        self._postal_codes_min = min_value
+        self._postal_codes_max = max_value
         return super(TaxRule, self).save(*args, **kwargs)
 
     def __str__(self):
