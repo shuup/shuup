@@ -17,7 +17,7 @@ class MutableAddressForm(forms.ModelForm):
     class Meta:
         model = MutableAddress
         fields = (
-            "name", "phone", "email",
+            "name", "name_ext", "phone", "email",
             "street", "street2", "postal_code", "city",
             "region", "region_code", "country"
         )
