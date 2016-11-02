@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 from collections import Counter
 
+from django.contrib import messages
 from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ValidationError
 from django.utils.encoding import force_text
@@ -375,7 +376,10 @@ class OrderSource(object):
             if with_taxes or should_calculate_taxes_automatically():
                 self._calculate_taxes(lines)
         for error_message in self.get_validation_errors():
-            raise ValidationError(error_message.args[0], code="invalid_order_source")
+            if hasattr(self, "request"):
+                messages.error(self.request, error_message.args[0], extra_tags='danger')
+            else:
+                raise ValidationError(error_message.args[0], code="invalid_order_source")
         return lines
 
     def calculate_taxes(self, force_recalculate=False):
