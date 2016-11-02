@@ -23,6 +23,7 @@ Localization
 Admin
 ~~~~~
 
+- Change main menu template and remove ajax loading from main menu.
 - Remove language layer from shop configurations
 - Fix bug in product cross-sell editview
 - Allow product attribute form extension through provides

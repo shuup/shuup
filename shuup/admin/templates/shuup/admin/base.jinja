@@ -19,7 +19,7 @@
     <body class="{% block body_class %}{% endblock %} {{ "popup" if request.GET.popup else "" }}">
         {% block top %}
         <header id="top-header">{% include "shuup/admin/base/_navigation.jinja" %}</header>
-        <nav id="main-menu">{# this content is loaded dynamically; see base/_main_menu.jinja #}</nav>
+        {% include "shuup/admin/base/_main_menu.jinja" %}
         {% endblock %}
 
         {% block content_wrap %}
