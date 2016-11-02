@@ -1,18 +1,22 @@
 #main-menu {
     background: @nav-bg;
     position: fixed;
-    left: -88px;
+    left: 0;
     bottom: 0;
     top: 60px;
     width: 88px;
     z-index:1000;
 
-    body.menu-open & {
-        left: 0px;
+    @media (max-width: @screen-sm-min) {
+        left: -88px;
+    }
 
-        @media (max-width: @screen-sm-max) {
-            overflow: hidden;
-        }
+    @media (min-width: @screen-sm-min) {
+        left: 0;
+    }
+
+    body.menu-open & {
+        left: 0;
     }
 
     .scroll-wrapper {
@@ -150,7 +154,8 @@
 }
 
 .category-submenu {
-    top: 0px;
+    z-index: 10;
+    top: 60px;
     position: absolute;
     background: @nav-bg;
     box-shadow: 0 0 3px #000;
