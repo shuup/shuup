@@ -42,6 +42,7 @@ Addons
 Front
 ~~~~~
 
+- Basket validation errors are now shown as messages instead of `HttpResponse 500`.
 - Show variation parents in highlight plugins
 - Fallback to variation parent image for variation children
   in basket, checkout and saved carts.
