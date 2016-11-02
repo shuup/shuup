@@ -33,7 +33,7 @@
                         <h2>{{ product.name }}</h2>
                         {% if product.description %}
                             <p class="description">
-                                {{ product.description|safe|truncate(150, False) }}
+                                {{ product.description|markdown|safe|truncate(150, False) }}
                             </p>
                         {% endif %}
                         {% if show_prices() %}
