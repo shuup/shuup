@@ -215,6 +215,9 @@
 
 .quicklink-submenu {
     background: white;
+    @media (max-width: @screen-sm-min) {
+        max-width: 270px;
+    }
 
     .category-menu-title {
         color: @text-color;
@@ -228,10 +231,27 @@
 
             h3 {
                 font-size: 1.6rem;
-            }
 
+                @media (max-width: @screen-sm-min) {
+                    font-size: 1.2rem;
+                }
+            }
             .btn {
                 display: block;
+
+                @media (max-width: @screen-sm-min) {
+                    font-size: 1.2rem;
+                }
+            }
+            .content-with-logo {
+                @media (max-width: @screen-sm-min) {
+                    margin-left: 0;
+                }
+            }
+            .action {
+               @media (max-width: @screen-sm-min) {
+                    clear: both;
+                }
             }
         }
     }
