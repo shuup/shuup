@@ -42,6 +42,7 @@ from shuup.core.signals import (
 from shuup.utils.analog import define_log_model, LogEntryKind
 from shuup.utils.excs import Problem
 from shuup.utils.money import Money
+from shuup.utils.numbers import bankers_round
 from shuup.utils.properties import (
     MoneyPropped, TaxfulPriceProperty, TaxlessPriceProperty
 )
@@ -302,10 +303,10 @@ class Order(MoneyPropped, models.Model):
         taxful_total = TaxfulPrice(0, self.currency)
         taxless_total = TaxlessPrice(0, self.currency)
         for line in self.lines.all():
-            taxful_total += line.taxful_price
-            taxless_total += line.taxless_price
-        self.taxful_total_price = taxful_total
-        self.taxless_total_price = taxless_total
+            taxful_total += line.raw_taxful_price
+            taxless_total += line.raw_taxless_price
+        self.taxful_total_price = bankers_round(taxful_total, 2)
+        self.taxless_total_price = bankers_round(taxless_total, 2)
 
     def _cache_contact_values(self):
         sources = [
@@ -673,7 +674,8 @@ class Order(MoneyPropped, models.Model):
         self.create_refund(line_data)
 
     def get_total_refunded_amount(self):
-        total = sum([line.taxful_price.amount.value for line in self.lines.refunds()])
+        total = sum([line.raw_taxful_price.amount.value for line in self.lines.refunds()])
+        total = bankers_round(total, 2)
         return Money(-total, self.currency)
 
     def get_total_unrefunded_amount(self):

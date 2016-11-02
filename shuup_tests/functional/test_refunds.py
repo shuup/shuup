@@ -24,6 +24,8 @@ from shuup.testing.factories import (
     create_default_tax_rule, create_product, get_default_category,
     get_default_tax_class, get_initial_order_status, get_shop, get_tax
 )
+from shuup.utils.money import Money
+from shuup.utils.numbers import bankers_round
 from shuup_tests.simple_supplier.utils import get_simple_supplier
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
 
@@ -109,6 +111,7 @@ def _get_order(prices_include_tax=False, include_basket_campaign=False, include_
     source = BasketishOrderSource(shop)
     source.status = get_initial_order_status()
     ctx = get_pricing_module().get_context_from_data(shop, AnonymousContact())
+
     for product_data in _get_product_data():
         quantity = product_data.pop("quantity")
         product = create_product(
@@ -143,7 +146,6 @@ def test_create_full_refund(prices_include_tax):
     order = _get_order(prices_include_tax, True, True)
     original_order_total = order.taxful_total_price
     num_order_lines = order.lines.count()
-
     order.create_full_refund(restock_products=True)
 
     for line in order.lines.products():
@@ -180,6 +182,69 @@ def test_create_refund_line_by_line(prices_include_tax):
     for line in order.lines.products():
         order.create_refund([
             {"line": line, "quantity": line.quantity, "amount": line.taxful_price.amount, "restock_products": True}])
+
+    for line in order.lines.products():
+        check_stock_counts(supplier, line.product, INITIAL_PRODUCT_QUANTITY, INITIAL_PRODUCT_QUANTITY)
+
+    assert order.has_refunds()
+    assert not order.can_create_refund()
+    assert not order.taxful_total_price_value
+    assert not order.taxless_total_price_value
+    assert order.lines.refunds().count() == num_order_lines
+    assert order.shipping_status == ShippingStatus.FULLY_SHIPPED
+    assert order.get_total_refunded_amount() == original_order_total.amount
+    assert not order.get_total_unrefunded_amount().value
+
+
+@pytest.mark.django_db
+def test_refund_special_case():
+    """
+    buy 2 of a product
+    with a base unit price of 29.264 refund 1 at 29.264 then refund 1 more at 29.264.The order
+    total is 0.01.This is caused by the bankers_round done for each line in the Order model cache_prices method.
+    """
+    shop = get_shop(prices_include_tax=True)
+    supplier = get_simple_supplier()
+
+    source = BasketishOrderSource(shop)
+    source.status = get_initial_order_status()
+    ctx = get_pricing_module().get_context_from_data(shop, AnonymousContact())
+    default_price = decimal.Decimal("29.264")
+    created_price = shop.create_price(default_price)
+    product = create_product("test-123", shop=shop, supplier=supplier, default_price=default_price)
+
+    source.add_line(
+        type=OrderLineType.PRODUCT,
+        product=product,
+        supplier=supplier,
+        quantity=2,
+        base_unit_price=created_price,
+    )
+    oc = OrderCreator()
+    order = oc.create_order(source)
+    order.cache_prices()
+    order.create_payment(created_price * 2, shop.currency)
+
+    line = order.lines.products().first()
+    order.create_refund([
+        {"line": line, "quantity": 1, "amount": Money(default_price, shop.currency), "restock_products": True}])
+    order.create_refund([
+        {"line": line, "quantity": 1, "amount": Money(default_price, shop.currency), "restock_products": True}])
+
+    order.cache_prices()
+    assert order.taxful_total_price.value == decimal.Decimal("0")
+    assert order.get_total_refunded_amount() == bankers_round(Money(default_price * 2, shop.currency), 2)
+
+
+@pytest.mark.django_db
+def test_create_full_refund1():
+    prices_include_tax = True
+    supplier = get_simple_supplier()
+    order = _get_order(prices_include_tax, True, True)
+    original_order_total = order.taxful_total_price
+    num_order_lines = order.lines.count()
+
+    order.create_full_refund(restock_products=True)
 
     for line in order.lines.products():
         check_stock_counts(supplier, line.product, INITIAL_PRODUCT_QUANTITY, INITIAL_PRODUCT_QUANTITY)
