@@ -55,20 +55,20 @@ def test_checkout_with_login_and_register(browser, live_server, settings):
     # Initialize test and go to front page
     browser = initialize_front_browser_test(browser, live_server)
 
-    assert browser.is_text_present("Welcome to Default!")
+    wait_until_condition(browser, lambda x: x.is_text_present("Welcome to Default!"))
     navigate_to_checkout(browser, product)
 
     # Let's assume that after addresses the checkout is normal
-    assert browser.is_text_present("Checkout Method")
+    wait_until_condition(browser, lambda x: x.is_text_present("Checkout Method"))
     guest_ordering_test(browser, live_server)
 
     test_username = "test_username"
     test_email = "test@example.com"
     test_password = "test_password"
-    assert browser.is_text_present("Checkout Method")
+    wait_until_condition(browser, lambda x: x.is_text_present("Checkout Method"))
     register_test(browser, live_server, test_username, test_email, test_password)
 
-    assert browser.is_text_present("Checkout Method")
+    wait_until_condition(browser, lambda x: x.is_text_present("Checkout Method"))
     login_and_finish_up_the_checkout(browser, live_server, test_username, test_email, test_password)
 
 
@@ -93,11 +93,11 @@ def test_single_page_checkout_with_login_and_register(browser, live_server, sett
     # Initialize test and go to front page
     browser = initialize_front_browser_test(browser, live_server)
 
-    assert browser.is_text_present("Welcome to Default!")
+    wait_until_condition(browser, lambda x: x.is_text_present("Welcome to Default!"))
     navigate_to_checkout(browser, product)
 
     # Let's assume that after addresses the checkout is normal
-    assert browser.is_text_present("Checkout Method")
+    wait_until_condition(browser, lambda x: x.is_text_present("Checkout Method"))
     test_username = "test_username"
     test_email = "test@example.com"
     test_password = "test_password"
@@ -107,8 +107,8 @@ def test_single_page_checkout_with_login_and_register(browser, live_server, sett
 
 
 def navigate_to_checkout(browser, product):
-    assert browser.is_text_present("Newest Products")
-    assert browser.is_text_present(product.name)
+    wait_until_condition(browser, lambda x: x.is_text_present("Newest Products"))
+    wait_until_condition(browser, lambda x: x.is_text_present(product.name))
 
     click_element(browser, "#product-%s" % product.pk)  # open product from product list
     click_element(browser, "#add-to-cart-button-%s" % product.pk)  # add product to basket
@@ -118,8 +118,8 @@ def navigate_to_checkout(browser, product):
 
     click_element(browser, "#navigation-basket-partial")  # open upper basket navigation menu
     click_element(browser, "a[href='/basket/']")  # click the link to basket in dropdown
-    assert browser.is_text_present("Shopping cart")  # we are in basket page
-    assert browser.is_text_present(product.name)  # product is in basket
+    wait_until_condition(browser, lambda x: x.is_text_present("Shopping cart"))  # we are in basket page
+    wait_until_condition(browser, lambda x: x.is_text_present(product.name))  # product is in basket
 
     click_element(browser, "a[href='/checkout/']") # click link that leads to checkout
 
@@ -130,13 +130,13 @@ def guest_ordering_test(browser, live_server):
     wait_until_appeared(browser, "div.form-group.passwordinput.required.has-error")
     browser.fill("login-password", "test-password")
     click_element(browser, "button[name='login']")
-    assert browser.is_text_present("Please enter a correct username and password.")
+    wait_until_condition(browser, lambda x: x.is_text_present("Please enter a correct username and password."))
     wait_until_appeared(browser, "div.alert.alert-danger")
 
     click_element(browser, "button[data-id='id_checkout_method_choice-register']")
     click_element(browser, "li[data-original-index='0'] a")
     click_element(browser, "div.clearfix button.btn.btn-primary.btn-lg.pull-right")
-    assert browser.is_text_present("Checkout: Addresses")
+    wait_until_condition(browser, lambda x: x.is_text_present("Checkout: Addresses"))
     url = reverse("shuup:checkout", kwargs={"phase": "checkout_method"})
     browser.visit("%s%s" % (live_server, url))
 
@@ -227,36 +227,36 @@ def login_and_finish_up_the_checkout(browser, live_server, test_username, test_e
     wait_until_appeared(browser, "select[name='shipping-region_code']")
 
     click_element(browser, "#addresses button[type='submit']")
-    assert browser.is_text_present("Shipping & Payment")
+    wait_until_condition(browser, lambda x: x.is_text_present("Shipping & Payment"))
 
     pm = get_default_payment_method()
     sm = get_default_shipping_method()
 
-    assert browser.is_text_present(sm.name)  # shipping method name is present
-    assert browser.is_text_present(pm.name)  # payment method name is present
+    wait_until_condition(browser, lambda x: x.is_text_present(sm.name))  # shipping method name is present
+    wait_until_condition(browser, lambda x: x.is_text_present(pm.name))  # payment method name is present
 
     click_element(browser, ".btn.btn-primary.btn-lg.pull-right")  # click "continue" on methods page
 
-    assert browser.is_text_present("Confirmation")  # we are indeed in confirmation page
+    wait_until_condition(browser, lambda x: x.is_text_present("Confirmation"))  # we are indeed in confirmation page
     product = Product.objects.first()
 
     # See that all expected texts are present
-    assert browser.is_text_present(product.name)
-    assert browser.is_text_present(sm.name)
-    assert browser.is_text_present(pm.name)
-    assert browser.is_text_present("Delivery")
-    assert browser.is_text_present("Billing")
+    wait_until_condition(browser, lambda x: x.is_text_present(product.name))
+    wait_until_condition(browser, lambda x: x.is_text_present(sm.name))
+    wait_until_condition(browser, lambda x: x.is_text_present(pm.name))
+    wait_until_condition(browser, lambda x: x.is_text_present("Delivery"))
+    wait_until_condition(browser, lambda x: x.is_text_present("Billing"))
 
     # check that user information is available
-    assert browser.is_text_present(customer_name)
-    assert browser.is_text_present(customer_street)
-    assert browser.is_text_present(customer_city)
-    assert browser.is_text_present("United States")
+    wait_until_condition(browser, lambda x: x.is_text_present(customer_name))
+    wait_until_condition(browser, lambda x: x.is_text_present(customer_street))
+    wait_until_condition(browser, lambda x: x.is_text_present(customer_city))
+    wait_until_condition(browser, lambda x: x.is_text_present("United States"))
 
     browser.execute_script('document.getElementById("id_accept_terms").checked=true')  # click accept terms
     click_element(browser, ".btn.btn-primary.btn-lg")  # click "place order"
 
-    assert browser.is_text_present("Thank you for your order!")  # order succeeded
+    wait_until_condition(browser, lambda x: x.is_text_present("Thank you for your order!"))  # order succeeded
 
     # Let's make sure the order now has a customer
     assert Order.objects.count() == 1

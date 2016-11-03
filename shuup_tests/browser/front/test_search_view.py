@@ -69,7 +69,7 @@ def test_search_product_list(browser, live_server, settings):
     # initialize test and go to front page
     browser = initialize_front_browser_test(browser, live_server)
     # check that front page actually loaded
-    assert browser.is_text_present("Welcome to Default!")
+    wait_until_condition(browser, lambda x: x.is_text_present("Welcome to Default!"))
 
     url = reverse("shuup:product_search")
     browser.visit("%s%s?q=test product" % (live_server, url))

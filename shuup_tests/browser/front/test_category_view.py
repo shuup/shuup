@@ -124,12 +124,12 @@ def test_category_product_list(browser, live_server, settings):
     browser = initialize_front_browser_test(browser, live_server)
 
     # check that front page actually loaded
-    assert browser.is_text_present("Welcome to Default!")
+    wait_until_condition(browser, lambda x: x.is_text_present("Welcome to Default!"))
 
     url = reverse("shuup:category", kwargs={"pk": first_cat.pk, "slug": first_cat.slug})
     browser.visit("%s%s" % (live_server, url))
-    assert browser.is_text_present("First Category")
-    assert browser.is_text_present("Sort")
+    wait_until_condition(browser, lambda x: x.is_text_present("First Category"))
+    wait_until_condition(browser, lambda x: x.is_text_present("Sort"))
     assert not browser.is_text_present("Manufacturers")  # Since not in default configuration
     hide_sorts_for_shop(browser, shop)
     show_sorts_for_the_category_only(browser, first_cat)
@@ -155,7 +155,7 @@ def hide_sorts_for_shop(browser, shop):
 def show_sorts_for_the_category_only(browser, category):
     set_configuration(category=category, data={"sort_products_by_name": True})
     browser.reload()
-    assert browser.is_text_present("Sort")
+    wait_until_condition(browser, lambda x: x.is_text_present("Sort"))
     wait_until_condition(browser, lambda x: len(x.find_by_css("#id_sort option")) == 2)
     click_element(browser, "button[data-id='id_sort']")
 
@@ -226,7 +226,7 @@ def manufacturer_filter_test(browser, category, manufacturer):
         }
     )
     browser.reload()
-    assert browser.is_text_present("Manufacturers")
+    wait_until_condition(browser, lambda x: x.is_text_present("Manufacturers"))
     browser.execute_script("$('#manufacturers-%s').click();" % manufacturer.id)
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 1)
 
