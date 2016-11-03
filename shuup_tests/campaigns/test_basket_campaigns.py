@@ -397,6 +397,9 @@ def test_product_basket_campaigns():
     # category effect that doesn't match
     effect = DiscountFromCategoryProducts.objects.create(campaign=campaign, category=cat)
     shop_product.categories.remove(cat)
+    shop_product.primary_category = None
+    shop_product.save()
+
     campaign.line_effects.add(effect)
     assert BasketCampaign.get_for_product(shop_product).count() == 0
 

@@ -12,6 +12,8 @@ Unrealeased
 Core
 ~~~~
 
+- Add `SHUUP_AUTO_SHOP_PRODUCT_CATEGORIES` option that
+  allows autopopulating categories. Default is `True`.
 - Populate some unfilled customer fields from order
 - Add `is_not_paid` function for `Order` model.
 - Allow zero price payments for zero price orders.

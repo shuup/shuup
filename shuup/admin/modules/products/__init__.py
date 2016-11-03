@@ -12,12 +12,16 @@ from collections import Counter
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db.models import Q
+from django.db.models.signals import m2m_changed, post_save
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from filer.models import File
 
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
 from shuup.admin.menu import PRODUCTS_MENU_CATEGORY
+from shuup.admin.modules.products.signal_handlers import (
+    update_categories_post_save, update_categories_through
+)
 from shuup.admin.utils.permissions import (
     get_default_model_permissions, get_permissions_from_urls
 )
@@ -28,7 +32,8 @@ from shuup.admin.utils.urls import (
 )
 from shuup.admin.views.home import SimpleHelpBlock
 from shuup.core.models import (
-    Product, ProductCrossSell, ProductPackageLink, ProductVariationResult
+    Product, ProductCrossSell, ProductPackageLink, ProductVariationResult,
+    ShopProduct
 )
 
 
@@ -153,3 +158,17 @@ class ProductModule(AdminModule):
 
     def get_model_url(self, object, kind):
         return derive_model_url(Product, "shuup_admin:product", object, kind)
+
+
+m2m_changed.connect(
+    update_categories_through,
+    sender=ShopProduct.categories.through,
+    dispatch_uid="shop_product:update_categories_through"
+)
+
+
+post_save.connect(
+    update_categories_post_save,
+    sender=ShopProduct,
+    dispatch_uid="shop_product:update_categories"
+)
