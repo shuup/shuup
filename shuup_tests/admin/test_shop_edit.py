@@ -38,7 +38,6 @@ def test_protected_fields():
     shop_form = ShopBaseForm(data=data, instance=shop, languages=settings.LANGUAGES)
     _test_cleanliness(shop_form)
     shop_form.save()
-    assert ConfigurationItem.objects.filter(shop=shop, key="languages").first().value == list(map(list, settings.LANGUAGES))
 
     # Now let's make it protected!
     create_product(printable_gibberish(), shop=shop, supplier=get_default_supplier())

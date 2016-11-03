@@ -23,6 +23,7 @@ Localization
 Admin
 ~~~~~
 
+- Remove language layer from shop configurations
 - Fix bug in product cross-sell editview
 - Allow product attribute form extension through provides
 - Make form modifiers reusable. Users of `ShipmentFormModifier`

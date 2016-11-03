@@ -15,7 +15,6 @@ from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 from django.views.generic import View
 
-from shuup import configuration
 from shuup.admin.form_part import (
     FormPart, FormPartsViewMixin, SaveFormPartsMixin, TemplatedFormDef
 )
@@ -39,7 +38,7 @@ class ShopBaseFormPart(FormPart):
             required=True,
             kwargs={
                 "instance": self.object,
-                "languages": configuration.get(self.object, "languages", settings.LANGUAGES)
+                "languages": settings.LANGUAGES
             }
         )
 

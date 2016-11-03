@@ -192,7 +192,6 @@ REST_FRAMEWORK = {
 }
 
 SHUUP_SETUP_WIZARD_PANE_SPEC = [
-    "shuup.admin.modules.shops.views:ShopLanguagesWizardPane",
     "shuup.admin.modules.shops.views:ShopWizardPane",
     "shuup.admin.modules.service_providers.views.PaymentWizardPane",
     "shuup.admin.modules.service_providers.views.CarrierWizardPane",

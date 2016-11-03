@@ -49,28 +49,6 @@ def test_get_wizard_no_panes(rf, settings):
 
 
 @pytest.mark.django_db
-def test_languages_wizard_pane(rf, admin_user, settings):
-    settings.SHUUP_SETUP_WIZARD_PANE_SPEC = [
-        "shuup.admin.modules.shops.views:ShopLanguagesWizardPane"
-    ]
-    shop = get_default_shop()
-    configuration.set(shop, "languages", None)
-    assert not configuration.get(shop, "languages", None)
-    fields = _extract_fields(rf, admin_user)
-    fields["shop_languages-languages"] = []
-    request = rf.post("/", data=fields)
-    response = WizardView.as_view()(request)
-    # fields are missing
-    assert response.status_code == 400
-
-    fields["shop_languages-languages"] = ["en", "fi"]
-    request = rf.post("/", data=fields)
-    response = WizardView.as_view()(request)
-    assert response.status_code == 200
-    assert len(configuration.get(shop, "languages", None)) == 2
-
-
-@pytest.mark.django_db
 def test_shop_wizard_pane(rf, admin_user, settings):
     settings.SHUUP_SETUP_WIZARD_PANE_SPEC = [
         "shuup.admin.modules.shops.views:ShopWizardPane"

@@ -15,7 +15,6 @@ from django.utils.translation import get_language, get_language_info, ugettext
 from jinja2.utils import contextfunction
 from mptt.templatetags.mptt_tags import cache_tree_children
 
-from shuup import configuration
 from shuup.core.models import Category, Manufacturer, Product, Supplier
 from shuup.front.utils.product_statistics import get_best_selling_product_info
 from shuup.front.utils.views import cache_product_things
@@ -196,9 +195,8 @@ def _get_page_range(current_page, num_pages, range_gap=5):
 
 @contextfunction
 def get_shop_language_choices(context):
-    request = context["request"]
     languages = []
-    for code, name in configuration.get(request.shop, "languages", settings.LANGUAGES):
+    for code, name in settings.LANGUAGES:
         lang_info = get_language_info(code)
         name_in_current_lang = ugettext(name)
         local_name = lang_info["name_local"]
