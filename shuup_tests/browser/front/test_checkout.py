@@ -14,8 +14,8 @@ from django.test import override_settings
 from shuup.core.models import OrderStatus, OrderStatusRole
 from shuup.testing.browser_utils import (
     click_element, move_to_element, wait_until_appeared,
-    wait_until_disappeared
-)
+    wait_until_disappeared,
+    wait_until_condition)
 from shuup.testing.factories import (
     create_product, get_default_payment_method, get_default_shipping_method,
     get_default_shop, get_default_supplier
@@ -53,9 +53,9 @@ def test_browser_checkout_horizontal(browser, live_server, settings):
     browser = initialize_front_browser_test(browser, live_server)
 
     # check that front page actually loaded
-    assert browser.is_text_present("Welcome to Default!")
-    assert browser.is_text_present("Newest Products")
-    assert browser.is_text_present(product_name)
+    wait_until_condition(browser, lambda x: x.is_text_present("Welcome to Default!"))
+    wait_until_condition(browser, lambda x: x.is_text_present("Newest Products"))
+    wait_until_condition(browser, lambda x: x.is_text_present(product_name))
 
     click_element(browser, "#product-%s" % product.pk)  # open product from product list
     click_element(browser, "#add-to-cart-button-%s" % product.pk)  # add product to basket
@@ -65,8 +65,8 @@ def test_browser_checkout_horizontal(browser, live_server, settings):
 
     click_element(browser, "#navigation-basket-partial")  # open upper basket navigation menu
     click_element(browser, "a[href='/basket/']")  # click the link to basket in dropdown
-    assert browser.is_text_present("Shopping cart")  # we are in basket page
-    assert browser.is_text_present(product_name)  # product is in basket
+    wait_until_condition(browser, lambda x: x.is_text_present("Shopping cart"))  # we are in basket page
+    wait_until_condition(browser, lambda x: x.is_text_present(product_name))  # product is in basket
 
     click_element(browser, "a[href='/checkout/']") # click link that leads to checkout
 
@@ -86,7 +86,7 @@ def test_browser_checkout_horizontal(browser, live_server, settings):
 
     click_element(browser, "#addresses button[type='submit']")
 
-    assert browser.is_text_present("There were errors on submitted form fields. Please check them and try again.")
+    wait_until_condition(browser, lambda x: x.is_text_present("There were errors on submitted form fields. Please check them and try again."))
 
     # Fill the errors
     browser.fill("shipping-name", customer_name)
@@ -95,32 +95,32 @@ def test_browser_checkout_horizontal(browser, live_server, settings):
     browser.select("shipping-country", customer_country)
 
     click_element(browser, "#addresses button[type='submit']")
-    assert browser.is_text_present("Checkout: Shipping & Payment")
+    wait_until_condition(browser, lambda x: x.is_text_present("Checkout: Shipping & Payment"))
 
-    assert browser.is_text_present(sm.name)  # shipping method name is present
-    assert browser.is_text_present(pm.name)  # payment method name is present
+    wait_until_condition(browser, lambda x: x.is_text_present(sm.name))  # shipping method name is present
+    wait_until_condition(browser, lambda x: x.is_text_present(pm.name))  # payment method name is present
 
     click_element(browser, ".btn.btn-primary.btn-lg.pull-right")  # click "continue" on methods page
 
-    assert browser.is_text_present("Checkout: Confirmation")  # we are indeed in confirmation page
+    wait_until_condition(browser, lambda x: x.is_text_present("Checkout: Confirmation"))  # we are indeed in confirmation page
 
     # See that all expected texts are present
-    assert browser.is_text_present(product_name)
-    assert browser.is_text_present(sm.name)
-    assert browser.is_text_present(pm.name)
-    assert browser.is_text_present("Delivery")
-    assert browser.is_text_present("Billing")
+    wait_until_condition(browser, lambda x: x.is_text_present(product_name))
+    wait_until_condition(browser, lambda x: x.is_text_present(sm.name))
+    wait_until_condition(browser, lambda x: x.is_text_present(pm.name))
+    wait_until_condition(browser, lambda x: x.is_text_present("Delivery"))
+    wait_until_condition(browser, lambda x: x.is_text_present("Billing"))
 
     # check that user information is available
-    assert browser.is_text_present(customer_name)
-    assert browser.is_text_present(customer_street)
-    assert browser.is_text_present(customer_city)
-    assert browser.is_text_present("United States")
+    wait_until_condition(browser, lambda x: x.is_text_present(customer_name))
+    wait_until_condition(browser, lambda x: x.is_text_present(customer_street))
+    wait_until_condition(browser, lambda x: x.is_text_present(customer_city))
+    wait_until_condition(browser, lambda x: x.is_text_present("United States"))
 
     browser.execute_script('document.getElementById("id_accept_terms").checked=true')  # click accept terms
     click_element(browser, ".btn.btn-primary.btn-lg")  # click "place order"
 
-    assert browser.is_text_present("Thank you for your order!")  # order succeeded
+    wait_until_condition(browser, lambda x: x.is_text_present("Thank you for your order!"))  # order succeeded
 
 
 @pytest.mark.urls('shuup.testing.single_page_checkout_test_urls')
@@ -144,9 +144,9 @@ def test_browser_checkout_vertical(browser, live_server, settings):
         # initialize test and go to front page
         browser = initialize_front_browser_test(browser, live_server)
         # check that front page actually loaded
-        assert browser.is_text_present("Welcome to Default!")
-        assert browser.is_text_present("Newest Products")
-        assert browser.is_text_present(product_name)
+        wait_until_condition(browser, lambda x: x.is_text_present("Welcome to Default!"))
+        wait_until_condition(browser, lambda x: x.is_text_present("Newest Products"))
+        wait_until_condition(browser, lambda x: x.is_text_present(product_name))
 
         click_element(browser, "#product-%s" % product.pk)  # open product from product list
         click_element(browser, "#add-to-cart-button-%s" % product.pk)  # add product to basket
@@ -156,8 +156,8 @@ def test_browser_checkout_vertical(browser, live_server, settings):
 
         click_element(browser, "#navigation-basket-partial")  # open upper basket navigation menu
         click_element(browser, "a[href='/basket/']")  # click the link to basket in dropdown
-        assert browser.is_text_present("Shopping cart")  # we are in basket page
-        assert browser.is_text_present(product_name)  # product is in basket
+        wait_until_condition(browser, lambda x: x.is_text_present("Shopping cart"))  # we are in basket page
+        wait_until_condition(browser, lambda x: x.is_text_present(product_name))  # product is in basket
 
         click_element(browser, "a[href='/checkout/']") # click link that leads to checkout
         wait_until_appeared(browser, "h4.panel-title")
@@ -177,7 +177,7 @@ def test_browser_checkout_vertical(browser, live_server, settings):
 
         click_element(browser, "#addresses button[type='submit']")
 
-        assert browser.is_text_present("This field is required.")
+        wait_until_condition(browser, lambda x: x.is_text_present("This field is required."))
 
         # Fill the errors
         browser.fill("shipping-name", customer_name)
@@ -186,29 +186,29 @@ def test_browser_checkout_vertical(browser, live_server, settings):
         browser.select("shipping-country", customer_country)
 
         click_element(browser, "#addresses button[type='submit']")
-        assert browser.is_text_present("Shipping & Payment")
+        wait_until_condition(browser, lambda x: x.is_text_present("Shipping & Payment"))
 
-        assert browser.is_text_present(sm.name)  # shipping method name is present
-        assert browser.is_text_present(pm.name)  # payment method name is present
+        wait_until_condition(browser, lambda x: x.is_text_present(sm.name))  # shipping method name is present
+        wait_until_condition(browser, lambda x: x.is_text_present(pm.name))  # payment method name is present
 
         click_element(browser, ".btn.btn-primary.btn-lg.pull-right")  # click "continue" on methods page
 
-        assert browser.is_text_present("Confirmation")  # we are indeed in confirmation page
+        wait_until_condition(browser, lambda x: x.is_text_present("Confirmation"))  # we are indeed in confirmation page
 
         # See that all expected texts are present
-        assert browser.is_text_present(product_name)
-        assert browser.is_text_present(sm.name)
-        assert browser.is_text_present(pm.name)
-        assert browser.is_text_present("Delivery")
-        assert browser.is_text_present("Billing")
+        wait_until_condition(browser, lambda x: x.is_text_present(product_name))
+        wait_until_condition(browser, lambda x: x.is_text_present(sm.name))
+        wait_until_condition(browser, lambda x: x.is_text_present(pm.name))
+        wait_until_condition(browser, lambda x: x.is_text_present("Delivery"))
+        wait_until_condition(browser, lambda x: x.is_text_present("Billing"))
 
         # check that user information is available
-        assert browser.is_text_present(customer_name)
-        assert browser.is_text_present(customer_street)
-        assert browser.is_text_present(customer_city)
-        assert browser.is_text_present("United States")
+        wait_until_condition(browser, lambda x: x.is_text_present(customer_name))
+        wait_until_condition(browser, lambda x: x.is_text_present(customer_street))
+        wait_until_condition(browser, lambda x: x.is_text_present(customer_city))
+        wait_until_condition(browser, lambda x: x.is_text_present("United States"))
 
         browser.execute_script('document.getElementById("id_accept_terms").checked=true')  # click accept terms
         click_element(browser, ".btn.btn-primary.btn-lg")  # click "place order"
 
-        assert browser.is_text_present("Thank you for your order!")  # order succeeded
+        wait_until_condition(browser, lambda x: x.is_text_present("Thank you for your order!"))  # order succeeded
