@@ -756,13 +756,20 @@ class Order(MoneyPropped, models.Model):
             quantities[product_id] += quantity
         return dict(quantities)
 
+    def has_products(self):
+        return self.lines.products().exists()
+
     def is_complete(self):
         return (self.status.role == OrderStatusRole.COMPLETE)
 
     def can_set_complete(self):
-        fully_shipped = (self.shipping_status == ShippingStatus.FULLY_SHIPPED)
-        canceled = (self.status.role == OrderStatusRole.CANCELED)
-        return (not self.is_complete()) and fully_shipped and (not canceled)
+        if self.has_products():
+            # order has products, we need to check the fully shipped status
+            return (not self.is_complete()) and self.is_fully_shipped() and (not self.is_canceled())
+        return (not self.is_complete()) and (not self.is_canceled())
+
+    def is_fully_shipped(self):
+        return (self.shipping_status == ShippingStatus.FULLY_SHIPPED)
 
     def is_canceled(self):
         return (self.status.role == OrderStatusRole.CANCELED)
