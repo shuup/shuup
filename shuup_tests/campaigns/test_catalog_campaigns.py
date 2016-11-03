@@ -430,6 +430,7 @@ def test_product_catalog_campaigns():
     shop_product.primary_category = cat
     shop_product.save()
     assert CatalogCampaign.get_for_product(shop_product).count() == 1
+    shop_product.categories.remove(cat)
     shop_product.primary_category = None
     shop_product.save()
     assert CatalogCampaign.get_for_product(shop_product).count() == 0
@@ -455,6 +456,7 @@ def test_product_catalog_campaigns():
     sp.save()
 
     assert CatalogCampaign.get_for_product(sp).count() == 1  # matches now
+    sp.categories.remove(cat)
     sp.primary_category = None
     sp.save()
     assert CatalogCampaign.get_for_product(sp).count() == 0  # no match

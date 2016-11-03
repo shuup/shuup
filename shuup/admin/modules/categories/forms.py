@@ -102,7 +102,10 @@ class CategoryProductForm(forms.Form):
         remove_shop_product_ids = [int(shop_product_id) for shop_product_id in data.get("remove_products", [])]
         for shop_product in ShopProduct.objects.filter(id__in=remove_shop_product_ids):
             if shop_product.primary_category == self.category:
+                if self.category in shop_product.categories.all():
+                    shop_product.categories.remove(self.category)
                 shop_product.primary_category = None
                 shop_product.save()
+
             Product.objects.filter(id=shop_product.product_id).update(category_id=None)
             shop_product.categories.remove(self.category)

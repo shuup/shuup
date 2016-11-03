@@ -148,10 +148,12 @@ class Category(MPTTModel, TranslatableModel):
     def soft_delete(self, user=None):
         if not self.status == CategoryStatus.DELETED:
             for shop_product in self.primary_shop_products.all():
+                shop_product.categories.remove(self)
                 shop_product.primary_category = None
                 shop_product.save()
             for shop_product in self.shop_products.all():
                 shop_product.categories.remove(self)
+                shop_product.primary_category = None
                 shop_product.save()
             for product in self.primary_products.all():
                 product.category = None

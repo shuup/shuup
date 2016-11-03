@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from collections import defaultdict
 
 from django import forms
+from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.forms import BaseModelFormSet
@@ -34,7 +35,6 @@ class ProductBaseForm(MultiLanguageModelForm):
         fields = (
             "accounting_identifier",
             "barcode",
-            "category",
             "cost_center",
             "depth",
             "gross_weight",
@@ -65,7 +65,6 @@ class ProductBaseForm(MultiLanguageModelForm):
     def __init__(self, **kwargs):
         super(ProductBaseForm, self).__init__(**kwargs)
         self.fields["sales_unit"].required = True  # TODO: Move this to model
-        self.fields["category"].queryset = Category.objects.all_except_deleted()
 
     def clean_sku(self):
         sku = self.cleaned_data["sku"]
@@ -127,6 +126,23 @@ class ShopProductForm(forms.ModelForm):
         if backorder_maximum is not None and backorder_maximum < 0:
             raise ValidationError(_("Backorder maximum must be greater than or equal to 0."))
         return backorder_maximum
+
+    def clean(self):
+        data = super(ShopProductForm, self).clean()
+        if not getattr(settings, "SHUUP_AUTO_SHOP_PRODUCT_CATEGORIES", False):
+            return data
+
+        # handle this here since form_part save causes problems with signals
+        primary_category = data["primary_category"]
+        categories = data["categories"]
+        if not primary_category and categories:
+            primary_category = categories[0]  # first is going to be primary
+        if primary_category and primary_category not in categories:
+            combined = [primary_category.pk] + list(categories.values_list("pk", flat=True))
+            categories = Category.objects.filter(pk__in=combined)
+        data["primary_category"] = primary_category
+        data["categories"] = categories
+        return data
 
 
 class ProductAttributesForm(forms.Form):

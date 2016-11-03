@@ -5,7 +5,6 @@
 {% call content_block(_("Additional Details"), "fa-file-text") %}
     {{ bs3.field(product_form.barcode) }}
     {{ bs3.field(product_form.gtin) }}
-    {{ bs3.field(product_form.category) }}
     {% call(form, language, map) language_dependent_content_tabs(product_form, tab_id_prefix="additional-language") %}
         {{ bs3.field(product_form[map.variation_name]) }}
         {{ bs3.field(product_form[map.status_text]) }}
