@@ -8,7 +8,6 @@
  */
 $(function() {
     "use strict";
-    var menuLoaded = false;
 
     function openMainNav() {
         $(document.body).addClass("menu-open");
@@ -22,20 +21,8 @@ $(function() {
         return $(document.body).hasClass("menu-open");
     }
 
-    function loadMenu(force) {
-        if (!menuLoaded || force) {
-            $("#main-menu").empty().load(window.ShuupAdminConfig.menuUrl, function() {
-                $("#main-menu .scroll-inner-content").scrollbar("init", {
-                    disableBodyScroll: true
-                });
-            });
-            menuLoaded = true;
-        }
-    }
-
     $("#menu-button").click(function(event) {
         closeAllSubmenus();
-        loadMenu();
         $("#site-search.mobile").removeClass("open"); // Close search if open on mobile
         event.stopPropagation();
         if (mainNavIsOpen()) {
@@ -43,9 +30,6 @@ $(function() {
         } else {
             openMainNav();
         }
-    }).hover(function() {
-        // Start pre-emptively loading the contents of the main menu when the user seems he's about to open it.
-        loadMenu();
     });
 
     function closeAllSubmenus() {
@@ -55,6 +39,7 @@ $(function() {
     }
     $(document).on("click", "#main-menu ul.menu-list > li a", function(e) {
         e.preventDefault();
+        e.stopPropagation();  // do not close submenus
         const target_id = $(this).data("target-id");
         $(".category-submenu").each(function(idx, elem){
             if($(elem).attr("id") != target_id) {
@@ -68,20 +53,21 @@ $(function() {
         const isOpen = $target.hasClass("open");
         $target.toggleClass("open", !isOpen);
     });
-    $(document).ready(function(){
-        loadMenu();
-        if($(window).width() > 768) {
-            openMainNav();
-        }
-    });
-    $(document).on("click", ".category-menu-close", function(e){
+
+    $(window).click(function() {
         closeAllSubmenus();
     });
-    window.onresize = (function() {
-        if($(window).width() > 768) {
-            openMainNav();
+
+    $('.category-submenu').click(function(event){
+        event.stopPropagation();
+        if($(event.target).hasClass("fa-close")) {
+            closeAllSubmenus();
         }
-        else {
+    });
+
+    window.onresize = (function() {
+        closeAllSubmenus();
+        if($(window).width() < 768) {
             closeMainNav();
         }
     });

@@ -11,7 +11,7 @@ import time
 import pytest
 from django.core.urlresolvers import reverse
 
-from shuup.testing.browser_utils import click_element, wait_until_appeared
+from shuup.testing.browser_utils import click_element, wait_until_appeared, wait_until_condition
 from shuup.testing.factories import create_random_person, get_default_shop
 from shuup.testing.utils import initialize_admin_browser_test
 
@@ -35,7 +35,7 @@ def test_list_view(browser, admin_user, live_server, settings):
 def _visit_contacts_list_view(browser, live_server):
     url = reverse("shuup_admin:contact.list")
     browser.visit("%s%s" % (live_server, url))
-    assert browser.is_text_present("Contacts")
+    wait_until_condition(browser, lambda x: x.is_text_present("Contacts"))
     wait_until_appeared(browser, ".picotable-item-info")
 
 
@@ -95,4 +95,4 @@ def _set_settings(browser):
     browser.find_by_id("id_view_configuration_contact_identifier").click()
     browser.find_by_css(".btn.btn-success").click()
     wait_until_appeared(browser, ".picotable-item-info")
-    assert browser.is_text_present("Internal Identifier")
+    wait_until_condition(browser, lambda x: x.is_text_present("Internal Identifier"))

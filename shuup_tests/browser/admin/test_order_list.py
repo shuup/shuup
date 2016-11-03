@@ -39,7 +39,7 @@ def test_orders_list_view(browser, admin_user, live_server, settings):
 def _visit_orders_list_view(browser, live_server):
     url = reverse("shuup_admin:order.list")
     browser.visit("%s%s" % (live_server, url))
-    assert browser.is_text_present("Orders")
+    wait_until_condition(browser, condition=lambda x: x.is_text_present("Orders"))
     wait_until_appeared(browser, ".picotable-item-info")
 
 
