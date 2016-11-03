@@ -71,6 +71,8 @@ def test_ultrafilter():
     uf.save()
     assert matcher.matches(uf)
     shop_product.categories.remove(category)
+    shop_product.primary_category = None
+    shop_product.save()
     assert not matcher.matches(uf)
     shop_product.primary_category = category
     assert matcher.matches(uf)

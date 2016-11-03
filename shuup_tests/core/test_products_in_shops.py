@@ -10,17 +10,18 @@ import uuid
 import pytest
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
+from django.test import override_settings
 
 from shuup.core.excs import (
     ProductNotOrderableProblem, ProductNotVisibleProblem
 )
 from shuup.core.models import (
-    AnonymousContact, get_person_contact, ProductVisibility,
+    AnonymousContact, Category, get_person_contact, ProductVisibility,
     ShopProductVisibility, Supplier
 )
 from shuup.testing.factories import (
-    get_default_customer_group, get_default_product, get_default_shop,
-    get_default_shop_product, get_default_supplier
+    CategoryFactory, get_default_customer_group, get_default_product,
+    get_default_shop, get_default_shop_product, get_default_supplier
 )
 from shuup_tests.core.utils import modify
 from shuup_tests.utils import (
@@ -121,3 +122,63 @@ def test_product_visibility(rf, admin_user, regular_user):
         assert error_does_not_exist(shop_product.get_visibility_errors(customer=grouped_contact), "product_not_visible_to_group")
         assert error_does_not_exist(shop_product.get_visibility_errors(customer=admin_contact), "product_not_visible_to_group")
         assert error_exists(shop_product.get_visibility_errors(customer=regular_contact), "product_not_visible_to_group")
+
+
+@pytest.mark.django_db
+def test_product_categories(settings):
+    with override_settings(SHUUP_AUTO_SHOP_PRODUCT_CATEGORIES=True):
+        shop_product = get_default_shop_product()
+        shop_product.categories.clear()
+        shop_product.primary_category = None
+        shop_product.save()
+
+        assert not shop_product.primary_category
+        assert not shop_product.categories.count()
+
+        category_one = CategoryFactory()
+        category_two = CategoryFactory()
+
+        shop_product.categories = Category.objects.all()
+
+        assert shop_product.primary_category  # this was automatically populated
+        assert shop_product.primary_category.pk == category_one.pk  # it's the first one also
+
+        shop_product.categories.clear()
+
+        shop_product.primary_category = category_one
+        shop_product.save()
+
+        assert shop_product.primary_category == category_one
+        assert category_one in shop_product.categories.all()
+
+        # test removing
+        shop_product.categories.remove(category_one)
+        shop_product.refresh_from_db()
+        assert not shop_product.categories.exists()
+
+        shop_product.categories.add(category_one)
+        category_one.soft_delete()
+        assert not shop_product.categories.exists()
+
+    with override_settings(SHUUP_AUTO_SHOP_PRODUCT_CATEGORIES=False):
+        shop_product.categories.clear()
+        shop_product.primary_category = None
+        shop_product.save()
+
+        assert not shop_product.primary_category
+        assert not shop_product.categories.count()
+
+        category_one = CategoryFactory()
+        category_two = CategoryFactory()
+
+        shop_product.categories = Category.objects.all()
+
+        assert not shop_product.primary_category  # this was NOT automatically populated
+
+        shop_product.categories.clear()
+
+        shop_product.primary_category = category_one
+        shop_product.save()
+
+        assert shop_product.primary_category == category_one
+        assert category_one not in shop_product.categories.all()

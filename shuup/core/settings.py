@@ -184,3 +184,19 @@ SHUUP_ADDRESS_FIELD_PROPERTIES = {}
 
 #: Indicates maximum days for daily data included to one telemetry request
 SHUUP_MAX_DAYS_IN_TELEMETRY = 180
+
+#: Spec which defines if shop product categories
+#: will be automatically populated on save or
+#: when the shop_product categories change.
+#:
+#: Example A:
+#: shop_product.categories = []
+#: shop_product.primary_category = "A"
+#: shop_product.save()
+#: => "A" will be added to categories
+#:
+#: Example B:
+#: shop_product.primary_category = None
+#: shop_product.categories = ["A", "B"]
+#: => "A" will be made the shop_product.primary_category
+SHUUP_AUTO_SHOP_PRODUCT_CATEGORIES = True
