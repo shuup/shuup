@@ -56,3 +56,13 @@ class AdminFieldRenderer(FieldRenderer):
 
         if not self.show_help_block:  # Remove field help to avoid rendering `help-block`
             self.field_help = ''
+
+    def append_to_field(self, html):
+        if self.field_errors:
+            errors = "<br>".join(self.field_errors)
+            html += '<div class="help-block error-block">{error}</div>'.format(error=errors)
+
+        if self.field_help:
+            html += '<span class="help-block">{help}</span>'.format(help=self.field_help)
+
+        return html
