@@ -174,9 +174,9 @@ class PicotableListView(PicotableViewMixin, ListView):
 
         if self.mass_actions:
             if self.settings.columns:
-                # settings.columns never have this empty one
+                # settings.columns never have selects
                 self.columns = [
-                    Column("select", "", display="", sortable=False, linked=False),  # empty column for selects
+                    Column("select", "", display="", sortable=False, linked=False, class_name="text-center"),
                 ] + self.settings.columns
             else:
                 self.columns = self.default_columns
