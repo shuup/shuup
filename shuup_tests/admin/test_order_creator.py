@@ -44,9 +44,9 @@ def get_frontend_order_state(contact, valid_lines=True):
     """
     translation.activate("en")
     shop = get_default_shop()
-    tax = Tax.objects.create(code="test_code", rate=decimal.Decimal("0.20"), name="Default")
-    tax_class = TaxClass.objects.create(identifier="test_tax_class", name="Default")
-    rule = TaxRule.objects.create(tax=tax)
+    tax, created = Tax.objects.get_or_create(code="test_code", defaults={"rate": decimal.Decimal("0.20"), "name": "Default"})
+    tax_class, created = TaxClass.objects.get_or_create(identifier="test_tax_class", defaults={"name": "Default"})
+    rule, created = TaxRule.objects.get_or_create(tax=tax)
     rule.tax_classes.add(tax_class)
     rule.save()
     product = create_product(

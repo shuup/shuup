@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- `OrderSource.language` is now properly used.
 - Start using `Contact.language`.
   It fallbacks to `settings.LANGUAGE_CODE` if not set.
 - Add `LanguageFormField`
