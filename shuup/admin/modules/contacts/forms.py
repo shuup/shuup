@@ -14,18 +14,19 @@ from enumfields import EnumField
 
 from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.forms.widgets import PersonContactChoiceWidget
+from shuup.core.fields import LanguageFormField
 from shuup.core.models import (
     CompanyContact, Contact, ContactGroup, Gender, PersonContact
 )
 
 FIELDS_BY_MODEL_NAME = {
     "Contact": (
-        "is_active", "language", "marketing_permission", "phone", "www",
+        "is_active", "marketing_permission", "phone", "www",
         "timezone", "prefix", "suffix", "name_ext", "email", "tax_group",
         "merchant_notes", "account_manager"
     ),
     "PersonContact": (
-        "first_name", "last_name", "gender", "birth_date"
+        "first_name", "last_name", "gender", "language", "birth_date"
     ),
     "CompanyContact": (
         "name", "tax_number", "members"
@@ -58,6 +59,8 @@ class ContactBaseFormMixin(object):
 
 
 class PersonContactBaseForm(ContactBaseFormMixin, forms.ModelForm):
+    language = LanguageFormField(label=_("Language"), required=False, include_blank=True)
+
     class Meta:
         model = PersonContact
         fields = list(FIELDS_BY_MODEL_NAME["PersonContact"]) + list(FIELDS_BY_MODEL_NAME["Contact"])
@@ -70,9 +73,11 @@ class PersonContactBaseForm(ContactBaseFormMixin, forms.ModelForm):
         super(PersonContactBaseForm, self).init_fields()
         for field_name in ("first_name", "last_name"):
             self.fields[field_name].required = True
+        self.initial["language"] = self.instance.language
 
     def save(self, commit=True):
         self.instance.name = self.cleaned_data["first_name"] + " " + self.cleaned_data["last_name"]
+        self.instance.language = self.cleaned_data["language"]
         obj = super(PersonContactBaseForm, self).save(commit)
         if self.user and not getattr(obj, "user", None):  # Allow binding only once
             obj.user = self.user

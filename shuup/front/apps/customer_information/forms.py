@@ -10,20 +10,28 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from enumfields import EnumField
 
+from shuup.core.fields import LanguageFormField
 from shuup.core.models import (
     CompanyContact, PersonContact, SavedAddressRole, SavedAddressStatus
 )
 
 
 class PersonContactForm(forms.ModelForm):
+    language = LanguageFormField(label=_("Language"), required=False)
+
     class Meta:
         model = PersonContact
-        fields = ("first_name", "last_name", "phone", "email", "gender", "marketing_permission")
+        fields = ("first_name", "last_name", "phone", "email", "gender", "language", "marketing_permission")
 
     def __init__(self, *args, **kwargs):
         super(PersonContactForm, self).__init__(*args, **kwargs)
         for field in ("first_name", "last_name", "email"):
             self.fields[field].required = True
+        self.initial["language"] = self.instance.language
+
+    def save(self, commit=True):
+        self.instance.language = self.cleaned_data["language"]
+        return super(PersonContactForm, self).save(commit)
 
 
 class CompanyContactForm(forms.ModelForm):
