@@ -16,7 +16,7 @@ from shuup.core.models import AnonymousContact, Shop
 from shuup.front.basket import get_basket
 from shuup.testing.factories import (
     create_product, create_random_person, get_default_customer_group,
-    get_default_supplier, get_payment_method, get_shop
+    get_default_supplier, get_payment_method, get_shipping_method, get_shop
 )
 from shuup.testing.utils import apply_request_middleware
 
@@ -37,9 +37,10 @@ def create_basket_and_campaign(request, conditions, product_price_value, campaig
     basket.customer = request.customer
     supplier = get_default_supplier()
     basket.add_product(supplier=supplier, shop=request.shop, product=product, quantity=1)
+    basket.shipping_method = get_shipping_method(shop=request.shop)
 
     original_line_count = len(basket.get_final_lines())
-    assert original_line_count == 1
+    assert original_line_count == 2
     assert basket.product_count == 1
     original_price = basket.total_price
 

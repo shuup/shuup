@@ -421,8 +421,9 @@ def get_default_product():
     if not product:
         product = create_product(DEFAULT_IDENTIFIER)
         image = get_random_filer_image()
-        media = ProductMedia.objects.create(product=product, kind=ProductMediaKind.IMAGE, file=image, enabled=True,
-                                            public=True)
+        media = ProductMedia.objects.create(
+            product=product, kind=ProductMediaKind.IMAGE, file=image, enabled=True,
+            public=True)
         product.primary_image = media
         product.save()
         assert product.primary_image_id
