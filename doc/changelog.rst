@@ -25,6 +25,7 @@ Localization
 Admin
 ~~~~~
 
+- Standardize picotable datepicker across browsers
 - Fix picotable aggregate columns
 - Allow setting productless order as completed
 - Change main menu template and remove ajax loading from main menu.
