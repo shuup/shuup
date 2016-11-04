@@ -25,6 +25,7 @@ Localization
 Admin
 ~~~~~
 
+- Allow setting productless order as completed
 - Change main menu template and remove ajax loading from main menu.
 - Remove language layer from shop configurations
 - Fix bug in product cross-sell editview

@@ -76,6 +76,9 @@ def create_order(request, creator, customer, product):
     order.cache_prices()
     order.check_all_verified()
     order.save()
+
+    assert not order.can_set_complete()
+
     base = 5 * shop.create_price(100).amount
     discount = shop.create_price(30).amount
     tax_value = line_tax.amount
@@ -86,15 +89,46 @@ def create_order(request, creator, customer, product):
         assert_almost_equal(order.taxless_total_price.amount, base - tax_value - discount)
         assert_almost_equal(order.taxful_total_price.amount, base - discount)
 
+    assert not order.is_fully_shipped()
     shipment = order.create_shipment_of_all_products(supplier=supplier)
+    assert order.is_fully_shipped()
+
     assert shipment.total_products == 5, "All products were shipped"
     assert shipment.weight == product.gross_weight * 5 / 1000, "Gravity works"
     assert not order.get_unshipped_products(), "Nothing was left in the warehouse"
 
+    assert order.can_set_complete()
+
     order.create_payment(order.taxful_total_price)
     assert order.is_paid()
     assert Order.objects.paid().filter(pk=order.pk).exists(), "It was paid! Honestly!"
+    assert order.has_products()
 
+def create_simple_order(request, creator, customer):
+    billing_address = get_address().to_immutable()
+    shipping_address = get_address(name="Shippy Doge").to_immutable()
+    shipping_address.save()
+    shop = request.shop
+    order = Order(
+        creator=creator,
+        customer=customer,
+        shop=shop,
+        payment_method=get_default_payment_method(),
+        shipping_method=get_default_shipping_method(),
+        billing_address=billing_address,
+        shipping_address=shipping_address,
+        order_date=now(),
+        status=get_initial_order_status(),
+        currency=shop.currency,
+        prices_include_tax=shop.prices_include_tax,
+    )
+    order.full_clean()
+    order.save()
+
+    order.cache_prices()
+    order.check_all_verified()
+    order.save()
+    return order
 
 def assert_almost_equal(x, y):
     assert abs(x - y).value <= 0.005
@@ -124,3 +158,17 @@ def test_basic_order(rf, admin_user, mode):
     for x in range(10):
         create_order(request, creator=admin_user, customer=customer, product=product)
     assert Order.objects.filter(customer=customer).count() == 10
+
+
+@pytest.mark.django_db
+def test_can_complete_productless_order(rf, admin_user):
+    shop = get_shop(prices_include_tax=False)
+    supplier = get_default_supplier()
+    request = rf.get('/')
+    request.shop = shop
+    apply_request_middleware(request)
+    customer = get_person_contact(admin_user)
+    order =  create_simple_order(request, admin_user, customer)
+    assert not order.has_products()
+    assert order.can_set_complete()
+    assert not order.is_fully_shipped()
