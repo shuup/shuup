@@ -270,6 +270,12 @@ const Picotable = (function(m, storage) {
             ctrl.setFilterValue(col.id, filterObj);
         };
         var attrs = {"type": col.filter.range.type || "text"};
+        var useDatepicker = false;
+        if(attrs["type"] == "date") {
+            // use a normal text input since mixing a date input and the datepicker together works weird in chrome
+            useDatepicker = true;
+            attrs["type"] = "text";
+        }
         Util.map(["min", "max", "step"], function(key) {
             var val = col.filter.range[key];
             if (!(val === undefined || val === null)) {
@@ -284,7 +290,7 @@ const Picotable = (function(m, storage) {
             onchange: function() {
                 setFilterValueFromInput.call(this, "min");
             },
-            config: debounceChangeConfig(500)
+            config: useDatepicker? ctrl.datePicker() : debounceChangeConfig(500)
         }));
         var maxInput = m("input.form-control", Util.extend({}, attrs, {
             value: Util.stringValue(value.max),
@@ -292,7 +298,7 @@ const Picotable = (function(m, storage) {
             onchange: function() {
                 setFilterValueFromInput.call(this, "max");
             },
-            config: debounceChangeConfig(500)
+            config: useDatepicker? ctrl.datePicker() : debounceChangeConfig(500)
         }));
         return m("div.range-filter", [
             m("div.input-wrapper.min", {key: "min"}, minInput),
@@ -786,19 +792,19 @@ const Picotable = (function(m, storage) {
                 return;
             }
 
-            
+
             var xhrConfig = function(xhr) {
                 xhr.setRequestHeader("X-CSRFToken", window.ShuupAdminConfig.csrf);
                 xhr.setRequestHeader('Content-type', 'application/json');
             };
-            var payload = {     
+            var payload = {
                 "action": value,
                 "values": originalValues
             };
             m.request({
-                method: "POST", 
-                url: window.location.pathname, 
-                data: payload, 
+                method: "POST",
+                url: window.location.pathname,
+                data: payload,
                 extract:ctrl.getMassActionResponse,
                 config: xhrConfig
             });
@@ -870,6 +876,22 @@ const Picotable = (function(m, storage) {
                 }
             }, "*");
             event.preventDefault();
+        };
+        ctrl.datePicker = function() {
+            return function(el, isInitialized) {
+                if(isInitialized) {
+                    return;
+                }
+
+                $(el).datetimepicker({
+                    format: "yyyy-mm-dd",
+                    autoclose: true,
+                    todayBtn: true,
+                    todayHighlight: true,
+                    fontAwesome: true,
+                    minView: 2
+                });
+            }
         };
         ctrl.loadSettings();
         ctrl.adaptRenderMode();
