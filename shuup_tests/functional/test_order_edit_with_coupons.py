@@ -92,6 +92,7 @@ def _get_order_with_coupon(request, initial_status, condition_product_count=1):
     supplier = get_default_supplier()
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price="50")
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
+    basket.shipping_method = get_shipping_method(shop=shop)  # For shippable products
 
     dc = Coupon.objects.create(code="TEST", active=True)
     campaign = BasketCampaign.objects.create(
@@ -113,7 +114,7 @@ def _get_order_with_coupon(request, initial_status, condition_product_count=1):
     basket.status = initial_status
     creator = OrderCreator(request)
     order = creator.create_order(basket)
-    assert order.lines.count() == 2
+    assert order.lines.count() == 3
     assert OrderLineType.DISCOUNT in [l.type for l in order.lines.all()]
     return order
 

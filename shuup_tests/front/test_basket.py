@@ -15,7 +15,7 @@ from shuup.front.basket import get_basket
 from shuup.front.models import StoredBasket
 from shuup.testing.factories import (
     create_product, get_default_shop, get_default_payment_method,
-    get_default_supplier
+    get_default_supplier, get_shipping_method
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import printable_gibberish
@@ -50,6 +50,7 @@ def test_basket(rf, storage):
             assert basket == request.basket
             assert basket.product_count == 0
             line = basket.add_product(supplier=supplier, shop=shop, product=product, quantity=q)
+            basket.shipping_method = get_shipping_method(shop=shop)  # For shippable product
             assert line.quantity == q
             assert basket.get_lines()
             assert basket.get_product_ids_and_quantities().get(product.pk) == q

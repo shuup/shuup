@@ -193,7 +193,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         on_delete=models.PROTECT,
         verbose_name=_('variation parent'))
     stock_behavior = EnumIntegerField(StockBehavior, default=StockBehavior.UNSTOCKED, verbose_name=_('stock'))
-    shipping_mode = EnumIntegerField(ShippingMode, default=ShippingMode.NOT_SHIPPED, verbose_name=_('shipping mode'))
+    shipping_mode = EnumIntegerField(ShippingMode, default=ShippingMode.SHIPPED, verbose_name=_('shipping mode'))
     sales_unit = models.ForeignKey("SalesUnit", verbose_name=_('unit'), blank=True, null=True, on_delete=models.PROTECT)
     tax_class = models.ForeignKey("TaxClass", verbose_name=_('tax class'), on_delete=models.PROTECT)
 

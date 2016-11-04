@@ -21,7 +21,8 @@ from shuup.campaigns.models.catalog_filters import ProductFilter
 from shuup.campaigns.models.product_effects import ProductDiscountPercentage
 from shuup.front.basket import get_basket
 from shuup.testing.factories import (
-    create_product, get_default_category, get_default_supplier
+    create_product, get_default_category, get_default_supplier,
+    get_shipping_method
 )
 from shuup_tests.campaigns import initialize_test
 from shuup_tests.utils import printable_gibberish
@@ -64,9 +65,9 @@ def test_multiple_campaigns_cheapest_price(rf):
     # add product to basket
     basket = get_basket(request)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
-
+    basket.shipping_method = get_shipping_method(shop=shop)
     final_lines = basket.get_final_lines()
-    assert len(final_lines) == 1
+    assert len(final_lines) == 2
     assert basket.total_price == expected_total
 
     effect.discount_amount = total_discount_amount

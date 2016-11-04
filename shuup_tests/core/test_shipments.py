@@ -10,7 +10,10 @@ import pytest
 
 from django.conf import settings
 
-from shuup.core.models import Shipment, ShippingStatus, StockBehavior
+from shuup.core.models import (
+    Shipment, ShipmentProduct, ShippingMode, ShippingStatus,
+    StockBehavior
+)
 from shuup.testing.factories import (
     add_product_to_order, create_empty_order, create_product,
     get_default_shop, get_default_supplier
@@ -140,6 +143,34 @@ def test_shipment_with_insufficient_stock():
     # Should be fine after adding more stock
     supplier.adjust_stock(product.pk, delta=5)
     order.create_shipment({product: 10}, supplier=supplier)
+
+
+@pytest.mark.django_db
+def test_shipment_with_unshippable_products():
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+
+    product = create_product(
+        "unshippable",
+        shop=shop,
+        supplier=supplier,
+        default_price=5.55)
+    product.shipping_mode = ShippingMode.NOT_SHIPPED
+    product.save()
+    order = _get_order(shop, supplier, stocked=False)
+    initial_product_line_count = order.lines.products().count()
+    add_product_to_order(order, supplier, product, quantity=4, taxless_base_unit_price=3)
+    order.cache_prices()
+    order.check_all_verified()
+    order.save()
+
+    assert order.shipments.count() == 0
+    order.create_shipment_of_all_products(supplier=supplier)
+    assert (order.lines.products().count() == initial_product_line_count + 1)
+
+    assert order.shipments.count() == 1
+    assert ShipmentProduct.objects.filter(shipment__order_id=order.id).count() == initial_product_line_count
+    assert order.shipping_status == ShippingStatus.FULLY_SHIPPED
 
 
 def _get_order(shop, supplier, stocked=False):

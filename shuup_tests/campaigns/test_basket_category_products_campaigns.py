@@ -15,7 +15,10 @@ from shuup.campaigns.models.basket_line_effects import (
     DiscountFromCategoryProducts
 )
 from shuup.front.basket import get_basket
-from shuup.testing.factories import create_product, get_default_supplier, get_default_category
+from shuup.testing.factories import (
+    create_product, get_default_supplier, get_default_category,
+    get_shipping_method
+)
 from shuup_tests.campaigns import initialize_test
 
 
@@ -27,6 +30,7 @@ def test_category_product_in_basket_condition(rf):
     category = get_default_category()
     product = create_product("The Product", shop=shop, default_price="200", supplier=supplier)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
+    basket.shipping_method = get_shipping_method(shop=shop)
 
     shop_product = product.get_shop_instance(shop)
     assert category not in shop_product.categories.all()
@@ -66,6 +70,7 @@ def test_category_products_effect_with_amount(rf):
     shop_product.categories.add(category)
 
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=quantity)
+    basket.shipping_method = get_shipping_method(shop=shop)
     basket.save()
 
     rule = CategoryProductsBasketCondition.objects.create(
@@ -81,7 +86,7 @@ def test_category_products_effect_with_amount(rf):
     basket.uncache()
     final_lines = basket.get_final_lines()
 
-    assert len(final_lines) == 1  # no new lines since the effect touches original lines
+    assert len(final_lines) == 2  # no new lines since the effect touches original lines
     expected_discount_amount = quantity * basket.create_price(discount_amount_value)
     original_price = basket.create_price(single_product_price) * quantity
     line = final_lines[0]
@@ -106,6 +111,7 @@ def test_category_products_effect_with_percentage(rf):
     shop_product.categories.add(category)
 
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=quantity)
+    basket.shipping_method = get_shipping_method(shop=shop)
     basket.save()
 
     rule = CategoryProductsBasketCondition.objects.create(
@@ -121,7 +127,7 @@ def test_category_products_effect_with_percentage(rf):
     basket.uncache()
     final_lines = basket.get_final_lines()
 
-    assert len(final_lines) == 1  # no new lines since the effect touches original lines
+    assert len(final_lines) == 2 # no new lines since the effect touches original lines
     expected_discount_amount = quantity * basket.create_price(single_product_price) * discount_percentage
     original_price = basket.create_price(single_product_price) * quantity
     line = final_lines[0]

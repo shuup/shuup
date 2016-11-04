@@ -694,10 +694,12 @@ class Order(MoneyPropped, models.Model):
         :return: Saved, complete Shipment object
         :rtype: shuup.shop.models.Shipment
         """
+        from ._products import ShippingMode
+
         suppliers_to_product_quantities = defaultdict(lambda: defaultdict(lambda: 0))
         lines = (
             self.lines
-            .filter(type=OrderLineType.PRODUCT)
+            .filter(type=OrderLineType.PRODUCT, product__shipping_mode=ShippingMode.SHIPPED)
             .values_list("supplier_id", "product_id", "quantity"))
         for supplier_id, product_id, quantity in lines:
             if product_id:
@@ -824,6 +826,13 @@ class Order(MoneyPropped, models.Model):
             .values_list("product_id", "quantity"))
         for product_id, quantity in lines:
             products[product_id]['ordered'] += quantity
+
+        from ._products import ShippingMode
+
+        lines_to_ship = (
+            self.lines.filter(type=OrderLineType.PRODUCT, product__shipping_mode=ShippingMode.SHIPPED)
+            .values_list("product_id", "quantity"))
+        for product_id, quantity in lines_to_ship:
             products[product_id]['unshipped'] += quantity
 
         from ._shipments import ShipmentProduct, ShipmentStatus
