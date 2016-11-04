@@ -76,7 +76,10 @@ class ViewSettings(object):
             column = self._get_column(field)
             if column:
                 columns.append(column)
-
+        table_columns = set([col.id for col in columns])
+        for default_column in self.default_columns:
+            if default_column.id not in table_columns and default_column.id != "select":
+                columns.append(default_column)
         return columns
 
     def _get_translated_column(self, field):
