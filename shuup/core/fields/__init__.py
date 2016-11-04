@@ -21,7 +21,7 @@ from django.utils.translation import ugettext_lazy as _
 from jsonfield.fields import JSONField
 
 from shuup.core.fields.tagged_json import tag_registry, TaggedJSONEncoder
-from shuup.utils.i18n import get_current_babel_locale
+from shuup.utils.i18n import get_current_babel_locale, remove_extinct_languages
 
 IdentifierValidator = RegexValidator("[a-z][a-z_]+")
 
@@ -143,11 +143,17 @@ class MeasurementField(FormattedDecimalField):
         return (name, path, args, kwargs)
 
 
-class LanguageField(models.CharField):
+class LanguageFieldMixin(object):
     # TODO: This list will include extinct languages
     LANGUAGE_CODES = set(babel.Locale("en").languages.keys())
 
+    def clean_language_codes(self):
+        self.LANGUAGE_CODES = remove_extinct_languages(self.LANGUAGE_CODES)
+
+
+class LanguageField(LanguageFieldMixin, models.CharField):
     def __init__(self, *args, **kwargs):
+        self.clean_language_codes()
         kwargs.setdefault("max_length", 10)
         kwargs["choices"] = [(code, code) for code in sorted(self.LANGUAGE_CODES)]
         super(LanguageField, self).__init__(*args, **kwargs)
@@ -160,6 +166,27 @@ class LanguageField(models.CharField):
             in super(LanguageField, self).get_choices(include_blank, blank_choice)
         ]
         translated_choices.sort(key=lambda pair: pair[1].lower())
+        return translated_choices
+
+
+class LanguageFormField(LanguageFieldMixin, forms.ChoiceField):
+    def __init__(self, *args, **kwargs):
+        include_blank = kwargs.pop("include_blank", True)
+        blank_choice = kwargs.pop("blank_choice", BLANK_CHOICE_DASH)
+        self.clean_language_codes()
+        kwargs["choices"] = self.get_choices(include_blank, blank_choice)
+        super(LanguageFormField, self).__init__(*args, **kwargs)
+
+    def get_choices(self, include_blank=True, blank_choice=BLANK_CHOICE_DASH):
+        locale = get_current_babel_locale()
+        translated_choices = [
+            (code, locale.languages.get(code, code))
+            for code
+            in sorted(self.LANGUAGE_CODES)
+        ]
+        translated_choices.sort(key=lambda pair: pair[1].lower())
+        if include_blank:
+            translated_choices = blank_choice + translated_choices
         return translated_choices
 
 
