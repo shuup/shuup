@@ -12,6 +12,8 @@ Unrealeased
 Core
 ~~~~
 
+- Start using `Contact.language`.
+  It fallbacks to `settings.LANGUAGE_CODE` if not set.
 - Add `LanguageFormField`
 - Add `SHUUP_AUTO_SHOP_PRODUCT_CATEGORIES` option that
   allows autopopulating categories. Default is `True`.

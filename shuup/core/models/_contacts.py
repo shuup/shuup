@@ -16,6 +16,7 @@ from parler.managers import TranslatableQuerySet
 from parler.models import TranslatedFields
 from timezone_field.fields import TimeZoneField
 
+from shuup import configuration
 from shuup.core.fields import InternalIdentifierField, LanguageField
 from shuup.core.pricing import PriceDisplayOptions
 from shuup.utils.analog import define_log_model
@@ -107,7 +108,7 @@ class Contact(PolymorphicShuupModel):
         "PaymentMethod", verbose_name=_('default payment method'), blank=True, null=True, on_delete=models.SET_NULL
     )
 
-    language = LanguageField(verbose_name=_('language'), blank=True)
+    _language = LanguageField(verbose_name=_('language'), blank=True)
     marketing_permission = models.BooleanField(default=True, verbose_name=_('marketing permission'))
     phone = models.CharField(max_length=64, blank=True, verbose_name=_('phone'))
     www = models.URLField(max_length=128, blank=True, verbose_name=_('web address'))
@@ -139,6 +140,16 @@ class Contact(PolymorphicShuupModel):
     @property
     def full_name(self):
         return (" ".join([self.prefix, self.name, self.suffix])).strip()
+
+    @property
+    def language(self):
+        if self._language is not None:
+            return self._language
+        return configuration.get(None, "default_contact_language", settings.LANGUAGE_CODE)
+
+    @language.setter
+    def language(self, value):
+        self._language = value
 
     def get_price_display_options(self):
         """
