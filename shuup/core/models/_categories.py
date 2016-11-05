@@ -155,9 +155,6 @@ class Category(MPTTModel, TranslatableModel):
                 shop_product.categories.remove(self)
                 shop_product.primary_category = None
                 shop_product.save()
-            for product in self.primary_products.all():
-                product.category = None
-                product.save()
             for child in self.children.all():
                 child.parent = None
                 child.save()

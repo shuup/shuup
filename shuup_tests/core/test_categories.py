@@ -115,7 +115,6 @@ def test_category_deletion(admin_user):
     shop_product = get_default_shop_product()
     shop_product.categories.add(category)
     shop_product.primary_category = category
-    shop_product.product.category = category
     shop_product.save()
 
     assert category.status == CategoryStatus.INVISIBLE
@@ -130,7 +129,6 @@ def test_category_deletion(admin_user):
 
     assert shop_product.categories.count() == 0
     assert shop_product.primary_category is None
-    assert shop_product.product.category is None
     assert category.status == CategoryStatus.DELETED
     assert category.children.count() == 0
     # the child category still exists
