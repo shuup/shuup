@@ -16,7 +16,9 @@ import xlrd
 from django.db.models import AutoField, ForeignKey, Q
 from django.db.models.fields.related import RelatedField
 from django.db.transaction import atomic
+from django.utils.text import force_text
 from django.utils.translation import ugettext_lazy as _
+from enumfields import EnumIntegerField
 
 from shuup.importer._mapper import RelatedMapper
 from shuup.importer.exceptions import ImporterError
@@ -220,6 +222,9 @@ class DataImporter(object):
             if not field:
                 continue
 
+            if field.name in self._meta.fields_to_skip:
+                continue
+
             value = orig_value = row.get(fname)
             if not self._row_valid(mapping, value, obj):
                 continue
@@ -227,6 +232,7 @@ class DataImporter(object):
             value = self._handle_special_row_values(mapping, value)
             setter = mapping.get("setter")
             if setter:
+                value, has_related = self._handle_related_value(field, mapping, orig_value, row_session, obj, value)
                 setter(row_session, value, mapping)
                 continue
 
@@ -250,6 +256,11 @@ class DataImporter(object):
         elif mapping.get("m2m"):
             self._handle_row_m2m_value(field, orig_value, row_session, obj, value)
             has_related = True
+        elif mapping.get("is_enum_field"):
+            for k, v in field.get_choices():
+                if fold_mapping_name(force_text(v)) == fold_mapping_name(orig_value):
+                    value = k
+                    break
         return (value, has_related)
 
     def _handle_special_row_values(self, mapping, value):
@@ -277,7 +288,7 @@ class DataImporter(object):
                 )
             else:
                 value = self._meta.mutate_normal_field_set(row_session, field, value, original=orig_value)
-                setattr(target, field.name, value)
+            setattr(target, field.name, value)
 
     def _get_field_choices_value(self, field, value):
         if field.choices:
@@ -296,6 +307,7 @@ class DataImporter(object):
                     "field_name": (field.verbose_name or field.name)
                 }
             )
+
         row_session.defer("m2m_%s" % field.name, target, {field.name: value})
 
     def _handle_row_fk_value(self, field, orig_value, row_session, value):
@@ -356,6 +368,7 @@ class DataImporter(object):
         is_translation = (mode == 2)
         is_m2m = (mode == 1)
         is_fk = isinstance(field, ForeignKey)
+        is_enum_field = isinstance(field, EnumIntegerField)
         return {
             "name": field.verbose_name or field.name,
             "id": field.name,
@@ -367,6 +380,7 @@ class DataImporter(object):
             "priority": 0,
             "m2m": is_m2m,
             "fk": is_fk,
+            "is_enum_field": is_enum_field,
         }
 
     def _find_matching_object(self, row, shop):
@@ -437,7 +451,6 @@ class DataImporter(object):
 
         if not mapper:
             self.relation_map_cache[field] = mapper = RelatedMapper(handler=self, row_session=row_session, field=field)
-
         if reverse:
             if multi:
                 return mapper.map_instances(value)

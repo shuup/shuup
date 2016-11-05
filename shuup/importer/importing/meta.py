@@ -51,6 +51,15 @@ class ImportMetaBase(object):
     """
     post_save_handlers = {}
 
+    """
+    Fields to skip
+
+    It's sometimes necessary to skip fields in importer.
+
+    For now we are using this to skip image fields in `ProductMetaBase`.
+    """
+    fields_to_skip = []
+
     def __init__(self, handler, model):
         self.handler = handler
         self.model = model
