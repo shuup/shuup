@@ -57,17 +57,6 @@ def test_tax_class_removal():
     assert Product.objects.filter(pk=product.pk).exists()
 
 
-@pytest.mark.django_db
-def test_category_removal():
-    product = get_product()
-    category = get_default_category()
-    product.category = category
-    product.save()
-    with pytest.raises(NotImplementedError):
-        category.delete()
-    assert Product.objects.filter(pk=product.pk).exists()
-
-
 # -------------- CONTACT ----------------
 @pytest.mark.django_db
 def test_shipping_method_removal():

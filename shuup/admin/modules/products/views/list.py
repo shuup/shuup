@@ -12,7 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.utils.picotable import ChoicesFilter, Column, TextFilter
 from shuup.admin.utils.views import PicotableListView
-from shuup.core.models import Category, Product, ProductMode
+from shuup.core.models import Product, ProductMode
 
 
 class ProductListView(PicotableListView):
@@ -26,7 +26,6 @@ class ProductListView(PicotableListView):
         Column("barcode", _(u"Barcode"), display="barcode", filter_config=TextFilter(_("Filter by barcode..."))),
         Column("type", _(u"Type")),
         Column("mode", _(u"Mode"), filter_config=ChoicesFilter(ProductMode.choices)),
-        Column("category", _(u"Primary Category"), filter_config=ChoicesFilter(Category.objects.all(), "category")),
     ]
 
     mass_actions = [
@@ -57,5 +56,4 @@ class ProductListView(PicotableListView):
             {"title": _(u"Barcode"), "text": item.get("barcode")},
             {"title": _(u"SKU"), "text": item.get("sku")},
             {"title": _(u"Type"), "text": item.get("type")},
-            {"title": _(u"Primary Category"), "text": item.get("category")}
         ]
