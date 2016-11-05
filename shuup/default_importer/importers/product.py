@@ -6,6 +6,7 @@
 # LICENSE file in the root directory of this source tree.
 import six
 from django.db.models import ForeignKey
+from django.utils.text import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.models import (
@@ -13,6 +14,7 @@ from shuup.core.models import (
 )
 from shuup.importer.exceptions import ImporterError
 from shuup.importer.importing import DataImporter, ImportMetaBase
+from shuup.importer.utils import fold_mapping_name
 from shuup.simple_supplier.models import StockAdjustment
 from shuup.utils.properties import PriceProperty
 
@@ -24,8 +26,13 @@ class ProductMetaBase(ImportMetaBase):
         "name": ["title"],
         "keywords": ["tags"],
         "qty": ["quantity", "stock_amount", "stock_qty", "stock_quantity"],
-        "suppliers": ["supplier"]
+        "suppliers": ["supplier"],
+        "primary_category": ["category", "main_category"],
+        "categories": ["extra_categories"],
+        "manufacturer": ["mfgr"]
     }
+
+    fields_to_skip = ["shop_primary_image", "primary_image"]
 
     post_save_handlers = {
         "handle_stocks": ["qty"],
@@ -71,6 +78,7 @@ class ProductMetaBase(ImportMetaBase):
         shop_product.shop = sess.shop
         shop_product.product = sess.instance
         shop_product.save()
+
         matched_fields = []
         for k, v in six.iteritems(sess.importer.extra_matches):
             if k.startswith("ShopProduct:"):
@@ -81,15 +89,19 @@ class ProductMetaBase(ImportMetaBase):
 
         for k, v in sess.importer.data_map.items():
             field_name = v.get("id")
+            if field_name in self.fields_to_skip:
+                continue
             if hasattr(shop_product, field_name):
                 field = getattr(shop_product, field_name)
                 value = sess.row.get(k, None)
+
                 if isinstance(field, PriceProperty):
                     value = sess.shop.create_price(value)
 
                 value, is_related = self._find_related_values(field_name, sess, value)
                 if is_related and isinstance(value, six.string_types):
                     continue
+
                 setattr(shop_product, field_name, value)
         shop_product.save()
 
@@ -97,6 +109,8 @@ class ProductMetaBase(ImportMetaBase):
         is_related_field = False
         if not value:
             return (value, is_related_field)
+
+        field_mapping = sess.importer.mapping.get(field_name)
 
         for related_field, relmapper in sess.importer.relation_map_cache.items():
             if related_field.name != field_name:
@@ -111,8 +125,15 @@ class ProductMetaBase(ImportMetaBase):
                 value = relmapper.fk_cache.get(str(value))
                 break
             else:
-                value = related_field.related_model._default_manager.all()
+                value = sess.importer.relation_map_cache.get(field_mapping.get("field")).map_cache[value]
                 break
+
+        if field_mapping.get("is_enum_field"):
+            field = field_mapping.get("field")
+            for k, v in field.get_choices():
+                if fold_mapping_name(force_text(v)) == fold_mapping_name(value):
+                    value = k
+                    break
         return (value, is_related_field)
 
     def get_import_defaults(self):

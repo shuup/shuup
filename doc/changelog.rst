@@ -93,6 +93,10 @@ Guide
 Importer
 ~~~~~~~~
 
+- Remove images from importing products for now.
+- Fix `ForeignKey` importing.
+- Add `fields_to_skip` for skipping certain items in import.
+
 Regions
 ~~~~~~~
 
