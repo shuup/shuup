@@ -208,13 +208,6 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
     accounting_identifier = models.CharField(max_length=32, blank=True, verbose_name=_('bookkeeping account'))
     profit_center = models.CharField(max_length=32, verbose_name=_('profit center'), blank=True)
     cost_center = models.CharField(max_length=32, verbose_name=_('cost center'), blank=True)
-    # Category is duplicated here because not all products necessarily belong in Shops (i.e. have
-    # ShopProduct instances), but they should nevertheless be searchable by category in other
-    # places, such as administration UIs.
-    category = models.ForeignKey(
-        "Category", related_name='primary_products', blank=True, null=True,
-        verbose_name=_('primary category'),
-        help_text=_("only used for administration and reporting"), on_delete=models.PROTECT)
 
     # Physical dimensions
     width = MeasurementField(unit="mm", verbose_name=_('width (mm)'))

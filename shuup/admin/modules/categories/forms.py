@@ -55,10 +55,6 @@ class CategoryProductForm(forms.Form):
         help_text=_("Set this category as a primary for selected products."),
         model=Product,
         required=False)
-    update_product_category = forms.BooleanField(
-        label=_("Default Category"),
-        help_text=_("Update product default category while setting primary category."),
-        required=False)
     additional_products = Select2MultipleField(
         label=_("Additional Category"),
         help_text=_("Add selected products to this category"),
@@ -92,8 +88,6 @@ class CategoryProductForm(forms.Form):
             shop_product.visibility_groups = visibility_groups
             shop_product.save()
             shop_product.categories.add(self.category)
-            if data.get("update_product_category", False):
-                Product.objects.filter(id=shop_product.product_id).update(category_id=self.category.id)
 
         additional_product_ids = [int(product_id) for product_id in data.get("additional_products", [])]
         for shop_product in ShopProduct.objects.filter(shop_id=self.shop.id, product_id__in=additional_product_ids):
@@ -106,6 +100,4 @@ class CategoryProductForm(forms.Form):
                     shop_product.categories.remove(self.category)
                 shop_product.primary_category = None
                 shop_product.save()
-
-            Product.objects.filter(id=shop_product.product_id).update(category_id=None)
             shop_product.categories.remove(self.category)

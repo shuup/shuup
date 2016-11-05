@@ -68,8 +68,6 @@ def test_products_form_add():
     category.save()
     product = create_product("test_product", shop=shop)
     shop_product = product.get_shop_instance(shop)
-    product_category = product.category
-    assert (product_category is None)
     assert (category not in shop_product.categories.all())
     data = {
         "primary_products": ["%s" % product.id]
@@ -83,7 +81,6 @@ def test_products_form_add():
     assert (category in shop_product.categories.all())
     assert (shop_product.visibility_limit.value == category.visibility.value)
     assert (shop_product.visibility == ShopProductVisibility.NOT_VISIBLE)
-    assert (product.category is None)
 
 
 @pytest.mark.django_db
@@ -93,8 +90,6 @@ def test_products_form_update_default_category():
     category.shops.add(shop)
     product = create_product("test_product", shop=shop)
     shop_product = product.get_shop_instance(shop)
-    product_category = product.category
-    assert (product_category is None)
     assert (category not in shop_product.categories.all())
     data = {
         "primary_products": ["%s" % product.id],
@@ -107,7 +102,6 @@ def test_products_form_update_default_category():
     product.refresh_from_db()
     assert (shop_product.primary_category == category)
     assert (category in shop_product.categories.all())
-    assert (product.category == category)
 
 
 @pytest.mark.django_db
@@ -138,15 +132,11 @@ def test_products_form_remove():
     category = get_default_category()
     category.shops.add(shop)
     product = create_product("test_product", shop=shop)
-    product.category = category
-    product.save()
     shop_product = product.get_shop_instance(shop)
     shop_product.primary_category = category
     shop_product.save()
     shop_product.categories.add(category)
 
-    product.refresh_from_db()
-    assert (product.category == category)
     shop_product.refresh_from_db()
     assert (shop_product.primary_category == category)
     assert (shop_product.categories.count() == 1)
@@ -161,8 +151,6 @@ def test_products_form_remove():
 
     category.refresh_from_db()
     assert (category.shop_products.count() == 0)
-    product.refresh_from_db()
-    assert (product.category is None)
     shop_product.refresh_from_db()
     assert (shop_product.primary_category is None)
     assert (shop_product.categories.count() == 0)
