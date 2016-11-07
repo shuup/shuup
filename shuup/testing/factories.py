@@ -593,7 +593,9 @@ def get_faker(providers, locale=None):
     locale = locale or (random.choice(["en_US"] + list(find_available_locales(providers))))
     fake = faker.Factory.create(locale=locale)
     fake.locale = locale
-    fake.locale_language = fake.locale.split("_")[0]
+    lang_code = fake.locale.split("_")[0]
+    fake.locale_language = lang_code
+    fake.language = lang_code
     return fake
 
 
@@ -651,7 +653,7 @@ def create_random_person(locale=None, minimum_name_comp_len=0):
     # so better just avoid them.
     prefix = ""  # (random.choice(fake.prefix()) if random.random() < 0.05 else "")
     suffix = ""  # (random.choice(fake.suffix()) if random.random() < 0.05 else "")
-    language = random.choice(["en", fake.locale_language])
+
     address = create_random_address(
         fake=fake,
         name=name,
@@ -672,7 +674,7 @@ def create_random_person(locale=None, minimum_name_comp_len=0):
         default_shipping_address=address,
         default_billing_address=address,
         gender=random.choice("mfuo"),
-        language=language
+        language=fake.language
     )
 
 
@@ -731,7 +733,6 @@ def create_random_order(customer=None, products=(), completion_probability=0, sh
         source.shipping_address = create_random_address()
     source.order_date = now() - datetime.timedelta(days=random.uniform(0, 400))
 
-    source.language = customer.language
     source.status = get_initial_order_status()
 
     if not products:

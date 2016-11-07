@@ -8,6 +8,7 @@
 
 import babel
 import babel.numbers
+from babel import UnknownLocaleError
 from babel.dates import format_datetime
 from babel.numbers import format_currency
 from django.apps import apps
@@ -144,3 +145,37 @@ def javascript_catalog_all(request, domain='djangojs'):
 def get_currency_name(currency):
     locale = get_current_babel_locale()
     return babel.numbers.get_currency_name(currency, locale=locale)
+
+
+def is_existing_language(language_code):
+    """
+    Try to find out if language actually exists
+
+    Calling `babel.Locale("en").languages.keys()`
+    will contain extinct languages.
+    :param language_code: A language code string ("fi", "en")
+    :type language_code: str
+    :return: True or False
+    :rtype: bool
+    """
+    try:
+        get_babel_locale(language_code)
+    except (UnknownLocaleError, ValueError):
+        """
+        Catch errors with babel locale parsing
+
+        For example language `bew` raises `UnknownLocaleError`
+        and `ValueError` is being raised if language_code is
+        an empty string.
+        """
+        return False
+    return True
+
+
+def remove_extinct_languages(language_codes):
+    language_codes = set(language_codes)
+    codes = language_codes.copy()
+    for language_code in codes:
+        if not is_existing_language(language_code):
+            language_codes.remove(language_code)
+    return language_codes

@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 from collections import Counter
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ValidationError
@@ -27,6 +28,7 @@ from shuup.core.models import (
 from shuup.core.pricing import Price, Priceful, TaxfulPrice, TaxlessPrice
 from shuup.core.taxing import should_calculate_taxes_automatically, TaxableItem
 from shuup.utils.decorators import non_reentrant
+from shuup.utils.i18n import is_existing_language
 from shuup.utils.money import Money
 
 from ._source_modifier import get_order_source_modifier_modules
@@ -124,13 +126,13 @@ class OrderSource(object):
         self.payment_method_id = None
         self.customer_comment = u""
         self.marketing_permission = False
-        self.language = None
         self.ip_address = None  # type: str
         self.order_date = now()
         self.status_id = None
         self.payment_data = {}
         self.shipping_data = {}
         self.extra_data = {}
+        self._language = None
 
         self._codes = []
         self._lines = []
@@ -245,6 +247,25 @@ class OrderSource(object):
     def status(self):
         if self.status_id:
             return OrderStatus.objects.get(pk=self.status_id)
+
+    @property
+    def language(self):
+        lang = settings.LANGUAGE_CODE
+        if self._language:
+            lang = self._language
+        elif self.customer:
+            lang = self.customer.language
+
+        if not is_existing_language(lang):
+            lang = settings.LANGUAGE_CODE  # sane fallback
+
+        return lang
+
+    @language.setter
+    def language(self, value):
+        if not is_existing_language(value):
+            value = settings.LANGUAGE_CODE  # sane fallback
+        self._language = value
 
     @status.setter
     def status(self, status):

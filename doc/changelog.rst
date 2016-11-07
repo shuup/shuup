@@ -12,6 +12,10 @@ Unrealeased
 Core
 ~~~~
 
+- `OrderSource.language` is now properly used.
+- Start using `Contact.language`.
+  It fallbacks to `settings.LANGUAGE_CODE` if not set.
+- Add `LanguageFormField`
 - Add `SHUUP_AUTO_SHOP_PRODUCT_CATEGORIES` option that
   allows autopopulating categories. Default is `True`.
 - Populate some unfilled customer fields from order
