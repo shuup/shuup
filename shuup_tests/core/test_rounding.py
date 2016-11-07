@@ -5,17 +5,14 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-import pytest
-
 from decimal import Decimal
 
-from shuup.core.models import OrderLine
-from shuup.core.models import OrderLineType
-from shuup.core.models import Shop
-from shuup.core.models import ShopStatus
+import pytest
+
+from shuup.core.models import OrderLine, OrderLineType, Shop, ShopStatus
 from shuup.testing.factories import (
-    add_product_to_order, create_empty_order, create_product,
-    get_default_shop, get_default_supplier
+    add_product_to_order, create_empty_order, create_product, get_default_shop,
+    get_default_supplier
 )
 from shuup.utils.numbers import bankers_round
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
@@ -36,9 +33,7 @@ PRICE_SPEC = [
 @pytest.mark.parametrize("prices", PRICE_SPEC)
 @pytest.mark.django_db
 def test_rounding(prices):
-    expected = 0
-    for p in prices:
-        expected += bankers_round(p, 2)
+    expected = bankers_round(sum(prices), 2)
 
     order = create_empty_order(prices_include_tax=False)
     order.save()
