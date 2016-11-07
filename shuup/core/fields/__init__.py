@@ -153,7 +153,6 @@ class LanguageFieldMixin(object):
 
 class LanguageField(LanguageFieldMixin, models.CharField):
     def __init__(self, *args, **kwargs):
-        self.clean_language_codes()
         kwargs.setdefault("max_length", 10)
         kwargs["choices"] = [(code, code) for code in sorted(self.LANGUAGE_CODES)]
         super(LanguageField, self).__init__(*args, **kwargs)
