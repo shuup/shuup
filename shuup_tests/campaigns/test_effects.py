@@ -13,7 +13,9 @@ from shuup.campaigns.models.basket_line_effects import FreeProductLine, Discount
 from shuup.core.models import OrderLineType
 from shuup.core.order_creator._source import LineSource
 from shuup.front.basket import get_basket
-from shuup.testing.factories import create_product, get_default_supplier
+from shuup.testing.factories import (
+    create_product, get_default_supplier, get_shipping_method
+)
 from shuup_tests.campaigns import initialize_test
 from shuup_tests.utils import printable_gibberish
 
@@ -32,6 +34,7 @@ def test_basket_free_product(rf):
      # create basket rule that requires 2 products in basket
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=single_product_price)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=2)
+    basket.shipping_method = get_shipping_method(shop=shop)
     basket.save()
 
     second_product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=single_product_price)
@@ -47,13 +50,15 @@ def test_basket_free_product(rf):
     basket.uncache()
     final_lines = basket.get_final_lines()
 
-    assert len(final_lines) == 2
+    assert len(final_lines) == 3
 
     line_types = [l.type for l in final_lines]
     assert OrderLineType.DISCOUNT not in line_types
 
     for line in basket.get_final_lines():
-        assert line.type == OrderLineType.PRODUCT
+        assert line.type in [OrderLineType.PRODUCT, OrderLineType.SHIPPING]
+        if line.type == OrderLineType.SHIPPING:
+            continue
         if line.product != product:
             assert line.product == second_product
             assert line.line_source == LineSource.DISCOUNT_MODULE
@@ -77,6 +82,7 @@ def test_basket_free_product_coupon(rf):
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=single_product_price)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
+    basket.shipping_method = get_shipping_method(shop=shop)
     basket.save()
 
     second_product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=single_product_price)
@@ -95,13 +101,15 @@ def test_basket_free_product_coupon(rf):
     basket.uncache()
     final_lines = basket.get_final_lines()
 
-    assert len(final_lines) == 2
+    assert len(final_lines) == 3
 
     line_types = [l.type for l in final_lines]
     assert OrderLineType.DISCOUNT not in line_types
 
     for line in basket.get_final_lines():
-        assert line.type == OrderLineType.PRODUCT
+        assert line.type in [OrderLineType.PRODUCT, OrderLineType.SHIPPING]
+        if line.type == OrderLineType.SHIPPING:
+            continue
 
         if line.product != product:
             assert line.product == second_product
@@ -123,6 +131,7 @@ def test_productdiscountamount(rf):
      # create basket rule that requires 2 products in basket
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=single_product_price)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=quantity)
+    basket.shipping_method = get_shipping_method(shop=shop)
     basket.save()
 
     rule = ProductsInBasketCondition.objects.create(quantity=2)
@@ -141,7 +150,7 @@ def test_productdiscountamount(rf):
 
     final_lines = basket.get_final_lines()
 
-    assert len(final_lines) == 1  # no new lines since the effect touches original lines
+    assert len(final_lines) == 2  # no new lines since the effect touches original lines
     expected_discount_amount = basket.create_price(discount_amount_value)
     original_price = basket.create_price(single_product_price) * quantity
     line = final_lines[0]

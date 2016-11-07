@@ -61,6 +61,7 @@ def test_basket_campaign_module_case1(rf):
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=single_product_price)
 
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
+    basket.shipping_method = get_shipping_method(shop=shop)
     basket.save()
 
     assert basket.product_count == 1
@@ -71,13 +72,13 @@ def test_basket_campaign_module_case1(rf):
     campaign.save()
     BasketDiscountAmount.objects.create(campaign=campaign, discount_amount=discount_amount_value)
 
-    assert len(basket.get_final_lines()) == 1  # case 1
+    assert len(basket.get_final_lines()) == 2  # case 1
     assert basket.total_price == price(single_product_price) # case 1
 
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
     basket.save()
 
-    assert len(basket.get_final_lines()) == 2  # case 1
+    assert len(basket.get_final_lines()) == 3  # case 1
     assert basket.product_count == 2
     assert basket.total_price == (price(single_product_price) * basket.product_count - price(discount_amount_value))
     assert OrderLineType.DISCOUNT in [l.type for l in basket.get_final_lines()]
@@ -132,7 +133,8 @@ def test_basket_category_discount(rf):
     products = [create_category_product(category) for i in range(2)]
     for product in products:
         basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
-        basket.save()
+        basket.shipping_method = get_shipping_method(shop=shop)
+    basket.save()
 
     assert basket.product_count == 2
     assert basket_condition.matches(basket=basket, lines=basket.get_lines())
@@ -204,6 +206,7 @@ def test_only_cheapest_price_is_selected(rf):
     discount2 = "20"  # should be selected
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=product_price)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
+    basket.shipping_method = get_shipping_method(shop=shop)
 
     campaign1 = BasketCampaign.objects.create(shop=shop, public_name="test", name="test", active=True)
     campaign1.conditions.add(rule)
@@ -215,7 +218,7 @@ def test_only_cheapest_price_is_selected(rf):
     campaign2.save()
     BasketDiscountAmount.objects.create(discount_amount=discount2, campaign=campaign2)
 
-    assert len(basket.get_final_lines()) == 2
+    assert len(basket.get_final_lines()) == 3
 
     line_types = [l.type for l in basket.get_final_lines()]
     assert OrderLineType.DISCOUNT in line_types
@@ -241,6 +244,7 @@ def test_multiple_campaigns_match_with_coupon(rf):
     discount2 = "20"
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=product_price)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
+    basket.shipping_method = get_shipping_method(shop=shop)
 
     campaign = BasketCampaign.objects.create(shop=shop, public_name="test", name="test", active=True)
     campaign.conditions.add(rule)
@@ -287,6 +291,7 @@ def test_percentage_campaign(rf):
 
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=product_price)
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
+    basket.shipping_method = get_shipping_method(shop=shop)
 
     campaign = BasketCampaign.objects.create(
         shop=shop, public_name="test", name="test", active=True)
@@ -295,7 +300,7 @@ def test_percentage_campaign(rf):
 
     BasketDiscountPercentage.objects.create(campaign=campaign, discount_percentage=discount_percentage)
 
-    assert len(basket.get_final_lines()) == 2
+    assert len(basket.get_final_lines()) == 3
     assert basket.product_count == 1
     assert basket.total_price == expected_discounted_price
 

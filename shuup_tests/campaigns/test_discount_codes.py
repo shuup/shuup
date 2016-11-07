@@ -24,7 +24,8 @@ from shuup.core.order_creator import OrderCreator
 from shuup.front.basket import get_basket
 from shuup.testing.factories import (
     create_product, create_random_order, create_random_person,
-    get_default_shop, get_default_supplier, get_initial_order_status
+    get_default_shop, get_shipping_method, get_default_supplier,
+    get_initial_order_status
 )
 from shuup_tests.campaigns import initialize_test
 from shuup_tests.utils import printable_gibberish
@@ -131,6 +132,7 @@ def test_campaign_with_coupons(rf):
         product = create_product(printable_gibberish(), shop, supplier=supplier, default_price="50")
         basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
 
+    basket.shipping_method = get_shipping_method(shop=shop)  # For shippable products
     dc = Coupon.objects.create(code="TEST", active=True)
     campaign = BasketCampaign.objects.create(
             shop=shop,
@@ -143,11 +145,11 @@ def test_campaign_with_coupons(rf):
     campaign.conditions.add(rule)
     campaign.save()
 
-    assert len(basket.get_final_lines()) == 2  # no discount was applied because coupon is required
+    assert len(basket.get_final_lines()) == 3  # no discount was applied because coupon is required
 
     basket.add_code(dc.code)
 
-    assert len(basket.get_final_lines()) == 3  # now basket has codes so they will be applied too
+    assert len(basket.get_final_lines()) == 4  # now basket has codes so they will be applied too
     assert OrderLineType.DISCOUNT in [l.type for l in basket.get_final_lines()]
 
     # Ensure codes persist between requests, so do what the middleware would, i.e.
