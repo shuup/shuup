@@ -39,7 +39,7 @@ def fold_mapping_name(m_name):
     m_name = force_text(m_name).strip().lower()
     m_name = force_text(unicodedata.normalize("NFKD", m_name).encode("ascii", "ignore"))
     m_name = re.sub(r"/[^a-z0-9]+/", "", m_name)
-    return m_name
+    return m_name.replace(" ", "_")
 
 
 def get_global_aliases():

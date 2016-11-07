@@ -95,7 +95,6 @@ class RelatedMapper(object):
 
         if not value:
             return None
-
         value = "%s" % value
         mapped = self.fk_cache.get(value, NotCached)
         if mapped is NotCached:
@@ -109,16 +108,23 @@ class RelatedMapper(object):
 
     def _create_new_object(self, mapped, value):
         obj = self.to()
+
         if self.is_translated:
             obj.set_current_language(self.handler.language)
             for field in self.translated_fields:
                 if field.name not in ("master", "id", "language_code", "description"):
                     setattr(obj, field.name, value)
+
         for field in obj._meta.local_fields:
             if isinstance(field, ForeignKey) and isinstance(self.row_session.instance, field.rel.to):
                 setattr(obj, field.name, self.row_session.instance)
+
+            elif field.name in ("name", "title"):
+                setattr(obj, field.name, value)
+
         if hasattr(obj, "shop"):
             obj.shop = self.row_session.shop
+
         try:
             obj.save()
             mapped = obj
