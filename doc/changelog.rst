@@ -12,6 +12,8 @@ Unrealeased
 Core
 ~~~~
 
+- Order Statuses are now modifiable through admin.
+
 Localization
 ~~~~~~~~~~~~
 

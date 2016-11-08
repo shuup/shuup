@@ -18,8 +18,7 @@ from six import print_
 from shuup import configuration
 from shuup.core.defaults.order_statuses import create_default_order_statuses
 from shuup.core.models import (
-    CustomerTaxGroup, OrderStatus, ProductType, SalesUnit, Shop, ShopStatus,
-    Supplier
+    CustomerTaxGroup, ProductType, SalesUnit, Shop, ShopStatus, Supplier
 )
 from shuup.core.telemetry import get_installation_key, is_telemetry_enabled
 
@@ -64,10 +63,11 @@ class Initializer(object):
     def run(self):
         for schema in self.schemata:
             self.objects[schema["model"]] = self.process_schema(schema)
-        if not OrderStatus.objects.exists():
-            print_("Creating order statuses...", end=" ")
-            create_default_order_statuses()
-            print_("done.")
+
+        # Ensure default statuses are available
+        print_("Creating order statuses...", end=" ")
+        create_default_order_statuses()
+        print_("done.")
         if not settings.DEBUG and is_telemetry_enabled():
             try:
                 data = json.dumps({

@@ -25,8 +25,8 @@ from ._counters import Counter, CounterType
 from ._manufacturers import Manufacturer
 from ._order_lines import OrderLine, OrderLineTax, OrderLineType
 from ._orders import (
-    Order, OrderLogEntry, OrderStatus, OrderStatusRole, PaymentStatus,
-    ShippingStatus
+    DefaultOrderStatus, Order, OrderLogEntry, OrderStatus, OrderStatusManager,
+    OrderStatusRole, PaymentStatus, ShippingStatus
 )
 from ._payments import Payment
 from ._persistent_cache import PersistentCacheEntry
@@ -83,6 +83,7 @@ __all__ = [
     "CustomCarrier",
     "CustomerTaxGroup",
     "CustomPaymentProcessor",
+    "DefaultOrderStatus",
     "FixedCostBehaviorComponent",
     "get_company_contact",
     "get_person_contact",
@@ -96,6 +97,7 @@ __all__ = [
     "OrderLineType",
     "OrderLogEntry",
     "OrderStatus",
+    "OrderStatusManager",
     "OrderStatusRole",
     "Payment",
     "PaymentMethod",

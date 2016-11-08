@@ -17,8 +17,12 @@ from shuup.admin.menu import ORDERS_MENU_CATEGORY
 from shuup.admin.utils.permissions import (
     get_default_model_permissions, get_permissions_from_urls
 )
-from shuup.admin.utils.urls import admin_url, derive_model_url, get_model_url
-from shuup.core.models import Contact, Order, OrderStatusRole, Product
+from shuup.admin.utils.urls import (
+    admin_url, derive_model_url, get_edit_and_list_urls, get_model_url
+)
+from shuup.core.models import (
+    Contact, Order, OrderStatus, OrderStatusRole, Product
+)
 
 
 class OrderModule(AdminModule):
@@ -112,7 +116,12 @@ class OrderModule(AdminModule):
                 name="order.list_settings",
                 permissions=get_default_model_permissions(Order),
             )
-        ]
+        ] + get_edit_and_list_urls(
+            url_prefix="^order-status",
+            view_template="shuup.admin.modules.orders.views.OrderStatus%sView",
+            name_template="order_status.%s",
+            permissions=get_default_model_permissions(OrderStatus)
+        )
 
     def get_menu_entries(self, request):
         return [
@@ -123,6 +132,14 @@ class OrderModule(AdminModule):
                 category=ORDERS_MENU_CATEGORY,
                 ordering=1,
                 aliases=[_("Show orders")]
+            ),
+            MenuEntry(
+                text=_("Statuses"),
+                icon="fa fa-inbox",
+                url="shuup_admin:order_status.list",
+                category=ORDERS_MENU_CATEGORY,
+                ordering=1,
+                aliases=[_("List Statuses")]
             ),
         ]
 
@@ -167,4 +184,6 @@ class OrderModule(AdminModule):
             )
 
     def get_model_url(self, object, kind):
+        if hasattr(object, "role"):
+            return derive_model_url(OrderStatus, "shuup_admin:order_status", object, kind)
         return derive_model_url(Order, "shuup_admin:order", object, kind)
