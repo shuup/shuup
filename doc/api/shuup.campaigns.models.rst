@@ -28,6 +28,14 @@ shuup.campaigns.models.basket_line_effects module
     :undoc-members:
     :show-inheritance:
 
+shuup.campaigns.models.cache module
+-----------------------------------
+
+.. automodule:: shuup.campaigns.models.cache
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.campaigns.models.campaigns module
 ---------------------------------------
 

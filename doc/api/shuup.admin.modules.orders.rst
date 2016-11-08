@@ -19,6 +19,14 @@ shuup.admin.modules.orders.json_order_creator module
     :undoc-members:
     :show-inheritance:
 
+shuup.admin.modules.orders.mass_actions module
+----------------------------------------------
+
+.. automodule:: shuup.admin.modules.orders.mass_actions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.admin.modules.orders.receivers module
 -------------------------------------------
 

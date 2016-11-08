@@ -68,6 +68,14 @@ shuup.admin.modules.products.views.list module
     :undoc-members:
     :show-inheritance:
 
+shuup.admin.modules.products.views.mass_edit module
+---------------------------------------------------
+
+.. automodule:: shuup.admin.modules.products.views.mass_edit
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.admin.modules.products.views.toolbars module
 --------------------------------------------------
 
