@@ -19,6 +19,7 @@ module.exports = {
             "js/materialize.js",
             "js/main-menu.js",
             "js/search.js",
+            "js/popover.js",
             "js/tooltip.js",
             "js/timesince.js",
             "js/messages.js",

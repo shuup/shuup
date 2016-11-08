@@ -5,6 +5,7 @@
 .content-block {
     .form-group {
         margin-bottom: 20px;
+        position: relative;
         .clearfix;
         @media (min-width: @screen-sm-min) {
             margin-bottom: 30px;
@@ -32,8 +33,8 @@
         }
 
         .control-label + div:not(.input-group) {
-            .make-sm-column(8);
-            .make-lg-column(6);
+            .make-sm-column(7);
+            .make-lg-column(5);
             padding: 0;
 
             .radio:first-child, .checkbox:first-child { padding-top: 10px; }
@@ -58,15 +59,15 @@
         }
 
         .form-control {
-            .make-sm-column(8);
-            .make-lg-column(6);
+            .make-sm-column(7);
+            .make-lg-column(5);
             padding-left: 12px;
             padding-right: 12px;
         }
 
         .input-group {
-            .make-sm-column(8);
-            .make-lg-column(6);
+            .make-sm-column(7);
+            .make-lg-column(5);
             float: none;
             padding: 0;
             .form-control {
@@ -77,13 +78,40 @@
 
         .help-block {
             clear: both;
-            .make-sm-column(8);
-            .make-lg-column(6);
+            .make-sm-column(7);
+            .make-lg-column(5);
             .make-sm-column-push(4);
             .make-lg-column-push(3);
             padding-left: 0;
             font-size: 1.2rem;
             margin-bottom: 5px;
+        }
+
+        .help-popover-btn {
+            cursor: pointer;
+            .make-sm-column(1);
+            .make-lg-column(1);
+            padding-left: 0px;
+            padding-right: 0px;
+            position: initial;
+            @media (max-width: @screen-xs-max) {
+                .btn {
+                    position: absolute;
+                    top: 0px;
+                    right: -15px;
+                }
+            }
+        }
+
+        .checkbox + .help-popover-btn {
+            padding-left: 15px;
+            margin-top: -8px;
+
+            @media (max-width: @screen-xs-max) {
+                .btn {
+                    top: -8px;
+                }
+            }
         }
 
         .radio, .checkbox {
@@ -209,6 +237,22 @@
             label, .control-label {
                 font-size: 1.6rem;
                 padding-top: 11px;
+            }
+
+            .help-popover-btn {
+                .btn {
+                    padding: 12px 15px;
+                }
+            }
+
+            .checkbox + .help-popover-btn {
+                margin-top: -3px;
+
+                @media (max-width: @screen-xs-max) {
+                    .btn {
+                        top: -3px;
+                    }
+                }
             }
         }
     }

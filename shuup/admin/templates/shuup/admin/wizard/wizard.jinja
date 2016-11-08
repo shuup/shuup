@@ -53,6 +53,7 @@
 <script src="{{ static("shuup_admin/js/wizard.js") }}"></script>
 <script>
     (function(){
+        $($(".help-popover-btn .btn")[0]).append(" {% trans %}Click here for help{% endtrans %}")
         $(".wizard").wizard({
             hidePrevious: true,
             redirectOnLastPane: "{{ url("shuup_admin:home") }}",
