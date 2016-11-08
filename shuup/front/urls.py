@@ -23,6 +23,7 @@ from .views.category import CategoryView
 from .views.checkout import get_checkout_view
 from .views.dashboard import DashboardView
 from .views.index import IndexView
+from .views.misc import toggle_all_seeing
 from .views.order import OrderCompleteView
 from .views.payment import ProcessPaymentView
 from .views.product import ProductDetailView
@@ -47,6 +48,7 @@ urlpatterns = [
     url(r'^checkout/(?P<phase>.+)/$', checkout_view, name='checkout'),
     url(r'^basket/$', csrf_exempt(BasketView.as_view()), name='basket'),
     url(r'^dashboard/$', login_required(DashboardView.as_view()), name="dashboard"),
+    url(r'^toggle-allseeing/$', login_required(toggle_all_seeing), name="toggle-all-seeing"),
     url(r'^order/payment/(?P<pk>.+?)/(?P<key>.+?)/$',
         csrf_exempt(ProcessPaymentView.as_view()),
         kwargs={"mode": "payment"},
