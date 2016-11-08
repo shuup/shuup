@@ -59,8 +59,8 @@ class ShopWizardForm(MultiLanguageModelForm):
         super(ShopWizardForm, self).__init__(**kwargs)
         locale = get_current_babel_locale()
         self.fields["prices_include_tax"].help_text = _(
-            "Show storefront products with tax pre-calculated into the price. "
-            "Note this behavior can be overridden for customer groups."
+            "This option defines whether product prices entered in admin include taxes. "
+            "Note this behavior can be overridden with customer group pricing."
         )
         self.fields["currency"] = forms.ChoiceField(
             choices=sorted(locale.currencies.items()),

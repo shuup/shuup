@@ -27,7 +27,6 @@ $(function() {
             }
             remarkable(textArea).open();
         });
-        $(textArea).after($container);
+        $(textArea).parent().append($container);
     });
 });
-

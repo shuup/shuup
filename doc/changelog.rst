@@ -18,6 +18,7 @@ Localization
 Admin
 ~~~~~
 
+- Show help text as popovers
 - Add admin walkthrough
 
 Addons
