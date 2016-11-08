@@ -24,6 +24,9 @@ Addons
 Front
 ~~~~~
 
+- Add admin toolbar for logged in admins to control product and
+  category visibility.
+
 Xtheme
 ~~~~~~
 

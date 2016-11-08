@@ -136,16 +136,61 @@
 {% endmacro %}
 
 {% macro render_maintenance_mode_notification() %}
-    {% if request.shop.maintenance_mode %}
-        <div class="alert alert-warning alert-top text-center alert-dismissible">
-            <button type="button"
-                    class="close"
-                    data-dismiss="alert"
-                    aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            {% trans %}Shop is currently in maintenance mode.{% endtrans %}
+    {{ render_admin_tools() }}
+{% endmacro %}
+
+{% macro render_admin_tools() %}
+    {% if request.user.is_superuser %}
+    <nav class="navbar navbar-default navbar-admin-tools navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button"
+                        class="navbar-toggle collapsed"
+                        data-toggle="collapse"
+                        data-target="#admin-tools-menu"
+                        aria-expanded="false">
+                    <span class="sr-only">{% trans %}Toggle navigation{% endtrans %}</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    {% trans %}Admin Tools{% endtrans %}
+                    <br>
+                    <small>{% trans %}Maintenance{% endtrans %}:
+                        {% if request.shop.maintenance_mode %}
+                            <span class="maintenance-on">{% trans %}ON{% endtrans %}</span>
+                        {% else %}
+                            <span class="maintenance-off">{% trans %}OFF{% endtrans %}</span>
+                        {% endif %}
+                    </small>
+                </a>
+            </div>
+            {%- set allseeing = request.customer.is_all_seeing -%}
+            <div class="collapse navbar-collapse" id="admin-tools-menu">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle"
+                           data-toggle="dropdown"
+                           role="button"
+                           aria-haspopup="true"
+                           aria-expanded="false">{% trans %}Tools{% endtrans %} <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{{ url("shuup:toggle-all-seeing") }}">
+                                {% if allseeing %}
+                                {% trans %}Show only visible products and categories{% endtrans %}
+                                {% else %}
+                                {% trans %}Show all products and categories{% endtrans %}
+                                {% endif %}
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
+    </nav>
     {% endif %}
 {% endmacro %}
 
