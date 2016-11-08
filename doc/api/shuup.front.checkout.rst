@@ -12,6 +12,14 @@ shuup.front.checkout.addresses module
     :undoc-members:
     :show-inheritance:
 
+shuup.front.checkout.checkout_method module
+-------------------------------------------
+
+.. automodule:: shuup.front.checkout.checkout_method
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.front.checkout.confirm module
 -----------------------------------
 
@@ -32,14 +40,6 @@ shuup.front.checkout.methods module
 -----------------------------------
 
 .. automodule:: shuup.front.checkout.methods
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-shuup.front.checkout.single_page module
----------------------------------------
-
-.. automodule:: shuup.front.checkout.single_page
     :members:
     :undoc-members:
     :show-inheritance:

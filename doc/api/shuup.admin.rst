@@ -34,6 +34,14 @@ shuup.admin.currencybound module
     :undoc-members:
     :show-inheritance:
 
+shuup.admin.form_modifier module
+--------------------------------
+
+.. automodule:: shuup.admin.form_modifier
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.admin.form_part module
 ----------------------------
 

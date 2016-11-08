@@ -22,6 +22,14 @@ shuup.testing.browser_utils module
     :undoc-members:
     :show-inheritance:
 
+shuup.testing.checkout_with_login_and_register_urls module
+----------------------------------------------------------
+
+.. automodule:: shuup.testing.checkout_with_login_and_register_urls
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.testing.factories module
 ------------------------------
 
@@ -58,6 +66,22 @@ shuup.testing.simple_checkout_phase module
 ------------------------------------------
 
 .. automodule:: shuup.testing.simple_checkout_phase
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.testing.single_page_checkout_test_urls module
+---------------------------------------------------
+
+.. automodule:: shuup.testing.single_page_checkout_test_urls
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.testing.single_page_checkout_with_login_and_register_conf module
+----------------------------------------------------------------------
+
+.. automodule:: shuup.testing.single_page_checkout_with_login_and_register_conf
     :members:
     :undoc-members:
     :show-inheritance:

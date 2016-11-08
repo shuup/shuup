@@ -27,6 +27,14 @@ shuup.admin.modules.contacts.forms module
     :undoc-members:
     :show-inheritance:
 
+shuup.admin.modules.contacts.mass_actions module
+------------------------------------------------
+
+.. automodule:: shuup.admin.modules.contacts.mass_actions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.admin.modules.contacts.sections module
 --------------------------------------------
 
