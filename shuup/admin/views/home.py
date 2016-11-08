@@ -11,6 +11,7 @@ from django.views.generic.base import TemplateView
 
 from shuup.admin.module_registry import get_modules
 from shuup.admin.utils.permissions import get_missing_permissions
+from shuup.admin.utils.tour import is_tour_complete
 from shuup.admin.utils.wizard import setup_wizard_complete
 
 
@@ -31,6 +32,8 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
         context["blocks"] = blocks = []
+        context["tour_key"] = "home"
+        context["tour_complete"] = is_tour_complete("home")
         wizard_complete = setup_wizard_complete()
         blocks.append(
             SimpleHelpBlock(

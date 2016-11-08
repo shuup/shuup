@@ -10,6 +10,7 @@ from django.core.exceptions import MiddlewareNotUsed
 from django.utils.module_loading import import_string
 from django.utils.translation import activate
 
+from shuup import configuration
 from shuup.testing.factories import get_default_shop
 
 
@@ -54,6 +55,7 @@ def initialize_admin_browser_test(browser, live_server, settings, username="admi
     settings.SHUUP_SETUP_WIZARD_PANE_SPEC = []
     activate("en")
     get_default_shop()
+    configuration.set(None, "shuup_dashboard_tour_complete", True)
     url = live_server + "/sa"
     browser.visit(url)
     browser.fill('username', username)

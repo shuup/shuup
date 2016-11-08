@@ -36,7 +36,6 @@
         </form>
     {% endcall %}
 {% endblock %}
-
 {% block extra_js %}
     <script src="{{ static("shuup_admin/js/product.js") }}"></script>
     <script src="{{ static("shuup_admin/js/remarkable.js") }}"></script>
@@ -53,7 +52,19 @@
                     scrollTop: $elem.offset().top - $("#top-header").height() - 50
                 }, 100);
             }
+
+            $.tour("setPageSteps", [{
+                title: "Add a new product",
+                icon: "{{ static('shuup_admin/img/product.png') }}",
+                helpPage: "product.html",
+                text: [
+                    "{% trans %}You are adding a product.{% endtrans %}",
+                    "{% trans %}To make it stand out, give it an awesome description and picture. This is what will help your shoppers learn about your products. It will also help shoppers find them in the store and on the web.{% endtrans %}",
+                    "{% trans %}You can set its price or size and many other things in the option boxes for each product.{% endtrans %}"
+                ]
+            }]);
         })();
+
     </script>
     {% for product_section in product_sections %}
         {% if product_section.extra_js %}

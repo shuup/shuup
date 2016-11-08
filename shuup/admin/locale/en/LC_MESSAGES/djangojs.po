@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-21 18:42+0000\n"
+"POT-Creation-Date: 2016-11-10 22:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -431,6 +431,117 @@ msgid "No results found"
 msgstr ""
 
 msgid "Searching..."
+msgstr ""
+
+msgid "Quicklinks"
+msgstr ""
+
+msgid ""
+"These are the main things you will want to do to get your store up and "
+"running, and the things you do most often."
+msgstr ""
+
+msgid "Orders"
+msgstr ""
+
+msgid "Here you can track your orders and shoppers’ carts."
+msgstr ""
+
+msgid ""
+"Filters are setup to find the orders or shopping carts you are looking for, "
+"based on anything. There are order filters like customer’s name, date range, "
+"if it has been shipped or paid, and basket filters like how many products "
+"are in the basket or if the cart was abandoned."
+msgstr ""
+
+msgid "Products"
+msgstr ""
+
+msgid ""
+"All your products and product options are in here, there’s a bunch. "
+"Manufacturers, suppliers, and your inventory and stock management are "
+"inside. You can add more products and categories here too."
+msgstr ""
+
+msgid "Contacts"
+msgstr ""
+
+msgid ""
+"All your shopper data is inside. Check out your best customers, setup "
+"special user groups, and get info to target them so that they want to buy."
+msgstr ""
+
+msgid "Reports"
+msgstr ""
+
+msgid ""
+"Here you can create all types of reports and export them in multiple "
+"formats. Get the sales data you need and see how and where you are making "
+"money."
+msgstr ""
+
+msgid "Campaigns"
+msgstr ""
+
+msgid ""
+"Here you can create sales, coupons, and marketing campaigns that entice your "
+"shoppers. Set them up based on catalog or basket and make recommended "
+"product upsells and crossells. Or do something unique that will create "
+"loyalty and happy shoppers."
+msgstr ""
+
+msgid "Storefront"
+msgstr ""
+
+msgid ""
+"This is the place to customize your site and add pages, shops, and sales "
+"carousels. You can add media like photos and videos or completely change the "
+"look of your store. It’s super customizable to make it exactly how you want."
+msgstr ""
+
+msgid "Addons"
+msgstr ""
+
+msgid ""
+"This is your connection interface. Addons and other systems you use can be "
+"attached to your store through powerful data connections. Supercharge your "
+"site and gather crazy amounts of data with integrations to CRMs and ERPs, "
+"POS’s and PIM’s, or any other acronym you can think of."
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid ""
+"Here are the main options for your store. Its got everything from taxes and "
+"tax rules, payment and shipping methods, to notification settings. Tweak "
+"away."
+msgstr ""
+
+msgid "Search"
+msgstr ""
+
+msgid ""
+"Find anything that is inside your store. This includes settings, products, "
+"users, and addons."
+msgstr ""
+
+msgid "View your storefront"
+msgstr ""
+
+msgid "Check out your shop and all the cool changes you’ve made."
+msgstr ""
+
+msgid "We're done!"
+msgstr ""
+
+msgid "You have completed the tutorial."
+msgstr ""
+
+msgid "If you need to run it again, fire it up from the menu in the top right."
+msgstr ""
+
+msgid "Learn more at the Shuup Help Center"
 msgstr ""
 
 msgid "Mass actions"

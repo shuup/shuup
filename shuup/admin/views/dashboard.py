@@ -13,6 +13,7 @@ import shuup
 from shuup.admin.dashboard import get_activity
 from shuup.admin.module_registry import get_modules
 from shuup.admin.utils.permissions import get_missing_permissions
+from shuup.admin.utils.tour import is_tour_complete
 from shuup.admin.utils.wizard import setup_wizard_complete
 from shuup.core.telemetry import try_send_telemetry
 
@@ -30,6 +31,8 @@ class DashboardView(TemplateView):
                 notifications.extend(module.get_notifications(request=self.request))
                 blocks.extend(module.get_dashboard_blocks(request=self.request))
         context["activity"] = get_activity(request=self.request)
+        context["tour_key"] = "dashboard"
+        context["tour_complete"] = is_tour_complete("dashboard")
         return context
 
     def get(self, request, *args, **kwargs):

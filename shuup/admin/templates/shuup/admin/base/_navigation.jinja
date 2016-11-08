@@ -47,13 +47,16 @@
             <span class="icon"><i class="fa fa-user"></i></span>{% trans %}Hello{% endtrans %}, <span class="user">{{ request.user }}</span>!
         </div>
         {% if LANGUAGES|length > 1 %}
-        <ul class="languages">
+        <ul class="dropdown-list languages">
             {% for (code, name, local_name) in get_language_choices() %}
-            <li><a href="#" class="language{% if LANGUAGE_CODE == code %} active{% endif %}" data-value="{{ code }}">{{ name }} ({{ local_name }})</a></li>
+            <li><a href="#" class="{% if LANGUAGE_CODE == code %} active{% endif %}" data-value="{{ code }}">{{ name }} ({{ local_name }})</a></li>
             {% endfor %}
         </ul>
         {% endif %}
         <div class="divider"></div>
+        <ul class="dropdown-list">
+            <li class="hidden show-tour-li"><a href="#">{% trans %}Show Tour{% endtrans %}</a></li>
+        </ul>
         <div class="actions">
             <a href="{{ url("shuup_admin:logout") }}" class="btn btn-block btn-sm btn-info">
                 <i class="fa fa-sign-out"></i> {% trans %}Log out{% endtrans %}

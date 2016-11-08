@@ -21,3 +21,17 @@
         {% endfor %}
     </div>
 {% endblock %}
+{% block extra_js %}
+    <script>
+        (function(){
+            $.tour("setPageSteps", [{
+                title: "{% trans %}Welcome!{% endtrans %}",
+                text: [
+                    "{% trans %}Welcome to Shuup!{% endtrans %}",
+                    "{% trans %}Time to setup your shop.{% endtrans %}",
+                    "{% trans %}We just need a few details to begin.{% endtrans %}"
+                ]
+            }]);
+        })();
+    </script>
+{% endblock %}

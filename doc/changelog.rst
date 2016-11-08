@@ -20,6 +20,8 @@ Localization
 Admin
 ~~~~~
 
+- Add admin walkthrough
+
 Addons
 ~~~~~~
 
