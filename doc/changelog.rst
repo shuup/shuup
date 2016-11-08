@@ -1,13 +1,8 @@
 Shuup Change Log
 ================
 
-Unrealeased
+SHUUP 0.5.3
 -----------
-
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
 
 Core
 ~~~~
@@ -48,9 +43,6 @@ Admin
   a POST request do not have to have a toolbar button of its own.
 - Add option to set zero price orders as paid without creating a payment manually.
 
-Addons
-~~~~~~
-
 Front
 ~~~~~
 
@@ -67,48 +59,12 @@ Front
 - Add recently viewed products app
 - Fix/refactor single page checkout view
 
-Xtheme
-~~~~~~
-
-Classic Gray Theme
-~~~~~~~~~~~~~~~~~~
-
-Simple Supplier
-~~~~~~~~~~~~~~~
-
-Order Printouts
-~~~~~~~~~~~~~~~
-
-Campaigns
-~~~~~~~~~
-
-Customer Group Pricing
-~~~~~~~~~~~~~~~~~~~~~~
-
-Discount Pricing
-~~~~~~~~~~~~~~~~
-
-Simple CMS
-~~~~~~~~~~
-
-Default Tax
-~~~~~~~~~~~
-
-Guide
-~~~~~
-
 Importer
 ~~~~~~~~
 
 - Remove images from importing products for now.
 - Fix `ForeignKey` importing.
 - Add `fields_to_skip` for skipping certain items in import.
-
-Regions
-~~~~~~~
-
-General/miscellaneous
-~~~~~~~~~~~~~~~~~~~~~
 
 SHUUP 0.5.1
 -----------

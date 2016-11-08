@@ -1,0 +1,25 @@
+Shuup 0.5.3 Release Notes
+=========================
+
+Released on 2016-11-7 17:00pm -0800.
+
+For core most notable change was that there is now language for
+contact which is used for example as printout and notification
+language. Also products is now in shipped mode by default. Product
+does not have primary category and shop product primary category
+should be only main category for product.
+
+At admin we added mass actions for products, contacts and orders.
+We did some changes to form modifiers. Also we removed the language
+layer which caused way too many issues. The admin side got also
+multiple bug fixes for current features.
+
+Front got app for showing recently viewed products. Option to login
+and register through checkout phases. Also the front we added multiple
+minor enhancements and bug fixes.
+
+Update all translations and add support for Italian.
+
+For all changes see the full changelog:
+:doc:`../shoop-changelog` or `Git commit log
+<https://github.com/shuup/shuup/commits/v0.5.3>`__.
