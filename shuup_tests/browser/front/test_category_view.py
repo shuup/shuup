@@ -149,7 +149,7 @@ def hide_sorts_for_shop(browser, shop):
     set_configuration(
         shop=shop, data={"sort_products_by_name": False, "sort_products_by_price": False})
     browser.reload()
-    assert not browser.is_text_present("Sort")
+    wait_until_condition(browser, lambda x: not x.is_text_present("sort"), timeout=20)
 
 
 def show_sorts_for_the_category_only(browser, category):

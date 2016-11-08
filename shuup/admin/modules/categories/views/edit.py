@@ -12,6 +12,7 @@ from shuup.admin.modules.categories.form_parts import (
     CategoryBaseFormPart, CategoryProductFormPart
 )
 from shuup.admin.toolbar import get_default_edit_toolbar
+from shuup.admin.utils.tour import is_tour_complete
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Category
 
@@ -28,6 +29,12 @@ class CategoryEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateVie
         object = self.get_object()
         delete_url = reverse_lazy("shuup_admin:category.delete", kwargs={"pk": object.pk}) if object.pk else None
         return get_default_edit_toolbar(self, save_form_id, delete_url=delete_url)
+
+    def get_context_data(self, **kwargs):
+        context = super(CategoryEditView, self).get_context_data(**kwargs)
+        context["tour_key"] = "category"
+        context["tour_complete"] = is_tour_complete("category")
+        return context
 
     def form_valid(self, form):
         return self.save_form_parts(form)

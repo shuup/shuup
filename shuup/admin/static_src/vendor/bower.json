@@ -27,6 +27,7 @@
     "bootstrap-select": "1.6.5",
     "jquery.scrollbar": "0.2.10",
     "select2": "4.0.2",
-    "smalot-bootstrap-datetimepicker": "2.3.8"
+    "smalot-bootstrap-datetimepicker": "2.3.8",
+    "tether-shepherd": "1.8.1"
   }
 }
