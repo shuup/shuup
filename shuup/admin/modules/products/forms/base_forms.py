@@ -379,7 +379,7 @@ class ProductImageMediaFormSet(ProductMediaFormSet):
                           (form.cleaned_data.get("file") and not form.cleaned_data.get("DELETE"))]
 
         if eligible_forms and not has_primary:
-            # make first form be the primary image as well
-            form_instance = self.forms[0]
+            # make first eligible form be the primary image as well
+            form_instance = eligible_forms[0]
             form_instance.product.primary_image = form_instance.instance
             form_instance.product.save()
