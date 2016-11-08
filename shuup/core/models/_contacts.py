@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumField
 from parler.managers import TranslatableQuerySet
@@ -295,10 +296,12 @@ class PersonContact(Contact):
 
         return super(PersonContact, self).save(*args, **kwargs)
 
-    @property
+    @cached_property
     def is_all_seeing(self):
-        if self.user_id:
-            return getattr(self.user, 'is_superuser', False)
+        if self.user_id and self.user.is_superuser:
+            all_seeing_key = "is_all_seeing:%d" % self.user_id
+            return configuration.get(None, all_seeing_key, False)
+        return False
 
 
 class AnonymousContact(Contact):

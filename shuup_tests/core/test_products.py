@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 
 import pytest
+from shuup import configuration
 
 from shuup.core.models import (
     AnonymousContact, get_person_contact, Product, ProductVisibility,
@@ -14,8 +15,8 @@ from shuup.core.models import (
 )
 from shuup.testing.factories import (
     create_product, get_default_customer_group, get_default_shop,
-    get_default_shop_product
-)
+    get_default_shop_product,
+    get_all_seeing_key)
 from shuup_tests.core.utils import modify
 from shuup_tests.utils.fixtures import regular_user
 
@@ -47,6 +48,7 @@ def test_product_query(visibility, show_in_list, show_in_search, admin_user, reg
     assert (product in Product.objects.searchable(shop=shop, customer=anon_contact)) == show_in_search
 
     # Admin should see all non-deleted results
+    configuration.set(None, get_all_seeing_key(admin_contact), True)
     assert product in Product.objects.listed(shop=shop, customer=admin_contact)
     assert product in Product.objects.searchable(shop=shop, customer=admin_contact)
 
@@ -66,6 +68,7 @@ def test_product_query(visibility, show_in_list, show_in_search, admin_user, reg
     assert product not in Product.objects.searchable(shop=shop)
     assert product not in Product.objects.listed(shop=shop, customer=admin_contact)
     assert product not in Product.objects.searchable(shop=shop, customer=admin_contact)
+    configuration.set(None, get_all_seeing_key(admin_contact), False)
 
 
 @pytest.mark.django_db
