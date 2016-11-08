@@ -83,12 +83,31 @@ class OrderStatusRole(Enum):
     INITIAL = 1
     COMPLETE = 2
     CANCELED = 3
+    PROCESSING = 4
+    # TODO: Failed state?
 
     class Labels:
         NONE = _('none')
-        INITIAL = _('initial')
-        COMPLETE = _('complete')
-        CANCELED = _('canceled')
+        INITIAL = _('Initial')
+        PROCESSING = _('Processing')
+        COMPLETE = _('Complete')
+        CANCELED = _('Canceled')
+
+
+class DefaultOrderStatus(Enum):
+    NONE = "none"
+    INITIAL = "initial"
+    COMPLETE = "processing"
+    CANCELED = "complete"
+    PROCESSING = "canceled"
+    # TODO: Failed state?
+
+    class Labels:
+        NONE = _('none')
+        INITIAL = _('Received')
+        PROCESSING = _('In Progress')
+        COMPLETE = _('Complete')
+        CANCELED = _('Canceled')
 
 
 class OrderStatusQuerySet(TranslatableQuerySet):
@@ -109,6 +128,9 @@ class OrderStatusQuerySet(TranslatableQuerySet):
     def get_default_initial(self):
         return self._default_for_role(OrderStatusRole.INITIAL)
 
+    def get_default_processing(self):
+        return self._default_for_role(OrderStatusRole.PROCESSING)
+
     def get_default_canceled(self):
         return self._default_for_role(OrderStatusRole.CANCELED)
 
@@ -118,25 +140,119 @@ class OrderStatusQuerySet(TranslatableQuerySet):
 
 @python_2_unicode_compatible
 class OrderStatus(TranslatableModel):
-    identifier = InternalIdentifierField(db_index=True, blank=False, unique=True)
-    ordering = models.IntegerField(db_index=True, default=0, verbose_name=_('ordering'))
-    role = EnumIntegerField(OrderStatusRole, db_index=True, default=OrderStatusRole.NONE, verbose_name=_('role'))
-    default = models.BooleanField(default=False, db_index=True, verbose_name=_('default'))
+    identifier = InternalIdentifierField(
+        db_index=True, blank=False, editable=True,
+        unique=True, help_text=_("Internal identifier for status. This is used to identify the statuses in Shuup."))
+    ordering = models.IntegerField(db_index=True, default=0, verbose_name=_('ordering'),
+                                   help_text=_("The processing order of statuses. Default is always processed first."))
+    role = EnumIntegerField(
+        OrderStatusRole, db_index=True,
+        default=OrderStatusRole.NONE, verbose_name=_('role'),
+        help_text=_("Role of status. One role can have multiple order statuses."))
+    default = models.BooleanField(
+        default=False, db_index=True, verbose_name=_('default'),
+        help_text=_("Defines if the status should be considered as default."))
+
+    is_active = models.BooleanField(
+        default=True, db_index=True, verbose_name=_('is active'), help_text=_("Define if the status is usable."))
 
     objects = OrderStatusQuerySet.as_manager()
 
     translations = TranslatedFields(
-        name=models.CharField(verbose_name=_("name"), max_length=64)
+        name=models.CharField(verbose_name=_("name"), max_length=64, help_text=_("Name of the order status")),
+        public_name=models.CharField(
+            verbose_name=_('public name'), max_length=64, help_text=_("The name shown for customer in shop front."))
     )
 
+    class Meta:
+        unique_together = ("identifier", "role")
+        verbose_name = _('order status')
+        verbose_name_plural = _('order statuses')
+
     def __str__(self):
-        return self.safe_translation_getter("name", default=self.identifier)
+        return force_text(self.safe_translation_getter("name", default=self.identifier))
 
     def save(self, *args, **kwargs):
         super(OrderStatus, self).save(*args, **kwargs)
         if self.default and self.role != OrderStatusRole.NONE:
             # If this status is the default, make the others for this role non-default.
             OrderStatus.objects.filter(role=self.role).exclude(pk=self.pk).update(default=False)
+
+
+class OrderStatusManager(object):
+    def __init__(self):
+        self.default_statuses = [
+            {
+                "name": DefaultOrderStatus.INITIAL.label,
+                "public_name": DefaultOrderStatus.INITIAL.label,
+                "role": OrderStatusRole.INITIAL,
+                "identifier": DefaultOrderStatus.INITIAL.value,
+                "default": True,
+                "is_active": True
+            },
+            {
+                "name": DefaultOrderStatus.PROCESSING.label,
+                "public_name": DefaultOrderStatus.PROCESSING.label,
+                "role": OrderStatusRole.PROCESSING,
+                "identifier": DefaultOrderStatus.PROCESSING.value,
+                "default": True,
+                "is_active": True
+            },
+            {
+                "name": DefaultOrderStatus.COMPLETE.label,
+                "public_name": DefaultOrderStatus.COMPLETE.label,
+                "role": OrderStatusRole.COMPLETE,
+                "identifier": DefaultOrderStatus.COMPLETE.value,
+                "default": True,
+                "is_active": True
+            },
+            {
+                "name": DefaultOrderStatus.CANCELED.label,
+                "public_name": DefaultOrderStatus.CANCELED.label,
+                "role": OrderStatusRole.CANCELED,
+                "identifier": DefaultOrderStatus.CANCELED.value,
+                "default": True,
+                "is_active": True
+            }
+        ]
+
+    def is_default(self, status_object):
+        return any(s['identifier'] == status_object.identifier for s in self.default_statuses)
+
+    def ensure_default_statuses(self):
+        """
+        Ensure Default Statuses
+
+        It is important to ensure that default
+        statuses are always available. This method
+        will ensure that
+        """
+        # these values are based on old shuup data
+        update_map = {
+            "none": DefaultOrderStatus.NONE.value,
+            "recv": DefaultOrderStatus.INITIAL.value,
+            "prog": DefaultOrderStatus.PROCESSING.value,
+            "comp": DefaultOrderStatus.COMPLETE.value,
+            "canc": DefaultOrderStatus.CANCELED.value,
+        }
+
+        for status in OrderStatus.objects.all():
+            if status.identifier not in update_map:
+                continue
+            status.identifier = update_map[status.identifier]
+            status.save()
+
+        for i, defaults in enumerate(self.default_statuses):
+            defaults["ordering"] = i
+            status = OrderStatus.objects.filter(identifier=defaults["identifier"]).first()
+            if status:
+                defaults.pop("name")
+                defaults.pop("public_name")
+                for k, v in six.iteritems(defaults):
+                    setattr(status, k, v)
+                status.save()
+            else:
+                OrderStatus.objects.create(**defaults)
 
 
 class OrderQuerySet(models.QuerySet):
@@ -147,10 +263,10 @@ class OrderQuerySet(models.QuerySet):
         return self.filter(status__role__in=(OrderStatusRole.NONE, OrderStatusRole.INITIAL))
 
     def complete(self):
-        return self.filter(status__role=OrderStatusRole.COMPLETE)
+        return self.filter(status__role=OrderStatusRole.COMPLETE)    # TODO: read status
 
     def valid(self):
-        return self.exclude(deleted=True, status__role=OrderStatusRole.CANCELED)
+        return self.exclude(deleted=True, status__role=OrderStatusRole.CANCELED)  # TODO: read status
 
     def since(self, days):
         return self.filter(
@@ -406,6 +522,9 @@ class Order(MoneyPropped, models.Model):
 
     def is_paid(self):
         return (self.payment_status == PaymentStatus.FULLY_PAID)
+
+    def is_partially_paid(self):
+        return (self.payment_status == PaymentStatus.PARTIALLY_PAID)
 
     def is_not_paid(self):
         return (self.payment_status == PaymentStatus.NOT_PAID)
@@ -772,6 +891,9 @@ class Order(MoneyPropped, models.Model):
 
     def is_fully_shipped(self):
         return (self.shipping_status == ShippingStatus.FULLY_SHIPPED)
+
+    def is_partially_shipped(self):
+        return (self.shipping_status == ShippingStatus.PARTIALLY_SHIPPED)
 
     def is_canceled(self):
         return (self.status.role == OrderStatusRole.CANCELED)
