@@ -8,12 +8,14 @@
 import pytest
 from filer.models import Folder, Image
 
+from shuup import configuration
 from shuup.core.models import (
     AnonymousContact, Category, CategoryStatus, CategoryVisibility,
     ContactGroup, get_person_contact
 )
 from shuup.testing.factories import (
-    DEFAULT_NAME, get_default_category, get_default_shop_product
+    DEFAULT_NAME, get_all_seeing_key, get_default_category,
+    get_default_shop_product
 )
 from shuup_tests.utils.fixtures import regular_user
 
@@ -33,6 +35,8 @@ def test_category_visibility(admin_user, regular_user):
     anon_contact = AnonymousContact()
     regular_contact = get_person_contact(regular_user)
     admin_contact = get_person_contact(admin_user)
+
+    configuration.set(None, get_all_seeing_key(admin_contact), True)
 
     for (customer, category, expect) in [
         (anon_contact, visible_public_category, True),
@@ -58,6 +62,7 @@ def test_category_visibility(admin_user, regular_user):
         assert category.is_visible(customer) == expect, "Direct visibility of %s for %s as expected" % (category.identifier, customer)
 
     assert not Category.objects.all_except_deleted().filter(pk=deleted_public_category.pk).exists(), "Deleted category does not show up in 'all_except_deleted'"
+    configuration.set(None, get_all_seeing_key(admin_contact), False)
 
 
 @pytest.mark.django_db
@@ -117,6 +122,8 @@ def test_category_deletion(admin_user):
     shop_product.primary_category = category
     shop_product.save()
 
+    configuration.set(None, get_all_seeing_key(admin), True)
+
     assert category.status == CategoryStatus.INVISIBLE
     assert category.children.count() == 1
 
@@ -134,3 +141,4 @@ def test_category_deletion(admin_user):
     # the child category still exists
     assert Category.objects.all_visible(customer=admin).count() == 1
     assert Category.objects.all_except_deleted().count() == 1
+    configuration.set(None, get_all_seeing_key(admin), False)

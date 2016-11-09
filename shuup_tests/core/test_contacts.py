@@ -10,23 +10,27 @@ from __future__ import unicode_literals
 import pytest
 from django.contrib.auth.models import AnonymousUser
 from django.db.models import QuerySet
+from shuup import configuration
 
 from shuup.core.models import (
     AnonymousContact, CompanyContact, ContactGroup, get_company_contact,
     get_person_contact, PersonContact
 )
 from shuup.core.pricing import PriceDisplayOptions
-from shuup.testing.factories import create_random_company
+from shuup.testing.factories import create_random_company, get_all_seeing_key
 from shuup_tests.utils.fixtures import regular_user
 
 
 @pytest.mark.django_db
 def test_omniscience(admin_user, regular_user):
+    assert not get_person_contact(admin_user).is_all_seeing
+    configuration.set(None, get_all_seeing_key(admin_user), True)
     assert get_person_contact(admin_user).is_all_seeing
     assert not get_person_contact(regular_user).is_all_seeing
     assert not get_person_contact(None).is_all_seeing
     assert not get_person_contact(AnonymousUser()).is_all_seeing
     assert not AnonymousContact().is_all_seeing
+    configuration.set(None, get_all_seeing_key(admin_user), False)
 
 
 @pytest.mark.django_db

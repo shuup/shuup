@@ -789,3 +789,11 @@ def _get_pricing_context(shop, customer=None):
         shop=shop,
         customer=(customer or AnonymousContact()),
     )
+
+
+def get_all_seeing_key(user_or_contact):
+    if isinstance(user_or_contact, Contact):
+        user = user_or_contact.user
+    else:
+        user = user_or_contact
+    return "is_all_seeing:%d" % user.pk

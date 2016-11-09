@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-25 18:30+0000\n"
+"POT-Creation-Date: 2016-11-08 23:05+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -628,7 +628,28 @@ msgstr ""
 msgid "Items %(start_index)d of %(end_index)d of %(count)d total"
 msgstr ""
 
-msgid "Shop is currently in maintenance mode."
+msgid "Toggle navigation"
+msgstr ""
+
+msgid "Admin Tools"
+msgstr ""
+
+msgid "Maintenance"
+msgstr ""
+
+msgid "ON"
+msgstr ""
+
+msgid "OFF"
+msgstr ""
+
+msgid "Tools"
+msgstr ""
+
+msgid "Show only visible products and categories"
+msgstr ""
+
+msgid "Show all products and categories"
 msgstr ""
 
 msgid ""
@@ -825,8 +846,8 @@ msgstr ""
 msgid "Newest products"
 msgstr ""
 
-msgid "This product is not available in this shop."
+msgid "Edit"
 msgstr ""
 
-msgid "Edit"
+msgid "This product is not available in this shop."
 msgstr ""

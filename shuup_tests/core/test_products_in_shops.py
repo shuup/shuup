@@ -11,6 +11,7 @@ import pytest
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 from django.test import override_settings
+from shuup import configuration
 
 from shuup.core.excs import (
     ProductNotOrderableProblem, ProductNotVisibleProblem
@@ -21,8 +22,8 @@ from shuup.core.models import (
 )
 from shuup.testing.factories import (
     CategoryFactory, get_default_customer_group, get_default_product,
-    get_default_shop, get_default_shop_product, get_default_supplier
-)
+    get_default_shop, get_default_shop_product, get_default_supplier,
+    get_all_seeing_key)
 from shuup_tests.core.utils import modify
 from shuup_tests.utils import (
     error_does_not_exist, error_exists, printable_gibberish
@@ -95,6 +96,7 @@ def test_product_visibility(rf, admin_user, regular_user):
     admin_contact = get_person_contact(admin_user)
     regular_contact = get_person_contact(regular_user)
 
+    configuration.set(None, get_all_seeing_key(admin_contact), True)
 
     with modify(shop_product.product, deleted=True):  # NB: assigning to `product` here works because `get_shop_instance` populates `_product_cache`
         assert error_exists(shop_product.get_visibility_errors(customer=anon_contact), "product_deleted")
@@ -122,6 +124,8 @@ def test_product_visibility(rf, admin_user, regular_user):
         assert error_does_not_exist(shop_product.get_visibility_errors(customer=grouped_contact), "product_not_visible_to_group")
         assert error_does_not_exist(shop_product.get_visibility_errors(customer=admin_contact), "product_not_visible_to_group")
         assert error_exists(shop_product.get_visibility_errors(customer=regular_contact), "product_not_visible_to_group")
+
+    configuration.set(None, get_all_seeing_key(admin_contact), False)
 
 
 @pytest.mark.django_db
