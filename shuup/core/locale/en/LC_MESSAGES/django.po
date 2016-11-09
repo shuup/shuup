@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-05 01:06+0000\n"
+"POT-Creation-Date: 2016-11-08 23:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -485,13 +485,60 @@ msgstr ""
 msgid "none"
 msgstr ""
 
-msgid "initial"
+msgid "Initial"
 msgstr ""
 
-msgid "complete"
+msgid "Processing"
+msgstr ""
+
+msgid "Complete"
+msgstr ""
+
+msgid "Canceled"
+msgstr ""
+
+msgid "Received"
+msgstr ""
+
+msgid "In Progress"
+msgstr ""
+
+msgid ""
+"Internal identifier for status. This is used to identify the statuses in "
+"Shuup."
+msgstr ""
+
+msgid "The processing order of statuses. Default is always processed first."
+msgstr ""
+
+msgid "Role of status. One role can have multiple order statuses."
 msgstr ""
 
 msgid "default"
+msgstr ""
+
+msgid "Defines if the status should be considered as default."
+msgstr ""
+
+msgid "is active"
+msgstr ""
+
+msgid "Define if the status is usable."
+msgstr ""
+
+msgid "Name of the order status"
+msgstr ""
+
+msgid "public name"
+msgstr ""
+
+msgid "The name shown for customer in shop front."
+msgstr ""
+
+msgid "order status"
+msgstr ""
+
+msgid "order statuses"
 msgstr ""
 
 msgid "modified on"
@@ -1176,9 +1223,6 @@ msgid "maintenance mode"
 msgstr ""
 
 msgid "contact address"
-msgstr ""
-
-msgid "public name"
 msgstr ""
 
 msgid "maintenance message"
