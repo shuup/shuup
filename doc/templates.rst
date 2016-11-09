@@ -262,3 +262,132 @@ folder. The folder hierarchy for frontend templates was discussed earlier in thi
   ``myshop/templates/shuup/product/category.jinja``, then start modifying.
   As you can see, the template directory structure within your ``myshop`` application
   reflects the one in the original app.
+
+Overriding templates and macros
+-------------------------------
+
+The general ideology with overriding templates and themes:
+* macros: simple block changes
+* templates: totally different structure
+
+Most of the Shuup Front templates are found in ``shuup/front/templates/shuup/front/``
+and macros in ``shuup/front/templates/shuup/front/macros``.
+
+Shuup has some applications for front also, these are found in ``shuup/front/apps``.
+These apps define their own templates and are not found
+in the ``shuup_shuup/front/templates/shuup/front/``.
+
+**For example purposes, we expect that your theme is defined like this**
+
+.. code-block:: python
+
+    class MyTheme(ClassicGrayTheme):
+        template_dir = "mytheme"
+
+.. topic:: Note
+
+    This means that your templates are found in ``templates/mytheme/shuup/``.
+
+    ``templates/mytheme/shuup/front/index.jinja`` **must exist**.
+
+Class Inheritance
+^^^^^^^^^^^^^^^^^
+
+Theme can be created in multiple ways and each offers different starting point
+for theme creation.
+
+**Theme that re-writes all templates and static sources**
+
+.. code-block:: python
+
+    class MyThemeTheme(Theme):
+        ...
+
+**Theme that uses other theme functionality**
+
+.. code-block:: python
+
+    class MyTheme(ClassicGrayTheme):
+        ...
+
+.. topic:: Note
+
+    This theme uses the functionality of another theme or overrides
+    some of the templates, static sources, or such from inherited   template.
+
+
+**Theme that uses uses other theme functionality but not templates**
+
+.. code-block:: python
+
+    class MyTheme(ClassicGrayTheme):
+        default_template_dir = "path/to/templatedir"
+
+.. topic:: Note
+
+    This method is handy if you want the functionality of some theme and
+    want to use a certain template set with that, for example when your
+    theme addon actually offers multiple themes.
+
+Terminology
+^^^^^^^^^^^
+
+**Base theme:** ``ClassicGrayTheme`` found in ``shuup/themes/classic_gray/theme.py``.
+
+Templates
+^^^^^^^^^
+
+Overriding templates are pretty straight forward,
+you have two use cases when overriding shuup templates.
+
+**Case A**, overriding shuup front template:
+
+So the base theme is satisfying, however you are not happy on the
+category page. You can find the current category template
+from ``shuup/front/templates/shuup/front/product/category.jinja``.
+
+You can then copy said file to ``templates/mytheme/shuup/front/product/`` and make your changes.
+
+**Case B**, overriding shuup front app template:
+
+You want to make the search results page to reflect the changes made in
+category page. In this case you must override
+the file found in ``shuup/front/apps/simple_search/templates/shuup/simple_search/search_form.jinja``.
+
+You can again copy that file to ``templates/mytheme/simple_search/search_form.jinja`` and make your changes.
+
+Macros
+^^^^^^
+
+As said before, macros can be found
+from ``shuup/front/templates/shuup/front/macros``. Under this folder is a
+folder called ``theme``, this folder contains all the possible
+theme specific macro override files.
+
+In **Case A** in template example, you overrided the ``category.jinja``.
+This file includes macro call: ``render_products_section()`` and you
+want to change the way products are being rendered. In this case you
+create a file in ``templates/mytheme/shuup/front/macros/theme/category.jinja``
+and define the ``{% macro render_products_section() %}`` there
+with the changes you want.
+
+Some real life examples
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Here are some real life examples based on using a theme inherited from ``ClassicGrayTheme``.
+
+**I want the product boxes in category page look different.**
+
+Add macro definition to ``templates/mytheme/shuup/front/macros/theme/product.jinja``.
+Original definition can be found from ``shuup/front/templates/shuup/front/macros/product.jinja``
+
+**I want to have a completely new theme with no base theme.**
+
+Define your theme like this:
+
+.. code-block:: python
+
+    class MyTheme(Theme):
+        template_dir = "mytheme"
+
+Then add all template files to your template dir.
