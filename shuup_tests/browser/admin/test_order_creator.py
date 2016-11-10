@@ -97,12 +97,13 @@ def _test_customer_data(browser, person):
     assert browser.find_by_css("input[name='ship-to-billing-address']").first.checked == False
     assert browser.find_by_css("input[name='order-for-company']").first.checked == False
     assert not browser.find_by_css("input[name='billing-tax_number']").first['required']
-    browser.check("ship-to-billing-address")
-    browser.check("order-for-company")
+    browser.find_by_css("input[name=ship-to-billing-address]").check()
+    browser.find_by_css("input[name='order-for-company']").check()
+    wait_until_condition(
+        browser, lambda x: x.find_by_css("input[name='billing-tax_number']").first['required'])
     assert len(browser.find_by_css("input[name='shipping-name']")) == 0, "shipping address column is hidden"
-    assert browser.find_by_css("input[name='billing-tax_number']").first['required'], "tax number is required"
 
-    browser.uncheck("order-for-company")
+    browser.find_by_css("input[name='order-for-company']").uncheck()
     click_element(browser, "#select-existing-customer")
     browser.windows.current = browser.windows[1]
     wait_until_appeared(browser, "a")
@@ -116,6 +117,16 @@ def _test_customer_data(browser, person):
     assert browser.find_by_name("billing-street").value == person.default_billing_address.street
     assert browser.find_by_name("billing-city").value == person.default_billing_address.city
     assert browser.find_by_name("billing-country").value == person.default_billing_address.country
+    click_element(browser, "#clear-customer")
+    wait_until_condition(
+        browser, lambda x: "new customer" in x.find_by_css("#customer-description").text)
+    # add customer using search
+    click_element(browser, "#customer-search .select2")
+    wait_until_appeared(browser, "input.select2-search__field")
+    browser.find_by_css("input.select2-search__field").first.value = person.name
+    wait_until_appeared(browser, ".select2-results__option:not([aria-live='assertive'])")
+    browser.execute_script('$($(".select2-results__option")[0]).trigger({type: "mouseup"})')
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".view-details-link")) == 1)
 
 
 def _test_regions(browser, person):
@@ -185,9 +196,6 @@ def _test_quick_add_lines(browser):
     browser.find_by_css("input.select2-search__field").first.value = "test-sku0"
     wait_until_appeared(browser, ".select2-results__option:not([aria-live='assertive'])")
     browser.execute_script('$($(".select2-results__option")[0]).trigger({type: "mouseup"})')
-    wait_until_condition(
-        browser, lambda x: x.find_by_css("#quick-add .select2-selection__rendered").text == "Test-Sku0")
-    click_element(browser, "#add-product")
     wait_until_condition(browser, lambda x: len(x.find_by_css('#lines .list-group-item')) == 2)
     line_items = browser.find_by_id("lines").find_by_css('.list-group-item')
     assert len(line_items) == 2, "two line items exist"
