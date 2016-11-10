@@ -21,11 +21,14 @@ from parler.utils.context import switch_language
 from shuup.utils.i18n import get_language_name
 
 
-def to_language_codes(languages):
+def to_language_codes(languages, default_language):
     languages = languages or (get_language(),)
     if languages and isinstance(languages[0], (list, tuple)):
         # `languages` looks like a `settings.LANGUAGES`, so fix it
         languages = [code for (code, name) in languages]
+    if default_language not in languages:
+        raise ValueError("Language %r not in %r" % (default_language, languages))
+    languages = [default_language] + [code for code in languages if code != default_language]
     return languages
 
 
@@ -34,12 +37,9 @@ class MultiLanguageModelForm(TranslatableModelForm):
         return self._meta.model._parler_meta.root_model
 
     def __init__(self, **kwargs):
-        self.languages = to_language_codes(kwargs.pop("languages", ()))
-
         self.default_language = kwargs.pop(
             "default_language", getattr(self, 'language', getattr(settings, "PARLER_DEFAULT_LANGUAGE_CODE")))
-        if self.default_language not in self.languages:
-            raise ValueError("Language %r not in %r" % (self.default_language, self.languages))
+        self.languages = to_language_codes(kwargs.pop("languages", ()), self.default_language)
 
         self.required_languages = kwargs.pop("required_languages", [self.default_language])
 

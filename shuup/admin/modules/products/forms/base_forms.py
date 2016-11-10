@@ -147,7 +147,9 @@ class ShopProductForm(forms.ModelForm):
 
 class ProductAttributesForm(forms.Form):
     def __init__(self, **kwargs):
-        self.languages = to_language_codes(kwargs.pop("languages", ()))
+        self.default_language = kwargs.pop(
+            "default_language", getattr(settings, "PARLER_DEFAULT_LANGUAGE_CODE"))
+        self.languages = to_language_codes(kwargs.pop("languages", ()), self.default_language)
         self.language_names = dict((lang, get_language_name(lang)) for lang in self.languages)
         self.product = kwargs.pop("product")
         self.attributes = self.product.get_available_attribute_queryset()
@@ -295,7 +297,9 @@ class BaseProductMediaFormSet(BaseModelFormSet):
 
     def __init__(self, *args, **kwargs):
         self.product = kwargs.pop("product")
-        self.languages = to_language_codes(kwargs.pop("languages", ()))
+        self.default_language = kwargs.pop(
+            "default_language", getattr(settings, "PARLER_DEFAULT_LANGUAGE_CODE"))
+        self.languages = to_language_codes(kwargs.pop("languages", ()), self.default_language)
         kwargs.pop("empty_permitted")  # this is unknown to formset
         super(BaseProductMediaFormSet, self).__init__(*args, **kwargs)
 
