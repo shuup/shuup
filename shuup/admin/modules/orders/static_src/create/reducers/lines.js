@@ -43,8 +43,8 @@ function getFormattedStockCounts(line) {
     const logicalCount = ensureNumericValue(line.logicalCount);
 
     return {
-        physicalCount: physicalCount.toFixed(line.salesDecimals) + ' ' + line.salesUnit,
-        logicalCount: logicalCount.toFixed(line.salesDecimals) + ' ' + line.salesUnit
+        physicalCount: physicalCount.toFixed(line.salesDecimals) + " " + line.salesUnit,
+        logicalCount: logicalCount.toFixed(line.salesDecimals) + " " + line.salesUnit
     };
 }
 
@@ -119,15 +119,17 @@ function setLineProperty(state, {payload}) {
     var updates = {};
     if (line) {
         switch (property) {
-            case "product":
+            case "product": {
                 const product = value;
                 updates.product = product;
                 updates.type = "product";
                 break;
-            case "text":
+            }
+            case "text": {
                 updates.text = value;
                 break;
-            case "type":
+            }
+            case "type": {
                 updates.type = value;
                 updates.errors = null;
                 if (value === "other" || value === "text") {
@@ -141,12 +143,14 @@ function setLineProperty(state, {payload}) {
                 }
                 updates.type = value;
                 break;
-            case "quantity":
+            }
+            case "quantity": {
                 const quantity = Math.max(0, ensureNumericValue(value, 1));
                 updates = getDiscountsAndTotal(quantity, line.baseUnitPrice, line.unitPrice);
                 updates.quantity = quantity;
                 break;
-            case "unitPrice":
+            }
+            case "unitPrice": {
                 updates = getDiscountsAndTotal(
                     line.quantity,
                     line.baseUnitPrice,
@@ -154,13 +158,15 @@ function setLineProperty(state, {payload}) {
                     true
                 );
                 break;
-            case "discountPercent":
+            }
+            case "discountPercent": {
                 const discountPercent = Math.min(100, Math.max(0, ensureNumericValue(value)));
                 updates = getDiscountsAndTotal(
                     line.quantity, line.baseUnitPrice, (line.baseUnitPrice * (1 - (discountPercent / 100))), true
                 );
                 break;
-            case "discountAmount":
+            }
+            case "discountAmount": {
                 const newDiscountAmount = Math.max(0, ensureNumericValue(value));
                 updates = getDiscountsAndTotal(
                     line.quantity,
@@ -170,7 +176,8 @@ function setLineProperty(state, {payload}) {
                 );
                 updates.discountAmount = newDiscountAmount;
                 break;
-            case "total":
+            }
+            case "total": {
                 const calculatedTotal = line.quantity * line.baseUnitPrice;
                 // TODO: change the hardcoded rounding when doing SHUUP-1912
                 const total = +ensureNumericValue(value, calculatedTotal);
@@ -181,6 +188,7 @@ function setLineProperty(state, {payload}) {
                     true
                 );
                 break;
+            }
         }
     }
     return setLineProperties(state, id, updates);

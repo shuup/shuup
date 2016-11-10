@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-10 22:15+0000\n"
+"POT-Creation-Date: 2016-11-11 01:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -146,6 +146,32 @@ msgstr ""
 msgid "Click to select user %s."
 msgstr ""
 
+msgid "Save customer details while creating order"
+msgstr ""
+
+msgid ""
+"Checking this box will save entered customer data to your contacts list."
+msgstr ""
+
+msgid "Ship to billing address"
+msgstr ""
+
+msgid ""
+"Checking this will make the shipping address the same as the billing address."
+msgstr ""
+
+msgid "Order for company"
+msgstr ""
+
+msgid "Check this if the order is for a company or business with a tax ID."
+msgstr ""
+
+msgid "Billing Address"
+msgstr ""
+
+msgid "Shipping Address"
+msgstr ""
+
 msgid "Full Name"
 msgstr ""
 
@@ -182,6 +208,27 @@ msgstr ""
 msgid "Order Status"
 msgstr ""
 
+msgid "Search by name or email"
+msgstr ""
+
+msgid "Customer Search"
+msgstr ""
+
+msgid ""
+"Search for existing customers by searching by name or email or click the "
+"magnifying glass for more fine-grained filtering. Clear the search filter to "
+"create an order for a new customer."
+msgstr ""
+
+msgid "Customer"
+msgstr ""
+
+msgid "View Details"
+msgstr ""
+
+msgid "A new customer will be created based on billing address."
+msgstr ""
+
 msgid "Customer Information"
 msgstr ""
 
@@ -195,36 +242,6 @@ msgid "Close"
 msgstr ""
 
 msgid "Warning: No customer account is currently associated with this order."
-msgstr ""
-
-msgid "A new customer will be created based on billing address."
-msgstr ""
-
-msgid "Customer"
-msgstr ""
-
-msgid "Select Existing Customer"
-msgstr ""
-
-msgid "New Customer"
-msgstr ""
-
-msgid "View Details"
-msgstr ""
-
-msgid "Save customer details while creating order"
-msgstr ""
-
-msgid "Ship to billing address"
-msgstr ""
-
-msgid "Order for company"
-msgstr ""
-
-msgid "Billing Address"
-msgstr ""
-
-msgid "Shipping Address"
 msgstr ""
 
 msgid "Back"
@@ -271,28 +288,74 @@ msgstr ""
 msgid "Text/Comment"
 msgstr ""
 
+msgid ""
+"Enter a comment or text note about the order. This could be anything from "
+"special order requests to special shipping needs."
+msgstr ""
+
 msgid "Qty"
+msgstr ""
+
+msgid "Enter the number of units of the product ordered."
+msgstr ""
+
+msgid ""
+"Enter the regular base price for a single unit of the product. If an "
+"existing product is selected, the price is already determined in product "
+"settings. Total price will be automatically calculated."
 msgstr ""
 
 msgid "Total Price"
 msgstr ""
 
+msgid ""
+"Enter the total amount for the line item. Unit price will be automatically "
+"calculated."
+msgstr ""
+
 msgid "Base Unit Price"
+msgstr ""
+
+msgid ""
+"Enter the regular base price for a single unit of the product. If an "
+"existing product is selected, the price is already determined in product "
+"settings."
+msgstr ""
+
+msgid ""
+"Enter the total discounted price for a single product unit in the order. "
+"Discount percent, Total Discount Amount, and Line Total will be "
+"automatically calculated."
 msgstr ""
 
 msgid "Discount Percent"
 msgstr ""
 
+msgid ""
+"Enter the discount percentage (%) for the line item. Discounted Unit Price, "
+"Total Discount Amount, and Line Total will be automatically."
+msgstr ""
+
 msgid "Total Discount Amount"
+msgstr ""
+
+msgid ""
+"Enter the total discount amount for the line item. Discounted Unit Price, "
+"Discount percent, and Line Total will be automatically calculated."
 msgstr ""
 
 msgid "Line Total"
 msgstr ""
 
+msgid ""
+"Enter the total amount for the line item. Discounted Unit Price, Discount "
+"percent, and Total Discount Amount will be automatically calculated."
+msgstr ""
+
 msgid "Orderline type"
 msgstr ""
 
-msgid "Missing JavaScript dependencies detected"
+msgid "Search product by name, SKU, or barcode"
 msgstr ""
 
 msgid ""
@@ -301,32 +364,41 @@ msgid ""
 msgstr ""
 
 #, javascript-format
-msgid "All prices are in %s currency."
+msgid "All prices are in %s and include taxes."
 msgstr ""
 
-msgid "All prices include taxes."
+#, javascript-format
+msgid "All prices are in %s. Taxes not included"
 msgstr ""
 
-msgid "Taxes not included."
-msgstr ""
-
-msgid "Add new line"
-msgstr ""
-
-msgid "Quick add product line"
+msgid "Product Quick Adder"
 msgstr ""
 
 msgid ""
-"Search product by name, SKU, or barcode and press button to add product line."
+"Search for products to add to the order by searching by name, SKU, or "
+"barcode or click the magnifying glass for more fine-grained filtering."
 msgstr ""
 
 msgid "Automatically add selected product"
 msgstr ""
 
+msgid "Add new line"
+msgstr ""
+
 msgid "No shipping method"
 msgstr ""
 
+msgid ""
+"Select a shipping method for the order. These methods are defined in "
+"shipping settings."
+msgstr ""
+
 msgid "No payment method"
+msgstr ""
+
+msgid ""
+"Select a payment method for the order. These methods are defined in payment "
+"settings."
 msgstr ""
 
 msgid "Shop"
@@ -338,28 +410,76 @@ msgstr ""
 msgid "Other"
 msgstr ""
 
+msgid "billing"
+msgstr ""
+
+msgid "shipping"
+msgstr ""
+
+#, javascript-format
+msgid "Enter the name for the %s address."
+msgstr ""
+
 msgid "Tax number"
+msgstr ""
+
+msgid "Enter the company tax (ID) number."
+msgstr ""
+
+#, javascript-format
+msgid "Enter the best %s contact phone number."
+msgstr ""
+
+#, javascript-format
+msgid "Enter the %s email address for transaction receipts and communications."
 msgstr ""
 
 msgid "Street"
 msgstr ""
 
+#, javascript-format
+msgid "Enter the %s street address."
+msgstr ""
+
 msgid "Street (2)"
+msgstr ""
+
+#, javascript-format
+msgid "Enter the %s street address (2)."
 msgstr ""
 
 msgid "ZIP / Postal code"
 msgstr ""
 
+#, javascript-format
+msgid "Enter the zip or postal code of the %s address."
+msgstr ""
+
 msgid "City"
+msgstr ""
+
+#, javascript-format
+msgid "Enter the city of the %s address."
 msgstr ""
 
 msgid "Region"
 msgstr ""
 
+#, javascript-format
+msgid "Enter the region, state, or province of the %s address."
+msgstr ""
+
 msgid "Country"
 msgstr ""
 
+#, javascript-format
+msgid "Enter the country of the %s address."
+msgstr ""
+
 msgid "No records found."
+msgstr ""
+
+msgid "Missing JavaScript dependencies detected"
 msgstr ""
 
 msgid "Identifier"

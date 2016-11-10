@@ -184,7 +184,7 @@ export const beginFinalizingOrder = function () {
 
 export const addProduct = function(product) {
     return (dispatch, getState) => {
-        const {lines, quickAdd} = getState();
+        const {lines} = getState();
         var line = _.find(lines, function(o) { return (o.product && o.product.id === parseInt(product.id));});
         if (line === undefined) {
             dispatch(addLine());

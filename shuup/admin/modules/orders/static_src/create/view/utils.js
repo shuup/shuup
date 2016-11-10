@@ -15,18 +15,22 @@ export const LINE_TYPES = [
     {id: "text", name: gettext("Text/Comment")}
 ];
 
+// ensure address types are translated
+gettext("billing");
+gettext("shipping");
+
 export const ADDRESS_FIELDS = [
-    {key: "name", label: gettext("Name"), "required": true},
-    {key: "tax_number", label: gettext("Tax number"), "required": false},
-    {key: "phone", label: gettext("Phone"), "required": false},
-    {key: "email", label: gettext("Email"), "required": false},
-    {key: "street", label: gettext("Street"), "required": true},
-    {key: "street2", label: gettext("Street (2)"), "required": false},
-    {key: "postal_code", label: gettext("ZIP / Postal code"), "required": false},
-    {key: "city", label: gettext("City"), "required": true},
-    {key: "region", label: gettext("Region"), "required": false},
-    {key: "region_code", label: gettext("Region"), "required": false},
-    {key: "country", label: gettext("Country"), "required": true}
+    {key: "name", label: gettext("Name"), "required": true, helpText: gettext("Enter the name for the %s address.")},
+    {key: "tax_number", label: gettext("Tax number"), "required": false, helpText: gettext("Enter the company tax (ID) number.")},
+    {key: "phone", label: gettext("Phone"), "required": false, helpText: gettext("Enter the best %s contact phone number.")},
+    {key: "email", label: gettext("Email"), "required": false, helpText: gettext("Enter the %s email address for transaction receipts and communications.")},
+    {key: "street", label: gettext("Street"), "required": true, helpText: gettext("Enter the %s street address.")},
+    {key: "street2", label: gettext("Street (2)"), "required": false, helpText: gettext("Enter the %s street address (2).")},
+    {key: "postal_code", label: gettext("ZIP / Postal code"), "required": false, helpText: gettext("Enter the zip or postal code of the %s address.")},
+    {key: "city", label: gettext("City"), "required": true, helpText: gettext("Enter the city of the %s address.")},
+    {key: "region", label: gettext("Region"), "required": false, helpText: gettext("Enter the region, state, or province of the %s address.")},
+    {key: "region_code", label: gettext("Region"), "required": false, helpText: gettext("Enter the region, state, or province of the %s address.")},
+    {key: "country", label: gettext("Country"), "required": true, helpText: gettext("Enter the country of the %s address.")}
 ];
 
 export function selectBox(
@@ -105,3 +109,75 @@ export function modal({show=false, sizeClass="", title, body, footer, close}) {
         )
     );
 }
+
+export const Select2 = {
+    view: function(ctrl, attrs) {
+        return m("select", {
+            name: attrs.name,
+            config: Select2.config(attrs)
+        });
+    },
+    config: function(ctrl) {
+        return function(element, isInitialized) {
+            if(typeof jQuery !== "undefined" && typeof jQuery.fn.select2 !== "undefined") {
+                const $el = $(element);
+                if (!isInitialized) {
+                    activateSelect($el, ctrl.model, ctrl.attrs).on("change", () => {
+                        // note: data is only populated when an element is actually clicked or enter is pressed
+                        const data = $el.select2("data");
+                        ctrl.onchange(data);
+                        if(ctrl.focus && ctrl.focus()){
+                            // close it first to clear the search box...
+                            $el.select2("close");
+                            $el.select2("open");
+                        }
+                    });
+                } else {
+                    // this doesn't actually set the value for ajax autoadd
+                    if(ctrl.value) {
+                        $el.val(ctrl.value().id).trigger("change");
+                    }
+
+                    if(ctrl.clear) {
+                        $el.select2("val", "");
+                    }
+
+                    // trigger select2 dropdown repositioning
+                    $(window).scroll();
+                }
+
+            } else {
+                alert(gettext("Missing JavaScript dependencies detected"));
+            }
+        };
+    }
+};
+
+export const HelpPopover = {
+    view: function(ctrl, attrs) {
+        return m("span.help-popover-btn", [
+            m("a.btn", {
+                role: "button",
+                config: HelpPopover.config(attrs),
+                // tabindex is required for popover to work but we don't want to actually tab the popover
+                tabindex: 50000
+            }, [
+                m("i.fa.fa-question-circle")
+            ])
+        ]);
+    },
+    config: function(attrs) {
+        return function(element, isInitialized) {
+            const $el = $(element);
+            if(!isInitialized) {
+                const defaults = {
+                    "placement": "bottom",
+                    "container": "body",
+                    "trigger": "focus"
+                };
+
+                $el.popover($.extend({}, defaults, attrs));
+            }
+        };
+    }
+};

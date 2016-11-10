@@ -7,9 +7,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 import {setShippingMethod, setPaymentMethod, updateTotals} from "../actions";
-import {selectBox} from "./utils";
+import {selectBox, HelpPopover} from "./utils";
 
-function renderMethod(store, mode, title, selectedMethod, choices, emptyChoice) {
+function renderMethod(store, mode, title, selectedMethod, choices, emptyChoice, helpText) {
     return [
         m("div.form-group", [
                 m("label.control-label", title),
@@ -18,7 +18,11 @@ function renderMethod(store, mode, title, selectedMethod, choices, emptyChoice) 
                     (mode === "shipping" ?
                         store.dispatch(setShippingMethod(newMethod)) : store.dispatch(setPaymentMethod(newMethod)));
                     store.dispatch(updateTotals(store.getState));
-                }, [].concat({id: 0, name: emptyChoice}, choices || []), "id", "name", mode)
+                }, [].concat({id: 0, name: emptyChoice}, choices || []), "id", "name", mode),
+                m.component(HelpPopover, {
+                    title: title,
+                    content: helpText
+                })
             ]
         )
     ];
@@ -32,7 +36,8 @@ export function shipmentMethodSelectView(store) {
         gettext("Shipping Method"),
         methods.shippingMethod,
         methods.shippingMethodChoices,
-        gettext("No shipping method")
+        gettext("No shipping method"),
+        gettext("Select a shipping method for the order. These methods are defined in shipping settings.")
     );
 }
 
@@ -44,6 +49,7 @@ export function paymentMethodSelectView(store) {
         gettext("Payment Method"),
         methods.paymentMethod,
         methods.paymentMethodChoices,
-        gettext("No payment method")
+        gettext("No payment method"),
+        gettext("Select a payment method for the order. These methods are defined in payment settings.")
     );
 }

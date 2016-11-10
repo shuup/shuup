@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 import {addLine, deleteLine, retrieveProductData, setLineProperty, updateTotals, setQuickAddProduct, clearQuickAddProduct, setAutoAdd, addProduct} from "../actions";
-import {LINE_TYPES, selectBox} from "./utils";
+import {LINE_TYPES, selectBox, Select2, HelpPopover} from "./utils";
 import BrowseAPI from "BrowseAPI";
 
 function renderNumberCell(store, line, value, fieldId, canEditPrice, min=null) {
@@ -31,7 +31,7 @@ function renderNumberCell(store, line, value, fieldId, canEditPrice, min=null) {
 }
 
 export function renderOrderLines(store, shop, lines) {
-    return _(lines).map((line, idx) => {
+    return _(lines).map((line) => {
         var text = line.text, canEditPrice = true;
         var editCell = null;
         const showPrice = (line.type !== "text");
@@ -69,47 +69,87 @@ export function renderOrderLines(store, shop, lines) {
                     onchange: function () {
                         store.dispatch(setLineProperty(line.id, "text", this.value));
                     }
+                }),
+                m.component(HelpPopover, {
+                    title: gettext("Text/Comment"),
+                    content: gettext("Enter a comment or text note about the order. This could be anything from special order requests to special shipping needs.")
                 })
             ];
         }
         const priceCells = [
             m("div.line-cell", [
                 m("label", gettext("Qty")),
-                renderNumberCell(store, line, line.quantity, "quantity", canEditPrice, 0)
+                renderNumberCell(store, line, line.quantity, "quantity", canEditPrice, 0),
+                m.component(HelpPopover, {
+                    title: "Quantity",
+                    content: gettext("Enter the number of units of the product ordered.")
+                })
             ]),
             m("div.line-cell", [
                 m("label", gettext("Unit Price")),
-                renderNumberCell(store, line, line.unitPrice, "unitPrice", canEditPrice)
+                renderNumberCell(store, line, line.unitPrice, "unitPrice", canEditPrice),
+                m.component(HelpPopover, {
+                    title: "Unit Price",
+                    content: gettext("Enter the regular base price for a single unit of the product. If an existing product is selected, the price is already determined in product settings. Total price will be automatically calculated.")
+                })
             ]),
             m("div.line-cell", [
                 m("label", gettext("Total Price")),
-                renderNumberCell(store, line, line.total, "total", canEditPrice)
+                renderNumberCell(store, line, line.total, "total", canEditPrice),
+                m.component(HelpPopover, {
+                    title: "Total Price",
+                    content: gettext("Enter the total amount for the line item. Unit price will be automatically calculated.")
+                })
             ])
         ];
         const productPriceCells = [
             m("div.line-cell", [
                 m("label", gettext("Qty")),
-                renderNumberCell(store, line, line.quantity, "quantity", canEditPrice, 0)
+                renderNumberCell(store, line, line.quantity, "quantity", canEditPrice, 0),
+                m.component(HelpPopover, {
+                    title: "Quantity",
+                    content: gettext("Enter the number of units of the product ordered.")
+                })
             ]),
             m("div.line-cell", [
                 m("label", gettext("Base Unit Price")),
-                renderNumberCell(store, line, line.baseUnitPrice, "baseUnitPrice", false)
+                renderNumberCell(store, line, line.baseUnitPrice, "baseUnitPrice", false),
+                m.component(HelpPopover, {
+                    title: "Base Unit Price",
+                    content: gettext("Enter the regular base price for a single unit of the product. If an existing product is selected, the price is already determined in product settings.")
+                })
             ]),
             m("div.line-cell", [
                 m("label", gettext("Discounted Unit Price")),
-                renderNumberCell(store, line, line.unitPrice, "unitPrice", canEditPrice)
+                renderNumberCell(store, line, line.unitPrice, "unitPrice", canEditPrice),
+                m.component(HelpPopover, {
+                    title: "Discounted Unit Price",
+                    content: gettext("Enter the total discounted price for a single product unit in the order. Discount percent, Total Discount Amount, and Line Total will be automatically calculated.")
+                })
             ]),
             m("div.line-cell", [
                 m("label", gettext("Discount Percent")),
-                renderNumberCell(store, line, line.discountPercent, "discountPercent", canEditPrice)
+                renderNumberCell(store, line, line.discountPercent, "discountPercent", canEditPrice),
+                m.component(HelpPopover, {
+                    title: "Discount Percent",
+                    content: gettext("Enter the discount percentage (%) for the line item. Discounted Unit Price, Total Discount Amount, and Line Total will be automatically.")
+                })
             ]),
             m("div.line-cell", [
                 m("label", gettext("Total Discount Amount")),
-                renderNumberCell(store, line, line.discountAmount, "discountAmount", canEditPrice)
+                renderNumberCell(store, line, line.discountAmount, "discountAmount", canEditPrice),
+                m.component(HelpPopover, {
+                    title: "Total Discount Amount",
+                    content: gettext("Enter the total discount amount for the line item. Discounted Unit Price, Discount percent, and Line Total will be automatically calculated.")
+                })
             ]),
             m("div.line-cell", [
                 m("label", gettext("Line Total")),
-                renderNumberCell(store, line, line.total, "total", canEditPrice)
+                renderNumberCell(store, line, line.total, "total", canEditPrice),
+                m.component(HelpPopover, {
+                    title: "Line Total",
+                    content: gettext("Enter the total amount for the line item. Discounted Unit Price, Discount percent, and Total Discount Amount will be automatically calculated.")
+                })
             ])
         ];
         if (line.type === "product" && line.product ){
@@ -147,43 +187,6 @@ export function renderOrderLines(store, shop, lines) {
 }
 
 
-var Select2 = {
-    view: function(ctrl, attrs) {
-        return m("select", {
-            name: attrs.name,
-            config: Select2.config(attrs)
-        });
-    },
-    config: function(ctrl) {
-        return function(element, isInitialized) {
-            if(typeof jQuery !== "undefined" && typeof jQuery.fn.select2 !== "undefined") {
-                let $el = $(element);
-                if (!isInitialized) {
-                    activateSelect($el, ctrl.model, ctrl.attrs).on("change", () => {
-                        // note: data is only populated when an element is actually clicked or enter is pressed
-                        const data = $el.select2("data");
-                        ctrl.onchange(data);
-                        if(ctrl.focus()){
-                            // close it first to clear the search box...
-                            $el.select2("close");
-                            $el.select2("open");
-                        }
-                    });
-                } else {
-                    // this doesn't actually set the value for ajax autoadd
-                    $el.val(ctrl.value().id).trigger("change");
-                    // trigger select2 dropdown repositioning
-                    $(window).scroll();
-                }
-
-            } else {
-                alert(gettext("Missing JavaScript dependencies detected"));
-            }
-        };
-    }
-};
-
-
 var ProductQuickSelect = {
     view: function(ctrl, attrs) {
         const {store} = attrs;
@@ -192,6 +195,7 @@ var ProductQuickSelect = {
             name: "product-quick-select",
             model: "shuup.product",
             attrs: {
+                placeholder: gettext("Search product by name, SKU, or barcode"),
                 ajax: {
                     processResults: function (data) {
                         const {quickAdd} = store.getState();
@@ -214,12 +218,8 @@ var ProductQuickSelect = {
             focus: () => store.getState().quickAdd.autoAdd && store.getState().quickAdd.product.id,
             onchange: (product) => {
                 const {quickAdd} = store.getState();
-                if(product && product.length) {
-                    if(quickAdd.autoAdd) {
-                        store.dispatch(addProduct(product[0]));
-                    } else {
-                        store.dispatch(setQuickAddProduct(product[0]));
-                    }
+                if(product && product.length && !quickAdd.product.id) {
+                    store.dispatch(addProduct(product[0]));
                 }
             }
         });
@@ -228,20 +228,56 @@ var ProductQuickSelect = {
 
 export function orderLinesView(store, isCreating) {
     const {lines, shop, quickAdd} = store.getState();
-    // This is needed to make select work when going back from confirmation view
-    store.dispatch(updateTotals(store.getState));
+    let infoText = gettext("If your product prices vary based on customer, you might want to select customer first.");
+    if(shop.selected.pricesIncludeTaxes) {
+        infoText += " " + interpolate(gettext("All prices are in %s and include taxes."), [shop.selected.currency]);
+    } else {
+        infoText += " " + interpolate(gettext("All prices are in %s. Taxes not included"), [shop.selected.currency]);
+    }
     return m("div", [
-        m("p", gettext("If your product prices vary based on customer, you might want to select customer first.")),
-        m("p", interpolate(gettext("All prices are in %s currency."), [shop.selected.currency])),
-        m(
-            "p",
-            shop.selected.pricesIncludeTaxes ? gettext("All prices include taxes.") : gettext("Taxes not included.")
-        ),
+        m("p", [
+            m("i.fa.fa-info-circle"),
+            m("span", " " + infoText)
+        ]),
+        m("br"),
+        m("br"),
         m("div.list-group", {id: "lines"}, renderOrderLines(store, shop.selected, lines)),
         m("hr"),
         m("div.row", [
+            m("div.col-sm-6", {id: "quick-add"}, [
+                m.component(ProductQuickSelect, {store: store}),
+                m("button.btn.text-success", {
+                    href: "#",
+                    onclick: (e) => {
+                        e.preventDefault();
+                        BrowseAPI.openBrowseWindow({
+                            kind: "product",
+                            filter: {"shop": shop.id},
+                            onSelect: (obj) => {
+                                store.dispatch(addProduct(obj));
+                            }
+                        });
+                    }
+                }, m("i.fa.fa-search")),
+                m.component(HelpPopover, {
+                    title: gettext("Product Quick Adder"),
+                    content: gettext("Search for products to add to the order by searching by name, SKU, or barcode or click the magnifying glass for more fine-grained filtering.")
+                }, m("i.fa.fa-search")),
+                m("p", [
+                    m("input", {
+                        name: "auto-add",
+                        type: "checkbox",
+                        checked: quickAdd.autoAdd,
+                        onchange: function() {
+                            store.dispatch(clearQuickAddProduct());
+                            store.dispatch(setAutoAdd(this.checked));
+                        }
+                    }),
+                    m("span.quick-add-check-text", " " + gettext("Automatically add selected product"))
+                ])
+            ]),
             m("div.col-sm-6",
-                m("button.btn.text-success" + (isCreating ? ".disabled": ""), {
+                m("button.btn.text-success.pull-right" + (isCreating ? ".disabled": ""), {
                     id: "add-line",
                     disabled: isCreating,
                     onclick: () => {
@@ -253,41 +289,7 @@ export function orderLinesView(store, isCreating) {
                         }
                     }
                 }, m("i.fa.fa-plus"), " " + gettext("Add new line"))
-            ),
-            m("div.col-sm-6", {id: "quick-add"}, [
-                m("fieldset", [
-                    m("legend", gettext("Quick add product line")),
-                    m.component(ProductQuickSelect, {store: store}),
-                    m("button.btn.text-success" + (isCreating ? ".disabled": ""), {
-                        id: "add-product",
-                        disabled: isCreating,
-                        onclick: () => {
-                            if (quickAdd.product.id){
-                                store.dispatch(addProduct(quickAdd.product));
-                                store.dispatch(clearQuickAddProduct());
-                            }
-                        }
-                    }, m("i.fa.fa-plus")),
-                    m("button.btn.text-success" + (isCreating ? ".disabled": ""), {
-                        id: "clear-quick-add",
-                        disabled: isCreating,
-                        onclick: () => {
-                            store.dispatch(clearQuickAddProduct());
-                        }
-                    }, m("i.fa.fa-trash")),
-                    m("span.help-block", gettext("Search product by name, SKU, or barcode and press button to add product line.")),
-                    m("input", {
-                        name: "auto-add",
-                        type: "checkbox",
-                        checked: quickAdd.autoAdd,
-                        onchange: function() {
-                            store.dispatch(clearQuickAddProduct());
-                            store.dispatch(setAutoAdd(this.checked));
-                        }
-                    }),
-                    m("span.quick-add-check-text", " " + gettext("Automatically add selected product")),
-                ])
-            ]),
-        ]),
+            )
+        ])
     ]);
 }
