@@ -20,6 +20,8 @@ Localization
 Admin
 ~~~~~
 
+- Order creator usability improvements to customer selection
+  and quick product addition.
 - Show help text as popovers
 - Add admin walkthrough
 
