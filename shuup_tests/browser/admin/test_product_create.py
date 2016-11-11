@@ -12,6 +12,7 @@ import pytest
 from django.core.urlresolvers import reverse
 from django.utils.translation import activate
 
+from shuup import configuration
 from shuup.admin.signals import object_created
 from shuup.core.models import Product
 from shuup.testing.browser_utils import click_element, wait_until_appeared
@@ -33,6 +34,7 @@ def test_product_create(browser, admin_user, live_server, settings):
     get_default_product_type()
     get_default_sales_unit()
     get_default_tax_class()
+    configuration.set(None, "shuup_product_tour_complete", True)
     object_created.connect(_add_custom_product_created_message, sender=Product, dispatch_uid="object_created_signal_test")
     initialize_admin_browser_test(browser, live_server, settings)
 

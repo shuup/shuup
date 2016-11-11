@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-05 01:06+0000\n"
+"POT-Creation-Date: 2016-11-10 22:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -182,6 +182,9 @@ msgstr ""
 msgid "User %(bind_user)s already has a contact"
 msgstr ""
 
+msgid "Language"
+msgstr ""
+
 msgid "Gender"
 msgstr ""
 
@@ -201,9 +204,6 @@ msgid "Company: Members"
 msgstr ""
 
 msgid "Select Language"
-msgstr ""
-
-msgid "Language"
 msgstr ""
 
 msgid "Contact Group"
@@ -1011,8 +1011,8 @@ msgid "Shop name"
 msgstr ""
 
 msgid ""
-"Show storefront products with tax pre-calculated into the price. Note this "
-"behavior can be overridden for customer groups."
+"This option defines whether product prices entered in admin include taxes. "
+"Note this behavior can be overridden with customer group pricing."
 msgstr ""
 
 msgid "Shop Owner Name"
@@ -1270,6 +1270,9 @@ msgstr ""
 msgid "Hello"
 msgstr ""
 
+msgid "Show Tour"
+msgstr ""
+
 msgid "Log out"
 msgstr ""
 
@@ -1283,6 +1286,20 @@ msgid "Category Image"
 msgstr ""
 
 msgid "* Products that has this category as a primary category."
+msgstr ""
+
+msgid "Add a new product category"
+msgstr ""
+
+msgid ""
+"You are adding a new product category. When people search your store, they "
+"can find your product under the category you choose for it, like the aisle "
+"signs at the supermarket."
+msgstr ""
+
+msgid ""
+"You can add a name, description, picture or anything you want to make it "
+"stand out."
 msgstr ""
 
 msgid "General information"
@@ -1355,6 +1372,20 @@ msgstr ""
 msgid "Shuup %(version)s"
 msgstr ""
 
+msgid ""
+"This is the dashboard for your store. It’s like the flight deck for your "
+"ecommerce spaceship. You can control everything from here."
+msgstr ""
+
+msgid ""
+"Check out your shoppers’ info, add more products or categories, setup "
+"marketing campaigns, see orders and sales stats, and track the money you’ve "
+"made."
+msgstr ""
+
+msgid "Every setting you could possibly need is in here."
+msgstr ""
+
 msgid "Table Columns"
 msgstr ""
 
@@ -1363,6 +1394,12 @@ msgstr ""
 
 msgid ""
 "You're almost done! Complete the following steps to sell your products online"
+msgstr ""
+
+msgid "Time to setup your shop."
+msgstr ""
+
+msgid "We just need a few details to begin."
 msgstr ""
 
 msgid "Date"
@@ -1579,6 +1616,20 @@ msgstr ""
 msgid "This product is currently not orderable."
 msgstr ""
 
+msgid "You are adding a product."
+msgstr ""
+
+msgid ""
+"To make it stand out, give it an awesome description and picture. This is "
+"what will help your shoppers learn about your products. It will also help "
+"shoppers find them in the store and on the web."
+msgstr ""
+
+msgid ""
+"You can set its price or size and many other things in the option boxes for "
+"each product."
+msgstr ""
+
 msgid "Cross-sells"
 msgstr ""
 
@@ -1748,6 +1799,9 @@ msgstr ""
 
 msgid ""
 "Please fill out the following information to get your store up and running"
+msgstr ""
+
+msgid "Click here for help"
 msgstr ""
 
 msgid "Setup can be continued later from the admin dashboard"

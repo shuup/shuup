@@ -63,5 +63,12 @@
             }());
         </script>
         {% endif %}
+        {% if tour_complete is defined and not tour_complete %}
+        <script>
+            (function(){
+                $.tour({tourKey: "{{ tour_key }}"});
+            }());
+        </script>
+        {% endif %}
     </body>
 </html>

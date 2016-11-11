@@ -24,6 +24,7 @@ from shuup.admin.views.home import HomeView
 from shuup.admin.views.menu import MenuView
 from shuup.admin.views.search import SearchView
 from shuup.admin.views.select import MultiselectAjaxView
+from shuup.admin.views.tour import TourView
 from shuup.admin.views.wizard import WizardView
 from shuup.utils.i18n import javascript_catalog_all
 
@@ -43,6 +44,7 @@ def get_urls():
         admin_url(r'^$', DashboardView.as_view(), name='dashboard'),
         admin_url(r'^home/$', HomeView.as_view(), name='home'),
         admin_url(r'^wizard/$', WizardView.as_view(), name='wizard'),
+        admin_url(r'^tour/$', TourView.as_view(), name='tour'),
         admin_url(r'^search/$', SearchView.as_view(), name='search'),
         admin_url(r'^select/$', MultiselectAjaxView.as_view(), name='select'),
         admin_url(r'^menu/$', MenuView.as_view(), name='menu'),

@@ -19,6 +19,7 @@ module.exports = {
             "js/materialize.js",
             "js/main-menu.js",
             "js/search.js",
+            "js/popover.js",
             "js/tooltip.js",
             "js/timesince.js",
             "js/messages.js",
@@ -30,7 +31,8 @@ module.exports = {
             "js/jquery.form-submission-attributes.polyfill.js",
             "js/datetimepicker.js",
             "js/language-changer.js",
-            "js/select.js"
+            "js/select.js",
+            "js/tour.js"
         ]
     },
     "contact-group": {
