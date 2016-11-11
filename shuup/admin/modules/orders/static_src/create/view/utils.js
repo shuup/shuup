@@ -155,6 +155,8 @@ export const Select2 = {
 
 export const HelpPopover = {
     view: function(ctrl, attrs) {
+        return m("span");
+        /*
         return m("span.help-popover-btn", [
             m("a.btn", {
                 role: "button",
@@ -165,6 +167,7 @@ export const HelpPopover = {
                 m("i.fa.fa-question-circle")
             ])
         ]);
+        */
     },
     config: function(attrs) {
         return function(element, isInitialized) {
