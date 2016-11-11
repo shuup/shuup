@@ -228,8 +228,6 @@ var ProductQuickSelect = {
 
 export function orderLinesView(store, isCreating) {
     const {lines, shop, quickAdd} = store.getState();
-    // This is needed to make select work when going back from confirmation view
-    store.dispatch(updateTotals(store.getState));
     let infoText = gettext("If your product prices vary based on customer, you might want to select customer first.");
     if(shop.selected.pricesIncludeTaxes) {
         infoText += " " + interpolate(gettext("All prices are in %s and include taxes."), [shop.selected.currency])
