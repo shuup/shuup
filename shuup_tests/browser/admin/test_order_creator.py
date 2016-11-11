@@ -98,9 +98,11 @@ def _test_customer_data(browser, person):
     assert browser.find_by_css("input[name='order-for-company']").first.checked == False
     assert not browser.find_by_css("input[name='billing-tax_number']").first['required']
     browser.find_by_css("input[name=ship-to-billing-address]").check()
+    assert browser.find_by_css("input[name=ship-to-billing-address]").first.checked
     browser.find_by_css("input[name='order-for-company']").check()
-    wait_until_condition(
-        browser, lambda x: x.find_by_css("input[name='billing-tax_number']").first['required'])
+    assert browser.find_by_css("input[name='order-for-company']").first.checked
+    #wait_until_condition(
+    #    browser, lambda x: x.find_by_css("input[name='billing-tax_number']").first['required'])
     assert len(browser.find_by_css("input[name='shipping-name']")) == 0, "shipping address column is hidden"
 
     browser.find_by_css("input[name='order-for-company']").uncheck()
