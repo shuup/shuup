@@ -30,8 +30,10 @@
             <label class="control-label" for="log-message">{% trans %}Message{% endtrans %}</label>
             <textarea class="form-control" id="log-message" type="text"></textarea>
         </div>
-        <div class="form-group text-center">
-            <button class="btn btn-info" href="#">{% trans %}Add to Log{% endtrans %}</button>
+        <div class="row">
+            <div class="input-actions">
+                <button class="btn btn-info" href="#">{% trans %}Add to Log{% endtrans %}</button>
+            </div>
         </div>
         {% csrf_token %}
     </form>

@@ -1,5 +1,5 @@
-<div id="order-shipments" class="table-responsive">
-    <table class="table table-striped{% if not shipments %} hidden{% endif %}">
+<div id="order-shipments" class="table-responsive {% if not shipments %} hidden{% endif %}">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>{% trans %}Supplier{% endtrans %}</th>
@@ -29,12 +29,12 @@
             {% endfor %}
         </tbody>
     </table>
-    {% if not shipments %}
-        <div id="no-shipments-text">
-            <p>{% trans %}No shipments have been created yet.{% endtrans %}</p>
-        </div>
-    {% endif %}
 </div>
+{% if not shipments %}
+    <div id="no-shipments-text">
+        <p>{% trans %}No shipments have been created yet.{% endtrans %}</p>
+    </div>
+{% endif %}
 
 {% block extra_js %}
 <script>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-10 22:56+0000\n"
+"POT-Creation-Date: 2016-11-12 01:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -405,6 +405,12 @@ msgstr ""
 msgid "Show orders"
 msgstr ""
 
+msgid "Statuses"
+msgstr ""
+
+msgid "List Statuses"
+msgstr ""
+
 msgid "Outstanding Orders"
 msgstr ""
 
@@ -462,13 +468,10 @@ msgstr ""
 msgid "Payments"
 msgstr ""
 
-msgid "Order Contents"
+msgid "Shipments"
 msgstr ""
 
 msgid "Log Entries"
-msgstr ""
-
-msgid "Shipments"
 msgstr ""
 
 msgid "Admin comment/notes"
@@ -645,6 +648,18 @@ msgstr ""
 
 #, python-format
 msgid "Shipment %s has been deleted."
+msgstr ""
+
+msgid "Order Statuses"
+msgstr ""
+
+msgid "Public Name"
+msgstr ""
+
+msgid "Role"
+msgstr ""
+
+msgid "Default"
 msgstr ""
 
 msgid "Permission Groups"
@@ -1423,10 +1438,19 @@ msgstr ""
 msgid "Save comment"
 msgstr ""
 
+msgid "Comment saved."
+msgstr ""
+
 msgid "There was an error updating the admin comment."
 msgstr ""
 
 msgid "Description"
+msgstr ""
+
+msgid "No payments have been created yet."
+msgstr ""
+
+msgid "Order Contents"
 msgstr ""
 
 msgid "Text"
@@ -1466,6 +1490,9 @@ msgid "Use the input below to add new log entries."
 msgstr ""
 
 msgid "Add to Log"
+msgstr ""
+
+msgid "Log entry added."
 msgstr ""
 
 msgid "There was an error adding the log entry."
@@ -1533,7 +1560,7 @@ msgstr ""
 msgid "Ship All"
 msgstr ""
 
-msgid "Details & Status"
+msgid "Details"
 msgstr ""
 
 msgid "Order Number"
@@ -1564,6 +1591,9 @@ msgid "Customer Comment"
 msgstr ""
 
 msgid "Tracking codes"
+msgstr ""
+
+msgid "Address Information"
 msgstr ""
 
 msgid "Error!"

@@ -1,5 +1,5 @@
 <div class="hidden-xs">
-    <table class="table table-striped table-bordered">
+    <table class="table table-striped {% if not payments %} hidden {% endif %}">
         <thead>
         <tr>
             <th>{% trans %}Date{% endtrans %}</th>
@@ -20,7 +20,7 @@
         </tbody>
     </table>
 </div>
-<div class="visible-xs mobile-list-group">
+<div class="visible-xs mobile-list-group {% if not payments %} hidden {% endif %}">
     <ul class="list-group">
         {% for payment in payments %}
             <li class="list-group-item">
@@ -38,3 +38,8 @@
         {% endfor %}
     </ul>
 </div>
+{% if not payments %}
+    <div id="no-payments-text">
+        <p>{% trans %}No payments have been created yet.{% endtrans %}</p>
+    </div>
+{% endif %}
