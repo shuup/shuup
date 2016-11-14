@@ -49,6 +49,7 @@ def test_product_edit_view_works_at_all(rf, admin_user):
         with admin_only_urls():
             view_func = ProductEditView.as_view()
             response = view_func(request, pk=product.pk)
+            response.render()
             assert (product.sku in response.rendered_content)  # it's probable the SKU is there
             response = view_func(request, pk=None)  # "new mode"
             assert response.rendered_content  # yeah, something gets rendered

@@ -31,6 +31,7 @@ def test_default_language_finnish():
     shop.save()
 
     shop_form = ShopBaseForm(instance=shop, languages=settings.LANGUAGES)
+    assert shop_form.languages[0] == "fi"
     data = get_form_data(shop_form, prepared=True)
     assert data.get("name__en") == test_name_en
     assert not data.get("name__fi")

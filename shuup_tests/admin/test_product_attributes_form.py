@@ -36,7 +36,9 @@ def test_product_attributes_form():
 
     # English is missing on purpose from the languages list; it'll still be available
     # for `genre` as it has an extant value.
-    paf = ProductAttributesForm(product=product, languages=("fi", "sv"))
+    paf = ProductAttributesForm(product=product, languages=("fi", "sv"), default_language="sv")
+    assert paf.languages[0] == "sv"
+
     assert compare_partial_dicts(paf.initial, {  # Check that things get loaded.
         "bogomips": 6400,
         "genre__fi": "Kauhu",
@@ -53,7 +55,7 @@ def test_product_attributes_form():
         "awesome": "True",
         "important_datetime": make_aware(datetime.datetime(2000, 1, 1, 1, 2, 3), utc)
     })
-    paf = ProductAttributesForm(product=product, languages=("fi", "sv"), data=form_data)
+    paf = ProductAttributesForm(product=product, languages=("fi", "sv"), default_language="sv", data=form_data)
     paf.full_clean()
     assert not paf.errors
     paf.save()
