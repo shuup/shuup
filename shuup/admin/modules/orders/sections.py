@@ -23,18 +23,18 @@ class PaymentOrderSection(Section):
 
     @staticmethod
     def visible_for_object(order):
-        return order.payments.count() > 0
+        return True
 
     @staticmethod
     def get_context_data(order):
         return order.payments.all()
 
 
-class ContentsOrderSection(Section):
-    identifier = "contents"
-    name = _("Order Contents")
-    icon = "fa-file-text"
-    template = "shuup/admin/orders/_order_contents.jinja"
+class ShipmentSection(Section):
+    identifier = "shipments"
+    name = _("Shipments")
+    icon = "fa-truck"
+    template = "shuup/admin/orders/_order_shipments.jinja"
     order = 2
 
     @staticmethod
@@ -43,7 +43,7 @@ class ContentsOrderSection(Section):
 
     @staticmethod
     def get_context_data(order):
-        return None
+        return Shipment.objects.filter(order=order).order_by("-created_on").all()
 
 
 class LogEntriesOrderSection(Section):
@@ -62,22 +62,6 @@ class LogEntriesOrderSection(Section):
     def get_context_data(order):
         return OrderLogEntry.objects.filter(target=order).order_by("-created_on").all()[:12]
         # TODO: We're currently trimming to 12 entries, probably need pagination
-
-
-class ShipmentSection(Section):
-    identifier = "shipments"
-    name = _("Shipments")
-    icon = "fa-check-circle"
-    template = "shuup/admin/orders/_order_shipments.jinja"
-    order = 3
-
-    @staticmethod
-    def visible_for_object(order):
-        return True
-
-    @staticmethod
-    def get_context_data(order):
-        return Shipment.objects.filter(order=order).order_by("-created_on").all()
 
 
 class AdminCommentSection(Section):

@@ -221,5 +221,5 @@ def _test_confirm(browser):
     assert len(browser.find_by_css("table tbody tr")) == 5, "2 line items, 2 methods, 1 total line shown in confirmation table"
     # click confirm
     click_element(browser, ".btn-success")
-    wait_until_appeared(browser, "#details-status-section")
+    wait_until_appeared(browser, "#details-section")
     assert Order.objects.count() == 1, "order created"

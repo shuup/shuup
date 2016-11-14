@@ -31,6 +31,7 @@
                 success: function(data){
                     prependRow(data);
                     $("#log-message").val("");
+                    window.Messages.enqueue({tags: "success", text: "{% trans %}Log entry added.{% endtrans %}"});
                 },
                 error: function(){
                     alert("{% trans %}There was an error adding the log entry.{% endtrans %}")
