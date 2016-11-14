@@ -16,7 +16,7 @@ from shuup.admin.views.wizard import WizardView
 from shuup.apps.provides import override_provides
 from shuup.core.models import (
     CustomCarrier, CustomPaymentProcessor, PaymentMethod, ServiceProvider,
-    ShippingMethod, ShopStatus, TaxClass
+    ShippingMethod, Shop, ShopStatus, TaxClass
 )
 from shuup.testing.factories import get_default_shop, get_default_tax_class
 from shuup.testing.soup_utils import extract_form_fields
@@ -53,7 +53,7 @@ def test_shop_wizard_pane(rf, admin_user, settings):
     settings.SHUUP_SETUP_WIZARD_PANE_SPEC = [
         "shuup.admin.modules.shops.views:ShopWizardPane"
     ]
-    shop = get_default_shop()
+    shop = Shop.objects.create()
     assert not shop.contact_address
     assert not TaxClass.objects.exists()
     fields = _extract_fields(rf, admin_user)
@@ -61,8 +61,10 @@ def test_shop_wizard_pane(rf, admin_user, settings):
     response = WizardView.as_view()(request)
     # fields are missing
     assert response.status_code == 400
-
+    fields["shop-public_name__fi"] = "test shop"
     fields["shop-currency"] = "USD"
+    fields["address-name"] = "TEST"
+    fields["address-city"] = "TEST"
     fields["address-region_code"] = "CA"
     fields["address-street"] = "test"
     fields["address-country"] = "US"
@@ -71,6 +73,9 @@ def test_shop_wizard_pane(rf, admin_user, settings):
     response = WizardView.as_view()(request)
     assert response.status_code == 200
     shop.refresh_from_db()
+    shop.set_current_language("fi")
+    assert shop.name == "test shop"
+    assert shop.public_name == "test shop"
     assert shop.contact_address
     assert shop.currency == "USD"
     assert TaxClass.objects.exists()

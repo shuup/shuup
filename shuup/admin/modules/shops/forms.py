@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms.widgets import MediaChoiceWidget
@@ -67,6 +68,15 @@ class ShopWizardForm(MultiLanguageModelForm):
             required=True,
             label=_("Currency")
         )
+
+    def save(self):
+        obj = super(ShopWizardForm, self).save()
+        for language in settings.LANGUAGES:
+            public_name = self.cleaned_data.get("public_name__%s" % language[0])
+            if public_name:
+                obj.set_current_language(language[0])
+                obj.name = obj.public_name
+            obj.save()
 
 
 class ShopAddressWizardForm(forms.ModelForm):
