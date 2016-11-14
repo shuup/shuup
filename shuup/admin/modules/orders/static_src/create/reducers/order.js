@@ -11,7 +11,7 @@ import _ from "lodash";
 
 function updateTotals(state, {payload}) {
     const updates = {};
-    const {lines, methods} = payload();
+    const {lines} = payload();
     var total = 0;
     _.map(lines, (line) => {
         total += line.total;

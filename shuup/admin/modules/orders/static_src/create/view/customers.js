@@ -9,7 +9,7 @@
 import {get} from "../api";
 import {clearExistingCustomer, retrieveCustomerData, setAddressProperty,
     setAddressSavingOption, setShipToBillingAddress, setIsCompany, showCustomerModal, retrieveCustomerDetails} from "../actions";
-import {ADDRESS_FIELDS, selectBox, contentBlock, infoRow, table, modal} from "./utils";
+import {ADDRESS_FIELDS, selectBox, contentBlock, infoRow, table, modal, Select2, HelpPopover} from "./utils";
 import BrowseAPI from "BrowseAPI";
 
 function removeWarningBlocks(parentElement){
@@ -43,12 +43,17 @@ function buildWarningBlock(store, parentElement, fieldName, customerName, custom
 function renderAddress(store, shop, customer, address, addressType) {
     return _(ADDRESS_FIELDS).map((field) => {
         const isRequired = (field.key === "tax_number" && customer.isCompany ? true : field.required);
+        const helpText = field.helpText.replace("%s", gettext(addressType));
         if (field.key === "country") {
             return m("div.form-group" + (isRequired ? " required-field" : ""), [
                 m("label.control-label", field.label),
                 selectBox(_.get(address, field.key, ""), function () {
                     store.dispatch(setAddressProperty(addressType, field.key, this.value));
-                }, shop.countries, "id", "name", addressType + "-" + field.key)
+                }, shop.countries, "id", "name", addressType + "-" + field.key),
+                m.component(HelpPopover, {
+                    title: field.label,
+                    content: helpText
+                })
             ]);
         }
         var onchange = function () {
@@ -69,14 +74,18 @@ function renderAddress(store, shop, customer, address, addressType) {
         }
         if (window.REGIONS) {
             const country = _.get(address, "country", "");
-            let regionsData = window.REGIONS[country];
+            const regionsData = window.REGIONS[country];
             if (regionsData) {
                 if (field.key === "region_code") {
                     return m("div.form-group" + (isRequired ? " required-field" : ""), [
                         m("label.control-label", field.label),
                         selectBox(
                             _.get(address, field.key, ""), onchange, regionsData,
-                            "code", "name", addressType + "-" + field.key, {code: "", name: "---------"})
+                            "code", "name", addressType + "-" + field.key, {code: "", name: "---------"}),
+                        m.component(HelpPopover, {
+                            title: field.label,
+                            content: helpText
+                        })
                     ]);
                 }
                 if (field.key === "region") {
@@ -102,9 +111,90 @@ function renderAddress(store, shop, customer, address, addressType) {
                 required: isRequired,
                 value: _.get(address, field.key, ""),
                 onchange: onchange
+            }),
+            m.component(HelpPopover, {
+                title: field.label,
+                content: helpText
             })
         ]);
     }).value();
+}
+
+
+function renderCustomerAddressView(store, shop, customer) {
+    return [
+        m("hr"),
+        m("div.form-group", [
+            m("div.inline-checkbox", [
+                m("label", [
+                    m("input", {
+                        name: "save-address",
+                        type: "checkbox",
+                        checked: customer.saveAddress,
+                        onchange: function() {
+                            store.dispatch(setAddressSavingOption(this.checked));
+                        }
+                    }),
+                    " " + gettext("Save customer details while creating order")
+                ]),
+                m.component(HelpPopover, {
+                    content: gettext("Checking this box will save entered customer data to your contacts list.")
+                }),
+            ]),
+            m("div.inline-checkbox", [
+                m("label", [
+                    m("input", {
+                        name: "ship-to-billing-address",
+                        type: "checkbox",
+                        checked: customer.shipToBillingAddress,
+                        onchange: function() {
+                            store.dispatch(setShipToBillingAddress(this.checked));
+                        }
+                    }),
+                    " " + gettext("Ship to billing address")
+                ]),
+                m.component(HelpPopover, {
+                    content: gettext("Checking this will make the shipping address the same as the billing address.")
+                }),
+            ]),
+            m("div.inline-checkbox", [
+                m("label", [
+                    m("input", {
+                        name: "order-for-company",
+                        type: "checkbox",
+                        checked: customer.isCompany,
+                        onchange: function() {
+                            store.dispatch(setIsCompany(this.checked));
+                        }
+                    }),
+                    " " + gettext("Order for company")
+                ]),
+                m.component(HelpPopover, {
+                    content: gettext("Check this if the order is for a company or business with a tax ID.")
+                })
+            ])
+        ]),
+        m("hr"),
+        m("br"),
+        m("br"),
+        m("div.row", [
+            m("div.col-sm-6",
+                m("fieldset", [
+                    m("legend", gettext("Billing Address")),
+                    m("br"),
+                    renderAddress(store, shop, customer, customer.billingAddress, "billing")
+                ])
+            ),
+            (!customer.shipToBillingAddress ?
+                m("div.col-sm-6",
+                    m("fieldset", [
+                        m("legend", gettext("Shipping Address")),
+                        m("br"),
+                        renderAddress(store, shop, customer, customer.shippingAddress, "shipping")
+                    ])
+                ) : null)
+        ])
+    ];
 }
 
 function customerDetailView(customerInfo) {
@@ -165,6 +255,68 @@ function recentOrderView(recentOrders) {
     );
 }
 
+function renderCustomerSelectionView(store, customer) {
+    return [
+        m("div.row", [
+            m("div.col-lg-6.col-md-12", {id: "customer-search"}, [
+                m.component(Select2, {
+                    name: "customer-search",
+                    model: "shuup.contact",
+                    onchange: (obj) => {
+                        if(obj.length > 0) {
+                            store.dispatch(retrieveCustomerData({id: obj[0].id}));
+                        }
+                    },
+                    clear: true,
+                    attrs: {
+                        placeholder: gettext("Search by name or email")
+                    }
+                }),
+                m("a.btn.text-success", {
+                    id: "select-existing-customer",
+                    onclick: () => {
+                        BrowseAPI.openBrowseWindow({
+                            kind: "contact",
+                            clearable: true,
+                            onSelect: (obj) => {
+                                store.dispatch(retrieveCustomerData({id: obj.id}));
+                            }
+                        });
+                    }
+                }, m("i.fa.fa-search")),
+                m("button.btn.text-success" + (!customer.id ? ".disabled": ""), {
+                    id: "clear-customer",
+                    disabled: !customer.id,
+                    onclick: () => {
+                        store.dispatch(clearExistingCustomer());
+                    }
+                }, m("i.fa.fa-trash")),
+                m.component(HelpPopover, {
+                    title: gettext("Customer Search"),
+                    content: gettext("Search for existing customers by searching by name or email or click the magnifying glass for more fine-grained filtering. Clear the search filter to create an order for a new customer.")
+                })
+            ])
+        ]),
+        m("div.row", [
+            m("div.col-lg-6.col-md-12", {id: "customer-description"}, [
+                (customer.id?
+                m("p.view-details-link", [
+                    m("div", gettext("Customer") + ": " + customer.name),
+                    m("a[href='#customer-detail-view']", {
+                        onclick: (e) => {
+                            e.preventDefault();
+                            store.dispatch(retrieveCustomerDetails({id: customer.id})).then(() => {
+                                store.dispatch(showCustomerModal(true));
+                            });
+                        }
+                    }, gettext("View Details"))
+                ]) : m("p", gettext("A new customer will be created based on billing address.")))
+            ])
+        ]),
+        m("br")
+    ];
+}
+
 export function renderCustomerDetailModal(store) {
     const {customerDetails} = store.getState();
 
@@ -192,100 +344,9 @@ export function renderCustomerDetailModal(store) {
 
 export function customerSelectView(store) {
     const {customer, order, shop} = store.getState();
-    return m("div.form-group", [
-        ((!customer.id && !(order.id === null)) ? m("p.text-danger", gettext("Warning: No customer account is currently associated with this order.")) : null),
-        (!customer.id ? m("p" + (!(order.id === null)? ".text-danger": ""), gettext("A new customer will be created based on billing address.")) : null),
-        m("br"),
-        m("div.clearfix", [
-            m("label.control-label", gettext("Customer")),
-            m("div.btn-group", [
-                m("button.btn.btn-default" + (customer.id ? " active" : ""), {
-                    id: "select-existing-customer",
-                    onclick: () => {
-                        BrowseAPI.openBrowseWindow({
-                            kind: "contact",
-                            clearable: true,
-                            onSelect: (obj) => {
-                                store.dispatch(retrieveCustomerData({id: obj.id}));
-                            }
-                        });
-                    }
-                    }, (customer.id ? [m("i.fa.fa-user"), " ", customer.name] : gettext("Select Existing Customer"))
-                ),
-                m("button.btn.btn-default" + (!customer.id ? " active" : ""), {
-                    id: "new-customer",
-                    onclick: () => {
-                        store.dispatch(clearExistingCustomer());
-                    }
-                    }, [m("i.fa.fa-user"), " ", gettext("New Customer")]
-                )
-            ])
-        ]),
-        m("br"),
-        m("div.clearfix " + (!customer.id? " hidden": ""), [
-            m("label.control-label"),
-            m("a[href='#customer-detail-view']", {
-                onclick: (e) => {
-                    e.preventDefault();
-                    store.dispatch(retrieveCustomerDetails({id: customer.id})).then(() => {
-                        store.dispatch(showCustomerModal(true));
-                    });
-                }
-            }, gettext("View Details"))
-        ]),
-        m("hr"),
-        m("label", [
-            m("input", {
-                name: "save-address",
-                type: "checkbox",
-                checked: customer.saveAddress,
-                onchange: function() {
-                    store.dispatch(setAddressSavingOption(this.checked));
-                }
-            }),
-            " " + gettext("Save customer details while creating order")
-        ]),
-        m("label", [
-            m("input", {
-                name: "ship-to-billing-address",
-                type: "checkbox",
-                checked: customer.shipToBillingAddress,
-                onchange: function() {
-                    store.dispatch(setShipToBillingAddress(this.checked));
-                }
-            }),
-            " " + gettext("Ship to billing address")
-        ]),
-        m("label", [
-            m("input", {
-                name: "order-for-company",
-                type: "checkbox",
-                checked: customer.isCompany,
-                onchange: function() {
-                    store.dispatch(setIsCompany(this.checked));
-                }
-            }),
-            " " + gettext("Order for company")
-        ]),
-        m("br"),
-        m("br"),
-        m("hr"),
-        m("div.row", [
-            m("div.col-sm-6",
-                m("fieldset", [
-                    m("legend", gettext("Billing Address")),
-                    m("br"),
-                    renderAddress(store, shop, customer, customer.billingAddress, "billing")
-                ])
-            ),
-            (!customer.shipToBillingAddress ?
-                m("div.col-sm-6",
-                    m("fieldset", [
-                        m("legend", gettext("Shipping Address")),
-                        m("br"),
-                        renderAddress(store, shop, customer, customer.shippingAddress, "shipping")
-                    ])
-                ) : null)
-        ])
+    return m("div", [
+        ((!customer.id && order.id !== null) ? m("p.text-danger", gettext("Warning: No customer account is currently associated with this order.")) : null),
+        renderCustomerSelectionView(store, customer),
+        renderCustomerAddressView(store, shop, customer, order)
     ]);
 }

@@ -20,6 +20,8 @@ Localization
 Admin
 ~~~~~
 
+- Order creator usability improvements to customer selection
+  and quick product addition.
 - Ensure `PARLER_DEFAULT_LANGUAGE_CODE` is the first tab in multilingual tab forms
 - Show help text as popovers
 - Add admin walkthrough
