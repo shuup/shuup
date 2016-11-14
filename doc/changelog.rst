@@ -21,6 +21,8 @@ Localization
 Admin
 ~~~~~
 
+- Show more details when picking line to refund
+
 Addons
 ~~~~~~
 

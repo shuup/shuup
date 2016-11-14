@@ -25,7 +25,7 @@ from shuup.utils.money import Money
 
 
 class RefundForm(forms.Form):
-    line_number = forms.ChoiceField(label=_("Line number"), required=False)
+    line_number = forms.ChoiceField(label=_("Line"), required=False)
     quantity = forms.DecimalField(required=False, min_value=0, initial=0, label=_("Quantity"))
     amount = forms.DecimalField(
         required=False, initial=0, label=_("Amount"), help_text=_("Total incl. tax to refund"))
@@ -114,13 +114,17 @@ class OrderCreateRefundView(UpdateView):
         kwargs.pop("instance")
         return kwargs
 
-    def _get_refundable_line_numbers(self):
-        return [
-            line.ordering for line in self.object.lines.all()
-            if line.max_refundable_amount and line.type != OrderLineType.REFUND]
+    def _get_line_text(self, line):
+        text = "line %s: %s" % (line.ordering + 1, line.text)
+        if line.sku:
+            text += " (SKU %s)" % (line.sku)
+        return text
 
     def _get_line_number_choices(self):
-        return [("", "---")] + [((i), (i+1)) for i in self._get_refundable_line_numbers()]
+        return [("", "---")] + [
+            (line.ordering, self._get_line_text(line)) for line in self.object.lines.all()
+            if line.max_refundable_amount and line.type != OrderLineType.REFUND
+        ]
 
     def get_form(self, form_class):
         formset = super(OrderCreateRefundView, self).get_form(form_class)

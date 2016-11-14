@@ -594,7 +594,7 @@ msgstr ""
 msgid "Order marked as paid."
 msgstr ""
 
-msgid "Line number"
+msgid "Line"
 msgstr ""
 
 msgid "Quantity"
