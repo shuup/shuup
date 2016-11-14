@@ -21,6 +21,7 @@ Localization
 Admin
 ~~~~~
 
+- Fix ability to add multiple refund lines at once
 - Show more details when picking line to refund
 
 Addons
