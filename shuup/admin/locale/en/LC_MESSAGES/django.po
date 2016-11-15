@@ -597,16 +597,36 @@ msgstr ""
 msgid "Line"
 msgstr ""
 
+msgid ""
+"The line to refund. To refund an amount not associated with any line, select "
+"'Refund arbitrary amount'."
+msgstr ""
+
 msgid "Quantity"
+msgstr ""
+
+msgid "The number of units to refund."
+msgstr ""
+
+msgid "Line Text/Comment"
+msgstr ""
+
+msgid ""
+"The text describing the nature of the refund and/or the reason for the "
+"refund."
 msgstr ""
 
 msgid "Amount"
 msgstr ""
 
-msgid "Total incl. tax to refund"
+msgid "The amount including tax to refund."
 msgstr ""
 
 msgid "Restock products"
+msgstr ""
+
+msgid ""
+"If checked, the quantity is adding back into the sellable product inventory."
 msgstr ""
 
 #, python-format
@@ -619,7 +639,7 @@ msgstr ""
 msgid "This order already has existing refunds"
 msgstr ""
 
-msgid "Refund amount cannot be 0"
+msgid "Refund arbitrary amount"
 msgstr ""
 
 msgid "Refund amount exceeds order amount."
@@ -1548,7 +1568,7 @@ msgstr ""
 msgid "Refunded"
 msgstr ""
 
-msgid "Add More Refunds "
+msgid "Add Another Refund"
 msgstr ""
 
 msgid "To Ship"

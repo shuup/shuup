@@ -22,6 +22,7 @@ Localization
 Admin
 ~~~~~
 
+- Allow refund quantity/amount to be editable
 - Fix ability to add multiple refund lines at once
 - Show more details when picking line to refund
 
