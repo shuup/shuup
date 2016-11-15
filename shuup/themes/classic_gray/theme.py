@@ -24,6 +24,8 @@ class ClassicGrayTheme(Theme):
         ("show_welcome_text", forms.BooleanField(required=False, initial=True, label=_("Show Frontpage Welcome Text"))),
     ]
 
+    guide_template = "classic_gray/admin/guide.jinja"
+
     stylesheets = [
         ("shuup/front/css/style.css", _("Default")),
         ("shuup/classic_gray/blue/style.css", _("Midnight Blue")),
