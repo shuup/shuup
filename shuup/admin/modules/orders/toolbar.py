@@ -18,6 +18,7 @@ from shuup.admin.toolbar import (
 )
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import OrderStatus
+from shuup.utils.deprecation import RemovedFromShuupWarning
 
 
 class OrderDetailToolbar(Toolbar):
@@ -93,7 +94,7 @@ class OrderDetailToolbar(Toolbar):
         for button in get_provide_objects("admin_order_toolbar_button"):
             warnings.warn(
                 "admin_order_toolbar_button provider is deprecated, use admin_order_toolbar_action_item instead",
-                DeprecationWarning)
+                RemovedFromShuupWarning)
             self.append(button(self.order))
 
 
