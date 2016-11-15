@@ -17,7 +17,8 @@ from shuup.admin.utils.permissions import (
     get_default_model_permissions, get_missing_permissions
 )
 from shuup.core.models import (
-    OrderLine, OrderLineType, OrderStatusRole, ShipmentProduct, ShipmentStatus
+    OrderLine, OrderLineType, OrderStatusRole, ShipmentProduct, ShipmentStatus,
+    ShipmentType
 )
 from shuup.core.suppliers.base import StockAdjustmentType
 from shuup.simple_supplier.forms import AlertLimitForm, StockAdjustmentForm
@@ -57,12 +58,17 @@ def get_current_stock_value(supplier_id, product_id):
         .aggregate(total=Sum("delta"))["total"] or 0)
     products_sent = (
         ShipmentProduct.objects
-        .filter(shipment__supplier=supplier_id, product_id=product_id)
+        .filter(shipment__supplier=supplier_id, shipment__type=ShipmentType.OUT, product_id=product_id)
         .exclude(shipment__status=ShipmentStatus.DELETED)
+        .aggregate(total=Sum("quantity"))["total"] or 0)
+    pending_incoming_shipments = (
+        ShipmentProduct.objects
+        .filter(shipment__supplier=supplier_id, shipment__type=ShipmentType.IN, product_id=product_id)
+        .exclude(shipment__status__in=[ShipmentStatus.DELETED, ShipmentStatus.RECEIVED])
         .aggregate(total=Sum("quantity"))["total"] or 0)
 
     return {
-        "logical_count": events - products_bought + products_refunded_before_shipment,
+        "logical_count": events - products_bought + products_refunded_before_shipment + pending_incoming_shipments,
         "physical_count": events - products_sent
     }
 
