@@ -43,6 +43,15 @@ class ShipmentStatus(Enum):
         DELETED = _("deleted")
 
 
+class ShipmentType(Enum):
+    OUT = 0
+    IN = 1
+
+    class Labels:
+        OUT = _("outgoing")
+        IN = _("incoming")
+
+
 class ShipmentManager(models.Manager):
 
     def all_except_deleted(self):
@@ -50,7 +59,8 @@ class ShipmentManager(models.Manager):
 
 
 class Shipment(models.Model):
-    order = models.ForeignKey("Order", related_name='shipments', on_delete=models.PROTECT, verbose_name=_("order"))
+    order = models.ForeignKey(
+        "Order", blank=True, null=True, related_name='shipments', on_delete=models.PROTECT, verbose_name=_("order"))
     supplier = models.ForeignKey(
         "Supplier", related_name='shipments', on_delete=models.PROTECT, verbose_name=_("supplier"))
     created_on = models.DateTimeField(auto_now_add=True, verbose_name=_("created on"))
@@ -60,6 +70,7 @@ class Shipment(models.Model):
     volume = MeasurementField(unit="m3", verbose_name=_("volume"))
     weight = MeasurementField(unit="kg", verbose_name=_("weight"))
     identifier = InternalIdentifierField(unique=True)
+    type = EnumIntegerField(ShipmentType, default=ShipmentType.OUT, verbose_name=_("type"))
     # TODO: documents = models.ManyToManyField(FilerFile)
 
     objects = ShipmentManager()
@@ -78,8 +89,8 @@ class Shipment(models.Model):
             self.identifier = prefix + get_random_string(32)
 
     def __repr__(self):  # pragma: no cover
-        return "<Shipment %s for order %s (tracking %r, created %s)>" % (
-            self.pk, self.order_id, self.tracking_code, self.created_on
+        return "<Shipment %s (tracking %r, created %s)>" % (
+            self.pk, self.tracking_code, self.created_on
         )
 
     def save(self, *args, **kwargs):
@@ -98,7 +109,8 @@ class Shipment(models.Model):
         self.save(update_fields=["status"])
         for product_id in self.products.values_list("product_id", flat=True):
             self.supplier.module.update_stock(product_id=product_id)
-        self.order.update_shipping_status()
+        if self.order:
+            self.order.update_shipping_status()
         shipment_deleted.send(sender=type(self), shipment=self)
 
     def is_deleted(self):
@@ -119,6 +131,29 @@ class Shipment(models.Model):
     @property
     def total_products(self):
         return (self.products.aggregate(quantity=models.Sum("quantity"))["quantity"] or 0)
+
+    def set_received(self, purchase_prices=None, created_by=None):
+        """
+        Mark shipment received
+
+        In case shipment is incoming add stock adjustment for each
+        shipment product in this shipment.
+
+        :param purchase_prices: a dict mapping product ids to purchase prices
+        :type purchase_prices: dict[shuup.shop.models.Product, decimal.Decimal]
+        :param created_by: user who set this shipment received
+        :type created_by: settings.AUTH_USER_MODEL
+        """
+        self.status = ShipmentStatus.RECEIVED
+        self.save()
+        if self.type == ShipmentType.IN:
+            for product_id, quantity in self.products.values_list("product_id", "quantity"):
+                purchase_price = (purchase_prices.get(product_id, None) if purchase_prices else None)
+                self.supplier.module.adjust_stock(
+                    product_id=product_id,
+                    delta=quantity,
+                    purchase_price=purchase_price or 0,
+                    created_by=created_by)
 
 
 @python_2_unicode_compatible
