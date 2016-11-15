@@ -16,7 +16,7 @@ from shuup.front.apps.carousel.models import Carousel
 
 class CarouselListView(PicotableListView):
     model = Carousel
-    columns = [
+    default_columns = [
         Column(
             "name",
             _("Name"),
