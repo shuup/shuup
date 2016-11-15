@@ -64,6 +64,9 @@ class Theme(object):
     # List of plugin specs used in this template
     plugins = []
 
+    # Guide template location
+    guide_template = None
+
     def __init__(self, settings_obj=None):
         """
         Initialize this theme, with an optional `ThemeSettings` object

@@ -11,6 +11,7 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
+from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
 from shuup.admin.utils.views import CreateOrUpdateView
@@ -123,3 +124,12 @@ class ThemeConfigDetailView(CreateOrUpdateView):
         return reverse("shuup_admin:xtheme.config_detail", kwargs={
             "theme_identifier": self.object.theme_identifier
         })
+
+
+class ThemeGuideTemplateView(TemplateView):
+    template_name = None
+
+    def dispatch(self, request, *args, **kwargs):
+        theme = get_theme_by_identifier(kwargs["theme_identifier"])
+        self.template_name = theme.guide_template
+        return super(ThemeGuideTemplateView, self).dispatch(request, *args, **kwargs)

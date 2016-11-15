@@ -34,7 +34,13 @@ class XthemeAdminModule(AdminModule):
     def get_urls(self):  # doccov: ignore
         return [
             admin_url(
-                "^xtheme/(?P<theme_identifier>.+?)/",
+                "^xtheme/guide/(?P<theme_identifier>.+?)/",
+                "shuup.xtheme.admin_module.views.ThemeGuideTemplateView",
+                name="xtheme.guide",
+                permissions=get_default_model_permissions(ThemeSettings)
+            ),
+            admin_url(
+                "^xtheme/configure/(?P<theme_identifier>.+?)/",
                 "shuup.xtheme.admin_module.views.ThemeConfigDetailView",
                 name="xtheme.config_detail",
                 permissions=get_default_model_permissions(ThemeSettings)
