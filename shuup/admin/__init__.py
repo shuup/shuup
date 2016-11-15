@@ -25,6 +25,7 @@ class ShuupAdminAppConfig(AppConfig):
             "shuup.admin.modules.categories:CategoryModule",
             "shuup.admin.modules.contacts:ContactModule",
             "shuup.admin.modules.contact_groups:ContactGroupModule",
+            "shuup.admin.modules.currencies:CurrencyModule",
             "shuup.admin.modules.customers_dashboard:CustomersDashboardModule",
             "shuup.admin.modules.permission_groups:PermissionGroupModule",
             "shuup.admin.modules.users:UserModule",

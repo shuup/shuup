@@ -1,0 +1,9 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import single_section_form with context %}
+
+{% block content %}
+    {% call single_section_form("currency_form", form) %}
+        {{ bs3.field(form.code) }}
+        {{ bs3.field(form.decimal_places) }}
+    {% endcall %}
+{% endblock %}

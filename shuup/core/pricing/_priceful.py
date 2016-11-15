@@ -6,8 +6,6 @@
 # LICENSE file in the root directory of this source tree.
 import decimal
 
-from shuup.utils.numbers import bankers_round
-
 from ._price import TaxfulPrice, TaxlessPrice
 from ._priceful_properties import TaxfulFrom, TaxlessFrom
 
@@ -190,7 +188,7 @@ class Priceful(object):
         :rtype: TaxfulPrice
         """
         price = self.price
-        return bankers_round((price if price.includes_tax else TaxfulPrice(price.amount + self.tax_amount)), 2)
+        return (price if price.includes_tax else TaxfulPrice(price.amount + self.tax_amount)).as_rounded()
 
     @property
     def taxless_price(self):
@@ -198,7 +196,7 @@ class Priceful(object):
         :rtype: TaxlessPrice
         """
         price = self.price
-        return bankers_round((TaxlessPrice(price.amount - self.tax_amount) if price.includes_tax else price), 2)
+        return (TaxlessPrice(price.amount - self.tax_amount) if price.includes_tax else price).as_rounded()
 
     taxful_base_price = TaxfulFrom('base_price')
     taxless_base_price = TaxlessFrom('base_price')

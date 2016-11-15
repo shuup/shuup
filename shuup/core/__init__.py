@@ -35,5 +35,13 @@ class ShuupCoreAppConfig(AppConfig):
         if not getattr(settings, "PARLER_LANGUAGES", None):
             raise MissingSettingException("PARLER_LANGUAGES must be set.")
 
+        # set money precision provider function
+        from shuup.core.models._currencies import get_currency_precision
+        from shuup.utils.money import set_precision_provider_function
+        set_precision_provider_function(get_currency_precision)
+
+        # connect signals
+        import shuup.core.signal_handler    # noqa
+
 
 default_app_config = "shuup.core.ShuupCoreAppConfig"

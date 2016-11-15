@@ -12,7 +12,7 @@ from shuup.admin.modules.shops.views.edit import ShopBaseForm
 from shuup.core.models import ConfigurationItem, Shop, ShopStatus
 from shuup.testing.factories import (
     create_product, create_random_order, create_random_person,
-    get_default_supplier
+    get_currency, get_default_supplier
 )
 from shuup_tests.utils import printable_gibberish
 from shuup_tests.utils.forms import get_form_data
@@ -29,6 +29,8 @@ def test_protected_fields():
         domain="derp",
         currency="EUR"
     )
+    get_currency("EUR")
+    get_currency("USD")
     assert shop.name == "testshop"
     assert shop.currency == "EUR"
     assert not ConfigurationItem.objects.filter(shop=shop, key="languages").exists()

@@ -409,6 +409,24 @@ msgstr ""
 msgid "counters"
 msgstr ""
 
+msgid "code"
+msgstr ""
+
+msgid "The ISO-4217 code of the currency"
+msgstr ""
+
+msgid "decimal places"
+msgstr ""
+
+msgid "Enter a valid ISO-4217 currency code"
+msgstr ""
+
+msgid "currency"
+msgstr ""
+
+msgid "currencies"
+msgstr ""
+
 msgid "added"
 msgstr ""
 
@@ -637,9 +655,6 @@ msgid "grand total"
 msgstr ""
 
 msgid "taxless total"
-msgstr ""
-
-msgid "currency"
 msgstr ""
 
 msgid "prices include tax"
@@ -1520,9 +1535,6 @@ msgid "module data"
 msgstr ""
 
 msgid "Cannot change business critical fields of Tax that is in use"
-msgstr ""
-
-msgid "code"
 msgstr ""
 
 msgid "tax rate"

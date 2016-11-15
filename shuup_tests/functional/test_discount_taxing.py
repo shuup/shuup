@@ -21,10 +21,14 @@ from shuup.default_tax.models import TaxRule
 from shuup.testing.factories import (
     create_product, get_payment_method, get_shipping_method, get_shop
 )
+from shuup.utils.money import get_precision, Money, set_precision_provider_function
 from shuup.utils.numbers import bankers_round
 
 
 def setup_module(module):
+    # uses the get_precision to avoid db hits
+    set_precision_provider_function(get_precision)
+
     global settings_overrider
     settings_overrider = override_settings(
         SHUUP_CALCULATE_TAXES_AUTOMATICALLY_IF_POSSIBLE=False)

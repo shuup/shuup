@@ -12,6 +12,8 @@ Unrealeased
 Core
 ~~~~
 
+- Currencies can be now created and edited through admin.
+
 Localization
 ~~~~~~~~~~~~
 

@@ -10,10 +10,16 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms.widgets import MediaChoiceWidget
-from shuup.core.models import MutableAddress, Shop
+from shuup.core.models import Currency, MutableAddress, Shop
 from shuup.core.utils.form_mixins import ProtectedFieldsMixin
 from shuup.utils.i18n import get_current_babel_locale
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
+
+
+def get_currency_choices():
+    locale = get_current_babel_locale()
+    currencies = Currency.objects.all().order_by("code")
+    return [(currency.code, locale.currencies.get(currency.code, currency)) for currency in currencies]
 
 
 class ShopBaseForm(ProtectedFieldsMixin, MultiLanguageModelForm):
@@ -26,9 +32,8 @@ class ShopBaseForm(ProtectedFieldsMixin, MultiLanguageModelForm):
     def __init__(self, **kwargs):
         super(ShopBaseForm, self).__init__(**kwargs)
         self.fields["logo"].widget = MediaChoiceWidget(clearable=True)
-        locale = get_current_babel_locale()
         self.fields["currency"] = forms.ChoiceField(
-            choices=sorted(locale.currencies.items()),
+            choices=get_currency_choices(),
             required=True,
             label=_("Currency")
         )
@@ -58,13 +63,12 @@ class ShopWizardForm(MultiLanguageModelForm):
 
     def __init__(self, **kwargs):
         super(ShopWizardForm, self).__init__(**kwargs)
-        locale = get_current_babel_locale()
         self.fields["prices_include_tax"].help_text = _(
             "This option defines whether product prices entered in admin include taxes. "
             "Note this behavior can be overridden with customer group pricing."
         )
         self.fields["currency"] = forms.ChoiceField(
-            choices=sorted(locale.currencies.items()),
+            choices=get_currency_choices(),
             required=True,
             label=_("Currency")
         )

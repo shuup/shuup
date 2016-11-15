@@ -18,7 +18,8 @@ from six import print_
 from shuup import configuration
 from shuup.core.defaults.order_statuses import create_default_order_statuses
 from shuup.core.models import (
-    CustomerTaxGroup, ProductType, SalesUnit, Shop, ShopStatus, Supplier
+    Currency, CustomerTaxGroup, ProductType, SalesUnit, Shop, ShopStatus,
+    Supplier
 )
 from shuup.core.telemetry import get_installation_key, is_telemetry_enabled
 
@@ -35,7 +36,13 @@ class Initializer(object):
         schema(Supplier, "default", name="Default Supplier"),
         schema(SalesUnit, "pcs", name="Pieces"),
         schema(CustomerTaxGroup, "default_person_customers", name="Retail Customers"),
-        schema(CustomerTaxGroup, "default_company_customers", name="Company Customers")
+        schema(CustomerTaxGroup, "default_company_customers", name="Company Customers"),
+        schema(Currency, "USD", decimal_places=2),
+        schema(Currency, "EUR", decimal_places=2),
+        schema(Currency, "BRL", decimal_places=2),
+        schema(Currency, "JPY", decimal_places=0),
+        schema(Currency, "CNY", decimal_places=2),
+        schema(Currency, "GBP", decimal_places=2)
     ]
 
     def __init__(self):
