@@ -126,6 +126,12 @@ class OrderLine(MoneyPropped, models.Model, Priceful):
         return (self.taxful_price.amount + Money(refund_total_value, self.order.currency))
 
     @property
+    def max_refundable_quantity(self):
+        if self.type != OrderLineType.PRODUCT:
+            return 0
+        return self.quantity - self.refunded_quantity
+
+    @property
     def refunded_quantity(self):
         return (
             self.child_lines.filter(type=OrderLineType.REFUND).aggregate(total=Sum("quantity"))["total"] or 0

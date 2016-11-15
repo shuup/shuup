@@ -16,7 +16,7 @@ from shuup.campaigns.models.campaigns import BasketCampaign, CatalogCampaign
 from shuup.campaigns.models.catalog_filters import CategoryFilter
 from shuup.campaigns.models.product_effects import ProductDiscountAmount
 from shuup.core.models import (
-    AnonymousContact, OrderLineType, ShippingStatus, StockBehavior
+    AnonymousContact, OrderLineType, ShippingStatus, StockBehavior, PaymentStatus
 )
 from shuup.core.order_creator import OrderCreator
 from shuup.core.pricing import get_pricing_module
@@ -26,6 +26,7 @@ from shuup.testing.factories import (
 )
 from shuup_tests.simple_supplier.utils import get_simple_supplier
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
+from shuup.utils.money import Money
 
 INITIAL_PRODUCT_QUANTITY = 10
 
@@ -92,7 +93,9 @@ def _add_catalog_campaign(shop):
 
 def _add_taxes():
     tax = get_tax(code=u'test_code', name=u'default', rate=0.24)
+    tax2 = get_tax(code=u'test_code2', name=u'default', rate=0.11)
     create_default_tax_rule(tax)
+    create_default_tax_rule(tax2)
 
 
 def _get_order(prices_include_tax=False, include_basket_campaign=False, include_catalog_campaign=False):
@@ -133,6 +136,11 @@ def _get_order(prices_include_tax=False, include_basket_campaign=False, include_
         )
     oc = OrderCreator()
     order = oc.create_order(source)
+    order.create_payment(Money("1", "EUR"))
+    assert not order.has_refunds()
+    assert order.can_create_refund()
+    assert order.shipping_status == ShippingStatus.NOT_SHIPPED
+    assert order.payment_status == PaymentStatus.PARTIALLY_PAID
     return order
 
 
@@ -143,7 +151,6 @@ def test_create_full_refund(prices_include_tax):
     order = _get_order(prices_include_tax, True, True)
     original_order_total = order.taxful_total_price
     num_order_lines = order.lines.count()
-
     order.create_full_refund(restock_products=True)
 
     for line in order.lines.products():
@@ -155,8 +162,10 @@ def test_create_full_refund(prices_include_tax):
     assert not order.taxless_total_price_value
     assert order.lines.refunds().count() == num_order_lines
     assert order.shipping_status == ShippingStatus.FULLY_SHIPPED
+    assert order.payment_status == PaymentStatus.FULLY_PAID
     assert order.get_total_refunded_amount() == original_order_total.amount
     assert not order.get_total_unrefunded_amount().value
+    assert not order.get_total_unrefunded_quantity()
 
 
 @pytest.mark.django_db
@@ -192,3 +201,40 @@ def test_create_refund_line_by_line(prices_include_tax):
     assert order.shipping_status == ShippingStatus.FULLY_SHIPPED
     assert order.get_total_refunded_amount() == original_order_total.amount
     assert not order.get_total_unrefunded_amount().value
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("prices_include_tax", (True, False))
+def test_create_refund_amount(prices_include_tax):
+    supplier = get_simple_supplier()
+    order = _get_order(prices_include_tax, True, True)
+
+    original_order_total = order.taxful_total_price
+    num_order_lines = order.lines.count()
+
+    # refund the discount lines first
+    for line in order.lines.discounts():
+        order.create_refund([
+            {"line": "amount", "quantity": line.quantity, "amount": line.taxful_price.amount}])
+
+    # refund each line 1 by 1
+    for line in order.lines.products():
+        order.create_refund([
+            {"line": "amount", "quantity": 1, "amount": line.taxful_price.amount, "restock_products": True}])
+
+    assert order.has_refunds()
+    #assert not order.can_create_refund()
+    assert not order.taxful_total_price_value
+    assert not order.taxless_total_price_value
+    assert order.lines.refunds().count() == num_order_lines
+    # we haven't refunded any quantity so the shipping status remains as-is
+    assert order.shipping_status == ShippingStatus.NOT_SHIPPED
+    assert order.payment_status == PaymentStatus.FULLY_PAID
+    assert order.get_total_refunded_amount() == original_order_total.amount
+    assert not order.get_total_unrefunded_amount().value
+
+    for line in order.lines.products():
+        order.create_refund([
+            {"line": line, "quantity": line.quantity, "amount": Money(0, "EUR"), "restock_products": True}])
+
+    assert order.shipping_status == ShippingStatus.FULLY_SHIPPED

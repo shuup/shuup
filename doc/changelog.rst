@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Allow refunding by arbitrary amounts and quantity-only refunds
 - Fix bug in `Order.can_set_complete`
 - Currencies can be now created and edited through admin.
 
