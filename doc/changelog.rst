@@ -20,6 +20,7 @@ Localization
 Admin
 ~~~~~
 
+- Add help text to product, product type, and category detail/edit pages
 - Order creator usability improvements to customer selection
   and quick product addition.
 - Ensure `PARLER_DEFAULT_LANGUAGE_CODE` is the first tab in multilingual tab forms

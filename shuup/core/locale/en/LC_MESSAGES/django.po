@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-08 23:07+0000\n"
+"POT-Creation-Date: 2016-11-16 23:53+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -195,7 +195,20 @@ msgstr ""
 msgid "parent category"
 msgstr ""
 
+msgid ""
+"If your category is a sub-category of another category, you can link them "
+"here."
+msgstr ""
+
 msgid "shops"
+msgstr ""
+
+msgid "You can select which shops the category is visible in."
+msgstr ""
+
+msgid ""
+"Here you can choose whether or not you want the category to be visible in "
+"your store."
 msgstr ""
 
 msgid "image"
@@ -204,16 +217,44 @@ msgstr ""
 msgid "ordering"
 msgstr ""
 
+msgid "You can set the order of categories in your store numerically."
+msgstr ""
+
 msgid "visibility limitations"
+msgstr ""
+
+msgid ""
+"You can choose to limit who sees your category based on whether they are "
+"logged in or if they are  part of a customer group."
 msgstr ""
 
 msgid "visible for groups"
 msgstr ""
 
+msgid ""
+"Select the customer groups you would like to be able to see the category. "
+"These groups are defined in Contacts Settings - Contact Groups."
+msgstr ""
+
+msgid ""
+"Enter a descriptive name for your product category. Products can be found in "
+"menus and in search in your store under the category name."
+msgstr ""
+
 msgid "description"
 msgstr ""
 
+msgid ""
+"Give your product category a detailed description. This will help shoppers "
+"find your products under that category in your store and on the web."
+msgstr ""
+
 msgid "slug"
+msgstr ""
+
+msgid ""
+"Enter a URL slug for your category. This is what your product category page "
+"URL will be. A default will be created using the category name."
 msgstr ""
 
 msgid "category"
@@ -706,7 +747,15 @@ msgstr ""
 msgid "sample"
 msgstr ""
 
+msgid "Select which shops you would like the product media to be visible in."
+msgstr ""
+
 msgid "kind"
+msgstr ""
+
+msgid ""
+"Select what type the media is. It can either be a normal file, part of the "
+"documentation, or a sample."
 msgstr ""
 
 msgid ""
@@ -714,10 +763,35 @@ msgid ""
 "doesn't apply."
 msgstr ""
 
+msgid ""
+"You enter the numerical order that your image will be displayed on your "
+"product page."
+msgstr ""
+
 msgid "public (shown on product page)"
 msgstr ""
 
+msgid ""
+"Check this if you would like the image shown on your product page. Checked "
+"by default."
+msgstr ""
+
 msgid "purchased (shown for finished purchases)"
+msgstr ""
+
+msgid ""
+"Select this if you would like the product media shown for completed "
+"purchases."
+msgstr ""
+
+msgid ""
+"Choose a title for your product media. This will help it be found in your "
+"store and on the web."
+msgstr ""
+
+msgid ""
+"Write a description for your product media. This will help it be found in "
+"your store and on the web."
 msgstr ""
 
 msgid "product attachment"
@@ -747,22 +821,68 @@ msgstr ""
 msgid "suppliers"
 msgstr ""
 
+msgid ""
+"List your suppliers here. Suppliers can be found in Product Settings - "
+"Suppliers."
+msgstr ""
+
 msgid "visibility"
+msgstr ""
+
+msgid ""
+"Select if you want your product to be seen and found by customers. <p>Not "
+"visible: Product will not be shown in your store front or found in search.</"
+"p><p>Searchable: Product will be shown in search but not listed on any "
+"category page.</p><p>Listed: Product will be shown on category pages but not "
+"shown in search results.</p><p>Always Visible: Product will be shown in your "
+"store front and found in search.</p>"
 msgstr ""
 
 msgid "purchasable"
 msgstr ""
 
+msgid ""
+"Select whether you want your product to have special limitations on its "
+"visibility in your store. You can make products visible to all, visible to "
+"only logged in users, or visible only to certain customer groups."
+msgstr ""
+
+msgid ""
+"Select the groups you would like to make your product visible for. These "
+"groups are defined in Contacts Settings - Contact Groups."
+msgstr ""
+
 msgid "backorder maximum"
+msgstr ""
+
+msgid ""
+"The number of units that can be purchased after the product is out of stock. "
+"Set to blank for product to be purchasable without limits."
 msgstr ""
 
 msgid "purchase multiple"
 msgstr ""
 
+msgid ""
+"Set this if the product needs to be purchased in multiples. For example, if "
+"the purchase multiple is set to 2, then customers are required to order the "
+"product in multiples of 2."
+msgstr ""
+
 msgid "minimum purchase"
 msgstr ""
 
+msgid ""
+"Set a minimum number of products needed to be ordered for the purchase. This "
+"is useful for setting bulk orders and B2B purchases."
+msgstr ""
+
 msgid "limited for shipping methods"
+msgstr ""
+
+msgid ""
+"Check this if you want to limit your product to use only select payment "
+"methods. You can select the payment method(s) in the field below."
 msgstr ""
 
 msgid "limited for payment methods"
@@ -771,19 +891,56 @@ msgstr ""
 msgid "shipping methods"
 msgstr ""
 
+msgid ""
+"Select the shipping methods you would like to limit the product to using. "
+"These are defined in Settings - Shipping Methods."
+msgstr ""
+
 msgid "payment methods"
+msgstr ""
+
+msgid ""
+"Select the payment methods you would like to limit the product to using. "
+"These are defined in Settings - Payment Methods."
 msgstr ""
 
 msgid "primary category"
 msgstr ""
 
+msgid ""
+"Choose the primary category for your product. This will be the main category "
+"for classification in the system. Your product can be found under this "
+"category in your store. Categories are defined in Products Settings - "
+"Categories."
+msgstr ""
+
+msgid ""
+"Add secondary categories for your product. These are other categories that "
+"your product fits under and that it can be found by in your store."
+msgstr ""
+
 msgid "primary image"
+msgstr ""
+
+msgid ""
+"Click this to set this image as the primary display image for your product."
 msgstr ""
 
 msgid "default price"
 msgstr ""
 
+msgid ""
+"This is the default individual base unit (or multi-pack) price of the "
+"product. All discounts or coupons will be based off of this price."
+msgstr ""
+
 msgid "minimum price"
+msgstr ""
+
+msgid ""
+"This is the default price that the product cannot go under in your store, "
+"despite coupons or discounts being applied. This is useful to make sure your "
+"product price stays above cost."
 msgstr ""
 
 msgid "This product has been deleted."
@@ -896,6 +1053,16 @@ msgstr ""
 msgid "third party verification required"
 msgstr ""
 
+msgid ""
+"Enter a descriptive name for your product type. Products and attributes for "
+"products of this type can be found under this name."
+msgstr ""
+
+msgid ""
+"Select attributes that go with your product type. These are defined in "
+"Products Settings – Attributes."
+msgstr ""
+
 msgid "product type"
 msgstr ""
 
@@ -911,25 +1078,64 @@ msgstr ""
 msgid "stock"
 msgstr ""
 
+msgid "Set to stocked if inventory should be managed within Shuup."
+msgstr ""
+
 msgid "shipping mode"
 msgstr ""
 
-msgid "unit"
+msgid "Set to shipped if the product requires shipment."
+msgstr ""
+
+msgid "sales unit"
+msgstr ""
+
+msgid ""
+"Select a sales unit for your product. This is shown in your store front and "
+"is used to determine whether the product can be purchased using fractional "
+"amounts. Sales units are defined in Products - Sales Units."
 msgstr ""
 
 msgid "tax class"
 msgstr ""
 
+msgid ""
+"Select a tax class for your product. The tax class is used to determine "
+"which taxes to apply to your product. Tax classes are defined in Settings - "
+"Tax Classes. The rules by which taxes are applied are defined in Settings - "
+"Tax Rules."
+msgstr ""
+
+msgid ""
+"Select a product type for your product. These allow you to configure custom "
+"attributes to help with classification and analysis."
+msgstr ""
+
 msgid "SKU"
+msgstr ""
+
+msgid ""
+"Enter a SKU (Stock Keeping Unit) number for your product. This is a product "
+"identification code that helps you track it through your inventory. People "
+"often use the number by the barcode on the product, but you can set up any "
+"numerical system you want to keep track of products."
 msgstr ""
 
 msgid "GTIN"
 msgstr ""
 
-msgid "Global Trade Item Number"
+msgid ""
+"You can enter a Global Trade Item Number. This is typically a 14 digit "
+"identification number for all of your trade items. It can often be found by "
+"the barcode."
 msgstr ""
 
 msgid "barcode"
+msgstr ""
+
+msgid ""
+"You can enter the barcode number for your product. This is useful for "
+"inventory/stock tracking and analysis."
 msgstr ""
 
 msgid "bookkeeping account"
@@ -944,30 +1150,91 @@ msgstr ""
 msgid "width (mm)"
 msgstr ""
 
+msgid ""
+"Set the measured width of your product or product packaging. This will "
+"provide customers with your product size and help with calculating shipping "
+"costs."
+msgstr ""
+
 msgid "height (mm)"
+msgstr ""
+
+msgid ""
+"Set the measured height of your product or product packaging. This will "
+"provide customers with your product size and help with calculating shipping "
+"costs."
 msgstr ""
 
 msgid "depth (mm)"
 msgstr ""
 
+msgid ""
+"Set the measured depth or length of your product or product packaging. This "
+"will provide customers with your product size and help with calculating "
+"shipping costs."
+msgstr ""
+
 msgid "net weight (g)"
+msgstr ""
+
+msgid ""
+"Set the measured weight of your product WITHOUT its packaging. This will "
+"provide customers with your product weight."
 msgstr ""
 
 msgid "gross weight (g)"
 msgstr ""
 
+msgid ""
+"Set the measured gross Weight of your product WITH its packaging. This will "
+"help with calculating shipping costs."
+msgstr ""
+
+msgid ""
+"Select a manufacturer for your product. These are defined in Products "
+"Settings - Manufacturers"
+msgstr ""
+
+msgid ""
+"Enter a descriptive name for your product. This will be its title in your "
+"store."
+msgstr ""
+
+msgid ""
+"To make your product stand out, give it an awesome description. This is what "
+"will help your shoppers learn about your products. It will also help "
+"shoppers find them in the store and on the web."
+msgstr ""
+
+msgid ""
+"Enter a URL Slug for your product. This is what your product page URL will "
+"be. A default will be created using the product name."
+msgstr ""
+
 msgid "keywords"
+msgstr ""
+
+msgid ""
+"You can enter keywords that describe your product. This will help your "
+"shoppers learn about your products. It will also help shoppers find them in "
+"the store and on the web."
 msgstr ""
 
 msgid "status text"
 msgstr ""
 
 msgid ""
-"This text will be shown alongside the product in the shop. (Ex.: \"Available "
+"This text will be shown alongside the product in the shop. It is useful for "
+"informing customers of special stock numbers or preorders. (Ex.: \"Available "
 "in a month\")"
 msgstr ""
 
 msgid "variation name"
+msgstr ""
+
+msgid ""
+"You can enter a name for the variation of your product. This could be for "
+"example different colors or versions."
 msgstr ""
 
 msgid "products"
@@ -1304,9 +1571,6 @@ msgid "allowed decimals"
 msgstr ""
 
 msgid "short name"
-msgstr ""
-
-msgid "sales unit"
 msgstr ""
 
 msgid "sales units"

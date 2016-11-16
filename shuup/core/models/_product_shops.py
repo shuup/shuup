@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 import six
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 
@@ -43,50 +44,114 @@ class ShopProduct(MoneyPropped, models.Model):
     product = UnsavedForeignKey(
         "Product", related_name="shop_products", on_delete=models.CASCADE, verbose_name=_("product"))
     suppliers = models.ManyToManyField(
-        "Supplier", related_name="shop_products", blank=True, verbose_name=_("suppliers"))
+        "Supplier", related_name="shop_products", blank=True, verbose_name=_("suppliers"), help_text=_(
+            "List your suppliers here. Suppliers can be found in Product Settings - Suppliers."
+        )
+    )
 
     visibility = EnumIntegerField(
-        ShopProductVisibility, default=ShopProductVisibility.NOT_VISIBLE, db_index=True,
-        verbose_name=_("visibility")
+        ShopProductVisibility, default=ShopProductVisibility.NOT_VISIBLE, db_index=True, verbose_name=_("visibility"),
+        help_text=mark_safe(_(
+            "Select if you want your product to be seen and found by customers. "
+            "<p>Not visible: Product will not be shown in your store front or found in search.</p>"
+            "<p>Searchable: Product will be shown in search but not listed on any category page.</p>"
+            "<p>Listed: Product will be shown on category pages but not shown in search results.</p>"
+            "<p>Always Visible: Product will be shown in your store front and found in search.</p>"
+        ))
     )
     purchasable = models.BooleanField(default=True, db_index=True, verbose_name=_("purchasable"))
     visibility_limit = EnumIntegerField(
         ProductVisibility, db_index=True, default=ProductVisibility.VISIBLE_TO_ALL,
-        verbose_name=_('visibility limitations')
+        verbose_name=_('visibility limitations'), help_text=_(
+            "Select whether you want your product to have special limitations on its visibility in your store. "
+            "You can make products visible to all, visible to only logged in users, or visible only to certain "
+            "customer groups."
+        )
     )
     visibility_groups = models.ManyToManyField(
-        "ContactGroup", related_name='visible_products', verbose_name=_('visible for groups'), blank=True
+        "ContactGroup", related_name='visible_products', verbose_name=_('visible for groups'), blank=True, help_text=_(
+            u"Select the groups you would like to make your product visible for. "
+            u"These groups are defined in Contacts Settings - Contact Groups."
+        )
     )
-    backorder_maximum = QuantityField(default=0, blank=True, null=True, verbose_name=_('backorder maximum'))
-    purchase_multiple = QuantityField(default=0, verbose_name=_('purchase multiple'))
-    minimum_purchase_quantity = QuantityField(default=1, verbose_name=_('minimum purchase'))
-    limit_shipping_methods = models.BooleanField(default=False, verbose_name=_("limited for shipping methods"))
-    limit_payment_methods = models.BooleanField(default=False, verbose_name=_("limited for payment methods"))
+    backorder_maximum = QuantityField(
+        default=0, blank=True, null=True, verbose_name=_('backorder maximum'), help_text=_(
+            "The number of units that can be purchased after the product is out of stock. "
+            "Set to blank for product to be purchasable without limits."
+        ))
+    purchase_multiple = QuantityField(default=0, verbose_name=_('purchase multiple'), help_text=_(
+            "Set this if the product needs to be purchased in multiples. "
+            "For example, if the purchase multiple is set to 2, then customers are required to order the product "
+            "in multiples of 2."
+        )
+    )
+    minimum_purchase_quantity = QuantityField(default=1, verbose_name=_('minimum purchase'), help_text=_(
+            "Set a minimum number of products needed to be ordered for the purchase. "
+            "This is useful for setting bulk orders and B2B purchases."
+        )
+    )
+    limit_shipping_methods = models.BooleanField(
+        default=False, verbose_name=_("limited for shipping methods"), help_text=_(
+            "Check this if you want to limit your product to use only select payment methods. "
+            "You can select the payment method(s) in the field below."
+        )
+    )
+    limit_payment_methods = models.BooleanField(
+        default=False, verbose_name=_("limited for payment methods"), help_text=_(
+            "Check this if you want to limit your product to use only select payment methods. "
+            "You can select the payment method(s) in the field below."
+        )
+    )
     shipping_methods = models.ManyToManyField(
-        "ShippingMethod", related_name='shipping_products', verbose_name=_('shipping methods'), blank=True
+        "ShippingMethod", related_name='shipping_products', verbose_name=_('shipping methods'), blank=True, help_text=_(
+            "Select the shipping methods you would like to limit the product to using. "
+            "These are defined in Settings - Shipping Methods."
+        )
     )
     payment_methods = models.ManyToManyField(
-        "PaymentMethod", related_name='payment_products', verbose_name=_('payment methods'), blank=True
+        "PaymentMethod", related_name='payment_products', verbose_name=_('payment methods'), blank=True, help_text=_(
+            "Select the payment methods you would like to limit the product to using. "
+            "These are defined in Settings - Payment Methods."
+        )
     )
     primary_category = models.ForeignKey(
         "Category", related_name='primary_shop_products', verbose_name=_('primary category'), blank=True, null=True,
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT, help_text=_(
+            "Choose the primary category for your product. "
+            "This will be the main category for classification in the system. "
+            "Your product can be found under this category in your store. "
+            "Categories are defined in Products Settings - Categories."
+        )
     )
     categories = models.ManyToManyField(
-        "Category", related_name='shop_products', verbose_name=_('categories'), blank=True
+        "Category", related_name='shop_products', verbose_name=_('categories'), blank=True, help_text=_(
+            "Add secondary categories for your product. "
+            "These are other categories that your product fits under and that it can be found by in your store."
+        )
     )
     shop_primary_image = models.ForeignKey(
         "ProductMedia", null=True, blank=True,
         related_name="primary_image_for_shop_products", on_delete=models.SET_NULL,
-        verbose_name=_("primary image")
+        verbose_name=_("primary image"), help_text=_(
+            "Click this to set this image as the primary display image for your product."
+        )
     )
 
     # the default price of this product in the shop
     default_price = PriceProperty('default_price_value', 'shop.currency', 'shop.prices_include_tax')
-    default_price_value = MoneyValueField(verbose_name=_("default price"), null=True, blank=True)
+    default_price_value = MoneyValueField(verbose_name=_("default price"), null=True, blank=True, help_text=_(
+            "This is the default individual base unit (or multi-pack) price of the product. "
+            "All discounts or coupons will be based off of this price."
+        )
+    )
 
     minimum_price = PriceProperty('minimum_price_value', 'shop.currency', 'shop.prices_include_tax')
-    minimum_price_value = MoneyValueField(verbose_name=_("minimum price"), null=True, blank=True)
+    minimum_price_value = MoneyValueField(verbose_name=_("minimum price"), null=True, blank=True, help_text=_(
+            "This is the default price that the product cannot go under in your store, "
+            "despite coupons or discounts being applied. "
+            "This is useful to make sure your product price stays above cost."
+        )
+    )
 
     class Meta:
         unique_together = (("shop", "product",),)

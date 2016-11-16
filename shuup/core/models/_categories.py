@@ -88,24 +88,57 @@ class CategoryManager(TreeManager, TranslatableManager):
 class Category(MPTTModel, TranslatableModel):
     parent = TreeForeignKey(
         'self', null=True, blank=True, related_name='children',
-        verbose_name=_('parent category'), on_delete=models.CASCADE)
-    shops = models.ManyToManyField("Shop", blank=True, related_name="categories", verbose_name=_("shops"))
+        verbose_name=_('parent category'), on_delete=models.CASCADE, help_text=_(
+            "If your category is a sub-category of another category, you can link them here."
+        )
+    )
+    shops = models.ManyToManyField(
+        "Shop", blank=True, related_name="categories", verbose_name=_("shops"), help_text=_(
+            "You can select which shops the category is visible in."
+        )
+    )
     identifier = InternalIdentifierField(unique=True)
-    status = EnumIntegerField(CategoryStatus, db_index=True, verbose_name=_('status'), default=CategoryStatus.INVISIBLE)
+    status = EnumIntegerField(
+        CategoryStatus, db_index=True, verbose_name=_('status'), default=CategoryStatus.INVISIBLE, help_text=_(
+            "Here you can choose whether or not you want the category to be visible in your store."
+        )
+    )
     image = FilerImageField(verbose_name=_('image'), blank=True, null=True, on_delete=models.SET_NULL)
-    ordering = models.IntegerField(default=0, verbose_name=_('ordering'))
+    ordering = models.IntegerField(default=0, verbose_name=_('ordering'), help_text=_(
+            "You can set the order of categories in your store numerically."
+        )
+    )
     visibility = EnumIntegerField(
         CategoryVisibility, db_index=True, default=CategoryVisibility.VISIBLE_TO_ALL,
-        verbose_name=_('visibility limitations')
+        verbose_name=_('visibility limitations'), help_text=_(
+            "You can choose to limit who sees your category based on whether they are logged in or if they are "
+            " part of a customer group."
+        )
     )
     visibility_groups = models.ManyToManyField(
-        "ContactGroup", blank=True, verbose_name=_('visible for groups'), related_name=u"visible_categories"
+        "ContactGroup", blank=True, verbose_name=_('visible for groups'), related_name=u"visible_categories",
+        help_text=_(
+            "Select the customer groups you would like to be able to see the category. "
+            "These groups are defined in Contacts Settings - Contact Groups."
+        )
     )
 
     translations = TranslatedFields(
-        name=models.CharField(max_length=128, verbose_name=_('name')),
-        description=models.TextField(verbose_name=_('description'), blank=True),
-        slug=models.SlugField(blank=True, null=True, verbose_name=_('slug'))
+        name=models.CharField(max_length=128, verbose_name=_('name'), help_text=_(
+                "Enter a descriptive name for your product category. "
+                "Products can be found in menus and in search in your store under the category name."
+            )
+        ),
+        description=models.TextField(verbose_name=_('description'), blank=True, help_text=_(
+                "Give your product category a detailed description. "
+                "This will help shoppers find your products under that category in your store and on the web."
+                )
+        ),
+        slug=models.SlugField(blank=True, null=True, verbose_name=_('slug'), help_text=_(
+            "Enter a URL slug for your category. "
+            "This is what your product category page URL will be. "
+            "A default will be created using the category name."
+        ))
     )
 
     objects = CategoryManager()
