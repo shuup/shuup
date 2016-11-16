@@ -23,7 +23,6 @@ gtools.webpackTasks("injection", gtools.buildWebpackConfig(
     "editor-injection.js"
 ));
 
-
 gtools.webpackTasks("editor-js", gtools.buildWebpackConfig(
     [
         "./editor/index.js",
@@ -31,7 +30,6 @@ gtools.webpackTasks("editor-js", gtools.buildWebpackConfig(
     ],
     "editor.js"
 ));
-
 
 gulp.task("editor-style", function() {
     return gulp.src(["static_src/editor/style.less"])
@@ -46,4 +44,20 @@ gtools.registerWatchTask(["editor-style"], function() {
     gulp.watch("static_src/editor/*.*", ["editor-style"]);
 });
 
-gulp.task("default", ["editor-style", "injection", "editor-js"]);
+gulp.task("admin-style", function() {
+    return gulp.src(["static_src/admin/css/style.less"])
+        .pipe(less())
+        .pipe(apfx())
+        .pipe(PRODUCTION ? nano() : gutil.noop())
+        .pipe(ren("xtheme_admin.css"))
+        .pipe(gulp.dest("static/xtheme/admin"));
+});
+
+gtools.webpackTasks("admin-js", gtools.buildWebpackConfig(
+    [
+        "./admin/js/script.js",
+    ],
+    "admin/admin.js"
+));
+
+gulp.task("default", ["editor-style", "injection", "editor-js", "admin-style", "admin-js"]);

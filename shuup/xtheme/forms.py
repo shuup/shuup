@@ -5,11 +5,13 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import warnings
 from copy import deepcopy
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.utils.deprecation import RemovedInFutureShuupWarning
 from shuup.xtheme.models import ThemeSettings
 
 
@@ -26,9 +28,15 @@ class GenericThemeForm(forms.ModelForm):
         self.theme = kwargs.pop("theme")
         super(GenericThemeForm, self).__init__(**kwargs)
         if self.theme.stylesheets:
+            if isinstance(self.theme.stylesheets[0], dict):
+                choices = [(style["stylesheet"], style["name"]) for style in self.theme.stylesheets]
+            else:
+                warnings.warn(
+                    "Using list of tuples in theme.stylesheets will deprecate "
+                    "in Shuup 0.5.7. Use list of dictionaries instead.", RemovedInFutureShuupWarning)
+                choices = self.theme.stylesheets
             self.fields["stylesheet"] = forms.ChoiceField(
-                label=_("Stylesheets"), choices=self.theme.stylesheets,
-                initial=self.theme.stylesheets[0], required=True)
+                label=_("Stylesheets"), choices=choices, initial=choices[0], required=True)
 
         fields = self.theme.fields
         if hasattr(fields, "items"):  # Quacks like a dict; that's fine too
