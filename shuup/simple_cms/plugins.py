@@ -75,7 +75,7 @@ class PageLinksPlugin(TemplatedPlugin):
         based on the plugin's ``hide_expired`` setting
         """
         selected_pages = self.config.get("pages", [])
-        show_all_pages = self.config.get("show_all_pages", True)
+        show_all_pages = self.config.get("show_all_pages", False)
         hide_expired = self.config.get("hide_expired", False)
 
         pages_qs = Page.objects.filter()
