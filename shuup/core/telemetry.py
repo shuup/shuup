@@ -12,6 +12,7 @@ from datetime import date, datetime, time, timedelta
 
 import requests
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Q, Sum
@@ -176,6 +177,7 @@ def get_telemetry_data(request, indent=None):
     :return: Data blob.
     :rtype: str
     """
+    admin_user = User.objects.first()
     data_dict = {
         "daily_data": get_daily_data(now()),
         "apps": settings.INSTALLED_APPS,
@@ -183,6 +185,8 @@ def get_telemetry_data(request, indent=None):
         "host": (request.get_host() if request else None),
         "key": get_installation_key(),
         "machine": platform.machine(),
+        "admin_user": admin_user.email if admin_user else None,
+        "last_login": admin_user.last_login if admin_user else None,
         "platform": platform.platform(),
         "python_version": sys.version,
         "shuup_version": shuup.__version__,

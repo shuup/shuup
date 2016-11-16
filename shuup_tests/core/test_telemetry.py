@@ -27,9 +27,10 @@ from shuup.core.telemetry import (
 from shuup.testing.factories import (
     create_empty_order, create_order_with_product,
     create_product, create_random_company,
-    get_default_shop, get_default_supplier
-)
+    get_default_shop, get_default_supplier,
+    UserFactory)
 from shuup.testing.utils import apply_request_middleware
+from shuup_tests.utils import SmartClient
 
 
 class MockResponse(Response):
@@ -55,13 +56,41 @@ def _clear_telemetry_submission():
 
 
 @pytest.mark.django_db
-def test_get_telemetry_data(rf):
-    assert json.loads(get_telemetry_data(rf.get("/"))).get("host")
+def test_get_telemetry_data(rf, admin_user):
+    data = json.loads(get_telemetry_data(rf.get("/")))
+    assert data.get("host")
+    assert data.get("admin_user") == admin_user.email
     assert not json.loads(get_telemetry_data(None)).get("host")
 
 
 @pytest.mark.django_db
-def test_optin_optout(rf):
+def test_get_telemetry_data_after_login(rf, admin_user):
+    get_default_shop()
+    # create users to ensure correct admin is found
+    UserFactory()
+    UserFactory()
+
+    data = json.loads(get_telemetry_data(rf.get("/")))
+    assert data.get("admin_user") == admin_user.email
+    assert not data.get("last_login")
+
+    client = SmartClient()
+    client.login(username="admin", password="password")
+
+    data = json.loads(get_telemetry_data(rf.get("/")))
+    assert data.get("admin_user") == admin_user.email
+    last_login = data.get("last_login", None)
+    assert last_login
+
+    last_login_datetime = datetime.datetime.strptime(last_login, "%Y-%m-%dT%H:%M:%S.%fZ")
+    today = datetime.datetime.now()
+    assert last_login_datetime.year == today.year
+    assert last_login_datetime.month == today.month
+    assert last_login_datetime.day == today.day
+
+
+@pytest.mark.django_db
+def test_optin_optout(rf, admin_user):
     with override_settings(SHUUP_TELEMETRY_ENABLED=True, DEBUG=True):
         with patch.object(requests, "post", return_value=MockResponse("test")) as requestor:
             _clear_telemetry_submission()
@@ -89,7 +118,7 @@ def test_optin_optout(rf):
 
 
 @pytest.mark.django_db
-def test_disable(rf):
+def test_disable(rf, admin_user):
     with override_settings(SHUUP_TELEMETRY_ENABLED=False):
         _clear_telemetry_submission()
         _backdate_installation_key()
@@ -100,10 +129,9 @@ def test_disable(rf):
 
 
 @pytest.mark.django_db
-def test_graceful_error():
+def test_graceful_error(admin_user):
     def thrower(*args, **kwargs):
         raise ValueError("aaaagh")
-
     with override_settings(SHUUP_TELEMETRY_ENABLED=True):
         with patch.object(requests, "post", thrower) as requestor:
             _clear_telemetry_submission()
@@ -193,7 +221,7 @@ def test_telemetry_daily_data_components(data_key, data_value, create_object):
 
 
 @pytest.mark.django_db
-def test_telemetry_multiple_days(rf):
+def test_telemetry_multiple_days(rf, admin_user):
     with override_settings(SHUUP_TELEMETRY_ENABLED=True, DEBUG=True):
         with patch.object(requests, "post", return_value=MockResponse("test")) as requestor:
             try_send_telemetry()

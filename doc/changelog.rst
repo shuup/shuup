@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Telemetry now sends admin email and last login
 - Order Statuses are now modifiable through admin.
 
 Localization
