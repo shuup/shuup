@@ -85,6 +85,12 @@ module.exports = {
             root + "/modules/orders/static_src/create/**/*.js"
         ]
     },
+    "imagelightbox": {
+        "base": "./static_src/vendor",
+        "files": [
+            "imagelightbox.min.js"
+        ]
+    },
     "wizard": {
         "base": "./static_src/wizard",
         "es6": true,
