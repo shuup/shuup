@@ -32,6 +32,15 @@ from shuup.testing.factories import (
 from shuup.testing.utils import apply_request_middleware
 
 
+class MockResponse(Response):
+    def __init__(self, content):
+        self.content = content
+        super(MockResponse, self).__init__()
+
+    def content(self):
+        return self.content
+
+
 def _backdate_installation_key(days=24):
     get_installation_key()
     PersistentCacheEntry.objects.filter(**INSTALLATION_KEY_KWARGS).update(time=now() - datetime.timedelta(days=days))
@@ -54,7 +63,7 @@ def test_get_telemetry_data(rf):
 @pytest.mark.django_db
 def test_optin_optout(rf):
     with override_settings(SHUUP_TELEMETRY_ENABLED=True, DEBUG=True):
-        with patch.object(requests, "post", return_value=Response()) as requestor:
+        with patch.object(requests, "post", return_value=MockResponse("test")) as requestor:
             _clear_telemetry_submission()
             assert not set_opt_out(False)  # Not opted out
             assert not is_opt_out()
@@ -114,7 +123,7 @@ def test_disabling_telemetry_hides_menu_item(rf):
 @pytest.mark.django_db
 def test_telemetry_is_sent_on_login(rf, admin_user):
     shop = get_default_shop()
-    with patch.object(requests, "post", return_value=Response()) as requestor:
+    with patch.object(requests, "post", return_value=MockResponse("test")) as requestor:
         with override_settings(SHUUP_TELEMETRY_ENABLED=True):
             _backdate_installation_key(days=0)  # instance was created today
             request = apply_request_middleware(rf.get("/"), user=admin_user)
@@ -186,7 +195,7 @@ def test_telemetry_daily_data_components(data_key, data_value, create_object):
 @pytest.mark.django_db
 def test_telemetry_multiple_days(rf):
     with override_settings(SHUUP_TELEMETRY_ENABLED=True, DEBUG=True):
-        with patch.object(requests, "post", return_value=Response()) as requestor:
+        with patch.object(requests, "post", return_value=MockResponse("test")) as requestor:
             try_send_telemetry()
             day = now()
             _backdate_telemetry_submission(days=0)
