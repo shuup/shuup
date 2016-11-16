@@ -138,7 +138,8 @@ class VariationVariablesDataForm(forms.Form):
                 {
                     "code": code,
                     "name": get_language_name(code)
-                } for code in to_language_codes(settings.LANGUAGES)
+                } for code in to_language_codes(
+                    settings.LANGUAGES, getattr(settings, "PARLER_DEFAULT_LANGUAGE_CODE", "en"))
                 ],
             "variables": self.get_variable_data()
         }
