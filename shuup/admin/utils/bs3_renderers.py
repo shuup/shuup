@@ -10,7 +10,6 @@ from __future__ import unicode_literals
 from bootstrap3.renderers import FieldRenderer
 from bootstrap3.utils import add_css_class
 from django.forms import DateField, DateTimeField, ModelMultipleChoiceField
-from django.utils.html import escape, strip_tags
 
 
 class AdminFieldRenderer(FieldRenderer):
@@ -69,8 +68,8 @@ class AdminFieldRenderer(FieldRenderer):
             # tabindex is required for popover to function but we don't actually want to be able to tab to it
             # so set a large tabindex
             html += "<a class='btn' data-toggle='popover' data-placement='bottom' role='button' tabindex='50000' "
-            html += "data-trigger='focus' title='{title}' data-content='{help}'>".format(
-                title=self.field.label, help=escape(strip_tags(self.field_help)))
+            html += "data-html='true' data-trigger='focus' title='{title}' data-content='{help}'>".format(
+                title=self.field.label, help=self.field_help)
             html += "<i class='fa fa-question-circle'></i>"
             html += "</a>"
             html += "</span>"
