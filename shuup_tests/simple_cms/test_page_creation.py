@@ -96,8 +96,13 @@ def test_page_form(rf):
 
     # add finnish urls, it should not be possible to enter original url
     data.update({"title__fi": "englaish", "url__fi": original_url, "content__fi": "ennnn ennnn ennnnnnn-nn-n-n"})
+
+    assert data["url__fi"] == data["url__en"] # both urls are same, should raise two errors
+
     form = form_class(**dict(form_kwargs, data=data, instance=page))
     form.full_clean()
     assert len(form.errors) == 1
     assert "url__fi" in form.errors
-    assert form.errors["url__fi"].as_data()[0].code == "invalid_url"
+    error_data = form.errors["url__fi"].as_data()
+    assert error_data[0].code == "invalid_url"
+    assert error_data[1].code == "invalid_unique_url"

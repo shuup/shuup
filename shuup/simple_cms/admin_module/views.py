@@ -51,7 +51,9 @@ class PageForm(MultiLanguageModelForm):
         data = super(PageForm, self).clean()
 
         something_filled = False
-        for language, field_names in self.trans_name_map.items():
+        urls = []
+        for language in self.languages:
+            field_names = self.trans_name_map[language]
             if not any(data.get(field_name) for field_name in field_names.values()):
                 # Let's not complain about this language
                 continue
@@ -62,6 +64,10 @@ class PageForm(MultiLanguageModelForm):
                     if field_name.startswith("url__"):  # url needs a second look though
                         if not self.is_url_valid(language, field_name, value):
                             self.add_error(field_name, ValidationError(_("URL already exists."), code="invalid_url"))
+                        if value in urls:
+                            self.add_error(
+                                field_name, ValidationError(_("URL must be unique"), code="invalid_unique_url"))
+                        urls.append(value)
                     continue
                 self.add_error(
                     field_name,
