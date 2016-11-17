@@ -60,9 +60,6 @@ class AdminFieldRenderer(FieldRenderer):
             self.field_help = ''
 
     def append_to_field(self, html):
-        if self.field_errors:
-            errors = "<br>".join(self.field_errors)
-            html += '<div class="help-block error-block">{error}</div>'.format(error=errors)
         if self.field_help:
             html += "<span class='help-popover-btn'>"
             # tabindex is required for popover to function but we don't actually want to be able to tab to it
@@ -73,4 +70,7 @@ class AdminFieldRenderer(FieldRenderer):
             html += "<i class='fa fa-question-circle'></i>"
             html += "</a>"
             html += "</span>"
+        if self.field_errors:
+            errors = "<br>".join(self.field_errors)
+            html += '<div class="help-block error-block">{error}</div>'.format(error=errors)
         return html
