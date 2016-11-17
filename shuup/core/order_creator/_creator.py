@@ -16,6 +16,7 @@ from shuup.core.models import Order, OrderLine, OrderLineType
 from shuup.core.order_creator.signals import order_creator_finished
 from shuup.core.shortcuts import update_order_line_from_product
 from shuup.core.utils.users import real_user_or_none
+from shuup.utils.deprecation import RemovedFromShuupWarning
 from shuup.utils.numbers import bankers_round
 
 from ._source_modifier import get_order_source_modifier_modules
@@ -284,7 +285,7 @@ class OrderCreator(OrderProcessor):
         if request is not None:
             warnings.warn(
                 "Initializing OrderCreator with a request is deprecated",
-                DeprecationWarning, stacklevel=2)
+                RemovedFromShuupWarning, stacklevel=2)
 
     def create_order(self, order_source):
         data = self.get_source_base_data(order_source)

@@ -60,8 +60,10 @@ class SlideFormSet(BaseModelFormSet):
     extra = 0
 
     def __init__(self, *args, **kwargs):
+        self.default_language = kwargs.pop(
+            "default_language", getattr(settings, "PARLER_DEFAULT_LANGUAGE_CODE"))
         self.carousel = kwargs.pop("carousel")
-        self.languages = to_language_codes(kwargs.pop("languages", ()))
+        self.languages = to_language_codes(kwargs.pop("languages", ()), self.default_language)
         kwargs.pop("empty_permitted")
         super(SlideFormSet, self).__init__(*args, **kwargs)
 

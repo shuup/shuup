@@ -58,11 +58,40 @@ class Theme(object):
     # TODO: Document this
     fields = []
 
-    # List of tuples(path, name) for stylesheets provided by this theme.
+    """
+    List of dicts containing stylesheet definitions
+
+    Each dict must contain following values:
+        * `identifier` internal identifier of the stylesheet
+          definition. Identifier is used on theme selection.
+          If your stylesheet doesn't define the `identifier`
+          the images cannot be shown in theme selector.
+        * `stylesheet` with a value of the css file path
+        * `name` with a name of the stylesheet
+
+    Following values are not mandatory:
+        * `images` a list of image paths. Images are shown
+          when merchant makes decisions on what theme to use.
+
+    Example:
+        stylesheets = [
+            {
+                "identifier": "my_style",
+                "stylesheet": "path/to/style.css",
+                "name": _("My Style"),
+                "images: ["path/to/image.png", "path/to/image2.png"]
+            }
+        ]
+    Will be Deprecated in future: List of tuples(path, name) for
+    stylesheets provided by this theme.
+    """
     stylesheets = []
 
     # List of plugin specs used in this template
     plugins = []
+
+    # Guide template location
+    guide_template = None
 
     def __init__(self, settings_obj=None):
         """

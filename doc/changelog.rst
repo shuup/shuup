@@ -40,6 +40,8 @@ Front
 Xtheme
 ~~~~~~
 
+- Add screenshot support for stylesheets
+
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 

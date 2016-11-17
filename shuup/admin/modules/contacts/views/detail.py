@@ -24,6 +24,7 @@ from shuup.admin.toolbar import (
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import CompanyContact, Contact
+from shuup.utils.deprecation import RemovedFromShuupWarning
 from shuup.utils.excs import Problem
 
 
@@ -108,7 +109,7 @@ class ContactDetailToolbar(Toolbar):
         for button in get_provide_objects("admin_contact_toolbar_button"):
             warnings.warn(
                 "admin_contact_toolbar_button provider is deprecated, use admin_contact_toolbar_action_item instead",
-                DeprecationWarning)
+                RemovedFromShuupWarning)
             self.append(button(self.contact))
 
     def build(self):

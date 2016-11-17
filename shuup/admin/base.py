@@ -14,6 +14,8 @@ import six
 from django.core.urlresolvers import reverse
 from django.utils.encoding import force_bytes, force_text
 
+from shuup.utils.deprecation import RemovedFromShuupWarning
+
 
 class AdminModule(object):
     name = "_Base_"
@@ -259,7 +261,7 @@ class OrderSection(Section):
     Deprecated use Section instead
     """
     def __new__(cls):
-        warnings.warn("OrderSection in shuup.admin.base is deprecated, use Section instead ", DeprecationWarning)
+        warnings.warn("OrderSection in shuup.admin.base is deprecated, use Section instead ", RemovedFromShuupWarning)
         return super(OrderSection, cls).__new__(cls)
 
     @classmethod

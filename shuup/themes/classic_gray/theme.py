@@ -24,10 +24,27 @@ class ClassicGrayTheme(Theme):
         ("show_welcome_text", forms.BooleanField(required=False, initial=True, label=_("Show Frontpage Welcome Text"))),
     ]
 
+    guide_template = "classic_gray/admin/guide.jinja"
+
     stylesheets = [
-        ("shuup/front/css/style.css", _("Default")),
-        ("shuup/classic_gray/blue/style.css", _("Midnight Blue")),
-        ("shuup/classic_gray/pink/style.css", _("Candy Pink"))
+        {
+            "identifier": "default",
+            "stylesheet": "shuup/front/css/style.css",
+            "name": _("Default"),
+            "images": []
+        },
+        {
+            "identifier": "midnight_blue",
+            "stylesheet": "shuup/classic_gray/blue/style.css",
+            "name": _("Midnight Blue"),
+            "images": []
+        },
+        {
+            "identifier": "candy_pink",
+            "stylesheet": "shuup/classic_gray/pink/style.css",
+            "name": _("Candy Pink"),
+            "images": []
+        },
     ]
 
     def get_view(self, view_name):

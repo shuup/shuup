@@ -3,6 +3,7 @@
         <thead>
             <tr>
                 <th>{% trans %}Theme{% endtrans %}</th>
+                <th>{% trans %}Guide{% endtrans %}</th>
                 <th colspan="2">{% trans %}Actions{% endtrans %}</th>
             </tr>
         </thead>
@@ -21,6 +22,13 @@
                     {% endif %}
                 </td>
                 <td>
+                    {% if theme.guide_template %}
+                        <a href="{{ url("shuup_admin:xtheme.guide", theme_identifier=theme.identifier) }}">{% trans %}Show guide{% endtrans %}</a>
+                    {% else %}
+                        {% trans %}No guide{% endtrans %}
+                    {% endif %}
+                </td>
+                <td>
                     <span class="active {% if not active_theme %} hidden {% endif %}"><i class="fa fa-check text-success"></i> {% trans %}Currently active{% endtrans %}</span>
                     <button
                         name="activate"
@@ -30,6 +38,7 @@
                         <i class="fa fa-check-circle"></i> {% trans %}Activate{% endtrans %}
                     </button>
                 </td>
+
                 <td>
                     <a {% if new_tab %} target="_blank" {% endif %} href="{{ url("shuup_admin:xtheme.config_detail", theme_identifier=theme.identifier) }}" class="btn btn-sm btn-gray">
                         <i class="fa fa-cogs"></i> {% trans %}Configure{% endtrans %}
