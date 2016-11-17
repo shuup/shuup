@@ -23,7 +23,11 @@
                 </td>
                 <td>
                     {% if theme.guide_template %}
-                        <a href="{{ url("shuup_admin:xtheme.guide", theme_identifier=theme.identifier) }}">{% trans %}Show guide{% endtrans %}</a>
+                        {% if active_theme %}
+                            <a href="{{ url("shuup_admin:xtheme.guide", theme_identifier=theme.identifier) }}">{% trans %}Show guide{% endtrans %}</a>
+                        {% else %}
+                            {% trans %}Activate theme to show guide{% endtrans %}
+                        {% endif %}
                     {% else %}
                         {% trans %}No guide{% endtrans %}
                     {% endif %}
