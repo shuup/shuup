@@ -44,6 +44,14 @@ shuup.admin.views.select module
     :undoc-members:
     :show-inheritance:
 
+shuup.admin.views.tour module
+-----------------------------
+
+.. automodule:: shuup.admin.views.tour
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.admin.views.wizard module
 -------------------------------
 

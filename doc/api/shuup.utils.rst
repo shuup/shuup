@@ -28,6 +28,14 @@ shuup.utils.decorators module
     :undoc-members:
     :show-inheritance:
 
+shuup.utils.deprecation module
+------------------------------
+
+.. automodule:: shuup.utils.deprecation
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.utils.excs module
 -----------------------
 

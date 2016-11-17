@@ -44,6 +44,14 @@ shuup.front.views.index module
     :undoc-members:
     :show-inheritance:
 
+shuup.front.views.misc module
+-----------------------------
+
+.. automodule:: shuup.front.views.misc
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.front.views.order module
 ------------------------------
 

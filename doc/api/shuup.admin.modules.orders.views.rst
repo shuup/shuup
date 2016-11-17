@@ -60,6 +60,14 @@ shuup.admin.modules.orders.views.shipment module
     :undoc-members:
     :show-inheritance:
 
+shuup.admin.modules.orders.views.status module
+----------------------------------------------
+
+.. automodule:: shuup.admin.modules.orders.views.status
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

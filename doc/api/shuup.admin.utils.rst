@@ -52,6 +52,14 @@ shuup.admin.utils.str_utils module
     :undoc-members:
     :show-inheritance:
 
+shuup.admin.utils.tour module
+-----------------------------
+
+.. automodule:: shuup.admin.utils.tour
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.admin.utils.urls module
 -----------------------------
 
