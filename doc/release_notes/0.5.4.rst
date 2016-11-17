@@ -1,0 +1,26 @@
+Shuup 0.5.4 Release Notes
+=========================
+
+Released on 2016-11-16 21:45pm -0800.
+
+Add usability fixes to admin. Refactor order creator.
+Also multiple help texts for initializing shop is now
+available for merchant. Now the default language
+is actually first in the multilanguage tabs. This change
+possibly will lead to issues with addons using multilanguage
+model form. Admin has now option to modify and add order
+statuses.
+
+Front now has admin toolbar where the merchant can choose
+how products is shown instead of everything being visible
+for superuser. Also the xtheme editor including
+simple CMS got multiple improvements.
+
+There is now better tools for creating themes and themes can
+now introduce guide with preview images for the merchant.
+
+Multiple fixes and enhancements for previous versions.
+
+For all changes see the full changelog:
+:doc:`../shoop-changelog` or `Git commit log
+<https://github.com/shuup/shuup/commits/v0.5.4>`__.
