@@ -6,7 +6,7 @@
 <script>
 function toggleRowState($tr) {
     var $title = $tr.find(".title");
-    var $action = $($tr.find("td")[1]);
+    var $action = $($tr.find("td")[2]);
     if($tr.hasClass("active-row")) {
         $title.replaceWith("<span class='title'>" + $title.text() + "</span>");
     } else {
