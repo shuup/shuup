@@ -31,7 +31,7 @@
         <script type="text/javascript" src="{{ url("shuup_admin:js-catalog") }}?lang={{ LANGUAGE_CODE }}"></script>
     {% endif %}
 </head>
-<body>
+<body {% if request.user and request.user.is_superuser %} class="admin-tools-visible" {% endif %}>
     {{ macros.render_admin_tools() }}
     <nav class="main-nav">
         {{ render_navigation() }}
