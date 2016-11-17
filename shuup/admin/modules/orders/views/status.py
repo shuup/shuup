@@ -38,6 +38,14 @@ class OrderStatusForm(MultiLanguageModelForm):
             data["ordering"] = self.instance.ordering
             data["is_active"] = self.instance.is_active
             return data
+
+        qs = OrderStatus.objects.filter(identifier=self.cleaned_data["identifier"])
+        if self.instance.pk:
+            qs = qs.exclude(pk=self.instance.pk)
+
+        if qs.exists():
+            self.add_error("identifier", _("Identifier already exists"))
+
         return super(OrderStatusForm, self).clean()
 
     def save(self, commit=True):
