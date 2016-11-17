@@ -104,11 +104,18 @@ class ProductVerificationMode(Enum):
 class ProductType(TranslatableModel):
     identifier = InternalIdentifierField(unique=True)
     translations = TranslatedFields(
-        name=models.CharField(max_length=64, verbose_name=_('name')),
+        name=models.CharField(max_length=64, verbose_name=_('name'), help_text=_(
+                "Enter a descriptive name for your product type. "
+                "Products and attributes for products of this type can be found under this name."
+            )
+        ),
     )
     attributes = models.ManyToManyField(
         "Attribute", blank=True, related_name='product_types',
-        verbose_name=_('attributes'))
+        verbose_name=_('attributes'), help_text=_(
+            "Select attributes that go with your product type. These are defined in Products Settings – Attributes."
+        )
+    )
 
     class Meta:
         verbose_name = _('product type')
@@ -192,34 +199,104 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         "self", null=True, blank=True, related_name='variation_children',
         on_delete=models.PROTECT,
         verbose_name=_('variation parent'))
-    stock_behavior = EnumIntegerField(StockBehavior, default=StockBehavior.UNSTOCKED, verbose_name=_('stock'))
-    shipping_mode = EnumIntegerField(ShippingMode, default=ShippingMode.SHIPPED, verbose_name=_('shipping mode'))
-    sales_unit = models.ForeignKey("SalesUnit", verbose_name=_('unit'), blank=True, null=True, on_delete=models.PROTECT)
-    tax_class = models.ForeignKey("TaxClass", verbose_name=_('tax class'), on_delete=models.PROTECT)
+    stock_behavior = EnumIntegerField(
+        StockBehavior, default=StockBehavior.UNSTOCKED, verbose_name=_('stock'),
+        help_text=_("Set to stocked if inventory should be managed within Shuup.")
+    )
+    shipping_mode = EnumIntegerField(
+        ShippingMode, default=ShippingMode.SHIPPED, verbose_name=_('shipping mode'),
+        help_text=_("Set to shipped if the product requires shipment.")
+    )
+    sales_unit = models.ForeignKey(
+        "SalesUnit", verbose_name=_('sales unit'), blank=True, null=True, on_delete=models.PROTECT, help_text=_(
+            "Select a sales unit for your product. "
+            "This is shown in your store front and is used to determine whether the product can be purchased using "
+            "fractional amounts. Sales units are defined in Products - Sales Units."
+        )
+    )
+    tax_class = models.ForeignKey("TaxClass", verbose_name=_('tax class'), on_delete=models.PROTECT, help_text=_(
+            "Select a tax class for your product. "
+            "The tax class is used to determine which taxes to apply to your product. "
+            "Tax classes are defined in Settings - Tax Classes. "
+            "The rules by which taxes are applied are defined in Settings - Tax Rules."
+        )
+    )
 
     # Identification
     type = models.ForeignKey(
         "ProductType", related_name='products',
         on_delete=models.PROTECT, db_index=True,
-        verbose_name=_('product type'))
-    sku = models.CharField(db_index=True, max_length=128, verbose_name=_('SKU'), unique=True)
-    gtin = models.CharField(blank=True, max_length=40, verbose_name=_('GTIN'), help_text=_('Global Trade Item Number'))
-    barcode = models.CharField(blank=True, max_length=40, verbose_name=_('barcode'))
+        verbose_name=_('product type'),
+        help_text=_(
+            "Select a product type for your product. "
+            "These allow you to configure custom attributes to help with classification and analysis."
+        )
+    )
+    sku = models.CharField(
+        db_index=True, max_length=128, verbose_name=_('SKU'), unique=True,
+        help_text=_(
+            "Enter a SKU (Stock Keeping Unit) number for your product. "
+            "This is a product identification code that helps you track it through your inventory. "
+            "People often use the number by the barcode on the product, "
+            "but you can set up any numerical system you want to keep track of products."
+        )
+    )
+    gtin = models.CharField(blank=True, max_length=40, verbose_name=_('GTIN'), help_text=_(
+        "You can enter a Global Trade Item Number. "
+        "This is typically a 14 digit identification number for all of your trade items. "
+        "It can often be found by the barcode."
+    ))
+    barcode = models.CharField(blank=True, max_length=40, verbose_name=_('barcode'), help_text=_(
+        "You can enter the barcode number for your product. This is useful for inventory/stock tracking and analysis."
+    ))
     accounting_identifier = models.CharField(max_length=32, blank=True, verbose_name=_('bookkeeping account'))
     profit_center = models.CharField(max_length=32, verbose_name=_('profit center'), blank=True)
     cost_center = models.CharField(max_length=32, verbose_name=_('cost center'), blank=True)
 
     # Physical dimensions
-    width = MeasurementField(unit="mm", verbose_name=_('width (mm)'))
-    height = MeasurementField(unit="mm", verbose_name=_('height (mm)'))
-    depth = MeasurementField(unit="mm", verbose_name=_('depth (mm)'))
-    net_weight = MeasurementField(unit="g", verbose_name=_('net weight (g)'))
-    gross_weight = MeasurementField(unit="g", verbose_name=_('gross weight (g)'))
+    width = MeasurementField(
+        unit="mm", verbose_name=_('width (mm)'),
+        help_text=_(
+            "Set the measured width of your product or product packaging. "
+            "This will provide customers with your product size and help with calculating shipping costs."
+        )
+    )
+    height = MeasurementField(
+        unit="mm", verbose_name=_('height (mm)'),
+        help_text=_(
+            "Set the measured height of your product or product packaging. "
+            "This will provide customers with your product size and help with calculating shipping costs."
+        )
+    )
+    depth = MeasurementField(
+        unit="mm", verbose_name=_('depth (mm)'),
+        help_text=_(
+            "Set the measured depth or length of your product or product packaging. "
+            "This will provide customers with your product size and help with calculating shipping costs."
+        )
+    )
+    net_weight = MeasurementField(
+        unit="g", verbose_name=_('net weight (g)'),
+        help_text=_(
+            "Set the measured weight of your product WITHOUT its packaging. "
+            "This will provide customers with your product weight."
+        )
+    )
+    gross_weight = MeasurementField(
+        unit="g", verbose_name=_('gross weight (g)'),
+        help_text=_(
+            "Set the measured gross Weight of your product WITH its packaging. "
+            "This will help with calculating shipping costs."
+        )
+    )
 
     # Misc.
     manufacturer = models.ForeignKey(
         "Manufacturer", blank=True, null=True,
-        verbose_name=_('manufacturer'), on_delete=models.PROTECT)
+        verbose_name=_('manufacturer'), on_delete=models.PROTECT, help_text=_(
+            "Select a manufacturer for your product. These are defined in Products Settings - Manufacturers"
+        )
+    )
     primary_image = models.ForeignKey(
         "ProductMedia", null=True, blank=True,
         related_name="primary_image_for_products",
@@ -227,19 +304,47 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         verbose_name=_("primary image"))
 
     translations = TranslatedFields(
-        name=models.CharField(max_length=256, verbose_name=_('name')),
-        description=models.TextField(blank=True, verbose_name=_('description')),
-        slug=models.SlugField(verbose_name=_('slug'), max_length=255, blank=True, null=True),
-        keywords=models.TextField(blank=True, verbose_name=_('keywords')),
+        name=models.CharField(
+            max_length=256, verbose_name=_('name'),
+            help_text=_("Enter a descriptive name for your product. This will be its title in your store.")),
+        description=models.TextField(
+            blank=True, verbose_name=_('description'),
+            help_text=_(
+                "To make your product stand out, give it an awesome description. "
+                "This is what will help your shoppers learn about your products. "
+                "It will also help shoppers find them in the store and on the web."
+            )
+        ),
+        slug=models.SlugField(
+            verbose_name=_('slug'), max_length=255, blank=True, null=True,
+            help_text=_(
+                "Enter a URL Slug for your product. This is what your product page URL will be. "
+                "A default will be created using the product name."
+            )
+        ),
+        keywords=models.TextField(blank=True, verbose_name=_('keywords'), help_text=_(
+                "You can enter keywords that describe your product. "
+                "This will help your shoppers learn about your products. "
+                "It will also help shoppers find them in the store and on the web."
+            )
+        ),
         status_text=models.CharField(
             max_length=128, blank=True,
             verbose_name=_('status text'),
             help_text=_(
-                'This text will be shown alongside the product in the shop.'
-                ' (Ex.: "Available in a month")')),
+                'This text will be shown alongside the product in the shop. '
+                'It is useful for informing customers of special stock numbers or preorders. '
+                '(Ex.: "Available in a month")'
+            )
+        ),
         variation_name=models.CharField(
             max_length=128, blank=True,
-            verbose_name=_('variation name'))
+            verbose_name=_('variation name'),
+            help_text=_(
+                "You can enter a name for the variation of your product. "
+                "This could be for example different colors or versions."
+            )
+        )
     )
 
     objects = ProductQuerySet.as_manager()

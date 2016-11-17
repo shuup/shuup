@@ -42,8 +42,8 @@ def test_formatted_decimal_field():
         product = Product(width=Decimal(value))
         form = TestModelForm(instance=product)
         rendered_form = force_text(form)
-        rendered_value = re.search('value="(.*)"', rendered_form).group(1)
-        rendered_step = re.search('step="(.*)"', rendered_form).group(1)
+        rendered_value = re.search('value="(.*?)"', rendered_form).group(1)
+        rendered_step = re.search('step="(.*?)"', rendered_form).group(1)
         assert rendered_value and "E" not in rendered_value
         assert rendered_step and "E" not in rendered_step
 
@@ -90,5 +90,5 @@ def test_formatted_decimal_field_default():
             fields = ["width"]
 
     rendered_form = force_text(TestModelForm(instance=Product()))
-    rendered_value = re.search('value="(.*)"', rendered_form).group(1)
+    rendered_value = re.search('value="(.*?)"', rendered_form).group(1)
     assert rendered_value == "0"
