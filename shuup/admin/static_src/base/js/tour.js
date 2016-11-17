@@ -112,12 +112,10 @@
     }
 
     $(document).ready(function() {
-        if(typeof window.runTour !== "undefined") {
-            $("#top-header .show-tour-li").removeClass("hidden").on("click", "a", function(e){
-                e.preventDefault();
-                $.tour();
-            });
-        }
+        $("#top-header .show-tour-li").on("click", "a", function(e){
+            e.preventDefault();
+            $.tour();
+        });
     });
 
     $.tour = function(config={}, params) {
