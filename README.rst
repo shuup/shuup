@@ -1,3 +1,8 @@
+.. image:: https://travis-ci.org/shuup/shuup.svg?branch=master
+    :target: https://travis-ci.org/shuup/shuup
+.. image:: https://coveralls.io/repos/github/shuup/shuup/badge.svg?branch=master
+   :target: https://coveralls.io/github/shuup/shuup?branch=master
+
 Shuup
 =====
 
