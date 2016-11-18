@@ -30,13 +30,13 @@ from six import BytesIO
 from shuup.core.defaults.order_statuses import create_default_order_statuses
 from shuup.core.models import (
     AnonymousContact, Attribute, AttributeType, AttributeVisibility, Category,
-    CategoryStatus, CompanyContact, Contact, ContactGroup, CustomCarrier,
-    CustomPaymentProcessor, FixedCostBehaviorComponent, MutableAddress, Order,
-    OrderLine, OrderLineTax, OrderLineType, OrderStatus, PaymentMethod,
-    PersonContact, Product, ProductMedia, ProductMediaKind, ProductType,
-    SalesUnit, ShippingMethod, Shop, ShopProduct, ShopProductVisibility,
-    ShopStatus, StockBehavior, Supplier, SupplierType, Tax, TaxClass,
-    WaivingCostBehaviorComponent
+    CategoryStatus, CompanyContact, Contact, ContactGroup, Currency,
+    CustomCarrier, CustomPaymentProcessor, FixedCostBehaviorComponent,
+    MutableAddress, Order, OrderLine, OrderLineTax, OrderLineType, OrderStatus,
+    PaymentMethod, PersonContact, Product, ProductMedia, ProductMediaKind,
+    ProductType, SalesUnit, ShippingMethod, Shop, ShopProduct,
+    ShopProductVisibility, ShopStatus, StockBehavior, Supplier, SupplierType,
+    Tax, TaxClass, WaivingCostBehaviorComponent
 )
 from shuup.core.order_creator import OrderCreator, OrderSource
 from shuup.core.pricing import get_pricing_module
@@ -50,6 +50,7 @@ from .image_generator import generate_image
 
 DEFAULT_IDENTIFIER = "default"
 DEFAULT_NAME = "Default"
+DEFAULT_CURRENCY = "EUR"
 
 DEFAULT_ADDRESS_DATA = dict(
     prefix="Sir",
@@ -299,6 +300,21 @@ def get_default_tax_class():
     return tax_class
 
 
+def get_currency(code, digits=2):
+    currency = Currency.objects.filter(code=code).first()
+    if not currency:
+        currency = Currency.objects.create(
+            code=code,
+            decimal_places=digits
+        )
+        assert currency.pk
+    return currency
+
+
+def get_default_currency():
+    return get_currency(DEFAULT_CURRENCY, 2)
+
+
 def get_custom_payment_processor():
     return _get_service_provider(CustomPaymentProcessor)
 
@@ -397,16 +413,20 @@ def get_default_shop():
             name=DEFAULT_NAME,
             identifier=DEFAULT_IDENTIFIER,
             status=ShopStatus.ENABLED,
-            public_name=DEFAULT_NAME
+            public_name=DEFAULT_NAME,
+            currency=get_default_currency().code
         )
         assert str(shop) == DEFAULT_NAME
     return shop
 
 
-def get_shop(prices_include_tax, currency="EUR"):
+def get_shop(prices_include_tax, currency=DEFAULT_CURRENCY):
     key = "shop:%s/taxful=%s" % (currency, prices_include_tax)
     values = {"prices_include_tax": prices_include_tax, "currency": currency}
     shop = Shop.objects.get_or_create(identifier=key, defaults=values)[0]
+
+    # make sure that the currency is available throughout the Shuup
+    get_currency(code=currency)
 
     # Make our default product available to the new shop
     product = get_default_product()

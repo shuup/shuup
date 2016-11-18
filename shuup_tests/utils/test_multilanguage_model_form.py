@@ -131,6 +131,7 @@ def test_model_form_partially_translated():
         translation.refresh_from_db()  # Just in case if the translation object comes from cache or something
 
 
+@pytest.mark.django_db
 def test_form_labels():
     shop_form = ShopBaseForm(languages=[("en", "en")])
     assert shop_form.base_fields["name__en"].label == "Name"

@@ -70,7 +70,7 @@ class ShippingMethodModule(ServiceModule):
     view_template = "shuup.admin.modules.services.views.ShippingMethod%sView"
     name_template = "shipping_method.%s"
     menu_entry_url = "shuup_admin:shipping_method.list"
-    menu_ordering = 3
+    menu_ordering = 4
     url_name_prefix = "shuup_admin:shipping_method"
 
     breadcrumbs_menu_entry = MenuEntry(text=name, url="shuup_admin:shipping_method.list")
@@ -83,7 +83,7 @@ class PaymentMethodModule(ServiceModule):
     view_template = "shuup.admin.modules.services.views.PaymentMethod%sView"
     name_template = "payment_method.%s"
     menu_entry_url = "shuup_admin:payment_method.list"
-    menu_ordering = 4
+    menu_ordering = 5
     url_name_prefix = "shuup_admin:payment_method"
 
     breadcrumbs_menu_entry = MenuEntry(text=name, url="shuup_admin:payment_method.list")

@@ -13,7 +13,6 @@ from django.utils.translation import ugettext as _
 
 from shuup.core.fields.utils import ensure_decimal_places
 from shuup.utils.money import Money
-from shuup.utils.numbers import bankers_round
 
 from ._line_tax import LineTax
 
@@ -37,7 +36,7 @@ class TaxSummary(list):
             assert isinstance(line_tax, LineTax)
             tax_amount_by_tax[line_tax.tax] += line_tax.amount
             raw_base_amount_by_tax[line_tax.tax] += line_tax.base_amount
-            base_amount_by_tax[line_tax.tax] += bankers_round(line_tax.base_amount, 2)
+            base_amount_by_tax[line_tax.tax] += line_tax.base_amount.as_rounded()
 
         lines = [
             TaxSummaryLine.from_tax(tax, base_amount_by_tax[tax], raw_base_amount_by_tax[tax], tax_amount)
@@ -47,7 +46,7 @@ class TaxSummary(list):
             lines.append(
                 TaxSummaryLine(
                     tax_id=None, tax_code='', tax_name=_("Untaxed"),
-                    tax_rate=Decimal(0), based_on=bankers_round(untaxed.amount, 2),
+                    tax_rate=Decimal(0), based_on=untaxed.amount.as_rounded(),
                     raw_based_on=untaxed.amount, tax_amount=zero_amount))
         return cls(sorted(lines, key=TaxSummaryLine.get_sort_key))
 
@@ -73,7 +72,7 @@ class TaxSummaryLine(object):
         self.raw_based_on = ensure_decimal_places(raw_based_on)
         self.based_on = ensure_decimal_places(based_on)
         self.tax_amount = ensure_decimal_places(tax_amount)
-        self.taxful = bankers_round(self.raw_based_on + tax_amount, 2)
+        self.taxful = (self.raw_based_on + tax_amount).as_rounded()
 
     def get_sort_key(self):
         return (-self.tax_rate or 0, self.tax_name)

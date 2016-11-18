@@ -13,9 +13,9 @@ from django.utils import translation
 from shuup.core.models import Category, Product, ShopProduct
 
 from .factories import (
-    CategoryFactory, create_default_order_statuses, get_default_customer_group,
-    get_default_payment_method, get_default_shipping_method, get_default_shop,
-    ProductFactory
+    CategoryFactory, create_default_order_statuses, get_currency,
+    get_default_customer_group, get_default_payment_method,
+    get_default_shipping_method, get_default_shop, ProductFactory
 )
 
 
@@ -30,6 +30,12 @@ class Populator:
         get_default_payment_method()
         get_default_shipping_method()
         create_default_order_statuses()
+        get_currency("EUR")
+        get_currency("USD")
+        get_currency("BRL")
+        get_currency("GBP")
+        get_currency("CNY")
+        get_currency("JPY", digits=0)
 
         category_created = False
         while Category.objects.count() < 5:

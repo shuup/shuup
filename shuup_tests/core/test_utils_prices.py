@@ -19,7 +19,9 @@ from shuup.core.models import (
 from shuup.core.pricing import PriceInfo, TaxfulPrice, TaxlessPrice
 from shuup.core.taxing import SourceLineTax, TaxedPrice, TaxModule
 from shuup.core.utils.prices import convert_taxness
-from shuup.utils.money import Money
+from shuup.utils import babel_precision_provider
+from shuup.utils.money import Money, set_precision_provider
+from shuup.testing.factories import get_currency
 
 
 
@@ -32,6 +34,9 @@ tax_mod_overrider = override_provides("tax_module", [TAX_MODULE_SPEC])
 def setup_module(module):
     settings.SHUUP_TAX_MODULE = "dummy_tax_module"
     tax_mod_overrider.__enter__()
+
+    # uses the get_precision to avoid db hits
+    set_precision_provider(babel_precision_provider.get_precision)
 
 
 def teardown_module(module):
@@ -65,6 +70,8 @@ class DummyTaxModule(TaxModule):
     (False, TaxlessPrice),
     (True, TaxfulPrice),
 ])
+
+
 def test_convert_taxness_without_conversion(taxes, price_cls):
     request = get_request()
     item = Product()

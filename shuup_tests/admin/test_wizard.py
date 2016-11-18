@@ -18,7 +18,9 @@ from shuup.core.models import (
     CustomCarrier, CustomPaymentProcessor, PaymentMethod, ServiceProvider,
     ShippingMethod, Shop, ShopStatus, TaxClass
 )
-from shuup.testing.factories import get_default_shop, get_default_tax_class
+from shuup.testing.factories import (
+    get_currency, get_default_shop, get_default_tax_class
+)
 from shuup.testing.soup_utils import extract_form_fields
 from shuup.testing.utils import apply_request_middleware
 from shuup.xtheme._theme import get_current_theme
@@ -54,6 +56,7 @@ def test_shop_wizard_pane(rf, admin_user, settings):
         "shuup.admin.modules.shops.views:ShopWizardPane"
     ]
     shop = Shop.objects.create()
+    currency = get_currency("USD")
     assert not shop.contact_address
     assert not TaxClass.objects.exists()
     fields = _extract_fields(rf, admin_user)

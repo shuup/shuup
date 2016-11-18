@@ -5,10 +5,12 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import pytest
 from decimal import Decimal
 
 from shuup.core.pricing import Priceful, TaxfulPrice, TaxlessPrice
-from shuup.utils.money import Money
+from shuup.utils import babel_precision_provider
+from shuup.utils.money import Money, set_precision_provider
 
 
 class Line(Priceful):
@@ -36,6 +38,11 @@ line2 = Line(
     discount_amount=TaxfulPrice(0, 'EUR'),
     tax_amount=Money(123, 'EUR')
 )
+
+
+def setup_module(module):
+    # uses the get_precision to avoiding db hits
+    set_precision_provider(babel_precision_provider.get_precision)
 
 
 def test_price():

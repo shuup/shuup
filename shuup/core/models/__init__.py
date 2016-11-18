@@ -22,6 +22,7 @@ from ._contacts import (
     get_company_contact, get_person_contact, PersonContact
 )
 from ._counters import Counter, CounterType
+from ._currencies import Currency, get_currency_precision
 from ._manufacturers import Manufacturer
 from ._order_lines import OrderLine, OrderLineTax, OrderLineType
 from ._orders import (
@@ -83,9 +84,11 @@ __all__ = [
     "CustomCarrier",
     "CustomerTaxGroup",
     "CustomPaymentProcessor",
+    "Currency",
     "DefaultOrderStatus",
     "FixedCostBehaviorComponent",
     "get_company_contact",
+    "get_currency_precision",
     "get_person_contact",
     "Gender",
     "ImmutableAddress",

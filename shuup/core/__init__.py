@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from shuup.apps import AppConfig
 from shuup.core.excs import MissingSettingException
+from shuup.utils import money
 
 
 class ShuupCoreAppConfig(AppConfig):
@@ -34,6 +35,10 @@ class ShuupCoreAppConfig(AppConfig):
             raise MissingSettingException("PARLER_DEFAULT_LANGUAGE_CODE must be set.")
         if not getattr(settings, "PARLER_LANGUAGES", None):
             raise MissingSettingException("PARLER_LANGUAGES must be set.")
+
+        # set money precision provider function
+        from .models import get_currency_precision
+        money.set_precision_provider(get_currency_precision)
 
 
 default_app_config = "shuup.core.ShuupCoreAppConfig"
