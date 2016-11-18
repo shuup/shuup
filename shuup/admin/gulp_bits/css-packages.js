@@ -40,10 +40,6 @@ module.exports = {
          "base": "./static_src/vendor/css",
          "entrypoint": "select2.css"
      },
-     "imagelightbox": {
-         "base": "./static_src/vendor/css",
-         "entrypoint": "imagelightbox.min.css"
-     },
      "wizard": {
          "base": "./static_src/wizard",
          "entrypoint": "less/wizard.less",

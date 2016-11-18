@@ -30,7 +30,7 @@
                     </div>
                 {% endif %}
 
-                {% if has_images %}
+                {% if theme.has_images() %}
                 <div id="theme-images">
                     <div class="row">
                     {% for style_definition in theme.stylesheets %}
@@ -39,11 +39,15 @@
                                 {% set active = " active" if style_definition.stylesheet == active_stylesheet else "" %}
                                 <div class="col-md-4 theme-screenshot{{ active }}" data-identifier="{{ style_definition.identifier }}">
                                     <div class="theme-name">{{ style_definition.name }}</div>
-                                    <a class="theme-image" href="{{ STATIC_URL }}{{ image }}">
+                                    <a class="theme-image lightbox" href="{{ STATIC_URL }}{{ image }}">
                                         <img src="{{ STATIC_URL }}{{ image }}">
                                     </a>
                                     <div class="tools">
-                                        <button class="btn btn-primary theme-select" data-target="{{ style_definition.stylesheet }}">select</button>
+                                        <button
+                                                class="btn btn-primary theme-select"
+                                                data-target="{{ style_definition.stylesheet }}">
+                                            {% trans %}Select theme{% endtrans %}
+                                        </button>
                                     </div>
                                 </div>
                             {% endfor %}
@@ -59,15 +63,8 @@
     {% endcall %}
 {% endblock %}
 {% block extra_css %}
-    <link rel="stylesheet" href="{{ static("shuup_admin/css/imagelightbox.css") }}">
     <link rel="stylesheet" href="{{ static("xtheme/admin/xtheme_admin.css") }}">
 {% endblock %}
 {% block extra_js %}
-    <script src="{{ static("shuup_admin/js/imagelightbox.js") }}"></script>
     <script src="{{ static("xtheme/admin/admin.js") }}"></script>
-    <script>
-        $(document).ready(function() {
-            $(".theme-image").imageLightbox();
-        });
-    </script>
 {% endblock %}

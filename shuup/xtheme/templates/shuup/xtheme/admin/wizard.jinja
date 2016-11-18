@@ -1,12 +1,46 @@
-{% from "shuup/xtheme/admin/macros.jinja" import theme_table %}
+{% from "shuup/xtheme/admin/macros.jinja" import wizard_theme_table %}
+{% set themes = form_def.context["theme_classes"] %}
+{% set active_theme = form_def.context["current_theme"] %}
+{% set active_stylesheet = active_theme().get_default_style().stylesheet %}
+<input type="hidden" name="theme-activate" value="{{ active_theme.identifier }}">
+<input type="hidden" name="theme-selected_style" value="{{ active_stylesheet }}">
+{{ wizard_theme_table(themes, active_theme, "chooseTheme(this)", True) }}
 
-<input type="hidden" name="theme-activate" value="{{ form_def.context["current_theme"].identifier }}">
-{{ theme_table(form_def.context["theme_classes"], form_def.context["current_theme"], "chooseTheme(this)", True) }}
+<div id="theme-images">
+{% for theme in themes %}
+    {% if theme().has_images() %}
+        <div class="row">
+        {% for style_definition in theme.stylesheets %}
+            {% if style_definition.identifier %}
+                {% for image in style_definition.images %}
+                    {% set active = " active" if style_definition.stylesheet == active_stylesheet else "" %}
+                    <div class="col-md-3 theme-screenshot{{ active }}" data-identifier="{{ style_definition.identifier }}">
+                        <div class="theme-name">{{ style_definition.name }}</div>
+                        <a class="theme-image lightbox" href="{{ STATIC_URL }}{{ image }}">
+                            <img src="{{ STATIC_URL }}{{ image }}">
+                        </a>
+                        <div class="tools">
+                            <button
+                                    class="btn btn-primary theme-select"
+                                    data-stylesheet="{{ style_definition.stylesheet }}"
+                                    data-theme="{{ theme.identifier }}" onclick="chooseStyle(event, this);">
+                                {% trans %}Select theme{% endtrans %}
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+        </div>
+        <div style="clear:both;"></div>
+    {% endif %}
+{% endfor %}
+</div>
 
 <script>
 function toggleRowState($tr) {
     var $title = $tr.find(".title");
-    var $action = $($tr.find("td")[2]);
+    var $action = $($tr.find("td")[1]);
     if($tr.hasClass("active-row")) {
         $title.replaceWith("<span class='title'>" + $title.text() + "</span>");
     } else {
@@ -17,10 +51,32 @@ function toggleRowState($tr) {
     $tr.toggleClass("active-row");
 }
 
+function setDefaultStylesheet(stylesheet) {
+    $(".wizard-pane.active form input[name='theme-selected_style']").val(stylesheet);
+}
+
 function chooseTheme(button) {
     $(".wizard-pane.active form input[name='theme-activate']").val(button.value);
     toggleRowState($(".theme-table .active-row"));
     toggleRowState($(button).parents("tr"));
+    setDefaultStylesheet($(button).data("default-stylesheet"));
     // actual submission happens when user clicks next in wizard
 }
+
+function chooseStyle(event, button) {
+    event.preventDefault();
+    var stylesheet = $(button).data("stylesheet");
+    var theme = $(button).data("theme");
+    var targetButton = document.getElementById("theme-activate-" + theme);
+    $(".theme-screenshot").each(function(idx, elem) {$(elem).removeClass("active")});
+    $(button).closest(".theme-screenshot").addClass("active");
+
+    // the usual tricks
+    chooseTheme(targetButton);
+    setDefaultStylesheet(stylesheet);
+}
+
 </script>
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ static("xtheme/admin/xtheme_admin.css") }}">
+{% endblock %}

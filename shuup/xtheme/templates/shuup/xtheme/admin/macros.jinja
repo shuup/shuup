@@ -53,3 +53,43 @@
         </tbody>
     </table>
 {% endmacro %}
+
+{% macro wizard_theme_table(theme_classes, current_theme, on_activate="", new_tab=False) %}
+    <table class="table table-striped table-bordered table-shuup theme-table">
+        <thead>
+            <tr>
+                <th>{% trans %}Theme Name{% endtrans %}</th>
+                <th>{% trans %}Actions{% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for theme in theme_classes %}
+            {% set active_theme = current_theme and theme.identifier == current_theme.identifier %}
+            <tr {% if active_theme %} class="active-row" {% endif %} id="{{ theme.identifier }}">
+                <td>
+                    {% if current_theme and theme.identifier == current_theme.identifier %}
+                        <strong class="title">{{ theme.name or theme.identifier }}</strong>
+                    {% else %}
+                        <span class="title">{{ theme.name or theme.identifier }}</span>
+                    {% endif %}
+                    {% if theme.author %}
+                        <br><small class="text-muted">{% trans %}Author{% endtrans %}: {{ theme.author }}</small>
+                    {% endif %}
+                </td>
+                <td>
+                    <span class="active {% if not active_theme %} hidden {% endif %}"><i class="fa fa-check text-success"></i> {% trans %}Currently active{% endtrans %}</span>
+                    <button
+                        name="activate"
+                        value="{{ theme.identifier }}"
+                        id="theme-activate-{{ theme.identifier }}"
+                        data-default-stylesheet="{{ theme().get_default_style().stylesheet }}"
+                        {% if on_activate != "" %} type="button" onclick="{{ on_activate }}" {% else %} type="submit" {% endif %}
+                        class="btn btn-sm btn-success {% if active_theme %} hidden {% endif %}">
+                        <i class="fa fa-check-circle"></i> {% trans %}Activate{% endtrans %}
+                    </button>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}
