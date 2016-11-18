@@ -43,7 +43,11 @@
                                         <img src="{{ STATIC_URL }}{{ image }}">
                                     </a>
                                     <div class="tools">
-                                        <button class="btn btn-primary theme-select" data-target="{{ style_definition.stylesheet }}">select</button>
+                                        <button
+                                                class="btn btn-primary theme-select"
+                                                data-target="{{ style_definition.stylesheet }}">
+                                            {% trans %}Select theme{% endtrans %}
+                                        </button>
                                     </div>
                                 </div>
                             {% endfor %}
