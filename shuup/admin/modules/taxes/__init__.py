@@ -50,19 +50,19 @@ class TaxModule(AdminModule):
                 text=_("Taxes"), icon="fa fa-pie-chart",
                 url="shuup_admin:tax.list",
                 category=category,
-                ordering=7
+                ordering=8
             ),
             MenuEntry(
                 text=_("Customer Tax Groups"), icon="fa fa-pie-chart",
                 url="shuup_admin:customer_tax_group.list",
                 category=category,
-                ordering=5
+                ordering=6
             ),
             MenuEntry(
                 text=_("Tax Classes"), icon="fa fa-pie-chart",
                 url="shuup_admin:tax_class.list",
                 category=category,
-                ordering=6
+                ordering=7
             )
         ]
 

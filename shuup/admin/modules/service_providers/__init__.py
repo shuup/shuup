@@ -48,7 +48,7 @@ class ServiceProviderModule(AdminModule):
                 icon="fa fa-truck",
                 url="shuup_admin:service_provider.list",
                 category=SETTINGS_MENU_CATEGORY,
-                ordering=2
+                ordering=3
             )
         ]
 
