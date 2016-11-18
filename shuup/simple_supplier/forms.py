@@ -6,20 +6,28 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.core.settings import SHUUP_HOME_CURRENCY
+from shuup.core.models import Shop
 from shuup.utils.i18n import get_currency_name
 
 
 class StockAdjustmentForm(forms.Form):
     purchase_price = forms.DecimalField(
         label=_("Purchase price per unit (%(currency_name)s)") % {
-            "currency_name": get_currency_name(SHUUP_HOME_CURRENCY)
+            "currency_name": get_currency_name(settings.SHUUP_HOME_CURRENCY)
         }
     )
     delta = forms.DecimalField(label=_("Quantity"))
+
+    def __init__(self, *args, **kwargs):
+        super(StockAdjustmentForm, self).__init__(*args, **kwargs)
+        if not settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
+            self.fields["purchase_price"].label = "Purchase price per unit (%(currency_name)s)" % {
+                "currency_name": get_currency_name(Shop.objects.first().currency)
+            }
 
     def clean_delta(self):
         delta = self.cleaned_data.get("delta")

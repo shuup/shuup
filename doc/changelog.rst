@@ -33,6 +33,9 @@ Classic Gray Theme
 Simple Supplier
 ~~~~~~~~~~~~~~~
 
+- Use shop price properties when in single shop mode for adjustments
+  and counts
+
 Order Printouts
 ~~~~~~~~~~~~~~~
 

@@ -7,13 +7,27 @@
 # LICENSE file in the root directory of this source tree.
 from django.conf import settings
 from django.db import models
+from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from enumfields import EnumIntegerField
 
 from shuup.core.fields import MoneyValueField, QuantityField
-from shuup.core.settings import SHUUP_HOME_CURRENCY
 from shuup.core.suppliers.enums import StockAdjustmentType
 from shuup.utils.properties import PriceProperty
+
+
+def _get_currency():
+    from shuup.core.models import Shop
+    if not settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
+        return Shop.objects.first().currency
+    return settings.SHUUP_HOME_CURRENCY
+
+
+def _get_prices_include_tax():
+    from shuup.core.models import Shop
+    if not settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
+        return Shop.objects.first().prices_include_tax
+    return False
 
 
 class StockAdjustment(models.Model):
@@ -28,13 +42,13 @@ class StockAdjustment(models.Model):
     type = EnumIntegerField(
         StockAdjustmentType, db_index=True, default=StockAdjustmentType.INVENTORY, verbose_name=_("type"))
 
-    @property
+    @cached_property
     def currency(self):
-        return SHUUP_HOME_CURRENCY
+        return _get_currency()
 
-    @property
+    @cached_property
     def includes_tax(self):
-        return False
+        return _get_prices_include_tax()
 
 
 class StockCount(models.Model):
@@ -52,13 +66,13 @@ class StockCount(models.Model):
     class Meta:
         unique_together = [("product", "supplier")]
 
-    @property
+    @cached_property
     def currency(self):
-        return SHUUP_HOME_CURRENCY
+        return _get_currency()
 
-    @property
+    @cached_property
     def includes_tax(self):
-        return False
+        return _get_prices_include_tax()
 
     @property
     def stock_unit_price_value(self):

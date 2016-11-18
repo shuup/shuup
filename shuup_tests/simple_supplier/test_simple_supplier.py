@@ -6,8 +6,9 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import decimal
-import pytest
 import random
+
+import pytest
 
 from shuup.admin.modules.products.views.edit import ProductEditView
 from shuup.core.models import StockBehavior, Supplier
@@ -15,8 +16,7 @@ from shuup.simple_supplier.admin_module.forms import SimpleSupplierForm
 from shuup.simple_supplier.admin_module.views import (
     process_alert_limit, process_stock_adjustment
 )
-from shuup.simple_supplier.models import StockCount
-
+from shuup.simple_supplier.models import StockAdjustment, StockCount
 from shuup.testing.factories import (
     create_order_with_product, create_product, get_default_shop
 )
@@ -53,7 +53,6 @@ def test_simple_supplier(rf):
 @pytest.mark.django_db
 def test_supplier_with_stock_counts(rf):
     supplier = get_simple_supplier()
-    shop = get_default_shop()
     product = create_product("simple-test-product", shop, supplier)
     quantity = random.randint(100, 600)
     supplier.adjust_stock(product.pk, quantity)
@@ -70,9 +69,12 @@ def test_supplier_with_stock_counts(rf):
 
 
 @pytest.mark.django_db
-def test_supplier_with_stock_counts(rf, admin_user):
+def test_supplier_with_stock_counts(rf, admin_user, settings):
     supplier = get_simple_supplier()
     shop = get_default_shop()
+    settings.SHUUP_HOME_CURRENCY = "USD"
+    assert shop.prices_include_tax
+    assert shop.currency != settings.SHUUP_HOME_CURRENCY
     product = create_product("simple-test-product", shop, supplier)
     quantity = random.randint(100, 600)
     supplier.adjust_stock(product.pk, quantity)
@@ -91,6 +93,25 @@ def test_supplier_with_stock_counts(rf, admin_user):
     pss = supplier.get_stock_status(product.pk)
     # Product stock values should be adjusted
     assert pss.logical_count == (quantity + adjust_quantity)
+    # test price properties
+    sa = StockAdjustment.objects.first()
+    assert sa.purchase_price.currency == shop.currency
+    assert sa.purchase_price.includes_tax
+    sc = StockCount.objects.first()
+    assert sc.stock_value.currency == shop.currency
+    assert sc.stock_value.includes_tax
+    assert sc.stock_unit_price.currency == shop.currency
+    assert sc.stock_unit_price.includes_tax
+    settings.SHUUP_ENABLE_MULTIPLE_SHOPS = True
+    sa = StockAdjustment.objects.first() # refetch to invalidate cache
+    assert sa.purchase_price.currency != shop.currency
+    assert sa.purchase_price.currency == settings.SHUUP_HOME_CURRENCY
+    assert not sa.purchase_price.includes_tax
+    sc = StockCount.objects.first()
+    assert sc.stock_value.currency == settings.SHUUP_HOME_CURRENCY
+    assert not sc.stock_value.includes_tax
+    assert sc.stock_unit_price.currency == settings.SHUUP_HOME_CURRENCY
+    assert not sc.stock_unit_price.includes_tax
 
 
 @pytest.mark.django_db
