@@ -30,7 +30,7 @@
                     </div>
                 {% endif %}
 
-                {% if has_images %}
+                {% if theme.has_images() %}
                 <div id="theme-images">
                     <div class="row">
                     {% for style_definition in theme.stylesheets %}

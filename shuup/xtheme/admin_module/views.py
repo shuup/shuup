@@ -6,8 +6,6 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import warnings
-
 from django import forms
 from django.contrib import messages
 from django.core.urlresolvers import reverse
@@ -19,7 +17,6 @@ from django.views.generic.edit import FormView
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.admin.views.wizard import TemplatedWizardFormDef, WizardPane
 from shuup.apps.provides import get_provide_objects
-from shuup.utils.deprecation import RemovedInFutureShuupWarning
 from shuup.xtheme._theme import (
     get_current_theme, get_theme_by_identifier, set_current_theme
 )
@@ -117,14 +114,8 @@ class ThemeConfigDetailView(CreateOrUpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(ThemeConfigDetailView, self).get_context_data(**kwargs)
-        context["theme"] = theme = self.get_theme()
+        context["theme"] = self.get_theme()
         context["active_stylesheet"] = self.object.data.get("settings", {}).get("stylesheet", None)
-        if isinstance(theme.stylesheets[0], dict):
-            context["has_images"] = True
-        else:
-            warnings.warn(
-                "Using list of tuples in theme.stylesheets will deprecate "
-                "in Shuup 0.5.7. Use list of dictionaries instead.", RemovedInFutureShuupWarning)
         return context
 
     def get_form(self, form_class=None):

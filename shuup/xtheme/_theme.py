@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import logging
+import warnings
 from contextlib import contextmanager
 
 from django.utils.translation import ugettext_lazy as _
@@ -13,6 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.apps.provides import (
     get_identifier_to_object_map, get_provide_objects
 )
+from shuup.utils.deprecation import RemovedInFutureShuupWarning
 from shuup.utils.importing import load
 
 log = logging.getLogger(__name__)
@@ -86,6 +88,9 @@ class Theme(object):
     stylesheets provided by this theme.
     """
     stylesheets = []
+
+    # identifier for the stylesheet provided by default
+    default_style_identifier = None
 
     # List of plugin specs used in this template
     plugins = []
@@ -268,6 +273,55 @@ class Theme(object):
         choices.sort()
         return choices
 
+    def has_stylesheets(self):
+        return bool(self.stylesheets)
+
+    def has_images(self):
+        """
+        Check if theme has images available
+
+        :return: True or False
+        :rtype: bool
+        """
+        if not self.has_stylesheets():
+            return False
+
+        if isinstance(self.stylesheets[0], dict):
+            for sheet in self.stylesheets:
+                if sheet.get("images", None):
+                    return True
+        else:
+            warnings.warn(
+                "Using list of tuples in theme.stylesheets will deprecate "
+                "in Shuup 0.5.7. Use list of dictionaries instead.", RemovedInFutureShuupWarning)
+        return False
+
+    def get_default_style(self):
+        blank = {"stylesheet": "", "name": self.name}
+        if not self.has_stylesheets():
+            return blank
+
+        old_style = False if isinstance(self.stylesheets[0], dict) else True
+        if old_style:
+            warnings.warn(
+                "Using list of tuples in theme.stylesheets will deprecate "
+                "in Shuup 0.5.7. Use list of dictionaries instead.", RemovedInFutureShuupWarning)
+
+            # just return this, no identifier available
+            stylesheet, name = self.stylesheets[0]
+            return {
+                "stylesheet": stylesheet,
+                "name": name
+            }
+
+        if not self.default_style_identifier:
+            return self.stylesheets[0]
+        else:
+            for stylesheet in self.stylesheets:
+                if stylesheet.identifier == self.default_style_identifier:
+                    return stylesheet
+        return blank
+
 
 _not_set = object()  # Can't use `None` here.
 _current_theme_class = _not_set
@@ -363,8 +417,11 @@ def set_current_theme(identifier):
 
     :param identifier: Theme identifier
     :type identifier: str
+    :return: Activated theme
+    :rtype: Theme
     """
     theme = get_theme_by_identifier(identifier)
     if not theme:
         raise ValueError("Invalid theme identifier")
     theme.set_current()
+    return theme
