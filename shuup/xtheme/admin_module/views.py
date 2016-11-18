@@ -38,6 +38,7 @@ class ActivationForm(forms.Form):
     A very simple form for activating a theme.
     """
     activate = forms.CharField(label=_("activate"))
+    selected_style = forms.CharField(required=False, widget=forms.HiddenInput())
 
 
 class ThemeWizardPane(WizardPane):
@@ -64,7 +65,18 @@ class ThemeWizardPane(WizardPane):
 
     def form_valid(self, form):
         identifier = form["theme"].cleaned_data["activate"]
-        set_current_theme(identifier)
+        theme = set_current_theme(identifier)
+        data = {
+            "settings": {
+               "stylesheet": form["theme"].cleaned_data["selected_style"]
+            }
+        }
+        theme_settings, created = ThemeSettings.objects.get_or_create(theme_identifier=theme.identifier)
+        if created:
+            theme_settings.data = data
+        else:
+            theme_settings.update_settings(data["settings"])
+        theme_settings.activate()
 
 
 class ThemeConfigView(FormView):
