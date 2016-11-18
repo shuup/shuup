@@ -39,7 +39,7 @@
                                 {% set active = " active" if style_definition.stylesheet == active_stylesheet else "" %}
                                 <div class="col-md-4 theme-screenshot{{ active }}" data-identifier="{{ style_definition.identifier }}">
                                     <div class="theme-name">{{ style_definition.name }}</div>
-                                    <a class="theme-image" href="{{ STATIC_URL }}{{ image }}">
+                                    <a class="theme-image lightbox" href="{{ STATIC_URL }}{{ image }}">
                                         <img src="{{ STATIC_URL }}{{ image }}">
                                     </a>
                                     <div class="tools">
@@ -59,15 +59,8 @@
     {% endcall %}
 {% endblock %}
 {% block extra_css %}
-    <link rel="stylesheet" href="{{ static("shuup_admin/css/imagelightbox.css") }}">
     <link rel="stylesheet" href="{{ static("xtheme/admin/xtheme_admin.css") }}">
 {% endblock %}
 {% block extra_js %}
-    <script src="{{ static("shuup_admin/js/imagelightbox.js") }}"></script>
     <script src="{{ static("xtheme/admin/admin.js") }}"></script>
-    <script>
-        $(document).ready(function() {
-            $(".theme-image").imageLightbox();
-        });
-    </script>
 {% endblock %}
