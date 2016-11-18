@@ -32,7 +32,8 @@ module.exports = {
             "js/datetimepicker.js",
             "js/language-changer.js",
             "js/select.js",
-            "js/tour.js"
+            "js/tour.js",
+            "js/imagelightbox.js"
         ]
     },
     "contact-group": {
@@ -83,12 +84,6 @@ module.exports = {
         "webpack": root + "/modules/orders/static_src/create/webpack.config.js",
         "watch": [
             root + "/modules/orders/static_src/create/**/*.js"
-        ]
-    },
-    "imagelightbox": {
-        "base": "./static_src/vendor",
-        "files": [
-            "imagelightbox.min.js"
         ]
     },
     "wizard": {
