@@ -7,6 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import decimal
+
 import babel
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinLengthValidator
@@ -14,12 +16,8 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.core import cache
 from shuup.utils.analog import define_log_model
-from shuup.utils.money import get_precision as money_get_precision
-from shuup.utils.money import make_precision
-
-# map of precisions for currencies
-CURRENCY_PRECISIONS = {}
 
 
 @python_2_unicode_compatible
@@ -43,6 +41,10 @@ class Currency(models.Model):
         if self.code not in babel.Locale("en").currency_symbols:
             raise ValidationError(_('Enter a valid ISO-4217 currency code'))
 
+    def save(self, *args, **kwargs):
+        super(Currency, self).save(*args, **kwargs)
+        cache.bump_version('currency_precision')
+
     class Meta:
         verbose_name = _("currency")
         verbose_name_plural = _("currencies")
@@ -51,44 +53,28 @@ class Currency(models.Model):
         return self.code
 
 
-def override_currency_precision(currency, precision):
+def get_currency_precision(currency):
     """
-    Overrides the precision for the given currency in the module internal map.
+    Get precision by currency code.
 
-    :param str currency:
-      Currency as ISO-4217 code (3-letter string).
-    :param decimal.Decimal precision:
-      The currency precision
+    Precision values will be populated from the ``decimal_places``
+    fields of the `Currency` objects in the database.
+
+    :type currency: str
+    :param currency: Currency code as 3-letter string (ISO-4217)
+
+    :rtype: decimal.Decimal|None
+    :return: Precision value for given currency code or None for unknown
     """
-    CURRENCY_PRECISIONS[currency] = precision
-
-
-def get_currency_precision(digits=None, currency=None):
-    """
-    Returns the precision for the given digits or currency.
-    digits is required argument if no currency is passed
-
-    Currency model will be used to fetch the number of digits of the currency
-
-    :param int|None digits:
-      Number of digits to use for precision
-
-    :param str|None currency:
-      Currency as ISO-4217 code (3-letter string) or None.
-    """
-    assert (digits is not None or currency is not None)
-
-    if digits is None:
-        if currency not in CURRENCY_PRECISIONS:
-            try:
-                digits = Currency.objects.get(code=currency).decimal_places
-                override_currency_precision(currency, make_precision(digits))
-            except Currency.DoesNotExist:
-                override_currency_precision(currency, money_get_precision(currency=currency))
-
-        return CURRENCY_PRECISIONS[currency]
-    else:
-        return money_get_precision(digits=digits)
+    cache_key = 'currency_precision:' + currency
+    precision = cache.get(cache_key)
+    if precision is None:
+        currency_obj = Currency.objects.filter(code=currency).first()
+        precision = (
+            decimal.Decimal('0.1') ** currency_obj.decimal_places
+            if currency_obj else None)
+        cache.set(cache_key, precision)
+    return precision
 
 
 CurrencyLogEntry = define_log_model(Currency)

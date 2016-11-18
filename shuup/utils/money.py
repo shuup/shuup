@@ -6,77 +6,10 @@
 # LICENSE file in the root directory of this source tree.
 
 import decimal
-from decimal import ROUND_HALF_EVEN
 
-from babel.core import get_global
+from . import babel_precision_provider, numbers
 
-from . import numbers
-
-# map of precisions for currencies
-CURRENCY_PRECISIONS = {}
-
-# map of precisions for digits
-DIGITS_PRECISIONS = {}
-
-# the precision provider function
-_precision_provider_func = None
-
-
-def make_precision(digits):
-    """ Return a precision for a given number of digits """
-    return decimal.Decimal('0.1') ** digits
-
-
-def get_babel_digits(currency):
-    """ Get the number of digits used by the currency from Babel """
-    fractions = get_global('currency_fractions')
-    try:
-        return fractions[currency][0]
-    except KeyError:
-        return fractions['DEFAULT'][0]
-
-
-def get_precision(digits=None, currency=None):
-    """
-    Returns the precision for the given digits or currency.
-    digits is required argument if no currency is passed
-
-    babel will be used to fetch the number of digits of the currency
-
-    :param int|None digits:
-      Number of digits to use for precision
-
-    :param str|None currency:
-      Currency as ISO-4217 code (3-letter string) or None.
-    """
-    assert (digits is not None or currency is not None)
-
-    if digits is None:
-        if currency not in CURRENCY_PRECISIONS:
-            CURRENCY_PRECISIONS[currency] = make_precision(get_babel_digits(currency))
-
-        return CURRENCY_PRECISIONS[currency]
-    else:
-        if digits not in DIGITS_PRECISIONS:
-            DIGITS_PRECISIONS[digits] = make_precision(digits)
-
-        return DIGITS_PRECISIONS[digits]
-
-
-def set_precision_provider_function(precision_provider_func):
-    """
-    Set the precision provider function to be used by Money when rounding
-
-    :param precision_provider_func function(digits, currency):
-      the function which will return the precision for the given arguments
-    """
-    assert callable(precision_provider_func)
-    global _precision_provider_func
-    _precision_provider_func = precision_provider_func
-
-
-# sets the default precision provider function
-set_precision_provider_function(get_precision)
+DEFAULT_PRECISION = decimal.Decimal('0.01')
 
 
 class Money(numbers.UnittedDecimal):
@@ -134,19 +67,55 @@ class Money(numbers.UnittedDecimal):
     def new(self, value):
         return type(self)(value, currency=self.currency)
 
-    def as_rounded(self, digits=None, rounding=ROUND_HALF_EVEN):
+    def as_rounded(self, digits=None, rounding=decimal.ROUND_HALF_EVEN):
         """
-        Returns the value rounded to the given `digits` if specified,
-        otherwise through the currency of the this instance.
+        Get rounded value of self.
 
-        The precision will be fetched from the `precision_provider_func`.
+        Return the value rounded to given `digits` if specified,
+        otherwise to the precision of ``self.currency`` as returned by
+        the precision provider, see `set_precision_provider`.
 
-        :param digits int:
-          The number of digits to round
+        :type digits: int|None
+        :param digits:  Number of digits to round to or None
         :type rounding: str
+        :param rounding: Rounding mode to use
 
-        :return A new value rounded to the given digits or currency
+        :rtype: Money
+        :return: A new `Money` instance with the rounded value
         """
-
-        precision = _precision_provider_func(digits, self.currency)
+        precision = _get_precision(self.currency, digits)
         return self.new(self.value.quantize(precision, rounding=rounding))
+
+
+def set_precision_provider(precision_provider):
+    """
+    Set precision provider for Money instances.
+
+    Default precision provider is
+    `shuup.utils.babel_precision_provider.get_precision`.
+
+    :type precision_provider: Callable[[str], decimal.Decimal|None]
+    :param precision_provider:
+      Function which will return precision for given currency code, or
+      None for unhandled currency codes, e.g. ``func('USD')`` could
+      return ``Decimal('0.01')``.
+    """
+    assert callable(precision_provider)
+    global _precision_provider
+    _precision_provider = precision_provider
+
+
+_precision_provider = babel_precision_provider.get_precision
+
+
+def _get_precision(currency, digits):
+    if digits is None:
+        return (_precision_provider(currency) or DEFAULT_PRECISION)
+    precision = _digits_to_precision.get(digits)
+    if precision is None:
+        precision = decimal.Decimal('0.1') ** digits
+        _digits_to_precision[digits] = precision
+    return precision
+
+
+_digits_to_precision = {2: decimal.Decimal('0.01')}
