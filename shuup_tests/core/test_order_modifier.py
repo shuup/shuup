@@ -101,10 +101,13 @@ def test_shop_change(rf, admin_user):
     source.shop = shop
 
     modifier = OrderModifier()
+
     assert order.shop != source.shop
-    # Changing shop should be blocked. Source shop is just ignored.
-    edited_order = modifier.update_order_from_source(source, order)
-    assert edited_order.shop == order.shop
+    order_count = Order.objects.count()
+    with pytest.raises(ValidationError):
+        # Changing shop should be blocked. Source shop is just ignored.
+        modifier.update_order_from_source(source, order)
+    assert order_count == Order.objects.count(), "no new orders created"
 
 
 def test_order_cannot_be_created():
