@@ -97,6 +97,25 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
         add_form_errors_as_messages(self.request, form)
         return super(OrderCreateShipmentView, self).form_invalid(form)
 
+    def create_shipment(self, order, product_quantities, shipment):
+        """
+        This function exists so subclasses can implement custom logic without
+        overriding the entire form_valid method
+
+        :param order: Order to create the shipment for
+        :type order: shuup.core.models.Order
+        :param product_quantities: a dict mapping Product instances to quantities to ship
+        :type product_quantities: dict[shuup.shop.models.Product, decimal.Decimal]
+        :param shipment: unsaved Shipment for ShipmentProduct's.
+        :type shipment: shuup.core.models.Shipment
+        :return: Saved, complete Shipment object
+        :rtype: shuup.core.models.Shipment
+        """
+        return order.create_shipment(
+            product_quantities=product_quantities,
+            shipment=shipment
+        )
+
     def form_valid(self, form):
         product_ids_to_quantities = dict(
             (int(key.replace("q_", "")), value)
@@ -122,7 +141,8 @@ class OrderCreateShipmentView(ModifiableViewMixin, UpdateView):
             return self.form_invalid(form)
 
         try:
-            shipment = order.create_shipment(
+            shipment = self.create_shipment(
+                order=order,
                 product_quantities=products_to_quantities,
                 shipment=unsaved_shipment
             )
