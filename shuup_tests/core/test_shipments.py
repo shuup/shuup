@@ -165,12 +165,40 @@ def test_shipment_with_unshippable_products():
     order.save()
 
     assert order.shipments.count() == 0
+    assert order.can_create_shipment()
+    assert not order.can_set_complete()
     order.create_shipment_of_all_products(supplier=supplier)
     assert (order.lines.products().count() == initial_product_line_count + 1)
 
     assert order.shipments.count() == 1
     assert ShipmentProduct.objects.filter(shipment__order_id=order.id).count() == initial_product_line_count
     assert order.shipping_status == ShippingStatus.FULLY_SHIPPED
+    assert order.can_set_complete()
+
+
+@pytest.mark.django_db
+def test_order_with_only_unshippable_products():
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+
+    order = create_empty_order(shop=shop)
+    order.full_clean()
+    order.save()
+
+    product = create_product(
+        "unshippable",
+        shop=shop,
+        supplier=supplier,
+        default_price=5.55)
+    product.shipping_mode = ShippingMode.NOT_SHIPPED
+    product.save()
+    add_product_to_order(order, supplier, product, quantity=4, taxless_base_unit_price=3)
+    order.cache_prices()
+    order.check_all_verified()
+    order.save()
+
+    assert not order.can_create_shipment()
+    assert order.can_set_complete()
 
 
 def _get_order(shop, supplier, stocked=False):
