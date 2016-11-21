@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-16 23:53+0000\n"
+"POT-Creation-Date: 2016-11-21 19:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1410,6 +1410,21 @@ msgstr ""
 msgid "Service is only available for staff"
 msgstr ""
 
+msgid "Order total limit"
+msgstr ""
+
+msgid "Limit service availability based on order total"
+msgstr ""
+
+msgid "min price value"
+msgstr ""
+
+msgid "max price value"
+msgstr ""
+
+msgid "Order total does not match with service limits."
+msgstr ""
+
 msgid "round to nearest with ties going away from zero"
 msgstr ""
 
@@ -1471,6 +1486,12 @@ msgid "received"
 msgstr ""
 
 msgid "error"
+msgstr ""
+
+msgid "outgoing"
+msgstr ""
+
+msgid "incoming"
 msgstr ""
 
 msgid "tracking code"
