@@ -73,6 +73,9 @@ class ServiceWizardFormDef(TemplatedWizardFormDef):
             **form_def_kwargs
         )
 
+    def visible(self):
+        return True
+
 
 class ManualShippingWizardForm(ServiceWizardForm):
     service_name = forms.CharField(label=_("Service name"), help_text=_("The name shown in the shop checkout process."))

@@ -19,6 +19,14 @@ $("select[name='address-country']").on("change", function(){
     } else {
         disableRegionsDropdown();
     }
+
+    $(".wizard *[data-allowed-countries]").each(function(idx, el) {
+        if($(el).attr("data-allowed-countries").indexOf(country) < 0) {
+            $(el).hide();
+        } else {
+            $(el).show();
+        }
+    });
 });
 
 $(".general").on("change", "select[name='address-region_code']", function(){
