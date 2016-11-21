@@ -10,7 +10,6 @@ from __future__ import unicode_literals
 from collections import Counter
 
 from django.conf import settings
-from django.contrib import messages
 from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ValidationError
 from django.utils.encoding import force_text
@@ -379,7 +378,8 @@ class OrderSource(object):
         `get_lines` and in addition, lines from shipping and payment
         methods, but these lines can be extended, deleted or replaced by
         a subclass (by overriding `_compute_processed_lines` method) and
-        with the `post_compute_source_lines` signal.
+        with the `post_compute_source_lines` signal. Lines returned is not
+        validated.
 
         .. note::
 
@@ -396,11 +396,6 @@ class OrderSource(object):
         if not self._taxes_calculated:
             if with_taxes or should_calculate_taxes_automatically():
                 self._calculate_taxes(lines)
-        for error_message in self.get_validation_errors():
-            if hasattr(self, "request"):
-                messages.error(self.request, error_message.args[0], extra_tags='danger')
-            else:
-                raise ValidationError(error_message.args[0], code="invalid_order_source")
         return lines
 
     def calculate_taxes(self, force_recalculate=False):
@@ -476,6 +471,10 @@ class OrderSource(object):
         """
         product_lines = [l for l in self.get_lines() if l.product]
         return product_lines
+
+    def verify_orderability(self):
+        for error_message in self.get_validation_errors():
+            raise ValidationError(error_message.args[0], code="invalid_order_source")
 
     def get_validation_errors(self):
         shipping_method = self.shipping_method
