@@ -125,28 +125,6 @@ class WeightBasedPriceRange(TranslatableModel):
         return _is_in_range(value, self.min_value, self.max_value)
 
 
-def _is_in_range(value, min_value, max_value):
-    """
-    Help function to check if the ``WeightBasedPriceRange`` matches
-
-    If min_value is None the max_value determines if the range matches.
-    None as a max_value represents infinity. Min value is counted in
-    range only when it's zero. Max value is always part of the range.
-
-    :type value: decimal.Decimal
-    :type min_value: MeasurementField
-    :type max_value: MeasurementField
-    :rtype: bool
-    """
-    if value is None:
-        return False
-    if (not (min_value or max_value)) or (min_value == max_value == value):
-        return True
-    if (not min_value or value > min_value) and (max_value is None or value <= max_value):
-        return True
-    return False
-
-
 class WeightBasedPricingBehaviorComponent(ServiceBehaviorComponent):
     name = _("Weight-based pricing")
     help_text = _(
@@ -201,6 +179,21 @@ class StaffOnlyBehaviorComponent(ServiceBehaviorComponent):
             yield ValidationError(_("Service is only available for staff"))
 
 
+class OrderTotalLimitBehaviorComponent(ServiceBehaviorComponent):
+    name = _("Order total limit")
+    help_text = _("Limit service availability based on order total")
+
+    min_price_value = MoneyValueField(blank=True, null=True, verbose_name=_("min price value"))
+    max_price_value = MoneyValueField(blank=True, null=True, verbose_name=_("max price value"))
+
+    def get_unavailability_reasons(self, service, source):
+        total = (
+            source.taxful_total_price.value if source.shop.prices_include_tax else source.taxless_total_price.value)
+        is_in_range = _is_in_range(total, self.min_price_value, self.max_price_value)
+        if not is_in_range:
+            yield ValidationError(_("Order total does not match with service limits."), code="order_total_out_of_range")
+
+
 class RoundingMode(Enum):
     ROUND_HALF_UP = decimal.ROUND_HALF_UP
     ROUND_HALF_DOWN = decimal.ROUND_HALF_DOWN
@@ -212,3 +205,25 @@ class RoundingMode(Enum):
         ROUND_HALF_DOWN = _("round to nearest with ties going towards zero")
         ROUND_UP = _("round away from zero")
         ROUND_DOWN = _("round towards zero")
+
+
+def _is_in_range(value, min_value, max_value):
+    """
+    Help function to check if the range matches with value
+
+    If min_value is None the max_value determines if the range matches.
+    None as a max_value represents infinity. Min value is counted in
+    range only when it's zero. Max value is always part of the range.
+
+    :type value: decimal.Decimal
+    :type min_value: MeasurementField|MoneyValueField
+    :type max_value: MeasurementField|MoneyValueField
+    :rtype: bool
+    """
+    if value is None:
+        return False
+    if (not (min_value or max_value)) or (min_value == max_value == value):
+        return True
+    if (not min_value or value > min_value) and (max_value is None or value <= max_value):
+        return True
+    return False

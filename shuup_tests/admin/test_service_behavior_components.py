@@ -16,7 +16,7 @@ from shuup.admin.modules.services.views import (
 )
 from shuup.core.models import (
     FixedCostBehaviorComponent, GroupAvailabilityBehaviorComponent,
-    PaymentMethod, RoundingMode, ShippingMethod,
+    OrderTotalLimitBehaviorComponent, PaymentMethod, ShippingMethod,
     StaffOnlyBehaviorComponent, WaivingCostBehaviorComponent,
     WeightLimitsBehaviorComponent
 )
@@ -55,7 +55,11 @@ def get_default_behavior_settings():
         GroupAvailabilityBehaviorComponent.__name__.lower(): {
             "groups": [get_default_customer_group().pk]
         },
-        StaffOnlyBehaviorComponent.__name__.lower(): {}
+        StaffOnlyBehaviorComponent.__name__.lower(): {},
+        OrderTotalLimitBehaviorComponent.__name__.lower(): {
+            "min_price_value": 0,
+            "max_price_value": 21
+        },
     }
 
 
