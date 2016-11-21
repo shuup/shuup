@@ -80,7 +80,7 @@ class Pattern(object):
         return any(self._test_piece(piece, target) for piece in self.positive_pieces)
 
     def get_alphabetical_limits(self):
-        if self.negative_pieces:
+        if self.negative_pieces or self.pattern_text == "*":
             return (None, None)
         all_values = set()
         for min_value, max_value in self.positive_pieces:

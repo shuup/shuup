@@ -182,6 +182,21 @@ def test_rule_min_max():
     postal_code = None
     assert TaxRule.objects.may_match_postal_code(postal_code).count() == 1
 
+@pytest.mark.django_db
+def test_wildcard_postalcode():
+    tax = create_tax("test-1", rate=Decimal("0.12"))
+    tax.save()
+    rule = TaxRule.objects.create(postal_codes_pattern="*", tax=tax)
+
+    for postal_code in ["", None, "12333", "test"]:
+        assert TaxRule.objects.may_match_postal_code(postal_code).count() == 1
+
+    rule.postal_codes_pattern = ""
+    rule.save()
+
+    assert rule._postal_codes_min is None
+    assert rule._postal_codes_max is None
+
 
 @pytest.mark.django_db
 def test_rule_admin(rf, admin_user):
