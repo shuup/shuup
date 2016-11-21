@@ -884,10 +884,7 @@ class Order(MoneyPropped, models.Model):
         return (self.status.role == OrderStatusRole.COMPLETE)
 
     def can_set_complete(self):
-        if self.has_products():
-            # order has products, we need to check the fully shipped status
-            return (not self.is_complete()) and self.is_fully_shipped() and (not self.is_canceled())
-        return (not self.is_complete()) and (not self.is_canceled())
+        return not (self.is_complete() or self.is_canceled() or bool(self.get_unshipped_products()))
 
     def is_fully_shipped(self):
         return (self.shipping_status == ShippingStatus.FULLY_SHIPPED)
