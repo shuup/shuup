@@ -62,7 +62,7 @@ class SlideQuerySet(TranslatableQuerySet):
 @python_2_unicode_compatible
 class Carousel(ShuupModel):
     name = models.CharField(
-        max_length=50, verbose_name=_("name"), help_text=_("Name is only used to configure carousels.")
+        max_length=50, verbose_name=_("name"), help_text=_("The carousel name use for carousel configuration.")
     )
     animation = EnumIntegerField(
         CarouselMode, default=CarouselMode.SLIDE, verbose_name=_("animation"),
@@ -73,10 +73,14 @@ class Carousel(ShuupModel):
     )
     pause_on_hover = models.BooleanField(
         default=True, verbose_name=_("pause on hover"),
-        help_text=_("Pauses the cycling of the carousel on mouse over.")
+        help_text=_("When checked, the carousel cycling pauses on mouse over.")
     )
-    is_arrows_visible = models.BooleanField(default=True, verbose_name=_("show navigation arrows"))
-    use_dot_navigation = models.BooleanField(default=True, verbose_name=_("show navigation dots"))
+    is_arrows_visible = models.BooleanField(default=True, verbose_name=_("show navigation arrows"), help_text=_(
+        "When checked, navigational arrows are shown on the carousel allowing for customers to go back and forward."
+    ))
+    use_dot_navigation = models.BooleanField(default=True, verbose_name=_("show navigation dots"), help_text=_(
+        "When checked, navigational indicator dots are shown."
+    ))
     image_width = models.IntegerField(
         default=1200, verbose_name=_("image width"),
         help_text=_("Slide images will be cropped to this width.")
@@ -106,27 +110,52 @@ class Slide(TranslatableShuupModel):
         help_text=_("Name is only used to configure slides.")
     )
     product_link = models.ForeignKey(
-        Product, related_name="+", blank=True, null=True, verbose_name=_("product link"))
+        Product, related_name="+", blank=True, null=True, verbose_name=_("product link"), help_text=_(
+            "Set the product detail page that should be shown when this slide is clicked, if any."
+        ))
     category_link = models.ForeignKey(
-        Category, related_name="+", blank=True, null=True, verbose_name=_("category link"))
+        Category, related_name="+", blank=True, null=True, verbose_name=_("category link"), help_text=_(
+            "Set the product category page that should be shown when this slide is clicked, if any."
+        ))
     cms_page_link = models.ForeignKey(
-        Page, related_name="+", verbose_name=_("cms page link"), blank=True, null=True)
-    ordering = models.IntegerField(default=0, blank=True, null=True, verbose_name=_("ordering"))
+        Page, related_name="+", verbose_name=_("cms page link"), blank=True, null=True, help_text=_(
+            "Set the web page that should be shown when the slide is clicked, if any."
+        ))
+    ordering = models.IntegerField(default=0, blank=True, null=True, verbose_name=_("ordering"), help_text=_(
+        "Set the numeric order in which this slide should appear relative to other slides in this carousel."
+    ))
     target = EnumIntegerField(
-        LinkTargetType, default=LinkTargetType.CURRENT, verbose_name=_("link target")
+        LinkTargetType, default=LinkTargetType.CURRENT, verbose_name=_("link target"), help_text=_(
+            "Set this to current if clicking on this slide should open a new browser tab."
+        )
     )
-    available_from = models.DateTimeField(null=True, blank=True, verbose_name=_('available from'))
-    available_to = models.DateTimeField(null=True, blank=True, verbose_name=_('available to'))
+    available_from = models.DateTimeField(null=True, blank=True, verbose_name=_('available from'), help_text=_(
+        "Set the date and time from which this slide should be visible in the carousel. "
+        "This is useful to advertise sales campaigns or other time-sensitive marketing."
+    ))
+    available_to = models.DateTimeField(null=True, blank=True, verbose_name=_('available to'), help_text=_(
+        "Set the date and time from which this slide should be visible in the carousel. "
+        "This is useful to advertise sales campaigns or other time-sensitive marketing."
+    ))
 
     translations = TranslatedFields(
-        caption=models.CharField(max_length=80, blank=True, null=True, verbose_name=_("caption")),
+        caption=models.CharField(
+            max_length=80, blank=True, null=True, verbose_name=_("caption"), help_text=_(
+                "Text that describes the image. Used for search engine purposes."
+            )
+        ),
         caption_text=models.TextField(
             blank=True, null=True, verbose_name=_("caption text"),
             help_text=_("When displayed in banner box mode, caption text is shown as a tooltip"),
         ),
-        external_link=models.CharField(max_length=160, blank=True, null=True, verbose_name=_("external link")),
+        external_link=models.CharField(
+            max_length=160, blank=True, null=True, verbose_name=_("external link"), help_text=_(
+                "Set the external site that should be shown when this slide is clicked, if any."
+            )),
         image=FilerImageField(
-            blank=True, null=True, related_name="+", verbose_name=_("image"), on_delete=models.PROTECT)
+            blank=True, null=True, related_name="+", verbose_name=_("image"), on_delete=models.PROTECT, help_text=_(
+                "The slide image to show."
+            ))
     )
 
     def __str__(self):

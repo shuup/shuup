@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 18:58+0000\n"
+"POT-Creation-Date: 2016-11-22 23:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,7 +48,7 @@ msgstr ""
 msgid "name"
 msgstr ""
 
-msgid "Name is only used to configure carousels."
+msgid "The carousel name use for carousel configuration."
 msgstr ""
 
 msgid "animation"
@@ -66,13 +66,21 @@ msgstr ""
 msgid "pause on hover"
 msgstr ""
 
-msgid "Pauses the cycling of the carousel on mouse over."
+msgid "When checked, the carousel cycling pauses on mouse over."
 msgstr ""
 
 msgid "show navigation arrows"
 msgstr ""
 
+msgid ""
+"When checked, navigational arrows are shown on the carousel allowing for "
+"customers to go back and forward."
+msgstr ""
+
 msgid "show navigation dots"
+msgstr ""
+
+msgid "When checked, navigational indicator dots are shown."
 msgstr ""
 
 msgid "image width"
@@ -93,25 +101,57 @@ msgstr ""
 msgid "product link"
 msgstr ""
 
+msgid ""
+"Set the product detail page that should be shown when this slide is clicked, "
+"if any."
+msgstr ""
+
 msgid "category link"
+msgstr ""
+
+msgid ""
+"Set the product category page that should be shown when this slide is "
+"clicked, if any."
 msgstr ""
 
 msgid "cms page link"
 msgstr ""
 
+msgid ""
+"Set the web page that should be shown when the slide is clicked, if any."
+msgstr ""
+
 msgid "ordering"
+msgstr ""
+
+msgid ""
+"Set the numeric order in which this slide should appear relative to other "
+"slides in this carousel."
 msgstr ""
 
 msgid "link target"
 msgstr ""
 
+msgid ""
+"Set this to current if clicking on this slide should open a new browser tab."
+msgstr ""
+
 msgid "available from"
+msgstr ""
+
+msgid ""
+"Set the date and time from which this slide should be visible in the "
+"carousel. This is useful to advertise sales campaigns or other time-"
+"sensitive marketing."
 msgstr ""
 
 msgid "available to"
 msgstr ""
 
 msgid "caption"
+msgstr ""
+
+msgid "Text that describes the image. Used for search engine purposes."
 msgstr ""
 
 msgid "caption text"
@@ -123,7 +163,15 @@ msgstr ""
 msgid "external link"
 msgstr ""
 
+msgid ""
+"Set the external site that should be shown when this slide is clicked, if "
+"any."
+msgstr ""
+
 msgid "image"
+msgstr ""
+
+msgid "The slide image to show."
 msgstr ""
 
 msgid "Slides"

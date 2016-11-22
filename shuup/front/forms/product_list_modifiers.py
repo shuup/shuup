@@ -97,6 +97,17 @@ class SortProductListByName(SimpleProductListModifier):
             products = sorted(products, key=sorter, reverse=reverse)
         return products
 
+    def get_admin_fields(self):
+        default_fields = super(SortProductListByName, self).get_admin_fields()
+        default_fields[0][1].help_text = _(
+            "Check this to allow products to be sortable by product name."
+        )
+        default_fields[1][1].help_text = _(
+            "Use a numeric value to set the order in which the the filter will appear on the "
+            "product listing page."
+        )
+        return default_fields
+
 
 class SortProductListByPrice(SimpleProductListModifier):
     is_active_key = "sort_products_by_price"
@@ -133,6 +144,17 @@ class SortProductListByPrice(SimpleProductListModifier):
             return sorted(products, key=sorter, reverse=reverse)
         return products
 
+    def get_admin_fields(self):
+        default_fields = super(SortProductListByPrice, self).get_admin_fields()
+        default_fields[0][1].help_text = _(
+            "Check this to allow products to be sortable by price (from low to high and high to low)."
+        )
+        default_fields[1][1].help_text = _(
+            "Use a numeric value to set the order in which the the filter will appear on the "
+            "product listing page."
+        )
+        return default_fields
+
 
 class SortProductListByCreatedDate(SimpleProductListModifier):
     is_active_key = "sort_products_by_date_created"
@@ -166,6 +188,17 @@ class SortProductListByCreatedDate(SimpleProductListModifier):
             products = sorted(products, key=sorter, reverse=reverse)
         return products
 
+    def get_admin_fields(self):
+        default_fields = super(SortProductListByCreatedDate, self).get_admin_fields()
+        default_fields[0][1].help_text = _(
+            "Check this to allow products to be sortable from newest to oldest products."
+        )
+        default_fields[1][1].help_text = _(
+            "Use a numeric value to set the order in which the filter will appear on the "
+            "product listing page."
+        )
+        return default_fields
+
 
 class SortProductListByAscendingCreatedDate(SortProductListByCreatedDate):
     is_active_key = "sort_products_by_ascending_created_date"
@@ -179,6 +212,17 @@ class SortProductListByAscendingCreatedDate(SortProductListByCreatedDate):
                 ("created_date_a", _("Date created - oldest first")),
             ]),
         ]
+
+    def get_admin_fields(self):
+        default_fields = super(SortProductListByAscendingCreatedDate, self).get_admin_fields()
+        default_fields[0][1].help_text = _(
+            "Check this to allow products to be sortable from oldest to newest products."
+        )
+        default_fields[1][1].help_text = _(
+            "Use a numeric value to set the order in which the filter will appear on the "
+            "product listing page."
+        )
+        return default_fields
 
 
 class ManufacturerProductListFilter(SimpleProductListModifier):
@@ -213,6 +257,17 @@ class ManufacturerProductListFilter(SimpleProductListModifier):
         if manufacturers:
             return Q(manufacturer__in=manufacturers)
 
+    def get_admin_fields(self):
+        default_fields = super(ManufacturerProductListFilter, self).get_admin_fields()
+        default_fields[0][1].help_text = _(
+            "Check this to allow products to be filterable by manufacturer for this category."
+        )
+        default_fields[1][1].help_text = _(
+            "Use a numeric value to set the order in which the manufacturer filters will appear on the "
+            "product listing page."
+        )
+        return default_fields
+
 
 class CategoryProductListFilter(SimpleProductListModifier):
     is_active_key = "filter_products_by_category"
@@ -245,6 +300,17 @@ class CategoryProductListFilter(SimpleProductListModifier):
         if categories:
             return Q(shop_products__categories__in=list(categories))
 
+    def get_admin_fields(self):
+        default_fields = super(CategoryProductListFilter, self).get_admin_fields()
+        default_fields[0][1].help_text = _(
+            "Check this to allow products to be filterable by any visible product category. "
+        )
+        default_fields[1][1].help_text = _(
+            "Use a numeric value to set the order in which the category list filters will appear on the "
+            "product listing page."
+        )
+        return default_fields
+
 
 class LimitProductListPageSize(SimpleProductListModifier):
     is_active_key = "limit_product_list_page_size"
@@ -259,6 +325,17 @@ class LimitProductListPageSize(SimpleProductListModifier):
         return [
             ("limit", [(12, 12), (24, 24), (36, 36), (48, 48)]),
         ]
+
+    def get_admin_fields(self):
+        default_fields = super(LimitProductListPageSize, self).get_admin_fields()
+        default_fields[0][1].help_text = _(
+            "Check this to allow the customer to be able to select the number of products to display."
+        )
+        default_fields[1][1].help_text = _(
+            "Use a numeric value to set the order in which the page size filter will appear on the "
+            "product listing page."
+        )
+        return default_fields
 
 
 class ProductVariationFilter(SimpleProductListModifier):
@@ -305,6 +382,18 @@ class ProductVariationFilter(SimpleProductListModifier):
                 queryset = queryset.filter(variation_query)
         return queryset
 
+    def get_admin_fields(self):
+        default_fields = super(ProductVariationFilter, self).get_admin_fields()
+        default_fields[0][1].help_text = _(
+            "Check this to allow products to be filterable by their different variations. "
+            "For example, size or color."
+        )
+        default_fields[1][1].help_text = _(
+            "Use a numeric value to set the order in which the variation filters will appear on the "
+            "product listing page."
+        )
+        return default_fields
+
 
 class ProductPriceFilter(SimpleProductListModifier):
     is_active_key = "filter_products_by_price"
@@ -350,17 +439,26 @@ class ProductPriceFilter(SimpleProductListModifier):
 
     def get_admin_fields(self):
         default_fields = super(ProductPriceFilter, self).get_admin_fields()
+        default_fields[0][1].help_text = _(
+            "Check this to allow products to be filtered by price. "
+            "Prices will be listed in groups from the price range minimum to price range maximum in increments of "
+            "the configured price range step."
+        )
+        default_fields[1][1].help_text = _(
+            "Use a numeric value to set the order in which the price range filters will appear on the "
+            "product listing page."
+        )
         min_field = forms.IntegerField(
             label=_("Price range minimum"), min_value=0, required=False,
-            help_text=_("Set minimum price for filter. First range will be from zero to this value.")
+            help_text=_("Set the minimum price for the filter. The first range will be from zero to this value.")
         )
         max_field = forms.IntegerField(
             label=_("Price range maximum"), min_value=0, required=False,
-            help_text=_("Set maximum price for filter. Last range will include this value and above.")
+            help_text=_("Set the maximum price for the filter. The last range will include this value and above.")
         )
         range_step = forms.IntegerField(
             label=_("Price range step"), min_value=0, required=False,
-            help_text=_("Set step for ranges. The second range is from min price to this value.")
+            help_text=_("Set the price step for each range. Each range will increment by this value.")
         )
         return default_fields + [
             (self.range_min_key, min_field),
