@@ -68,6 +68,12 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
+msgid "Payment & Shipping"
+msgstr ""
+
+msgid "Taxes"
+msgstr ""
+
 msgid "Attributes"
 msgstr ""
 
@@ -101,7 +107,7 @@ msgstr ""
 msgid "Add a product category to organize your products"
 msgstr ""
 
-msgid "Add a category"
+msgid "New category"
 msgstr ""
 
 msgid "Primary Category"
@@ -131,6 +137,9 @@ msgstr ""
 
 #, python-format
 msgid "%s has been deleted."
+msgstr ""
+
+msgid "Image"
 msgstr ""
 
 msgid "Status"
@@ -430,6 +439,9 @@ msgstr ""
 msgid "%d outstanding orders"
 msgstr ""
 
+msgid "New order"
+msgstr ""
+
 #, python-format
 msgid "The quantity '%(quantity)s' (for line %(text)s) is invalid (%(error)s)"
 msgstr ""
@@ -725,10 +737,7 @@ msgstr ""
 msgid "Create Product with SKU \"%s\""
 msgstr ""
 
-msgid "Add a product"
-msgstr ""
-
-msgid "Import products"
+msgid "New product"
 msgstr ""
 
 msgid "Add a product to see it in your store"
@@ -870,6 +879,9 @@ msgid "Variation cleared."
 msgstr ""
 
 msgid "Variation simplified."
+msgstr ""
+
+msgid "Primary Image"
 msgstr ""
 
 msgid "SKU"
@@ -1057,6 +1069,9 @@ msgstr ""
 msgid "Settings saved"
 msgstr ""
 
+msgid "Reset Defaults"
+msgstr ""
+
 msgid "Shops"
 msgstr ""
 
@@ -1120,9 +1135,6 @@ msgid ""
 "for more information."
 msgstr ""
 
-msgid "Taxes"
-msgstr ""
-
 msgid "Customer Tax Groups"
 msgstr ""
 
@@ -1138,7 +1150,7 @@ msgstr ""
 msgid "Add some users to help manage your shop"
 msgstr ""
 
-msgid "Add a user"
+msgid "New user"
 msgstr ""
 
 msgid "Password"
@@ -1297,10 +1309,13 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
+msgid "Forgot your password?"
+msgstr ""
+
 msgid "Logged out"
 msgstr ""
 
-msgid "You have been logged out. Good bye!"
+msgid "You have been securely logged out. Hope to see you soon!"
 msgstr ""
 
 msgid "Log in again"
@@ -1444,6 +1459,15 @@ msgid "Every setting you could possibly need is in here."
 msgstr ""
 
 msgid "Table Columns"
+msgstr ""
+
+msgid "Active headers"
+msgstr ""
+
+msgid "Selectable headers"
+msgstr ""
+
+msgid "Add"
 msgstr ""
 
 msgid "Welcome to Shuup!"
@@ -1647,7 +1671,7 @@ msgstr ""
 msgid "Manufacturer"
 msgstr ""
 
-msgid "Shipping & Payment"
+msgid "Additional"
 msgstr ""
 
 #, python-format
@@ -1673,7 +1697,10 @@ msgstr ""
 msgid "Product Images"
 msgstr ""
 
-msgid "Product Media"
+msgid "Product Files"
+msgstr ""
+
+msgid "Here you can manage files for your product. For example a pdf manuals."
 msgstr ""
 
 msgid "Add new image"
@@ -1944,6 +1971,9 @@ msgid "Only one %(model)s permitted."
 msgstr ""
 
 msgid "Mass Edit"
+msgstr ""
+
+msgid "General"
 msgstr ""
 
 msgid "Complete the setup wizard"

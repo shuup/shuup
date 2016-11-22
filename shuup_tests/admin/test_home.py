@@ -77,13 +77,7 @@ def test_dashboard_redirect(rf, admin_user, settings):
 def test_product_blocks(rf, admin_user, settings):
     shop = get_default_shop()
     blocks = get_blocks(rf, admin_user)
-    assert any(["a product" in action["text"] for b in blocks for action in b.actions])
-    assert any(["Import products" in action["text"] for b in blocks for action in b.actions])
-
-    settings.INSTALLED_APPS.remove("shuup.importer")
-    blocks = get_blocks(rf, admin_user)
-    assert not any(["Import products" in action["text"] for b in blocks for action in b.actions])
-
+    assert any(["New product" in action["text"] for b in blocks for action in b.actions])
 
 @pytest.mark.django_db
 def test_product_category_block(rf, admin_user):
