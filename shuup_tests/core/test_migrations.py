@@ -16,5 +16,5 @@ def test_makemigrations():
     if type(settings.MIGRATION_MODULES).__name__ == "DisableMigrations":
         pytest.skip()
     out = StringIO()
-    call_command("makemigrations", "shuup", "--dry-run", stdout=out)
+    call_command("shuup_makemigrations", "shuup", "--dry-run", stdout=out)
     assert "No changes detected in app 'shuup'" in out.getvalue()
