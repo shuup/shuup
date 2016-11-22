@@ -1,5 +1,5 @@
-{% macro service_provider_section(identifier, header, description) %}
-    <div class="form-def" data-name="{{ identifier }}">
+{% macro service_provider_section(identifier, header, description, allowed_countries="") %}
+    <div class="form-def" data-name="{{ identifier }}" {% if allowed_countries != "" %}data-allowed-countries="{{ allowed_countries }}" {% endif %}>
         <div class="row">
             <div class="service-provider-form col-sm-6 col-sm-offset-3">
                 <div class="clearfix">
