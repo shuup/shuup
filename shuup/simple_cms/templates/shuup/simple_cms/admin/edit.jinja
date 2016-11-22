@@ -10,8 +10,8 @@
             {% csrf_token %}
             {% call content_block(_("General Information"), "fa-info-circle") %}
                 {% call(form, language, map) language_dependent_content_tabs(form, tab_id_prefix="additional-language") %}
-                    {{ bs3.field(form[map.title]) }}
-                    {{ bs3.field(form[map.url]) }}
+                    {{ bs3.field(form[map.title], widget_class="autoupdate-slug") }}
+                    {{ bs3.field(form[map.url], widget_class="slugfield") }}
                     {{ bs3.field(form[map.content], widget_class="remarkable-field") }}
                 {% endcall %}
             {% endcall %}
