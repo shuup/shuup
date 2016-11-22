@@ -6,19 +6,12 @@
     <h2 class="block-subtitle"><i class="fa fa-home"></i>{{ shop_name }}</h2>
 </div>
 <div class="row content">
-    <div class="col-md-6">
+    <div class="col-md-12">
+        {{ bs3.field(shop_product_form.default_price_value) }}
+        {{ bs3.field(shop_product_form.primary_category) }}
+        {{ bs3.field(shop_product_form.categories) }}
         {{ bs3.field(shop_product_form.visibility) }}
         {{ bs3.field(shop_product_form.visibility_limit) }}
         {{ bs3.field(shop_product_form.visibility_groups) }}
-        {{ bs3.field(shop_product_form.primary_category) }}
-        {{ bs3.field(shop_product_form.categories) }}
-    </div>
-    <div class="col-md-6">
-        {{ bs3.field(shop_product_form.default_price_value) }}
-        {{ bs3.field(shop_product_form.minimum_price_value) }}
-        {{ bs3.field(shop_product_form.suppliers) }}
-        {{ bs3.field(shop_product_form.purchase_multiple) }}
-        {{ bs3.field(shop_product_form.minimum_purchase_quantity) }}
-        {{ bs3.field(shop_product_form.backorder_maximum) }}
     </div>
 </div>

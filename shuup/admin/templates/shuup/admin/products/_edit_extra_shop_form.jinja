@@ -5,9 +5,17 @@
 {% set shop_name = shop_product_form.instance.shop.name %}
 {% set shop_name_prefix = shop_name ~ " - " %}
 
-{% call content_block(shop_name_prefix ~ _("Shipping & Payment"), "fa-truck") %}
+{% call content_block(shop_name_prefix ~ _("Additional"), "fa-truck") %}
+    {{ bs3.field(shop_product_form.minimum_price_value) }}
+    {{ bs3.field(shop_product_form.suppliers) }}
+    {{ bs3.field(shop_product_form.purchase_multiple) }}
+    {{ bs3.field(shop_product_form.minimum_purchase_quantity) }}
+    {{ bs3.field(shop_product_form.backorder_maximum) }}
+
     {{ bs3.field(shop_product_form.limit_payment_methods) }}
     {{ bs3.field(shop_product_form.limit_shipping_methods) }}
     {{ bs3.field(shop_product_form.payment_methods) }}
     {{ bs3.field(shop_product_form.shipping_methods) }}
+
 {% endcall %}
+
