@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-07 03:24+0000\n"
+"POT-Creation-Date: 2016-11-22 23:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -31,7 +31,7 @@ msgstr ""
 msgid "Add a web page"
 msgstr ""
 
-msgid "Add a page"
+msgid "New page"
 msgstr ""
 
 msgid "Available from"
@@ -41,6 +41,9 @@ msgid "Available to"
 msgstr ""
 
 msgid "URL already exists."
+msgstr ""
+
+msgid "URL must be unique"
 msgstr ""
 
 #, python-format
@@ -68,6 +71,12 @@ msgstr ""
 msgid "available from"
 msgstr ""
 
+msgid ""
+"Set an available from date to restrict the page to be available only after a "
+"certain date and time. This is useful for pages describing sales campaigns "
+"or other time-sensitive pages."
+msgstr ""
+
 msgid "available to"
 msgstr ""
 
@@ -89,19 +98,46 @@ msgstr ""
 msgid "visible in menu"
 msgstr ""
 
+msgid ""
+"Check this if this page should have a link in the top menu of the store "
+"front."
+msgstr ""
+
 msgid "parent"
+msgstr ""
+
+msgid ""
+"Set this to a parent page if this page should be subcategorized under "
+"another page."
 msgstr ""
 
 msgid "list children on page"
 msgstr ""
 
+msgid "Check this if this page should list its children pages."
+msgstr ""
+
 msgid "title"
+msgstr ""
+
+msgid "The page title. This is shown anywhere links to your page are shown."
 msgstr ""
 
 msgid "URL"
 msgstr ""
 
+msgid ""
+"The page url. Choose a descriptive url so that search engines can rank your "
+"page higher. Often the best url is simply the page title with spaces "
+"replaced with dashes."
+msgstr ""
+
 msgid "content"
+msgstr ""
+
+msgid ""
+"The page content. This is the text that is displayed when customers click on "
+"your page link."
 msgstr ""
 
 msgid "page"
