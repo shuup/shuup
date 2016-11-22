@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-22 04:08+0000\n"
+"POT-Creation-Date: 2016-11-22 23:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -154,6 +154,9 @@ msgstr ""
 msgid "Price display mode"
 msgstr ""
 
+msgid "Set how prices are displayed to contacts in this group."
+msgstr ""
+
 msgid "unspecified"
 msgstr ""
 
@@ -191,7 +194,22 @@ msgstr ""
 msgid "User %(bind_user)s already has a contact"
 msgstr ""
 
+msgid ""
+"The contact groups this contact belongs to. Contact groups are defined in "
+"Contacts - Contact Groups and are used to configure sales, campaigns, and "
+"product pricing tailored for a set of users."
+msgstr ""
+
 msgid "Language"
+msgstr ""
+
+msgid "The primary language to be used in all communications with the contact."
+msgstr ""
+
+msgid "The company name."
+msgstr ""
+
+msgid "The contacts that are members of this company."
 msgstr ""
 
 msgid "Gender"
@@ -712,18 +730,30 @@ msgstr ""
 msgid "Permission Groups"
 msgstr ""
 
+msgid "The permission group name."
+msgstr ""
+
 msgid "Module Permissions"
 msgstr ""
 
 msgid ""
+"Select the modules that should be accessible by this permission group. "
 "Modules with the same permissions as selected modules will be added "
 "automatically."
+msgstr ""
+
+msgid "Set the users that belong to this permission group."
 msgstr ""
 
 msgid "Product Types"
 msgstr ""
 
 msgid "Product types"
+msgstr ""
+
+msgid ""
+"Select attributes that go with your product type. These are defined in "
+"Products Settings - Attributes."
 msgstr ""
 
 msgid "Number of Attributes"
@@ -1004,6 +1034,11 @@ msgstr ""
 msgid "Edit %(model)s"
 msgstr ""
 
+msgid ""
+"Ther service provider type. This can be any of the shipping carriers or "
+"payment processors configured for your shop."
+msgstr ""
+
 #, python-brace-format
 msgid "Create {service_name}"
 msgstr ""
@@ -1036,10 +1071,17 @@ msgstr ""
 msgid "Service"
 msgstr ""
 
-msgid "Select carrier before filling other fields."
+msgid "Select a service to use for this service provider."
 msgstr ""
 
-msgid "Select payment processor before filling other fields."
+msgid ""
+"The carrier to use for this shipping method. Select a carrier before filling "
+"other fields."
+msgstr ""
+
+msgid ""
+"The payment processor to use for this payment method. Select a payment "
+"processor before filling out the other fields."
 msgstr ""
 
 msgid "Price"
@@ -1082,12 +1124,12 @@ msgstr ""
 msgid "Currency"
 msgstr ""
 
-msgid "Shop name"
+msgid ""
+"The primary shop currency. This is the currency used when selling your "
+"products."
 msgstr ""
 
-msgid ""
-"This option defines whether product prices entered in admin include taxes. "
-"Note this behavior can be overridden with customer group pricing."
+msgid "Shop name"
 msgstr ""
 
 msgid "Shop Owner Name"
@@ -1097,6 +1139,23 @@ msgid "Zip/Postal code"
 msgstr ""
 
 msgid "State/Province"
+msgstr ""
+
+msgid "The name of primary shop contact person."
+msgstr ""
+
+msgid ""
+"The shop street address. This may be used to provide estimated shipping "
+"costs."
+msgstr ""
+
+msgid "The shop zip/postal code."
+msgstr ""
+
+msgid "The city in which your shop is located."
+msgstr ""
+
+msgid "The country in which your shop is located."
 msgstr ""
 
 msgid "There are still some pending actions to complete!"
@@ -1156,10 +1215,25 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
+msgid "The user password."
+msgstr ""
+
 msgid "Permissions"
 msgstr ""
 
 msgid "See the permissions view to change these."
+msgstr ""
+
+msgid "See Contacts - Permission Groups to change these."
+msgstr ""
+
+msgid "The user email address. Used for password resets."
+msgstr ""
+
+msgid "The first name of the user."
+msgstr ""
+
+msgid "The last name of the user."
 msgstr ""
 
 msgid "staff"
@@ -1287,6 +1361,11 @@ msgid "Password recovery email sent to %(email)s"
 msgstr ""
 
 msgid "Sending the password recovery email failed."
+msgstr ""
+
+msgid ""
+"The permission groups that this user belongs to. Permission groups are "
+"configured through Contacts - Permission Groups."
 msgstr ""
 
 msgid "You can't unset this status for yourself."
@@ -1805,6 +1884,11 @@ msgid "Behavior"
 msgstr ""
 
 msgid "Behavior component type"
+msgstr ""
+
+msgid ""
+"The behaviors for this service. These behaviors can be used to add costs to "
+"the order or can be used to restrict availability of the service."
 msgstr ""
 
 msgid "Add component"

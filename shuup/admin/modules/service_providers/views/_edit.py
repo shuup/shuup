@@ -72,6 +72,10 @@ class ServiceProviderEditView(CreateOrUpdateView):
             label=_("Type"),
             required=type_enabled,
             initial=selected.choice_value,
+            help_text=_(
+                "Ther service provider type. "
+                "This can be any of the shipping carriers or payment processors configured for your shop."
+            )
         )
         if not type_enabled:
             type_field.widget.attrs['disabled'] = True

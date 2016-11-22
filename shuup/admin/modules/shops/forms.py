@@ -35,7 +35,8 @@ class ShopBaseForm(ProtectedFieldsMixin, MultiLanguageModelForm):
         self.fields["currency"] = forms.ChoiceField(
             choices=get_currency_choices(),
             required=True,
-            label=_("Currency")
+            label=_("Currency"),
+            help_text=_("The primary shop currency. This is the currency used when selling your products.")
         )
         self.disable_protected_fields()
 
@@ -63,14 +64,11 @@ class ShopWizardForm(MultiLanguageModelForm):
 
     def __init__(self, **kwargs):
         super(ShopWizardForm, self).__init__(**kwargs)
-        self.fields["prices_include_tax"].help_text = _(
-            "This option defines whether product prices entered in admin include taxes. "
-            "Note this behavior can be overridden with customer group pricing."
-        )
         self.fields["currency"] = forms.ChoiceField(
             choices=get_currency_choices(),
             required=True,
-            label=_("Currency")
+            label=_("Currency"),
+            help_text=_("The primary shop currency. This is the currency used when selling your products.")
         )
 
     def save(self):
@@ -94,4 +92,11 @@ class ShopAddressWizardForm(forms.ModelForm):
             "name": _("Shop Owner Name"),
             "postal_code": _("Zip/Postal code"),
             "region_code": _("State/Province")
+        }
+        help_texts = {
+            "name": _("The name of primary shop contact person."),
+            "street": _("The shop street address. This may be used to provide estimated shipping costs."),
+            "postal_code": _("The shop zip/postal code."),
+            "city": _("The city in which your shop is located."),
+            "country": _("The country in which your shop is located.")
         }

@@ -49,6 +49,10 @@ class PermissionChangeFormBase(forms.ModelForm):
             initial=[group.pk for group in initial_groups],
             required=False,
             label=_("Permission Groups"),
+            help_text=_(
+                "The permission groups that this user belongs to. "
+                "Permission groups are configured through Contacts - Permission Groups."
+            )
         )
         permission_groups_field.widget.choices = [(group.pk, force_text(group)) for group in initial_groups]
         self.fields["permission_groups"] = permission_groups_field

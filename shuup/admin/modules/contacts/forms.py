@@ -45,7 +45,11 @@ class ContactBaseFormMixin(object):
             initial=(self.instance.groups.all_except_defaults() if self.instance.pk else ()),
             required=False,
             widget=forms.SelectMultiple(),
-            label=_("Contact Groups")
+            label=_("Contact Groups"),
+            help_text=_(
+                "The contact groups this contact belongs to. Contact groups are defined in Contacts - Contact Groups "
+                "and are used to configure sales, campaigns, and product pricing tailored for a set of users."
+            )
         )
         if "account_manager" in self.fields:
             self.fields["account_manager"].widget = PersonContactChoiceWidget(clearable=True)
@@ -59,7 +63,9 @@ class ContactBaseFormMixin(object):
 
 
 class PersonContactBaseForm(ContactBaseFormMixin, forms.ModelForm):
-    language = LanguageFormField(label=_("Language"), required=False, include_blank=True)
+    language = LanguageFormField(label=_("Language"), required=False, include_blank=True, help_text=_(
+        "The primary language to be used in all communications with the contact."
+    ))
 
     class Meta:
         model = PersonContact
@@ -92,7 +98,10 @@ class CompanyContactBaseForm(ContactBaseFormMixin, forms.ModelForm):
 
     def init_fields(self):
         super(CompanyContactBaseForm, self).init_fields()
-        members_field = Select2MultipleField(model=PersonContact, required=False)
+        self.fields["name"].help_text = _("The company name.")
+        members_field = Select2MultipleField(model=PersonContact, required=False, help_text=_(
+            "The contacts that are members of this company."
+        ))
         if self.instance.pk and hasattr(self.instance, "members"):
             members_field.widget.choices = [
                 (object.pk, force_text(object)) for object in self.instance.members.all()

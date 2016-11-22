@@ -43,7 +43,9 @@ def get_front_url():
 
 
 class BaseUserForm(forms.ModelForm):
-    password = forms.CharField(label=_("Password"), widget=forms.PasswordInput)
+    password = forms.CharField(label=_("Password"), widget=forms.PasswordInput, help_text=_(
+        "The user password."
+    ))
     permission_info = forms.CharField(
         label=_("Permissions"),
         widget=forms.TextInput(attrs={"readonly": True, "disabled": True}),
@@ -54,11 +56,14 @@ class BaseUserForm(forms.ModelForm):
         label=_("Permission Groups"),
         widget=forms.TextInput(attrs={"readonly": True, "disabled": True}),
         required=False,
-        help_text=_("See the permissions view to change these.")
+        help_text=_("See Contacts - Permission Groups to change these.")
     )
 
     def __init__(self, *args, **kwargs):
         super(BaseUserForm, self).__init__(*args, **kwargs)
+        self.fields["email"].help_text = _("The user email address. Used for password resets.")
+        self.fields["first_name"].help_text = _("The first name of the user.")
+        self.fields["last_name"].help_text = _("The last name of the user.")
         if self.instance.pk:
             # Changing the password for an existing user requires more confirmation
             self.fields.pop("password")
