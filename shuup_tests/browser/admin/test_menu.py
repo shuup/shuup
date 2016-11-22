@@ -24,10 +24,10 @@ def test_menu(browser, admin_user, live_server, settings):
     initialize_admin_browser_test(browser, live_server, settings)
 
     browser.find_by_css(".menu-list li").first.click()
-    wait_until_condition(browser, lambda x: x.is_text_present("Add a product to see it in your store"))
+    wait_until_condition(browser, lambda x: x.is_text_present("New product"))
 
     # Make sure that the menu is clickable in small devices
     browser.driver.set_window_size(480, 960)
     browser.find_by_css("#menu-button").first.click()
     browser.find_by_css(".menu-list li").first.click()
-    wait_until_condition(browser, lambda x: x.is_text_present("Add a product to see it in your store"))
+    wait_until_condition(browser, lambda x: x.is_text_present("New product"))
