@@ -20,9 +20,12 @@ class ImportSettingsForm(forms.Form):
 
 
 class ImportForm(forms.Form):
-    language = forms.ChoiceField(label=_("Importing language"), choices=settings.LANGUAGES)
+    language = forms.ChoiceField(label=_("Importing language"), choices=settings.LANGUAGES, help_text=_(
+        "The language of the data you would like to import."
+    ))
     shop = forms.ChoiceField(label=_("Shop"), help_text=_("Select a shop you want import into"))
-    importer = forms.ChoiceField(label=_("Importer"), help_text=_("Select a importer type matching your data"))
+    importer = forms.ChoiceField(label=_("Importer"), help_text=_(
+        "Select a importer type matching the data you would like to import"))
     file = forms.FileField(label=_("File"))
 
     def __init__(self, **kwargs):
