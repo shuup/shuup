@@ -25,11 +25,25 @@ from shuup.utils.money import Money
 
 
 class RefundForm(forms.Form):
-    line_number = forms.ChoiceField(label=_("Line number"), required=False)
-    quantity = forms.DecimalField(required=False, min_value=0, initial=0, label=_("Quantity"))
+    line_number = forms.ChoiceField(label=_("Line"), required=False, help_text=_(
+            "The line to refund. "
+            "To refund an amount not associated with any line, select 'Refund arbitrary amount'."
+        )
+    )
+    quantity = forms.DecimalField(required=False, min_value=0, initial=0, label=_("Quantity"), help_text=_(
+            "The number of units to refund."
+        )
+    )
+    text = forms.CharField(max_length=255, label=_("Line Text/Comment"), required=False, help_text=_(
+            "The text describing the nature of the refund and/or the reason for the refund."
+        )
+    )
     amount = forms.DecimalField(
-        required=False, initial=0, label=_("Amount"), help_text=_("Total incl. tax to refund"))
-    restock_products = forms.BooleanField(required=False, initial=True, label=_("Restock products"))
+        required=False, initial=0, label=_("Amount"), help_text=_("The amount including tax to refund."))
+    restock_products = forms.BooleanField(required=False, initial=True, label=_("Restock products"), help_text=_(
+            "If checked, the quantity is adding back into the sellable product inventory."
+        )
+    )
 
     def clean_line_number(self):
         line_number = self.cleaned_data["line_number"]
@@ -73,7 +87,6 @@ class OrderCreateRefundView(UpdateView):
         # So adding that to the context to be rendered manually
         context["line_number_choices"] = self._get_line_number_choices()
         context["json_line_data"] = [self._get_line_data(self.object.shop, line) for line in self.object.lines.all()]
-
         return context
 
     def _get_line_data(self, shop, line):
@@ -114,13 +127,24 @@ class OrderCreateRefundView(UpdateView):
         kwargs.pop("instance")
         return kwargs
 
-    def _get_refundable_line_numbers(self):
-        return [
-            line.ordering for line in self.object.lines.all()
-            if line.max_refundable_amount and line.type != OrderLineType.REFUND]
+    def _get_line_text(self, line):
+        text = "line %s: %s" % (line.ordering + 1, line.text)
+        if line.sku:
+            text += " (SKU %s)" % (line.sku)
+        return text
 
     def _get_line_number_choices(self):
-        return [("", "---")] + [((i), (i+1)) for i in self._get_refundable_line_numbers()]
+        line_number_choices = [("", "---")]
+        if self.object.get_total_unrefunded_amount().value > 0:
+            line_number_choices += [("amount", _("Refund arbitrary amount"))]
+        return line_number_choices + [
+            (line.ordering, self._get_line_text(line)) for line in self.object.lines.all()
+            if (line.type == OrderLineType.PRODUCT and line.max_refundable_quantity > 0) or
+            (line.type != OrderLineType.PRODUCT and
+             line.max_refundable_amount.value > 0 and
+             line.max_refundable_quantity > 0) and
+            line.type != OrderLineType.REFUND
+        ]
 
     def get_form(self, form_class):
         formset = super(OrderCreateRefundView, self).get_form(form_class)
@@ -135,24 +159,24 @@ class OrderCreateRefundView(UpdateView):
 
     def _get_refund_line_info(self, order, data):
         refund_line_info = {}
-        amount_value = data.get("amount", 0)
+        amount_value = data.get("amount", 0) or 0
         line_number = data.get("line_number")
-        quantity = data.get("quantity", 0)
+        quantity = data.get("quantity", 0) or 1
         restock_products = data.get("restock_products")
 
-        line = order.lines.filter(ordering=line_number).first()
+        if line_number != "amount":
+            line = order.lines.filter(ordering=line_number).first()
 
-        if not line:
-            return None
-
-        # TODO: temporary - to be removed once proper rounding is implemented
-        amount_value = line.taxful_price.value
-        quantity = line.quantity
-
-        refund_line_info["line"] = line
-        refund_line_info["quantity"] = quantity
+            if not line:
+                return None
+            refund_line_info["line"] = line
+            refund_line_info["quantity"] = quantity
+            refund_line_info["restock_products"] = bool(restock_products)
+        else:
+            refund_line_info["line"] = "amount"
+            refund_line_info["text"] = data.get("text")
+            refund_line_info["quantity"] = 1
         refund_line_info["amount"] = Money(amount_value, order.currency)
-        refund_line_info["restock_products"] = bool(restock_products)
         return refund_line_info
 
     def form_valid(self, form):
@@ -161,12 +185,8 @@ class OrderCreateRefundView(UpdateView):
 
         for refund in form.cleaned_data:
             line = self._get_refund_line_info(order, refund)
-            if line and line["amount"]:
+            if line:
                 refund_lines.append(line)
-
-        if not refund_lines:
-            messages.error(self.request, _("Refund amount cannot be 0"))
-            return self.form_invalid(form)
 
         try:
             order.create_refund(refund_lines, created_by=self.request.user)

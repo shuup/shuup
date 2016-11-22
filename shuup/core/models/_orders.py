@@ -10,6 +10,7 @@ from __future__ import unicode_literals, with_statement
 import datetime
 from collections import defaultdict
 from decimal import Decimal
+from itertools import chain
 
 import six
 from django.conf import settings
@@ -538,7 +539,7 @@ class Order(MoneyPropped, models.Model):
         return max(difference, Money(0, self.currency))
 
     def can_create_payment(self):
-        return not(self.is_paid() or self.is_canceled() or (self.has_refunds() and not self.can_create_refund()))
+        return not(self.is_paid() or self.is_canceled())
 
     def create_payment(self, amount, payment_identifier=None, description=''):
         """
@@ -670,7 +671,59 @@ class Order(MoneyPropped, models.Model):
         return shipment
 
     def can_create_refund(self):
-        return (self.taxful_total_price.amount.value > 0 and not self.can_edit())
+        return (
+            (self.taxful_total_price.amount.value > 0 or self.get_total_unrefunded_quantity() > 0) and
+            not self.can_edit()
+        )
+
+    def _get_tax_class_proportions(self):
+        product_lines = self.lines.products()
+
+        zero = self.lines.first().price.new(0)
+
+        total_by_tax_class = defaultdict(lambda: zero)
+        total = zero
+
+        for line in product_lines:
+            total_by_tax_class[line.product.tax_class] += line.price
+            total += line.price
+
+        if not total:
+            # Can't calculate proportions, if total is zero
+            return []
+
+        return [
+            (tax_class, tax_class_total / total)
+            for (tax_class, tax_class_total) in total_by_tax_class.items()
+        ]
+
+    def _refund_amount(self, index, text, amount, tax_proportions):
+        taxmod = taxing.get_tax_module()
+        ctx = taxmod.get_context_from_order_source(self)
+        taxes = (list(chain.from_iterable(
+            taxmod.get_taxed_price(ctx, TaxfulPrice(amount * factor), tax_class).taxes
+            for (tax_class, factor) in tax_proportions)))
+
+        base_amount = amount
+        if not self.prices_include_tax:
+            base_amount /= (1 + sum([tax.tax.rate for tax in taxes]))
+        refund_line = OrderLine.objects.create(
+            text=text,
+            order=self,
+            type=OrderLineType.REFUND,
+            ordering=index,
+            base_unit_price_value=-base_amount,
+            quantity=1,
+        )
+        for line_tax in taxes:
+            refund_line.taxes.create(
+                tax=line_tax.tax,
+                name=_("Refund for %s" % line_tax.name),
+                amount_value=-line_tax.amount,
+                base_amount_value=-line_tax.base_amount,
+                ordering=1
+            )
+        return refund_line
 
     @atomic
     def create_refund(self, refund_data, created_by=None):
@@ -693,6 +746,7 @@ class Order(MoneyPropped, models.Model):
         :type created_by: django.contrib.auth.User|None
         """
         index = self.lines.all().aggregate(models.Max("ordering"))["ordering__max"]
+        tax_proportions = self._get_tax_class_proportions()
         zero = Money(0, self.currency)
         refund_lines = []
         total_refund_amount = zero
@@ -709,59 +763,62 @@ class Order(MoneyPropped, models.Model):
             assert parent_line
             assert quantity
 
-            # ensure the amount to refund and the order line amount have the same signs
-            if ((amount > zero and parent_line.taxful_price.amount < zero) or
-               (amount < zero and parent_line.taxful_price.amount > zero)):
-                raise InvalidRefundAmountException
+            if parent_line == "amount":
+                refund_line = self._refund_amount(index, refund.get("text", _("Misc refund")), amount, tax_proportions)
+            else:
+                # ensure the amount to refund and the order line amount have the same signs
+                if ((amount > zero and parent_line.taxful_price.amount < zero) or
+                   (amount < zero and parent_line.taxful_price.amount > zero)):
+                    raise InvalidRefundAmountException
 
-            if abs(amount) > abs(parent_line.max_refundable_amount):
-                raise RefundExceedsAmountException
+                if abs(amount) > abs(parent_line.max_refundable_amount):
+                    raise RefundExceedsAmountException
 
-            # If restocking products, calculate quantity of products to restock
-            product = parent_line.product
-            if (restock_products and quantity and product and (product.stock_behavior == StockBehavior.STOCKED)):
-                from shuup.core.suppliers.enums import StockAdjustmentType
-                # restock from the unshipped quantity first
-                unshipped_quantity_to_restock = min(quantity, product_summary[product.pk]["unshipped"])
-                shipped_quantity_to_restock = min(
-                    quantity - unshipped_quantity_to_restock,
-                    product_summary[product.pk]["ordered"] - product_summary[product.pk]["refunded"])
+                # If restocking products, calculate quantity of products to restock
+                product = parent_line.product
+                if (restock_products and quantity and product and (product.stock_behavior == StockBehavior.STOCKED)):
+                    from shuup.core.suppliers.enums import StockAdjustmentType
+                    # restock from the unshipped quantity first
+                    unshipped_quantity_to_restock = min(quantity, product_summary[product.pk]["unshipped"])
+                    shipped_quantity_to_restock = min(
+                        quantity - unshipped_quantity_to_restock,
+                        product_summary[product.pk]["ordered"] - product_summary[product.pk]["refunded"])
 
-                if unshipped_quantity_to_restock > 0:
-                    product_summary[product.pk]["unshipped"] -= unshipped_quantity_to_restock
-                    parent_line.supplier.adjust_stock(
-                        product.id,
-                        unshipped_quantity_to_restock,
-                        created_by=created_by,
-                        type=StockAdjustmentType.RESTOCK_LOGICAL)
-                if shipped_quantity_to_restock > 0:
-                    parent_line.supplier.adjust_stock(
-                        product.id,
-                        shipped_quantity_to_restock,
-                        created_by=created_by,
-                        type=StockAdjustmentType.RESTOCK)
-                product_summary[product.pk]["refunded"] += quantity
+                    if unshipped_quantity_to_restock > 0:
+                        product_summary[product.pk]["unshipped"] -= unshipped_quantity_to_restock
+                        parent_line.supplier.adjust_stock(
+                            product.id,
+                            unshipped_quantity_to_restock,
+                            created_by=created_by,
+                            type=StockAdjustmentType.RESTOCK_LOGICAL)
+                    if shipped_quantity_to_restock > 0:
+                        parent_line.supplier.adjust_stock(
+                            product.id,
+                            shipped_quantity_to_restock,
+                            created_by=created_by,
+                            type=StockAdjustmentType.RESTOCK)
+                    product_summary[product.pk]["refunded"] += quantity
 
-            base_amount = amount if self.prices_include_tax else amount / (1 + parent_line.tax_rate)
-            refund_line = OrderLine.objects.create(
-                text=_("Refund for %s" % parent_line.text),
-                order=self,
-                type=OrderLineType.REFUND,
-                parent_line=parent_line,
-                ordering=index,
-                base_unit_price_value=-(base_amount / quantity),
-                quantity=quantity,
-            )
-            for line_tax in parent_line.taxes.all():
-                tax_base_amount = amount / (1 + line_tax.tax.rate)
-                tax_amount = tax_base_amount * line_tax.tax.rate
-                refund_line.taxes.create(
-                    tax=line_tax.tax,
-                    name=_("Refund for %s" % line_tax.name),
-                    amount_value=-tax_amount,
-                    base_amount_value=-tax_base_amount,
-                    ordering=line_tax.ordering
+                base_amount = amount if self.prices_include_tax else amount / (1 + parent_line.tax_rate)
+                refund_line = OrderLine.objects.create(
+                    text=_("Refund for %s" % parent_line.text),
+                    order=self,
+                    type=OrderLineType.REFUND,
+                    parent_line=parent_line,
+                    ordering=index,
+                    base_unit_price_value=-(base_amount / (quantity or 1)),
+                    quantity=quantity
                 )
+                for line_tax in parent_line.taxes.all():
+                    tax_base_amount = amount / (1 + parent_line.tax_rate)
+                    tax_amount = tax_base_amount * line_tax.tax.rate
+                    refund_line.taxes.create(
+                        tax=line_tax.tax,
+                        name=_("Refund for %s" % line_tax.name),
+                        amount_value=-tax_amount,
+                        base_amount_value=-tax_base_amount,
+                        ordering=line_tax.ordering
+                    )
 
             total_refund_amount += refund_line.taxful_price.amount
             refund_lines.append(refund_line)
@@ -770,6 +827,7 @@ class Order(MoneyPropped, models.Model):
         self.cache_prices()
         self.save()
         self.update_shipping_status()
+        self.update_payment_status()
         refund_created.send(sender=type(self), order=self, refund_lines=refund_lines)
 
     def create_full_refund(self, restock_products=False):
@@ -797,6 +855,9 @@ class Order(MoneyPropped, models.Model):
 
     def get_total_unrefunded_amount(self):
         return max(self.taxful_total_price.amount, Money(0, self.currency))
+
+    def get_total_unrefunded_quantity(self):
+        return sum([line.max_refundable_quantity for line in self.lines.all()])
 
     def has_refunds(self):
         return self.lines.refunds().exists()
@@ -916,6 +977,22 @@ class Order(MoneyPropped, models.Model):
                 })
             )
             self.save(update_fields=("shipping_status",))
+
+    def update_payment_status(self):
+        status_before_update = self.payment_status
+        if self.get_total_unpaid_amount().value == 0:
+            self.payment_status = PaymentStatus.FULLY_PAID
+        elif self.get_total_paid_amount().value > 0:
+            self.payment_status = PaymentStatus.PARTIALLY_PAID
+        else:
+            self.payment_status = PaymentStatus.NOT_PAID
+        if status_before_update != self.payment_status:
+            self.add_log_entry(
+                _("New payment status set: %(payment_status)s" % {
+                    "payment_status": self.payment_status
+                })
+            )
+            self.save(update_fields=("payment_status",))
 
     def get_known_additional_data(self):
         """

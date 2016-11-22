@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Allow refunding by arbitrary amounts and quantity-only refunds
 - Fix bug in `Order.can_set_complete`
 - Currencies can be now created and edited through admin.
 
@@ -20,6 +21,10 @@ Localization
 
 Admin
 ~~~~~
+
+- Allow refund quantity/amount to be editable
+- Fix ability to add multiple refund lines at once
+- Show more details when picking line to refund
 
 Addons
 ~~~~~~

@@ -716,11 +716,18 @@ msgstr ""
 msgid "Refund for %s"
 msgstr ""
 
+msgid "Misc refund"
+msgstr ""
+
 msgid "All rows requiring verification have been verified."
 msgstr ""
 
 #, python-format
 msgid "New shipping status set: %(shipping_status)s"
+msgstr ""
+
+#, python-format
+msgid "New payment status set: %(payment_status)s"
 msgstr ""
 
 msgid "gateway ID"
