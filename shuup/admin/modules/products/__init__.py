@@ -9,7 +9,6 @@ from __future__ import unicode_literals
 
 from collections import Counter
 
-from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.db.models.signals import m2m_changed, post_save
@@ -30,7 +29,7 @@ from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls, get_model_url,
     manipulate_query_string
 )
-from shuup.admin.views.home import SimpleHelpBlock
+from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
 from shuup.core.models import (
     Product, ProductCrossSell, ProductPackageLink, ProductVariationResult,
     ShopProduct
@@ -132,20 +131,16 @@ class ProductModule(AdminModule):
 
     def get_help_blocks(self, request, kind):
         actions = [{
-            "text": _("Add a product"),
+            "text": _("New product"),
             "url": self.get_model_url(Product, "new")
         }]
-
-        if "shuup.importer" in settings.INSTALLED_APPS:
-            actions.append({
-                "text": _("Import products"),
-                "url": reverse("shuup_admin:importer.import")
-            })
 
         yield SimpleHelpBlock(
             text=_("Add a product to see it in your store"),
             actions=actions,
             icon_url="shuup_admin/img/product.png",
+            priority=0,
+            category=HelpBlockCategory.PRODUCTS,
             done=Product.objects.exists() if kind == "setup" else False
         )
 

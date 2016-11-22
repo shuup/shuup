@@ -35,6 +35,7 @@ class CurrencyModule(AdminModule):
                 icon="fa fa-money",
                 url="shuup_admin:currency.list",
                 category=SETTINGS_MENU_CATEGORY,
+                subcategory="store",
                 ordering=2
             ),
         ]

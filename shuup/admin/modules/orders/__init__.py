@@ -20,6 +20,7 @@ from shuup.admin.utils.permissions import (
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls, get_model_url
 )
+from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
 from shuup.core.models import (
     Contact, Order, OrderStatus, OrderStatusRole, Product
 )
@@ -187,3 +188,18 @@ class OrderModule(AdminModule):
         if hasattr(object, "role"):
             return derive_model_url(OrderStatus, "shuup_admin:order_status", object, kind)
         return derive_model_url(Order, "shuup_admin:order", object, kind)
+
+    def get_help_blocks(self, request, kind):
+        actions = [{
+            "text": _("New order"),
+            "url": self.get_model_url(Order, "new")
+        }]
+
+        yield SimpleHelpBlock(
+            text=_("New order"),
+            actions=actions,
+            icon_url="shuup_admin/img/product.png",
+            priority=0,
+            category=HelpBlockCategory.ORDERS,
+            done=Order.objects.exists() if kind == "setup" else False
+        )

@@ -36,7 +36,8 @@ class SystemModule(AdminModule):
         return [e for e in [
             MenuEntry(
                 text=_("Telemetry"), icon="fa fa-tachometer", url="shuup_admin:telemetry",
-                category=SETTINGS_MENU_CATEGORY
+                category=SETTINGS_MENU_CATEGORY,
+                subcategory="store",
             ) if is_telemetry_enabled() else None,
         ] if e]
 

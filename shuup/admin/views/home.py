@@ -8,11 +8,40 @@
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.base import TemplateView
+from enumfields import Enum
 
 from shuup.admin.module_registry import get_modules
 from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.admin.utils.tour import is_tour_complete
 from shuup.admin.utils.wizard import setup_wizard_complete
+
+
+class HelpBlockCategory(Enum):
+    PRODUCTS = 1
+    ORDERS = 2
+    CAMPAIGNS = 3
+    CONTACTS = 4
+    STOREFRONT = 5
+
+    GENERAL = 200
+
+    class Labels:
+        PRODUCTS = _("Products")
+        CONTACTS = _("Contacts")
+        STOREFRONT = _("Storefront")
+        CAMPAIGNS = _("Campaigns")
+        ORDERS = _("Orders")
+        GENERAL = _("General")
+
+
+QUICKLINK_ORDER = [
+    HelpBlockCategory.PRODUCTS,
+    HelpBlockCategory.ORDERS,
+    HelpBlockCategory.CAMPAIGNS,
+    HelpBlockCategory.CONTACTS,
+    HelpBlockCategory.STOREFRONT,
+    HelpBlockCategory.GENERAL
+]
 
 
 class SimpleHelpBlock(object):
@@ -24,6 +53,7 @@ class SimpleHelpBlock(object):
         self.priority = kwargs.pop("priority", 1)
         self.css_class = kwargs.pop("css_class", "")
         self.done = kwargs.pop("done", False)
+        self.category = kwargs.pop("category", HelpBlockCategory.GENERAL)
 
 
 class HomeView(TemplateView):

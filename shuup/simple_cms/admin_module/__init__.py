@@ -13,7 +13,7 @@ from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
-from shuup.admin.views.home import SimpleHelpBlock
+from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
 from shuup.simple_cms.models import Page
 
 
@@ -43,9 +43,11 @@ class SimpleCMSAdminModule(AdminModule):
             yield SimpleHelpBlock(
                 text=_("Add a web page"),
                 actions=[{
-                    "text": _("Add a page"),
+                    "text": _("New page"),
                     "url": self.get_model_url(Page, "new")
                 }],
+                priority=100,
+                category=HelpBlockCategory.STOREFRONT,
                 icon_url="simple_cms/page.png"
             )
 

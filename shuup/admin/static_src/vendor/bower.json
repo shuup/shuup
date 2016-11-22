@@ -29,6 +29,24 @@
     "select2": "4.0.2",
     "smalot-bootstrap-datetimepicker": "2.3.8",
     "tether-shepherd": "1.8.1",
-    "imagelightbox2": "0.5.4"
+    "imagelightbox2": "0.5.4",
+    "masonry": "4.1.1",
+    "sortablejs": "1.4.2"
+  },
+  "overrides": {
+    "sortablejs": {
+      "see-this-url": "https://github.com/RubaXa/Sortable/issues/604",
+      "main": [
+        "Sortable.js",
+        "ng-sortable.js"
+      ]
+    },
+    "outlayer": {
+      "see-this-url": "https://github.com/metafizzy/outlayer/issues/33",
+      "main": [
+        "item.js",
+        "outlayer.js"
+      ]
+    }
   }
 }

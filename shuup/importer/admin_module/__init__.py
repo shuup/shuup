@@ -41,6 +41,7 @@ class ImportAdminModule(AdminModule):
             MenuEntry(
                 text=_("Data Import"),
                 category=SETTINGS_MENU_CATEGORY,
+                subcategory="store",
                 url="shuup_admin:importer.import",
                 icon="fa fa-star"
             )

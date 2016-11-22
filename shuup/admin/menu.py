@@ -12,6 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.module_registry import get_modules
 from shuup.admin.utils.permissions import get_missing_permissions
+from shuup.admin.views.home import QUICKLINK_ORDER
 
 ORDERS_MENU_CATEGORY = 1
 PRODUCTS_MENU_CATEGORY = 2
@@ -23,15 +24,68 @@ ADDONS_MENU_CATEGORY = 7
 SETTINGS_MENU_CATEGORY = 8
 
 
-MENU_CATEGORIES = [
-    (ORDERS_MENU_CATEGORY, _("Orders"), "fa fa-inbox"),
-    (PRODUCTS_MENU_CATEGORY, _("Products"), "fa fa-cube"),
-    (CONTACTS_MENU_CATEGORY, _("Contacts"), "fa fa-users"),
-    (REPORTS_MENU_CATEGORY, _("Reports"), "fa fa-bar-chart"),
-    (CAMPAIGNS_MENU_CATEGORY, _("Campaigns"), "fa fa-bullhorn"),
-    (STOREFRONT_MENU_CATEGORY, _("Storefront"), "fa fa-paint-brush"),
-    (ADDONS_MENU_CATEGORY, _("Addons"), "fa fa-puzzle-piece"),
-    (SETTINGS_MENU_CATEGORY, _("Settings"), "fa fa-tachometer")
+MAIN_MENU = [
+    {
+        "identifier": ORDERS_MENU_CATEGORY,
+        "title": _("Orders"),
+        "icon": "fa fa-inbox",
+        "children": []
+    },
+    {
+        "identifier": PRODUCTS_MENU_CATEGORY,
+        "title": _("Products"),
+        "icon": "fa fa-cube",
+        "children": []
+    },
+    {
+        "identifier": CONTACTS_MENU_CATEGORY,
+        "title": _("Contacts"),
+        "icon": "fa fa-users",
+        "children": []
+    },
+    {
+        "identifier": REPORTS_MENU_CATEGORY,
+        "title": _("Reports"),
+        "icon": "fa fa-bar-chart",
+        "children": []
+    },
+    {
+        "identifier": CAMPAIGNS_MENU_CATEGORY,
+        "title": _("Campaigns"),
+        "icon": "fa fa-bullhorn",
+        "children": []
+    },
+    {
+        "identifier": STOREFRONT_MENU_CATEGORY,
+        "title": _("Storefront"),
+        "icon": "fa fa-paint-brush",
+        "children": []
+    },
+    {
+        "identifier": ADDONS_MENU_CATEGORY,
+        "title": _("Addons"),
+        "icon": "fa fa-puzzle-piece",
+        "children": []
+    },
+    {
+        "identifier": SETTINGS_MENU_CATEGORY,
+        "title": _("Settings"),
+        "icon": "fa fa-tachometer",
+        "children": [
+            {
+                "identifier": "payment_shipping",
+                "title": _("Payment & Shipping")
+            },
+            {
+                "identifier": "store",
+                "title": _("Storefront")
+            },
+            {
+                "identifier": "taxes",
+                "title": _("Taxes")
+            }
+        ]
+    }
 ]
 
 
@@ -43,6 +97,7 @@ class _MenuCategory(object):
         self.identifier = identifier
         self.name = name
         self.icon = icon
+        self.children = []
         self.entries = []
 
     def __iter__(self):
@@ -51,9 +106,22 @@ class _MenuCategory(object):
 
 def get_menu_entry_categories(request):
     menu_categories = OrderedDict()
+    menu_children = OrderedDict()
+
     menu_category_icons = {}
-    for identifier, category_name, icon in MENU_CATEGORIES:
-        menu_categories[identifier] = _MenuCategory(identifier, category_name, icon)
+    for menu_item in MAIN_MENU:
+        identifier = menu_item["identifier"]
+        icon = menu_item["icon"]
+        menu_categories[identifier] = _MenuCategory(
+            identifier=identifier,
+            name=menu_item["title"],
+            icon=icon,
+        )
+        for child in menu_item["children"]:
+            child_category = _MenuCategory(child["identifier"], child["title"], None)
+            menu_children[child["identifier"]] = child_category
+            menu_categories[identifier].children.append(child_category)
+
         menu_category_icons[identifier] = icon
 
     modules = list(get_modules())
@@ -64,29 +132,51 @@ def get_menu_entry_categories(request):
             if key not in menu_category_icons
         )
 
+    all_categories = set()
     for module in modules:
         if get_missing_permissions(request.user, module.get_required_permissions()):
             continue
+
         for entry in (module.get_menu_entries(request=request) or ()):
             category_identifier = entry.category
-            category = menu_categories.get(category_identifier) if category_identifier else None
+            subcategory = entry.subcategory
+
+            entry_identifier = subcategory if subcategory else category_identifier
+            menu_items = menu_children if subcategory else menu_categories
+
+            category = menu_items.get(entry_identifier) if identifier else None
             if not category:
                 category_identifier = force_text(category_identifier or module.name)
-                category = menu_categories.get(category_identifier)
+                category = menu_items.get(category_identifier)
                 if not category:
-                    menu_categories[category_identifier] = category = _MenuCategory(
+                    menu_items[category_identifier] = category = _MenuCategory(
                         identifier=category_identifier,
                         name=category_identifier,
                         icon=menu_category_icons.get(category_identifier, "fa fa-circle")
                     )
             category.entries.append(entry)
-    return [c for identifier, c in six.iteritems(menu_categories) if len(c.entries) > 0]
+            if subcategory:
+                parent = menu_categories.get(category_identifier)
+                all_categories.add(parent)
+            else:
+                all_categories.add(category)
+
+    return [c for menu_identifier, c in six.iteritems(menu_categories) if c in all_categories]
 
 
 def get_quicklinks(request):
-    quicklinks = []
+    quicklinks = OrderedDict()
+    for block in QUICKLINK_ORDER:
+        quicklinks[block] = []
+
     for module in get_modules():
         if get_missing_permissions(request.user, module.get_required_permissions()):
             continue
-        quicklinks.extend(module.get_help_blocks(request, kind="quicklink"))
+        for help_block in module.get_help_blocks(request, kind="quicklink"):
+            quicklinks[help_block.category].append(help_block)
+
+    links = quicklinks.copy()
+    for block, data in six.iteritems(links):
+        if not quicklinks[block]:
+            quicklinks.pop(block)
     return quicklinks

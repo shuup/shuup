@@ -134,11 +134,12 @@ class Resolvable(object):
 
 
 class MenuEntry(Resolvable):
-    def __init__(self, text, url, icon=None, category=None, ordering=99999, aliases=()):
+    def __init__(self, text, url, icon=None, category=None, subcategory=None, ordering=99999, aliases=()):
         self.text = text
         self._url = url
         self.icon = icon
         self.category = category
+        self.subcategory = subcategory
         self.ordering = ordering
         self.aliases = tuple(aliases)
 

@@ -47,22 +47,28 @@ class TaxModule(AdminModule):
         category = SETTINGS_MENU_CATEGORY
         return [
             MenuEntry(
-                text=_("Taxes"), icon="fa fa-pie-chart",
+                text=_("Taxes"),
+                icon="fa fa-pie-chart",
                 url="shuup_admin:tax.list",
                 category=category,
-                ordering=8
+                subcategory="taxes",
+                ordering=1
             ),
             MenuEntry(
-                text=_("Customer Tax Groups"), icon="fa fa-pie-chart",
+                text=_("Customer Tax Groups"),
+                icon="fa fa-pie-chart",
                 url="shuup_admin:customer_tax_group.list",
                 category=category,
-                ordering=6
+                subcategory="taxes",
+                ordering=2
             ),
             MenuEntry(
-                text=_("Tax Classes"), icon="fa fa-pie-chart",
+                text=_("Tax Classes"),
+                icon="fa fa-pie-chart",
                 url="shuup_admin:tax_class.list",
                 category=category,
-                ordering=7
+                subcategory="taxes",
+                ordering=3
             )
         ]
 
