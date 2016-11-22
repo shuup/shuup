@@ -1,7 +1,7 @@
 {% from "shuup/admin/macros/general.jinja" import content_block with context %}
 {% set sp_form = form["customer_group_pricing"] %}
-{% call content_block(_("Customer Group Pricing"), "fa-money") %}
-    <p>{% trans %}Here you can set individual pricing for different customer groups. This can be useful for special discounts or for B2B orders. These groups are defined in Contacts Settings – Contact Groups{% endtrans %}</p>
+{% call content_block(_("Contact Group Pricing"), "fa-money") %}
+    <p>{% trans %}Here you can set individual pricing for different contact groups. This can be useful for special discounts or for B2B orders. These groups are defined in Contacts Settings – Contact Groups{% endtrans %}</p>
     <br>
     <div class="panel panel-default">
         <div class="panel-heading">

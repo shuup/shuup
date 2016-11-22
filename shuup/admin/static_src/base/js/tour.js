@@ -20,9 +20,9 @@
             {
                 title: gettext("Quicklinks"),
                 text: [
-                    gettext("These are the main things you will want to do to get your store up and running, and the things you do most often.")
+                    gettext("Quick Links to your most used features.")
                 ],
-                attachTo: "li.quicklinks a right"
+                attachTo: "li a[data-target-id='quicklinks'] right"
             }, {
                 title: gettext("Orders"),
                 text: [

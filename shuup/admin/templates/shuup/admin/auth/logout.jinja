@@ -3,7 +3,7 @@
 {% from "shuup/admin/macros/general.jinja" import auth_block %}
 {% block content %}
     {% call auth_block("subtle-slide-in") %}
-        <h4 class="text-center">{% trans %}You have been logged out. Good bye!{% endtrans %}</h4>
+        <h4 class="text-center">{% trans %}You have been securely logged out. Hope to see you soon!{% endtrans %}</h4>
         <div class="actions">
             <a class="btn btn-primary btn-lg btn-block" href="{{ url("shuup_admin:login") }}?next={{ url("shuup_admin:dashboard") }}">
                 <i class="fa fa-sign-in"></i> {% trans %}Log in again{% endtrans %}
