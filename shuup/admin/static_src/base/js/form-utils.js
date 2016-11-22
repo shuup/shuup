@@ -53,8 +53,12 @@ function renderFormErrors($form, errors) {
         let formErrors = errors[formName];
         for(let fieldName in formErrors) {
             let fieldErrors = formErrors[fieldName].join(" ");
-            let $field = $form.find(":input[name='" + formName + "-" + fieldName + "']").parent(".form-group");
-            $field.append("<span class='help-block error-block'>" + fieldErrors + "</span>").addClass("has-error");
+            if(fieldName === "__all__") {
+                $form.parent().find(".errors").append('<div class="alert alert-danger">' + fieldErrors + '</div>');
+            } else {
+                let $field = $form.find(":input[name='" + formName + "-" + fieldName + "']").parent(".form-group");
+                $field.append("<span class='help-block error-block'>" + fieldErrors + "</span>").addClass("has-error");
+            }
         }
     }
 }
@@ -62,6 +66,7 @@ function renderFormErrors($form, errors) {
 function clearErrors($form) {
     $form.find(".has-error").removeClass("has-error");
     $form.find(".error-block").remove();
+    $form.parent().find(".errors").empty();
 }
 
 $(function() {

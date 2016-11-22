@@ -45,12 +45,13 @@
                         getButton(gettext("Previous"), "previous", disablePrevious, "btn-primary pull-left " + (config.hidePrevious? "hidden":"")) +
                         getButton(gettext("Next"), "next", disableNext, "btn-primary pull-right") +
                     '</div>' +
+                    (config.skip?
                     '<div class="clearfix">' +
                         getButton(gettext("Skip Setup"), "skip", false, "btn-default pull-right", config.skipTooltip) +
-                    '</div>' +
+                    '</div>': '') +
                 '</div>'
             );
-            $activeWizardPane.find('[data-toggle="tooltip"]').tooltip();            
+            $activeWizardPane.find('[data-toggle="tooltip"]').tooltip();
         }
 
         function switchToPane(index) {

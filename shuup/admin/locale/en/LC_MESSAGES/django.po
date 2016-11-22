@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-15 23:23+0000\n"
+"POT-Creation-Date: 2016-11-22 04:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -682,6 +682,9 @@ msgstr ""
 msgid "Shipment %s has been deleted."
 msgstr ""
 
+msgid "Identifier already exists"
+msgstr ""
+
 msgid "Order Statuses"
 msgstr ""
 
@@ -996,22 +999,26 @@ msgstr ""
 msgid "Provider"
 msgstr ""
 
+#, python-format
+msgid "Please activate at least one %s."
+msgstr ""
+
 msgid "Please add shipping methods for your shop"
 msgstr ""
 
-msgid "Carrier"
-msgstr ""
-
-msgid "Payment Methods"
+msgid "shipping method"
 msgstr ""
 
 msgid "Please add payment methods for your shop"
 msgstr ""
 
-msgid "Payment Processor"
+msgid "payment method"
 msgstr ""
 
 msgid "Shipping Methods"
+msgstr ""
+
+msgid "Payment Methods"
 msgstr ""
 
 msgid "Service"
@@ -1036,6 +1043,12 @@ msgid "Enabled"
 msgstr ""
 
 msgid "Shop"
+msgstr ""
+
+msgid "Carrier"
+msgstr ""
+
+msgid "Payment Processor"
 msgstr ""
 
 msgid "Weight-based pricing range"
@@ -1861,9 +1874,6 @@ msgid ""
 msgstr ""
 
 msgid "Click here for help"
-msgstr ""
-
-msgid "Setup can be continued later from the admin dashboard"
 msgstr ""
 
 msgid "Create new"
