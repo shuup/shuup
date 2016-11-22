@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-25 18:30+0000\n"
+"POT-Creation-Date: 2016-11-22 23:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,6 +21,9 @@ msgid "Reports"
 msgstr ""
 
 msgid "Type"
+msgstr ""
+
+msgid "Select the type of report to run."
 msgstr ""
 
 msgid "Custom"
@@ -47,13 +50,19 @@ msgstr ""
 msgid "Shop"
 msgstr ""
 
+msgid "Filter report results by shop."
+msgstr ""
+
 msgid "Date Range"
+msgstr ""
+
+msgid "Filter report results by a date range."
 msgstr ""
 
 msgid "Start Date"
 msgstr ""
 
-msgid "For custom date range"
+msgid "For a custom date range."
 msgstr ""
 
 msgid "End Date"
@@ -62,7 +71,13 @@ msgstr ""
 msgid "Output Format"
 msgstr ""
 
+msgid "The format to show the report results."
+msgstr ""
+
 msgid "Download"
+msgstr ""
+
+msgid "Check this to download the report."
 msgstr ""
 
 msgid "Toggle Filters"
