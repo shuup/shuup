@@ -43,21 +43,41 @@ class Shop(ChangeProtected, TranslatableShuupModel):
     change_protect_message = _("The following fields cannot be changed since there are existing orders for this shop")
 
     identifier = InternalIdentifierField(unique=True)
-    domain = models.CharField(max_length=128, blank=True, null=True, unique=True, verbose_name=_("domain"))
-    status = EnumIntegerField(ShopStatus, default=ShopStatus.DISABLED, verbose_name=_("status"))
+    domain = models.CharField(max_length=128, blank=True, null=True, unique=True, verbose_name=_("domain"), help_text=_(
+        "Your shop domain name. Use this field to configure the URL that is used to visit your site. "
+        "Note: this requires additional configuration through your internet domain registrar."
+    ))
+    status = EnumIntegerField(ShopStatus, default=ShopStatus.DISABLED, verbose_name=_("status"), help_text=_(
+        "Your shop status. Disable your shop if it is no longer in use."
+    ))
     owner = models.ForeignKey("Contact", blank=True, null=True, on_delete=models.SET_NULL, verbose_name=_("contact"))
     options = JSONField(blank=True, null=True, verbose_name=_("options"))
-    currency = CurrencyField(default=_get_default_currency, verbose_name=_("currency"))
-    prices_include_tax = models.BooleanField(default=True, verbose_name=_("prices include tax"))
+    currency = CurrencyField(default=_get_default_currency, verbose_name=_("currency"), help_text=_(
+        "The primary shop currency. This is the currency used when selling your products."
+    ))
+    prices_include_tax = models.BooleanField(default=True, verbose_name=_("prices include tax"), help_text=_(
+        "This option defines whether product prices entered in admin include taxes. "
+        "Note this behavior can be overridden with contact group pricing."
+    ))
     logo = FilerImageField(verbose_name=_("logo"), blank=True, null=True, on_delete=models.SET_NULL)
-    maintenance_mode = models.BooleanField(verbose_name=_("maintenance mode"), default=False)
+    maintenance_mode = models.BooleanField(verbose_name=_("maintenance mode"), default=False, help_text=_(
+        "Check this if you would like to make your shop temporarily unavailable while you do some shop maintenance."
+    ))
     contact_address = models.ForeignKey(
         "MutableAddress", verbose_name=_("contact address"), blank=True, null=True, on_delete=models.SET_NULL)
 
     translations = TranslatedFields(
-        name=models.CharField(max_length=64, verbose_name=_("name")),
-        public_name=models.CharField(max_length=64, verbose_name=_("public name")),
-        maintenance_message=models.CharField(max_length=300, blank=True, verbose_name=_("maintenance message"))
+        name=models.CharField(max_length=64, verbose_name=_("name"), help_text=_(
+            "The shop name. This name is displayed throughout admin."
+        )),
+        public_name=models.CharField(max_length=64, verbose_name=_("public name"), help_text=_(
+            "The public shop name. This name is displayed in the store front and in any customer email correspondence."
+        )),
+        maintenance_message=models.CharField(
+            max_length=300, blank=True, verbose_name=_("maintenance message"), help_text=_(
+                "The message to display to customers while your shop is in maintenance mode."
+            )
+        )
     )
 
     def __str__(self):

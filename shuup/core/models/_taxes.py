@@ -30,10 +30,13 @@ class Tax(MoneyPropped, ChangeProtected, TranslatableShuupModel):
     unprotected_fields = ['enabled']
 
     code = InternalIdentifierField(
-        unique=True, editable=True, verbose_name=_("code"), help_text="")
+        unique=True, editable=True, verbose_name=_("code"), help_text=_("The abbreviated tax code name."))
 
     translations = TranslatedFields(
-        name=models.CharField(max_length=124, verbose_name=_("name")),
+        name=models.CharField(max_length=124, verbose_name=_("name"), help_text=_(
+                "The tax name. This is shown in order lines in order invoices and confirmations."
+            )
+        ),
     )
 
     rate = models.DecimalField(
@@ -50,7 +53,9 @@ class Tax(MoneyPropped, ChangeProtected, TranslatableShuupModel):
         default=None, blank=True, null=True,
         verbose_name=_("currency of tax amount"))
 
-    enabled = models.BooleanField(default=True, verbose_name=_('enabled'))
+    enabled = models.BooleanField(default=True, verbose_name=_('enabled'), help_text=_(
+        "Check this if this tax is valid and active."
+    ))
 
     def clean(self):
         super(Tax, self).clean()
@@ -94,9 +99,15 @@ class Tax(MoneyPropped, ChangeProtected, TranslatableShuupModel):
 class TaxClass(TranslatableShuupModel):
     identifier = InternalIdentifierField(unique=True)
     translations = TranslatedFields(
-        name=models.CharField(max_length=100, verbose_name=_('name')),
+        name=models.CharField(max_length=100, verbose_name=_('name'), help_text=_(
+                "The tax class name. "
+                "Tax classes are used to control how taxes are applied to products."
+            )
+        ),
     )
-    enabled = models.BooleanField(default=True, verbose_name=_('enabled'))
+    enabled = models.BooleanField(default=True, verbose_name=_('enabled'), help_text=_(
+        "Check this if this tax class is active and valid."
+    ))
 
     class Meta:
         verbose_name = _('tax class')
@@ -106,7 +117,11 @@ class TaxClass(TranslatableShuupModel):
 class CustomerTaxGroup(TranslatableShuupModel):
     identifier = InternalIdentifierField(unique=True)
     translations = TranslatedFields(
-        name=models.CharField(max_length=100, verbose_name=_('name')),
+        name=models.CharField(max_length=100, verbose_name=_('name'), help_text=_(
+                "The customer tax group name. "
+                "Customer tax groups can be used to control how taxes are applied to a set of customers. "
+            )
+        ),
     )
     enabled = models.BooleanField(default=True, verbose_name=_('enabled'))
 

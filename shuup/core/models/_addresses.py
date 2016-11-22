@@ -59,22 +59,55 @@ class Address(NameMixin, ShuupModel):
     """
     Abstract base class of addresses.
     """
-    prefix = models.CharField(verbose_name=_('name prefix'), max_length=64, blank=True)
-    name = models.CharField(verbose_name=_('name'), max_length=255)
-    suffix = models.CharField(verbose_name=_('name suffix'), max_length=64, blank=True)
-    name_ext = models.CharField(verbose_name=_('name extension'), max_length=255, blank=True)
-    company_name = models.CharField(verbose_name=_('company name'), max_length=255, blank=True)
-    tax_number = models.CharField(verbose_name=_('tax number'), max_length=64, blank=True)
-    phone = models.CharField(verbose_name=_('phone'), max_length=64, blank=True)
-    email = models.EmailField(verbose_name=_('email'), max_length=128, blank=True)
-    street = models.CharField(verbose_name=_('street'), max_length=255)
-    street2 = models.CharField(verbose_name=_('street (2)'), max_length=255, blank=True)
-    street3 = models.CharField(verbose_name=_('street (3)'), max_length=255, blank=True)
-    postal_code = models.CharField(verbose_name=_('postal code'), max_length=64, blank=True)
-    city = models.CharField(verbose_name=_('city'), max_length=255)
-    region_code = models.CharField(verbose_name=_('region code'), max_length=16, blank=True)
-    region = models.CharField(verbose_name=_('region'), max_length=64, blank=True)
-    country = CountryField(verbose_name=_('country'))
+    prefix = models.CharField(verbose_name=_('name prefix'), max_length=64, blank=True, help_text=_(
+        "The name prefix. For example, Mr, Mrs, Ms, Dr, etc."
+    ))
+    name = models.CharField(verbose_name=_('name'), max_length=255, help_text=_(
+        "The name for the address."
+    ))
+    suffix = models.CharField(verbose_name=_('name suffix'), max_length=64, blank=True, help_text=_(
+        "The name suffix. For example, Jr, Sr, etc."
+    ))
+    name_ext = models.CharField(verbose_name=_('name extension'), max_length=255, blank=True, help_text=_(
+        "Any other text to display along with the address. "
+        "This could be department names (for companies) or titles (for people)."
+    ))
+    company_name = models.CharField(verbose_name=_('company name'), max_length=255, blank=True, help_text=_(
+        "The company name for the address."
+    ))
+    tax_number = models.CharField(verbose_name=_('tax number'), max_length=64, blank=True, help_text=_(
+        "The business tax number. For example, EIN in US or VAT code in Europe."
+    ))
+    phone = models.CharField(verbose_name=_('phone'), max_length=64, blank=True, help_text=_(
+        "The primary phone number for the address."
+    ))
+    email = models.EmailField(verbose_name=_('email'), max_length=128, blank=True, help_text=_(
+        "The primary email for the address."
+    ))
+    street = models.CharField(verbose_name=_('street'), max_length=255, help_text=_(
+        "The street address."
+    ))
+    street2 = models.CharField(verbose_name=_('street (2)'), max_length=255, blank=True, help_text=_(
+        "An additional street address line."
+    ))
+    street3 = models.CharField(verbose_name=_('street (3)'), max_length=255, blank=True, help_text=_(
+        "Any additional street address line."
+    ))
+    postal_code = models.CharField(verbose_name=_('postal code'), max_length=64, blank=True, help_text=_(
+        "The address postal/zip code."
+    ))
+    city = models.CharField(verbose_name=_('city'), max_length=255, help_text=_(
+        "The address city."
+    ))
+    region_code = models.CharField(verbose_name=_('region code'), max_length=16, blank=True, help_text=_(
+        "The address region, province, or state."
+    ))
+    region = models.CharField(verbose_name=_('region'), max_length=64, blank=True, help_text=_(
+        "The address region, provice, or state."
+    ))
+    country = CountryField(verbose_name=_('country'), help_text=_(
+        "The address country."
+    ))
 
     class Meta:
         abstract = True

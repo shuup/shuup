@@ -27,11 +27,13 @@ class FixedCostBehaviorComponent(TranslatableServiceBehaviorComponent):
     name = _("Fixed cost")
     help_text = _("Add fixed cost to price of the service.")
 
-    price_value = MoneyValueField()
+    price_value = MoneyValueField(help_text=_("The fixed cost to apply to this service."))
     description = TranslatedField(any_language=True)
 
     translations = TranslatedFields(
-        description=models.CharField(max_length=100, blank=True, verbose_name=_("description")),
+        description=models.CharField(max_length=100, blank=True, verbose_name=_("description"), help_text=_(
+            "The order line text to display when this behavior is applied."
+        )),
     )
 
     def get_costs(self, service, source):
@@ -46,12 +48,17 @@ class WaivingCostBehaviorComponent(TranslatableServiceBehaviorComponent):
         "Add cost to price of the service if total price "
         "of products is less than a waive limit.")
 
-    price_value = MoneyValueField()
-    waive_limit_value = MoneyValueField()
+    price_value = MoneyValueField(
+        help_text=_("The cost to apply to this service if the total price is below the waive limit."))
+    waive_limit_value = MoneyValueField(help_text=_(
+        "The total price of products at which this service cost is waived."
+    ))
     description = TranslatedField(any_language=True)
 
     translations = TranslatedFields(
-        description=models.CharField(max_length=100, blank=True, verbose_name=_("description")),
+        description=models.CharField(max_length=100, blank=True, verbose_name=_("description"), help_text=_(
+            "The order line text to display when this behavior is applied."
+        )),
     )
 
     def get_costs(self, service, source):
@@ -74,10 +81,14 @@ class WeightLimitsBehaviorComponent(ServiceBehaviorComponent):
 
     min_weight = models.DecimalField(
         max_digits=36, decimal_places=6, blank=True, null=True,
-        verbose_name=_("minimum weight"))
+        verbose_name=_("minimum weight"), help_text=_(
+            "The minimum weight required for this service to be available."
+        ))
     max_weight = models.DecimalField(
         max_digits=36, decimal_places=6, blank=True, null=True,
-        verbose_name=_("maximum weight"))
+        verbose_name=_("maximum weight"), help_text=_(
+            "The maximum weight allowed by this service."
+        ))
 
     def get_unavailability_reasons(self, service, source):
         weight = sum(((x.get("weight") or 0) for x in source.get_lines()), 0)
@@ -95,13 +106,19 @@ class WeightBasedPriceRange(TranslatableModel):
         related_name="ranges",
         on_delete=models.CASCADE
     )
-    min_value = MeasurementField(unit="g", verbose_name=_("min weight"), blank=True, null=True)
-    max_value = MeasurementField(unit="g", verbose_name=_("max weight"), blank=True, null=True)
-    price_value = MoneyValueField()
+    min_value = MeasurementField(unit="g", verbose_name=_("min weight (g)"), blank=True, null=True, help_text=_(
+        "The minimum weight, in grams, for this price to apply."
+    ))
+    max_value = MeasurementField(unit="g", verbose_name=_("max weight (g)"), blank=True, null=True, help_text=_(
+        "The maximum weight, in grams, before this price no longer applies."
+    ))
+    price_value = MoneyValueField(help_text=_("The cost to apply to this service when the weight criteria is met."))
     description = TranslatedField(any_language=True)
 
     translations = TranslatedFields(
-        description=models.CharField(max_length=100, blank=True, verbose_name=_("description")),
+        description=models.CharField(max_length=100, blank=True, verbose_name=_("description"), help_text=_(
+            "The order line text to display when this behavior is applied."
+        )),
     )
 
     def matches_to_value(self, value):
@@ -160,7 +177,9 @@ class GroupAvailabilityBehaviorComponent(ServiceBehaviorComponent):
     name = _("Contact group availability")
     help_text = _("Limit service availability for specific contact groups.")
 
-    groups = models.ManyToManyField("ContactGroup", verbose_name=_("groups"))
+    groups = models.ManyToManyField("ContactGroup", verbose_name=_("groups"), help_text=_(
+        "The contact groups for which this service is available."
+    ))
 
     def get_unavailability_reasons(self, service, source):
         if source.customer and not source.customer.pk:

@@ -37,7 +37,7 @@ class InternalIdentifierField(models.CharField):
         kwargs.setdefault("blank", True)
         kwargs.setdefault("null", bool(kwargs.get("blank")))  # If it's allowed to be blank, it should be null
         kwargs.setdefault("verbose_name", _("internal identifier"))
-        kwargs.setdefault("help_text", _(u"Do not change this value if you are not sure what you're doing."))
+        kwargs.setdefault("help_text", _(u"Do not change this value if you are not sure what you are doing."))
         kwargs.setdefault("editable", False)
         super(InternalIdentifierField, self).__init__(**kwargs)
         self.validators.append(IdentifierValidator)

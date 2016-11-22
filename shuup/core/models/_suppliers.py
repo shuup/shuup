@@ -33,10 +33,21 @@ class Supplier(ModuleInterface, ShuupModel):
     module_provides_key = "supplier_module"
 
     identifier = InternalIdentifierField(unique=True)
-    name = models.CharField(verbose_name=_("name"), max_length=64)
-    type = EnumIntegerField(SupplierType, verbose_name=_("supplier type"), default=SupplierType.INTERNAL)
-    stock_managed = models.BooleanField(verbose_name=_("stock managed"), default=False)
-    module_identifier = models.CharField(max_length=64, blank=True, verbose_name=_('module'))
+    name = models.CharField(verbose_name=_("name"), max_length=64, help_text=_(
+        "The product suppliers name. "
+        "Suppliers can be used manage the inventory of stocked products."
+    ))
+    type = EnumIntegerField(SupplierType, verbose_name=_("supplier type"), default=SupplierType.INTERNAL, help_text=_(
+        "The supplier type indicates whether the products are supplied through an internal supplier or "
+        "an external supplier."
+    ))
+    stock_managed = models.BooleanField(verbose_name=_("stock managed"), default=False, help_text=_(
+        "Check this if this supplier will be used to manage the inventory of stocked products."
+    ))
+    module_identifier = models.CharField(max_length=64, blank=True, verbose_name=_('module'), help_text=_(
+        "Select the supplier module to use for this supplier. "
+        "Supplier modules define the rules by which inventory is managed."
+    ))
     module_data = JSONField(blank=True, null=True, verbose_name=_("module data"))
 
     def __str__(self):

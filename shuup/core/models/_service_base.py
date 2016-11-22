@@ -42,14 +42,17 @@ class ServiceProvider(PolymorphicTranslatableShuupModel):
     `Service`.
     """
     identifier = InternalIdentifierField(unique=True)
-    enabled = models.BooleanField(default=True, verbose_name=_("enabled"))
+    enabled = models.BooleanField(default=True, verbose_name=_("enabled"), help_text=_(
+            "Check this if this service provider can be used when placing orders"
+        )
+    )
     name = TranslatedField(any_language=True)
     logo = FilerImageField(
         blank=True, null=True, on_delete=models.SET_NULL,
         verbose_name=_("logo"))
 
     base_translations = TranslatedFields(
-        name=models.CharField(max_length=100, verbose_name=_("name")),
+        name=models.CharField(max_length=100, verbose_name=_("name"), help_text=_("The service provider name.")),
     )
 
     #: Model class of the provided services (subclass of `Service`)
@@ -188,8 +191,10 @@ class Service(TranslatableShuupModel):
     values returned by the `ServiceProvider.get_service_choices` method.
     """
     identifier = InternalIdentifierField(unique=True, verbose_name=_("identifier"))
-    enabled = models.BooleanField(default=False, verbose_name=_("enabled"))
-    shop = models.ForeignKey(Shop, verbose_name=_("shop"))
+    enabled = models.BooleanField(default=False, verbose_name=_("enabled"), help_text=_(
+        "Check this if this service is selectable on checkout."
+    ))
+    shop = models.ForeignKey(Shop, verbose_name=_("shop"), help_text=_("The shop for this service."))
 
     choice_identifier = models.CharField(
         blank=True, max_length=64, verbose_name=_("choice identifier"))
@@ -204,7 +209,10 @@ class Service(TranslatableShuupModel):
         blank=True, null=True, on_delete=models.SET_NULL,
         verbose_name=_("logo"))
     tax_class = models.ForeignKey(
-        'TaxClass', on_delete=models.PROTECT, verbose_name=_("tax class"))
+        'TaxClass', on_delete=models.PROTECT, verbose_name=_("tax class"), help_text=_(
+            "The tax class to use for this service. Tax classes are defined in Settings - Tax Classes."
+        )
+    )
 
     behavior_components = models.ManyToManyField(
         'ServiceBehaviorComponent', verbose_name=_("behavior components"))

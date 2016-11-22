@@ -102,15 +102,28 @@ class AttributeQuerySet(TranslatableQuerySet):
 @python_2_unicode_compatible
 class Attribute(TranslatableModel):
     identifier = InternalIdentifierField(unique=True, blank=False, null=False, editable=True)
-    searchable = models.BooleanField(default=True, verbose_name=_("searchable"))
-    type = EnumIntegerField(AttributeType, default=AttributeType.TRANSLATED_STRING, verbose_name=_("type"))
+    searchable = models.BooleanField(default=True, verbose_name=_("searchable"), help_text=_(
+        "Searchable attributes will be used for product lookup when customers search your store."
+    ))
+    type = EnumIntegerField(
+        AttributeType, default=AttributeType.TRANSLATED_STRING, verbose_name=_("type"), help_text=_(
+            "The attribute data type. Attribute values can be set on the product editor page."
+        ))
     visibility_mode = EnumIntegerField(
         AttributeVisibility,
         default=AttributeVisibility.SHOW_ON_PRODUCT_PAGE,
-        verbose_name=_("visibility mode"))
+        verbose_name=_("visibility mode"),
+        help_text=_(
+            "Select the attribute visibility setting. "
+            "Attributes can be shown on the product detail page or can be used to enhance product search results."))
 
     translations = TranslatedFields(
-        name=models.CharField(max_length=64, verbose_name=_("name")),
+        name=models.CharField(max_length=64, verbose_name=_("name"), help_text=_(
+            "The attribute name. "
+            "Product attributes can be used to list the various features of a product and can be shown on the "
+            "product detail page. The product attributes for a product are determined by the product type and can "
+            "be set on the product editor page."
+        )),
     )
 
     objects = AttributeQuerySet.as_manager()

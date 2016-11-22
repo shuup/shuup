@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-16 23:53+0000\n"
+"POT-Creation-Date: 2016-11-22 23:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "internal identifier"
 msgstr ""
 
-msgid "Do not change this value if you are not sure what you're doing."
+msgid "Do not change this value if you are not sure what you are doing."
 msgstr ""
 
 msgid "Error"
@@ -42,49 +42,99 @@ msgstr ""
 msgid "name prefix"
 msgstr ""
 
+msgid "The name prefix. For example, Mr, Mrs, Ms, Dr, etc."
+msgstr ""
+
 msgid "name"
+msgstr ""
+
+msgid "The name for the address."
 msgstr ""
 
 msgid "name suffix"
 msgstr ""
 
+msgid "The name suffix. For example, Jr, Sr, etc."
+msgstr ""
+
 msgid "name extension"
+msgstr ""
+
+msgid ""
+"Any other text to display along with the address. This could be department "
+"names (for companies) or titles (for people)."
 msgstr ""
 
 msgid "company name"
 msgstr ""
 
+msgid "The company name for the address."
+msgstr ""
+
 msgid "tax number"
+msgstr ""
+
+msgid "The business tax number. For example, EIN in US or VAT code in Europe."
 msgstr ""
 
 msgid "phone"
 msgstr ""
 
+msgid "The primary phone number for the address."
+msgstr ""
+
 msgid "email"
+msgstr ""
+
+msgid "The primary email for the address."
 msgstr ""
 
 msgid "street"
 msgstr ""
 
+msgid "The street address."
+msgstr ""
+
 msgid "street (2)"
+msgstr ""
+
+msgid "An additional street address line."
 msgstr ""
 
 msgid "street (3)"
 msgstr ""
 
+msgid "Any additional street address line."
+msgstr ""
+
 msgid "postal code"
+msgstr ""
+
+msgid "The address postal/zip code."
 msgstr ""
 
 msgid "city"
 msgstr ""
 
+msgid "The address city."
+msgstr ""
+
 msgid "region code"
+msgstr ""
+
+msgid "The address region, province, or state."
 msgstr ""
 
 msgid "region"
 msgstr ""
 
+msgid "The address region, provice, or state."
+msgstr ""
+
 msgid "country"
+msgstr ""
+
+msgid "The address country."
 msgstr ""
 
 msgid "address"
@@ -150,10 +200,32 @@ msgstr ""
 msgid "searchable"
 msgstr ""
 
+msgid ""
+"Searchable attributes will be used for product lookup when customers search "
+"your store."
+msgstr ""
+
 msgid "type"
 msgstr ""
 
+msgid ""
+"The attribute data type. Attribute values can be set on the product editor "
+"page."
+msgstr ""
+
 msgid "visibility mode"
+msgstr ""
+
+msgid ""
+"Select the attribute visibility setting. Attributes can be shown on the "
+"product detail page or can be used to enhance product search results."
+msgstr ""
+
+msgid ""
+"The attribute name. Product attributes can be used to list the various "
+"features of a product and can be shown on the product detail page. The "
+"product attributes for a product are determined by the product type and can "
+"be set on the product editor page."
 msgstr ""
 
 msgid "attribute"
@@ -298,6 +370,11 @@ msgstr ""
 msgid "hide prices"
 msgstr ""
 
+msgid ""
+"The contact group name. Contact groups can be used to target sales and "
+"campaigns to specific set of users."
+msgstr ""
+
 msgid "contact group"
 msgstr ""
 
@@ -313,6 +390,9 @@ msgstr ""
 msgid "active"
 msgstr ""
 
+msgid "Check this if the contact is an active customer."
+msgstr ""
+
 msgid "default shipping method"
 msgstr ""
 
@@ -322,19 +402,63 @@ msgstr ""
 msgid "language"
 msgstr ""
 
+msgid "The primary language to be used in all communications with the contact."
+msgstr ""
+
 msgid "marketing permission"
+msgstr ""
+
+msgid ""
+"Check this if the contact can receive marketing and promotional materials."
+msgstr ""
+
+msgid "The primary phone number of the contact."
 msgstr ""
 
 msgid "web address"
 msgstr ""
 
+msgid "The web address of the contact, if any."
+msgstr ""
+
 msgid "time zone"
+msgstr ""
+
+msgid ""
+"The timezone in which the contact resides. This can be used to target the "
+"delivery of promotional materials at a particular time."
+msgstr ""
+
+msgid "The name prefix of the contact. For example, Mr, Mrs, Dr, etc."
+msgstr ""
+
+msgid "The contact name"
+msgstr ""
+
+msgid "The name suffix of the contact. For example, Sr, Jr, etc."
+msgstr ""
+
+msgid ""
+"The email that will receive order confirmations and promotional materials "
+"(if permitted)."
 msgstr ""
 
 msgid "tax group"
 msgstr ""
 
+msgid ""
+"Select the contact tax group to use for this contact. Tax groups can be used "
+"to customize the tax rules the that apply to any of this contacts orders. "
+"Tax groups are defined in Settings - Customer Tax Groups and can be applied "
+"to tax rules in Settings - Tax Rules"
+msgstr ""
+
 msgid "merchant notes"
+msgstr ""
+
+msgid ""
+"Enter any private notes for this customer that are only accessible in Shuup "
+"admin."
 msgstr ""
 
 msgid "account manager"
@@ -379,13 +503,25 @@ msgstr ""
 msgid "gender"
 msgstr ""
 
+msgid "The gender of the contact."
+msgstr ""
+
 msgid "birth date"
+msgstr ""
+
+msgid "The birth date of the contact."
 msgstr ""
 
 msgid "first name"
 msgstr ""
 
+msgid "The first name of the contact."
+msgstr ""
+
 msgid "last name"
+msgstr ""
+
+msgid "The last name of the contact."
 msgstr ""
 
 msgid "person"
@@ -418,6 +554,9 @@ msgstr ""
 msgid "decimal places"
 msgstr ""
 
+msgid "The number of decimal places supported by this currency."
+msgstr ""
+
 msgid "Enter a valid ISO-4217 currency code"
 msgstr ""
 
@@ -430,7 +569,17 @@ msgstr ""
 msgid "added"
 msgstr ""
 
+msgid ""
+"Enter the manufacturer’s name. Products can be filtered by the manufacturer "
+"and can be useful for inventory and stock management."
+msgstr ""
+
 msgid "URL"
+msgstr ""
+
+msgid ""
+"Enter the URL of the product manufacturer if you would like customers to be "
+"able to visit the manufacturer's website."
 msgstr ""
 
 msgid "manufacturer"
@@ -1316,10 +1465,27 @@ msgstr ""
 msgid "product attributes"
 msgstr ""
 
+msgid "Check this if this service provider can be used when placing orders"
+msgstr ""
+
 msgid "logo"
 msgstr ""
 
+msgid "The service provider name."
+msgstr ""
+
+msgid "Check this if this service is selectable on checkout."
+msgstr ""
+
+msgid "The shop for this service."
+msgstr ""
+
 msgid "choice identifier"
+msgstr ""
+
+msgid ""
+"The tax class to use for this service. Tax classes are defined in Settings - "
+"Tax Classes."
 msgstr ""
 
 msgid "behavior components"
@@ -1343,12 +1509,26 @@ msgstr ""
 msgid "Add fixed cost to price of the service."
 msgstr ""
 
+msgid "The fixed cost to apply to this service."
+msgstr ""
+
+msgid "The order line text to display when this behavior is applied."
+msgstr ""
+
 msgid "Waiving cost"
 msgstr ""
 
 msgid ""
 "Add cost to price of the service if total price of products is less than a "
 "waive limit."
+msgstr ""
+
+msgid ""
+"The cost to apply to this service if the total price is below the waive "
+"limit."
+msgstr ""
+
+msgid "The total price of products at which this service cost is waived."
 msgstr ""
 
 msgid "Weight limits"
@@ -1360,7 +1540,13 @@ msgstr ""
 msgid "minimum weight"
 msgstr ""
 
+msgid "The minimum weight required for this service to be available."
+msgstr ""
+
 msgid "maximum weight"
+msgstr ""
+
+msgid "The maximum weight allowed by this service."
 msgstr ""
 
 msgid "Minimum weight not met."
@@ -1369,10 +1555,19 @@ msgstr ""
 msgid "Maximum weight exceeded."
 msgstr ""
 
-msgid "min weight"
+msgid "min weight (g)"
 msgstr ""
 
-msgid "max weight"
+msgid "The minimum weight, in grams, for this price to apply."
+msgstr ""
+
+msgid "max weight (g)"
+msgstr ""
+
+msgid "The maximum weight, in grams, before this price no longer applies."
+msgstr ""
+
+msgid "The cost to apply to this service when the weight criteria is met."
 msgstr ""
 
 msgid "Weight-based pricing"
@@ -1393,6 +1588,9 @@ msgid "Limit service availability for specific contact groups."
 msgstr ""
 
 msgid "groups"
+msgstr ""
+
+msgid "The contact groups for which this service is available."
 msgstr ""
 
 msgid "Customer does not belong to any group."
@@ -1425,6 +1623,14 @@ msgstr ""
 msgid "payment processor"
 msgstr ""
 
+msgid "The payment method name. This name is shown to customers on checkout."
+msgstr ""
+
+msgid ""
+"The payment method description. This description is shown to customers on "
+"checkout."
+msgstr ""
+
 msgid "rounding quantize"
 msgstr ""
 
@@ -1452,6 +1658,13 @@ msgstr ""
 msgid "carrier"
 msgstr ""
 
+msgid "The shipping method name. This name is shown to customers on checkout."
+msgstr ""
+
+msgid ""
+"The shipping method description. This name is shown to customers on checkout."
+msgstr ""
+
 msgid "custom carrier"
 msgstr ""
 
@@ -1471,6 +1684,12 @@ msgid "received"
 msgstr ""
 
 msgid "error"
+msgstr ""
+
+msgid "outgoing"
+msgstr ""
+
+msgid "incoming"
 msgstr ""
 
 msgid "tracking code"
@@ -1505,16 +1724,52 @@ msgstr ""
 msgid "domain"
 msgstr ""
 
+msgid ""
+"Your shop domain name. Use this field to configure the URL that is used to "
+"visit your site. Note: this requires additional configuration through your "
+"internet domain registrar."
+msgstr ""
+
+msgid "Your shop status. Disable your shop if it is no longer in use."
+msgstr ""
+
 msgid "options"
+msgstr ""
+
+msgid ""
+"The primary shop currency. This is the currency used when selling your "
+"products."
+msgstr ""
+
+msgid ""
+"This option defines whether product prices entered in admin include taxes. "
+"Note this behavior can be overridden with contact group pricing."
 msgstr ""
 
 msgid "maintenance mode"
 msgstr ""
 
+msgid ""
+"Check this if you would like to make your shop temporarily unavailable while "
+"you do some shop maintenance."
+msgstr ""
+
 msgid "contact address"
 msgstr ""
 
+msgid "The shop name. This name is displayed throughout admin."
+msgstr ""
+
+msgid ""
+"The public shop name. This name is displayed in the store front and in any "
+"customer email correspondence."
+msgstr ""
+
 msgid "maintenance message"
+msgstr ""
+
+msgid ""
+"The message to display to customers while your shop is in maintenance mode."
 msgstr ""
 
 msgid "alert limit"
@@ -1532,16 +1787,44 @@ msgstr ""
 msgid "external"
 msgstr ""
 
+msgid ""
+"The product suppliers name. Suppliers can be used manage the inventory of "
+"stocked products."
+msgstr ""
+
 msgid "supplier type"
 msgstr ""
 
+msgid ""
+"The supplier type indicates whether the products are supplied through an "
+"internal supplier or an external supplier."
+msgstr ""
+
 msgid "stock managed"
+msgstr ""
+
+msgid ""
+"Check this if this supplier will be used to manage the inventory of stocked "
+"products."
+msgstr ""
+
+msgid ""
+"Select the supplier module to use for this supplier. Supplier modules define "
+"the rules by which inventory is managed."
 msgstr ""
 
 msgid "module data"
 msgstr ""
 
 msgid "Cannot change business critical fields of Tax that is in use"
+msgstr ""
+
+msgid "The abbreviated tax code name."
+msgstr ""
+
+msgid ""
+"The tax name. This is shown in order lines in order invoices and "
+"confirmations."
 msgstr ""
 
 msgid "tax rate"
@@ -1559,6 +1842,9 @@ msgstr ""
 msgid "currency of tax amount"
 msgstr ""
 
+msgid "Check this if this tax is valid and active."
+msgstr ""
+
 msgid "Either rate or amount is required"
 msgstr ""
 
@@ -1571,7 +1857,20 @@ msgstr ""
 msgid "taxes"
 msgstr ""
 
+msgid ""
+"The tax class name. Tax classes are used to control how taxes are applied to "
+"products."
+msgstr ""
+
+msgid "Check this if this tax class is active and valid."
+msgstr ""
+
 msgid "tax classes"
+msgstr ""
+
+msgid ""
+"The customer tax group name. Customer tax groups can be used to control how "
+"taxes are applied to a set of customers. "
 msgstr ""
 
 msgid "customer tax group"
@@ -1586,10 +1885,26 @@ msgstr ""
 msgid "Company Customers"
 msgstr ""
 
-msgid "allowed decimals"
+msgid "allowed decimal places"
+msgstr ""
+
+msgid ""
+"The number of decimal places allowed by this sales unit.Set this to a value "
+"greater than zero if products with this sales unit can be sold in fractional "
+"quantities"
+msgstr ""
+
+msgid ""
+"The sales unit name to use for products (For example, 'pieces' or 'units'). "
+"Sales units can be set for each product through the product editor view."
 msgstr ""
 
 msgid "short name"
+msgstr ""
+
+msgid ""
+"An abbreviated name for this sales unit that is shown throughout admin and "
+"order invoices."
 msgstr ""
 
 msgid "sales units"
