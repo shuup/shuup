@@ -33,5 +33,10 @@ $(function() {
     // this circumvents the need for !important in our css
     $(window).resize(_.debounce(function(){
         $contentWraps.css("height", "");
+        $("#main-content").css("margin-top", $(".support-nav-wrap").height() + 15);
     }, 100));
+
+    $(window).ready(function() {
+        $("#main-content").css("margin-top", $(".support-nav-wrap").height() + 15);
+    });
 });

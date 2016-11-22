@@ -12,7 +12,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC  # noqa: N812
 from selenium.webdriver.support.wait import WebDriverWait
 
-FIXED_HEADER_HEIGHT = 60
+FIXED_HEADER_HEIGHT = 60 + 80 + 15
 
 
 def wait_until_disappeared(browser, css_selector, timeout=10, frequency=1.0):

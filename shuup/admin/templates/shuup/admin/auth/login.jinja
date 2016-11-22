@@ -26,6 +26,10 @@
                     {% trans %}Login{% endtrans %}
                 </button>
             </div>
+            <hr>
+            <a href="{{ url("shuup:recover_password") }}">
+                {% trans %}Forgot your password?{% endtrans %}
+            </a>
         </form>
     {% endcall %}
 {% endblock %}

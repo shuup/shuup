@@ -33,7 +33,9 @@ class TaxRulesAdminModule(AdminModule):
             MenuEntry(
                 text=_("Tax Rules"), icon="fa fa-file-text",
                 url="shuup_admin:default_tax.tax_rule.list",
-                category=SETTINGS_MENU_CATEGORY, ordering=8, aliases=[_("Show tax rules")]
+                category=SETTINGS_MENU_CATEGORY,
+                subcategory="taxes",
+                ordering=4, aliases=[_("Show tax rules")]
             )
         ]
 

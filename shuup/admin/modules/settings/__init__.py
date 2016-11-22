@@ -36,17 +36,47 @@ class ViewSettings(object):
         self.default_columns = default_columns
         self.ensure_initial_columns(default_columns)
         self.column_spec = self._build_settings_columns()
-        self.columns = [column for column in self.column_spec if self.get_config(column.id)]
+        self.active_columns = []
+        self.inactive_columns = []
+        self._create_columns()
+
+    def _create_columns(self):
+        for column in self.column_spec:
+            config = self.get_config(column.id)
+            try:
+                # backwards compatibility
+                int(config)
+                old_mode = True
+            except:
+                old_mode = False
+
+            column.ordering = config.get("ordering", 9999) if not old_mode else 9999
+
+            if old_mode:
+                # old and active
+                if config > 1:
+                    self.active_columns.append(column)
+                else:
+                    self.inactive_columns.append(column)
+            else:
+                if config.get("active", False):
+                    self.active_columns.append(column)
+                else:
+                    self.inactive_columns.append(column)
+
+        self.active_columns.sort(key=lambda x: x.ordering)
+        self.inactive_columns.sort(key=lambda x: x.title)
+        self.columns = self.active_columns
 
     def ensure_initial_columns(self, default_columns):
         if not self.view_configured():
             # generate the default stuff
             for default_column in default_columns:
-                self.set_config(default_column.id, 1)
+                self.set_config(default_column.id, {"ordering": default_column.ordering, "active": True})
             self.set_config("saved", True)
 
     def get_config(self, value):
-        val = configuration.get(None, self.get_settings_key(value), None)
+        val = configuration.get(None, self.get_settings_key(value), {})
         return val
 
     def set_config(self, key_value, value, use_key=False):

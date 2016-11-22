@@ -334,7 +334,7 @@ const Picotable = (function(m, storage) {
         }
     }
 
-    function buildColumnHeaderCell(ctrl, col) {
+    function buildColumnHeaderCell(ctrl, col, columnNumber) {
         var sortIndicator = null;
         var classSet = {"": col.className};
         var columnOnClick = null;
@@ -357,15 +357,35 @@ const Picotable = (function(m, storage) {
                 ctrl.setSortColumn(col.id);
             };
         }
-        return m("th", {key: col.id, className: cx(classSet), onclick: columnOnClick}, [sortIndicator, " ", col.title]);
+        var columnSettings = {key: col.id, className: cx(classSet), onclick: columnOnClick};
+        var massActions = (ctrl.vm.data() ? ctrl.vm.data().massActions : null);
+        if (massActions.length) {
+            if (columnNumber == 0) {
+                columnSettings.className += " hidden";
+            }
+            if (columnNumber == 1) {
+                columnSettings.colspan = 2;
+            }
+        }
+        return m("th", columnSettings, [sortIndicator, " ", col.title]);
     }
 
-    function buildColumnFilterCell(ctrl, col) {
+    function buildColumnFilterCell(ctrl, col, columnNumber) {
         var filterControl = null;
         if (col.filter) {
             filterControl = buildColumnFilter(ctrl, col);
         }
-        return m("th", {key: col.id, className: col.className || ""}, [filterControl]);
+        var columnSettings = {key: col.id, className: col.className || ""};
+        var massActions = (ctrl.vm.data() ? ctrl.vm.data().massActions : null);
+        if (massActions.length) {
+            if (columnNumber == 0) {
+                columnSettings.className += " hidden";
+            }
+            if (columnNumber == 1) {
+                columnSettings.colspan = 2;
+            }
+        }
+        return m("th", columnSettings, [filterControl]);
     }
 
     function renderTable(ctrl) {
@@ -379,13 +399,13 @@ const Picotable = (function(m, storage) {
         ctrl.vm.filterValues(defaultValues);
 
         // Build header
-        var columnHeaderCells = Util.map(data.columns, function(col) {
-            return buildColumnHeaderCell(ctrl, col);
+        var columnHeaderCells = Util.map(data.columns, function(col, columnNumber) {
+            return buildColumnHeaderCell(ctrl, col, columnNumber);
         });
         var columnFilterCells = (
             Util.any(data.columns, Util.property("filter")) ?
-            Util.map(data.columns, function(col) {
-                return buildColumnFilterCell(ctrl, col);
+            Util.map(data.columns, function(col, columnNumber) {
+                return buildColumnFilterCell(ctrl, col, columnNumber);
             }) : null
         );
         var thead = m("thead", [
@@ -402,8 +422,15 @@ const Picotable = (function(m, storage) {
 
         // Build body
         var isPick = !!ctrl.vm.pickId();
-        var rows = Util.map(data.items, function(item) {
-            return m("tr", {key: "item-" + item._id}, Util.map(data.columns, function(col, idx) {
+        var rows = Util.map(data.items, function(item, rowNumber) {
+            var rowSettings = {key: "item-" + item._id};
+            if (massActions.length) {
+                rowSettings.onclick = (function() {
+                    ctrl.saveCheck(item);
+                });
+                rowSettings.class = ctrl.isChecked(item) ? "active" : "";
+            }
+            return m("tr", rowSettings, Util.map(data.columns, function(col, idx) {
                 if (idx == 0 && massActions.length) {
                     var content = m("input[type=checkbox]", {
                         value: item.type + "-" + item._id,
@@ -423,14 +450,19 @@ const Picotable = (function(m, storage) {
                             onclick: Util.boundPartial(ctrl, ctrl.pickObject, item)
                         }, content);
                     } else if (item._url) {
-                        content = m("a", {href: item._url}, content);
+                        content = m("a", {href: item._url, onclick:preventSelect}, content);
                     }
                 }
                 return m("td", {key: "col-" + col.id, className: col.className || ""}, [content]);
             }));
         });
         var tbody = m("tbody", rows);
-        return m("table.table.table-striped.picotable-table", [thead, tfoot, tbody]);
+        var mass_actions_class = massActions ? ".has-mass-actions" : "";
+        return m("table.table.table-striped.picotable-table" + mass_actions_class, [thead, tfoot, tbody]);
+    }
+
+    function preventSelect(event) {
+        event.stopPropagation();
     }
 
     function getMobileFilterModal(ctrl) {
@@ -729,6 +761,8 @@ const Picotable = (function(m, storage) {
                 originalValues.push(object._id);
                 ctrl.vm.checkboxes(originalValues);
             }
+
+            $(object).toggleClass("active");
         };
         ctrl.isChecked = function(object) {
             var originalValues = ctrl.vm.checkboxes();

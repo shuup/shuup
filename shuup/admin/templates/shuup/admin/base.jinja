@@ -22,10 +22,9 @@
         {% include "shuup/admin/base/_main_menu.jinja" %}
         {% endblock %}
 
-        {% block content_wrap %}
-        <main id="main-content">
-            {% block support_content %}
-            <div class="container-fluid">
+
+        {% block support_content %}
+            <div class="container-fluid support-nav-wrap">
                 <div class="support-nav">
                     {% block breadcrumbs -%}
                         {% set breadcrumbs = breadcrumbs or shuup_admin.get_breadcrumbs() %}
@@ -45,6 +44,9 @@
                 </div>
             </div>
             {% endblock %}
+        {% block content_wrap %}
+        <main id="main-content">
+
             {% block content %}{% endblock %}
         </main>
         {% endblock %}

@@ -22,6 +22,11 @@ Localization
 Admin
 ~~~~~
 
+- Some slug fields now auto update their content
+- Picotable columns are now orderable
+- Simplify product creation
+- Make top toolbar fixed
+- Refactor menu to allow sub categories
 - Make the setup wizard mandatory
 - Allow refund quantity/amount to be editable
 - Fix ability to add multiple refund lines at once

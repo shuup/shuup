@@ -1,15 +1,24 @@
 #picotable {
+    .has-mass-actions {
+        tbody {
+            td:first-child {
+                width: 0px;
+                padding: 0;
+            }
+        }
+    }
     thead {
         .headers {
             color: #fff;
             th {
                 border-bottom: 0;
                 background: @brand-primary;
-                padding: 8px;
+                padding: 4px;
                 border: 0;
                 border-right: 1px solid rgba(255,255,255,0.5);
                 user-select: none;
-
+                font-size: 1.4rem;
+                line-height: 25px;
                 @media (min-width: @screen-lg-min) {
                     white-space: nowrap;
                 }
@@ -89,8 +98,19 @@
                     line-height: 32px;
                 }
 
+                &.select2-selection--single {
+                    border-radius: 0;
+                }
+
+                &.select2-selection--multiple {
+                    border-radius: 0;
+                }
+
                 .select2-selection__arrow {
                     height: 32px;
+                }
+                .select2-selection__choice {
+                    border-radius: 0;
                 }
             }
         }
@@ -101,15 +121,51 @@
     }
 
     tbody {
-        th, td { padding: 5px 8px; }
+        tr:hover {
+            td {
+                background-color: @block-light-blue;
+                color: #fff;
+                a {
+                    color:#fff;
+                }
+            }
+        }
+        th, td {
+            padding: 5px;
+            font-size: 1.3rem;
+            line-height: 34px;
+            vertical-align: middle;
+            input[type=checkbox] {
+                display:none;
+            }
+        }
+        tr {
+            &.active {
+                td {
+                    background-color: @block-light-blue;
+                    color: #fff;
+                    a {
+                        color: #fff;
+                    }
+                }
+            }
+        }
 
         td {
-            border: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            cursor:pointer;
         }
     }
 
     tfoot {
-        th, td { padding: 8px 0px; }
+        background-color: #444;
+        height: 40px;
+        th, td {
+            padding: 0px;
+        }
+        nav {
+            text-align: center;
+        }
     }
 
     .picotable-header {
@@ -120,7 +176,6 @@
         }
         @media (min-width: @screen-md-min) {
             display: flex;
-            margin-bottom: 25px;
         }
 
         .picotable-mass-actions {
@@ -213,6 +268,11 @@
             }
         }
     }
+    .mobile {
+        nav {
+            text-align: center;
+        }
+    }
     .mobile-items {
         margin-top: 30px;
         .row;
@@ -231,7 +291,6 @@
 
             .inner {
                 padding: 0px 15px;
-                border-radius: 4px;
                 width: 100%;
                 display: block;
                 border: 1px solid @border-color;
@@ -258,7 +317,7 @@
                 }
 
                 &.header:first-child {
-                    font-size: 1.6rem;
+                    font-size: 1.3rem;
                     .column {
                         color: @brand-primary;
                         border-bottom: 1px solid @border-color;

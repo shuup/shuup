@@ -71,4 +71,14 @@ $(function() {
             closeMainNav();
         }
     });
+    if (window.Masonry) {
+        const Masonry = window.Masonry;
+        $(".category-menu-content").each(function(idx, elem) {
+            const msnry = new Masonry(elem, {
+                itemSelector: '.submenu-container',
+                columnWidth: '.submenu-container',
+                percentPosition: true
+            });
+        });
+    }
 });

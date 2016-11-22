@@ -92,6 +92,7 @@ def _test_language_change(browser):
     wait_until_appeared(browser, "h2[class='block-title']")
 
 
+# browser.driver.execute_script("document.getElementsByClassName('support-nav')[0].style.display = 'none';")
 def _test_customer_data(browser, person):
     browser.driver.execute_script("window.scrollTo(0, 200);")
     # check defaults
@@ -156,7 +157,7 @@ def _test_add_lines(browser):
     click_element(browser, "#lines .list-group-item:last-child a")
     browser.windows.current = browser.windows[1]
     wait_until_appeared(browser, "a")
-    click_element(browser, "tbody a:first-of-type")
+    click_element(browser, "tbody tr:first-child td:nth-child(3) a")
     browser.windows.current = browser.windows[0]
     wait_until_condition(browser, lambda x: x.find_by_css('#lines input[name="total"]').first.value == '10')
     last_line_item = browser.find_by_css("#lines .list-group-item:last-child")

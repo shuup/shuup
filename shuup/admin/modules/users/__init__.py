@@ -14,7 +14,7 @@ from shuup.admin.base import AdminModule, MenuEntry, SearchResult
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url, derive_model_url, get_model_url
-from shuup.admin.views.home import SimpleHelpBlock
+from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
 
 
 class UserModule(AdminModule):
@@ -83,6 +83,7 @@ class UserModule(AdminModule):
                 icon="fa fa-users",
                 url="shuup_admin:user.list",
                 category=SETTINGS_MENU_CATEGORY,
+                subcategory="store",
                 ordering=1
             )
         ]
@@ -108,9 +109,11 @@ class UserModule(AdminModule):
             yield SimpleHelpBlock(
                 text=_("Add some users to help manage your shop"),
                 actions=[{
-                    "text": _("Add a user"),
+                    "text": _("New user"),
                     "url": self.get_model_url(get_user_model(), "new")
                 }],
+                priority=3,
+                category=HelpBlockCategory.CONTACTS,
                 icon_url="shuup_admin/img/users.png"
             )
 

@@ -8,7 +8,7 @@
   ],
   "dependencies": {
     "chartist": "0.9.5",
-    "masonry": "3.3.2"
+    "masonry": "4.1.1"
   },
   "overrides": {
     "outlayer": {

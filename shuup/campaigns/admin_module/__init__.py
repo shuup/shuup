@@ -15,7 +15,7 @@ from shuup.admin.utils.permissions import (
     get_default_model_permissions, get_permissions_from_urls
 )
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
-from shuup.admin.views.home import SimpleHelpBlock
+from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
 from shuup.campaigns.models import BasketCampaign, CatalogCampaign, Coupon
 
 
@@ -72,15 +72,17 @@ class CampaignAdminModule(AdminModule):
             yield SimpleHelpBlock(
                 text=_("Set up a sales campaign"),
                 actions=[{
-                    "text": _("Add a basket campaign"),
+                    "text": _("New basket campaign"),
                     "url": self.get_model_url(BasketCampaign, "new")
                 }, {
-                    "text": _("Add a catalog campaign"),
+                    "text": _("New catalog campaign"),
                     "url": self.get_model_url(CatalogCampaign, "new")
                 }, {
-                    "text": _("Add a coupon"),
+                    "text": _("New coupon"),
                     "url": self.get_model_url(Coupon, "new")
                 }],
+                priority=1,
+                category=HelpBlockCategory.CAMPAIGNS,
                 icon_url="shuup/campaigns/img/campaign.png"
             )
 

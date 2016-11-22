@@ -8,7 +8,7 @@
         position: relative;
         .clearfix;
         @media (min-width: @screen-sm-min) {
-            margin-bottom: 30px;
+            margin-bottom: 15px;
         }
 
         // add an asterisk on required field labels
@@ -250,7 +250,7 @@
     .form-lg {
         .form-group {
             label, .control-label {
-                font-size: 1.6rem;
+                font-size: 1.3rem;
                 padding-top: 11px;
             }
 
@@ -277,7 +277,7 @@ label, .radio label, .checkbox label {
     font-weight: 300;
     font-size: 1.4rem;
     @media (min-width: @screen-sm-min) {
-        font-size: 1.6rem;
+        font-size: 1.4rem;
     }
 }
 
@@ -306,7 +306,6 @@ fieldset[disabled] .form-control {
     padding: 10px 16px;
     font-size: 1.6rem;
     line-height: 1.333333;
-    border-radius: 6px;
 
     input.form-control,
     select.form-control {
@@ -321,7 +320,7 @@ fieldset[disabled] .form-control {
 
 .input-group-addon {
     background: #fff;
-    border: 2px solid @input-border-color;
+    border: 1px solid @input-border-color;
     .has-error & {
         background: #fff;
     }
@@ -351,8 +350,8 @@ fieldset[disabled] .form-control {
     }
     .sidebar-list-item & {
         position: absolute;
-        right: 10px;
-        top: 13px;
+        right: 0px;
+        top: 6px;
     }
 }
 
@@ -371,5 +370,17 @@ fieldset[disabled] .form-control {
     }
     100% {
         transform: scale(0.7);
+    }
+}
+select {
+  -webkit-appearance: none;
+  -webkit-border-radius: 0px;
+}
+.form-control {
+    border-radius: 0;
+    border: 1px solid @input-border-color;
+
+    textarea& {
+        height: 100px !important;
     }
 }

@@ -90,9 +90,9 @@ def _click_item(items, value):
 
 
 def _set_settings(browser):
-    assert not browser.is_text_present("Internal Identifier")
+    assert not browser.is_text_present("Account Manager")
     browser.find_by_css(".btn.btn-default.btn-inverse").click()
-    browser.find_by_id("id_view_configuration_contact_identifier").click()
-    browser.find_by_css(".btn.btn-success").click()
+    browser.find_by_css(".btn.btn-xs.btn-success.btn-add-sortable").first.click()
+    browser.find_by_css(".btn.btn-success").first.click()
     wait_until_appeared(browser, ".picotable-item-info")
-    wait_until_condition(browser, lambda x: x.is_text_present("Internal Identifier"))
+    wait_until_condition(browser, lambda x: x.is_text_present("Account Manager"))

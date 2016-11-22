@@ -16,7 +16,7 @@ from shuup.admin.base import AdminModule, MenuEntry, Notification
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url
-from shuup.admin.views.home import SimpleHelpBlock
+from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
 from shuup.xtheme._theme import get_current_theme
 from shuup.xtheme.engine import XthemeEnvironment
 from shuup.xtheme.models import ThemeSettings
@@ -72,6 +72,8 @@ class XthemeAdminModule(AdminModule):
                     "text": _("Customize theme"),
                     "url": reverse("shuup_admin:xtheme.config_detail", kwargs={"theme_identifier": theme.identifier})
                 }],
+                priority=200,
+                category=HelpBlockCategory.STOREFRONT,
                 icon_url="xtheme/theme.png"
             )
 

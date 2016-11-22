@@ -47,7 +47,7 @@ def test_view_default_columns(rf):
     assert response.status_code == 302
 
     assert listview.settings.get_config("name") == configuration.get(None, "view_configuration_product_name")
-    assert not configuration.get(None, "view_configuration_product_name")
+    assert not configuration.get(None, "view_configuration_product_name").get("active")
 
 
 @pytest.mark.django_db
@@ -55,7 +55,7 @@ def test_view_saved_columns(rf):
     visible_fields = sorted(["id", "name", "select"])
     configuration.set(None, "view_configuration_product_saved", True)
     for field in visible_fields:
-        configuration.set(None, "view_configuration_product_%s" % field, True)
+        configuration.set(None, "view_configuration_product_%s" % field, {"active": True, "ordering": 999})
 
     listview = ProductListView()
     column_names = [c.id for c in sorted(listview.columns, key=lambda x: x.id)]
