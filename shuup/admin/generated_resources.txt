@@ -2,10 +2,12 @@ static/shuup_admin/css/base.css
 static/shuup_admin/css/base.css.map
 static/shuup_admin/css/dashboard.css
 static/shuup_admin/css/dashboard.css.map
+static/shuup_admin/css/home.css
 static/shuup_admin/css/media-browser.css
 static/shuup_admin/css/media-browser.css.map
 static/shuup_admin/css/select2.css
 static/shuup_admin/css/select2.css.map
+static/shuup_admin/css/wizard.css
 static/shuup_admin/js/base.js
 static/shuup_admin/js/base.js.map
 static/shuup_admin/js/contact-group.js
