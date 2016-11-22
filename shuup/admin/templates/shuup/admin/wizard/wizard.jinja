@@ -28,6 +28,9 @@
                             {% endif %}
                             <p>{{ pane.text }}</p>
                         </div>
+                        <div class="row">
+                            <div class="errors col-sm-6 col-sm-offset-3"></div>
+                        </div>
                         <form method="POST" class="form-lg">
                             {% csrf_token %}
                             <input type="hidden" name="pane_id" value="{{ pane.identifier }}">
@@ -56,20 +59,7 @@
         $($(".help-popover-btn .btn")[0]).append(" {% trans %}Click here for help{% endtrans %}")
         $(".wizard").wizard({
             hidePrevious: true,
-            redirectOnLastPane: "{{ url("shuup_admin:home") }}",
-            skipTooltip: "{% trans %}Setup can be continued later from the admin dashboard{% endtrans %}",
-            skip: function() {
-                $.ajax({
-                    method: "POST",
-                    data: {
-                        abort: true,
-                        csrfmiddlewaretoken: ShuupAdminConfig.csrf
-                    },
-                    success: function() {
-                        window.location = "{{ url("shuup_admin:home") }}";
-                    }
-                });
-            }
+            redirectOnLastPane: "{{ url("shuup_admin:home") }}"
         });
     }());
 </script>

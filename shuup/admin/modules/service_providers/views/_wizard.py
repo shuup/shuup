@@ -16,6 +16,16 @@ from shuup.core.models import PaymentMethod, ShippingMethod
 class ServiceProviderTypeForm(forms.Form):
     providers = forms.CharField(label=_("Provider"), required=False)
 
+    def __init__(self, *args, **kwargs):
+        self.provider_label = kwargs.pop("label", "")
+        super(ServiceProviderTypeForm, self).__init__(*args, **kwargs)
+
+    def clean_providers(self):
+        data = self.cleaned_data.get("providers", None)
+        if not data:
+            self.add_error(None, _("Please activate at least one %s." % self.provider_label))
+        return data
+
 
 class ServiceWizardFormPartMixin(object):
     def visible(self):
@@ -47,6 +57,9 @@ class ServiceWizardFormPartMixin(object):
                 template_name="shuup/admin/service_providers/_wizard_service_provider_base_form.jinja",
                 extra_js="shuup/admin/service_providers/_wizard_script.jinja",
                 form_class=ServiceProviderTypeForm,
+                kwargs={
+                    "label": self.provider_label
+                }
             )
         ] + service_provider_form_defs
 
@@ -64,16 +77,15 @@ class CarrierWizardPane(ServiceWizardFormPartMixin, WizardPane):
     icon = "shuup_admin/img/shipping.png"
     service_model = ShippingMethod
     base_name = "shipping_method_base"
-    provider_label = _("Carrier")
+    provider_label = _("shipping method")
     form_def_provide_key = "carrier_wizard_form_def"
 
 
 class PaymentWizardPane(ServiceWizardFormPartMixin, WizardPane):
     identifier = "payment"
-    title = _("Payment Methods")
     text = _("Please add payment methods for your shop")
     icon = "shuup_admin/img/payment.png"
     service_model = PaymentMethod
     base_name = "payment_method_base"
-    provider_label = _("Payment Processor")
+    provider_label = _("payment method")
     form_def_provide_key = "payment_processor_wizard_form_def"
