@@ -49,5 +49,5 @@ def test_product_detail(browser, admin_user, live_server, settings):
     # Make sure that the tabs is clickable in small devices
     browser.driver.set_window_size(480, 960)
 
-    click_element(browser, "#product-images-section")
-    click_element(browser, "#additional-details-section")
+    click_element(browser, "#product-images-section", header_height=320)
+    click_element(browser, "#additional-details-section", header_height=320)

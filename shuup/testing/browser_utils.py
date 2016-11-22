@@ -12,8 +12,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC  # noqa: N812
 from selenium.webdriver.support.wait import WebDriverWait
 
-FIXED_HEADER_HEIGHT = 60 + 80 + 15
-
 
 def wait_until_disappeared(browser, css_selector, timeout=10, frequency=1.0):
     """
@@ -77,7 +75,7 @@ def wait_until_condition(browser, condition, timeout=10, frequency=1.0):
     ).until(lambda x: condition(browser))
 
 
-def move_to_element(browser, css_selector):
+def move_to_element(browser, css_selector, header_height=155):
     """
     Scroll the browser window to the element
 
@@ -88,12 +86,11 @@ def move_to_element(browser, css_selector):
     """
     wait_until_condition(browser, lambda x: x.is_element_present_by_css(css_selector))
     element = browser.driver.find_element_by_css_selector(css_selector)
-    # may need to be parameterized in the future...
-    y = element.location["y"] - FIXED_HEADER_HEIGHT
+    y = element.location["y"] - header_height
     browser.execute_script("window.scrollTo(0, %s)" % y)
 
 
-def click_element(browser, css_selector, timeout=10, frequency=1.0):
+def click_element(browser, css_selector, timeout=10, frequency=1.0, header_height=155):
     """
     Click a browser DOM element
 
@@ -106,7 +103,7 @@ def click_element(browser, css_selector, timeout=10, frequency=1.0):
     :param frequency: Polling frequency
     :type frequency: float
     """
-    move_to_element(browser, css_selector)
+    move_to_element(browser, css_selector, header_height)
     # selenium weirdness when clicking a button that already has focus...grumble grumble
     # http://stackoverflow.com/questions/21330894/why-do-i-have-to-click-twice-to-a-submit-input-using-selenium
     browser.execute_script('document.querySelector("%s").focus()' % css_selector.replace('"', '\\"'))
