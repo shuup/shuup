@@ -36,7 +36,10 @@ class GenericThemeForm(forms.ModelForm):
                     "in Shuup 0.5.7. Use list of dictionaries instead.", RemovedInFutureShuupWarning)
                 choices = self.theme.stylesheets
             self.fields["stylesheet"] = forms.ChoiceField(
-                label=_("Stylesheets"), choices=choices, initial=choices[0], required=True)
+                label=_("Stylesheets"), choices=choices, initial=choices[0], required=True, help_text=_(
+                    "The fonts, colors, and styles to use with your theme."
+                )
+            )
 
         fields = self.theme.fields
         if hasattr(fields, "items"):  # Quacks like a dict; that's fine too
