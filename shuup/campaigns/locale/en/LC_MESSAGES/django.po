@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-07 03:24+0000\n"
+"POT-Creation-Date: 2016-11-22 23:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,13 +41,13 @@ msgstr ""
 msgid "Set up a sales campaign"
 msgstr ""
 
-msgid "Add a basket campaign"
+msgid "New basket campaign"
 msgstr ""
 
-msgid "Add a catalog campaign"
+msgid "New catalog campaign"
 msgstr ""
 
-msgid "Add a coupon"
+msgid "New coupon"
 msgstr ""
 
 msgid "Minimum value"
@@ -288,7 +288,7 @@ msgstr ""
 msgid "shop"
 msgstr ""
 
-msgid "The shop where campaign is active."
+msgid "The shop where the campaign is active."
 msgstr ""
 
 msgid "name"
@@ -300,10 +300,25 @@ msgstr ""
 msgid "active"
 msgstr ""
 
+msgid ""
+"Check this if the campaign is currently active. Please also set a start and "
+"end date."
+msgstr ""
+
 msgid "start date and time"
 msgstr ""
 
+msgid ""
+"The date and time the campaign starts. This is only applicable if the "
+"campaign is marked as active."
+msgstr ""
+
 msgid "end date and time"
+msgstr ""
+
+msgid ""
+"The date and time the campaign ends. This is only applicable if the campaign "
+"is marked as active."
 msgstr ""
 
 msgid "created by"
@@ -319,6 +334,9 @@ msgid "modified on"
 msgstr ""
 
 msgid "Campaign"
+msgstr ""
+
+msgid "The campaign name to show in the store front."
 msgstr ""
 
 #, python-format
@@ -425,6 +443,9 @@ msgid "Rules"
 msgstr ""
 
 msgid "Rule type"
+msgstr ""
+
+msgid "The criteria used to determine whether this campaign is applied."
 msgstr ""
 
 msgid "Add rule"

@@ -21,6 +21,14 @@
                             {% endif %}
                         {% endfor %}
                     </select>
+                    <span class="help-popover-btn">
+                        <a
+                            class="btn" data-toggle="popover" data-placement="bottom" role="button" tabindex="50000"
+                            data-html="true" data-trigger="focus" title="{% trans %}Rule type{% endtrans %}"
+                            data-content="{% trans %}The criteria used to determine whether this campaign is applied.{% endtrans %}" >
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
                 </div>
                 <div class="form-group text-center">
                     <a class="btn btn-lg btn-text" id="rule-button" href="#">+ {% trans %}Add rule{% endtrans %}</a>
@@ -90,6 +98,8 @@
 
             // reactivate possible select2 widgets
             activateSelects();
+            // ... and help text
+            $("[data-toggle='popover']").popover();
         });
     });
 </script>

@@ -53,15 +53,21 @@ class CampaignQueryset(models.QuerySet):
 class Campaign(MoneyPropped, TranslatableModel):
     admin_url_suffix = None
 
-    shop = models.ForeignKey(Shop, verbose_name=_("shop"), help_text=_("The shop where campaign is active."))
+    shop = models.ForeignKey(Shop, verbose_name=_("shop"), help_text=_("The shop where the campaign is active."))
     name = models.CharField(max_length=120, verbose_name=_("name"), help_text=_("The name for this campaign."))
 
     # translations in subclass
     identifier = InternalIdentifierField(unique=True)
 
-    active = models.BooleanField(default=False, verbose_name=_("active"))
-    start_datetime = models.DateTimeField(null=True, blank=True, verbose_name=_("start date and time"))
-    end_datetime = models.DateTimeField(null=True, blank=True, verbose_name=_("end date and time"))
+    active = models.BooleanField(default=False, verbose_name=_("active"), help_text=_(
+        "Check this if the campaign is currently active. Please also set a start and end date."
+    ))
+    start_datetime = models.DateTimeField(null=True, blank=True, verbose_name=_("start date and time"), help_text=_(
+        "The date and time the campaign starts. This is only applicable if the campaign is marked as active."
+    ))
+    end_datetime = models.DateTimeField(null=True, blank=True, verbose_name=_("end date and time"), help_text=_(
+        "The date and time the campaign ends. This is only applicable if the campaign is marked as active."
+    ))
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, blank=True, null=True,
         related_name="+", on_delete=models.SET_NULL,
@@ -113,7 +119,9 @@ class CatalogCampaign(Campaign):
     conditions = models.ManyToManyField('ContextCondition', blank=True, related_name='campaign')
     filters = models.ManyToManyField('CatalogFilter', blank=True, related_name='campaign')
 
-    translations = TranslatedFields(public_name=models.CharField(max_length=120, blank=True))
+    translations = TranslatedFields(public_name=models.CharField(max_length=120, blank=True, help_text=_(
+        "The campaign name to show in the store front."
+    )))
 
     def __str__(self):
         return force_text(_("Catalog Campaign: %(name)s" % dict(name=self.name)))
@@ -203,7 +211,9 @@ class BasketCampaign(Campaign):
     coupon = models.OneToOneField('Coupon', null=True, blank=True, related_name='campaign', verbose_name=_("coupon"))
 
     translations = TranslatedFields(
-        public_name=models.CharField(max_length=120, verbose_name=_("public name"))
+        public_name=models.CharField(max_length=120, verbose_name=_("public name"), help_text=_(
+            "The campaign name to show in the store front."
+        ))
     )
 
     def __str__(self):
