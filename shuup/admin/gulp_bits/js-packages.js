@@ -33,7 +33,9 @@ module.exports = {
             "js/language-changer.js",
             "js/select.js",
             "js/tour.js",
-            "js/imagelightbox.js"
+            "js/imagelightbox.js",
+            "js/drag-n-drop.js",
+            "js/slugify.js",
         ]
     },
     "contact-group": {

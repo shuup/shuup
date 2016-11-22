@@ -16,8 +16,11 @@ from django.http.response import HttpResponse, JsonResponse
 from django.template.defaultfilters import yesno
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
+from easy_thumbnails.files import get_thumbnailer
+from filer.models import Image
 
 from shuup.admin.utils.urls import get_model_url, NoModelUrl
+from shuup.core.models import ProductMedia
 from shuup.utils.dates import try_parse_date
 from shuup.utils.importing import load
 from shuup.utils.objects import compact
@@ -242,6 +245,8 @@ class Column(object):
         self.sortable = bool(kwargs.pop("sortable", True))
         self.linked = bool(kwargs.pop("linked", True))
         self.raw = bool(kwargs.pop("raw", False))
+        self.ordering = kwargs.pop("ordering", 9999)
+
         if kwargs and type(self) is Column:  # If we're not derived, validate that client code doesn't fail
             raise NameError("Unexpected kwarg(s): %s" % kwargs.keys())
 
@@ -273,6 +278,15 @@ class Column(object):
         value = object
         for bit in self.display.split("__"):
             value = getattr(value, bit, None)
+
+        if isinstance(value, ProductMedia):
+            return "<img src='/media/%s'>" % value.get_thumbnail()
+
+        if isinstance(value, Image):
+            thumbnailer = get_thumbnailer(value)
+            options = {"size": (64, 64)}
+            thumbnail = thumbnailer.get_thumbnail(options, generate=True)
+            return "<img src='%s'>" % thumbnail.url
 
         if isinstance(value, bool):
             value = yesno(value)

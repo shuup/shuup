@@ -18,14 +18,17 @@ from shuup.core.models import Product, ProductMode
 class ProductListView(PicotableListView):
     model = Product
     default_columns = [
-        Column("sku", _(u"SKU"), display="sku", filter_config=TextFilter(placeholder=_("Filter by SKU..."))),
+        Column("primary_image", _(u"Primary Image"), display="primary_image", raw=True, ordering=1),
         Column("name", _(u"Name"), sort_field="translations__name", display="name", filter_config=TextFilter(
             filter_field="translations__name",
             placeholder=_("Filter by name...")
-        )),
-        Column("barcode", _(u"Barcode"), display="barcode", filter_config=TextFilter(_("Filter by barcode..."))),
-        Column("type", _(u"Type")),
-        Column("mode", _(u"Mode"), filter_config=ChoicesFilter(ProductMode.choices)),
+        ), ordering=2),
+        Column("sku", _(u"SKU"), display="sku",
+               filter_config=TextFilter(placeholder=_("Filter by SKU...")), ordering=3),
+        Column("barcode", _(u"Barcode"),
+               display="barcode", filter_config=TextFilter(_("Filter by barcode...")), ordering=4),
+        Column("type", _(u"Type"), ordering=5),
+        Column("mode", _(u"Mode"), filter_config=ChoicesFilter(ProductMode.choices), ordering=6),
     ]
 
     mass_actions = [
