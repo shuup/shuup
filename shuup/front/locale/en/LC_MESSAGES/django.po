@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-08 23:05+0000\n"
+"POT-Creation-Date: 2016-11-22 23:32+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -218,6 +218,14 @@ msgstr ""
 msgid "Name - Z-A"
 msgstr ""
 
+msgid "Check this to allow products to be sortable by product name."
+msgstr ""
+
+msgid ""
+"Use a numeric value to set the order in which the the filter will appear on "
+"the product listing page."
+msgstr ""
+
 msgid "Sort products by price"
 msgstr ""
 
@@ -230,6 +238,11 @@ msgstr ""
 msgid "Price - High to Low"
 msgstr ""
 
+msgid ""
+"Check this to allow products to be sortable by price (from low to high and "
+"high to low)."
+msgstr ""
+
 msgid "Sort products by date created"
 msgstr ""
 
@@ -237,6 +250,15 @@ msgid "Ordering for sort by date created"
 msgstr ""
 
 msgid "Date created"
+msgstr ""
+
+msgid ""
+"Check this to allow products to be sortable from newest to oldest products."
+msgstr ""
+
+msgid ""
+"Use a numeric value to set the order in which the filter will appear on the "
+"product listing page."
 msgstr ""
 
 msgid "Sort products by date created - oldest first"
@@ -248,6 +270,10 @@ msgstr ""
 msgid "Date created - oldest first"
 msgstr ""
 
+msgid ""
+"Check this to allow products to be sortable from oldest to newest products."
+msgstr ""
+
 msgid "Filter products by manufacturer"
 msgstr ""
 
@@ -255,6 +281,16 @@ msgid "Ordering for filter by manufacturer"
 msgstr ""
 
 msgid "Manufacturers"
+msgstr ""
+
+msgid ""
+"Check this to allow products to be filterable by manufacturer for this "
+"category."
+msgstr ""
+
+msgid ""
+"Use a numeric value to set the order in which the manufacturer filters will "
+"appear on the product listing page."
 msgstr ""
 
 msgid "Filter products by category"
@@ -266,6 +302,16 @@ msgstr ""
 msgid "Categories"
 msgstr ""
 
+msgid ""
+"Check this to allow products to be filterable by any visible product "
+"category. "
+msgstr ""
+
+msgid ""
+"Use a numeric value to set the order in which the category list filters will "
+"appear on the product listing page."
+msgstr ""
+
 msgid "Limit page size"
 msgstr ""
 
@@ -275,10 +321,30 @@ msgstr ""
 msgid "Products per page"
 msgstr ""
 
+msgid ""
+"Check this to allow the customer to be able to select the number of products "
+"to display."
+msgstr ""
+
+msgid ""
+"Use a numeric value to set the order in which the page size filter will "
+"appear on the product listing page."
+msgstr ""
+
 msgid "Filter products by variation"
 msgstr ""
 
 msgid "Ordering for filter by variation"
+msgstr ""
+
+msgid ""
+"Check this to allow products to be filterable by their different variations. "
+"For example, size or color."
+msgstr ""
+
+msgid ""
+"Use a numeric value to set the order in which the variation filters will "
+"appear on the product listing page."
 msgstr ""
 
 msgid "Filter products by price"
@@ -287,24 +353,38 @@ msgstr ""
 msgid "Ordering for filter by price"
 msgstr ""
 
+msgid ""
+"Check this to allow products to be filtered by price. Prices will be listed "
+"in groups from the price range minimum to price range maximum in increments "
+"of the configured price range step."
+msgstr ""
+
+msgid ""
+"Use a numeric value to set the order in which the price range filters will "
+"appear on the product listing page."
+msgstr ""
+
 msgid "Price range minimum"
 msgstr ""
 
 msgid ""
-"Set minimum price for filter. First range will be from zero to this value."
+"Set the minimum price for the filter. The first range will be from zero to "
+"this value."
 msgstr ""
 
 msgid "Price range maximum"
 msgstr ""
 
 msgid ""
-"Set maximum price for filter. Last range will include this value and above."
+"Set the maximum price for the filter. The last range will include this value "
+"and above."
 msgstr ""
 
 msgid "Price range step"
 msgstr ""
 
-msgid "Set step for ranges. The second range is from min price to this value."
+msgid ""
+"Set the price step for each range. Each range will increment by this value."
 msgstr ""
 
 #, python-format

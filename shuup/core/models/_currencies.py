@@ -32,7 +32,9 @@ class Currency(models.Model):
 
     decimal_places = models.PositiveSmallIntegerField(verbose_name=_("decimal places"),
                                                       validators=[MaxValueValidator(10)],
-                                                      default=2)
+                                                      default=2,
+                                                      help_text=_(
+                                                          "The number of decimal places supported by this currency."))
 
     def clean(self):
         super(Currency, self).clean()

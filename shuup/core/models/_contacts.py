@@ -58,7 +58,10 @@ class ContactGroup(TranslatableShuupModel):
         verbose_name=_("hide prices"))
 
     translations = TranslatedFields(
-        name=models.CharField(max_length=64, verbose_name=_('name')),
+        name=models.CharField(max_length=64, verbose_name=_('name'), help_text=_(
+            "The contact group name. "
+            "Contact groups can be used to target sales and campaigns to specific set of users."
+        )),
     )
 
     objects = ContactGroupQuerySet.as_manager()
@@ -92,7 +95,9 @@ class Contact(PolymorphicShuupModel):
 
     created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_('created on'))
     identifier = InternalIdentifierField(unique=True, null=True, blank=True)
-    is_active = models.BooleanField(default=True, db_index=True, verbose_name=_('active'))
+    is_active = models.BooleanField(default=True, db_index=True, verbose_name=_('active'), help_text=_(
+        "Check this if the contact is an active customer."
+    ))
     # TODO: parent contact?
     default_shipping_address = models.ForeignKey(
         "MutableAddress", null=True, blank=True, related_name="+", verbose_name=_('shipping address'),
@@ -109,21 +114,46 @@ class Contact(PolymorphicShuupModel):
         "PaymentMethod", verbose_name=_('default payment method'), blank=True, null=True, on_delete=models.SET_NULL
     )
 
-    _language = LanguageField(verbose_name=_('language'), blank=True)
-    marketing_permission = models.BooleanField(default=True, verbose_name=_('marketing permission'))
-    phone = models.CharField(max_length=64, blank=True, verbose_name=_('phone'))
-    www = models.URLField(max_length=128, blank=True, verbose_name=_('web address'))
-    timezone = TimeZoneField(blank=True, null=True, verbose_name=_('time zone'))
-    prefix = models.CharField(verbose_name=_('name prefix'), max_length=64, blank=True)
-    name = models.CharField(max_length=256, verbose_name=_('name'))
-    suffix = models.CharField(verbose_name=_('name suffix'), max_length=64, blank=True)
+    _language = LanguageField(verbose_name=_('language'), blank=True, help_text=_(
+        "The primary language to be used in all communications with the contact."
+    ))
+    marketing_permission = models.BooleanField(default=True, verbose_name=_('marketing permission'), help_text=_(
+        "Check this if the contact can receive marketing and promotional materials."
+    ))
+    phone = models.CharField(max_length=64, blank=True, verbose_name=_('phone'), help_text=_(
+        "The primary phone number of the contact."
+    ))
+    www = models.URLField(max_length=128, blank=True, verbose_name=_('web address'), help_text=_(
+        "The web address of the contact, if any."
+    ))
+    timezone = TimeZoneField(blank=True, null=True, verbose_name=_('time zone'), help_text=_(
+        "The timezone in which the contact resides. This can be used to target the delivery of promotional materials "
+        "at a particular time."
+    ))
+    prefix = models.CharField(verbose_name=_('name prefix'), max_length=64, blank=True, help_text=_(
+        "The name prefix of the contact. For example, Mr, Mrs, Dr, etc."
+    ))
+    name = models.CharField(max_length=256, verbose_name=_('name'), help_text=_("The contact name"))
+    suffix = models.CharField(verbose_name=_('name suffix'), max_length=64, blank=True, help_text=_(
+        "The name suffix of the contact. For example, Sr, Jr, etc."
+    ))
     name_ext = models.CharField(max_length=256, blank=True, verbose_name=_('name extension'))
-    email = models.EmailField(max_length=256, blank=True, verbose_name=_('email'))
+    email = models.EmailField(max_length=256, blank=True, verbose_name=_('email'), help_text=_(
+        "The email that will receive order confirmations and promotional materials (if permitted)."
+    ))
 
     tax_group = models.ForeignKey(
-        "CustomerTaxGroup", blank=True, null=True, on_delete=models.PROTECT, verbose_name=_('tax group')
+        "CustomerTaxGroup", blank=True, null=True, on_delete=models.PROTECT, verbose_name=_('tax group'),
+        help_text=_(
+            "Select the contact tax group to use for this contact. "
+            "Tax groups can be used to customize the tax rules the that apply to any of this contacts orders. "
+            "Tax groups are defined in Settings - Customer Tax Groups and can be applied to tax rules in "
+            "Settings - Tax Rules"
+        )
     )
-    merchant_notes = models.TextField(blank=True, verbose_name=_('merchant notes'))
+    merchant_notes = models.TextField(blank=True, verbose_name=_('merchant notes'), help_text=_(
+        "Enter any private notes for this customer that are only accessible in Shuup admin."
+    ))
     account_manager = models.ForeignKey("PersonContact", blank=True, null=True, verbose_name=_('account manager'))
 
     def __str__(self):
@@ -256,10 +286,18 @@ class PersonContact(Contact):
         settings.AUTH_USER_MODEL, blank=True, null=True, related_name="contact",
         verbose_name=_('user')
     )
-    gender = EnumField(Gender, default=Gender.UNDISCLOSED, max_length=4, verbose_name=_('gender'))
-    birth_date = models.DateField(blank=True, null=True, verbose_name=_('birth date'))
-    first_name = models.CharField(max_length=30, blank=True, verbose_name=_('first name'))
-    last_name = models.CharField(max_length=50, blank=True, verbose_name=_('last name'))
+    gender = EnumField(Gender, default=Gender.UNDISCLOSED, max_length=4, verbose_name=_('gender'), help_text=_(
+        "The gender of the contact."
+    ))
+    birth_date = models.DateField(blank=True, null=True, verbose_name=_('birth date'), help_text=_(
+        "The birth date of the contact."
+    ))
+    first_name = models.CharField(max_length=30, blank=True, verbose_name=_('first name'), help_text=_(
+        "The first name of the contact."
+    ))
+    last_name = models.CharField(max_length=50, blank=True, verbose_name=_('last name'), help_text=_(
+        "The last name of the contact."
+    ))
     # TODO: Figure out how/when/if the name and email fields are updated from users
 
     class Meta:

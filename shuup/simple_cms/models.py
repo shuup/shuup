@@ -41,8 +41,14 @@ class PageQuerySet(TranslatableQuerySet):
 
 @python_2_unicode_compatible
 class Page(MPTTModel, TranslatableModel):
-    available_from = models.DateTimeField(null=True, blank=True, verbose_name=_('available from'))
-    available_to = models.DateTimeField(null=True, blank=True, verbose_name=_('available to'))
+    available_from = models.DateTimeField(null=True, blank=True, verbose_name=_('available from'), help_text=_(
+        "Set an available from date to restrict the page to be available only after a certain date and time. "
+        "This is useful for pages describing sales campaigns or other time-sensitive pages."
+    ))
+    available_to = models.DateTimeField(null=True, blank=True, verbose_name=_('available to'), help_text=_(
+        "Set an available from date to restrict the page to be available only after a certain date and time. "
+        "This is useful for pages describing sales campaigns or other time-sensitive pages."
+    ))
 
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, blank=True, null=True, related_name="+", on_delete=models.SET_NULL,
@@ -62,21 +68,35 @@ class Page(MPTTModel, TranslatableModel):
         editable=True
     )
 
-    visible_in_menu = models.BooleanField(verbose_name=_("visible in menu"), default=False)
+    visible_in_menu = models.BooleanField(verbose_name=_("visible in menu"), default=False, help_text=_(
+        "Check this if this page should have a link in the top menu of the store front."
+    ))
     parent = TreeForeignKey(
-        "self", blank=True, null=True, related_name="children", verbose_name=_("parent"))
-    list_children_on_page = models.BooleanField(verbose_name=_("list children on page"), default=False)
+        "self", blank=True, null=True, related_name="children", verbose_name=_("parent"), help_text=_(
+            "Set this to a parent page if this page should be subcategorized under another page."
+        ))
+    list_children_on_page = models.BooleanField(verbose_name=_("list children on page"), default=False, help_text=_(
+        "Check this if this page should list its children pages."
+    ))
 
     translations = TranslatedFields(
-        title=models.CharField(max_length=256, verbose_name=_('title')),
+        title=models.CharField(max_length=256, verbose_name=_('title'), help_text=_(
+            "The page title. This is shown anywhere links to your page are shown."
+        )),
         url=models.CharField(
             max_length=100, verbose_name=_('URL'),
             unique=True,
             default=None,
             blank=True,
-            null=True
+            null=True,
+            help_text=_(
+                "The page url. Choose a descriptive url so that search engines can rank your page higher. "
+                "Often the best url is simply the page title with spaces replaced with dashes."
+            )
         ),
-        content=models.TextField(verbose_name=_('content')),
+        content=models.TextField(verbose_name=_('content'), help_text=_(
+            "The page content. This is the text that is displayed when customers click on your page link."
+        )),
     )
 
     objects = TreeManager.from_queryset(PageQuerySet)()

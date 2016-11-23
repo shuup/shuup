@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-25 05:02+0000\n"
+"POT-Creation-Date: 2016-11-22 23:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -67,6 +67,9 @@ msgstr ""
 msgid "enabled"
 msgstr ""
 
+msgid "Check this if this tax rule is active."
+msgstr ""
+
 msgid "tax classes"
 msgstr ""
 
@@ -74,6 +77,9 @@ msgid "Tax classes of the items to be taxed"
 msgstr ""
 
 msgid "customer tax groups"
+msgstr ""
+
+msgid "The customer tax groups for which this tax rule is limited."
 msgstr ""
 
 msgid "country codes pattern"
@@ -104,6 +110,9 @@ msgid ""
 msgstr ""
 
 msgid "tax"
+msgstr ""
+
+msgid "The tax to apply when this rule is applied."
 msgstr ""
 
 msgid "Tax rule {} ({})"

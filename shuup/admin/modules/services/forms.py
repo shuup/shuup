@@ -45,6 +45,7 @@ class BaseMethodForm(ShuupAdminForm):
             choices=_get_service_choices(self.service_provider),
             required=bool(self.service_provider),
             label=_("Service"),
+            help_text=_("Select a service to use for this service provider.")
         )
         self.fields[self.service_provider_attr].required = True
 
@@ -96,7 +97,10 @@ class ShippingMethodForm(BaseMethodForm):
         model = ShippingMethod
         fields = ["carrier"] + BaseMethodForm.Meta.base_fields
         help_texts = {
-            "carrier": _("Select carrier before filling other fields.")
+            "carrier": _(
+                "The carrier to use for this shipping method. "
+                "Select a carrier before filling other fields."
+            )
         }
 
 
@@ -107,7 +111,10 @@ class PaymentMethodForm(BaseMethodForm):
         model = PaymentMethod
         fields = ["payment_processor"] + BaseMethodForm.Meta.base_fields
         help_texts = {
-            "payment_processor": _("Select payment processor before filling other fields.")
+            "payment_processor": _(
+                "The payment processor to use for this payment method. "
+                "Select a payment processor before filling out the other fields."
+            )
         }
 
 

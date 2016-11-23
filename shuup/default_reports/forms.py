@@ -18,18 +18,23 @@ class OrderReportForm(BaseReportForm):
     def __init__(self, *args, **kwargs):
         super(OrderReportForm, self).__init__(*args, **kwargs)
 
-        customer_field = Select2MultipleField(label=_("Customer"), model=Contact, required=False)
+        customer_field = Select2MultipleField(label=_("Customer"), model=Contact, required=False, help_text=_(
+                "Filter report results by customer."
+            )
+        )
         customers = self.initial_contacts("customer")
         if customers:
             customer_field.initial = customers
             customer_field.widget.choices = [(obj.pk, obj.name) for obj in customers]
-
-        orderer_field = Select2MultipleField(label=_("Orderer"), model=Contact, required=False)
+        orderer_field = Select2MultipleField(
+            label=_("Orderer"), model=Contact, required=False, help_text=_(
+                "Filter report results by the person that made the order."
+            )
+        )
         orderers = self.initial_contacts("orderer")
         if orderers:
             orderer_field.initial = orderers
             orderer_field.widget.choices = [(obj.pk, obj.name) for obj in orderers]
-
         self.fields["customer"] = customer_field
         self.fields["orderer"] = orderer_field
 

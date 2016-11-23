@@ -33,7 +33,8 @@ class ContactGroupBaseForm(MultiLanguageModelForm):
         self.fields['price_display_mode'] = forms.ChoiceField(
             choices=_PRICE_DISPLAY_MODE_CHOICES,
             label=_("Price display mode"),
-            initial=_get_price_display_mode(self.instance))
+            initial=_get_price_display_mode(self.instance),
+            help_text=_("Set how prices are displayed to contacts in this group."))
 
     def save(self, commit=True):
         price_display_mode = self.cleaned_data['price_display_mode']

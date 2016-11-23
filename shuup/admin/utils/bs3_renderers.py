@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from bootstrap3.renderers import FieldRenderer
 from bootstrap3.utils import add_css_class
 from django.forms import DateField, DateTimeField, ModelMultipleChoiceField
+from django.utils.translation import ugettext_lazy as _
 
 
 class AdminFieldRenderer(FieldRenderer):
@@ -61,6 +62,10 @@ class AdminFieldRenderer(FieldRenderer):
 
     def append_to_field(self, html):
         if self.field_help:
+            if self.field.field.required:
+                self.field_help = _("Required. %s" % self.field_help)
+            else:
+                self.field_help = _("Optional. %s" % self.field_help)
             html += "<span class='help-popover-btn'>"
             # tabindex is required for popover to function but we don't actually want to be able to tab to it
             # so set a large tabindex

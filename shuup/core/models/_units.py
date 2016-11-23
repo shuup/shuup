@@ -24,11 +24,19 @@ __all__ = ("SalesUnit",)
 @python_2_unicode_compatible
 class SalesUnit(TranslatableModel):
     identifier = InternalIdentifierField(unique=True)
-    decimals = models.PositiveSmallIntegerField(default=0, verbose_name=_(u"allowed decimals"))
+    decimals = models.PositiveSmallIntegerField(default=0, verbose_name=_(u"allowed decimal places"), help_text=_(
+        "The number of decimal places allowed by this sales unit."
+        "Set this to a value greater than zero if products with this sales unit can be sold in fractional quantities"
+    ))
 
     translations = TranslatedFields(
-        name=models.CharField(max_length=128, verbose_name=_('name')),
-        short_name=models.CharField(max_length=128, verbose_name=_('short name')),
+        name=models.CharField(max_length=128, verbose_name=_('name'), help_text=_(
+            "The sales unit name to use for products (For example, 'pieces' or 'units'). "
+            "Sales units can be set for each product through the product editor view."
+        )),
+        short_name=models.CharField(max_length=128, verbose_name=_('short name'), help_text=_(
+            "An abbreviated name for this sales unit that is shown throughout admin and order invoices."
+        )),
     )
 
     class Meta:

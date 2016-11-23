@@ -30,9 +30,15 @@ class PaymentMethod(Service):
         verbose_name=_("payment processor"))
 
     translations = TranslatedFields(
-        name=models.CharField(max_length=100, verbose_name=_("name")),
+        name=models.CharField(max_length=100, verbose_name=_("name"), help_text=_(
+                "The payment method name. This name is shown to customers on checkout."
+            )
+        ),
         description=models.CharField(
-            max_length=500, blank=True, verbose_name=_("description")),
+            max_length=500, blank=True, verbose_name=_("description"), help_text=_(
+                "The payment method description. This description is shown to customers on checkout."
+            )
+        ),
     )
 
     line_type = OrderLineType.PAYMENT

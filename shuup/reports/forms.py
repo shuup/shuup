@@ -37,14 +37,19 @@ class DateRangeChoices(Enum):
 
 class BaseReportForm(forms.Form):
     report = forms.CharField(widget=HiddenInput)
-    shop = forms.ChoiceField(label=_("Shop"))
+    shop = forms.ChoiceField(label=_("Shop"), help_text=_("Filter report results by shop."))
     date_range = EnumField(DateRangeChoices).formfield(
-        form_class=ChoiceField, label=_("Date Range"), initial=DateRangeChoices.RUNNING_WEEK)
-    start_date = DateField(label=_("Start Date"), required=False, help_text=_("For custom date range"))
-    end_date = DateField(label=_("End Date"), required=False, help_text=_("For custom date range"))
+        form_class=ChoiceField, label=_("Date Range"), initial=DateRangeChoices.RUNNING_WEEK, help_text=_(
+            "Filter report results by a date range."
+        ))
+    start_date = DateField(label=_("Start Date"), required=False, help_text=_("For a custom date range."))
+    end_date = DateField(label=_("End Date"), required=False, help_text=_("For a custom date range."))
     writer = forms.ChoiceField(
-        label=_("Output Format"), initial="html", choices=[(name, name.title()) for name in sorted(get_writer_names())])
-    force_download = forms.BooleanField(required=False, label=_("Download"))
+        label=_("Output Format"), initial="html", choices=[(name, name.title()) for name in sorted(get_writer_names())],
+        help_text=_("The format to show the report results.")
+    )
+    force_download = forms.BooleanField(required=False, label=_("Download"), help_text=_(
+        "Check this to download the report."))
 
     def __init__(self, *args, **kwargs):
         super(BaseReportForm, self).__init__(*args, **kwargs)

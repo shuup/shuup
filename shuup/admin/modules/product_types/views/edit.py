@@ -8,6 +8,8 @@
 
 from __future__ import unicode_literals
 
+from django.utils.translation import ugettext_lazy as _
+
 from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Attribute, ProductType
@@ -15,7 +17,9 @@ from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 
 
 class ProductTypeForm(MultiLanguageModelForm):
-    attributes = Select2MultipleField(model=Attribute, required=False)
+    attributes = Select2MultipleField(model=Attribute, required=False, help_text=_(
+        "Select attributes that go with your product type. These are defined in Products Settings - Attributes."
+    ))
 
     class Meta:
         model = ProductType
