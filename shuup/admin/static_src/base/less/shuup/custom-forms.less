@@ -55,6 +55,9 @@
                     left: 0;
                     margin-left: 0px;
                 }
+                input[type="checkbox"] {
+                    margin-left: 5px;
+                }
             }
         }
 
@@ -118,6 +121,12 @@
             margin: 0;
 
             label {
+                input[type="checkbox"] {
+                    position: relative;
+                    margin: 0 5px 0 -15px;
+                    transform: scale(1.25);
+                }
+
                 @media (max-width: @screen-xs-max) {
                     float: none;
                     width: auto;
@@ -131,6 +140,9 @@
                         position: absolute;
                         left: 100%;
                         margin-left: 0;
+                    }
+                    input[type="checkbox"] {
+                        margin-left: 5px;
                     }
                 }
             }
