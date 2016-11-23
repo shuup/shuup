@@ -1,13 +1,8 @@
 Shuup Change Log
 ================
 
-Unrealeased
+SHUUP 0.5.5
 -----------
-
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
 
 Core
 ~~~~
@@ -15,9 +10,6 @@ Core
 - Allow refunding by arbitrary amounts and quantity-only refunds
 - Fix bug in `Order.can_set_complete`
 - Currencies can be now created and edited through admin.
-
-Localization
-~~~~~~~~~~~~
 
 Admin
 ~~~~~
@@ -32,53 +24,12 @@ Admin
 - Fix ability to add multiple refund lines at once
 - Show more details when picking line to refund
 
-Addons
-~~~~~~
-
-Front
-~~~~~
-
-Xtheme
-~~~~~~
-
-Classic Gray Theme
-~~~~~~~~~~~~~~~~~~
-
 Simple Supplier
 ~~~~~~~~~~~~~~~
 
 - Use shop price properties when in single shop mode for adjustments
   and counts
 
-Order Printouts
-~~~~~~~~~~~~~~~
-
-Campaigns
-~~~~~~~~~
-
-Customer Group Pricing
-~~~~~~~~~~~~~~~~~~~~~~
-
-Discount Pricing
-~~~~~~~~~~~~~~~~
-
-Simple CMS
-~~~~~~~~~~
-
-Default Tax
-~~~~~~~~~~~
-
-Guide
-~~~~~
-
-Importer
-~~~~~~~~
-
-Regions
-~~~~~~~
-
-General/miscellaneous
-~~~~~~~~~~~~~~~~~~~~~
 
 SHUUP 0.5.4
 -----------

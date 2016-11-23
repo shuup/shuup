@@ -1,0 +1,18 @@
+Shuup 0.5.5 Release Notes
+=========================
+
+Released on 2016-11-22 17:45pm -0800.
+
+For core we now have more solid way of refunding orders.
+Also currencies is now provided as an objects and the currency
+decimal places can be set by merchant. Also now it's possible to
+set orders without products ship to completed.
+
+Most notable changes in this release is in Admin. The admin
+styles got a major update and there is a multiple fixes all
+over the admin. Also most of the fields in admin should now
+have help texts for the merchant.
+
+For all changes see the full changelog:
+:doc:`../shoop-changelog` or `Git commit log
+<https://github.com/shuup/shuup/commits/v0.5.5>`__.
