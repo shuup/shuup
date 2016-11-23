@@ -18,7 +18,7 @@
         let steps = [];
         steps = steps.concat([
             {
-                title: gettext("Quicklinks"),
+                title: gettext("Quick Links"),
                 text: [
                     gettext("Quick Links to your most used features.")
                 ],
@@ -26,20 +26,19 @@
             }, {
                 title: gettext("Orders"),
                 text: [
-                    gettext("Here you can track your orders and shoppers’ carts."),
-                    gettext("Filters are setup to find the orders or shopping carts you are looking for, based on anything. There are order filters like customer’s name, date range, if it has been shipped or paid, and basket filters like how many products are in the basket or if the cart was abandoned.")
+                    gettext("Track and filter your customers’ orders here."),
                 ],
                 attachTo: "li a[data-target-id='category-1'] right"
             }, {
                 title: gettext("Products"),
                 text: [
-                    gettext("All your products and product options are in here, there’s a bunch. Manufacturers, suppliers, and your inventory and stock management are inside. You can add more products and categories here too.")
+                    gettext("All your exciting products and features are located here.")
                 ],
                 attachTo: "li a[data-target-id='category-2'] right"
             }, {
                 title: gettext("Contacts"),
                 text: [
-                    gettext("All your shopper data is inside. Check out your best customers, setup special user groups, and get info to target them so that they want to buy.")
+                    gettext("All your customer data is located here. Target and organize your clients details your way!")
                 ],
                 attachTo: "li a[data-target-id='category-3'] right"
             }
@@ -49,7 +48,7 @@
             steps.push({
                 title: gettext("Reports"),
                 text: [
-                    gettext("Here you can create all types of reports and export them in multiple formats. Get the sales data you need and see how and where you are making money.")
+                    gettext("Your reporting tool to build and analyze your consumer behavior information that can assist with your business decisions.")
                 ],
                 attachTo: "li a[data-target-id='category-4'] right"
             });
@@ -59,7 +58,8 @@
             steps.push({
                 title: gettext("Campaigns"),
                 text: [
-                    gettext("Here you can create sales, coupons, and marketing campaigns that entice your shoppers. Set them up based on catalog or basket and make recommended product upsells and crossells. Or do something unique that will create loyalty and happy shoppers.")
+                    gettext("Great loyalty tool for creating marketing, campaigns, special offers and coupons to entice your shoppers!"),
+                    gettext("Set offers based on their previous purchase behavior to up- and cross sale your inventory.")
                 ],
                 attachTo: "li a[data-target-id='category-5'] right"
             });
@@ -68,7 +68,7 @@
         steps.push({
             title: gettext("Storefront"),
             text: [
-                gettext("This is the place to customize your site and add pages, shops, and sales carousels. You can add media like photos and videos or completely change the look of your store. It’s super customizable to make it exactly how you want.")
+                gettext("The make-over tool to customize you site themes, add pages and product carousels. Incorporate any media to make your store pop!")
             ],
             attachTo: "li a[data-target-id='category-6'] right"
         });
@@ -77,7 +77,8 @@
             steps.push({
                 title: gettext("Addons"),
                 text: [
-                    gettext("This is your connection interface. Addons and other systems you use can be attached to your store through powerful data connections. Supercharge your site and gather crazy amounts of data with integrations to CRMs and ERPs, POS’s and PIM’s, or any other acronym you can think of.")
+                    gettext("This is your connection interface. Addons and other systems you use can be attached to your store through powerful data connections."),
+                    gettext("Supercharge your site and gather crazy amounts of data with integrations to CRMs and ERPs, POS’s and PIM’s, or any other acronym you can think of.")
                 ],
                 attachTo: "li a[data-target-id='category-7'] right"
             });
@@ -86,25 +87,25 @@
         steps = steps.concat([{
             title: gettext("Settings"),
             text: [
-                gettext("Here are the main options for your store. Its got everything from taxes and tax rules, payment and shipping methods, to notification settings. Tweak away.")
+                gettext("The nuts and bolts of your store are found here. From individual country tax-regulations to your contact details.")
             ],
             attachTo: "li a[data-target-id='category-8'] right"
         }, {
             title: gettext("Search"),
             text: [
-                gettext("Find anything that is inside your store. This includes settings, products, users, and addons.")
+                gettext("Lost and cannot find your way? No worries, you can search contacts, settings, add-ons and more features from here.")
             ],
             attachTo: "#site-search bottom"
         }, {
             title: gettext("View your storefront"),
             text: [
-                gettext("Check out your shop and all the cool changes you’ve made.")
+                gettext("Preview your shop and all the cool features you have created!")
             ],
             attachTo: ".shop-btn left"
         }, {
             title: gettext("We're done!"),
             text: [
-                gettext("You have completed the tutorial."),
+                gettext("It was nice to show you around!"),
                 gettext("If you need to run it again, fire it up from the menu in the top right.")
             ]
         }]);
