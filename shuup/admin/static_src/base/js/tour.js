@@ -175,7 +175,7 @@
                 let helpUrl = "http://shuup-guide.readthedocs.io/en/latest/" + page;
                 content += "<br>";
                 content += "<p class='text-center'>";
-                content += "<a href='" + helpUrl + "' class='btn btn-inverse btn-default'>";
+                content += "<a href='" + helpUrl + "' class='btn btn-inverse btn-default', target='_blank'>";
                 content += "<i class='fa fa-info-circle'></i> " + gettext("Learn more at the Shuup Help Center");
                 content += "</a>";
                 content += "</p>";
