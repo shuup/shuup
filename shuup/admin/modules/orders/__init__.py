@@ -190,16 +190,17 @@ class OrderModule(AdminModule):
         return derive_model_url(Order, "shuup_admin:order", object, kind)
 
     def get_help_blocks(self, request, kind):
-        actions = [{
-            "text": _("New order"),
-            "url": self.get_model_url(Order, "new")
-        }]
+        if kind == "quicklink":
+            actions = [{
+                "text": _("New order"),
+                "url": self.get_model_url(Order, "new")
+            }]
 
-        yield SimpleHelpBlock(
-            text=_("New order"),
-            actions=actions,
-            icon_url="shuup_admin/img/product.png",
-            priority=0,
-            category=HelpBlockCategory.ORDERS,
-            done=Order.objects.exists() if kind == "setup" else False
-        )
+            yield SimpleHelpBlock(
+                text=_("New order"),
+                actions=actions,
+                icon_url="shuup_admin/img/product.png",
+                priority=0,
+                category=HelpBlockCategory.ORDERS,
+                done=Order.objects.exists() if kind == "setup" else False
+            )
