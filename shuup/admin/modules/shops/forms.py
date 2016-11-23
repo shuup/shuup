@@ -84,17 +84,17 @@ class ShopWizardForm(MultiLanguageModelForm):
 class ShopAddressWizardForm(forms.ModelForm):
     class Meta:
         model = MutableAddress
-        fields = ("name", "street", "postal_code", "city", "country", "region_code", "region")
+        fields = ("street", "street2", "postal_code", "city", "country", "region_code", "region")
         widgets = {
             "region_code": forms.Select(choices=[])
         }
         labels = {
-            "name": _("Shop Owner Name"),
             "postal_code": _("Zip/Postal code"),
-            "region_code": _("State/Province")
+            "region_code": _("State/Province"),
+            "street": _("Address"),
+            "street2": _("Address (2)")
         }
         help_texts = {
-            "name": _("The name of primary shop contact person."),
             "street": _("The shop street address. This may be used to provide estimated shipping costs."),
             "postal_code": _("The shop zip/postal code."),
             "city": _("The city in which your shop is located."),

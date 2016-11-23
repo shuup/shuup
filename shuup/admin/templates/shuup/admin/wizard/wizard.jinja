@@ -26,7 +26,11 @@
                             {% else %}
                                 <br>
                             {% endif %}
-                            <p>{{ pane.text }}</p>
+                            <p>
+                            {{ pane.text }}
+                            <br>
+                            <small>{% trans %}All information entered here can be edited later.{% endtrans %}</small>
+                            </p>
                         </div>
                         <div class="row">
                             <div class="errors col-sm-6 col-sm-offset-3"></div>

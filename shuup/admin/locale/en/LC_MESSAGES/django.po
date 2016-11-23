@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-23 00:02+0000\n"
+"POT-Creation-Date: 2016-11-23 00:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1132,16 +1132,16 @@ msgstr ""
 msgid "Shop name"
 msgstr ""
 
-msgid "Shop Owner Name"
-msgstr ""
-
 msgid "Zip/Postal code"
 msgstr ""
 
 msgid "State/Province"
 msgstr ""
 
-msgid "The name of primary shop contact person."
+msgid "Address"
+msgstr ""
+
+msgid "Address (2)"
 msgstr ""
 
 msgid ""
@@ -1982,6 +1982,9 @@ msgstr ""
 
 msgid ""
 "Please fill out the following information to get your store up and running"
+msgstr ""
+
+msgid "All information entered here can be edited later."
 msgstr ""
 
 msgid "Click here for help"
