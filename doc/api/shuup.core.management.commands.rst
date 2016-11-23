@@ -36,6 +36,14 @@ shuup.core.management.commands.shuup_makemessages module
     :undoc-members:
     :show-inheritance:
 
+shuup.core.management.commands.shuup_makemigrations module
+----------------------------------------------------------
+
+.. automodule:: shuup.core.management.commands.shuup_makemigrations
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.core.management.commands.shuup_migrate_from_shoop module
 --------------------------------------------------------------
 

@@ -10,6 +10,7 @@ Subpackages
     shuup.admin.modules.categories
     shuup.admin.modules.contact_groups
     shuup.admin.modules.contacts
+    shuup.admin.modules.currencies
     shuup.admin.modules.customers_dashboard
     shuup.admin.modules.demo
     shuup.admin.modules.manufacturers

@@ -12,6 +12,14 @@ shuup.utils.analog module
     :undoc-members:
     :show-inheritance:
 
+shuup.utils.babel_precision_provider module
+-------------------------------------------
+
+.. automodule:: shuup.utils.babel_precision_provider
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.utils.dates module
 ------------------------
 
