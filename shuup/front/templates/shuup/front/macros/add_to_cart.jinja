@@ -1,0 +1,90 @@
+{% extends "shuup/front/macros/theme/add_to_cart.jinja" %}
+
+{% macro add_product_to_cart(main_class="cover-wrap") %}
+    <div class="{{ main_class }}">
+        <div class="text-wrap">
+            <div class="ready">
+                <i class="fa fa-check"></i>
+                <p>{% trans %}Product added to cart{% endtrans %}</p>
+            </div>
+            <div class="load">
+                <i class="fa fa-spinner fa-spin"></i>
+            </div>
+            <div class="error-msg">
+                <i class="fa fa-warning"></i>
+                <p id="error-msg"></p>
+            </div>
+        </div>
+    </div>
+    {{ product_to_basket_js(main_class) }}
+{% endmacro %}
+
+{% macro product_to_basket_js(main_class) %}
+    <script>
+        function updateNavigationBasket() {
+            $.ajax({
+                url: "{{ url('shuup:xtheme_extra_view', view='basket_partial') }}",
+                method: "GET",
+                success: function(basket_html) {
+                    $("#navigation-basket-partial").html(basket_html);
+                }
+            });
+        }
+
+        function handleError(cover, error) {
+            setTimeout(function() {
+                // Hide the loader and change to error message
+                cover.removeClass("loading").addClass('error');
+                var msg = "{% trans %}There was an error adding the product to the basket{% endtrans %}";
+                cover.find("#error-msg").text(error ? error : msg);
+                setTimeout(function() {
+                    // Hide the error message and the modal
+                    cover.removeClass("error in");
+                }, 1750);
+            }, 500);
+        }
+
+        function addToBasket(form) {
+            var cover = $(".{{ main_class }}");
+            cover.addClass("in loading");
+            $.ajax({
+                url: form.attr("action"),
+                method: "POST",
+                data: form.serializeArray(),
+                success: function(response) {
+                    if(response.error) {
+                        handleError(cover, response.error);
+                        return;
+                    }
+
+                    updateNavigationBasket();
+                    setTimeout(function() {
+                        // Hide the loader and show the message
+                        cover.removeClass("loading").addClass("loaded");
+                        setTimeout(function() {
+                            // Hide the message
+                            cover.removeClass("loaded");
+                            setTimeout(function() {
+                                // Hide the modal
+                                cover.removeClass("in");
+                            }, 250);
+                        }, 1500);
+                    }, 500);
+
+
+                },
+                error: function() {
+                    handleError(cover);
+
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            $("form.add-to-basket").on("submit", function(e) {
+                e.preventDefault();
+                addToBasket($(this));
+            });
+        });
+    </script>
+{% endmacro %}

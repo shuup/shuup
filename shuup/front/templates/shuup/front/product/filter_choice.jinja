@@ -1,0 +1,16 @@
+<div id="id_{{ name }}" class="collapse in" aria-expanded="true">
+    <div class="collapsible-content">
+        {% for choice_key, choice_label in choices %}
+            <div class="custom-checkbox">
+                <input
+                    type="checkbox"
+                    name="{{ name }}"
+                    id="{{ name }}-{{ choice_key}}"
+                    class="product-filter"
+                    value="{{ choice_key }}"
+                    {% if choice_key|string in values %} checked{% endif %}>
+                <label for="{{ name }}-{{ choice_key }}">{{ choice_label }}</label>
+            </div>
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,22 @@
+{% extends "shuup/front/base.jinja" %}
+
+{% block title %}{% trans %}Bad Request{% endtrans %} (400){% endblock %}
+{% block content_title %}{{ self.title() }}{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li><a href="/">{% trans %}Home{% endtrans %}</a></li>
+        <li class="active">{{ self.title() }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <p class="lead">
+        <i class="fa fa-info-circle text-info"></i>
+        {% trans %}Unfortunately the server couldn't process your request.{% endtrans %}
+    </p>
+    <hr>
+    <a href="/"><i class="fa fa-angle-double-left"></i>
+        {% trans %}Back to Homepage{% endtrans %}
+    </a>
+{% endblock %}

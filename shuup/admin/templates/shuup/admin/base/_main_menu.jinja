@@ -1,0 +1,34 @@
+{% from "shuup/admin/macros/block.jinja" import link_block %}
+
+{% set categories = shuup_admin.get_menu_entry_categories() %}
+
+{% for category in categories %}
+<div class="category-submenu" id="category-{{ category.identifier }}">
+    <div class="category-menu-title">{{ category.name }}</div>
+    <a href="#" class="category-menu-close"><i class="fa fa-close"></i></a>
+    <div class="category-menu-content">
+        <ul>
+        {% for entry in category %}
+            <li>
+                <a href="{{ entry.url }}">{{ entry.text }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endfor %}
+<nav id="main-menu">
+    <div class="scroll-inner-content">
+        <ul class="menu-list">
+            {% for category in categories %}
+            {% set only_entry = (category.entries|first if category.entries|length == 1 else None) %}
+            <li>
+                <a href="{% if not only_entry %}#{% else %}{{ only_entry.url }}{% endif %}" data-target-id="category-{{ category.identifier }}">
+                    <i class="{{ category.icon }}"></i>
+                    <span class="item-name parent">{{ category.name }}</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</nav>

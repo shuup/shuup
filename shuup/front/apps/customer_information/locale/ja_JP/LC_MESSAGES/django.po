@@ -1,0 +1,91 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Yuki Miyagi <yuki.miyagi@anders.fi>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-04 19:11+0000\n"
+"PO-Revision-Date: 2016-06-10 09:12+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"Language-Team: Japanese (Japan) (http://www.transifex.com/shuup/shuup/"
+"language/ja_JP/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja_JP\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Shuup Frontend - Customer Information Editing"
+msgstr ""
+
+msgid "Will become default user email when linked"
+msgstr ""
+
+msgid "Given Tax Number already exists. Please contact support."
+msgstr ""
+
+msgid "Change Password"
+msgstr ""
+
+msgid "Home"
+msgstr ""
+
+msgid "Change password"
+msgstr ""
+
+#, fuzzy
+#| msgid "User account information"
+msgid "Edit user account information"
+msgstr "ユーザーアカウント情報"
+
+msgid "Save password"
+msgstr ""
+
+msgid "Company account information"
+msgstr ""
+
+msgid "Save changes"
+msgstr "変更を保存する"
+
+msgid "Company information"
+msgstr ""
+
+msgid "User account information"
+msgstr "ユーザーアカウント情報"
+
+#, fuzzy
+#| msgid "User account information"
+msgid "Edit company information"
+msgstr "ユーザーアカウント情報"
+
+msgid "Link account to company"
+msgstr ""
+
+msgid "User information"
+msgstr "ユーザー情報"
+
+msgid "Billing information"
+msgstr ""
+
+msgid "Copy to shipping information"
+msgstr ""
+
+msgid "Shipping information"
+msgstr ""
+
+msgid "Copy to billing information"
+msgstr ""
+
+msgid "Password successfully changed."
+msgstr ""
+
+msgid "Account information saved successfully."
+msgstr "アカウント情報は保存されました。"
+
+msgid "Company information saved successfully."
+msgstr ""

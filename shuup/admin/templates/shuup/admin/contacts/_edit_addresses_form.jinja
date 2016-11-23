@@ -1,0 +1,29 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+
+{% macro address_form(form) %}
+    {% for field in form %}
+    {{ bs3.field(field) }}
+    {% endfor %}
+{% endmacro %}
+
+{% call content_block(_("Addresses"), "fa-map-marker") %}
+    <div class="row">
+        <div class="col-lg-12">
+            <label>
+                <input id="billing-to-shipping" type="checkbox">
+                {% trans %}Use billing address as shipping address{% endtrans %}
+            </label>
+        </div>
+    </div>
+    <br />
+    <div class="row contact-addresses">
+        <div class="col-lg-6 billing-address">
+            <h4 class="underline"><i class="fa fa-file-text"></i> {% trans %}Billing Address{% endtrans %}</h4>
+            {{ address_form(form["billing_address"]) }}
+        </div>
+        <div class="col-lg-6 shipping-address">
+            <h4 class="underline"><i class="fa fa-truck"></i> {% trans %}Shipping Address{% endtrans %}</h4>
+            {{ address_form(form["shipping_address"]) }}
+        </div>
+    </div>
+{% endcall %}

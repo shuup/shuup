@@ -1,0 +1,1629 @@
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-23 01:12+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: en <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Generated-By: Babel 2.1.1\n"
+
+msgid "internal identifier"
+msgstr ""
+
+msgid "Do not change this value if you are not sure what you're doing."
+msgstr ""
+
+msgid "Error"
+msgstr ""
+
+msgid "shipping address"
+msgstr ""
+
+msgid "billing address"
+msgstr ""
+
+msgid "disabled"
+msgstr ""
+
+msgid "enabled"
+msgstr ""
+
+msgid "name prefix"
+msgstr ""
+
+msgid "name"
+msgstr ""
+
+msgid "name suffix"
+msgstr ""
+
+msgid "name extension"
+msgstr ""
+
+msgid "company name"
+msgstr ""
+
+msgid "tax number"
+msgstr ""
+
+msgid "phone"
+msgstr ""
+
+msgid "email"
+msgstr ""
+
+msgid "street"
+msgstr ""
+
+msgid "street (2)"
+msgstr ""
+
+msgid "street (3)"
+msgstr ""
+
+msgid "postal code"
+msgstr ""
+
+msgid "city"
+msgstr ""
+
+msgid "region code"
+msgstr ""
+
+msgid "region"
+msgstr ""
+
+msgid "country"
+msgstr ""
+
+msgid "address"
+msgstr ""
+
+msgid "addresses"
+msgstr ""
+
+msgid "owner"
+msgstr ""
+
+msgid "role"
+msgstr ""
+
+msgid "status"
+msgstr ""
+
+msgid "title"
+msgstr ""
+
+msgid "saved address"
+msgstr ""
+
+msgid "saved addresses"
+msgstr ""
+
+msgid "hidden"
+msgstr ""
+
+msgid "shown on product page"
+msgstr ""
+
+msgid "searchable metadata"
+msgstr ""
+
+msgid "private metadata"
+msgstr ""
+
+msgid "integer"
+msgstr ""
+
+msgid "decimal"
+msgstr ""
+
+msgid "boolean"
+msgstr ""
+
+msgid "time interval"
+msgstr ""
+
+msgid "date and time"
+msgstr ""
+
+msgid "date only"
+msgstr ""
+
+msgid "translated string"
+msgstr ""
+
+msgid "untranslated string"
+msgstr ""
+
+msgid "searchable"
+msgstr ""
+
+msgid "type"
+msgstr ""
+
+msgid "visibility mode"
+msgstr ""
+
+msgid "attribute"
+msgstr ""
+
+msgid "attributes"
+msgstr ""
+
+msgid "numeric value"
+msgstr ""
+
+msgid "datetime value"
+msgstr ""
+
+msgid "untranslated value"
+msgstr ""
+
+msgid "The following fields can not be changed"
+msgstr ""
+
+msgid "invisible"
+msgstr ""
+
+msgid "visible"
+msgstr ""
+
+msgid "deleted"
+msgstr ""
+
+msgid "visible to all"
+msgstr ""
+
+msgid "visible to logged in customers"
+msgstr ""
+
+msgid "visible to certain customer groups"
+msgstr ""
+
+msgid "parent category"
+msgstr ""
+
+msgid ""
+"If your category is a sub-category of another category, you can link them "
+"here."
+msgstr ""
+
+msgid "shops"
+msgstr ""
+
+msgid "You can select which shops the category is visible in."
+msgstr ""
+
+msgid ""
+"Here you can choose whether or not you want the category to be visible in "
+"your store."
+msgstr ""
+
+msgid "image"
+msgstr ""
+
+msgid "ordering"
+msgstr ""
+
+msgid "You can set the order of categories in your store numerically."
+msgstr ""
+
+msgid "visibility limitations"
+msgstr ""
+
+msgid ""
+"You can choose to limit who sees your category based on whether they are "
+"logged in or if they are  part of a customer group."
+msgstr ""
+
+msgid "visible for groups"
+msgstr ""
+
+msgid ""
+"Select the customer groups you would like to be able to see the category. "
+"These groups are defined in Contacts Settings - Contact Groups."
+msgstr ""
+
+msgid ""
+"Enter a descriptive name for your product category. Products can be found in "
+"menus and in search in your store under the category name."
+msgstr ""
+
+msgid "description"
+msgstr ""
+
+msgid ""
+"Give your product category a detailed description. This will help shoppers "
+"find your products under that category in your store and on the web."
+msgstr ""
+
+msgid "slug"
+msgstr ""
+
+msgid ""
+"Enter a URL slug for your category. This is what your product category page "
+"URL will be. A default will be created using the category name."
+msgstr ""
+
+msgid "category"
+msgstr ""
+
+msgid "categories"
+msgstr ""
+
+msgid "shop"
+msgstr ""
+
+msgid "key"
+msgstr ""
+
+msgid "value"
+msgstr ""
+
+msgid "configuration item"
+msgstr ""
+
+msgid "configuration items"
+msgstr ""
+
+#, python-format
+msgid "%(key)s for shop %(shop)s"
+msgstr ""
+
+#, python-format
+msgid "%(key)s (global)"
+msgstr ""
+
+msgid "members"
+msgstr ""
+
+msgid "show as pricing option"
+msgstr ""
+
+msgid "show prices including taxes"
+msgstr ""
+
+msgid "hide prices"
+msgstr ""
+
+msgid "contact group"
+msgstr ""
+
+msgid "contact groups"
+msgstr ""
+
+msgid "Can't delete. This object is protected."
+msgstr ""
+
+msgid "created on"
+msgstr ""
+
+msgid "active"
+msgstr ""
+
+msgid "default shipping method"
+msgstr ""
+
+msgid "default payment method"
+msgstr ""
+
+msgid "language"
+msgstr ""
+
+msgid "marketing permission"
+msgstr ""
+
+msgid "web address"
+msgstr ""
+
+msgid "time zone"
+msgstr ""
+
+msgid "tax group"
+msgstr ""
+
+msgid "merchant notes"
+msgstr ""
+
+msgid "account manager"
+msgstr ""
+
+msgid "contact"
+msgstr ""
+
+msgid "contacts"
+msgstr ""
+
+msgid "Company Contacts"
+msgstr ""
+
+msgid "e.g. EIN in US or VAT code in Europe"
+msgstr ""
+
+msgid "company"
+msgstr ""
+
+msgid "companies"
+msgstr ""
+
+msgid "undisclosed"
+msgstr ""
+
+msgid "male"
+msgstr ""
+
+msgid "female"
+msgstr ""
+
+msgid "other"
+msgstr ""
+
+msgid "Person Contacts"
+msgstr ""
+
+msgid "user"
+msgstr ""
+
+msgid "gender"
+msgstr ""
+
+msgid "birth date"
+msgstr ""
+
+msgid "first name"
+msgstr ""
+
+msgid "last name"
+msgstr ""
+
+msgid "person"
+msgstr ""
+
+msgid "persons"
+msgstr ""
+
+msgid "Anonymous Contacts"
+msgstr ""
+
+msgid "order reference"
+msgstr ""
+
+msgid "identifier"
+msgstr ""
+
+msgid "counter"
+msgstr ""
+
+msgid "counters"
+msgstr ""
+
+msgid "code"
+msgstr ""
+
+msgid "The ISO-4217 code of the currency"
+msgstr ""
+
+msgid "decimal places"
+msgstr ""
+
+msgid "Enter a valid ISO-4217 currency code"
+msgstr ""
+
+msgid "currency"
+msgstr ""
+
+msgid "currencies"
+msgstr ""
+
+msgid "added"
+msgstr ""
+
+msgid "URL"
+msgstr ""
+
+msgid "manufacturer"
+msgstr ""
+
+msgid "manufacturers"
+msgstr ""
+
+msgid "product"
+msgstr ""
+
+msgid "shipping"
+msgstr ""
+
+msgid "payment"
+msgstr ""
+
+msgid "discount"
+msgstr ""
+
+msgid "refund"
+msgstr ""
+
+msgid "rounding"
+msgstr ""
+
+msgid "order"
+msgstr ""
+
+msgid "supplier"
+msgstr ""
+
+msgid "parent line"
+msgstr ""
+
+msgid "line type"
+msgstr ""
+
+msgid "line SKU"
+msgstr ""
+
+msgid "line text"
+msgstr ""
+
+msgid "accounting identifier"
+msgstr ""
+
+msgid "require verification"
+msgstr ""
+
+msgid "verified"
+msgstr ""
+
+msgid "extra data"
+msgstr ""
+
+msgid "quantity"
+msgstr ""
+
+msgid "unit price amount (undiscounted)"
+msgstr ""
+
+msgid "total amount of discount"
+msgstr ""
+
+msgid "order line"
+msgstr ""
+
+msgid "order lines"
+msgstr ""
+
+msgid "tax"
+msgstr ""
+
+msgid "tax name"
+msgstr ""
+
+msgid "tax amount"
+msgstr ""
+
+msgid "base amount"
+msgstr ""
+
+msgid "Amount that this tax is calculated from"
+msgstr ""
+
+msgid "not paid"
+msgstr ""
+
+msgid "partially paid"
+msgstr ""
+
+msgid "fully paid"
+msgstr ""
+
+msgid "canceled"
+msgstr ""
+
+msgid "deferred"
+msgstr ""
+
+msgid "not shipped"
+msgstr ""
+
+msgid "partially shipped"
+msgstr ""
+
+msgid "fully shipped"
+msgstr ""
+
+msgid "none"
+msgstr ""
+
+msgid "Initial"
+msgstr ""
+
+msgid "Processing"
+msgstr ""
+
+msgid "Complete"
+msgstr ""
+
+msgid "Canceled"
+msgstr ""
+
+msgid "Received"
+msgstr ""
+
+msgid "In Progress"
+msgstr ""
+
+msgid ""
+"Internal identifier for status. This is used to identify the statuses in "
+"Shuup."
+msgstr ""
+
+msgid "The processing order of statuses. Default is always processed first."
+msgstr ""
+
+msgid "Role of status. One role can have multiple order statuses."
+msgstr ""
+
+msgid "default"
+msgstr ""
+
+msgid "Defines if the status should be considered as default."
+msgstr ""
+
+msgid "is active"
+msgstr ""
+
+msgid "Define if the status is usable."
+msgstr ""
+
+msgid "Name of the order status"
+msgstr ""
+
+msgid "public name"
+msgstr ""
+
+msgid "The name shown for customer in shop front."
+msgstr ""
+
+msgid "order status"
+msgstr ""
+
+msgid "order statuses"
+msgstr ""
+
+msgid "modified on"
+msgstr ""
+
+msgid "order identifier"
+msgstr ""
+
+msgid "label"
+msgstr ""
+
+msgid "reference number"
+msgstr ""
+
+msgid "customer"
+msgstr ""
+
+msgid "orderer"
+msgstr ""
+
+msgid "email address"
+msgstr ""
+
+msgid "creating user"
+msgstr ""
+
+msgid "modifier user"
+msgstr ""
+
+msgid "payment status"
+msgstr ""
+
+msgid "shipping status"
+msgstr ""
+
+msgid "payment method"
+msgstr ""
+
+msgid "payment method name"
+msgstr ""
+
+msgid "payment data"
+msgstr ""
+
+msgid "shipping method"
+msgstr ""
+
+msgid "shipping method name"
+msgstr ""
+
+msgid "shipping data"
+msgstr ""
+
+msgid "grand total"
+msgstr ""
+
+msgid "taxless total"
+msgstr ""
+
+msgid "prices include tax"
+msgstr ""
+
+msgid "display currency"
+msgstr ""
+
+msgid "display currency rate"
+msgstr ""
+
+msgid "IP address"
+msgstr ""
+
+msgid "order date"
+msgstr ""
+
+msgid "payment date"
+msgstr ""
+
+msgid "customer comment"
+msgstr ""
+
+msgid "admin comment/notes"
+msgstr ""
+
+msgid "requires verification"
+msgstr ""
+
+msgid "all lines verified"
+msgstr ""
+
+msgid "codes"
+msgstr ""
+
+msgid "orders"
+msgstr ""
+
+msgid "Order marked as paid."
+msgstr ""
+
+msgid "Order marked as partially paid."
+msgstr ""
+
+#, python-format
+msgid "%(name)s (physical stock: %(quantity)s)"
+msgstr ""
+
+#, python-format
+msgid ""
+"Insufficient physical stock count for following products: %(product_counts)s"
+msgstr ""
+
+#, python-format
+msgid "Shipment #%d created."
+msgstr ""
+
+#, python-format
+msgid "Refund for %s"
+msgstr ""
+
+msgid "All rows requiring verification have been verified."
+msgstr ""
+
+#, python-format
+msgid "New shipping status set: %(shipping_status)s"
+msgstr ""
+
+msgid "gateway ID"
+msgstr ""
+
+msgid "amount"
+msgstr ""
+
+msgid "foreign amount"
+msgstr ""
+
+msgid "foreign amount currency"
+msgstr ""
+
+msgid "payments"
+msgstr ""
+
+msgid "module"
+msgstr ""
+
+msgid "time"
+msgstr ""
+
+msgid "data"
+msgstr ""
+
+msgid "cache entry"
+msgstr ""
+
+msgid "cache entries"
+msgstr ""
+
+msgid "file"
+msgstr ""
+
+msgid "documentation"
+msgstr ""
+
+msgid "sample"
+msgstr ""
+
+msgid "Select which shops you would like the product media to be visible in."
+msgstr ""
+
+msgid "kind"
+msgstr ""
+
+msgid ""
+"Select what type the media is. It can either be a normal file, part of the "
+"documentation, or a sample."
+msgstr ""
+
+msgid ""
+"Enter URL to external file. If this field is filled, the selected media "
+"doesn't apply."
+msgstr ""
+
+msgid ""
+"You enter the numerical order that your image will be displayed on your "
+"product page."
+msgstr ""
+
+msgid "public (shown on product page)"
+msgstr ""
+
+msgid ""
+"Check this if you would like the image shown on your product page. Checked "
+"by default."
+msgstr ""
+
+msgid "purchased (shown for finished purchases)"
+msgstr ""
+
+msgid ""
+"Select this if you would like the product media shown for completed "
+"purchases."
+msgstr ""
+
+msgid ""
+"Choose a title for your product media. This will help it be found in your "
+"store and on the web."
+msgstr ""
+
+msgid ""
+"Write a description for your product media. This will help it be found in "
+"your store and on the web."
+msgstr ""
+
+msgid "product attachment"
+msgstr ""
+
+msgid "product attachments"
+msgstr ""
+
+msgid "attachment"
+msgstr ""
+
+msgid "parent product"
+msgstr ""
+
+msgid "child product"
+msgstr ""
+
+msgid "not visible"
+msgstr ""
+
+msgid "listed"
+msgstr ""
+
+msgid "always visible"
+msgstr ""
+
+msgid "suppliers"
+msgstr ""
+
+msgid ""
+"List your suppliers here. Suppliers can be found in Product Settings - "
+"Suppliers."
+msgstr ""
+
+msgid "visibility"
+msgstr ""
+
+msgid ""
+"Select if you want your product to be seen and found by customers. <p>Not "
+"visible: Product will not be shown in your store front or found in search.</"
+"p><p>Searchable: Product will be shown in search but not listed on any "
+"category page.</p><p>Listed: Product will be shown on category pages but not "
+"shown in search results.</p><p>Always Visible: Product will be shown in your "
+"store front and found in search.</p>"
+msgstr ""
+
+msgid "purchasable"
+msgstr ""
+
+msgid ""
+"Select whether you want your product to have special limitations on its "
+"visibility in your store. You can make products visible to all, visible to "
+"only logged in users, or visible only to certain customer groups."
+msgstr ""
+
+msgid ""
+"Select the groups you would like to make your product visible for. These "
+"groups are defined in Contacts Settings - Contact Groups."
+msgstr ""
+
+msgid "backorder maximum"
+msgstr ""
+
+msgid ""
+"The number of units that can be purchased after the product is out of stock. "
+"Set to blank for product to be purchasable without limits."
+msgstr ""
+
+msgid "purchase multiple"
+msgstr ""
+
+msgid ""
+"Set this if the product needs to be purchased in multiples. For example, if "
+"the purchase multiple is set to 2, then customers are required to order the "
+"product in multiples of 2."
+msgstr ""
+
+msgid "minimum purchase"
+msgstr ""
+
+msgid ""
+"Set a minimum number of products needed to be ordered for the purchase. This "
+"is useful for setting bulk orders and B2B purchases."
+msgstr ""
+
+msgid "limited for shipping methods"
+msgstr ""
+
+msgid ""
+"Check this if you want to limit your product to use only select payment "
+"methods. You can select the payment method(s) in the field below."
+msgstr ""
+
+msgid "limited for payment methods"
+msgstr ""
+
+msgid "shipping methods"
+msgstr ""
+
+msgid ""
+"Select the shipping methods you would like to limit the product to using. "
+"These are defined in Settings - Shipping Methods."
+msgstr ""
+
+msgid "payment methods"
+msgstr ""
+
+msgid ""
+"Select the payment methods you would like to limit the product to using. "
+"These are defined in Settings - Payment Methods."
+msgstr ""
+
+msgid "primary category"
+msgstr ""
+
+msgid ""
+"Choose the primary category for your product. This will be the main category "
+"for classification in the system. Your product can be found under this "
+"category in your store. Categories are defined in Products Settings - "
+"Categories."
+msgstr ""
+
+msgid ""
+"Add secondary categories for your product. These are other categories that "
+"your product fits under and that it can be found by in your store."
+msgstr ""
+
+msgid "primary image"
+msgstr ""
+
+msgid ""
+"Click this to set this image as the primary display image for your product."
+msgstr ""
+
+msgid "default price"
+msgstr ""
+
+msgid ""
+"This is the default individual base unit (or multi-pack) price of the "
+"product. All discounts or coupons will be based off of this price."
+msgstr ""
+
+msgid "minimum price"
+msgstr ""
+
+msgid ""
+"This is the default price that the product cannot go under in your store, "
+"despite coupons or discounts being applied. This is useful to make sure your "
+"product price stays above cost."
+msgstr ""
+
+msgid "This product has been deleted."
+msgstr ""
+
+msgid "This product is not visible."
+msgstr ""
+
+msgid "The Product is invisible to users not logged in."
+msgstr ""
+
+msgid "This product is not visible to your group."
+msgstr ""
+
+msgid "The product has no supplier."
+msgstr ""
+
+#, python-format
+msgid "The purchase quantity needs to be at least %d for this product."
+msgstr ""
+
+#, python-format
+msgid "The product is not supplied by %s."
+msgstr ""
+
+#, python-format
+msgid ""
+"The product can only be ordered in multiples of %(package_size)s, for "
+"example %(smaller_p)s %(unit)s."
+msgstr ""
+
+#, python-format
+msgid ""
+"The product can only be ordered in multiples of %(package_size)s, for "
+"example %(smaller_p)s or %(larger_p)s %(unit)s."
+msgstr ""
+
+msgid "variation variable"
+msgstr ""
+
+msgid "variation variables"
+msgstr ""
+
+msgid "variation value"
+msgstr ""
+
+msgid "variation values"
+msgstr ""
+
+msgid "combination hash"
+msgstr ""
+
+msgid "result"
+msgstr ""
+
+msgid "variation result"
+msgstr ""
+
+msgid "variation results"
+msgstr ""
+
+msgid "normal"
+msgstr ""
+
+msgid "package parent"
+msgstr ""
+
+msgid "variation parent (simple)"
+msgstr ""
+
+msgid "variation parent (variable)"
+msgstr ""
+
+msgid "variation child"
+msgstr ""
+
+msgid "visible to logged in"
+msgstr ""
+
+msgid "visible to groups"
+msgstr ""
+
+msgid "stocked"
+msgstr ""
+
+msgid "unstocked"
+msgstr ""
+
+msgid "recommended"
+msgstr ""
+
+msgid "related"
+msgstr ""
+
+msgid "computed"
+msgstr ""
+
+msgid "bought with"
+msgstr ""
+
+msgid "shipped"
+msgstr ""
+
+msgid "no verification required"
+msgstr ""
+
+msgid "admin verification required"
+msgstr ""
+
+msgid "third party verification required"
+msgstr ""
+
+msgid ""
+"Enter a descriptive name for your product type. Products and attributes for "
+"products of this type can be found under this name."
+msgstr ""
+
+msgid ""
+"Select attributes that go with your product type. These are defined in "
+"Products Settings – Attributes."
+msgstr ""
+
+msgid "product type"
+msgstr ""
+
+msgid "product types"
+msgstr ""
+
+msgid "mode"
+msgstr ""
+
+msgid "variation parent"
+msgstr ""
+
+msgid "stock"
+msgstr ""
+
+msgid "Set to stocked if inventory should be managed within Shuup."
+msgstr ""
+
+msgid "shipping mode"
+msgstr ""
+
+msgid "Set to shipped if the product requires shipment."
+msgstr ""
+
+msgid "sales unit"
+msgstr ""
+
+msgid ""
+"Select a sales unit for your product. This is shown in your store front and "
+"is used to determine whether the product can be purchased using fractional "
+"amounts. Sales units are defined in Products - Sales Units."
+msgstr ""
+
+msgid "tax class"
+msgstr ""
+
+msgid ""
+"Select a tax class for your product. The tax class is used to determine "
+"which taxes to apply to your product. Tax classes are defined in Settings - "
+"Tax Classes. The rules by which taxes are applied are defined in Settings - "
+"Tax Rules."
+msgstr ""
+
+msgid ""
+"Select a product type for your product. These allow you to configure custom "
+"attributes to help with classification and analysis."
+msgstr ""
+
+msgid "SKU"
+msgstr ""
+
+msgid ""
+"Enter a SKU (Stock Keeping Unit) number for your product. This is a product "
+"identification code that helps you track it through your inventory. People "
+"often use the number by the barcode on the product, but you can set up any "
+"numerical system you want to keep track of products."
+msgstr ""
+
+msgid "GTIN"
+msgstr ""
+
+msgid ""
+"You can enter a Global Trade Item Number. This is typically a 14 digit "
+"identification number for all of your trade items. It can often be found by "
+"the barcode."
+msgstr ""
+
+msgid "barcode"
+msgstr ""
+
+msgid ""
+"You can enter the barcode number for your product. This is useful for "
+"inventory/stock tracking and analysis."
+msgstr ""
+
+msgid "bookkeeping account"
+msgstr ""
+
+msgid "profit center"
+msgstr ""
+
+msgid "cost center"
+msgstr ""
+
+msgid "width (mm)"
+msgstr ""
+
+msgid ""
+"Set the measured width of your product or product packaging. This will "
+"provide customers with your product size and help with calculating shipping "
+"costs."
+msgstr ""
+
+msgid "height (mm)"
+msgstr ""
+
+msgid ""
+"Set the measured height of your product or product packaging. This will "
+"provide customers with your product size and help with calculating shipping "
+"costs."
+msgstr ""
+
+msgid "depth (mm)"
+msgstr ""
+
+msgid ""
+"Set the measured depth or length of your product or product packaging. This "
+"will provide customers with your product size and help with calculating "
+"shipping costs."
+msgstr ""
+
+msgid "net weight (g)"
+msgstr ""
+
+msgid ""
+"Set the measured weight of your product WITHOUT its packaging. This will "
+"provide customers with your product weight."
+msgstr ""
+
+msgid "gross weight (g)"
+msgstr ""
+
+msgid ""
+"Set the measured gross Weight of your product WITH its packaging. This will "
+"help with calculating shipping costs."
+msgstr ""
+
+msgid ""
+"Select a manufacturer for your product. These are defined in Products "
+"Settings - Manufacturers"
+msgstr ""
+
+msgid ""
+"Enter a descriptive name for your product. This will be its title in your "
+"store."
+msgstr ""
+
+msgid ""
+"To make your product stand out, give it an awesome description. This is what "
+"will help your shoppers learn about your products. It will also help "
+"shoppers find them in the store and on the web."
+msgstr ""
+
+msgid ""
+"Enter a URL Slug for your product. This is what your product page URL will "
+"be. A default will be created using the product name."
+msgstr ""
+
+msgid "keywords"
+msgstr ""
+
+msgid ""
+"You can enter keywords that describe your product. This will help your "
+"shoppers learn about your products. It will also help shoppers find them in "
+"the store and on the web."
+msgstr ""
+
+msgid "status text"
+msgstr ""
+
+msgid ""
+"This text will be shown alongside the product in the shop. It is useful for "
+"informing customers of special stock numbers or preorders. (Ex.: \"Available "
+"in a month\")"
+msgstr ""
+
+msgid "variation name"
+msgstr ""
+
+msgid ""
+"You can enter a name for the variation of your product. This could be for "
+"example different colors or versions."
+msgstr ""
+
+msgid "products"
+msgstr ""
+
+msgid ""
+"Multilevel parentage hierarchies aren't supported (parent is a child already)"
+msgstr ""
+
+msgid "Parent is a variable variation parent, yet variables were not passed"
+msgstr ""
+
+msgid ""
+"Multilevel parentage hierarchies aren't supported (this product is a simple "
+"variation parent)"
+msgstr ""
+
+msgid ""
+"Multilevel parentage hierarchies aren't supported (this product is a "
+"variable variation parent)"
+msgstr ""
+
+msgid "Product is currently not a normal product, can't turn into package"
+msgstr ""
+
+msgid "Variation parents can not belong into a package"
+msgstr ""
+
+msgid "Packages can't be nested"
+msgstr ""
+
+#, python-format
+msgid "Quantity %s is invalid"
+msgstr ""
+
+msgid "primary product"
+msgstr ""
+
+msgid "secondary product"
+msgstr ""
+
+msgid "weight"
+msgstr ""
+
+msgid "cross sell link"
+msgstr ""
+
+msgid "cross sell links"
+msgstr ""
+
+msgid "translated value"
+msgstr ""
+
+msgid "product attribute"
+msgstr ""
+
+msgid "product attributes"
+msgstr ""
+
+msgid "logo"
+msgstr ""
+
+msgid "choice identifier"
+msgstr ""
+
+msgid "behavior components"
+msgstr ""
+
+#, python-format
+msgid "%s is disabled"
+msgstr ""
+
+#, python-format
+msgid "%s is for different shop"
+msgstr ""
+
+#, python-format
+msgid "%(service_name)s: %(sub_item)s"
+msgstr ""
+
+msgid "Fixed cost"
+msgstr ""
+
+msgid "Add fixed cost to price of the service."
+msgstr ""
+
+msgid "Waiving cost"
+msgstr ""
+
+msgid ""
+"Add cost to price of the service if total price of products is less than a "
+"waive limit."
+msgstr ""
+
+msgid "Weight limits"
+msgstr ""
+
+msgid "Limit availability of the service based on total weight of products."
+msgstr ""
+
+msgid "minimum weight"
+msgstr ""
+
+msgid "maximum weight"
+msgstr ""
+
+msgid "Minimum weight not met."
+msgstr ""
+
+msgid "Maximum weight exceeded."
+msgstr ""
+
+msgid "min weight"
+msgstr ""
+
+msgid "max weight"
+msgstr ""
+
+msgid "Weight-based pricing"
+msgstr ""
+
+msgid ""
+"Define price based on basket weight. Range minimums is counted in range only "
+"as zero."
+msgstr ""
+
+msgid "Weight does not match with any range."
+msgstr ""
+
+msgid "Contact group availability"
+msgstr ""
+
+msgid "Limit service availability for specific contact groups."
+msgstr ""
+
+msgid "groups"
+msgstr ""
+
+msgid "Customer does not belong to any group."
+msgstr ""
+
+msgid "Service is not available for any of the customers groups."
+msgstr ""
+
+msgid "Staff only availability"
+msgstr ""
+
+msgid "Limit service availability to staff only"
+msgstr ""
+
+msgid "Service is only available for staff"
+msgstr ""
+
+msgid "round to nearest with ties going away from zero"
+msgstr ""
+
+msgid "round to nearest with ties going towards zero"
+msgstr ""
+
+msgid "round away from zero"
+msgstr ""
+
+msgid "round towards zero"
+msgstr ""
+
+msgid "payment processor"
+msgstr ""
+
+msgid "rounding quantize"
+msgstr ""
+
+msgid "Rounding quantize for cash payment."
+msgstr ""
+
+msgid "rounding mode"
+msgstr ""
+
+msgid "Rounding mode for cash payment."
+msgstr ""
+
+msgid "custom payment processor"
+msgstr ""
+
+msgid "custom payment processors"
+msgstr ""
+
+msgid "Manually processed payment"
+msgstr ""
+
+msgid "Cash payment"
+msgstr ""
+
+msgid "carrier"
+msgstr ""
+
+msgid "custom carrier"
+msgstr ""
+
+msgid "custom carriers"
+msgstr ""
+
+msgid "Manually processed shipment"
+msgstr ""
+
+msgid "not sent"
+msgstr ""
+
+msgid "sent"
+msgstr ""
+
+msgid "received"
+msgstr ""
+
+msgid "error"
+msgstr ""
+
+msgid "outgoing"
+msgstr ""
+
+msgid "incoming"
+msgstr ""
+
+msgid "tracking code"
+msgstr ""
+
+msgid "volume"
+msgstr ""
+
+msgid "shipment"
+msgstr ""
+
+msgid "shipments"
+msgstr ""
+
+msgid "unit volume"
+msgstr ""
+
+msgid "unit weight"
+msgstr ""
+
+msgid "sent product"
+msgstr ""
+
+msgid "sent products"
+msgstr ""
+
+msgid ""
+"The following fields cannot be changed since there are existing orders for "
+"this shop"
+msgstr ""
+
+msgid "domain"
+msgstr ""
+
+msgid "options"
+msgstr ""
+
+msgid "maintenance mode"
+msgstr ""
+
+msgid "contact address"
+msgstr ""
+
+msgid "maintenance message"
+msgstr ""
+
+msgid "alert limit"
+msgstr ""
+
+msgid "physical stock count"
+msgstr ""
+
+msgid "logical stock count"
+msgstr ""
+
+msgid "internal"
+msgstr ""
+
+msgid "external"
+msgstr ""
+
+msgid "supplier type"
+msgstr ""
+
+msgid "stock managed"
+msgstr ""
+
+msgid "module data"
+msgstr ""
+
+msgid "Cannot change business critical fields of Tax that is in use"
+msgstr ""
+
+msgid "tax rate"
+msgstr ""
+
+msgid "The percentage rate of the tax."
+msgstr ""
+
+msgid "tax amount value"
+msgstr ""
+
+msgid "The flat amount of the tax. Mutually exclusive with percentage rates."
+msgstr ""
+
+msgid "currency of tax amount"
+msgstr ""
+
+msgid "Either rate or amount is required"
+msgstr ""
+
+msgid "Cannot have both rate and amount"
+msgstr ""
+
+msgid "Currency is required if amount is specified"
+msgstr ""
+
+msgid "taxes"
+msgstr ""
+
+msgid "tax classes"
+msgstr ""
+
+msgid "customer tax group"
+msgstr ""
+
+msgid "customer tax groups"
+msgstr ""
+
+msgid "Retail Customers"
+msgstr ""
+
+msgid "Company Customers"
+msgstr ""
+
+msgid "allowed decimals"
+msgstr ""
+
+msgid "short name"
+msgstr ""
+
+msgid "sales units"
+msgstr ""
+
+msgid "No Choice"
+msgstr ""
+
+#, python-format
+msgid "%s not available in this shop"
+msgstr ""
+
+msgid "Default Pricing"
+msgstr ""
+
+msgid "Insufficient stock"
+msgstr ""
+
+msgid "inventory"
+msgstr ""
+
+msgid "restock"
+msgstr ""
+
+msgid "restock logical"
+msgstr ""
+
+msgid "Untaxed"
+msgstr ""
+
+msgid "This field cannot be changed since it is protected."
+msgstr ""
+
+msgid "Region Code"
+msgstr ""
+
+msgid "First Last"
+msgstr ""

@@ -1,0 +1,27 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% set children_formset = form["children"] %}
+
+{% call content_block(_("Simple Variation Children"), "fa-sitemap", id="simple-variation-children-section") %}
+    {% for mf in children_formset.management_form %}{{ mf|safe }}{% endfor %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>{% trans %}Product{% endtrans %}</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for f in children_formset %}
+            <tr>
+                <td>
+                    {% for fld in f.hidden_fields() %}{{ fld|safe }}{% endfor %}
+                    {{ f.child|safe }}
+                </td>
+                <td class="text-right">
+                    {% if f.DELETE and f.initial.child %}{{ bs3.field(f.DELETE) }}{% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endcall %}

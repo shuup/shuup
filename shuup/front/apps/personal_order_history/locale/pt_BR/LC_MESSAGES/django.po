@@ -1,0 +1,148 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Jonathan Hess <jhess666@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-04 19:11+0000\n"
+"PO-Revision-Date: 2016-07-30 11:42+0000\n"
+"Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/"
+"language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Shuup Frontend - Personal Order History"
+msgstr "Front-end do Shuup - Histórico Pessoal de Pedidos"
+
+#, python-format
+msgid "Order %(identifier)s"
+msgstr "Pedido %(identifier)s"
+
+msgid "Home"
+msgstr ""
+
+msgid "Order History"
+msgstr "Histórico de Pedidos"
+
+#, python-format
+msgid "Details of order %(identifier)s"
+msgstr "Detalhes do pedido %(identifier)s"
+
+msgid "Basic Information"
+msgstr "Informações Básicas"
+
+msgid "Order Number"
+msgstr "Número do Pedido"
+
+msgid "Order Date"
+msgstr "Data do Pedido"
+
+msgid "Reference"
+msgstr "Referência"
+
+msgid "Label"
+msgstr "Rótulo"
+
+msgid "Customer"
+msgstr "Cliente"
+
+msgid "Ordered by"
+msgstr "Comprado por"
+
+msgid "Creator"
+msgstr "Criador"
+
+msgid "Phone"
+msgstr "Telefone"
+
+msgid "Email"
+msgstr "E-mail"
+
+#, fuzzy
+#| msgid "Tax number"
+msgid "Tax Number"
+msgstr "Número de contribuinte"
+
+msgid "Total Price"
+msgstr "Preço Total"
+
+msgid "Total Price (taxless)"
+msgstr "Preço Total (sem impostos)"
+
+msgid "Tracking codes"
+msgstr ""
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Order Status"
+msgstr "Status do Pedido"
+
+msgid "Payment Status"
+msgstr "Status do Pagamento"
+
+msgid "Shipping Status"
+msgstr "Status de Entrega"
+
+msgid "Shipping Address"
+msgstr "Endereço de Entrega"
+
+msgid "Billing Address"
+msgstr "Endereço de Cobrança"
+
+msgid "Order Contents"
+msgstr "Conteúdo do Pedido"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Text"
+msgstr "Texto"
+
+msgid "Taxless Unit Price"
+msgstr "Preço Unitário sem Impostos"
+
+msgid "Quantity"
+msgstr "Quantidade"
+
+msgid "Taxless Discount"
+msgstr "Desconto sem Impostos"
+
+msgid "Tax"
+msgstr "Imposto"
+
+msgid "Taxless Total"
+msgstr "Total sem Impostos"
+
+msgid "Total incl. Tax"
+msgstr "Total incl. Imposto"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Order history"
+msgstr "Histórico de pedidos"
+
+msgid "Identifier"
+msgstr "Identificador"
+
+msgid "Order date"
+msgstr "Data do pedido"
+
+msgid "Total price"
+msgstr "Preço total"
+
+msgid "Details"
+msgstr ""
+
+msgid "You haven't made any orders yet."
+msgstr ""

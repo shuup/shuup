@@ -1,0 +1,1862 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Aarni Koskela, 2015
+# Antti Mäki <antti@anttimaki.com>, 2015
+# Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Heikki Saari <heikki.saari@anders.fi>, 2016
+# Janne Tammi <janne@shuup.com>, 2016
+# Janne Tammi <janne@shuup.com>, 2015
+# Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
+# Juha Kujala <juha.kujala@shoop.io>, 2015-2016
+# Juha Louhiranta <charni@gmail.com>, 2015
+# Panu Tulimäki <panu@shuup.com>, 2016
+# Rauli L. <rauli.laine@iki.fi>, 2015-2016
+# Sami Haltia <sami.haltia@anders.fi>, 2016
+# Shuup Admin <admin@shuup.com>, 2015-2016
+# Shuup Admin <admin@shuup.com>, 2016
+# Teemu Selkälä <teemu.selkala@anders.fi>, 2015
+# tomijarvi <tomi@jarvi.pro>, 2015
+# Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
+# Tuomas Suutari <tuomas.suutari@shoop.io>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-21 18:42+0000\n"
+"PO-Revision-Date: 2016-10-26 02:14+0000\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: fi_FI\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Home"
+msgstr "Koti"
+
+#, python-format
+msgid ""
+"Please enter a correct %(username)s and password. Note that both fields may "
+"be case-sensitive. In case of multiple accounts with same email only "
+"username can be used to login."
+msgstr "Syötä oikea %(username)s ja salasana. Huomaathan, että molemmissa kentissä voi olla isoja ja pieniä kirjaimia. Jos teillä on useita tilejä samalla sähköpostilla, niin vain käyttäjätunnusta voidaan käyttää kirjautumiseen."
+
+msgid "This account is inactive."
+msgstr "Tämä tili ei ole aktiivinen"
+
+msgid "Username or email address"
+msgstr "Käyttäjänimi tai sähköpostiosoite"
+
+msgid "Browse"
+msgstr "Selaa"
+
+msgid "Clear"
+msgstr "Tyhjennä"
+
+msgid "Select"
+msgstr "Valitse"
+
+msgid "Orders"
+msgstr "Tilaukset"
+
+msgid "Products"
+msgstr "Tuotteet"
+
+msgid "Contacts"
+msgstr "Kontaktit"
+
+msgid "Reports"
+msgstr "Raportit"
+
+msgid "Campaigns"
+msgstr "Kampanjat"
+
+msgid "Storefront"
+msgstr "Kaupan näkymä"
+
+msgid "Addons"
+msgstr "Lisäosat"
+
+msgid "Settings"
+msgstr "Asetukset"
+
+msgid "Attributes"
+msgstr "Attribuutit"
+
+msgid "Identifier"
+msgstr "Tunniste"
+
+msgid "Filter by identifier..."
+msgstr "Rajaa tunnisteen mukaan"
+
+msgid "Name"
+msgstr "Nimi"
+
+msgid "Filter by name..."
+msgstr "Rajaa nimen mukaan"
+
+msgid "Type"
+msgstr "Tyyppi"
+
+msgid "Visibility Mode"
+msgstr "Näkyvyystila"
+
+msgid "Searchable"
+msgstr "Haettavissa"
+
+msgid "Used in # Product Types"
+msgstr "Käytössä # Tuotetyypissä"
+
+msgid "Categories"
+msgstr "Kategoriat"
+
+msgid "Add a product category to organize your products"
+msgstr "Lisää tuotekategoria järjestääksesi tuotteet"
+
+msgid "Add a category"
+msgstr "Lisää kategoria"
+
+msgid "Primary Category"
+msgstr "Pääkategoria"
+
+msgid "Set this category as a primary for selected products."
+msgstr "Aseta tämä kategoria ensisijaiseksi valituille tuotteille."
+
+msgid "Default Category"
+msgstr "Oletuskategoria"
+
+msgid "Update product default category while setting primary category."
+msgstr "Päivitä tuotteiden oletuskategoria samalla kun asetat ensisijaisen kategorian."
+
+msgid "Additional Category"
+msgstr "Lisäkategoria"
+
+msgid "Add selected products to this category"
+msgstr "Lisää valitut tuotteet tähän kategoriaan"
+
+msgid "Remove Products"
+msgstr "Poista tuotteet"
+
+msgid "Remove selected products from this category"
+msgstr "Poista valitut tuotteet tästä kategoriasta"
+
+msgid "Invalid category"
+msgstr "Epäkelpo kategoria"
+
+#, python-format
+msgid "Visibility settings copied to %d product(s)"
+msgstr "Näkyvyysasetukset kopioitu %d tuotteelle/tuotteille"
+
+#, python-format
+msgid "%s has been deleted."
+msgstr "%s poistettu."
+
+msgid "Status"
+msgstr "Tila"
+
+msgid "Visibility"
+msgstr "Näkyvyys"
+
+msgid "Contact Groups"
+msgstr "Kontaktiryhmät"
+
+msgid "Price display mode"
+msgstr "Hintojen näyttötapa"
+
+msgid "unspecified"
+msgstr "määrittelemätön"
+
+msgid "show prices with taxes included"
+msgstr "näytä hinnat, joissa verot ovat sisällytettynä"
+
+msgid "show pre-tax prices"
+msgstr "näytä verottomat hinnat"
+
+msgid "hide prices"
+msgstr "piilota hinnat"
+
+msgid "member"
+msgstr "jäsen"
+
+msgid "Remove"
+msgstr "Poista"
+
+#, python-format
+msgid "%(count)s member added"
+msgid_plural "%(count)s members added"
+msgstr[0] "%(count)s jäsen lisätty"
+msgstr[1] "%(count)s jäsentä lisätty"
+
+#, python-format
+msgid "%(count)s member removed"
+msgid_plural "%(count)s members removed"
+msgstr[0] "%(count)s jäsen poistettu"
+msgstr[1] "%(count)s jäsentä poistettu"
+
+msgid "Number of Members"
+msgstr "Jäsenien määrä"
+
+#, python-format
+msgid "User %(bind_user)s already has a contact"
+msgstr "Käyttäjällä %(bind_user)s on jo kontakti"
+
+msgid "Gender"
+msgstr "Sukupuoli"
+
+msgid "Merchant Notes"
+msgstr "Kauppiaan merkinnät"
+
+msgid "Website URL"
+msgstr "Verkkosivun osoite"
+
+msgid "Account Manager"
+msgstr "Tilin haltija"
+
+msgid "Company: Tax Number"
+msgstr "Yritys: Y-tunnus"
+
+msgid "Company: Members"
+msgstr "Yritys: Jäsenet"
+
+msgid "Select Language"
+msgstr "Valitse kieli"
+
+msgid "Language"
+msgstr "Kieli"
+
+msgid "Contact Group"
+msgstr "Kontaktiryhmä"
+
+msgid "Edit Contacts"
+msgstr "Muokkaa kontakteja"
+
+msgid "Set Contact Groups"
+msgstr "Aseta kontaktiryhmät"
+
+msgid "Basic Information"
+msgstr "Perustiedot"
+
+msgid "Addresses"
+msgstr "Osoitteet"
+
+msgid "Members"
+msgstr "Jäsenet"
+
+msgid "The Shuup frontend is not enabled."
+msgstr "Shuup kauppasi julkista puolta ei ole otettu käyttöön."
+
+msgid "Contact has no associated user."
+msgstr "Kontaktilla ei ole liitettyä käyttäjää."
+
+msgid "User has no associated email."
+msgstr "Käyttäjällä ei ole sähköpostia."
+
+msgid "Reset password"
+msgstr "Nollaa salasana"
+
+msgid "Send a password renewal email."
+msgstr "Lähetä salasananuusintasähköposti."
+
+#, python-format
+msgid "Are you sure you wish to send a password recovery email to %s?"
+msgstr "Haluatko varmasti lähettää salasananpalautussähköpostin osoitteeseen %s?"
+
+msgid "New User"
+msgstr "Uusi käyttäjä"
+
+msgid "Create an user for the contact."
+msgstr "Luo kontaktille käyttäjä."
+
+msgid "New Order"
+msgstr "Uusi tilaus"
+
+msgid "Create an order for the contact."
+msgstr "Luo kontaktille käyttäjä"
+
+msgid "Deactivate Contact"
+msgstr "Deaktivoi kontakti"
+
+msgid "Activate Contact"
+msgstr "Aktivoi kontakti"
+
+msgid "Actions"
+msgstr "Toiminnot"
+
+msgid "Edit..."
+msgstr "Muokkaa..."
+
+msgid "You can not deactivate a superuser."
+msgstr "Et voi deaktivoida pääkäyttäjää."
+
+msgid "You can not deactivate yourself."
+msgstr "Et voi deaktivoida itseäsi"
+
+#, python-format
+msgid "%(contact)s is now %(state)s."
+msgstr "%(contact)s on nyt %(state)s."
+
+msgid "active"
+msgstr "aktiivinen"
+
+msgid "inactive"
+msgstr "passiivinen"
+
+msgid "New Company"
+msgstr "Lisää yritys"
+
+msgid "New Contact"
+msgstr "Uusi kontakti"
+
+msgid "Person"
+msgstr "Henkilö"
+
+msgid "Company"
+msgstr "Yritys"
+
+msgid "Email"
+msgstr "Sähköposti"
+
+msgid "Phone"
+msgstr "Puhelin"
+
+msgid "Active"
+msgstr "Aktiivinen"
+
+msgid "no"
+msgstr "ei"
+
+msgid "yes"
+msgstr "kyllä"
+
+msgid "# Orders"
+msgstr "Tilauslkm"
+
+msgid "Groups"
+msgstr "Ryhmät"
+
+msgid "Contact"
+msgstr "Kontakti"
+
+msgid "Inactive"
+msgstr "Passiivinen"
+
+#, python-format
+msgid "Email: %s"
+msgstr "Sähköposti: %s"
+
+#, python-format
+msgid "Phone: %s"
+msgstr "Puhelin: %s"
+
+#, python-format
+msgid "%d orders"
+msgstr "%d tilausta"
+
+msgid "Mass Edit: Contacts"
+msgstr "Massamuokkaus: Kontaktit"
+
+msgid "Contacts changed successfully"
+msgstr "Kontaktien muokkaus onnistui"
+
+msgid "Mass Edit: Contact Groups"
+msgstr "Massamuokkaus: Kontaktiryhmät"
+
+msgid "Contacts Groups changed successfully"
+msgstr "Kontaktiryhmien muokkaus onnistui"
+
+msgid "The contact does not have an associated user."
+msgstr "Kontaktilla ei ole liitettyä käyttäjää."
+
+msgid "Customers Dashboard"
+msgstr "Asiakkaiden ohjausnäkymä"
+
+msgid "Active customers"
+msgstr "Aktiivisia asiakkaita"
+
+msgid "Based on orders within 30 days"
+msgstr "Perustuen viimeisen 30 päivän tilauksiin"
+
+msgid "Demo"
+msgstr "Demo"
+
+msgid "Manufacturers"
+msgstr "Valmistajat"
+
+msgid "Media"
+msgstr "Media"
+
+msgid "Media browser"
+msgstr "Mediaselain"
+
+msgid "Root"
+msgstr "Juuri"
+
+#, python-brace-format
+msgid "{num} subfolders moved to {folder}."
+msgstr "{num} alikansiota siirretty kansioon {folder}."
+
+#, python-brace-format
+msgid "{num} files moved to {folder}."
+msgstr "{num} tiedostoa siirretty kansioon {folder}."
+
+#, python-format
+msgid "Folder %s deleted."
+msgstr "Kansio %s poistettu."
+
+#, python-format
+msgid "%(file)s uploaded to %(folder)s"
+msgstr "%(file)s lähetetty kansioon %(folder)s"
+
+msgid "Folder renamed."
+msgstr "Kansio uudelleennimetty."
+
+msgid "File renamed."
+msgstr "Tiedosto uudelleennimetty."
+
+msgid "File deleted."
+msgstr "Tiedosto poistettu."
+
+#, python-format
+msgid "%(file)s moved from %(old)s to %(new)s."
+msgstr "%(file)s siirretty sijainnista %(old)s sijaintiin %(new)s."
+
+msgid "Show orders"
+msgstr "Näytä tilaukset"
+
+msgid "Outstanding Orders"
+msgstr "Avoimet tilaukset"
+
+#, python-format
+msgid "%d outstanding orders"
+msgstr "%d avointa tilausta"
+
+#, python-format
+msgid "The quantity '%(quantity)s' (for line %(text)s) is invalid (%(error)s)"
+msgstr "Määrä '%(quantity)s' (rivillä %(text)s) ei ole kelvollinen (%(error)s)"
+
+#, python-format
+msgid "The price '%(price)s' (for line %(text)s) is invalid (%(error)s)"
+msgstr "Hinta '%(price)s' (rivillä %(text)s) ei ole kelvollinen (%(error)s)"
+
+#, python-format
+msgid "The discount '%(discount)s' (for line %(text)s is invalid (%(error)s)"
+msgstr "Alennus '%(discount)s' (rivillä %(text)s) ei ole kelvollinen (%(error)s)"
+
+msgid "Product line does not have a product set."
+msgstr "Tuoterivillä ei ole asetettua tuotetta."
+
+#, python-format
+msgid "Product %s does not exist."
+msgstr "Tuotetta %s ei ole olemassa"
+
+#, python-format
+msgid "Product %(product)s is not available in the %(shop)s shop."
+msgstr "Tuotetta %(product)s ei ole saatavilla %(shop)s kaupassa."
+
+msgid "Please add lines to the order."
+msgstr "Lisää rivejä tilaukseen"
+
+msgid "Tax number is not set for company."
+msgstr "Yritykselle ei ole asetettu veronumeroa ."
+
+msgid "Please choose a valid shop."
+msgstr "Valitse kelvollinen kauppa"
+
+msgid "Please select shipping method."
+msgstr "Valitse toimitustapa."
+
+msgid "Please select payment method."
+msgstr "Valitse maksutapa."
+
+msgid "Cancel"
+msgstr "Peruuta"
+
+msgid "Print Confirmation PDF(s)"
+msgstr "Tulosta tilausvahvistus PDF:t"
+
+msgid "Print Delivery PDF(s)"
+msgstr "Tulosta lähete PDF:t"
+
+msgid "Payments"
+msgstr "Maksut"
+
+msgid "Order Contents"
+msgstr "Tilauksen sisältö"
+
+msgid "Log Entries"
+msgstr "Lokimerkinnät"
+
+msgid "Shipments"
+msgstr "Lähetykset"
+
+msgid "Admin comment/notes"
+msgstr "Pääkäyttäjän kommentti/muistiinpanot"
+
+msgid "Set Complete"
+msgstr "Aseta käsitellyksi"
+
+msgid "This order can not be set as complete at this point"
+msgstr "Tilausta ei voi asettaa käsitellyksi tällä hetkellä"
+
+msgid "Cancel Order"
+msgstr "Peruuta tilaus"
+
+msgid "Paid, shipped, or canceled orders cannot be canceled"
+msgstr "Maksettuja, toimitettuja, tai jo peruutettuja tilauksia ei voi perua."
+
+msgid "Edit order"
+msgstr "Muokkaa tilausta"
+
+msgid "This order cannot modified at this point"
+msgstr "Tätä tilausta ei voi muokata tällä hetkellä"
+
+msgid "Create Payment"
+msgstr "Luo maksu"
+
+msgid "Create Shipment"
+msgstr "Luo lähetys"
+
+msgid "Create Refund"
+msgstr "Luo hyvitys"
+
+msgid "Unable to set order as completed at this point"
+msgstr "Tilausta ei voi asettaa käsitellyksi tällä hetkellä"
+
+#, python-brace-format
+msgid "Order status changed: {old_status} to {new_status}"
+msgstr "Tilauksen tila ({old_status} tmuutettu ({new_status})"
+
+msgid "Create Order"
+msgstr "Luo tilaus"
+
+#, python-format
+msgid "Contact %s does not exist."
+msgstr "Yhteystietoa %s ei ole olemassa."
+
+#, python-format
+msgid "Order %(identifier)s updated."
+msgstr "Tilauksen %(identifier)s päivitetty"
+
+#, python-format
+msgid "Order %(identifier)s created."
+msgstr "Tilaus %(identifier)s luotu"
+
+msgid "Could not proceed with order:"
+msgstr "Ei voitu luoda tilausta:"
+
+msgid "Could not finalize order:"
+msgstr "Tilausta ei voitu luoda"
+
+msgid "Order"
+msgstr "Tilaus"
+
+msgid "Order Date"
+msgstr "Tilauspäivämäärä"
+
+msgid "Customer"
+msgstr "Asiakas"
+
+msgid "Payment Status"
+msgstr "Maksutila"
+
+msgid "Shipping Status"
+msgstr "Toimitustila"
+
+msgid "Total"
+msgstr "Yhteensä"
+
+#, python-format
+msgid "Create Payment -- %s"
+msgstr "Luo maksu -- %s"
+
+msgid "Payment amount"
+msgstr "Maksun määrä"
+
+msgid "Payment amount cannot be 0"
+msgstr "Maksun määrä ei voi olla 0"
+
+#, python-format
+msgid "Payment %s created."
+msgstr "Maksu %s luotu"
+
+msgid "Order has already been paid"
+msgstr "Tilaus on jo maksettu"
+
+msgid "Line number"
+msgstr "Rivinumero"
+
+msgid "Quantity"
+msgstr "Lukumäärä"
+
+msgid "Amount"
+msgstr "Määrä"
+
+msgid "Total incl. tax to refund"
+msgstr "Hyvityksen verollinen kokonaissumma"
+
+msgid "Restock products"
+msgstr "Uudelleenvarastoi tuotteet"
+
+#, python-format
+msgid "Create Refund -- %s"
+msgstr "Luo hyvitys -- %s"
+
+msgid "Refund Entire Order"
+msgstr "Hyvitä koko tilaus"
+
+msgid "This order already has existing refunds"
+msgstr "Tällä tilauksella on jo hyvityksiä"
+
+msgid "Refund amount cannot be 0"
+msgstr "Hyvityksen määrä ei voi olla 0"
+
+msgid "Refund amount exceeds order amount."
+msgstr "Hyvityksen määrä on suurempi kuin tilauksen summa."
+
+msgid "Refund amounts should match sign on parent line."
+msgstr "Hyvitysten summan tulee täsmätä isäntä rivin kanssa."
+
+msgid "Refund created."
+msgstr "Hyvitys luotu."
+
+#, python-format
+msgid "Create Full Refund -- %s"
+msgstr "Luo kokonaishyvitys -- %s"
+
+msgid "Could not create full refund."
+msgstr "Ei voitu luoda hyvitystä."
+
+msgid "Full refund created."
+msgstr "Kokonaishyvitys luotu."
+
+#, python-format
+msgid "Create Shipment -- %s"
+msgstr "Luo toimitus -- %s"
+
+msgid "Supplier"
+msgstr "Toimittaja"
+
+msgid "No products to ship."
+msgstr "Ei toimitettavia tuotteita."
+
+msgid "Shipping address is not set."
+msgstr "Toimitusosoitetta ei ole asetettu."
+
+#, python-format
+msgid "Shipment %s created."
+msgstr "Lähetys %s luotu."
+
+#, python-format
+msgid "Shipment %s has been deleted."
+msgstr "Toimitus %s on poistettu."
+
+msgid "Permission Groups"
+msgstr "Käyttöoikeusryhmät"
+
+msgid "Module Permissions"
+msgstr "Modulin käyttöoikeudet"
+
+msgid ""
+"Modules with the same permissions as selected modules will be added "
+"automatically."
+msgstr "Kaikki moduulit, joilla on samat käyttöoikeudet kuin valituilla, lisätään automaattisesti"
+
+msgid "Product Types"
+msgstr "Tuotetyypit"
+
+msgid "Product types"
+msgstr "Tuotetyypit"
+
+msgid "Number of Attributes"
+msgstr "Attribuuttien määrä"
+
+#, python-format
+msgid "Create Product Called \"%s\""
+msgstr "Luo tuote \"%s\""
+
+#, python-format
+msgid "Create Product with SKU \"%s\""
+msgstr "Luo tuote tuotekoodilla \"%s\""
+
+msgid "Add a product"
+msgstr "Lisää tuote"
+
+msgid "Import products"
+msgstr "Tuo tuotteita"
+
+msgid "Add a product to see it in your store"
+msgstr "Lisää tuote kauppaan"
+
+msgid "Given value is already in use, please use unique SKU and try again."
+msgstr "Annettu arvon on jo käytössä, ole hyvä ja tarkista että tuotenumero ei ole käytössä."
+
+msgid ""
+"Number of units that can be purchased after the product is out of stock. Set"
+" to blank for product to be purchasable without limits"
+msgstr "Tuotemäärä joka voidaan vielä ostaa kun tuotetta ei ole varastossa. Aseta tyhjäksi mikäli jälkimyyntiä ei haluta rajoittaa."
+
+msgid "Minimum Purchase Quantity must be greater than 0."
+msgstr "Minimiostomäärän tulee olla vähintään 0."
+
+msgid "Backorder maximum must be greater than or equal to 0."
+msgstr "Jälkimyynniin maksimi. Arvon täytää olla positivinen tai 0."
+
+#, python-format
+msgid "Thumbnail generation of %(media)s failed: %(error)s"
+msgstr "Pikkukuvan muodostus  %(media)s :lle epäonnistui: %(error)s"
+
+msgid "Use only URL or file, not both"
+msgstr "Vain URL-osoite tai tiedosto, ei molempia"
+
+msgid "Is primary"
+msgstr "On ensisijainen"
+
+msgid "Only images allowed in this field"
+msgstr "Voit liittää tähän vain kuvatiedostoja"
+
+#, python-format
+msgid "Unable to make package %(product)s: %(error)s"
+msgstr "Paketin luominen epäonnistui %(product)s: %(error)s"
+
+#, python-format
+msgid "New: %d"
+msgstr "Uusi: %d"
+
+#, python-format
+msgid "Removed: %d"
+msgstr "Poistettu: %d"
+
+#, python-format
+msgid "Couldn't add product %s to own package"
+msgstr "Tuotteen %s lisäämineen pakettiin epäonnistui"
+
+msgid "child"
+msgstr "lapsi"
+
+msgid "Unlink"
+msgstr "Poista linkki"
+
+#, python-format
+msgid "Unable to link %(product)s: %(error)s"
+msgstr "Tuotteiden %(product)s  linkittäminen epäonnistui: %(error)s"
+
+msgid "variable combination"
+msgstr "muuttujayhdistelmä"
+
+msgid "Set visible"
+msgstr "Aseta näkyväksi"
+
+msgid "Set invisible"
+msgstr "Aseta pois näkyvistä"
+
+msgid "Export CSV"
+msgstr "Tuo CSV"
+
+msgid "Edit products"
+msgstr "Muokkaa tuotteita"
+
+#, python-format
+msgid "%s has been marked deleted."
+msgstr "%s on merkitty poistetuksi."
+
+msgid "Minimum Purchase Quantity has been rounded to match Sales Unit."
+msgstr "Minimiostomäärä pyöristettiin yhteensopivaksi myyntikoon kanssa."
+
+#, python-format
+msgid "Changes to shop instance for %s saved"
+msgstr "Muutokset kauppaan %s tallennettu"
+
+msgid "Product is not available."
+msgstr "Tuote ei ole saatavilla."
+
+msgid "Product"
+msgstr "Tuote"
+
+#, python-format
+msgid "Edit Cross-Sell: %s"
+msgstr "Muokkaa ristiinmyyntiä: %s"
+
+msgid "Save"
+msgstr "Tallenna"
+
+msgid "Changes saved."
+msgstr "Muutokset tallennettu."
+
+#, python-format
+msgid "Edit Media: %s"
+msgstr "Muokkaa mediaa: %s"
+
+msgid "Are you sure? This will remove all products from package."
+msgstr "Oletko varma? Tämä toiminto poistaa kaikki tuotteet paketista."
+
+msgid "Clear package"
+msgstr "Tyhjennä paketti"
+
+#, python-format
+msgid "Edit Package: %s"
+msgstr "Muokkaa pakettia: %s"
+
+msgid "Package cleared."
+msgstr "Paketti tyhjennetty."
+
+msgid ""
+"Are you sure? This will unlink all children and remove all variation "
+"variables."
+msgstr "Oletko varma? Tämä toiminto poistaa liitokset kaikkiin lapsiin ja poistaa kaikki variaatiomuuttujat."
+
+msgid "Clear variation"
+msgstr "Tyhjennä variaatio"
+
+msgid ""
+"Are you sure? This will remove all variation variables, converting children "
+"to direct links."
+msgstr "Oletko varma? Tämä toiminto poistaa kaikki variaatiomuuttujat ja muuttaa lapset suoriksi linkeiksi."
+
+msgid "Convert to simple variation"
+msgstr "Muunna yksinkertaiseksi variaatioksi"
+
+#, python-format
+msgid "Edit Variation: %s"
+msgstr "Muokkaa variaatiota: %s"
+
+msgid "Variation cleared."
+msgstr "Variaatio tyhjennetty."
+
+msgid "Variation simplified."
+msgstr "Variaatio yksinkertaistettu."
+
+msgid "SKU"
+msgstr "Tuotekoodi"
+
+msgid "Filter by SKU..."
+msgstr "Rajaa tuotekoodin mukaan..."
+
+msgid "Barcode"
+msgstr "Viivakoodi"
+
+msgid "Filter by barcode..."
+msgstr "Rajaa viivakoodin mukaan"
+
+msgid "Mode"
+msgstr "Tila"
+
+msgid "Purchasable"
+msgstr "Tilattavissa"
+
+msgid "Mass Edit: Products"
+msgstr "Massamuokkaus: Tuotteet"
+
+msgid "Products changed successfully"
+msgstr "Tuotteiden muokkaus onnistui"
+
+msgid "Save as a copy"
+msgstr "Tallenna kopiona"
+
+msgid "Manage Cross-Selling"
+msgstr "Hallinnoi ristiinmyyntiä"
+
+msgid "Cross-Selling"
+msgstr "Ristiinmyynti"
+
+#, python-format
+msgid "Child: %s"
+msgstr "Lapsi: %s"
+
+#, python-format
+msgid "Parent: %s"
+msgstr "Isäntä: %s"
+
+#, python-format
+msgid "Sibling: %s"
+msgstr "Sisarus: %s"
+
+msgid "Variations"
+msgstr "Variaatiot"
+
+msgid "Manage Variations"
+msgstr "Hallinnoi variaatioita"
+
+msgid "Packages"
+msgstr "Paketit"
+
+msgid "Manage Package"
+msgstr "Hallinnoi pakettia"
+
+msgid "Convert to Package Parent"
+msgstr "Muunna paketti-isännäksi"
+
+msgid "Convert to Variation Parent"
+msgstr "Muunna variaatioisännäksi"
+
+msgid "Sales Dashboard"
+msgstr "Myynnin ohjausnäkymä"
+
+msgid "Sales per Month (last year)"
+msgstr "Myynti/kk (viime vuosi)"
+
+#, python-format
+msgid "Sales (%(currency)s)"
+msgstr "Myynti (%(currency)s)"
+
+#, python-format
+msgid "Based on %d orders"
+msgstr "Perustuen %d tilaukseen"
+
+msgid "Today's Sales"
+msgstr "Päivän myynti"
+
+msgid "Lifetime Sales"
+msgstr "Myynti kautta aikain"
+
+msgid "Average Purchase"
+msgstr "Keskiostos"
+
+msgid "Open Orders Value"
+msgstr "Avoimia tilauksia"
+
+msgid "Sales Units"
+msgstr "Myyntiyksiköt"
+
+msgid "Short Name"
+msgstr "Lyhyt nimi"
+
+msgid "Allowed decimals"
+msgstr "Sallitut desimaalit"
+
+msgid "Service Providers"
+msgstr "Palveluntarjoajat"
+
+msgid "Payment and Shipping"
+msgstr "Maksaminen ja toimitus"
+
+msgid "Service name"
+msgstr "Palvelun nimi"
+
+msgid "The name shown in the shop checkout process."
+msgstr "Nimi näytetään kassalla."
+
+msgid "Instructions"
+msgstr "Ohjeet"
+
+msgid "additional instructions shown in the shop checkout process."
+msgstr "lisätiedot näytetään kassalla."
+
+#, python-format
+msgid "Edit %(model)s"
+msgstr "Muokkaa %(model)s"
+
+#, python-brace-format
+msgid "Create {service_name}"
+msgstr "Luo {service_name}"
+
+msgid "Provider"
+msgstr "Palveluntarjoaja"
+
+msgid "Please add shipping methods for your shop"
+msgstr "Ole hyvä ja aseta toimitustavat"
+
+msgid "Carrier"
+msgstr "Kuljetusliike"
+
+msgid "Payment Methods"
+msgstr "Maksutavat"
+
+msgid "Please add payment methods for your shop"
+msgstr "Ole hyvä ja aseta maksutavat"
+
+msgid "Payment Processor"
+msgstr "Maksupalvelun tarjoaja"
+
+msgid "Shipping Methods"
+msgstr "Toimitustavat"
+
+msgid "Service"
+msgstr "Palvelu"
+
+msgid "Select carrier before filling other fields."
+msgstr "Valitse ensin kuljettaja"
+
+msgid "Select payment processor before filling other fields."
+msgstr "Valitse ensin maksupalvelun tarjoaja"
+
+msgid "Price"
+msgstr "Hinta"
+
+msgid "Waive limit"
+msgstr "Luopumisraja"
+
+msgid "Service choice"
+msgstr "Palvelun valinta"
+
+msgid "Enabled"
+msgstr "Käytössä"
+
+msgid "Shop"
+msgstr "Kauppa"
+
+msgid "Weight-based pricing range"
+msgstr "Painon mukaan määräytyvä hinnoittelu"
+
+msgid "Settings saved"
+msgstr "Asetukset tallennettu"
+
+msgid "Shops"
+msgstr "Kaupat"
+
+msgid ""
+"This field cannot be changed since there are existing orders for this shop."
+msgstr "Tätä kenttää ei voi muuttaa, koska tälle kaupalle on olemassa tilauksia."
+
+msgid "Currency"
+msgstr "Valuutta"
+
+msgid "Languages"
+msgstr "Kielet"
+
+msgid "Supported Languages"
+msgstr "Tuetut kielet"
+
+msgid "Shop name"
+msgstr "Kaupan nimi"
+
+msgid ""
+"Show storefront products with tax pre-calculated into the price. Note this "
+"behavior can be overridden for customer groups."
+msgstr "Näytä kaupan hinnat verottomina (hallinta). Kontaktiryhmillä voi erikseen säätää loppukäyttäjälle näytettävät hinnat."
+
+msgid "Shop Owner Name"
+msgstr "Kaupan omistajan nimi"
+
+msgid "Zip/Postal code"
+msgstr "Postinumero"
+
+msgid "State/Province"
+msgstr "Osavaltio"
+
+msgid "There are still some pending actions to complete!"
+msgstr "Et ole vielä suorittanut kaikki vaiheita!"
+
+msgid "Your store is now live!"
+msgstr "Kauppasi on nyt auki!"
+
+msgid "Domain"
+msgstr "Verkkotunnus"
+
+msgid "Please select the languages supported by your shop"
+msgstr "Ole hyvä ja valitse kielet kaupallesi"
+
+msgid "Please enter your shop details"
+msgstr "Ole hyvä ja aseta kaupan tiedot"
+
+msgid "Default Tax Class"
+msgstr "Perus veroluokka"
+
+msgid "Suppliers"
+msgstr "Toimittajat"
+
+#, python-format
+msgid "No %s module"
+msgstr "Ei %s -moduulia"
+
+msgid "Module"
+msgstr "Moduuli"
+
+msgid "System"
+msgstr "Järjestelmä"
+
+msgid "Telemetry"
+msgstr "Telemetria"
+
+msgid ""
+"Statistics will be periodically sent to Shuup.com after 24 hours. Click here"
+" for more information."
+msgstr "Statistiikat tullaan jaksoittain lähettämään Shuup.com:lle 24 tunnin jälkeen. Paina tästä saadaksesi lisäinformaatiota."
+
+msgid "Taxes"
+msgstr "Verot"
+
+msgid "Customer Tax Groups"
+msgstr "Asiakasveroryhmät"
+
+msgid "Tax Classes"
+msgstr "Veroluokat"
+
+msgid "Code"
+msgstr "Koodi"
+
+msgid "Rate"
+msgstr "Määrä"
+
+msgid "Users"
+msgstr "Käyttäjät"
+
+msgid "Add some users to help manage your shop"
+msgstr "Lisää käyttäjiä kaupan hallintaan"
+
+msgid "Add a user"
+msgstr "Lisää käyttäjä"
+
+msgid "Password"
+msgstr "Salasana"
+
+msgid "Permissions"
+msgstr "Oikeudet"
+
+msgid "See the permissions view to change these."
+msgstr "Katso käyttöoikeusnäkymää muuttaaksesi näitä."
+
+msgid "staff"
+msgstr "henkilökunta"
+
+msgid "superuser"
+msgstr "pääkäyttäjä"
+
+msgid "No special permissions"
+msgstr "Ei erityisiä oikeuksia"
+
+msgid "No permission groups"
+msgstr "Ei käyttöoikeusryhmiä"
+
+msgid "Change Password"
+msgstr "Vaihda salasana"
+
+msgid "User has no email address"
+msgstr "Käyttäjällä ei ole sähköpostia"
+
+msgid "Send Password Reset Email"
+msgstr "Lähetä salasanan palautussähköposti"
+
+msgid "Edit Permissions"
+msgstr "Muokkaa oikeuksia"
+
+msgid "Contact Details"
+msgstr "Yhteystiedot"
+
+msgid "Create a new contact and associate it with this user"
+msgstr "Luo uusi kontakti ja liitä se tähän käyttäjään"
+
+msgid "Activate User"
+msgstr "Aktivoi käyttäjä"
+
+msgid "Deactivate User"
+msgstr "Deaktivoi käyttäjä"
+
+msgid "Login as User"
+msgstr "Kirjaudu käyttäjänä"
+
+#, python-format
+msgid "User bound to contact %(contact)s."
+msgstr "Käyttäjä liitetty kontaktiin %(contact)s."
+
+#, python-format
+msgid "%(user)s is now %(state)s."
+msgstr "%(user)s on nyt %(state)s."
+
+msgid "No shop configured."
+msgstr "Kauppaa ei ole konfiguroitu."
+
+msgid "You are already logged in."
+msgstr "Olet jo kirjautunut sisään."
+
+msgid "This user is not active."
+msgstr "Tämä käyttäjä ei ole aktiivinen."
+
+#, python-brace-format
+msgid "You're now logged in as {username}"
+msgstr "Olet nyt kirjautunut käyttäjänä {username}"
+
+msgid "Username"
+msgstr "Käyttäjänimi"
+
+msgid "First Name"
+msgstr "Etunimi"
+
+msgid "Last Name"
+msgstr "Sukunimi"
+
+msgid "Staff"
+msgstr "Henkilökunta"
+
+msgid "Superuser"
+msgstr "Pääkäyttäjä"
+
+#, python-format
+msgid "First Name: %s"
+msgstr "Etunimi: %s"
+
+#, python-format
+msgid "Last Name: %s"
+msgstr "Sukunimi: %s"
+
+msgid "User"
+msgstr "Käyttäjä"
+
+msgid "The two password fields didn't match."
+msgstr "Salasanakentät eivät täsmää"
+
+msgid "Your old password was entered incorrectly. Please enter it again."
+msgstr "Syötit vanhan salasanan väärin. Kokeiletko uudelleen, kiitos."
+
+msgid "Your Password"
+msgstr "Salasanasi"
+
+msgid "For security purposes, we need your current password."
+msgstr "Turvallisuussyistä tarvitsemme nykyisen salasanasi."
+
+msgid "New Password"
+msgstr "Uusi salasana"
+
+msgid "New Password (again)"
+msgstr "Uusi salasana (uudelleen)"
+
+msgid "You can not change the password of a superuser."
+msgstr "Et voi vaihtaa pääkäyttäjän salasanaa."
+
+msgid "Change User Password"
+msgstr "Muuta käyttäjän salasana"
+
+#, python-format
+msgid "Password changed for %s."
+msgstr "Käyttäjän %s salasana vaihdettu."
+
+msgid "Reset User Password"
+msgstr "Nollaa käyttäjän salasana"
+
+msgid ""
+"The `shuup.front.apps.auth` app needs to be enabled for password reset."
+msgstr "`shuup.front.apps.auth`  sovellus tarvitsee olla otettuna käyttöön palauttaaksesi salasanan."
+
+#, python-format
+msgid "Password recovery email sent to %(email)s"
+msgstr "Salasananpalautussähköposti lähetetty: %(email)s"
+
+msgid "Sending the password recovery email failed."
+msgstr "Salasanan palauttamissähköpostin lähettäminen epäonnistui."
+
+msgid "You can't unset this status for yourself."
+msgstr "Et voi poistaa tätä tilaa itseltäsi."
+
+msgid "Change User Permissions"
+msgstr "Muokkaa käyttäjän oikeuksia"
+
+#, python-format
+msgid "Change Permissions: %s"
+msgstr "Muokkaa oikeuksia: %s"
+
+#, python-format
+msgid "Permissions changed for %s."
+msgstr "Käyttäjän %s oikeuksia muutettu."
+
+msgid "New Attribute"
+msgstr "Uusi attribuutti"
+
+msgid "Login"
+msgstr "Kirjaudu sisään"
+
+msgid "Logged out"
+msgstr "Kirjaudu ulos"
+
+msgid "You have been logged out. Good bye!"
+msgstr "Olet kirjautunut ulos. Näkemiin!"
+
+msgid "Log in again"
+msgstr "Kirjaudu uudelleen"
+
+msgid "Visit shop"
+msgstr "Vieraile kaupassa."
+
+msgid "Quicklinks"
+msgstr "Pikalinkit"
+
+msgid "Menu"
+msgstr "Valikko"
+
+msgid "Dashboard"
+msgstr "Kojelauta"
+
+msgid "Search for"
+msgstr "Etsi"
+
+msgid "Support ID: "
+msgstr "Tukinumero: "
+
+msgid "Hello"
+msgstr "Hei"
+
+msgid "Log out"
+msgstr "Kirjaudu ulos"
+
+msgid "General Information"
+msgstr "Yleiset tiedot"
+
+msgid "Copy visibility settings to products"
+msgstr "Kopioi näkyvyysasetukset tuotteille"
+
+msgid "Category Image"
+msgstr "Kategorian kuva"
+
+msgid "* Products that has this category as a primary category."
+msgstr "* Tuotteet joilla on tämä kategoria ensisijaisena kategoriana."
+
+msgid "General information"
+msgstr "Yleiset tiedot"
+
+msgid "Add Members"
+msgstr "Lisää jäseniä"
+
+msgid "Add more"
+msgstr "Lisää enemmän"
+
+msgid "Billing address"
+msgstr "Laskutusosoite"
+
+msgid "No billing address defined."
+msgstr "Laskutusosoitetta ei ole asetettu."
+
+msgid "Shipping address"
+msgstr "Toimitusosoite"
+
+msgid "No shipping address defined."
+msgstr "Toimitusosoitetta ei ole asetettu."
+
+msgid "Full Name"
+msgstr "Koko nimi"
+
+msgid "No groups"
+msgstr "Ei ryhmiä"
+
+msgid "Bound User"
+msgstr "Sidottu käyttäjä"
+
+msgid "Companies"
+msgstr "Yritykset"
+
+msgid "No members."
+msgstr "Ei jäseniä."
+
+msgid "Use billing address as shipping address"
+msgstr "Käytä laskutusosoitetta toimitusosoitteena"
+
+msgid "Billing Address"
+msgstr "Laskutusosoite"
+
+msgid "Shipping Address"
+msgstr "Toimitusosoitteet"
+
+msgid "Basic details"
+msgstr "Perustiedot"
+
+msgid "Remove block"
+msgstr "Poista lohko"
+
+msgid "Resize block"
+msgstr "Muuta lohkon kokoa"
+
+msgid "Welcome!"
+msgstr "Tervetuloa!"
+
+msgid "Notifications"
+msgstr "Ilmoitukset"
+
+msgid "Mark as read"
+msgstr "Merkitse luetuksi"
+
+msgid "Activity Feed"
+msgstr "Syöte"
+
+#, python-format
+msgid "Shuup %(version)s"
+msgstr "Shuup %(version)s"
+
+msgid "Table Columns"
+msgstr "Taulun sarakkeet"
+
+msgid "Welcome to Shuup!"
+msgstr "Tervetuloa Shuuppiin!"
+
+msgid ""
+"You're almost done! Complete the following steps to sell your products "
+"online"
+msgstr "Olet melkein valmis! Suorita seuraavat vaiheet aloittaaksesi kaupanteon."
+
+msgid "Date"
+msgstr "Päivämäärä"
+
+msgid "Order Status"
+msgstr "Tilauksen tila"
+
+msgid "Save and Exit"
+msgstr "Tallenna ja poistu"
+
+msgid "Edit"
+msgstr "Muokkaa"
+
+msgid "Upload"
+msgstr "Lataa"
+
+msgid "Comment"
+msgstr "Kommentti"
+
+msgid "Save comment"
+msgstr "Tallenna kommentti"
+
+msgid "There was an error updating the admin comment."
+msgstr "Kommentin päivitys ei onnistunut."
+
+msgid "Description"
+msgstr "Kuvaus"
+
+msgid "Text"
+msgstr "Teksti"
+
+msgid "Taxless Unit Price"
+msgstr "Veroton yksikköhinta"
+
+msgid "Taxless Discount"
+msgstr "Veroton alennus"
+
+msgid "Taxless Discount Percentage"
+msgstr "Veroton alennusprosentti"
+
+msgid "Tax"
+msgstr "Vero"
+
+msgid "Taxless Total"
+msgstr "Veroton yhteensä"
+
+msgid "Total incl. Tax"
+msgstr "Verollinen yhteensä"
+
+msgid "Discount"
+msgstr "Alennus"
+
+msgid "Taxless"
+msgstr "Veroton"
+
+msgid "Message"
+msgstr "Viesti"
+
+msgid "No log entries have been added yet."
+msgstr "Yhtään lokimerkintää ei ole vielä lisätty."
+
+msgid "Use the input below to add new log entries."
+msgstr "Lisää uusia lokimerkintöjä alla."
+
+msgid "Add to Log"
+msgstr "Lisää lokiin"
+
+msgid "There was an error adding the log entry."
+msgstr "Lokimerkinnän lisäämisessä tapahtui virhe."
+
+msgid "Tracking Code"
+msgstr "Seurantakoodi"
+
+msgid "Created"
+msgstr "Luotu"
+
+msgid "Delete"
+msgstr "Poista"
+
+msgid "No shipments have been created yet."
+msgstr "Toimituksia ei ole vielä luotu."
+
+msgid ""
+"Shipped shipments should not be deleted. Deletion will affect products "
+"physical stock count. Delete anyway?"
+msgstr "Toimitettuja toimituksia ei tule poistaa. Poistaminen vaikuttaa tuotteet fyysiseen saldoon. Vahvista poisto."
+
+msgid "Line #"
+msgstr "Rivi #"
+
+msgid "Refunded Quantity"
+msgstr "Hyvitetty määrä"
+
+msgid "Refund Amount"
+msgstr "Hyvityksen määrä"
+
+msgid "Are you sure you want to create a full refund?"
+msgstr "Oletko varma, että haluat tehdä kokonaishyvityksen?"
+
+msgid "Confirm Refund"
+msgstr "Vahvista hyvitys"
+
+msgid "Paid"
+msgstr "Maksettu"
+
+msgid "Remaining"
+msgstr "Jäljellä"
+
+msgid "Refunded"
+msgstr "Hyvitetty"
+
+msgid "Add More Refunds "
+msgstr "Syötä lisää hyvityksiä"
+
+msgid "To Ship"
+msgstr "Lähetettäväksi"
+
+msgid "Ordered"
+msgstr "Tilattu"
+
+msgid "Shipped"
+msgstr "Lähetetty"
+
+msgid "Unshipped"
+msgstr "Lähettämätön"
+
+msgid "Set All Products To Ship"
+msgstr "Aseta kaikki tuotteet lähetettäväksi"
+
+msgid "Ship All"
+msgstr "Lähetä kaikki"
+
+msgid "Details & Status"
+msgstr "Tiedot & Tila"
+
+msgid "Order Number"
+msgstr "Tilausnumero"
+
+msgid "Reference"
+msgstr "Viite"
+
+msgid "Label"
+msgstr "Merkki"
+
+msgid "Ordered by"
+msgstr "Järjestä"
+
+msgid "Creator"
+msgstr "Laatija"
+
+msgid "Tax number"
+msgstr "veronumero"
+
+msgid "Total Price (taxless)"
+msgstr "Kokonaishinta (veroton)"
+
+msgid "Total Price"
+msgstr "Kokonaishinta"
+
+msgid "Customer Comment"
+msgstr "Asiakaskommentti"
+
+msgid "Tracking codes"
+msgstr "Seurantakoodit"
+
+msgid "Error!"
+msgstr "Virhe!"
+
+msgid "Additional Details"
+msgstr "Lisätietoja"
+
+msgid "Manufacturer"
+msgstr "Valmistaja"
+
+msgid "Shipping & Payment"
+msgstr "Toimitukset & Maksaminen"
+
+#, python-format
+msgid "Product image %(index)s"
+msgstr "Tuotekuva %(index)s"
+
+#, python-format
+msgid "Product media %(index)s"
+msgstr "Tuotemedia %(index)s"
+
+msgid "Primary image"
+msgstr "Pääkuva"
+
+msgid "Set as primary image"
+msgstr "Aseta pääkuvaksi"
+
+msgid "No image"
+msgstr "Ei kuvaa"
+
+msgid "Advanced options"
+msgstr "Edistyneet asetukset"
+
+msgid "Product Images"
+msgstr "Tuotekuvat"
+
+msgid "Product Media"
+msgstr "Tuotemedia"
+
+msgid "Add new image"
+msgstr "Lisää uusi kuva"
+
+msgid "Add new media"
+msgstr "Lisää uusi media"
+
+msgid "No orders found"
+msgstr "Tilauksia ei löytynyt"
+
+msgid "This product is currently not orderable."
+msgstr "Tämä tuote ei ole tällä hetkellä tilattavissa."
+
+msgid "Cross-sells"
+msgstr "Ristiinmyynnit"
+
+msgid "Cross-sell"
+msgstr "Ristiinmyynti"
+
+msgid "File "
+msgstr "Tiedosto"
+
+msgid "Package Products"
+msgstr "Pakettituotteet"
+
+#, python-format
+msgid "Logical count: %(logical_count)s %(sales_unit)s"
+msgstr "Looginen luku: %(logical_count)s %(sales_unit)s"
+
+#, python-format
+msgid "Physical count: %(physical_count)s %(sales_unit)s"
+msgstr "Fyysinen luku: %(physical_count)s %(sales_unit)s"
+
+msgid "This product is not yet a package."
+msgstr "Tämä tuote ei ole pakettituote"
+
+msgid "To create a package, choose products below."
+msgstr "Valitse tuotteet alta, jotka haluat lisätä pakettiin"
+
+msgid "Simple Variation Children"
+msgstr "Yksinkertainen variaatiolapsi"
+
+msgid "Variable Children"
+msgstr "Variaatiolapsi"
+
+msgid "Combination"
+msgstr "Yhdistelmä"
+
+msgid "Variables"
+msgstr "Muuttujat"
+
+msgid "This product is not yet a variation."
+msgstr "Tämä tuote ei ole vielä variaatio."
+
+msgid "To create a simple variation, choose products below."
+msgstr "Valitse alla olevat tuotteet tehdäksesi yksinkertaisen variaation."
+
+msgid ""
+"To create a variation with multiple variables, create the variables on the "
+"Variables tab and then link them to products here."
+msgstr "Luodaksesi variaation useammalla muuttujalla, luo muuttujat Muuttujat-välilehdellä ja linkitä ne sitten täällä tuotteisiin."
+
+msgid "Manually process payments"
+msgstr "Käsittele maksut käsin"
+
+msgid "Manage payments outside of Shuup"
+msgstr "Hallitse maksuja Shuupin ulkopuolella"
+
+msgid "Manual"
+msgstr "Käsin"
+
+msgid "Manual process shipping"
+msgstr "Käsittele maksu käsin"
+
+msgid "Handle shipping outside of Shuup"
+msgstr "Hallitse toimituksia Shuupin ulkopuolella"
+
+msgid "Activate"
+msgstr "Aktivoi"
+
+msgid ""
+"Define price based basket weight range. Range minimum is counted in range "
+"only as zero."
+msgstr "Määritä painoperusteiset hintapisteet. "
+
+msgid "Behavior"
+msgstr "Käyttäytyminen"
+
+msgid "Behavior component type"
+msgstr "Käyttäytymiskomponentin tyyppi"
+
+msgid "Add component"
+msgstr "Lisää komponentti"
+
+msgid "Shop Logo"
+msgstr "Kaupan logo"
+
+msgid "Maintenance Mode"
+msgstr "Huoltotila"
+
+msgid "Contact Address"
+msgstr "Yhteystiedot"
+
+msgid "About Shuup Telemetry"
+msgstr "Lisää Shuup telemetriasta"
+
+msgid "Shuup will occasionally send telemetry data to a Shuup.com server."
+msgstr "Shuup lähettää ajoittain telemetriikkaa Shuup.com palvelimelle."
+
+#, python-format
+msgid ""
+"The data contains an unique installation key, as well as the hostname of the"
+" installation (as sent by the visiting browser; currently "
+"<code>%(host)s</code>)."
+msgstr "Tiedot sisältävät uniikin asennusavaimen sekä asennuksen osoitteen (selaimen lähettämänä; tällä hetkellä <code>%(host)s</code>). "
+
+msgid ""
+"No business data or other customer information is ever sent. Shuup.com only "
+"uses the telemetry data for statistical purposes and for insights about the "
+"software's installation base."
+msgstr "Mitään liiketoimintadataa tai asiakasinformaatiota ei \nkerätä. Shuup.com käyttää telemetriikkaa ainoastaan tilastollisiin tarpeisiin sekä ohjelmiston asennusasetusten keräämiseen."
+
+msgid "Opt-in / opt-out"
+msgstr "Mukanaolo"
+
+msgid ""
+"You are currently <span class=\"lead label label-success\">opted in</span> "
+"to send telemetry data to Shuup.com."
+msgstr "Sinä olet tällä hetkellä <span class=\"lead label label-success\">hyväksynyt</span> Shuup telemetriikan."
+
+msgid "Thank you for your valuable contribution."
+msgstr "Kiitos arvokkaasta panostuksestasi."
+
+msgid "Opt out"
+msgstr "Jättäydy syrjään"
+
+msgid ""
+"You are currently <span class=\"label label-warning\">opted out</span> of "
+"Shuup telemetry."
+msgstr "Sinä olet tällä hetkellä <span class=\"label label-warning\">jättäytynyt pois</span> Shuup telemetriikasta."
+
+msgid "Opt in"
+msgstr "Tule mukaan"
+
+msgid "Last Telemetry"
+msgstr "Viimeisin telemetria"
+
+msgid ""
+"Telemetry submission is currently suspended; data will only be sent 24 hours"
+" after installation if still opted in at that point."
+msgstr "Telemetrialähetykset ovat tällä hetkellä keskeytetty. Tietoja lähetetään vasta 24 tunnin kuluessa asennuksesta jollei lähetystä ole siihen mennessä kytketty pois päältä."
+
+#, python-format
+msgid ""
+"Telemetry data was last submitted at %(submission_datetime)s - "
+"(%(submission_timesince)s) ago"
+msgstr "Telemetriatiedot lähetettiin viimeksi %(submission_datetime)s - (%(submission_timesince)s)"
+
+msgid "See the data that was submitted."
+msgstr "Katso data, joka toimitettiin."
+
+msgid "Telemetry data has not yet been submitted."
+msgstr "Telemetriadataa ei ole vielä toimitettu."
+
+msgid "Telemetry Data"
+msgstr "Telemetrian data"
+
+msgid "Here is an example of the data that would be submitted right now."
+msgstr "Tässä on esimerkki datasta, joka lähetettäisiin tällä hetkellä."
+
+msgid "User Information"
+msgstr "Käyttäjän tiedot"
+
+#, python-format
+msgid "Send a password reset email to %(email)s?"
+msgstr "Lähetä salasananpalautussähköposti osoitteeseen %(email)s?"
+
+msgid "Send Reset Email"
+msgstr "Lähetä palautussähköposti"
+
+msgid ""
+"Please fill out the following information to get your store up and running"
+msgstr "Ole hyvä ja täytä seuraavat tiedot avataksesi kaupan"
+
+msgid "Setup can be continued later from the admin dashboard"
+msgstr "Asennusta voidaan jatkaa myöhemmin hallinnasta"
+
+msgid "Create new"
+msgstr "Luo uusi"
+
+#, python-format
+msgid "New %(model)s"
+msgstr "Uusi %(model)s"
+
+msgid "Discard Changes"
+msgstr "Hylkää muutokset"
+
+msgid "Save and Create New"
+msgstr "Tallenna ja luo uusi"
+
+#, python-format
+msgid "Are you sure you wish to delete %s?"
+msgstr "Haluatko poistaa %s?"
+
+#, python-format
+msgid "Showing %(per_page)s of %(n_items)s %(verbose_name_plural)s"
+msgstr "Näytetään %(per_page)s/%(n_items)s %(verbose_name_plural)s-kohdetta"
+
+msgid "objects"
+msgstr "esineet"
+
+msgid "Unknown error"
+msgstr "Tuntematon virhe"
+
+msgid "Mass Action"
+msgstr "Massatoiminto"
+
+#, python-format
+msgid "Can't view this page. %(reason)s"
+msgstr "Sivua ei voida näyttää. %(reason)s"
+
+msgid "Log in with different credentials..."
+msgstr "Kirjaudu sisään toisilla tunnuksilla..."
+
+msgid "You must be logged in."
+msgstr "Sinun täytyy olla kirjautunut sisään."
+
+msgid "You must be a staff member."
+msgstr "Sinun tulee olla henkilökunnan jäsen."
+
+#, python-format
+msgid "You do not have the required permissions: %s"
+msgstr "Sinulla ei ole riittäviä käyttöoikeuksia: %s"
+
+#, python-format
+msgid "New %s created."
+msgstr "Uusi %s luotu."
+
+#, python-format
+msgid "%s edited."
+msgstr "%s muokattu."
+
+#, python-format
+msgid "New %s"
+msgstr "Uusi %s"
+
+#, python-format
+msgid "Unnamed %s"
+msgstr "Nimeämätön %s"
+
+#, python-format
+msgid "Only one %(model)s permitted."
+msgstr "Vain yksi %(model)s sallittu"
+
+msgid "Mass Edit"
+msgstr "Massamuokkaus"
+
+msgid "Complete the setup wizard"
+msgstr "Viimeistele kaupan asennus"
+
+msgid "Complete wizard"
+msgstr "Viimeistele asennus"
+
+msgid "Publish your store"
+msgstr "Julkaise kauppa"
+
+msgid "Let customers browse your store and make purchases"
+msgstr "Salli käyttäjän selata kauppaa ja tehdä tilauksia"
+
+msgid "Publish shop"
+msgstr "Julkaise kauppa"
+
+#, python-format
+msgid "Couldn't get selections for %s."
+msgstr "%s valintoja ei voitu hakea"

@@ -1,0 +1,22 @@
+{
+  "name": "dashboard",
+  "version": "0.0.0",
+  "private": true,
+  "main": [
+      "js/dashboard-charts.js",
+      "js/dashboard.js"
+  ],
+  "dependencies": {
+    "chartist": "0.9.5",
+    "masonry": "3.3.2"
+  },
+  "overrides": {
+    "outlayer": {
+      "see-this-url": "https://github.com/metafizzy/outlayer/issues/33",
+      "main": [
+        "item.js",
+        "outlayer.js"
+      ]
+    }
+  }
+}

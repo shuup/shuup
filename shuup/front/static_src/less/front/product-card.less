@@ -1,0 +1,104 @@
+.product-card {
+    background: #fff;
+    display: block;
+    border: 1px solid #ededed;
+    border-bottom: 2px solid #ddd;
+    position: relative;
+    padding-bottom: 52px;
+    width: 100%;
+    max-width: 280px;
+    margin-bottom: 30px;
+    text-align: center;
+
+    &:hover, &:focus {
+        text-decoration: none;
+        box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.15);
+    }
+
+    a, button {
+        color: @text-color;
+        display: block;
+        &:hover, &:focus {
+            color: @brand-primary;
+            text-decoration: none;
+        }
+    }
+
+    > a {
+        padding-bottom: 10px;
+        &:hover, &:focus {
+            .name {
+                color: @brand-primary;
+            }
+        }
+    }
+
+    .product-badge {
+        position: absolute;
+        left: 5px;
+        top: 5px;
+        z-index: 5;
+    }
+    .name {
+        display: block;
+        padding: 10px 15px;
+        color: @text-color;
+    }
+    .image {
+        background-position: 50%;
+        background-size: contain;
+        background-repeat: no-repeat;
+        margin-bottom: 15px;
+        display: block;
+        &:before {
+            content: "";
+            display: block;
+            position: relative;
+            padding-top: 100%;
+        }
+    }
+    .description {
+        display: none;
+        margin: 10px 0px;
+        padding: 0px 15px;
+        font-size: 1.2rem;
+    }
+    .actions {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 0;
+        border-top: 1px solid #ededed;
+
+        .btn {
+            background: #fff;
+            font-size: 1.2rem;
+            padding: 15px 0px;
+            &:active {
+                box-shadow: none;
+            }
+        }
+        i {
+            margin-right: 3px;
+            font-size: 1.6rem;
+        }
+    }
+    .price {
+        padding: 0px 15px;
+        font-size: 1.6rem;
+        font-weight: bold;
+        margin: 10px 0px;
+        color: @brand-primary;
+        .lead {
+            font-size: 1.6rem;
+        }
+        .original {
+            color: @text-muted;
+            text-decoration: line-through;
+            font-weight: normal;
+            font-size: 1.3rem;
+            margin-left: 5px;
+        }
+    }
+}

@@ -1,0 +1,40 @@
+<div id="order-log-entries">
+    <table class="table table-striped{% if not log_entries %} hidden{% endif %}">
+        <thead>
+            <tr>
+                <th>{% trans %}Message{% endtrans %}</th>
+                <th>{% trans %}Type{% endtrans %}</th>
+                <th>{% trans %}Date{% endtrans %}</th>
+                <th>{% trans %}User{% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in log_entries %}
+                <tr>
+                    <td>{{ entry.message }}</td>
+                    <td>{{ entry.kind }}</td>
+                    <td>{{ entry.created_on }}</td>
+                    <td>{{ entry.user }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if not log_entries %}
+        <div id="no-log-entries-text">
+            <p>{% trans %}No log entries have been added yet.{% endtrans %}</p>
+            <p>{% trans %}Use the input below to add new log entries.{% endtrans %}</p>
+        </div>
+    {% endif %}
+    <form action="" method="post">
+        <div class="form-group">
+            <label class="control-label" for="log-message">{% trans %}Message{% endtrans %}</label>
+            <textarea class="form-control" id="log-message" type="text"></textarea>
+        </div>
+        <div class="row">
+            <div class="input-actions">
+                <button class="btn btn-info" href="#">{% trans %}Add to Log{% endtrans %}</button>
+            </div>
+        </div>
+        {% csrf_token %}
+    </form>
+</div>

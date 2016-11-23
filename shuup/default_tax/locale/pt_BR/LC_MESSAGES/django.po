@@ -1,0 +1,162 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Jonathan Hess <jhess666@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-20 13:16+0000\n"
+"PO-Revision-Date: 2016-08-08 14:42+0000\n"
+"Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Shuup Default Tax"
+msgstr "Imposto Padrão do Shuup"
+
+msgid "Tax Rules"
+msgstr "Regras Fiscais"
+
+msgid "Taxes"
+msgstr "Impostos"
+
+msgid "Show tax rules"
+msgstr "Mostrar regras fiscais"
+
+msgid "Use ISO 3166-1 country codes (US, FI etc.)"
+msgstr "Use códigos de países em conformidade com a ISO 3166-1 (BR, US etc.)"
+
+msgid "Use two letter state codes for the US"
+msgstr "Use códigos de estados com duas letras para os EUA"
+
+msgid "Tax Rule"
+msgstr "Regra Fiscal"
+
+msgid "Tax"
+msgstr "Imposto"
+
+msgid "Tax Classes"
+msgstr "Classes Fiscais"
+
+msgid "Customer Tax Groups"
+msgstr "Grupos de Impostos do Cliente"
+
+msgid "Countries"
+msgstr "Países"
+
+msgid "Regions"
+msgstr "Estados"
+
+msgid "Postal Codes"
+msgstr "Códigos Postais"
+
+msgid "Priority"
+msgstr "Prioridade"
+
+msgid "Override Group"
+msgstr "Grupo de Substituição"
+
+msgid "Enabled"
+msgstr "Habilitado"
+
+msgid "enabled"
+msgstr "habilitado"
+
+msgid "tax classes"
+msgstr "classes fiscais"
+
+msgid "Tax classes of the items to be taxed"
+msgstr "Classes fiscais dos itens a ser tributados"
+
+msgid "customer tax groups"
+msgstr "grupos de impostos do cliente"
+
+msgid "country codes pattern"
+msgstr "padrão de códigos de países"
+
+msgid "region codes pattern"
+msgstr "padrão de códigos de estados"
+
+msgid "postal codes pattern"
+msgstr "padrão de códigos postais"
+
+msgid "priority"
+msgstr "prioridade"
+
+msgid ""
+"Rules with same priority define added taxes (e.g. US taxes) and rules with "
+"different priority define compound taxes (e.g. Canada Quebec PST case)"
+msgstr "Regras com mesma prioridade definem impostos agregados (p. ex. impostos dos EUA) e regras com diferentes prioridades definem impostos compostos (p. ex. caso do PST no Quebec, Canadá)"
+
+msgid "override group number"
+msgstr "número do grupo de substituição"
+
+msgid ""
+"If several rules match, only the rules with the highest override group "
+"number will be effective.  This can be used, for example, to implement tax "
+"exemption by adding a rule with very high override group that sets a zero "
+"tax."
+msgstr "Se várias regras corresponderem, apenas as regras com o maior número do grupo de substituição serão efetivas. Isto pode ser útil, por exemplo, na implementação da isenção de impostos, quando adicionado uma regra com o grupo de substituição muito elevado e que estabeleça a alíquota zero."
+
+msgid "tax"
+msgstr "imposto"
+
+msgid "Tax rule {} ({})"
+msgstr "Regra fiscal {} ({})"
+
+msgid "Default Taxation"
+msgstr "Tributação Padrão"
+
+msgid "Tax rule information"
+msgstr "Informações da regra fiscal"
+
+msgid "Matching criteria"
+msgstr "Critérios de correspondência"
+
+msgid "Grouping"
+msgstr "Agrupamento"
+
+msgid "Applied tax"
+msgstr "Imposto aplicado"
+
+msgid ""
+"\n"
+"            The following fields determine when this rule applies.  All\n"
+"            non-empty fields must match for the rule to apply.  Empty fields are\n"
+"            not considered, e.g. if \"Customer tax groups\" is left empty, all\n"
+"            customer tax groups will match.\n"
+"        "
+msgstr "\nOs seguintes campos determinam quando esta regra se aplica. Todos\nos campos não vazios devem casar para que a regra seja aplicada. Os campos vazios\nnão são considerados, p. ex. se \"Grupos de impostos do cliente\" for deixado em branco, todos\nos grupos de impostos do cliente irão corresponder.\n "
+
+msgid ""
+"\n"
+"            Pattern can be a single value or a comma separated list of items,\n"
+"            where each item can be a single value or a range, such as\n"
+"            \"value1-value2\".  Special value \"*\" matches everything.  For\n"
+"            example, a pattern \"1,2,50-90\" will match values \"1\" and \"2\", and\n"
+"            \"50\", \"90\", and everything between.  The range uses alphabetical\n"
+"            ordering unless start, end and the string to be matched are all\n"
+"            numerical, i.e. \"50-90\" will match also \"6a\" and \"700X\", since they\n"
+"            are alphabetically between \"50\" and \"90\", but it will not match\n"
+"            \"700000\" since for numerical items natural numeric ordering is used.\n"
+"        "
+msgstr "\nPadrão pode ser um valor único ou uma lista de itens separados por vírgula,\nonde cada item pode ser um valor único ou um intervalo, tal como\n\"valor1-valor2\". O caractere especial \"*\" casa com qualquer coisa. Por\nexemplo, um padrão \"1,2,50-90\" irá casar com os valores \"1\" e \"2\", e\n\"50\", \"90\", e tudo entre eles. Os intervalos usam ordenação alfabética\nexceto quando o início, fim e a string a ser comparada são todos\nnuméricos, ou seja, \"50-90\" irá casar também com \"6a\" e \"700X\", uma vez\nque estão alfabeticamente compreendidos entre \"50\" e \"90\", mas não irá casar com\n\"700000\", já que para itens numéricos a ordenação numérica natural é utilizada.\n "
+
+msgid ""
+"\n"
+"            Use the following fields to configure added or compounded\n"
+"            taxes (when several taxes apply for an item), or to create a\n"
+"            tax rule or a set of tax rules that override other tax rules.\n"
+"        "
+msgstr "\nUtilize os seguintes campos para configurar os impostos agregados ou\ncompostos (quando vários impostos são aplicáveis a um item), ou para criar uma\nou um conjunto de regras fiscais que sobreponham às demais.\n "
+
+msgid "When this rule applies, apply the following tax."
+msgstr "Quando esta regra for posta em prática, aplique o seguinte imposto."

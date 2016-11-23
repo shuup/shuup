@@ -1,0 +1,167 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Yuki Miyagi <yuki.miyagi@anders.fi>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-02-20 10:21+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"Language-Team: Japanese (Japan) (http://www.transifex.com/shuup/shuup/"
+"language/ja_JP/)\n"
+"Language: ja_JP\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Addons"
+msgstr "アドオン"
+
+#, python-format
+msgid "Enable %s"
+msgstr "有効化 %s"
+
+#, python-format
+msgid "%d new addons enabled."
+msgstr "%d 新しいアドオンが有効化されました。"
+
+#, python-format
+msgid "%d previously enabled addons disabled."
+msgstr "%d 以前に有効化されたアドオンが無効になりました。"
+
+msgid "No changes were made."
+msgstr "変更は行われませんでした。"
+
+msgid "Save addon changes"
+msgstr "アドオンの変更を保存する"
+
+msgid "Upload new addon"
+msgstr "新しいアドオンをアップロードする"
+
+msgid "Reload application"
+msgstr "アプリケーションをリロードする"
+
+msgid ""
+"There are no viable reload methods available. Please contact your system "
+"administrator."
+msgstr ""
+
+msgid "Reload Method"
+msgstr "メソッドをリロードする"
+
+msgid "Reloading."
+msgstr ""
+
+msgid "Addon file (ZIP)"
+msgstr "アドオンファイル (ZIP)"
+
+msgid "Only upload addon files you trust."
+msgstr "あなたが信頼できるアドオンファイルのみアップロードしてください。"
+
+msgid "Only ZIP files are supported"
+msgstr ""
+
+msgid "Upload"
+msgstr "アップロード"
+
+msgid "Install Addon"
+msgstr "アドオンをインストールする"
+
+msgid "Installed addons"
+msgstr "インストールされたアドオン"
+
+msgid "Addon name"
+msgstr "アドオンネーム"
+
+msgid "Is enabled"
+msgstr "を有効化しました"
+
+msgid "You don't have any installed addons"
+msgstr "インストールされたアドオンはありません"
+
+msgid "Reload Application Server"
+msgstr "アプリケーションサーバをリロード"
+
+msgid ""
+"When you reload the application server, it may take some time for the new "
+"instance of your application to properly initialize."
+msgstr ""
+"アプリケーションサーバをリロードする際、適切に初期化するために少々時間がかか"
+"ることがあります。"
+
+msgid ""
+"In addition, there is always a chance for the server to not properly "
+"initialize at all, in which case you may need to troubleshoot the problem "
+"yourself (or have a system administrator handy)."
+msgstr ""
+"また、サーバが正常に初期化しない場合は、問題を自分でトラブルシューティングす"
+"る (またはシステム管理者に依頼する) 必要がある可能性があります。"
+
+msgid "Reload steps"
+msgstr ""
+
+msgid ""
+"Finalize installations for newly installed addons (migrate and collect "
+"static resources)"
+msgstr ""
+
+msgid "Reload application server"
+msgstr ""
+
+msgid "Reload initiated."
+msgstr ""
+
+msgid "Error while reloading application."
+msgstr ""
+
+msgid "Finalizing installations."
+msgstr ""
+
+msgid "Your Shuup seems to be back up!"
+msgstr ""
+
+msgid "Your Shuup is not up yet. Trying again soon."
+msgstr ""
+
+msgid "Select file"
+msgstr "ファイルを選ぶ"
+
+msgid "Installation Finished"
+msgstr "インストールは完了しました"
+
+msgid "Installation Failed"
+msgstr "インストールに失敗しました"
+
+msgid "Success"
+msgstr "成功"
+
+#, python-format
+msgid ""
+"Next, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activate "
+"the newly installed addon</strong></a> and <a href=\"%(addon_reload_url)s\" "
+"class=\"text-success\"><strong>reload your application server</strong></a>."
+msgstr ""
+
+msgid "Error"
+msgstr "エラー"
+
+msgid "Installer Log"
+msgstr "インストーラーログ"
+
+msgid "Upload Addon - Install"
+msgstr "アドオンをアップロード – インストール"
+
+msgid "Package Information"
+msgstr "パッケージ情報"
+
+msgid "No package information could be extracted."
+msgstr "パッケージ情報を抽出することができませんでした。"
+
+msgid "File List"
+msgstr "ファイルリスト"

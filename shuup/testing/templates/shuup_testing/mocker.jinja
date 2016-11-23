@@ -1,0 +1,15 @@
+{% extends "shuup/admin/base.jinja" %}
+{% block content %}
+    <div class="container">
+        <div class="alert alert-danger">Warning: This will create mock data which may be hard to remove. Do not use in production.</div>
+        <form method="post">
+            <table class="table">
+                {% csrf_token %}
+                {{ form.as_table() }}
+                <tr>
+                    <td colspan="2"><input type="submit" value="Create"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+{% endblock %}

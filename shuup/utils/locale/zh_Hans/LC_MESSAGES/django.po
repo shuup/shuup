@@ -1,0 +1,85 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Jessica Wang <jessica.wang@shuup.com>, 2015-2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-04-14 09:11+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/"
+"language/cmn/)\n"
+"Language: cmn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Shuup Utilities"
+msgstr "Shuup 实用程序"
+
+msgid "other"
+msgstr "其他"
+
+msgid "audit"
+msgstr "审计"
+
+msgid "edit"
+msgstr "编辑"
+
+msgid "deletion"
+msgstr "删除"
+
+msgid "note"
+msgstr "注释"
+
+msgid "email"
+msgstr "邮箱"
+
+msgid "warning"
+msgstr "警告"
+
+msgid "error"
+msgstr "错误"
+
+msgid "created on"
+msgstr "创建"
+
+msgid "user"
+msgstr "用户"
+
+msgid "message"
+msgstr "信息"
+
+msgid "identifier"
+msgstr "标识符"
+
+msgid "log entry kind"
+msgstr ""
+
+msgid "extra data"
+msgstr "多余的数据"
+
+msgid "target"
+msgstr "目标"
+
+#, python-format
+msgid "%s day"
+msgid_plural "%s days"
+msgstr[0] ""
+
+#, python-format
+msgid "%(min)s--%(max)s days"
+msgstr ""
+
+msgid ""
+"Comma-separated values or ranges, e.g. A-Z,10000-19000. Use exclamation "
+"marks to negate (A-Z,!G will not match G)."
+msgstr ""
+"被逗号隔开的值或范围，例如A-Z,10000-19000。用感叹号取消掉 (A-Z,!G不会与G匹"
+"配)。"

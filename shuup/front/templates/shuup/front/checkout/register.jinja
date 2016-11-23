@@ -1,0 +1,10 @@
+{% extends "shuup/front/checkout/_base.jinja" %}
+
+{% block checkout_phase_content %}
+    <form class="single-page-refresh-after" role="form" method="post" action="" id="register">
+        {% csrf_token %}
+        {% for field in form.hidden_fields() %}{{ field|safe }}{% endfor %}
+        {% for field in form.visible_fields() %}{{ macros.render_field(field) }}{% endfor %}
+        {{ checkout_macros.default_buttons() }}
+    </form>
+{% endblock %}

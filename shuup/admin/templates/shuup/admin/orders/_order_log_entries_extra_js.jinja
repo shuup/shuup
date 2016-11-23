@@ -1,0 +1,43 @@
+<script>
+    (function(){
+        function toggleHidden(){
+            $("#order-log-entries table").toggleClass("hidden");
+            $("#order-log-entries #no-log-entries-text").toggleClass("hidden");
+        }
+        function prependRow(log){
+            $("#order-log-entries tbody").prepend(
+                "<tr><td>" + log.message + "</td><td>" + log.kind +
+                "</td><td>" + log.created_on + "</td><td>" + log.user + "</td></tr>"
+            );
+        }
+        $("#order-log-entries button").on("click", function(event){
+            event.preventDefault();
+            var $children = $("#order-log-entries tbody").children();
+            var numEntries = $children.length;
+            if(numEntries==0){
+                toggleHidden();
+            }
+            else if(numEntries>12){
+                $children.last().remove();
+                $("#order-log-entries tbody")
+            }
+            $.ajax({
+                type: "POST",
+                url: "{{ url('shuup_admin:order.new-log-entry', pk=order.pk) }}",
+                data: {
+                    "message": $("#log-message").val(),
+                    "csrfmiddlewaretoken": '{{ csrf_token }}',
+                },
+                success: function(data){
+                    prependRow(data);
+                    $("#log-message").val("");
+                    window.Messages.enqueue({tags: "success", text: "{% trans %}Log entry added.{% endtrans %}"});
+                },
+                error: function(){
+                    alert("{% trans %}There was an error adding the log entry.{% endtrans %}")
+                },
+            });
+
+        });
+    })();
+</script>

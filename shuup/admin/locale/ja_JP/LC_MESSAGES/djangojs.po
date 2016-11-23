@@ -1,0 +1,475 @@
+# English translations for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+#
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"PO-Revision-Date: 2016-06-28 21:58+0000\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shuup.com>\n"
+"Language-Team: Japanese (Japan) (http://www.transifex.com/shuup/shuup/"
+"language/ja_JP/)\n"
+"Language: ja_JP\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Unexpected error while uploading files."
+msgstr ""
+
+msgid "Error:"
+msgstr ""
+
+msgid "Uploaded:"
+msgstr ""
+
+msgid "New file name?"
+msgstr ""
+
+#, javascript-format
+msgid "Are you sure you want to delete the file %s?"
+msgstr ""
+
+msgid "New folder name?"
+msgstr ""
+
+#, javascript-format
+msgid "Are you sure you want to delete the %s folder?"
+msgstr ""
+
+msgid "New folder"
+msgstr ""
+
+msgid "current"
+msgstr ""
+
+msgid "Oldest first"
+msgstr ""
+
+msgid "Newest first"
+msgstr ""
+
+msgid "Smallest first"
+msgstr ""
+
+msgid "Largest first"
+msgstr ""
+
+msgid "Drop your files here"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Size"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Click the <strong>Upload</strong> button to upload files."
+msgstr ""
+
+msgid ""
+"<span>Drag and drop</span> files here<br> or click the <span>Upload</span> "
+"button."
+msgstr ""
+
+msgid "Rename file"
+msgstr ""
+
+msgid "Delete file"
+msgstr ""
+
+msgid "Rename folder"
+msgstr ""
+
+msgid "Delete folder"
+msgstr ""
+
+#, javascript-format
+msgid "Order %s created."
+msgstr ""
+
+msgid "An unspecified error occurred.\n"
+msgstr ""
+
+msgid "SKU"
+msgstr "最小管理単位"
+
+msgid "Text"
+msgstr ""
+
+msgid "Quantity"
+msgstr ""
+
+msgid "Unit Price"
+msgstr ""
+
+msgid "Discount amount"
+msgstr ""
+
+msgid "Total (excluding taxes)"
+msgstr ""
+
+msgid "Tax percent"
+msgstr ""
+
+msgid "Total"
+msgstr "合計"
+
+msgid "Billing address"
+msgstr " 請求先住所"
+
+msgid "Shipping address"
+msgstr "お届け先住所"
+
+msgid "Full Name"
+msgstr ""
+
+msgid "Phone"
+msgstr "電話"
+
+msgid "Email"
+msgstr "Eメール"
+
+msgid "Groups"
+msgstr ""
+
+msgid "Companies"
+msgstr ""
+
+msgid "Merchant Notes"
+msgstr ""
+
+msgid "Year"
+msgstr ""
+
+msgid "Total Sales"
+msgstr ""
+
+msgid "Shipment Status"
+msgstr ""
+
+msgid "Payment Status"
+msgstr ""
+
+msgid "Order Status"
+msgstr ""
+
+msgid "Customer Information"
+msgstr ""
+
+msgid "Order Summary"
+msgstr ""
+
+msgid "Recent Orders"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "A new customer will be created based on billing address."
+msgstr ""
+
+msgid "Customer"
+msgstr ""
+
+msgid "Select Existing Customer"
+msgstr ""
+
+msgid "New Customer"
+msgstr ""
+
+msgid "View Details"
+msgstr ""
+
+msgid "Save customer details while creating order"
+msgstr ""
+
+msgid "Ship to billing address"
+msgstr ""
+
+msgid "Order for company"
+msgstr ""
+
+msgid "Billing Address"
+msgstr "請求先住所"
+
+msgid "Shipping Address"
+msgstr "お届け先住所"
+
+msgid "Back"
+msgstr ""
+
+msgid "Confirm"
+msgstr ""
+
+msgid "Discard Changes"
+msgstr ""
+
+msgid "Select Shop"
+msgstr ""
+
+msgid "Customer Details"
+msgstr ""
+
+msgid "Order Contents"
+msgstr ""
+
+msgid "Shipping Method"
+msgstr ""
+
+msgid "Payment Method"
+msgstr ""
+
+msgid ""
+"Method rules, taxes and possible extra discounts are calculated after "
+"proceeding."
+msgstr ""
+
+msgid "Proceed"
+msgstr ""
+
+msgid "Logical Count"
+msgstr ""
+
+msgid "Physical Count"
+msgstr ""
+
+msgid "Select product"
+msgstr "商品を選ぶ"
+
+msgid "Text/Comment"
+msgstr ""
+
+msgid "Qty"
+msgstr ""
+
+msgid "Total Price"
+msgstr ""
+
+msgid "Base Unit Price"
+msgstr ""
+
+msgid "Discounted Unit Price"
+msgstr ""
+
+msgid "Discount Percent"
+msgstr ""
+
+msgid "Total Discount Amount"
+msgstr ""
+
+msgid "Line Total"
+msgstr ""
+
+msgid "Orderline type"
+msgstr ""
+
+msgid ""
+"If your product prices vary based on customer, you might want to select "
+"customer first."
+msgstr ""
+
+#, javascript-format
+msgid "All prices are in %s currency."
+msgstr ""
+
+msgid "All prices include taxes."
+msgstr ""
+
+msgid "Taxes not included."
+msgstr ""
+
+msgid "Add new line"
+msgstr ""
+
+msgid "No shipping method"
+msgstr ""
+
+msgid "No payment method"
+msgstr ""
+
+msgid "Shop"
+msgstr ""
+
+msgid "Product"
+msgstr ""
+
+msgid "Other"
+msgstr ""
+
+msgid "Tax number"
+msgstr "税番号"
+
+msgid "Street"
+msgstr ""
+
+msgid "Street (2)"
+msgstr ""
+
+msgid "ZIP / Postal code"
+msgstr "郵便番号"
+
+msgid "City"
+msgstr ""
+
+msgid "Region"
+msgstr ""
+
+msgid "Country"
+msgstr ""
+
+msgid "No records found."
+msgstr ""
+
+msgid "Identifier"
+msgstr ""
+
+#, javascript-format
+msgid "Value %s Name"
+msgstr ""
+
+msgid "Delete value"
+msgstr ""
+
+msgid "Are you sure?"
+msgstr ""
+
+msgid "Delete Variable"
+msgstr ""
+
+msgid "Add new value"
+msgstr ""
+
+msgid "Variable Name"
+msgstr ""
+
+msgid "DELETE"
+msgstr ""
+
+msgid "Variable"
+msgstr ""
+
+msgid "Show identifier fields (for advanced users)"
+msgstr ""
+
+msgid "There are no variables defined."
+msgstr ""
+
+msgid "Add new variable"
+msgstr ""
+
+msgid "No browser URL for kind:"
+msgstr ""
+
+msgid "Expand Editor"
+msgstr ""
+
+msgid "No results."
+msgstr ""
+
+msgid "The results could not be loaded"
+msgstr ""
+
+#, javascript-format
+msgid "Please delete %s character"
+msgid_plural "Please delete %s characters"
+msgstr[0] ""
+
+#, javascript-format
+msgid "Please enter %s or more characters"
+msgstr ""
+
+msgid "Loading more results..."
+msgstr ""
+
+#, javascript-format
+msgid "You can only select %s item"
+msgid_plural "You can only select %s items"
+msgstr[0] ""
+
+msgid "No results found"
+msgstr ""
+
+msgid "Searching..."
+msgstr ""
+
+msgid "From"
+msgstr ""
+
+msgid "To"
+msgstr ""
+
+msgid "Items per page"
+msgstr ""
+
+msgid "Reset filters"
+msgstr ""
+
+msgid "Reset"
+msgstr ""
+
+msgid "Sort by"
+msgstr ""
+
+msgid "ascending"
+msgstr ""
+
+msgid "descending"
+msgstr ""
+
+msgid "Default sorting"
+msgstr ""
+
+msgid "Previous"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+#, javascript-format
+msgid "Filter by %s"
+msgstr ""
+
+msgid "Filters"
+msgstr ""
+
+msgid "Are you sure you want to delete this media?"
+msgstr ""
+
+msgid "Set as primary image"
+msgstr ""
+
+msgid "Primary image"
+msgstr ""
+
+msgid "Bold"
+msgstr ""
+
+msgid "Italic"
+msgstr ""
+
+msgid "List"
+msgstr ""
+
+msgid "Ordered list"
+msgstr ""
+
+msgid "Link"
+msgstr ""
+
+msgid "Editor"
+msgstr ""
+
+msgid "Done"
+msgstr ""

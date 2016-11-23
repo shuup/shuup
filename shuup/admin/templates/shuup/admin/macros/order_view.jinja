@@ -1,0 +1,53 @@
+{% macro order_view(orders) %}
+    <div class="hidden-xs">
+        <table class="table table-condensed table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>{% trans %}Date{% endtrans %}</th>
+                <th class="text-right">{% trans %}Total{% endtrans %}</th>
+                <th>{% trans %}Order Status{% endtrans %}</th>
+                <th>{% trans %}Shipping Status{% endtrans %}</th>
+                <th>{% trans %}Payment Status{% endtrans %}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order in orders %}
+                {% set url = shuup_admin.model_url(order) %}
+                <tr>
+                    <td>{% if url %}<a href="{{ url }}">{% endif %}{{ order.identifier }}{% if url %}</a>{% endif %}</td>
+                    <td>{{ order.order_date|datetime(format="short") }}</td>
+                    <td class="text-right">{{ order.taxful_total_price|money }}</td>
+                    <td>{{ order.get_status_display() }}</td>
+                    <td>{{ order.get_shipping_status_display() }}</td>
+                    <td>{{ order.get_payment_status_display() }}</td>
+                    <td>{% if url %}<a href="{{ url }}">{% endif %}<i class="fa fa-arrow-right"></i>{% if url %}</a>{% endif %}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="visible-xs mobile-list-group">
+        <ul class="list-group">
+            {% for order in orders %}
+                {% set url = shuup_admin.model_url(order) %}
+                <li class="list-group-item">
+                    {% if url %}<a href="{{ url }}">{% endif %}
+                        <h4 class="list-group-item-heading">
+                            <strong>{% trans %}Order{% endtrans %} {{ order.identifier }}</strong> ({{ order.order_date|datetime(format="short") }})
+                        </h4>
+                    {% if url %}</a>{% endif %}
+                    <p class="list-group-item-text">
+                        {{ order.get_status_display() }},
+                        {{ order.get_shipping_status_display() }},
+                        {{ order.get_payment_status_display() }}.
+                    </p>
+                    <p class="list-group-item-text">
+                        {% trans %}Total{% endtrans %} <strong>{{ order.taxful_total_price|money }}</strong>
+                    </p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endmacro %}

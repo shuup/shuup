@@ -1,0 +1,8 @@
+Shuup 0.6.0 Release Notes
+=========================
+
+Released on 2016-11-22 21:45pm -0800.
+
+For all changes see the full changelog:
+:doc:`../changelog` or `Git commit log
+<https://github.com/shuup/shuup/commits/v0.6.0>`__.

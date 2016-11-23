@@ -1,0 +1,18 @@
+.badge {
+    &.product-badge {
+        line-height: 65px;
+        border-radius: 50%;
+        height: 65px;
+        width: 65px;
+        padding: 0;
+        background: @brand-primary;
+        color: #fff;
+        letter-spacing: 1px;
+        &.sale {
+          background-color: @brand-danger;
+        }
+        &.new {
+            background: @brand-info;
+        }
+    }
+}

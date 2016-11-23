@@ -1,0 +1,21 @@
+<canvas id="canvas_bar" height="400" width="500"></canvas>
+
+<script>
+    var randomScalingFactorBar = function() {
+        return Math.round(Math.random()*100)
+    };
+
+    var barChartData = {
+        labels : ["January","February","March","April","May","June","July"],
+        datasets : [
+            {
+                fillColor : "rgba(53,154,140,0.75)",
+                strokeColor : "rgba(53,154,140,0)",
+                highlightFill : "rgba(53,154,140,1)",
+                highlightStroke : "rgba(53,154,140,1)",
+                data : [randomScalingFactorBar(),randomScalingFactorBar(),randomScalingFactorBar(),randomScalingFactorBar(),randomScalingFactorBar(),randomScalingFactorBar(),randomScalingFactorBar()]
+            }
+        ]
+    }
+
+</script>

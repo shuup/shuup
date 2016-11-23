@@ -1,0 +1,40 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Christian Hess <christianhess.rlz@gmail.com>, 2016
+# Jonathan Hess <jhess666@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-04 19:11+0000\n"
+"PO-Revision-Date: 2016-04-09 17:36+0000\n"
+"Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/"
+"language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Search"
+msgstr "Procurar"
+
+msgid "Search for products"
+msgstr "Procurar por produtos"
+
+#, python-format
+msgid "No results found for \"<strong>%(query)s</strong>\"."
+msgstr "Nenhum resultado encontrado para \"<strong>%(query)s</strong>\"."
+
+#, fuzzy, python-format
+#| msgid "No results found for \"<strong>%(query)s</strong>\"."
+msgid "%(n)s results found for \"<strong>%(query)s</strong>\"."
+msgstr "Nenhum resultado encontrado para \"<strong>%(query)s</strong>\"."
+
+msgid "Sort"
+msgstr "Ordenar"

@@ -1,0 +1,49 @@
+{% extends "shuup/front/dashboard/dashboard.jinja" %}
+
+{% block title -%}{% trans %}Order history{% endtrans %}{%- endblock %}
+{% block content_title %}{% trans %}Order history{% endtrans %}{% endblock %}
+
+{% block breadcrumb %}
+    {% call macros.breadcrumb() %}
+        {{ macros.render_breadcrumb_item("/", _("Home")) }}
+        {{ macros.render_breadcrumb_item(url("shuup:dashboard"), _("Dashboard")) }}
+        {{ macros.render_breadcrumb_item(None, _("Order History"), True) }}
+    {% endcall %}
+{% endblock %}
+
+{% block dashboard_content %}
+    {% if orders %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>{{ _('Identifier') }}</th>
+                        <th>{{ _('Order date') }}</th>
+                        <th>{{ _('Status') }}</th>
+                        <th class="text-right">{{ _('Total price') }}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                        <tr>
+                            <td>{{- order.identifier -}}</td>
+                            <td>{{ order.order_date|datetime }}</td>
+                            <td>{{ order.get_status_display() }}</td>
+                            <td class="text-right">{{ order.taxful_total_price|money }}</td>
+                            <td class="text-right">
+                                <a href="{{ url("shuup:show-order", pk=order.pk) }}">
+                                    <i class="fa fa-search"></i> {% trans %}Details{% endtrans %}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="lead">
+            <i class="fa fa-info-circle text-info"></i> {{ _("You haven't made any orders yet.") }}
+        </p>
+    {% endif %}
+{% endblock %}

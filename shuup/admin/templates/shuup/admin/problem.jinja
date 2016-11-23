@@ -1,0 +1,23 @@
+{% extends "shuup/admin/base_popup.jinja" %}
+{% block content %}
+    <div class="container">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ title|default(_("Error!")) }}</h3>
+            </div>
+            <div class="panel-body">
+                <h1>{{ title|default(_("Error!")) }}</h1>
+                <hr>
+                {{ message }}
+                {% if exception.links %}
+                    <hr>
+                    <ul>
+                        {% for link in exception.links %}
+                            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,12 @@
+<section class="xtheme-image-plugin">
+    <h2>{{ title }}</h2>
+    {% if image %}
+        {% if url %}<a href="{{ url }}">{% endif %}
+            <img src="{{ image.url }}"
+            {% if full_width or width or height %}
+                style="{% if width%}width: {{ width }}px; {% elif full_width %}width: 100%{% endif %}
+                {% if height %}height: {{ height }}px{% endif %}"
+            {% endif %}>
+        {% if url %}</a>{% endif %}
+    {% endif %}
+</section>

@@ -1,0 +1,148 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Yuki Miyagi <yuki.miyagi@anders.fi>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-04 19:11+0000\n"
+"PO-Revision-Date: 2016-02-05 12:24+0000\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"Language-Team: Japanese (Japan) (http://www.transifex.com/shuup/shuup/"
+"language/ja_JP/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja_JP\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Shuup Frontend - Personal Order History"
+msgstr ""
+
+#, python-format
+msgid "Order %(identifier)s"
+msgstr ""
+
+msgid "Home"
+msgstr ""
+
+msgid "Order History"
+msgstr "ご注文履歴"
+
+#, python-format
+msgid "Details of order %(identifier)s"
+msgstr ""
+
+msgid "Basic Information"
+msgstr "基本情報"
+
+msgid "Order Number"
+msgstr ""
+
+msgid "Order Date"
+msgstr "注文日付"
+
+msgid "Reference"
+msgstr ""
+
+msgid "Label"
+msgstr ""
+
+msgid "Customer"
+msgstr "カスタマー"
+
+msgid "Ordered by"
+msgstr ""
+
+msgid "Creator"
+msgstr ""
+
+msgid "Phone"
+msgstr "電話"
+
+msgid "Email"
+msgstr "Eメール"
+
+#, fuzzy
+#| msgid "Tax number"
+msgid "Tax Number"
+msgstr "税番号"
+
+msgid "Total Price"
+msgstr ""
+
+msgid "Total Price (taxless)"
+msgstr ""
+
+msgid "Tracking codes"
+msgstr ""
+
+msgid "Status"
+msgstr "ステータス"
+
+msgid "Order Status"
+msgstr "注文状況"
+
+msgid "Payment Status"
+msgstr "支払状況"
+
+msgid "Shipping Status"
+msgstr "運送状況"
+
+msgid "Shipping Address"
+msgstr "お届け先住所"
+
+msgid "Billing Address"
+msgstr "請求先住所"
+
+msgid "Order Contents"
+msgstr ""
+
+msgid "SKU"
+msgstr "最小管理単位"
+
+msgid "Text"
+msgstr ""
+
+msgid "Taxless Unit Price"
+msgstr ""
+
+msgid "Quantity"
+msgstr "数量"
+
+msgid "Taxless Discount"
+msgstr ""
+
+msgid "Tax"
+msgstr "税"
+
+msgid "Taxless Total"
+msgstr ""
+
+msgid "Total incl. Tax"
+msgstr ""
+
+msgid "Total"
+msgstr "合計"
+
+msgid "Order history"
+msgstr "ご注文履歴"
+
+msgid "Identifier"
+msgstr "識別子"
+
+msgid "Order date"
+msgstr ""
+
+msgid "Total price"
+msgstr "合計価格"
+
+msgid "Details"
+msgstr ""
+
+msgid "You haven't made any orders yet."
+msgstr ""

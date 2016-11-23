@@ -1,0 +1,25 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% set children_form = form["children"] %}
+
+{% call content_block(_("Variable Children"), "fa-sitemap", id="variable-children-section") %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>{% trans %}Combination{% endtrans %}</th>
+            <th>{% trans %}Product{% endtrans %}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for f in children_form %}
+            <tr>
+                <td>
+                    {{ f.field.combo.text_description }}
+                </td>
+                <td>
+                    {{ f|safe }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endcall %}

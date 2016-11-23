@@ -1,0 +1,18 @@
+{% extends "shuup/front/base.jinja" %}
+
+{% block title -%}{% if title %}{{ title }}{% endif %}{%- endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-8 col-sm-push-2 col-md-6 col-md-push-3">
+            <h1 class="page-header text-center">
+                {{ self.title() }}
+            </h1>
+            <div class="text-center">
+                {% block message %}
+                    {% if message %}{{ message }}{% endif %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

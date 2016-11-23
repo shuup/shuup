@@ -1,0 +1,6 @@
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs, render_monolingual_fields %}
+{% set form = pane.forms[form_def.name] %}
+<div class="form-def">
+    {{ language_dependent_content_tabs(form) }}
+    {{ render_monolingual_fields(form) }}
+</div>

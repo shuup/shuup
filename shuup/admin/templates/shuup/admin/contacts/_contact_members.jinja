@@ -1,0 +1,22 @@
+{% if not contact_members.count() %}
+    {{ _("No members.") }}
+
+{% else %}
+<table class="table table-condensed table-striped">
+<thead>
+    <tr>
+        <th>{{ _("Name") }}</th>
+        <th>{{ _("Email") }}</th>
+    </tr>
+</thead>
+<tbody>
+    {% for member in contact_members %}
+        <tr>
+            {% set url = shuup_admin.model_url(member) %}
+            <td>{% if url %}<a href="{{ url }}">{% endif %}{{ member.name }}{% if url %}</a>{% endif %}</td>
+            <td>{{ member.email }}</td>
+        </tr>
+    {% endfor %}
+</tbody>
+</table>
+{% endif %}

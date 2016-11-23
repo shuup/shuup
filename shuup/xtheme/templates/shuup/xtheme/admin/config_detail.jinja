@@ -1,0 +1,70 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block, content_with_sidebar %}
+
+{% block title %}{% trans name=theme.name %}Theme Configuration: {{ name }}{% endtrans %}{% endblock %}
+
+{% block content %}
+    {% call content_with_sidebar(content_id="theme_settings_form") %}
+        <form method="post" id="theme_settings_form">
+            {% csrf_token %}
+            {% call content_block(_("Theme Configuration"), "fa-cog") %}
+                {% if form.fields %}
+                    {% for field in form %}
+                        {% if field.name == "stylesheet" and has_images %}
+                            <div class="form-group required-field">
+                                <label class="control-label" for="id_stylesheet">{% trans %}Stylesheets{% endtrans %}</label>
+                                <select class="form-control" id="id_stylesheet" name="stylesheet" tabindex="-1" aria-hidden="true">
+                                    {% for stylesheet in theme.stylesheets %}
+                                        {% set selected = " selected='selected'" if stylesheet.stylesheet == active_stylesheet else "" %}
+                                        <option{{ selected }} value="{{ stylesheet.stylesheet }}" data-identifier="{{ stylesheet.identifier }}">{{ stylesheet.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% else %}
+                            {{ bs3.field(field) }}
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert-info">
+                        {% trans %}There's nothing to configure in this theme.{% endtrans %}
+                    </div>
+                {% endif %}
+
+                {% if theme.has_images() %}
+                <div id="theme-images">
+                    <div class="row">
+                    {% for style_definition in theme.stylesheets %}
+                        {% if style_definition.identifier %}
+                            {% for image in style_definition.images %}
+                                {% set active = " active" if style_definition.stylesheet == active_stylesheet else "" %}
+                                <div class="col-md-4 theme-screenshot{{ active }}" data-identifier="{{ style_definition.identifier }}">
+                                    <div class="theme-name">{{ style_definition.name }}</div>
+                                    <a class="theme-image lightbox" href="{{ STATIC_URL }}{{ image }}">
+                                        <img src="{{ STATIC_URL }}{{ image }}">
+                                    </a>
+                                    <div class="tools">
+                                        <button
+                                                class="btn btn-primary theme-select"
+                                                data-target="{{ style_definition.stylesheet }}">
+                                            {% trans %}Select theme{% endtrans %}
+                                        </button>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+                </div>
+                <div style="clear:both;"></div>
+                {% endif %}
+            {% endcall %}
+        </form>
+
+    {% endcall %}
+{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ static("xtheme/admin/xtheme_admin.css") }}">
+{% endblock %}
+{% block extra_js %}
+    <script src="{{ static("xtheme/admin/admin.js") }}"></script>
+{% endblock %}

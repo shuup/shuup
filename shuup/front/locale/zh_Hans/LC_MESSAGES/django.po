@@ -1,0 +1,640 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Jessica Wang <jessica.wang@shuup.com>, 2015-2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-04 19:12+0000\n"
+"PO-Revision-Date: 2016-08-04 12:59-0700\n"
+"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"Language-Team: Chinese (Mandarin) (http://www.transifex.com/shuup/shuup/"
+"language/cmn/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cmn\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 1.8.8\n"
+
+msgid "Abandoned Cart Value"
+msgstr ""
+
+msgid "Based on {b} carts over the last {d} days"
+msgstr ""
+
+msgid "Carts"
+msgstr ""
+
+msgid "Show carts"
+msgstr ""
+
+msgid "Created on"
+msgstr ""
+
+msgid "Last updated on"
+msgstr ""
+
+msgid "Abandoned"
+msgstr ""
+
+msgid "yes"
+msgstr ""
+
+msgid "no"
+msgstr ""
+
+msgid "Shop"
+msgstr ""
+
+msgid "Product count"
+msgstr ""
+
+msgid "Customer"
+msgstr "顾客"
+
+msgid "Orderer"
+msgstr ""
+
+msgid "Total"
+msgstr "总共"
+
+msgid "Ordered"
+msgstr ""
+
+msgid "Shuup Frontend - Saved Baskets"
+msgstr ""
+
+msgid "Home"
+msgstr "主页"
+
+msgid "My Saved Carts"
+msgstr ""
+
+msgid "Add all products to cart"
+msgstr ""
+
+msgid "Delete cart"
+msgstr ""
+
+msgid "Product"
+msgstr "产品"
+
+msgid "Quantity"
+msgstr "数量"
+
+msgid "Price"
+msgstr "价格"
+
+msgid "Saved Carts"
+msgstr ""
+
+msgid "Title"
+msgstr "名称"
+
+msgid "Product Count"
+msgstr ""
+
+msgid "Details"
+msgstr "详情"
+
+msgid "You haven't saved any carts yet."
+msgstr ""
+
+msgid "Please enter a basket title."
+msgstr ""
+
+msgid "Cannot save an empty basket."
+msgstr ""
+
+msgid "Product not available in this shop"
+msgstr "该商店没有此产品。"
+
+msgid "Invalid supplier"
+msgstr ""
+
+#, python-format
+msgid "%d product(s) added to cart"
+msgstr ""
+
+#, python-format
+msgid "Invalid command %s"
+msgstr "命令无效 %s"
+
+#, python-format
+msgid "The quantity %f is not allowed. Please use an integer value."
+msgstr "该数量 %f 不可用。请使用整数值。"
+
+#, python-format
+msgid "The quantity %s is not valid."
+msgstr "该数量 %s 无效。"
+
+msgid "This variation is not available."
+msgstr "该变体不可用。"
+
+#, python-format
+msgid "Basket loading failed: Incompatible basket (%s)"
+msgstr "购物篮加载失败：不可兼容的购物篮 (%s)"
+
+msgid "Try to remove some products from the basket and order them separately."
+msgstr "请尝试清除购物篮里的一些产品，接着单独订购这些产品。"
+
+#, python-format
+msgid "Products in basket cannot be shipped together. %s"
+msgstr "购物篮里的产品不能一起配送。%s"
+
+#, python-format
+msgid "Products in basket have no common payment method. %s"
+msgstr "购物篮里的产品没有共同的支付方式。%s"
+
+msgid "Tax number required for companies"
+msgstr "所有公司要求提供税号"
+
+msgid "Cannot use tax number without company name"
+msgstr "无法使用没有公司名的税号"
+
+msgid "Addresses"
+msgstr "地址"
+
+msgid "I accept the terms and conditions"
+msgstr "我接受条款和条件"
+
+msgid "I want to subscribe to your newsletter"
+msgstr "我想要订阅你们的时事通讯"
+
+msgid "Comment"
+msgstr "评论"
+
+msgid "Confirmation"
+msgstr "确认"
+
+msgid "Empty Basket"
+msgstr "购物篮为空"
+
+msgid "shipping method"
+msgstr "配送方式"
+
+msgid "payment method"
+msgstr "支付方式"
+
+msgid "Shipping & Payment"
+msgstr "配送 & 支付"
+
+msgid "Company name"
+msgstr "公司名称"
+
+msgid "Tax number"
+msgstr "税号"
+
+msgid "Shipping method"
+msgstr "配送方式"
+
+msgid "Payment method"
+msgstr "支付方式"
+
+msgid "Please send me marketing correspondence"
+msgstr "请发送给我营销通信"
+
+msgid "Logged out since this account is inactive."
+msgstr ""
+
+msgid "key"
+msgstr "键"
+
+msgid "shop"
+msgstr "商店"
+
+msgid "customer"
+msgstr "顾客"
+
+msgid "orderer"
+msgstr "订货人"
+
+msgid "creator"
+msgstr "创建人"
+
+msgid "created on"
+msgstr "创建"
+
+msgid "updated on"
+msgstr ""
+
+msgid "persistent"
+msgstr ""
+
+msgid "deleted"
+msgstr "已删除"
+
+msgid "finished"
+msgstr ""
+
+msgid "title"
+msgstr "名称"
+
+msgid "data"
+msgstr "数据"
+
+msgid "taxless total price"
+msgstr ""
+
+msgid "taxful total price"
+msgstr ""
+
+msgid "currency"
+msgstr "货币"
+
+msgid "prices include tax"
+msgstr "含税价"
+
+msgid "product_count"
+msgstr ""
+
+msgid "products"
+msgstr "产品"
+
+msgid "Shop is currently in maintenance mode."
+msgstr "商店目前在维修模式中。"
+
+msgid ""
+"There were errors on submitted form fields. Please check them and try again."
+msgstr "提交表格字段时出错，请查看并重试。"
+
+msgid "Product added to cart"
+msgstr "已添加该产品至购物车"
+
+msgid "There was an error adding the product to the basket"
+msgstr "添加产品至购物篮出错"
+
+msgid "Shopping cart"
+msgstr "购物车"
+
+msgid "Your shopping cart is empty."
+msgstr "您的购物车为空。"
+
+msgid "Back to Products"
+msgstr "返回产品"
+
+msgid "There were errors on following items"
+msgstr "下列物品发生错误"
+
+msgid "You are unable to proceed to checkout!"
+msgstr "无法前进至结账！"
+
+msgid "Continue Shopping"
+msgstr "继续购物"
+
+msgid "Proceed to checkout"
+msgstr "去结账"
+
+msgid "Save cart"
+msgstr ""
+
+msgid "Cart Title"
+msgstr "名称"
+
+msgid "Save"
+msgstr ""
+
+msgid "Coupon is not available."
+msgstr "该变体不可用。"
+
+msgid "Error when adding coupon."
+msgstr ""
+
+msgid "Cart"
+msgstr "购物车"
+
+msgid "Items"
+msgstr "物品"
+
+msgid "View cart"
+msgstr "查看购物车"
+
+msgid "Qty"
+msgstr "数量"
+
+msgid "Remove product from basket"
+msgstr "从购物篮中删除该产品"
+
+msgid "Have a coupon code? Enter it here"
+msgstr ""
+
+msgid "Coupon Code"
+msgstr ""
+
+msgid "Submit Code"
+msgstr ""
+
+msgid "Checkout"
+msgstr "结账"
+
+msgid "Continue"
+msgstr "继续"
+
+msgid "excl. tax"
+msgstr "不包税"
+
+msgid "Billing address"
+msgstr "账单地址"
+
+msgid "Ordering for a company?"
+msgstr "为公司订购？"
+
+msgid "Please fill out these fields if you are ordering for a company."
+msgstr "如果您是为公司订购，请填写这些字段。"
+
+msgid "Shipping address"
+msgstr "收货地址"
+
+msgid "Ship to my billing address"
+msgstr "发货至我的账单地址"
+
+msgid "Delivery"
+msgstr "邮寄"
+
+msgid "Delivery method"
+msgstr "邮寄方式"
+
+msgid "Billing"
+msgstr "账单"
+
+msgid "Add comment"
+msgstr "添加评论"
+
+msgid "Place Order"
+msgstr "下订单"
+
+msgid "There are errors"
+msgstr "出错"
+
+msgid "Choose Shipping Method"
+msgstr "配送方式"
+
+msgid "Choose Payment Method"
+msgstr "支付方式"
+
+msgid "Errors"
+msgstr "错误"
+
+msgid "Ordering for a company"
+msgstr "为公司订购"
+
+msgid "Other information"
+msgstr "其他信息"
+
+msgid "Place the order"
+msgstr "下订单"
+
+msgid "Bad Request"
+msgstr "错误请求"
+
+msgid "Unfortunately the server couldn't process your request."
+msgstr "抱歉，服务器无法处理您的请求。"
+
+msgid "Back to Homepage"
+msgstr "返回主页"
+
+msgid "Permission Denied"
+msgstr "许可被拒绝"
+
+msgid "Unfortunately you didn't have permission to display this page."
+msgstr "抱歉，您没有权限展示该页面。"
+
+msgid "Page not Found"
+msgstr "无法找到页面"
+
+msgid "Unfortunately the page you were looking for does not exist."
+msgstr "抱歉，您所查找的页面不存在。"
+
+msgid "Internal Server Error"
+msgstr "内部服务器错误"
+
+msgid ""
+"Unfortunately an internal server error occurred. Try refreshing the page or "
+"try again later."
+msgstr "抱歉，内部服务器出错。请刷新页面或稍后再试。"
+
+msgid "Categories"
+msgstr "分类"
+
+msgid "Edit account details"
+msgstr "账号详情编辑"
+
+msgid "Edit company details"
+msgstr ""
+
+msgid "My orders"
+msgstr "我的订单"
+
+msgid "My saved carts"
+msgstr ""
+
+msgid "My wishlists"
+msgstr ""
+
+msgid "Admin panel"
+msgstr "管理面板"
+
+msgid "Log out"
+msgstr "退出"
+
+msgid "Log in"
+msgstr "登录"
+
+msgid "Username or email address"
+msgstr "用户名或者邮箱地址"
+
+msgid "Password"
+msgstr "密码"
+
+msgid "Forgot your password?"
+msgstr "忘记密码？"
+
+msgid "New user? Register here!"
+msgstr "新用户？在此注册！"
+
+msgid "Menu"
+msgstr "菜单"
+
+msgid "Products"
+msgstr "产品"
+
+#, python-format
+msgid "Welcome to %(shop_name)s!"
+msgstr "欢迎到 %(shop_name)s!"
+
+msgid "Preview"
+msgstr "预览"
+
+msgid "Files"
+msgstr "文件"
+
+msgid "Products ordered"
+msgstr "产品已订购。"
+
+msgid "Tax breakdown"
+msgstr "税收明细"
+
+msgid "Payment"
+msgstr "支付"
+
+msgid "Company"
+msgstr "公司"
+
+msgid "Previous"
+msgstr "上一页"
+
+msgid "Next"
+msgstr "下一页"
+
+msgid "Maintenance mode"
+msgstr "维护模式"
+
+msgid "Shop is currently down for maintenance."
+msgstr "商店目前在维修中。"
+
+msgid "Thank you for your order!"
+msgstr "感谢您的订购！"
+
+msgid ""
+"Your order has been received. You can see the details of your order below."
+msgstr "您的订单已接收。您可在下查看订单详情。"
+
+msgid "User account activation"
+msgstr "用户账号激活"
+
+msgid ""
+"If you want to be able to see your order history, please create a password "
+"for your account: "
+msgstr "如果您想查看您的订单历史纪录，请为您的账号创建密码："
+
+msgid "Send"
+msgstr "发送"
+
+msgid "Tax"
+msgstr "税收"
+
+msgid "Tax percentage"
+msgstr "税率"
+
+msgid "Based on amount"
+msgstr "根据数额"
+
+msgid "Amount of tax"
+msgstr "税额"
+
+msgid "Total including tax"
+msgstr "总含税 "
+
+msgid "Payment canceled"
+msgstr "支付已取消"
+
+msgid "You have canceled payment"
+msgstr "您已经取消支付"
+
+msgid "Retry payment"
+msgstr "重试支付"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Barcode"
+msgstr "条码"
+
+msgid "Manufacturer"
+msgstr "制造商"
+
+msgid "Package Size"
+msgstr "包大小"
+
+msgid "Width"
+msgstr "宽度"
+
+msgid "Height"
+msgstr "高度"
+
+msgid "Depth"
+msgstr "深度"
+
+msgid "Net Weight"
+msgstr "净重"
+
+msgid "Gross Weight"
+msgstr "毛重"
+
+msgid "External link"
+msgstr "外部链接"
+
+msgid "Add to cart"
+msgstr "添加至购物车"
+
+msgid "Product is not orderable."
+msgstr "该产品不可订购。"
+
+msgid "Select"
+msgstr "选择"
+
+msgid "Select product"
+msgstr "选择产品"
+
+msgid "Combination not available"
+msgstr "无法合并"
+
+msgid "Show Grid/List"
+msgstr "网格/列表显示"
+
+msgid "Grid/list view"
+msgstr "网格/列表视图"
+
+#, python-format
+msgid "Save %(discount_percent)s"
+msgstr "保存 %(discount_percent)s"
+
+msgid "Product Information"
+msgstr "产品信息"
+
+msgid "Description"
+msgstr "描述"
+
+msgid "Attributes"
+msgstr "属性"
+
+msgid "Includes these products"
+msgstr "包含这些产品"
+
+msgid "No product description available"
+msgstr "没有产品描述"
+
+msgid "Also available in"
+msgstr "也提供"
+
+msgid "Open product page"
+msgstr "打开产品页面"
+
+msgid "Newest products"
+msgstr "最新产品"
+
+msgid "Show Frontpage Welcome Text"
+msgstr "首页显示欢迎文本"
+
+msgid "This product is not available in this shop."
+msgstr "该商店没有此产品。"
+
+msgid "Name - A-Z"
+msgstr "名称 - A-Z"
+
+msgid "Name - Z-A"
+msgstr "名称- Z-A"
+
+msgid "Price - Low to High"
+msgstr "价格 - 由低到高"
+
+msgid "Price - High to Low"
+msgstr "价格 - 由高到低"
+
+msgid "Sort"
+msgstr "排列"

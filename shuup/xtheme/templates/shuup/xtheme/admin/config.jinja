@@ -1,0 +1,27 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/xtheme/admin/macros.jinja" import theme_table %}
+{% block title %}{% trans %}Themes{% endtrans %}{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="content-block">
+            <div class="title">
+                <h2 class="block-title"><i class="fa fa-cog"></i> {% trans %}Theme Configuration{% endtrans %}</h2>
+            </div>
+            <div class="content-wrap">
+                <div class="content">
+                    {% if theme_classes %}
+                        <form method="post" id="theme_form">
+                            {% csrf_token %}
+                            {{ theme_table(theme_classes, current_theme) }}
+                        </form>
+                    {% else %}
+                        <div class="alert alert-info">
+                            {% trans %}No themes are installed.{% endtrans %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

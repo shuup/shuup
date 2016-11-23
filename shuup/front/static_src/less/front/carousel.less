@@ -1,0 +1,184 @@
+.carousel {
+    margin-bottom: 20px;
+
+    &.fade {
+        opacity: 1;
+
+        .item {
+            display: block !important;
+            position: absolute;
+            left: 0 !important;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+
+            &:first-child {
+                position: relative;
+                top: auto;
+            }
+
+            &.active {
+                height: 100%;
+                z-index: 2;
+                opacity: 1;
+                transition: opacity 0.6s ease-in-out;
+            }
+        }
+    }
+
+    .carousel-control {
+        z-index: 5;
+    }
+
+    .carousel-control {
+        background-image: none !important;
+        background-repeat: no-repeat !important;
+        position: absolute;
+        top: 50%;
+        margin-top: -18px;
+        text-align: center;
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+        background: #fff;
+        color: @gray-dark;
+        text-shadow: none;
+        opacity: 0.6;
+
+        @media (max-width: @screen-xs-max) {
+            display: none;
+        }
+
+        &:hover, &:focus {
+            opacity: 1;
+            background: #fff;
+        }
+        &.left {
+            left: 15px;
+        }
+        &.right {
+            right: 15px;
+        }
+        span {
+            font-size: 2rem;
+            line-height: 36px;
+            margin-top: 0;
+            top: 0;
+        }
+    }
+
+    .carousel-indicators {
+        bottom: auto;
+        left: auto;
+        width: auto;
+        margin-left: 0;
+        top: 10px;
+        right: 15px;
+        li {
+            position: relative;
+            width: 16px;
+            height: 16px;
+            border: 0;
+            margin: 0px 1px;
+            vertical-align: middle;
+            background: none;
+
+            &:before {
+                content: "";
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                width: 12px;
+                height: 12px;
+                border: 1px solid rgba(255, 255, 255, 0.7);
+                background: rgba(40,40,40,0.7);
+                border-radius: 50%;
+                transition: all 0.15s;
+            }
+
+            &.active {
+                &:before {
+                    background: @brand-primary;
+                }
+            }
+        }
+    }
+
+    .carousel-caption {
+        bottom: 0;
+        z-index: 1;
+        @media (max-width: @screen-xs-max) {
+            left: 0;
+            right: 0;
+        }
+        h3 {
+            margin: 0;
+            @media (max-width: @screen-xs-max) {
+                font-size: 1.4rem;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+        }
+    }
+}
+
+.carousel-plugin {
+    .fa {
+        font-size: 30px;
+        z-index: 10;
+        position: absolute;
+        top: 50%;
+        margin-top: -15px;
+    }
+    .fa-angle-left {
+        left: -25px;
+        z-index: 1000;
+    }
+    .fa-angle-right {
+        right: -25px;
+    }
+
+    &.one {
+        .fa-angle-left {
+            left: 40px;
+        }
+        .fa-angle-right {
+            right: 40px;
+        }
+        .owl-dots {
+            position: absolute;
+            bottom: 0 !important;
+            left: 50%;
+            z-index: 15;
+            width: 60%;
+            margin-left: -30%;
+            padding-left: 0;
+            list-style: none;
+            text-align: center;
+        }
+        .owl-dot {
+            background: transparent;
+            border-radius: 10px;
+            border: 1px solid #6f6f6f;
+            display: inline-block;
+            height: 10px;
+            margin: 1px;
+            width: 10px;
+            &.active {
+                margin: 0;
+                width:  12px;
+                height: 12px;
+                background-color: #6f6f6f;
+            }
+        }
+    }
+}
+.carousel-banner-section {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    padding: 0 30px;
+}

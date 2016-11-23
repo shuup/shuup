@@ -1,0 +1,30 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block, content_with_sidebar %}
+{% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs %}
+
+{% block content %}
+    {% call content_with_sidebar(content_id="media_form", extra_classes="media-edit-content") %}
+        <form method="post" id="media_form">
+            {% csrf_token %}
+            {% for mf in form.management_form %}{{ mf|safe }}{% endfor %}
+            {% for f in form %}
+                {% set f_title = ("" ~ f.instance if f.instance.pk else _("File ") ~ loop.index) %}
+                {% call content_block(f_title) %}
+                    {{ bs3.field(f.file) }}
+                    {{ bs3.field(f.external_url) }}
+                    {{ bs3.field(f.ordering) }}
+                    {{ bs3.field(f.shops) }}
+                    {{ bs3.field(f.kind) }}
+                    {{ bs3.field(f.enabled) }}
+                    {{ bs3.field(f.public) }}
+                    {{ bs3.field(f.purchased) }}
+                    {% if f.instance.pk and f.DELETE %}
+                        {{ bs3.field(f.DELETE) }}
+                    {% endif %}
+                    {% for fld in f.hidden_fields() %}{{ fld|safe }}{% endfor %}
+                    {{ language_dependent_content_tabs(f, ["title", "description"]) }}
+                {% endcall %}
+            {% endfor %}
+        </form>
+    {% endcall %}
+{% endblock %}

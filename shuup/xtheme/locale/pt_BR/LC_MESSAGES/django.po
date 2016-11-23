@@ -1,0 +1,285 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Jonathan Hess <jhess666@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-04 20:11+0000\n"
+"PO-Revision-Date: 2016-08-04 13:14-0700\n"
+"Last-Translator: Jonathan Hess <jhess666@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/shuup/shuup/"
+"language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.8.8\n"
+
+msgid "Shuup Extensible Theme Engine"
+msgstr "Motor de Temas Extensíveis do Shuup"
+
+msgid "Themes"
+msgstr "Temas"
+
+msgid "No theme is active. Click here to activate one."
+msgstr "Nenhum tema está ativo. Clique aqui para ativar um."
+
+msgid "Theming"
+msgstr "Tematização"
+
+msgid "activate"
+msgstr "ativar"
+
+msgid "Theme activated."
+msgstr "Tema ativado."
+
+msgid "current draft"
+msgstr "rascunho atual"
+
+msgid "old version"
+msgstr "versão antiga"
+
+msgid "public"
+msgstr "público"
+
+msgid "theme identifier"
+msgstr "identificador do tema"
+
+msgid "view name"
+msgstr "nome da view"
+
+msgid "created on"
+msgstr "criado em"
+
+msgid "status"
+msgstr "status"
+
+msgid "internal data"
+msgstr "dados internos"
+
+msgid "active"
+msgstr "ativo"
+
+msgid "data"
+msgstr "dados"
+
+#, python-format
+msgid "Theme configuration for %s"
+msgstr "Configuração do tema para %s"
+
+msgid "Plugin"
+msgstr "Plugin"
+
+msgid "Category Links"
+msgstr "Links de Categorias"
+
+msgid "Title"
+msgstr "Título"
+
+msgid "Show all categories"
+msgstr "Mostrar todas as categorias"
+
+msgid "All categories are shown, even if not selected"
+msgstr "Todas as categorias são mostradas, mesmo se não estiverem selecionadas"
+
+msgid "Image"
+msgstr "Imagem"
+
+msgid "Image Link URL"
+msgstr "Link URL da Imagem"
+
+msgid "Full width"
+msgstr "Largura total"
+
+msgid "Set image to full width of cell"
+msgstr "Definir à imagem a largura total da célula"
+
+msgid "Width (px)"
+msgstr "Largura (px)"
+
+msgid "Leave blank for default width"
+msgstr "Deixe em branco para largura padrão"
+
+msgid "Height (px)"
+msgstr "Altura (px)"
+
+msgid "Product Highlights"
+msgstr "Produtos em Destaque"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Count"
+msgstr "Contagem"
+
+msgid "Only show in-stock and orderable items"
+msgstr "Mostrar apenas itens em estoque e que possam ser comprados"
+
+msgid "Product Cross Sells"
+msgstr "Vendas Cruzadas de Produtos"
+
+msgid "Snippets"
+msgstr "Snippets"
+
+msgid "In-Place Snippet"
+msgstr "Snippet Local"
+
+msgid "Resource snippet for end of head"
+msgstr "Snippet de recurso para o final de head"
+
+msgid "Resource snippet for beginning of body"
+msgstr "Snippet de recurso para o início de body"
+
+msgid "Resource for end of body"
+msgstr "Recurso para o final de body"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Ordering"
+msgstr "Ordenação"
+
+msgid "Social Media Links"
+msgstr "Links de Mídias Sociais"
+
+msgid "Topic"
+msgstr "Tópico"
+
+msgid "Icon Size"
+msgstr "Tamanho do Ícone"
+
+msgid "Default"
+msgstr "Padrão"
+
+msgid "Large"
+msgstr "Grande"
+
+msgid "Alignment"
+msgstr "Alinhamento"
+
+msgid "Left"
+msgstr "Esquerda"
+
+msgid "Center"
+msgstr "Centro"
+
+msgid "Right"
+msgstr "Direita"
+
+msgid "text"
+msgstr "texto"
+
+msgid "(Untranslated)"
+msgstr "(Não traduzido)"
+
+#, python-format
+msgid "Click to edit placeholder: %s"
+msgstr "Clique para editar o placeholder: %s"
+
+msgid "Delete This Cell"
+msgstr "Excluir esta Célula"
+
+msgid "There's nothing to configure in this plugin."
+msgstr "Não há nada para configurar neste plugin."
+
+msgid "Save Plugin"
+msgstr "Salvar Plugin"
+
+msgid "Edit Placeholder"
+msgstr "Editar Placeholder"
+
+msgid "Add new cell"
+msgstr "Adicionar nova célula"
+
+msgid "Delete row"
+msgstr "Excluir linha"
+
+msgid "Add new row"
+msgstr "Adicionar nova linha"
+
+msgid "Theme Configuration"
+msgstr "Configuração do Tema"
+
+msgid "No themes are installed."
+msgstr "Nenhum tema está instalado."
+
+msgid "Theme"
+msgstr "Tema"
+
+msgid "Actions"
+msgstr "Ações"
+
+msgid "Author"
+msgstr "Autor"
+
+msgid "Currently active"
+msgstr "Atualmente ativo"
+
+msgid "Activate"
+msgstr "Ativar"
+
+msgid "Configure"
+msgstr " Configurar"
+
+#, python-format
+msgid "Theme Configuration: %(name)s"
+msgstr "Configuração do Tema: %(name)s"
+
+msgid "There's nothing to configure in this theme."
+msgstr "Não há nada para configurar neste tema."
+
+msgid "Revert Changes"
+msgstr "Reverter Alterações"
+
+msgid "Publish Changes"
+msgstr "Publicar Alterações"
+
+msgid "No access to editing"
+msgstr "Sem acesso à edição"
+
+#, python-format
+msgid "Unknown command %s"
+msgstr "Comando desconhecido %s"
+
+msgid "Unable to determine current theme."
+msgstr "Não foi possível determinar o tema atual."
+
+#, python-format
+msgid "Cannot add more than %d cells in one row."
+msgstr "Não é possível adicionar mais do que %d células em uma linha."
+
+msgid "Published"
+msgstr "Publicado"
+
+msgid "Reverted"
+msgstr "Revertido"
+
+msgid "Full Width"
+msgstr "Largura Total"
+
+msgid "Three Fourths (3/4)"
+msgstr "Três Quartos (3/4)"
+
+msgid "Two Thirds (2/3)"
+msgstr "Dois Terços (2/3)"
+
+msgid "Half (1/2)"
+msgstr "Metade (1/2)"
+
+msgid "One Third (1/3)"
+msgstr "Um Terço (1/3)"
+
+msgid "One Fourth (1/4)"
+msgstr "Um Quarto (1/4)"
+
+msgid "Cell width"
+msgstr "Largura da célula"
+
+msgid "No Plugin"
+msgstr "Nenhum Plugin"

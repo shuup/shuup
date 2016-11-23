@@ -1,0 +1,10 @@
+{% extends "shuup/front/checkout/_base.jinja" %}
+
+{% block checkout_phase_content %}
+    <form role="form" method="post" action="" id="methods">
+        {% csrf_token %}
+        {{ checkout_macros.method_phase_shipping_panel(form) }}
+        {{ checkout_macros.method_phase_payment_panel(form) }}
+        {{ checkout_macros.default_buttons() }}
+    </form>
+{% endblock %}

@@ -1,0 +1,129 @@
+{# See shuup/front/macros/macros.jinja for inheritance ordering #}
+{% extends "shuup/front/macros/product_information.jinja" %}
+
+{% macro render_product_image_section(product) %}
+    {% if product|is_discounted %}
+        <div class="badge product-badge sale">
+            {% set discount_percent = product|discount_percent %}
+            {{- _("Save %(discount_percent)s", discount_percent=discount_percent) -}}
+        </div>
+    {% endif %}
+    <div id="carousel_product_{{ product.id }}" class="product-carousel carousel fade" data-ride="carousel" data-interval="false">
+        <div class="carousel-inner">
+            {% for product_image in images %}
+                <div class="item{% if product_image == primary_image %} active{% endif %}">
+                    {% set product_image_cropped = product_image|thumbnail(size=(700, 700)) %}
+                    {% if loop|count > 1 %}
+                        <a data-imagelightbox="image-multiple" href="{{ product_image.url }}" rel="gallery" class="thumbnail">
+                            <div class="image"
+                                 style="background-image:url('{{ product_image_cropped }}')"
+                                 data-title="{% if product_image.title %}{{ product_image.title }}{% endif %}"
+                                 data-description="{% if product_image.description %}{{ product_image.description }}{% endif %}">
+                            </div>
+                        </a>
+                    {% else %}
+                        <a data-imagelightbox="image" href="{{ product_image.url }}" rel="gallery" class="thumbnail">
+                            <div class="image"
+                                 style="background-image:url('{{ product_image_cropped }}')"
+                                 data-title="{% if product_image.title %}{{ product_image.title }}{% endif %}"
+                                 data-description="{% if product_image.description %}{{ product_image.description }}{% endif %}">
+                            </div>
+                        </a>
+                    {% endif %}
+                </div>
+            {% else %}
+                <div class="item active">
+                    <div class="thumbnail" rel="gallery1">
+                        <img class="img-responsive no-image"
+                             alt="{{ product.name }}"
+                             src="{{ STATIC_URL }}shuup/front/img/no_image.png">
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="wrap-thumbnails">
+        <div class="carousel-thumbnails owl-carousel">
+            {% for product_image in images %}
+                {% if loop|count > 1 %}
+                    {% set product_image_thumbnail = product_image|thumbnail(size=(300, 300)) %}
+                    <a href="#carousel_product_{{ product.id }}" class="thumbnail" data-slide-to="{{ loop.index0 }}">
+                        <div class="image" style="background-image:url('{{ product_image_thumbnail }}')"></div>
+                    </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro render_product_image_js() %}
+    <script>
+        {{ render_owl_carousel_js() }}
+        {{ render_lightbox_js() }}
+    </script>
+{% endmacro %}
+
+{% macro render_owl_carousel_js() %}
+    // Set up owl carousel for product page's slider thumbnails.
+    $(".owl-carousel.carousel-thumbnails").owlCarousel({
+        margin: 10,
+        nav: $(".carousel-thumbnails .thumbnail").length > 4,
+        navText: [
+            "<i class='fa fa-chevron-left'></i>",
+            "<i class='fa fa-chevron-right'></i>"
+        ],
+        responsiveClass: true,
+        items: 4
+    });
+{% endmacro %}
+
+{% macro render_lightbox_js() %}
+    // Enable lightbox for products with multiple images. Uses arrows to
+    // navigate through images.
+    var selector_multiple = "a[data-imagelightbox='image-multiple']";
+    var instance_multiple = $(selector_multiple).imageLightbox({
+        "onStart": function() {
+            overlayOn();
+            closeButtonOn(instance_multiple);
+            arrowsOn(instance_multiple, selector_multiple);
+        },
+        "onEnd": function() {
+            overlayOff();
+            closeButtonOff();
+            arrowsOff();
+            captionOff();
+        },
+        "onLoadStart": function() {
+            activityIndicatorOn();
+            captionOff();
+        },
+        "onLoadEnd": function() {
+            $(".imagelightbox-arrow").css("display", "block");
+            activityIndicatorOff();
+            captionOn();
+        }
+    });
+
+    // Enable lightbox for products with only one image.
+    var selector = "a[data-imagelightbox='image']";
+    var instance = $(selector).imageLightbox({
+        "onStart": function() {
+            overlayOn();
+            closeButtonOn(instance);
+        },
+        "onEnd": function() {
+            overlayOff();
+            closeButtonOff();
+            captionOff();
+        },
+        "onLoadStart": function() {
+            activityIndicatorOn();
+            captionOff();
+        },
+        "onLoadEnd": function() {
+            $(".imagelightbox-arrow").css("display", "block");
+            activityIndicatorOff();
+            captionOn();
+        }
+    });
+{% endmacro %}

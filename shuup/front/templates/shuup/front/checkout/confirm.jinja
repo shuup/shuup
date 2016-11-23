@@ -1,0 +1,16 @@
+{% extends "shuup/front/checkout/_base.jinja" %}
+
+{% block checkout_phase_content %}
+    {{ checkout_macros.confirm_phase_order_information(basket) }}
+    {{ checkout_macros.confirm_phase_address_information(basket) }}
+    {% if orderable %}
+        {{ checkout_macros.render_confirm_form(form) }}
+    {% else %}
+        <h2>{% trans %}There are errors{% endtrans %}</h2>
+        <ul>
+        {% for error in errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
