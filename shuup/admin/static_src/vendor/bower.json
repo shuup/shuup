@@ -31,7 +31,8 @@
     "tether-shepherd": "1.8.1",
     "imagelightbox2": "0.5.4",
     "masonry": "4.1.1",
-    "sortablejs": "1.4.2"
+    "sortablejs": "1.4.2",
+    "dropzone": "4.3.0"
   },
   "overrides": {
     "sortablejs": {

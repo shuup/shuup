@@ -51,6 +51,7 @@ $(function() {
         const html = $source.html().replace(/__prefix__/g, panelCount - 1).replace(/__prefix_name__/g, panelCount);
 
         $(html).insertBefore($source);
+        activateDropzone($(html).find(".dropzone"));
         const targetId = $(this).data("target-id");
         const $totalFormsField = $("#" + targetId + "-TOTAL_FORMS");
         $totalFormsField.val(parseInt($totalFormsField.val()) + 1);
