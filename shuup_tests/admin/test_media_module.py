@@ -151,6 +151,47 @@ def test_upload(rf):
 
 
 @pytest.mark.django_db
+def test_upload_into_new_folder(rf):
+    assert Folder.objects.count() == 0
+    # no folder
+    response = mbv_upload(path="/")
+    assert not File.objects.get(pk=response["file"]["id"]).folder
+    assert Folder.objects.count() == 0
+
+    # new folder
+    response = mbv_upload(path="/foo/bar")
+    folder = File.objects.get(pk=response["file"]["id"]).folder
+    assert folder.name == "bar"
+    assert folder.parent.name == "foo"
+    assert not folder.parent.parent
+    assert Folder.objects.count() == 2
+
+    # ensure path is correct with same folder names
+    response = mbv_upload(path="/bar/foo")
+    folder = File.objects.get(pk=response["file"]["id"]).folder
+    assert folder.name == "foo"
+    assert folder.parent.name == "bar"
+    assert not folder.parent.parent
+    assert Folder.objects.count() == 4
+
+    # upload into pre-existing folder
+    response = mbv_upload(path="/foo/bar")
+    folder = File.objects.get(pk=response["file"]["id"]).folder
+    assert folder.name == "bar"
+    assert folder.parent.name == "foo"
+    assert not folder.parent.parent
+    assert Folder.objects.count() == 4
+
+    # add subfolder
+    response = mbv_upload(path="/foo/bar/baz")
+    folder = File.objects.get(pk=response["file"]["id"]).folder
+    assert folder.name == "baz"
+    assert folder.parent.name == "bar"
+    assert folder.parent.parent.name == "foo"
+    assert Folder.objects.count() == 5
+
+
+@pytest.mark.django_db
 def test_get_folders(rf):
     # Create a structure and retrieve it
     folder1 = Folder.objects.create(name=printable_gibberish())

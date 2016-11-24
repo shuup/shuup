@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 import json
 
+import six
 from django.forms import HiddenInput, Widget
 from django.utils.encoding import force_text
 from django.utils.html import escape
@@ -87,6 +88,50 @@ class BasePopupChoiceWidget(Widget):
             }),
             "content": "".join(bits)
         })
+
+
+class FileDnDUploaderWidget(Widget):
+    def __init__(self, attrs=None, kind=None, upload_path="/"):
+        self.kind = kind
+        self.upload_path = upload_path
+        super(FileDnDUploaderWidget, self).__init__(attrs)
+
+    def _get_file_attrs(self, file):
+        try:
+            thumbnail = file.easy_thumbnails_thumbnailer.get_thumbnail({
+                'size': (120, 120),
+                'crop': True,
+                'upscale': True,
+                'subject_location': file.subject_location
+            })
+        except Exception:
+            thumbnail = None
+        data = {
+            "id": file.id,
+            "name": file.label,
+            "size": file.size,
+            "url": file.url,
+            "thumbnail": (thumbnail.url if thumbnail else None),
+            "date": file.uploaded_at.isoformat()
+        }
+        return ["data-%s='%s'" % (key, val) for key, val in six.iteritems(data) if val is not None]
+
+    def render(self, name, value, attrs={}):
+        pk_input = HiddenInput().render(name, value, attrs)
+        file_attrs = ["data-upload_path='%s'" % self.upload_path]
+        if self.kind:
+            file_attrs.append("data-kind='%s'" % self.kind)
+        if value:
+            file = File.objects.get(pk=value)
+            file_attrs += self._get_file_attrs(file)
+        return (
+            mark_safe("<div id='%s-dropzone' class='dropzone %s' %s>%s</div>" % (
+                attrs.get("id", "dropzone"),
+                "has-file" if value else "",
+                " ".join(file_attrs),
+                pk_input
+            ))
+        )
 
 
 class MediaChoiceWidget(BasePopupChoiceWidget):

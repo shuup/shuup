@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-24 01:35+0000\n"
+"POT-Creation-Date: 2016-11-24 17:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1767,9 +1767,6 @@ msgstr ""
 msgid "Set as primary image"
 msgstr ""
 
-msgid "No image"
-msgstr ""
-
 msgid "Advanced options"
 msgstr ""
 
@@ -1779,7 +1776,8 @@ msgstr ""
 msgid "Product Files"
 msgstr ""
 
-msgid "Here you can manage files for your product. For example a pdf manuals."
+msgid ""
+"Here you can manage your product files, like pdf manuals and documentation."
 msgstr ""
 
 msgid "Add new image"
@@ -2118,6 +2116,9 @@ msgid "Let customers browse your store and make purchases"
 msgstr ""
 
 msgid "Publish shop"
+msgstr ""
+
+msgid "No Plugin"
 msgstr ""
 
 #, python-format

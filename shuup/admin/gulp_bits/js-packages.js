@@ -36,6 +36,7 @@ module.exports = {
             "js/imagelightbox.js",
             "js/drag-n-drop.js",
             "js/slugify.js",
+            "js/dropzone.js"
         ]
     },
     "contact-group": {

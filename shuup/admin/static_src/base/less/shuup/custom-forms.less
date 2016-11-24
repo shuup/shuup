@@ -283,6 +283,43 @@
             }
         }
     }
+
+    .dropzone {
+        border-style: dashed;
+        border-width: 2px;
+        border-color: @brand-primary;
+        text-align: center;
+        transition: all 0.2s;
+        background-color: #fff;
+        cursor: pointer;
+
+        &.dz-drag-hover {
+            background-color: @brand-primary;
+
+            .dz-message {
+                opacity: 1;
+                color: #fff;
+            }
+        }
+
+        &.has-file {
+            border-color: transparent;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .dz-image {
+            border-radius: 0px;
+            z-index: 0;
+        }
+
+        // don't show size since it doesn't work when using BrowseAPI
+        .dz-size {
+            display: none;
+        }
+    }
 }
 
 label, .radio label, .checkbox label {
