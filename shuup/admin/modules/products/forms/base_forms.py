@@ -18,7 +18,7 @@ from django.forms.formsets import DEFAULT_MAX_NUM, DEFAULT_MIN_NUM
 from django.utils.translation import ugettext_lazy as _
 from filer.models import Image
 
-from shuup.admin.forms.widgets import ImageChoiceWidget, MediaChoiceWidget
+from shuup.admin.forms.widgets import FileDnDUploaderWidget
 from shuup.core.models import (
     Attribute, AttributeType, Category, Product, ProductMedia,
     ProductMediaKind, Shop, ShopProduct
@@ -240,7 +240,7 @@ class BaseProductMediaForm(MultiLanguageModelForm):
         default_shop = kwargs.pop("default_shop")
         super(BaseProductMediaForm, self).__init__(**kwargs)
 
-        self.fields["file"].widget = MediaChoiceWidget()  # Filer misimplemented the field; we need to do this manually.
+        self.fields["file"].widget = FileDnDUploaderWidget(upload_path="/products/files")
         self.fields["file"].required = True
 
         if self.allowed_media_kinds:
@@ -345,7 +345,7 @@ class ProductImageMediaForm(BaseProductMediaForm):
 
     def __init__(self, **kwargs):
         super(ProductImageMediaForm, self).__init__(**kwargs)
-        self.fields["file"].widget = ImageChoiceWidget()
+        self.fields["file"].widget = FileDnDUploaderWidget(kind="images", upload_path="/products/images")
 
         if self.instance.pk and self.instance.file:
             if self.product.primary_image_id == self.instance.pk:

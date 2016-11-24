@@ -18,6 +18,9 @@ Localization
 Admin
 ~~~~~
 
+- Add drag-and-drop support for product image and file uploads
+
+
 Addons
 ~~~~~~
 

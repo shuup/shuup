@@ -30,20 +30,7 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-sm-4 file-control">
-                    <div class="form-group{% if f.file.errors %} has-error{% endif %}">
-                        {%- set thumbnail = f.get_thumbnail(request) %}
-                        <span class="thumbnail">
-                            {% if thumbnail %}
-                                <a href="{{ f.file_url }}" target="_blank"><img src="{{ thumbnail.url }}"></a>
-                            {% else %}
-                                <small class="no-image">{% trans %}No image{% endtrans %}</small>
-                            {% endif %}
-                        </span>
-                        {{ f.file }}
-                        {% if f.file.errors %}
-                        <div class="help-block">{{ f.file.errors }}</div>
-                        {% endif %}
-                    </div>
+                    {{ bs3.field(f.file, render_label=False) }}
                 </div>
                 <div class="col-sm-4 extra-fields">
                 {% if not is_image_form %}
@@ -92,7 +79,7 @@
 {%- set name = _("Product Images") if is_image_form else _("Product Files") %}
 {% call content_block(name, "fa-camera", id=id) %}
     {% if not is_image_form %}
-    <p>{% trans %}Here you can manage files for your product. For example a pdf manuals.{% endtrans %}</p>
+    <p>{% trans %}Here you can manage your product files, like pdf manuals and documentation.{% endtrans %}</p>
     {% endif %}
     {{ media_form.management_form }}
     {% for f in media_form %}
