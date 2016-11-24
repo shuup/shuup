@@ -45,9 +45,9 @@
                         getButton(gettext("Previous"), "previous", disablePrevious, "btn-primary pull-left " + (config.hidePrevious? "hidden":"")) +
                         getButton(isLastPane() ? gettext("Finish") : gettext("Next"), "next", disableNext, "btn-primary pull-right") +
                     '</div>' +
-                    (config.skip?
+                    ($activeWizardPane.data("can_skip") === "True" || config.skip?
                     '<div class="clearfix">' +
-                        getButton(gettext("Skip Setup"), "skip", false, "btn-default pull-right", config.skipTooltip) +
+                        getButton(gettext("Skip"), "skip", false, "btn-default pull-right", config.skipTooltip) +
                     '</div>': '') +
                 '</div>'
             );
@@ -114,7 +114,11 @@
             });
 
             this.on("click", "button[name='skip']", () => {
-                config.skip();
+                if(config.redirectOnLastPane && isLastPane()){
+                    window.location = config.redirectOnLastPane;
+                } else {
+                    next();
+                }
             });
             switchToPane(0);
         }

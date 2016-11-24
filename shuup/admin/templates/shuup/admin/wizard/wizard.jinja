@@ -19,7 +19,7 @@
         <div class="wizard">
             <div class="wizard-pane-container">
                 {% for pane in panes %}
-                    <div class="wizard-pane {{ pane.identifier }}">
+                    <div class="wizard-pane {{ pane.identifier }}" data-can_skip="{{ pane.can_skip }}">
                         <div class="pane-header text-center">
                             {% if pane.icon %}
                                 <img src="{{ static(pane.icon) }}">
@@ -62,7 +62,7 @@
     (function(){
         $($(".help-popover-btn .btn")[0]).append(" {% trans %}Click here for help{% endtrans %}")
         $(".wizard").wizard({
-            hidePrevious: true,
+            hidePrevious: false,
             redirectOnLastPane: "{{ url("shuup_admin:home") }}"
         });
     }());

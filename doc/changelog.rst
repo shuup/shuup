@@ -21,6 +21,8 @@ Localization
 Admin
 ~~~~~
 
+- Add option to skip wizard panes
+
 Addons
 ~~~~~~
 

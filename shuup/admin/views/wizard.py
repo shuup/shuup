@@ -35,12 +35,13 @@ class TemplatedWizardFormDef(WizardFormDefMixin, TemplatedFormDef):
 
 
 class _WizardFormGroup(FormGroup):
-    def __init__(self, identifier, title, text, icon, **kwargs):
+    def __init__(self, identifier, title, text, icon, can_skip, **kwargs):
         super(_WizardFormGroup, self).__init__(**kwargs)
         self.identifier = identifier
         self.title = title
         self.text = text
         self.icon = icon
+        self.can_skip = can_skip
 
 
 class WizardPane(FormPart):
@@ -48,6 +49,7 @@ class WizardPane(FormPart):
     title = None
     text = None
     icon = None
+    can_skip = False
 
     def visible(self):
         return True
@@ -93,7 +95,7 @@ class WizardView(TemplateView):
                 "data": self.request.POST,
                 "files": self.request.FILES
             })
-        fg = _WizardFormGroup(pane.identifier, pane.title, pane.text, pane.icon, **kwargs)
+        fg = _WizardFormGroup(pane.identifier, pane.title, pane.text, pane.icon, pane.can_skip, **kwargs)
         for form_def in pane.get_form_defs():
             fg.form_defs[form_def.name] = form_def
         return fg

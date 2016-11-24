@@ -740,5 +740,5 @@ msgstr ""
 msgid "Done"
 msgstr ""
 
-msgid "Skip Setup"
+msgid "Skip"
 msgstr ""
