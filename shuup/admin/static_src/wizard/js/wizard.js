@@ -43,7 +43,7 @@
                 '<div class="action-bar">' +
                     '<div class="clearfix">' +
                         getButton(gettext("Previous"), "previous", disablePrevious, "btn-primary pull-left " + (config.hidePrevious? "hidden":"")) +
-                        getButton(gettext("Next"), "next", disableNext, "btn-primary pull-right") +
+                        getButton(isLastPane() ? gettext("Finish") : gettext("Next"), "next", disableNext, "btn-primary pull-right") +
                     '</div>' +
                     (config.skip?
                     '<div class="clearfix">' +
@@ -87,6 +87,7 @@
             switchToPane(config);
         } else {
             this.on("click", "button[name='next']", () => {
+                this.find("button[name='next']").prepend('<i class="fa fa-spinner fa-pulse fa-fw"></i>');
                 if(config.next) {
                     config.next($activeWizardPane);
                 } else {
@@ -96,11 +97,15 @@
                         } else {
                             next();
                         }
-                    }).fail((err) => renderFormErrors($activeWizardPane.find("form"), err.responseJSON));
+                    }).fail((err) => {
+                        this.find("i.fa.fa-spinner").remove();
+                        renderFormErrors($activeWizardPane.find("form"), err.responseJSON);
+                    });
                 }
             });
 
             this.on("click", "button[name='previous']", () => {
+                this.find("button[name='previous']").prepend('<i class="fa fa-spinner fa-pulse fa-fw"></i>');
                 if(config.previous) {
                     config.previous($activeWizardPane);
                 } else {
