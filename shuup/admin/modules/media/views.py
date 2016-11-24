@@ -68,6 +68,18 @@ def get_folder_name(folder):
     return (folder.name if folder else _("Root"))
 
 
+def get_or_create_folder(path):
+    folders = path.split("/")
+    parent = None
+    child = None
+    created = False
+    for folder in folders:
+        if folder != "":
+            child, created = Folder.objects.get_or_create(parent=parent, name=folder)
+            parent = child
+    return child
+
+
 class MediaBrowserView(TemplateView):
     """
     A view for browsing media.
@@ -168,8 +180,11 @@ class MediaBrowserView(TemplateView):
         request = self.request
         try:
             folder_id = int(request.POST.get("folder_id") or request.GET.get("folder_id") or 0)
+            path = request.POST.get("path") or request.GET.get("path") or None
             if folder_id != 0:
                 folder = Folder.objects.get(pk=folder_id)
+            elif path:
+                folder = get_or_create_folder(path)
             else:
                 folder = None  # Root folder upload. How bold!
         except Exception as exc:

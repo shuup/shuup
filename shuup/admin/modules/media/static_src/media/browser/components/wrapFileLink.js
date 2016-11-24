@@ -20,7 +20,8 @@ export default function(file, tag = "a", content = file.name) {
                     "object": {
                         "id": file.id,
                         "text": file.name,
-                        "url": file.url
+                        "url": file.url,
+                        "thumbnail": file.thumbnail
                     }
                 }
             }, "*");
