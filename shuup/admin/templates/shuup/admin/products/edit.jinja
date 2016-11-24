@@ -16,7 +16,7 @@
     {% call content_with_sidebar(content_id="product_form") %}
         <form method="post" id="product_form">
             {% csrf_token %}
-            {% call content_block(_("General Information"), "fa-info-circle") %}
+            {% call content_block(_("Basic Information"), "fa-info-circle") %}
                 {% for form_def in form.form_defs.values() %}
                     {% if form_def.required %}
                         {% include form_def.template_name with context %}
@@ -53,16 +53,60 @@
                 }, 100);
             }
 
-            $.tour("setPageSteps", [{
-                title: "Add a new product",
-                icon: "{{ static('shuup_admin/img/product.png') }}",
-                helpPage: "products.html",
-                text: [
-                    "{% trans %}You are adding a product.{% endtrans %}",
-                    "{% trans %}To make it stand out, give it an awesome description and picture. This is what will help your shoppers learn about your products. It will also help shoppers find them in the store and on the web.{% endtrans %}",
-                    "{% trans %}You can set its price or size and many other things in the option boxes for each product.{% endtrans %}"
-                ]
-            }]);
+            $.tour("setPageSteps", [
+                {
+                    title: "Add a new product",
+                    icon: "{{ static('shuup_admin/img/product.png') }}",
+                    helpPage: "products.html",
+                    text: [
+                        "{% trans %}You are adding a product.{% endtrans %}",
+                        "{% trans %}To make it stand out, give it an awesome description and picture. This is what will help your shoppers learn about your products. It will also help shoppers find them in the store and on the web.{% endtrans %}",
+                        "{% trans %}You can set its price or size and many other things in the option boxes for each product.{% endtrans %}"
+                    ]
+                },
+                {
+                    title: "{% trans %}Basic Information{% endtrans %}",
+                    text: ["{% trans %}All the required product information.{% endtrans %}"],
+                    attachTo: "a[href='#general-information-section'] bottom",
+                    scrollTo: false,
+                },
+                {
+                    title: "{% trans %}Additional Details{% endtrans %}",
+                    text: ["{% trans %}Product features such as size, weight and keywords are located here.{% endtrans %}"],
+                    attachTo: "a[href='#additional-details-section'] bottom",
+                    scrollTo: false,
+                },
+                {
+                    title: "{% trans %}Manufacturer{% endtrans %}",
+                    text: ["{% trans %}If you know the product manufacturer, it can be set here.{% endtrans %}"],
+                    attachTo: "a[href='#manufacturer-section'] bottom",
+                    scrollTo: false,
+                },
+                {
+                    title: "{% trans %}Additional Information{% endtrans %}",
+                    text: ["{% trans %}Strictly shop related information. For example set the minimum price applicable in this shop.{% endtrans %}"],
+                    attachTo: "a[href*='-additional-section'] bottom",
+                    scrollTo: false,
+                },
+                {
+                    title: "{% trans %}Product Files{% endtrans %}",
+                    text: ["{% trans %}You can attach files such as manual to the merchandise(s) here.{% endtrans %}"],
+                    attachTo: "a[href='#product-media-section'] bottom",
+                    scrollTo: false,
+                },
+                {
+                    title: "{% trans %}Images{% endtrans %}",
+                    text: ["{% trans %}Showcase your merchandise here.{% endtrans %}"],
+                    attachTo: "a[href='#product-images-section'] bottom",
+                    scrollTo: false,
+                },
+                {
+                    title: "{% trans %}Contact Group Pricing{% endtrans %}",
+                    text: ["{% trans %}Set specific prices for your customer segments such as loyalty, tier status or season here.{% endtrans %}"],
+                    attachTo: "a[href='#contact-group-pricing-section'] bottom",
+                    scrollTo: false,
+                }
+            ]);
         })();
 
     </script>

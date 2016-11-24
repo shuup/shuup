@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-23 00:27+0000\n"
+"POT-Creation-Date: 2016-11-24 01:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1806,6 +1806,40 @@ msgstr ""
 msgid ""
 "You can set its price or size and many other things in the option boxes for "
 "each product."
+msgstr ""
+
+msgid "All the required product information."
+msgstr ""
+
+msgid "Product features such as size, weight and keywords are located here."
+msgstr ""
+
+msgid "If you know the product manufacturer, it can be set here."
+msgstr ""
+
+msgid "Additional Information"
+msgstr ""
+
+msgid ""
+"Strictly shop related information. For example set the minimum price "
+"applicable in this shop."
+msgstr ""
+
+msgid "You can attach files such as manual to the merchandise(s) here."
+msgstr ""
+
+msgid "Images"
+msgstr ""
+
+msgid "Showcase your merchandise here."
+msgstr ""
+
+msgid "Contact Group Pricing"
+msgstr ""
+
+msgid ""
+"Set specific prices for your customer segments such as loyalty, tier status "
+"or season here."
 msgstr ""
 
 msgid "Cross-sells"
