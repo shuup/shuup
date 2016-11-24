@@ -131,7 +131,15 @@
                 showCancelLink: true
             }
         });
-        const steps = (this.pageSteps || []).concat(getAppChromeSteps(config.tourKey));
+
+        var steps = [];
+        if (this.pageSteps && this.pageSteps.length > 1) {
+            steps = this.pageSteps;
+        }
+        else {
+            steps = (this.pageSteps || []).concat(getAppChromeSteps(config.tourKey));
+        }
+
         $.each(steps, (idx, step) => {
             var buttonType = null;
             if(idx === 0) {
