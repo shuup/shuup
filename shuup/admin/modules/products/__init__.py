@@ -130,10 +130,16 @@ class ProductModule(AdminModule):
                     )
 
     def get_help_blocks(self, request, kind):
-        actions = [{
-            "text": _("New product"),
-            "url": self.get_model_url(Product, "new")
-        }]
+        actions = [
+            {
+                "text": _("New product"),
+                "url": self.get_model_url(Product, "new")
+            },
+            {
+                "text": _("Import"),
+                "url": reverse("shuup_admin:importer.import")
+            }
+        ]
 
         yield SimpleHelpBlock(
             text=_("Add a product to see it in your store"),
