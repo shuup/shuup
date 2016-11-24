@@ -22,6 +22,7 @@ Admin
 ~~~~~
 
 - Add option to skip wizard panes
+- Add option to return home view
 
 Addons
 ~~~~~~
