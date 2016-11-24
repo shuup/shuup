@@ -13,7 +13,10 @@ from enumfields import Enum
 from shuup.admin.module_registry import get_modules
 from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.admin.utils.tour import is_tour_complete
-from shuup.admin.utils.wizard import setup_wizard_complete
+from shuup.admin.utils.wizard import (
+    load_setup_wizard_panes, setup_wizard_complete
+)
+from shuup.core.models import Shop
 
 
 class HelpBlockCategory(Enum):
@@ -65,13 +68,28 @@ class HomeView(TemplateView):
         context["tour_key"] = "home"
         context["tour_complete"] = is_tour_complete("home")
         wizard_complete = setup_wizard_complete()
+
+        wizard_url = reverse("shuup_admin:wizard")
+        wizard_actions = []
+        if not wizard_complete:
+            wizard_actions.append({
+                "text": _("Complete wizard"),
+                "url": wizard_url
+            })
+        else:
+            wizard_steps = load_setup_wizard_panes(
+                shop=Shop.objects.first(), request=self.request, visible_only=False)
+            for step in wizard_steps:
+                wizard_actions.append({
+                    "text": step.title,
+                    "url": "%s?pane_id=%s" % (wizard_url, step.identifier),
+                    "no_redirect": True
+                })
+
         blocks.append(
             SimpleHelpBlock(
                 _("Complete the setup wizard"),
-                actions=[{
-                    "text": _("Complete wizard"),
-                    "url": reverse("shuup_admin:wizard")
-                }] if not wizard_complete else [],
+                actions=wizard_actions,
                 icon_url="shuup_admin/img/configure.png",
                 priority=-1,
                 done=wizard_complete

@@ -13,7 +13,9 @@ from django.views.generic import TemplateView
 
 from shuup import configuration
 from shuup.admin.form_part import FormPart, TemplatedFormDef
-from shuup.admin.utils.wizard import load_setup_wizard_panes
+from shuup.admin.utils.wizard import (
+    load_setup_wizard_pane, load_setup_wizard_panes
+)
 from shuup.core.models import Shop
 from shuup.utils.form_group import FormDef, FormGroup
 from shuup.utils.iterables import first
@@ -60,12 +62,23 @@ class WizardView(TemplateView):
 
     @cached_property
     def panes(self):
-        return load_setup_wizard_panes(
-            shop=Shop.objects.first(),
+        shop = Shop.objects.first()
+        pane_id = self.request.GET.get("pane_id", None)
+        panes = load_setup_wizard_panes(
+            shop=shop,
             request=self.request,
             # if the user presses "previous" then "next" again, resubmit the form
             visible_only=self.request.method == "GET"
         )
+        if not panes and pane_id:
+            pane = load_setup_wizard_pane(
+                shop=shop,
+                request=self.request,
+                pane_id=pane_id
+            )
+            if pane:
+                panes.append(pane)
+        return panes
 
     def get_all_pane_forms(self):
         return [self.get_form_group_for_pane(pane) for pane in self.panes]

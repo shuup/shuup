@@ -23,6 +23,7 @@ Admin
 
 - Add option to skip wizard panes
 - Add option to return home view
+- List wizard phases at home view
 
 Addons
 ~~~~~~
