@@ -1,0 +1,17 @@
+Shuup 0.5.6 Release Notes
+=========================
+
+Released on 2016-11-24 11:34pm -0800.
+
+* Images can be added to product with drag n' drop manner
+* Tables have more padding if there is no checkbox in the first column
+* Import data is now available through home screen
+* Tour texts have been changed for menu
+* Product page has it's own tour now which shows what's under every tab
+* Learn more help texts open in new tab
+* Menus should work in mobile size better than before
+* Checkboxes are bigger in wizard and all over the shop
+
+For all changes see the full changelog:
+:doc:`../shoop-changelog` or `Git commit log
+<https://github.com/shuup/shuup-enterprise/commits/v0.5.6>`__.
