@@ -137,7 +137,7 @@ class ProductModule(AdminModule):
                 "url": self.get_model_url(Product, "new")
             }
         ]
-        if "shuup.import" in settings.INSTALLED_APPS:
+        if "shuup.importer" in settings.INSTALLED_APPS:
             actions.append({
                 "text": _("Import"),
                 "url": reverse("shuup_admin:importer.import")
