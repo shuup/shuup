@@ -44,6 +44,7 @@ class ActivationForm(forms.Form):
 class ThemeWizardPane(WizardPane):
     identifier = "theme"
     icon = "xtheme/theme.png"
+    title = _("Theme")
     text = _("Choose a theme for your shop")
 
     def visible(self):
@@ -53,6 +54,12 @@ class ThemeWizardPane(WizardPane):
         context = get_theme_context()
         if not context["current_theme"] and len(context["theme_classes"]) > 0:
             context["current_theme"] = context["theme_classes"][0]
+
+        theme_settings = ThemeSettings.objects.filter(theme_identifier=context["current_theme"].identifier).first()
+        if theme_settings:
+            context["active_stylesheet"] = theme_settings.data.get("settings", {}).get("stylesheet", None)
+        else:
+            context["active_stylesheet"] = context["current_theme"]().get_default_style().get("stylesheet", None)
 
         return [
             TemplatedWizardFormDef(
