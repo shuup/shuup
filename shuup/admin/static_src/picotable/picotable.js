@@ -457,7 +457,7 @@ const Picotable = (function(m, storage) {
             }));
         });
         var tbody = m("tbody", rows);
-        var mass_actions_class = massActions ? ".has-mass-actions" : "";
+        var mass_actions_class = massActions.length ? ".has-mass-actions" : "";
         return m("table.table.table-striped.picotable-table" + mass_actions_class, [thead, tfoot, tbody]);
     }
 
