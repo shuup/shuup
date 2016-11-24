@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 from collections import Counter
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.db.models.signals import m2m_changed, post_save
@@ -134,12 +135,13 @@ class ProductModule(AdminModule):
             {
                 "text": _("New product"),
                 "url": self.get_model_url(Product, "new")
-            },
-            {
-                "text": _("Import"),
-                "url": reverse("shuup_admin:importer.import")
             }
         ]
+        if "shuup.import" in settings.INSTALLED_APPS:
+            actions.append({
+                "text": _("Import"),
+                "url": reverse("shuup_admin:importer.import")
+            })
 
         yield SimpleHelpBlock(
             text=_("Add a product to see it in your store"),
