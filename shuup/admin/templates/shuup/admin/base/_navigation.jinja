@@ -37,7 +37,7 @@
 {% if support_id %}<p class="nav-text hidden-xs">{% trans %}Support ID: {% endtrans %}{{ support_id }}</p>{% endif %}
 
 {% set front_url=shuup_admin.get_front_url() %}
-{% if front_url %}<a class="nav-btn shop-btn" href="{{ front_url }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}Visit shop{% endtrans %}"><i class="fa fa-eye"></i></a>{% endif %}
+{% if front_url %}<a class="nav-btn shop-btn visit-store" href="{{ front_url }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}Visit shop{% endtrans %}"><i class="fa fa-eye"></i></a>{% endif %}
 
 <div class="dropdown">
     <button class="dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-expanded="true" data-placement="bottom" title="{% trans %}Settings{% endtrans %}">
