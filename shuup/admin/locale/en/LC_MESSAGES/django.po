@@ -1572,10 +1572,14 @@ msgid ""
 "You're almost done! Complete the following steps to sell your products online"
 msgstr ""
 
-msgid "Time to setup your shop."
+msgid "Hi, new shop owner!"
 msgstr ""
 
-msgid "We just need a few details to begin."
+msgid "Welcome to your store admin!"
+msgstr ""
+
+msgid ""
+"Let’s go through some of the things you can do here. Click next to begin."
 msgstr ""
 
 msgid "Date"

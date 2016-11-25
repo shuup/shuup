@@ -162,6 +162,16 @@
                 content += getHelpButton(step.helpPage);
                 content += "</div>";
                 content += "</div>";
+            } else if(step.banner){
+                content += "<div>";
+                content += "<div class='banner'>";
+                content += "<img src='" + step.banner + "' />";
+                content += "</div>";
+                content += "<div class='step-with-banner'>";
+                content += getTextLines(step.text);
+                content += getHelpButton(step.helpPage);
+                content += "</div>";
+                content += "</div>";
             } else {
                 content += getTextLines(step.text);
                 content += getHelpButton(step.helpPage);

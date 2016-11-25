@@ -36,6 +36,15 @@ body.shepherd-active > .shepherd-step {
     opacity: 1;
     pointer-events: auto;
 
+    &.has-banner {
+        header {
+            display: none;
+        }
+        .shepherd-text {
+            padding: 0;
+        }
+    }
+
     .btn-primary {
         border-color: @brand-primary !important;
         background-color: @brand-primary !important;
@@ -54,6 +63,10 @@ body.shepherd-active > .shepherd-step {
     .step-with-icon {
         margin-left: 220px;
         max-width: 400px;
+    }
+
+    .step-with-banner {
+        padding: 1em;
     }
 
     .lead {
