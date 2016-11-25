@@ -21,6 +21,8 @@ Localization
 Admin
 ~~~~~
 
+- Show default image for products without a primary image
+- Center the product table image and remove column sort for the image
 - Allow product primary image upload from Basic Information section
 - Allow multiple file drag-and-drop for product images/files sections
 - Add option to skip wizard panes

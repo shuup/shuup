@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
@@ -18,7 +19,8 @@ from shuup.core.models import Product, ProductMode
 class ProductListView(PicotableListView):
     model = Product
     default_columns = [
-        Column("primary_image", _(u"Primary Image"), display="primary_image", raw=True, ordering=1),
+        Column("primary_image", _(u"Primary Image"), display="get_primary_image",
+               class_name="text-center", raw=True, ordering=1, sortable=False),
         Column("name", _(u"Name"), sort_field="translations__name", display="name", filter_config=TextFilter(
             filter_field="translations__name",
             placeholder=_("Filter by name...")
@@ -37,6 +39,12 @@ class ProductListView(PicotableListView):
         "shuup.admin.modules.products.mass_actions:FileResponseAction",
         "shuup.admin.modules.products.mass_actions:EditProductAttributesAction",
     ]
+
+    def get_primary_image(self, instance):
+        if instance.primary_image:
+            return "<img src='/media/%s'>" % instance.primary_image.get_thumbnail()
+        else:
+            return "<img src='%s'>" % static("shuup_admin/img/no_image_thumbnail.png")
 
     def get_queryset(self):
         filter = self.get_filter()
