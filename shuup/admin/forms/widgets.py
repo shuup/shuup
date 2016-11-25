@@ -118,7 +118,10 @@ class FileDnDUploaderWidget(Widget):
 
     def render(self, name, value, attrs={}):
         pk_input = HiddenInput().render(name, value, attrs)
-        file_attrs = ["data-upload_path='%s'" % self.upload_path]
+        file_attrs = [
+            "data-upload_path='%s'" % self.upload_path,
+            "data-dropzone='true'"
+        ]
         if self.kind:
             file_attrs.append("data-kind='%s'" % self.kind)
         if value:

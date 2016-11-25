@@ -19,10 +19,10 @@ def has_data_attribute(soup, attribute, val):
 def test_unbound_file_dnd_uploader_widget():
     soup = BeautifulSoup(FileDnDUploaderWidget().render(name="foo", value=""))
     assert soup.select("#dropzone-dropzone"), "widget has id"
-    assert soup.select(".dropzone"), "widget has expected class"
     assert soup.select("input")[0]["name"] == "foo"
     assert not soup.select("input")[0].get("value")
     assert soup.select("[data-upload_path]")[0]["data-upload_path"] == "/"
+    assert soup.select("[data-dropzone]")[0]["data-dropzone"] == "true"
     assert not soup.select("[data-kind]")
     assert not soup.select("[data-id]")
     assert not soup.select("[data-name]")
@@ -38,10 +38,10 @@ def test_bound_file_dnd_uploader_widget():
     widget_html = FileDnDUploaderWidget(upload_path="/test", kind="foo").render(name="foo", value=f.pk)
     soup = BeautifulSoup(widget_html)
     assert soup.select("#dropzone-dropzone"), "widget has id"
-    assert soup.select(".dropzone"), "widget has expected class"
     assert soup.select("input")[0]["name"] == "foo"
     assert soup.select("input")[0]["value"] == str(f.pk)
     assert soup.select("[data-upload_path]")[0]["data-upload_path"] == "/test"
+    assert soup.select("[data-dropzone]")[0]["data-dropzone"] == "true"
     assert soup.select("[data-kind]")[0]["data-kind"] == "foo"
     assert soup.select("[data-id]")[0]["data-id"] == str(f.pk)
     assert soup.select("[data-name]")[0]["data-name"] == f.name

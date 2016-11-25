@@ -6,11 +6,10 @@
  * This source code is licensed under the AGPLv3 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-
-function activateDropzone($dropzone) {
+function activateDropzone($dropzone, attrs={}) {
     const selector = "#" + $dropzone.attr("id");
     const uploadPath = $(selector).data().upload_path;
-    const dropzone = new Dropzone(selector, {
+    const params = $.extend(true, {
         url: "/sa/media/?action=upload&path=" + uploadPath,
         params: {
             csrfmiddlewaretoken: window.ShuupAdminConfig.csrf
@@ -21,19 +20,26 @@ function activateDropzone($dropzone) {
         maxFiles: 1,
         dictDefaultMessage: gettext("Drop files here or click to browse."),
         clickable: false
-    });
+    }, attrs);
+    const dropzone = new Dropzone(selector, params);
 
-    dropzone.on("addedfile", function(file) {
-        if(dropzone.files.length > 1) {
+
+    dropzone.on("addedfile", attrs.onAddedFile || function(file) {
+        if(params.maxFiles === 1 && dropzone.files.length > 1) {
             dropzone.removeFile(dropzone.files[0]);
         }
     });
 
-    dropzone.on("success", function(data){
-        let response = JSON.parse(data.xhr.responseText);
-        $(selector).find("input").val(response.file.id);
-        $(selector).addClass("has-file");
+
+    dropzone.on("success", attrs.onSuccess || function(data){
+        // file selected through dnd
+        if(data.xhr) {
+            data = JSON.parse(data.xhr.responseText).file;
+        }
+        $(selector).find("input").val(data.id);
     });
+
+    dropzone.on("queuecomplete", attrs.onQueueComplete || $.noop);
 
     $(selector).on("click", function(e) {
         window.BrowseAPI.openBrowseWindow({kind: "media", filter: $(selector).data().kind, onSelect: (obj) => {
@@ -45,8 +51,8 @@ function activateDropzone($dropzone) {
             if(obj.thumbnail) {
                 dropzone.emit("thumbnail", obj, obj.thumbnail);
             }
+            dropzone.emit("success", obj);
             dropzone.emit("complete", obj);
-            $(selector).addClass("has-file");
         }});
     });
 
@@ -57,11 +63,11 @@ function activateDropzone($dropzone) {
             dropzone.emit("thumbnail", data, data.thumbnail);
         }
         dropzone.emit("complete", data);
-    }
+    }    
 }
 
 function activateDropzones() {
-    $("div.dropzone").each(function(idx, object) {
+    $("div[data-dropzone='true']").each(function(idx, object) {
         const dropzone = $(object);
         if(dropzone.find(".dz-message").length === 0) {
             activateDropzone(dropzone);

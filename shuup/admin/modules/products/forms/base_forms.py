@@ -16,6 +16,7 @@ from django.core.exceptions import ValidationError
 from django.forms import BaseModelFormSet
 from django.forms.formsets import DEFAULT_MAX_NUM, DEFAULT_MIN_NUM
 from django.utils.translation import ugettext_lazy as _
+from filer.fields.file import AdminFileFormField
 from filer.models import Image
 
 from shuup.admin.forms.widgets import FileDnDUploaderWidget
@@ -30,6 +31,13 @@ from shuup.utils.multilanguage_model_form import (
 
 
 class ProductBaseForm(MultiLanguageModelForm):
+    file = forms.CharField(
+        label=_("Primary Product Image"),
+        widget=FileDnDUploaderWidget(kind="images", upload_path="/products/images"),
+        help_text=_("The main product image. You can add additional images on the Product Images tab."),
+        required=False
+    )
+
     class Meta:
         model = Product
         fields = (
@@ -65,6 +73,8 @@ class ProductBaseForm(MultiLanguageModelForm):
     def __init__(self, **kwargs):
         super(ProductBaseForm, self).__init__(**kwargs)
         self.fields["sales_unit"].required = True  # TODO: Move this to model
+        if self.instance.pk:
+            del self.fields["file"]
 
     def clean_sku(self):
         sku = self.cleaned_data["sku"]
@@ -78,6 +88,18 @@ class ProductBaseForm(MultiLanguageModelForm):
             raise ValidationError(
                 _("Given value is already in use, please use unique SKU and try again."), code="sku_not_unique")
         return sku
+
+    def save(self):
+        instance = super(ProductBaseForm, self).save()
+        if self.cleaned_data.get("file"):
+            image = ProductMedia.objects.create(
+                product=instance,
+                file_id=self.cleaned_data["file"],
+                kind=ProductMediaKind.IMAGE,
+            )
+            image.shops.add(Shop.objects.first())
+            instance.primary_image = image
+            instance.save()
 
 
 class ShopProductForm(forms.ModelForm):
@@ -240,7 +262,7 @@ class BaseProductMediaForm(MultiLanguageModelForm):
         default_shop = kwargs.pop("default_shop")
         super(BaseProductMediaForm, self).__init__(**kwargs)
 
-        self.fields["file"].widget = FileDnDUploaderWidget(upload_path="/products/files")
+        self.fields["file"].widget = forms.HiddenInput()
         self.fields["file"].required = True
 
         if self.allowed_media_kinds:
@@ -291,7 +313,7 @@ class BaseProductMediaFormSet(BaseModelFormSet):
     model = ProductMedia
     can_delete = True
     can_order = False
-    extra = 1
+    extra = 0
 
     allowed_media_kinds = []
 
@@ -300,7 +322,7 @@ class BaseProductMediaFormSet(BaseModelFormSet):
         self.default_language = kwargs.pop(
             "default_language", getattr(settings, "PARLER_DEFAULT_LANGUAGE_CODE"))
         self.languages = to_language_codes(kwargs.pop("languages", ()), self.default_language)
-        kwargs.pop("empty_permitted")  # this is unknown to formset
+        kwargs.pop("empty_permitted", None)  # this is unknown to formset
         super(BaseProductMediaFormSet, self).__init__(*args, **kwargs)
 
     def get_queryset(self):
@@ -345,7 +367,7 @@ class ProductImageMediaForm(BaseProductMediaForm):
 
     def __init__(self, **kwargs):
         super(ProductImageMediaForm, self).__init__(**kwargs)
-        self.fields["file"].widget = FileDnDUploaderWidget(kind="images", upload_path="/products/images")
+        self.fields["file"].widget = forms.HiddenInput()
 
         if self.instance.pk and self.instance.file:
             if self.product.primary_image_id == self.instance.pk:
@@ -382,7 +404,7 @@ class ProductImageMediaFormSet(ProductMediaFormSet):
         eligible_forms = [form for form in (self.forms or []) if
                           (form.cleaned_data.get("file") and not form.cleaned_data.get("DELETE"))]
 
-        if eligible_forms and not has_primary:
+        if eligible_forms and not has_primary and not self.forms[0].product.primary_image:
             # make first form be the primary image as well
             form_instance = self.forms[0]
             form_instance.product.primary_image = form_instance.instance

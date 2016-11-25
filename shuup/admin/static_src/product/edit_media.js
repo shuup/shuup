@@ -43,17 +43,92 @@ $(function() {
         $("#id_images-" + current + "-is_primary").prop("checked", true);
     });
 
-    $(".media-add-new-panel").on("click", function(e) {
-        e.preventDefault();
-        const section = $(this).data("target-panels");
+    function addMediaPanel($section, file) {
+        const section = $section.attr("id");
         const panelCount = $("#" + section + " .panel").length;
         const $source = $("#" + section + "-placeholder-panel");
-        const html = $source.html().replace(/__prefix__/g, panelCount - 1).replace(/__prefix_name__/g, panelCount);
-
-        $(html).insertBefore($source);
-        activateDropzone($(html).find(".dropzone"));
-        const targetId = $(this).data("target-id");
+        const $html = $($source.html().replace(/__prefix__/g, panelCount - 1).replace(/__prefix_name__/g, panelCount));
+        let targetId = "id_images";
+        if(section.indexOf("media") > 0) {
+            targetId = "id_media";
+        }
+        if(file) {
+            let $contents = $("<a href='" + file.url + "' target='_blank'></a>");
+            if(targetId === "id_images") {
+                $contents.append("<img src='" + file.url + "'>");
+                $html.find(".thumbnail").append($contents);
+            } else {
+                $contents.append("<br><p>" + file.name + "</p>");
+                $html.find(".thumbnail").append($contents);
+            }
+            $html.find(".file-control").find("input").val(file.id);
+        }
+        $html.insertBefore($source);
         const $totalFormsField = $("#" + targetId + "-TOTAL_FORMS");
         $totalFormsField.val(parseInt($totalFormsField.val()) + 1);
+    }
+
+    function onDropzoneQueueComplete(dropzone, kind) {
+        if(location.pathname.indexOf("new") > 0) {
+            // save product media the traditional way via the save button when creating a new product
+            return;
+        }
+        const productId = $("#product-" + kind + "-section-dropzone").data().product_id;
+        const $fileInputs = $("#product-" + kind + "-section").find(".file-control input");
+        var fileIds = [];
+
+        for(var i = 0; i < $fileInputs.length; i++){
+            let fileId = parseInt($($fileInputs[i]).val());
+            if(!isNaN(fileId)) {
+                fileIds.push(parseInt($($fileInputs[i]).val()));
+            }
+        }
+        $.ajax({
+            url: "/sa/products/" + productId + "/media/add/",
+            method: "POST",
+            data: {
+                csrfmiddlewaretoken: ShuupAdminConfig.csrf,
+                product_id: productId,
+                file_ids: fileIds,
+                kind
+            },
+            traditional: true,
+            success: function(data) {
+                window.Messages.enqueue({tags: "success", text: data.message});
+            },
+            error: function(data) {
+                alert("ERROR");
+            }
+        });
+    }
+
+    function onDropzoneSuccess($section, file) {
+        // file selected through dnd
+        if(file.xhr) {
+            file = JSON.parse(file.xhr.responseText).file;
+        }
+        addMediaPanel($section, file);
+    }
+
+    activateDropzone($("#product-images-section-dropzone"), {
+        url: "/sa/media/?action=upload&path=/products/images",
+        maxFiles: 10,
+        onSuccess: function(file) {
+            onDropzoneSuccess($("#product-images-section"), file);
+        },
+        onQueueComplete: function() {
+            onDropzoneQueueComplete(this, "images");
+        }
+    });
+
+    activateDropzone($("#product-media-section-dropzone"), {
+        url: "/sa/media/?action=upload&path=/products/media",
+        maxFiles: 10,
+        onSuccess: function(file) {
+            onDropzoneSuccess($("#product-media-section"), file);
+        },
+        onQueueComplete: function() {
+            onDropzoneQueueComplete(this, "media");
+        }
     });
 });
