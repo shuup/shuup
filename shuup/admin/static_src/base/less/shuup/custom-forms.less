@@ -284,7 +284,8 @@
         }
     }
 
-    .dropzone {
+    .dropzone,
+    .dropzone-lg {
         border-style: dashed;
         border-width: 2px;
         border-color: @brand-primary;
@@ -293,6 +294,15 @@
         background-color: #fff;
         cursor: pointer;
 
+        &.dropzone-no-preview.dz-started {
+            .dz-preview {
+                display: none;
+            }
+            .dz-message {
+                display: block;
+            }
+        }
+
         &.dz-drag-hover {
             background-color: @brand-primary;
 
@@ -300,10 +310,6 @@
                 opacity: 1;
                 color: #fff;
             }
-        }
-
-        &.has-file {
-            border-color: transparent;
         }
 
         input[type="file"] {

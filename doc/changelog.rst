@@ -21,6 +21,8 @@ Localization
 Admin
 ~~~~~
 
+- Allow product primary image upload from Basic Information section
+- Allow multiple file drag-and-drop for product images/files sections
 - Add option to skip wizard panes
 - Add option to return home view
 - List wizard phases at home view

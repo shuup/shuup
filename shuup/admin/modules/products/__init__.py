@@ -54,6 +54,11 @@ class ProductModule(AdminModule):
                 permissions=get_default_model_permissions(Product),
             ),
             admin_url(
+                "^products/(?P<pk>\d+)/media/add/$", "shuup.admin.modules.products.views.ProductMediaBulkAdderView",
+                name="product.add_media",
+                permissions=get_default_model_permissions(Product),
+            ),
+            admin_url(
                 "^products/(?P<pk>\d+)/crosssell/$", "shuup.admin.modules.products.views.ProductCrossSellEditView",
                 name="product.edit_cross_sell",
                 permissions=get_default_model_permissions(ProductCrossSell),

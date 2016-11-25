@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-25 21:06+0000\n"
+"POT-Creation-Date: 2016-11-25 08:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -776,6 +776,14 @@ msgstr ""
 msgid "Add a product to see it in your store"
 msgstr ""
 
+msgid "Primary Product Image"
+msgstr ""
+
+msgid ""
+"The main product image. You can add additional images on the Product Images "
+"tab."
+msgstr ""
+
 msgid "Given value is already in use, please use unique SKU and try again."
 msgstr ""
 
@@ -873,6 +881,9 @@ msgstr ""
 
 #, python-format
 msgid "Edit Media: %s"
+msgstr ""
+
+msgid "Files added to product."
 msgstr ""
 
 msgid "Are you sure? This will remove all products from package."
@@ -1798,12 +1809,6 @@ msgstr ""
 
 msgid ""
 "Here you can manage your product files, like pdf manuals and documentation."
-msgstr ""
-
-msgid "Add new image"
-msgstr ""
-
-msgid "Add new media"
 msgstr ""
 
 msgid "No orders found"

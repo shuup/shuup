@@ -9,17 +9,20 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.contrib import messages
+from django.db.transaction import atomic
 from django.forms.formsets import DEFAULT_MAX_NUM, DEFAULT_MIN_NUM
 from django.forms.models import BaseModelFormSet
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, View
+from filer.models import File
 
 from shuup.admin.base import MenuEntry
 from shuup.admin.forms.widgets import MediaChoiceWidget
 from shuup.admin.toolbar import PostActionButton, Toolbar
 from shuup.admin.utils.urls import get_model_url
-from shuup.core.models import Product, ProductMedia
+from shuup.core.models import Product, ProductMedia, ProductMediaKind, Shop
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 
 
@@ -114,3 +117,41 @@ class ProductMediaEditView(UpdateView):
         form.save()
         messages.success(self.request, _("Changes saved."))
         return HttpResponseRedirect(self.request.path)
+
+
+class ProductMediaBulkAdderView(View):
+    """
+    Adds media in bulk to a pre-existing product.
+    """
+    @atomic
+    def post(self, *args, **kwargs):
+        ids = self.request.POST.getlist("file_ids")
+        product_id = kwargs.pop("pk")
+        kind = self.request.POST.get("kind")
+        shop_id = self.request.POST.get("shop_id", Shop.objects.first().pk)
+        if not ids or not product_id:
+            return JsonResponse({"response": "error", "message": "bad request"}, status=400)
+        if not Shop.objects.filter(pk=shop_id).exists():
+            return JsonResponse({"response": "error", "message": "invalid shop id: %s" % shop_id}, status=400)
+        if not Product.objects.filter(pk=product_id).exists():
+            return JsonResponse(
+                {"response": "error", "message": "invalid product id: %s" % product_id}, status=400)
+        if kind == "images":
+            kind = ProductMediaKind.IMAGE
+        elif kind == "media":
+            kind = ProductMediaKind.GENERIC_FILE
+        else:
+            return JsonResponse({"response": "error", "message": "invalid file kind: %s" % kind}, status=400)
+        for file_id in ids:
+            if not File.objects.filter(id=file_id).exists():
+                return JsonResponse({"response": "error", "message": "invalid file id: %s" % file_id}, status=400)
+
+        for file_id in ids:
+            if not ProductMedia.objects.filter(product_id=product_id, file_id=file_id, kind=kind, shops__in=[shop_id]).exists():
+                image = ProductMedia.objects.create(
+                    product_id=product_id,
+                    file_id=file_id,
+                    kind=kind,
+                )
+                image.shops.add(shop_id)
+        return JsonResponse({"response": "success", "message": force_text(_("Files added to product."))})
