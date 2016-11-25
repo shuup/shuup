@@ -21,6 +21,11 @@
             $providers.val(activeProviders.join(","));
         }
 
+        // Initialize activeProciders with active form defs
+        $("div.form-def[data-is-active='True']").each(function() {
+            addToActiveProviderList($(this).data("name"));
+        });
+
         $(".{{ pane.identifier }} button[name='activate']").on("click", function(e){
             var $formDef = $(this).parents(".form-def");
             if($(this).hasClass("btn-primary")){

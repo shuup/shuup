@@ -73,7 +73,8 @@ class ServiceWizardFormPartMixin(object):
 
 class CarrierWizardPane(ServiceWizardFormPartMixin, WizardPane):
     identifier = "carrier"
-    text = _("Please add shipping methods for your shop")
+    title = _("Carrier")
+    text = _("To start accepting payments right away, please add shipping methods for your shop")
     icon = "shuup_admin/img/shipping.png"
     service_model = ShippingMethod
     base_name = "shipping_method_base"
@@ -83,7 +84,8 @@ class CarrierWizardPane(ServiceWizardFormPartMixin, WizardPane):
 
 class PaymentWizardPane(ServiceWizardFormPartMixin, WizardPane):
     identifier = "payment"
-    text = _("Please add payment methods for your shop")
+    title = _("Payment Provider")
+    text = _("To start shipping products right away, please add payment methods for your shop")
     icon = "shuup_admin/img/payment.png"
     service_model = PaymentMethod
     base_name = "payment_method_base"
