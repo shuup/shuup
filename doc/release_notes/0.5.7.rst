@@ -1,0 +1,14 @@
+Shuup 0.5.7 Release Notes
+=========================
+
+Released on 2016-11-25 15:00pm -0800.
+
+This release contains mostly admin changes:
+
+* Show default image for products without a primary image
+* Center the product table image and remove column sort for the image
+* Allow product primary image upload from Basic Information section
+* Allow multiple file drag-and-drop for product images/files sections
+* Add option to skip wizard panes
+* Add option to return home view
+* List wizard phases at home view
