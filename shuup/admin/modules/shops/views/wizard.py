@@ -20,6 +20,7 @@ from shuup.core.models import TaxClass
 class ShopWizardPane(WizardPane):
     identifier = "general"
     icon = "shuup_admin/img/configure.png"
+    title = _("Shop Details")
     text = _("Please enter your shop details")
 
     def visible(self):

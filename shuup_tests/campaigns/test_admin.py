@@ -9,6 +9,7 @@ import pytest
 from shuup.admin.module_registry import replace_modules
 from shuup.admin.modules.products import ProductModule
 from shuup.admin.modules.products.views import ProductEditView
+from shuup.importer.admin_module import ImportAdminModule
 from shuup.testing.factories import create_product
 from shuup.testing.factories import get_default_shop
 from shuup.testing.utils import apply_request_middleware
@@ -23,7 +24,7 @@ def test_campaigned_product_view(rf, admin_user):
 
     request = apply_request_middleware(rf.get("/"), user=admin_user)
 
-    with replace_modules([ProductModule]):
+    with replace_modules([ImportAdminModule, ProductModule]):
         with admin_only_urls():
             render_product_view(product, request)
             product2 = create_product("test-product2")

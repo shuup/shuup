@@ -13,7 +13,9 @@ from django.views.generic import TemplateView
 
 from shuup import configuration
 from shuup.admin.form_part import FormPart, TemplatedFormDef
-from shuup.admin.utils.wizard import load_setup_wizard_panes
+from shuup.admin.utils.wizard import (
+    load_setup_wizard_pane, load_setup_wizard_panes
+)
 from shuup.core.models import Shop
 from shuup.utils.form_group import FormDef, FormGroup
 from shuup.utils.iterables import first
@@ -35,12 +37,13 @@ class TemplatedWizardFormDef(WizardFormDefMixin, TemplatedFormDef):
 
 
 class _WizardFormGroup(FormGroup):
-    def __init__(self, identifier, title, text, icon, **kwargs):
+    def __init__(self, identifier, title, text, icon, can_skip, **kwargs):
         super(_WizardFormGroup, self).__init__(**kwargs)
         self.identifier = identifier
         self.title = title
         self.text = text
         self.icon = icon
+        self.can_skip = can_skip
 
 
 class WizardPane(FormPart):
@@ -48,6 +51,7 @@ class WizardPane(FormPart):
     title = None
     text = None
     icon = None
+    can_skip = False
 
     def visible(self):
         return True
@@ -58,12 +62,23 @@ class WizardView(TemplateView):
 
     @cached_property
     def panes(self):
-        return load_setup_wizard_panes(
-            shop=Shop.objects.first(),
+        shop = Shop.objects.first()
+        pane_id = self.request.GET.get("pane_id", None)
+        panes = load_setup_wizard_panes(
+            shop=shop,
             request=self.request,
             # if the user presses "previous" then "next" again, resubmit the form
             visible_only=self.request.method == "GET"
         )
+        if not panes and pane_id:
+            pane = load_setup_wizard_pane(
+                shop=shop,
+                request=self.request,
+                pane_id=pane_id
+            )
+            if pane:
+                panes.append(pane)
+        return panes
 
     def get_all_pane_forms(self):
         return [self.get_form_group_for_pane(pane) for pane in self.panes]
@@ -93,7 +108,7 @@ class WizardView(TemplateView):
                 "data": self.request.POST,
                 "files": self.request.FILES
             })
-        fg = _WizardFormGroup(pane.identifier, pane.title, pane.text, pane.icon, **kwargs)
+        fg = _WizardFormGroup(pane.identifier, pane.title, pane.text, pane.icon, pane.can_skip, **kwargs)
         for form_def in pane.get_form_defs():
             fg.form_defs[form_def.name] = form_def
         return fg

@@ -31,7 +31,7 @@
                         <form>
                     {% else %}
                         <a class="btn btn-primary {% if not b.css_class %}btn-inverse{% endif %}"
-                            href="{{ action.url }}{% if redirect %}?redirect={{ redirect }}{% endif %}">{{ action.text }}</a>
+                            href="{{ action.url }}{% if redirect and not action.no_redirect %}?redirect={{ redirect }}{% endif %}">{{ action.text }}</a>
                     {% endif %}
                 {% endfor %}
             </div>

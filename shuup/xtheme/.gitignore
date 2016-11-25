@@ -1,3 +1,5 @@
+static/xtheme/admin/*js*
+static/xtheme/admin/*css
 static/xtheme/*js*
 static/xtheme/*css
 !static_src/lib

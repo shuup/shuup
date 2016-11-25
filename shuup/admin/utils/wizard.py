@@ -23,6 +23,14 @@ def load_setup_wizard_panes(shop, request=None, visible_only=True):
     return panes
 
 
+def load_setup_wizard_pane(shop, request, pane_id):
+    for pane_spec in getattr(settings, "SHUUP_SETUP_WIZARD_PANE_SPEC", []):
+        pane_class = load(pane_spec)
+        pane_inst = pane_class(request=request, object=shop)
+        if pane_inst.identifier == pane_id:
+            return pane_inst
+
+
 def setup_wizard_complete():
     """
     Check if shop wizard should be run.

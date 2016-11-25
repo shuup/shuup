@@ -1,4 +1,7 @@
 @import "../../base/less/variables.less";
+@bs-path: "../../base/bower_components/bootstrap/less";
+
+@import "@{bs-path}/mixins/grid.less";
 
 .wizard-header {
     text-align: center;
@@ -156,12 +159,54 @@
                     margin-top: 20px;
                 }
             }
-
-            .action-bar {
-                .clearfix {
-                    margin-bottom: 10px;
-                }
-            }
         }
     }
+}
+
+div.action-bar {
+    i {
+        margin-right: 8px;
+    }
+
+    .clearfix {
+        margin-bottom: 10px;
+    }
+}
+
+div.wizard-pane.general div.action-bar {
+    .make-sm-column-push(4);
+    .make-sm-column(7);
+    .make-md-column-push(4);
+    .make-md-column(7);
+    .make-lg-column-push(3);
+    .make-lg-column(5);
+
+    @media (min-width: @screen-sm-min) {
+        padding-left: 5px;
+        padding-right: 15px;
+    }
+
+    @media (min-width: @screen-md-min) {
+        padding-left: 5px;
+        padding-right: 10px;
+    }
+
+    @media (min-width: @screen-lg-min) {
+        padding-left: 10px;
+        padding-right: 5px;
+    }
+
+    float: none !important;
+}
+
+div.wizard-pane.carrier div.action-bar,  div.wizard-pane.payment div.action-bar{
+    .make-sm-column-push(3);
+    .make-sm-column(6);
+
+    @media (min-width: @screen-sm-min) {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    float: none !important;
 }

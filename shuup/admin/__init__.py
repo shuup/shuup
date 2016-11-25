@@ -45,10 +45,10 @@ class ShuupAdminAppConfig(AppConfig):
             "shuup.admin.modules.service_providers.forms:CustomPaymentProcessorForm"
         ],
         "carrier_wizard_form_def": [
-            "shuup.admin.modules.service_providers.forms:ManualShippingWizardFormDef"
+            "shuup.admin.modules.service_providers.wizard_form_defs:ManualShippingWizardFormDef"
         ],
         "payment_processor_wizard_form_def": [
-            "shuup.admin.modules.service_providers.forms:ManualPaymentWizardFormDef"
+            "shuup.admin.modules.service_providers.wizard_form_defs:ManualPaymentWizardFormDef"
         ],
         "service_behavior_component_form": [
             "shuup.admin.modules.services.forms:FixedCostBehaviorComponentForm",

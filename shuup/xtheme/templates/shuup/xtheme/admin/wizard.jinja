@@ -1,7 +1,7 @@
 {% from "shuup/xtheme/admin/macros.jinja" import wizard_theme_table %}
 {% set themes = form_def.context["theme_classes"] %}
 {% set active_theme = form_def.context["current_theme"] %}
-{% set active_stylesheet = active_theme().get_default_style().stylesheet %}
+{% set active_stylesheet = form_def.context["active_stylesheet"] %}
 <input type="hidden" name="theme-activate" value="{{ active_theme.identifier }}">
 <input type="hidden" name="theme-selected_style" value="{{ active_stylesheet }}">
 {{ wizard_theme_table(themes, active_theme, "chooseTheme(this)", True) }}

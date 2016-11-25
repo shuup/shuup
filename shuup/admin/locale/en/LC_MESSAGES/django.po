@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-24 17:14+0000\n"
+"POT-Creation-Date: 2016-11-25 21:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -770,6 +770,9 @@ msgstr ""
 msgid "New product"
 msgstr ""
 
+msgid "Import"
+msgstr ""
+
 msgid "Add a product to see it in your store"
 msgstr ""
 
@@ -1018,18 +1021,6 @@ msgstr ""
 msgid "Payment and Shipping"
 msgstr ""
 
-msgid "Service name"
-msgstr ""
-
-msgid "The name shown in the shop checkout process."
-msgstr ""
-
-msgid "Instructions"
-msgstr ""
-
-msgid "additional instructions shown in the shop checkout process."
-msgstr ""
-
 #, python-format
 msgid "Edit %(model)s"
 msgstr ""
@@ -1050,16 +1041,38 @@ msgstr ""
 msgid "Please activate at least one %s."
 msgstr ""
 
-msgid "Please add shipping methods for your shop"
+msgid "Carrier"
+msgstr ""
+
+msgid ""
+"To start accepting payments right away, please add shipping methods for your "
+"shop"
 msgstr ""
 
 msgid "shipping method"
 msgstr ""
 
-msgid "Please add payment methods for your shop"
+msgid "Payment Provider"
+msgstr ""
+
+msgid ""
+"To start shipping products right away, please add payment methods for your "
+"shop"
 msgstr ""
 
 msgid "payment method"
+msgstr ""
+
+msgid "Service name"
+msgstr ""
+
+msgid "The name shown in the shop checkout process."
+msgstr ""
+
+msgid "Instructions"
+msgstr ""
+
+msgid "Additional instructions shown in the shop checkout process."
 msgstr ""
 
 msgid "Shipping Methods"
@@ -1097,9 +1110,6 @@ msgid "Enabled"
 msgstr ""
 
 msgid "Shop"
-msgstr ""
-
-msgid "Carrier"
 msgstr ""
 
 msgid "Payment Processor"
@@ -1165,6 +1175,9 @@ msgid "Your store is now live!"
 msgstr ""
 
 msgid "Domain"
+msgstr ""
+
+msgid "Shop Details"
 msgstr ""
 
 msgid "Please enter your shop details"
@@ -1410,6 +1423,9 @@ msgid "Menu"
 msgstr ""
 
 msgid "Dashboard"
+msgstr ""
+
+msgid "Go home"
 msgstr ""
 
 msgid "Search for"
@@ -1904,6 +1920,9 @@ msgstr ""
 msgid "Handle shipping outside of Shuup"
 msgstr ""
 
+msgid "Deactivate"
+msgstr ""
+
 msgid "Activate"
 msgstr ""
 
@@ -2103,10 +2122,10 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-msgid "Complete the setup wizard"
+msgid "Complete wizard"
 msgstr ""
 
-msgid "Complete wizard"
+msgid "Complete the setup wizard"
 msgstr ""
 
 msgid "Publish your store"
@@ -2116,9 +2135,6 @@ msgid "Let customers browse your store and make purchases"
 msgstr ""
 
 msgid "Publish shop"
-msgstr ""
-
-msgid "No Plugin"
 msgstr ""
 
 #, python-format
