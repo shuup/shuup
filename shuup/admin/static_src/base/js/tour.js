@@ -101,7 +101,7 @@
             text: [
                 gettext("Preview your shop and all the cool features you have created!")
             ],
-            attachTo: ".shop-btn left"
+            attachTo: ".shop-btn.visit-store left"
         }, {
             title: gettext("We're done!"),
             text: [
