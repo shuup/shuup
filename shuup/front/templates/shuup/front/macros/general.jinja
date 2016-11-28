@@ -169,6 +169,9 @@
             {%- set allseeing = request.customer.is_all_seeing -%}
             <div class="collapse navbar-collapse" id="admin-tools-menu">
                 <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="{{ url("shuup_admin:dashboard") }}">{% trans %}Admin{% endtrans %}</a>
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle"
                            data-toggle="dropdown"
