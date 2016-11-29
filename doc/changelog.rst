@@ -18,6 +18,8 @@ Localization
 Admin
 ~~~~~
 
+- Add option to create categories in product edit
+
 Addons
 ~~~~~~
 
