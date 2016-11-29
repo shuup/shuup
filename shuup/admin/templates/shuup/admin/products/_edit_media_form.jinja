@@ -88,7 +88,9 @@
 {%- set name = _("Product Images") if is_image_form else _("Product Files") %}
 {% call content_block(name, "fa-camera", id=id) %}
     {% if not is_image_form %}
-    <p>{% trans %}Here you can manage your product files, like pdf manuals and documentation.{% endtrans %}</p>
+        <p class="section-description">{% trans %}You can attach files such as manual to the merchandise(s) here.{% endtrans %}</p>
+    {% else %}
+        <p class="section-description">{% trans %}Showcase your merchandise here.{% endtrans %}</p>
     {% endif %}
     <div id="{{ id }}-dropzone" class="dropzone dropzone-no-preview"
         {% if is_image_form %}data-kind="images"{% endif %}

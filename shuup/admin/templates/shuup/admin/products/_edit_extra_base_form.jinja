@@ -3,6 +3,8 @@
 {% set product_form = form["base"] %}
 
 {% call content_block(_("Additional Details"), "fa-file-text") %}
+    <p class="section-description">{% trans %}Product features such as size, weight and keywords are located here.{% endtrans %}</p>
+
     {{ bs3.field(product_form.barcode) }}
     {{ bs3.field(product_form.gtin) }}
 
@@ -22,5 +24,6 @@
 {% endcall %}
 
 {% call content_block(_("Manufacturer"), "fa-building") %}
+    <p class="section-description">{% trans %}If you know the manufacturer of the product select it here.{% endtrans %}</p>
     {{ bs3.field(product_form.manufacturer) }}
 {% endcall %}

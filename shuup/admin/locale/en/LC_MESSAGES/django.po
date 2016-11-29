@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-25 22:04+0000\n"
+"POT-Creation-Date: 2016-11-28 18:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1775,13 +1775,31 @@ msgstr ""
 msgid "Error!"
 msgstr ""
 
+msgid "All the required product information."
+msgstr ""
+
 msgid "Additional Details"
+msgstr ""
+
+msgid "Product features such as size, weight and keywords are located here."
 msgstr ""
 
 msgid "Manufacturer"
 msgstr ""
 
+msgid "If you know the manufacturer of the product select it here."
+msgstr ""
+
 msgid "Additional"
+msgstr ""
+
+msgid ""
+"Strictly shop related information. For example set the minimum price "
+"applicable in this shop."
+msgstr ""
+
+#, python-format
+msgid "These settings apply only for shop: <b>%(shop_name)s</b>."
 msgstr ""
 
 #, python-format
@@ -1807,8 +1825,13 @@ msgstr ""
 msgid "Product Files"
 msgstr ""
 
-msgid ""
-"Here you can manage your product files, like pdf manuals and documentation."
+msgid "You can attach files such as manual to the merchandise(s) here."
+msgstr ""
+
+msgid "Showcase your merchandise here."
+msgstr ""
+
+msgid "All the orders that have this product."
 msgstr ""
 
 msgid "No orders found"
@@ -1831,30 +1854,13 @@ msgid ""
 "each product."
 msgstr ""
 
-msgid "All the required product information."
-msgstr ""
-
-msgid "Product features such as size, weight and keywords are located here."
-msgstr ""
-
 msgid "If you know the product manufacturer, it can be set here."
 msgstr ""
 
 msgid "Additional Information"
 msgstr ""
 
-msgid ""
-"Strictly shop related information. For example set the minimum price "
-"applicable in this shop."
-msgstr ""
-
-msgid "You can attach files such as manual to the merchandise(s) here."
-msgstr ""
-
 msgid "Images"
-msgstr ""
-
-msgid "Showcase your merchandise here."
 msgstr ""
 
 msgid "Contact Group Pricing"

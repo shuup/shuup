@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-22 23:17+0000\n"
+"POT-Creation-Date: 2016-11-28 18:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -44,6 +44,9 @@ msgid "Theming"
 msgstr ""
 
 msgid "activate"
+msgstr ""
+
+msgid "Theme"
 msgstr ""
 
 msgid "Choose a theme for your shop"
@@ -236,9 +239,6 @@ msgid "There's nothing to configure in this theme."
 msgstr ""
 
 msgid "Select theme"
-msgstr ""
-
-msgid "Theme"
 msgstr ""
 
 msgid "Guide"
