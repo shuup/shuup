@@ -15,7 +15,9 @@ TEST_STEP_ACTIONS = [
         "template_data": {
             "fi": {
                 "body": "Irrelevant body",
+                "content_type": "plain",
                 "subject": "Irrelevant subject"
+
             }
         }
     },
@@ -30,6 +32,7 @@ TEST_STEP_ACTIONS = [
         "template_data": {
             "fi": {
                 "body": "Irrelevant body",
+                "content_type": "html",
                 "subject": "Irrelevant subject"
             }
         }
