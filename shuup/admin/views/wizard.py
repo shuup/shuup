@@ -52,6 +52,7 @@ class WizardPane(FormPart):
     text = None
     icon = None
     can_skip = False
+    editable = True
 
     def visible(self):
         return True
