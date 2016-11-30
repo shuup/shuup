@@ -84,7 +84,7 @@ class ShopWizardForm(MultiLanguageModelForm):
 class ShopAddressWizardForm(forms.ModelForm):
     class Meta:
         model = MutableAddress
-        fields = ("street", "street2", "postal_code", "city", "country", "region_code", "region")
+        fields = ("street", "street2", "postal_code", "city", "country", "region_code", "region", "phone")
         widgets = {
             "region_code": forms.Select(choices=[])
         }
@@ -100,3 +100,7 @@ class ShopAddressWizardForm(forms.ModelForm):
             "city": _("The city in which your shop is located."),
             "country": _("The country in which your shop is located.")
         }
+
+    def __init__(self, **kwargs):
+        self.user = kwargs.pop("user")
+        super(ShopAddressWizardForm, self).__init__(**kwargs)

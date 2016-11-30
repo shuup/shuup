@@ -60,7 +60,7 @@ def test_shop_wizard_pane(rf, admin_user, settings):
     assert not shop.contact_address
     assert not TaxClass.objects.exists()
     fields = _extract_fields(rf, admin_user)
-    request = rf.post("/", data=fields)
+    request = apply_request_middleware(rf.post("/", data=fields), user=admin_user)
     response = WizardView.as_view()(request)
     # fields are missing
     assert response.status_code == 400
@@ -72,7 +72,7 @@ def test_shop_wizard_pane(rf, admin_user, settings):
     fields["address-street"] = "test"
     fields["address-country"] = "US"
 
-    request = rf.post("/", data=fields)
+    request = apply_request_middleware(rf.post("/", data=fields), user=admin_user)
     response = WizardView.as_view()(request)
     assert response.status_code == 200
     shop.refresh_from_db()

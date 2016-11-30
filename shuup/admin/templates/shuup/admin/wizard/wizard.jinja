@@ -29,7 +29,9 @@
                             <p>
                             {{ pane.text }}
                             <br>
-                            <small>{% trans %}All information entered here can be edited later.{% endtrans %}</small>
+                            {% if pane.editable %}
+                                <small>{% trans %}All information entered here can be edited later.{% endtrans %}</small>
+                            {% endif %}
                             </p>
                         </div>
                         <div class="row">

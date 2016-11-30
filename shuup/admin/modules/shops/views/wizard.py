@@ -21,7 +21,7 @@ class ShopWizardPane(WizardPane):
     identifier = "general"
     icon = "shuup_admin/img/configure.png"
     title = _("Shop Details")
-    text = _("Please enter your shop details")
+    text = _("Add an address so you can get paid")
 
     def visible(self):
         return not self.object.contact_address
@@ -42,7 +42,8 @@ class ShopWizardPane(WizardPane):
                 name="address",
                 form_class=ShopAddressWizardForm,
                 kwargs={
-                    "instance": self.object.contact_address
+                    "instance": self.object.contact_address,
+                    "user": self.request.user
                 }
             )
         ]
