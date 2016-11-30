@@ -13,13 +13,13 @@
     <div class="block width-{{ b.size }}">
         <div class="block-inner color-block block-{{ b.color }}">
             <div class="block-header">
-                <div class="text-wrap">{{ b.title }}</div>
+                <div class="text-wrap"><span>{{ b.title }}</span></div>
                 {% if b.icon %}
                     <div class="icon-wrap"><i class="{{ b.icon }}"></i></div>
                 {% endif %}
             </div>
             <div class="block-content">
-                <h2 class="h1">{{ b.value }}</h2>
+                <h2>{{ b.value }}</h2>
                 {% if b.subtitle %}
                     <div class="subtitle">{{ b.subtitle }}</div>
                 {% endif %}
@@ -28,31 +28,36 @@
     </div>
 {% endmacro %}
 {% macro notification_block_content(notifications) %}
-<div class="notifications">
-    <h2 class="block-title"><i class="fa fa-exclamation-circle"></i>{% trans %}Notifications{% endtrans %}</h2>
-    <table>
-    {% for notification in notifications %}
-        <tr id="notif-{{ notification.id }}">
-            <td class="dismiss-td">
-                {% if notification.dismissal_url %}
-                <button class="btn dismiss-button" title="{{ _("Mark as read") }}"
-                    data-dismiss-url="{{ notification.dismissal_url }}"
-                    data-dismiss-target="#notif-{{ notification.id }}">
-                    <i class="fa fa-check"></i>
-                </button>
-                {% endif %}
-            </td>
-            <td>
-            {%- if notification.title %}<span class="label label-{{ notification.kind }}">{{ notification.title }}</span>&nbsp;{% endif %}
-            {%- if notification.url %}<a href="{{ notification.url }}">{% endif -%}
-            {{ notification.text }}
-            {%- if notification.url -%}</a>{%- endif %}
-            </td>
-            {% if notification.datetime %}<td class="timestamp timesince" data-ts="{{ notification.datetime.isoformat() }}"></td>{% endif %}
-        </tr>
-    {% endfor %}
-    </table>
-</div>
+    <div class="block-inner color-block block-red">
+        <div class="block-header">
+            <div class="text-wrap"><span>{% trans %}Notifications{% endtrans %}</span></div>
+            <div class="icon-wrap"><i class="fa fa-line-chart"></i></div>
+        </div>
+        <div class="block-content">
+            <table>
+            {% for notification in notifications %}
+                <tr id="notif-{{ notification.id }}">
+                    <td class="dismiss-td">
+                        {% if notification.dismissal_url %}
+                        <button class="btn dismiss-button" title="{{ _("Mark as read") }}"
+                            data-dismiss-url="{{ notification.dismissal_url }}"
+                            data-dismiss-target="#notif-{{ notification.id }}">
+                            <i class="fa fa-check"></i>
+                        </button>
+                        {% endif %}
+                    </td>
+                    <td>
+                    {%- if notification.title %}<span class="label label-{{ notification.kind }}">{{ notification.title }}</span>&nbsp;{% endif %}
+                    {%- if notification.url %}<a href="{{ notification.url }}">{% endif -%}
+                    {{ notification.text }}
+                    {%- if notification.url -%}</a>{%- endif %}
+                    </td>
+                    {% if notification.datetime %}<td class="timestamp timesince" data-ts="{{ notification.datetime.isoformat() }}"></td>{% endif %}
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+    </div>
 {% endmacro %}
 
 {% macro activity_block_content(activities) %}

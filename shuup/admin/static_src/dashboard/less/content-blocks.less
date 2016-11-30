@@ -102,78 +102,72 @@
     }
 
     .block-inner {
-        padding: 30px;
-        background: #fff;
-        border-radius: 4px;
-        border: solid #ededed;
-        border-width: 3px 1px;
+
+        padding: 5px;
+        background-color: #e4e4e4;
 
         .block-title {
-            margin-bottom: 20px;
-            border-bottom: 3px solid @brand-primary;
-            padding-bottom: 15px;
+            border-bottom: 2px solid @brand-primary;
+            margin-bottom: 5px;
+            padding-bottom: 5px;
             margin-top: 0px;
+            padding-top: 0;
+            font-size: 1.6rem;
             i {
                 margin-right: 10px;
                 color: @brand-primary;
             }
         }
 
-        &.color-block {
-            padding: 0;
-            .block-header {
-                display: table;
-                width: 100%;
-                color: #fff;
-                overflow: hidden;
-                border-top-right-radius: 2px;
-                border-top-left-radius: 2px;
-                .text-wrap {
-                    background: @brand-primary;
-                    margin: 0;
-                    vertical-align: middle;
-                    display: table-cell;
-                    padding: 1rem 1.5rem;
-                    font-size: 1.8rem;
-                }
-                .icon-wrap {
-                    background: darken(@brand-primary, 8%);
-                    display: table-cell;
-                    height: 5rem;
-                    width: 5rem;
-                    vertical-align: middle;
-                    text-align: center;
-                    i {
-                        font-size: 2.5rem;
-                        color: rgba(255, 255, 255, 0.85);
-                    }
+         .block-header {
+            display: table;
+            width: 100%;
+            color: #fff;
+            overflow: hidden;
+            .text-wrap {
+                background-color: #fff;
+                color: black;
+                margin: 0;
+                vertical-align: middle;
+                display: table-cell;
+                padding: 0.5rem 1rem;
+                font-size: 1.6rem;
+            }
+            .icon-wrap {
+                display:none;
+                background: darken(@brand-primary, 8%);
+                height: 2rem;
+                width: 2rem;
+                vertical-align: middle;
+                text-align: center;
+                i {
+                    font-size: 2.5rem;
+                    color: rgba(255, 255, 255, 0.85);
                 }
             }
-            .block-content {
-                padding: 2.5rem 3rem;
-                background: #FFF none repeat scroll 0% 0%;
-                border-bottom-right-radius: 2px;
-                border-bottom-left-radius: 2px;
-                h2 {
-                    margin: 0;
-                    font-weight: 400;
-                }
-                .subtitle {
-                    color: #999;
-                    padding-top: 1rem;
-                    border-top: 1px solid #DDD;
-                    display: block;
-                    margin-top: 10px;
-                    font-size: 1.3rem;
-                }
+        }
+        .block-content {
+            padding: 1rem;
+            background-color:#fff;
+
+            h2 {
+                margin: 0;
+                font-weight: 400;
+            }
+            .subtitle {
+                color: #999;
+                padding-top: 1rem;
+                border-top: 1px solid #DDD;
+                display: block;
+                margin-top: 10px;
+                font-size: 1.3rem;
             }
         }
 
         // Mixin for changing block header background colors
         .block-bg-color(@color) {
             .block-header {
-                .text-wrap { background: @color; }
-                .icon-wrap { background: darken(@color, 8%); }
+                .text-wrap >span { border-bottom: 2px solid @color; }
             }
         }
 
