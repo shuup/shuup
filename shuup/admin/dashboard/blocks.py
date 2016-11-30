@@ -73,8 +73,13 @@ class DashboardChartBlock(DashboardBlock):
     type = "chart"
     default_size = "medium"
     BLOCK_TEMPLATE = """
-    <h2 class="block-title"><i class="fa fa-bar-chart"></i>%(title)s</h2>
-    <div id="chart-%(id)s"></div>
+    <div class="block-header">
+        <div class="text-wrap"><span>%(title)s</span></div>
+        <div class="icon-wrap"><i class="fa %(icon)s"></i></div>
+    </div>
+    <div class="block-content">
+        <div id="chart-%(id)s"></div>
+    </div>
     <script>
     window.CHART_CONFIGS = window.CHART_CONFIGS || {};
     window.CHART_CONFIGS["%(id)s"] = %(config)s;
@@ -101,6 +106,7 @@ class DashboardChartBlock(DashboardBlock):
         content = self.BLOCK_TEMPLATE % {
             "title": force_text(chart.title),
             "id": self.id,
-            "config": chart.get_config_json()
+            "config": chart.get_config_json(),
+            "icon": "fa-line-chart"
         }
         return content
