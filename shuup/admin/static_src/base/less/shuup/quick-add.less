@@ -1,0 +1,54 @@
+div.container-fluid.support-nav-wrap.iframe-mode {
+    top: 0;
+    padding-top: 50px;
+}
+
+#create-object-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 2000;
+    background-color: rgba(0,0,0,0.5);
+
+    iframe {
+        float: right;
+        transition: transform 1s;
+        transition-property: width;
+        transform: translate(0, 0);
+        &.open {
+            width: 100%;
+        }
+
+        @media (min-width: @screen-lg-min) {
+            &.open {
+                width: 80%;
+            }
+        }
+    }
+
+    a.close-btn {
+        position: absolute;
+        right: 50px;
+        top: 10px;
+        z-index: 2001;
+    }
+}
+
+.content-block {
+    .form-group {
+        .quick-add-btn {
+            cursor: pointer;
+            float: left;
+            padding-top: 8px;
+            padding-left: 16px;
+            padding-right: 0px;
+            position: initial;
+
+            i.fa-plus:hover {
+                color: #000;
+            }
+        }
+    }
+}

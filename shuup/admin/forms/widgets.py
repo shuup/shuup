@@ -10,9 +10,11 @@ from __future__ import unicode_literals
 import json
 
 import six
-from django.forms import HiddenInput, Widget
+from django.core.urlresolvers import reverse_lazy
+from django.forms import HiddenInput, Select, SelectMultiple, Widget
+from django.forms.utils import flatatt
 from django.utils.encoding import force_text
-from django.utils.html import escape
+from django.utils.html import escape, format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from filer.models import File
@@ -178,3 +180,65 @@ class PersonContactChoiceWidget(ContactChoiceWidget):
 
 class PackageProductChoiceWidget(ProductChoiceWidget):
     filter = json.dumps({"modes": [ProductMode.NORMAL.value, ProductMode.VARIATION_CHILD.value]})
+
+
+class QuickAddRelatedObjectSelect(Select):
+    url = ""
+
+    def render(self, name, value, attrs=None, choices=()):
+        if value is None:
+            value = ''
+        final_attrs = self.build_attrs(attrs, name=name)
+        output = [format_html('<select{}>', flatatt(final_attrs))]
+        options = self.render_options(choices, [value])
+        if options:
+            output.append(options)
+        output.append('</select>')
+        quick_add_button = """
+            <span
+                class="quick-add-btn"
+                data-url="%s?mode=iframe&quick_add_target=%s"
+                data-toggle="popover"
+                data-placement="bottom"
+                data-trigger="hover"
+                data-content="%s">
+                    <i class="fa fa-plus text-primary"></i>
+            </span>
+        """.strip()
+        output.append(quick_add_button % (self.url, name, _("Create New")))
+        return mark_safe('\n'.join(output))
+
+
+class QuickAddRelatedObjectMultiSelect(SelectMultiple):
+    url = ""
+
+    def render(self, name, value, attrs=None, choices=()):
+        if value is None:
+            value = []
+        final_attrs = self.build_attrs(attrs, name=name)
+        output = [format_html('<select multiple="multiple"{}>', flatatt(final_attrs))]
+        options = self.render_options(choices, value)
+        if options:
+            output.append(options)
+        output.append('</select>')
+        quick_add_button = """
+            <span
+                class="quick-add-btn"
+                data-url="%s?mode=iframe&quick_add_target=%s"
+                data-toggle="popover"
+                data-placement="bottom"
+                data-trigger="hover"
+                data-content="%s">
+                    <i class="fa fa-plus text-primary"></i>
+            </span>
+        """.strip()
+        output.append(quick_add_button % (self.url, name, _("Create New")))
+        return mark_safe('\n'.join(output))
+
+
+class QuickAddCategoryMultiSelect(QuickAddRelatedObjectMultiSelect):
+    url = reverse_lazy("shuup_admin:category.new")
+
+
+class QuickAddCategorySelect(QuickAddRelatedObjectSelect):
+    url = reverse_lazy("shuup_admin:category.new")

@@ -16,10 +16,11 @@ from django.core.exceptions import ValidationError
 from django.forms import BaseModelFormSet
 from django.forms.formsets import DEFAULT_MAX_NUM, DEFAULT_MIN_NUM
 from django.utils.translation import ugettext_lazy as _
-from filer.fields.file import AdminFileFormField
 from filer.models import Image
 
-from shuup.admin.forms.widgets import FileDnDUploaderWidget
+from shuup.admin.forms.widgets import (
+    FileDnDUploaderWidget, QuickAddCategoryMultiSelect, QuickAddCategorySelect
+)
 from shuup.core.models import (
     Attribute, AttributeType, Category, Product, ProductMedia,
     ProductMediaKind, Shop, ShopProduct
@@ -127,6 +128,10 @@ class ShopProductForm(forms.ModelForm):
         help_texts = {
             "backorder_maximum": _("Number of units that can be purchased after the product is out of stock. "
                                    "Set to blank for product to be purchasable without limits")
+        }
+        widgets = {
+            "primary_category": QuickAddCategorySelect(),
+            "categories": QuickAddCategoryMultiSelect()
         }
 
     def __init__(self, **kwargs):

@@ -51,6 +51,12 @@ class CreateOrUpdateView(UpdateView):
         context["title"] = get_create_or_change_title(self.request, self.object)
         context["save_form_id"] = self.get_save_form_id()
         context["toolbar"] = self.get_toolbar()
+        context["iframe_mode"] = bool(self.request.GET.get("mode", "") == "iframe")
+        if context["iframe_mode"] and self.object and self.object.id is not None:
+            context["iframe_close"] = bool(self.request.GET.get("iframe_close"))
+            context["quick_add_target"] = self.request.GET.get("quick_add_target", "")
+            context["quick_add_option_id"] = self.object.id
+            context["quick_add_option_name"] = self.object.name
         return context
 
     def get_save_form_id(self):
@@ -63,6 +69,11 @@ class CreateOrUpdateView(UpdateView):
         return get_model_url(self.object, kind="new")
 
     def get_success_url(self):
+        if self.request.GET.get("mode", "") == "iframe":
+            quick_add_target = self.request.GET.get("quick_add_target")
+            return "%s?mode=iframe&quick_add_target=%s&iframe_close=yes" % (
+                get_model_url(self.object), quick_add_target)
+
         next = self.request.POST.get("__next")
         try:
             if next == "return":
