@@ -196,7 +196,8 @@ SHUUP_SETUP_WIZARD_PANE_SPEC = [
     "shuup.admin.modules.shops.views:ShopWizardPane",
     "shuup.admin.modules.service_providers.views.PaymentWizardPane",
     "shuup.admin.modules.service_providers.views.CarrierWizardPane",
-    "shuup.xtheme.admin_module.views.ThemeWizardPane"
+    "shuup.xtheme.admin_module.views.ThemeWizardPane",
+    "shuup.admin.modules.sample_data.views.SampleObjectsWizardPane"
 ]
 
 if os.environ.get("SHUUP_WORKBENCH_DISABLE_MIGRATIONS") == "1":
