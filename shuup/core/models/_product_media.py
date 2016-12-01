@@ -10,6 +10,7 @@ from __future__ import with_statement
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
+from easy_thumbnails.exceptions import InvalidImageFormatError
 from easy_thumbnails.files import get_thumbnailer
 from enumfields import Enum, EnumIntegerField
 from filer.fields.file import FilerFileField
@@ -146,7 +147,10 @@ class ProductMedia(TranslatableModel):
         if not thumbnailer:
             return None
 
-        return thumbnailer.get_thumbnail(thumbnail_options=kwargs)
+        try:
+            return thumbnailer.get_thumbnail(thumbnail_options=kwargs)
+        except InvalidImageFormatError:
+            return None
 
 
 ProductMediaLogEntry = define_log_model(ProductMedia)
