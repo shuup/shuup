@@ -1,0 +1,12 @@
+Shuup 0.5.8 Release Notes
+=========================
+
+Released on 2016-12-1 10:55am -0800.
+
+This release contains mostly admin changes:
+
+* Fix bugs in wizard
+* Restyle dashboard
+* Add option to create categories in product edit
+* Fix bugs in rendering address and customer forms
+* Add admin link to toolbar
