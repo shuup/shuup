@@ -14,7 +14,7 @@
     <fieldset>
         <legend>{{ title }}</legend>
         {% for field in form.visible_fields() %}
-            {{ render_field(field) }}
+            {{ render_field(field, show_help_text=False) }}
         {% endfor %}
     </fieldset>
 

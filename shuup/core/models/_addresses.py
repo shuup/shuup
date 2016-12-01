@@ -103,7 +103,7 @@ class Address(NameMixin, ShuupModel):
         "The address region, province, or state."
     ))
     region = models.CharField(verbose_name=_('region'), max_length=64, blank=True, help_text=_(
-        "The address region, provice, or state."
+        "The address region, province, or state."
     ))
     country = CountryField(verbose_name=_('country'), help_text=_(
         "The address country."

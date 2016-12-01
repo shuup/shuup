@@ -26,7 +26,7 @@
             <fieldset>
                 <legend>{% trans %}Billing information{% endtrans %}</legend>
                 {% for field in billing_form.visible_fields() %}
-                    {{ render_field(field) }}
+                    {{ render_field(field, show_help_text=False) }}
                 {% endfor %}
             </fieldset>
             <button class="btn btn-primary" type="button" onclick="copyAddress('billing', 'shipping')">
@@ -37,7 +37,7 @@
                 <fieldset>
                     <legend>{% trans %}Shipping information{% endtrans %}</legend>
                     {% for field in shipping_form.visible_fields() %}
-                        {{ render_field(field) }}
+                        {{ render_field(field, show_help_text=False) }}
                     {% endfor %}
                 </fieldset>
                 <button class="btn btn-primary" type="button" onclick="copyAddress('shipping', 'billing')">
