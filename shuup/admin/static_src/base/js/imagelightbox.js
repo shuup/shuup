@@ -7,5 +7,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 (function(){
-    $(".lightbox").imageLightbox();
+    $(".lightbox").imageLightbox({
+        "button": true,
+        "overlay": true,
+    });
 })();
