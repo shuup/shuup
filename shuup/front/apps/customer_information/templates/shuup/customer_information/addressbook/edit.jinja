@@ -1,5 +1,6 @@
 {% extends "shuup/front/dashboard/dashboard.jinja" %}
 {% from "shuup/customer_information/macros/buttons.jinja" import save_changes_button %}
+{% from "shuup/front/macros/general.jinja" import render_field %}
 
 {% block title %}{% trans %}Address Book{% endtrans %}{% endblock %}
 {% block content_title %}{% trans %}Address Book{% endtrans %}{% endblock %}
@@ -20,25 +21,24 @@
     <div class="row">
         <div class="col-md-12">
             <div class="title">{% trans %}General Information{% endtrans %}</div>
-            {{ bs3.field(saved_form.title) }}
-            {{ bs3.field(saved_form.role) }}
-            {{ bs3.field(saved_form.status) }}
+            {{ render_field(saved_form.title) }}
+            {{ render_field(saved_form.role) }}
+            {{ render_field(saved_form.status) }}
         </div>
         <div class="col-md-6">
             <div class="title">{% trans %}Contact Information{% endtrans %}</div>
-            {{ bs3.field(address_form.name) }}
-            {{ bs3.field(address_form.company_name) }}
-            {{ bs3.field(address_form.phone) }}
-            {{ bs3.field(address_form.email) }}
+            {{ render_field(address_form.name, show_help_text=False) }}
+            {{ render_field(address_form.phone, show_help_text=False) }}
+            {{ render_field(address_form.email, show_help_text=False) }}
         </div>
         <div class="col-md-6">
             <div class="title">{% trans %}Address{% endtrans %}</div>
-            {{ bs3.field(address_form.street) }}
-            {{ bs3.field(address_form.city) }}
-            {{ bs3.field(address_form.region) }}
-            {{ bs3.field(address_form.region_code) }}
-            {{ bs3.field(address_form.postal_code) }}
-            {{ bs3.field(address_form.country) }}
+            {{ render_field(address_form.street, show_help_text=False) }}
+            {{ render_field(address_form.city, show_help_text=False) }}
+            {{ render_field(address_form.region, show_help_text=False) }}
+            {{ render_field(address_form.region_code, show_help_text=False) }}
+            {{ render_field(address_form.postal_code, show_help_text=False) }}
+            {{ render_field(address_form.country, show_help_text=False) }}
         </div>
     </div>
     <div class="btn-toolbar pull-right" role="toolbar">
