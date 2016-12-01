@@ -53,7 +53,7 @@
     </div>
     <div id="{{ div_id }}" class="form-horizontal">
         {% for field in form %}
-            {{ bs3.field(field, layout="horizontal") }}
+            {{ render_field(field, layout="horizontal", show_help_text=False) }}
         {% endfor %}
     </div>
 {% endmacro %}
@@ -76,8 +76,8 @@
             </div>
         </div>
         <div class="form-horizontal">
-            {{ bs3.field(name_field, layout="horizontal") }}
-            {{ bs3.field(tax_number_field, layout="horizontal") }}
+            {{ render_field(name_field, layout="horizontal") }}
+            {{ render_field(tax_number_field, layout="horizontal") }}
         </div>
     {% endif %}
 {% endmacro %}
@@ -195,7 +195,7 @@
                 </h2>
             </div>
             <div class="panel-body">
-                {{ bs3.field(form.comment) }}
+                {{ render_field(form.comment) }}
             </div>
         </div>
         <hr>
