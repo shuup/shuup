@@ -4,7 +4,9 @@
 {% set active_stylesheet = form_def.context["active_stylesheet"] %}
 <input type="hidden" name="theme-activate" value="{{ active_theme.identifier }}">
 <input type="hidden" name="theme-selected_style" value="{{ active_stylesheet }}">
+<div class="hidden">
 {{ wizard_theme_table(themes, active_theme, "chooseTheme(this)", True) }}
+</div>
 
 <div id="theme-images">
 {% for theme in themes %}
