@@ -32,12 +32,6 @@ class SampleDataAdminModule(AdminModule):
                 "shuup.admin.modules.sample_data.views.ConsolidateSampleObjectsView",
                 name="sample_data",
                 permissions=get_default_model_permissions(Shop)
-            ),
-            admin_url(
-                "^sample_data/clear$",
-                "shuup.admin.modules.sample_data.views.ClearSampleObjectsView",
-                name="clear_sample_data",
-                permissions=get_default_model_permissions(Shop)
             )
         ]
 
@@ -61,7 +55,6 @@ class SampleDataAdminModule(AdminModule):
 
     def get_notifications(self, request):
         """ Injects a message to the user and also a notification """
-
         # multi-shop not supported
         if not settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
             # there would be only sample data for single-shops envs

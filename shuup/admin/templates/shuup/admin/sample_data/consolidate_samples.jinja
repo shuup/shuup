@@ -7,24 +7,19 @@
                     <h2>{{ _("Sample Data") }}</h2>
 
                     {% if has_installed_sample %}
-                    <p><i class="text-info fa fa-info-circle"></i> {{ _("Your shop currently has some sample data installed.") }}</p>
-                    <p>{{ _("Consolidating data will remove Sample status from the objects below. Remove those which you do not want to save.") }}</p>
+                    <p><i class="text-info fa fa-info-circle"></i> {{ _("Your shop currently has some sample data installed. Select below which objects you want to uninstall.") }}</p>
+                    <p>{{ _("After the consolidation, preserved objects will lose their status of Sample Object and it will be no longer possible to distinguish them from the others.") }}</p>
                     <p class="text-danger"><strong>{{ _("Caution: this action cannot be undone.") }}</strong></p>
-
                     <hr/>
-
                     <form action="{{ request.path }}" method="post" id="sample-object-form">
                         {% csrf_token %}
                         {% for field in form %}
                             {{ bs3.field(field) }}
                         {% endfor %}
-
-                        <hr/>
-
-                        <button type="button" class="btn btn-lg btn-danger" onclick="deleteAll()">{{ _("Delete all") }}</button>
-                        <button type="submit" class="btn btn-lg btn-primary pull-right">{{ _("Consolidate") }}</button>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-check"></i> {{ _("Consolidate") }}</button>
+                        </div>
                     </form>
-
                     {% else %}
                         <p><i class="text-info fa fa-info-circle"></i> {{ _("Your shop has no sample data installed!") }}</p>
                     {% endif %}
@@ -32,12 +27,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block extra_js %}
-<script>
-    function deleteAll(){
-        $("#sample-object-form").attr("action", "{{ url('shuup_admin:clear_sample_data') }}").submit();
-    }
-</script>
 {% endblock %}

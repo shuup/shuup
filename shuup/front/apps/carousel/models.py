@@ -11,7 +11,8 @@ from django.db import models
 from django.db.models import Q
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.timezone import now
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
+from easy_thumbnails.files import get_thumbnailer
 from enumfields import Enum, EnumIntegerField
 from filer.fields.image import FilerImageField
 from parler.managers import TranslatableQuerySet
@@ -221,5 +222,44 @@ class Slide(TranslatableShuupModel):
             return "_blank"
         else:
             return "_self"
+
+    @property
+    def easy_thumbnails_thumbnailer(self):
+        """
+        Get Thumbnailer instance for the translated image.
+        Will return None if file cannot be thumbnailed.
+        :rtype:easy_thumbnails.files.Thumbnailer|None
+        """
+        image = self.get_translated_field("image")
+
+        if not image:
+            return
+
+        try:
+            return get_thumbnailer(image)
+        except ValueError:
+            return get_thumbnailer(image.filer_image_file)
+        except:
+            return None
+
+    def get_thumbnail(self, **kwargs):
+        """
+        Get thumbnail for the translated image
+        This will return None if there is no file
+        :rtype: easy_thumbnails.files.ThumbnailFile|None
+        """
+        kwargs.setdefault("size", (self.carousel.image_width, self.carousel.image_height))
+        kwargs.setdefault("crop", True)  # sane defaults
+        kwargs.setdefault("upscale", True)  # sane defaults
+
+        if kwargs["size"] is (0, 0):
+            return None
+
+        thumbnailer = self.easy_thumbnails_thumbnailer
+
+        if not thumbnailer:
+            return None
+
+        return thumbnailer.get_thumbnail(thumbnail_options=kwargs)
 
     objects = SlideQuerySet.as_manager()

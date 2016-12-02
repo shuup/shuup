@@ -7,57 +7,25 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-import os
-
 from django.conf import settings
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.db.transaction import atomic
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import FormView, View
+from django.views.generic import FormView
 
 from shuup import configuration
 from shuup.admin.modules.sample_data import manager as sample_manager
-from shuup.admin.modules.sample_data import SAMPLE_IMAGES_BASE_DIR
 from shuup.admin.modules.sample_data.data import BUSINESS_SEGMENTS, CMS_PAGES
 from shuup.admin.modules.sample_data.factories import (
-    create_sample_category, create_sample_product
+    create_sample_carousel, create_sample_category, create_sample_product
 )
 from shuup.admin.modules.sample_data.forms import (
     ConsolidateObjectsForm, SampleObjectsWizardForm
 )
 from shuup.admin.views.wizard import TemplatedWizardFormDef, WizardPane
 from shuup.core.models import Category, Product, Shop
-
-
-class ClearSampleObjectsView(View):
-    """
-    This view will clear all the installed samples no matter what.
-    """
-
-    @atomic
-    def post(self, request, *args, **kwargs):
-        # there would be only sample data for single-shops envs
-        shop = Shop.objects.first()
-
-        # delete categories
-        for c in Category.objects.filter(pk__in=sample_manager.get_installed_categories(shop)):
-            c.soft_delete()
-
-        # delete Products
-        for p in Product.objects.filter(pk__in=sample_manager.get_installed_products(shop)):
-            p.soft_delete()
-
-        # delete CMS pages
-        if 'shuup.simple_cms' in settings.INSTALLED_APPS:
-            from shuup.simple_cms.models import Page
-            Page.objects.filter(identifier__in=sample_manager.get_installed_cms_pages(shop)).delete()
-
-        # clear the samples from config
-        sample_manager.clear_installed_samples(shop)
-        messages.success(request, _("All sample data were deleted"))
-        return HttpResponseRedirect(reverse("shuup_admin:dashboard"))
 
 
 class ConsolidateSampleObjectsView(FormView):
@@ -74,31 +42,29 @@ class ConsolidateSampleObjectsView(FormView):
         # there would be only sample data for single-shops envs
         shop = Shop.objects.first()
 
-        products = [int(p) for p in form.cleaned_data.get("products", [])]
-        categories = [int(c) for c in form.cleaned_data.get("categories", [])]
+        # uninstall products
+        if form.cleaned_data.get("products", False):
+            for product in Product.objects.filter(pk__in=sample_manager.get_installed_products(shop)):
+                product.soft_delete()
 
-        # remove all unecessary products
-        remove_products = [
-            prod for prod in sample_manager.get_installed_products(shop) if prod not in products
-        ]
-        for p in Product.objects.filter(pk__in=remove_products):
-            p.soft_delete()
+        # uninstall categories
+        if form.cleaned_data.get("categories", False):
+            for category in Category.objects.filter(pk__in=sample_manager.get_installed_categories(shop)):
+                category.soft_delete()
 
-        # remove all unecessary categories
-        remove_categories = [
-            cat for cat in sample_manager.get_installed_categories(shop) if cat not in categories
-        ]
-        for c in Category.objects.filter(pk__in=remove_categories):
-            c.soft_delete()
+        # uninstall carousel
+        if 'shuup.front.apps.carousel' in settings.INSTALLED_APPS and \
+                form.cleaned_data.get("carousel", False):
+            carousel = sample_manager.get_installed_carousel(shop)
+            if carousel:
+                from shuup.front.apps.carousel.models import Carousel
+                Carousel.objects.filter(pk=carousel).delete()
 
-        # remove all unecessary CMS pages
-        if 'shuup.simple_cms' in settings.INSTALLED_APPS:
+        # uninstall cms pages
+        if 'shuup.simple_cms' in settings.INSTALLED_APPS and \
+                form.cleaned_data.get("cms", False):
             from shuup.simple_cms.models import Page
-            cms_pages = form.cleaned_data.get("cms", [])
-            remove_pages = [
-                page for page in sample_manager.get_installed_cms_pages(shop) if page not in cms_pages
-            ]
-            Page.objects.filter(identifier__in=remove_pages).delete()
+            Page.objects.filter(identifier__in=sample_manager.get_installed_cms_pages(shop)).delete()
 
         sample_manager.clear_installed_samples(shop)
         messages.success(self.request, _("Sample data were consolidated"))
@@ -108,14 +74,6 @@ class ConsolidateSampleObjectsView(FormView):
         kwargs = super(ConsolidateSampleObjectsView, self).get_form_kwargs()
         kwargs.update({"shop": Shop.objects.first()})
         return kwargs
-
-    def get_initial(self):
-        shop = Shop.objects.first()
-        return {
-            "products": sample_manager.get_installed_products(shop),
-            "categories": sample_manager.get_installed_categories(shop),
-            "cms": sample_manager.get_installed_cms_pages(shop)
-        }
 
     def get_context_data(self, **kwargs):
         shop = Shop.objects.first()
@@ -168,6 +126,12 @@ class SampleObjectsWizardPane(WizardPane):
                 merged_products = list(set(products) | set(current_products))
                 sample_manager.save_products(shop, merged_products)
 
+        # user wants a carousel
+        if form_data.get("carousel"):
+            carousel = self._create_sample_carousel(shop, business_segment)
+            if carousel:
+                sample_manager.save_carousel(shop, carousel.pk)
+
         # user wants to install sample CMS Pages
         if form_data.get("cms"):
             cms_pages = self._create_sample_cms_pages(form_data["cms"])
@@ -180,7 +144,8 @@ class SampleObjectsWizardPane(WizardPane):
         # user will no longer see this pane
         configuration.set(None, "sample_data_wizard_completed", True)
 
-    def _create_sample_categories(self, shop, business_segment):
+    @classmethod
+    def _create_sample_categories(cls, shop, business_segment):
         """
         Create the categories for the given business segment
         """
@@ -190,17 +155,17 @@ class SampleObjectsWizardPane(WizardPane):
         categories = []
 
         for category_data in BUSINESS_SEGMENTS[business_segment]["categories"]:
-            image_path = os.path.join(SAMPLE_IMAGES_BASE_DIR, category_data["image"])
             category = create_sample_category(category_data["name"],
                                               category_data["description"],
                                               business_segment,
-                                              image_path,
+                                              category_data["image"],
                                               shop)
             categories.append(category.pk)
 
         return categories
 
-    def _create_sample_products(self, shop, business_segment):
+    @classmethod
+    def _create_sample_products(cls, shop, business_segment):
         """
         Create the sample products for the given business_segment
         """
@@ -210,18 +175,65 @@ class SampleObjectsWizardPane(WizardPane):
         products = []
 
         for product_data in BUSINESS_SEGMENTS[business_segment]["products"]:
-            image_path = os.path.join(SAMPLE_IMAGES_BASE_DIR, product_data["image"])
-
             product = create_sample_product(product_data["name"],
                                             product_data["description"],
                                             business_segment,
-                                            image_path,
+                                            product_data["image"],
                                             shop)
             products.append(product.pk)
 
         return products
 
-    def _create_sample_cms_pages(self, cms_pages_ids):
+    @classmethod
+    def _create_sample_carousel(cls, shop, business_segment):
+        """
+        Create the sample carousel for the given business_segment
+        and also injects it to the default theme currently being used in front
+        """
+        if business_segment not in BUSINESS_SEGMENTS:
+            return None
+
+        carousel_data = BUSINESS_SEGMENTS[business_segment]["carousel"]
+        carousel = create_sample_carousel(carousel_data, business_segment, shop)
+
+        # injects the carousel plugin with in the front_content placeholder
+        # this will only works if the theme have this placeholder, we expect so
+        if 'shuup.xtheme' in settings.INSTALLED_APPS:
+            from shuup.front.apps.carousel.plugins import CarouselPlugin
+            from shuup.xtheme.plugins.products import ProductHighlightPlugin
+
+            from shuup.xtheme.models import SavedViewConfig, SavedViewConfigStatus
+            from shuup.xtheme.layout import Layout
+            from shuup.xtheme._theme import get_current_theme
+
+            theme = get_current_theme()
+
+            if theme:
+                layout = Layout(theme, "front_content")
+
+                # adds the carousel
+                layout.begin_row()
+                layout.begin_column({"md": 12})
+                layout.add_plugin(CarouselPlugin.identifier, {"carousel": carousel.pk})
+
+                # adds some products
+                layout.begin_row()
+                layout.begin_column({"md": 12})
+                layout.add_plugin(ProductHighlightPlugin.identifier, {})
+
+                svc = SavedViewConfig(
+                    theme_identifier=theme.identifier,
+                    view_name="IndexView",
+                    status=SavedViewConfigStatus.CURRENT_DRAFT
+                )
+                svc.set_layout_data(layout.placeholder_name, layout)
+                svc.save()
+                svc.publish()
+
+        return carousel
+
+    @classmethod
+    def _create_sample_cms_pages(cls, cms_pages_ids):
         """
         Creates the sample CMS pages for the given list of identifiers.
         If a page with the same identifier already exists, nothing will be done.

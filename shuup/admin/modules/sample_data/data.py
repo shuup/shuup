@@ -95,6 +95,21 @@ BUSINESS_SEGMENTS = {
                                  "perfect combination of oils."),
                 "image": "default/product10.jpg"
             }
-        ]
+        ],
+        "carousel": {
+            "name": _("Sample Carousel"),
+            "width": 1000,
+            "height": 400,
+            "slides": [
+                {
+                    "title": "You awesome again.",
+                    "image": "default/banner01.jpg"
+                },
+                {
+                    "title": "The best cosmetics in the world.",
+                    "image": "default/banner02.jpg"
+                }
+            ]
+        }
     }
 }

@@ -12,6 +12,7 @@ from shuup import configuration
 SAMPLE_PRODUCTS_KEY = "sample_products"
 SAMPLE_CATEGORIES_KEY = "sample_categories"
 SAMPLE_CMS_PAGES_KEY = "sample_cms_pages"
+SAMPLE_CAROUSEL_KEY = "sample_carousel"
 
 
 def get_installed_products(shop):
@@ -29,11 +30,17 @@ def get_installed_cms_pages(shop):
     return configuration.get(shop, SAMPLE_CMS_PAGES_KEY) or []
 
 
+def get_installed_carousel(shop):
+    """ Returns the installed sample carousel """
+    return configuration.get(shop, SAMPLE_CAROUSEL_KEY)
+
+
 def clear_installed_samples(shop):
     """ Clears all the samples values from the configuration """
     configuration.set(shop, SAMPLE_PRODUCTS_KEY, None)
     configuration.set(shop, SAMPLE_CATEGORIES_KEY, None)
     configuration.set(shop, SAMPLE_CMS_PAGES_KEY, None)
+    configuration.set(shop, SAMPLE_CAROUSEL_KEY, None)
 
 
 def save_cms_pages(shop, cms_pages_ids):
@@ -51,8 +58,16 @@ def save_categories(shop, categories_pk):
     configuration.set(shop, SAMPLE_CATEGORIES_KEY, categories_pk)
 
 
+def save_carousel(shop, carousel_pk):
+    """ Save the PK of the sample carousel """
+    configuration.set(shop, SAMPLE_CAROUSEL_KEY, carousel_pk)
+
+
 def has_installed_samples(shop):
     """ Returns whether there is some sample data installed """
     return bool(
-        get_installed_products(shop) or get_installed_categories(shop) or get_installed_cms_pages(shop)
+        get_installed_products(shop) or
+        get_installed_categories(shop) or
+        get_installed_cms_pages(shop) or
+        get_installed_carousel(shop)
     )
