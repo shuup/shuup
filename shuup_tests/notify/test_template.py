@@ -21,7 +21,11 @@ from shuup_tests.notify.fixtures import (
 def test_template_render(template=None):
     template = get_test_template()
     # since both subject and body are required, "sw" is disqualified
-    japanese_render = template.render_first_match(TEST_TEMPLATE_LANGUAGES, ("subject", "body"))
+    fields = {
+        "subject": None,
+        "body": None,
+    }
+    japanese_render = template.render_first_match(TEST_TEMPLATE_LANGUAGES, fields)
     assert japanese_render["_language"] == "ja"
     # test that |upper worked
     assert template.context.get("name").upper() in japanese_render["body"]
@@ -29,13 +33,19 @@ def test_template_render(template=None):
 
 def test_some_fields_language_fallback():
     template = get_test_template()
-    assert template.render_first_match(TEST_TEMPLATE_LANGUAGES, ("body",))["_language"] == "sw"
+    fields = {
+        "body": None
+    }
+    assert template.render_first_match(TEST_TEMPLATE_LANGUAGES, fields)["_language"] == "sw"
 
 
 def test_no_language_matches():
     template = get_test_template()
+    fields = {
+        "body": None,
+    }
     with pytest.raises(NoLanguageMatches):
-        template.render_first_match(("xx",), ("body",))
+        template.render_first_match(("xx",), fields)
 
 
 def test_template_in_action():

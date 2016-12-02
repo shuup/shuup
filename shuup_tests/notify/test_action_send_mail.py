@@ -36,6 +36,21 @@ TEST_STEP_ACTIONS = [
                 "subject": "Irrelevant subject"
             }
         }
+    },
+    {
+        "identifier": "send_email",
+        "language": {
+            "constant": "fi"
+        },
+        "recipient": {
+            "constant": "some.email@domain.net"
+        },
+        "template_data": {
+            "fi": {
+                "body": "Irrelevant body",
+                "subject": "Irrelevant subject"
+            }
+        }
     }
 ]
 

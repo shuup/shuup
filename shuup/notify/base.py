@@ -298,7 +298,7 @@ class Action(ScriptItem):
             raise ValueError("Attempting to `get_template_values` on an action with no template use")
 
         template = self.get_template(context)
-        fields = self.template_fields.keys()
+        fields = self.template_fields
 
         if self.template_use == TemplateUse.UNILINGUAL:
             language_preferences = [UNILINGUAL_TEMPLATE_LANGUAGE]
