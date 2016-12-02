@@ -47,12 +47,16 @@ class Template(object):
         self.context = context
         self.data = data
 
-    def _get_language_data(self, language):
-        return self.data.get(force_text(language).lower(), {})
+    def _get_language_data(self, language, fields):
+        data = self.data.get(force_text(language).lower(), {})
+        for key, field in fields.items():
+            if hasattr(field, "initial"):
+                data.setdefault(key, field.initial)
+        return data
 
     def has_language(self, language, fields):
-        data = self._get_language_data(language)
-        return set(data.keys()) >= set(fields)
+        data = self._get_language_data(language, fields)
+        return set(data.keys()) >= set(fields.keys())
 
     def render(self, language, fields):
         """
@@ -66,11 +70,11 @@ class Template(object):
         :return: Dict of field -> rendered content.
         :rtype: dict[str, str]
         """
-        data = self._get_language_data(language)
+        data = self._get_language_data(language, fields)
 
         rendered = {}
 
-        for field in fields:
+        for field in fields.keys():
             field_template = data.get(field)
             if field_template:  # pragma: no branch
                 rendered[field] = render_in_context(self.context, field_template, html_intent=False)
@@ -85,5 +89,5 @@ class Template(object):
                 rendered["_language"] = language
                 return rendered
         raise NoLanguageMatches("No language in template matches any of languages %r for fields %r" % (
-            language_preferences, fields
+            language_preferences, fields.keys()
         ))

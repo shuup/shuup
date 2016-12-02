@@ -31,7 +31,8 @@ class SendEmail(Action):
         "body": forms.CharField(required=True, label=_(u"Email Body"), widget=forms.Textarea()),
         "content_type": forms.ChoiceField(required=True,
                                           label=_(u"Content type"),
-                                          choices=EMAIL_CONTENT_TYPE_CHOICES)
+                                          choices=EMAIL_CONTENT_TYPE_CHOICES,
+                                          initial=EMAIL_CONTENT_TYPE_CHOICES[0][0])
     }
 
     recipient = Binding(_("Recipient"), type=Email, constant_use=ConstantUse.VARIABLE_OR_CONSTANT, required=True)
