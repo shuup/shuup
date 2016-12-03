@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 import six
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
@@ -24,6 +25,8 @@ from shuup.utils.properties import MoneyPropped, PriceProperty
 
 from ._product_media import ProductMediaKind
 from ._products import ProductVisibility, StockBehavior
+
+mark_safe_lazy = lazy(mark_safe, six.text_type)
 
 
 class ShopProductVisibility(Enum):
@@ -51,7 +54,7 @@ class ShopProduct(MoneyPropped, models.Model):
 
     visibility = EnumIntegerField(
         ShopProductVisibility, default=ShopProductVisibility.NOT_VISIBLE, db_index=True, verbose_name=_("visibility"),
-        help_text=mark_safe(_(
+        help_text=mark_safe_lazy(_(
             "Select if you want your product to be seen and found by customers. "
             "<p>Not visible: Product will not be shown in your store front or found in search.</p>"
             "<p>Searchable: Product will be shown in search but not listed on any category page.</p>"
