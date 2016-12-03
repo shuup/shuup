@@ -82,9 +82,15 @@ class ShopWizardForm(MultiLanguageModelForm):
 
 
 class ShopAddressWizardForm(forms.ModelForm):
+    first_name = forms.CharField(label=_("First name"), help_text=_("Your first name."))
+    last_name = forms.CharField(label=_("Last name"), help_text=_("Your last name."))
+
     class Meta:
         model = MutableAddress
-        fields = ("street", "street2", "postal_code", "city", "country", "region_code", "region", "phone")
+        fields = (
+            "first_name", "last_name", "phone", "street", "street2", "postal_code", "city", "country",
+            "region_code", "region"
+        )
         widgets = {
             "region_code": forms.Select(choices=[])
         }
@@ -104,3 +110,20 @@ class ShopAddressWizardForm(forms.ModelForm):
     def __init__(self, **kwargs):
         self.user = kwargs.pop("user")
         super(ShopAddressWizardForm, self).__init__(**kwargs)
+        self.fields["postal_code"].required = True
+        self.fields["phone"].required = True
+        if self.instance.pk:
+            name_components = self.instance.name.split(" ")
+            first_name = ""
+            last_name = ""
+            if len(name_components) >= 2:
+                first_name = name_components[0]
+                last_name = " ".join(name_components[1:])
+            self.fields["first_name"].initial = first_name
+            self.fields["last_name"].initial = last_name
+
+    def save(self):
+        obj = super(ShopAddressWizardForm, self).save()
+        obj.name = "%s %s" % (self.cleaned_data.get("first_name"), self.cleaned_data.get("last_name"))
+        obj.save()
+        return obj

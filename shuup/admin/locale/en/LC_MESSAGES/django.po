@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-30 00:15+0000\n"
+"POT-Creation-Date: 2016-12-03 00:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1156,6 +1156,18 @@ msgstr ""
 msgid "Shop name"
 msgstr ""
 
+msgid "First name"
+msgstr ""
+
+msgid "Your first name."
+msgstr ""
+
+msgid "Last name"
+msgstr ""
+
+msgid "Your last name."
+msgstr ""
+
 msgid "Zip/Postal code"
 msgstr ""
 
@@ -1194,7 +1206,7 @@ msgstr ""
 msgid "Shop Details"
 msgstr ""
 
-msgid "Please enter your shop details"
+msgid "Add an address so you can get paid"
 msgstr ""
 
 msgid "Default Tax Class"
@@ -2153,6 +2165,9 @@ msgid "Let customers browse your store and make purchases"
 msgstr ""
 
 msgid "Publish shop"
+msgstr ""
+
+msgid "No Plugin"
 msgstr ""
 
 #, python-format

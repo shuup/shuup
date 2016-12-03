@@ -50,11 +50,9 @@ class ShopWizardPane(WizardPane):
 
     def form_valid(self, form):
         form["shop"].save()
-        addr_form = form["address"]
-        if addr_form.changed_data:
-            addr = addr_form.save()
-            self.object.contact_address = addr
-            self.object.save()
+        addr = form["address"].save()
+        self.object.contact_address = addr
+        self.object.save()
         tax_class, created = TaxClass.objects.get_or_create(identifier="default")
         tax_class.name = _("Default Tax Class")
         tax_class.save()
