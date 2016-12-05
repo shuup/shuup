@@ -242,3 +242,7 @@ class QuickAddCategoryMultiSelect(QuickAddRelatedObjectMultiSelect):
 
 class QuickAddCategorySelect(QuickAddRelatedObjectSelect):
     url = reverse_lazy("shuup_admin:category.new")
+
+
+class QuickAddProductTypeSelect(QuickAddRelatedObjectSelect):
+    url = reverse_lazy("shuup_admin:product_type.new")
