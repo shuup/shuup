@@ -298,7 +298,7 @@ function renderCustomerSelectionView(store, customer) {
             ])
         ]),
         m("div.row", [
-            m("div.col-lg-6.col-md-12", {id: "customer-description"}, [
+            m("div.col-lg-6.col-md-12.mt-1", {id: "customer-description"}, [
                 (customer.id?
                 m("p.view-details-link", [
                     m("div", gettext("Customer") + ": " + customer.name),
