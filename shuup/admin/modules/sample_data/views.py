@@ -97,7 +97,10 @@ class SampleObjectsWizardPane(WizardPane):
             TemplatedWizardFormDef(
                 name="sample",
                 form_class=SampleObjectsWizardForm,
-                template_name="shuup/admin/sample_data/wizard.jinja"
+                template_name="shuup/admin/sample_data/wizard.jinja",
+                kwargs={
+                    "shop": self.object
+                }
             )
         ]
 
@@ -107,39 +110,41 @@ class SampleObjectsWizardPane(WizardPane):
         form_data = form["sample"].cleaned_data
         business_segment = form_data["business_segment"]
 
-        # user wants to install sample categories
-        if form_data.get("categories", False):
-            categories = self._create_sample_categories(shop, business_segment)
+        current_categories = sample_manager.get_installed_categories(shop)
+        current_products = sample_manager.get_installed_products(shop)
+        current_carousel = sample_manager.get_installed_carousel(shop)
+        current_cms_pages = sample_manager.get_installed_cms_pages(shop)
 
+        # only saves the business segment if there is no data installed
+        # otherwise user can't change the segment
+        if sample_manager.has_installed_samples(shop):
+            business_segment = sample_manager.get_installed_business_segment(shop)
+        else:
+            sample_manager.save_business_segment(shop, business_segment)
+
+        # user wants to install sample categories
+        if form_data.get("categories", False) and not current_categories:
+            categories = self._create_sample_categories(shop, business_segment)
             if categories:
-                current_categories = sample_manager.get_installed_categories(shop)
-                # Merge categories with existing ones
-                merged_categories = list(set(categories) | set(current_categories))
-                sample_manager.save_categories(shop, merged_categories)
+                sample_manager.save_categories(shop, categories)
 
         # user wants to install sample products
-        if form_data.get("products", False):
+        if form_data.get("products", False) and not current_products:
             products = self._create_sample_products(shop, business_segment)
             if products:
-                current_products = sample_manager.get_installed_categories(shop)
-                # merge the new products with the existing ones
-                merged_products = list(set(products) | set(current_products))
-                sample_manager.save_products(shop, merged_products)
+                sample_manager.save_products(shop, products)
 
         # user wants a carousel
-        if form_data.get("carousel"):
+        if form_data.get("carousel") and not current_carousel:
             carousel = self._create_sample_carousel(shop, business_segment)
             if carousel:
                 sample_manager.save_carousel(shop, carousel.pk)
 
         # user wants to install sample CMS Pages
-        if form_data.get("cms"):
+        if form_data.get("cms") and not current_cms_pages:
             cms_pages = self._create_sample_cms_pages(form_data["cms"])
             if cms_pages:
-                # merge the new cms pages with the existing ones
-                current_cms_pages = sample_manager.get_installed_cms_pages(shop)
-                merged_pages = list(set(cms_pages) | set(current_cms_pages))
-                sample_manager.save_cms_pages(shop, merged_pages)
+                sample_manager.save_cms_pages(shop, cms_pages)
 
         # user will no longer see this pane
         configuration.set(None, "sample_data_wizard_completed", True)
