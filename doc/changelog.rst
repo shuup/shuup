@@ -20,6 +20,7 @@ Localization
 Admin
 ~~~~~
 
+- Add option to clear dropzone selection
 - Add option to install sample data in Wizard
 
 

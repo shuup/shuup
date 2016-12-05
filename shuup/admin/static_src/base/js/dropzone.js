@@ -9,11 +9,14 @@
 function activateDropzone($dropzone, attrs={}) {
     const selector = "#" + $dropzone.attr("id");
     const uploadPath = $(selector).data().upload_path;
+    const addRemoveLinks = $(selector).data().add_remove_links;
     const params = $.extend(true, {
         url: "/sa/media/?action=upload&path=" + uploadPath,
         params: {
             csrfmiddlewaretoken: window.ShuupAdminConfig.csrf
         },
+        addRemoveLinks: (addRemoveLinks == "True" ? true : false),
+        dictRemoveFile: gettext("Clear"),
         autoProcessQueue: true,
         uploadMultiple: false,
         parallelUploads: 1,
@@ -30,6 +33,9 @@ function activateDropzone($dropzone, attrs={}) {
         }
     });
 
+    dropzone.on("removedfile", attrs.onSuccess || function(data){
+        $(selector).find("input").val("");
+    });
 
     dropzone.on("success", attrs.onSuccess || function(data){
         // file selected through dnd
@@ -58,6 +64,7 @@ function activateDropzone($dropzone, attrs={}) {
 
     const data = $(selector).data();
     if(data.url) {
+        dropzone.files.push(data);
         dropzone.emit("addedfile", data);
         if(data.thumbnail){
             dropzone.emit("thumbnail", data, data.thumbnail);

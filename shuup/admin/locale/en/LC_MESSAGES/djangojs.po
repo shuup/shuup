@@ -519,6 +519,9 @@ msgstr ""
 msgid "No browser URL for kind:"
 msgstr ""
 
+msgid "Clear"
+msgstr ""
+
 msgid "Drop files here or click to browse."
 msgstr ""
 
