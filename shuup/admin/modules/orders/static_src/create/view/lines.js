@@ -263,7 +263,7 @@ export function orderLinesView(store, isCreating) {
                     title: gettext("Product Quick Adder"),
                     content: gettext("Search for products to add to the order by searching by name, SKU, or barcode or click the magnifying glass for more fine-grained filtering.")
                 }, m("i.fa.fa-search")),
-                m("p", [
+                m("p.mt-1", [
                     m("input", {
                         name: "auto-add",
                         type: "checkbox",
