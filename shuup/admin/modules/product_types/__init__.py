@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
-from shuup.admin.menu import PRODUCTS_MENU_CATEGORY
+from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shuup.core.models import ProductType
@@ -34,7 +34,8 @@ class ProductTypeModule(AdminModule):
                 text=_("Product types"),
                 icon="fa fa-asterisk",
                 url="shuup_admin:product_type.list",
-                category=PRODUCTS_MENU_CATEGORY,
+                category=STOREFRONT_MENU_CATEGORY,
+                subcategory="attributes",
                 ordering=3
             )
         ]

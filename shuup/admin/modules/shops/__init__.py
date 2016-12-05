@@ -45,6 +45,7 @@ class ShopModule(AdminModule):
                 icon="fa fa-house",
                 url="shuup_admin:shop.list",
                 category=STOREFRONT_MENU_CATEGORY,
+                subcategory="settings",
                 ordering=4
             ),
         ]

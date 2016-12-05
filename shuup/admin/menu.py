@@ -22,7 +22,7 @@ CAMPAIGNS_MENU_CATEGORY = 5
 STOREFRONT_MENU_CATEGORY = 6
 ADDONS_MENU_CATEGORY = 7
 SETTINGS_MENU_CATEGORY = 8
-
+CONTENT_MENU_CATEGORY = 9
 
 MAIN_MENU = [
     {
@@ -44,22 +44,62 @@ MAIN_MENU = [
         "children": []
     },
     {
-        "identifier": REPORTS_MENU_CATEGORY,
-        "title": _("Reports"),
-        "icon": "fa fa-bar-chart",
-        "children": []
-    },
-    {
         "identifier": CAMPAIGNS_MENU_CATEGORY,
         "title": _("Campaigns"),
         "icon": "fa fa-bullhorn",
         "children": []
     },
     {
-        "identifier": STOREFRONT_MENU_CATEGORY,
-        "title": _("Storefront"),
-        "icon": "fa fa-paint-brush",
+        "identifier": CONTENT_MENU_CATEGORY,
+        "title": _("Content"),
+        "icon": "fa fa-columns",
+        "children": [
+            {
+                "identifier": "elements",
+                "title": _("Elements")
+            },
+            {
+                "identifier": "design",
+                "title": _("Design")
+            },
+            {
+                "identifier": "other",
+                "title": _("Other"),
+            }
+        ]
+    },
+    {
+        "identifier": REPORTS_MENU_CATEGORY,
+        "title": _("Reports"),
+        "icon": "fa fa-bar-chart",
         "children": []
+    },
+    {
+        "identifier": STOREFRONT_MENU_CATEGORY,
+        "title": _("Stores"),
+        "icon": "fa fa-paint-brush",
+        "children": [
+            {
+                "identifier": "settings",
+                "title": _("Settings")
+            },
+            {
+                "identifier": "taxes",
+                "title": _("Taxes")
+            },
+            {
+                "identifier": "currency",
+                "title": _("Currency")
+            },
+            {
+                "identifier": "attributes",
+                "title": _("Attributes")
+            },
+            {
+                "identifier": "other_settings",
+                "title": _("Other settings")
+            },
+        ]
     },
     {
         "identifier": ADDONS_MENU_CATEGORY,
@@ -73,17 +113,21 @@ MAIN_MENU = [
         "icon": "fa fa-tachometer",
         "children": [
             {
+                "identifier": "data_transfer",
+                "title": _("Data Transfer")
+            },
+            {
                 "identifier": "payment_shipping",
                 "title": _("Payment & Shipping")
             },
             {
-                "identifier": "store",
-                "title": _("Storefront")
+                "identifier": "permissions",
+                "title": _("Permissions")
             },
             {
-                "identifier": "taxes",
-                "title": _("Taxes")
-            }
+                "identifier": "other_settings",
+                "title": _("Other Settings")
+            },
         ]
     }
 ]
@@ -118,8 +162,9 @@ def get_menu_entry_categories(request):
             icon=icon,
         )
         for child in menu_item["children"]:
+            child_identifier = "%s:%s" % (identifier, child["identifier"])
             child_category = _MenuCategory(child["identifier"], child["title"], None)
-            menu_children[child["identifier"]] = child_category
+            menu_children[child_identifier] = child_category
             menu_categories[identifier].children.append(child_category)
 
         menu_category_icons[identifier] = icon
@@ -141,10 +186,10 @@ def get_menu_entry_categories(request):
             category_identifier = entry.category
             subcategory = entry.subcategory
 
-            entry_identifier = subcategory if subcategory else category_identifier
+            entry_identifier = "%s:%s" % (category_identifier, subcategory) if subcategory else category_identifier
             menu_items = menu_children if subcategory else menu_categories
 
-            category = menu_items.get(entry_identifier) if identifier else None
+            category = menu_items.get(entry_identifier)
             if not category:
                 category_identifier = force_text(category_identifier or module.name)
                 category = menu_items.get(category_identifier)

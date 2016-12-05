@@ -30,7 +30,7 @@ class TestingAdminModule(AdminModule):
             MenuEntry(
                 text="Create Mock Objects",
                 category=SETTINGS_MENU_CATEGORY,
-                subcategory="store",
+                subcategory="data_transfer",
                 url="shuup_admin:mocker",
                 icon="fa fa-star"
             )

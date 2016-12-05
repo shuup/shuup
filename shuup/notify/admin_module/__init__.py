@@ -62,7 +62,7 @@ class NotifyAdminModule(AdminModule):
                 text=_("Notifications"), icon="fa fa-code",
                 url="shuup_admin:notify.script.list",
                 category=SETTINGS_MENU_CATEGORY,
-                subcategory="store",
+                subcategory="other_settings",
                 ordering=9,
                 aliases=[_("Show notification scripts")]
             )

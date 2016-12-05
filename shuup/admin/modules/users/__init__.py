@@ -83,7 +83,7 @@ class UserModule(AdminModule):
                 icon="fa fa-users",
                 url="shuup_admin:user.list",
                 category=SETTINGS_MENU_CATEGORY,
-                subcategory="store",
+                subcategory="permissions",
                 ordering=1
             )
         ]

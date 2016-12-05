@@ -35,9 +35,11 @@ class SystemModule(AdminModule):
     def get_menu_entries(self, request):
         return [e for e in [
             MenuEntry(
-                text=_("Telemetry"), icon="fa fa-tachometer", url="shuup_admin:telemetry",
+                text=_("Telemetry"),
+                icon="fa fa-tachometer",
+                url="shuup_admin:telemetry",
                 category=SETTINGS_MENU_CATEGORY,
-                subcategory="store",
+                subcategory="other_settings",
             ) if is_telemetry_enabled() else None,
         ] if e]
 

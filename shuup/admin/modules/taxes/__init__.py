@@ -10,7 +10,7 @@ from __future__ import unicode_literals
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
-from shuup.admin.menu import SETTINGS_MENU_CATEGORY
+from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
 from shuup.admin.utils.permissions import (
     get_default_model_permissions, get_permissions_from_urls
 )
@@ -44,7 +44,7 @@ class TaxModule(AdminModule):
         return tax_urls + tax_group_urls + tax_class_urls
 
     def get_menu_entries(self, request):
-        category = SETTINGS_MENU_CATEGORY
+        category = STOREFRONT_MENU_CATEGORY
         return [
             MenuEntry(
                 text=_("Taxes"),

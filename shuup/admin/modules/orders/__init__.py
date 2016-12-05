@@ -13,7 +13,7 @@ from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry, Notification, SearchResult
-from shuup.admin.menu import ORDERS_MENU_CATEGORY
+from shuup.admin.menu import ORDERS_MENU_CATEGORY, STOREFRONT_MENU_CATEGORY
 from shuup.admin.utils.permissions import (
     get_default_model_permissions, get_permissions_from_urls
 )
@@ -135,10 +135,11 @@ class OrderModule(AdminModule):
                 aliases=[_("Show orders")]
             ),
             MenuEntry(
-                text=_("Statuses"),
+                text=_("Order Status"),
                 icon="fa fa-inbox",
                 url="shuup_admin:order_status.list",
-                category=ORDERS_MENU_CATEGORY,
+                category=STOREFRONT_MENU_CATEGORY,
+                subcategory="settings",
                 ordering=1,
                 aliases=[_("List Statuses")]
             ),
