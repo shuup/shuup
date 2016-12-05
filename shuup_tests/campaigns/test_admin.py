@@ -5,6 +5,11 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
+from shuup.admin.modules.services import PaymentMethodModule, ShippingMethodModule
+
+from shuup.admin.modules.manufacturers import ManufacturerModule
+
+from shuup.admin.modules.product_types import ProductTypeModule
 
 from shuup.admin.module_registry import replace_modules
 from shuup.admin.modules.categories import CategoryModule
@@ -25,7 +30,8 @@ def test_campaigned_product_view(rf, admin_user):
 
     request = apply_request_middleware(rf.get("/"), user=admin_user)
 
-    with replace_modules([CategoryModule, ImportAdminModule, ProductModule]):
+    with replace_modules([CategoryModule, ImportAdminModule, ProductModule,
+                          ProductTypeModule, ManufacturerModule, PaymentMethodModule, ShippingMethodModule]):
         with admin_only_urls():
             render_product_view(product, request)
             product2 = create_product("test-product2")

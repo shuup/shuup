@@ -7,6 +7,11 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from filer.models import File
+from shuup.admin.modules.services import PaymentMethodModule, ShippingMethodModule
+
+from shuup.admin.modules.manufacturers import ManufacturerModule
+
+from shuup.admin.modules.product_types import ProductTypeModule
 
 from shuup.admin.module_registry import replace_modules
 from shuup.admin.modules.categories import CategoryModule
@@ -31,7 +36,8 @@ def test_product_module_search(rf, admin_user):
     get_default_shop()
     request = apply_request_middleware(rf.get("/"), user=admin_user)
 
-    with replace_modules([CategoryModule, ImportAdminModule, ProductModule]):
+    with replace_modules([CategoryModule, ImportAdminModule, ProductModule,
+                          ProductTypeModule, ManufacturerModule, PaymentMethodModule, ShippingMethodModule]):
         with admin_only_urls():
             default_product = get_default_product()
             model_url = get_model_url(default_product)
@@ -50,7 +56,8 @@ def test_product_edit_view_works_at_all(rf, admin_user):
     shop_product.save()
     request = apply_request_middleware(rf.get("/"), user=admin_user)
 
-    with replace_modules([CategoryModule, ImportAdminModule, ProductModule]):
+    with replace_modules([CategoryModule, ImportAdminModule, ProductModule,
+                          ProductTypeModule, ManufacturerModule, PaymentMethodModule, ShippingMethodModule]):
         with admin_only_urls():
             view_func = ProductEditView.as_view()
             response = view_func(request, pk=product.pk)
@@ -67,7 +74,8 @@ def test_product_edit_view_with_params(rf, admin_user):
     name = "test name"
     request = apply_request_middleware(rf.get("/", {"name": name, "sku": sku}), user=admin_user)
 
-    with replace_modules([CategoryModule, ImportAdminModule, ProductModule]):
+    with replace_modules([CategoryModule, ImportAdminModule, ProductModule,
+                          ProductTypeModule, ManufacturerModule, PaymentMethodModule, ShippingMethodModule]):
         with admin_only_urls():
             view_func = ProductEditView.as_view()
             response = view_func(request)

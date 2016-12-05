@@ -124,7 +124,7 @@ def test_category_deletion(admin_user):
 
     configuration.set(None, get_all_seeing_key(admin), True)
 
-    assert category.status == CategoryStatus.INVISIBLE
+    assert category.status == CategoryStatus.VISIBLE
     assert category.children.count() == 1
 
     with pytest.raises(NotImplementedError):
