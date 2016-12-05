@@ -31,6 +31,7 @@ Addons
 Front
 ~~~~~
 
+- Make carousel slide available by default
 - Add dropzone widget for carousel slide images
 
 Xtheme

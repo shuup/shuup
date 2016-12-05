@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.forms import BaseModelFormSet, ModelForm
+from django.utils.timezone import now
 
 from shuup.admin.forms.widgets import (
     FileDnDUploaderWidget, ProductChoiceWidget
@@ -43,6 +44,9 @@ class SlideForm(MultiLanguageModelForm):
                 self.fields[image_field].widget = FileDnDUploaderWidget(clearable=False)
                 self.fields[image_field].required = True
                 self.fields[image_field].widget.is_required = True
+
+        if not self.fields["available_from"].initial:
+            self.fields["available_from"].initial = now()
 
     def pre_master_save(self, instance):
         instance.carousel = self.carousel
