@@ -31,6 +31,8 @@ Addons
 Front
 ~~~~~
 
+- Add dropzone widget for carousel slide images
+
 Xtheme
 ~~~~~~
 
