@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-01 00:30+0000\n"
+"POT-Creation-Date: 2016-12-05 20:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -281,6 +281,9 @@ msgid ""
 msgstr ""
 
 msgid "image"
+msgstr ""
+
+msgid "Category image. Will be shown at theme."
 msgstr ""
 
 msgid "ordering"
@@ -1741,6 +1744,9 @@ msgstr ""
 msgid ""
 "This option defines whether product prices entered in admin include taxes. "
 "Note this behavior can be overridden with contact group pricing."
+msgstr ""
+
+msgid "Shop logo. Will be shown at theme."
 msgstr ""
 
 msgid "maintenance mode"

@@ -103,7 +103,9 @@ class Category(MPTTModel, TranslatableModel):
             "Here you can choose whether or not you want the category to be visible in your store."
         )
     )
-    image = FilerImageField(verbose_name=_('image'), blank=True, null=True, on_delete=models.SET_NULL)
+    image = FilerImageField(verbose_name=_('image'), blank=True, null=True, on_delete=models.SET_NULL, help_text=_(
+        "Category image. Will be shown at theme."
+    ))
     ordering = models.IntegerField(default=0, verbose_name=_('ordering'), help_text=_(
             "You can set the order of categories in your store numerically."
         )
