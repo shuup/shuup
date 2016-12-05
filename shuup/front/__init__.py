@@ -5,8 +5,6 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-import django.conf
-
 from shuup.apps import AppConfig
 from shuup.apps.settings import validate_templates_configuration
 
@@ -51,9 +49,6 @@ class ShuupFrontAppConfig(AppConfig):
         import shuup.front.notify_events  # noqa: F401
 
         validate_templates_configuration()
-        if django.conf.settings.SHUUP_FRONT_INSTALL_ERROR_HANDLERS:
-            from .error_handling import install_error_handlers
-            install_error_handlers()
 
 
 default_app_config = "shuup.front.ShuupFrontAppConfig"

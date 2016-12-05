@@ -200,6 +200,13 @@ SHUUP_SETUP_WIZARD_PANE_SPEC = [
     "shuup.admin.modules.sample_data.views.SampleObjectsWizardPane"
 ]
 
+
+SHUUP_ERROR_PAGE_HANDLERS_SPEC = [
+    "shuup.admin.error_handlers:AdminPageErrorHandler",
+    "shuup.front.error_handlers:FrontPageErrorHandler"
+]
+
+
 if os.environ.get("SHUUP_WORKBENCH_DISABLE_MIGRATIONS") == "1":
     from .utils import DisableMigrations
     MIGRATION_MODULES = DisableMigrations()

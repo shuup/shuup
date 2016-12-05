@@ -53,17 +53,6 @@ SHUUP_BASKET_STORAGE_CLASS_SPEC = (
 SHUUP_CHECKOUT_VIEW_SPEC = (
     "shuup.front.views.checkout:DefaultCheckoutView")
 
-#: Whether Shuup uses its own error handlers.
-#:
-#: If this value is set to ``False`` django defaults are used or the ones specified
-#: in ``settings.ROOT_URLCONF`` file.
-#:
-#: Setting this to ``True`` won't override handlers specified
-#: in ``settings.ROOT_URLCONF``.
-#:
-#: Handled error cases are: 400, 403, 404, and 500
-SHUUP_FRONT_INSTALL_ERROR_HANDLERS = True
-
 #: Default product lists facet configuration
 #:
 #: This configuration will be used if the configuration is not set from admin

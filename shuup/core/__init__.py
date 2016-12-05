@@ -5,6 +5,8 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+import django.conf
+
 from shuup.apps import AppConfig
 from shuup.core.excs import MissingSettingException
 from shuup.utils import money
@@ -39,6 +41,10 @@ class ShuupCoreAppConfig(AppConfig):
         # set money precision provider function
         from .models import get_currency_precision
         money.set_precision_provider(get_currency_precision)
+
+        if django.conf.settings.SHUUP_ERROR_PAGE_HANDLERS_SPEC:
+            from .error_handling import install_error_handlers
+            install_error_handlers()
 
 
 default_app_config = "shuup.core.ShuupCoreAppConfig"

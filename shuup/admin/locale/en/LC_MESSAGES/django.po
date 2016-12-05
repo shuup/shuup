@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-03 00:50+0000\n"
+"POT-Creation-Date: 2016-12-05 19:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1729,6 +1729,26 @@ msgid "Selectable headers"
 msgstr ""
 
 msgid "Add"
+msgstr ""
+
+msgid "Bad Request"
+msgstr ""
+
+msgid "Unfortunately the server couldn't process your request."
+msgstr ""
+
+msgid "Permission Denied"
+msgstr ""
+
+msgid "Unfortunately you didn't have permission to display this page."
+msgstr ""
+
+msgid "Internal Server Error"
+msgstr ""
+
+msgid ""
+"Unfortunately an internal server error occurred. Try refreshing the page or "
+"try again later"
 msgstr ""
 
 msgid "Welcome to Shuup!"
