@@ -246,3 +246,15 @@ class QuickAddCategorySelect(QuickAddRelatedObjectSelect):
 
 class QuickAddProductTypeSelect(QuickAddRelatedObjectSelect):
     url = reverse_lazy("shuup_admin:product_type.new")
+
+
+class QuickAddManufacturerSelect(QuickAddRelatedObjectSelect):
+    url = reverse_lazy("shuup_admin:manufacturer.new")
+
+
+class QuickAddPaymentMethodsSelect(QuickAddRelatedObjectMultiSelect):
+    url = reverse_lazy("shuup_admin:payment_method.new")
+
+
+class QuickAddShippingMethodsSelect(QuickAddRelatedObjectMultiSelect):
+    url = reverse_lazy("shuup_admin:shipping_method.new")
