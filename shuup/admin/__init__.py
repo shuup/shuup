@@ -38,7 +38,8 @@ class ShuupAdminAppConfig(AppConfig):
             "shuup.admin.modules.shops:ShopModule",
             "shuup.admin.modules.demo:DemoModule",
             "shuup.admin.modules.manufacturers:ManufacturerModule",
-            "shuup.admin.modules.suppliers:SupplierModule"
+            "shuup.admin.modules.suppliers:SupplierModule",
+            "shuup.admin.modules.sample_data:SampleDataAdminModule"
         ],
         "service_provider_admin_form": [
             "shuup.admin.modules.service_providers.forms:CustomCarrierForm",

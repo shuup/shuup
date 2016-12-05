@@ -18,6 +18,9 @@ Localization
 Admin
 ~~~~~
 
+- Add option to install sample data in Wizard
+
+
 Addons
 ~~~~~~
 
