@@ -99,7 +99,7 @@ class Category(MPTTModel, TranslatableModel):
     )
     identifier = InternalIdentifierField(unique=True)
     status = EnumIntegerField(
-        CategoryStatus, db_index=True, verbose_name=_('status'), default=CategoryStatus.INVISIBLE, help_text=_(
+        CategoryStatus, db_index=True, verbose_name=_('status'), default=CategoryStatus.VISIBLE, help_text=_(
             "Here you can choose whether or not you want the category to be visible in your store."
         )
     )
