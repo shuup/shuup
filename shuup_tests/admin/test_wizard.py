@@ -56,10 +56,11 @@ def test_shop_wizard_pane(rf, admin_user, settings):
         "shuup.admin.modules.shops.views:ShopWizardPane"
     ]
     shop = Shop.objects.create()
-    currency = get_currency("USD")
+    get_currency("USD")
     assert not shop.contact_address
     assert not TaxClass.objects.exists()
     fields = _extract_fields(rf, admin_user)
+    fields["shop-logo"] = ""  # Correct init value for this is not None, but empty string
     request = apply_request_middleware(rf.post("/", data=fields), user=admin_user)
     response = WizardView.as_view()(request)
     # fields are missing
@@ -79,6 +80,7 @@ def test_shop_wizard_pane(rf, admin_user, settings):
     shop.set_current_language("fi")
     assert shop.name == "test shop"
     assert shop.public_name == "test shop"
+    assert shop.logo is None
     assert shop.contact_address
     assert shop.currency == "USD"
     assert TaxClass.objects.exists()

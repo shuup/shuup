@@ -10,17 +10,16 @@ from django.conf import settings
 from django.db.transaction import atomic
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.forms import ShuupAdminForm
 from shuup.admin.forms.fields import Select2MultipleField
-from shuup.admin.forms.widgets import MediaChoiceWidget
 from shuup.admin.utils.forms import filter_form_field_choices
 from shuup.core.models import (
     Category, CategoryStatus, Product, Shop, ShopProduct,
     ShopProductVisibility
 )
-from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 
 
-class CategoryBaseForm(MultiLanguageModelForm):
+class CategoryBaseForm(ShuupAdminForm):
     class Meta:
         model = Category
         fields = (
@@ -53,7 +52,6 @@ class CategoryBaseForm(MultiLanguageModelForm):
 
         # Exclude current category from parents, because it cannot be its own child anyways
         filter_form_field_choices(self.fields["parent"], (kwargs["instance"].pk,), invert=True)
-        self.fields["image"].widget = MediaChoiceWidget(clearable=True)
 
         if not settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
             self.fields["shops"].disabled = True

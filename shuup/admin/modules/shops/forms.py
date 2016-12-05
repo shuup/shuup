@@ -9,11 +9,10 @@ from django import forms
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.forms.widgets import MediaChoiceWidget
+from shuup.admin.forms import ShuupAdminForm
 from shuup.core.models import Currency, MutableAddress, Shop
 from shuup.core.utils.form_mixins import ProtectedFieldsMixin
 from shuup.utils.i18n import get_current_babel_locale
-from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 
 
 def get_currency_choices():
@@ -22,7 +21,7 @@ def get_currency_choices():
     return [(currency.code, locale.currencies.get(currency.code, currency)) for currency in currencies]
 
 
-class ShopBaseForm(ProtectedFieldsMixin, MultiLanguageModelForm):
+class ShopBaseForm(ProtectedFieldsMixin, ShuupAdminForm):
     change_protect_field_text = _("This field cannot be changed since there are existing orders for this shop.")
 
     class Meta:
@@ -31,7 +30,6 @@ class ShopBaseForm(ProtectedFieldsMixin, MultiLanguageModelForm):
 
     def __init__(self, **kwargs):
         super(ShopBaseForm, self).__init__(**kwargs)
-        self.fields["logo"].widget = MediaChoiceWidget(clearable=True)
         self.fields["currency"] = forms.ChoiceField(
             choices=get_currency_choices(),
             required=True,
@@ -54,10 +52,10 @@ class ContactAddressForm(forms.ModelForm):
         )
 
 
-class ShopWizardForm(MultiLanguageModelForm):
+class ShopWizardForm(ShuupAdminForm):
     class Meta:
         model = Shop
-        fields = ("public_name", "currency", "prices_include_tax")
+        fields = ("public_name", "logo", "currency", "prices_include_tax")
         labels = {
             "public_name": _("Shop name")
         }

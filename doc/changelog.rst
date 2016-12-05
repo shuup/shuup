@@ -20,9 +20,10 @@ Localization
 Admin
 ~~~~~
 
+- Add dropzone widget for shop, category, service provider
+  and service image fields
 - Add option to clear dropzone selection
 - Add option to install sample data in Wizard
-
 
 Addons
 ~~~~~~
