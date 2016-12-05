@@ -319,6 +319,7 @@ class CouponUsage(models.Model):
 @python_2_unicode_compatible
 class Coupon(models.Model):
     admin_url_suffix = "coupon"
+    name_field = "code"  # TODO: Document me
 
     code = models.CharField(max_length=12)
 

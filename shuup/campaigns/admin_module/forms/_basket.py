@@ -10,7 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.campaigns.models import BasketCampaign, Coupon
 
-from ._base import BaseCampaignForm
+from ._base import BaseCampaignForm, QuickAddCouponSelect
 
 
 class BasketCampaignForm(BaseCampaignForm):
@@ -29,6 +29,7 @@ class BasketCampaignForm(BaseCampaignForm):
         field_kwargs = dict(choices=coupon_code_choices, required=False)
         field_kwargs["help_text"] = _("Define the required coupon for this campaign.")
         field_kwargs["label"] = _("Coupon")
+        field_kwargs["widget"] = QuickAddCouponSelect()
         if self.instance.pk and self.instance.coupon:
             field_kwargs["initial"] = self.instance.coupon.pk
 
