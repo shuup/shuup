@@ -82,6 +82,7 @@ REQUIRES = [
     'django-countries>=3.3,<4',
     'django-enumfields>=0.7.2,<0.8',
     'django-filer>=1.0,<2',
+    'django-filter>=1.0,<1.1',
     'django-jinja>=1.4,<2',
     'django-mptt>=0.8.0,<0.9',
     'django-parler>=1.5,<1.6.3',
