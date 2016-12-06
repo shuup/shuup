@@ -76,8 +76,8 @@ MAIN_MENU = [
     },
     {
         "identifier": STOREFRONT_MENU_CATEGORY,
-        "title": _("Stores"),
-        "icon": "fa fa-paint-brush",
+        "title": _("Shops"),
+        "icon": "fa fa-shopping-basket",
         "children": [
             {
                 "identifier": "settings",

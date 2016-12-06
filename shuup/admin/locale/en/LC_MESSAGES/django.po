@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-05 19:06+0000\n"
+"POT-Creation-Date: 2016-12-06 05:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -74,7 +74,7 @@ msgstr ""
 msgid "Reports"
 msgstr ""
 
-msgid "Stores"
+msgid "Shops"
 msgstr ""
 
 msgid "Settings"
@@ -1159,6 +1159,9 @@ msgstr ""
 msgid "This oil is natural, and is made with the perfect combination of oils."
 msgstr ""
 
+msgid "Sample Carousel"
+msgstr ""
+
 msgid "Business Segment"
 msgstr ""
 
@@ -1177,16 +1180,28 @@ msgstr ""
 msgid "Check this to install sample products."
 msgstr ""
 
+msgid "Install Carousel"
+msgstr ""
+
+msgid "Check this to install a sample carousel."
+msgstr ""
+
 msgid "Install CMS Pages"
 msgstr ""
 
 msgid "Select the CMS pages you want to install."
 msgstr ""
 
-msgid "CMS Pages"
+msgid "Uninstall Categories"
 msgstr ""
 
-msgid "All sample data were deleted"
+msgid "Uninstall Products"
+msgstr ""
+
+msgid "Uninstall Carousel"
+msgstr ""
+
+msgid "Uninstall CMS Pages"
 msgstr ""
 
 msgid "Sample data were consolidated"
@@ -1303,9 +1318,6 @@ msgid "Settings saved"
 msgstr ""
 
 msgid "Reset Defaults"
-msgstr ""
-
-msgid "Shops"
 msgstr ""
 
 msgid ""
@@ -1769,7 +1781,7 @@ msgstr ""
 
 msgid ""
 "Unfortunately an internal server error occurred. Try refreshing the page or "
-"try again later"
+"try again later."
 msgstr ""
 
 msgid "Welcome to Shuup!"
@@ -2113,18 +2125,17 @@ msgid ""
 "Variables tab and then link them to products here."
 msgstr ""
 
-msgid "Your shop currently has some sample data installed."
+msgid ""
+"Your shop currently has some sample data installed. Select below which "
+"objects you want to uninstall."
 msgstr ""
 
 msgid ""
-"Consolidating data will remove Sample status from the objects below. Remove "
-"those which you do not want to save."
+"After the consolidation, preserved objects will lose their status of Sample "
+"Object and it will be no longer possible to distinguish them from the others."
 msgstr ""
 
 msgid "Caution: this action cannot be undone."
-msgstr ""
-
-msgid "Delete all"
 msgstr ""
 
 msgid "Consolidate"
@@ -2372,9 +2383,6 @@ msgid "Let customers browse your store and make purchases"
 msgstr ""
 
 msgid "Publish shop"
-msgstr ""
-
-msgid "No Plugin"
 msgstr ""
 
 #, python-format

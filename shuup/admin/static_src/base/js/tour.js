@@ -44,42 +44,40 @@
             }
         ]);
 
-        if($("li a[data-target-id='category-4']").length > 0) {
-            steps.push({
-                title: gettext("Reports"),
-                text: [
-                    gettext("Your reporting tool to build and analyze your consumer behavior information that can assist with your business decisions.")
-                ],
-                attachTo: "li a[data-target-id='category-4'] right"
-            });
-        }
-
-        if($("li a[data-target-id='category-5']").length > 0) {
+        if ($("li a[data-target-id='category-5']").length > 0) {
             steps.push({
                 title: gettext("Campaigns"),
-                text: [
-                    gettext("Great loyalty tool for creating marketing, campaigns, special offers and coupons to entice your shoppers!"),
-                    gettext("Set offers based on their previous purchase behavior to up- and cross sale your inventory.")
-                ],
+                text: [gettext("Great loyalty tool for creating marketing, campaigns, special offers and coupons to entice your shoppers!"), gettext("Set offers based on their previous purchase behavior to up- and cross sale your inventory.")],
                 attachTo: "li a[data-target-id='category-5'] right"
             });
         }
 
+        if ($("li a[data-target-id='category-9']").length > 0) {
+            steps.push({
+                title: gettext("Content"),
+                text: [gettext("The make-over tool to customize you site themes, add pages and product carousels. Incorporate any media to make your store pop!")],
+                attachTo: "li a[data-target-id='category-9'] right"
+            });
+        }
+
+        if ($("li a[data-target-id='category-4']").length > 0) {
+            steps.push({
+                title: gettext("Reports"),
+                text: [gettext("Your reporting tool to build and analyze your consumer behavior information that can assist with your business decisions.")],
+                attachTo: "li a[data-target-id='category-4'] right"
+            });
+        }
+
         steps.push({
-            title: gettext("Storefront"),
-            text: [
-                gettext("The make-over tool to customize you site themes, add pages and product carousels. Incorporate any media to make your store pop!")
-            ],
+            title: gettext("Shops"),
+            text: [gettext("Place for your Shop specific settings. You can customize taxes, currencies, customer groups, and many other things in this menu.")],
             attachTo: "li a[data-target-id='category-6'] right"
         });
 
-        if($("li a[data-target-id='category-7']").length > 0){
+        if ($("li a[data-target-id='category-7']").length > 0) {
             steps.push({
                 title: gettext("Addons"),
-                text: [
-                    gettext("This is your connection interface. Addons and other systems you use can be attached to your store through powerful data connections."),
-                    gettext("Supercharge your site and gather crazy amounts of data with integrations to CRMs and ERPs, POS’s and PIM’s, or any other acronym you can think of.")
-                ],
+                text: [gettext("This is your connection interface. Addons and other systems you use can be attached to your store through powerful data connections."), gettext("Supercharge your site and gather crazy amounts of data with integrations to CRMs and ERPs, POS’s and PIM’s, or any other acronym you can think of.")],
                 attachTo: "li a[data-target-id='category-7'] right"
             });
         }
