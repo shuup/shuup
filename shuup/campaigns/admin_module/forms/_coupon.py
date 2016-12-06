@@ -24,9 +24,15 @@ class CouponForm(forms.ModelForm):
         ]
 
     def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request")
+
         super(CouponForm, self).__init__(*args, **kwargs)
         if self.instance.pk and self.instance.has_been_used():
             self.fields["code"].readonly = True
+
+        if self.request.GET.get("mode") == "iframe":
+            self.fields["active"].disabled = True
+            self.fields["active"].widget.disabled = True
 
     def clean_code(self):
         code = self.cleaned_data["code"]

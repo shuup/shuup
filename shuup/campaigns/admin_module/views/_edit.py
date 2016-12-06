@@ -111,3 +111,12 @@ class CouponEditView(BreadcrumbedView, CreateOrUpdateView):
     add_form_errors_as_messages = True
     parent_name = _("Coupon")
     parent_url = "shuup_admin:coupon.list"
+
+    def get_form_kwargs(self):
+        kwargs = super(CouponEditView, self).get_form_kwargs()
+        kwargs["request"] = self.request
+        if self.request.GET.get("mode") == "iframe":
+            initial = kwargs.get("initial", {})
+            initial["active"] = True
+            kwargs["initial"] = initial
+        return kwargs

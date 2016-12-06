@@ -19,7 +19,9 @@ from django.utils.translation import ugettext_lazy as _
 from filer.models import Image
 
 from shuup.admin.forms.widgets import (
-    FileDnDUploaderWidget, QuickAddCategoryMultiSelect, QuickAddCategorySelect
+    FileDnDUploaderWidget, QuickAddCategoryMultiSelect, QuickAddCategorySelect,
+    QuickAddManufacturerSelect, QuickAddPaymentMethodsSelect,
+    QuickAddProductTypeSelect, QuickAddShippingMethodsSelect
 )
 from shuup.core.models import (
     Attribute, AttributeType, Category, Product, ProductMedia,
@@ -68,7 +70,9 @@ class ProductBaseForm(MultiLanguageModelForm):
             "variation_name",
         )
         widgets = {
-            "keywords": forms.TextInput()
+            "keywords": forms.TextInput(),
+            "type": QuickAddProductTypeSelect(),
+            "manufacturer": QuickAddManufacturerSelect()
         }
 
     def __init__(self, **kwargs):
@@ -131,7 +135,9 @@ class ShopProductForm(forms.ModelForm):
         }
         widgets = {
             "primary_category": QuickAddCategorySelect(),
-            "categories": QuickAddCategoryMultiSelect()
+            "categories": QuickAddCategoryMultiSelect(),
+            "payment_methods": QuickAddPaymentMethodsSelect(),
+            "shipping_methods": QuickAddShippingMethodsSelect(),
         }
 
     def __init__(self, **kwargs):

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-05 19:02+0000\n"
+"POT-Creation-Date: 2016-12-05 19:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -56,28 +56,55 @@ msgstr ""
 msgid "Contacts"
 msgstr ""
 
-msgid "Reports"
-msgstr ""
-
 msgid "Campaigns"
 msgstr ""
 
-msgid "Storefront"
+msgid "Content"
 msgstr ""
 
-msgid "Addons"
+msgid "Elements"
+msgstr ""
+
+msgid "Design"
+msgstr ""
+
+msgid "Other"
+msgstr ""
+
+msgid "Reports"
+msgstr ""
+
+msgid "Stores"
 msgstr ""
 
 msgid "Settings"
 msgstr ""
 
-msgid "Payment & Shipping"
-msgstr ""
-
 msgid "Taxes"
 msgstr ""
 
+msgid "Currency"
+msgstr ""
+
 msgid "Attributes"
+msgstr ""
+
+msgid "Other settings"
+msgstr ""
+
+msgid "Addons"
+msgstr ""
+
+msgid "Data Transfer"
+msgstr ""
+
+msgid "Payment & Shipping"
+msgstr ""
+
+msgid "Permissions"
+msgstr ""
+
+msgid "Other Settings"
 msgstr ""
 
 msgid "Identifier"
@@ -447,7 +474,7 @@ msgstr ""
 msgid "Show orders"
 msgstr ""
 
-msgid "Statuses"
+msgid "Order Status"
 msgstr ""
 
 msgid "List Statuses"
@@ -1285,9 +1312,6 @@ msgid ""
 "This field cannot be changed since there are existing orders for this shop."
 msgstr ""
 
-msgid "Currency"
-msgstr ""
-
 msgid ""
 "The primary shop currency. This is the currency used when selling your "
 "products."
@@ -1395,9 +1419,6 @@ msgid "Password"
 msgstr ""
 
 msgid "The user password."
-msgstr ""
-
-msgid "Permissions"
 msgstr ""
 
 msgid "See the permissions view to change these."
@@ -1769,9 +1790,6 @@ msgid ""
 msgstr ""
 
 msgid "Date"
-msgstr ""
-
-msgid "Order Status"
 msgstr ""
 
 msgid "Save and Exit"
@@ -2309,6 +2327,9 @@ msgstr ""
 msgid "You do not have the required permissions: %s"
 msgstr ""
 
+msgid "Unnamed"
+msgstr ""
+
 #, python-format
 msgid "New %s created."
 msgstr ""
@@ -2330,6 +2351,9 @@ msgid "Only one %(model)s permitted."
 msgstr ""
 
 msgid "Mass Edit"
+msgstr ""
+
+msgid "Storefront"
 msgstr ""
 
 msgid "General"

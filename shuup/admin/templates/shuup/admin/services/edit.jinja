@@ -76,7 +76,14 @@
         });
         $("#id_base-payment_processor,#id_base-carrier").on("change", function() {
             var url = window.location.href.split('?')[0];
-            location.href = url + "?provider=" + $(this).val();
+            var srch = window.location.search;
+            if (srch.length) {
+                url = url + srch + "&";
+            }
+            else {
+                url = url + "?";
+            }
+            location.href = url + "provider=" + $(this).val();
         });
     });
 </script>

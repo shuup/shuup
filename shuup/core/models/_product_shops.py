@@ -53,7 +53,10 @@ class ShopProduct(MoneyPropped, models.Model):
     )
 
     visibility = EnumIntegerField(
-        ShopProductVisibility, default=ShopProductVisibility.NOT_VISIBLE, db_index=True, verbose_name=_("visibility"),
+        ShopProductVisibility,
+        default=ShopProductVisibility.ALWAYS_VISIBLE,
+        db_index=True,
+        verbose_name=_("visibility"),
         help_text=mark_safe_lazy(_(
             "Select if you want your product to be seen and found by customers. "
             "<p>Not visible: Product will not be shown in your store front or found in search.</p>"

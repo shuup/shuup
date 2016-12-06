@@ -41,6 +41,7 @@ def test_category_module_search(rf):
 @pytest.mark.django_db
 def test_category_form_saving(rf):
     with transaction.atomic():
+        shop = get_default_shop()
         category = CategoryFactory()
         form_kwargs = dict(instance=category, languages=("sw",), default_language="sw")
         form = CategoryBaseForm(**form_kwargs)

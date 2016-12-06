@@ -74,3 +74,31 @@ def flatatt_filter(attrs):
         if key and value
     )
     return flatatt(attrs)
+
+
+def get_possible_name_fields_for_model(model):
+    """
+    Get possible name fields for given model
+
+    This function yields strings of field names that
+    could possible be identified as name fields for model.
+
+    For example
+    get_possible_name_fields_for_model(Coupon) yields string "code"
+
+    :param model Class object of the model:
+    :type model object:
+    :return: Yield strings of possible name fields
+    :rtype: str
+    """
+
+    if hasattr(model, "name_field"):
+        yield model.name_field
+
+    for field in model._meta.local_fields:
+        if field.name in ["name", "title"]:
+            yield field.name
+    if hasattr(model, "_parler_meta"):
+        for field in model._parler_meta.root_model._meta.get_fields():
+            if field.name not in ("master", "id", "language_code", "description"):
+                yield field.name

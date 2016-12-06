@@ -5,11 +5,13 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
+from django.core.urlresolvers import reverse_lazy
 from django.db.models import ManyToManyField
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms import ShuupAdminForm
 from shuup.admin.forms.fields import Select2MultipleField
+from shuup.admin.forms.widgets import QuickAddRelatedObjectSelect
 
 
 class BaseCampaignForm(ShuupAdminForm):
@@ -78,3 +80,7 @@ def _process_fields(form, **kwargs):
         formfield.initial = objects
         formfield.widget.choices = [(obj.pk, obj.name) for obj in objects]
         form.fields[field.name] = formfield
+
+
+class QuickAddCouponSelect(QuickAddRelatedObjectSelect):
+    url = reverse_lazy("shuup_admin:coupon.new")

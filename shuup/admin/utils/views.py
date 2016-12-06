@@ -21,7 +21,9 @@ from shuup.admin.signals import object_created
 from shuup.admin.toolbar import (
     get_default_edit_toolbar, NewActionButton, SettingsActionButton, Toolbar
 )
-from shuup.admin.utils.forms import add_form_errors_as_messages
+from shuup.admin.utils.forms import (
+    add_form_errors_as_messages, get_possible_name_fields_for_model
+)
 from shuup.admin.utils.picotable import Column, PicotableViewMixin
 from shuup.admin.utils.urls import (
     get_model_front_url, get_model_url, NoModelUrl
@@ -53,10 +55,16 @@ class CreateOrUpdateView(UpdateView):
         context["toolbar"] = self.get_toolbar()
         context["iframe_mode"] = bool(self.request.GET.get("mode", "") == "iframe")
         if context["iframe_mode"] and self.object and self.object.id is not None:
+            name = None
+            for field in get_possible_name_fields_for_model(self.object.__class__):
+                name = getattr(self.object, field)
+                if name:
+                    break
+
             context["iframe_close"] = bool(self.request.GET.get("iframe_close"))
             context["quick_add_target"] = self.request.GET.get("quick_add_target", "")
             context["quick_add_option_id"] = self.object.id
-            context["quick_add_option_name"] = self.object.name
+            context["quick_add_option_name"] = name if name else _("Unnamed")
         return context
 
     def get_save_form_id(self):

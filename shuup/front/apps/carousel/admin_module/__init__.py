@@ -10,7 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 from filer.models import File
 
 from shuup.admin.base import AdminModule, MenuEntry
-from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
+from shuup.admin.menu import CONTENT_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls
@@ -21,7 +21,7 @@ from shuup.front.apps.carousel.models import Carousel
 
 class CarouselModule(AdminModule):
     name = _("Carousels")
-    breadcrumbs_menu_entry = MenuEntry(text=name, url="shuup_admin:carousel.list", category=STOREFRONT_MENU_CATEGORY)
+    breadcrumbs_menu_entry = MenuEntry(text=name, url="shuup_admin:carousel.list", category=CONTENT_MENU_CATEGORY)
 
     def get_urls(self):
         return get_edit_and_list_urls(
@@ -44,7 +44,8 @@ class CarouselModule(AdminModule):
                 text=self.name,
                 icon="fa fa-image",
                 url="shuup_admin:carousel.list",
-                category=STOREFRONT_MENU_CATEGORY
+                category=CONTENT_MENU_CATEGORY,
+                subcategory="elements"
             )
         ]
 
