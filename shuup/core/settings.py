@@ -200,3 +200,16 @@ SHUUP_MAX_DAYS_IN_TELEMETRY = 180
 #: shop_product.categories = ["A", "B"]
 #: => "A" will be made the shop_product.primary_category
 SHUUP_AUTO_SHOP_PRODUCT_CATEGORIES = True
+
+#: Spec which defines a list of handlers of page errors
+#: overwriting Django's default error handlers configured in urls.py (if some).
+#:
+#: Shuup will iterate over all handlers in order to determinate
+#: if some can handle the error. In case of no handler can
+#: do the job, a blank response will be returned.
+#:
+#: A handler must be a subclass of `shuup.core.error_handling.ErrorPageHandler`.
+#:
+#: If no handler is set (blank), Shuup will use default Django's handlers.
+#:
+SHUUP_ERROR_PAGE_HANDLERS_SPEC = []
