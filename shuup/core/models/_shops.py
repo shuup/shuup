@@ -59,7 +59,9 @@ class Shop(ChangeProtected, TranslatableShuupModel):
         "This option defines whether product prices entered in admin include taxes. "
         "Note this behavior can be overridden with contact group pricing."
     ))
-    logo = FilerImageField(verbose_name=_("logo"), blank=True, null=True, on_delete=models.SET_NULL)
+    logo = FilerImageField(
+        verbose_name=_("logo"), blank=True, null=True, on_delete=models.SET_NULL,
+        help_text=_("Shop logo. Will be shown at theme."))
     maintenance_mode = models.BooleanField(verbose_name=_("maintenance mode"), default=False, help_text=_(
         "Check this if you would like to make your shop temporarily unavailable while you do some shop maintenance."
     ))

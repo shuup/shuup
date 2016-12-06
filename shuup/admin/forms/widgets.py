@@ -93,9 +93,10 @@ class BasePopupChoiceWidget(Widget):
 
 
 class FileDnDUploaderWidget(Widget):
-    def __init__(self, attrs=None, kind=None, upload_path="/"):
+    def __init__(self, attrs=None, kind=None, upload_path="/", clearable=False):
         self.kind = kind
         self.upload_path = upload_path
+        self.clearable = clearable
         super(FileDnDUploaderWidget, self).__init__(attrs)
 
     def _get_file_attrs(self, file):
@@ -122,6 +123,7 @@ class FileDnDUploaderWidget(Widget):
         pk_input = HiddenInput().render(name, value, attrs)
         file_attrs = [
             "data-upload_path='%s'" % self.upload_path,
+            "data-add_remove_links='%s'" % self.clearable,
             "data-dropzone='true'"
         ]
         if self.kind:
