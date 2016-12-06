@@ -2,7 +2,7 @@
 {% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs %}
 {% set product_form = form["base"] %}
 
-{% call content_block(_("Additional Details"), "fa-file-text") %}
+{% call content_block(_("Additional Details"), "fa-file-text", id="additional-details-section") %}
     <p class="section-description">{% trans %}Product features such as size, weight and keywords are located here.{% endtrans %}</p>
 
     {{ bs3.field(product_form.stock_behavior) }}
@@ -27,7 +27,7 @@
     {% endcall %}
 {% endcall %}
 
-{% call content_block(_("Manufacturer"), "fa-building") %}
+{% call content_block(_("Manufacturer"), "fa-building", id="manufacturer-section") %}
     <p class="section-description">{% trans %}If you know the manufacturer of the product select it here.{% endtrans %}</p>
     {{ bs3.field(product_form.manufacturer) }}
 {% endcall %}
