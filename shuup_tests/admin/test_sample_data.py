@@ -32,13 +32,14 @@ from shuup.xtheme.models import SavedViewConfig
 @pytest.mark.django_db
 def test_sample_data_manager():
     shop = get_default_shop()
-
+    assert manager.get_installed_business_segment(shop) is None
     assert manager.get_installed_products(shop) == []
     assert manager.get_installed_categories(shop) == []
     assert manager.get_installed_cms_pages(shop) == []
     assert manager.get_installed_carousel(shop) is None
     assert manager.has_installed_samples(shop) is False
 
+    BUSINESS_SEG = "default"
     PRODUCTS = [1, 2, 3]
     CATEGORIES = [4, 5, 6]
     CMS = ["about_us"]
@@ -48,7 +49,9 @@ def test_sample_data_manager():
     manager.save_products(shop, PRODUCTS)
     manager.save_cms_pages(shop, CMS)
     manager.save_carousel(shop, CAROUSEL)
+    manager.save_business_segment(shop, BUSINESS_SEG)
 
+    assert manager.get_installed_business_segment(shop) == BUSINESS_SEG
     assert manager.get_installed_products(shop) == PRODUCTS
     assert manager.get_installed_categories(shop) == CATEGORIES
     assert manager.get_installed_cms_pages(shop) == CMS
@@ -56,6 +59,7 @@ def test_sample_data_manager():
     assert manager.has_installed_samples(shop) is True
 
     new_shop = Shop.objects.create()
+    assert manager.get_installed_business_segment(new_shop) is None
     assert manager.get_installed_products(new_shop) == []
     assert manager.get_installed_categories(new_shop) == []
     assert manager.get_installed_cms_pages(new_shop) == []
@@ -63,6 +67,7 @@ def test_sample_data_manager():
     assert manager.has_installed_samples(new_shop) is False
 
     manager.clear_installed_samples(shop)
+    assert manager.get_installed_business_segment(shop) is None
     assert manager.get_installed_products(shop) == []
     assert manager.get_installed_categories(shop) == []
     assert manager.get_installed_cms_pages(shop) == []
@@ -139,17 +144,18 @@ def test_sample_data_wizard_pane(rf, admin_user, settings, with_simple_cms):
 
 @pytest.mark.django_db
 def test_forms(settings):
+    shop = get_default_shop()
+
     # check wheter the cms field only appears when the module is installed
     settings.INSTALLED_APPS.remove("shuup.simple_cms")
-    wizard_form = SampleObjectsWizardForm()
+    wizard_form = SampleObjectsWizardForm(shop=shop)
     assert "cms" not in wizard_form.fields.keys()
 
     settings.INSTALLED_APPS.append("shuup.simple_cms")
-    wizard_form = SampleObjectsWizardForm()
+    wizard_form = SampleObjectsWizardForm(shop=shop)
     assert "cms" in wizard_form.fields.keys()
 
     # check whether the fields are dynamically added
-    shop = get_default_shop()
     manager.clear_installed_samples(shop)
     consolidate_form = ConsolidateObjectsForm(**{"shop":shop})
     assert len(consolidate_form.fields) == 0
@@ -237,6 +243,7 @@ def test_consolidate_objects(rf):
     assert Product.objects.count() == 4
     assert Page.objects.count() == 1
     assert Carousel.objects.count() == 1
+    assert manager.get_installed_business_segment(shop) is None
     assert manager.get_installed_products(shop) == []
     assert manager.get_installed_categories(shop) == []
     assert manager.get_installed_cms_pages(shop) == []
@@ -259,6 +266,7 @@ def test_consolidate_objects(rf):
     assert Product.objects.all_except_deleted().count() == 0
     assert Page.objects.count() == 0
     assert Carousel.objects.count() == 0
+    assert manager.get_installed_business_segment(shop) is None
     assert manager.get_installed_products(shop) == []
     assert manager.get_installed_categories(shop) == []
     assert manager.get_installed_cms_pages(shop) == []
@@ -281,6 +289,7 @@ def test_consolidate_objects(rf):
     assert Product.objects.all_except_deleted().count() == 4
     assert Page.objects.count() == 0
     assert Carousel.objects.count() == 0
+    assert manager.get_installed_business_segment(shop) is None
     assert manager.get_installed_products(shop) == []
     assert manager.get_installed_categories(shop) == []
     assert manager.get_installed_cms_pages(shop) == []

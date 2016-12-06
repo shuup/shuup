@@ -34,28 +34,48 @@ class SampleObjectsWizardForm(forms.Form):
                                   help_text=_("Check this to install sample products."))
 
     def __init__(self, **kwargs):
+        shop = kwargs.pop("shop")
         super(SampleObjectsWizardForm, self).__init__(**kwargs)
 
+        if sample_manager.get_installed_categories(shop):
+            self.fields["categories"].initial = True
+            self.fields["categories"].widget = forms.CheckboxInput(attrs={'disabled': True})
+
+        if sample_manager.get_installed_products(shop):
+            self.fields["products"].initial = True
+            self.fields["products"].widget = forms.CheckboxInput(attrs={'disabled': True})
+
         # no really choices to make - change to a hidden field widget
-        if not len(BUSINESS_SEGMENTS) > 1:
+        if len(BUSINESS_SEGMENTS) == 1:
             self.fields["business_segment"].widget = forms.HiddenInput()
+
+        # installed data means only one choice - the current installed one
+        installed_bs = sample_manager.get_installed_business_segment(shop)
+        if installed_bs:
+            self.fields["business_segment"].initial = installed_bs
+            self.fields["business_segment"].choices = [(installed_bs, BUSINESS_SEGMENTS[installed_bs]["name"])]
 
         # add the carousel option if its module is installed
         if 'shuup.front.apps.carousel' in settings.INSTALLED_APPS:
+            has_installed_carousel = (sample_manager.get_installed_carousel(shop) is not None)
             self.fields["carousel"] = forms.BooleanField(
                 label=_("Install Carousel"),
-                initial=False,
+                initial=has_installed_carousel,
                 required=False,
+                widget=forms.CheckboxInput(attrs={"disabled": has_installed_carousel}),
                 help_text=_("Check this to install a sample carousel.")
             )
 
         # add the cms field if the module is installed
         if 'shuup.simple_cms' in settings.INSTALLED_APPS:
             cms_pages_choices = sorted([(k, v["title"]) for k, v in CMS_PAGES.items()])
+            installed_pages = sample_manager.get_installed_cms_pages(shop)
             self.fields["cms"] = forms.MultipleChoiceField(
                 label=_("Install CMS Pages"),
                 required=False,
                 choices=cms_pages_choices,
+                initial=installed_pages,
+                widget=forms.SelectMultiple(attrs={"disabled": bool(installed_pages)}),
                 help_text=_("Select the CMS pages you want to install.")
             )
 
