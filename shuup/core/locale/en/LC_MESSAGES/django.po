@@ -1605,6 +1605,21 @@ msgstr ""
 msgid "Service is only available for staff"
 msgstr ""
 
+msgid "Order total limit"
+msgstr ""
+
+msgid "Limit service availability based on order total"
+msgstr ""
+
+msgid "min price value"
+msgstr ""
+
+msgid "max price value"
+msgstr ""
+
+msgid "Order total does not match with service limits."
+msgstr ""
+
 msgid "round to nearest with ties going away from zero"
 msgstr ""
 

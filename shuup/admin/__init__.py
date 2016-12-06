@@ -57,6 +57,7 @@ class ShuupAdminAppConfig(AppConfig):
             "shuup.admin.modules.services.forms:WeightLimitsBehaviorComponentForm",
             "shuup.admin.modules.services.forms:GroupAvailabilityBehaviorComponentForm",
             "shuup.admin.modules.services.forms.StaffOnlyBehaviorComponentForm",
+            "shuup.admin.modules.services.forms.OrderTotalLimitBehaviorComponentForm",
         ],
         "service_behavior_component_form_part": [
             "shuup.admin.modules.services.weight_based_pricing.WeightBasedPricingFormPart"

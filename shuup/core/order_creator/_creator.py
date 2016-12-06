@@ -200,6 +200,7 @@ class OrderProcessor(object):
         )
 
     def finalize_creation(self, order, order_source):
+        order_source.verify_orderability()
         self.process_order_before_lines(source=order_source, order=order)
         lines = self.get_source_order_lines(source=order_source, order=order)
         self.add_lines_into_order(order, lines)

@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Add option to limit service availability based on order total
 - Add the setting `SHUUP_ERROR_PAGE_HANDLERS_SPEC` to handle custom error pages (400, 403, 404 and 500)
 
 Localization
