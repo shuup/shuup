@@ -18,7 +18,7 @@ from shuup.testing.factories import (
     get_default_payment_method, get_default_shipping_method, get_default_shop
 )
 from shuup.testing.models import PseudoPaymentProcessor
-from shuup.testing.utils import apply_request_middleware
+from shuup.testing.utils import apply_all_middleware
 
 
 def get_bs_object_for_view(request, view, user, object=None):
@@ -34,7 +34,7 @@ def get_bs_object_for_view(request, view, user, object=None):
         "shuup.admin.modules.service_providers.forms:CustomCarrierForm",
         "shuup.admin.modules.service_providers.forms:CustomPaymentProcessorForm"
     ]):
-        request = apply_request_middleware(request, user=user)
+        request = apply_all_middleware(request, user=user)
         response = view(request, pk=object.pk if object else None)
         if hasattr(response, "render"):
             response.render()
@@ -95,7 +95,7 @@ def test_invalid_service_provider_type(rf, admin_user):
     """
     get_default_shop()
     view = ServiceProviderEditView.as_view()
-    url ="/?type=SomethingThatIsNotProvided"
+    url = "/?type=SomethingThatIsNotProvided"
 
     soup = get_bs_object_for_view(rf.get(url), view, admin_user)
     provider_form = soup.find("form", attrs={"id": "service_provider_form"})
@@ -183,5 +183,5 @@ def test_delete(get_object, service_provider_attr):
     # Re fetch method to check it's new field
     method = method_cls.objects.get(pk=method_pk)
     assert getattr(method, service_provider_attr) is None
-    assert method.enabled == False
+    assert method.enabled is False
     assert not service_provider_cls.objects.filter(pk=service_provider_pk).exists()

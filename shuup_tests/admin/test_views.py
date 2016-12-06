@@ -111,6 +111,18 @@ def test_product_edit_view(rf, admin_user, settings):
     content = force_text(response.content)
     post = extract_form_fields(BeautifulSoup(content))
 
+    # Needed for Django 1.8 tests to pass
+    post.update({
+        'shop1-default_price_value': '42',
+        'images-TOTAL_FORMS': '0',
+        'media-TOTAL_FORMS': '0',
+        'base-name__fi': 'test',
+        'base-name__it': 'test',
+        'base-name__ja': 'test',
+        'base-name__pt-br': 'test',
+        'base-name__zh-hans': 'test',
+    })
+
     post_data = {
         'shop1-primary_category': [],
         'shop1-categories': []
