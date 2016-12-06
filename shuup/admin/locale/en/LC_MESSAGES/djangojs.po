@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-25 21:06+0000\n"
+"POT-Creation-Date: 2016-12-06 05:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -582,14 +582,6 @@ msgid ""
 "details your way!"
 msgstr ""
 
-msgid "Reports"
-msgstr ""
-
-msgid ""
-"Your reporting tool to build and analyze your consumer behavior information "
-"that can assist with your business decisions."
-msgstr ""
-
 msgid "Campaigns"
 msgstr ""
 
@@ -603,12 +595,28 @@ msgid ""
 "your inventory."
 msgstr ""
 
-msgid "Storefront"
+msgid "Content"
 msgstr ""
 
 msgid ""
 "The make-over tool to customize you site themes, add pages and product "
 "carousels. Incorporate any media to make your store pop!"
+msgstr ""
+
+msgid "Reports"
+msgstr ""
+
+msgid ""
+"Your reporting tool to build and analyze your consumer behavior information "
+"that can assist with your business decisions."
+msgstr ""
+
+msgid "Shops"
+msgstr ""
+
+msgid ""
+"Place for your Shop specific settings. You can customize taxes, currencies, "
+"customer groups, and many other things in this menu."
 msgstr ""
 
 msgid "Addons"
