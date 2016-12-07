@@ -5,7 +5,7 @@
 {% macro render_information() %}
     {% if category.description %}
         <div class="category-description">
-            <p class="lead">{{ category.description|markdown|safe }}</p>
+            <p class="lead">{{ category.description|safe }}</p>
         </div>
     {% endif %}
     {% set category_image = category.image|thumbnail(size=(1140,350), crop="smart", upscale=True) %}
