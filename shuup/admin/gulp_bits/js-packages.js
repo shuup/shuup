@@ -26,7 +26,6 @@ module.exports = {
             "js/browse-widget.js",
             "js/side-nav.js",
             "js/content-blocks.js",
-            "js/remarkable-field.js",
             "js/form-utils.js",
             "js/jquery.form-submission-attributes.polyfill.js",
             "js/datetimepicker.js",
@@ -56,12 +55,6 @@ module.exports = {
         "webpack": root + "/modules/media/webpack.config.js",
         "watch": [
             "./modules/media/static_src/media/**/*.js"
-        ]
-    },
-    "remarkable": {
-        "webpack": root + "/static_src/remarkable/webpack.config.js",
-        "watch": [
-            "./static_src/remarkable/*.js"
         ]
     },
     "picotable": {

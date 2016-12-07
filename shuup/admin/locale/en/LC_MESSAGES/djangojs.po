@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-06 05:07+0000\n"
+"POT-Creation-Date: 2016-12-07 23:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -525,9 +525,6 @@ msgstr ""
 msgid "Drop files here or click to browse."
 msgstr ""
 
-msgid "Expand Editor"
-msgstr ""
-
 msgid "No results."
 msgstr ""
 
@@ -728,27 +725,6 @@ msgid "Set as primary image"
 msgstr ""
 
 msgid "Primary image"
-msgstr ""
-
-msgid "Bold"
-msgstr ""
-
-msgid "Italic"
-msgstr ""
-
-msgid "List"
-msgstr ""
-
-msgid "Ordered list"
-msgstr ""
-
-msgid "Link"
-msgstr ""
-
-msgid "Editor"
-msgstr ""
-
-msgid "Done"
 msgstr ""
 
 msgid "Finish"
