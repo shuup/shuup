@@ -37,7 +37,8 @@ module.exports = {
             "js/drag-n-drop.js",
             "js/slugify.js",
             "js/dropzone.js",
-            "js/quick_add_related_objects.js"
+            "js/quick_add_related_objects.js",
+            "js/editor.js"
         ]
     },
     "contact-group": {
