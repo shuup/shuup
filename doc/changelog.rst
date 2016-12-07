@@ -64,6 +64,8 @@ Discount Pricing
 Simple CMS
 ~~~~~~~~~~
 
+- Add rich text editor for CMS content
+
 Default Tax
 ~~~~~~~~~~~
 

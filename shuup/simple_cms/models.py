@@ -5,7 +5,6 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
-import markdown
 from django.conf import settings
 from django.db import models
 from django.db.models import Q
@@ -116,7 +115,7 @@ class Page(MPTTModel, TranslatableModel):
         )
 
     def get_html(self):
-        return markdown.markdown(self.content)
+        return self.content
 
     def __str__(self):
         return force_text(self.safe_translation_getter("title", any_language=True, default=_("Untitled")))

@@ -10,6 +10,7 @@ from django.core.exceptions import ValidationError
 from django.forms import DateTimeField
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.admin.utils.picotable import Column, TextFilter
 from shuup.admin.utils.views import CreateOrUpdateView, PicotableListView
 from shuup.simple_cms.models import Page
@@ -34,6 +35,9 @@ class PageForm(MultiLanguageModelForm):
             'parent',
             'list_children_on_page'
         ]
+        widgets = {
+            "content": TextEditorWidget()
+        }
 
     def __init__(self, **kwargs):
         kwargs.setdefault("required_languages", ())  # No required languages here
