@@ -43,6 +43,8 @@ Front
 Xtheme
 ~~~~~~
 
+- Use rich text editor for text plugin
+
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
 

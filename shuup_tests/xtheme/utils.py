@@ -84,7 +84,7 @@ def get_test_template_bits(request, pass_view=True, **extra_ctx):
     layout = Layout(FauxTheme, "test")
     gibberish = printable_gibberish()
     layout.begin_column({"md": 12, "xs": 0})
-    layout.add_plugin("text", {"text": gibberish})
+    layout.add_plugin("text", {"text": "<p>%s</p>" % gibberish})
     jeng = get_jinja2_engine()
     template = jeng.from_string("")
     template.template.name = "test"
