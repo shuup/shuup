@@ -6,7 +6,7 @@
     {% call(form, language, map) language_dependent_content_tabs(category_form) %}
         {{ bs3.field(category_form[map.name], widget_class="autoupdate-slug") }}
         {{ bs3.field(category_form[map.slug], widget_class="slugfield") }}
-        {{ bs3.field(category_form[map.description], widget_class="remarkable-field") }}
+        {{ bs3.field(category_form[map.description]) }}
     {% endcall %}
     <div class="form-divider"></div>
     {{ bs3.field(category_form.parent) }}

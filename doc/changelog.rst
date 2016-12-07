@@ -24,6 +24,7 @@ Localization
 Admin
 ~~~~~
 
+- Add rich text editor for product, category, and service description
 - Add dropzone widget for shop, category, service provider
   and service image fields
 - Add option to clear dropzone selection
