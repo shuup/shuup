@@ -246,8 +246,6 @@ def variations_filter_test(browser, category):
         }
     )
 
-
-    # figure out the ids
     def get_var_id(value):
         return value.replace(" ", "*")
 

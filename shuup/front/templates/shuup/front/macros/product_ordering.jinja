@@ -49,13 +49,13 @@
                         id="var_{{ var.pk }}"
                         class="form-control selectpicker variable-variation variable-variation-{{ product_id }}"
                         onchange="updatePrice('{{ product_id }}')">
-                    {% for pvvv in var.values.all() %}
+                    {% for pvvv in orderable_variation_children[var] %}
                         <option value="{{ pvvv.pk }}">{{ pvvv.value }}</option>
                     {% endfor %}
                 </select>
             </div>
         {% endfor %}
-        {{ product_order_section(shop_product, quantity, True) }}
+        {{ product_order_section(shop_product, quantity, variation_orderable) }}
     </div>
 {% endmacro %}
 
