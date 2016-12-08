@@ -14,20 +14,38 @@ from shuup.utils.importing import load
 
 
 def load_setup_wizard_panes(shop, request=None, visible_only=True):
+    """
+    Load the setup Wizard panes.
+    The result will be a list of valid pane instances.
+
+    :type request: HttpRequest|None
+    :param visible_only: whether to return only visible panes
+    :type visible_only: bool
+    """
     panes = []
     for pane_spec in getattr(settings, "SHUUP_SETUP_WIZARD_PANE_SPEC", []):
         pane_class = load(pane_spec)
         pane_inst = pane_class(request=request, object=shop)
-        if not visible_only or pane_inst.visible():
+        if pane_inst.valid() and (not visible_only or pane_inst.visible()):
             panes.append(pane_inst)
     return panes
 
 
 def load_setup_wizard_pane(shop, request, pane_id):
+    """
+    Search, load and return a valid Wizard Pane by its identifier.
+
+    :type request: HttpRequest
+    :param pane_id: the pane identifier
+    :type pane_id: str
+
+    :return: the pane instance or None
+    :rtype: shuup.admin.views.wizard.WizardPane|None
+    """
     for pane_spec in getattr(settings, "SHUUP_SETUP_WIZARD_PANE_SPEC", []):
         pane_class = load(pane_spec)
         pane_inst = pane_class(request=request, object=shop)
-        if pane_inst.identifier == pane_id:
+        if pane_inst.identifier == pane_id and pane_inst.valid():
             return pane_inst
 
 

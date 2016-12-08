@@ -1,0 +1,10 @@
+<div class="row">
+    <div class="col-sm-12 text-center">
+        <strong>{{ shop.public_name or shop.name }}</strong><br/>
+        {{ shop.contact_address.street }}<br/>
+        {% if shop.contact_address.street2 %}{{ shop.contact_address.street2 }}<br/>{% endif %}
+        {% if shop.contact_address.street3 %}{{ shop.contact_address.street3 }}<br/>{% endif %}
+        {{ shop.contact_address.postal_code }} {{ shop.contact_address.city }} {{ shop.contact_address.region or shop.contact_address.region_code }} {{ shop.contact_address.country }}<br/>
+        {% if shop.contact_address.phone %}{{ shop.contact_address.phone }}{% endif %}
+    </div>
+</div>

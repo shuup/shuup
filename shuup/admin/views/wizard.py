@@ -55,6 +55,15 @@ class WizardPane(FormPart):
     editable = True
 
     def visible(self):
+        """
+        Returns whether this pane is visible for editing
+        """
+        return True
+
+    def valid(self):
+        """
+        Returns whether this pane is valid and should be included in wizard pane list
+        """
         return True
 
 
