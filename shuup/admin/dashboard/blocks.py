@@ -73,12 +73,14 @@ class DashboardChartBlock(DashboardBlock):
     type = "chart"
     default_size = "medium"
     BLOCK_TEMPLATE = """
-    <div class="block-header">
-        <div class="text-wrap"><span>%(title)s</span></div>
-        <div class="icon-wrap"><i class="fa %(icon)s"></i></div>
-    </div>
-    <div class="block-content">
-        <div id="chart-%(id)s"></div>
+    <div class="color-block block-purple">
+        <div class="block-header">
+            <div class="text-wrap"><span>%(title)s</span></div>
+            <div class="icon-wrap"><i class="fa %(icon)s"></i></div>
+        </div>
+        <div class="block-content">
+            <div id="chart-%(id)s"></div>
+        </div>
     </div>
     <script>
     window.CHART_CONFIGS = window.CHART_CONFIGS || {};
