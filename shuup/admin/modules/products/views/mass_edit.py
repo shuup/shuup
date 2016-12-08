@@ -13,6 +13,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
 from enumfields import EnumIntegerField
 
+from shuup.admin.forms.widgets import (
+    QuickAddCategoryMultiSelect, QuickAddCategorySelect
+)
 from shuup.admin.utils.views import MassEditMixin
 from shuup.core.models import Category, Product, ShopProductVisibility
 
@@ -22,7 +25,11 @@ class MassEditForm(forms.Form):
     default_price_value = forms.DecimalField(label="Default Price", required=False)
     visibility = EnumIntegerField(ShopProductVisibility).formfield(label=_("Visibility"), required=False)
     primary_category = forms.ModelChoiceField(
-        label=_("Primary Category"), queryset=Category.objects.all(), required=False)
+        label=_("Primary Category"), queryset=Category.objects.all_except_deleted(), required=False,
+        widget=QuickAddCategorySelect())
+    categories = forms.ModelMultipleChoiceField(
+        label=_("Additional Categories"), queryset=Category.objects.all_except_deleted(), required=False,
+        widget=QuickAddCategoryMultiSelect())
     purchasable = forms.BooleanField(label=_("Purchasable"), required=False)
 
 
