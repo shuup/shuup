@@ -15,10 +15,10 @@ from shuup.admin.modules.services.views import (
     PaymentMethodEditView, ShippingMethodEditView
 )
 from shuup.core.models import (
-    FixedCostBehaviorComponent, GroupAvailabilityBehaviorComponent,
-    OrderTotalLimitBehaviorComponent, PaymentMethod, ShippingMethod,
-    StaffOnlyBehaviorComponent, WaivingCostBehaviorComponent,
-    WeightLimitsBehaviorComponent
+    CountryLimitBehaviorComponent, FixedCostBehaviorComponent,
+    GroupAvailabilityBehaviorComponent, OrderTotalLimitBehaviorComponent,
+    PaymentMethod, ShippingMethod, StaffOnlyBehaviorComponent,
+    WaivingCostBehaviorComponent, WeightLimitsBehaviorComponent
 )
 from shuup.testing.factories import (
     get_default_customer_group, get_default_payment_method,
@@ -60,6 +60,9 @@ def get_default_behavior_settings():
             "min_price_value": 0,
             "max_price_value": 21
         },
+        CountryLimitBehaviorComponent.__name__.lower(): {
+            "available_in_countries": ["FI",]
+        }
     }
 
 

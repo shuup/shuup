@@ -1302,6 +1302,24 @@ msgstr ""
 msgid "Waive limit"
 msgstr ""
 
+msgid "Available in countries"
+msgstr ""
+
+msgid "Unavailable in countries"
+msgstr ""
+
+msgid "Select accepted countries for this service."
+msgstr ""
+
+msgid "Select this to accept all countries in EU."
+msgstr ""
+
+msgid "Select restricted countries for this service."
+msgstr ""
+
+msgid "Select this to restrict this service for countries in EU"
+msgstr ""
+
 msgid "Service choice"
 msgstr ""
 
