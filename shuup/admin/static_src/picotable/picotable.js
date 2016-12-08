@@ -782,7 +782,10 @@ const Picotable = (function(m, storage) {
 
                 var blob = new Blob([xhr.response], { type: type });
                 if (typeof window.navigator.msSaveBlob !== 'undefined') {
-                    // IE workaround for "HTML7007: One or more blob URLs were revoked by closing the blob for which they were created. These URLs will no longer resolve as the data backing the URL has been freed."
+                    // IE workaround for "HTML7007: One or more blob URLs
+                    // were revoked by closing the blob for which they were
+                    // created. These URLs will no longer resolve as the data
+                    // backing the URL has been freed."
                     window.navigator.msSaveBlob(blob, filename);
                 }
                 else {
@@ -810,7 +813,9 @@ const Picotable = (function(m, storage) {
                         ctrl.resetCheckboxes();
                         $(".picotable-mass-action-select").val(0);
                         ctrl.refresh();
-                        window.Messages.enqueue({tags: "success", text: gettext("Mass Action complete.")});
+                        setTimeout(function() {
+                            window.Messages.enqueue({tags: "success", text: gettext("Mass Action complete.")});
+                        }, 1000);
                     }
                     setTimeout(function () { URL.revokeObjectURL(downloadUrl); }, 100); // cleanup
                 }
