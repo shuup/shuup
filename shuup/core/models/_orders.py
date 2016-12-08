@@ -16,6 +16,7 @@ import six
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db import models
+from django.db.models import Q
 from django.db.transaction import atomic
 from django.utils.crypto import get_random_string
 from django.utils.encoding import force_text, python_2_unicode_compatible
@@ -267,7 +268,7 @@ class OrderQuerySet(models.QuerySet):
         return self.filter(status__role=OrderStatusRole.COMPLETE)    # TODO: read status
 
     def valid(self):
-        return self.exclude(deleted=True, status__role=OrderStatusRole.CANCELED)  # TODO: read status
+        return self.exclude(Q(deleted=True) | Q(status__role=OrderStatusRole.CANCELED))  # TODO: read status
 
     def since(self, days):
         return self.filter(
