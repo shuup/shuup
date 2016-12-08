@@ -356,12 +356,12 @@ class ProductVariationFilter(SimpleProductListModifier):
         variation_values = defaultdict(set)
         for variation in ProductVariationVariable.objects.filter(product__shop_products__categories=category):
             for value in variation.values.all():
-                variation_values[slugify(variation.name)].add(value.value)
+                # TODO: Use ID here instead of this "trick"
+                choices = (value.value.replace(" ", "*"), value.value)
+                variation_values[slugify(variation.name)].add(choices)
 
         fields = []
-        for variation_key, variation_values in six.iteritems(variation_values):
-            choices = [(value.lower(), value) for value in variation_values]
-
+        for variation_key, choices in six.iteritems(variation_values):
             fields.append((
                 "variation_%s" % variation_key,
                 forms.MultipleChoiceField(
@@ -378,7 +378,9 @@ class ProductVariationFilter(SimpleProductListModifier):
             if key.startswith("variation"):
                 variation_query = Q()
                 for value in list(values):
-                    variation_query |= Q(variation_variables__values__translations__value__iexact=value)
+                    # TODO: When using id this should search value for id
+                    variation_query |= Q(
+                        variation_variables__values__translations__value__iexact=value.replace("*", " "))
                 queryset = queryset.filter(variation_query)
         return queryset
 

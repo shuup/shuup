@@ -21,6 +21,7 @@ window.refreshFilters = function refreshFilters(pageNumber) {
             state[key] = values;
         }
     });
+
     var filterString = getFilterString(state);
     if (pagination.length > 0) {
         // Prevent double clicking when ajax is loading
@@ -37,6 +38,7 @@ window.refreshFilters = function refreshFilters(pageNumber) {
         }
         window.PAGE_NUMBER = pageNumber;
     }
+
 
     reloadProducts(filterString);
 
@@ -67,7 +69,7 @@ function reloadProducts(filterString) {
     // this is to ensure browser back/forward from different domain does a full refresh
     filterString += (filterString === "") ? "?" : "&";
     filterString += "ajax=1";
-    window.scrollTo(0, 0);
+    window.scrollTo(0, $(".products-wrap").offset().top);
     $("#ajax_content").load(location.pathname + filterString);
 }
 
