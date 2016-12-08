@@ -831,6 +831,11 @@ const Picotable = (function(m, storage) {
                 return;
             }
 
+            if (!confirm(gettext("Confirm action by clicking OK!"))) {
+                $(".picotable-mass-action-select").val(0);
+                ctrl.refresh();
+                return;
+            }
 
             var xhrConfig = function(xhr) {
                 xhr.setRequestHeader("X-CSRFToken", window.ShuupAdminConfig.csrf);
