@@ -13,7 +13,9 @@ from shuup.core.models import Order
 
 class OrderReportMixin(object):
     def get_objects(self):
-        queryset = Order.objects.filter(shop=self.shop, order_date__range=(self.start_date, self.end_date))
+        queryset = Order.objects.filter(
+            shop=self.shop,
+            order_date__range=(self.start_date, self.end_date))
         creator = self.options.get("creator")
         orderer = self.options.get("orderer")
         customer = self.options.get("customer")
@@ -25,4 +27,4 @@ class OrderReportMixin(object):
         if customer:
             filters &= Q(customer__in=customer)
 
-        return queryset.filter(filters).order_by("order_date")
+        return queryset.filter(filters).valid().paid().order_by("order_date")

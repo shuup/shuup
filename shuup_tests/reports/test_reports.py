@@ -39,6 +39,12 @@ def initialize_report_test(product_price, product_count, tax_rate, line_count):
     order = create_order_with_product(
         product=product, supplier=supplier, quantity=product_count,
         taxless_base_unit_price=product_price, tax_rate=tax_rate, n_lines=line_count, shop=shop)
+    order.create_payment(order.taxful_total_price.amount)
+    order2 = create_order_with_product(
+        product=product, supplier=supplier, quantity=product_count,
+        taxless_base_unit_price=product_price, tax_rate=tax_rate, n_lines=line_count, shop=shop)
+    order2.create_payment(order2.taxful_total_price.amount)
+    order2.set_canceled()  # Shouldn't affect reports
     return expected_taxful_total, expected_taxless_total, shop, order
 
 
@@ -57,7 +63,7 @@ class TestSalesReport(ShuupReportBase):
 
     def get_objects(self):
         return Order.objects.filter(
-            shop=self.shop, order_date__range=(self.start_date, self.end_date)).order_by("order_date")
+            shop=self.shop, order_date__range=(self.start_date, self.end_date)).valid().paid().order_by("order_date")
 
     def extract_date(self, entity):
         # extracts the starting date from an entity
