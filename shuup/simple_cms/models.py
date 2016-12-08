@@ -45,7 +45,7 @@ class Page(MPTTModel, TranslatableModel):
         "This is useful for pages describing sales campaigns or other time-sensitive pages."
     ))
     available_to = models.DateTimeField(null=True, blank=True, verbose_name=_('available to'), help_text=_(
-        "Set an available from date to restrict the page to be available only after a certain date and time. "
+        "Set an available to date to restrict the page to be available only after a certain date and time. "
         "This is useful for pages describing sales campaigns or other time-sensitive pages."
     ))
 

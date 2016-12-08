@@ -9,7 +9,6 @@ from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
 
-
 ABOUT_US_KEY = "about_us"
 PRIVACY_POLICY_KEY = "privacy_policy"
 TERMS_AND_CONDITIONS_KEY = "terms_conditions"
