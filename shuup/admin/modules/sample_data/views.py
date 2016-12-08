@@ -17,7 +17,7 @@ from django.views.generic import FormView
 
 from shuup import configuration
 from shuup.admin.modules.sample_data import manager as sample_manager
-from shuup.admin.modules.sample_data.data import BUSINESS_SEGMENTS, CMS_PAGES
+from shuup.admin.modules.sample_data.data import BUSINESS_SEGMENTS
 from shuup.admin.modules.sample_data.factories import (
     create_sample_carousel, create_sample_category, create_sample_product
 )
@@ -59,12 +59,6 @@ class ConsolidateSampleObjectsView(FormView):
             if carousel:
                 from shuup.front.apps.carousel.models import Carousel
                 Carousel.objects.filter(pk=carousel).delete()
-
-        # uninstall cms pages
-        if 'shuup.simple_cms' in settings.INSTALLED_APPS and \
-                form.cleaned_data.get("cms", False):
-            from shuup.simple_cms.models import Page
-            Page.objects.filter(identifier__in=sample_manager.get_installed_cms_pages(shop)).delete()
 
         sample_manager.clear_installed_samples(shop)
         messages.success(self.request, _("Sample data were consolidated"))
@@ -113,7 +107,6 @@ class SampleObjectsWizardPane(WizardPane):
         current_categories = sample_manager.get_installed_categories(shop)
         current_products = sample_manager.get_installed_products(shop)
         current_carousel = sample_manager.get_installed_carousel(shop)
-        current_cms_pages = sample_manager.get_installed_cms_pages(shop)
 
         # only saves the business segment if there is no data installed
         # otherwise user can't change the segment
@@ -139,12 +132,6 @@ class SampleObjectsWizardPane(WizardPane):
             carousel = self._create_sample_carousel(shop, business_segment)
             if carousel:
                 sample_manager.save_carousel(shop, carousel.pk)
-
-        # user wants to install sample CMS Pages
-        if form_data.get("cms") and not current_cms_pages:
-            cms_pages = self._create_sample_cms_pages(form_data["cms"])
-            if cms_pages:
-                sample_manager.save_cms_pages(shop, cms_pages)
 
         # user will no longer see this pane
         configuration.set(None, "sample_data_wizard_completed", True)
@@ -236,26 +223,3 @@ class SampleObjectsWizardPane(WizardPane):
                 svc.publish()
 
         return carousel
-
-    @classmethod
-    def _create_sample_cms_pages(cls, cms_pages_ids):
-        """
-        Creates the sample CMS pages for the given list of identifiers.
-        If a page with the same identifier already exists, nothing will be done.
-        """
-
-        # handle CMS if it is installed
-        if 'shuup.simple_cms' in settings.INSTALLED_APPS:
-            from shuup.simple_cms.models import Page
-
-            for cms_identifier in cms_pages_ids:
-                page, created = Page.objects.get_or_create(identifier=cms_identifier)
-
-                if created:
-                    page.visible_in_menu = True
-                    page.title = CMS_PAGES[cms_identifier]["title"]
-                    page.content = CMS_PAGES[cms_identifier]["content"]
-                    page.url = cms_identifier
-                    page.save()
-
-        return cms_pages_ids
