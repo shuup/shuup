@@ -11,7 +11,9 @@ from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.utils.picotable import ChoicesFilter, Column, TextFilter, RangeFilter
+from shuup.admin.utils.picotable import (
+    ChoicesFilter, Column, RangeFilter, TextFilter
+)
 from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import Product, ProductMode
 

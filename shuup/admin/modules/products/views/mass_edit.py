@@ -8,6 +8,7 @@ import six
 from django import forms
 from django.contrib import messages
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
@@ -38,7 +39,10 @@ class ProductMassEditView(MassEditMixin, FormView):
     form_class = MassEditForm
 
     def form_valid(self, form):
-        for product in Product.objects.filter(id__in=self.ids):
+        query = Q(id__in=self.ids)
+        if isinstance(self.ids, six.string_types) and self.ids == "all":
+            query = Q()
+        for product in Product.objects.filter(query):
             shop_product = product.get_shop_instance(self.request.shop)
 
             for k, v in six.iteritems(form.cleaned_data):
