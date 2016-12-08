@@ -14,7 +14,7 @@ from six import BytesIO
 from shuup.admin.utils.picotable import (
     PicotableFileMassAction, PicotableMassAction
 )
-from shuup.core.models import Order
+from shuup.core.models import Order, Shipment
 from shuup.order_printouts.admin_module.views import (
     get_confirmation_pdf, get_delivery_pdf
 )
@@ -76,10 +76,11 @@ class OrderDeliveryPdfAction(PicotableFileMassAction):
     identifier = "mass_action_order_delivery_pdf"
 
     def process(self, request, ids):
-        if len(ids) == 1:
+        shipment_ids = set(Shipment.objects.filter(order_id__in=ids).values_list("id", flat=True))
+        if len(shipment_ids) == 1:
             try:
                 response = get_delivery_pdf(request, ids[0])
-                response['Content-Disposition'] = 'attachment; filename=order_%s_delivery.pdf' % ids[0]
+                response['Content-Disposition'] = 'attachment; filename=shipment_%s_delivery.pdf' % ids[0]
                 return response
             except Exception as e:
                 msg = e.message if hasattr(e, "message") else e
@@ -89,10 +90,10 @@ class OrderDeliveryPdfAction(PicotableFileMassAction):
 
         added = 0
         errors = []
-        for id in ids:
+        for id in shipment_ids:
             try:
                 pdf_file = get_delivery_pdf(request, id)
-                filename = "order_%d_delivery.pdf" % id
+                filename = "shipment_%d_delivery.pdf" % id
                 archive.writestr(filename, pdf_file.content)
                 added += 1
             except Exception as e:
