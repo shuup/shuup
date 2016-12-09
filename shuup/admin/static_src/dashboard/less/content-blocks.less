@@ -126,12 +126,13 @@
             overflow: hidden;
             .text-wrap {
                 background-color: #fff;
-                color: black;
                 margin: 0;
+                color: @text-color;
                 vertical-align: middle;
                 display: table-cell;
                 padding: 0.5rem 1rem;
-                font-size: 1.6rem;
+                font-size: 1.7rem;
+                font-weight: 500;
             }
             .icon-wrap {
                 display:none;
@@ -162,38 +163,6 @@
                 margin-top: 10px;
                 font-size: 1.3rem;
             }
-        }
-
-        // Mixin for changing block header background colors
-        .block-bg-color(@color) {
-            .block-header {
-                .text-wrap >span { border-bottom: 2px solid @color; }
-            }
-        }
-
-        &.block-blue {
-            .block-bg-color(@block-blue);
-        }
-        &.block-orange {
-            .block-bg-color(@block-orange);
-        }
-        &.block-gray {
-            .block-bg-color(@block-gray);
-        }
-        &.block-red {
-            .block-bg-color(@block-red);
-        }
-        &.block-purple {
-            .block-bg-color(@block-purple);
-        }
-        &.block-green {
-            .block-bg-color(@block-green);
-        }
-        &.block-yellow {
-            .block-bg-color(@block-yellow);
-        }
-        &.block-navy {
-            .block-bg-color(@block-navy);
         }
 
         .activity-list, .notifications {
@@ -242,7 +211,40 @@
                 padding: 1px 3px;
             }
         }
-
     }
 
+    // Mixin for changing block header background colors
+    .block-bg-color(@color) {
+        .block-header {
+            .text-wrap >span {
+                border-bottom: 4px solid @color;
+                padding-bottom: 2px;
+            }
+        }
+    }
+
+    .block-blue {
+        .block-bg-color(@block-blue);
+    }
+    .block-orange {
+        .block-bg-color(@block-orange);
+    }
+    .block-gray {
+        .block-bg-color(@block-gray);
+    }
+    .block-red {
+        .block-bg-color(@block-red);
+    }
+    .block-purple {
+        .block-bg-color(@block-purple);
+    }
+    .block-green {
+        .block-bg-color(@block-green);
+    }
+    .block-yellow {
+        .block-bg-color(@block-yellow);
+    }
+    .block-navy {
+        .block-bg-color(@block-navy);
+    }
 }
