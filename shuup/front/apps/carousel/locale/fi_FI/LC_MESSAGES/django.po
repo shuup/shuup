@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 18:59+0000\n"
+"POT-Creation-Date: 2016-12-09 21:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,8 +48,8 @@ msgstr "Uusi"
 msgid "name"
 msgstr "nimi"
 
-msgid "Name is only used to configure carousels."
-msgstr "Nimeä käytetään vain karusellien konfiguroinnissa."
+msgid "The carousel name use for carousel configuration."
+msgstr "Karusellin nimi"
 
 msgid "animation"
 msgstr "animaatio"
@@ -66,14 +66,22 @@ msgstr "Kuvien aikaväli sekunneissa."
 msgid "pause on hover"
 msgstr "pysäytä hiiren alle"
 
-msgid "Pauses the cycling of the carousel on mouse over."
+msgid "When checked, the carousel cycling pauses on mouse over."
 msgstr "Pysäyttää kuvien vaihtumisen kun hiiri viedään kuvan päälle."
 
 msgid "show navigation arrows"
 msgstr "näytä siirtymisnuolet"
 
+msgid ""
+"When checked, navigational arrows are shown on the carousel allowing for "
+"customers to go back and forward."
+msgstr "Kun tämä on valittu, siirtymisnuolet näytetään karusellissa."
+
 msgid "show navigation dots"
 msgstr "näytä siirtymispisteet"
+
+msgid "When checked, navigational indicator dots are shown."
+msgstr "Kun tämä on valittu, navigaatiopisteet näytetään."
 
 msgid "image width"
 msgstr "kuvan leveys"
@@ -93,26 +101,62 @@ msgstr "Nimeä käytetään vain kuvien konfigurointiin."
 msgid "product link"
 msgstr "tuotelinkki"
 
+msgid ""
+"Set the product detail page that should be shown when this slide is clicked, "
+"if any."
+msgstr "Aseta tuotesivu, joka näytetään mikäli kuvaa klikataan."
+
 msgid "category link"
 msgstr "kategorialinkki"
+
+msgid ""
+"Set the product category page that should be shown when this slide is "
+"clicked, if any."
+msgstr "Aseta kategoriasivu, joka näytetään mikäli kuvaa klikataan."
 
 msgid "cms page link"
 msgstr "sisältösivulinkki"
 
+msgid ""
+"Set the web page that should be shown when the slide is clicked, if any."
+msgstr "Aseta verkkosivu, johon siirrytään mikäli kuvaa klikataan."
+
 msgid "ordering"
 msgstr "järjestys"
+
+msgid ""
+"Set the numeric order in which this slide should appear relative to other "
+"slides in this carousel."
+msgstr "Aseta järjestysnumero kuvalle."
 
 msgid "link target"
 msgstr "linkin kohde"
 
+msgid ""
+"Set this to current if clicking on this slide should open a new browser tab."
+msgstr ""
+"Aseta tämä tilaan 'nykyinen' mikäli haluat, että kuvan klikkaus avaa uuden "
+"välilehden."
+
 msgid "available from"
-msgstr "saatavilla alkaen"
+msgstr "saatavilla lähtien"
+
+msgid ""
+"Set the date and time from which this slide should be visible in the "
+"carousel. This is useful to advertise sales campaigns or other time-"
+"sensitive marketing."
+msgstr ""
+"Aseta päivämäärä ja aika mistä lähtien tämä kuva näytetään karusellissa. "
+"Voit käyttää tätä esimerkiksi kampanjoiden ja markkinoinnin apuvälineenä."
 
 msgid "available to"
 msgstr "saatavilla asti"
 
 msgid "caption"
 msgstr "kuvateksti"
+
+msgid "Text that describes the image. Used for search engine purposes."
+msgstr "Teksti, joka kuvailee kuvaa. Käytetään hakukoneissa."
 
 msgid "caption text"
 msgstr "kuvateksti"
@@ -125,8 +169,16 @@ msgstr ""
 msgid "external link"
 msgstr "ulkoinen linkki"
 
+msgid ""
+"Set the external site that should be shown when this slide is clicked, if "
+"any."
+msgstr "Aseta ulkopuolinen verkkosivusto, joka avataan mikäli kuvaa klikataan."
+
 msgid "image"
 msgstr "kuva"
+
+msgid "The slide image to show."
+msgstr "Kuva joka näytetään."
 
 msgid "Slides"
 msgstr "Kuvat"
