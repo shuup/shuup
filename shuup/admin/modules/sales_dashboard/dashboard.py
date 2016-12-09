@@ -8,12 +8,14 @@
 
 from __future__ import unicode_literals
 
+from datetime import date
+
 from babel.dates import format_date
 from django.db.models import Avg, Count, Sum
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.dashboard import (
-    BarChart, DashboardChartBlock, DashboardMoneyBlock
+    BarChart, DashboardChartBlock, DashboardContentBlock, DashboardMoneyBlock
 )
 from shuup.core.models import Order
 from shuup.core.pricing import TaxfulPrice
@@ -137,3 +139,37 @@ def get_open_orders_block(request, currency):
 
 def get_order_value_chart_dashboard_block(request, currency):
     return OrderValueChartDashboardBlock(id="order_value_chart", currency=currency)
+
+
+def get_order_overview_for_date_range(currency, start_date, end_date):
+    orders = get_orders_by_currency(currency).complete()
+    q = orders.since((end_date - start_date).days).aggregate(
+        num_orders=Count("id"),
+        num_customers=Count("customer", distinct=True),
+        sales=Sum("taxful_total_price_value"))
+    q["sales"] = TaxfulPrice(q["sales"] or 0, currency)
+    return q
+
+
+def get_shop_overview_block(request, currency):
+    today = date.today()
+    start_of_month = date(today.year, today.month, 1)
+    start_of_year = date(today.year, 1, 1)
+    daily = get_order_overview_for_date_range(currency, today, today)
+    mtd = get_order_overview_for_date_range(currency, start_of_month, today)
+    ytd = get_order_overview_for_date_range(currency, start_of_year, today)
+    totals = get_orders_by_currency(currency).complete().aggregate(
+        num_orders=Count("id"),
+        num_customers=Count("customer", distinct=True),
+        sales=Sum("taxful_total_price_value")
+    )
+    totals["sales"] = TaxfulPrice(totals["sales"] or 0, currency)
+    block = DashboardContentBlock.by_rendering_template(
+        "store_overview", request, "shuup/admin/sales_dashboard/_store_overview_dashboard_block.jinja", {
+            "daily": daily,
+            "mtd": mtd,
+            "ytd": ytd,
+            "totals": totals
+        })
+    block.size = "small"
+    return block
