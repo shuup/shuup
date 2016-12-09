@@ -28,3 +28,4 @@ class SalesDashboardModule(CurrencyBound, AdminModule):
         yield dashboard.get_open_orders_block(request, currency)
         yield dashboard.get_order_value_chart_dashboard_block(request, currency)
         yield dashboard.get_shop_overview_block(request, currency)
+        yield dashboard.get_recent_orders_block(request, currency)

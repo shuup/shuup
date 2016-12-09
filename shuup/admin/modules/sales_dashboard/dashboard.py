@@ -173,3 +173,14 @@ def get_shop_overview_block(request, currency):
         })
     block.size = "small"
     return block
+
+
+def get_recent_orders_block(request, currency):
+    orders = get_orders_by_currency(currency).valid().order_by("-order_date")[:5]
+    block = DashboardContentBlock.by_rendering_template(
+        "recent_orders", request, "shuup/admin/sales_dashboard/_recent_orders_dashboard_block.jinja", {
+            "orders": orders
+        }
+    )
+    block.size = "small"
+    return block

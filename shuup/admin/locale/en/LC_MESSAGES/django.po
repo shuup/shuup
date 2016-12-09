@@ -2902,6 +2902,9 @@ msgid ""
 "Variables tab and then link them to products here."
 msgstr ""
 
+msgid "Recent Orders"
+msgstr ""
+
 msgid "Store Overview"
 msgstr ""
 

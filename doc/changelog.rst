@@ -26,6 +26,7 @@ Localization
 Admin
 ~~~~~
 
+- Add recent orders dashboard block
 - Add store overview dashboard block
 - Add wizard pane to create shop content pages and configure behaviors
 - Picotable now supports related objects. See ``ProductListView`` for example.
