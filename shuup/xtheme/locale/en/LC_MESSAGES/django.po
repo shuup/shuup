@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-28 18:00+0000\n"
+"POT-Creation-Date: 2016-12-09 21:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -144,6 +144,12 @@ msgid "Only show in-stock and orderable items"
 msgstr ""
 
 msgid "Product Cross Sells"
+msgstr ""
+
+msgid "category"
+msgstr ""
+
+msgid "Category Products Highlight"
 msgstr ""
 
 msgid "Snippets"

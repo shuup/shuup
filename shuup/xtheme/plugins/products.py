@@ -8,13 +8,15 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.core.models import ProductCrossSell, ProductCrossSellType
+from shuup.core.models import Category, ProductCrossSell, ProductCrossSellType
 from shuup.front.template_helpers.general import (
-    get_best_selling_products, get_newest_products, get_random_products
+    get_best_selling_products, get_newest_products, get_products_for_category,
+    get_random_products
 )
 from shuup.front.template_helpers.product import map_relation_type
 from shuup.xtheme import TemplatedPlugin
-from shuup.xtheme.plugins.forms import TranslatableField
+from shuup.xtheme.plugins.forms import GenericPluginForm, TranslatableField
+from shuup.xtheme.plugins.widgets import XThemeModelChoiceField
 
 
 class ProductHighlightPlugin(TemplatedPlugin):
@@ -95,4 +97,50 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
             "type": type,
             "count": count,
             "orderable_only": orderable_only,
+        }
+
+
+class ProductsFromCategoryForm(GenericPluginForm):
+    def populate(self):
+        for field in self.plugin.fields:
+            if isinstance(field, tuple):
+                name, value = field
+                value.initial = self.plugin.config.get(name, value.initial)
+                self.fields[name] = value
+        self.fields["category"] = XThemeModelChoiceField(
+            label=_("category"),
+            queryset=Category.objects.all(),
+            required=False,
+            initial=self.plugin.config.get("category") if self.plugin else None
+        )
+
+    def clean(self):
+        cleaned_data = super(ProductsFromCategoryForm, self).clean()
+        carousel = cleaned_data.get("category")
+        cleaned_data["category"] = carousel.pk if hasattr(carousel, "pk") else None
+        return cleaned_data
+
+
+class ProductsFromCategoryPlugin(TemplatedPlugin):
+    identifier = "category_products"
+    name = _("Category Products Highlight")
+    template_name = "shuup/xtheme/plugins/highlight_plugin.jinja"
+    editor_form_class = ProductsFromCategoryForm
+    fields = [
+        ("title", TranslatableField(label=_("Title"), required=False, initial="")),
+        ("count", forms.IntegerField(label=_("Count"), min_value=1, initial=4)),
+        "category",
+    ]
+
+    def get_context_data(self, context):
+        products = []
+        category_id = self.config.get("category")
+        count = self.config.get("count")
+        category = Category.objects.filter(id=category_id).first() if category_id else None
+        if category:
+            products = get_products_for_category(context, [category], n_products=count)
+        return {
+            "request": context["request"],
+            "title": self.get_translated_value("title"),
+            "products": products
         }
