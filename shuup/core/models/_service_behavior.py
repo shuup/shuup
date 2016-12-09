@@ -222,7 +222,7 @@ class CountryLimitBehaviorComponent(ServiceBehaviorComponent):
         if is_available:  # Let's see if target country is restricted
             if self.unavailable_in_countries and country in (self.unavailable_in_countries or []):
                 is_available = False
-            if self.unavailable_in_european_countries and address.is_european_union:
+            if self.unavailable_in_european_countries and address and address.is_european_union:
                 is_available = False
 
         if not is_available:
