@@ -6,6 +6,8 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.utils.timezone import now
+from django_filters import DateTimeFilter
+from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from rest_framework import serializers, status
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
@@ -57,9 +59,24 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
 
 
+class OrderFilter(FilterSet):
+    date = DateTimeFilter(name="order_date", method="filter_date")
+
+    def filter_date(self, queryset, name, value):
+        if not value:
+            return queryset
+        return queryset.filter(order_date__year=value.year, order_date__month=value.month, order_date__day=value.day)
+
+    class Meta:
+        model = Order
+        fields = ["identifier", "date", "status"]
+
+
 class OrderViewSet(ModelViewSet):
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
+    filter_backends = (DjangoFilterBackend,)
+    filter_class = OrderFilter
 
     @detail_route(methods=['post'])
     def create_payment(self, request, pk=None):
