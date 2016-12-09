@@ -23,7 +23,7 @@
             {% if unorderability_reason %}
                 <p class="text-warning not-orderable">{{ unorderability_reason }}</p>
             {% elif variation_variables %}
-                {{ variable_variation_form(shop_product, quantity, variation_variables) }}
+                {{ variable_variation_form(shop_product, quantity, variation_variables, orderable_variation_children) }}
             {% elif variation_children %}
                 {{ simple_variation_form(shop_product, quantity, orderable_variation_children) }}
             {% else %}
@@ -33,7 +33,8 @@
     </div>
 {% endmacro %}
 
-{% macro variable_variation_form(shop_product, quantity, variation_variables) %}
+{% macro variable_variation_form(shop_product, quantity, variation_variables, orderable_variation_children) %}
+    {% set variation_orderable = orderable_variation_children|length %}
     {% if shop_product.product.variation_parent %}
         {%- set product_id = shop_product.product.variation_parent.pk -%}
     {% else %}

@@ -6,9 +6,9 @@
         <form method="post" action="{{ url("shuup:basket") }}" id="update_basket_form">
             <input name="command" type="hidden" value="update">
             {% csrf_token %}
-            {{ render_basket_lines() }}
-            {{ render_unorderable_basket_lines() }}
-            {{ render_coupon_div() }}
+            {{ render_basket_lines(basket) }}
+            {{ render_unorderable_basket_lines(basket) }}
+            {{ render_coupon_div(basket) }}
             {{ render_basket_summary(basket) }}
         </form>
     </div>
@@ -97,7 +97,7 @@
     </div>
 {% endmacro %}
 
-{% macro render_basket_lines() %}
+{% macro render_basket_lines(basket) %}
     {% set lines = basket.get_final_lines() %}
     {% if lines %}
         <div class="basket-lines">
@@ -108,7 +108,7 @@
     {% endif %}
 {% endmacro %}
 
-{% macro render_unorderable_basket_lines() %}
+{% macro render_unorderable_basket_lines(basket) %}
     {% set unorderable_lines = basket.get_unorderable_lines() %}
     {% if unorderable_lines %}
         <div class="basket-unorderable-lines">
@@ -120,7 +120,7 @@
     {% endif %}
 {% endmacro %}
 
-{%  macro render_basket_summary(basket) %}
+{% macro render_basket_summary(basket) %}
     <div class="basket-summary">
         {% if show_prices() %}
             <div class="row">
@@ -152,7 +152,7 @@
     </a>
 {% endmacro %}
 
-{% macro render_coupon_div() %}
+{% macro render_coupon_div(basket) %}
     <div class="row basket-discount-code">
         <div class="col-sm-6 pull-right">
             <a class="coupon-toggler"
