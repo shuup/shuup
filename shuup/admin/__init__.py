@@ -39,6 +39,7 @@ class ShuupAdminAppConfig(AppConfig):
             "shuup.admin.modules.demo:DemoModule",
             "shuup.admin.modules.manufacturers:ManufacturerModule",
             "shuup.admin.modules.suppliers:SupplierModule",
+            "shuup.admin.modules.support:ShuupSupportModule",
             "shuup.admin.modules.sample_data:SampleDataAdminModule"
         ],
         "service_provider_admin_form": [
