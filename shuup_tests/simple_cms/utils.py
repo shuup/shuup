@@ -12,11 +12,11 @@ from shuup.utils.i18n import get_language_name
 
 
 CONTENT = """
-# Bacon ipsum dolor amet doner ham brisket
+<h1>Bacon ipsum dolor amet doner ham brisket</h1>
 
-Pig tenderloin hamburger sausage pork shankle.
+<p>Pig tenderloin hamburger sausage pork shankle.
 Shoulder chicken alcatra boudin.
-[Rump short ribs porchetta shankle bacon.](https://baconipsum.com/)
+<a href="https://baconipsum.com">Rump short ribs porchetta shankle bacon.</a></p>
 """
 
 

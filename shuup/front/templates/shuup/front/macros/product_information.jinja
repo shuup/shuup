@@ -4,7 +4,7 @@ s{% extends "shuup/front/macros/product_ordering.jinja" %}
     <h1 class="product-name">{{ product.name }}</h1>
     <p class="text-muted product-sku"><small>{{ product.sku }}</small></p>
     {% if product.description %}
-        <p class="product-short-description">{{ product.description|markdown|safe|truncate(150, False) }}</p>
+        <p class="product-short-description">{{ product.description|safe|striptags|truncate(150, False) }}</p>
     {% endif %}
     {% if show_prices() %}
         <div class="product-price">
@@ -32,7 +32,7 @@ s{% extends "shuup/front/macros/product_ordering.jinja" %}
         <div class="tab-content">
             <div role="tabpanel" class="product-description tab-pane fade in active" id="tab1">
                 {% if product.description or package_children %}
-                    {{ product.description|markdown|safe }}
+                    {{ product.description|safe }}
                     {% if package_children %}
                         {% set quantity_map = product.get_package_child_to_quantity_map() %}
                         <p><strong>{% trans %}Includes these products{% endtrans %}</strong></p>

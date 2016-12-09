@@ -11,7 +11,7 @@ import json
 
 import six
 from django.core.urlresolvers import reverse_lazy
-from django.forms import HiddenInput, Select, SelectMultiple, Widget
+from django.forms import HiddenInput, Select, SelectMultiple, Textarea, Widget
 from django.forms.utils import flatatt
 from django.utils.encoding import force_text
 from django.utils.html import escape, format_html
@@ -138,6 +138,19 @@ class FileDnDUploaderWidget(Widget):
                 " ".join(file_attrs),
                 pk_input
             ))
+        )
+
+
+class TextEditorWidget(Textarea):
+    def render(self, name, value, attrs=None):
+        attrs_for_textarea = attrs.copy()
+        attrs_for_textarea['class'] = 'hidden'
+        attrs_for_textarea['id'] += '-textarea'
+        html = super(TextEditorWidget, self).render(name, value, attrs_for_textarea)
+        return mark_safe(
+            "<div id='%s-editor-wrap' class='summernote-wrap'>%s<div class='summernote-editor'>%s</div></div>" % (
+                attrs["id"], html, value or ""
+            )
         )
 
 

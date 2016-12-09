@@ -12,6 +12,7 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms import ShuupAdminForm
+from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.core.models import (
     FixedCostBehaviorComponent, GroupAvailabilityBehaviorComponent,
     OrderTotalLimitBehaviorComponent, PaymentMethod, ServiceProvider,
@@ -32,7 +33,7 @@ class BaseMethodForm(ShuupAdminForm):
             "logo", "tax_class"
         ]
         widgets = {
-            "description": forms.Textarea
+            "description": TextEditorWidget()
         }
 
     def __init__(self, **kwargs):

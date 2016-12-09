@@ -72,7 +72,7 @@
             // reactivate possible select2 widgets
             activateSelects();
             // ... and help text
-            $("[data-toggle='popover']").popover();            
+            $("[data-toggle='popover']").popover();
         });
         $("#id_base-payment_processor,#id_base-carrier").on("change", function() {
             var url = window.location.href.split('?')[0];
@@ -87,5 +87,4 @@
         });
     });
 </script>
-<script src="{{ static("shuup_admin/js/remarkable.js") }}"></script>
 {% endblock %}

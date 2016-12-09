@@ -12,6 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms import ShuupAdminForm
 from shuup.admin.forms.fields import Select2MultipleField
+from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.admin.utils.forms import filter_form_field_choices
 from shuup.core.models import (
     Category, CategoryStatus, Product, Shop, ShopProduct,
@@ -38,6 +39,7 @@ class CategoryBaseForm(ShuupAdminForm):
         widgets = {
             "status": forms.RadioSelect,
             "visibility": forms.RadioSelect,
+            "description": TextEditorWidget()
         }
 
     def __init__(self, **kwargs):

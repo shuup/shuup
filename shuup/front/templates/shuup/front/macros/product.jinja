@@ -30,7 +30,7 @@ Inheritance order for product macors:
             <div class="detail-wrap">
                 <div class="name">{{ product.name }}</div>
                 {% if show_description and product.description %}
-                    <p class="description">{{ product.description|striptags|truncate(180)|safe }}</p>
+                    <p class="description">{{ product.description|safe|striptags|truncate(180) }}</p>
                 {% endif %}
                 {% if show_prices() %}
                     <div class="price">
@@ -78,7 +78,7 @@ Inheritance order for product macors:
 
 {% macro render_metadata(product) %}
     {% if product.description %}
-        <meta name="description" content="{{ product.description|markdown|striptags|truncate(160)|replace("\n", " ")|replace("\"", "'") }}">
+        <meta name="description" content="{{ product.description|safe|striptags|truncate(160)|replace("\n", " ")|replace("\"", "'") }}">
     {% endif %}
     {{ render_open_graph_metadata(product) }}
 {% endmacro %}
@@ -89,7 +89,7 @@ Inheritance order for product macors:
     <meta property="og:url" content="{{ shuup.urls.model_url(product, absolute=True) }}">
     <meta property="og:title" content="{{ product.name }}">
     {% if product.description %}
-        <meta property="og:description" content="{{ product.description|markdown|striptags|truncate(160)|replace("\n", " ")|replace("\"", "'") }}">
+        <meta property="og:description" content="{{ product.description|safe|striptags|truncate(160)|replace("\n", " ")|replace("\"", "'") }}">
     {% endif %}
     {% if primary_image %}
         <meta property="og:image" content="{{ request.build_absolute_uri(primary_image.url) }}">

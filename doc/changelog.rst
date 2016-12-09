@@ -24,6 +24,7 @@ Localization
 Admin
 ~~~~~
 
+- Add rich text editor for product, category, and service description
 - Add dropzone widget for shop, category, service provider
   and service image fields
 - Add option to clear dropzone selection
@@ -35,11 +36,14 @@ Addons
 Front
 ~~~~~
 
+- Render product, category, and service descriptions as HTML
 - Make carousel slide available by default
 - Add dropzone widget for carousel slide images
 
 Xtheme
 ~~~~~~
+
+- Use rich text editor for text plugin
 
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
@@ -61,6 +65,8 @@ Discount Pricing
 
 Simple CMS
 ~~~~~~~~~~
+
+- Add rich text editor for CMS content
 
 Default Tax
 ~~~~~~~~~~~

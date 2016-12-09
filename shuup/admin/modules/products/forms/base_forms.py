@@ -21,7 +21,7 @@ from filer.models import Image
 from shuup.admin.forms.widgets import (
     FileDnDUploaderWidget, QuickAddCategoryMultiSelect, QuickAddCategorySelect,
     QuickAddManufacturerSelect, QuickAddPaymentMethodsSelect,
-    QuickAddProductTypeSelect, QuickAddShippingMethodsSelect
+    QuickAddProductTypeSelect, QuickAddShippingMethodsSelect, TextEditorWidget
 )
 from shuup.core.models import (
     Attribute, AttributeType, Category, Product, ProductMedia,
@@ -72,7 +72,8 @@ class ProductBaseForm(MultiLanguageModelForm):
         widgets = {
             "keywords": forms.TextInput(),
             "type": QuickAddProductTypeSelect(),
-            "manufacturer": QuickAddManufacturerSelect()
+            "manufacturer": QuickAddManufacturerSelect(),
+            "description": TextEditorWidget()
         }
 
     def __init__(self, **kwargs):
