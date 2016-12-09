@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-09 00:01+0000\n"
+"POT-Creation-Date: 2016-12-09 03:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1419,6 +1419,9 @@ msgstr ""
 msgid "Module"
 msgstr ""
 
+msgid "Shuup Support"
+msgstr ""
+
 msgid "System"
 msgstr ""
 
@@ -2222,6 +2225,27 @@ msgid "Maintenance Mode"
 msgstr ""
 
 msgid "Contact Address"
+msgstr ""
+
+msgid "News &amp; Updates"
+msgstr ""
+
+msgid "FAQ"
+msgstr ""
+
+msgid "Support"
+msgstr ""
+
+msgid "Community Links"
+msgstr ""
+
+msgid "Community Forums"
+msgstr ""
+
+msgid "Shuup Blog"
+msgstr ""
+
+msgid "Contact Us"
 msgstr ""
 
 msgid "About Shuup Telemetry"
