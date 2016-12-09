@@ -19,34 +19,44 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-04 18:53+0000\n"
+"POT-Creation-Date: 2016-12-09 21:20+0000\n"
 "PO-Revision-Date: 2016-06-29 09:33+0000\n"
 "Last-Translator: Shuup Admin <admin@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
 "language/fi_FI/)\n"
+"Language: fi_FI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fi_FI\n"
 "Generated-By: Babel 2.1.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Shuup Frontend - Personal Order History"
 msgstr "Kauppa - tilaushistoria"
 
-#, python-format
-msgid "Order %(identifier)s"
-msgstr "Tilaus %(identifier)s"
-
-msgid "Home"
-msgstr ""
-
-msgid "Order History"
+msgid "Order history"
 msgstr "Tilaushistoria"
 
-#, python-format
-msgid "Details of order %(identifier)s"
-msgstr "Tilauksen %(identifier)s tiedot"
+msgid "Show all"
+msgstr "Näytä kaikki"
+
+msgid "Identifier"
+msgstr "Tunniste"
+
+msgid "Order date"
+msgstr "Tilauspäivämäärä"
+
+msgid "Status"
+msgstr "Tila"
+
+msgid "Total price"
+msgstr "Hinta yhteensä"
+
+msgid "Details"
+msgstr "Tiedot"
+
+msgid "You haven't made any orders yet."
+msgstr "Et ole tehnyt yhtään tilausta."
 
 msgid "Basic Information"
 msgstr "Perustiedot"
@@ -78,10 +88,8 @@ msgstr "Puhelin"
 msgid "Email"
 msgstr "Sähköposti"
 
-#, fuzzy
-#| msgid "Tax number"
 msgid "Tax Number"
-msgstr "Veronumero"
+msgstr "Y-tunnus"
 
 msgid "Total Price"
 msgstr "Kokonaishinta"
@@ -90,10 +98,7 @@ msgid "Total Price (taxless)"
 msgstr "Kokonaishinta (veroton)"
 
 msgid "Tracking codes"
-msgstr ""
-
-msgid "Status"
-msgstr "Tila"
+msgstr "Seurantakoodit"
 
 msgid "Order Status"
 msgstr "Tilauksen tila"
@@ -113,47 +118,19 @@ msgstr "Laskutusosoitteet"
 msgid "Order Contents"
 msgstr "Tilauksen sisältö"
 
-msgid "SKU"
-msgstr "Tuotenumero"
+#, python-format
+msgid "Order %(identifier)s"
+msgstr "Tilaus %(identifier)s"
 
-msgid "Text"
-msgstr "Teksti"
+#, python-format
+msgid "Details of order %(identifier)s"
+msgstr "Tilauksen %(identifier)s tiedot"
 
-msgid "Taxless Unit Price"
-msgstr "Veroton yksikköhinta"
+msgid "Home"
+msgstr "Koti"
 
-msgid "Quantity"
-msgstr "Määrä"
+msgid "Dashboard"
+msgstr "Tilin hallinta"
 
-msgid "Taxless Discount"
-msgstr "Veroton alennus"
-
-msgid "Tax"
-msgstr "Vero"
-
-msgid "Taxless Total"
-msgstr "Veroton yhteensä"
-
-msgid "Total incl. Tax"
-msgstr "Verollinen yhteensä"
-
-msgid "Total"
-msgstr "Yhteensä"
-
-msgid "Order history"
+msgid "Order History"
 msgstr "Tilaushistoria"
-
-msgid "Identifier"
-msgstr "Tunniste"
-
-msgid "Order date"
-msgstr "Tilauspäivämäärä"
-
-msgid "Total price"
-msgstr "Hinta yhteensä"
-
-msgid "Details"
-msgstr ""
-
-msgid "You haven't made any orders yet."
-msgstr ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-05 19:02+0000\n"
+"POT-Creation-Date: 2016-12-09 21:39+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -63,64 +63,6 @@ msgid "Total"
 msgstr ""
 
 msgid "Ordered"
-msgstr ""
-
-msgid "Shuup Frontend - Saved Baskets"
-msgstr ""
-
-msgid "Saved Carts"
-msgstr ""
-
-msgid "Home"
-msgstr ""
-
-msgid "Dashboard"
-msgstr ""
-
-msgid "My Saved Carts"
-msgstr ""
-
-msgid "Product"
-msgstr ""
-
-msgid "Quantity"
-msgstr ""
-
-msgid "Price"
-msgstr ""
-
-msgid "Title"
-msgstr ""
-
-msgid "Product Count"
-msgstr ""
-
-msgid "Details"
-msgstr ""
-
-msgid "You haven't saved any carts yet."
-msgstr ""
-
-msgid "Add all products to cart"
-msgstr ""
-
-msgid "Delete cart"
-msgstr ""
-
-msgid "Please enter a basket title."
-msgstr ""
-
-msgid "Cannot save an empty basket."
-msgstr ""
-
-msgid "Product not available in this shop"
-msgstr ""
-
-msgid "Invalid supplier"
-msgstr ""
-
-#, python-format
-msgid "%d product(s) added to cart"
 msgstr ""
 
 #, python-format
@@ -353,6 +295,9 @@ msgstr ""
 msgid "Ordering for filter by price"
 msgstr ""
 
+msgid "Price"
+msgstr ""
+
 msgid ""
 "Check this to allow products to be filtered by price. Prices will be listed "
 "in groups from the price range minimum to price range maximum in increments "
@@ -533,6 +478,12 @@ msgstr ""
 msgid "My Dashboard"
 msgstr ""
 
+msgid "Dashboard"
+msgstr ""
+
+msgid "Home"
+msgstr ""
+
 msgid "Bad Request"
 msgstr ""
 
@@ -604,6 +555,9 @@ msgid "There was an error adding the product to the basket"
 msgstr ""
 
 msgid "Qty"
+msgstr ""
+
+msgid "Quantity"
 msgstr ""
 
 msgid "Remove product from basket"
@@ -790,6 +744,9 @@ msgstr ""
 msgid "Files"
 msgstr ""
 
+msgid "Product"
+msgstr ""
+
 msgid "excl. tax"
 msgstr ""
 
@@ -834,6 +791,9 @@ msgid "Product Information"
 msgstr ""
 
 msgid "Description"
+msgstr ""
+
+msgid "Details"
 msgstr ""
 
 msgid "Attributes"

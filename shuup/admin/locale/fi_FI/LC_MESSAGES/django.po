@@ -1277,7 +1277,7 @@ msgid "Menu"
 msgstr "Valikko"
 
 msgid "Dashboard"
-msgstr "Kojelauta"
+msgstr "Tilin hallinta"
 
 msgid "Search for"
 msgstr "Etsi"

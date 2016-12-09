@@ -20,79 +20,188 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-04 18:53+0000\n"
+"POT-Creation-Date: 2016-12-09 21:20+0000\n"
 "PO-Revision-Date: 2016-06-28 03:24+0000\n"
 "Last-Translator: Shuup Admin <admin@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
 "language/fi_FI/)\n"
+"Language: fi_FI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fi_FI\n"
 "Generated-By: Babel 2.1.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Shuup Frontend - Customer Information Editing"
 msgstr "Kauppa - asiakastietojen muokkaaminen"
 
+msgid "Customer Information"
+msgstr "Käyttäjätiedot"
+
+msgid "Company Information"
+msgstr "Yrityksen tiedot"
+
+msgid "Edit Company Information."
+msgstr "Muokkaa yrityksen tietoja."
+
+msgid "Address Book"
+msgstr "Osoitekirja"
+
+msgid "Language"
+msgstr "Kieli"
+
 msgid "Will become default user email when linked"
 msgstr "Tee tästä oletussähköpostiosoite"
 
 msgid "Given Tax Number already exists. Please contact support."
-msgstr ""
+msgstr "Y-tunnus on jo olemassa. Ole hyvä ja ota yhteys tukeen."
+
+msgid "Address Title"
+msgstr "Osoitteen nimi"
+
+msgid "Address Type"
+msgstr "Osoitteen tyyppi"
+
+msgid "Address Status"
+msgstr "Osoitteen tila"
+
+msgid "Home"
+msgstr "Koti"
+
+msgid "Dashboard"
+msgstr "Tilin hallinta"
+
+msgid "General Information"
+msgstr "Käyttäjätiedot"
+
+msgid "Contact Information"
+msgstr "Yrityksen käyttäjätilin tiedot"
+
+msgid "Address"
+msgstr "Osoite"
+
+msgid "Default Addresses"
+msgstr "Oletusosoite"
+
+msgid "Edit"
+msgstr "Muokkaa"
+
+msgid "Default Billing Address"
+msgstr "Oletuslaskutusosoite"
+
+msgid "No Default Billing Address set."
+msgstr "Oletuslaskutusosoitetta ei ole asetettu."
+
+msgid "Default Shipping Address"
+msgstr "Oletustoimitusosoite"
+
+msgid "No Default Shipping Address set."
+msgstr "Oletustoimitusosoitetta ei ole asetettu."
+
+msgid "Additional Addresses"
+msgstr "Lisäosoitteet"
+
+msgid "Create new"
+msgstr "Luo uusi"
+
+msgid "Role"
+msgstr "Rooli"
+
+msgid "Status"
+msgstr "Tila"
+
+msgid "Delete"
+msgstr "Poista"
+
+msgid "You don't have any additional addresses"
+msgstr "Sinulla ei ole yhtään lisäosoitetta"
 
 msgid "Change Password"
 msgstr "Vaihda salasana"
 
-msgid "Home"
-msgstr ""
-
-#| msgid "Change Password"
 msgid "Change password"
 msgstr "Vaihda salasana"
 
-#| msgid "User account information"
-msgid "Edit user account information"
-msgstr "Käyttäjätunnuksen tiedot"
+msgid "Basic Information"
+msgstr "Käyttäjätiedot"
 
-msgid "Save password"
-msgstr "Tallenna salasana"
+msgid "Name"
+msgstr "Nimi"
+
+msgid "Email"
+msgstr "Sähköposti"
+
+msgid "Phone"
+msgstr "Puhelin"
+
+msgid "Tax Number"
+msgstr "Y-tunnus"
+
+msgid "Birth Date"
+msgstr "Syntymäaika"
+
+msgid "Gender"
+msgstr "Sukupuoli"
+
+msgid "Marketing Permission"
+msgstr "Markkinointilupa"
+
+msgid "Yes"
+msgstr "Kyllä"
+
+msgid "No"
+msgstr "Ei"
 
 msgid "Company account information"
 msgstr "Yrityksen käyttäjätilin tiedot"
 
-msgid "Save changes"
-msgstr "Tallenna muutokset"
-
-msgid "Company information"
-msgstr "Yrityksen tiedot"
-
 msgid "User account information"
 msgstr "Käyttäjätunnuksen tiedot"
 
-#| msgid "Company information"
-msgid "Edit company information"
-msgstr "Yrityksen tiedot"
+msgid "Street"
+msgstr "Katuosoite"
 
-msgid "Link account to company"
-msgstr ""
+msgid "Postal code"
+msgstr "Postinumero"
 
-msgid "User information"
-msgstr "Käyttäjätiedot"
+msgid "City"
+msgstr "Kaupunki"
+
+msgid "Region"
+msgstr "Alue"
 
 msgid "Billing information"
 msgstr "Laskutustiedot"
 
-#| msgid "Shipping information"
 msgid "Copy to shipping information"
 msgstr "Kopioi toimitustiedot"
 
 msgid "Shipping information"
 msgstr "Toimitustiedot"
 
-#| msgid "Billing information"
 msgid "Copy to billing information"
 msgstr "Kopioi laskutustiedot"
+
+msgid "Edit user account information"
+msgstr "Käyttäjätunnuksen tiedot"
+
+msgid "Save password"
+msgstr "Tallenna salasana"
+
+msgid "Save changes"
+msgstr "Tallenna muutokset"
+
+msgid "Edit company information"
+msgstr "Muokkaa yrityksen tietoja"
+
+msgid "Link account to company"
+msgstr "Linkitä tili yritykseen"
+
+msgid "Company information"
+msgstr "Yrityksen tiedot"
+
+msgid "User information"
+msgstr "Käyttäjätiedot"
 
 msgid "Password successfully changed."
 msgstr "Salasana vaihdettu."
@@ -102,3 +211,9 @@ msgstr "Tilitiedot tallennettu."
 
 msgid "Company information saved successfully."
 msgstr "Yrityksen tiedot tallennettu onnistuneesti."
+
+msgid "Address information saved successfully."
+msgstr "Tilitiedot tallennettu."
+
+msgid "Cannot remove address"
+msgstr "Osoitetta ei voi poistaa"
