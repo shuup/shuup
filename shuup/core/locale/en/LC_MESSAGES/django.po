@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-05 20:22+0000\n"
+"POT-Creation-Date: 2016-12-07 23:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1621,6 +1621,30 @@ msgid "max price value"
 msgstr ""
 
 msgid "Order total does not match with service limits."
+msgstr ""
+
+msgid "Country limit"
+msgstr ""
+
+msgid "Limit service availability based on countries selected"
+msgstr ""
+
+msgid "available in countries"
+msgstr ""
+
+msgid "available in european countries"
+msgstr ""
+
+msgid "unavailable in countries"
+msgstr ""
+
+msgid "unavailable in european countries"
+msgstr ""
+
+msgid "Service is not available without country."
+msgstr ""
+
+msgid "Service is not available for this country."
 msgstr ""
 
 msgid "round to nearest with ties going away from zero"

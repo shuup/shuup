@@ -49,10 +49,11 @@ from ._service_base import (
     ServiceProvider
 )
 from ._service_behavior import (
-    FixedCostBehaviorComponent, GroupAvailabilityBehaviorComponent,
-    OrderTotalLimitBehaviorComponent, RoundingMode, StaffOnlyBehaviorComponent,
-    WaivingCostBehaviorComponent, WeightBasedPriceRange,
-    WeightBasedPricingBehaviorComponent, WeightLimitsBehaviorComponent
+    CountryLimitBehaviorComponent, FixedCostBehaviorComponent,
+    GroupAvailabilityBehaviorComponent, OrderTotalLimitBehaviorComponent,
+    RoundingMode, StaffOnlyBehaviorComponent, WaivingCostBehaviorComponent,
+    WeightBasedPriceRange, WeightBasedPricingBehaviorComponent,
+    WeightLimitsBehaviorComponent
 )
 from ._service_payment import (
     CustomPaymentProcessor, PaymentMethod, PaymentProcessor, PaymentUrls
@@ -78,9 +79,9 @@ __all__ = [
     "ConfigurationItem",
     "Contact",
     "ContactGroup",
-    "GroupAvailabilityBehaviorComponent",
     "Counter",
     "CounterType",
+    "CountryLimitBehaviorComponent",
     "CustomCarrier",
     "CustomerTaxGroup",
     "CustomPaymentProcessor",
@@ -91,6 +92,7 @@ __all__ = [
     "get_currency_precision",
     "get_person_contact",
     "Gender",
+    "GroupAvailabilityBehaviorComponent",
     "ImmutableAddress",
     "Manufacturer",
     "MutableAddress",

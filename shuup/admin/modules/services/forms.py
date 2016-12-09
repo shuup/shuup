@@ -10,14 +10,15 @@ from __future__ import unicode_literals
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
+from django_countries import Countries
 
 from shuup.admin.forms import ShuupAdminForm
 from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.core.models import (
-    FixedCostBehaviorComponent, GroupAvailabilityBehaviorComponent,
-    OrderTotalLimitBehaviorComponent, PaymentMethod, ServiceProvider,
-    ShippingMethod, StaffOnlyBehaviorComponent, WaivingCostBehaviorComponent,
-    WeightLimitsBehaviorComponent
+    CountryLimitBehaviorComponent, FixedCostBehaviorComponent,
+    GroupAvailabilityBehaviorComponent, OrderTotalLimitBehaviorComponent,
+    PaymentMethod, ServiceProvider, ShippingMethod, StaffOnlyBehaviorComponent,
+    WaivingCostBehaviorComponent, WeightLimitsBehaviorComponent
 )
 
 
@@ -161,3 +162,26 @@ class OrderTotalLimitBehaviorComponentForm(forms.ModelForm):
     class Meta:
         model = OrderTotalLimitBehaviorComponent
         exclude = ["identifier"]
+
+
+class CountryLimitBehaviorComponentForm(forms.ModelForm):
+    available_in_countries = forms.MultipleChoiceField(
+        choices=Countries, label=_("Available in countries"), required=False)
+    unavailable_in_countries = forms.MultipleChoiceField(
+        choices=Countries, label=_("Unavailable in countries"), required=False)
+
+    class Meta:
+        model = CountryLimitBehaviorComponent
+        exclude = ["identifier"]
+        help_texts = {
+            "available_in_countries": _("Select accepted countries for this service."),
+            "available_in_european_countries": _("Select this to accept all countries in EU."),
+            "unavailable_in_countries": _("Select restricted countries for this service."),
+            "unavailable_in_european_countries": _("Select this to restrict this service for countries in EU")
+        }
+
+    def __init__(self, **kwargs):
+        super(CountryLimitBehaviorComponentForm, self).__init__(**kwargs)
+        if self.instance and self.instance.pk:
+            self.initial["available_in_countries"] = self.instance.available_in_countries
+            self.initial["unavailable_in_countries"] = self.instance.unavailable_in_countries

@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Add option to limit service availability with shipping/payment country
 - API: Enable option to filter orders with id, identifier, date and status.
 - API: Enable option to filter users with id and email.
 - API: Add option to filter cotacts with id, email and group id

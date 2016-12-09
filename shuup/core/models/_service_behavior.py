@@ -9,10 +9,12 @@ from __future__ import unicode_literals
 
 import decimal
 
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum
+from jsonfield import JSONField
 from parler.models import TranslatableModel, TranslatedField, TranslatedFields
 
 from shuup.core.fields import MeasurementField, MoneyValueField
@@ -192,6 +194,39 @@ class OrderTotalLimitBehaviorComponent(ServiceBehaviorComponent):
         is_in_range = _is_in_range(total, self.min_price_value, self.max_price_value)
         if not is_in_range:
             yield ValidationError(_("Order total does not match with service limits."), code="order_total_out_of_range")
+
+
+class CountryLimitBehaviorComponent(ServiceBehaviorComponent):
+    name = _("Country limit")
+    help_text = _("Limit service availability based on countries selected")
+
+    available_in_countries = JSONField(blank=True, null=True, verbose_name=_("available in countries"))
+    available_in_european_countries = models.BooleanField(
+        default=False, verbose_name=_("available in european countries"))
+    unavailable_in_countries = JSONField(blank=True, null=True, verbose_name=_("unavailable in countries"))
+    unavailable_in_european_countries = models.BooleanField(
+        default=False, verbose_name=_("unavailable in european countries"))
+
+    def get_unavailability_reasons(self, service, source):
+        address = (source.shipping_address if hasattr(service, "carrier") else source.billing_address)
+        country = (address.country if address else settings.SHUUP_ADDRESS_HOME_COUNTRY)
+        if not (address or country):
+            yield ValidationError(_("Service is not available without country."), code="no_country")
+
+        is_available = True
+        if self.available_in_countries:
+            is_available = bool(country in (self.available_in_countries or []))
+        if not is_available and self.available_in_european_countries:
+            is_available = address.is_european_union if address else False
+
+        if is_available:  # Let's see if target country is restricted
+            if self.unavailable_in_countries and country in (self.unavailable_in_countries or []):
+                is_available = False
+            if self.unavailable_in_european_countries and address.is_european_union:
+                is_available = False
+
+        if not is_available:
+            yield ValidationError(_("Service is not available for this country."), code="invalid_country")
 
 
 class RoundingMode(Enum):
