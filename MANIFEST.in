@@ -6,7 +6,7 @@ include tox.ini
 
 recursive-include shuup \
     *.jinja *.txt *.js *.css *.json *.less *.map \
-    *.ico *.png *.svg \
+    *.ico *.png *.svg *.jpg \
     *.woff *.woff2 *.eot *.otf *.ttf *.po *.mo
 
 recursive-include shuup_tests *.jinja
