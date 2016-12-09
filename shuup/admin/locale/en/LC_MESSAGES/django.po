@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-06 05:03+0000\n"
+"POT-Creation-Date: 2016-12-09 00:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -534,6 +534,9 @@ msgstr ""
 msgid "Print Confirmation PDF(s)"
 msgstr ""
 
+msgid "Selecting all is not supported."
+msgstr ""
+
 msgid "Print Delivery PDF(s)"
 msgstr ""
 
@@ -961,9 +964,6 @@ msgstr ""
 msgid "SKU"
 msgstr ""
 
-msgid "Filter by SKU..."
-msgstr ""
-
 msgid "Barcode"
 msgstr ""
 
@@ -971,6 +971,9 @@ msgid "Filter by barcode..."
 msgstr ""
 
 msgid "Mode"
+msgstr ""
+
+msgid "Additional Categories"
 msgstr ""
 
 msgid "Purchasable"
@@ -1805,6 +1808,13 @@ msgid "Date"
 msgstr ""
 
 msgid "Save and Exit"
+msgstr ""
+
+msgid "This action effects on all products."
+msgstr ""
+
+#, python-format
+msgid "This action effects %(item_count)s products."
 msgstr ""
 
 msgid "Edit"

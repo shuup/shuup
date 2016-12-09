@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-07 23:59+0000\n"
+"POT-Creation-Date: 2016-12-09 00:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -712,10 +712,27 @@ msgstr ""
 msgid "Select Action"
 msgstr ""
 
+msgid "Clear Selections"
+msgstr ""
+
+msgid "Select All"
+msgstr ""
+
+#, javascript-format
+msgid "Select All %s Items"
+msgstr ""
+
+#, javascript-format
+msgid "All %s Items Selected"
+msgstr ""
+
 msgid "Mass Action complete."
 msgstr ""
 
 msgid "You haven't selected anything"
+msgstr ""
+
+msgid "Confirm action by clicking OK!"
 msgstr ""
 
 msgid "Are you sure you want to delete this media?"
