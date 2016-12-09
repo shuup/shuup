@@ -11,7 +11,9 @@ from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.admin.utils.picotable import ChoicesFilter, Column, TextFilter
+from shuup.admin.utils.picotable import (
+    ChoicesFilter, Column, RangeFilter, TextFilter
+)
 from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import Product, ProductMode
 
@@ -25,8 +27,7 @@ class ProductListView(PicotableListView):
             filter_field="translations__name",
             placeholder=_("Filter by name...")
         ), ordering=2),
-        Column("sku", _(u"SKU"), display="sku",
-               filter_config=TextFilter(placeholder=_("Filter by SKU...")), ordering=3),
+        Column("sku", _(u"SKU"), display="sku", filter_config=RangeFilter(), ordering=3),
         Column("barcode", _(u"Barcode"),
                display="barcode", filter_config=TextFilter(_("Filter by barcode...")), ordering=4),
         Column("type", _(u"Type"), ordering=5),

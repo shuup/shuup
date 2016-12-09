@@ -7,6 +7,7 @@
 import six
 from django.contrib import messages
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
@@ -21,7 +22,10 @@ class ContactMassEditView(MassEditMixin, FormView):
     form_class = MassEditForm
 
     def form_valid(self, form):
-        for contact in Contact.objects.filter(id__in=self.ids):
+        query = Q(id__in=self.ids)
+        if isinstance(self.ids, six.string_types) and self.ids == "all":
+            query = Q()
+        for contact in Contact.objects.filter(query):
             for k, v in six.iteritems(form.cleaned_data):
                 if not v:
                     continue
@@ -39,9 +43,12 @@ class ContactGroupMassEditView(MassEditMixin, FormView):
     form_class = GroupMassEditForm
 
     def form_valid(self, form):
+        ids = self.ids
+        if isinstance(self.ids, six.string_types) and self.ids == "all":
+            ids = set(Contact.objects.all().values_list("id", flat=True))
         groups = form.cleaned_data.get("contact_group", [])
         for group in groups:
-            group.members.add(*self.ids)
+            group.members.add(*ids)
 
         messages.success(self.request, _("Contacts Groups changed successfully"))
         self.request.session["mass_action_ids"] = []

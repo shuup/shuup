@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import six
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ImproperlyConfigured
@@ -241,5 +242,7 @@ class MassEditMixin(object):
         context = super(MassEditMixin, self).get_context_data(**kwargs)
         context["form"] = self.get_form()
         context["edit_title"] = self.title
-        context["item_count"] = len(self.ids)
+        context["is_all_selected"] = bool(isinstance(self.ids, six.string_types) and self.ids == "all")
+        if not context["is_all_selected"]:
+            context["item_count"] = len(self.ids)
         return context

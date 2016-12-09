@@ -6,9 +6,12 @@
 # LICENSE file in the root directory of this source tree.
 import zipfile
 
+import six
+from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext
 from six import BytesIO
 
 from shuup.admin.utils.picotable import (
@@ -25,7 +28,10 @@ class CancelOrderAction(PicotableMassAction):
     identifier = "mass_action_order_cancel"
 
     def process(self, request, ids):
-        for order in Order.objects.filter(pk__in=ids):
+        query = Q(id__in=ids)
+        if isinstance(ids, six.string_types) and ids == "all":
+            query = Q()
+        for order in Order.objects.filter(query):
             if not order.can_set_canceled():
                 continue
             order.set_canceled()
@@ -36,6 +42,8 @@ class OrderConfirmationPdfAction(PicotableFileMassAction):
     identifier = "mass_action_order_confirmation_pdf"
 
     def process(self, request, ids):
+        if isinstance(ids, six.string_types) and ids == "all":
+            return JsonResponse({"error": ugettext("Selecting all is not supported.")})
         if len(ids) == 1:
             try:
                 response = get_confirmation_pdf(request, ids[0])
@@ -76,6 +84,8 @@ class OrderDeliveryPdfAction(PicotableFileMassAction):
     identifier = "mass_action_order_delivery_pdf"
 
     def process(self, request, ids):
+        if isinstance(ids, six.string_types) and ids == "all":
+            return JsonResponse({"error": ugettext("Selecting all is not supported.")})
         shipment_ids = set(Shipment.objects.filter(order_id__in=ids).values_list("id", flat=True))
         if len(shipment_ids) == 1:
             try:

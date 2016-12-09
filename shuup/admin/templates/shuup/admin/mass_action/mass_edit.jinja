@@ -14,6 +14,14 @@
 
 {% block content %}
 {% call content_block() %}
+    <h3 class="text-center">
+    {% if is_all_selected %}
+        {% trans%}This action effects on all products.{% endtrans %}
+    {% else %}
+        {% trans item_count=item_count %}This action effects {{ item_count }} products.{% endtrans %}
+    {% endif %}
+    </h3>
+
     <form method="post" id="mass_edit">
         {% csrf_token %}
         {{ bs3.form(form) }}
