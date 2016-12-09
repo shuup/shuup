@@ -5,9 +5,14 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from collections import OrderedDict
+
+import six
 from django.utils.translation import get_language
 
-from shuup.core.models import AttributeVisibility, ProductMode
+from shuup.core.models import (
+    AttributeVisibility, ProductMode, ProductVariationResult
+)
 from shuup.front.utils.views import cache_product_things
 from shuup.utils.numbers import get_string_sort_order
 
@@ -45,7 +50,11 @@ def get_product_context(request, product, language=None):
             if p.get_shop_instance(request.shop).is_orderable(supplier=None, customer=request.customer, quantity=1)
         ]
     elif product.mode == ProductMode.VARIABLE_VARIATION_PARENT:
-        context["variation_variables"] = product.variation_variables.all().prefetch_related("values")
+        variation_variables = product.variation_variables.all().prefetch_related("values")
+        orderable_children, is_orderable = get_orderable_variation_children(product, request, variation_variables)
+        context["orderable_variation_children"] = orderable_children
+        context["variation_orderable"] = is_orderable
+        context["variation_variables"] = variation_variables
     elif product.mode == ProductMode.PACKAGE_PARENT:
         children = product.get_all_package_children().translated().order_by("translations__name")
         context["package_children"] = cache_product_things(request, children)
@@ -56,3 +65,28 @@ def get_product_context(request, product, language=None):
     context["primary_image"] = shop_product.public_primary_image
     context["images"] = shop_product.public_images
     return context
+
+
+def get_orderable_variation_children(product, request, variation_variables):
+    if not variation_variables:
+        variation_variables = product.variation_variables.all().prefetch_related("values")
+    orderable_variation_children = OrderedDict()
+    orderable = 0
+    for combo_data in product.get_all_available_combinations():
+        combo = combo_data["variable_to_value"]
+        for k, v in six.iteritems(combo):
+            if k not in orderable_variation_children:
+                orderable_variation_children[k] = set()
+
+        res = ProductVariationResult.resolve(product, combo)
+        if res and res.get_shop_instance(request.shop).is_orderable(
+                supplier=None,
+                customer=request.customer,
+                quantity=1
+        ):
+            orderable += 1
+
+            for k, v in six.iteritems(combo):
+                orderable_variation_children[k].add(v)
+
+    return (orderable_variation_children, orderable != 0)

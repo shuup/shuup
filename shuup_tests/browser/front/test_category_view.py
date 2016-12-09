@@ -245,37 +245,42 @@ def variations_filter_test(browser, category):
             "filter_products_by_variation_value_ordering": 1
         }
     )
+
+    def get_var_id(value):
+        return value.replace(" ", "*")
+
     browser.reload()
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 3)
 
     # Two brown products
-    browser.execute_script("$('#variation_color-brown').click();")
+    browser.execute_script("$('#variation_color-%s').click();" % get_var_id("Brown"))
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 2)
 
     # Two brown L sized products
-    browser.execute_script("$('#variation_size-l').click();")
+    browser.execute_script("$('#variation_size-%s').click();" % get_var_id("L"))
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 2)
 
     # One brown big
-    browser.execute_script("$('#variation_size-big').click();")
-    browser.execute_script("$('#variation_size-l').click();")
+    browser.execute_script("$('#variation_size-%s').click();" % get_var_id("Big"))
+    browser.execute_script("$('#variation_size-%s').click();" % get_var_id("L"))
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 1)
 
-    browser.execute_script("$('#variation_color-brown').click();")  # unselect brown
+    browser.execute_script("$('#variation_color-%s').click();" % get_var_id("Brown"))  # unselect brown
 
     # Two Big or Black products
-    browser.execute_script("$('#variation_color-black').click();")
+    browser.execute_script("$('#variation_color-%s').click();"% get_var_id("Black"))
 
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 2)
 
-    browser.execute_script("$('#variation_color-black').click();")  # unselect black
+    browser.execute_script("$('#variation_color-%s').click();" % get_var_id("Black"))  # unselect black
 
     # Three Big or Pink products
-    browser.execute_script("$('#variation_color-pink').click();")
+    browser.execute_script("$('#variation_color-%s').click();" % get_var_id("Pink"))
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 0)
 
     # One pink product
-    browser.execute_script("$('#variation_size-big').click();")
+    browser.execute_script("$('#variation_size-%s').click();" % get_var_id("Big"))
+    browser.execute_script("$('#variation_size-%s').click();" % get_var_id("Brown"))
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 1)
 
 

@@ -11,19 +11,23 @@ import pytest
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 from django.test import override_settings
-from shuup import configuration
 
+from shuup import configuration
 from shuup.core.excs import (
     ProductNotOrderableProblem, ProductNotVisibleProblem
 )
 from shuup.core.models import (
-    AnonymousContact, Category, get_person_contact, ProductVisibility,
+    AnonymousContact, Category, get_person_contact, ProductMode,
+    ProductVariationResult, ProductVariationVariable,
+    ProductVariationVariableValue, ProductVisibility, ShopProduct,
     ShopProductVisibility, Supplier
 )
+from shuup.core.models._product_variation import hash_combination
 from shuup.testing.factories import (
-    CategoryFactory, get_default_customer_group, get_default_product,
-    get_default_shop, get_default_shop_product, get_default_supplier,
-    get_all_seeing_key)
+    CategoryFactory, create_product, get_all_seeing_key,
+    get_default_customer_group, get_default_product, get_default_shop,
+    get_default_shop_product, get_default_supplier
+)
 from shuup_tests.core.utils import modify
 from shuup_tests.utils import (
     error_does_not_exist, error_exists, printable_gibberish
@@ -126,6 +130,116 @@ def test_product_visibility(rf, admin_user, regular_user):
         assert error_exists(shop_product.get_visibility_errors(customer=regular_contact), "product_not_visible_to_group")
 
     configuration.set(None, get_all_seeing_key(admin_contact), False)
+
+@pytest.mark.django_db
+def test_complex_orderability(admin_user):
+    shop = get_default_shop()
+
+    fake_supplier = Supplier.objects.create(identifier="fake")
+    admin_contact = get_person_contact(admin_user)
+
+    parent = create_product("SuperComplexVarParent")
+
+    shop_product = ShopProduct.objects.create(product=parent, shop=shop, visibility=ShopProductVisibility.ALWAYS_VISIBLE)
+    shop_product.suppliers.add(fake_supplier)
+    shop_product.visibility = ShopProductVisibility.ALWAYS_VISIBLE
+    shop_product.save()
+
+    color_var = ProductVariationVariable.objects.create(product=parent, identifier="color")
+    size_var = ProductVariationVariable.objects.create(product=parent, identifier="size")
+
+    for color in ("yellow", "blue", "brown"):
+        ProductVariationVariableValue.objects.create(variable=color_var, identifier=color)
+
+    for size in ("small", "medium", "large", "huge"):
+        ProductVariationVariableValue.objects.create(variable=size_var, identifier=size)
+
+    combinations = list(parent.get_all_available_combinations())
+    assert len(combinations) == (3 * 4)
+    for combo in combinations:
+        assert not combo["result_product_pk"]
+        child = create_product("xyz-%s" % combo["sku_part"], shop=shop, supplier=fake_supplier)
+        child.link_to_parent(parent, combo["variable_to_value"])
+        result_product = ProductVariationResult.resolve(parent, combo["variable_to_value"])
+        assert result_product == child
+
+    assert parent.mode == ProductMode.VARIABLE_VARIATION_PARENT
+
+    small_size_value = ProductVariationVariableValue.objects.get(variable=size_var, identifier="small")
+    brown_color_value = ProductVariationVariableValue.objects.get(variable=color_var, identifier="brown")
+
+    result1 = ProductVariationResult.resolve(parent, {color_var: brown_color_value, size_var: small_size_value})
+    result2 = ProductVariationResult.resolve(parent,
+                                             {color_var.pk: brown_color_value.pk, size_var.pk: small_size_value.pk})
+    assert result1 and result2
+    assert result1.pk == result2.pk
+
+    assert error_does_not_exist(
+        shop_product.get_orderability_errors(supplier=fake_supplier, customer=admin_contact, quantity=1),
+        code="no_sellable_children")
+
+    # result 1 is no longer sellable
+    sp = result1.get_shop_instance(shop)
+    sp.visibility = ShopProductVisibility.NOT_VISIBLE
+    sp.save()
+
+    assert error_does_not_exist(
+        shop_product.get_orderability_errors(supplier=fake_supplier, customer=admin_contact, quantity=1),
+        code="no_sellable_children")
+
+    # no sellable children
+    for combo in combinations:
+        result_product = ProductVariationResult.resolve(parent, combo["variable_to_value"])
+        sp = result_product.get_shop_instance(shop)
+        sp.visibility = ShopProductVisibility.NOT_VISIBLE
+        sp.save()
+
+    assert error_exists(
+        shop_product.get_orderability_errors(supplier=fake_supplier, customer=admin_contact, quantity=1),
+        code="no_sellable_children")
+
+
+def test_simple_orderability(admin_user):
+    shop = get_default_shop()
+    fake_supplier = Supplier.objects.create(identifier="fake")
+    admin_contact = get_person_contact(admin_user)
+
+    parent = create_product("SimpleVarParent", shop=shop, supplier=fake_supplier)
+    children = [create_product("SimpleVarChild-%d" % x, shop=shop, supplier=fake_supplier) for x in range(10)]
+    for child in children:
+        child.link_to_parent(parent)
+        sp = child.get_shop_instance(shop)
+        # sp = ShopProduct.objects.create(
+        #     shop=shop, product=child, visibility=ShopProductVisibility.ALWAYS_VISIBLE
+        # )
+        assert child.is_variation_child()
+        assert not sp.is_list_visible()  # Variation children are not list visible
+
+    assert parent.mode == ProductMode.SIMPLE_VARIATION_PARENT
+    assert not list(parent.get_all_available_combinations())  # Simple variations can't have these.
+
+    shop_product = parent.get_shop_instance(shop)
+    assert error_does_not_exist(
+        shop_product.get_orderability_errors(supplier=fake_supplier, customer=admin_contact, quantity=1),
+        code="no_sellable_children")
+
+    first_child = children[0]
+    child_sp = first_child.get_shop_instance(shop)
+    child_sp.visibility = ShopProductVisibility.NOT_VISIBLE
+    child_sp.save()
+
+    assert error_does_not_exist(
+        shop_product.get_orderability_errors(supplier=fake_supplier, customer=admin_contact, quantity=1),
+        code="no_sellable_children")
+
+    for child in children:
+        child_sp = child.get_shop_instance(shop)
+        child_sp.visibility = ShopProductVisibility.NOT_VISIBLE
+        child_sp.save()
+
+    assert error_exists(
+        shop_product.get_orderability_errors(supplier=fake_supplier, customer=admin_contact, quantity=1),
+        code="no_sellable_children")
 
 
 @pytest.mark.django_db

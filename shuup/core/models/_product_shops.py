@@ -24,7 +24,7 @@ from shuup.utils.analog import define_log_model
 from shuup.utils.properties import MoneyPropped, PriceProperty
 
 from ._product_media import ProductMediaKind
-from ._products import ProductVisibility, StockBehavior
+from ._products import ProductMode, ProductVisibility, StockBehavior
 
 mark_safe_lazy = lazy(mark_safe, six.text_type)
 
@@ -275,6 +275,34 @@ class ShopProduct(MoneyPropped, models.Model):
                 _('The product is not supplied by %s.') % supplier,
                 code="invalid_supplier"
             )
+
+        if self.product.mode == ProductMode.SIMPLE_VARIATION_PARENT:
+            sellable = 0
+            for child_product in self.product.variation_children.all():
+                if child_product.get_shop_instance(self.shop).is_orderable(
+                        supplier=supplier,
+                        customer=customer,
+                        quantity=1
+                ):
+                    sellable += 1
+
+            if sellable == 0:
+                yield ValidationError(_("Product has no sellable children"), code="no_sellable_children")
+
+        if self.product.mode == ProductMode.VARIABLE_VARIATION_PARENT:
+            from shuup.core.models import ProductVariationResult
+            sellable = 0
+            for combo in self.product.get_all_available_combinations():
+                res = ProductVariationResult.resolve(self.product, combo["variable_to_value"])
+                if res and res.get_shop_instance(self.shop).is_orderable(
+                        supplier=supplier,
+                        customer=customer,
+                        quantity=1
+                ):
+                    sellable += 1
+
+            if sellable == 0:
+                yield ValidationError(_("Product has no sellable children"), code="no_sellable_children")
 
         if self.product.is_package_parent():
             for child_product, child_quantity in six.iteritems(self.product.get_package_child_to_quantity_map()):

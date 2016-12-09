@@ -388,7 +388,9 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         """
         priced_children = (
             (child, child.get_price_info(context, quantity=quantity))
-            for child in self.variation_children.all())
+            for child in self.variation_children.all()
+            if child.get_shop_instance(context.shop).is_orderable(supplier=None, customer=context.customer, quantity=1)
+        )
         return sorted(priced_children, key=(lambda x: x[1].price))
 
     def get_cheapest_child_price(self, context, quantity=1):

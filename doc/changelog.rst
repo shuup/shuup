@@ -38,6 +38,7 @@ Addons
 Front
 ~~~~~
 
+- Variation children that are not purchaseable should not be visible anymore in dropdowns
 - Render product, category, and service descriptions as HTML
 - Make carousel slide available by default
 - Add dropzone widget for carousel slide images
