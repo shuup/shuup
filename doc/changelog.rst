@@ -47,6 +47,7 @@ Front
 Xtheme
 ~~~~~~
 
+- Add highlight plugin for category products
 - Use rich text editor for text plugin
 
 Classic Gray Theme

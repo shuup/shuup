@@ -134,6 +134,22 @@ def get_random_products(context, n_products=6, orderable_only=True):
 
 
 @contextfunction
+def get_products_for_category(context, category, n_products=6, orderable_only=True):
+    request = context["request"]
+    products = get_listed_products(
+        context,
+        n_products,
+        ordering="?",
+        filter_dict={
+            "shop_products__categories__in": category
+        },
+        orderable_only=orderable_only,
+    )
+    products = cache_product_things(request, products)
+    return products
+
+
+@contextfunction
 def get_all_manufacturers(context):
     request = context["request"]
     products = Product.objects.listed(shop=request.shop, customer=request.customer)
