@@ -6,12 +6,12 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
-import urllib
 
 from django.conf import settings
 from django.http import HttpResponse
 from django.utils.translation import ugettext_lazy as _
 from easy_thumbnails.files import get_thumbnailer
+from six.moves import urllib
 
 from shuup.utils.excs import Problem
 
@@ -39,7 +39,7 @@ def _fetch_static_resource_str(resource_file):
 
 def _custom_url_fetcher(url):
     if url.startswith("logo:"):
-        thumbnailer = get_thumbnailer(urllib.unquote(url[5:]))
+        thumbnailer = get_thumbnailer(urllib.parse.unquote(url[5:]))
         thumbnail_options = {"size": (240, 80), "upscale": True}
         return {"file_obj": thumbnailer.get_thumbnail(thumbnail_options), "mime_type": "image/jpg"}
     raise ValueError("Possible file system traversal shenanigan detected with %(path)s" % {"path": url})
