@@ -830,6 +830,7 @@ const Picotable = (function(m, storage) {
             var xhrConfig = function(xhr) {
                 xhr.setRequestHeader("X-CSRFToken", window.ShuupAdminConfig.csrf);
                 xhr.setRequestHeader('Content-type', 'application/json');
+                xhr.responseType = "blob";
             };
             var payload = {
                 "action": value,
