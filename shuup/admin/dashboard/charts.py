@@ -13,9 +13,18 @@ import six
 from shuup.utils.serialization import ExtendedJSONEncoder
 
 
+class ChartType(object):
+    """ Type of a chart """
+    BAR = "bar"
+    LINE = "line"
+
+
 class Chart(six.with_metaclass(abc.ABCMeta)):
+    supported_data_types = []   # list[ChartType]
+
     def __init__(self, title):
         self.title = title
+        self.datasets = []
 
     @abc.abstractmethod
     def get_config(self):
@@ -32,25 +41,51 @@ class Chart(six.with_metaclass(abc.ABCMeta)):
     def get_config_json(self):
         return json.dumps(self.get_config(), cls=ExtendedJSONEncoder, separators=',:')
 
+    def add_data(self, name, data, data_type):
+        """
+        Add data to this chart
+        :param name: the name of the dataset
+        :type name: str
+        :param data: the list of data
+        :type data: list[int|float|Decimal]
+        :param data_type: the cart type of this data - tells how data should be rendered.
+            This data type must be available in the `supported_data_types` attribute of this instance
+        :type data_type: ChartType
+        """
+        assert data_type in self.supported_data_types
+        self.datasets.append({"type": data_type, "label": name, "data": data})
+
 
 class BarChart(Chart):
+    supported_data_types = [ChartType.BAR]
+
     def __init__(self, title, labels):
         super(BarChart, self).__init__(title)
         self.labels = labels
-        self.series = []
-
-    def add_data(self, name, data):
-        assert len(data) == len(self.labels)
-        self.series.append({"name": name, "data": data})
 
     def get_config(self):
         return {
-            "type": "bar",
+            "type": ChartType.BAR,
             "data": {
                 "labels": self.labels,
-                "series": self.series,
-            },
-            "options": {
-                "seriesBarDistance": 3
+                "datasets": self.datasets
             }
+        }
+
+
+class MixedChart(Chart):
+    """
+    This chart supports both Bars and Lines
+    """
+    supported_data_types = [ChartType.BAR, ChartType.LINE]
+
+    def __init__(self, title, labels):
+        super(MixedChart, self).__init__(title)
+        self.labels = labels
+
+    def get_config(self):
+        return {
+            "type": "mixed",
+            "labels": self.labels,
+            "data": self.datasets
         }

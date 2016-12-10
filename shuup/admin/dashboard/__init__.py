@@ -10,11 +10,13 @@ from .blocks import (
     DashboardBlock, DashboardChartBlock, DashboardContentBlock,
     DashboardMoneyBlock, DashboardNumberBlock, DashboardValueBlock
 )
-from .charts import BarChart
+from .charts import BarChart, ChartType, MixedChart
 from .utils import get_activity
 
 __all__ = [
     "BarChart",
+    "MixedChart",
+    "ChartType",
     "DashboardBlock",
     "DashboardChartBlock",
     "DashboardContentBlock",

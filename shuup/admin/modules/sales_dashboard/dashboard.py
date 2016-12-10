@@ -9,19 +9,22 @@
 from __future__ import unicode_literals
 
 from datetime import date
+from decimal import Decimal
 
 from babel.dates import format_date
 from django.db.models import Avg, Count, Sum
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.dashboard import (
-    BarChart, DashboardChartBlock, DashboardContentBlock, DashboardMoneyBlock
+    ChartType, DashboardChartBlock, DashboardContentBlock, DashboardMoneyBlock,
+    MixedChart
 )
 from shuup.core.models import Order
 from shuup.core.pricing import TaxfulPrice
 from shuup.core.utils.query import group_by_period
 from shuup.utils.dates import get_year_and_month_format
 from shuup.utils.i18n import get_current_babel_locale
+from shuup.utils.money import Money
 
 
 def get_orders_by_currency(currency):
@@ -34,23 +37,51 @@ class OrderValueChartDashboardBlock(DashboardChartBlock):
         super(OrderValueChartDashboardBlock, self).__init__(id, **kwargs)
 
     def get_chart(self):
+        today = date.today()
+        start_of_year = date(today.year, 1, 1)
+
         orders = get_orders_by_currency(self.currency)
-        aggregate_data = group_by_period(
-            orders.valid().since(days=365),
+        sum_sales_data = group_by_period(
+            orders.valid().since((today - start_of_year).days),
             "order_date",
             "month",
             sum=Sum("taxful_total_price_value")
         )
+
         locale = get_current_babel_locale()
-        bar_chart = BarChart(title=_("Sales per Month (last year)"), labels=[
+        mixed_chart = MixedChart(title=_("Sales per Month (this year)"), labels=[
             format_date(k, format=get_year_and_month_format(locale), locale=locale)
-            for k in aggregate_data
+            for k in sum_sales_data
         ])
-        bar_chart.add_data(
-            _("Sales (%(currency)s)") % {"currency": self.currency},
-            [v["sum"] for v in aggregate_data.values()]
+
+        cumulative_sales = []
+        average_sales = []
+        count = 0
+        total = Decimal()
+
+        for month_sale in sum_sales_data.values():
+            total = total + month_sale["sum"]
+            cumulative_sales.append(total)
+            average_sales.append(total / (count+1))
+            count = count + 1
+
+        mixed_chart.add_data(
+            _("Average Sales (%(currency)s)") % {"currency": self.currency},
+            [Money(v, currency=self.currency).as_rounded().value for v in average_sales],
+            ChartType.LINE
         )
-        return bar_chart
+        mixed_chart.add_data(
+            _("Sales (%(currency)s)") % {"currency": self.currency},
+            [Money(v["sum"], currency=self.currency).as_rounded().value for v in sum_sales_data.values()],
+            ChartType.BAR
+        )
+        mixed_chart.add_data(
+            _("Cumulative Total Sales (%(currency)s)") % {"currency": self.currency},
+            [Money(v, currency=self.currency).as_rounded().value for v in cumulative_sales],
+            ChartType.BAR
+        )
+
+        return mixed_chart
 
 
 def get_subtitle(count):

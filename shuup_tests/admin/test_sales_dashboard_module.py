@@ -33,7 +33,7 @@ def get_order_for_date(dt, product):
 def test_order_chart_works():
     order = create_random_order(customer=create_random_person(), products=(get_default_product(),))
     chart = OrderValueChartDashboardBlock("test", order.currency).get_chart()
-    assert len(chart.series[0]) > 0
+    assert len(chart.datasets[0]) > 0
 
 
 @pytest.mark.django_db
