@@ -39,9 +39,11 @@ class SlideForm(MultiLanguageModelForm):
         self.fields["product_link"].widget = ProductChoiceWidget(clearable=True)
         for lang in self.languages:
             image_field = "image__%s" % lang
-            self.fields[image_field].widget = FileDnDUploaderWidget(clearable=True)
+            self.fields[image_field].widget = FileDnDUploaderWidget(
+                kind="images", upload_path="/carousel", clearable=True)
             if lang == self.default_language:
-                self.fields[image_field].widget = FileDnDUploaderWidget(clearable=False)
+                self.fields[image_field].widget = FileDnDUploaderWidget(
+                    kind="images", upload_path="/carousel", clearable=False)
                 self.fields[image_field].required = True
                 self.fields[image_field].widget.is_required = True
 
