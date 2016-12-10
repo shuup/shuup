@@ -15,7 +15,7 @@ function activateDropzone($dropzone, attrs={}) {
         params: {
             csrfmiddlewaretoken: window.ShuupAdminConfig.csrf
         },
-        addRemoveLinks: (addRemoveLinks == "True" ? true : false),
+        addRemoveLinks: (addRemoveLinks == "True"),
         dictRemoveFile: gettext("Clear"),
         autoProcessQueue: true,
         uploadMultiple: false,
@@ -50,7 +50,6 @@ function activateDropzone($dropzone, attrs={}) {
     $(selector).on("click", function(e) {
         window.BrowseAPI.openBrowseWindow({kind: "media", filter: $(selector).data().kind, onSelect: (obj) => {
             obj.name = obj.text;
-            let ext = obj.name.split(".")
             $(selector).find("input").val(obj.id);
             $(selector).find(".dz-preview").remove();
             dropzone.emit("addedfile", obj);
@@ -76,7 +75,7 @@ function activateDropzone($dropzone, attrs={}) {
 function activateDropzones() {
     $("div[data-dropzone='true']").each(function(idx, object) {
         const dropzone = $(object);
-        if(dropzone.find(".dz-message").length === 0) {
+        if(!dropzone.attr("id").includes("__prefix__") && dropzone.find(".dz-message").length === 0) {
             activateDropzone(dropzone);
         }
     });
