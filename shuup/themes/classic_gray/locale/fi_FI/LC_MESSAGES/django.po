@@ -7,15 +7,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-04 20:15+0000\n"
+"POT-Creation-Date: 2016-12-12 03:47+0000\n"
 "PO-Revision-Date: 2016-08-04 13:16-0700\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fi_FI\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.8\n"
+
+msgid "Classic Gray"
+msgstr ""
+
+msgid "This theme has no special settings to configure."
+msgstr "Tässä teemassa ei ole muokattavia ominaisuuksia."
 
 msgid "Home"
 msgstr "Koti"
@@ -24,5 +30,20 @@ msgstr "Koti"
 msgid "Welcome to %(shop_name)s!"
 msgstr "%(shop_name)s, tervetuloa!"
 
+msgid "Menu"
+msgstr "Valikko"
+
+msgid "Products"
+msgstr "Tuotteet"
+
 msgid "Show Frontpage Welcome Text"
 msgstr "Näytä tervetulotoivotus etusivulla"
+
+msgid "Default"
+msgstr "Oletus"
+
+msgid "Midnight Blue"
+msgstr ""
+
+msgid "Candy Pink"
+msgstr ""

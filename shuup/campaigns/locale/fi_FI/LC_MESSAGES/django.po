@@ -2,20 +2,21 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-07 03:24+0000\n"
+"POT-Creation-Date: 2016-12-12 03:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>, 2016\n"
-"Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/teams/55306/fi_FI/)\n"
+"Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/"
+"teams/55306/fi_FI/)\n"
+"Language: fi_FI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Campaigns"
@@ -42,14 +43,14 @@ msgstr "Näytä kupongit"
 msgid "Set up a sales campaign"
 msgstr "Aseta myyntikampanja"
 
-msgid "Add a basket campaign"
-msgstr "Lisää korikampanja"
+msgid "New basket campaign"
+msgstr "Uusi korikampanja"
 
-msgid "Add a catalog campaign"
-msgstr "Lisää katalogikampanja"
+msgid "New catalog campaign"
+msgstr "Uusi katalogikampanja"
 
-msgid "Add a coupon"
-msgstr "Lisää kuponki"
+msgid "New coupon"
+msgstr "Uusi kuponki"
 
 msgid "Minimum value"
 msgstr "Minimiarvo"
@@ -154,8 +155,7 @@ msgid ""
 "Limit the campaign to match when basket has at least the product count "
 "entered here."
 msgstr ""
-"Rajoita kampanja täsmäämään kun korissa on vähintään annettu määrä "
-"tuotteita."
+"Rajoita kampanja täsmäämään kun korissa on vähintään annettu määrä tuotteita."
 
 msgid "Basket total value"
 msgstr "Korin kokonaisarvo"
@@ -300,7 +300,7 @@ msgstr ""
 msgid "shop"
 msgstr "kauppa"
 
-msgid "The shop where campaign is active."
+msgid "The shop where the campaign is active."
 msgstr "Kauppa missä kampanja on aktiivinen."
 
 msgid "name"
@@ -312,11 +312,32 @@ msgstr "Nimi kampanjalle."
 msgid "active"
 msgstr "aktiivinen"
 
+msgid ""
+"Check this if the campaign is currently active. Please also set a start and "
+"end date."
+msgstr ""
+"Valitse tämä mikäli kampanja on aktiivinen. Ole hyvä ja aseta myös alkamis- ja "
+"päättymispäivä."
+
 msgid "start date and time"
 msgstr "alkupäivämäärä ja aika"
 
+msgid ""
+"The date and time the campaign starts. This is only applicable if the "
+"campaign is marked as active."
+msgstr ""
+"Päivämäärä, jolloin kampanja aloitetaan. Tämä pätee vain jos kampanja on "
+"aktiivinen."
+
 msgid "end date and time"
 msgstr "loppupäivämäärä ja aika"
+
+msgid ""
+"The date and time the campaign ends. This is only applicable if the campaign "
+"is marked as active."
+msgstr ""
+"Päivämäärä, jolloin kampanja päättyy. Tämä pätee vain jos kampanja on "
+"aktiivinen."
 
 msgid "created by"
 msgstr "luoja"
@@ -332,6 +353,9 @@ msgstr "muutettu"
 
 msgid "Campaign"
 msgstr "Kampanja"
+
+msgid "The campaign name to show in the store front."
+msgstr "Kampanjan nimi teemaa varten."
 
 #, python-format
 msgid "Catalog Campaign: %(name)s"
@@ -435,11 +459,22 @@ msgstr "Ei asetettu"
 msgid "No campaigns found"
 msgstr "Kampanjoita ei löytynyt"
 
+msgid "This section shows all the <b>active</b> campaigns this product is in."
+msgstr "Tämä osio näyttää kaikki <b>aktiiviset</b> kampanjat, joissa tämä "
+"tuote esiintyy."
+
+#, python-format
+msgid "Active campaings for shop: %(shop)s"
+msgstr "Aktiiviset kampanjat kaupalle: %(shop)s"
+
 msgid "Rules"
 msgstr "Säännöt"
 
 msgid "Rule type"
 msgstr "Säännön tyyppi"
+
+msgid "The criteria used to determine whether this campaign is applied."
+msgstr "Kriteeri, joka määrittelee käytetäänkö kampanjaa."
 
 msgid "Add rule"
 msgstr "Lisää sääntö"

@@ -2,21 +2,22 @@
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-01 22:46+0000\n"
+"POT-Creation-Date: 2016-12-12 03:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Janne Tammi <janne@shuup.com>, 2016\n"
-"Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/teams/55306/fi_FI/)\n"
+"Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/"
+"teams/55306/fi_FI/)\n"
+"Language: fi_FI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
-"Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Shuup Customer Group Pricing"
@@ -47,8 +48,17 @@ msgstr "tuotehinnat"
 msgid "Customer Group Pricing"
 msgstr "Asiakasryhmähinnoittelu"
 
-msgid "Default price"
-msgstr "Oletushinta"
+msgid "Contact Group Pricing"
+msgstr "Asiakasryhmähinnoittelu"
+
+msgid ""
+"Here you can set individual pricing for different contact groups. This can "
+"be useful for special discounts or for B2B orders. These groups are defined "
+"in Contacts Settings – Contact Groups"
+msgstr ""
+"Täällä voit asettaa yksittäisiä hinnoitteluita eri asiakasryhmille. Tämä "
+"on erityisen kätevää erikoisalennuksille tai B2B tilauksille. Nämä ryhmät "
+"määritellään Kaupat - Asiakasryhmät"
 
 msgid "Other shops"
 msgstr "Muut kaupat"

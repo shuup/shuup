@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"POT-Creation-Date: 2016-12-12 03:47+0000\n"
 "PO-Revision-Date: 2016-06-06 06:26+0000\n"
 "Last-Translator: Heikki Saari <heikki.saari@anders.fi>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
@@ -32,11 +32,20 @@ msgstr ""
 "Generated-By: Babel 2.1.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgid "Plain text"
+msgstr ""
+
+msgid "HTML"
+msgstr ""
+
 msgid "Subject"
 msgstr "Aihe"
 
 msgid "Email Body"
 msgstr "Sähköpostin sisältö"
+
+msgid "Content type"
+msgstr "Sisältötyyppi"
 
 msgid "Recipient"
 msgstr "Vastaanottaja"
@@ -59,9 +68,6 @@ msgstr ""
 
 msgid "Notifications"
 msgstr "Ilmoitukset"
-
-msgid "Notification scripts"
-msgstr "Ilmoituskomentosarjat"
 
 msgid "Show notification scripts"
 msgstr "Näytä ilmoituskomentosarjat"

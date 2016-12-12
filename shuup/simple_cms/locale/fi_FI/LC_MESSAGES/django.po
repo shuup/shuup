@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
@@ -20,15 +20,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-28 23:41+0000\n"
+"POT-Creation-Date: 2016-12-12 03:47+0000\n"
 "PO-Revision-Date: 2016-08-02 18:43+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
-"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/language/fi_FI/)\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
+"language/fi_FI/)\n"
+"Language: fi_FI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
-"Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Simple CMS"
@@ -40,6 +41,12 @@ msgstr "Sivut"
 msgid "Show pages"
 msgstr "Näytä sivut"
 
+msgid "Add a web page"
+msgstr "Lisää sivu"
+
+msgid "New page"
+msgstr "Uusi sivu"
+
 msgid "Available from"
 msgstr "Saatavilla alkaen"
 
@@ -49,9 +56,13 @@ msgstr "Saatavilla päättyen"
 msgid "URL already exists."
 msgstr "Antamasi verkko-osoite on jo olemassa."
 
+msgid "URL must be unique"
+msgstr "Osoitteen pitää olla uniikki"
+
 #, python-format
 msgid "%(label)s is required when any %(language)s field is filled."
-msgstr "%(label)s on pakollinen kun mikä tahansa %(language)s-kenttä on täytetty."
+msgstr ""
+"%(label)s on pakollinen kun mikä tahansa %(language)s-kenttä on täytetty."
 
 msgid "Please fill at least one language fully."
 msgstr "Ole hyvä ja täytä vähintään yksi kieli täysin"
@@ -74,6 +85,15 @@ msgstr "Sivu"
 msgid "available from"
 msgstr "saatavilla alkaen"
 
+msgid ""
+"Set an available from date to restrict the page to be available only after a "
+"certain date and time. This is useful for pages describing sales campaigns "
+"or other time-sensitive pages."
+msgstr ""
+"Aseta sivun saatavuuspäivämäärät. Tämä on hyödyllistä jos haluat rajoittaa "
+"sivun näkymään vain tietyn kampanjan aikana tai muuten vain aikarajoittaa "
+"sen näkyvyyttä."
+
 msgid "available to"
 msgstr "saatavilla päättyen"
 
@@ -90,25 +110,59 @@ msgid "modified on"
 msgstr "muutettu"
 
 msgid "This identifier can be used in templates to create URLs"
-msgstr "Tätä tunnistetta voidaan käyttää mallineissa URL-osoitteiden muodostamiseen"
+msgstr ""
+"Tätä tunnistetta voidaan käyttää mallineissa URL-osoitteiden muodostamiseen"
 
 msgid "visible in menu"
 msgstr "näkyvissä valikossa"
 
+msgid ""
+"Check this if this page should have a link in the top menu of the store "
+"front."
+msgstr ""
+"Valitse tämä, mikäli haluat, että sivu näytetään teeman valikoissa."
+
 msgid "parent"
 msgstr "isäntä"
+
+msgid ""
+"Set this to a parent page if this page should be subcategorized under "
+"another page."
+msgstr ""
+"Aseta isäsivu jos haluat, että sivu näkyy toisen sivun alla."
 
 msgid "list children on page"
 msgstr "listaa lapset sivulla"
 
+msgid "Check this if this page should list its children pages."
+msgstr "Valitse tämä, jos haluat että sivu listaa lapset."
+
 msgid "title"
 msgstr "otsikko"
+
+msgid "The page title. This is shown anywhere links to your page are shown."
+msgstr "Sivun otsikko. Tätä käytetään kaikkialla kun sivu linkitetään."
 
 msgid "URL"
 msgstr "URL"
 
+msgid ""
+"The page url. Choose a descriptive url so that search engines can rank your "
+"page higher. Often the best url is simply the page title with spaces "
+"replaced with dashes."
+msgstr ""
+"Sivun osoite. Valitse kuvaava osoite, jotta hakukoneet löytävät sivun "
+"helpommin. Usein paras osoite on vain sivun otsikko, jossa välilyönnit "
+"on korvattu viivoilla."
+
 msgid "content"
 msgstr "sisältö"
+
+msgid ""
+"The page content. This is the text that is displayed when customers click on "
+"your page link."
+msgstr ""
+"Sivun sisältö. Tämä näytetään kun asiakas avaa sivun."
 
 msgid "page"
 msgstr "sivu"
@@ -142,3 +196,6 @@ msgstr "Saatavuus"
 
 msgid "Extras"
 msgstr "Extrat"
+
+msgid "Home"
+msgstr "Koti"
