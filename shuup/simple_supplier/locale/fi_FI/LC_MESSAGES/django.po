@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-29 15:06+0000\n"
+"POT-Creation-Date: 2016-12-12 03:47+0000\n"
 "PO-Revision-Date: 2016-06-28 03:21+0000\n"
 "Last-Translator: Shuup Admin <admin@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
@@ -23,9 +23,6 @@ msgstr ""
 
 msgid "Stock management"
 msgstr "Varastonhallinta"
-
-msgid "Products"
-msgstr "Tuotteet"
 
 msgid "SKU"
 msgstr "Tuotekoodi"
@@ -64,6 +61,11 @@ msgstr ""
 "Poistettiin %(delta)s %(unit_short_name)s tuotteelta %(product_name)s "
 "varastosta (%(supplier_name)s)"
 
+
+msgid "Alert limit for product %(product_name)s set to %(value)s."
+msgstr "Hälytysraja tuotteelle %(product_name)s asetettiin "
+"arvoihin %(value)s"
+
 msgid "Not allowed"
 msgstr "Ei sallittu"
 
@@ -84,6 +86,9 @@ msgstr "Lukumäärä"
 msgid "Only non-zero values can be added to stock."
 msgstr "Varastoarvon pitää olla suurempi kuin nolla."
 
+msgid "Alert limit"
+msgstr "Hälytysraja"
+
 msgid "product"
 msgstr "tuote"
 
@@ -99,14 +104,37 @@ msgstr "luoja"
 msgid "delta"
 msgstr "muutos"
 
+msgid "type"
+msgstr "tyyppi"
+
+msgid "alert limit"
+msgstr "hälytysraja"
+
 msgid "logical count"
 msgstr "looginen määrä"
 
 msgid "physical count"
 msgstr "fyysinen määrä"
 
+msgid "Alert Limit Reached"
+msgstr "hälytysraja saavutettu"
+
+msgid "Product"
+msgstr "Tuote"
+
 msgid "Add stock"
 msgstr "Lisää varastoa"
+
+#, python-format
+msgid ""
+"Alert limit <a href=\"%(notify_url)s\" target=\"_blank\">notification "
+"scripts</a> are executed when product stock falls below set quantity."
+msgstr ""
+"Hälytysrajan <a href=\"%(notify_url)s\" target=\"_blank\">notifikaatio "
+"skriptit</a> ajetaan kun tuotteen varasto laskee alle asetetun määrän."
+
+msgid "Change alert limit"
+msgstr "Vaihda hälytysrajaa"
 
 #, python-format
 msgid ""
@@ -142,17 +170,23 @@ msgstr ""
 "Ole hyvä ja aseta %(module_name)s moduli ainakin yhdelle <a href="
 "\"%(supplier_url)s\" target=\"_blank\">toimittajalle</a>."
 
-msgid "Physical count"
-msgstr "Fyysinen määrä"
+#, python-format
+msgid "Physical count: %(count)s %(sales_unit)s"
+msgstr "Fyysinen määrä: %(count)s %(sales_unit)s"
 
-msgid "Logical count"
-msgstr "Looginen määrä"
+#, python-format
+msgid "Logical count: %(count)s %(sales_unit)s"
+msgstr "Looginen määrä: %(count)s %(sales_unit)s"
 
-msgid "Value per unit"
-msgstr "Yksikköarvo"
+msgid "Value per unit: %(value)s"
+msgstr "Arvo per yksikkö: %(value)s"
 
-msgid "Total value"
-msgstr "Kokonaisarvo"
+msgid "Total value: %(value)s"
+msgstr "Kokonaisarvo: %(value)s"
+
+#, python-format
+msgid "Alert limit: %(limit)s"
+msgstr "Hälytysraja: %(limit)s"
 
 msgid "No stock information available."
 msgstr "Varastotietoa ei saatavilla."

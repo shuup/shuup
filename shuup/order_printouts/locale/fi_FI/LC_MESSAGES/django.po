@@ -2,34 +2,53 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-11 12:32+0000\n"
+"POT-Creation-Date: 2016-12-12 03:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>, 2016\n"
-"Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/teams/55306/fi_FI/)\n"
+"Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/"
+"teams/55306/fi_FI/)\n"
+"Language: fi_FI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fi_FI\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "Order printouts"
-msgstr "Tilaustulosteet"
+msgid "To"
+msgstr "Kohde"
 
-msgid "Print"
-msgstr "Tulosta"
+msgid "Email Subject"
+msgstr "Sähköpostin aihe"
+
+msgid "Email Body"
+msgstr "Sähköpostin sisältö"
 
 #, python-format
-msgid "Get Delivery Slip (Shipment %(id)s)"
-msgstr "Hae Lähetysluettelo (Lähetys %(id)s)"
+msgid ""
+"Important information regarding your order, see attachment.\n"
+"\n"
+"Best Regards,\n"
+"%(shop)s"
+msgstr ""
+"Tärkeää tietoa tilaukseesi liittyen, katso liite.\n"
+"\n"
+"Parhain terveisin,\n"
+"%(shop)s"
 
-msgid "Get Order Confirmation"
-msgstr "Hae tilausvahvistus"
+msgid "Printouts"
+msgstr "Tulosteet"
+
+#, python-format
+msgid "%(shop)s: Order %(pk)s"
+msgstr "%(shop)s: Tilaus %(pk)s"
+
+msgid "Not allowed"
+msgstr "Ei sallittu"
 
 msgid "Delivery slip"
 msgstr "Lähetysluettelo"
@@ -40,12 +59,8 @@ msgstr "Tilaus"
 msgid "Order confirmation"
 msgstr "Tilausvahvistus"
 
-msgid ""
-"Could not create PDF since Weasyprint is not available. Please contact "
-"support."
-msgstr ""
-"Ei voitu luoda PDF:ää, sillä Weasyprint ei ole saatavilla. Ota yhteyttä "
-"tukeen."
+msgid "Order printouts"
+msgstr "Tilaustulosteet"
 
 msgid "Shipped products"
 msgstr "Toimitetut tuotteet"
@@ -109,3 +124,36 @@ msgstr "Yhteensä veroineen"
 
 msgid "Billing address"
 msgstr "Laskutusosoite"
+
+msgid "Confirmation"
+msgstr "Vahvistus"
+
+msgid "Get Order Confirmation PDF"
+msgstr "Hae tilausvahvistus PDF"
+
+msgid "Get Order Confirmation HTML"
+msgstr "Hae tilausvahvistus HTML"
+
+msgid "Shipments"
+msgstr "Toimitukset"
+
+msgid "Get Delivery Slip PDF (Shipment %(id)s)"
+msgstr "Hae Lähetysluettelo PDF (Lähetys %(id)s)"
+
+msgid "Get Delivery Slip HTML (Shipment %(id)s)"
+msgstr "Hae Lähetysluettelo HTML (Lähetys %(id)s)"
+
+msgid "Send Email"
+msgstr "Lähetä sähköposti"
+
+msgid "Send Order Confirmation"
+msgstr "Lähetä tilausvahvistus"
+
+msgid "Send Delivery Slip (Shipment %(id)s)"
+msgstr "Lähetä Lähetysluettelo (Lähetys %(id)s)"
+
+msgid "Email sent successfully!"
+msgstr "Sähköposti lähetetty onnistuneesti!"
+
+msgid "Could not sent the email, please try again."
+msgstr "Sähköpostin lähetys epäonnistui, ole hyvä ja yritä uudelleen."
