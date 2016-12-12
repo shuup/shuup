@@ -29,8 +29,7 @@ class OrderDetailToolbar(Toolbar):
 
     def build(self):
         self._build_action_button()
-        self._build_set_complete_button()
-        self._build_cancel_button()
+        self._build_order_set_state_button()
         self._build_edit_button()
         self._build_provided_toolbar_buttons()
 
@@ -48,6 +47,27 @@ class OrderDetailToolbar(Toolbar):
                     icon="fa fa-star",
                     text=_(u"Actions"),
                     extra_css_class="btn-info",
+                )
+            )
+
+    def _build_order_set_state_button(self):
+        set_status_menu_items = []
+        for status in OrderStatus.objects.filter(is_active=True).exclude(pk=self.order.status.pk).order_by("ordering"):
+            btn = PostActionDropdownItem(
+                post_url=reverse("shuup_admin:order.set-status", kwargs={"pk": self.order.pk}),
+                name="status",
+                value=status.pk,
+                text=status.name,
+            )
+            set_status_menu_items.append(btn)
+
+        if set_status_menu_items:
+            self.append(
+                DropdownActionButton(
+                    set_status_menu_items,
+                    icon="fa fa-refresh",
+                    text=_("Set Status"),
+                    extra_css_class="btn-info set-status-button",
                 )
             )
 
