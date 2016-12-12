@@ -61,7 +61,12 @@ class Shop(ChangeProtected, TranslatableShuupModel):
     ))
     logo = FilerImageField(
         verbose_name=_("logo"), blank=True, null=True, on_delete=models.SET_NULL,
-        help_text=_("Shop logo. Will be shown at theme."))
+        help_text=_("Shop logo. Will be shown at theme."), related_name="shop_logos")
+
+    favicon = FilerImageField(
+        verbose_name=_("favicon"), blank=True, null=True, on_delete=models.SET_NULL,
+        help_text=_("Shop favicon. Will be shown next to the address on browser."), related_name="shop_favicons")
+
     maintenance_mode = models.BooleanField(verbose_name=_("maintenance mode"), default=False, help_text=_(
         "Check this if you would like to make your shop temporarily unavailable while you do some shop maintenance."
     ))
