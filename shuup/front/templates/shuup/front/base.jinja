@@ -18,7 +18,9 @@
     {# Page Title #}
     <title>{{ request.shop.public_name }} &ndash; {% block title %}{% endblock %}</title>
     {# Include Favicon #}
-    <link rel="icon" type="image/x-icon" href="{{ static("shuup/front/img/favicon.ico") }}">
+    {%- set favicon = request.shop.favicon.url if request.shop.favicon else static("shuup/front/img/favicon.ico") -%}
+    <link rel="icon" type="image/x-icon" href="{{ favicon }}">
+
     {# Include Fonts #}
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
     {# Include Styles #}
