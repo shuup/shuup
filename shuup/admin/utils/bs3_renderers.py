@@ -69,8 +69,9 @@ class AdminFieldRenderer(FieldRenderer):
             html += "<span class='help-popover-btn'>"
             # tabindex is required for popover to function but we don't actually want to be able to tab to it
             # so set a large tabindex
-            html += "<a class='btn' data-toggle='popover' data-placement='bottom' role='button' tabindex='50000' "
-            html += "data-html='true' data-trigger='focus' title='{title}' data-content='{help}'>".format(
+            html += "<a class=\"btn\" data-toggle=\"popover\" data-placement=\"bottom\" "
+            html += "role=\"button\" tabindex=\"50000\" "
+            html += "data-html=\"true\" data-trigger=\"focus\" title=\"{title}\" data-content=\"{help}\">".format(
                 title=self.field.label, help=self.field_help)
             html += "<i class='fa fa-question-circle'></i>"
             html += "</a>"
