@@ -65,6 +65,8 @@ Order Printouts
 Campaigns
 ~~~~~~~~~
 
+- Variation children should match rules based on parent
+
 Customer Group Pricing
 ~~~~~~~~~~~~~~~~~~~~~~
 

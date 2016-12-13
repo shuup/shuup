@@ -13,7 +13,7 @@ from shuup.campaigns.models.catalog_filters import (
    CategoryFilter, ProductFilter, ProductTypeFilter
 )
 from shuup.campaigns.models.product_effects import ProductDiscountPercentage
-from shuup.core.models import Category, ShopProduct
+from shuup.core.models import Category, ProductMode, ShopProduct
 from shuup.front.basket import get_basket
 from shuup.testing.factories import (
     create_product, get_default_category, get_default_supplier,
@@ -124,3 +124,24 @@ def test_productfilter_works(rf):
 
     expected_total = price(product_price) - (Decimal(discount_percentage) * price(product_price))
     assert basket.total_price == expected_total
+
+
+@pytest.mark.django_db
+def test_product_filters_with_variation_parents(rf):
+    request, shop, group = initialize_test(rf, False)
+    product = create_product("test", shop, default_price=20, mode=ProductMode.SIMPLE_VARIATION_PARENT)
+    child_products = []
+    for x in range(0, 3):
+        child_product = create_product("test-product-%s" % x, shop, default_price=10)
+        child_product.link_to_parent(product)
+        child_products.append(child_product)
+
+    catalog_filter = ProductFilter.objects.create()
+    catalog_filter.products.add(product)
+
+    shop_product = product.get_shop_instance(shop)
+    assert catalog_filter.matches(shop_product)
+
+    for child_product in child_products:
+        shop_product = child_product.get_shop_instance(shop)
+        assert catalog_filter.matches(shop_product)
