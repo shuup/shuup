@@ -109,7 +109,7 @@ class ProductVariationView(ProductParentBaseView):
         if self.object.variation_parent_id:
             # Redirect to the parent instead.
             return HttpResponseRedirect(
-                reverse("shuup_admin:product.edit_variation", kwargs={"pk": self.object.variation_parent_id})
+                reverse("shuup_admin:shop_product.edit_variation", kwargs={"pk": self.object.variation_parent_id})
             )
         return super(ProductVariationView, self).dispatch(request, *args, **kwargs)
 

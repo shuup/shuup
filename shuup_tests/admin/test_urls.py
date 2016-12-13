@@ -12,23 +12,26 @@ from django.core.exceptions import ImproperlyConfigured
 
 from shuup.admin.utils.urls import admin_url, get_model_url, NoModelUrl
 from shuup.core.models import Product
+from shuup.testing.factories import get_default_product, get_default_shop
 from shuup_tests.admin.utils import admin_only_urls
 from shuup_tests.utils.faux_users import StaffUser
 
 
+@pytest.mark.django_db
 def test_model_url():
     with admin_only_urls():
         with pytest.raises(NoModelUrl):
             get_model_url(Counter)  # That's silly!
-        p = Product()
-        p.pk = 3
+        p = get_default_product()
+
         assert get_model_url(p)
 
 
+@pytest.mark.django_db
 def test_model_url_with_permissions():
     permissions = set(["shuup.add_product", "shuup.delete_product", "shuup.change_product"])
-    p = Product()
-    p.pk = 3
+
+    p = get_default_product()
 
     # If no user is given, don't check for permissions
     assert get_model_url(p)

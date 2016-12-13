@@ -26,7 +26,7 @@ class EditProductToolbar(Toolbar):
         self.product = view.object
         self.extend(get_default_edit_toolbar(
             self.view, "product_form",
-            delete_url="shuup_admin:product.delete"
+            delete_url="shuup_admin:shop_product.delete"
         ))
         if self.product.pk:
             self._build_existing_product()
@@ -45,7 +45,7 @@ class EditProductToolbar(Toolbar):
         cross_sell_button = DropdownItem(
             text=_("Manage Cross-Selling"),
             icon="fa fa-random",
-            url=reverse("shuup_admin:product.edit_cross_sell", kwargs={"pk": product.pk}),
+            url=reverse("shuup_admin:shop_product.edit_cross_sell", kwargs={"pk": product.pk}),
         )
         menu_items = [
             DropdownHeader(text=_("Cross-Selling")),
@@ -72,10 +72,10 @@ class EditProductToolbar(Toolbar):
         yield DropdownHeader(text=header)
 
     def _get_package_url(self, product):
-        return reverse("shuup_admin:product.edit_package", kwargs={"pk": product.pk})
+        return reverse("shuup_admin:shop_product.edit_package", kwargs={"pk": product.pk})
 
     def _get_variation_url(self, product):
-        return reverse("shuup_admin:product.edit_variation", kwargs={"pk": product.pk})
+        return reverse("shuup_admin:shop_product.edit_variation", kwargs={"pk": product.pk})
 
     def _get_children_items(self, children):
         for child in children:

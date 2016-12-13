@@ -26,7 +26,7 @@ def test_product_detail(browser, admin_user, live_server, settings):
     configuration.set(None, "shuup_product_tour_complete", True)
     initialize_admin_browser_test(browser, live_server, settings)
 
-    url = reverse("shuup_admin:product.edit", kwargs={"pk": product.pk})
+    url = reverse("shuup_admin:shop_product.edit", kwargs={"pk": product.get_shop_instance(shop).pk})
     browser.visit("%s%s" % (live_server, url))
     assert browser.find_by_id("id_base-sku").value == product.sku
 

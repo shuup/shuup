@@ -33,15 +33,15 @@ def test_campaigned_product_view(rf, admin_user):
     with replace_modules([CategoryModule, ImportAdminModule, ProductModule,
                           ProductTypeModule, ManufacturerModule, PaymentMethodModule, ShippingMethodModule]):
         with admin_only_urls():
-            render_product_view(product, request)
-            product2 = create_product("test-product2")
+            render_product_view(shop_product, request)
+            product2 = create_product("test-product2", shop)
+            sp2 = product2.get_shop_instance(shop)
+            render_product_view(sp2, request)  # should not break even though shop_product is not available
 
-            render_product_view(product2, request)  # should not break even though shop_product is not available
 
-
-def render_product_view(product, request):
+def render_product_view(shop_product, request):
     view_func = ProductEditView.as_view()
-    response = view_func(request, pk=product.pk)
-    assert (product.sku in response.rendered_content)  # it's probable the SKU is there
+    response = view_func(request, pk=shop_product.pk)
+    assert (shop_product.product.sku in response.rendered_content)  # it's probable the SKU is there
     response = view_func(request, pk=None)  # "new mode"
     assert response.rendered_content  # yeah, something gets rendered

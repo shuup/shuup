@@ -40,7 +40,7 @@
     <script src="{{ static("shuup_admin/js/product.js") }}"></script>
     <script>
         function saveAsACopy(){
-            $("#product_form").attr("action", "{{ url('shuup_admin:product.new') }}").submit();
+            $("#product_form").attr("action", "{{ url('shuup_admin:shop_product.new') }}").submit();
         }
 
         (function() {

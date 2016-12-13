@@ -33,56 +33,56 @@ from shuup.admin.utils.urls import (
 from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
 from shuup.core.models import (
     Product, ProductCrossSell, ProductPackageLink, ProductVariationResult,
-    ShopProduct
+    Shop, ShopProduct
 )
 
 
 class ProductModule(AdminModule):
     name = _("Products")
-    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:product.list")
+    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:shop_product.list")
 
     def get_urls(self):
         return [
             admin_url(
                 "^products/(?P<pk>\d+)/delete/$", "shuup.admin.modules.products.views.ProductDeleteView",
-                name="product.delete",
+                name="shop_product.delete",
                 permissions=["shuup.delete_product"]
             ),
             admin_url(
                 "^products/(?P<pk>\d+)/media/$", "shuup.admin.modules.products.views.ProductMediaEditView",
-                name="product.edit_media",
-                permissions=get_default_model_permissions(Product),
+                name="shop_product.edit_media",
+                permissions=get_default_model_permissions(ShopProduct),
             ),
             admin_url(
                 "^products/(?P<pk>\d+)/media/add/$", "shuup.admin.modules.products.views.ProductMediaBulkAdderView",
-                name="product.add_media",
-                permissions=get_default_model_permissions(Product),
+                name="shop_product.add_media",
+                permissions=get_default_model_permissions(ShopProduct),
             ),
             admin_url(
                 "^products/(?P<pk>\d+)/crosssell/$", "shuup.admin.modules.products.views.ProductCrossSellEditView",
-                name="product.edit_cross_sell",
+                name="shop_product.edit_cross_sell",
                 permissions=get_default_model_permissions(ProductCrossSell),
             ),
             admin_url(
                 "^products/(?P<pk>\d+)/variation/$", "shuup.admin.modules.products.views.ProductVariationView",
-                name="product.edit_variation",
+                name="shop_product.edit_variation",
                 permissions=get_default_model_permissions(ProductVariationResult),
             ),
             admin_url(
                 "^products/(?P<pk>\d+)/package/$", "shuup.admin.modules.products.views.ProductPackageView",
-                name="product.edit_package",
+                name="shop_product.edit_package",
                 permissions=get_default_model_permissions(ProductPackageLink)
             ),
             admin_url(
                 "^products/mass-edit/$", "shuup.admin.modules.products.views.ProductMassEditView",
-                name="product.mass_edit",
-                permissions=get_default_model_permissions(Product)
-            )
+                name="shop_product.mass_edit",
+                permissions=get_default_model_permissions(ShopProduct)
+            ),
         ] + get_edit_and_list_urls(
             url_prefix="^products",
             view_template="shuup.admin.modules.products.views.Product%sView",
-            name_template="product.%s",
-            permissions=get_default_model_permissions(Product)
+            name_template="shop_product.%s",
+            permissions=get_default_model_permissions(ShopProduct)
         )
 
     def get_menu_entries(self, request):
@@ -90,7 +90,7 @@ class ProductModule(AdminModule):
             MenuEntry(
                 text=_("Products"),
                 icon="fa fa-cube",
-                url="shuup_admin:product.list",
+                url="shuup_admin:shop_product.list",
                 category=PRODUCTS_MENU_CATEGORY,
                 ordering=1
             )
@@ -109,6 +109,7 @@ class ProductModule(AdminModule):
                 Product._parler_meta.root_model.objects.filter(name_q).values_list("master_id", flat=True)
             )
             pks = [pk for (pk, count) in pk_counter.most_common(10)]
+
             for product in Product.objects.filter(pk__in=pks):
                 relevance = 100 - pk_counter.get(product.pk, 0)
                 skus_seen.add(product.sku.lower())
@@ -120,7 +121,7 @@ class ProductModule(AdminModule):
                 )
 
         if len(query) >= minimum_query_length:
-            url = reverse("shuup_admin:product.new")
+            url = reverse("shuup_admin:shop_product.new")
             if " " in query:
                 yield SearchResult(
                     text=_("Create Product Called \"%s\"") % query,
@@ -139,7 +140,7 @@ class ProductModule(AdminModule):
         actions = [
             {
                 "text": _("New product"),
-                "url": self.get_model_url(Product, "new")
+                "url": self.get_model_url(ShopProduct, "new")
             }
         ]
         if "shuup.importer" in settings.INSTALLED_APPS:
@@ -165,7 +166,10 @@ class ProductModule(AdminModule):
         )
 
     def get_model_url(self, object, kind):
-        return derive_model_url(Product, "shuup_admin:product", object, kind)
+        if isinstance(object, Product):
+            shop = Shop.objects.first()
+            object = object.get_shop_instance(shop)
+        return derive_model_url(ShopProduct, "shuup_admin:shop_product", object, kind)
 
 
 m2m_changed.connect(
