@@ -141,6 +141,7 @@ def get_products_for_category(context, category, n_products=6, orderable_only=Tr
         n_products,
         ordering="?",
         filter_dict={
+            "variation_parent": None,
             "shop_products__categories__in": category
         },
         orderable_only=orderable_only,
