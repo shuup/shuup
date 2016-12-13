@@ -10,19 +10,21 @@ import django_filters
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from parler_rest.fields import TranslatedFieldsField
 from parler_rest.serializers import TranslatableModelSerializer
-from rest_framework import serializers
+from rest_framework import filters, serializers, viewsets
 from rest_framework.decorators import list_route
 from rest_framework.response import Response
-from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
 
-from shuup.core.models import Product, ShopProduct, Supplier
+from shuup.core.models import Product, ProductMedia, ShopProduct, Supplier
 from shuup.utils.numbers import parse_decimal_string
 
 
-class ShopProductSerializer(ModelSerializer):
+class ShopProductSerializer(serializers.ModelSerializer):
+    orderable = serializers.SerializerMethodField()
+
     class Meta:
         model = ShopProduct
+        exclude = ("id", "product")
         extra_kwargs = {
             "visibility_groups": {"required": False},
             "shipping_methods": {"required": False},
@@ -31,10 +33,34 @@ class ShopProductSerializer(ModelSerializer):
             "categories": {"required": False},
         }
 
+    def get_orderable(self, shop_product):
+        supplier = shop_product.suppliers.first()
+        customer = self.context["request"].customer
+        quantity = shop_product.minimum_purchase_quantity
+        return shop_product.is_orderable(
+            supplier=supplier, customer=customer, quantity=quantity
+        )
+
+
+class ProductMediaSerializer(serializers.ModelSerializer):
+    translations = TranslatedFieldsField(shared_model=ProductMedia)
+    url = serializers.SerializerMethodField()
+
+    class Meta:
+        fields = ("kind", "ordering", "public", "purchased", "shops", "url", "translations")
+        model = ProductMedia
+
+    def get_url(self, product_media):
+        if product_media.external_url:
+            return product_media.external_url
+        return self.context["request"].build_absolute_uri(product_media.file.url)
+
 
 class ProductSerializer(TranslatableModelSerializer):
     translations = TranslatedFieldsField(shared_model=Product)
     shop_products = ShopProductSerializer(many=True, read_only=True)
+    primary_image = ProductMediaSerializer(read_only=True)
+    media = ProductMediaSerializer(read_only=True, many=True)
 
     class Meta:
         model = Product
@@ -91,7 +117,7 @@ class ProductFilter(FilterSet):
 class ProductViewSet(ModelViewSet):
     queryset = Product.objects.none()
     serializer_class = ProductSerializer
-    filter_backends = (DjangoFilterBackend,)
+    filter_backends = (filters.OrderingFilter, DjangoFilterBackend)
     filter_class = ProductFilter
 
     def get_queryset(self):
@@ -111,7 +137,7 @@ class ProductViewSet(ModelViewSet):
         return Response(serializer.data)
 
 
-class ShopProductViewSet(ModelViewSet):
+class ShopProductViewSet(viewsets.ModelViewSet):
     queryset = ShopProduct.objects.none()
     serializer_class = ShopProductSerializer
 
