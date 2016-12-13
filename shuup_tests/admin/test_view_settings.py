@@ -8,6 +8,7 @@ import json
 
 import pytest
 from django.utils.http import urlencode
+
 from shuup import configuration
 from shuup.admin.modules.products.views import ProductListView
 from shuup.admin.modules.settings.views import ListSettingsView
@@ -54,7 +55,7 @@ def test_view_default_columns(rf):
 @pytest.mark.django_db
 def test_view_saved_columns(rf):
     shop = get_default_shop()
-    visible_fields = sorted(["id", "name", "select"])
+    visible_fields = sorted(["shopproduct_id", "name", "select"])
     configuration.set(None, "view_configuration_shopproduct_saved", True)
     for field in visible_fields:
         configuration.set(None, "view_configuration_shopproduct_%s" % field, {"active": True, "ordering": 999})
@@ -63,4 +64,3 @@ def test_view_saved_columns(rf):
     column_names = [c.id for c in sorted(listview.columns, key=lambda x: x.id)]
     assert len(listview.columns) == len(visible_fields)
     assert column_names == visible_fields
-

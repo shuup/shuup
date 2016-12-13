@@ -190,7 +190,7 @@ class PicotableListView(PicotableViewMixin, ListView):
                 Column("select", "", display="", sortable=False, linked=False, class_name="text-center"),
             ] + self.default_columns
 
-        self.settings = ViewSettings(self.model, self.default_columns)
+        self.settings = ViewSettings(self.model, self.default_columns, view_context=self)
 
         if self.mass_actions:
             if self.settings.columns:

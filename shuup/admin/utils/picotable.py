@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import datetime
 import json
 
 import six
@@ -22,6 +23,7 @@ from filer.models import Image
 from shuup.admin.utils.urls import get_model_url, NoModelUrl
 from shuup.core.models import ProductMedia
 from shuup.utils.dates import try_parse_date
+from shuup.utils.i18n import get_locally_formatted_datetime
 from shuup.utils.importing import load
 from shuup.utils.objects import compact
 from shuup.utils.serialization import ExtendedJSONEncoder
@@ -57,11 +59,19 @@ def maybe_call(thing, context, args=None, kwargs=None):
 
 class Filter(object):
     type = None
+    filter_field = None
+
+    def get_filter_field(self, column, context):
+        if self.filter_field:
+            return self.filter_field
+        if column.context and not maybe_callable(column.display, context=context):
+            return column.display
+        return column.id
 
     def to_json(self, context):
         return None
 
-    def filter_queryset(self, queryset, column, value):
+    def filter_queryset(self, queryset, column, value, context):
         return queryset  # pragma: no cover
 
 
@@ -91,10 +101,11 @@ class ChoicesFilter(Filter):
             "defaultChoice": self.default
         }
 
-    def filter_queryset(self, queryset, column, value):
+    def filter_queryset(self, queryset, column, value, context):
         if value == "_all":
             return queryset
-        return queryset.filter(**{(self.filter_field or column.id): value})
+        filter_field = self.get_filter_field(column, context)
+        return queryset.filter(**{filter_field: value})
 
 
 class Select2Filter(ChoicesFilter):
@@ -109,8 +120,8 @@ class Select2Filter(ChoicesFilter):
 class MPTTFilter(Select2Filter):
     type = "mptt"
 
-    def filter_queryset(self, queryset, column, value):
-        qs = super(MPTTFilter, self).filter_queryset(queryset, column, value)
+    def filter_queryset(self, queryset, column, value, context):
+        qs = super(MPTTFilter, self).filter_queryset(queryset, column, value, context)
         return qs.get_descendants(include_self=True)
 
 
@@ -143,12 +154,12 @@ class RangeFilter(Filter):
             })
         }
 
-    def filter_queryset(self, queryset, column, value):
+    def filter_queryset(self, queryset, column, value, context):
         if value:
             min = value.get("min")
             max = value.get("max")
             q = {}
-            filter_field = (self.filter_field or column.id)
+            filter_field = self.get_filter_field(column, context)
             if min is not None:
                 q["%s__gte" % filter_field] = min
             if max is not None:
@@ -165,13 +176,13 @@ class DateRangeFilter(RangeFilter):
         if not self.field_type:
             self.field_type = "date"
 
-    def filter_queryset(self, queryset, column, value):
+    def filter_queryset(self, queryset, column, value, context):
         if value:
             value = {
                 "min": try_parse_date(value.get("min")),
                 "max": try_parse_date(value.get("max")),
             }
-        return super(DateRangeFilter, self).filter_queryset(queryset, column, value)
+        return super(DateRangeFilter, self).filter_queryset(queryset, column, value, context)
 
 
 class TextFilter(Filter):
@@ -201,11 +212,12 @@ class TextFilter(Filter):
             })
         }
 
-    def filter_queryset(self, queryset, column, value):
+    def filter_queryset(self, queryset, column, value, context):
         if value:
             value = force_text(value).strip()
+            field = self.get_filter_field(column, context)
             if value:
-                return queryset.filter(**{"%s__%s" % ((self.filter_field or column.id), self.operator): value})
+                return queryset.filter(**{"%s__%s" % (field, self.operator): value})
         return queryset
 
 
@@ -219,7 +231,7 @@ class MultiFieldTextFilter(TextFilter):
         super(MultiFieldTextFilter, self).__init__(**kwargs)
         self.filter_fields = tuple(filter_fields)
 
-    def filter_queryset(self, queryset, column, value):
+    def filter_queryset(self, queryset, column, value, context):
         if value:
             q = Q()
             for filter_field in self.filter_fields:
@@ -235,10 +247,10 @@ true_or_false_filter = ChoicesFilter([
 
 
 class Column(object):
+
     def __init__(self, id, title, **kwargs):
         self.id = id
         self.title = title
-        self.sort_field = kwargs.pop("sort_field", id)
         self.display = kwargs.pop("display", id)
         self.class_name = kwargs.pop("class_name", None)
         self.filter_config = kwargs.pop("filter_config", None)
@@ -246,6 +258,8 @@ class Column(object):
         self.linked = bool(kwargs.pop("linked", True))
         self.raw = bool(kwargs.pop("raw", False))
         self.ordering = kwargs.pop("ordering", 9999)
+        self.context = None  # will be set after initializing
+        self.sort_field = kwargs.pop("sort_field", None)
 
         if kwargs and type(self) is Column:  # If we're not derived, validate that client code doesn't fail
             raise NameError("Unexpected kwarg(s): %s" % kwargs.keys())
@@ -262,19 +276,36 @@ class Column(object):
         }
         return dict((key, value) for (key, value) in six.iteritems(out) if value is not None)
 
+    def get_sort_field(self, sort_field):
+        if self.sort_field:
+            return self.sort_field
+        if self.filter_config and self.filter_config.filter_field:
+            return self.filter_config.filter_field
+        if self.display and not maybe_callable(self.display, context=self.context):
+            return self.display
+        return self.id
+
+    def set_sort_field(self):
+        self.sort_field = self.get_sort_field(None)
+
+    def set_context(self, context):
+        self.context = context
+        self.set_sort_field()
+
     def sort_queryset(self, queryset, desc=False):
         order_by = ("-" if desc else "") + self.sort_field
         return queryset.order_by(order_by)
 
     def filter_queryset(self, queryset, value):
         if self.filter_config:
-            queryset = self.filter_config.filter_queryset(queryset, self, value)
+            queryset = self.filter_config.filter_queryset(queryset, self, value, self.context)
         return queryset
 
     def get_display_value(self, context, object):
         display_callable = maybe_callable(self.display, context=context)
         if display_callable:
             return display_callable(object)
+
         value = object
         for bit in self.display.split("__"):
             value = getattr(value, bit, None)
@@ -294,6 +325,9 @@ class Column(object):
         if isinstance(value, Manager):
             value = ", ".join("%s" % x for x in value.all())
 
+        if isinstance(value, datetime.datetime):
+            return get_locally_formatted_datetime(value)
+
         if not value:
             value = ""
 
@@ -305,6 +339,8 @@ class Column(object):
 
 class Picotable(object):
     def __init__(self, request, columns, mass_actions, queryset, context):
+        for column in columns:
+            column.set_context(context)
         self.request = request
         self.columns = columns
         self.mass_actions = mass_actions
@@ -400,6 +436,7 @@ class PicotableViewMixin(object):
     columns = []
     mass_actions = []
     picotable_class = Picotable
+    related_objects = []
     template_name = "shuup/admin/base_picotable.jinja"
 
     def process_picotable(self, query_json):

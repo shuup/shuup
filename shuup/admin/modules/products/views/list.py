@@ -22,19 +22,26 @@ class ProductListView(PicotableListView):
     model = ShopProduct
 
     default_columns = [
-        Column("primary_image", _(u"Primary Image"), display="get_primary_image",
-               class_name="text-center", raw=True, ordering=1, sortable=False),
+        Column("primary_image", _(u"Primary Image"),
+               display="get_primary_image", class_name="text-center", raw=True, ordering=1, sortable=False),
         Column("name", _(u"Name"),
                sort_field="product__translations__name",
                display="product__name",
-               filter_config=TextFilter(filter_field="product__translations__name",
-                                        placeholder=_("Filter by name...")), ordering=2),
-        Column("sku", _(u"SKU"), display="product__sku", filter_config=RangeFilter(), ordering=3),
+               filter_config=TextFilter(
+                   filter_field="product__translations__name", placeholder=_("Filter by name...")
+               ),
+               ordering=2),
+        Column("sku", _(u"SKU"),
+               display="product__sku", filter_config=RangeFilter(filter_field="product__sku"), ordering=3),
         Column("barcode", _(u"Barcode"),
                display="product__barcode", filter_config=TextFilter(_("Filter by barcode...")), ordering=4),
         Column("type", _(u"Type"), display="product__type", ordering=5),
         Column("mode", _(u"Mode"),
                display="product__mode", filter_config=ChoicesFilter(ProductMode.choices), ordering=6),
+    ]
+
+    related_objects = [
+        ("product", "shuup.core.models:Product"),
     ]
 
     mass_actions = [
