@@ -26,6 +26,7 @@ Localization
 Admin
 ~~~~~
 
+- Add variation children to categories from category module
 - Set order states manually fom the order detail
 - Add FAQ, support, and news/blog dashboard blocks
 - Add rich text editor for product, category, and service description
@@ -63,6 +64,8 @@ Order Printouts
 
 Campaigns
 ~~~~~~~~~
+
+- Variation children should match rules based on parent
 
 Customer Group Pricing
 ~~~~~~~~~~~~~~~~~~~~~~

@@ -18,7 +18,7 @@ from shuup.admin.modules.categories.views import (
 )
 from shuup.core.models import (
     Category, CategoryStatus, CategoryVisibility,
-    ShopProductVisibility
+    ProductMode, ShopProductVisibility
 )
 from shuup.testing.factories import (
     CategoryFactory, create_product, get_default_category,
@@ -115,6 +115,13 @@ def test_products_form_add_multiple_products():
         product = create_product("%s" % x, shop=shop)
         product_ids.append(product.id)
 
+    for x in range(0, 5):
+        product = create_product("parent_%s" % x, shop=shop, mode=ProductMode.SIMPLE_VARIATION_PARENT)
+        for y in range(0, 3):
+            child_product = create_product("child_%s_%s" % (x, y), shop=shop)
+            child_product.link_to_parent(product)
+        product_ids.append(product.id)
+
     assert (category.shop_products.count() == 0)
     data = {
         "additional_products": ["%s" % product_id for product_id in product_ids]
@@ -124,7 +131,7 @@ def test_products_form_add_multiple_products():
     form.save()
 
     category.refresh_from_db()
-    assert (category.shop_products.count() == len(product_ids))
+    assert (category.shop_products.count() == 35)  # 15 normal products and 5 parents with 3 children each
 
 
 @pytest.mark.django_db
@@ -142,6 +149,47 @@ def test_products_form_remove():
     assert (shop_product.primary_category == category)
     assert (shop_product.categories.count() == 1)
     assert (shop_product.categories.first() == category)
+
+    data = {
+        "remove_products": ["%s" % shop_product.id]
+    }
+    form = CategoryProductForm(shop=shop, category=category, data=data)
+    form.full_clean()
+    form.save()
+
+    category.refresh_from_db()
+    assert (category.shop_products.count() == 0)
+    shop_product.refresh_from_db()
+    assert (shop_product.primary_category is None)
+    assert (shop_product.categories.count() == 0)
+
+
+@pytest.mark.django_db
+def test_products_form_remove_with_parent():
+    shop = get_default_shop()
+    category = get_default_category()
+    category.shops.add(shop)
+
+    product = create_product("test_product", shop=shop, mode=ProductMode.SIMPLE_VARIATION_PARENT)
+    shop_product = product.get_shop_instance(shop)
+    shop_product.primary_category = category
+    shop_product.save()
+    shop_product.categories.add(category)
+
+    child_product = create_product("child_product", shop=shop)
+    child_product.link_to_parent(product)
+    child_shop_product = child_product.get_shop_instance(shop)
+    child_shop_product.primary_category = category
+    child_shop_product.save()
+    child_shop_product.categories.add(category)
+
+
+    shop_product.refresh_from_db()
+    assert (shop_product.primary_category == category)
+    assert (shop_product.categories.count() == 1)
+    assert (shop_product.categories.first() == category)
+
+    assert (category.shop_products.count() == 2)
 
     data = {
         "remove_products": ["%s" % shop_product.id]

@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.conf import settings
+from django.db.models import Q
 from django.db.transaction import atomic
 from django.utils.translation import ugettext_lazy as _
 
@@ -86,7 +87,7 @@ class CategoryProductForm(forms.Form):
         self.category = category
         super(CategoryProductForm, self).__init__(**kwargs)
         self.fields["remove_products"].choices = [(None, "-----")] + [
-            (obj.pk, obj.product.name) for obj in category.shop_products.filter(shop=shop)
+            (obj.product.pk, obj.product.name) for obj in category.shop_products.filter(shop=shop)
         ]
 
     @atomic
@@ -95,7 +96,9 @@ class CategoryProductForm(forms.Form):
         is_visible = self.category.status == CategoryStatus.VISIBLE
         visibility_groups = self.category.visibility_groups.all()
         primary_product_ids = [int(product_id) for product_id in data.get("primary_products", [])]
-        for shop_product in ShopProduct.objects.filter(shop_id=self.shop.id, product_id__in=primary_product_ids):
+        for shop_product in ShopProduct.objects.filter(
+                Q(shop_id=self.shop.id),
+                Q(product_id__in=primary_product_ids) | Q(product__variation_parent_id__in=primary_product_ids)):
             shop_product.primary_category = self.category
             shop_product.visibility = (
                 ShopProductVisibility.ALWAYS_VISIBLE if is_visible else ShopProductVisibility.NOT_VISIBLE
@@ -106,11 +109,14 @@ class CategoryProductForm(forms.Form):
             shop_product.categories.add(self.category)
 
         additional_product_ids = [int(product_id) for product_id in data.get("additional_products", [])]
-        for shop_product in ShopProduct.objects.filter(shop_id=self.shop.id, product_id__in=additional_product_ids):
+        for shop_product in ShopProduct.objects.filter(
+                Q(shop_id=self.shop.id),
+                Q(product_id__in=additional_product_ids) | Q(product__variation_parent_id__in=additional_product_ids)):
             shop_product.categories.add(self.category)
 
-        remove_shop_product_ids = [int(shop_product_id) for shop_product_id in data.get("remove_products", [])]
-        for shop_product in ShopProduct.objects.filter(id__in=remove_shop_product_ids):
+        remove_product_ids = [int(product_id) for product_id in data.get("remove_products", [])]
+        for shop_product in ShopProduct.objects.filter(
+                Q(product_id__in=remove_product_ids) | Q(product__variation_parent_id__in=remove_product_ids)):
             if shop_product.primary_category == self.category:
                 if self.category in shop_product.categories.all():
                     shop_product.categories.remove(self.category)

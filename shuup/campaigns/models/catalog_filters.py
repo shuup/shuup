@@ -5,6 +5,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.db import models
+from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from polymorphic.models import PolymorphicModel
 
@@ -65,10 +66,13 @@ class ProductFilter(CatalogFilter):
         return ShopProduct.objects.filter(product__id__in=ids)
 
     def matches(self, shop_product):
-        return (shop_product.product.pk in self.values.values_list("pk", flat=True))
+        product_ids = self.values.values_list("pk", flat=True)
+        return (shop_product.product.pk in product_ids or shop_product.product.variation_parent_id in product_ids)
 
     def filter_queryset(self, queryset):
-        return queryset.filter(product_id__in=self.products.values_list("id", flat=True))
+        product_ids = self.products.values_list("id", flat=True)
+        return queryset.filter(
+            Q(product_id__in=product_ids) | Q(product__variation_parent_id__in=product_ids))
 
     @property
     def description(self):
