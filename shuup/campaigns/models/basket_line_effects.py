@@ -106,8 +106,12 @@ class DiscountFromProduct(BasketLineEffect):
                 continue
             if line.product.pk not in product_ids:
                 continue
+
+            base_price = line.base_unit_price.value * line.quantity
             amnt = (self.discount_amount * line.quantity) if not self.per_line_discount else self.discount_amount
-            discount_price = order_source.create_price(amnt)
+
+            # we use min() to limit the amount of discount to the products price
+            discount_price = order_source.create_price(min(base_price, amnt))
             if not line.discount_amount or line.discount_amount < discount_price:
                 line.discount_amount = discount_price
         return []
@@ -145,12 +149,17 @@ class DiscountFromCategoryProducts(BasketLineEffect):
             if line.product.pk not in product_ids:
                 continue
 
+            amount = order_source.zero_price.value
+            base_price = line.base_unit_price.value * line.quantity
+
             if self.discount_amount:
                 amount = self.discount_amount * line.quantity
-                discount_price = order_source.create_price(amount)
             elif self.discount_percentage:
-                amount = line.taxless_price * self.discount_percentage
-                discount_price = order_source.create_price(amount)
+                amount = base_price * self.discount_percentage
+
+            # we use min() to limit the amount of discount to base price
+            # also in percentage, since one can configure 150% of discount
+            discount_price = order_source.create_price(min(base_price, amount))
 
             if not line.discount_amount or line.discount_amount < discount_price:
                 line.discount_amount = discount_price

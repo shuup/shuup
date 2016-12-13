@@ -63,10 +63,12 @@ class BasketCampaignModule(OrderSourceModifierModule):
 
     def get_new_lines(self, order_source, lines):
         matching_campaigns = BasketCampaign.get_matching(order_source, lines)
-        for line in self._handle_total_discount_effects(matching_campaigns, order_source, lines):
-            yield line
 
         for line in self._handle_line_effects(matching_campaigns, order_source, lines):
+            yield line
+
+        # total discounts must be run after line effects since lines can be changed in place
+        for line in self._handle_total_discount_effects(matching_campaigns, order_source, lines):
             yield line
 
     def _get_campaign_line(self, campaign, highest_discount, order_source):
@@ -113,7 +115,8 @@ class BasketCampaignModule(OrderSourceModifierModule):
         lines = []
         for campaign in matching_campaigns:
             for effect in campaign.discount_effects.all():
-                discount_amount = effect.apply_for_basket(order_source=order_source)
+                discount_amount = min(price_so_far, effect.apply_for_basket(order_source=order_source))
+
                 # if campaign has coupon, match it to order_source.codes
                 if campaign.coupon:
                     # campaign was found because discount code matched. This line is always added
