@@ -28,8 +28,15 @@ $(function() {
         });
     });
 
-    $(".carousel-plugin.four").each(function () {
+    slideCountToResponsiveData = {
+        2: {0: {items: 1}, 640: {items: 2}, 992: {items: 2}},
+        3: {0: {items: 2}, 640: {items: 2}, 992: {items: 3}},
+    };
+
+    $(".carousel-plugin.banner").each(function () {
+        var slideCount = JSON.parse($(this).data("slide-count"));
         var arrowsVisible = JSON.parse($(this).data("arrows-visible").toLowerCase());
+        var responsiveConfigure = slideCountToResponsiveData[slideCount];
         $(this).owlCarousel({
             margin: 30,
             nav: arrowsVisible,
@@ -38,17 +45,7 @@ $(function() {
                 '<i class="fa fa-angle-right .carousel-control .icon-prev"></i>'
             ],
             responsiveClass: true,
-            responsive: {
-                0: { // breakpoint from 0 up
-                    items: 2
-                },
-                640: { // breakpoint from 640 up
-                    items: 2
-                },
-                992: { // breakpoint from 992 up
-                    items: 4
-                }
-            }
+            responsive: (responsiveConfigure ? responsiveConfigure : {0: {items: 2}, 640: {items: 2}, 992: {items: 4}})
         });
     });
 });
