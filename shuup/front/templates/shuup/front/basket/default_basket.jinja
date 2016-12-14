@@ -12,10 +12,7 @@
         </p>
         <hr>
         <div class="cart-actions">
-            <a href="/xtheme/products" class="btn btn-primary">
-                <i class="fa fa-angle-double-left"></i>
-                {% trans %}Back to Products{% endtrans %}
-            </a>
+            {{ basket_macros.render_empty_basket_actions() }}
         </div>
     {% else %}
         {% if errors %}
