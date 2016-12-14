@@ -74,7 +74,7 @@ class ProductPackageView(ProductParentBaseView):
         if parent:
             # By default, redirect to the first parent
             return HttpResponseRedirect(
-                reverse("shuup_admin:product.edit_package", kwargs={"pk": parent.id})
+                reverse("shuup_admin:shop_product.edit_package", kwargs={"pk": parent.id})
             )
         return super(ProductPackageView, self).dispatch(request, *args, **kwargs)
 

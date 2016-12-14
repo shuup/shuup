@@ -18,7 +18,9 @@ from shuup.admin.forms.widgets import (
     QuickAddCategoryMultiSelect, QuickAddCategorySelect
 )
 from shuup.admin.utils.views import MassEditMixin
-from shuup.core.models import Category, Product, ShopProductVisibility
+from shuup.core.models import (
+    Category, Product, ShopProduct, ShopProductVisibility
+)
 
 
 class MassEditForm(forms.Form):
@@ -39,7 +41,10 @@ class ProductMassEditView(MassEditMixin, FormView):
     form_class = MassEditForm
 
     def form_valid(self, form):
-        query = Q(id__in=self.ids)
+
+        product_ids = ShopProduct.objects.filter(id__in=self.ids).values_list("product__id", flat=True)
+
+        query = Q(id__in=product_ids)
         if isinstance(self.ids, six.string_types) and self.ids == "all":
             query = Q()
         for product in Product.objects.filter(query):
@@ -57,4 +62,4 @@ class ProductMassEditView(MassEditMixin, FormView):
 
         messages.success(self.request, _("Products changed successfully"))
         self.request.session["mass_action_ids"] = []
-        return HttpResponseRedirect(reverse("shuup_admin:product.list"))
+        return HttpResponseRedirect(reverse("shuup_admin:shop_product.list"))

@@ -29,4 +29,4 @@ class ProductDeleteView(DetailView):
         product = self.get_object()
         product.soft_delete(user=request.user)
         messages.success(request, _(u"%s has been marked deleted.") % product)
-        return HttpResponseRedirect(reverse("shuup_admin:product.list"))
+        return HttpResponseRedirect(reverse("shuup_admin:shop_product.list"))

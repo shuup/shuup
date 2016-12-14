@@ -199,6 +199,17 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
     form_part_class_provide_key = "admin_product_form_part"
     add_form_errors_as_messages = True
 
+    product_id = None
+
+    def get_object(self, queryset=None):
+        if not self.kwargs.get(self.pk_url_kwarg):
+            return self.model()
+        # modify kwargs to match the product instead
+        # TODO: Change this to use ShopProduct
+        key = self.pk_url_kwarg
+        self.kwargs[key] = ShopProduct.objects.get(pk=self.kwargs[key]).product.pk
+        return super(CreateOrUpdateView, self).get_object(queryset)
+
     @atomic
     def form_valid(self, form):
         return self.save_form_parts(form)

@@ -26,6 +26,8 @@ Localization
 Admin
 ~~~~~
 
+- Picotable now supports related objects. See ``ProductListView`` for example.
+- Product list view now lists ``ShopProducts`` instead of ``Products``
 - Add variation children to categories from category module
 - Set order states manually fom the order detail
 - Add FAQ, support, and news/blog dashboard blocks

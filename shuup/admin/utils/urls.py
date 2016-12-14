@@ -214,7 +214,7 @@ def derive_model_url(model_class, urlname_prefix, object, kind):
 
     :param model_class: The model class the object must be an instance or subclass of.
     :type model_class: class
-    :param urlname_prefix: URLname prefix. For instance, `shuup_admin:product.`
+    :param urlname_prefix: URLname prefix. For instance, `shuup_admin:shop_product.`
     :type urlname_prefix: str
     :param object: The model or model class as passed to `get_model_url`
     :type object: django.db.models.Model|class

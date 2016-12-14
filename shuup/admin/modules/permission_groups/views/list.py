@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import Group as PermissionGroup
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.admin.toolbar import NewActionButton, SettingsActionButton, Toolbar
 from shuup.admin.utils.picotable import Column, TextFilter
 from shuup.admin.utils.views import PicotableListView
 
@@ -29,4 +30,8 @@ class PermissionGroupListView(PicotableListView):
     def get_context_data(self, **kwargs):
         context = super(PermissionGroupListView, self).get_context_data(**kwargs)
         context["title"] = _("Permission Groups")
+        context["toolbar"] = Toolbar([
+            NewActionButton("shuup_admin:permission_group.new", text=_("Create new Permission Group")),
+            SettingsActionButton.for_model(self.model, return_url="permission_group")
+        ])
         return context

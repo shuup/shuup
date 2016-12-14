@@ -7,13 +7,14 @@
 import six
 from django.apps import apps
 from django.conf import settings
-from django.db.models import BooleanField, CharField
+from django.db.models import BooleanField, CharField, ForeignKey
 from enumfields import EnumIntegerField
 
 from shuup import configuration
 from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, TextFilter, true_or_false_filter
 )
+from shuup.utils.importing import load
 
 INVALID_FIELDS = [
     "ptr",
@@ -28,12 +29,13 @@ class ViewSettings(object):
     key = "view_configuration_%s_%s"
     column_spec = []
 
-    def __init__(self, model, default_columns, *args, **kwargs):
+    def __init__(self, model, default_columns, view_context, *args, **kwargs):
         if isinstance(model, six.string_types) and model == settings.AUTH_USER_MODEL:
             model = apps.get_model(settings.AUTH_USER_MODEL)
 
         self.model = model
         self.default_columns = default_columns
+        self.view_context = view_context
         self.ensure_initial_columns(default_columns)
         self.column_spec = self._build_settings_columns()
         self.active_columns = []
@@ -94,35 +96,81 @@ class ViewSettings(object):
 
     def _build_settings_columns(self):
         columns = []
+        all_models = [(None, self.model)]
 
-        if hasattr(self.model, "_parler_meta"):
-            for field in self.model._parler_meta.root_model._meta.get_fields():
-                if field.name == "id":  # we don't want duplicate id's
-                    continue
-                column = self._get_translated_column(field)
-                columns.append(column)
+        defaults = [col.id for col in self.default_columns]
 
-        for field in self.model._meta.local_fields:
-            column = self._get_column(field)
-            if column:
-                columns.append(column)
+        known_names = []
+
+        for identifier, m in self.view_context.related_objects:
+            all_models.append((identifier, load(m)))
+
+        for identifier, model in all_models:
+            if hasattr(model, "_parler_meta"):
+                self._add_translated_columns(columns, defaults, identifier, known_names, model)
+            self._add_local_columns(all_models, columns, defaults, identifier, known_names, model)
+            self._add_m2m_columns(all_models, columns, defaults, identifier, known_names, model)
+
         table_columns = set([col.id for col in columns])
         for default_column in self.default_columns:
             if default_column.id not in table_columns and default_column.id != "select":
                 columns.append(default_column)
         return columns
 
-    def _get_translated_column(self, field):
+    def _add_m2m_columns(self, all_models, columns, defaults, identifier, known_names, model):
+        for field in model._meta.local_many_to_many:
+            if field.name in defaults:
+                continue
+            if field.rel.to in all_models:
+                continue  # no need to have these...
+
+            column = self._get_column(model, field, known_names, identifier)
+            if column:
+                columns.append(column)
+
+    def _add_local_columns(self, all_models, columns, defaults, identifier, known_names, model):
+        for field in model._meta.local_fields:
+            if field.name in defaults:
+                continue
+            if field.name == "id" and model != self.model:
+                continue
+
+            if isinstance(field, ForeignKey) and field.rel.to in all_models:
+                continue  # no need to have these...
+
+            column = self._get_column(model, field, known_names, identifier)
+            if column:
+                columns.append(column)
+
+    def _add_translated_columns(self, columns, defaults, identifier, known_names, model):
+        for field in model._parler_meta.root_model._meta.get_fields():
+            if field.name in defaults:
+                continue
+            if field.name in ["id", "master"]:  # we don't want duplicate id's
+                continue
+            column = self._get_translated_column(model, field, known_names, identifier)
+            columns.append(column)
+
+    def _get_translated_column(self, model, field, known_names, identifier):
         field_name = field.verbose_name.title()
+        if field_name in known_names:
+            field_name = "%s %s" % (model.__name__, field_name)
+
         filter_config = TextFilter(
             filter_field="translations__%s" % field.name,
             placeholder=field_name
         )
+
+        if model != self.model:
+            display = "%s__translations__%s" % (identifier, field.name) if identifier else field.name
+        else:
+            display = "%s__%s" % (identifier, field.name) if identifier else field.name
+
         column = Column(
-            field.name,
+            "%s_%s" % (model.__name__.lower(), field.name),
             field_name,
-            sort_field="translations__%s" % field.name,
-            display=field.name,
+            sort_field=display,
+            display=display,
             filter_config=filter_config
         )
         return self.handle_special_column(field, column)[0]
@@ -135,11 +183,22 @@ class ViewSettings(object):
                 is_special = True
         return (column, is_special)
 
-    def _get_column(self, field):
-        field_name = field.verbose_name.title()
+    def _get_column(self, model, field, known_names, identifier):
         if not self._valid_field(field.name):
             return None
-        column = Column(field.name, field_name, display=field.name)
+
+        field_name = field.verbose_name.title()
+        if field_name in known_names:
+            field_name = "%s %s" % (model.__name__, field_name)
+
+        display = "%s__%s" % (identifier, field.name) if identifier else field.name
+
+        column = Column(
+            "%s_%s" % (model.__name__.lower(), field.name),
+            field_name,
+            display=display
+        )
+
         column, is_special = self.handle_special_column(field, column)
         if not is_special:
             if isinstance(field, CharField):

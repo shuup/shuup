@@ -53,6 +53,14 @@ def wait_until_appeared(browser, css_selector, timeout=10, frequency=1.0):
         frequency=frequency)
 
 
+def wait_until_appeared_xpath(browser, xpath, timeout=10, frequency=1.0):
+    wait_until_condition(
+        browser,
+        condition=lambda x: x.driver.find_element_by_xpath(xpath).is_displayed(),
+        timeout=timeout,
+        frequency=frequency)
+
+
 def wait_until_condition(browser, condition, timeout=10, frequency=1.0):
     """
     Wait until the condition has been met

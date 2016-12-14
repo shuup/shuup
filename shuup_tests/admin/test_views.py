@@ -11,13 +11,17 @@ import pytest
 import six
 from bs4 import BeautifulSoup
 from django.utils.encoding import force_text
+from django.utils.translation import activate
 
 from shuup.admin.modules.products.views import ProductEditView
+from shuup.core.models import Product
+from shuup.core.models import Shop
 from shuup.core.models import ShopProduct
+from shuup.core.models import ShopProductVisibility
 from shuup.testing.factories import (
     CategoryFactory, create_random_order, create_random_person,
-    get_default_category, get_default_product, get_default_shop
-)
+    get_default_category, get_default_product, get_default_shop,
+    create_product)
 from shuup.testing.soup_utils import extract_form_fields
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.importing import load
@@ -31,6 +35,7 @@ from shuup.utils.importing import load
 ])
 @pytest.mark.django_db
 def test_list_view(rf, class_spec):
+    shop = get_default_shop()
     view = load(class_spec).as_view()
     request = rf.get("/", {
         "jq": json.dumps({"perPage": 100, "page": 1})
@@ -211,3 +216,26 @@ def test_product_edit_view(rf, admin_user, settings):
         assert shop_product.primary_category == cat
     else:
         assert not shop_product.primary_category
+
+
+@pytest.mark.django_db
+def test_product_edit_view_multishop(rf, admin_user, settings):
+    activate("en")
+
+    product = create_product(sku="TEST-SKU-HAHA")
+
+    for i in range(5):
+        shop = Shop.objects.create(name="test-%d" % i)
+        sp = ShopProduct.objects.create(
+            product=product, shop=shop, visibility=ShopProductVisibility.ALWAYS_VISIBLE
+        )
+
+    assert Product.objects.count() == 1
+
+    view = ProductEditView.as_view()
+    for shop_product in ShopProduct.objects.all():
+        request = apply_request_middleware(rf.get("/"), user=admin_user)
+        response = view(request, pk=shop_product.pk)
+        response.render()
+        content = force_text(response.content)
+        assert product.sku in content

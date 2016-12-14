@@ -65,4 +65,4 @@ class FileResponseAction(PicotableFileMassAction):
 class EditProductAttributesAction(PicotableRedirectMassAction):
     label = _("Edit products")
     identifier = "mass_action_edit_product"
-    redirect_url = reverse("shuup_admin:product.mass_edit")
+    redirect_url = reverse("shuup_admin:shop_product.mass_edit")

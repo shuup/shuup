@@ -27,9 +27,11 @@ class ListSettingsView(FormView):
         module_str = "%s:%s" % (request.GET.get("module"), request.GET.get("model"))
         self.return_url = reverse("shuup_admin:%s.list" % request.GET.get("return_url"))
         match = resolve(self.return_url)
-        default_columns = load("%s:%s" % (match.func.__module__, match.func.__name__)).default_columns
+        view_context = load("%s:%s" % (match.func.__module__, match.func.__name__))
+
+        default_columns = view_context.default_columns
         self.model = load(module_str)
-        self.settings = ViewSettings(self.model, default_columns)
+        self.settings = ViewSettings(self.model, default_columns, view_context)
         return super(ListSettingsView, self).dispatch(request, *args, **kwargs)
 
     def get_form(self, form_class=None):

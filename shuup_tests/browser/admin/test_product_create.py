@@ -40,7 +40,7 @@ def test_product_create(browser, admin_user, live_server, settings):
     object_created.connect(_add_custom_product_created_message, sender=Product, dispatch_uid="object_created_signal_test")
     initialize_admin_browser_test(browser, live_server, settings)
 
-    url = reverse("shuup_admin:product.new")
+    url = reverse("shuup_admin:shop_product.new")
     browser.visit("%s%s" % (live_server, url))
     sku = "testsku"
     name = "Some product name"
