@@ -38,6 +38,9 @@ export function controller(config={}) {
     ctrl.viewMode = m.prop("grid");
     ctrl.sortMode = m.prop("+name");
 
+    ctrl.isMenuDisabled = function(action) {
+        return (config.disabledMenus || []).indexOf(action) >= 0;
+    }
     ctrl.setFolder = function(newFolderId) {
         newFolderId = 0 | newFolderId;
         if (ctrl.currentFolderId() === newFolderId) {

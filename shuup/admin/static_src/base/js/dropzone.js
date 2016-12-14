@@ -48,17 +48,22 @@ function activateDropzone($dropzone, attrs={}) {
     dropzone.on("queuecomplete", attrs.onQueueComplete || $.noop);
 
     $(selector).on("click", function(e) {
-        window.BrowseAPI.openBrowseWindow({kind: "media", filter: $(selector).data().kind, onSelect: (obj) => {
-            obj.name = obj.text;
-            $(selector).find("input").val(obj.id);
-            $(selector).find(".dz-preview").remove();
-            dropzone.emit("addedfile", obj);
-            if(obj.thumbnail) {
-                dropzone.emit("thumbnail", obj, obj.thumbnail);
+        window.BrowseAPI.openBrowseWindow({
+            kind: "media",
+            disabledMenus: ["delete", "rename"],
+            filter: $(selector).data().kind,
+            onSelect: (obj) => {
+                obj.name = obj.text;
+                $(selector).find("input").val(obj.id);
+                $(selector).find(".dz-preview").remove();
+                dropzone.emit("addedfile", obj);
+                if(obj.thumbnail) {
+                    dropzone.emit("thumbnail", obj, obj.thumbnail);
+                }
+                dropzone.emit("success", obj);
+                dropzone.emit("complete", obj);
             }
-            dropzone.emit("success", obj);
-            dropzone.emit("complete", obj);
-        }});
+        });
     });
 
     const data = $(selector).data();
@@ -69,7 +74,7 @@ function activateDropzone($dropzone, attrs={}) {
             dropzone.emit("thumbnail", data, data.thumbnail);
         }
         dropzone.emit("complete", data);
-    }    
+    }
 }
 
 function activateDropzones() {
