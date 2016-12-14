@@ -30,6 +30,7 @@ class CategoryBaseForm(ShuupAdminForm):
             "status",
             "ordering",
             "visibility",
+            "visible_in_menu",
             "visibility_groups",
             "name",
             "image",

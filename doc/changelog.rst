@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Add option to hide visible categories from menu
 - API: add endpoint for Stocks
 - Add option to limit service availability with shipping/payment country
 - API: Enable option to filter orders with id, identifier, date and status.
