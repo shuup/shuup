@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-12 18:15+0000\n"
+"POT-Creation-Date: 2016-12-14 17:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -779,6 +779,9 @@ msgid ""
 msgstr ""
 
 msgid "Set the users that belong to this permission group."
+msgstr ""
+
+msgid "Create new Permission Group"
 msgstr ""
 
 msgid "Product Types"
@@ -2897,6 +2900,30 @@ msgstr ""
 msgid ""
 "To create a variation with multiple variables, create the variables on the "
 "Variables tab and then link them to products here."
+msgstr ""
+
+msgid "Recent Orders"
+msgstr ""
+
+msgid "Store Overview"
+msgstr ""
+
+msgid "Sales"
+msgstr ""
+
+msgid "Customers"
+msgstr ""
+
+msgid "Today"
+msgstr ""
+
+msgid "MTD"
+msgstr ""
+
+msgid "YTD"
+msgstr ""
+
+msgid "Totals"
 msgstr ""
 
 msgid "Sample Data"
