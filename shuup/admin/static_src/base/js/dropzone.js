@@ -22,7 +22,14 @@ function activateDropzone($dropzone, attrs={}) {
         parallelUploads: 1,
         maxFiles: 1,
         dictDefaultMessage: gettext("Drop files here or click to browse."),
-        clickable: false
+        clickable: false,
+        accept: function(file, done) {
+            if ($(selector).data().kind === "images" && file.type.indexOf("image") < 0) {
+                done(gettext("only images can be uploaded!"));
+            } else {
+                done();
+            }
+        }
     }, attrs);
     const dropzone = new Dropzone(selector, params);
 
