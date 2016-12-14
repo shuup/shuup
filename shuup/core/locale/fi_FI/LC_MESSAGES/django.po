@@ -2195,7 +2195,7 @@ msgid "This field cannot be changed since it is protected."
 msgstr "Tätä kenttää ei voi muuttaa, koska se on suojattu."
 
 msgid "Region"
-msgstr "alue"
+msgstr "Alue"
 
 msgid "First Last"
 msgstr "Ensimmäinen Viimeinen"

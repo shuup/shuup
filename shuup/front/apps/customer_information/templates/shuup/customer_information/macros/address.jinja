@@ -5,16 +5,16 @@
 {% macro render_address(addr) %}
     {% set region = (addr.region_code or addr.region) %}
     <p><b>{% trans %}Name{% endtrans %}:</b> {{ addr.name }}</p>
-    <p><b>{% trans %}Email{% endtrans %}:</b> {{ addr.email or "Not specified" }}</p>
-    <p><b>{% trans %}Phone{% endtrans %}:</b> {{ addr.phone or "Not specified" }}</p>
+    <p><b>{% trans %}Email{% endtrans %}:</b> {{ addr.email or _("Not specified") }}</p>
+    <p><b>{% trans %}Phone{% endtrans %}:</b> {{ addr.phone or _("Not specified") }}</p>
     {% if addr.postal_code and addr.city and region %}
-        <p><b>{% trans %}Address{% endtrans %}:</b><br>{{ addr.street or "Not specified" }}</p>
+        <p><b>{% trans %}Address{% endtrans %}:</b><br>{{ addr.street }}</p>
         <p>{{ addr.postal_code }} {{ addr.city }}, {{ region }}</p>
     {% else %}
-        <p><b>{% trans %}Street{% endtrans %}:</b> {{ addr.street or "Not specified" }}</p>
-        <p><b>{% trans %}Postal code{% endtrans %}:</b> {{ addr.postal_code or "Not specified" }}</p>
-        <p><b>{% trans %}City{% endtrans %}:</b> {{ addr.city or "Not specified" }}</p>
-        <p><b>{% trans %}Region{% endtrans %}:</b> {{ region }}</p>
+        <p><b>{% trans %}Street{% endtrans %}:</b> {{ addr.street }}</p>
+        <p><b>{% trans %}Postal code{% endtrans %}:</b> {{ addr.postal_code or _("Not specified") }}</p>
+        <p><b>{% trans %}City{% endtrans %}:</b> {{ addr.city }}{% if region %}, {{ region }}{% endif %}</p>
+        <p><b>{% trans %}Country{% endtrans %}:</b> {{ addr.country.name }}</p>
     {% endif %}
 {% endmacro %}
 
