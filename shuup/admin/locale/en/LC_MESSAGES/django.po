@@ -1033,11 +1033,19 @@ msgstr ""
 msgid "Sales Dashboard"
 msgstr ""
 
-msgid "Sales per Month (last year)"
+msgid "Sales per Month (this year)"
+msgstr ""
+
+#, python-format
+msgid "Average Sales (%(currency)s)"
 msgstr ""
 
 #, python-format
 msgid "Sales (%(currency)s)"
+msgstr ""
+
+#, python-format
+msgid "Cumulative Total Sales (%(currency)s)"
 msgstr ""
 
 #, python-format

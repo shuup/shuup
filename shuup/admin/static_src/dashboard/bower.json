@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "main": [
-      "js/dashboard-charts.js",
-      "js/dashboard.js"
+    "js/dashboard-charts.js",
+    "js/dashboard.js"
   ],
   "dependencies": {
-    "chartist": "0.9.5",
-    "masonry": "4.1.1"
+    "masonry": "4.1.1",
+    "chart.js": "^2.4.0"
   },
   "overrides": {
     "outlayer": {

@@ -6,59 +6,61 @@
  * This source code is licensed under the AGPLv3 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-window.DashboardCharts = (function(Chartist) {
-    const chartTypeInfo = {
-        "bar": {
-            "factory": Chartist.Bar,
-            "elementSelector": ".ct-bar"
-        }
-    };
-    function activate(config, id) {
-        const parent = Chartist.querySelector("#chart-" + id);
-        if (!parent) {
-            return;
-        }
-        const typeInfo = chartTypeInfo[config.type];
-        if (!typeInfo) {
-            console.log("Unable to initialize chart - no type info", config); // eslint-disable-line
-            return;
-        }
-        const chartElement = document.createElement("div");
-        chartElement.className = "ct-chart " + (config.aspect || "ct-major-twelfth");
+window.DashboardCharts = (function(Chart) {
+    // colors from shuup/admin/static_src/base/less/variables.less
+    let colorPallete = [
+        "#429AAF",
+        "#C54141",
+        "#D16B2C",
+        "#555555",
+        "#7F5C99",
+        "#409AAF",
+        "#94B933",
+        "#CFBE00",
+        "#41589B"
+    ];
+    let nextColorIndex = 0;
 
-        parent.appendChild(chartElement);
-        const ChartFactory = typeInfo.factory;
-        config.instance = new ChartFactory(chartElement, config.data, config.options);
-        if (typeInfo.elementSelector) {
-            setupTooltips(chartElement, typeInfo.elementSelector);
+    function getNextColorFromPallete (){
+        return colorPallete[nextColorIndex++ % colorPallete.length];
+    }
+    function configureChartData(chartData){
+        let color = getNextColorFromPallete();
+        chartData.backgroundColor = color;
+
+        if (chartData.type == "line"){
+            chartData.borderColor = color;
+            chartData.fill = false;
         }
     }
+    function activate(config, id) {
+        const context = $("#chart-" + id);
 
-    function setupTooltips(chart, elementSelector) {
-        const $chart = $(chart);
+        if (!context) {
+            return;
+        }
 
-        const $toolTip = $chart
-            .append("<div class=\"ct-tooltip\"></div>")
-            .find(".ct-tooltip")
-            .hide();
+        let chartData = {};
+        if (config.type == "mixed"){
+            _.each(config.data, configureChartData);
 
-        $chart.on("mouseenter", elementSelector, function() {
-            const $point = $(this),
-                value = $point.attr("ct:value"),
-                seriesName = $point.parent().attr("ct:series-name");
-            $toolTip.html(seriesName + "<br>" + value).show();
-        });
-
-        $chart.on("mouseleave", elementSelector, function() {
-            $toolTip.hide();
-        });
-
-        $chart.on("mousemove", function(event) {
-            $toolTip.css({
-                left: (event.offsetX || event.originalEvent.layerX) - $toolTip.width() / 2 - 10,
-                top: (event.offsetY || event.originalEvent.layerY) - $toolTip.height() - 40
-            });
-        });
+            chartData = {
+                type: "bar",
+                data: {
+                    labels: config.labels,
+                    datasets: config.data,
+                    options: config.options
+                }
+            }
+        }else{
+            _.each(config.data.datasets, configureChartData);
+            chartData = {
+                type: config.type,
+                data: config.data,
+                options: config.options
+            };
+        }
+        const chart = new Chart(context, chartData);
     }
     return {
         init: function init() {
@@ -67,4 +69,4 @@ window.DashboardCharts = (function(Chartist) {
             });
         }
     };
-}(window.Chartist));
+}(window.Chart));

@@ -79,7 +79,7 @@ class DashboardChartBlock(DashboardBlock):
             <div class="icon-wrap"><i class="fa %(icon)s"></i></div>
         </div>
         <div class="block-content">
-            <div id="chart-%(id)s"></div>
+            <canvas id="chart-%(id)s" height="250"></canvas>
         </div>
     </div>
     <script>
