@@ -9,13 +9,20 @@ from __future__ import unicode_literals
 
 import json
 
-from rest_framework.test import APIClient
+import pytest
 from rest_framework import status
+from rest_framework.test import APIClient
+
+from shuup.core import cache
 from shuup.core.models import Order
 from shuup.testing.factories import (
-    create_order_with_product, get_default_product,
-    get_default_shop, get_default_supplier
+    create_order_with_product, get_default_product, get_default_shop,
+    get_default_supplier
 )
+
+
+def setup_function(fn):
+    cache.clear()
 
 
 def create_order():
@@ -52,6 +59,7 @@ def get_order_url(order_pk):
     return "/api/shuup/order/%s/" % order_pk
 
 
+@pytest.mark.django_db
 def test_create_payment(admin_user):
     order = create_order()
     client = get_client(admin_user)
@@ -82,6 +90,7 @@ def test_create_payment(admin_user):
     assert payments[0]["payment_identifier"] == payment_identifier
 
 
+@pytest.mark.django_db
 def test_set_fully_paid(admin_user):
     order = create_order()
     client = get_client(admin_user)
@@ -112,6 +121,7 @@ def test_set_fully_paid(admin_user):
     assert currently_paid_amount == order.get_total_paid_amount()
 
 
+@pytest.mark.django_db
 def test_set_paid_from_partially_paid_order(admin_user):
     order = create_order()
     client = get_client(admin_user)

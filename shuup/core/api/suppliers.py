@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers, viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
@@ -46,6 +47,12 @@ class SupplierViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = Supplier.objects.all()
     serializer_class = SupplierSerializer
+
+    def get_view_name(self):
+        return _("Suppliers")
+
+    def get_view_description(self, html=False):
+        return _("Suppliers can be listed and fetched.")
 
     @detail_route(methods=['get'])
     def stock(self, request, pk=None):

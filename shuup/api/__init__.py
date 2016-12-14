@@ -18,6 +18,12 @@ class ShuupApiAppConfig(AppConfig):
         "rest_framework",
     )
 
+    provides = {
+        "admin_module": [
+            "shuup.api.admin_module:APIModule",
+        ]
+    }
+
     def ready(self):
         super(ShuupApiAppConfig, self).ready()
         from django.conf import settings

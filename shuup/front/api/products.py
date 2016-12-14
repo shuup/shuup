@@ -9,6 +9,7 @@
 from collections import defaultdict
 
 import six
+from django.utils.translation import ugettext_lazy as _
 from django_filters import filters
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from rest_framework import mixins, serializers, viewsets
@@ -77,6 +78,12 @@ class FrontProductViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     serializer_class = FrontProductSerializer
     filter_backends = (OrderingFilter, DjangoFilterBackend)
     filter_class = FrontProductFilter
+
+    def get_view_name(self):
+        return _("Front Products")
+
+    def get_view_description(self, html=False):
+        return _("Front Products can be listed and fetched.")
 
     def get_queryset(self):
         return Product.objects.listed(

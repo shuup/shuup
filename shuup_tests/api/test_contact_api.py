@@ -9,12 +9,18 @@ from __future__ import unicode_literals
 
 import json
 
-from rest_framework.test import APIClient
 from rest_framework import status
+from rest_framework.test import APIClient
+
+from shuup.core import cache
 from shuup.core.models import Contact
 from shuup.testing.factories import (
     create_random_person, get_default_customer_group, get_default_shop
 )
+
+
+def setup_function(fn):
+    cache.clear()
 
 
 def test_get_by_pk(admin_user):

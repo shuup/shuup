@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-12 03:46+0000\n"
+"POT-Creation-Date: 2016-12-15 19:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -17,6 +17,48 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
+
+msgid "Contacts"
+msgstr ""
+
+msgid "Contacts can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+msgid "Orders"
+msgstr ""
+
+msgid "Orders can be listed, fetched, created, updated and canceled."
+msgstr ""
+
+msgid "Products"
+msgstr ""
+
+msgid "Products can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+msgid "Shop Products"
+msgstr ""
+
+msgid "Shop Products can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+msgid "Shipments"
+msgstr ""
+
+msgid "Shipments can be listed and fetched."
+msgstr ""
+
+msgid "Suppliers"
+msgstr ""
+
+msgid "Suppliers can be listed and fetched."
+msgstr ""
+
+msgid "Users"
+msgstr ""
+
+msgid "Users can be listed, fetched, created, updated and deleted."
+msgstr ""
 
 msgid "internal identifier"
 msgstr ""
@@ -298,6 +340,12 @@ msgstr ""
 msgid ""
 "You can choose to limit who sees your category based on whether they are "
 "logged in or if they are  part of a customer group."
+msgstr ""
+
+msgid "visible in menu"
+msgstr ""
+
+msgid "Check this if this category should be visible in menu."
 msgstr ""
 
 msgid "visible for groups"
