@@ -77,7 +77,7 @@ function addEditToggleMarkup() {
         // No placeholders in the DOM, so no need to show an Edit button here.
         return;
     }
-    const div = el("div.xt-edit-toggle", [
+    const li = el("li.xt-edit-toggle", [
         el("form", {
             "action": window.XthemeEditorConfig.commandUrl,
             "method": "POST"
@@ -90,7 +90,8 @@ function addEditToggleMarkup() {
             }, (editing ? gettext("Exit Edit") : gettext("Edit Page")))
         ])
     ]);
-    document.body.appendChild(div);
+    let nav = document.querySelector(".navbar-admin-tools .navbar-nav")
+    nav.insertBefore(li, nav.firstChild);
 }
 
 function handleMessage(event) {
