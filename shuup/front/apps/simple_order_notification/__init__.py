@@ -19,12 +19,4 @@ class SimpleOrderNotificationAppConfig(AppConfig):
         ]
     }
 
-    def ready(self):
-        from shuup.front.signals import order_complete_viewed
-        from shuup.front.apps.simple_order_notification.signal_handler import send_simple_order_notification
-        order_complete_viewed.connect(
-            send_simple_order_notification,
-            dispatch_uid="simple_order_notification.send_simple_order_notification")
-
-
 default_app_config = "shuup.front.apps.simple_order_notification.SimpleOrderNotificationAppConfig"

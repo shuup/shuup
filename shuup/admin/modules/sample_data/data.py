@@ -9,22 +9,6 @@ from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
 
-CMS_PAGES = {
-    "about_us": {
-        "title": _("About Us"),
-        "content": _("Write here about your shop.")
-    },
-    "terms_conditions": {
-        "title": _("Terms and Conditions"),
-        "content": _("Write here the terms and conditions."),
-    },
-    "privacy_policy": {
-        "title": _("Privacy Policy"),
-        "content": _("Write here the privacy policy.")
-    }
-}
-
-
 BUSINESS_SEGMENTS = {
     "default": {
         "name": _("Default"),

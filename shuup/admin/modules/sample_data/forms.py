@@ -10,7 +10,7 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.modules.sample_data import manager as sample_manager
-from shuup.admin.modules.sample_data.data import BUSINESS_SEGMENTS, CMS_PAGES
+from shuup.admin.modules.sample_data.data import BUSINESS_SEGMENTS
 
 
 class SampleObjectsWizardForm(forms.Form):
@@ -66,19 +66,6 @@ class SampleObjectsWizardForm(forms.Form):
                 help_text=_("Check this to install a sample carousel.")
             )
 
-        # add the cms field if the module is installed
-        if 'shuup.simple_cms' in settings.INSTALLED_APPS:
-            cms_pages_choices = sorted([(k, v["title"]) for k, v in CMS_PAGES.items()])
-            installed_pages = sample_manager.get_installed_cms_pages(shop)
-            self.fields["cms"] = forms.MultipleChoiceField(
-                label=_("Install CMS Pages"),
-                required=False,
-                choices=cms_pages_choices,
-                initial=installed_pages,
-                widget=forms.SelectMultiple(attrs={"disabled": bool(installed_pages)}),
-                help_text=_("Select the CMS pages you want to install.")
-            )
-
 
 class ConsolidateObjectsForm(forms.Form):
 
@@ -102,8 +89,3 @@ class ConsolidateObjectsForm(forms.Form):
                 initial=False,
                 required=False
             )
-
-        if sample_manager.get_installed_cms_pages(shop):
-            self.fields["cms"] = forms.BooleanField(label=_("Uninstall CMS Pages"),
-                                                    initial=False,
-                                                    required=False)

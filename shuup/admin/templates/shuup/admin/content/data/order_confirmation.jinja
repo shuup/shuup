@@ -1,0 +1,19 @@
+{{'Thank you for your order, {{ order.customer }}!'}}
+
+{% trans %}Your order has been received and will be processed as soon as possible.{% endtrans %}
+
+{% trans %}For reference, here's a list of your order's contents.{% endtrans %}
+
+{%- raw %}
+{% for line in order.lines.all() %}
+* {{ line.quantity|float(2) }} x {{ line.text }} - {{ line.taxful_price|float(2) }}
+{%- endfor %}
+{%- endraw %}
+
+{{'Order Total: {{ order.taxful_total_price|float(2) }}'}}
+
+{% raw %}{% if not order.is_paid() %}{% endraw %}
+{% trans %}Please note that no record of your order being paid currently exists.{% endtrans %}
+{% raw %}{% endif %}{% endraw %}
+
+{% trans %}Thank you for shopping with us!{% endtrans %}
