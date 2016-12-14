@@ -11,31 +11,77 @@ import time
 import pytest
 from django.core.urlresolvers import reverse
 
-from shuup.testing.browser_utils import click_element, wait_until_appeared, wait_until_condition
-from shuup.testing.factories import create_random_person, get_default_shop
+from shuup.testing.browser_utils import (
+    click_element, wait_until_appeared, wait_until_appeared_xpath,
+    wait_until_condition
+)
+from shuup.testing.factories import (
+    create_product, create_random_person, get_default_shop,
+    get_default_supplier
+)
 from shuup.testing.utils import initialize_admin_browser_test
 
-
 pytestmark = pytest.mark.skipif(os.environ.get("SHUUP_BROWSER_TESTS", "0") != "1", reason="No browser tests run.")
+
+def create_contacts(shop):
+    for i in range(0, 200):
+        contact = create_random_person()
+        contact.save()
+
+
+def create_products(shop):
+    supplier = get_default_supplier()
+    for i in range(0, 200):
+        sku = "sku-%d" % i
+        create_product(sku, shop, supplier, default_price=i)
+
+# used in settings
+list_view_settings = {
+    "contact": {
+        "page_header": "Contacts",
+        "default_column_count": 6,
+        "addable_fields": [(1, "Account Manager")],
+        "creator": create_contacts,
+        "test_pagination": True
+    },
+    "shop_product": {
+        "page_header": "Shop Products",
+        "default_column_count": 6,
+        "addable_fields": [(11, "Gtin"), (6, "Default Price")],
+        "creator": create_products,
+        "test_pagination": False
+    },
+    "permission_group": {
+        "page_header": "Permission Groups",
+        "default_column_count": 1,
+        "addable_fields": [(2, "Permissions"), (1, "Id")],  # use reverse order due idx
+        "creator": None,
+        "test_pagination": False
+    }
+}
 
 
 @pytest.mark.browser
 @pytest.mark.djangodb
-def test_list_view(browser, admin_user, live_server, settings):
+@pytest.mark.parametrize("visit_type", list_view_settings.keys())
+def test_list_views(browser, admin_user, live_server, settings, visit_type):
     shop = get_default_shop()
-    for i in range(0, 200):
-        contact = create_random_person()
-        contact.save()
+    creator = list_view_settings[visit_type].get("creator", None)
+
+    if creator and callable(creator):
+        creator(shop)
+
     initialize_admin_browser_test(browser, live_server, settings)
-    _visit_contacts_list_view(browser, live_server)
-    _test_pagination(browser)
-    _set_settings(browser)
+    _visit_list_view(browser, live_server, visit_type)
+    if list_view_settings[visit_type].get("test_pagination", False):
+        _test_pagination(browser)
+    _set_settings(browser, visit_type)
 
 
-def _visit_contacts_list_view(browser, live_server):
-    url = reverse("shuup_admin:contact.list")
+def _visit_list_view(browser, live_server, list_view_name):
+    url = reverse("shuup_admin:%s.list" % list_view_name)
     browser.visit("%s%s" % (live_server, url))
-    wait_until_condition(browser, lambda x: x.is_text_present("Contacts"))
+    wait_until_condition(browser, lambda x: x.is_text_present(list_view_settings[list_view_name]["page_header"]))
     wait_until_appeared(browser, ".picotable-item-info")
 
 
@@ -89,10 +135,44 @@ def _click_item(items, value):
     time.sleep(0.5)  # Wait mithril for a half sec
 
 
-def _set_settings(browser):
-    assert not browser.is_text_present("Account Manager")
-    browser.find_by_css(".btn.btn-default.btn-inverse").click()
-    browser.find_by_css(".btn.btn-xs.btn-success.btn-add-sortable").first.click()
+def _set_settings(browser, setting_type):
+    used_settings = list_view_settings[setting_type]
+    default_column_count = used_settings["default_column_count"]
+    addable_fields = used_settings["addable_fields"]
+
+    # not selected by default
+    for idx, text in addable_fields:
+        assert not browser.is_text_present(text)
+
+    # go to settings
+    browser.find_by_xpath("//a[contains(text(),'Settings')]").click()
+
+    # select settings
+    for idx, (index_key, text) in enumerate(addable_fields):
+        expected_index = default_column_count + 1 + idx
+        assert browser.is_text_present(text)
+        browser.find_by_xpath("//ul[@id='source-sortable']/li[%d]/button" % index_key).first.click()
+        wait_until_appeared_xpath(browser, "//ul[@id='target-sortable']/li[%d]/button" % expected_index)
+        # browser.find_by_css(".btn.btn-xs.btn-success.btn-add-sortable").first.click()
+
+    # save settings
     browser.find_by_css(".btn.btn-success").first.click()
     wait_until_appeared(browser, ".picotable-item-info")
-    wait_until_condition(browser, lambda x: x.is_text_present("Account Manager"))
+
+    for idx, text in addable_fields:
+        wait_until_condition(browser, lambda x: x.is_text_present(text))
+
+    # go back to settings
+    browser.find_by_xpath("//a[contains(text(),'Settings')]").click()
+
+    wait_until_appeared_xpath(browser, "//a[contains(text(),'Reset Defaults')]")
+
+    # reset to defaults
+    browser.find_by_xpath("//a[contains(text(),'Reset Defaults')]").click()
+
+    # wait
+    wait_until_appeared(browser, ".picotable-item-info")
+
+    # not selected by default
+    for idx, text in addable_fields:
+        assert not browser.is_text_present(text)
