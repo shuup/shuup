@@ -8,11 +8,18 @@ from markdown import Markdown
 import six
 
 
-def md_to_html(apps, schema_editor):
+def safe_convert(str):
     md = Markdown(extensions=[
         'markdown.extensions.extra',
         'markdown.extensions.nl2br',
     ], output_format="html5")
+    try:
+        return md.convert(str)
+    except:
+        return str
+
+
+def md_to_html(apps, schema_editor):
     SavedViewConfig = apps.get_model("shuup_xtheme", "SavedViewConfig")
     for config in SavedViewConfig.objects.all():
         record_changed = False
@@ -26,14 +33,14 @@ def md_to_html(apps, schema_editor):
                         continue
                     text_config = plugin.get("config", {})
                     texts = text_config.get("text", {})
-                    for lang in six.iterkeys(texts):
-                        # phew! finally
-                        try:
-                            texts[lang] = texts[lang] = md.convert(texts[lang])
+                    if isinstance(texts, six.string_types):
+                        text_config["text"] = safe_convert(texts)
+                        record_changed = True
+                    else:
+                        for lang in six.iterkeys(texts):
+                            # phew! finally
+                            texts[lang] = safe_convert(texts[lang])
                             record_changed = True
-                        except:
-                            # not valid markdown - leave it as-is
-                            pass
         if record_changed:
             config.save()
 
