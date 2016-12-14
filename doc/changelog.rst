@@ -71,6 +71,7 @@ Order Printouts
 Campaigns
 ~~~~~~~~~
 
+- Add option to select multiple categories to basket condition
 - Variation children should match rules based on parent
 
 Customer Group Pricing

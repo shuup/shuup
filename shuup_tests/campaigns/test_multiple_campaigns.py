@@ -55,7 +55,8 @@ def test_multiple_campaigns_cheapest_price(rf):
     cdp = ProductDiscountPercentage.objects.create(campaign=catalog_campaign, discount_percentage=discount_percentage)
 
     # create basket campaign
-    condition = CategoryProductsBasketCondition.objects.create(category=category, operator=ComparisonOperator.EQUALS, quantity=1)
+    condition = CategoryProductsBasketCondition.objects.create(operator=ComparisonOperator.EQUALS, quantity=1)
+    condition.categories.add(category)
     basket_campaign = BasketCampaign.objects.create(shop=shop, public_name="test", name="test", active=True)
     basket_campaign.conditions.add(condition)
 

@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('basketcondition_ptr', models.OneToOneField(serialize=False, auto_created=True, primary_key=True, to='campaigns.BasketCondition', parent_link=True)),
                 ('operator', enumfields.fields.EnumIntegerField(verbose_name='operator', enum=shuup.campaigns.models.basket_conditions.ComparisonOperator, default=1)),
                 ('quantity', models.PositiveIntegerField(verbose_name='quantity', default=1)),
-                ('category', models.ForeignKey(blank=True, to='shuup.Category', verbose_name='category')),
+                ('category', models.ForeignKey(blank=True, null=True, to='shuup.Category', verbose_name='category')),
             ],
             options={
                 'abstract': False,
