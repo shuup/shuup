@@ -225,7 +225,8 @@ class CategoryProductsBasketCondition(BasketCondition):
     def matches(self, basket, lines):
         product_id_to_qty = get_product_ids_and_quantities(basket)
         product_ids = ShopProduct.objects.filter(
-            categories__in=self.categories.all()).values_list("product_id", flat=True)
+            categories__in=self.categories.all(), product_id__in=product_id_to_qty.keys()
+        ).values_list("product_id", flat=True)
         product_count = sum(product_id_to_qty[product_id] for product_id in product_ids)
         if self.operator == ComparisonOperator.EQUALS:
             return bool(product_count == self.quantity)
