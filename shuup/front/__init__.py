@@ -42,6 +42,9 @@ class ShuupFrontAppConfig(AppConfig):
             "shuup.front.forms.product_list_modifiers.SortProductListByPrice",
             "shuup.front.forms.product_list_modifiers.ManufacturerProductListFilter",
         ],
+        "api_populator": [
+            "shuup.front.api:populate_front_api"
+        ],
     }
 
     def ready(self):

@@ -306,18 +306,20 @@ class ShopProduct(MoneyPropped, models.Model):
 
         if self.product.is_package_parent():
             for child_product, child_quantity in six.iteritems(self.product.get_package_child_to_quantity_map()):
-                child_shop_product = child_product.get_shop_instance(shop=self.shop)
-                if not child_shop_product:
+                try:
+                    child_shop_product = child_product.get_shop_instance(shop=self.shop)
+                except ShopProduct.DoesNotExist:
                     yield ValidationError("%s: Not available in %s" % (child_product, self.shop), code="invalid_shop")
-                for error in child_shop_product.get_orderability_errors(
-                        supplier=supplier,
-                        quantity=(quantity * child_quantity),
-                        customer=customer,
-                        ignore_minimum=ignore_minimum
-                ):
-                    message = getattr(error, "message", "")
-                    code = getattr(error, "code", None)
-                    yield ValidationError("%s: %s" % (child_product, message), code=code)
+                else:
+                    for error in child_shop_product.get_orderability_errors(
+                            supplier=supplier,
+                            quantity=(quantity * child_quantity),
+                            customer=customer,
+                            ignore_minimum=ignore_minimum
+                    ):
+                        message = getattr(error, "message", "")
+                        code = getattr(error, "code", None)
+                        yield ValidationError("%s: %s" % (child_product, message), code=code)
 
         if supplier and self.product.stock_behavior == StockBehavior.STOCKED:
             for error in supplier.get_orderability_errors(self, quantity, customer=customer):
