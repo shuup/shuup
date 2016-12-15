@@ -32,11 +32,30 @@ def get_orders_by_currency(currency):
 
 
 class OrderValueChartDashboardBlock(DashboardChartBlock):
+    default_size = "small"
+
     def __init__(self, id, currency, **kwargs):
         self.currency = currency
+        self.cached_chart = None
         super(OrderValueChartDashboardBlock, self).__init__(id, **kwargs)
 
+    @property
+    def size(self):
+        data_size = 0
+        for dataset in self.get_chart().datasets:
+            data_size = max(data_size, len(dataset["data"]))
+        # the size will be dynamic. small for periods up to 4 months, otherwise medium
+        return ("medium" if data_size > 4 else "small")
+
+    @size.setter
+    def size(self, value):
+        # do not raise!
+        pass
+
     def get_chart(self):
+        if self.cached_chart is not None:
+            return self.cached_chart
+
         today = date.today()
         start_of_year = date(today.year, 1, 1)
 
@@ -56,31 +75,42 @@ class OrderValueChartDashboardBlock(DashboardChartBlock):
 
         cumulative_sales = []
         average_sales = []
-        count = 0
-        total = Decimal()
 
-        for month_sale in sum_sales_data.values():
-            total = total + month_sale["sum"]
-            cumulative_sales.append(total)
-            average_sales.append(total / (count+1))
-            count = count + 1
+        # only calculate cumulative and average if there are at least 3 months
+        if len(sum_sales_data) >= 3:
+            count = 0
+            total = Decimal()
 
-        mixed_chart.add_data(
-            _("Average Sales (%(currency)s)") % {"currency": self.currency},
-            [Money(v, currency=self.currency).as_rounded().value for v in average_sales],
-            ChartType.LINE
-        )
+            for month_sale in sum_sales_data.values():
+                total = total + month_sale["sum"]
+                cumulative_sales.append(total)
+                average_sales.append(total / (count+1))
+                count = count + 1
+
+        # this will be on top of all bars
+        if average_sales:
+            mixed_chart.add_data(
+                _("Average Sales (%(currency)s)") % {"currency": self.currency},
+                [Money(v, currency=self.currency).as_rounded().value for v in average_sales],
+                ChartType.LINE
+            )
+
+        # this will be under the cummulative bars
         mixed_chart.add_data(
             _("Sales (%(currency)s)") % {"currency": self.currency},
             [Money(v["sum"], currency=self.currency).as_rounded().value for v in sum_sales_data.values()],
             ChartType.BAR
         )
-        mixed_chart.add_data(
-            _("Cumulative Total Sales (%(currency)s)") % {"currency": self.currency},
-            [Money(v, currency=self.currency).as_rounded().value for v in cumulative_sales],
-            ChartType.BAR
-        )
 
+        # this will be under all others charts
+        if cumulative_sales:
+            mixed_chart.add_data(
+                _("Cumulative Total Sales (%(currency)s)") % {"currency": self.currency},
+                [Money(v, currency=self.currency).as_rounded().value for v in cumulative_sales],
+                ChartType.BAR
+            )
+
+        self.cached_chart = mixed_chart
         return mixed_chart
 
 
