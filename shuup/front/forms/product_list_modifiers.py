@@ -20,7 +20,8 @@ from django.utils.translation import get_language
 
 from shuup.core import cache
 from shuup.core.models import (
-    Category, Manufacturer, ProductVariationVariable, ShopProduct
+    Category, Manufacturer, ProductVariationVariable, ShopProduct,
+    ShopProductVisibility
 )
 from shuup.front.utils.sorts_and_filters import (
     get_configuration, ProductListFormModifier
@@ -354,7 +355,9 @@ class ProductVariationFilter(SimpleProductListModifier):
             return cached_fields
 
         variation_values = defaultdict(set)
-        for variation in ProductVariationVariable.objects.filter(product__shop_products__categories=category):
+        for variation in ProductVariationVariable.objects.filter(
+                Q(product__shop_products__categories=category),
+                ~Q(product__shop_products__visibility=ShopProductVisibility.NOT_VISIBLE)):
             for value in variation.values.all():
                 # TODO: Use ID here instead of this "trick"
                 choices = (value.value.replace(" ", "*"), value.value)
