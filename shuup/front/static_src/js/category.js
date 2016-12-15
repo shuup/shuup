@@ -54,7 +54,8 @@ function getFilterString(state) {
     if(state !== null) {
         filterString = "?";
         $.each(state, function(key, value) {
-            filterString += (filterString.endsWith("?") || filterString.endsWith("&") ? "" : "&");
+            var shouldAppendAmpersand = ("&?".indexOf(filterString[filterString.length-1]) > 0);
+            filterString += (shouldAppendAmpersand ? "" : "&");
             if (value.constructor === Array) {
                 filterString += (value.length > 0 ? (key + "=" + value.join("&" + key + "=")) : "");
             } else {
