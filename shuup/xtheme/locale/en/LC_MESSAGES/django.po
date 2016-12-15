@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-09 21:39+0000\n"
+"POT-Creation-Date: 2016-12-16 02:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -203,14 +203,14 @@ msgstr ""
 msgid "text"
 msgstr ""
 
-msgid "(Untranslated)"
-msgstr ""
-
 #, python-format
 msgid "Click to edit placeholder: %s"
 msgstr ""
 
 msgid "Delete This Cell"
+msgstr ""
+
+msgid "Untranslated"
 msgstr ""
 
 msgid "There's nothing to configure in this plugin."
@@ -226,6 +226,9 @@ msgid "Add new cell"
 msgstr ""
 
 msgid "Delete row"
+msgstr ""
+
+msgid "Move row"
 msgstr ""
 
 msgid "Add new row"

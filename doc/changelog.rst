@@ -57,6 +57,7 @@ Front
 Xtheme
 ~~~~~~
 
+- Allow layout to be rearranged in xtheme editor through drag and drop
 - Add highlight plugin for category products
 - Use rich text editor for text plugin
 
