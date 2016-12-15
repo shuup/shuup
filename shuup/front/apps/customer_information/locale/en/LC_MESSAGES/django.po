@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-08 23:05+0000\n"
+"POT-Creation-Date: 2016-12-14 17:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -145,6 +145,9 @@ msgstr ""
 msgid "User account information"
 msgstr ""
 
+msgid "Not specified"
+msgstr ""
+
 msgid "Street"
 msgstr ""
 
@@ -154,7 +157,7 @@ msgstr ""
 msgid "City"
 msgstr ""
 
-msgid "Region"
+msgid "Country"
 msgstr ""
 
 msgid "Billing information"

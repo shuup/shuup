@@ -7,10 +7,10 @@
             <input name="command" type="hidden" value="update">
             {% csrf_token %}
             {{ render_basket_lines(basket) }}
-            {{ render_unorderable_basket_lines(basket) }}
-            {{ render_coupon_div(basket) }}
-            {{ render_basket_summary(basket) }}
         </form>
+        {{ render_unorderable_basket_lines(basket) }}
+        {{ render_coupon_div(basket) }}
+        {{ render_basket_summary(basket) }}
     </div>
 {% endmacro %}
 
@@ -215,6 +215,13 @@
             </div>
         </div>
     {% endif %}
+{% endmacro %}
+
+{% macro render_empty_basket_actions() %}
+    <a href="/xtheme/products" class="btn btn-primary">
+        <i class="fa fa-angle-double-left"></i>
+        {% trans %}Back to Products{% endtrans %}
+    </a>
 {% endmacro %}
 
 {% macro render_extrajs() %}

@@ -28,17 +28,20 @@
         <div class="col-md-6">
             <div class="title">{% trans %}Contact Information{% endtrans %}</div>
             {{ render_field(address_form.name, show_help_text=False) }}
-            {{ render_field(address_form.phone, show_help_text=False) }}
-            {{ render_field(address_form.email, show_help_text=False) }}
+            {% if "phone" in address_form.fields %}
+                {{ render_field(address_form.phone, show_help_text=False) }}
+            {% endif %}
+            {% if "email" in address_form.fields %}
+                {{ render_field(address_form.email, show_help_text=False) }}
+            {% endif %}
         </div>
         <div class="col-md-6">
             <div class="title">{% trans %}Address{% endtrans %}</div>
-            {{ render_field(address_form.street, show_help_text=False) }}
-            {{ render_field(address_form.city, show_help_text=False) }}
-            {{ render_field(address_form.region, show_help_text=False) }}
-            {{ render_field(address_form.region_code, show_help_text=False) }}
-            {{ render_field(address_form.postal_code, show_help_text=False) }}
-            {{ render_field(address_form.country, show_help_text=False) }}
+            {% for field in address_form %}
+                {% if field.name not in ["name", "phone", "email"] %}
+                    {{ render_field(field, show_help_text=False) }}
+                {% endif %}
+            {% endfor %}
         </div>
     </div>
     <div class="btn-toolbar pull-right" role="toolbar">
