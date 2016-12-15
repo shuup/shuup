@@ -12,8 +12,36 @@ import json
 from rest_framework import status
 from rest_framework.test import APIClient
 
+from shuup.core import cache
 from shuup.core.models import Shop, ShopProduct, StockBehavior, Supplier
-from shuup.testing.factories import create_product
+from shuup.testing.factories import create_product, get_default_shop
+
+
+def setup_function(fn):
+    cache.clear()
+
+
+def get_products_by_id_sku(admin_user):
+    client = _get_client(admin_user)
+    get_default_shop()
+    products = [create_product("product 1"), create_product("product 2"), create_product("product 3")]
+    client = _get_client(admin_user)
+
+    # get by ID
+    response = client.get("/api/shuup/product/?id=%d" % products[2].id)
+    assert response.status_code == status.HTTP_200_OK
+    product_data = json.loads(response.content.decode("utf-8"))
+    assert len(product_data) == 1
+    assert product_data[0]["product"] == products[2].id
+    assert product_data[0]["sku"] == products[2].id
+
+    # get by SKU
+    response = client.get("/api/shuup/product/?sku=%s" % products[1].sku)
+    assert response.status_code == status.HTTP_200_OK
+    product_data = json.loads(response.content.decode("utf-8"))
+    assert len(product_data) == 1
+    assert product_data[0]["product"] == products[1].id
+    assert product_data[0]["sku"] == products[1].id
 
 
 def create_simple_supplier(identifier):
