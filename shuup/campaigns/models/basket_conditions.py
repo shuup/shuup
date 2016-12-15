@@ -220,7 +220,7 @@ class CategoryProductsBasketCondition(BasketCondition):
     operator = EnumIntegerField(
         ComparisonOperator, default=ComparisonOperator.GTE, verbose_name=_("operator"))
     quantity = models.PositiveIntegerField(default=1, verbose_name=_("quantity"))
-    categories = models.ManyToManyField(Category, verbose_name=_("categories"), blank=True)
+    categories = models.ManyToManyField(Category, verbose_name=_("categories"))
 
     def matches(self, basket, lines):
         product_id_to_qty = get_product_ids_and_quantities(basket)
