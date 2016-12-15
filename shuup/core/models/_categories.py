@@ -117,6 +117,9 @@ class Category(MPTTModel, TranslatableModel):
             " part of a customer group."
         )
     )
+    visible_in_menu = models.BooleanField(verbose_name=_("visible in menu"), default=True, help_text=_(
+        "Check this if this category should be visible in menu."
+    ))
     visibility_groups = models.ManyToManyField(
         "ContactGroup", blank=True, verbose_name=_('visible for groups'), related_name=u"visible_categories",
         help_text=_(
