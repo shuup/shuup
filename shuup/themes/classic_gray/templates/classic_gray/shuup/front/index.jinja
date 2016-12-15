@@ -10,13 +10,17 @@
 
     {% placeholder "front_content" %}
         {% row %}
-            {% plugin "product_highlight" %}
-                type = "newest"
-                title = "Newest Products"
-            {% endplugin %}
+            {% column {"md": 12} %}
+                {% plugin "product_highlight" %}
+                    type = "newest"
+                    title = "Newest Products"
+                {% endplugin %}
+            {% endcolumn %}
         {% endrow %}
         {% row %}
-            {% plugin "product_highlight" %}type = "best_selling"{% endplugin %}
+            {% column {"md": 12} %}
+                {% plugin "product_highlight" %}type = "best_selling"{% endplugin %}
+            {% endcolumn %}
         {% endrow %}
     {% endplaceholder %}
 {% endblock %}
