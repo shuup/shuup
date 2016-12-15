@@ -2,33 +2,47 @@
 @color-blue: #55ACCC;
 @editor-bg-color: #fff;
 
-
-@keyframes xt-ph-outline-fade {
-    0% {
-        border-color: fade(@color-green, 70%);
-    }
-    100% {
-        border-color: fade(@color-green, 20%);
-    }
-}
-
 .xt-ph-edit {
-    border: 2px dashed fade(@color-green, 50%);
-    animation-name: xt-ph-outline-fade;
-    animation-duration: 1.5s;
-    animation-direction: alternate;
-    animation-fill-mode: both;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
+    border: 2px dashed @color-blue;
     min-height: 20px;
     cursor: pointer;
     padding: 0.2rem;
     margin-bottom: 10px;
+    position: relative;
+
+    &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        transition: all 0.3s;
+        opacity: 0;
+        background: @color-blue;
+        z-index: 100;
+    }
     &>* {
         pointer-events: none;
     }
     &:hover {
-        background: fade(@color-green, 10%);
+        border-style: solid;
+
+        &:before {
+            opacity: 0.5;
+        }
+    }
+
+    .xt-toolbar {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        margin: auto;
+
+        .configure {
+            padding: 20px;
+            font-size: 20px;
+        }
     }
 }
 
