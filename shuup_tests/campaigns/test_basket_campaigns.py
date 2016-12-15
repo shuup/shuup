@@ -117,7 +117,8 @@ def test_basket_category_discount(rf):
 
         return product
 
-    basket_condition = CategoryProductsBasketCondition.objects.create(quantity=2, category=category)
+    basket_condition = CategoryProductsBasketCondition.objects.create(quantity=2)
+    basket_condition.categories.add(category)
 
     campaign = BasketCampaign.objects.create(
         shop=shop, public_name="test", name="test", active=True
@@ -391,7 +392,8 @@ def test_product_basket_campaigns():
     assert BasketCampaign.get_for_product(shop_product).count() == 0
 
     # category condition that doesn't match
-    cat_condition = CategoryProductsBasketCondition.objects.create(category=cat)
+    cat_condition = CategoryProductsBasketCondition.objects.create()
+    cat_condition.categories.add(cat)
     campaign.conditions.add(cat_condition)
     assert BasketCampaign.get_for_product(shop_product).count() == 0
 

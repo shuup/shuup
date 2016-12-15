@@ -35,8 +35,8 @@ def test_category_product_in_basket_condition(rf):
     shop_product = product.get_shop_instance(shop)
     assert category not in shop_product.categories.all()
 
-    condition = CategoryProductsBasketCondition.objects.create(
-        category=category, operator=ComparisonOperator.EQUALS, quantity=1)
+    condition = CategoryProductsBasketCondition.objects.create(operator=ComparisonOperator.EQUALS, quantity=1)
+    condition.categories.add(category)
 
     # No match the product does not have the category
     assert not condition.matches(basket, [])
@@ -73,8 +73,8 @@ def test_category_products_effect_with_amount(rf):
     basket.shipping_method = get_shipping_method(shop=shop)
     basket.save()
 
-    rule = CategoryProductsBasketCondition.objects.create(
-        category=category, operator=ComparisonOperator.EQUALS, quantity=quantity)
+    rule = CategoryProductsBasketCondition.objects.create(operator=ComparisonOperator.EQUALS, quantity=quantity)
+    rule.categories.add(category)
 
     campaign = BasketCampaign.objects.create(active=True, shop=shop, name="test", public_name="test")
     campaign.conditions.add(rule)
@@ -114,8 +114,8 @@ def test_category_products_effect_with_percentage(rf):
     basket.shipping_method = get_shipping_method(shop=shop)
     basket.save()
 
-    rule = CategoryProductsBasketCondition.objects.create(
-        category=category, operator=ComparisonOperator.EQUALS, quantity=quantity)
+    rule = CategoryProductsBasketCondition.objects.create(operator=ComparisonOperator.EQUALS, quantity=quantity)
+    rule.categories.add(category)
 
     campaign = BasketCampaign.objects.create(active=True, shop=shop, name="test", public_name="test")
     campaign.conditions.add(rule)

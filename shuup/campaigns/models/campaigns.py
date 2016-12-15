@@ -28,7 +28,7 @@ from shuup.campaigns.utils.campaigns import get_product_ids_and_quantities
 from shuup.campaigns.utils.matcher import get_matching_for_product
 from shuup.core import cache
 from shuup.core.fields import InternalIdentifierField
-from shuup.core.models import Order, Shop
+from shuup.core.models import Category, Order, Shop
 from shuup.utils.analog import define_log_model
 from shuup.utils.properties import MoneyPropped
 
@@ -254,10 +254,10 @@ class BasketCampaign(Campaign):
         )
 
         # Get CategoryProductsBasketCondition's that can't match with the basket
+        categories = set(Category.objects.filter(
+            shop_products__product_id__in=product_id_to_qty.keys()).values_list("id", flat=True))
         category_products_in_basket_to_check = set(
-            CategoryProductsBasketCondition.objects.filter(
-                category__shop_products__product_id__in=product_id_to_qty.keys()
-            ).values_list("id", flat=True)
+            CategoryProductsBasketCondition.objects.filter(categories__in=categories).values_list("id", flat=True)
         )
         exclude_condition_ids |= set(
             CategoryProductsBasketCondition.objects.exclude(

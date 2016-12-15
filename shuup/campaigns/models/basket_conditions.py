@@ -12,7 +12,9 @@ from polymorphic.models import PolymorphicModel
 
 from shuup.campaigns.utils.campaigns import get_product_ids_and_quantities
 from shuup.core.fields import MoneyValueField
-from shuup.core.models import Category, Contact, ContactGroup, Product
+from shuup.core.models import (
+    Category, Contact, ContactGroup, Product, ShopProduct
+)
 from shuup.utils.properties import MoneyPropped, PriceProperty
 
 
@@ -218,16 +220,13 @@ class CategoryProductsBasketCondition(BasketCondition):
     operator = EnumIntegerField(
         ComparisonOperator, default=ComparisonOperator.GTE, verbose_name=_("operator"))
     quantity = models.PositiveIntegerField(default=1, verbose_name=_("quantity"))
-    category = models.ForeignKey(Category, verbose_name=_("category"), blank=True)
+    categories = models.ManyToManyField(Category, verbose_name=_("categories"), blank=True)
 
     def matches(self, basket, lines):
         product_id_to_qty = get_product_ids_and_quantities(basket)
-        category_product_ids = self.category.shop_products.filter(
-            product_id__in=product_id_to_qty.keys()
-        ).values_list(
-            "product_id", flat=True
-        )
-        product_count = sum(product_id_to_qty[product_id] for product_id in category_product_ids)
+        product_ids = ShopProduct.objects.filter(
+            categories__in=self.categories.all()).values_list("product_id", flat=True)
+        product_count = sum(product_id_to_qty[product_id] for product_id in product_ids)
         if self.operator == ComparisonOperator.EQUALS:
             return bool(product_count == self.quantity)
         else:
@@ -235,4 +234,4 @@ class CategoryProductsBasketCondition(BasketCondition):
 
     @property
     def description(self):
-        return _("Limit the campaign to match the products from selected category.")
+        return _("Limit the campaign to match the products from selected categories.")
