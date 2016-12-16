@@ -12,6 +12,7 @@ from shuup.core.api.orders import OrderViewSet
 from shuup.core.api.products import ProductViewSet, ShopProductViewSet
 from shuup.core.api.shipments import ShipmentViewSet
 from shuup.core.api.suppliers import SupplierViewSet
+from shuup.core.api.units import SalesUnitViewSet
 from shuup.core.api.users import UserViewSet
 from shuup.core.models import Category, Shop
 
@@ -31,3 +32,4 @@ def populate_core_api(router):
     router.register("shuup/manufacturer", ManufacturerViewSet)
     router.register("shuup/supplier", SupplierViewSet)
     router.register("shuup/user", UserViewSet)
+    router.register("shuup/sales_unit", SalesUnitViewSet)

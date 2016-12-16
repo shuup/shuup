@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- API: add endpoint for Sales Unit
 - API: add endpoint for Manufacturer
 - Add option to hide visible categories from menu
 - API: add endpoint for Stocks
