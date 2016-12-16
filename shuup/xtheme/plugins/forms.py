@@ -5,12 +5,14 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from collections import OrderedDict
 from copy import deepcopy
 
+import six
 from django import forms
 from django.conf import settings
 
-from shuup.xtheme.plugins.widgets import TranslatableFieldWidget
+from shuup.xtheme.plugins.consts import FALLBACK_LANGUAGE_CODE
 
 
 class PluginForm(forms.Form):
@@ -22,10 +24,29 @@ class PluginForm(forms.Form):
         self.plugin = kwargs.pop("plugin")
         super(PluginForm, self).__init__(**kwargs)
         self.populate()
+        self.init_translated_fields()
 
     def populate(self):  # pragma: no cover, doccov: ignore
         # Subclass hook (overriding __init__ all the time is such a bore)
         pass
+
+    def init_translated_fields(self):
+        self.translatable_field_names = []
+        self.monolingual_field_names = []
+        languages = self.get_languages()
+        new_fields = OrderedDict()
+        for name, field in six.iteritems(self.fields):
+            if isinstance(field, TranslatableField):
+                self.translatable_field_names.append(name)
+                for language_code in languages:
+                    key = "%s_%s" % (name, language_code)
+                    new_fields[key] = deepcopy(field)
+                    new_fields[key].initial = self.plugin.get_translated_value(name, language=language_code)
+                    new_fields[key].required = False
+            elif field:
+                self.monolingual_field_names.append(name)
+                new_fields[name] = field
+        self.fields = new_fields
 
     def get_config(self):
         """
@@ -40,10 +61,22 @@ class PluginForm(forms.Form):
         :return: A new JSONable (!) config dict
         :rtype: dict
         """
-
         config = self.plugin.config.copy()
-        config.update(self.cleaned_data)
+        data = self.cleaned_data.copy()
+        languages = self.get_languages()
+        for field_name in self.translatable_field_names:
+            data[field_name] = {}
+            for language_code in languages:
+                key = "%s_%s" % (field_name, language_code)
+                val = self.cleaned_data.get(key, "")
+                if val not in ["", None]:
+                    data[field_name][language_code] = val
+                del data[key]
+        config.update(data)
         return config
+
+    def get_languages(self):
+        return [l[0] for l in settings.LANGUAGES] + [FALLBACK_LANGUAGE_CODE]
 
 
 class GenericPluginForm(PluginForm):
@@ -61,15 +94,4 @@ class GenericPluginForm(PluginForm):
 
 
 class TranslatableField(forms.Field):
-    widget = TranslatableFieldWidget
-
-    def __init__(self, *args, **kwargs):
-        input_widget = kwargs.pop("widget", forms.TextInput)  # Only allow overriding the subwidget.
-        attrs = kwargs.pop("attrs", None)
-        languages = kwargs.pop("languages", [l[0] for l in settings.LANGUAGES])  # TODO: Another language source?
-        kwargs["widget"] = self.widget(languages=languages, input_widget=input_widget, attrs=attrs)
-        super(TranslatableField, self).__init__(*args, **kwargs)
-
-    def clean(self, value):
-        assert isinstance(value, dict)
-        return value
+    pass  # used solely to flag fields as translatable

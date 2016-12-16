@@ -51,7 +51,7 @@ def get_test_layout_and_svc():
         status=SavedViewConfigStatus.CURRENT_DRAFT
     )
     layout = Layout(FauxTheme, "ph")
-    layout.add_plugin("text", {"text": "hello"})
+    layout.add_plugin("text", {"text_*": "hello"})
     svc.set_layout_data(layout.placeholder_name, layout)
     svc.save()
     return layout, svc
@@ -111,7 +111,6 @@ def test_editor_save(rf):
         assert "general" in view_obj.form.forms
         assert "plugin" in view_obj.form.forms
         form_data = get_form_data(view_obj.form, prepared=True)
-
     new_text = printable_gibberish()
     form_data["plugin-text_%s" % FALLBACK_LANGUAGE_CODE] = new_text
     form_data["save"] = "1"
