@@ -26,6 +26,8 @@ from shuup.utils.i18n import get_current_babel_locale, remove_extinct_languages
 IdentifierValidator = RegexValidator("[a-z][a-z_]+")
 
 MONEY_FIELD_DECIMAL_PLACES = 9
+FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES = 9
+FORMATTED_DECIMAL_FIELD_MAX_DIGITS = 36
 
 
 class InternalIdentifierField(models.CharField):
@@ -112,14 +114,14 @@ class FormattedDecimalField(models.DecimalField):
 class MoneyValueField(FormattedDecimalField):
     def __init__(self, **kwargs):
         kwargs.setdefault("decimal_places", MONEY_FIELD_DECIMAL_PLACES)
-        kwargs.setdefault("max_digits", 36)
+        kwargs.setdefault("max_digits", FORMATTED_DECIMAL_FIELD_MAX_DIGITS)
         super(MoneyValueField, self).__init__(**kwargs)
 
 
 class QuantityField(FormattedDecimalField):
     def __init__(self, **kwargs):
-        kwargs.setdefault("decimal_places", 9)
-        kwargs.setdefault("max_digits", 36)
+        kwargs.setdefault("decimal_places", FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
+        kwargs.setdefault("max_digits", FORMATTED_DECIMAL_FIELD_MAX_DIGITS)
         kwargs.setdefault("default", 0)
         super(QuantityField, self).__init__(**kwargs)
 
@@ -131,8 +133,8 @@ class MeasurementField(FormattedDecimalField):
         if unit not in self.KNOWN_UNITS:
             raise ImproperlyConfigured("Unit %r is not a known unit." % unit)
         self.unit = unit
-        kwargs.setdefault("decimal_places", 9)
-        kwargs.setdefault("max_digits", 36)
+        kwargs.setdefault("decimal_places", FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
+        kwargs.setdefault("max_digits", FORMATTED_DECIMAL_FIELD_MAX_DIGITS)
         kwargs.setdefault("default", 0)
         super(MeasurementField, self).__init__(**kwargs)
 
