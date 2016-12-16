@@ -6,11 +6,15 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.utils.translation import ugettext_lazy as _
-from rest_framework import serializers, viewsets
+from rest_framework import serializers, status, viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 
+from shuup.core.fields import (
+    FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES, FORMATTED_DECIMAL_FIELD_MAX_DIGITS
+)
 from shuup.core.models import Product, Supplier
+from shuup.core.suppliers.enums import StockAdjustmentType
 from shuup.utils.numbers import parse_decimal_string
 
 
@@ -35,6 +39,23 @@ class ProductStockSerializer(serializers.Serializer):
         return representation.get("stock")
 
 
+class StockAdjustmentSerializer(serializers.Serializer):
+    type = serializers.ChoiceField(choices=StockAdjustmentType.choices(), default=StockAdjustmentType.INVENTORY)
+    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all_except_deleted())
+    delta = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
+                                     decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
+
+    def create(self, validated_data):
+        supplier = validated_data["supplier"]
+        product_id = validated_data["product"].pk
+        delta = validated_data["delta"]
+        type = validated_data["type"]
+        try:
+            return supplier.adjust_stock(product_id, delta, type=type)
+        except NotImplementedError:
+            raise serializers.ValidationError("This supplier does not support stock adjustments")
+
+
 class SupplierSerializer(serializers.ModelSerializer):
     class Meta:
         model = Supplier
@@ -52,12 +73,13 @@ class SupplierViewSet(viewsets.ReadOnlyModelViewSet):
         return _("Suppliers")
 
     def get_view_description(self, html=False):
-        return _("Suppliers can be listed and fetched.")
+        return _("Suppliers can be listed and fetched and stock can be updated.")
 
-    @detail_route(methods=['get'])
+    @detail_route(methods=['get', 'post'])
     def stock(self, request, pk=None):
+        if request.method == 'POST':
+            return self._adjust_stock(request, pk)
         supplier = self.get_object()
-
         if getattr(self.request.user, 'is_superuser', False):
             products_qs = Product.objects.all_except_deleted()
         else:
@@ -65,7 +87,6 @@ class SupplierViewSet(viewsets.ReadOnlyModelViewSet):
                 customer=self.request.customer,
                 shop=self.request.shop
             )
-
         products_qs = products_qs.filter(shop_products__suppliers=supplier)
 
         # filter by id
@@ -82,3 +103,10 @@ class SupplierViewSet(viewsets.ReadOnlyModelViewSet):
         context = {'request': request, 'supplier': supplier}
         serializer = ProductStockSerializer((page or products_qs), many=True, context=context)
         return Response(serializer.data)
+
+    def _adjust_stock(self, request, pk=None):
+        supplier = self.get_object()
+        serializer = StockAdjustmentSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(supplier=supplier)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
