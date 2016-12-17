@@ -155,15 +155,8 @@
 {% macro render_coupon_div(basket) %}
     <div class="row basket-discount-code">
         <div class="col-sm-6 pull-right">
-            <a class="coupon-toggler"
-               role="button"
-               data-toggle="collapse"
-               href="#collapseCoupon"
-               aria-expanded="false"
-               aria-controls="collapseCoupon">
-                {% trans %}Have a coupon code? Enter it here{% endtrans %}
-            </a>
-            <div class="collapse" id="collapseCoupon">
+            <p class="coupon-text">{% trans %}Have a coupon code? Enter it here{% endtrans %}</p>
+            <div id="collapseCoupon">
                 <div class="input-group">
                     <input type="text"
                            class="form-control"
