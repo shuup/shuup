@@ -16,6 +16,7 @@ from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls
 )
+from shuup.admin.views.home import SimpleHelpBlock
 from shuup.core.models import Shop
 
 
@@ -49,6 +50,20 @@ class ShopModule(AdminModule):
                 ordering=4
             ),
         ]
+
+    def get_help_blocks(self, request, kind):
+        if kind == "setup":
+            shop = Shop.objects.first()
+            yield SimpleHelpBlock(
+                text=_("Add a logo to make your store stand out"),
+                actions=[{
+                    "text": _("Add logo"),
+                    "url": self.get_model_url(shop, "edit"),
+                    "hash": "#shop-images-section"
+                }],
+                icon_url="shuup_admin/img/logo-icon.svg",
+                done=shop.logo
+            )
 
     def get_required_permissions(self):
         return get_default_model_permissions(Shop) | get_default_model_permissions(File)
