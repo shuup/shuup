@@ -153,13 +153,13 @@ def test_get_products(admin_user):
     assert products[1]["shop_products"][0]["orderable"] is True
 
     # check for medias
-    assert products[0]["primary_image"]["url"] == request.build_absolute_uri(product1.primary_image.url)
-    assert products[0]["media"][0]["url"] == request.build_absolute_uri(product1.media.first().url)
-    assert products[0]["media"][1]["url"] == request.build_absolute_uri(product1.media.all()[1].url)
+    assert products[0]["primary_image"]["file"] == request.build_absolute_uri(product1.primary_image.url)
+    assert products[0]["media"][0]["file"] == request.build_absolute_uri(product1.media.first().url)
+    assert products[0]["media"][1]["file"] == request.build_absolute_uri(product1.media.all()[1].url)
 
-    assert products[1]["primary_image"]["url"] == request.build_absolute_uri(product2.primary_image.url)
-    assert products[1]["media"][0]["url"] == request.build_absolute_uri(product2.media.first().url)
-    assert products[1]["media"][1]["url"] == request.build_absolute_uri(product2.media.all()[1].url)
+    assert products[1]["primary_image"]["file"] == request.build_absolute_uri(product2.primary_image.url)
+    assert products[1]["media"][0]["file"] == request.build_absolute_uri(product2.media.first().url)
+    assert products[1]["media"][1]["file"] == request.build_absolute_uri(product2.media.all()[1].url)
 
     # ordering by -id
     request = get_request("/api/shuup/front/products/?ordering=-id", admin_user, shop2, person1)

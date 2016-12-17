@@ -12,6 +12,10 @@ Unrealeased
 Core
 ~~~~
 
+- API: add endpoint to make a package Product
+- API: add endpoint to add attributes in Product
+- API: add endpoint for Product Type
+- API: add endpoint to send and manage product media
 - API: add endpoint for Attribute
 - API: add endpoint for Tax Class
 - API: add endpoint for Sales Unit

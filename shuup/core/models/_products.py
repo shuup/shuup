@@ -678,6 +678,8 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
             )
 
         for child_product, quantity in six.iteritems(package_def):
+            if child_product.pk == self.pk:
+                raise ImpossibleProductModeException(_("Package can't contain itself"), code="content")
             # :type child_product: Product
             if child_product.is_variation_parent():
                 raise ImpossibleProductModeException(
