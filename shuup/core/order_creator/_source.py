@@ -309,7 +309,7 @@ class OrderSource(object):
         :rtype: bool
         """
         code_text = force_text(code)
-        if code_text not in self._codes:
+        if code_text.upper() not in [c.upper() for c in self._codes]:
             self._codes.append(code_text)
             self.uncache()
             return True

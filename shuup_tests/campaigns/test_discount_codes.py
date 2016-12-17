@@ -40,6 +40,7 @@ def get_default_campaign(coupon=None):
     BasketDiscountAmount.objects.create(discount_amount=shop.create_price("20"), campaign=campaign)
     return campaign
 
+
 @pytest.mark.django_db
 def test_coupon_generation():
     original_code = "random"
@@ -106,7 +107,7 @@ def test_coupon_amount_limit():
 
 
 @pytest.mark.django_db
-def test_no_two_same_codes_active():
+def test_no_two_same_codes_active1():
     # allow two discount codes with same code as they are inactive
     dc1 = Coupon.objects.create(code="TEST")
     dc2 = Coupon.objects.create(code="TEST")
@@ -120,30 +121,27 @@ def test_no_two_same_codes_active():
     dc2.code = "changed_code"
     dc2.save()
 
+@pytest.mark.django_db
+def test_no_two_same_codes_active2():
+    # allow two discount codes with same code as they are inactive
+    dc1 = Coupon.objects.create(code="test")
+    dc2 = Coupon.objects.create(code="TEST")
+
+    assert dc1.code == "test"
+    assert dc2.code == "TEST"
+
+    dc1.active = True
+    dc1.save()
+
+    dc2.active = True
+    with pytest.raises(ValidationError):
+        dc2.save()
+    dc2.code = "changed_code"
+    dc2.save()
 
 @pytest.mark.django_db
-def test_campaign_with_coupons(rf):
-    status = get_initial_order_status()
-    request, shop, group = initialize_test(rf, False)
-    basket = get_basket(request)
-    supplier = get_default_supplier()
-
-    for x in range(2):
-        product = create_product(printable_gibberish(), shop, supplier=supplier, default_price="50")
-        basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
-
-    basket.shipping_method = get_shipping_method(shop=shop)  # For shippable products
-    dc = Coupon.objects.create(code="TEST", active=True)
-    campaign = BasketCampaign.objects.create(
-            shop=shop,
-            name="test", public_name="test",
-            coupon=dc,
-            active=True
-    )
-    BasketDiscountAmount.objects.create(discount_amount=shop.create_price("20"), campaign=campaign)
-    rule = BasketTotalProductAmountCondition.objects.create(value=2)
-    campaign.conditions.add(rule)
-    campaign.save()
+def test_campaign_with_coupons1(rf):
+    basket, dc, request, status = _init_basket_coupon_test(rf)
 
     assert len(basket.get_final_lines()) == 3  # no discount was applied because coupon is required
 
@@ -167,3 +165,63 @@ def test_campaign_with_coupons(rf):
     order = creator.create_order(basket)
     assert CouponUsage.objects.filter(order=order).count() == 1
     assert CouponUsage.objects.filter(order=order, coupon__code=dc.code).count() == 1
+
+
+@pytest.mark.django_db
+def test_campaign_with_coupons2(rf):
+    basket, dc, request, status = _init_basket_coupon_test(rf, code="tEsT")
+
+    assert len(basket.get_final_lines()) == 3  # no discount was applied because coupon is required
+
+    customer_code = "Test"  # Customer typoed the code, should still match
+    basket.add_code(customer_code)
+
+    assert customer_code in basket.codes
+    assert len(basket.codes) == 1  # only one code
+
+    basket.add_code(customer_code.upper())
+    assert customer_code.upper() not in basket.codes
+    assert len(basket.codes) == 1  # only one code
+
+    assert len(basket.get_final_lines()) == 4  # now basket has codes so they will be applied too
+    assert OrderLineType.DISCOUNT in [l.type for l in basket.get_final_lines()]
+
+    # Ensure codes persist between requests, so do what the middleware would, i.e.
+    basket.save()
+    # and then reload the basket:
+    del request.basket
+    basket = get_basket(request)
+
+    assert basket.codes != [dc.code]  # they don't match like this
+    assert [c.upper() for c in basket.codes] == [dc.code.upper()]  # they match like this
+    assert [c.upper() for c in basket.codes] != [customer_code]  # they don't match like this
+    assert basket.codes == [customer_code]  # they match like this
+
+    assert len(basket.get_final_lines()) == 3  # now basket has codes so they will be applied too
+    assert OrderLineType.DISCOUNT in [l.type for l in basket.get_final_lines()]
+
+    basket.status = status
+    creator = OrderCreator(request)
+    order = creator.create_order(basket)
+    assert CouponUsage.objects.filter(order=order).count() == 1
+    assert CouponUsage.objects.filter(order=order, coupon__code=dc.code).count() == 1
+
+
+def _init_basket_coupon_test(rf, code="TEST"):
+    status = get_initial_order_status()
+    request, shop, group = initialize_test(rf, False)
+    basket = get_basket(request)
+    supplier = get_default_supplier()
+    for x in range(2):
+        product = create_product(printable_gibberish(), shop, supplier=supplier, default_price="50")
+        basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
+    basket.shipping_method = get_shipping_method(shop=shop)  # For shippable products
+    dc = Coupon.objects.create(code=code, active=True)
+    campaign = BasketCampaign.objects.create(
+        shop=shop, name="test", public_name="test", coupon=dc, active=True
+    )
+    BasketDiscountAmount.objects.create(discount_amount=shop.create_price("20"), campaign=campaign)
+    rule = BasketTotalProductAmountCondition.objects.create(value=2)
+    campaign.conditions.add(rule)
+    campaign.save()
+    return basket, dc, request, status
