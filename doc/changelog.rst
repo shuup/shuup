@@ -28,6 +28,7 @@ Localization
 Admin
 ~~~~~
 
+- Send user confirmation email when new admin users are created
 - Add recent orders dashboard block
 - Add store overview dashboard block
 - Add wizard pane to create shop content pages and configure behaviors

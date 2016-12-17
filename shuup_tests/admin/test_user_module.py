@@ -9,6 +9,7 @@ import pytest
 from bs4 import BeautifulSoup
 from django.contrib.auth import get_user, get_user_model
 from django.contrib.auth.models import Group as PermissionGroup
+from django.core import mail
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.forms.models import modelform_factory
@@ -46,6 +47,51 @@ def test_user_detail_works_at_all(rf, admin_user):
     assert response.status_code < 500 and not get_user_model().objects.get(pk=user.pk).is_active
     with pytest.raises(Problem):
         view_func(apply_request_middleware(rf.post("/", {"set_is_active": "0"}), user=admin_user), pk=admin_user.pk)
+
+
+@pytest.mark.django_db
+def test_user_create(rf, admin_user):
+    get_default_shop()
+    view_func = UserDetailView.as_view()
+    before_count = get_user_model().objects.count()
+    response = view_func(apply_request_middleware(rf.post("/", {
+        "username": "test",
+        "email": "test@test.com",
+        "first_name": "test",
+        "last_name": "test",
+        "password": "test",
+        "send_confirmation": True
+    }), user=admin_user))
+    assert response.status_code == 302
+    assert get_user_model().objects.count() == before_count + 1
+    assert not len(mail.outbox), "mail not sent since user is not staff"
+
+    response = view_func(apply_request_middleware(rf.post("/", {
+        "username": "test3",
+        "email": "test3@test.com",
+        "first_name": "test",
+        "last_name": "test",
+        "password": "test",
+        "is_staff": True,
+        "send_confirmation": True
+    }), user=admin_user))
+    assert response.status_code == 302
+    assert get_user_model().objects.count() == before_count + 2
+    assert len(mail.outbox) == 1, "mail sent"
+
+    user = get_user_model().objects.create(
+        username=printable_gibberish(20),
+        first_name=printable_gibberish(10),
+        last_name=printable_gibberish(10),
+        password="suihku",
+        is_staff=True,
+        is_superuser=False
+    )
+    response = view_func(apply_request_middleware(rf.get("/", user=user)))
+    assert response.status_code == 200
+    response.render()
+    assert "Staff status" not in force_text(response.content)
+    assert "Superuser status" not in force_text(response.content)
 
 
 @pytest.mark.django_db
