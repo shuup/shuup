@@ -105,17 +105,17 @@ class UserModule(AdminModule):
                 )
 
     def get_help_blocks(self, request, kind):
-        if kind == "quicklink":
-            yield SimpleHelpBlock(
-                text=_("Add some users to help manage your shop"),
-                actions=[{
-                    "text": _("New user"),
-                    "url": self.get_model_url(get_user_model(), "new")
-                }],
-                priority=3,
-                category=HelpBlockCategory.CONTACTS,
-                icon_url="shuup_admin/img/users.png"
-            )
+        yield SimpleHelpBlock(
+            text=_("Add some users to help manage your shop"),
+            actions=[{
+                "text": _("New user"),
+                "url": self.get_model_url(get_user_model(), "new")
+            }],
+            priority=3,
+            category=HelpBlockCategory.CONTACTS,
+            icon_url="shuup_admin/img/users.png",
+            done=get_user_model().objects.exists() if kind == "setup" else False
+        )
 
     def get_required_permissions(self):
         return get_default_model_permissions(get_user_model())

@@ -96,7 +96,7 @@ def test_campaign_block(rf, admin_user):
 @pytest.mark.django_db
 def test_users_block(rf, admin_user):
     shop = get_default_shop()
-    assert not has_block_with_text("users", rf, admin_user)
+    assert has_block_with_text("users", rf, admin_user)
 
 
 @pytest.mark.django_db
