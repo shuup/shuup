@@ -124,10 +124,10 @@
     <div class="basket-summary">
         {% if show_prices() %}
             <div class="row">
-                <div class="col-sm-6 pull-right">
+                <div class="col-xs-12 col-sm-6 pull-right">
                     <div class="row">
-                        <div class="col-xs-6"><h4><strong>{% trans %}Total{% endtrans %}</strong></h4></div>
-                        <div class="total-price text-right col-xs-6"><h2>{{ basket|total_price }}</h2></div>
+                        <div class="total-price-label col-xs-6"><strong>{% trans %}Total{% endtrans %}</strong></div>
+                        <div class="total-price text-right col-xs-6"><strong>{{ basket|total_price }}</strong></div>
                     </div>
                 </div>
             </div>
