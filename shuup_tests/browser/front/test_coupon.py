@@ -53,7 +53,7 @@ CATEGORY_PRODUCT_DATA = [
 
 @pytest.mark.browser
 @pytest.mark.djangodb
-def test_category_product_list(browser, live_server, settings):
+def test_coupon(browser, live_server, settings):
     activate("en")
     # initialize
     cache.clear()
@@ -136,16 +136,15 @@ def _add_product_to_basket_from_category(live_server, browser, first_category, s
 
 def _activate_basket_campaign_through_coupon(browser, category, shop):
     # We should already be at basket so let's verify the total
-    wait_until_condition(browser, lambda x: "120.53" in x.find_by_css("div.total-price h2").first.text)
+    wait_until_condition(browser, lambda x: "120.53" in x.find_by_css("div.total-price strong").first.text)
 
     coupon_code = _create_campaign(category, shop)
-    click_element(browser, "a[class='coupon-toggler']")
     browser.fill("code", coupon_code)
     click_element(browser, "#submit-code")
 
     wait_until_condition(browser, lambda x: x.is_text_present(coupon_code))
     wait_until_condition(browser, lambda x: "-€24.11" in x.find_by_css("div.product-sum h4.price").last.text)
-    wait_until_condition(browser, lambda x: "€96.42" in x.find_by_css("div.total-price h2").first.text)
+    wait_until_condition(browser, lambda x: "€96.42" in x.find_by_css("div.total-price strong").first.text)
 
 
 def _create_campaign(category, shop):

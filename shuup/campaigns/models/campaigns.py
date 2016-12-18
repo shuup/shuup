@@ -286,7 +286,7 @@ class BasketCampaign(Campaign):
         if not self.is_available():
             return False
 
-        if self.coupon and not (self.coupon.active and self.coupon.code in basket.codes):
+        if self.coupon and not (self.coupon.active and self.coupon.code.upper() in [c.upper() for c in basket.codes]):
             return False
 
         for rule in self.conditions.all():
@@ -368,7 +368,7 @@ class Coupon(models.Model):
     @classmethod
     def is_usable(cls, code, customer):
         try:
-            code = cls.objects.get(code=code)
+            code = cls.objects.get(code__iexact=code, active=True)
             return code.can_use_code(customer)
         except cls.DoesNotExist:
             return False
@@ -413,7 +413,7 @@ class Coupon(models.Model):
         return CouponUsage.objects.filter(coupon=self).count() >= usage_count
 
     def save(self, **kwargs):
-        if Coupon.objects.filter(code=self.code, active=True).exclude(pk=self.pk).exists():
+        if Coupon.objects.filter(code__iexact=self.code, active=True).exclude(pk=self.pk).exists():
             raise ValidationError(_("Cannot have two same codes active at the same time."))
         return super(Coupon, self).save(**kwargs)
 

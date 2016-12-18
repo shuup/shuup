@@ -92,7 +92,7 @@ REQUIRES = [
     'django-timezone-field>=1.2,<2',
     'djangorestframework>=3.1,<3.5',
     'djangorestframework-jwt>=1.9,<2',
-    'factory-boy>=2.5,<3',
+    'factory-boy==2.7.0',
     'fake-factory>=0.5.0,<0.5.4',
     'Jinja2>=2.8,<3',
     'jsonfield>=1.0,<2',
