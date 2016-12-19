@@ -11,6 +11,9 @@ from shuup.core.api.contacts import ContactViewSet
 from shuup.core.api.manufacturer import ManufacturerViewSet
 from shuup.core.api.orders import OrderViewSet
 from shuup.core.api.product_media import ProductMediaViewSet
+from shuup.core.api.product_variation import (
+    ProductVariationVariableValueViewSet, ProductVariationVariableViewSet
+)
 from shuup.core.api.products import (
     ProductAttributeViewSet, ProductPackageViewSet, ProductTypeViewSet,
     ProductViewSet, ShopProductViewSet
@@ -37,6 +40,8 @@ def populate_core_api(router):
     router.register("shuup/product_media", ProductMediaViewSet)
     router.register("shuup/product_type", ProductTypeViewSet)
     router.register("shuup/product_package", ProductPackageViewSet)
+    router.register("shuup/product_variation_variable", ProductVariationVariableViewSet)
+    router.register("shuup/product_variation_variable_value", ProductVariationVariableValueViewSet)
     router.register("shuup/shipment", ShipmentViewSet)
     router.register("shuup/shop", viewset_factory(Shop))
     router.register("shuup/shop_product", ShopProductViewSet)

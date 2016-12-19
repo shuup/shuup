@@ -25,10 +25,15 @@ from shuup.core.api.product_media import (
 from shuup.core.excs import ImpossibleProductModeException
 from shuup.core.models import (
     Product, ProductAttribute, ProductPackageLink, ProductType,
-    ProductVisibility, ShippingMode, ShopProduct, ShopProductVisibility,
-    StockBehavior, Supplier
+    ProductVariationResult, ProductVisibility, ShippingMode, ShopProduct,
+    ShopProductVisibility, StockBehavior, Supplier
 )
 from shuup.utils.numbers import parse_decimal_string
+
+from .product_variation import (
+    ProductLinkVariationVariableSerializer, ProductSimpleVariationSerializer,
+    ProductVariationVariableResultSerializer
+)
 
 
 class ShopProductSerializer(serializers.ModelSerializer):
@@ -116,6 +121,9 @@ class ProductSerializer(TranslatableModelSerializer):
     shipping_mode = EnumField(enum=ShippingMode)
     attributes = ProductAttributeSerializer(many=True, read_only=True)
     package_content = serializers.SerializerMethodField()
+    variation_children = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    variation_variables = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    variation_results = serializers.SerializerMethodField()
 
     class Meta:
         fields = "__all__"
@@ -130,6 +138,9 @@ class ProductSerializer(TranslatableModelSerializer):
 
     def get_package_content(self, product):
         return ProductPackageLinkSerializer(ProductPackageLink.objects.filter(parent=product), many=True).data
+
+    def get_variation_results(self, product):
+        return ProductVariationVariableResultSerializer(product).data["combinations"]
 
 
 class ProductStockStatusSerializer(serializers.Serializer):
@@ -270,6 +281,69 @@ class ProductViewSet(ModelViewSet):
         page = self.paginate_queryset(product_qs)
         serializer = ProductStockStatusSerializer((page or product_qs), many=True, context=context)
         return Response(serializer.data)
+
+    @detail_route(methods=['post', 'delete'])
+    def simple_variation(self, request, pk=None):
+        product = self.get_object()
+        serializer = ProductSimpleVariationSerializer(data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            if request.method == "POST":
+                created = False
+                for child_product in serializer.validated_data["products"]:
+                    child_product.link_to_parent(product)
+                    created = True
+
+                return Response(status=(status.HTTP_201_CREATED if created else status.HTTP_200_OK))
+
+            elif request.method == "DELETE":
+                for child_product in serializer.validated_data["products"]:
+                    child_product.variation_parent = None
+                    child_product.verify_mode()
+                    child_product.save()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @detail_route(methods=['post', 'delete', 'put'])
+    def variable_variation(self, request, pk=None):
+        product = self.get_object()
+        serializer = ProductLinkVariationVariableSerializer(data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+
+            if request.method == "POST":
+                ProductVariationResult.objects.create(product=product,
+                                                      combination_hash=serializer.validated_data["hash"],
+                                                      status=serializer.validated_data.get("status"),
+                                                      result=serializer.validated_data["product"])
+                return Response(status=status.HTTP_201_CREATED)
+
+            elif request.method == "PUT":
+                try:
+                    result = ProductVariationResult.objects.get(product=product,
+                                                                combination_hash=serializer.validated_data["hash"])
+                except ProductVariationResult.DoesNotExist:
+                    return Response(data={"error": "Combination not found"}, status=status.HTTP_404_NOT_FOUND)
+
+                if serializer.validated_data.get("status"):
+                    result.status = serializer.validated_data["status"]
+
+                result.result = serializer.validated_data["product"]
+                result.save()
+                return Response(status=status.HTTP_200_OK)
+
+            elif request.method == "DELETE":
+                try:
+                    result = ProductVariationResult.objects.get(product=product,
+                                                                combination_hash=serializer.validated_data["hash"])
+                except ProductVariationResult.DoesNotExist:
+                    return Response(data={"error": "Combination not found"}, status=status.HTTP_404_NOT_FOUND)
+
+                result.delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ShopProductViewSet(viewsets.ModelViewSet):
