@@ -1,0 +1,96 @@
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-15 19:45+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: en <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "API"
+msgstr ""
+
+msgid "Disabled"
+msgstr ""
+
+msgid "Admin Users"
+msgstr ""
+
+msgid "Authenticated Users - Read/Write"
+msgstr ""
+
+msgid "Authenticated Users - Read only"
+msgstr ""
+
+msgid "Public Users - Read/Write"
+msgstr ""
+
+msgid "Public Users - Read only"
+msgstr ""
+
+msgid "API permissions saved"
+msgstr ""
+
+msgid "API Permissions"
+msgstr ""
+
+msgid "Configure API permissions"
+msgstr ""
+
+msgid ""
+"Please, configure the API permission level for each service by selecting the "
+"level below."
+msgstr ""
+
+msgid "Note:"
+msgstr ""
+
+msgid "No one can make requests."
+msgstr ""
+
+msgid "Admin users"
+msgstr ""
+
+msgid ""
+"Only administrators can make requests to the API to fetch, save, delete or "
+"update data."
+msgstr ""
+
+msgid "Authenticated users - Read/Write"
+msgstr ""
+
+msgid "Any authenticated user can fetch, save, delete or update data."
+msgstr ""
+
+msgid "Authenticated users - Read"
+msgstr ""
+
+msgid "Any authenticated user can only fetch data."
+msgstr ""
+
+msgid "Public users - Read/Write"
+msgstr ""
+
+msgid "Any user (authenticated or not) can fetch, save, delete or update data."
+msgstr ""
+
+msgid "Use this with caution."
+msgstr ""
+
+msgid "Public users - Read"
+msgstr ""
+
+msgid "Any user (authenticated or not) can only fetch data."
+msgstr ""
+
+msgid "Save"
+msgstr ""

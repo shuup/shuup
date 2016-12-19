@@ -10,12 +10,15 @@ from __future__ import unicode_literals
 import json
 
 from django.contrib.auth import get_user_model
-from rest_framework.test import APIClient
 from rest_framework import status
+from rest_framework.test import APIClient
 
-from shuup.testing.factories import (
-    get_default_shop, UserFactory
-)
+from shuup.core import cache
+from shuup.testing.factories import get_default_shop, UserFactory
+
+
+def setup_function(fn):
+    cache.clear()
 
 
 def test_get_by_pk(admin_user):

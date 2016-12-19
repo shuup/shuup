@@ -9,15 +9,22 @@ from __future__ import unicode_literals
 
 import json
 
-from rest_framework.test import APIClient
+import pytest
 from rest_framework import status
+from rest_framework.test import APIClient
 
+from shuup.core import cache
 from shuup.core.models import Shipment
 from shuup.testing.factories import (
-    create_random_order, get_shop, create_random_person
+    create_random_order, create_random_person, get_shop
 )
 
 
+def setup_function(fn):
+    cache.clear()
+
+
+@pytest.mark.django_db
 def test_get_shipments(admin_user):
     client = _get_client(admin_user)
     shop1 = get_shop(True)

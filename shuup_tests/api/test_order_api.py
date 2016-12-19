@@ -11,10 +11,12 @@ import datetime
 import decimal
 import json
 
+import pytest
 from django.utils.timezone import datetime as dt
 from rest_framework import status
 from rest_framework.test import APIClient
 
+from shuup.core import cache
 from shuup.core.models import Order, OrderStatus, PaymentStatus, ShippingStatus
 from shuup.testing.factories import (
     create_default_order_statuses, create_empty_order,
@@ -25,6 +27,11 @@ from shuup.testing.factories import (
 from shuup_tests.utils import printable_gibberish
 
 
+def setup_function(fn):
+    cache.clear()
+
+
+@pytest.mark.django_db
 def test_get_by_id(admin_user):
     shop = get_default_shop()
     order = create_empty_order(shop=shop)
@@ -37,6 +44,7 @@ def test_get_by_id(admin_user):
     assert order_data.get("id") == order.id
 
 
+@pytest.mark.django_db
 def test_get_by_identifier(admin_user):
     shop = get_default_shop()
     for i in range(1,10):
@@ -53,6 +61,7 @@ def test_get_by_identifier(admin_user):
     assert order_data[0].get("identifier") == order.identifier
 
 
+@pytest.mark.django_db
 def test_get_by_order_date(admin_user):
     shop = get_default_shop()
     today = dt.today()
@@ -79,6 +88,7 @@ def test_get_by_order_date(admin_user):
     assert len(order_data) == 9
 
 
+@pytest.mark.django_db
 def test_get_by_status(admin_user):
     create_default_order_statuses()
     shop = get_default_shop()

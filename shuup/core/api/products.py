@@ -5,8 +5,10 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from __future__ import unicode_literals
 
 import django_filters
+from django.utils.translation import ugettext_lazy as _
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from parler_rest.fields import TranslatedFieldsField
 from parler_rest.serializers import TranslatableModelSerializer
@@ -120,6 +122,12 @@ class ProductViewSet(ModelViewSet):
     filter_backends = (filters.OrderingFilter, DjangoFilterBackend)
     filter_class = ProductFilter
 
+    def get_view_name(self):
+        return _("Products")
+
+    def get_view_description(self, html=False):
+        return _("Products can be listed, fetched, created, updated and deleted.")
+
     def get_queryset(self):
         if getattr(self.request.user, 'is_superuser', False):
             return Product.objects.all_except_deleted()
@@ -127,6 +135,9 @@ class ProductViewSet(ModelViewSet):
             customer=self.request.customer,
             shop=self.request.shop
         )
+
+    def perform_destroy(self, instance):
+        instance.soft_delete(self.request.user)
 
     @list_route(methods=['get'])
     def stocks(self, request):
@@ -150,3 +161,9 @@ class ShopProductViewSet(viewsets.ModelViewSet):
                 shop=self.request.shop
             )
         return ShopProduct.objects.filter(id__in=products)
+
+    def get_view_name(self):
+        return _("Shop Products")
+
+    def get_view_description(self, html=False):
+        return _("Shop Products can be listed, fetched, created, updated and deleted.")

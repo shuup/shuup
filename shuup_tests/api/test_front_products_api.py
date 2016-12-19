@@ -32,6 +32,10 @@ from shuup.testing.factories import (
 )
 
 
+def setup_function(fn):
+    cache.clear()
+
+
 def create_simple_supplier(identifier):
     ident = "supplier_%s" % identifier
     return Supplier.objects.create(

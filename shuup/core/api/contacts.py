@@ -5,6 +5,9 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from __future__ import unicode_literals
+
+from django.utils.translation import ugettext_lazy as _
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
@@ -35,3 +38,9 @@ class ContactViewSet(ModelViewSet):
     serializer_class = ContactSerializer
     filter_backends = (DjangoFilterBackend,)
     filter_class = ContactFilter
+
+    def get_view_name(self):
+        return _("Contacts")
+
+    def get_view_description(self, html=False):
+        return _("Contacts can be listed, fetched, created, updated and deleted.")
