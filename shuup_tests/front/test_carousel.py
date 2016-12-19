@@ -23,9 +23,30 @@ def test_carousel_plugin_form():
     test_carousel = Carousel.objects.create(name="test")
     plugin = CarouselPlugin(config={})
     form_class = plugin.get_editor_form_class()
-    form = form_class(data={"carousel": test_carousel.pk}, plugin=plugin)
-    assert form.is_valid()
-    assert form.get_config() == {"carousel": test_carousel.pk}
+
+    checks = [
+        (
+            {},
+            {"carousel": None, "active": True}
+        ),
+        (
+            {"carousel": test_carousel.pk},
+            {"carousel": test_carousel.pk, "active": True}
+        ),
+        (
+            {"carousel": test_carousel.pk, "active": False},
+            {"carousel": test_carousel.pk, "active": False}
+        ),
+        (
+            {"carousel": test_carousel.pk, "active": True},
+            {"carousel": test_carousel.pk, "active": True}
+        )
+    ]
+
+    for data, expected in checks:
+        form = form_class(data=data, plugin=plugin)
+        assert form.is_valid()
+        assert form.get_config() == expected
 
 
 @pytest.mark.django_db

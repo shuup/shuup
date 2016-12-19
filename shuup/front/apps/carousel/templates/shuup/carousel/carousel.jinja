@@ -1,4 +1,4 @@
-{% if carousel %}
+{% if carousel and active %}
     {% set slides = carousel.slides.visible() %}
 {% else %}
     {% set slides = [] %}

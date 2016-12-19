@@ -21,6 +21,14 @@ class CarouselPlugin(TemplatedPlugin):
     fields = [("carousel", None)]
     editor_form_class = CarouselConfigForm
 
+    def get_defaults(self):
+        defaults = super(CarouselPlugin, self).get_defaults()
+        defaults.update({
+            "carousel": self.config.get("carousel", None),
+            "active": self.config.get("active", True)
+        })
+        return defaults
+
     def get_context_data(self, context):
         """
         Use only slides that has translated image in current language
@@ -30,9 +38,11 @@ class CarouselPlugin(TemplatedPlugin):
         :rtype: dict
         """
         carousel_id = self.config.get("carousel")
+        active = self.config.get("active")
         return {
             "request": context["request"],
             "carousel": Carousel.objects.filter(id=carousel_id).first() if carousel_id else None,
+            "active": active,
             "type": "carousel"
         }
 

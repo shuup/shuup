@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.forms import BooleanField
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.front.apps.carousel.models import Carousel
@@ -19,7 +20,10 @@ class CarouselConfigForm(GenericPluginForm):
             label=_("Carousel"),
             queryset=Carousel.objects.all(),
             required=False,
-            initial=self.plugin.config.get("carousel") if self.plugin else None
+        )
+        self.fields["active"] = BooleanField(
+            label=_("Active"),
+            required=False,
         )
 
     def clean(self):
