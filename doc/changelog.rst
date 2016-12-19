@@ -50,6 +50,7 @@ Addons
 Front
 ~~~~~
 
+- Enable password reset when shop is in maintenance mode
 - Shop can now have a favicon
 - Variation children that are not purchaseable should not be visible anymore in dropdowns
 - Render product, category, and service descriptions as HTML
