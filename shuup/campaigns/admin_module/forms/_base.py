@@ -73,7 +73,7 @@ def _process_fields(form, **kwargs):
     model_obj = form._meta.model
     for field in model_obj._meta.get_fields(include_parents=False):
         # TODO: Enable categories for Select2 widget
-        if not isinstance(field, ManyToManyField) or field.name == "categories":
+        if not isinstance(field, ManyToManyField) or "categories" in field.name:
             continue
         formfield = CampaignsSelectMultipleField(model_obj)
         objects = (getattr(instance, field.name).all() if instance else model_obj.model.objects.none())

@@ -220,10 +220,20 @@ class CategoryProductsBasketCondition(BasketCondition):
     operator = EnumIntegerField(
         ComparisonOperator, default=ComparisonOperator.GTE, verbose_name=_("operator"))
     quantity = models.PositiveIntegerField(default=1, verbose_name=_("quantity"))
-    categories = models.ManyToManyField(Category, verbose_name=_("categories"))
+    categories = models.ManyToManyField(Category, related_name="+", verbose_name=_("categories"))
+    excluded_categories = models.ManyToManyField(
+        Category, related_name="+", verbose_name=_("excluded categories"),
+        help_text=_(
+            "If the customer has even a single product in the basket from these categories "
+            "this rule won't match thus the campaign cannot be applied to the basket."
+        ))
 
     def matches(self, basket, lines):
         product_id_to_qty = get_product_ids_and_quantities(basket)
+        if ShopProduct.objects.filter(
+                product_id__in=product_id_to_qty.keys(), categories__in=self.excluded_categories.all()).exists():
+            return False
+
         product_ids = ShopProduct.objects.filter(
             categories__in=self.categories.all(), product_id__in=product_id_to_qty.keys()
         ).values_list("product_id", flat=True)
