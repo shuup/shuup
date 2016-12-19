@@ -54,6 +54,7 @@ class CategoryProductsBasketConditionForm(BaseRuleModelForm):
     def __init__(self, **kwargs):
         super(CategoryProductsBasketConditionForm, self).__init__(**kwargs)
         self.fields["categories"].queryset = Category.objects.all_except_deleted()
+        self.fields["excluded_categories"].queryset = Category.objects.all_except_deleted()
 
     class Meta(BaseRuleModelForm.Meta):
         model = CategoryProductsBasketCondition

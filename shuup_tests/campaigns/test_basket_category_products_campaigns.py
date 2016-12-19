@@ -52,6 +52,9 @@ def test_category_product_in_basket_condition(rf):
 
     assert condition.matches(basket, [])
 
+    condition.excluded_categories.add(category)
+    assert not condition.matches(basket, [])
+
 
 @pytest.mark.django_db
 def test_category_products_effect_with_amount(rf):

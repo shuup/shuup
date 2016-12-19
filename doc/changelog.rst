@@ -72,6 +72,8 @@ Order Printouts
 Campaigns
 ~~~~~~~~~
 
+- In `CategoryProductsBasketCondition` add option to exclude baskets
+  containing products from certain categories.
 - Add option to select multiple categories to basket condition
 - Variation children should match rules based on parent
 
