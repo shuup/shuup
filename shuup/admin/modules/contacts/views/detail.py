@@ -64,7 +64,7 @@ class ContactDetailToolbar(Toolbar):
         self.append(URLActionButton(
             url=reverse("shuup_admin:user.new") + "?contact_id=%s" % self.contact.pk,
             text=_(u"New User"),
-            tooltip=_(u"Create an user for the contact."),
+            tooltip=_(u"Create a user for the contact."),
             icon="fa fa-star",
             extra_css_class="btn-gray btn-inverse",
             required_permissions=get_default_model_permissions(get_user_model()),

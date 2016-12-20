@@ -65,10 +65,10 @@ msgstr ""
 msgid "Ordered"
 msgstr ""
 
-msgid "Front Products"
+msgid "Storefront Products"
 msgstr ""
 
-msgid "Front Products can be listed and fetched."
+msgid "Storefront products can be listed and fetched."
 msgstr ""
 
 #, python-format

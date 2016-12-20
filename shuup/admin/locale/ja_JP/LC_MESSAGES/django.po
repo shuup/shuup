@@ -142,7 +142,7 @@ msgstr "あなたは %s にパスワード再設定のメールを送信した�
 msgid "New User"
 msgstr "新しいユーザー"
 
-msgid "Create an user for the contact."
+msgid "Create a user for the contact."
 msgstr "コンタクトのユーザーを作成"
 
 msgid "New Order"

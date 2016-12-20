@@ -128,7 +128,7 @@ msgid "Please go to the following page and choose a new password:"
 msgstr "Siirry oheiselle sivulle ja valitse uusi salasana:"
 
 msgid ""
-"If an user account is associated with the information you entered, you "
+"If a user account is associated with the information you entered, you "
 "should receive instructions on how to reset your password shortly."
 msgstr ""
 "Jos syöttämääsi sähköpostiosoitteeseen liittyy asiakastili, vastaanottanet "

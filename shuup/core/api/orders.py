@@ -20,6 +20,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from shuup.admin.modules.orders.json_order_creator import JsonOrderCreator
 from shuup.admin.modules.orders.views.edit import encode_address
+from shuup.api.mixins import PermissionHelperMixin, ProtectedModelViewSetMixin
 from shuup.core.models import (
     Contact, MutableAddress, Order, OrderLine, OrderStatus, Payment, Shop
 )
@@ -86,7 +87,24 @@ class OrderFilter(FilterSet):
         fields = ["identifier", "date", "status"]
 
 
-class OrderViewSet(ModelViewSet):
+class OrderViewSet(PermissionHelperMixin, ProtectedModelViewSetMixin, ModelViewSet):
+    """
+    retrieve: Fetches an order by its ID.
+
+    list: Lists all orders.
+
+    delete: Deletes an order.
+    If the object is related to another one and the relationship is protected, an error will be returned.
+
+    create: Creates a new order.
+
+    update: Fully updates an existing order.
+    You must specify all parameters to make it possible to overwrite all attributes.
+
+    partial_update: Updates an existent order.
+    You can update only a set of attributes.
+    """
+
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
     filter_backends = (DjangoFilterBackend,)
@@ -95,7 +113,8 @@ class OrderViewSet(ModelViewSet):
     def get_view_name(self):
         return _("Orders")
 
-    def get_view_description(self, html=False):
+    @classmethod
+    def get_help_text(cls):
         return _("Orders can be listed, fetched, created, updated and canceled.")
 
     def create(self, request, *args, **kwargs):
@@ -162,6 +181,8 @@ class OrderViewSet(ModelViewSet):
 
     @detail_route(methods=['put'])
     def complete(self, request, pk=None):
+        """ Set the order as Completed. """
+
         order = self.get_object()
         if not order.can_set_complete():
             return Response({
@@ -177,6 +198,8 @@ class OrderViewSet(ModelViewSet):
 
     @detail_route(methods=['put'])
     def cancel(self, request, pk=None):
+        """ Set the order as Canceled. """
+
         order = self.get_object()
         if not order.can_set_canceled():
             return Response({
@@ -191,10 +214,12 @@ class OrderViewSet(ModelViewSet):
 
     @detail_route(methods=['post'])
     def create_payment(self, request, pk=None):
+        """ Creates a payment for the order. """
         return _handle_payment_creation(request, self.get_object())
 
     @detail_route(methods=['post'])
     def set_fully_paid(self, request, pk=None):
+        """ Set the order as Fully Paid. """
         order = self.get_object()
         if order.is_paid():
             return Response({"status": "order is already fully paid"})

@@ -23,6 +23,7 @@ def serializer_factory(model, serializer_class=None, attrs=None, meta=None):
         else:
             serializer_class = serializers.ModelSerializer
     meta.setdefault("model", model)
+    meta.setdefault("fields", "__all__")
     attrs.setdefault("Meta", type(str("Meta"), (object,), meta))
     return type(str("%sSerializer" % model.__name__), (serializer_class,), attrs)
 

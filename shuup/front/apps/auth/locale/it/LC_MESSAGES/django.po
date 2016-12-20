@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
 # Marco Badan <marco.badan@gmail.com>, 2016
@@ -109,7 +109,7 @@ msgid "Please go to the following page and choose a new password:"
 msgstr "Vai sulla seguente pagina e scegli una nuova password:"
 
 msgid ""
-"If an user account is associated with the information you entered, you "
+"If a user account is associated with the information you entered, you "
 "should receive instructions on how to reset your password shortly."
 msgstr "Se un account utente è associato con le informazioni che ci hai fornito, a breve dovresti ricevere le istruzioni su come reimpostare la tua password.\n    "
 

@@ -328,7 +328,7 @@ msgstr ""
 msgid "New User"
 msgstr "Uusi käyttäjä"
 
-msgid "Create an user for the contact."
+msgid "Create a user for the contact."
 msgstr "Luo kontaktille käyttäjä."
 
 msgid "New Order"

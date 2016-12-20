@@ -303,7 +303,7 @@ msgstr ""
 msgid "New User"
 msgstr ""
 
-msgid "Create an user for the contact."
+msgid "Create a user for the contact."
 msgstr ""
 
 msgid "New Order"

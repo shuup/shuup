@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-28 18:00+0000\n"
+"POT-Creation-Date: 2016-12-20 18:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -24,6 +24,13 @@ msgstr ""
 
 #, python-format
 msgid "Price (%(shop)s/%(group)s)"
+msgstr ""
+
+msgid "Customer Group Price"
+msgstr ""
+
+msgid ""
+"Customer group prices can be listed, fetched, created, updated and deleted."
 msgstr ""
 
 msgid "product"

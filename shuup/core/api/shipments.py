@@ -12,6 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from rest_framework import serializers, viewsets
 
+from shuup.api.mixins import PermissionHelperMixin
 from shuup.core.models import Product, Shipment, ShipmentProduct, Shop
 
 
@@ -39,13 +40,17 @@ class ShipmentFilter(FilterSet):
 
     class Meta:
         model = Shipment
-        fields = ["id", "order", "product", "shop"]
+        fields = ["order", "product", "shop"]
 
 
-class ShipmentViewSet(viewsets.ReadOnlyModelViewSet):
+class ShipmentViewSet(PermissionHelperMixin, viewsets.ReadOnlyModelViewSet):
     """
-    ViewSet for shuup.core.models.Shipment
+    retrieve: Fetches a shipment by its ID.
+
+    list: Lists all shipments.
+    You can filter the shipments by `product`, `order` or `shop`.
     """
+
     queryset = Shipment.objects.all()
     serializer_class = ShipmentSerializar
     filter_backends = (DjangoFilterBackend,)
@@ -54,5 +59,6 @@ class ShipmentViewSet(viewsets.ReadOnlyModelViewSet):
     def get_view_name(self):
         return _("Shipments")
 
-    def get_view_description(self, html=False):
+    @classmethod
+    def get_help_text(cls):
         return _("Shipments can be listed and fetched.")
