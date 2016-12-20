@@ -11,6 +11,9 @@ from rest_framework.response import Response
 
 
 class ProtectedModelViewSetMixin(object):
+    """
+    Mixin to catch ProtectedError exceptions and return a reasonable response error to the user.
+    """
 
     def destroy(self, request, *args, **kwargs):
         try:

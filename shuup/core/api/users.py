@@ -17,6 +17,7 @@ from rest_framework.viewsets import ModelViewSet
 class UserSerializer(ModelSerializer):
 
     class Meta:
+        fields = "__all__"
         model = get_user_model()
 
 

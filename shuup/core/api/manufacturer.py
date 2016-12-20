@@ -10,9 +10,8 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 from rest_framework.viewsets import ModelViewSet
 
+from shuup.api.mixins import ProtectedModelViewSetMixin
 from shuup.core.models import Manufacturer
-
-from .mixins import ProtectedModelViewSetMixin
 
 
 class ManufacturerSerializer(serializers.ModelSerializer):

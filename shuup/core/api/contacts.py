@@ -17,6 +17,7 @@ from shuup.core.models import Contact, ContactGroup
 
 class ContactGroupSerializer(ModelSerializer):
     class Meta:
+        fields = "__all__"
         model = ContactGroup
 
 
@@ -24,6 +25,7 @@ class ContactSerializer(ModelSerializer):
     groups = ContactGroupSerializer(many=True, read_only=True)
 
     class Meta:
+        fields = "__all__"
         model = Contact
 
 

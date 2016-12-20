@@ -28,6 +28,9 @@ from shuup.utils.numbers import parse_decimal_string
 class FrontProductSerializer(ProductSerializer):
     cross_sell = serializers.SerializerMethodField()
 
+    class Meta(ProductSerializer.Meta):
+        fields = "__all__"
+
     def get_cross_sell(self, product):
         request = self.context["request"]
 
