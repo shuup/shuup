@@ -72,6 +72,18 @@ msgstr ""
 msgid "Users can be listed, fetched, created, updated and deleted."
 msgstr ""
 
+msgid "Attributes"
+msgstr ""
+
+msgid "Attributes can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+msgid "Tax Class"
+msgstr ""
+
+msgid "Tax classes can be listed, fetched, created, updated and deleted."
+msgstr ""
+
 msgid "internal identifier"
 msgstr ""
 

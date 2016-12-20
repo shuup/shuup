@@ -6,12 +6,14 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from shuup.api.factories import viewset_factory
+from shuup.core.api.attribute import AttributeViewSet
 from shuup.core.api.contacts import ContactViewSet
 from shuup.core.api.manufacturer import ManufacturerViewSet
 from shuup.core.api.orders import OrderViewSet
 from shuup.core.api.products import ProductViewSet, ShopProductViewSet
 from shuup.core.api.shipments import ShipmentViewSet
 from shuup.core.api.suppliers import SupplierViewSet
+from shuup.core.api.tax_class import TaxClassViewSet
 from shuup.core.api.units import SalesUnitViewSet
 from shuup.core.api.users import UserViewSet
 from shuup.core.models import Category, Shop
@@ -22,6 +24,7 @@ def populate_core_api(router):
     :param router: Router
     :type router: rest_framework.routers.DefaultRouter
     """
+    router.register("shuup/attribute", AttributeViewSet)
     router.register("shuup/category", viewset_factory(Category))
     router.register("shuup/contact", ContactViewSet)
     router.register("shuup/order", OrderViewSet)
@@ -33,3 +36,4 @@ def populate_core_api(router):
     router.register("shuup/supplier", SupplierViewSet)
     router.register("shuup/user", UserViewSet)
     router.register("shuup/sales_unit", SalesUnitViewSet)
+    router.register("shuup/tax_class", TaxClassViewSet)

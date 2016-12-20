@@ -12,6 +12,8 @@ Unrealeased
 Core
 ~~~~
 
+- API: add endpoint for Attribute
+- API: add endpoint for Tax Class
 - API: add endpoint for Sales Unit
 - API: add endpoint for Manufacturer
 - Add option to hide visible categories from menu
