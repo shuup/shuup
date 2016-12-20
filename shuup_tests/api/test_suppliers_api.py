@@ -9,11 +9,16 @@ from __future__ import unicode_literals
 
 import json
 
+import pytest
 from rest_framework import status
 from rest_framework.test import APIClient
 
 from shuup.core.models import Shop, ShopProduct, StockBehavior, Supplier
-from shuup.testing.factories import create_product
+from shuup.testing.factories import (
+    create_product, get_default_shop, get_default_shop_product,
+    get_default_supplier
+)
+from shuup_tests.simple_supplier.utils import get_simple_supplier
 
 
 def create_simple_supplier(identifier):
@@ -25,6 +30,7 @@ def create_simple_supplier(identifier):
     )
 
 
+@pytest.mark.django_db
 def test_get_suppliers(admin_user):
     client = _get_client(admin_user)
     shop1 = Shop.objects.create()
@@ -107,6 +113,73 @@ def test_get_suppliers(admin_user):
     assert supplier_data[0]["product"] == product2.pk
     assert supplier_data[0]["physical_count"] == supplier1.get_stock_status(product2.pk).physical_count
     assert supplier_data[0]["logical_count"] == supplier1.get_stock_status(product2.pk).logical_count
+
+
+@pytest.mark.django_db
+def test_adjust_stock(admin_user):
+    get_default_shop()
+    sp = get_default_shop_product()
+    sp.stock_behavior = StockBehavior.STOCKED
+    sp.save()
+    client = _get_client(admin_user)
+    supplier = get_default_supplier()
+    simple_supplier = get_simple_supplier()
+    # invalid type
+    response = client.post("/api/shuup/supplier/%s/stock/" % supplier.pk, data={
+        "product": sp.product.pk,
+        "delta": 100,
+        "type": 100
+    })
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    data = json.loads(response.content.decode("utf-8"))
+    assert "type" in data
+
+    # invalid supplier
+    response = client.post("/api/shuup/supplier/%s/stock/" % 100, data={
+        "product": sp.product.pk,
+        "delta": 100,
+        "type": 100
+    })
+    assert response.status_code == status.HTTP_404_NOT_FOUND
+
+    # invalid product
+    response = client.post("/api/shuup/supplier/%s/stock/" % supplier.pk, data={
+        "product": 100,
+        "delta": 100,
+        "type": 1
+    })
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    data = json.loads(response.content.decode("utf-8"))
+    assert "product" in data
+
+    # invalid delta
+    response = client.post("/api/shuup/supplier/%s/stock/" % supplier.pk, data={
+        "product": sp.product.pk,
+        "delta": "not-a-number",
+        "type": 1
+    })
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    data = json.loads(response.content.decode("utf-8"))
+    assert "delta" in data
+
+    # adjust stock not implemented
+    response = client.post("/api/shuup/supplier/%s/stock/" % supplier.pk, data={
+        "product": sp.product.pk,
+        "delta": 100,
+        "type": 1
+    })
+    assert response.status_code == 400
+
+    # add 100 to inventory
+    response = client.post("/api/shuup/supplier/%s/stock/" % simple_supplier.pk, data={
+        "product": sp.product.pk,
+        "delta": 100,
+        "type": 1
+    })
+    assert response.status_code == 201
+    stock = simple_supplier.get_stock_status(sp.product.pk)
+    assert stock.logical_count == 100
+    assert stock.physical_count == 100
 
 
 def _get_client(admin_user):

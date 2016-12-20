@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-16 23:19+0000\n"
+"POT-Creation-Date: 2016-12-20 18:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -22,6 +22,12 @@ msgid "Contacts"
 msgstr ""
 
 msgid "Contacts can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+msgid "Manufacturer"
+msgstr ""
+
+msgid "Manufacturers can be listed, fetched, created, updated and deleted."
 msgstr ""
 
 msgid "Orders"
@@ -51,25 +57,19 @@ msgstr ""
 msgid "Suppliers"
 msgstr ""
 
-msgid "Suppliers can be listed and fetched."
-msgstr ""
-
-msgid "Users"
-msgstr ""
-
-msgid "Users can be listed, fetched, created, updated and deleted."
-msgstr ""
-
-msgid "Manufacturer"
-msgstr ""
-
-msgid "Manufacturers can be listed, fetched, created, updated and deleted."
+msgid "Suppliers can be listed and fetched and stock can be updated."
 msgstr ""
 
 msgid "Sales Unit"
 msgstr ""
 
 msgid "Sales units can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+msgid "Users"
+msgstr ""
+
+msgid "Users can be listed, fetched, created, updated and deleted."
 msgstr ""
 
 msgid "internal identifier"
