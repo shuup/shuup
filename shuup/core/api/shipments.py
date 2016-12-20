@@ -25,6 +25,7 @@ class ShipmentSerializar(serializers.ModelSerializer):
     products = ShipmentProductSerializer(many=True, read_only=True)
 
     class Meta:
+        fields = "__all__"
         model = Shipment
 
 

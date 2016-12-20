@@ -65,6 +65,7 @@ class ProductSerializer(TranslatableModelSerializer):
     media = ProductMediaSerializer(read_only=True, many=True)
 
     class Meta:
+        fields = "__all__"
         model = Product
 
 

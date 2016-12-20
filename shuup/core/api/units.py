@@ -11,9 +11,8 @@ from parler_rest.fields import TranslatedFieldsField
 from parler_rest.serializers import TranslatableModelSerializer
 from rest_framework.viewsets import ModelViewSet
 
+from shuup.api.mixins import ProtectedModelViewSetMixin
 from shuup.core.models import SalesUnit
-
-from .mixins import ProtectedModelViewSetMixin
 
 
 class SalesUnitSerializer(TranslatableModelSerializer):
