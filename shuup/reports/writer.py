@@ -21,7 +21,7 @@ from django.utils.functional import Promise
 from django.utils.html import conditional_escape, escape
 from django.utils.safestring import mark_safe
 from django.utils.timezone import now
-from six import StringIO
+from six import BytesIO
 
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
 from shuup.utils.i18n import get_current_babel_locale
@@ -154,9 +154,9 @@ class ExcelReportWriter(ReportWriter):
         self.worksheet.append([text])
 
     def get_rendered_output(self):
-        sio = StringIO()
-        self.workbook.save(sio)
-        return sio.getvalue()
+        bio = BytesIO()
+        self.workbook.save(bio)
+        return bio.getvalue()
 
 
 class HTMLReportWriter(ReportWriter):

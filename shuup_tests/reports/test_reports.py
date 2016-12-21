@@ -179,3 +179,19 @@ def test_html_writer(rf):
     assert str(expected_taxless_total) in rendered_report
     assert str(expected_taxful_total) in rendered_report
 
+
+@pytest.mark.django_db
+def test_excel_writer(rf):
+    expected_taxful_total, expected_taxless_total, shop, order = initialize_report_test(10, 1, 0, 1)
+    data = {
+        "report": TestSalesReport.get_name(),
+        "shop": shop.pk,
+        "date_range": DateRangeChoices.THIS_YEAR,
+        "writer": "excel",
+        "force_download": 1,
+    }
+    report = TestSalesReport(**data)
+    writer = get_writer_instance(data["writer"])
+    assert str(writer) == data["writer"]
+    rendered_report = writer.get_rendered_output()
+    assert rendered_report is not None
