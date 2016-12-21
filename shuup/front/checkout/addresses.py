@@ -8,11 +8,15 @@
 from __future__ import unicode_literals
 
 from django import forms
+from django.db.models.fields import BLANK_CHOICE_DASH
 from django.forms.models import model_to_dict
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import FormView
 
-from shuup.core.models import CompanyContact
+from shuup.core.models import (
+    CompanyContact, SavedAddress, SavedAddressRole, SavedAddressStatus
+)
 from shuup.front.checkout import CheckoutPhaseViewMixin
 from shuup.utils.form_group import FormGroup
 from shuup.utils.importing import cached_load
@@ -28,6 +32,23 @@ class CompanyForm(TaxNumberCleanMixin, forms.ModelForm):
         fields = ("name", "tax_number",)
 
 
+class SavedAddressForm(forms.Form):
+    kind_to_role_map = {
+        "shipping": SavedAddressRole.SHIPPING,
+        "billing": SavedAddressRole.BILLING
+    }
+
+    addresses = forms.ChoiceField(label=_("Use a saved address"), required=False, choices=(), initial=None)
+
+    def __init__(self, owner, kind, **kwargs):
+        super(SavedAddressForm, self).__init__(**kwargs)
+        saved_addr_qs = SavedAddress.objects.filter(owner=owner,
+                                                    role=self.kind_to_role_map[kind],
+                                                    status=SavedAddressStatus.ENABLED)
+        saved_addr_choices = BLANK_CHOICE_DASH + [(addr.pk, addr.title) for addr in saved_addr_qs]
+        self.fields["addresses"].choices = saved_addr_choices
+
+
 class AddressesPhase(CheckoutPhaseViewMixin, FormView):
     identifier = "addresses"
     title = _(u"Addresses")
@@ -38,12 +59,17 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
     address_kinds = ("shipping", "billing")
     address_form_classes = {}  # Override by `address_kind` if required
     company_form_class = CompanyForm
+    saved_address_form_class = SavedAddressForm
 
     def get_form(self, form_class):
         fg = FormGroup(**self.get_form_kwargs())
         default_address_form_class = cached_load("SHUUP_ADDRESS_MODEL_FORM")
         for kind in self.address_kinds:
             fg.add_form_def(kind, form_class=self.address_form_classes.get(kind, default_address_form_class))
+            fg.add_form_def("saved_{}".format(kind),
+                            form_class=SavedAddressForm,
+                            required=False,
+                            kwargs={"kind": kind, "owner": self.request.basket.customer})
         if self.company_form_class and not self.request.customer:
             fg.add_form_def("company", self.company_form_class, required=False)
         return fg
@@ -95,3 +121,21 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
             for address in (basket.shipping_address, basket.billing_address):
                 address.company_name = basket.customer.name
                 address.tax_number = basket.customer.tax_number
+
+    def get_context_data(self, **kwargs):
+        context = super(AddressesPhase, self).get_context_data(**kwargs)
+
+        # generate all the available saved addresses if user wants to use some
+        saved_addr_qs = SavedAddress.objects.filter(owner=self.request.basket.customer,
+                                                    status=SavedAddressStatus.ENABLED)
+        context["saved_address"] = {}
+        for saved_address in saved_addr_qs:
+            data = {}
+
+            for key, value in model_to_dict(saved_address.address).items():
+                if value:
+                    data[key] = force_text(value)
+
+            context["saved_address"][saved_address.pk] = data
+
+        return context
