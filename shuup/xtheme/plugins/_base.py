@@ -43,6 +43,23 @@ class Plugin(object):
         :type config: dict
         """
         self.config = config
+        self.set_defaults()
+
+    def get_defaults(self):
+        """
+        Return the default values of this plugins configuration.
+
+        Default values will be set to the plugin's configuration and applied
+        to the form fields' initial values
+        """
+        return {}
+
+    def set_defaults(self):
+        """
+        Apply the default configuration to the current configuration.
+        """
+        for key, value in self.get_defaults().items():
+            self.config.setdefault(key, value)
 
     def is_context_valid(self, context):
         """
