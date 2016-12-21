@@ -11,6 +11,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.fields import MoneyValueField
+from shuup.core.utils.context_cache import bump_cache_for_product
 from shuup.utils.properties import MoneyPropped, PriceProperty
 
 
@@ -34,3 +35,7 @@ class CgpPrice(MoneyPropped, models.Model):
             self.group_id,
             self.price,
         )
+
+    def save(self, *args, **kwargs):
+        super(CgpPrice, self).save(*args, **kwargs)
+        bump_cache_for_product(self.product, self.shop)
