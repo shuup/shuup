@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-14 17:39+0000\n"
+"POT-Creation-Date: 2016-12-17 00:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1310,6 +1310,19 @@ msgstr ""
 msgid "New user"
 msgstr ""
 
+#, python-format
+msgid ""
+"\n"
+"    Welcome %(first_name)s!\n"
+"\n"
+"    You've been added as an administrator to %(shop_url)s. Here are some "
+"details:\n"
+"        Shop url: %(shop_url)s\n"
+"        Login url: %(admin_url)s\n"
+"        Your username: %(username)s\n"
+"        Your password: Please contact your admin.\n"
+msgstr ""
+
 msgid "Password"
 msgstr ""
 
@@ -1343,6 +1356,17 @@ msgstr ""
 msgid "No permission groups"
 msgstr ""
 
+msgid "Send email confirmation"
+msgstr ""
+
+msgid ""
+"Send an email to the user to let them know they've been added as a shop "
+"user. Applicable only for users with staff status."
+msgstr ""
+
+msgid "Please enter an email to send a confirmation"
+msgstr ""
+
 msgid "Change Password"
 msgstr ""
 
@@ -1372,6 +1396,13 @@ msgstr ""
 
 #, python-format
 msgid "User bound to contact %(contact)s."
+msgstr ""
+
+#, python-format
+msgid "You've been added as an admin user to %s"
+msgstr ""
+
+msgid "User"
 msgstr ""
 
 #, python-format
@@ -1412,9 +1443,6 @@ msgstr ""
 
 #, python-format
 msgid "Last Name: %s"
-msgstr ""
-
-msgid "User"
 msgstr ""
 
 msgid "The two password fields didn't match."

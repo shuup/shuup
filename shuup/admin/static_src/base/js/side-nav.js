@@ -95,4 +95,13 @@ $(function() {
     $(".section-navigation, #section-navigation").each(function() {
         activateSectionNavigation($(this));
     });
+
+    if(location.hash) {
+        const $section = $("a[href='" + location.hash + "']");
+        if($section.length) {
+            $section.trigger("click");
+        } else {
+            location.hash = "";
+        }
+    }
 });

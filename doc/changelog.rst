@@ -36,6 +36,8 @@ Localization
 Admin
 ~~~~~
 
+- Add shop logo block to home page
+- Send user confirmation email when new admin users are created
 - Add recent orders dashboard block
 - Add store overview dashboard block
 - Add wizard pane to create shop content pages and configure behaviors
@@ -56,6 +58,7 @@ Addons
 Front
 ~~~~~
 
+- Enable password reset when shop is in maintenance mode
 - Shop can now have a favicon
 - Variation children that are not purchaseable should not be visible anymore in dropdowns
 - Render product, category, and service descriptions as HTML

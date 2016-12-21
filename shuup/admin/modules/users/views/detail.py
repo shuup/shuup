@@ -14,6 +14,7 @@ from django.conf import settings as django_settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model, load_backend, login
 from django.core.exceptions import PermissionDenied
+from django.core.mail import send_mail
 from django.core.urlresolvers import NoReverseMatch, reverse
 from django.db.transaction import atomic
 from django.forms.models import modelform_factory
@@ -31,6 +32,17 @@ from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Contact, PersonContact
 from shuup.utils.excs import Problem
 from shuup.utils.text import flatten
+
+
+NEW_USER_EMAIL_CONFIRMATION_TEMPLATE = _("""
+    Welcome %(first_name)s!
+
+    You've been added as an administrator to %(shop_url)s. Here are some details:
+        Shop url: %(shop_url)s
+        Login url: %(admin_url)s
+        Your username: %(username)s
+        Your password: Please contact your admin.
+""")
 
 
 def get_front_url():
@@ -61,9 +73,12 @@ class BaseUserForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(BaseUserForm, self).__init__(*args, **kwargs)
-        self.fields["email"].help_text = _("The user email address. Used for password resets.")
-        self.fields["first_name"].help_text = _("The first name of the user.")
-        self.fields["last_name"].help_text = _("The last name of the user.")
+        if "email" in self.fields:
+            self.fields["email"].help_text = _("The user email address. Used for password resets.")
+        if "first_name" in self.fields:
+            self.fields["first_name"].help_text = _("The first name of the user.")
+        if "last_name" in self.fields:
+            self.fields["last_name"].help_text = _("The last name of the user.")
         if self.instance.pk:
             # Changing the password for an existing user requires more confirmation
             self.fields.pop("password")
@@ -79,6 +94,25 @@ class BaseUserForm(forms.ModelForm):
         else:
             self.fields.pop("permission_info")
             self.fields.pop("permission_groups")
+            if "email" in self.fields:
+                self.fields["send_confirmation"] = forms.BooleanField(
+                    label=_("Send email confirmation"),
+                    initial=True,
+                    required=False,
+                    help_text=_(
+                        "Send an email to the user to let them know they've been added as a shop user. "
+                        "Applicable only for users with staff status."
+                    )
+                )
+
+    def clean(self):
+        cleaned_data = super(BaseUserForm, self).clean()
+        if (
+            cleaned_data.get("send_confirmation") and
+            cleaned_data.get("is_staff") and
+            not self.cleaned_data.get("email")
+        ):
+            raise forms.ValidationError({"email": _("Please enter an email to send a confirmation")})
 
     def save(self, commit=True):
         user = super(BaseUserForm, self).save(commit=False)
@@ -179,13 +213,17 @@ class UserDetailView(CreateOrUpdateView):
     # Model set during dispatch because it's swappable
     template_name = "shuup/admin/users/detail.jinja"
     context_object_name = "user"
-    _fields = ["username", "email", "first_name", "last_name"]
+    _fields = ["username", "email", "first_name", "last_name", "password"]
 
     @property
     def fields(self):
         # check whether these fields exists in the model or it has the attribute
         model_fields = self.model._meta.get_all_field_names()
-        return [field for field in self._fields if field in model_fields or hasattr(self.model, field)]
+        fields = [field for field in self._fields if field in model_fields or hasattr(self.model, field)]
+        if not self.object.pk and getattr(self.request.user, "is_superuser", False):
+            fields.append("is_staff")
+            fields.append("is_superuser")
+        return fields
 
     def get_form_class(self):
         return modelform_factory(self.model, form=BaseUserForm, fields=self.fields)
@@ -225,6 +263,20 @@ class UserDetailView(CreateOrUpdateView):
             contact.user = self.object
             contact.save()
             messages.info(self.request, _(u"User bound to contact %(contact)s.") % {"contact": contact})
+        if getattr(self.object, "is_staff", False) and form.cleaned_data.get("send_confirmation"):
+            shop_url = "%s://%s/" % (self.request.scheme, self.request.get_host())
+            admin_url = self.request.build_absolute_uri(reverse("shuup_admin:login"))
+            send_mail(
+                subject=_("You've been added as an admin user to %s" % shop_url),
+                message=NEW_USER_EMAIL_CONFIRMATION_TEMPLATE % {
+                    "first_name": getattr(self.object, "first_name") or getattr(self.object, "username", _("User")),
+                    "shop_url": shop_url,
+                    "admin_url": admin_url,
+                    "username": getattr(self.object, "username") or getattr(self.object.email)
+                },
+                from_email=django_settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[self.object.email]
+            )
 
     def get_success_url(self):
         return get_model_url(self.object)
