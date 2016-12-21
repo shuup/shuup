@@ -7,25 +7,29 @@
 # LICENSE file in the root directory of this source tree.
 import itertools
 import json
-
-import pytest
 from decimal import Decimal
 
-from bs4 import BeautifulSoup
+import pytest
 from babel.dates import format_date
+from bs4 import BeautifulSoup
 from django.utils.encoding import force_text
 from django.utils.safestring import SafeText
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.apps.provides import override_provides
 from shuup.core.models import Order
-from shuup.core.pricing import TaxlessPrice, TaxfulPrice
+from shuup.core.pricing import TaxfulPrice, TaxlessPrice
 from shuup.reports.admin_module.views import ReportView
 from shuup.reports.forms import DateRangeChoices
 from shuup.reports.report import ShuupReportBase
-from shuup.reports.writer import get_writer_instance
-from shuup.testing.factories import get_default_shop, create_order_with_product, get_default_product, \
+from shuup.reports.writer import (
+    get_writer_instance, populate_default_writers, REPORT_WRITERS_MAP,
+    ReportWriterPopulator
+)
+from shuup.testing.factories import (
+    create_order_with_product, get_default_product, get_default_shop,
     get_default_supplier
+)
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.i18n import get_current_babel_locale
 
@@ -195,3 +199,14 @@ def test_excel_writer(rf):
     assert str(writer) == data["writer"]
     rendered_report = writer.get_rendered_output()
     assert rendered_report is not None
+
+
+def test_report_writer_populator_provide():
+    with override_provides("report_writer_populator", [
+        "shuup.reports.writer.populate_default_writers"
+    ]):
+        populator = ReportWriterPopulator()
+        populator.populate()
+
+        for k, v in REPORT_WRITERS_MAP.items():
+            assert populator.populated_map[k] == v

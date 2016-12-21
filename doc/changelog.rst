@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Core: add provide entry to load report writers
 - API: add endpoints for product variation management and linkage
 - API: add endpoint to make a package Product
 - API: add endpoint to add attributes in Product

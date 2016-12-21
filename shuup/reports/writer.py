@@ -23,6 +23,7 @@ from django.utils.safestring import mark_safe
 from django.utils.timezone import now
 from six import BytesIO
 
+from shuup.apps.provides import get_provide_objects
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
 from shuup.utils.i18n import get_current_babel_locale
 from shuup.utils.pdf import render_html_to_pdf
@@ -31,6 +32,9 @@ try:
     import openpyxl
 except ImportError:
     openpyxl = None
+
+
+REPORT_WRITERS_MAP = {}
 
 
 class ReportWriter(object):
@@ -324,20 +328,71 @@ class PprintReportWriter(JSONReportWriter):
         return pformat(self.data)
 
 
-NAME_TO_CLASS = {
-    "excel": ExcelReportWriter if openpyxl is not None else None,
-    "html": HTMLReportWriter,
-    "pdf": PDFReportWriter,
-    "json": JSONReportWriter,
-    "pprint": PprintReportWriter
-}
+class ReportWriterPopulator(object):
+    """
+    A class which populates the report writers map
+    """
+    report_writers_map = {}
+
+    def populate(self):
+        """
+        Iterate over all report_writer_populator provides to fill/update the report writer map
+        """
+        for report_writer_populator_func in get_provide_objects("report_writer_populator"):
+            report_writer_populator_func(self)
+
+    def register(self, writer_name, writer_class):
+        """
+        Register a report writer for use.
+
+        If a writer with same name already exists, it will be overwriten.
+
+        :type writer_name: str
+        :param writer_name: the unique name of the writer
+        :type writer_class: ReportWriter
+        :param writer_class: the report writer class
+        """
+        self.report_writers_map[writer_name] = writer_class
+
+    @property
+    def populated_map(self):
+        """ Returns the populated map """
+        return self.report_writers_map
 
 
 def get_writer_names():
-    return set([k for k, v in six.iteritems(NAME_TO_CLASS) if v])
+    """ Get the registered writer names """
+    return set([k for k, v in six.iteritems(REPORT_WRITERS_MAP) if v])
 
 
 def get_writer_instance(writer_name):
-    writer = NAME_TO_CLASS[writer_name]()
+    """
+    Get a report writer instance by name
+    :type writer_name: str
+    :param writer_name: the name of the report writer
+    :rtype: ReportWriter
+    """
+    writer = REPORT_WRITERS_MAP[writer_name]()
     assert isinstance(writer, ReportWriter)
     return writer
+
+
+def populate_default_writers(writer_populator):
+    """
+    Populate the default report writers
+    :type writer_populator: ReportWriterPopulator
+    """
+    writer_populator.register("html", HTMLReportWriter)
+    writer_populator.register("pdf", PDFReportWriter)
+    writer_populator.register("json", JSONReportWriter)
+    writer_populator.register("pprint", PprintReportWriter)
+    writer_populator.register("html", HTMLReportWriter)
+
+    if openpyxl:
+        writer_populator.register("excel", ExcelReportWriter)
+
+
+# populate them
+populator = ReportWriterPopulator()
+populator.populate()
+REPORT_WRITERS_MAP.update(populator.populated_map)

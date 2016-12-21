@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
+
 import json
 from decimal import Decimal
 
@@ -14,11 +15,11 @@ import six
 from django.utils.encoding import force_text
 
 from shuup.core.models import get_person_contact, Order
+from shuup.default_reports.reports import SalesPerHour, SalesReport, TotalSales
 from shuup.reports.forms import DateRangeChoices
 from shuup.reports.writer import get_writer_instance
-from shuup.default_reports.reports import SalesReport, TotalSales, SalesPerHour
 from shuup.testing.factories import (
-    create_random_person, get_default_shop, get_default_product, UserFactory
+    create_random_person, get_default_product, get_default_shop, UserFactory
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.core.test_basic_order import create_order
