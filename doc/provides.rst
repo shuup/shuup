@@ -226,3 +226,7 @@ Reports Provide Categories
 
 ``reports``
     Class to handle report data collection. Should be a subclass of `~shuup.reports.report.ShuupReportBase`.
+
+``report_writer_populator``
+    List of functions to populate report writers. This allows the creation of custom output formats.
+    Should follow the signature of `~shuup.reports.writer.populate_default_writers`.
