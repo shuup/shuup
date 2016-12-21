@@ -13,6 +13,7 @@ from django.core import mail
 from django.core.urlresolvers import reverse
 from django.utils.translation import activate
 
+from shuup.core import cache
 from shuup.core.defaults.order_statuses import create_default_order_statuses
 from shuup.core.models import (
     get_person_contact, MutableAddress, Order, OrderLineType, Product,
@@ -231,6 +232,7 @@ def test_order_received_admin(rf, admin_user):
 @pytest.mark.django_db
 @pytest.mark.parametrize("with_company", [False, True])
 def test_basic_order_flow_not_registered(with_company):
+    cache.clear()
     create_default_order_statuses()
     n_orders_pre = Order.objects.count()
     populate_if_required()
@@ -281,6 +283,7 @@ def test_basic_order_flow_not_registered(with_company):
 
 @pytest.mark.django_db
 def test_basic_order_flow_registered(regular_user):
+    cache.clear()
     create_default_order_statuses()
     n_orders_pre = Order.objects.count()
     populate_if_required()

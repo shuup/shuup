@@ -27,8 +27,8 @@ from shuup.core.pricing import (
 )
 from shuup.front.basket.objects import BaseBasket
 from shuup.testing.factories import (
-    create_default_tax_rule, get_default_tax, get_default_tax_class
-)
+    create_default_tax_rule, get_default_tax, get_default_tax_class,
+    get_default_shop, create_product)
 
 PRICING_MODULE_SPEC = __name__ + ':DummyPricingModule'
 
@@ -176,8 +176,13 @@ def _get_template_engine_and_context():
     engine = django.template.engines['jinja2']
     assert isinstance(engine, django_jinja.backend.Jinja2)
 
+    shop = get_default_shop()
+    shop.currency = 'USD'
+    shop.prices_include_tax = False
+    shop.save()
+
     request = RequestFactory().get('/')
-    request.shop = Shop(currency='USD', prices_include_tax=False)
+    request.shop = shop
     request.customer = AnonymousContact()
     request.person = request.customer
     PriceDisplayOptions(include_taxes=False).set_for_request(request)
@@ -186,9 +191,11 @@ def _get_template_engine_and_context():
     tax_class = get_default_tax_class()
     order, order_line = _get_order_and_order_line(request)
 
+    product = create_product(sku='6.0745', shop=shop, tax_class=tax_class)
+
     context = {
         'request': request,
-        'prod': Product(sku='6.0745', tax_class=tax_class),
+        'prod': product,
         # TODO: Test also with variant products
         'sline': _get_source_line(request),
         'bline': _get_basket_line(request),

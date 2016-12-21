@@ -11,11 +11,13 @@ import pytest
 
 from django.core.urlresolvers import reverse
 from django.utils.translation import activate
+from django.test import override_settings
 
 from shuup.core import cache
 from shuup.core.models import (
     Category, CategoryStatus, Manufacturer, Product, ProductMode,
-    ProductVariationVariable, ProductVariationVariableValue, ShopProduct
+    ProductVariationVariable, ProductVariationVariableValue, ShopProduct,
+    ShopProductVisibility
 )
 from shuup.front.utils.sorts_and_filters import (
     set_configuration
@@ -60,9 +62,10 @@ def create_orderable_product(name, sku, price):
     return product
 
 
+@override_settings(DEBUG=True)
 @pytest.mark.browser
 @pytest.mark.djangodb
-def test_category_product_list(browser, live_server, settings):
+def test_category_product_filters(browser, live_server, settings):
     activate("en")
     # initialize
     cache.clear()
@@ -337,6 +340,22 @@ def second_category_sort_test(browser, live_server, shop, category):
     # Set limit to 24
     click_element(browser, "button[data-id='id_limit']")
     click_element(browser, "button[data-id='id_limit'] + .dropdown-menu li[data-original-index='1'] a")
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 13)
+
+    # Check that visibility change affects the product count
+    shop_products = ShopProduct.objects.filter(primary_category_id=category.id)[:3]
+    for sp in shop_products:
+        sp.visibility = ShopProductVisibility.NOT_VISIBLE
+        sp.save()
+
+    browser.reload()
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 10)
+
+    for sp in shop_products:
+        sp.visibility = ShopProductVisibility.ALWAYS_VISIBLE
+        sp.save()
+
+    browser.reload()
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 13)
 
 
