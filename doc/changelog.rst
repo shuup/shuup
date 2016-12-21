@@ -12,6 +12,8 @@ Unrealeased
 Core
 ~~~~
 
+- Add context cache utils. Context cache is mainly build for products and
+  shop products but it can cache also other context related content.
 - Core: add provide entry to load report writers
 - API: add endpoints for product variation management and linkage
 - API: add endpoint to make a package Product
