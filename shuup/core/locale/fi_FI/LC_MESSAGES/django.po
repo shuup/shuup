@@ -815,10 +815,10 @@ msgid "The name shown for customer in shop front."
 msgstr "Kaupan teemassa asiakkaalle näytettävä nimi."
 
 msgid "order status"
-msgstr "tilauspäivämäärä"
+msgstr "tilauksen tila"
 
 msgid "order statuses"
-msgstr "tilauspäivämäärä"
+msgstr "tilauksen tilat"
 
 msgid "modified on"
 msgstr "muutettu"

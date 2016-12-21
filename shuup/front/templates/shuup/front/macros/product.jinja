@@ -56,6 +56,11 @@ Inheritance order for product macors:
                 {%- if product.is_variation_parent() -%}
                     {% set (min_price, max_price) = product|price_range %}
                     {% if min_price == max_price %}
+                        {% if product|is_discounted -%}
+                        <small class="text-muted original-price original"><s>
+                            {{- product|base_price -}}
+                        </s></small>
+                        {%- endif %}
                         <strong>{{ min_price }}</strong>
                     {% else %}
                         <strong>{{ min_price }} &ndash; {{ max_price }}</strong>

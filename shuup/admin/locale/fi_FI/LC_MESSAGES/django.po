@@ -81,7 +81,7 @@ msgid "Campaigns"
 msgstr "Kampanjat"
 
 msgid "Content"
-msgstr "Kontakti"
+msgstr "Sisältö"
 
 msgid "Elements"
 msgstr "Maksut"
