@@ -17,8 +17,10 @@ from django.views.generic.edit import FormView
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.admin.views.wizard import TemplatedWizardFormDef, WizardPane
 from shuup.apps.provides import get_provide_objects
+from shuup.core import cache
 from shuup.xtheme._theme import (
-    get_current_theme, get_theme_by_identifier, set_current_theme
+    get_current_theme, get_theme_by_identifier, set_current_theme,
+    THEME_CACHE_KEY
 )
 from shuup.xtheme.models import ThemeSettings
 
@@ -144,6 +146,10 @@ class ThemeConfigDetailView(CreateOrUpdateView):
         return reverse("shuup_admin:xtheme.config_detail", kwargs={
             "theme_identifier": self.object.theme_identifier
         })
+
+    def save_form(self, form):
+        super(ThemeConfigDetailView, self).save_form(form)
+        cache.bump_version(THEME_CACHE_KEY)
 
 
 class ThemeGuideTemplateView(TemplateView):

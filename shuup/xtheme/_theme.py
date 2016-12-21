@@ -14,10 +14,13 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.apps.provides import (
     get_identifier_to_object_map, get_provide_objects
 )
+from shuup.core import cache
 from shuup.utils.deprecation import RemovedInFutureShuupWarning
 from shuup.utils.importing import load
 
 log = logging.getLogger(__name__)
+
+THEME_CACHE_KEY = "current_theme"
 
 
 # TODO: Document how to create Xthemes
@@ -360,37 +363,25 @@ def get_current_theme(request=None):
     :return: Theme object or None
     :rtype: Theme
     """
+
     if _current_theme_class is not _not_set:
         if _current_theme_class:
             return _current_theme_class()
         return None  # No theme (usually for testing)
 
+    value = cache.get(THEME_CACHE_KEY)
+    if value:
+        return value
+
     if request and hasattr(request, "_current_xtheme"):
         return request._current_xtheme
-    theme = None
 
-    try:
-        # Ensure this module can be imported from anywhere by lazily importing the model
-        from shuup.xtheme.models import ThemeSettings
-        ts = ThemeSettings.objects.filter(active=True).first()
-    except Exception as exc:
-        # This is unfortunate and weird, but I don't want other tests to depend
-        # on Xtheme's state or require the `djangodb` mark for every test.
-        # So we silence exceptions with pytest-django's "Database access not allowed"
-        # message here and let everything else pass.
-        if "Database access not allowed" not in str(exc):
-            raise
-        ts = None
-
-    if ts:
-        theme_cls = get_identifier_to_object_map("xtheme").get(ts.theme_identifier)
-        if theme_cls is not None:
-            theme = theme_cls(settings_obj=ts)
-        else:
-            log.warn("The active theme %r is not currently installed", ts.theme_identifier)
+    theme = _get_current_theme()
 
     if request:
         request._current_xtheme = theme
+
+    cache.set(THEME_CACHE_KEY, theme)
     return theme
 
 
@@ -420,8 +411,33 @@ def set_current_theme(identifier):
     :return: Activated theme
     :rtype: Theme
     """
+    cache.bump_version(THEME_CACHE_KEY)
     theme = get_theme_by_identifier(identifier)
     if not theme:
         raise ValueError("Invalid theme identifier")
     theme.set_current()
+    cache.set(THEME_CACHE_KEY, theme)
+    return theme
+
+
+def _get_current_theme():
+    theme = None
+    try:
+        # Ensure this module can be imported from anywhere by lazily importing the model
+        from shuup.xtheme.models import ThemeSettings
+        ts = ThemeSettings.objects.filter(active=True).first()
+    except Exception as exc:
+        # This is unfortunate and weird, but I don't want other tests to depend
+        # on Xtheme's state or require the `djangodb` mark for every test.
+        # So we silence exceptions with pytest-django's "Database access not allowed"
+        # message here and let everything else pass.
+        if "Database access not allowed" not in str(exc):
+            raise
+        ts = None
+    if ts:
+        theme_cls = get_identifier_to_object_map("xtheme").get(ts.theme_identifier)
+        if theme_cls is not None:
+            theme = theme_cls(settings_obj=ts)
+        else:
+            log.warn("The active theme %r is not currently installed", ts.theme_identifier)
     return theme
