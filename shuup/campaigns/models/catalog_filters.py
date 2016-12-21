@@ -9,7 +9,7 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from polymorphic.models import PolymorphicModel
 
-from shuup.core.models import Category, Product, ProductType, ShopProduct
+from shuup.core.models import Category, Product, ProductType, Shop, ShopProduct
 
 
 class CatalogFilter(PolymorphicModel):
@@ -95,10 +95,20 @@ class CategoryFilter(CatalogFilter):
     categories = models.ManyToManyField(Category, verbose_name=_("categories"))
 
     def get_matching_shop_products(self):
-        return ShopProduct.objects.filter(categories__in=self.categories.all_except_deleted())
+        shop_products = []
+        shop = Shop.objects.first()
+        for parent in ShopProduct.objects.filter(categories__in=self.categories.all_except_deleted()):
+            shop_products.append(parent)
+            for child in parent.product.variation_children.all():
+                child_sp = child.get_shop_instance(shop)
+                shop_products.append(child_sp)
+        return shop_products
 
     def matches(self, shop_product):
         ids = shop_product.categories.all_except_deleted().values_list("id", flat=True)
+        for child in shop_product.product.variation_children.all():
+            child_sp = child.get_shop_instance(shop_product.shop)
+            ids += child_sp.categories.all_except_deleted().values_list("id", flat=True)
         new_ids = self.values.values_list("id", flat=True)
         return bool([x for x in ids if x in new_ids])
 

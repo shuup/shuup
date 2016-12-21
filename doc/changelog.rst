@@ -88,6 +88,7 @@ Order Printouts
 Campaigns
 ~~~~~~~~~
 
+- Match child products for parents
 - In `CategoryProductsBasketCondition` add option to exclude baskets
   containing products from certain categories.
 - Add option to select multiple categories to basket condition
