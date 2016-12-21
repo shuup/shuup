@@ -93,6 +93,22 @@ class ShuupAdminAppConfig(AppConfig):
 
         order_creator_finished.connect(handle_custom_payment_return_requests,
                                        dispatch_uid='shuup.admin.handle_cash_payments')
+
+        from shuup.core.utils.context_cache import bump_shop_product_signal_handler
+        from shuup.core.models import ShopProduct
+        from django.db.models.signals import m2m_changed
+        m2m_changed.connect(
+            bump_shop_product_signal_handler,
+            sender=ShopProduct.categories.through,
+            dispatch_uid="shop_product:clear_shop_product_cache"
+        )
+        from django.db.models.signals import post_save
+        post_save.connect(
+            bump_shop_product_signal_handler,
+            sender=ShopProduct,
+            dispatch_uid="shop_product:clear_shop_product_cache"
+        )
+
         validate_templates_configuration()
 
 

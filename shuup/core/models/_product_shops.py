@@ -20,6 +20,7 @@ from shuup.core.excs import (
 )
 from shuup.core.fields import MoneyValueField, QuantityField, UnsavedForeignKey
 from shuup.core.signals import get_orderability_errors, get_visibility_errors
+from shuup.core.utils import context_cache
 from shuup.utils.analog import define_log_model
 from shuup.utils.properties import MoneyPropped, PriceProperty
 
@@ -282,7 +283,8 @@ class ShopProduct(MoneyPropped, models.Model):
                 if child_product.get_shop_instance(self.shop).is_orderable(
                         supplier=supplier,
                         customer=customer,
-                        quantity=1
+                        quantity=1,
+                        allow_cache=False
                 ):
                     sellable += 1
 
@@ -297,7 +299,8 @@ class ShopProduct(MoneyPropped, models.Model):
                 if res and res.get_shop_instance(self.shop).is_orderable(
                         supplier=supplier,
                         customer=customer,
-                        quantity=1
+                        quantity=1,
+                        allow_cache=False
                 ):
                     sellable += 1
 
@@ -307,7 +310,7 @@ class ShopProduct(MoneyPropped, models.Model):
         if self.product.is_package_parent():
             for child_product, child_quantity in six.iteritems(self.product.get_package_child_to_quantity_map()):
                 try:
-                    child_shop_product = child_product.get_shop_instance(shop=self.shop)
+                    child_shop_product = child_product.get_shop_instance(shop=self.shop, allow_cache=False)
                 except ShopProduct.DoesNotExist:
                     yield ValidationError("%s: Not available in %s" % (child_product, self.shop), code="invalid_shop")
                 else:
@@ -363,11 +366,22 @@ class ShopProduct(MoneyPropped, models.Model):
         for message in self.get_visibility_errors(customer=customer):
             raise ProductNotVisibleProblem(message.args[0])
 
-    def is_orderable(self, supplier, customer, quantity):
+    def is_orderable(self, supplier, customer, quantity, allow_cache=True):
+        key, val = context_cache.get_cached_value(
+            identifier="is_orderable", item=self, context={"customer": customer},
+            supplier=supplier, quantity=quantity, allow_cache=allow_cache)
+        if customer and val is not None:
+            return val
+
         if not supplier:
             supplier = self.suppliers.first()  # TODO: Allow multiple suppliers
         for message in self.get_orderability_errors(supplier=supplier, quantity=quantity, customer=customer):
+            if customer:
+                context_cache.set_cached_value(key, False)
             return False
+
+        if customer:
+            context_cache.set_cached_value(key, True)
         return True
 
     def is_visible(self, customer):

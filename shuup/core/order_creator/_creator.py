@@ -15,6 +15,7 @@ from django.utils.encoding import force_text
 from shuup.core.models import Order, OrderLine, OrderLineType
 from shuup.core.order_creator.signals import order_creator_finished
 from shuup.core.shortcuts import update_order_line_from_product
+from shuup.core.utils import context_cache
 from shuup.core.utils.users import real_user_or_none
 from shuup.utils.deprecation import RemovedFromShuupWarning
 from shuup.utils.numbers import bankers_round
@@ -294,4 +295,7 @@ class OrderCreator(OrderProcessor):
         order.save()
         order = self.finalize_creation(order, order_source)
         order_creator_finished.send(sender=type(self), order=order, source=order_source)
+        # reset product prices
+        for line in order.lines.exclude(product_id=None):
+            context_cache.bump_cache_for_product(line.product, shop=order.shop)
         return order
