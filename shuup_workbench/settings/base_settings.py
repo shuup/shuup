@@ -219,6 +219,7 @@ SHUUP_ERROR_PAGE_HANDLERS_SPEC = [
     "shuup.front.error_handlers:FrontPageErrorHandler"
 ]
 
+SHUUP_SIMPLE_SEARCH_LIMIT = 150
 
 if os.environ.get("SHUUP_WORKBENCH_DISABLE_MIGRATIONS") == "1":
     from .utils import DisableMigrations

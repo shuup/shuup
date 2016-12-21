@@ -11,11 +11,12 @@ import re
 from difflib import SequenceMatcher
 
 from django import forms
+from django.conf import settings
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.core import cache
 from shuup.core.models import Product
+from shuup.core.utils import context_cache
 from shuup.front.utils.sorts_and_filters import ProductListFormModifier
 
 
@@ -57,6 +58,7 @@ def get_compiled_query(query_string, needles):
 def get_product_ids_for_query_str(request, query_str, limit, product_ids=[]):
     if not query_str:
         return []
+
     entry_query = get_compiled_query(
         query_str, ['sku', 'translations__name', 'translations__description', 'translations__keywords'])
     return list(Product.objects.searchable(
@@ -67,25 +69,29 @@ def get_product_ids_for_query_str(request, query_str, limit, product_ids=[]):
     ).filter(entry_query).distinct().values_list("pk", flat=True))[:(limit-len(product_ids))]
 
 
-def get_search_product_ids(request, query, limit=150):
+def get_search_product_ids(request, query, limit=settings.SHUUP_SIMPLE_SEARCH_LIMIT):
     query = query.strip().lower()
     cache_key_elements = {
         "query": query,
         "shop": request.shop.pk,
         "customer": request.customer.pk
     }
-    cache_key = "simple_search:%s" % hash(frozenset(cache_key_elements.items()))
-    product_ids = cache.get(cache_key)
-    if product_ids is None:
-        product_ids = get_product_ids_for_query_str(request, query, limit)
-        for word in query.split(" ") or []:
-            if word == query:
-                break
-            prod_count = len(product_ids)
-            if prod_count >= limit:
-                break
-            product_ids += get_product_ids_for_query_str(request, word.strip(), limit, product_ids)
-        cache.set(cache_key, product_ids[:limit], 60 * 5)
+
+    key, val = context_cache.get_cached_value(
+        identifier="simple_search", item=None, context=request, cache_key_elements=cache_key_elements)
+    if val is not None:
+        return val
+
+    product_ids = get_product_ids_for_query_str(request, query, limit)
+    for word in query.split(" ") or []:
+        if word == query:
+            break
+        prod_count = len(product_ids)
+        if prod_count >= limit:
+            break
+        product_ids += get_product_ids_for_query_str(request, word.strip(), limit, product_ids)
+
+    context_cache.set_cached_value(key, product_ids[:limit])
     return product_ids
 
 
