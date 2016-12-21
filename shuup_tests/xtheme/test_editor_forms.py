@@ -58,7 +58,7 @@ def test_lcfg():
             lcfg = LayoutCellFormGroup(data={
                 "general-cell_width": "%d" % two_thirds,
                 "general-cell_align": " ",
-                "plugin-text": "Hello, world!"
+                "plugin-text_*": "Hello, world!"
             }, layout_cell=cell, theme=theme)
             assert lcfg.is_valid()  # Let's see now!
             lcfg.save()

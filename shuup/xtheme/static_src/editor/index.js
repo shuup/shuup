@@ -19,7 +19,7 @@ function post(args) {
     const inputs = Object.keys(args).
         map((key) => {
             const val = args[key];
-            return val ? el("input", {type: "hidden", name: key, value: val}) : null;
+            return typeof val !== "undefined"? el("input", {type: "hidden", name: key, value: val}) : null;
         }
     );
     const form = el("form", {method: "POST", action: location.href}, inputs);
@@ -100,6 +100,41 @@ domready(() => {
             updateModelChoiceWidgetURL(document.getElementById(this.id));
         });
     });
+
+
+    new Sortable(document.querySelector(".layout-rows"), {
+        handle: ".layout-move-row-btn",
+        onUpdate: function(evt) {
+            post({command: "move_row_to_index", from_y: evt.oldIndex, to_y: evt.newIndex});
+        }
+    });
+
+    var els = document.getElementsByClassName("layout-row-cells");
+    for(var i = 0; i < els.length; i++) {
+        new Sortable(els[i], {
+            group: 'cells',
+            onUpdate: function(evt) {
+                // cell re-arranged within the same row
+                post({
+                    command: "move_cell_to_position",
+                    from_x: evt.item.dataset.x,
+                    from_y: evt.item.dataset.y,
+                    to_x: evt.newIndex,
+                    to_y: evt.item.dataset.y
+                });
+            },
+            onAdd: function(evt) {
+                // cell moved to different row
+                post({
+                    command: "move_cell_to_position",
+                    from_x: evt.item.dataset.x,
+                    from_y: evt.item.dataset.y,
+                    to_x: Array.prototype.indexOf.call(evt.item.parentNode.children, evt.item),
+                    to_y: evt.item.parentNode.parentNode.dataset.y
+                });
+            }
+        });
+    }
 });
 
 window.refreshPlaceholderInParent = (placeholderName) => {

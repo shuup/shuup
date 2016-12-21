@@ -376,6 +376,58 @@ class Layout(object):
         self.rows.pop(y)
         return True
 
+    def move_row_to_index(self, from_y, to_y):
+        """
+        Move the y'th row to the specified zero-based index.
+
+        If `y` or index is out of bounds, nothing is done.
+
+        :param from_y: current Y coordinate
+        :type from_y: int
+        :param to_y: new Y coordinate
+        :type to_y: int
+        :return: Was something done?
+        :rtype: bool
+        """
+        from_y = int(from_y)
+        to_y = int(to_y)
+        if not (0 <= from_y < len(self.rows)) or not (0 <= to_y < len(self.rows)):
+            return False
+        self.rows.insert(to_y, self.rows.pop(from_y))
+        return True
+
+    def move_cell_to_position(self, from_x, from_y, to_x, to_y):
+        """
+        Move the layout cell to the specified zero-based coordinates.
+
+        If the coordinates are out of range, nothing is done.
+
+        :param from_x: X (horizontal) coordinate of the cell to move
+        :type from_x: int
+        :param from_y: Y (vertical) coordinate of the cell to move
+        :type from_y: int
+        :param to_x: X (horizontal) coordinate of the cell after moving
+        :type to_x: int
+        :param to_y: Y (vertical) coordinate of the cell after moving
+        :type to_y: int
+        :return: Was something done?
+        :rtype: bool
+        """
+        from_x = int(from_x)
+        from_y = int(from_y)
+        to_x = int(to_x)
+        to_y = int(to_y)
+
+        if not (0 <= from_y < len(self.rows)) or not(0 <= from_x < len(self.rows[from_y])):
+            return False
+        if not (0 <= to_y < len(self.rows)) or not (0 <= to_x <= len(self.rows[to_y])):
+            return False
+        cell_to_move = self.rows[from_y].cells.pop(from_x)
+        self.rows[to_y].cells.insert(to_x, cell_to_move)
+        if not len(self.rows[from_y]):
+            self.delete_row(from_y)
+        return True
+
     def delete_cell(self, x, y):
         """
         Delete a layout cell indicated by the given (zero-based) coordinates.

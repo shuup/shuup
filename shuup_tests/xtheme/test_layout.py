@@ -149,3 +149,25 @@ def test_layout_api():
     l.insert_row(1)  # insert an empty row in second place
     assert len(l) == 3 and list(map(len, l.rows)) == [1, 0, 2]
     assert not l.insert_row(-1)  # that's silly!
+    assert l.move_row_to_index(0, 1)
+    assert len(l) == 3 and list(map(len, l.rows)) == [0, 1, 2]
+    assert l.move_row_to_index(2, 0)
+    assert len(l) == 3 and list(map(len, l.rows)) == [2, 0, 1]
+    assert not l.move_row_to_index(1, 100)
+    assert len(l) == 3 and list(map(len, l.rows)) == [2, 0, 1]
+    assert not l.move_row_to_index(1, -1)
+    assert len(l) == 3 and list(map(len, l.rows)) == [2, 0, 1]
+    cell = l.get_cell(0, 0)
+    # top left to bottom right
+    assert l.move_cell_to_position(0, 0, 1, 2)
+    assert l.get_cell(1, 2) == cell
+    assert len(l) == 3 and list(map(len, l.rows)) == [1, 0, 2]
+    cell = l.get_cell(0, 0)
+    # top left to middle
+    assert l.move_cell_to_position(0, 0, 0, 1)
+    assert l.get_cell(0, 0) == cell
+    assert len(l) == 2 and list(map(len, l.rows)) == [1, 2]
+    # invalid cell
+    assert not l.move_cell_to_position(0, 100, 0, 1)
+    # move to invalid cell
+    assert not l.move_cell_to_position(0, 0, 100, 1)

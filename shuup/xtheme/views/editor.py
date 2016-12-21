@@ -151,6 +151,14 @@ class EditorView(TemplateView):
         self.layout.delete_row(y)
         self.save_layout()
 
+    def dispatch_move_row_to_index(self, from_y, to_y, **kwargs):
+        self.layout.move_row_to_index(from_y, to_y)
+        self.save_layout()
+
+    def dispatch_move_cell_to_position(self, from_x, from_y, to_x, to_y, **kwargs):
+        self.layout.move_cell_to_position(from_x, from_y, to_x, to_y)
+        self.save_layout()
+
     def dispatch_del_cell(self, x, y, **kwargs):
         self.layout.delete_cell(x, y)
         self.save_layout()

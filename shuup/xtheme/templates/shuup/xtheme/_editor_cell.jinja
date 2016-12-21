@@ -3,6 +3,7 @@
         data-y="{{ current_cell_coords[1] }}">
     <i class="fa fa-trash"></i> {% trans %}Delete This Cell{% endtrans %}
 </button>
+
 {% if form %}
     <form action="" method="POST">
         {% csrf_token %}
@@ -12,9 +13,55 @@
         </table>
         <hr>
         {% if "plugin" in form.forms %}
-            <table>
-            {{ form.plugin.as_table()|safe }}
-            </table>
+            {% set translated_fields = form.plugin.translatable_field_names %}
+            {% set monolingual_fields = form.plugin.monolingual_field_names %}
+            {% if translated_fields %}
+                <div>
+                    <ul class="editor-tabs nav nav-tabs">
+                        {% for language_code in form.plugin.get_languages() %}
+                        <li role="presentation" {% if loop.first %}class="active"{% endif %}>
+                            {% if language_code == "*" %}
+                                <a href="#untranslated" data-toggle="tab">{% trans %}Untranslated{% endtrans %}</a>
+                            {% else %}
+                                <a href="#{{ language_code }}" data-toggle="tab">{{ language_code }}</a>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="tab-content">
+                        {% for language_code in form.plugin.get_languages() %}
+                            <div role="tabpanel" class="tab-pane {% if loop.first %}active{% endif %}"
+                                {% if language_code == "*" %}
+                                    id="untranslated"
+                                {% else %}
+                                    id="{{ language_code }}"
+                                {% endif %}
+                            >
+                                <br>
+                                <table>
+                                {% for field in translated_fields %}
+                                    <tr>
+                                        <th>{{ form.forms["plugin"][field + "_" + language_code].label }}({{ language_code }}):</th>
+                                        <td>{{ form.forms["plugin"][field + "_" + language_code] }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </table>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% if monolingual_fields %}<hr>{% endif %}
+            {% endif %}
+            {% if monolingual_fields %}
+                <table>
+                {% for field in monolingual_fields %}
+                    <tr>
+                        <th>{{ form.forms["plugin"][field].label }}:</th>
+                        <td>{{ form.forms["plugin"][field] }}</td>
+                    </tr>
+                {% endfor %}
+                </table>
+            {% endif %}
         {% else %}
             <i>{% trans %}There's nothing to configure in this plugin.{% endtrans %}</i>
         {% endif %}
