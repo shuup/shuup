@@ -84,6 +84,30 @@ msgstr ""
 msgid "Tax classes can be listed, fetched, created, updated and deleted."
 msgstr ""
 
+msgid "Product Media"
+msgstr ""
+
+msgid "Products media can be listed, fetched, updated and deleted."
+msgstr ""
+
+msgid "Product type"
+msgstr ""
+
+msgid "Product types can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+msgid "Product Attribute"
+msgstr ""
+
+msgid "Products attributes can be listed, fetched, updated and deleted."
+msgstr ""
+
+msgid "Product Package"
+msgstr ""
+
+msgid "Products package can be listed, fetched, updated and deleted."
+msgstr ""
+
 msgid "internal identifier"
 msgstr ""
 
@@ -1504,6 +1528,9 @@ msgid ""
 msgstr ""
 
 msgid "Product is currently not a normal product, can't turn into package"
+msgstr ""
+
+msgid "Package can't contain itself"
 msgstr ""
 
 msgid "Variation parents can not belong into a package"

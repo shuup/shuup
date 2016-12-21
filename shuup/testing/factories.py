@@ -32,11 +32,11 @@ from shuup.core.models import (
     AnonymousContact, Attribute, AttributeType, AttributeVisibility, Category,
     CategoryStatus, CompanyContact, Contact, ContactGroup, Currency,
     CustomCarrier, CustomPaymentProcessor, FixedCostBehaviorComponent,
-    MutableAddress, Order, OrderLine, OrderLineTax, OrderLineType, OrderStatus,
-    PaymentMethod, PersonContact, Product, ProductMedia, ProductMediaKind,
-    ProductType, SalesUnit, ShippingMethod, Shop, ShopProduct,
-    ShopProductVisibility, ShopStatus, StockBehavior, Supplier, SupplierType,
-    Tax, TaxClass, WaivingCostBehaviorComponent
+    Manufacturer, MutableAddress, Order, OrderLine, OrderLineTax,
+    OrderLineType, OrderStatus, PaymentMethod, PersonContact, Product,
+    ProductMedia, ProductMediaKind, ProductType, SalesUnit, ShippingMethod,
+    Shop, ShopProduct, ShopProductVisibility, ShopStatus, StockBehavior,
+    Supplier, SupplierType, Tax, TaxClass, WaivingCostBehaviorComponent
 )
 from shuup.core.order_creator import OrderCreator, OrderSource
 from shuup.core.pricing import get_pricing_module
@@ -250,6 +250,15 @@ def get_default_product_type():
         for attr in get_default_attribute_set():
             product_type.attributes.add(attr)
     return product_type
+
+
+def get_default_manufacturer():
+    manufacturer = default_by_identifier(Manufacturer)
+    if not manufacturer:
+        manufacturer = Manufacturer.objects.create(identifier=DEFAULT_IDENTIFIER, name="Default Manufacturer")
+        assert manufacturer.pk, "manufacturer was saved"
+        assert (manufacturer.identifier == "default"), "manufacturer has requested identifier"
+    return manufacturer
 
 
 def get_tax(code, name, rate=None, amount=None):

@@ -7,14 +7,28 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import base64
 import json
+import os
+from decimal import Decimal
 
+from django.utils.translation import activate
 from rest_framework import status
 from rest_framework.test import APIClient
 
 from shuup.core import cache
-from shuup.core.models import Shop, ShopProduct, StockBehavior, Supplier
-from shuup.testing.factories import create_product, get_default_shop
+from shuup.core.models import (
+    Attribute, AttributeType, AttributeVisibility, Manufacturer, Product,
+    ProductAttribute, ProductMediaKind, ProductMode, ProductPackageLink,
+    ProductType, ProductVisibility, SalesUnit, ShippingMode, Shop, ShopProduct,
+    ShopProductVisibility, StockBehavior, Supplier, TaxClass
+)
+from shuup.testing.factories import (
+    CategoryFactory, create_product, create_random_contact_group,
+    create_random_product_attribute, get_default_category,
+    get_default_product_type, get_default_sales_unit, get_default_shop,
+    get_default_supplier, get_default_tax_class, get_random_filer_image
+)
 
 
 def setup_function(fn):
@@ -146,6 +160,405 @@ def test_get_product_stocks(admin_user):
     assert stock_data[0]["stocks"][0]["id"] == supplier1.id
     assert stock_data[0]["stocks"][0]["physical_count"] == supplier1.get_stock_status(product2.pk).physical_count
     assert stock_data[0]["stocks"][0]["logical_count"] == supplier1.get_stock_status(product2.pk).logical_count
+
+
+def test_create_product(admin_user):
+    get_default_shop()
+    client = _get_client(admin_user)
+
+    assert Product.objects.count() == 0
+    data = _get_product_sample_data()
+    response = client.post("/api/shuup/product/", content_type="application/json", data=json.dumps(data))
+    assert response.status_code == status.HTTP_201_CREATED
+
+    # check all
+    for lang in ("en", "pt-br"):
+        activate(lang)
+        product = Product.objects.first()
+        _check_product_basic_data(product, data, lang)
+
+
+def test_update_product(admin_user):
+    get_default_shop()
+    product = create_product("test")
+    client = _get_client(admin_user)
+    data = _get_product_sample_data()
+    response = client.put("/api/shuup/product/%d/" % product.pk, content_type="application/json", data=json.dumps(data))
+    assert response.status_code == status.HTTP_200_OK
+
+    # check whether the info was changed
+    for lang in ("en", "pt-br"):
+        activate(lang)
+        product = Product.objects.first()
+        _check_product_basic_data(product, data, lang)
+
+
+def test_delete_product(admin_user):
+    get_default_shop()
+    client = _get_client(admin_user)
+
+    assert Product.objects.count() == 0
+    data = _get_product_sample_data()
+    response = client.post("/api/shuup/product/", content_type="application/json", data=json.dumps(data))
+    assert response.status_code == status.HTTP_201_CREATED
+    assert Product.objects.count() == 1
+
+    product = Product.objects.first()
+
+    # actually, we do not remove it from db, just "soft delete"
+    response = client.delete("/api/shuup/product/%d/" % product.pk, content_type="application/json")
+    assert response.status_code == status.HTTP_204_NO_CONTENT
+
+    assert Product.objects.count() == 1
+
+    # check whether the info was changed
+    for lang in ("en", "pt-br"):
+        activate(lang)
+        product = Product.objects.first()
+        _check_product_basic_data(product, data, lang)
+        assert product.deleted is True
+
+
+def test_create_shop_product(admin_user):
+    shop = get_default_shop()
+    client = _get_client(admin_user)
+
+    assert Product.objects.count() == 0
+    data = _get_product_sample_data()
+    response = client.post("/api/shuup/product/", content_type="application/json", data=json.dumps(data))
+    assert response.status_code == status.HTTP_201_CREATED
+    product = Product.objects.first()
+    assert ShopProduct.objects.count() == 0
+
+    shop_data = _get_shop_product_sample_data()
+    response = client.post("/api/shuup/product/%d/add_shop/" % product.id,
+                           content_type="application/json",
+                           data=json.dumps(shop_data))
+    assert response.status_code == status.HTTP_201_CREATED
+    assert ShopProduct.objects.count() == 1
+
+
+def test_product_add_attribute(admin_user):
+    shop = get_default_shop()
+    client = _get_client(admin_user)
+    product = create_product("product1")
+
+    attribute1 = Attribute.objects.create(identifier="attr1",
+                                          type=AttributeType.BOOLEAN,
+                                          visibility_mode=AttributeVisibility.SHOW_ON_PRODUCT_PAGE,
+                                          name="Attribute 1")
+    attribute2 = Attribute.objects.create(identifier="attr2",
+                                          type=AttributeType.TRANSLATED_STRING,
+                                          visibility_mode=AttributeVisibility.SHOW_ON_PRODUCT_PAGE,
+                                          name="Attribute 2")
+    attribute3 = Attribute.objects.create(identifier="attr3",
+                                          type=AttributeType.UNTRANSLATED_STRING,
+                                          visibility_mode=AttributeVisibility.SHOW_ON_PRODUCT_PAGE,
+                                          name="Attribute 3")
+
+    get_default_product_type().attributes.add(attribute1)
+    get_default_product_type().attributes.add(attribute2)
+
+    product_attr1_data = {
+        "attribute": attribute1.pk,
+        "numeric_value": 0,
+    }
+    response = client.post("/api/shuup/product/%d/add_attribute/" % product.pk,
+                           content_type="application/json",
+                           data=json.dumps(product_attr1_data))
+    assert response.status_code == status.HTTP_201_CREATED
+    assert ProductAttribute.objects.filter(product=product).count() == 1
+    pa = ProductAttribute.objects.first()
+    assert pa.attribute.pk == attribute1.pk
+    assert pa.numeric_value == product_attr1_data["numeric_value"]
+
+    product_attr2_data = {
+        "attribute": attribute2.pk,
+        "translations": {
+            "en": {"translated_string_value": "come on"},
+            "pt-br": {"translated_string_value": "vamos lá"}
+        }
+    }
+    response = client.post("/api/shuup/product/%d/add_attribute/" % product.pk,
+                           content_type="application/json",
+                           data=json.dumps(product_attr2_data))
+    assert response.status_code == status.HTTP_201_CREATED
+    assert ProductAttribute.objects.filter(product=product).count() == 2
+    pa = ProductAttribute.objects.last()
+    assert pa.attribute.pk == attribute2.pk
+    assert pa.translated_string_value == product_attr2_data["translations"]["en"]["translated_string_value"]
+
+    # try to add an attribute which does not belong to the product type
+    product_attr3_data = {
+        "attribute": attribute3.pk,
+        "untraslated_string": "lalala"
+    }
+    response = client.post("/api/shuup/product/%d/add_attribute/" % product.pk,
+                           content_type="application/json",
+                           data=json.dumps(product_attr3_data))
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert ProductAttribute.objects.filter(product=product).count() == 2
+
+
+def test_make_product_package(admin_user):
+    shop = get_default_shop()
+    client = _get_client(admin_user)
+    product1 = create_product("product1")
+    product2 = create_product("product2")
+    product3 = create_product("product3")
+    product4 = create_product("product4")
+    assert product1.mode == product2.mode == product3.mode == product4.mode == ProductMode.NORMAL
+
+    package_data = [
+        {"product": product2.pk, "quantity":1},
+        {"product": product3.pk, "quantity":2},
+        {"product": product4.pk, "quantity":3.5}
+    ]
+    response = client.post("/api/shuup/product/%d/make_package/" % product1.pk,
+                           content_type="application/json",
+                           data=json.dumps(package_data))
+    assert response.status_code == status.HTTP_201_CREATED
+    product1.refresh_from_db()
+    product2.refresh_from_db()
+    product3.refresh_from_db()
+    product4.refresh_from_db()
+    assert product1.mode == ProductMode.PACKAGE_PARENT
+
+    child1 = ProductPackageLink.objects.get(parent=product1, child=product2)
+    assert child1.quantity == 1
+    child2 = ProductPackageLink.objects.get(parent=product1, child=product3)
+    assert child2.quantity == 2
+    child3 = ProductPackageLink.objects.get(parent=product1, child=product4)
+    assert child3.quantity == 3.5
+
+
+def test_make_product_package_impossible(admin_user):
+    shop = get_default_shop()
+    client = _get_client(admin_user)
+    product1 = create_product("product1")
+
+    package_data = [
+        {"product": product1.pk, "quantity":3.5}
+    ]
+    response = client.post("/api/shuup/product/%d/make_package/" % product1.pk,
+                           content_type="application/json",
+                           data=json.dumps(package_data))
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+
+def test_product_package(admin_user):
+    shop = get_default_shop()
+    client = _get_client(admin_user)
+    product1 = create_product("product1")
+    product2 = create_product("product2")
+    product3 = create_product("product3")
+    product4 = create_product("product4")
+
+    product1.make_package({product2: 1, product3: 2, product4: 3})
+    product1.save()
+    assert product1.mode == ProductMode.PACKAGE_PARENT
+
+    package_child_links = ProductPackageLink.objects.filter(parent=product1)
+
+    # get the first child
+    response = client.get("/api/shuup/product_package/%d/" % package_child_links[0].id)
+    assert response.status_code == status.HTTP_200_OK
+    data = json.loads(response.content.decode("utf-8"))
+    assert data["product"] == product2.id
+    assert Decimal(data["quantity"]) == Decimal(1)
+    assert data["id"] == package_child_links[0].id
+
+    # get the 2nd child
+    response = client.get("/api/shuup/product_package/%d/" % package_child_links[1].id)
+    assert response.status_code == status.HTTP_200_OK
+    data = json.loads(response.content.decode("utf-8"))
+    assert data["product"] == product3.id
+    assert Decimal(data["quantity"]) == Decimal(2)
+    assert data["id"] == package_child_links[1].id
+
+    # get the 3rd child
+    response = client.get("/api/shuup/product_package/%d/" % package_child_links[2].id)
+    assert response.status_code == status.HTTP_200_OK
+    data = json.loads(response.content.decode("utf-8"))
+    assert data["product"] == product4.id
+    assert Decimal(data["quantity"]) == Decimal(3)
+    assert data["id"] == package_child_links[2].id
+
+    # update the first child - set quantity=10
+    package_data = {"quantity": 10}
+    response = client.put("/api/shuup/product_package/%d/" % package_child_links[0].id,
+                          content_type="application/json",
+                          data=json.dumps(package_data))
+    assert response.status_code == status.HTTP_200_OK
+    response = client.get("/api/shuup/product_package/%d/" % package_child_links[0].id)
+    assert response.status_code == status.HTTP_200_OK
+    data = json.loads(response.content.decode("utf-8"))
+    assert data["product"] == product2.id
+    assert Decimal(data["quantity"]) == Decimal(10)
+
+    # deletes the last child
+    response = client.delete("/api/shuup/product_package/%d/" % package_child_links[2].id)
+    assert response.status_code == status.HTTP_204_NO_CONTENT
+    assert ProductPackageLink.objects.count() == 2
+
+
+def test_product_attribute(admin_user):
+    shop = get_default_shop()
+    client = _get_client(admin_user)
+    product1 = create_product("product1")
+
+    attrib1 = create_random_product_attribute()
+    attrib2 = create_random_product_attribute()
+    product_type = get_default_product_type()
+    product_type.attributes.add(attrib1)
+    product_type.attributes.add(attrib2)
+
+    product_attr1_data = {"attribute": attrib1.pk, "numeric_value": 0}
+    product_attr2_data = {"attribute": attrib2.pk, "numeric_value": 1}
+    response = client.post("/api/shuup/product/%d/add_attribute/" % product1.pk,
+                           content_type="application/json",
+                           data=json.dumps(product_attr1_data))
+    assert response.status_code == status.HTTP_201_CREATED
+    response = client.post("/api/shuup/product/%d/add_attribute/" % product1.pk,
+                           content_type="application/json",
+                           data=json.dumps(product_attr2_data))
+    assert response.status_code == status.HTTP_201_CREATED
+
+    attrs = ProductAttribute.objects.filter(product=product1)
+
+    # get the first attr
+    response = client.get("/api/shuup/product_attribute/%d/" % attrs[0].id)
+    assert response.status_code == status.HTTP_200_OK
+    data = json.loads(response.content.decode("utf-8"))
+    assert data["product"] == product1.id
+    assert data["attribute"] == attrib1.id
+    assert Decimal(data["numeric_value"]) == Decimal(0)
+
+    # get the 2nd attr
+    response = client.get("/api/shuup/product_attribute/%d/" % attrs[1].id)
+    assert response.status_code == status.HTTP_200_OK
+    data = json.loads(response.content.decode("utf-8"))
+    assert data["product"] == product1.id
+    assert data["attribute"] == attrib2.id
+    assert Decimal(data["numeric_value"]) == Decimal(1)
+
+    # update the first attr - numeric_value=1, attr=2
+    attr_data = {"numeric_value": 1, "attribute": attrib2.pk}
+    response = client.put("/api/shuup/product_attribute/%d/" % attrs[0].id,
+                          content_type="application/json",
+                          data=json.dumps(attr_data))
+    assert response.status_code == status.HTTP_200_OK
+    response = client.get("/api/shuup/product_attribute/%d/" % attrs[0].id)
+    assert response.status_code == status.HTTP_200_OK
+    data = json.loads(response.content.decode("utf-8"))
+    assert data["product"] == product1.id
+    assert data["attribute"] == attrib2.id
+    assert Decimal(data["numeric_value"]) == Decimal(1)
+
+    # deletes the last attr
+    response = client.delete("/api/shuup/product_attribute/%d/" % attrs[1].id)
+    assert response.status_code == status.HTTP_204_NO_CONTENT
+    assert ProductAttribute.objects.count() == 1
+
+
+def _get_shop_product_sample_data():
+    return {
+        "shop": get_default_shop().id,
+        "suppliers": [
+            get_default_supplier().id
+        ],
+        "visibility": ShopProductVisibility.ALWAYS_VISIBLE.value,
+        "purchasable": False,
+        "visibility_limit": ProductVisibility.VISIBLE_TO_ALL.value,
+        "visibility_groups": [
+            create_random_contact_group().id,
+            create_random_contact_group().id,
+        ],
+        "backorder_maximum": 0,
+        "purchase_multiple": 1,
+        "minimum_purchase_quantity": 1,
+        "limit_shipping_methods": False,
+        "limit_payment_methods": False,
+        "shipping_methods": [],
+        "payment_methods": [],
+        "primary_category": get_default_category().id,
+        "categories": [
+            get_default_category().id,
+            CategoryFactory().id
+        ],
+        "default_price_value": 12.45,
+        "minimum_price_value": 5.35
+    }
+
+
+def _get_product_sample_data():
+    return {
+        # translations
+        "translations":{
+            "en": {
+                "name": "Product Name",
+                "description": "Product Description",
+                "slug": "product_sku",
+                "keywords": "keyword1, k3yw0rd2",
+                "status_text": "available soon",
+                "variation_name": "Product RED"
+            },
+            "pt-br": {
+                "name": "Nome do Produto",
+                "description": "Descrição do Produto",
+                "slug": "product_sku_em_portugues",
+                "keywords": "chave1, chavez2",
+                "status_text": "disponivel logo",
+                "variation_name": "Produto Vermelho"
+            }
+        },
+
+        # others
+        "stock_behavior": StockBehavior.STOCKED.value,
+        "shipping_mode": ShippingMode.SHIPPED.value,
+        "sales_unit": get_default_sales_unit().pk,
+        "tax_class": get_default_tax_class().pk,
+        "type": get_default_product_type().pk,
+        "sku": "sku12345",
+        "gtin": "789456132",
+        "barcode": "7896899123456",
+        "accounting_identifier": "cbe6a7d67a8bdae",
+        "profit_center": "prooofit!",
+        "cost_center": "space ghost",
+        "width": 150.0,
+        "height": 230.0,
+        "depth": 450.4,
+        "net_weight": 13.2,
+        "gross_weight": 20.3
+    }
+
+
+def _check_product_basic_data(product, data, lang="en"):
+    precision = Decimal("0.01")
+
+    assert product.name == data["translations"][lang]["name"]
+    assert product.description == data["translations"][lang]["description"]
+    assert product.slug == data["translations"][lang]["slug"]
+    assert product.keywords == data["translations"][lang]["keywords"]
+    assert product.status_text == data["translations"][lang]["status_text"]
+    assert product.variation_name == data["translations"][lang]["variation_name"]
+
+    assert product.stock_behavior.value == data["stock_behavior"]
+    assert product.shipping_mode.value == data["shipping_mode"]
+    assert product.sales_unit.id == data["sales_unit"]
+    assert product.tax_class.id == data["tax_class"]
+    assert product.type.id == data["type"]
+    assert product.sku == data["sku"]
+    assert product.gtin == data["gtin"]
+    assert product.barcode == data["barcode"]
+    assert product.accounting_identifier == data["accounting_identifier"]
+    assert product.profit_center == data["profit_center"]
+    assert product.cost_center == data["cost_center"]
+    assert product.width == Decimal(data["width"]).quantize(precision)
+    assert product.height == Decimal(data["height"]).quantize(precision)
+    assert product.depth == Decimal(data["depth"]).quantize(precision)
+    assert product.net_weight == Decimal(data["net_weight"]).quantize(precision)
+    assert product.gross_weight == Decimal(data["gross_weight"]).quantize(precision)
 
 
 def _get_client(admin_user):

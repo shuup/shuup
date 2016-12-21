@@ -12,21 +12,32 @@ from django.utils.translation import ugettext_lazy as _
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from parler_rest.fields import TranslatedFieldsField
 from parler_rest.serializers import TranslatableModelSerializer
-from rest_framework import filters, serializers, viewsets
-from rest_framework.decorators import list_route
+from rest_framework import filters, mixins, serializers, status, viewsets
+from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from shuup.core.models import Product, ProductMedia, ShopProduct, Supplier
+from shuup.api.fields import EnumField
+from shuup.api.mixins import ProtectedModelViewSetMixin
+from shuup.core.api.product_media import (
+    ProductMediaSerializer, ProductMediaUploadSerializer
+)
+from shuup.core.excs import ImpossibleProductModeException
+from shuup.core.models import (
+    Product, ProductAttribute, ProductPackageLink, ProductType,
+    ProductVisibility, ShippingMode, ShopProduct, ShopProductVisibility,
+    StockBehavior, Supplier
+)
 from shuup.utils.numbers import parse_decimal_string
 
 
 class ShopProductSerializer(serializers.ModelSerializer):
     orderable = serializers.SerializerMethodField()
+    visibility = EnumField(enum=ShopProductVisibility)
+    visibility_limit = EnumField(enum=ProductVisibility)
 
     class Meta:
         model = ShopProduct
-        exclude = ("id", "product")
         extra_kwargs = {
             "visibility_groups": {"required": False},
             "shipping_methods": {"required": False},
@@ -44,29 +55,81 @@ class ShopProductSerializer(serializers.ModelSerializer):
         )
 
 
-class ProductMediaSerializer(serializers.ModelSerializer):
-    translations = TranslatedFieldsField(shared_model=ProductMedia)
-    url = serializers.SerializerMethodField()
+class ProductAttributeSerializer(TranslatableModelSerializer):
+    translations = TranslatedFieldsField(shared_model=ProductAttribute, required=False)
 
     class Meta:
-        fields = ("kind", "ordering", "public", "purchased", "shops", "url", "translations")
-        model = ProductMedia
+        fields = "__all__"
+        model = ProductAttribute
+        extra_kwargs = {
+            "product": {"read_only": True}
+        }
 
-    def get_url(self, product_media):
-        if product_media.external_url:
-            return product_media.external_url
-        return self.context["request"].build_absolute_uri(product_media.file.url)
+
+class ProductTypeSerializer(TranslatableModelSerializer):
+    translations = TranslatedFieldsField(shared_model=Product)
+
+    class Meta:
+        fields = "__all__"
+        model = ProductType
+
+
+class ProductPackageLinkSerializer(serializers.ModelSerializer):
+    product = serializers.SerializerMethodField()
+
+    class Meta:
+        fields = ("quantity", "product", "id")
+        extra_kwargs = {
+            "id": {"read_only": True}
+        }
+        model = ProductPackageLink
+
+    def get_product(self, product_pkge_link):
+        return product_pkge_link.child.pk
+
+
+class ProductPackageChildSerializer(serializers.Serializer):
+    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all())
+    quantity = serializers.DecimalField(max_digits=36, decimal_places=9)
+
+
+class ShopProductSubsetSerializer(ShopProductSerializer):
+    """ A subset class to hide id and product fields """
+    class Meta:
+        model = ShopProduct
+        extra_kwargs = {
+            "visibility_groups": {"required": False},
+            "shipping_methods": {"required": False},
+            "suppliers": {"required": False},
+            "payment_methods": {"required": False},
+            "categories": {"required": False},
+        }
+        exclude = ("id", "product")
 
 
 class ProductSerializer(TranslatableModelSerializer):
     translations = TranslatedFieldsField(shared_model=Product)
-    shop_products = ShopProductSerializer(many=True, read_only=True)
+    shop_products = ShopProductSubsetSerializer(many=True, read_only=True)
     primary_image = ProductMediaSerializer(read_only=True)
     media = ProductMediaSerializer(read_only=True, many=True)
+    stock_behavior = EnumField(enum=StockBehavior)
+    shipping_mode = EnumField(enum=ShippingMode)
+    attributes = ProductAttributeSerializer(many=True, read_only=True)
+    package_content = serializers.SerializerMethodField()
 
     class Meta:
         fields = "__all__"
         model = Product
+        extra_kwargs = {
+            "mode": {"read_only": True},
+            "variation_parent": {"read_only": True},
+            "created_on": {"read_only": True},
+            "modified_on": {"read_only": True},
+            "deleted_on": {"read_only": True}
+        }
+
+    def get_package_content(self, product):
+        return ProductPackageLinkSerializer(ProductPackageLink.objects.filter(parent=product), many=True).data
 
 
 class ProductStockStatusSerializer(serializers.Serializer):
@@ -140,6 +203,66 @@ class ProductViewSet(ModelViewSet):
     def perform_destroy(self, instance):
         instance.soft_delete(self.request.user)
 
+    @detail_route(methods=['post'])
+    def add_shop(self, request, pk=None):
+        product = self.get_object()
+        serializer = ShopProductSubsetSerializer(data=request.data)
+
+        if serializer.is_valid():
+            shop_product = ShopProduct.objects.filter(shop=serializer.validated_data["shop"],
+                                                      product=product).first()
+
+            if not shop_product:
+                shop_product = serializer.save(product=product)
+                return Response(status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @detail_route(methods=['post'])
+    def add_media(self, request, pk=None):
+        product = self.get_object()
+        serializer = ProductMediaUploadSerializer(data=request.data, context={"request": request})
+
+        if serializer.is_valid():
+            serializer.save(product=product)
+            return Response(status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @detail_route(methods=['post'])
+    def add_attribute(self, request, pk=None):
+        product = self.get_object()
+        serializer = ProductAttributeSerializer(data=request.data)
+
+        if serializer.is_valid():
+            # attribute does not belong to the product type
+            if not product.type.attributes.filter(id=serializer.validated_data["attribute"].pk).exists():
+                return Response({"error": "Attribute does not belong to the product type."},
+                                status=status.HTTP_400_BAD_REQUEST)
+
+            serializer.save(product=product)
+            return Response(status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @detail_route(methods=['post'])
+    def make_package(self, request, pk=None):
+        product = self.get_object()
+        serializer = ProductPackageChildSerializer(data=request.data, many=True)
+
+        if serializer.is_valid():
+            package_def = {package["product"]: package["quantity"] for package in serializer.validated_data}
+
+            try:
+                product.make_package(package_def)
+            except ImpossibleProductModeException as exc:
+                return Response("{}".format(exc), status=status.HTTP_400_BAD_REQUEST)
+            else:
+                product.save()
+                return Response(status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     @list_route(methods=['get'])
     def stocks(self, request):
         product_qs = self.filter_queryset(self.get_queryset()).distinct()
@@ -168,3 +291,43 @@ class ShopProductViewSet(viewsets.ModelViewSet):
 
     def get_view_description(self, html=False):
         return _("Shop Products can be listed, fetched, created, updated and deleted.")
+
+
+class ProductTypeViewSet(ProtectedModelViewSetMixin, viewsets.ModelViewSet):
+    queryset = ProductType.objects.all()
+    serializer_class = ProductTypeSerializer
+
+    def get_view_name(self):
+        return _("Product type")
+
+    def get_view_description(self, html=False):
+        return _("Product types can be listed, fetched, created, updated and deleted.")
+
+
+class ProductAttributeViewSet(ProtectedModelViewSetMixin,
+                              mixins.RetrieveModelMixin,
+                              mixins.DestroyModelMixin,
+                              mixins.UpdateModelMixin,
+                              viewsets.GenericViewSet):
+    queryset = ProductAttribute.objects.all()
+    serializer_class = ProductAttributeSerializer
+
+    def get_view_name(self):
+        return _("Product Attribute")
+
+    def get_view_description(self, html=False):
+        return _("Products attributes can be listed, fetched, updated and deleted.")
+
+
+class ProductPackageViewSet(mixins.RetrieveModelMixin,
+                            mixins.DestroyModelMixin,
+                            mixins.UpdateModelMixin,
+                            viewsets.GenericViewSet):
+    queryset = ProductPackageLink.objects.all()
+    serializer_class = ProductPackageLinkSerializer
+
+    def get_view_name(self):
+        return _("Product Package")
+
+    def get_view_description(self, html=False):
+        return _("Products package can be listed, fetched, updated and deleted.")
