@@ -18,11 +18,11 @@ from django.utils.text import capfirst, slugify
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import get_language
 
-from shuup.core import cache
 from shuup.core.models import (
     Category, Manufacturer, ProductVariationVariable, ShopProduct,
     ShopProductVisibility
 )
+from shuup.core.utils import context_cache
 from shuup.front.utils.sorts_and_filters import (
     get_configuration, ProductListFormModifier
 )
@@ -280,21 +280,32 @@ class CategoryProductListFilter(SimpleProductListModifier):
         if not Category.objects.exists():
             return
 
+        key, val = context_cache.get_cached_value(
+            identifier="categoryproductfilter", item=self, context=request, category=category)
+        if val:
+            return val
+
         language = get_language()
         base_queryset = Category.objects.all_visible(request.customer, request.shop, language=language)
         if category:
-            queryset = base_queryset.filter(shop_products__categories=category).exclude(pk=category.pk).distinct()
+            q = Q(
+                Q(shop_products__categories=category),
+                ~Q(shop_products__visibility=ShopProductVisibility.NOT_VISIBLE)
+            )
+            queryset = base_queryset.filter(q).exclude(pk=category.pk).distinct()
         else:
             # Show only first level when there is no category selected
             queryset = base_queryset.filter(parent=None)
 
-        return [
+        data = [
             (
                 "categories",
                 forms.ModelMultipleChoiceField(
                     queryset=queryset, required=False, label=_('Categories'), widget=FilterWidget())
             ),
         ]
+        context_cache.set_cached_value(key, data)
+        return data
 
     def get_filters(self, request, data):
         categories = data.get("categories")
@@ -349,10 +360,10 @@ class ProductVariationFilter(SimpleProductListModifier):
         if not category:
             return
 
-        cache_key = "productvariationfilter:%s" % category.pk
-        cached_fields = cache.get(cache_key)
-        if cached_fields:
-            return cached_fields
+        key, val = context_cache.get_cached_value(
+            identifier="productvariationfilter", item=self, context=request, category=category)
+        if val:
+            return val
 
         variation_values = defaultdict(set)
         for variation in ProductVariationVariable.objects.filter(
@@ -370,7 +381,7 @@ class ProductVariationFilter(SimpleProductListModifier):
                 forms.MultipleChoiceField(
                     choices=choices, required=False, label=capfirst(variation_key), widget=FilterWidget())
             ))
-        cache.set(cache_key, fields, 60 * 15)
+        context_cache.set_cached_value(key, fields)
         return fields
 
     def get_queryset(self, queryset, data):
@@ -413,6 +424,7 @@ class ProductPriceFilter(SimpleProductListModifier):
         if not category:
             return
 
+        # TODO: Add cache
         configuration = get_configuration(request.shop, category)
 
         min_price = configuration.get(self.range_min_key)

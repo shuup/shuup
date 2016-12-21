@@ -1,7 +1,7 @@
 {% extends "shuup/front/macros/theme/product.jinja" %}
 
 {% macro render_product_order_section(product, variation_variables, variation_children, unorderability_reason, orderable_variation_children) %}
-    {%- set shop_product = product.get_shop_instance(request.shop) -%}
+    {%- set shop_product = product.get_shop_instance(request.shop, allow_cache=False) -%}
     {% if not quantity %}
         {%- set quantity = shop_product.rounded_minimum_purchase_quantity -%}
     {% endif %}
@@ -89,7 +89,7 @@
 {% macro simple_product_form(shop_product, quantity) %}
     <input type="hidden" name="command" value="add">
     <input type="hidden" name="product_id" value="{{ shop_product.product.id }}">
-    {% set is_orderable = shop_product.is_orderable(supplier=None, customer=request.customer, quantity=quantity) %}
+    {% set is_orderable = shop_product.is_orderable(supplier=None, customer=request.customer, quantity=quantity, allow_cache=True) %}
     <div class="prices">
         {{ product_order_section(shop_product, quantity, is_orderable) }}
     </div>

@@ -15,7 +15,10 @@ from django.utils.translation import get_language, get_language_info, ugettext
 from jinja2.utils import contextfunction
 from mptt.templatetags.mptt_tags import cache_tree_children
 
-from shuup.core.models import Category, Manufacturer, Product, Supplier
+from shuup.core.models import (
+    Category, Manufacturer, Product, ShopProduct, Supplier
+)
+from shuup.core.utils import context_cache
 from shuup.front.utils.product_statistics import get_best_selling_product_info
 from shuup.front.utils.views import cache_product_things
 from shuup.utils.translation import cache_translations_for_tree
@@ -42,6 +45,9 @@ def get_listed_products(context, n_products, ordering=None, filter_dict=None, or
     request = context["request"]
     customer = request.customer
     shop = request.shop
+
+    # Todo: Check if this should be cached
+
     if not filter_dict:
         filter_dict = {}
     products_qs = Product.objects.listed(
@@ -59,18 +65,47 @@ def get_listed_products(context, n_products, ordering=None, filter_dict=None, or
         for product in products_qs[:(n_products * 4)]:
             if len(products) == n_products:
                 break
-            shop_product = product.get_shop_instance(shop)
+            shop_product = product.get_shop_instance(shop, allow_cache=True)
             for supplier in suppliers:
                 if shop_product.is_orderable(supplier, customer, shop_product.minimum_purchase_quantity):
                     products.append(product)
                     break
         return products
-    return products_qs[:n_products]
+
+    products = products_qs[:n_products]
+    return products
+
+
+def _can_use_cache(products, shop, customer):
+    """
+    Check whether the cached products can be still used
+
+    If any of the products is no more orderable refetch the products
+    """
+    product_ids = [prod.id for prod in products]
+    for supplier in Supplier.objects.all():
+        for sp in ShopProduct.objects.filter(product__id__in=product_ids):
+            if not sp.is_orderable(supplier, customer=customer, quantity=sp.minimum_purchase_quantity):
+                return False
+    return True
 
 
 @contextfunction
 def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_only=True):
     request = context["request"]
+
+    key, products = context_cache.get_cached_value(
+        identifier="best_selling_products", item=None, context=request,
+        n_products=n_products, cutoff_days=cutoff_days, orderable_only=orderable_only)
+    if products is not None and _can_use_cache(products, request.shop, request.customer):
+        return products
+
+    products = _get_best_selling_products(cutoff_days, n_products, orderable_only, request)
+    context_cache.set_cached_value(key, products, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
+    return products
+
+
+def _get_best_selling_products(cutoff_days, n_products, orderable_only, request):
     data = get_best_selling_product_info(
         shop_ids=[request.shop.pk],
         cutoff_days=cutoff_days
@@ -82,13 +117,15 @@ def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_
         else:
             combined_variation_products[product_id] += qty
     product_ids = [
-        d[0] for d in sorted(six.iteritems(combined_variation_products), key=lambda i: i[1], reverse=True)][:n_products]
+        d[0] for
+        d in sorted(six.iteritems(combined_variation_products), key=lambda i: i[1], reverse=True)
+    ][:n_products]
     products = []
     if orderable_only:
         # get suppliers for later use
         suppliers = Supplier.objects.all()
     for product in Product.objects.filter(id__in=product_ids):
-        shop_product = product.get_shop_instance(request.shop)
+        shop_product = product.get_shop_instance(request.shop, allow_cache=True)
         if orderable_only:
             for supplier in suppliers:
                 if shop_product.is_orderable(supplier, request.customer, shop_product.minimum_purchase_quantity):
@@ -104,6 +141,12 @@ def get_best_selling_products(context, n_products=12, cutoff_days=30, orderable_
 @contextfunction
 def get_newest_products(context, n_products=6, orderable_only=True):
     request = context["request"]
+    key, products = context_cache.get_cached_value(
+        identifier="newest_products", item=None, context=request,
+        n_products=n_products, orderable_only=orderable_only)
+    if products is not None and _can_use_cache(products, request.shop, request.customer):
+        return products
+
     products = get_listed_products(
         context,
         n_products,
@@ -114,12 +157,19 @@ def get_newest_products(context, n_products=6, orderable_only=True):
         orderable_only=orderable_only,
     )
     products = cache_product_things(request, products)
+    context_cache.set_cached_value(key, products, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
     return products
 
 
 @contextfunction
 def get_random_products(context, n_products=6, orderable_only=True):
     request = context["request"]
+    key, products = context_cache.get_cached_value(
+        identifier="random_products", item=None, context=request,
+        n_products=n_products, orderable_only=orderable_only)
+    if products is not None and _can_use_cache(products, request.shop, request.customer):
+        return products
+
     products = get_listed_products(
         context,
         n_products,
@@ -130,12 +180,19 @@ def get_random_products(context, n_products=6, orderable_only=True):
         orderable_only=orderable_only,
     )
     products = cache_product_things(request, products)
+    context_cache.set_cached_value(key, products, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
     return products
 
 
 @contextfunction
 def get_products_for_category(context, category, n_products=6, orderable_only=True):
     request = context["request"]
+    key, products = context_cache.get_cached_value(
+        identifier="products_for_category", item=None, context=request,
+        n_products=n_products, category=category, orderable_only=orderable_only)
+    if products is not None and _can_use_cache(products, request.shop, request.customer):
+        return products
+
     products = get_listed_products(
         context,
         n_products,
@@ -147,15 +204,22 @@ def get_products_for_category(context, category, n_products=6, orderable_only=Tr
         orderable_only=orderable_only,
     )
     products = cache_product_things(request, products)
+    context_cache.set_cached_value(key, products, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
     return products
 
 
 @contextfunction
 def get_all_manufacturers(context):
     request = context["request"]
+    key, manufacturers = context_cache.get_cached_value(
+        identifier="all_manufacturers", item=None, context=request)
+    if manufacturers is not None:
+        return manufacturers
+
     products = Product.objects.listed(shop=request.shop, customer=request.customer)
     manufacturers_ids = products.values_list("manufacturer__id").distinct()
     manufacturers = Manufacturer.objects.filter(pk__in=manufacturers_ids)
+    context_cache.set_cached_value(key, manufacturers, settings.SHUUP_TEMPLATE_HELPERS_CACHE_DURATION)
     return manufacturers
 
 

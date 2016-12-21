@@ -38,7 +38,7 @@ class ProductDetailView(DetailView):
         if product.mode == ProductMode.VARIATION_CHILD:
             return redirect("shuup:product", pk=product.variation_parent.pk, slug=product.variation_parent.slug)
 
-        shop_product = self.shop_product = product.get_shop_instance(request.shop)
+        shop_product = self.shop_product = product.get_shop_instance(request.shop, allow_cache=True)
         if not shop_product:
             raise Problem(_(u"This product is not available in this shop."))
 

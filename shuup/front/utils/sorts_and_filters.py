@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import abc
+from collections import OrderedDict
 
 import six
 from django import forms
@@ -14,6 +15,9 @@ from django.db.models import Q
 
 from shuup import configuration
 from shuup.apps.provides import get_provide_objects
+from shuup.core import cache
+from shuup.core.utils import context_cache
+from shuup.xtheme import THEME_CACHE_KEY
 
 FACETED_DEFAULT_CONF_KEY = "front_faceted_configurations"
 FACETED_CATEGORY_CONF_KEY_PREFIX = "front_faceted_category_configurations_%s"
@@ -168,6 +172,7 @@ class ProductListFormModifier(six.with_metaclass(abc.ABCMeta)):
 
 
 class ProductListForm(forms.Form):
+
     def __init__(self, request, shop, category, *args, **kwargs):
         super(ProductListForm, self).__init__(*args, **kwargs)
         for extend_obj in _get_active_modifiers(shop, category):
@@ -197,6 +202,14 @@ def set_configuration(shop=None, category=None, data=None):
         configuration.set(None, _get_category_configuration_key(category), data)
     elif shop:
         configuration.set(shop, FACETED_DEFAULT_CONF_KEY, data)
+        cache.bump_version(THEME_CACHE_KEY)
+
+    # clear active keys
+    context_cache.bump_cache_for_item(category)
+    if not category:
+        from shuup.core.models import Category
+        for cat_pk in Category.objects.all().values_list("pk", flat=True):
+            context_cache.bump_cache_for_pk(Category, cat_pk)
 
 
 def get_query_filters(request, category, data):
@@ -221,10 +234,22 @@ def sort_products(request, category, products, data):
 
 
 def get_product_queryset(queryset, request, category, data):
+    key_data = OrderedDict()
+    for k, v in data.items():
+        if isinstance(v, list):
+            v = "|".join(v)
+        key_data[k] = v
+
+    key, val = context_cache.get_cached_value(
+        identifier="product_queryset", item=category, allow_cache=True, context=request, data=key_data)
+    if val is not None:
+        return val
+
     for extend_obj in _get_active_modifiers(request.shop, category):
         new_queryset = extend_obj.get_queryset(queryset, data)
         if new_queryset is not None:
             queryset = new_queryset
+    context_cache.set_cached_value(key, queryset)
     return queryset
 
 
@@ -233,15 +258,25 @@ def _get_category_configuration_key(category):
 
 
 def _get_active_modifiers(shop=None, category=None):
-    configuration = get_configuration(shop=shop, category=category)
+    key = None
+    if category:
+        key, val = context_cache.get_cached_value(
+            identifier="active_modifiers", item=category, allow_cache=True, context={"shop": shop})
+        if val is not None:
+            return val
+
+    configurations = get_configuration(shop=shop, category=category)
 
     def sorter(extend_obj):
-        return extend_obj.get_ordering(configuration)
+        return extend_obj.get_ordering(configurations)
 
     objs = []
     for cls in get_provide_objects(FORM_MODIFIER_PROVIDER_KEY):
         obj = cls()
-        if obj.should_use(configuration):
+        if obj.should_use(configurations):
             objs.append(obj)
 
-    return sorted(objs, key=sorter)
+    sorted_objects = sorted(objs, key=sorter)
+    if category and key:
+        context_cache.set_cached_value(key, sorted_objects)
+    return sorted_objects

@@ -25,7 +25,7 @@ class ProductPriceView(ProductDetailView):
         if not product:
             return False
         shop_product = product.get_shop_instance(self.request.shop)
-        qty = int(self.request.GET.get("quantity"))
+        qty = int(self.request.GET.get("quantity", 1))
         if not shop_product.is_orderable(None, self.request.customer, qty):
             return False
         return True

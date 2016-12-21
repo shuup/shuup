@@ -11,6 +11,7 @@ from shuup.core.models import (
     AttributeVisibility, Product, ProductAttribute, ProductCrossSell,
     ProductCrossSellType, Supplier
 )
+from shuup.core.utils import context_cache
 from shuup.utils.text import force_ascii
 
 
@@ -40,10 +41,16 @@ def get_products_bought_with(context, product, count=5):
 
 @contextfunction
 def is_visible(context, product):
+    key, val = context_cache.get_cached_value(identifier="is_visible", item=product, context=context)
+    if val is not None:
+        return val
+
     request = context["request"]
-    shop_product = product.get_shop_instance(shop=request.shop)
+    shop_product = product.get_shop_instance(shop=request.shop, allow_cache=True)
     for error in shop_product.get_visibility_errors(customer=request.customer):  # pragma: no branch
+        context_cache.set_cached_value(key, False)
         return False
+    context_cache.set_cached_value(key, True)
     return True
 
 
@@ -61,10 +68,11 @@ def get_product_cross_sells(
 
     related_products = []
     for product in Product.objects.filter(id__in=related_product_ids):
-        shop_product = product.get_shop_instance(request.shop)
+        shop_product = product.get_shop_instance(request.shop, allow_cache=True)
         if orderable_only:
             for supplier in Supplier.objects.all():
-                if shop_product.is_orderable(supplier, request.customer, shop_product.minimum_purchase_quantity):
+                if shop_product.is_orderable(
+                        supplier, request.customer, shop_product.minimum_purchase_quantity, allow_cache=True):
                     related_products.append(product)
                     break
         elif shop_product.is_visible(request.customer):
@@ -92,3 +100,7 @@ def map_relation_type(relation_type):
         return getattr(ProductCrossSellType, attr_name)
     except AttributeError:
         raise LookupError('Unknown ProductCrossSellType %r' % (relation_type,))
+
+
+def get_shop_product(product, shop):
+    return product.get_shop_instance(shop, get_shop_instance=True)
