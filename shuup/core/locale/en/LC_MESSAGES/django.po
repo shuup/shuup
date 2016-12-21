@@ -36,6 +36,22 @@ msgstr ""
 msgid "Orders can be listed, fetched, created, updated and canceled."
 msgstr ""
 
+msgid "Product Variation Variable"
+msgstr ""
+
+msgid ""
+"Product variation variables can be listed, fetched, created, updated and "
+"deleted."
+msgstr ""
+
+msgid "Product Variation Variable Value"
+msgstr ""
+
+msgid ""
+"Product variation variable values can be listed, fetched, created, updated "
+"and deleted."
+msgstr ""
+
 msgid "Products"
 msgstr ""
 
