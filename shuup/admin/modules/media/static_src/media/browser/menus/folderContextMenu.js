@@ -16,13 +16,13 @@ export default function(controller) {
         return [
             menuItem(gettext("New folder"), () => {
                 folderActions.promptCreateFolderHere(controller);
-            }),
+            }, {disabled: controller.isMenuDisabled("new")}),
             menuItem(gettext("Rename folder"), () => {
                 folderActions.promptRenameCurrentFolder(controller);
-            }, {disabled: isRoot}),
+            }, {disabled: isRoot || controller.isMenuDisabled("rename")}),
             menuItem(gettext("Delete folder"), () => {
                 folderActions.promptDeleteCurrentFolder(controller);
-            }, {disabled: isRoot})
+            }, {disabled: isRoot || controller.isMenuDisabled("delete")})
         ];
     };
 }

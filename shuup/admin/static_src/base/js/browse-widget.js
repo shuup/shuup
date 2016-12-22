@@ -47,6 +47,7 @@ window.BrowseAPI = (function() {
      */
     function openBrowseWindow(options) {
         var filter = options.filter;
+        const disabledMenus = options.disabledMenus;
         const kind = options.kind;
         const browserUrl = window.ShuupAdminConfig.browserUrls[kind];
         if (!browserUrl) {
@@ -59,7 +60,8 @@ window.BrowseAPI = (function() {
         const qs = _.compact([
             "popup=1",
             "pick=" + id,
-            (filter ? "filter=" + filter : null)
+            (filter ? "filter=" + filter : null),
+            (disabledMenus ? "disabledMenus=" + disabledMenus.join(",") : null)
         ]).join("&");
         const popup = window.open(
             browserUrl + (browserUrl.indexOf("?") > -1 ? "&" : "?") + qs,

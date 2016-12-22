@@ -22,7 +22,14 @@ function activateDropzone($dropzone, attrs={}) {
         parallelUploads: 1,
         maxFiles: 1,
         dictDefaultMessage: gettext("Drop files here or click to browse."),
-        clickable: false
+        clickable: false,
+        accept: function(file, done) {
+            if ($(selector).data().kind === "images" && file.type.indexOf("image") < 0) {
+                done(gettext("only images can be uploaded!"));
+            } else {
+                done();
+            }
+        }
     }, attrs);
     const dropzone = new Dropzone(selector, params);
 
@@ -48,17 +55,22 @@ function activateDropzone($dropzone, attrs={}) {
     dropzone.on("queuecomplete", attrs.onQueueComplete || $.noop);
 
     $(selector).on("click", function(e) {
-        window.BrowseAPI.openBrowseWindow({kind: "media", filter: $(selector).data().kind, onSelect: (obj) => {
-            obj.name = obj.text;
-            $(selector).find("input").val(obj.id);
-            $(selector).find(".dz-preview").remove();
-            dropzone.emit("addedfile", obj);
-            if(obj.thumbnail) {
-                dropzone.emit("thumbnail", obj, obj.thumbnail);
+        window.BrowseAPI.openBrowseWindow({
+            kind: "media",
+            disabledMenus: ["delete", "rename"],
+            filter: $(selector).data().kind,
+            onSelect: (obj) => {
+                obj.name = obj.text;
+                $(selector).find("input").val(obj.id);
+                $(selector).find(".dz-preview").remove();
+                dropzone.emit("addedfile", obj);
+                if(obj.thumbnail) {
+                    dropzone.emit("thumbnail", obj, obj.thumbnail);
+                }
+                dropzone.emit("success", obj);
+                dropzone.emit("complete", obj);
             }
-            dropzone.emit("success", obj);
-            dropzone.emit("complete", obj);
-        }});
+        });
     });
 
     const data = $(selector).data();
@@ -69,7 +81,7 @@ function activateDropzone($dropzone, attrs={}) {
             dropzone.emit("thumbnail", data, data.thumbnail);
         }
         dropzone.emit("complete", data);
-    }    
+    }
 }
 
 function activateDropzones() {

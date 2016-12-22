@@ -92,13 +92,14 @@ class MediaBrowserView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(MediaBrowserView, self).get_context_data(**kwargs)
         context["browser_config"] = {
-            "filter": self.filter
+            "filter": self.filter,
+            "disabledMenus": self.disabledMenus
         }
         return context
 
     def get(self, request, *args, **kwargs):
         self.filter = request.GET.get("filter")
-
+        self.disabledMenus = request.GET.get("disabledMenus", "").split(",")
         action = request.GET.get("action")
         handler = getattr(self, "handle_get_%s" % action, None)
         if handler:

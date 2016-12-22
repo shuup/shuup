@@ -100,6 +100,8 @@ class FileDnDUploaderWidget(Widget):
         super(FileDnDUploaderWidget, self).__init__(attrs)
 
     def _get_file_attrs(self, file):
+        if not file:
+            return []
         try:
             thumbnail = file.easy_thumbnails_thumbnailer.get_thumbnail({
                 'size': (120, 120),
@@ -129,7 +131,7 @@ class FileDnDUploaderWidget(Widget):
         if self.kind:
             file_attrs.append("data-kind='%s'" % self.kind)
         if value:
-            file = File.objects.get(pk=value)
+            file = File.objects.filter(pk=value).first()
             file_attrs += self._get_file_attrs(file)
         return (
             mark_safe("<div id='%s-dropzone' class='dropzone %s' %s>%s</div>" % (
