@@ -12,6 +12,7 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.db.transaction import atomic
 from django.http import HttpResponseRedirect
+from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
 
@@ -100,6 +101,14 @@ class SampleObjectsWizardPane(WizardPane):
 
     @atomic
     def form_valid(self, form):
+        current_language = translation.get_language()
+        default_language = getattr(settings, "PARLER_DEFAULT_LANGUAGE_CODE", None)
+
+        # change the language to the PARLER_DEFAULT_LANGUAGE
+        # so sample data will have data on fallback languages
+        if default_language:
+            translation.activate(default_language)
+
         shop = self.object
         form_data = form["sample"].cleaned_data
         business_segment = form_data["business_segment"]
@@ -132,6 +141,9 @@ class SampleObjectsWizardPane(WizardPane):
             carousel = self._create_sample_carousel(shop, business_segment)
             if carousel:
                 sample_manager.save_carousel(shop, carousel.pk)
+
+        # back to current language
+        translation.activate(current_language)
 
         # user will no longer see this pane
         configuration.set(None, "sample_data_wizard_completed", True)
