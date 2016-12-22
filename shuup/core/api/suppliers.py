@@ -10,6 +10,8 @@ from rest_framework import serializers, status, viewsets
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 
+from shuup.api.decorators import schema_serializer_class
+from shuup.api.mixins import PermissionHelperMixin
 from shuup.core.fields import (
     FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES, FORMATTED_DECIMAL_FIELD_MAX_DIGITS
 )
@@ -62,23 +64,34 @@ class SupplierSerializer(serializers.ModelSerializer):
         fields = ["id", "name", "type"]
 
 
-class SupplierViewSet(viewsets.ReadOnlyModelViewSet):
+class SupplierViewSet(PermissionHelperMixin, viewsets.ReadOnlyModelViewSet):
     """
-    ViewSet for shuup.core.models.Supplier
+    retrieve: Fetches a supplier by its ID.
+
+    list: Lists all available suppliers.
     """
+
     queryset = Supplier.objects.all()
     serializer_class = SupplierSerializer
 
     def get_view_name(self):
         return _("Suppliers")
 
-    def get_view_description(self, html=False):
+    @classmethod
+    def get_help_text(cls):
         return _("Suppliers can be listed and fetched and stock can be updated.")
 
+    @schema_serializer_class(StockAdjustmentSerializer)
     @detail_route(methods=['get', 'post'])
     def stock(self, request, pk=None):
+        """
+        Retrieve or Update the current stocks of the Supplier.
+        You can filter the stocks through `product` and `sku` parameters.
+        """
+
         if request.method == 'POST':
             return self._adjust_stock(request, pk)
+
         supplier = self.get_object()
         if getattr(self.request.user, 'is_superuser', False):
             products_qs = Product.objects.all_except_deleted()

@@ -12,6 +12,7 @@ from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
 
+from shuup.api.mixins import PermissionHelperMixin, ProtectedModelViewSetMixin
 from shuup.core.models import Contact, ContactGroup
 
 
@@ -27,6 +28,7 @@ class ContactSerializer(ModelSerializer):
     class Meta:
         fields = "__all__"
         model = Contact
+        fields = "__all__"
 
 
 class ContactFilter(FilterSet):
@@ -35,7 +37,24 @@ class ContactFilter(FilterSet):
         fields = ['email', 'groups']
 
 
-class ContactViewSet(ModelViewSet):
+class ContactViewSet(ProtectedModelViewSetMixin, PermissionHelperMixin, ModelViewSet):
+    """
+    retrieve: Fetches a contact by its ID.
+
+    list: Lists all available contacts.
+
+    delete: Deletes a contact.
+    If the object is related to another one and the relationship is protected, an error will be returned.
+
+    create: Creates a new contact.
+
+    update: Fully updates an existing contact.
+    You must specify all parameters to make it possible to overwrite all attributes.
+
+    partial_update: Updates an existent contact.
+    You can update only a set of attributes.
+    """
+
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
     filter_backends = (DjangoFilterBackend,)
@@ -44,5 +63,6 @@ class ContactViewSet(ModelViewSet):
     def get_view_name(self):
         return _("Contacts")
 
-    def get_view_description(self, html=False):
+    @classmethod
+    def get_help_text(cls):
         return _("Contacts can be listed, fetched, created, updated and deleted.")

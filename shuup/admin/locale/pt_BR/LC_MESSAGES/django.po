@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Jonathan Hess <jhess666@gmail.com>, 2016
 msgid ""
@@ -200,7 +200,7 @@ msgstr "Tem certeza que deseja enviar um e-mail de recuperação de senha para %
 msgid "New User"
 msgstr "Novo Usuário"
 
-msgid "Create an user for the contact."
+msgid "Create a user for the contact."
 msgstr "Criar um usuário para o contato."
 
 msgid "New Order"

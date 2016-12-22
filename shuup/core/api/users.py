@@ -13,12 +13,15 @@ from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from rest_framework.serializers import ModelSerializer
 from rest_framework.viewsets import ModelViewSet
 
+from shuup.api.mixins import PermissionHelperMixin
+
 
 class UserSerializer(ModelSerializer):
 
     class Meta:
         fields = "__all__"
         model = get_user_model()
+        fields = "__all__"
 
 
 class UserFilter(FilterSet):
@@ -27,7 +30,24 @@ class UserFilter(FilterSet):
         fields = ['email']
 
 
-class UserViewSet(ModelViewSet):
+class UserViewSet(PermissionHelperMixin, ModelViewSet):
+    """
+    retrieve: Fetches a user by its ID.
+
+    list: Lists all users.
+
+    delete: Deletes an user.
+    If the object is related to another one and the relationship is protected, an error will be returned.
+
+    create: Creates a new user.
+
+    update: Fully updates an existing user.
+    You must specify all parameters to make it possible to overwrite all attributes.
+
+    partial_update: Updates an existent user.
+    You can update only a set of attributes.
+    """
+
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
     filter_backends = (DjangoFilterBackend,)
@@ -36,5 +56,6 @@ class UserViewSet(ModelViewSet):
     def get_view_name(self):
         return _("Users")
 
-    def get_view_description(self, html=False):
+    @classmethod
+    def get_help_text(cls):
         return _("Users can be listed, fetched, created, updated and deleted.")

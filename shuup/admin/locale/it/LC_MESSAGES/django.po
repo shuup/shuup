@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
 # Fabrizio Arzeni <fabrizio.arz@gmail.com>, 2016
@@ -254,7 +254,7 @@ msgstr "Sei sicuro di voler inviare un'email di recupero password a %s?"
 msgid "New User"
 msgstr "Nuovo Utente"
 
-msgid "Create an user for the contact."
+msgid "Create a user for the contact."
 msgstr "Crea un utente per il contatto"
 
 msgid "New Order"

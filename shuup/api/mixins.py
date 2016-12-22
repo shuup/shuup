@@ -10,6 +10,15 @@ from rest_framework import status
 from rest_framework.response import Response
 
 
+class PermissionHelperMixin(object):
+    """
+    Mixin to return a helper text to admin users in permission configuration.
+    """
+    @classmethod
+    def get_help_text(cls):
+        raise NotImplementedError()
+
+
 class ProtectedModelViewSetMixin(object):
     """
     Mixin to catch ProtectedError exceptions and return a reasonable response error to the user.

@@ -12,6 +12,7 @@ from parler_rest.serializers import TranslatableModelSerializer
 from rest_framework import mixins, serializers, viewsets
 
 from shuup.api.fields import Base64FileField, EnumField
+from shuup.api.mixins import PermissionHelperMixin
 from shuup.core.models import ProductMedia, ProductMediaKind
 from shuup.utils.filer import filer_file_from_upload, filer_image_from_upload
 
@@ -66,10 +67,24 @@ class ProductMediaUploadSerializer(ProductMediaSerializer):
         exclude = ("identifier",)
 
 
-class ProductMediaViewSet(mixins.RetrieveModelMixin,
+class ProductMediaViewSet(PermissionHelperMixin,
+                          mixins.RetrieveModelMixin,
                           mixins.DestroyModelMixin,
                           mixins.UpdateModelMixin,
                           viewsets.GenericViewSet):
+    """
+    retrieve: Fetches a product media by its ID.
+
+    delete: Deletes a product media.
+    If the object is related to another one and the relationship is protected, an error will be returned.
+
+    update: Fully updates an existing product media.
+    You must specify all parameters to make it possible to overwrite all attributes.
+
+    partial_update: Updates an existent product media.
+    You can update only a set of attributes.
+    """
+
     queryset = ProductMedia.objects.none()
     serializer_class = ProductMediaSerializer
 
@@ -88,5 +103,6 @@ class ProductMediaViewSet(mixins.RetrieveModelMixin,
     def get_view_name(self):
         return _("Product Media")
 
-    def get_view_description(self, html=False):
-        return _("Products media can be listed, fetched, updated and deleted.")
+    @classmethod
+    def get_help_text(cls):
+        return _("Products media can be fetched, updated and deleted.")

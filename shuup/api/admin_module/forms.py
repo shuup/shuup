@@ -11,6 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup import configuration
 from shuup.api import urls as api_urls
+from shuup.api.mixins import PermissionHelperMixin
 from shuup.api.permissions import (
     DEFAULT_PERMISSION, make_permission_config_key, PermissionLevel
 )
@@ -37,8 +38,14 @@ class APIPermissionForm(forms.Form):
             viewset_instance = viewset()
             field_name = make_permission_config_key(viewset_instance)
             initial = configuration.get(None, field_name, DEFAULT_PERMISSION)
+
+            if issubclass(viewset, PermissionHelperMixin):
+                help_text = viewset.get_help_text()
+            else:
+                help_text = viewset_instance.get_view_description()
+
             self.fields[field_name] = forms.ChoiceField(label=(viewset_instance.get_view_name() or basename),
-                                                        help_text=viewset_instance.get_view_description(),
+                                                        help_text=help_text,
                                                         initial=initial, required=False,
                                                         choices=self.API_PERMISSION_CHOICES)
 

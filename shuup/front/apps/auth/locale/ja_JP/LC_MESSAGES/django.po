@@ -112,7 +112,7 @@ msgstr ""
 
 msgid ""
 "\n"
-"    If an user account is associated with the information you entered,\n"
+"    If a user account is associated with the information you entered,\n"
 "    you should receive instructions on how to reset your password shortly.\n"
 "    "
 msgstr ""

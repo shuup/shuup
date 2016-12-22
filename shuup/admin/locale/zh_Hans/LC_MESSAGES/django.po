@@ -142,7 +142,7 @@ msgstr "您确定发送密码恢复邮件至 %s？"
 msgid "New User"
 msgstr "新用户"
 
-msgid "Create an user for the contact."
+msgid "Create a user for the contact."
 msgstr "为该联系人创建用户。"
 
 msgid "New Order"

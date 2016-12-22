@@ -17,6 +17,7 @@ from rest_framework.decorators import list_route
 from rest_framework.filters import OrderingFilter
 from rest_framework.response import Response
 
+from shuup.api.mixins import PermissionHelperMixin
 from shuup.core.api.products import ProductSerializer
 from shuup.core.models import (
     Category, Product, ProductCrossSellType, ShopProduct
@@ -76,17 +77,22 @@ class FrontProductFilter(FilterSet):
         fields = ["category"]
 
 
-class FrontProductViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+class FrontProductViewSet(PermissionHelperMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
+    """
+    list: Lists all available products to be present in storefront.
+    """
+
     queryset = Product.objects.none()
     serializer_class = FrontProductSerializer
     filter_backends = (OrderingFilter, DjangoFilterBackend)
     filter_class = FrontProductFilter
 
     def get_view_name(self):
-        return _("Front Products")
+        return _("Storefront Products")
 
-    def get_view_description(self, html=False):
-        return _("Front Products can be listed and fetched.")
+    @classmethod
+    def get_help_text(cls):
+        return _("Storefront products can be listed and fetched.")
 
     def get_queryset(self):
         return Product.objects.listed(

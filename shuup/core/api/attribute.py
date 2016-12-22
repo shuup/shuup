@@ -12,6 +12,7 @@ from parler_rest.serializers import TranslatableModelSerializer
 from rest_framework.viewsets import ModelViewSet
 
 from shuup.api.fields import EnumField
+from shuup.api.mixins import PermissionHelperMixin
 from shuup.core.models import Attribute, AttributeType, AttributeVisibility
 
 
@@ -25,12 +26,30 @@ class AttributeSerializer(TranslatableModelSerializer):
         model = Attribute
 
 
-class AttributeViewSet(ModelViewSet):
+class AttributeViewSet(PermissionHelperMixin, ModelViewSet):
+    """
+    retrieve: Fetches an attribute by its ID.
+
+    list: Lists all available attributes.
+
+    delete: Deletes an attribute.
+    If the object is related to another one and the relationship is protected, an error will be returned.
+
+    create: Creates a new attribute.
+
+    update: Fully updates an existing attribute.
+    You must specify all parameters to make it possible to overwrite all attributes.
+
+    partial_update: Updates an existent attribute.
+    You can update only a set of attributes.
+    """
+
     queryset = Attribute.objects.all()
     serializer_class = AttributeSerializer
 
     def get_view_name(self):
         return _("Attributes")
 
-    def get_view_description(self, html=False):
+    @classmethod
+    def get_help_text(cls):
         return _("Attributes can be listed, fetched, created, updated and deleted.")

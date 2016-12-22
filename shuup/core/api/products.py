@@ -15,10 +15,10 @@ from parler_rest.serializers import TranslatableModelSerializer
 from rest_framework import filters, mixins, serializers, status, viewsets
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
 
+from shuup.api.decorators import schema_serializer_class
 from shuup.api.fields import EnumField
-from shuup.api.mixins import ProtectedModelViewSetMixin
+from shuup.api.mixins import PermissionHelperMixin, ProtectedModelViewSetMixin
 from shuup.core.api.product_media import (
     ProductMediaSerializer, ProductMediaUploadSerializer
 )
@@ -43,6 +43,7 @@ class ShopProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ShopProduct
+        fields = "__all__"
         extra_kwargs = {
             "visibility_groups": {"required": False},
             "shipping_methods": {"required": False},
@@ -55,9 +56,10 @@ class ShopProductSerializer(serializers.ModelSerializer):
         supplier = shop_product.suppliers.first()
         customer = self.context["request"].customer
         quantity = shop_product.minimum_purchase_quantity
-        return shop_product.is_orderable(
-            supplier=supplier, customer=customer, quantity=quantity
-        )
+        try:
+            return shop_product.is_orderable(supplier=supplier, customer=customer, quantity=quantity)
+        except:
+            return False
 
 
 class ProductAttributeSerializer(TranslatableModelSerializer):
@@ -191,7 +193,24 @@ class ProductFilter(FilterSet):
         fields = ["id", "product", "sku", "supplier"]
 
 
-class ProductViewSet(ModelViewSet):
+class ProductViewSet(ProtectedModelViewSetMixin, PermissionHelperMixin, viewsets.ModelViewSet):
+    """
+    retrieve: Fetches a product by its ID.
+
+    list: Lists all available products.
+
+    delete: Deletes a product.
+    If the object is related to another one and the relationship is protected, an error will be returned.
+
+    create: Creates a new product.
+
+    update: Fully updates an existing product.
+    You must specify all parameters to make it possible to overwrite all attributes.
+
+    partial_update: Updates an existent product.
+    You can update only a set of attributes.
+    """
+
     queryset = Product.objects.none()
     serializer_class = ProductSerializer
     filter_backends = (filters.OrderingFilter, DjangoFilterBackend)
@@ -200,7 +219,8 @@ class ProductViewSet(ModelViewSet):
     def get_view_name(self):
         return _("Products")
 
-    def get_view_description(self, html=False):
+    @classmethod
+    def get_help_text(cls):
         return _("Products can be listed, fetched, created, updated and deleted.")
 
     def get_queryset(self):
@@ -214,8 +234,13 @@ class ProductViewSet(ModelViewSet):
     def perform_destroy(self, instance):
         instance.soft_delete(self.request.user)
 
+    @schema_serializer_class(ShopProductSubsetSerializer)
     @detail_route(methods=['post'])
     def add_shop(self, request, pk=None):
+        """
+        Adds a new shop to a product.
+        If the shop relation already exists, an error will be returned.
+        """
         product = self.get_object()
         serializer = ShopProductSubsetSerializer(data=request.data)
 
@@ -229,8 +254,14 @@ class ProductViewSet(ModelViewSet):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    @schema_serializer_class(ProductMediaUploadSerializer)
     @detail_route(methods=['post'])
     def add_media(self, request, pk=None):
+        """
+        Adds a media to a product.
+        The image must be serialized in base64 and sent using a Data URI scheme:
+        https://en.wikipedia.org/wiki/Data_URI_scheme
+        """
         product = self.get_object()
         serializer = ProductMediaUploadSerializer(data=request.data, context={"request": request})
 
@@ -240,8 +271,13 @@ class ProductViewSet(ModelViewSet):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    @schema_serializer_class(ProductAttributeSerializer)
     @detail_route(methods=['post'])
     def add_attribute(self, request, pk=None):
+        """
+        Adds an attribute value to a product.
+        The attribute must be related with the product type.
+        """
         product = self.get_object()
         serializer = ProductAttributeSerializer(data=request.data)
 
@@ -256,8 +292,13 @@ class ProductViewSet(ModelViewSet):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    @schema_serializer_class(ProductPackageChildSerializer)
     @detail_route(methods=['post'])
     def make_package(self, request, pk=None):
+        """
+        Convert this product into a package of products.
+        Send a list of products and quantities which will be the package contents.
+        """
         product = self.get_object()
         serializer = ProductPackageChildSerializer(data=request.data, many=True)
 
@@ -276,14 +317,23 @@ class ProductViewSet(ModelViewSet):
 
     @list_route(methods=['get'])
     def stocks(self, request):
+        """
+        Retrieves a list of products and their stocks.
+        You can filter the items using the `sku`, `product` and `supplier` parameters.
+        """
         product_qs = self.filter_queryset(self.get_queryset()).distinct()
         context = {'request': request}
         page = self.paginate_queryset(product_qs)
         serializer = ProductStockStatusSerializer((page or product_qs), many=True, context=context)
         return Response(serializer.data)
 
+    @schema_serializer_class(ProductSimpleVariationSerializer)
     @detail_route(methods=['post', 'delete'])
     def simple_variation(self, request, pk=None):
+        """
+        Add or remove simple variations of the product.
+        Send a list of products to be added or removed.
+        """
         product = self.get_object()
         serializer = ProductSimpleVariationSerializer(data=request.data, context={'request': request})
 
@@ -305,8 +355,13 @@ class ProductViewSet(ModelViewSet):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    @schema_serializer_class(ProductLinkVariationVariableSerializer)
     @detail_route(methods=['post', 'delete', 'put'])
     def variable_variation(self, request, pk=None):
+        """
+        Add, update or remove variable variation of the product.
+        Send a single product to be related as a variable variation.
+        """
         product = self.get_object()
         serializer = ProductLinkVariationVariableSerializer(data=request.data, context={'request': request})
 
@@ -317,6 +372,8 @@ class ProductViewSet(ModelViewSet):
                                                       combination_hash=serializer.validated_data["hash"],
                                                       status=serializer.validated_data.get("status"),
                                                       result=serializer.validated_data["product"])
+                product.verify_mode()
+                product.save()
                 return Response(status=status.HTTP_201_CREATED)
 
             elif request.method == "PUT":
@@ -341,12 +398,31 @@ class ProductViewSet(ModelViewSet):
                     return Response(data={"error": "Combination not found"}, status=status.HTTP_404_NOT_FOUND)
 
                 result.delete()
+                product.verify_mode()
+                product.save()
                 return Response(status=status.HTTP_204_NO_CONTENT)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ShopProductViewSet(viewsets.ModelViewSet):
+class ShopProductViewSet(ProtectedModelViewSetMixin, PermissionHelperMixin, viewsets.ModelViewSet):
+    """
+    retrieve: Fetches a shop product by its ID.
+
+    list: Lists all available products.
+
+    delete: Deletes a shop product.
+    If the object is related to another one and the relationship is protected, an error will be returned.
+
+    create: Creates a new shop product.
+
+    update: Fully updates an existing shop product.
+    You must specify all parameters to make it possible to overwrite all attributes.
+
+    partial_update: Updates an existent shop product.
+    You can update only a set of attributes.
+    """
+
     queryset = ShopProduct.objects.none()
     serializer_class = ShopProductSerializer
 
@@ -363,45 +439,94 @@ class ShopProductViewSet(viewsets.ModelViewSet):
     def get_view_name(self):
         return _("Shop Products")
 
-    def get_view_description(self, html=False):
+    @classmethod
+    def get_help_text(cls):
         return _("Shop Products can be listed, fetched, created, updated and deleted.")
 
 
-class ProductTypeViewSet(ProtectedModelViewSetMixin, viewsets.ModelViewSet):
+class ProductTypeViewSet(PermissionHelperMixin, ProtectedModelViewSetMixin, viewsets.ModelViewSet):
+    """
+    retrieve: Fetches a product type by its ID.
+
+    list: Lists all available product types.
+
+    delete: Deletes a product type.
+    If the object is related to another one and the relationship is protected, an error will be returned.
+
+    create: Creates a new product type.
+
+    update: Fully updates an existing product type.
+    You must specify all parameters to make it possible to overwrite all attributes.
+
+    partial_update: Updates an existent product type.
+    You can update only a set of attributes.
+    """
+
     queryset = ProductType.objects.all()
     serializer_class = ProductTypeSerializer
 
     def get_view_name(self):
         return _("Product type")
 
-    def get_view_description(self, html=False):
+    @classmethod
+    def get_help_text(cls):
         return _("Product types can be listed, fetched, created, updated and deleted.")
 
 
-class ProductAttributeViewSet(ProtectedModelViewSetMixin,
+class ProductAttributeViewSet(PermissionHelperMixin,
+                              ProtectedModelViewSetMixin,
                               mixins.RetrieveModelMixin,
                               mixins.DestroyModelMixin,
                               mixins.UpdateModelMixin,
                               viewsets.GenericViewSet):
+    """
+    retrieve: Fetches a product attribute by its ID.
+
+    delete: Deletes a product attribute.
+    If the object is related to another one and the relationship is protected, an error will be returned.
+
+    update: Fully updates an existing product attribute.
+    You must specify all parameters to make it possible to overwrite all object  attributes.
+
+    partial_update: Updates an existent product attribute.
+    You can update only a set of attributes.
+    """
+
     queryset = ProductAttribute.objects.all()
     serializer_class = ProductAttributeSerializer
 
     def get_view_name(self):
         return _("Product Attribute")
 
-    def get_view_description(self, html=False):
-        return _("Products attributes can be listed, fetched, updated and deleted.")
+    @classmethod
+    def get_help_text(cls):
+        return _("Products attributes can be fetched, updated and deleted.")
 
 
-class ProductPackageViewSet(mixins.RetrieveModelMixin,
+class ProductPackageViewSet(PermissionHelperMixin,
+                            mixins.RetrieveModelMixin,
                             mixins.DestroyModelMixin,
                             mixins.UpdateModelMixin,
                             viewsets.GenericViewSet):
+    """
+    retrieve: Fetches a product package link by its ID.
+
+    delete: Deletes a product package link.
+    If the object is related to another one and the relationship is protected, an error will be returned.
+
+    update: Fully updates an existing product package link.
+    You must specify all parameters to make it possible to overwrite all attributes.
+
+    partial_update: Updates an existent product package link.
+    You can update only a set of attributes.
+    """
+
     queryset = ProductPackageLink.objects.all()
     serializer_class = ProductPackageLinkSerializer
 
     def get_view_name(self):
-        return _("Product Package")
+        return _("Product Package Link")
 
-    def get_view_description(self, html=False):
-        return _("Products package can be listed, fetched, updated and deleted.")
+    @classmethod
+    def get_help_text(cls):
+        return _("Products package links can be fetched, updated and deleted.")

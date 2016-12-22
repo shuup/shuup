@@ -16,6 +16,7 @@ from parler_rest.serializers import TranslatableModelSerializer
 from rest_framework import filters, serializers, viewsets
 
 from shuup.api.fields import EnumField
+from shuup.api.mixins import PermissionHelperMixin
 from shuup.core.models import (
     Product, ProductMode, ProductVariationLinkStatus, ProductVariationVariable,
     ProductVariationVariableValue
@@ -112,7 +113,24 @@ class ProductVariationVariableValueFilter(FilterSet):
         fields = ["product", "variable"]
 
 
-class ProductVariationVariableViewSet(viewsets.ModelViewSet):
+class ProductVariationVariableViewSet(PermissionHelperMixin, viewsets.ModelViewSet):
+    """
+    retrieve: Fetches a product variation variable by its ID.
+
+    list: Lists all available product variation variables.
+
+    delete: Deletes a product variation variable.
+    If the object is related to another one and the relationship is protected, an error will be returned.
+
+    create: Creates a new product variation variable.
+
+    update: Fully updates an existing product variation variable.
+    You must specify all parameters to make it possible to overwrite all attributes.
+
+    partial_update: Updates an existent product variation variable.
+    You can update only a set of attributes.
+    """
+
     queryset = ProductVariationVariable.objects.all()
     serializer_class = ProductVariationVariableSerializer
     filter_backends = (filters.OrderingFilter, DjangoFilterBackend)
@@ -127,11 +145,29 @@ class ProductVariationVariableViewSet(viewsets.ModelViewSet):
     def get_view_name(self):
         return _("Product Variation Variable")
 
-    def get_view_description(self, html=False):
+    @classmethod
+    def get_help_text(cls):
         return _("Product variation variables can be listed, fetched, created, updated and deleted.")
 
 
-class ProductVariationVariableValueViewSet(viewsets.ModelViewSet):
+class ProductVariationVariableValueViewSet(PermissionHelperMixin, viewsets.ModelViewSet):
+    """
+    retrieve: Fetches a product variation variable value by its ID.
+
+    list: Lists all available product variation variable values.
+
+    delete: Deletes a product variation variable value.
+    If the object is related to another one and the relationship is protected, an error will be returned.
+
+    create: Creates a new product variation variable value.
+
+    update: Fully updates an existing product variation variable value.
+    You must specify all parameters to make it possible to overwrite all attributes.
+
+    partial_update: Updates an existent product variation variable value.
+    You can update only a set of attributes.
+    """
+
     queryset = ProductVariationVariableValue.objects.all()
     serializer_class = ProductVariationVariableValueSerializer
     filter_backends = (filters.OrderingFilter, DjangoFilterBackend)
@@ -140,5 +176,6 @@ class ProductVariationVariableValueViewSet(viewsets.ModelViewSet):
     def get_view_name(self):
         return _("Product Variation Variable Value")
 
-    def get_view_description(self, html=False):
+    @classmethod
+    def get_help_text(cls):
         return _("Product variation variable values can be listed, fetched, created, updated and deleted.")

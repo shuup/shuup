@@ -10,7 +10,7 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 from rest_framework.viewsets import ModelViewSet
 
-from shuup.api.mixins import ProtectedModelViewSetMixin
+from shuup.api.mixins import PermissionHelperMixin, ProtectedModelViewSetMixin
 from shuup.core.models import Manufacturer
 
 
@@ -23,12 +23,30 @@ class ManufacturerSerializer(serializers.ModelSerializer):
         }
 
 
-class ManufacturerViewSet(ProtectedModelViewSetMixin, ModelViewSet):
+class ManufacturerViewSet(PermissionHelperMixin, ProtectedModelViewSetMixin, ModelViewSet):
+    """
+    retrieve: Fetches a manufacturer by its ID.
+
+    list: Lists all available manufacturers.
+
+    delete: Deletes a manufacturer.
+    If the object is related to another one and the relationship is protected, an error will be returned.
+
+    create: Creates a new manufacturer.
+
+    update: Fully updates an existing manufacturer.
+    You must specify all parameters to make it possible to overwrite all attributes.
+
+    partial_update: Updates an existent manufacturer.
+    You can update only a set of attributes.
+    """
+
     queryset = Manufacturer.objects.all()
     serializer_class = ManufacturerSerializer
 
     def get_view_name(self):
         return _("Manufacturer")
 
-    def get_view_description(self, html=False):
+    @classmethod
+    def get_help_text(cls):
         return _("Manufacturers can be listed, fetched, created, updated and deleted.")

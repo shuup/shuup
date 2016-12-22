@@ -69,6 +69,7 @@ INSTALLED_APPS = add_enabled_addons(SHUUP_ENABLED_ADDONS_FILE, [
     'filer',
     'registration',
     'rest_framework',
+    'rest_framework_swagger'
 ])
 
 MIDDLEWARE_CLASSES = [
@@ -192,6 +193,16 @@ REST_FRAMEWORK = {
         'shuup.api.permissions.ShuupAPIPermission',
     )
 }
+
+SWAGGER_SETTINGS = {
+    "SUPPORTED_SUBMIT_METHODS": [
+        "get"
+    ]
+}
+
+# extend the submit methods only if DEBUG is True
+if DEBUG:
+    SWAGGER_SETTINGS["SUPPORTED_SUBMIT_METHODS"].extend(["post", "patch", "delete", "put"])
 
 SHUUP_SETUP_WIZARD_PANE_SPEC = [
     "shuup.admin.modules.shops.views:ShopWizardPane",

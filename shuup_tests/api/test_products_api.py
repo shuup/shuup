@@ -460,6 +460,119 @@ def test_product_attribute(admin_user):
     assert response.status_code == status.HTTP_204_NO_CONTENT
     assert ProductAttribute.objects.count() == 1
 
+def test_create_complete_product(admin_user):
+    """
+    Create category, product type, manufacturer, attributes, the product and after that,
+    add cross sells, images, media and configure attributes
+    EVERTYHING THROUGH REST API
+    """
+    get_default_shop()
+    client = _get_client(admin_user)
+
+    ###### 1) create attribute
+    attribute_data = {
+        "searchable": True,
+        "type": AttributeType.INTEGER.value,
+        "visibility_mode": AttributeVisibility.SHOW_ON_PRODUCT_PAGE.value,
+        "translations": {
+            "en": {"name": "Attribute Name"},
+            "pt-br": {"name": "Nome do Atributo"},
+        },
+        "identifier": "attr1"
+    }
+    response = client.post("/api/shuup/attribute/", content_type="application/json", data=json.dumps(attribute_data))
+    assert response.status_code == status.HTTP_201_CREATED
+    attribute = Attribute.objects.first()
+
+    ###### 2) crete product type
+    product_type_data = {
+        "translations": {
+            "en": {"name": "Product type 1"},
+            "pt-br": {"name": "Tipo do produto 1"},
+        },
+        "attributes": [attribute.pk]
+    }
+    response = client.post("/api/shuup/product_type/",
+                           content_type="application/json",
+                           data=json.dumps(product_type_data))
+    assert response.status_code == status.HTTP_201_CREATED
+    product_type = ProductType.objects.first()
+
+    ###### 3) create manufacturer
+    manufac_data = {
+        "name": "manu 1",
+        "url": "http://www.mamamia.com"
+    }
+    response = client.post("/api/shuup/manufacturer/", content_type="application/json", data=json.dumps(manufac_data))
+    assert response.status_code == status.HTTP_201_CREATED
+    manufacturer = Manufacturer.objects.first()
+
+    ###### 4) create sales unit
+    sales_unit_data = {
+        "translations": {
+            "en": {"name": "Kilo", "short_name": "KG"},
+            "pt-br": {"name": "Quilo", "short_name": "KGz"},
+        },
+        "decimals": 2
+    }
+    response = client.post("/api/shuup/sales_unit/", content_type="application/json", data=json.dumps(sales_unit_data))
+    assert response.status_code == status.HTTP_201_CREATED
+    sales_unit = SalesUnit.objects.first()
+
+    ###### 5) create tax class
+    tax_class_data = {
+        "translations": {
+            "en": {"name": "Tax Class"},
+            "pt-br": {"name": "Classe de Imposto"},
+        },
+        "enabled": True
+    }
+    response = client.post("/api/shuup/tax_class/", content_type="application/json", data=json.dumps(tax_class_data))
+    assert response.status_code == status.HTTP_201_CREATED
+    tax_class = TaxClass.objects.first()
+
+    ###### 6) finally, create the product
+    product_data = {
+        "translations":{
+            "en": {
+                "name": "Product Name",
+                "description": "Product Description",
+                "slug": "product_sku",
+                "keywords": "keyword1, k3yw0rd2",
+                "status_text": "available soon",
+                "variation_name": "Product RED"
+            },
+            "pt-br": {
+                "name": "Nome do Produto",
+                "description": "Descrição do Produto",
+                "slug": "product_sku_em_portugues",
+                "keywords": "chave1, chavez2",
+                "status_text": "disponivel logo",
+                "variation_name": "Produto Vermelho"
+            }
+        },
+        "stock_behavior": StockBehavior.STOCKED.value,
+        "shipping_mode": ShippingMode.SHIPPED.value,
+        "sales_unit": sales_unit.pk,
+        "tax_class": tax_class.pk,
+        "type": product_type.pk,
+        "sku": "sku12345",
+        "gtin": "789456132",
+        "barcode": "7896899123456",
+        "accounting_identifier": "cbe6a7d67a8bdae",
+        "profit_center": "prooofit!",
+        "cost_center": "space ghost",
+        "width": 150.0,
+        "height": 230.0,
+        "depth": 450.4,
+        "net_weight": 13.2,
+        "gross_weight": 20.3,
+        "manufacturer": manufacturer.pk
+    }
+    response = client.post("/api/shuup/product/", content_type="application/json", data=json.dumps(product_data))
+    product = Product.objects.first()
+    assert product
+
 
 def _get_shop_product_sample_data():
     return {

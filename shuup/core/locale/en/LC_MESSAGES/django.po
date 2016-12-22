@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-20 18:34+0000\n"
+"POT-Creation-Date: 2016-12-22 13:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -17,6 +17,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
+
+msgid "Attributes"
+msgstr ""
+
+msgid "Attributes can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Categories can be listed, fetched, created, updated and deleted."
+msgstr ""
 
 msgid "Contacts"
 msgstr ""
@@ -34,6 +46,12 @@ msgid "Orders"
 msgstr ""
 
 msgid "Orders can be listed, fetched, created, updated and canceled."
+msgstr ""
+
+msgid "Product Media"
+msgstr ""
+
+msgid "Products media can be fetched, updated and deleted."
 msgstr ""
 
 msgid "Product Variation Variable"
@@ -64,16 +82,46 @@ msgstr ""
 msgid "Shop Products can be listed, fetched, created, updated and deleted."
 msgstr ""
 
+msgid "Product type"
+msgstr ""
+
+msgid "Product types can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+msgid "Product Attribute"
+msgstr ""
+
+msgid "Products attributes can be fetched, updated and deleted."
+msgstr ""
+
+msgid "Product Package Link"
+msgstr ""
+
+msgid "Products package links can be fetched, updated and deleted."
+msgstr ""
+
 msgid "Shipments"
 msgstr ""
 
 msgid "Shipments can be listed and fetched."
 msgstr ""
 
+msgid "Shop"
+msgstr ""
+
+msgid "Shops can be listed, fetched, created, updated and deleted."
+msgstr ""
+
 msgid "Suppliers"
 msgstr ""
 
 msgid "Suppliers can be listed and fetched and stock can be updated."
+msgstr ""
+
+msgid "Tax Class"
+msgstr ""
+
+msgid "Tax classes can be listed, fetched, created, updated and deleted."
 msgstr ""
 
 msgid "Sales Unit"
@@ -86,42 +134,6 @@ msgid "Users"
 msgstr ""
 
 msgid "Users can be listed, fetched, created, updated and deleted."
-msgstr ""
-
-msgid "Attributes"
-msgstr ""
-
-msgid "Attributes can be listed, fetched, created, updated and deleted."
-msgstr ""
-
-msgid "Tax Class"
-msgstr ""
-
-msgid "Tax classes can be listed, fetched, created, updated and deleted."
-msgstr ""
-
-msgid "Product Media"
-msgstr ""
-
-msgid "Products media can be listed, fetched, updated and deleted."
-msgstr ""
-
-msgid "Product type"
-msgstr ""
-
-msgid "Product types can be listed, fetched, created, updated and deleted."
-msgstr ""
-
-msgid "Product Attribute"
-msgstr ""
-
-msgid "Products attributes can be listed, fetched, updated and deleted."
-msgstr ""
-
-msgid "Product Package"
-msgstr ""
-
-msgid "Products package can be listed, fetched, updated and deleted."
 msgstr ""
 
 msgid "internal identifier"
