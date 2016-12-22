@@ -1,5 +1,5 @@
-Getting Started with Shuup
-==========================
+Installing Shuup
+================
 
 .. note::
 
@@ -9,13 +9,12 @@ Getting Started with Shuup
 
 Requirements
 ------------
+
 * Python 2.7.9+/3.4+. https://www.python.org/download/.
 * Any database supported by Django.
 
 Installation
 ------------
-
-.. TODO:: Update this when Shuup is published to PyPI.
 
 This guide assumes familiarity with the PyPA tools for Python packaging,
 including ``pip`` and ``virtualenv``.
@@ -34,12 +33,12 @@ including ``pip`` and ``virtualenv``.
       virtualenv shuup-venv
       . shuup-venv/bin/activate
 
-3. Download the latest Shuup Wheel package from
-   https://github.com/shuup/shuup/releases and run
+3. Install shuup via pypi
 
    .. code-block:: shell
 
-      pip install /path/to/shuup/whl
+      pip install shuup
+
 
 4. Once installed, you can begin setting up a Django project using whichever
    standards you fancy. Refer to the top-level `settings
@@ -103,7 +102,7 @@ several sub-applications that may be used to toggle functionality on and off.
 ``shuup.addons`` can be used to install and manage Shuup addons.
 
 ``shuup.api`` exposes SHUUP APIs as RESTful url endpoints. See the
-:doc:`web API documentation <web_api>` for details.
+:doc:`web API documentation <../web_api>` for details.
 
 ``shuup.campaigns`` provides a highly customizable promotion and discount
 management system.
@@ -113,7 +112,7 @@ customer contact groups.
 
 ``shuup.default_tax`` is a rules-based tax module that calculates and applies
 taxes on orders. See the :doc:`prices and taxes documentation
-<prices_and_taxes>` for details.
+<../ref/prices_and_taxes>` for details.
 
 ``shuup.guide`` integrates search results from this documentation into Admin
 search.
@@ -121,7 +120,7 @@ search.
 ``shuup.notify`` is a generic notification framework that can be used to
 inform users about various events (order creation, shipments, password
 resets, etc). See the :doc:`notification documentation
-<notify_specification>` for details.
+<../ref/notify_specification>` for details.
 
 ``shuup.order_printouts`` adds support to create PDF printouts of orders from
 admin.

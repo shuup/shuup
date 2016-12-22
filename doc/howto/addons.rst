@@ -7,7 +7,7 @@ needed.  Packages that can be loaded in this way are called Addons.  Addons
 aren't very special, though: under the surface they are nothing more than
 standard Django applications that are discovered using the `Setuptools Entry
 Points mechanism <entrypoints_>`_.  Functionality registration after this
-occurs via the Shuup :doc:`Provides <provides>` subsystem.
+occurs via the Shuup :doc:`Provides <../ref/provides>` subsystem.
 
 Configuring your project to load addons
 ---------------------------------------
@@ -95,14 +95,14 @@ Preparing addons for distribution
 When the time comes to actually distribute your new addon, `configure your
 package according to the PyPUG guidelines <pypug-dist_>`_ and within the
 ``entry_points`` section add a ``shuup.addon`` entry point stanza, such as
-this (example taken from the `shuup-pugme <https://github.com/akx/shuup-
-pugme>`_ addon):
+this (example taken from the `shuup-stripe <https://github.com/shuup/shuup-stripe>`_
+addon):
 
 .. code-block:: python
 
     setuptools.setup(
         # ...
-        entry_points={"shuup.addon": "shuup_pugme=shuup_pugme"}
+        entry_points={"shuup.addon": "shuup_stripe=shuup_stripe"}
     )
 
 

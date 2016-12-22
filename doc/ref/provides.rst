@@ -56,13 +56,13 @@ Core
 ~~~~
 
 ``admin_category_form_part``
-    Additional ``FormPart`` classes for Category editing.
+    Additional ``FormPart`` classes for Category editing. See :doc:`example <../howto/new_tab>`.
 
 ``admin_contact_form_part``
-    Additional ``FormPart`` classes for Contact editing.
+    Additional ``FormPart`` classes for Contact editing. See :doc:`example <../howto/new_tab>`.
 
 ``admin_contact_group_form_part``
-    Additional ``FormPart`` classes for ContactGroup editing
+    Additional ``FormPart`` classes for ContactGroup editing. See :doc:`example <../howto/new_tab>`.
 
 ``admin_contact_toolbar_action_item``
     Additional ``DropdownItem`` subclass for Contact detail action buttons.
@@ -84,7 +84,7 @@ Core
 
 ``admin_product_form_part``
     Additional ``FormPart`` classes for Product editing.
-    (This is used by pricing modules, for instance.)
+    (This is used by pricing modules, for instance.) See :doc:`example <../howto/new_tab>`.
 
 ``admin_product_section``
     Additional ``Section`` subclasses for Product edit sections.
@@ -93,7 +93,7 @@ Core
     Additional ``DropdownItem`` subclass for Product edit action buttons.
 
 ``admin_shop_form_part``
-    Additional ``FormPart`` classes for Shop editing.
+    Additional ``FormPart`` classes for Shop editing. See :doc:`example <../howto/new_tab>`.
 
 ``admin_module``
     Admin module classes. Practically all of the functionality in the admin is built
