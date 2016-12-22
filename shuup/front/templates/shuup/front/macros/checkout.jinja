@@ -20,9 +20,13 @@
     {% endcall %}
 {% endmacro %}
 
-{% macro address_phase_billing_well(billing_form, company_form=None) %}
+{% macro address_phase_billing_well(billing_form, company_form=None, saved_address_form=None) %}
     <div class="well">
         <fieldset>
+            {% if saved_address_form and saved_address_form.fields.addresses.choices|count > 1 %}
+                {{ render_address_form(None, saved_address_form, "saved_billing") }}
+            {% endif %}
+
             {{ render_address_form(_("Billing address"), billing_form, "billing") }}
             {% if company_form %}
                 {{ render_company_form(
@@ -34,15 +38,19 @@
     </div>
 {% endmacro %}
 
-{% macro address_phase_shipping_well(shipping_form, ship_to_billing_checkbox=True) %}
+{% macro address_phase_shipping_well(shipping_form, ship_to_billing_checkbox=True, saved_address_form=None) %}
     <div class="well">
         <fieldset>
-            {{ render_address_form(_("Shipping address"), shipping_form, "shpping", ship_to_billing_checkbox) }}
+            {% if saved_address_form and saved_address_form.fields.addresses.choices|count > 1 %}
+                {{ render_address_form(None, saved_address_form, "saved_shpping") }}
+            {% endif %}
+            {{ render_address_form(_("Shipping address"), shipping_form, "shipping", ship_to_billing_checkbox) }}
         </fieldset>
     </div>
 {% endmacro %}
 
 {% macro render_address_form(title, form, div_id, ship_to_billing_checkbox=False) %}
+    {% if title %}
     <div class="row">
         <div class="order-for-company col-md-9 col-md-offset-3">
             <legend>{{ title }}</legend>
@@ -51,6 +59,7 @@
             {% endif %}
         </div>
     </div>
+    {% endif %}
     <div id="{{ div_id }}" class="form-horizontal">
         {% for field in form %}
             {{ render_field(field, layout="horizontal", show_help_text=False) }}
@@ -139,7 +148,36 @@
                 $("#same_as_billing").on("change", toggleCopyFields);
             }
             activateCheckoutAddressCopy();
+
+            $("#id_saved_billing-addresses").on("change", function(){
+                var saved_addr_id = $(this).val();
+                $("#billing :input").each(function() {
+                    var fieldName = $(this).attr("id").split("-")[1];
+                    var value = (saved_addr_id ? window.SAVED_ADDRESSES[saved_addr_id][fieldName] : '');
+                    $(this).toggleClass("disabled", value ? true : false);
+                    $(this).val(value);
+                });
+            });
+
+            $("#id_saved_shipping-addresses").on("change", function(){
+                var saved_addr_id = $(this).val();
+                $("#shipping :input").each(function() {
+                    var fieldName = $(this).attr("id").split("-")[1];
+                    var value = (saved_addr_id ? window.SAVED_ADDRESSES[saved_addr_id][fieldName] : '');
+                    if (value){
+                        $(this).toggleClass("disabled", true);
+                        $("#same_as_billing").prop("checked", false);
+                        $("#same_as_billing").attr("disabled", true);
+                    }else{
+                        $(this).toggleClass("disabled", false);
+                        $("#same_as_billing").attr("disabled", false);
+                    }
+                    $(this).val(value);
+                });
+            });
         });
+
+        window.SAVED_ADDRESSES = {{ saved_address|json if saved_address else "{}"|safe }};
     </script>
 {% endmacro %}
 

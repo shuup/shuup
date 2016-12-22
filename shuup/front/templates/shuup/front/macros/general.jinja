@@ -53,7 +53,10 @@
             </div>
         {% elif widget_name == "select" %}
             <div class="form-group {{ widget_name }}{% if field.field.required %} required{% endif %}{% if field.errors %} has-error{% endif %} {{ classes }}">
-                <label for="{{ field.auto_id }}" class="control-label">{{ field.label }}</label>
+                <label class="control-label {% if layout == "horizontal" %}col-md-3{% endif %}" for="{{ field.auto_id }}">{{ field.label }}</label>
+                {% if layout == "horizontal" %}
+                    <div class="col-md-9">
+                {% endif %}
                 {{ field.as_widget(attrs={"class": "form-control selectpicker"})|safe }}
                 {% if field.help_text and show_help_text %}
                     <p class="help-block">{{ field.help_text }}</p>
@@ -64,6 +67,9 @@
                             {{ error}}
                         {% endfor %}
                     </p>
+                {% endif %}
+                {% if layout == "horizontal" %}
+                    </div>
                 {% endif %}
             </div>
         {% else %}
