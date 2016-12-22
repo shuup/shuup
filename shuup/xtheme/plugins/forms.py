@@ -24,6 +24,7 @@ class PluginForm(forms.Form):
         self.plugin = kwargs.pop("plugin")
         super(PluginForm, self).__init__(**kwargs)
         self.populate()
+        self.set_defaults()
         self.init_translated_fields()
 
     def populate(self):  # pragma: no cover, doccov: ignore
@@ -47,6 +48,29 @@ class PluginForm(forms.Form):
                 self.monolingual_field_names.append(name)
                 new_fields[name] = field
         self.fields = new_fields
+
+    def set_defaults(self):
+        """
+        Set the forms initial values based on plugin defaults
+
+        Use the plugin's default configuration as the default form field
+        initial values.
+        """
+        for key, value in self.plugin.get_defaults().items():
+            if key in self.fields and self.fields[key].initial is None:
+                self.fields[key].initial = value
+
+    def full_clean(self):
+        """
+        Use initial values as defaults for cleaned data
+        """
+        super(PluginForm, self).full_clean()
+        for name in self.fields:
+            if name in self.data:
+                continue
+            if self.fields[name].initial is not None:
+                self.cleaned_data[name] = self.fields[name].initial
+        self.cleaned_data
 
     def get_config(self):
         """
