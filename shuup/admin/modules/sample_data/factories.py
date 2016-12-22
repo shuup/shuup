@@ -114,20 +114,13 @@ def create_sample_carousel(carousel_data, business_segment, shop):
         path = "CarouselImages/Samples/%s" % business_segment.capitalize()
         filer_image = _filer_image_from_file_path(image_file_path, path)
 
-        slide = Slide.objects.create(
+        Slide.objects.create(
             carousel=carousel,
             caption_text=slide_data["title"],
             available_from=available_from,
             available_to=available_to,
             image=filer_image
         )
-
-        # make sure there is an image for the PARLER_DEFAULT_LANGUAGE_CODE
-        default_lang_code = getattr(settings, "PARLER_DEFAULT_LANGUAGE_CODE")
-        if default_lang_code:
-            slide.set_current_language(default_lang_code)
-            slide.image = filer_image
-            slide.save()
 
     return carousel
 
