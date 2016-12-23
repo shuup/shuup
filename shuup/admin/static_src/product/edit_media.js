@@ -64,8 +64,6 @@ $(function() {
             $html.find(".file-control").find("input").val(file.id);
         }
         $html.insertBefore($source);
-        const $totalFormsField = $("#" + targetId + "-TOTAL_FORMS");
-        $totalFormsField.val(parseInt($totalFormsField.val()) + 1);
     }
 
     function onDropzoneQueueComplete(dropzone, kind) {
