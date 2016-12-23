@@ -190,6 +190,10 @@ REST_FRAMEWORK = {
     )
 }
 
+JWT_AUTH = {
+    'JWT_ALLOW_REFRESH': True
+}
+
 SWAGGER_SETTINGS = {
     "SUPPORTED_SUBMIT_METHODS": [
         "get"
@@ -199,7 +203,6 @@ SWAGGER_SETTINGS = {
 # extend the submit methods only if DEBUG is True
 if DEBUG:
     SWAGGER_SETTINGS["SUPPORTED_SUBMIT_METHODS"].extend(["post", "patch", "delete", "put"])
-
 
 SHUUP_SETUP_WIZARD_PANE_SPEC = [
     "shuup.admin.modules.shops.views:ShopWizardPane",

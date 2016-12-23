@@ -46,6 +46,9 @@ def test_jwt_authentication(admin_user):
     response = client.get("/api/shuup/order/")
     assert response.status_code == 200
 
+    response = response = client.post("/api/api-token-refresh/", data={"token": token})
+    assert response.status_code == 200
+
     client.credentials(HTTP_AUTHORIZATION='JWT bad-token')
     response = client.get("/api/shuup/order/")
     assert response.status_code == 401

@@ -194,6 +194,10 @@ REST_FRAMEWORK = {
     )
 }
 
+JWT_AUTH = {
+    'JWT_ALLOW_REFRESH': True
+}
+
 SWAGGER_SETTINGS = {
     "SUPPORTED_SUBMIT_METHODS": [
         "get"
