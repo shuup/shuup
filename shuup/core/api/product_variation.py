@@ -127,7 +127,7 @@ class ProductVariationVariableViewSet(PermissionHelperMixin, viewsets.ModelViewS
     update: Fully updates an existing product variation variable.
     You must specify all parameters to make it possible to overwrite all attributes.
 
-    partial_update: Updates an existent product variation variable.
+    partial_update: Updates an existing product variation variable.
     You can update only a set of attributes.
     """
 
@@ -164,7 +164,7 @@ class ProductVariationVariableValueViewSet(PermissionHelperMixin, viewsets.Model
     update: Fully updates an existing product variation variable value.
     You must specify all parameters to make it possible to overwrite all attributes.
 
-    partial_update: Updates an existent product variation variable value.
+    partial_update: Updates an existing product variation variable value.
     You can update only a set of attributes.
     """
 

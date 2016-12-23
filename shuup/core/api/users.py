@@ -44,7 +44,7 @@ class UserViewSet(PermissionHelperMixin, ModelViewSet):
     update: Fully updates an existing user.
     You must specify all parameters to make it possible to overwrite all attributes.
 
-    partial_update: Updates an existent user.
+    partial_update: Updates an existing user.
     You can update only a set of attributes.
     """
 

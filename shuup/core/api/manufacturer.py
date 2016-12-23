@@ -37,7 +37,7 @@ class ManufacturerViewSet(PermissionHelperMixin, ProtectedModelViewSetMixin, Mod
     update: Fully updates an existing manufacturer.
     You must specify all parameters to make it possible to overwrite all attributes.
 
-    partial_update: Updates an existent manufacturer.
+    partial_update: Updates an existing manufacturer.
     You can update only a set of attributes.
     """
 

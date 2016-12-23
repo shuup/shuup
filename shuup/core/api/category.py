@@ -58,7 +58,7 @@ class CategoryViewSet(ProtectedModelViewSetMixin, PermissionHelperMixin, viewset
     update: Fully updates an existing category.
     You must specify all parameters to make it possible to overwrite all attributes.
 
-    partial_update: Updates an existent category.
+    partial_update: Updates an existing category.
     You can update only a set of attributes.
     """
 

@@ -81,7 +81,7 @@ class ProductMediaViewSet(PermissionHelperMixin,
     update: Fully updates an existing product media.
     You must specify all parameters to make it possible to overwrite all attributes.
 
-    partial_update: Updates an existent product media.
+    partial_update: Updates an existing product media.
     You can update only a set of attributes.
     """
 

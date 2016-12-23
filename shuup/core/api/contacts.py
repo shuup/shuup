@@ -51,7 +51,7 @@ class ContactViewSet(ProtectedModelViewSetMixin, PermissionHelperMixin, ModelVie
     update: Fully updates an existing contact.
     You must specify all parameters to make it possible to overwrite all attributes.
 
-    partial_update: Updates an existent contact.
+    partial_update: Updates an existing contact.
     You can update only a set of attributes.
     """
 

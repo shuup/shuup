@@ -40,7 +40,7 @@ class ShopViewSet(ProtectedModelViewSetMixin, PermissionHelperMixin, viewsets.Mo
     update: Fully updates an existing shop.
     You must specify all parameters to make it possible to overwrite all attributes.
 
-    partial_update: Updates an existent shop.
+    partial_update: Updates an existing shop.
     You can update only a set of attributes.
     """
 

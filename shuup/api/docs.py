@@ -5,7 +5,11 @@
 #
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
+from collections import Counter
+
+import six
 from django.utils.encoding import force_text, smart_text
+from parler_rest.fields import TranslatedFieldsField
 from rest_framework import serializers
 from rest_framework.compat import coreapi
 from rest_framework.response import Response
@@ -14,6 +18,36 @@ from rest_framework.schemas import (
 )
 from rest_framework.views import APIView, get_view_description
 from rest_framework_swagger import renderers
+
+from shuup.api.fields import EnumField
+
+
+def guess_field_type(field):
+    """
+    Tries to guess the field type.
+    Fallbacks to original rest_framework.schemas.types_lookup dict
+
+    :param rest_framework.fields.Field field: the serializer field to guess the type
+    """
+
+    if isinstance(field, TranslatedFieldsField):
+        return 'object'
+
+    elif isinstance(field, EnumField):
+        # take all the choices and count the most common type of the enum
+        types = Counter([type(x) for x in field.choices])
+        most_common = types.most_common(1)[0][0]
+
+        # we can only check for string, numbers and boolean constants
+        # otherwise we dont't know that it is
+        if most_common in six.string_types or most_common == six.text_type:
+            return "string"
+        elif most_common in six.integer_types:
+            return "number"
+        elif most_common == bool:
+            return "boolean"
+
+    return types_lookup[field]
 
 
 class ShuupAPISchemaGenerator(SchemaGenerator):
@@ -103,7 +137,7 @@ class ShuupAPISchemaGenerator(SchemaGenerator):
                 location='form',
                 required=required,
                 description=description,
-                type=types_lookup[field]
+                type=guess_field_type(field)
             )
             fields.append(field)
 

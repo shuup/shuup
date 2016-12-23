@@ -37,7 +37,7 @@ class SalesUnitViewSet(PermissionHelperMixin, ProtectedModelViewSetMixin, ModelV
     update: Fully updates an existing sales unit.
     You must specify all parameters to make it possible to overwrite all attributes.
 
-    partial_update: Updates an existent sales unit.
+    partial_update: Updates an existing sales unit.
     You can update only a set of attributes.
     """
 

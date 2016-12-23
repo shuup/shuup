@@ -37,7 +37,7 @@ class TaxClassViewSet(PermissionHelperMixin, ProtectedModelViewSetMixin, ModelVi
     update: Fully updates an existing tax class.
     You must specify all parameters to make it possible to overwrite all attributes.
 
-    partial_update: Updates an existent tax class.
+    partial_update: Updates an existing tax class.
     You can update only a set of attributes.
     """
 

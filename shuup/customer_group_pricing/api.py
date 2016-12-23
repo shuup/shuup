@@ -54,7 +54,7 @@ class CgpPriceViewSet(ProtectedModelViewSetMixin, PermissionHelperMixin, viewset
     update: Fully updates an existing customer group price.
     You must specify all parameters to make it possible to overwrite all attributes.
 
-    partial_update: Updates an existent customer group price.
+    partial_update: Updates an existing customer group price.
     You can update only a set of attributes.
     """
 
