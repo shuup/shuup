@@ -49,8 +49,8 @@ window.DashboardCharts = (function(Chart) {
                 data: {
                     labels: config.labels,
                     datasets: config.data,
-                    options: config.options
-                }
+                },
+                options: config.options
             }
         }else{
             _.each(config.data.datasets, configureChartData);
@@ -60,6 +60,20 @@ window.DashboardCharts = (function(Chart) {
                 options: config.options
             };
         }
+
+        // change the tooltips label callback
+        chartData.options = chartData.options || {}
+        chartData.options.tooltips = {
+            callbacks: {
+                label: function(tooltipItem, data){
+                    let datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+                    let formattedData = data.datasets[tooltipItem.datasetIndex].formatted_data;
+                    let value = formattedData ? formattedData[tooltipItem.index] : tooltipItem.yLabel.toLocaleString();
+                    return datasetLabel + ': ' + value;
+                }
+            }
+        }
+
         const chart = new Chart(context, chartData);
     }
     return {
