@@ -208,6 +208,9 @@ def get_order_overview_for_date_range(currency, start_date, end_date):
         num_orders=Count("id"),
         num_customers=Count("customer", distinct=True),
         sales=Sum("taxful_total_price_value"))
+    anon_orders = orders.since((end_date - start_date).days).filter(customer__isnull=True).aggregate(
+        num_orders=Count("id"))
+    q["num_customers"] += anon_orders["num_orders"]
     q["sales"] = TaxfulPrice(q["sales"] or 0, currency)
     return q
 
@@ -224,6 +227,9 @@ def get_shop_overview_block(request, currency):
         num_customers=Count("customer", distinct=True),
         sales=Sum("taxful_total_price_value")
     )
+    anon_orders = get_orders_by_currency(currency).complete().filter(customer__isnull=True).aggregate(
+        num_orders=Count("id"))
+    totals["num_customers"] += anon_orders["num_orders"]
     totals["sales"] = TaxfulPrice(totals["sales"] or 0, currency)
     block = DashboardContentBlock.by_rendering_template(
         "store_overview", request, "shuup/admin/sales_dashboard/_store_overview_dashboard_block.jinja", {

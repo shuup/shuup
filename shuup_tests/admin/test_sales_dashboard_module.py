@@ -21,6 +21,8 @@ from shuup.testing.factories import (
 )
 
 NUM_ORDERS_COLUMN_INDEX = 2
+NUM_CUSTOMERS_COLUMN_INDEX = 3
+
 
 def get_order_for_date(dt, product):
     order = create_random_order(customer=create_random_person(), products=[product])
@@ -44,16 +46,23 @@ def test_shop_overview_block(rf):
     sp.default_price_value = "10"
     sp.save()
     get_order_for_date(today, product)
+    o = get_order_for_date(today, product)
+    o.customer = None
+    o.save()
     get_order_for_date(date(today.year, 1, 1), product)
     get_order_for_date(date(today.year, today.month, 1), product)
 
     block = get_shop_overview_block(rf.get("/"), DEFAULT_CURRENCY)
     soup = BeautifulSoup(block.content)
     _, today, mtd, ytd, totals = soup.find_all("tr")
-    assert today.find_all("td")[NUM_ORDERS_COLUMN_INDEX].string == "1"
-    assert mtd.find_all("td")[NUM_ORDERS_COLUMN_INDEX].string == "2"
-    assert ytd.find_all("td")[NUM_ORDERS_COLUMN_INDEX].string == "3"
-    assert totals.find_all("td")[NUM_ORDERS_COLUMN_INDEX].string == "3"
+    assert today.find_all("td")[NUM_ORDERS_COLUMN_INDEX].string == "2"
+    assert today.find_all("td")[NUM_CUSTOMERS_COLUMN_INDEX].string == "2"
+    assert mtd.find_all("td")[NUM_ORDERS_COLUMN_INDEX].string == "3"
+    assert mtd.find_all("td")[NUM_CUSTOMERS_COLUMN_INDEX].string == "3"
+    assert ytd.find_all("td")[NUM_ORDERS_COLUMN_INDEX].string == "4"
+    assert ytd.find_all("td")[NUM_CUSTOMERS_COLUMN_INDEX].string == "4"
+    assert totals.find_all("td")[NUM_ORDERS_COLUMN_INDEX].string == "4"
+    assert totals.find_all("td")[NUM_CUSTOMERS_COLUMN_INDEX].string == "4"
 
 
 @pytest.mark.django_db
