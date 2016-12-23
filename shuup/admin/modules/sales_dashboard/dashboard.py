@@ -8,23 +8,24 @@
 
 from __future__ import unicode_literals
 
+from collections import OrderedDict
 from datetime import date
 from decimal import Decimal
 
+import six
 from babel.dates import format_date
 from django.db.models import Avg, Count, Sum
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.dashboard import (
-    ChartType, DashboardChartBlock, DashboardContentBlock, DashboardMoneyBlock,
-    MixedChart
+    ChartDataType, ChartType, DashboardChartBlock, DashboardContentBlock,
+    DashboardMoneyBlock, MixedChart
 )
 from shuup.core.models import Order
 from shuup.core.pricing import TaxfulPrice
 from shuup.core.utils.query import group_by_period
 from shuup.utils.dates import get_year_and_month_format
 from shuup.utils.i18n import get_current_babel_locale
-from shuup.utils.money import Money
 
 
 def get_orders_by_currency(currency):
@@ -56,6 +57,16 @@ class OrderValueChartDashboardBlock(DashboardChartBlock):
         if self.cached_chart is not None:
             return self.cached_chart
 
+        chart_options = {
+            "scales": {
+                "yAxes": [{
+                    "ticks": {
+                        "beginAtZero": True
+                    }
+                }]
+            }
+        }
+
         today = date.today()
         start_of_year = date(today.year, 1, 1)
 
@@ -67,11 +78,31 @@ class OrderValueChartDashboardBlock(DashboardChartBlock):
             sum=Sum("taxful_total_price_value")
         )
 
+        # let's fill the gaps if there is some month without sales
+        if len(sum_sales_data) > 1:
+            sales_dates = list(sum_sales_data.keys())
+            first_month = sales_dates[0].month
+            last_month = sales_dates[-1].month
+
+            for month in range(first_month+1, last_month):
+                sales_date = date(today.year, month, 1)
+                if sales_date not in sum_sales_data:
+                    sum_sales_data[sales_date] = {"sum": Decimal(0)}
+
+            # sort and recreated the ordered dict since we've put new items into
+            sum_sales_data = OrderedDict(sorted(six.iteritems(sum_sales_data), key=lambda x: x[0]))
+
         locale = get_current_babel_locale()
-        mixed_chart = MixedChart(title=_("Sales per Month (this year)"), labels=[
+        labels = [
             format_date(k, format=get_year_and_month_format(locale), locale=locale)
             for k in sum_sales_data
-        ])
+        ]
+        mixed_chart = MixedChart(title=_("Sales per Month (this year)"),
+                                 labels=labels,
+                                 data_type=ChartDataType.CURRENCY,
+                                 options=chart_options,
+                                 currency=self.currency,
+                                 locale=locale)
 
         cumulative_sales = []
         average_sales = []
@@ -89,26 +120,14 @@ class OrderValueChartDashboardBlock(DashboardChartBlock):
 
         # this will be on top of all bars
         if average_sales:
-            mixed_chart.add_data(
-                _("Average Sales (%(currency)s)") % {"currency": self.currency},
-                [Money(v, currency=self.currency).as_rounded().value for v in average_sales],
-                ChartType.LINE
-            )
+            mixed_chart.add_data(_("Average Sales"), [v for v in average_sales], ChartType.LINE)
 
         # this will be under the cummulative bars
-        mixed_chart.add_data(
-            _("Sales (%(currency)s)") % {"currency": self.currency},
-            [Money(v["sum"], currency=self.currency).as_rounded().value for v in sum_sales_data.values()],
-            ChartType.BAR
-        )
+        mixed_chart.add_data(_("Sales"), [v["sum"] for v in sum_sales_data.values()], ChartType.BAR)
 
         # this will be under all others charts
         if cumulative_sales:
-            mixed_chart.add_data(
-                _("Cumulative Total Sales (%(currency)s)") % {"currency": self.currency},
-                [Money(v, currency=self.currency).as_rounded().value for v in cumulative_sales],
-                ChartType.BAR
-            )
+            mixed_chart.add_data(_("Cumulative Total Sales"), [v for v in cumulative_sales], ChartType.BAR)
 
         self.cached_chart = mixed_chart
         return mixed_chart
