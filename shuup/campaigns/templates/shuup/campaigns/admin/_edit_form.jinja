@@ -7,7 +7,7 @@
         <h4><a role="button" data-toggle="collapse" href="#collapse{{ full_prefix }}" aria-expanded="true" aria-controls="collapse{{ full_prefix }}">{{ form.instance.name }}</a></h4>
         <p>{{ form.instance.description }}</p>
     </div>
-    <div id="collapse{{ full_prefix }}" class="component-form panel-collapse collapse{% if  idx == "__prefix__" or form.errors %} in{% endif %}" role="tabpanel">
+    <div id="collapse{{ full_prefix }}" class="component-form panel-body panel-collapse collapse{% if  idx == "__prefix__" or form.errors %} in{% endif %}" role="tabpanel">
         {% if form.translated_field_names %}
             {{ language_dependent_content_tabs(form, tab_id_prefix=full_prefix) }}
             <div class="form-divider"></div>
