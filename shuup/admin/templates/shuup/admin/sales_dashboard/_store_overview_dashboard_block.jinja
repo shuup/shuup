@@ -14,20 +14,22 @@
         </div>
     </div>
     <div class="block-content">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th class="text-right">{% trans %}Sales{% endtrans %}</th>
-                    <th class="text-right">{% trans %}Orders{% endtrans %}</th>
-                    <th class="text-right">{% trans %}Customers{% endtrans %}</th>
-            </thead>
-            <tbody>
-                {{ render_row(_("Today"), daily) }}
-                {{ render_row(_("MTD"), mtd) }}
-                {{ render_row(_("YTD"), ytd) }}
-                {{ render_row(_("Totals"), totals) }}
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th class="text-right">{% trans %}Sales{% endtrans %}</th>
+                        <th class="text-right">{% trans %}Orders{% endtrans %}</th>
+                        <th class="text-right">{% trans %}Customers{% endtrans %}</th>
+                </thead>
+                <tbody>
+                    {{ render_row(_("Today"), daily) }}
+                    {{ render_row(_("MTD"), mtd) }}
+                    {{ render_row(_("YTD"), ytd) }}
+                    {{ render_row(_("Totals"), totals) }}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
