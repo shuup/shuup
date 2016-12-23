@@ -69,11 +69,14 @@ def create_sample_product(name, description, business_segment, image_file, shop)
     product.primary_image = media
     product.save()
 
+    # create the price and round it to the number of decimals of the currency
+    price = shop.create_price(decimal.Decimal(random.random() * random.randrange(0, 500))).as_rounded()
+
     sp = ShopProduct.objects.create(
         product=product,
         purchasable=True,
         visibility=ShopProductVisibility.ALWAYS_VISIBLE,
-        default_price_value=decimal.Decimal(random.random() * random.randrange(0, 500)),
+        default_price_value=price,
         shop=shop,
         shop_primary_image=media
     )
