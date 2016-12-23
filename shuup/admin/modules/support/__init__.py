@@ -23,7 +23,7 @@ class ShuupSupportModule(AdminModule):
         resource = cache.get(cache_key)
         if not resource:
             try:
-                r = requests.get("https://www.shuup.com/api/%s/?lang=%s" % (resource_id, request.LANGUAGE_CODE))
+                r = requests.get("https://www.shuup.com/%s/api/%s/" % (request.LANGUAGE_CODE, resource_id))
                 resource = r.json()
                 cache.set(cache_key, resource, timeout=SECONDS_IN_DAY)
             except Exception:
