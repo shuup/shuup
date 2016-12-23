@@ -100,7 +100,7 @@ def test_total_sales_report_with_zero_total(rf):
     assert return_data.get("currency") == test_info.shop.currency
     assert return_data.get("name") == test_info.shop.name
     assert int(return_data.get("order_amount")) == 0
-    assert str(test_info.shop.create_price(0)) in return_data.get("total_sales")
+    assert str(test_info.shop.create_price(0).as_rounded().value) in return_data.get("total_sales")
 
 
 @pytest.mark.django_db
@@ -194,5 +194,5 @@ def _assert_expected_values(expected_order_count, expected_taxful_total_price, e
     assert len(return_data) == 1  # only one row since both are on same day
     assert int(return_data[0].get("order_count")) == expected_order_count
     assert int(return_data[0].get("product_count")) == products_per_order * expected_order_count
-    assert return_data[0].get("taxful_total") == str(expected_taxful_total_price)
-    assert return_data[0].get("taxless_total") == str(expected_taxless_total_price)
+    assert return_data[0].get("taxful_total") == str(expected_taxful_total_price.as_rounded().value)
+    assert return_data[0].get("taxless_total") == str(expected_taxless_total_price.as_rounded().value)

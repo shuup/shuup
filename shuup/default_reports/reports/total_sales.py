@@ -32,7 +32,7 @@ class TotalSales(OrderReportMixin, ShuupReportBase):
         data = [{
             "name": self.shop.name,
             "order_amount": orders.count(),
-            "total_sales": self.shop.create_price(total_sales_value),
+            "total_sales": self.shop.create_price(total_sales_value).as_rounded().value,
             "currency": self.shop.currency
         }]
         return self.get_return_data(data)
