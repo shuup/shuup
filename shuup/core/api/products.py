@@ -207,7 +207,7 @@ class ProductViewSet(ProtectedModelViewSetMixin, PermissionHelperMixin, viewsets
     update: Fully updates an existing product.
     You must specify all parameters to make it possible to overwrite all attributes.
 
-    partial_update: Updates an existent product.
+    partial_update: Updates an existing product.
     You can update only a set of attributes.
     """
 
@@ -419,7 +419,7 @@ class ShopProductViewSet(ProtectedModelViewSetMixin, PermissionHelperMixin, view
     update: Fully updates an existing shop product.
     You must specify all parameters to make it possible to overwrite all attributes.
 
-    partial_update: Updates an existent shop product.
+    partial_update: Updates an existing shop product.
     You can update only a set of attributes.
     """
 
@@ -458,7 +458,7 @@ class ProductTypeViewSet(PermissionHelperMixin, ProtectedModelViewSetMixin, view
     update: Fully updates an existing product type.
     You must specify all parameters to make it possible to overwrite all attributes.
 
-    partial_update: Updates an existent product type.
+    partial_update: Updates an existing product type.
     You can update only a set of attributes.
     """
 
@@ -488,7 +488,7 @@ class ProductAttributeViewSet(PermissionHelperMixin,
     update: Fully updates an existing product attribute.
     You must specify all parameters to make it possible to overwrite all object  attributes.
 
-    partial_update: Updates an existent product attribute.
+    partial_update: Updates an existing product attribute.
     You can update only a set of attributes.
     """
 
@@ -517,7 +517,7 @@ class ProductPackageViewSet(PermissionHelperMixin,
     update: Fully updates an existing product package link.
     You must specify all parameters to make it possible to overwrite all attributes.
 
-    partial_update: Updates an existent product package link.
+    partial_update: Updates an existing product package link.
     You can update only a set of attributes.
     """
 

@@ -101,7 +101,7 @@ class OrderViewSet(PermissionHelperMixin, ProtectedModelViewSetMixin, ModelViewS
     update: Fully updates an existing order.
     You must specify all parameters to make it possible to overwrite all attributes.
 
-    partial_update: Updates an existent order.
+    partial_update: Updates an existing order.
     You can update only a set of attributes.
     """
 

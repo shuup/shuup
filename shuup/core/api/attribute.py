@@ -40,7 +40,7 @@ class AttributeViewSet(PermissionHelperMixin, ModelViewSet):
     update: Fully updates an existing attribute.
     You must specify all parameters to make it possible to overwrite all attributes.
 
-    partial_update: Updates an existent attribute.
+    partial_update: Updates an existing attribute.
     You can update only a set of attributes.
     """
 

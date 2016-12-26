@@ -45,9 +45,9 @@ def create_simple_supplier(identifier):
     )
 
 
-def get_request(path, user, shop, customer):
+def get_request(path, user, shop, customer, data=None):
     factory = APIRequestFactory()
-    request = factory.get(path)
+    request = factory.get(path, data=data)
     force_authenticate(request, user)
     request.customer = customer
     request.shop = shop
@@ -316,7 +316,7 @@ def test_get_best_selling_products(admin_user):
         best_selling[parent_product.id] = best_selling[parent_product.id] + qty
 
     # get the top 100 best selling products
-    response = client.get("/api/shuup/front/products/best_selling/?count=100")
+    response = client.get("/api/shuup/front/products/best_selling/", {"limit": 100})
     assert response.status_code == status.HTTP_200_OK
     products = json.loads(response.content.decode("utf-8"))
     assert len(products) == len(best_selling) # as we added less then 100, this must be true
@@ -326,7 +326,7 @@ def test_get_best_selling_products(admin_user):
         assert products[ix]["id"] in best_selling.keys()
 
     # get the top 5 best selling products
-    response = client.get("/api/shuup/front/products/best_selling/?count=5")
+    response = client.get("/api/shuup/front/products/best_selling/", {"limit": 5})
     assert response.status_code == status.HTTP_200_OK
     products = json.loads(response.content.decode("utf-8"))
     assert len(products) == 5
@@ -366,8 +366,8 @@ def test_get_newest_products(admin_user):
         p2 = create_product("product-%d-2" % x, shop=shop2, supplier=supplier)
 
     # list newest products
-    request = get_request("/api/shuup/front/products/newest/?count=100", admin_user, shop1, customer)
-    response = FrontProductViewSet.as_view({"get": "list"})(request)
+    request = get_request("/api/shuup/front/products/newest/", admin_user, shop1, customer, data={"limit": 100})
+    response = FrontProductViewSet.as_view({"get": "newest"})(request)
     response.render()
     assert response.status_code == status.HTTP_200_OK
     products = json.loads(response.content.decode("utf-8"))
@@ -381,12 +381,12 @@ def test_get_newest_products(admin_user):
     assert ids == list(newest_products.values_list("pk", flat=True))
 
     # shop2 - limit the numbers of the result
-    request = get_request("/api/shuup/front/products/newest/?count=10", admin_user, shop2, customer)
-    response = FrontProductViewSet.as_view({"get": "list"})(request)
+    request = get_request("/api/shuup/front/products/newest/", admin_user, shop2, customer, data={"limit": 10})
+    response = FrontProductViewSet.as_view({"get": "newest"})(request)
     response.render()
     assert response.status_code == status.HTTP_200_OK
     products = json.loads(response.content.decode("utf-8"))
-    newest_products = Product.objects.filter(shop_products__shop=shop2).order_by("-pk")
+    newest_products = Product.objects.filter(shop_products__shop=shop2).order_by("-pk")[:10]
     assert len(products) == newest_products.count()
     ids = [p["id"] for p in products]
     assert ids == list(newest_products.values_list("pk", flat=True))

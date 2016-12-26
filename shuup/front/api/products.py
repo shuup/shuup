@@ -107,20 +107,20 @@ class FrontProductViewSet(PermissionHelperMixin, mixins.ListModelMixin, viewsets
     def newest(self, request):
         """
         Returns the top 20 (default) new products.
-        To change the number of products, set the `count` query param.
+        To change the number of products, set the `limit` query param.
         """
-        count = int(parse_decimal_string(request.query_params.get("count", 20)))
+        limit = int(parse_decimal_string(request.query_params.get("limit", 20)))
         product_qs = self.filter_queryset(self.get_queryset()).order_by("-id").distinct()
-        serializer = ProductSerializer(product_qs[:count], many=True, context={"request": request})
+        serializer = ProductSerializer(product_qs[:limit], many=True, context={"request": request})
         return Response(serializer.data)
 
     @list_route(methods=['get'])
     def best_selling(self, request):
         """
         Returns the top 20 (default) best selling products.
-        To change the number of products, set the `count` query param.
+        To change the number of products, set the `limit` query param.
         """
-        count = int(parse_decimal_string(request.query_params.get("count", 20)))
+        limit = int(parse_decimal_string(request.query_params.get("limit", 20)))
         best_selling_products = get_best_selling_product_info(shop_ids=[request.shop.pk])
         combined_variation_products = defaultdict(int)
 
@@ -130,9 +130,9 @@ class FrontProductViewSet(PermissionHelperMixin, mixins.ListModelMixin, viewsets
             else:
                 combined_variation_products[product_id] += qty
 
-        # take here the top `count` records, because the filter_queryset below can mess with our work
+        # take here the top `limit` records, because the filter_queryset below can mess with our work
         product_ids = [
-            d[0] for d in sorted(six.iteritems(combined_variation_products), key=lambda i: i[1], reverse=True)[:count]
+            d[0] for d in sorted(six.iteritems(combined_variation_products), key=lambda i: i[1], reverse=True)[:limit]
         ]
 
         products_qs = Product.objects.filter(id__in=product_ids)
