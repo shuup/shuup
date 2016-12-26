@@ -1,3 +1,5 @@
-static/xtheme/editor-injection.js
+static/xtheme/admin/xtheme_admin.css
 static/xtheme/editor.css
+static/xtheme/admin/admin.js
 static/xtheme/editor.js
+static/xtheme/editor-injection.js

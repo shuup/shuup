@@ -26,3 +26,4 @@ static/shuup_admin/js/product-variation-variable-editor.js
 static/shuup_admin/js/product-variation-variable-editor.js.map
 static/shuup_admin/js/vendor.js
 static/shuup_admin/js/vendor.js.map
+static/shuup_admin/js/wizard.js
