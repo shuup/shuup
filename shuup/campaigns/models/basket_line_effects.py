@@ -112,8 +112,13 @@ class DiscountFromProduct(BasketLineEffect):
 
             # we use min() to limit the amount of discount to the products price
             discount_price = order_source.create_price(min(base_price, amnt))
+
             if not line.discount_amount or line.discount_amount < discount_price:
                 line.discount_amount = discount_price
+
+            # check for minimum price, if set, and change the discount amount
+            _limit_discount_amount_by_min_price(line, order_source)
+
         return []
 
 
@@ -164,4 +169,28 @@ class DiscountFromCategoryProducts(BasketLineEffect):
             if not line.discount_amount or line.discount_amount < discount_price:
                 line.discount_amount = discount_price
 
+            # check for minimum price, if set, and change the discount amount
+            _limit_discount_amount_by_min_price(line, order_source)
+
         return []
+
+
+def _limit_discount_amount_by_min_price(line, order_source):
+    """
+    Changes the Order Line discount amount if the
+    discount amount exceeds the minimium total price set by
+    `minimum_price` constraint in `ShopProduct`.
+
+    :param shuup.core.order_creator.SourceLine line: the line to limit the discount
+    :param shuup.core.order_source.OrderSource order_source: the order source
+    """
+
+    # make sure the discount respects the minimum price of the product, if set
+    shop_product = line.product.get_shop_instance(order_source.shop)
+    if shop_product.minimum_price:
+        min_total = shop_product.minimum_price.value * line.quantity
+        base_price = line.base_unit_price.value * line.quantity
+
+        # check if the discount makes the line less than the minimum total
+        if (base_price - line.discount_amount.value) < min_total:
+            line.discount_amount = order_source.create_price(base_price - min_total)
