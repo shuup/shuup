@@ -46,5 +46,27 @@ class ShuupCoreAppConfig(AppConfig):
             from .error_handling import install_error_handlers
             install_error_handlers()
 
+        from shuup.core.utils.context_cache import (
+            bump_product_signal_handler, bump_shop_product_signal_handler
+        )
+        from shuup.core.models import Product, ShopProduct
+        from django.db.models.signals import m2m_changed
+        m2m_changed.connect(
+            bump_shop_product_signal_handler,
+            sender=ShopProduct.categories.through,
+            dispatch_uid="shop_product:clear_shop_product_cache"
+        )
+        from django.db.models.signals import post_save
+        post_save.connect(
+            bump_product_signal_handler,
+            sender=Product,
+            dispatch_uid="product:bump_product_cache"
+        )
+        post_save.connect(
+            bump_shop_product_signal_handler,
+            sender=ShopProduct,
+            dispatch_uid="shop_product:bump_shop_product_cache"
+        )
+
 
 default_app_config = "shuup.core.ShuupCoreAppConfig"

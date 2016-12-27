@@ -13,6 +13,7 @@ from django.utils.translation import get_language
 from shuup.core.models import (
     AttributeVisibility, ProductMode, ProductVariationResult
 )
+from shuup.core.utils import context_cache
 from shuup.front.utils.views import cache_product_things
 from shuup.utils.numbers import get_string_sort_order
 
@@ -26,7 +27,6 @@ def get_product_context(request, product, language=None):
     :return: A context dict containing everything needed to render product view
     :rtype: dict
     """
-
     if not language:
         language = get_language()
 
@@ -70,6 +70,13 @@ def get_product_context(request, product, language=None):
 def get_orderable_variation_children(product, request, variation_variables):
     if not variation_variables:
         variation_variables = product.variation_variables.all().prefetch_related("values")
+
+    key, val = context_cache.get_cached_value(
+        identifier="orderable_variation_children", item=product, context=request,
+        variation_variables=variation_variables)
+    if val is not None:
+        return val
+
     orderable_variation_children = OrderedDict()
     orderable = 0
     for combo_data in product.get_all_available_combinations():
@@ -89,4 +96,6 @@ def get_orderable_variation_children(product, request, variation_variables):
             for k, v in six.iteritems(combo):
                 orderable_variation_children[k].add(v)
 
-    return (orderable_variation_children, orderable != 0)
+    values = (orderable_variation_children, orderable != 0)
+    context_cache.set_cached_value(key, values)
+    return values

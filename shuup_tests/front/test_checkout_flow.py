@@ -10,6 +10,7 @@ import random
 import pytest
 from django.core.urlresolvers import reverse
 
+from shuup.core import cache
 from shuup.core.models import Order, PaymentStatus, Product
 from shuup.testing.factories import (
     create_default_order_statuses, get_address, get_default_payment_method,
@@ -101,6 +102,7 @@ def _get_shipping_method_with_phase():
 @pytest.mark.django_db
 @pytest.mark.parametrize("with_company", [False, True])
 def test_basic_order_flow(with_company):
+    cache.clear()
     create_default_order_statuses()
     n_orders_pre = Order.objects.count()
     populate_if_required()
@@ -136,6 +138,7 @@ def test_basic_order_flow(with_company):
     (_get_shipping_method_with_phase, {"input_field": "20540"}, _get_payment_method_with_phase, {"input_field": True}),
 ])
 def test_order_flow_with_phases(get_shipping_method, shipping_data, get_payment_method, payment_data):
+    cache.clear()
     create_default_order_statuses()
     populate_if_required()
     c = SmartClient()
@@ -231,6 +234,7 @@ def test_order_flow_with_phases(get_shipping_method, shipping_data, get_payment_
 
 @pytest.mark.django_db
 def test_checkout_empty_basket(rf):
+    cache.clear()
     create_default_order_statuses()
     n_orders_pre = Order.objects.count()
     populate_if_required()

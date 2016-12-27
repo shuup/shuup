@@ -29,6 +29,7 @@ from shuup.campaigns.utils.matcher import get_matching_for_product
 from shuup.core import cache
 from shuup.core.fields import InternalIdentifierField
 from shuup.core.models import Category, Order, Shop
+from shuup.core.utils import context_cache
 from shuup.utils.analog import define_log_model
 from shuup.utils.properties import MoneyPropped
 
@@ -129,6 +130,9 @@ class CatalogCampaign(Campaign):
     def save(self, *args, **kwargs):
         super(CatalogCampaign, self).save(*args, **kwargs)
         self.filters.update(active=self.active)
+        for f in self.filters.all():
+            for matching_product in f.get_matching_shop_products():
+                context_cache.bump_cache_for_shop_product(matching_product)
         self.conditions.update(active=self.active)
 
     def rules_match(self, context, shop_product, matching_catalog_filters, matching_context_conditions):

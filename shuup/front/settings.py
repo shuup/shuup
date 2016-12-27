@@ -62,3 +62,8 @@ SHUUP_FRONT_DEFAULT_SORT_CONFIGURATION = {
     "sort_products_by_price": True,
     "sort_products_by_price_ordering": 2
 }
+
+#: Default cache duration for template helpers
+#:
+#: Cache duration in seconds for front template helpers. Default 30 minutes.
+SHUUP_TEMPLATE_HELPERS_CACHE_DURATION = 60*30

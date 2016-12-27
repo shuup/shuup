@@ -40,6 +40,7 @@ class CategoryView(DetailView):
             # Use first choice by default
             data["sort"] = form.fields["sort"].widget.choices[0][0]
 
+        # TODO: Check if context cache can be utilized here
         products = Product.objects.listed(
             customer=self.request.customer,
             shop=self.request.shop

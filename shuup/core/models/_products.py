@@ -20,6 +20,7 @@ from parler.models import TranslatableModel, TranslatedFields
 from shuup.core.excs import ImpossibleProductModeException
 from shuup.core.fields import InternalIdentifierField, MeasurementField
 from shuup.core.taxing import TaxableItem
+from shuup.core.utils import context_cache
 from shuup.core.utils.slugs import generate_multilanguage_slugs
 from shuup.utils.analog import define_log_model, LogEntryKind
 
@@ -360,21 +361,18 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         except ObjectDoesNotExist:
             return self.sku
 
-    def get_shop_instance(self, shop):
+    def get_shop_instance(self, shop, allow_cache=False):
         """
         :type shop: shuup.core.models.Shop
         :rtype: shuup.core.models.ShopProduct
         """
-        shop_inst_cache = self.__dict__.setdefault("_shop_inst_cache", {})
-        cached = shop_inst_cache.get(shop)
-        if cached:
-            return cached
+        key, val = context_cache.get_cached_value(
+            identifier="shop_product", item=self, context={"shop": shop}, allow_cache=allow_cache)
+        if val is not None:
+            return val
 
         shop_inst = self.shop_products.get(shop=shop)
-        shop_inst._product_cache = self
-        shop_inst._shop_cache = shop
-        shop_inst_cache[shop] = shop_inst
-
+        context_cache.set_cached_value(key, shop_inst)
         return shop_inst
 
     def get_priced_children(self, context, quantity=1):

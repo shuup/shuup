@@ -10,6 +10,7 @@ from shuup.campaigns.models import (
     CatalogFilterCachedShopProduct, ContextCondition
 )
 from shuup.core import cache
+from shuup.core.utils import context_cache
 
 
 def get_matching_context_conditions(context):
@@ -35,6 +36,7 @@ def update_matching_catalog_filters(filter):
     # then add new items in
     for matching_product in filter.get_matching_shop_products():
         CatalogFilterCachedShopProduct.objects.create(filter=filter, shop_product=matching_product)
+        context_cache.bump_cache_for_shop_product(matching_product)
 
 
 def get_matching_catalog_filters(shop_product):

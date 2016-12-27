@@ -8,7 +8,7 @@
 import pytest
 
 from shuup.core import cache
-from shuup.core.models import Product, ProductMode, StockBehavior
+from shuup.core.models import Product, ShopProductVisibility, StockBehavior
 from shuup.front.template_helpers import general
 from shuup.testing.factories import (
     create_order_with_product, create_product, get_default_product,
@@ -77,7 +77,6 @@ def test_get_listed_products_filter():
     assert product_1 in product_list
     assert product_2 not in product_list
 
-    # Test also with orderable_only False
     product_list = general.get_listed_products(context, n_products=2, filter_dict=filter_dict, orderable_only=False)
     assert product_1 in product_list
     assert product_2 not in product_list
@@ -97,6 +96,12 @@ def test_get_best_selling_products():
     cache.clear()
     # One product sold
     assert len(list(general.get_best_selling_products(context, n_products=2))) == 1
+
+    # Make order unorderable
+    shop_product = product.get_shop_instance(shop)
+    shop_product.visibility = ShopProductVisibility.NOT_VISIBLE
+    shop_product.save()
+    assert len(list(general.get_best_selling_products(context, n_products=2))) == 0
 
 
 @pytest.mark.django_db
@@ -148,6 +153,10 @@ def test_get_newest_products():
     context = get_jinja_context()
     # only 2 parent products exist
     assert len(list(general.get_newest_products(context, n_products=10))) == 2
+
+    # Delete one product
+    products[0].soft_delete()
+    assert len(list(general.get_newest_products(context, n_products=10))) == 1
 
 
 @pytest.mark.django_db

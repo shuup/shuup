@@ -12,6 +12,8 @@ Unrealeased
 Core
 ~~~~
 
+- Add context cache utils. Context cache is mainly build for products and
+  shop products but it can cache also other context related content.
 - Core: add provide entry to load report writers
 - API: add endpoints for product variation management and linkage
 - API: add endpoint to make a package Product
@@ -60,6 +62,7 @@ Addons
 Front
 ~~~~~
 
+- Cache template helpers, sorts and filters using context cache
 - Enable password reset when shop is in maintenance mode
 - Shop can now have a favicon
 - Variation children that are not purchaseable should not be visible anymore in dropdowns
@@ -86,6 +89,7 @@ Order Printouts
 Campaigns
 ~~~~~~~~~
 
+- Match child products for parents
 - In `CategoryProductsBasketCondition` add option to exclude baskets
   containing products from certain categories.
 - Add option to select multiple categories to basket condition

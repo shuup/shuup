@@ -92,6 +92,7 @@ class ShuupFrontMiddleware(object):
         company = get_company_contact(request.user)
         request.customer = (company or request.person)
         request.is_company_member = bool(company)
+        request.customer_groups = (company or request.person).groups.all()
 
     def _set_basket(self, request):
         request.basket = get_basket(request)

@@ -12,24 +12,24 @@ import pytest
 from django.core.urlresolvers import reverse
 from django.utils.translation import activate
 
-from shuup.campaigns.models import BasketCampaign, Coupon
+from shuup.campaigns.models import BasketCampaign, CatalogCampaign, Coupon
 from shuup.campaigns.models.basket_conditions import (
     CategoryProductsBasketCondition
 )
 from shuup.campaigns.models.basket_effects import (
     BasketDiscountPercentage
 )
+from shuup.campaigns.models.catalog_filters import (
+    CategoryFilter
+)
+from shuup.campaigns.models.product_effects import (
+    ProductDiscountAmount
+)
+
 from shuup.core import cache
-from shuup.core.models import (
-    Category, CategoryStatus, Manufacturer, Product, ProductMode,
-    ProductVariationVariable, ProductVariationVariableValue, ShopProduct
-)
-from shuup.front.utils.sorts_and_filters import (
-    set_configuration
-)
+from shuup.core.models import Category, CategoryStatus, Product
 from shuup.testing.browser_utils import (
-    click_element, move_to_element, wait_until_appeared, wait_until_condition,
-    wait_until_disappeared
+    click_element, wait_until_appeared, wait_until_condition, wait_until_disappeared
 )
 from shuup.testing.factories import (
     create_product, get_default_payment_method, get_default_shipping_method,
@@ -107,22 +107,37 @@ def _add_product_to_basket_from_category(live_server, browser, first_category, s
     shop_product.default_price_value = new_price
     shop_product.save()
 
+    discount_amount = 5
+    _create_catalog_category_campaign(first_category, shop, discount_amount)
+
     browser.reload()
-    wait_until_condition(browser, lambda x: str(new_price) in x.find_by_css(selector).first.text)
+    wait_until_condition(
+        browser,
+        lambda x: str(new_price - discount_amount) in x.find_by_css(selector).first.text
+    )
 
     # Go to product detail and update the price one more time
     click_element(browser, selector)
 
     product_detail_price_selector = "#product-price-div-%s span.product-price strong" % product.id
-    wait_until_condition(browser, lambda x: str(new_price) in x.find_by_css(product_detail_price_selector).first.text)
+    wait_until_appeared(browser, product_detail_price_selector)
+    wait_until_condition(
+        browser,
+        lambda x: str(new_price - discount_amount) in x.find_by_css(product_detail_price_selector).first.text)
 
     last_price = 120.53
     shop_product = product.get_shop_instance(shop)
     shop_product.default_price_value = last_price
     shop_product.save()
 
+    new_discount_amount = 10
+    _create_catalog_category_campaign(first_category, shop, new_discount_amount)
+
     browser.reload()
-    wait_until_condition(browser, lambda x: str(last_price) in x.find_by_css(product_detail_price_selector).first.text)
+    wait_until_condition(
+        browser,
+        lambda x: str(last_price - new_discount_amount) in x.find_by_css(product_detail_price_selector).first.text
+    )
 
     # Add product to basket and navigate to basket view
     click_element(browser, "#add-to-cart-button-%s" % product.pk)  # add product to basket
@@ -134,20 +149,34 @@ def _add_product_to_basket_from_category(live_server, browser, first_category, s
     wait_until_condition(browser, lambda x: x.is_text_present(product.name))  # product is in basket
 
 
+def _create_catalog_category_campaign(category, shop, discount_amount):
+    category_filter = CategoryFilter.objects.create()
+    category_filter.categories.add(category)
+
+    campaign = CatalogCampaign.objects.create(
+        shop=shop, public_name="test", name="test", active=True
+    )
+    campaign.filters.add(category_filter)
+
+    ProductDiscountAmount.objects.create(campaign=campaign, discount_amount=discount_amount)
+
+
 def _activate_basket_campaign_through_coupon(browser, category, shop):
     # We should already be at basket so let's verify the total
-    wait_until_condition(browser, lambda x: "120.53" in x.find_by_css("div.total-price strong").first.text)
+    wait_until_condition(browser, lambda x: "110.53" in x.find_by_css("div.total-price strong").first.text)
 
-    coupon_code = _create_campaign(category, shop)
+    coupon_code = _create_coupon_campaign(category, shop)
     browser.fill("code", coupon_code)
     click_element(browser, "#submit-code")
 
     wait_until_condition(browser, lambda x: x.is_text_present(coupon_code))
-    wait_until_condition(browser, lambda x: "-€24.11" in x.find_by_css("div.product-sum h4.price").last.text)
-    wait_until_condition(browser, lambda x: "€96.42" in x.find_by_css("div.total-price strong").first.text)
+    wait_until_condition(browser, lambda x: "-€22.11" in x.find_by_css("div.product-sum h4.price").last.text)
+    wait_until_condition(browser, lambda x: "€88.42" in x.find_by_css("div.total-price strong").first.text)
+
+    # TODO: Should disabling catalog campaigns here change the line totals
 
 
-def _create_campaign(category, shop):
+def _create_coupon_campaign(category, shop):
     basket_condition = CategoryProductsBasketCondition.objects.create(quantity=1)
     basket_condition.categories.add(category)
 

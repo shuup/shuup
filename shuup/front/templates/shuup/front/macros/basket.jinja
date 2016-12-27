@@ -77,9 +77,9 @@
         {% if show_prices() %}
             <div class="product-sum">
                 <h4 class="price text-right">
-                    <small>{% trans %}Total{% endtrans %}: </small>{{ line|price }}
+                    <small>{% trans %}Total{% endtrans %}: </small>{{ line|price(allow_cache=False) }}
                     {% if line.is_discounted and line.base_price.value > 0 %}
-                        <br><small><s class="text-muted">{{ line|base_price }}</s></small>
+                        <br><small><s class="text-muted">{{ line|base_price(allow_cache=False) }}</s></small>
                     {% endif %}
                 </h4>
             </div>
