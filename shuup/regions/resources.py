@@ -117,7 +117,7 @@ def add_front_resources(context, content):
                 ("initializeShippingRegion", "#id_shipping")
             ]
         )
-    elif view_name == "ContactEditView":  # For admin contact edit
+    elif view_name in ["ContactEditView", "OrderAddressEditView"]:  # For admin views
         add_resources(
             context,
             fields=[

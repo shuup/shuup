@@ -40,6 +40,7 @@ Localization
 Admin
 ~~~~~
 
+- Add option to update order addresses
 - Add shop logo block to home page
 - Send user confirmation email when new admin users are created
 - Add recent orders dashboard block

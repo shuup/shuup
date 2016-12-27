@@ -116,7 +116,13 @@ class OrderModule(AdminModule):
                 "shuup.admin.modules.settings.views.ListSettingsView",
                 name="order.list_settings",
                 permissions=get_default_model_permissions(Order),
-            )
+            ),
+            admin_url(
+                "^orders/(?P<pk>\d+)/edit-addresses/$",
+                "shuup.admin.modules.orders.views.OrderAddressEditView",
+                name="order.edit-addresses",
+                permissions=["shuup.change_order"]
+            ),
         ] + get_edit_and_list_urls(
             url_prefix="^order-status",
             view_template="shuup.admin.modules.orders.views.OrderStatus%sView",

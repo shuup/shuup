@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-17 00:44+0000\n"
+"POT-Creation-Date: 2016-12-27 22:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -585,6 +585,27 @@ msgstr ""
 msgid "Create Refund"
 msgstr ""
 
+msgid "Edit Addresses"
+msgstr ""
+
+msgid "Billing Address"
+msgstr ""
+
+msgid "Shipping Address"
+msgstr ""
+
+#, python-format
+msgid "%(field)s updated from: %(old_address)s"
+msgstr ""
+
+#, python-format
+msgid "%(field)s saved successfully."
+msgstr ""
+
+#, python-format
+msgid "Edit Addresses -- %s"
+msgstr ""
+
 msgid "Unable to set order as completed at this point"
 msgstr ""
 
@@ -1036,16 +1057,13 @@ msgstr ""
 msgid "Sales per Month (this year)"
 msgstr ""
 
-#, python-format
-msgid "Average Sales (%(currency)s)"
+msgid "Average Sales"
 msgstr ""
 
-#, python-format
-msgid "Sales (%(currency)s)"
+msgid "Sales"
 msgstr ""
 
-#, python-format
-msgid "Cumulative Total Sales (%(currency)s)"
+msgid "Cumulative Total Sales"
 msgstr ""
 
 #, python-format
@@ -1198,6 +1216,12 @@ msgid "Settings saved"
 msgstr ""
 
 msgid "Reset Defaults"
+msgstr ""
+
+msgid "Add a logo to make your store stand out"
+msgstr ""
+
+msgid "Add logo"
 msgstr ""
 
 msgid ""
@@ -1616,12 +1640,6 @@ msgid "No members."
 msgstr ""
 
 msgid "Use billing address as shipping address"
-msgstr ""
-
-msgid "Billing Address"
-msgstr ""
-
-msgid "Shipping Address"
 msgstr ""
 
 msgid "Basic details"
@@ -2942,9 +2960,6 @@ msgid "Recent Orders"
 msgstr ""
 
 msgid "Store Overview"
-msgstr ""
-
-msgid "Sales"
 msgstr ""
 
 msgid "Customers"

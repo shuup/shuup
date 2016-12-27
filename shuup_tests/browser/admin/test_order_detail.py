@@ -11,6 +11,7 @@ import pytest
 from django.core.urlresolvers import reverse
 from django.utils.translation import activate
 
+from shuup.admin.modules.orders.views.addresses import ADDRESS_EDITED_LOG_IDENTIFIER
 from shuup.core.models import OrderStatus
 from shuup.testing.browser_utils import (
     click_element, wait_until_appeared, wait_until_condition
@@ -33,9 +34,60 @@ def test_product_detail(browser, admin_user, live_server, settings):
     browser.visit("%s%s" % (live_server, url))
     wait_until_condition(browser, condition=lambda x: x.is_text_present("Order %s" % order.pk))
 
+    change_addresses(live_server, browser, order)
+
     set_status(browser, order, OrderStatus.objects.get_default_processing())
     assert order.can_set_complete()
     set_status(browser, order, OrderStatus.objects.get_default_complete())
+
+
+def change_addresses(live_server, browser, order):
+    edit_url = reverse("shuup_admin:order.edit-addresses", kwargs={"pk": order.pk})
+    browser.visit("%s%s" % (live_server, edit_url))
+    order_edited_log_entries = order.log_entries.filter(identifier=ADDRESS_EDITED_LOG_IDENTIFIER).count()
+    wait_until_condition(browser, condition=lambda x: x.is_text_present("Edit Addresses"))
+    # Do nothing just hit the save
+    click_element(browser, "button[form='edit-addresses']")
+    assert order.log_entries.filter(identifier=ADDRESS_EDITED_LOG_IDENTIFIER).count() == order_edited_log_entries
+
+    # Update billing address email
+    browser.visit("%s%s" % (live_server, edit_url))
+    wait_until_condition(browser, condition=lambda x: x.is_text_present("Edit Addresses"))
+    new_email = "somerandomemail@example.com"
+    browser.fill("billing_address-email", new_email)
+    assert new_email != order.billing_address.email
+    click_element(browser, "button[form='edit-addresses']")
+    assert order.log_entries.filter(identifier=ADDRESS_EDITED_LOG_IDENTIFIER).count() == order_edited_log_entries + 1
+    order.refresh_from_db()
+    assert new_email == order.billing_address.email
+    assert order.billing_address.email != order.shipping_address.email
+    assert order.billing_address.pk != order.shipping_address.pk
+
+    # Update shipping address postal code
+    browser.visit("%s%s" % (live_server, edit_url))
+    wait_until_condition(browser, condition=lambda x: x.is_text_present("Edit Addresses"))
+    new_postal_code = "20540"
+    browser.fill("shipping_address-postal_code", new_postal_code)
+    assert new_postal_code != order.shipping_address.postal_code
+    click_element(browser, "button[form='edit-addresses']")
+    assert order.log_entries.filter(identifier=ADDRESS_EDITED_LOG_IDENTIFIER).count() == order_edited_log_entries + 2
+    order.refresh_from_db()
+    assert new_postal_code == order.shipping_address.postal_code
+    assert order.billing_address.postal_code != order.shipping_address.postal_code
+    assert order.billing_address.pk != order.shipping_address.pk
+
+    # Now update both same time
+    browser.visit("%s%s" % (live_server, edit_url))
+    wait_until_condition(browser, condition=lambda x: x.is_text_present("Edit Addresses"))
+    click_element(browser, "#billing-to-shipping")
+    new_name = "%s (edited)" % order.billing_address.name
+    browser.fill("billing_address-name", new_name)
+    click_element(browser, "button[form='edit-addresses']")
+    assert order.log_entries.filter(identifier=ADDRESS_EDITED_LOG_IDENTIFIER).count() == order_edited_log_entries + 4
+    order.refresh_from_db()
+    assert new_name == order.shipping_address.name
+    assert order.billing_address.name == order.shipping_address.name
+    assert order.billing_address.email == order.shipping_address.email
 
 
 def set_status(browser, order, status):
