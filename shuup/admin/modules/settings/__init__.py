@@ -156,22 +156,22 @@ class ViewSettings(object):
         if field_name in known_names:
             field_name = "%s %s" % (model.__name__, field_name)
 
-        filter_config = TextFilter(
-            filter_field="translations__%s" % field.name,
-            placeholder=field_name
-        )
+        # take the first extension, usually we should not have more then one
+        translation_rel_name = model._parler_meta._extensions[0].rel_name
 
         if model != self.model:
-            display = "%s__translations__%s" % (identifier, field.name) if identifier else field.name
+            filter_field = "%s__%s__%s" % (identifier, translation_rel_name, field.name) if identifier else field.name
         else:
-            display = "%s__%s" % (identifier, field.name) if identifier else field.name
+            filter_field = "%s__%s" % (translation_rel_name, field.name)
+
+        display = "%s__%s" % (identifier, field.name) if identifier else field.name
 
         column = Column(
             "%s_%s" % (model.__name__.lower(), field.name),
             field_name,
             sort_field=display,
             display=display,
-            filter_config=filter_config
+            filter_config=TextFilter(filter_field=filter_field, placeholder=field_name)
         )
         return self.handle_special_column(field, column)[0]
 

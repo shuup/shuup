@@ -158,6 +158,13 @@ class RangeFilter(Filter):
         if value:
             min = value.get("min")
             max = value.get("max")
+
+            # strip string values
+            if type(max) in six.string_types:
+                max = max.strip()
+            if type(min) in six.string_types:
+                min = min.strip()
+
             q = {}
             filter_field = self.get_filter_field(column, context)
             if min is not None:
