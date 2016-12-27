@@ -170,6 +170,106 @@ def test_productdiscountamount(rf):
     assert basket.total_price == original_price - expected_discount_amount
 
 
+@pytest.mark.parametrize("per_line_discount", [True, False])
+@pytest.mark.django_db
+def test_productdiscountamount_with_minimum_price(rf, per_line_discount):
+    # Buy X amount of Y get Z discount from Y
+    request, shop, _ = initialize_test(rf, False)
+
+    basket = get_basket(request)
+    supplier = get_default_supplier()
+
+    single_product_price = Decimal("50")
+    single_product_min_price = Decimal("40")
+    discount_amount_value = Decimal("200") # will exceed the minimum price
+    quantity = 2
+
+     # create basket rule that requires 2 products in basket
+    product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=single_product_price)
+    shop_product = ShopProduct.objects.get(product=product, shop=shop)
+    shop_product.minimum_price_value = single_product_min_price
+    shop_product.save()
+
+    basket.add_product(supplier=supplier, shop=shop, product=product, quantity=quantity)
+    basket.shipping_method = get_shipping_method(shop=shop)
+    basket.save()
+
+    rule = ProductsInBasketCondition.objects.create(quantity=2)
+    rule.products.add(product)
+    rule.save()
+
+    campaign = BasketCampaign.objects.create(active=True, shop=shop, name="test", public_name="test")
+    campaign.conditions.add(rule)
+
+    effect = DiscountFromProduct.objects.create(campaign=campaign,
+                                                discount_amount=discount_amount_value,
+                                                per_line_discount=per_line_discount)
+    effect.products.add(product)
+
+    assert rule.matches(basket, [])
+    basket.uncache()
+
+    # the discount amount should not exceed the minimum price. as the configued discount
+    # will exceed, it should limit the discount amount
+    final_lines = basket.get_final_lines()
+    expected_discount_amount = basket.create_price((single_product_price - single_product_min_price) * quantity)
+    original_price = basket.create_price(single_product_price) * quantity
+    line = final_lines[0]
+    assert line.discount_amount == expected_discount_amount
+    assert basket.total_price == original_price - expected_discount_amount
+
+
+@pytest.mark.django_db
+def test_product_category_discount_amount_with_minimum_price(rf):
+    # Buy X amount of Y get Z discount from Y
+    request, shop, _ = initialize_test(rf, False)
+
+    basket = get_basket(request)
+    supplier = get_default_supplier()
+
+    single_product_price = Decimal("50")
+    single_product_min_price = Decimal("40")
+    discount_amount_value = Decimal("200") # will exceed the minimum price
+    quantity = 2
+
+    # the expected discount amount should not be greater than the products
+    expected_discount_amount = basket.create_price(single_product_price) * quantity
+
+    category = CategoryFactory()
+
+     # create basket rule that requires 2 products in basket
+    product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=single_product_price)
+    shop_product = ShopProduct.objects.get(shop=shop, product=product)
+    shop_product.minimum_price_value = single_product_min_price
+    shop_product.save()
+    shop_product.categories.add(category)
+
+    basket.add_product(supplier=supplier, shop=shop, product=product, quantity=quantity)
+    basket.shipping_method = get_shipping_method(shop=shop)
+    basket.save()
+
+    rule = ProductsInBasketCondition.objects.create(quantity=2)
+    rule.products.add(product)
+    rule.save()
+
+    campaign = BasketCampaign.objects.create(active=True, shop=shop, name="test", public_name="test")
+    campaign.conditions.add(rule)
+
+    DiscountFromCategoryProducts.objects.create(campaign=campaign,
+                                                discount_amount=discount_amount_value,
+                                                category=category)
+    assert rule.matches(basket, [])
+    basket.uncache()
+
+    # the discount amount should not exceed the minimum price. as the configued discount
+    # will exceed, it should limit the discount amount
+    final_lines = basket.get_final_lines()
+    expected_discount_amount = basket.create_price((single_product_price - single_product_min_price) * quantity)
+    original_price = basket.create_price(single_product_price) * quantity
+    line = final_lines[0]
+    assert line.discount_amount == expected_discount_amount
+    assert basket.total_price == original_price - expected_discount_amount
+
 
 @pytest.mark.django_db
 def test_productdiscountamount_greater_then_products(rf):
