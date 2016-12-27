@@ -7,19 +7,20 @@
 # LICENSE file in the root directory of this source tree.
 import decimal
 import random
+from time import time
 
 import pytest
 
 from shuup.admin.modules.products.views.edit import ProductEditView
+from shuup.core import cache
 from shuup.core.models import StockBehavior, Supplier
 from shuup.simple_supplier.admin_module.forms import SimpleSupplierForm
-from shuup.simple_supplier.admin_module.views import (
-    process_alert_limit, process_stock_adjustment
-)
+from shuup.simple_supplier.admin_module.views import (process_alert_limit,
+                                                      process_stock_adjustment)
 from shuup.simple_supplier.models import StockAdjustment, StockCount
-from shuup.testing.factories import (
-    create_order_with_product, create_product, get_default_shop
-)
+from shuup.simple_supplier.notify_events import AlertLimitReached
+from shuup.testing.factories import (create_order_with_product, create_product,
+                                     get_default_shop)
 from shuup_tests.simple_supplier.utils import get_simple_supplier
 
 
@@ -189,3 +190,52 @@ def test_alert_limit_view(rf, admin_user):
 
     sc = StockCount.objects.get(supplier=supplier, product=product)
     assert sc.alert_limit == test_alert_limit
+
+
+def test_alert_limit_notification(rf, admin_user):
+    supplier = get_simple_supplier()
+    shop = get_default_shop()
+    product = create_product("simple-test-product", shop, supplier)
+    product.stock_behavior = StockBehavior.STOCKED
+    product.save()
+
+    sc = StockCount.objects.get(supplier=supplier, product=product)
+    sc.alert_limit = 10
+    sc.save()
+
+    # nothing in cache
+    cache_key = AlertLimitReached.cache_key_fmt % (supplier.pk, product.pk)
+    assert cache.get(cache_key) is None
+
+    # put 11 units in stock
+    supplier.adjust_stock(product.pk, +11)
+
+    # still nothing in cache
+    cache_key = AlertLimitReached.cache_key_fmt % (supplier.pk, product.pk)
+    assert cache.get(cache_key) is None
+
+    event = AlertLimitReached(product=product, supplier=supplier)
+    assert  event.variable_values["dispatched_last_24hs"] == "False"
+
+    # stock should be 6, lower then the alert limit
+    supplier.adjust_stock(product.pk, -5)
+    last_run = cache.get(cache_key)
+    assert last_run is not None
+
+    event = AlertLimitReached(product=product, supplier=supplier)
+    assert event.variable_values["dispatched_last_24hs"] == "True"
+
+    # stock should be 1, lower then the alert limit
+    supplier.adjust_stock(product.pk, -5)
+
+    # last run should be updated
+    assert cache.get(cache_key) != last_run
+
+    event = AlertLimitReached(product=product, supplier=supplier)
+    assert event.variable_values["dispatched_last_24hs"] == "True"
+
+    # fake we have a cache with more than 24hrs
+    cache.set(cache_key, time() - (24 * 60 * 60 * 2))
+
+    event = AlertLimitReached(product=product, supplier=supplier)
+    assert event.variable_values["dispatched_last_24hs"] == "False"
