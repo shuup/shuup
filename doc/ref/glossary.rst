@@ -43,4 +43,7 @@ Entities
        definition of any group of companies and/or users.
 
    shop
+       Shop contains a collection of products, customers, etc. One Shuup
+       installation can have multiple shops. Multiple shops can be defined
+       through settings.
        .. TODO:: Define shop

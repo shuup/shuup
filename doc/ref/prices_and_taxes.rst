@@ -4,7 +4,7 @@ Prices and Taxes in Shuup
 This document gives an overview of Shuup's pricing and tax mechanics.
 For deeper view about the implementation -- for example, if you're
 implementing a price/tax related addon -- also read the
-:doc:`prices_and_taxes_implementation` document.
+:doc:`../howto/prices_and_taxes_implementation` document.
 
 .. _price-unit:
 
@@ -42,7 +42,7 @@ How Taxes Are Determined
 Taxes in Shuup are implemented by a `tax module
 <shuup.core.taxing.TaxModule>`.  The Shuup Base distribution ships a tax
 module called :ref:`Default Tax <default-tax-module>`, but it is
-possible to plug in another tax module via :doc:`addons <addons>` or to
+possible to plug in another tax module via :doc:`../howto/addons` or to
 implement a new one.
 
 The responsibilities of a tax module are to calculate taxes for an order

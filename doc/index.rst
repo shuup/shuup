@@ -1,36 +1,57 @@
 Shuup documentation
 ===================
 
-Contents
---------
+Everything about Shuup
 
-.. toctree::
-   :maxdepth: 2
+About this Documentation
+------------------------
 
-   getting_started
-   changes
-   glossary
-   basic_admin_tasks
-   prices_and_taxes
+This documentation is mainly for developers. If you are
+interested in merchant documentation, you can find it
+`here <http://shuup-guide.readthedocs.io/en/latest/>`_.
 
-Developer documentation
------------------------
 
-.. toctree::
-   :maxdepth: 2
+First Steps
+-----------
 
-   getting_started_dev
-   dev_tools
-   data_model
-   provides
-   addons
-   prices_and_taxes_implementation
-   services
-   notify_specification
-   templates
-   themes
-   api/modules
-   web_api
+* :doc:`howto/getting_started`
+* :doc:`howto/getting_started_dev`
+* :doc:`ref/glossary`
+
+
+Developing Shuup
+----------------
+
+* :doc:`howto/getting_started_dev`
+* :doc:`ref/data_model`
+* :doc:`ref/provides`
+* :doc:`ref/services`
+* :doc:`ref/templates`
+* :doc:`api/modules`
+* :doc:`ref/notify_specification`
+* :doc:`ref/prices_and_taxes`
+* :doc:`ref/campaigns`
+* :doc:`ref/formpart`
+* :doc:`web_api`
+* :doc:`howto/basic_admin_tasks`
+* :doc:`howto/dev_tools`
+
+
+Extending Shuup
+---------------
+
+* :doc:`howto/addons`
+* :doc:`howto/themes`
+* :doc:`howto/prices_and_taxes_implementation`
+* :doc:`howto/new_tab`
+* :doc:`howto/campaign_condition`
+
+
+
+Shuup
+-----
+* :doc:`changes`
+* :doc:`howto/contributing`
 
 
 Indices and tables

@@ -10,7 +10,7 @@ principles of HTML and CSS.
 If you would like to start creating your own customized templates with these
 instructions you should already have a working Shuup installation with the
 default frontend theme up and running. If not, you can start by reading
-:doc:`Getting Started guide <getting_started_dev>`.
+:doc:`Getting Started guide <../howto/getting_started_dev>`.
 
 Shuup's default frontend theme
 ------------------------------

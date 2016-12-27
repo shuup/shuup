@@ -5,7 +5,7 @@ The look and feel of your Shuup storefront can be completely customized to fit y
 brand using custom themes and macros.
 
 In Shuup lingo, themes are :doc:`addons <addons>` that customize the look and
-feel of a storefront using ``xtheme`` :doc:`provides <provides>`.
+feel of a storefront using ``xtheme`` :doc:`provides <../ref/provides>`.
 
 This document is a good starting point for first-time theme creators. Please refer to Classic Gray, the theme provided
 by Shuup base, as an example. This theme can be found in `shuup/themes/classic_gray`.
@@ -74,7 +74,7 @@ Files
     This file contains the ``AppConfig`` for your theme. The ``AppConfig`` is the mechanism by which Shuup recognizes
     that the addon is providing a theme.
     More details about Django AppConfig can be found in `Django Documentation <https://docs.djangoproject.com/en/1.8/ref/applications/>`_.
-    More about provides can be found in :doc:`Provides Documentation <provides>`.
+    More about provides can be found in :doc:`Provides Documentation <../ref/provides>`.
 
 ``theme_folder/theme.py``
     Contains the actual theme definition.

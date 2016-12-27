@@ -3,7 +3,7 @@ Implementation of Prices and Taxes in Shuup
 
 This document describes deeper details about price and tax
 implementation in Shuup from a developer's point of view.  To understand
-the basics, please read :doc:`prices_and_taxes` first.
+the basics, please read :doc:`../ref/prices_and_taxes` first.
 
 .. _price-tax-types:
 
