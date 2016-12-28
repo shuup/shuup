@@ -4,6 +4,9 @@
     {{ category_macros.render_product_list() }}
 {% else %}
     {% extends "shuup/front/base.jinja" %}
+    {% block extrameta %}
+    {{ macros.render_metadata(category, category.name, category.description, "category") }}
+    {% endblock %}
     {% block title %}{{ category.name }}{% endblock %}
 
     {% block content_title %}{{ category.name }}{% endblock %}

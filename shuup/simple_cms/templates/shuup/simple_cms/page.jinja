@@ -2,7 +2,9 @@
 
 {% block title %}{{ page.title }}{% endblock %}
 {% block content_title %}{{ page.title }}{% endblock %}
-
+{% block extrameta %}
+{{ macros.render_metadata(page, page.title, page.get_html(), "page") }}
+{% endblock %}
 {% block breadcrumb %}
     <ol class="breadcrumb">
         <li><a href="/">{% trans %}Home{% endtrans %}</a></li>
