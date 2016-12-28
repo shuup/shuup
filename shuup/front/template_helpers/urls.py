@@ -22,6 +22,9 @@ def model_url(context, model, absolute=False):
     if isinstance(model, Category):
         uri = reverse("shuup:category", kwargs=dict(pk=model.pk, slug=model.slug))
 
+    if hasattr(model, "pk") and model.pk and hasattr(model, "url"):
+        uri = "/%s" % model.url
+
     if not uri:  # pragma: no cover
         raise ValueError("Unable to figure out `model_url` for %r" % model)
 
