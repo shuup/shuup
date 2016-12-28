@@ -6,25 +6,36 @@ div.container-fluid.support-nav-wrap.iframe-mode {
 #create-object-overlay {
     position: fixed;
     top: 0;
-    right: 0;
+    right: 0%;
     height: 100%;
     width: 100%;
     z-index: 2000;
     background-color: rgba(0,0,0,0.5);
 
-    iframe {
-        float: right;
-        transition: transform 1s;
-        transition-property: width;
-        transform: translate(0, 0);
+    div.content-pane {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        right: -100%;
+
         &.open {
             width: 100%;
+            transition: 1s;
+            transition-property: right;
+            right: 0;
         }
 
         @media (min-width: @screen-lg-min) {
             &.open {
                 width: 80%;
+                transition: 1s;
+                transition-property: right;
+                right: 0;
             }
+        }
+
+        iframe {
+            float: right;
         }
     }
 
@@ -41,13 +52,18 @@ div.container-fluid.support-nav-wrap.iframe-mode {
         .quick-add-btn {
             cursor: pointer;
             float: left;
-            padding-top: 8px;
-            padding-left: 16px;
-            padding-right: 0px;
             position: initial;
 
             i.fa-plus:hover {
                 color: #000;
+            }
+
+            @media (max-width: @screen-xs-max) {
+                .btn {
+                    position: absolute;
+                    top: 0px;
+                    right: 15px;
+                }
             }
         }
     }

@@ -71,7 +71,7 @@ def _add_custom_product_created_message(sender, object, **kwargs):
 def _add_primary_category(browser, shop):
     assert Category.objects.count() == 0
     select_id = "id_shop%s-primary_category" % shop.pk
-    browser.execute_script('$("#%s").parent().find("span.quick-add-btn").click();' % select_id)
+    browser.execute_script('$("#%s").parent().find("span.quick-add-btn a.btn").click();' % select_id)
     with browser.get_iframe('create-object-iframe') as iframe:
         wait_until_condition(iframe, lambda x: x.is_text_present("New category"))
         category_test_name = "Test Category"
@@ -87,7 +87,7 @@ def _add_additional_category(browser, shop):
     assert Category.objects.count() == 1
     select_id = "id_shop%s-categories" % shop.pk
     wait_until_condition(browser, lambda x: len(x.find_by_css("#%s option[selected='']" % select_id)) == 1)
-    browser.execute_script('$("#%s").parent().find("span.quick-add-btn").click();' % select_id)
+    browser.execute_script('$("#%s").parent().find("span.quick-add-btn a.btn").click();' % select_id)
     with browser.get_iframe('create-object-iframe') as iframe:
         wait_until_condition(iframe, lambda x: x.is_text_present("New category"))
         category_test_name = "Test Category 2"
