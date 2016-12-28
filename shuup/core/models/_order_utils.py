@@ -26,34 +26,56 @@ def calc_reference_number_checksum(rn):
     return force_text(s)[-1]
 
 
-def get_unique_reference_number(order):
+def get_unique_reference_number(shop, id):
+    from shuup import configuration
+    from shuup.admin.modules.settings.consts import ORDER_REFERENCE_NUMBER_LENGTH_FIELD
     now = datetime.datetime.now()
-    dt = "%012s%07d%04d" % (now.strftime("%y%m%d%H%M%S"), now.microsecond * 1000000, order.pk % 1000)
+    ref_length = configuration.get(shop, ORDER_REFERENCE_NUMBER_LENGTH_FIELD, settings.SHUUP_REFERENCE_NUMBER_LENGTH)
+    dt = ("%06s%07d%04d" % (now.strftime("%y%m%d"), now.microsecond, id % 1000)).rjust(ref_length, "0")
     return dt + calc_reference_number_checksum(dt)
 
 
+def get_unique_reference_number_for_order(order):
+    return get_unique_reference_number(order.shop, order.pk)
+
+
 def get_running_reference_number(order):
+    from shuup import configuration
+    from shuup.admin.modules.settings.consts import (ORDER_REFERENCE_NUMBER_PREFIX_FIELD,
+                                                     ORDER_REFERENCE_NUMBER_LENGTH_FIELD)
     value = Counter.get_and_increment(CounterType.ORDER_REFERENCE)
-    prefix = settings.SHUUP_REFERENCE_NUMBER_PREFIX
-    padded_value = force_text(value).rjust(settings.SHUUP_REFERENCE_NUMBER_LENGTH - len(prefix), "0")
+    prefix = "%s" % configuration.get(
+        order.shop, ORDER_REFERENCE_NUMBER_PREFIX_FIELD, settings.SHUUP_REFERENCE_NUMBER_PREFIX)
+    ref_length = configuration.get(
+        order.shop, ORDER_REFERENCE_NUMBER_LENGTH_FIELD, settings.SHUUP_REFERENCE_NUMBER_LENGTH)
+
+    padded_value = force_text(value).rjust(ref_length - len(prefix), "0")
     reference_no = "%s%s" % (prefix, padded_value)
     return reference_no + calc_reference_number_checksum(reference_no)
 
 
 def get_shop_running_reference_number(order):
+    from shuup import configuration
+    from shuup.admin.modules.settings.consts import ORDER_REFERENCE_NUMBER_LENGTH_FIELD
     value = Counter.get_and_increment(CounterType.ORDER_REFERENCE)
     prefix = "%06d" % order.shop.pk
-    padded_value = force_text(value).rjust(settings.SHUUP_REFERENCE_NUMBER_LENGTH - len(prefix), "0")
+    ref_length = configuration.get(
+        order.shop, ORDER_REFERENCE_NUMBER_LENGTH_FIELD, settings.SHUUP_REFERENCE_NUMBER_LENGTH)
+    padded_value = force_text(value).rjust(ref_length - len(prefix), "0")
     reference_no = "%s%s" % (prefix, padded_value)
     return reference_no + calc_reference_number_checksum(reference_no)
 
 
 def get_reference_number(order):
+    from shuup import configuration
+    from shuup.admin.modules.settings.consts import ORDER_REFERENCE_NUMBER_METHOD_FIELD
+
     if order.reference_number:
         raise ValueError("Order passed to get_reference_number() already has a reference number")
-    reference_number_method = settings.SHUUP_REFERENCE_NUMBER_METHOD
+    reference_number_method = configuration.get(
+        order.shop, ORDER_REFERENCE_NUMBER_METHOD_FIELD, settings.SHUUP_REFERENCE_NUMBER_METHOD)
     if reference_number_method == "unique":
-        return get_unique_reference_number(order)
+        return get_unique_reference_number_for_order(order)
     elif reference_number_method == "running":
         return get_running_reference_number(order)
     elif reference_number_method == "shop_running":

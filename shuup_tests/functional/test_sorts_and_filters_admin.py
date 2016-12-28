@@ -11,10 +11,12 @@ from django.conf import settings
 from django.utils.translation import activate
 
 from shuup import configuration
+from shuup.admin.modules.settings import consts
 from shuup.core import cache
 from shuup.admin.modules.categories.views import CategoryEditView
 from shuup.admin.modules.shops.views import ShopEditView
 from shuup.apps.provides import override_provides
+from shuup.core.models import ConfigurationItem
 from shuup.front.utils.sorts_and_filters import get_configuration
 from shuup.testing.factories import get_default_category, get_default_shop
 from shuup.testing.utils import apply_request_middleware
@@ -47,7 +49,9 @@ def test_sorts_and_filter_in_shop_edit(rf, admin_user):
             "product_list_facets-sort_products_by_price": False,
             "product_list_facets-sort_products_by_price_ordering": 32,
             "product_list_facets-filter_products_by_manufacturer": False,
-            "product_list_facets-filter_products_by_manufacturer_ordering": 1
+            "product_list_facets-filter_products_by_manufacturer_ordering": 1,
+            "order_configuration-%s" % consts.ORDER_REFERENCE_NUMBER_LENGTH_FIELD: settings.SHUUP_REFERENCE_NUMBER_LENGTH,
+            "order_configuration-%s" % consts.ORDER_REFERENCE_NUMBER_PREFIX_FIELD: settings.SHUUP_REFERENCE_NUMBER_PREFIX,
         }
         request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
         response = view(request, pk=shop.pk)

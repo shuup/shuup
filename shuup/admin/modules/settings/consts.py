@@ -5,10 +5,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from .list import ListSettingsView
-from .system import SystemSettingsView
 
-__all__ = [
-    "ListSettingsView",
-    "SystemSettingsView"
-]
+ORDER_REFERENCE_NUMBER_LENGTH_FIELD = "order_reference_number_length"
+ORDER_REFERENCE_NUMBER_PREFIX_FIELD = "order_reference_number_prefix"
+ORDER_REFERENCE_NUMBER_METHOD_FIELD = "order_reference_number_method"

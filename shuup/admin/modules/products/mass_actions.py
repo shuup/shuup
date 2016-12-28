@@ -12,7 +12,7 @@ from django.http import HttpResponse
 from django.utils.translation import ugettext_lazy as _
 from six import string_types
 
-from shuup.admin.modules.settings import ViewSettings
+from shuup.admin.modules.settings.view_settings import ViewSettings
 from shuup.admin.utils.picotable import (
     PicotableFileMassAction, PicotableMassAction, PicotableRedirectMassAction
 )

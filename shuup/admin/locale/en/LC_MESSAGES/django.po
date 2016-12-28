@@ -1212,10 +1212,49 @@ msgstr ""
 msgid "Weight-based pricing range"
 msgstr ""
 
+msgid "System Settings"
+msgstr ""
+
+msgid "unique"
+msgstr ""
+
+msgid "running"
+msgstr ""
+
+msgid "shop running"
+msgstr ""
+
+msgid "Reference number length"
+msgstr ""
+
+msgid ""
+"Length of the order reference number not including the checksum number. This "
+"can vary based on the country your shop is in. If you set the length to 19, "
+"the actual length is going to be 20 because the checksum is being added."
+msgstr ""
+
+msgid "Reference number prefix"
+msgstr ""
+
+msgid "Order Reference number method"
+msgstr ""
+
+msgid ""
+"This option defines how the reference numbers for orders are built. The "
+"options are:<br><br><b>Unique</b><br>Order reference number is unique system "
+"wide, regardless of the amount of shops.<br><br><b>Running</b><br>Order "
+"number is running system wide, regardless of the amount of shops."
+"<br><br><b>Shop Running</b><br>Every shop has its own running numbers for "
+"reference."
+msgstr ""
+
 msgid "Settings saved"
 msgstr ""
 
 msgid "Reset Defaults"
+msgstr ""
+
+msgid "Saved successfully"
 msgstr ""
 
 msgid "Add a logo to make your store stand out"
@@ -3040,6 +3079,22 @@ msgid ""
 msgstr ""
 
 msgid "Add component"
+msgstr ""
+
+#, python-format
+msgid ""
+"You can change shop specific order related settings from <a href=\"%(url)s"
+"\">shop configuration</a>."
+msgstr ""
+
+msgid "Order Configuration"
+msgstr ""
+
+#, python-format
+msgid ""
+"The field \"Reference number prefix\" is disabled because the order "
+"reference number generation method doesn't support a prefix. You can edit "
+"this setting from <a href=\"%(url)s\">system settings</a>."
 msgstr ""
 
 msgid "Shop Images"
