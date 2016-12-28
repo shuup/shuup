@@ -62,6 +62,7 @@ Addons
 Front
 ~~~~~
 
+- Simple CMS and Category views now render metadata based on the description
 - Cache template helpers, sorts and filters using context cache
 - Enable password reset when shop is in maintenance mode
 - Shop can now have a favicon
