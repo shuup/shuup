@@ -239,3 +239,23 @@
         {% endif %}
     {% endif %}
 {% endmacro %}
+
+{% macro render_metadata(object, title, text, content_type) %}
+    {% if text %}
+        <meta name="description" content="{{ text|safe|striptags|truncate(160)|replace("\n", " ")|replace("\"", "'") }}">
+    {% endif %}
+    {{ render_open_graph_metadata(object, title, text, content_type) }}
+{% endmacro %}
+
+{% macro render_open_graph_metadata(object, title, text, content_type) %}
+    <meta property="og:site_name" content="{{ request.shop }}">
+    <meta property="og:type" content="{{ content_type }}">
+    <meta property="og:url" content="{{ shuup.urls.model_url(object, absolute=True) }}">
+    <meta property="og:title" content="{{ title }}">
+    {% if text %}
+        <meta property="og:description" content="{{ text|safe|striptags|truncate(160)|replace("\n", " ")|replace("\"", "'") }}">
+    {% endif %}
+    {% if primary_image %}
+        <meta property="og:image" content="{{ request.build_absolute_uri(primary_image.url) }}">
+    {% endif %}
+{% endmacro %}
