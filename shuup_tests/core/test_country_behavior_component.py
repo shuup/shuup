@@ -29,7 +29,14 @@ from shuup_tests.utils.basketish_order_source import BasketishOrderSource
         ([], True, ["SE"], False, "SE", False),
         ([], False, [], True, "USA", True),
         ([], False, [], True, "FI", False),
-        (["USA"], True, [], False, "USA", True)
+        (["USA"], True, [], False, "USA", True),
+        ([], False, [], True, "USA", True),
+        ([], False, [], True, "FI", False),
+        (["SE","DK","EE"], False, [], False, "DK", True),
+        (["SE","DK","EE"], False, [], False, "FI", False),
+        ([], True, ["SE","DK","EE","FI"], False, "FR", True),
+        ([], True, ["SE","DK","EE","FI"], False, "CA", False),
+        ([], True, ["SE","DK","EE","FI"], False, "EE", False),
 ])
 def test_coutries_availability_for_shipping_method(
         admin_user, countries, european_countries, not_in_countries, not_in_european_countries,

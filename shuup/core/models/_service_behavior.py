@@ -19,6 +19,7 @@ from parler.models import TranslatableModel, TranslatedField, TranslatedFields
 
 from shuup.core.fields import MeasurementField, MoneyValueField
 
+from ._addresses import REGION_ISO3166
 from ._service_base import (
     ServiceBehaviorComponent, ServiceCost,
     TranslatableServiceBehaviorComponent
@@ -213,17 +214,18 @@ class CountryLimitBehaviorComponent(ServiceBehaviorComponent):
         if not (address or country):
             yield ValidationError(_("Service is not available without country."), code="no_country")
 
-        is_available = True
-        if self.available_in_countries:
-            is_available = bool(country in (self.available_in_countries or []))
-        if not is_available and self.available_in_european_countries:
-            is_available = address.is_european_union if address else False
+        allowed_countries = self.available_in_countries or []
+        if self.available_in_european_countries:
+            allowed_countries += REGION_ISO3166["european-union"]
+
+        is_available = bool(country in allowed_countries) if allowed_countries else True
 
         if is_available:  # Let's see if target country is restricted
-            if self.unavailable_in_countries and country in (self.unavailable_in_countries or []):
-                is_available = False
-            if self.unavailable_in_european_countries and address and address.is_european_union:
-                is_available = False
+            restricted_countries = self.unavailable_in_countries or []
+            if self.unavailable_in_european_countries:
+                restricted_countries += REGION_ISO3166["european-union"]
+            if restricted_countries:
+                is_available = bool(country not in restricted_countries)
 
         if not is_available:
             yield ValidationError(_("Service is not available for this country."), code="invalid_country")
