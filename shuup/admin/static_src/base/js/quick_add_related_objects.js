@@ -31,31 +31,39 @@ window.closeQuickAddIFrame = function closeQuickAddIFrame(e) {
 };
 
 $(function() {
-    $('span.quick-add-btn').on("click", function(e) {
+    $('.quick-add-btn a.btn').on("click", function(e) {
         e.preventDefault();
         window.closeQuickAddIFrame();
         const url = $(this).data("url");
         const overlay = document.createElement("div");
         overlay.id = "create-object-overlay";
 
+        const contentPane = document.createElement('div');
+        contentPane.id = "create-object-content-pane"
+        contentPane.className = "content-pane";
+        overlay.appendChild(contentPane);
+
         const closeIcon = document.createElement("i");
         closeIcon.className = "fa fa-times-circle-o fa-3x text-danger";
-
         const closeButton = document.createElement("a");
         closeButton.className = "close-btn";
         closeButton.href = "#";
         closeButton.onclick = window.closeQuickAddIFrame;
         closeButton.appendChild(closeIcon);
-        overlay.appendChild(closeButton);
+        contentPane.appendChild(closeButton);
 
         const iframe = document.createElement('iframe');
         iframe.frameBorder=0;
-        iframe.width="0%";
+        iframe.width="100%";
         iframe.height="100%";
         iframe.id="create-object-iframe";
-        iframe.onload = function() {$(this).addClass("open");};
+
+        iframe.onload = function() {
+            $("#create-object-content-pane").addClass("open");
+        };
+
         iframe.setAttribute("src", url);
-        overlay.appendChild(iframe);
+        contentPane.appendChild(iframe);
         $(document.body).append(overlay);
     });
 });

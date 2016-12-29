@@ -106,6 +106,20 @@
             }
         }
 
+        .quick-add-btn + .help-popover-btn {
+            @media (min-width: @screen-lg-min) {
+                margin-left: -15px;
+            }
+
+            @media (max-width: @screen-md-max) {
+                .btn {
+                    position: absolute;
+                    top: 0px;
+                    right: -15px;
+                }
+            }
+        }
+
         .checkbox + .help-popover-btn {
             padding-left: 15px;
             margin-top: -8px;

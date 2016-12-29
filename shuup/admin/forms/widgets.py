@@ -212,14 +212,16 @@ class QuickAddRelatedObjectSelect(Select):
             output.append(options)
         output.append('</select>')
         quick_add_button = """
-            <span
-                class="quick-add-btn"
-                data-url="%s?mode=iframe&quick_add_target=%s"
-                data-toggle="popover"
-                data-placement="bottom"
-                data-trigger="hover"
-                data-content="%s">
-                    <i class="fa fa-plus text-primary"></i>
+            <span class="quick-add-btn">
+                <a
+                    class="btn"
+                    data-url="%s?mode=iframe&quick_add_target=%s"
+                    data-toggle="popover"
+                    data-placement="bottom"
+                    data-trigger="hover"
+                    data-content="%s">
+                        <i class="fa fa-plus text-primary"></i>
+                </a>
             </span>
         """.strip()
         output.append(quick_add_button % (self.url, name, _("Create New")))
@@ -239,14 +241,16 @@ class QuickAddRelatedObjectMultiSelect(SelectMultiple):
             output.append(options)
         output.append('</select>')
         quick_add_button = """
-            <span
-                class="quick-add-btn"
-                data-url="%s?mode=iframe&quick_add_target=%s"
-                data-toggle="popover"
-                data-placement="bottom"
-                data-trigger="hover"
-                data-content="%s">
-                    <i class="fa fa-plus text-primary"></i>
+            <span class="quick-add-btn">
+                <a
+                    class="btn"
+                    data-url="%s?mode=iframe&quick_add_target=%s"
+                    data-toggle="popover"
+                    data-placement="bottom"
+                    data-trigger="hover"
+                    data-content="%s">
+                        <i class="fa fa-plus text-primary"></i>
+                </a>
             </span>
         """.strip()
         output.append(quick_add_button % (self.url, name, _("Create New")))
