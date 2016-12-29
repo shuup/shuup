@@ -316,6 +316,14 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
                 "It will also help shoppers find them in the store and on the web."
             )
         ),
+        short_description=models.CharField(
+            max_length=150, blank=True, verbose_name=_('short description'),
+            help_text=_(
+                "Enter a short description for your product. "
+                "The short description will be used to get the attention of your "
+                "customer with a small but precise description of your product."
+            )
+        ),
         slug=models.SlugField(
             verbose_name=_('slug'), max_length=255, blank=True, null=True,
             help_text=_(

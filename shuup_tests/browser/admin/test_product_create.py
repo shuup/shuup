@@ -45,9 +45,11 @@ def test_product_create(browser, admin_user, live_server, settings):
     sku = "testsku"
     name = "Some product name"
     price_value = 10
+    short_description = "short but gold"
 
     browser.fill("base-sku", sku)
     browser.fill("base-name__en", name)
+    browser.fill("base-short_description__en", short_description)
     browser.fill("shop%s-default_price_value" % shop.pk, price_value)
 
     configuration.set(None, "shuup_category_tour_complete", True)

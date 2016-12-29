@@ -29,8 +29,8 @@ Inheritance order for product macors:
             {% endif %}
             <div class="detail-wrap">
                 <div class="name">{{ product.name }}</div>
-                {% if show_description and product.description %}
-                    <p class="description">{{ product.description|safe|striptags|truncate(180) }}</p>
+                {% if show_description and product.short_description %}
+                    <p class="description">{{ product.short_description|safe }}</p>
                 {% endif %}
                 {% if show_prices() %}
                     <div class="price">
