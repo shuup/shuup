@@ -6,21 +6,19 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-
 from django.conf import settings
 from django.utils.translation import activate
 
 from shuup import configuration
-from shuup.admin.modules.settings import consts
-from shuup.core import cache
 from shuup.admin.modules.categories.views import CategoryEditView
+from shuup.admin.modules.settings import consts
 from shuup.admin.modules.shops.views import ShopEditView
 from shuup.apps.provides import override_provides
+from shuup.core import cache
 from shuup.core.models import ConfigurationItem
 from shuup.front.utils.sorts_and_filters import get_configuration
 from shuup.testing.factories import get_default_category, get_default_shop
 from shuup.testing.utils import apply_request_middleware
-
 
 DEFAULT_FORM_MODIFIERS = [
     "shuup.front.forms.product_list_modifiers.SortProductListByName",
@@ -44,6 +42,7 @@ def test_sorts_and_filter_in_shop_edit(rf, admin_user):
             "base-currency": shop.currency,
             "base-prices_include_tax": shop.prices_include_tax,
             "base-languages": "en",
+            "order_configuration-order_min_total": 0,
             "product_list_facets-sort_products_by_name": True,
             "product_list_facets-sort_products_by_name_ordering": 11,
             "product_list_facets-sort_products_by_price": False,
