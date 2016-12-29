@@ -1,0 +1,69 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+
+{% macro address_form(form) %}
+    {% for field in form %}
+    {{ bs3.field(field) }}
+    {% endfor %}
+{% endmacro %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="content-block">
+            <div class="row">
+                <div class="col-lg-12">
+                    <label>
+                        <input id="billing-to-shipping" type="checkbox">
+                        {% trans %}Use billing address as shipping address{% endtrans %}
+                    </label>
+                </div>
+            </div>
+            <br />
+            <div class="row order-addresses">
+                <form method="post" action="" id="edit-addresses">
+                    {% csrf_token %}
+                    <div class="col-lg-6 billing-address">
+                        <h4 class="underline"><i class="fa fa-file-text"></i> {% trans %}Billing Address{% endtrans %}</h4>
+                        {{ address_form(form["billing_address"]) }}
+                    </div>
+                    <div class="col-lg-6 shipping-address">
+                        <h4 class="underline"><i class="fa fa-truck"></i> {% trans %}Shipping Address{% endtrans %}</h4>
+                        {{ address_form(form["shipping_address"]) }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function(){
+    var shouldCopyFields = false;
+
+    function copyFieldValue() {
+        if(!shouldCopyFields) {
+            return;
+        }
+        var targetName = $(this).attr("id").split("-")[1];
+        var $target = $("#id_shipping_address-"+targetName);
+        $target.val($(this).val());
+        if($target.is('select')) {
+            $target.select2().val($(this).select2().val())
+        }
+    }
+
+    $('#billing-to-shipping').click(function(){
+        if($(this).is(':checked')){
+            shouldCopyFields = true;
+            $('.billing-address :input').change();
+        } else {
+            shouldCopyFields = false;
+        }
+    });
+
+    $('.billing-address :input').on("input change", copyFieldValue);
+}());
+</script>
+{% endblock %}
+

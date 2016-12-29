@@ -84,6 +84,7 @@ class ShuupAdminAppConfig(AppConfig):
             "shuup.admin.modules.orders.toolbar:SetPaidAction",
             "shuup.admin.modules.orders.toolbar:CreateShipmentAction",
             "shuup.admin.modules.orders.toolbar:CreateRefundAction",
+            "shuup.admin.modules.orders.toolbar:EditAddresses",
         ]
     }
 

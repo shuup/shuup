@@ -6,6 +6,7 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
+from .addresses import OrderAddressEditView
 from .detail import OrderDetailView, OrderSetStatusView
 from .edit import OrderEditView, UpdateAdminCommentView
 from .list import OrderListView
@@ -16,9 +17,9 @@ from .shipment import OrderCreateShipmentView, ShipmentDeleteView
 from .status import OrderStatusEditView, OrderStatusListView
 
 __all__ = [
-    "NewLogEntryView", "OrderDetailView", "OrderEditView", "OrderListView",
-    "OrderCreatePaymentView", "OrderCreateFullRefundView", "OrderCreateRefundView",
-    "OrderCreateShipmentView", "OrderSetPaidView", "OrderSetStatusView",
-    "OrderStatusEditView", "OrderStatusListView", "ShipmentDeleteView",
+    "NewLogEntryView", "OrderAddressEditView", "OrderDetailView", "OrderEditView",
+    "OrderListView", "OrderCreatePaymentView", "OrderCreateFullRefundView",
+    "OrderCreateRefundView", "OrderCreateShipmentView", "OrderSetPaidView",
+    "OrderSetStatusView", "OrderStatusEditView", "OrderStatusListView", "ShipmentDeleteView",
     "UpdateAdminCommentView"
 ]

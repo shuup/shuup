@@ -164,3 +164,15 @@ class CreateRefundAction(DropdownItem):
     @staticmethod
     def visible_for_object(object):
         return object.can_create_refund()
+
+
+class EditAddresses(DropdownItem):
+    def __init__(self, object, **kwargs):
+        kwargs["url"] = reverse("shuup_admin:order.edit-addresses", kwargs={"pk": object.pk})
+        kwargs["icon"] = "fa fa-address-card"
+        kwargs["text"] = _("Edit Addresses")
+        super(EditAddresses, self).__init__(**kwargs)
+
+    @staticmethod
+    def visible_for_object(object):
+        return not object.is_complete()
