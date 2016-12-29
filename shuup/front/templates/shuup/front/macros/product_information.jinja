@@ -1,4 +1,4 @@
-s{% extends "shuup/front/macros/product_ordering.jinja" %}
+{% extends "shuup/front/macros/product_ordering.jinja" %}
 
 {% macro render_product_basic_information(product) %}
     <h1 class="product-name">{{ product.name }}</h1>
@@ -120,9 +120,8 @@ s{% extends "shuup/front/macros/product_ordering.jinja" %}
                 <div role="tabpanel" class="product-files tab-pane fade" id="tab4">
                     <table class="table">
                         {% for file in media_files %}
-                            {{ file }}
                             <tr>
-                                <td><a href="{{ file.url }}" target="_blank">{{ file.title }}</a></td>
+                                <td><a href="{{ file.url }}" target="_blank">{% if file.title %}{{ file.title }}{% else %}{{ file }}{% endif %}</a></td>
                                 <td>
                                     {% if file.description %}
                                         {{ file.description|linebreaksbr }}
