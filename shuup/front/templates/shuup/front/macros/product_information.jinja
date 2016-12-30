@@ -3,8 +3,8 @@
 {% macro render_product_basic_information(product) %}
     <h1 class="product-name">{{ product.name }}</h1>
     <p class="text-muted product-sku"><small>{{ product.sku }}</small></p>
-    {% if product.description %}
-        <p class="product-short-description">{{ product.description|safe|striptags|truncate(150, False) }}</p>
+    {% if product.short_description %}
+        <p class="product-short-description">{{ product.short_description|safe }}</p>
     {% endif %}
     {% if show_prices() %}
         <div class="product-price">

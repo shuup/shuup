@@ -1,7 +1,7 @@
 {% extends "shuup/front/base.jinja" %}
 
 {% block extrameta %}
-{{ macros.render_metadata(product, product.name, product.description, "product") }}
+{{ macros.render_metadata(product, product.name, product.short_description, "product") }}
 {% endblock %}
 
 {% block title %}{{ product.name }}{% endblock %}

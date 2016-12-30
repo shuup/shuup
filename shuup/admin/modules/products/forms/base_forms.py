@@ -63,6 +63,7 @@ class ProductBaseForm(MultiLanguageModelForm):
             "width",
             # I18n
             "description",
+            "short_description",
             "keywords",
             "name",
             "slug",
@@ -73,7 +74,8 @@ class ProductBaseForm(MultiLanguageModelForm):
             "keywords": forms.TextInput(),
             "type": QuickAddProductTypeSelect(),
             "manufacturer": QuickAddManufacturerSelect(),
-            "description": TextEditorWidget()
+            "description": TextEditorWidget(),
+            "short_description": forms.TextInput(),
         }
 
     def __init__(self, **kwargs):

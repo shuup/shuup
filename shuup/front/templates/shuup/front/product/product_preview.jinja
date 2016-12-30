@@ -31,9 +31,9 @@
                     </div>
                     <div class="preview-details">
                         <h2>{{ product.name }}</h2>
-                        {% if product.description %}
+                        {% if product.short_description %}
                             <p class="description">
-                                {{ product.description|safe|striptags|truncate(150, False) }}
+                                {{ product.short_description|safe }}
                             </p>
                         {% endif %}
                         {% if show_prices() %}

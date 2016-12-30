@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Add product short description attribute field
 - ``SHUUP_REFERENCE_NUMBER_METHOD``, ``SHUUP_REFERENCE_NUMBER_LENGTH``
   and ``SHUUP_REFERENCE_NUMBER_PREFIX`` are now mere defaults and can be
   changed from settings under main menu "Settings > Other Settings >
