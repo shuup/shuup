@@ -6,14 +6,18 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
+from decimal import Decimal
+
 import pytest
 from django.conf import settings
 from django.core.exceptions import ValidationError
 
+from shuup import configuration
 from shuup.core.models import (
     get_person_contact, Order, OrderLineType, Shop, StockBehavior
 )
 from shuup.core.order_creator import OrderCreator, OrderSource, SourceLine
+from shuup.core.order_creator.constants import ORDER_MIN_TOTAL_CONFIG_KEY
 from shuup.testing.factories import (
     create_package_product, get_address, get_default_payment_method,
     get_default_product, get_default_shipping_method, get_default_shop,
@@ -206,3 +210,28 @@ def test_order_source_parentage(rf, admin_user):
     kid_line = order.lines.filter(sku="KIDKIDKID").first()
     assert kid_line
     assert kid_line.parent_line.product_id == product.pk
+
+
+@pytest.mark.django_db
+def test_order_creator_min_total(rf, admin_user):
+    shop = get_default_shop()
+    configuration.set(shop, ORDER_MIN_TOTAL_CONFIG_KEY, Decimal(20))
+
+    source = seed_source(admin_user)
+    source.add_line(
+        type=OrderLineType.PRODUCT,
+        product=get_default_product(),
+        supplier=get_default_supplier(),
+        quantity=1,
+        base_unit_price=source.create_price(10),
+    )
+
+    creator = OrderCreator()
+    with pytest.raises(ValidationError):
+        creator.create_order(source)
+
+    configuration.set(shop, ORDER_MIN_TOTAL_CONFIG_KEY, Decimal(1))
+    creator.create_order(source)
+
+    # do not mess with other tests
+    configuration.set(shop, ORDER_MIN_TOTAL_CONFIG_KEY, Decimal(0))

@@ -45,6 +45,7 @@ Localization
 Admin
 ~~~~~
 
+- Add shop configuration to only allow orders with a minimum total
 - Add order reference number configuration under Shop configuration
 - Add System Settings view under "Settings > Other Settings"
 - Add option to update order addresses

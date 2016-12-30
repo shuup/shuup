@@ -7,6 +7,9 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+from decimal import Decimal
+
+import babel.core
 import six
 from django import forms
 from django.conf import settings
@@ -14,7 +17,11 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup import configuration
 from shuup.admin.form_part import FormPart, TemplatedFormDef
+from shuup.core.fields import (
+    FORMATTED_DECIMAL_FIELD_MAX_DIGITS, FormattedDecimalFormField
+)
 from shuup.core.models import ConfigurationItem
+from shuup.core.order_creator.constants import ORDER_MIN_TOTAL_CONFIG_KEY
 
 
 class ShopOrderConfigurationForm(forms.Form):
@@ -51,6 +58,20 @@ class ShopOrderConfigurationForm(forms.Form):
                                  OrderReferenceNumberMethod.SHOP_RUNNING.value])
 
         self.fields[consts.ORDER_REFERENCE_NUMBER_PREFIX_FIELD].disabled = self.prefix_disabled
+
+        decimal_places = 2  # default
+        if shop.currency in babel.core.get_global('currency_fractions'):
+            decimal_places = babel.core.get_global('currency_fractions')[shop.currency][0]
+
+        self.fields[ORDER_MIN_TOTAL_CONFIG_KEY] = FormattedDecimalFormField(
+            label=_("Order minimum total"),
+            decimal_places=decimal_places,
+            max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
+            min_value=0,
+            required=False,
+            initial=configuration.get(shop, ORDER_MIN_TOTAL_CONFIG_KEY, Decimal(0)),
+            help_text=_("The minimum sum that an order needs to reach to be created.")
+        )
 
 
 class OrderConfigurationFormPart(FormPart):

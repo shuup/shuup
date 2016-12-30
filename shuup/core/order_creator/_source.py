@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 from collections import Counter
+from decimal import Decimal
 
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
@@ -18,6 +19,7 @@ from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum
 from six import iteritems
 
+from shuup import configuration
 from shuup.core import taxing
 from shuup.core.fields.utils import ensure_decimal_places
 from shuup.core.models import (
@@ -27,10 +29,11 @@ from shuup.core.models import (
 from shuup.core.pricing import Price, Priceful, TaxfulPrice, TaxlessPrice
 from shuup.core.taxing import should_calculate_taxes_automatically, TaxableItem
 from shuup.utils.decorators import non_reentrant
-from shuup.utils.i18n import is_existing_language
+from shuup.utils.i18n import format_money, is_existing_language
 from shuup.utils.money import Money
 
 from ._source_modifier import get_order_source_modifier_modules
+from .constants import ORDER_MIN_TOTAL_CONFIG_KEY
 from .signals import post_compute_source_lines
 
 
@@ -477,6 +480,14 @@ class OrderSource(object):
             raise ValidationError(error_message.args[0], code="invalid_order_source")
 
     def get_validation_errors(self):
+        # check for the minimum sum of order total
+        min_total = configuration.get(self.shop, ORDER_MIN_TOTAL_CONFIG_KEY, Decimal(0))
+        total = (self.taxful_total_price.value if self.shop.prices_include_tax else self.taxless_total_price.value)
+        if total < min_total:
+            min_total_price = format_money(self.shop.create_price(min_total))
+            yield ValidationError(_("The total should be greater than {} to be ordered.").format(min_total_price),
+                                  code="order_total_too_low")
+
         shipping_method = self.shipping_method
         payment_method = self.payment_method
 
