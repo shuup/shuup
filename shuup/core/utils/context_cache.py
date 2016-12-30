@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import six
 from django.core.handlers.wsgi import WSGIRequest
-from django.db.models import QuerySet
+from django.db.models import Q, QuerySet
 from parler.managers import TranslatableQuerySet
 
 from shuup.core import cache
@@ -71,26 +71,25 @@ def bump_cache_for_shop_product(shop_product):
     :param shop_product: shop product object
     :type shop_product: shuup.core.models.ShopProduct
     """
+    from shuup.core.models import ShopProduct
     bump_cache_for_item(shop_product)
     bump_cache_for_item(shop_product.product)
 
-    from shuup.core.models import ShopProduct
-    # Bump all children if exists
-    for child_shop_products in ShopProduct.objects.filter(product__variation_parent_id=shop_product.product):
-        bump_cache_for_item(child_shop_products)
-        bump_cache_for_item(child_shop_products.product)
-
-    # Bump parent if exists
+    q = Q()
+    q |= Q(product__variation_parent_id=shop_product.product)
     if shop_product.product.variation_parent:
-        for sp in ShopProduct.objects.filter(product_id=shop_product.product.variation_parent.id):
-            bump_cache_for_item(sp)
-            bump_cache_for_item(sp.product)
+        q |= Q(product_id=shop_product.product.variation_parent.id)
+
+    for child in ShopProduct.objects.filter(q).select_related("product"):
+        bump_cache_for_item(child)
+        bump_cache_for_item(child.product)
 
     # Bump all package parents
-    for package_parent in shop_product.product.get_all_package_parents():
-        for sp in ShopProduct.objects.filter(product_id=package_parent.id):
-            bump_cache_for_item(sp)
-            bump_cache_for_item(sp.product)
+    if shop_product.product.is_package_child():
+        for package_parent in shop_product.product.get_all_package_parents():
+            for sp in ShopProduct.objects.filter(product_id=package_parent.id):
+                bump_cache_for_item(sp)
+                bump_cache_for_item(sp.product)
 
 
 def bump_cache_for_product(product, shop=None):

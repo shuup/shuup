@@ -12,8 +12,9 @@ from shuup.campaigns.consts import (
 from shuup.campaigns.models import CatalogFilter
 from shuup.campaigns.models.contact_group_sales_ranges import \
     ContactGroupSalesRange
-from shuup.campaigns.models.matching import update_matching_catalog_filters
-from shuup.campaigns.utils.matcher import get_matching_for_product
+from shuup.campaigns.models.matching import (
+    update_matching_catalog_filters, update_matching_category_filters
+)
 from shuup.core import cache
 from shuup.core.models import Category, ShopProduct
 
@@ -36,14 +37,24 @@ def update_filter_cache(sender, instance, **kwargs):
     if isinstance(instance, CatalogFilter):
         update_matching_catalog_filters(instance)
     elif isinstance(instance, ShopProduct):
-        for filter_id in get_matching_for_product(instance, provide_category="campaign_catalog_filter"):
-            filter = CatalogFilter.objects.get(pk=filter_id)
-            update_matching_catalog_filters(filter)
+        # shop product being saved
+        action = kwargs.get("action")
+        if not action:
+            # this is plain ``ShopProduct`` save
+            update_matching_catalog_filters(instance)
+        else:
+            # This comes from categories through and it should only
+            # update those categories the shop product attached into
+            ids = None
+            if action in ["post_add", "post_remove"]:
+                ids = kwargs["pk_set"]
+            if ids:
+                if instance and instance.primary_category:
+                    ids.add(instance.primary_category.pk)
+                update_matching_category_filters(instance, ids)
     elif isinstance(instance, Category):
         for shop_product in instance.shop_products.all():
-            for filter_id in get_matching_for_product(shop_product, provide_category="campaign_catalog_filter"):
-                filter = CatalogFilter.objects.get(pk=filter_id)
-                update_matching_catalog_filters(filter)
+            update_matching_catalog_filters(shop_product)
 
 
 def invalidate_context_filter_cache(sender, instance, **kwargs):

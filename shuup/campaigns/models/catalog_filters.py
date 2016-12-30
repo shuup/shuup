@@ -97,7 +97,8 @@ class CategoryFilter(CatalogFilter):
     def get_matching_shop_products(self):
         shop_products = []
         shop = Shop.objects.first()
-        for parent in ShopProduct.objects.filter(categories__in=self.categories.all_except_deleted()):
+        cat_ids = self.categories.all_except_deleted().values_list("pk", flat=True)
+        for parent in ShopProduct.objects.filter(categories__id__in=cat_ids).select_related("product"):
             shop_products.append(parent)
             for child in parent.product.variation_children.all():
                 child_sp = child.get_shop_instance(shop)
@@ -105,10 +106,15 @@ class CategoryFilter(CatalogFilter):
         return shop_products
 
     def matches(self, shop_product):
-        ids = shop_product.categories.all_except_deleted().values_list("id", flat=True)
+        ids = list(shop_product.categories.all_except_deleted().values_list("id", flat=True))
         for child in shop_product.product.variation_children.all():
             child_sp = child.get_shop_instance(shop_product.shop)
-            ids += child_sp.categories.all_except_deleted().values_list("id", flat=True)
+            ids += list(child_sp.categories.all_except_deleted().values_list("id", flat=True))
+
+        if shop_product.product.variation_parent:
+            parent_sp = shop_product.product.variation_parent.get_shop_instance(shop_product.shop)
+            ids += list(parent_sp.categories.all_except_deleted().values_list("id", flat=True))
+
         new_ids = self.values.values_list("id", flat=True)
         return bool([x for x in ids if x in new_ids])
 
