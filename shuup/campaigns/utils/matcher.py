@@ -11,7 +11,7 @@ from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Category, Product, ProductType, ShopProduct
 
 
-def get_matching_for_product(shop_product, provide_category):
+def get_matching_for_product(shop_product, provide_category, skippable_classes=None):
     """
     Get matching ids for shop product based on provide category
 
@@ -22,13 +22,19 @@ def get_matching_for_product(shop_product, provide_category):
     :type shop_product: shuup.core.models.ShopProduct
     :param provide_category: Provide category name
     :type provide_category: str
+    :param skip: Classes to skip
+    :type skip: None or list
     :return: list of collected item ids
     :rtype: list[int]
     """
     collected = set()
     matcher = ProductCampaignMatcher(shop_product)
     for item in get_provide_objects(provide_category):
-        for obj in item._meta.model.objects.all():
+        if skippable_classes:
+            objects = item._meta.model.objects.not_instance_of(*skippable_classes).all()
+        else:
+            objects = item._meta.model.objects.all()
+        for obj in objects:
             if matcher.matches(obj):
                 collected.add(obj.pk)
     return collected
