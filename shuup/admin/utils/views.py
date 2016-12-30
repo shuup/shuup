@@ -17,7 +17,7 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView, UpdateView
 
-from shuup.admin.modules.settings import ViewSettings
+from shuup.admin.modules.settings.view_settings import ViewSettings
 from shuup.admin.signals import object_created
 from shuup.admin.toolbar import (
     get_default_edit_toolbar, NewActionButton, SettingsActionButton, Toolbar

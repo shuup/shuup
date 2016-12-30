@@ -10,10 +10,12 @@ import hashlib
 import pytest
 from django.test import override_settings
 
+from shuup import configuration
+from shuup.core.models import ConfigurationItem
 from shuup.core.models._order_utils import (
-    get_order_identifier, get_reference_number
+    get_order_identifier, get_reference_number,
 )
-from shuup.testing.factories import create_empty_order
+from shuup.testing.factories import create_empty_order, get_default_shop
 
 
 def custom_refno_gen(order):
@@ -64,3 +66,71 @@ def test_custom_ident_generation():
             assert order.identifier == custom_ident_gen(order)
         with pytest.raises(ValueError):
             get_order_identifier(order)
+
+
+@pytest.mark.django_db
+def test_ref_lengths():
+    from shuup.admin.modules.settings import consts
+    from shuup.admin.modules.settings.enums import OrderReferenceNumberMethod
+
+    # clear shop configurations
+    shop = get_default_shop()
+
+    ConfigurationItem.objects.filter(shop=shop).delete()
+    order = create_empty_order(shop=shop)
+    order.save()
+    order.reference_number = None
+    order.save()
+
+    ref_number = get_reference_number(order)  # by default we return "unique"
+    assert len(ref_number) == 17 + 1 # unique ref + checksum
+
+    order.reference_number = None
+    order.save()
+
+    configuration.set(shop, consts.ORDER_REFERENCE_NUMBER_METHOD_FIELD, OrderReferenceNumberMethod.UNIQUE.value)
+    ref_number = get_reference_number(order)
+    assert len(ref_number) == 17 + 1  # unique ref + checksum
+
+    order.reference_number = None
+    order.save()
+
+    configuration.set(shop, consts.ORDER_REFERENCE_NUMBER_LENGTH_FIELD, 25)
+    ref_number = get_reference_number(order)
+    assert len(ref_number) == 25 + 1  # unique ref + checksum
+
+    order.reference_number = None
+    order.save()
+
+    configuration.set(shop, consts.ORDER_REFERENCE_NUMBER_LENGTH_FIELD, 19)
+    ref_number = get_reference_number(order)
+    assert len(ref_number) == 19 + 1  # Finnish case
+
+    order.reference_number = None
+    order.save()
+
+    configuration.set(shop, consts.ORDER_REFERENCE_NUMBER_METHOD_FIELD, OrderReferenceNumberMethod.RUNNING.value)
+    ref_number = get_reference_number(order)
+    assert len(ref_number) == 19 + 1
+    order.reference_number = None
+    order.save()
+
+    configuration.set(shop, consts.ORDER_REFERENCE_NUMBER_PREFIX_FIELD, "123")
+    ref_number = get_reference_number(order)
+    assert len(ref_number) == 19 + 1
+    order.reference_number = None
+    order.save()
+
+    configuration.set(shop, consts.ORDER_REFERENCE_NUMBER_PREFIX_FIELD, 123)
+    ref_number = get_reference_number(order)
+    assert len(ref_number) == 19 + 1  # Finnish case
+    order.reference_number = None
+    order.save()
+
+    # reset prefix
+    configuration.set(shop, consts.ORDER_REFERENCE_NUMBER_PREFIX_FIELD, "")
+    configuration.set(shop, consts.ORDER_REFERENCE_NUMBER_METHOD_FIELD, OrderReferenceNumberMethod.SHOP_RUNNING.value)
+    ref_number = get_reference_number(order)
+    assert len(ref_number) == 19 + 1  # Finnish case
+    order.reference_number = None
+    order.save()

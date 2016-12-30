@@ -5,10 +5,10 @@
 # This source code is licensed under the AGPLv3 license found in the
 # LICENSE file in the root directory of this source tree.
 
-from .list import ListSettingsView
-from .system import SystemSettingsView
+from .columns import ColumnSettingsForm
+from .system import OrderSettingsForm
 
 __all__ = [
-    "ListSettingsView",
-    "SystemSettingsView"
+    "ColumnSettingsForm",
+    "OrderSettingsForm"
 ]

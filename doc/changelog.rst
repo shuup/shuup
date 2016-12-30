@@ -12,6 +12,11 @@ Unrealeased
 Core
 ~~~~
 
+- ``SHUUP_REFERENCE_NUMBER_METHOD``, ``SHUUP_REFERENCE_NUMBER_LENGTH``
+  and ``SHUUP_REFERENCE_NUMBER_PREFIX`` are now mere defaults and can be
+  changed from settings under main menu "Settings > Other Settings >
+  System Settings".
+- Changed ``SHUUP_REFERENCE_NUMBER_LENGTH`` from 10 to 17
 - Add context cache utils. Context cache is mainly build for products and
   shop products but it can cache also other context related content.
 - Core: add provide entry to load report writers
@@ -40,6 +45,8 @@ Localization
 Admin
 ~~~~~
 
+- Add order reference number configuration under Shop configuration
+- Add System Settings view under "Settings > Other Settings"
 - Add option to update order addresses
 - Add shop logo block to home page
 - Send user confirmation email when new admin users are created

@@ -6,15 +6,21 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.conf import settings
+from django.core.urlresolvers import reverse
 from django.utils.translation import activate
 
-from shuup.admin.modules.shops.views.edit import ShopBaseForm
+from shuup import configuration
+from shuup.admin.modules.settings import consts
+from shuup.admin.modules.settings.enums import OrderReferenceNumberMethod
+from shuup.admin.modules.shops.views.edit import ShopBaseForm, ShopEditView
 from shuup.core.models import ConfigurationItem, Shop, ShopStatus
 from shuup.testing.factories import (
-    create_product, create_random_order, create_random_person,
-    get_currency, get_default_supplier
+    create_product, create_random_order, create_random_person, get_currency,
+    get_default_shop, get_default_supplier
 )
-from shuup_tests.utils import printable_gibberish
+from shuup.testing.utils import apply_request_middleware
+from shuup_tests.admin.test_settings import set_reference_method
+from shuup_tests.utils import printable_gibberish, SmartClient
 from shuup_tests.utils.forms import get_form_data
 
 
@@ -59,3 +65,64 @@ def _test_cleanliness(shop_form):
     shop_form.full_clean()
     assert not shop_form.errors
     assert shop_form.cleaned_data
+
+
+@pytest.mark.django_db
+def test_order_configuration(rf, admin_user):
+    shop = get_default_shop()
+    # clear shop configurations
+    ConfigurationItem.objects.filter(shop=shop).delete()
+    client = SmartClient()
+    client.login(username="admin", password="password")
+
+    url = reverse("shuup_admin:shop.edit", kwargs={"pk": shop.pk})
+    response, soup = client.response_and_soup(url)
+    assert response.status_code == 200
+
+    length_form_field = "order_configuration-%s" % consts.ORDER_REFERENCE_NUMBER_LENGTH_FIELD
+    prefix_form_field = "order_configuration-%s" % consts.ORDER_REFERENCE_NUMBER_PREFIX_FIELD
+
+    length_field = soup.find("input", attrs={"id": "id_%s" % length_form_field})
+    prefix_field = soup.find("input", attrs={"id": "id_%s" % prefix_form_field})
+
+    assert length_field
+    assert prefix_field
+
+    assert length_field["value"] == str(settings.SHUUP_REFERENCE_NUMBER_LENGTH)  # default value because nothing set yet
+    assert "value" not in prefix_field  # field empty
+
+    data = get_base_form_data(shop)
+    data[length_form_field] = "18"
+    data[prefix_form_field] = "123"
+    response, soup = client.response_and_soup(url, data=data, method="post")
+    assert "is required" not in soup.prettify()
+    assert response.status_code == 302  # redirect after success
+
+    assert configuration.get(shop, consts.ORDER_REFERENCE_NUMBER_LENGTH_FIELD) == 18
+
+    # set global system settings
+    set_reference_method(rf, admin_user, OrderReferenceNumberMethod.RUNNING)
+    data[length_form_field] = "19"
+    data[prefix_form_field] = "0"
+    client.post(url, data=data)
+
+    assert configuration.get(shop, consts.ORDER_REFERENCE_NUMBER_LENGTH_FIELD) == 19
+    assert configuration.get(shop, consts.ORDER_REFERENCE_NUMBER_PREFIX_FIELD) == 0
+
+
+def get_base_form_data(shop):
+    return {
+        "base-public_name__en": shop.public_name,
+        "base-name__en": shop.name,
+        "base-status": "1",
+        "base-currency": shop.currency,
+        "product_list_facets-filter_products_by_category_ordering": "1",
+        "product_list_facets-filter_products_by_price_ordering": "1",
+        "product_list_facets-limit_product_list_page_size_ordering": "1",
+        "product_list_facets-sort_products_by_price_ordering": "1",
+        "product_list_facets-sort_products_by_name_ordering": "1",
+        "product_list_facets-sort_products_by_ascending_created_date_ordering": "1",
+        "product_list_facets-sort_products_by_date_created_ordering": "1",
+        "product_list_facets-filter_products_by_manufacturer_ordering": "1",
+        "product_list_facets-filter_products_by_variation_value_ordering": "1",
+    }

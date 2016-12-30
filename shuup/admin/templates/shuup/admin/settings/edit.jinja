@@ -1,0 +1,18 @@
+{% extends "shuup/admin/base.jinja" %}
+{% from "shuup/admin/macros/general.jinja" import content_with_sidebar, content_block %}
+{% from "shuup/admin/macros/multilanguage.jinja" import render_monolingual_fields %}
+{% block title %}{% trans %}Settings{% endtrans %}{% endblock %}
+
+{% block content %}
+    {% call content_with_sidebar(content_id="settings_form") %}
+        <form method="post" id="settings_form">
+
+        {% csrf_token %}
+        {% call content_block(_("Orders"), "fa-table") %}
+            {% set url = url("shuup_admin:shop.list") %}
+            <p>{% trans url=url %}You can change shop specific order related settings from <a href="{{ url }}">shop configuration</a>.{% endtrans %}</p>
+            {{ bs3.field(form.order_reference_number_method) }}
+        {% endcall %}
+        </form>
+    {% endcall %}
+{% endblock %}

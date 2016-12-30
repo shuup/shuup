@@ -27,6 +27,7 @@ IGNORED_DIRS = [
     'node_modules',
     'var',
     'venv*',
+    'static',
 ]
 
 IGNORED_PATH_REGEXPS = [

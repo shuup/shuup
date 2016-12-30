@@ -39,7 +39,7 @@ def create_products(shop):
 list_view_settings = {
     "contact": {
         "page_header": "Contacts",
-        "default_column_count": 6,
+        "default_column_count": 7,
         "addable_fields": [(1, "Account Manager")],
         "creator": create_contacts,
         "test_pagination": True
@@ -143,9 +143,10 @@ def _set_settings(browser, setting_type):
     # not selected by default
     for idx, text in addable_fields:
         assert not browser.is_text_present(text)
-
+    #shuup_tests/browser/front/test_category_view.py
+    settings_xpath = "(//a[contains(text(),'Settings')])[2]"
     # go to settings
-    browser.find_by_xpath("//a[contains(text(),'Settings')]").click()
+    browser.find_by_xpath(settings_xpath).click()
 
     # select settings
     for idx, (index_key, text) in enumerate(addable_fields):
@@ -163,7 +164,7 @@ def _set_settings(browser, setting_type):
         wait_until_condition(browser, lambda x: x.is_text_present(text))
 
     # go back to settings
-    browser.find_by_xpath("//a[contains(text(),'Settings')]").click()
+    browser.find_by_xpath(settings_xpath).click()
 
     wait_until_appeared_xpath(browser, "//a[contains(text(),'Reset Defaults')]")
 
