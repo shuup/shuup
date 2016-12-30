@@ -77,7 +77,7 @@ def _parse_date_str(value):
         except:
             pass
     try:
-        return datetime.datetime.strptime(value, "%Y-%m-%d %H:%M:%S.%f")
+        return datetime.datetime.strptime(value, "%Y-%m-%d %H:%M:%S.%f").date()
     except:
         pass
 
@@ -101,10 +101,11 @@ def parse_date(value):
     :rtype: datetime.date
     :raise ValueError:
     """
-    if isinstance(value, datetime.date):
-        return value
+    # this should be first since `datetime.datetime` is subclass of `datetime.date`
     if isinstance(value, datetime.datetime):
         return value.date()
+    if isinstance(value, datetime.date):
+        return value
     elif isinstance(value, six.string_types):
         date = _parse_date_str(value)
         if not date:
