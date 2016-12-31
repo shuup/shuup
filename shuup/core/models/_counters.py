@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import with_statement
 
-from django.db import models
+from django.db import models, transaction
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 
@@ -31,8 +31,9 @@ class Counter(models.Model):
 
     @classmethod
     def get_and_increment(cls, id):
-        counter, created = cls.objects.select_for_update().get_or_create(id=id)
-        current = counter.value
-        counter.value += 1
-        counter.save()
+        with transaction.atomic():
+            counter, created = cls.objects.select_for_update().get_or_create(id=id)
+            current = counter.value
+            counter.value += 1
+            counter.save()
         return current
