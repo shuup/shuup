@@ -1,8 +1,8 @@
 # This file is part of Shuup.
 #
-# Copyright (c) 2012-2016, Shoop Commerce Ltd. All rights reserved.
+# Copyright (c) 2012-2017, Shoop Commerce Ltd. All rights reserved.
 #
-# This source code is licensed under the AGPLv3 license found in the
+# This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
 import sys
@@ -48,11 +48,11 @@ URL = 'http://shuup.com/'
 DOWNLOAD_URL_TEMPLATE = (
     'https://github.com/shuup/shuup/releases/download/'
     'v{version}/shuup-{version}-py2.py3-none-any.whl')
-LICENSE = 'AGPL-3.0'  # https://spdx.org/licenses/
+LICENSE = 'OSL-3.0'  # https://spdx.org/licenses/
 CLASSIFIERS = """
 Development Status :: 4 - Beta
 Intended Audience :: Developers
-License :: OSI Approved :: GNU Affero General Public License v3
+License :: Open Software License 3.0
 Natural Language :: English
 Programming Language :: JavaScript
 Programming Language :: Python :: 2

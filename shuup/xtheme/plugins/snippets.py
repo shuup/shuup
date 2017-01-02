@@ -3,7 +3,7 @@
 #
 # Copyright (c) 2012-2015, Shoop Commerce Ltd. All rights reserved.
 #
-# This source code is licensed under the AGPLv3 license found in the
+# This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.utils.translation import ugettext_lazy as _
