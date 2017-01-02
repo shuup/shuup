@@ -1,0 +1,8 @@
+Shuup 1.0.0 Release Notes
+=========================
+
+Released on 2017-01-02 03:39pm -0800.
+
+There are just way too many features to go through
+here so please see the changelog and our website
+for more information about this release.

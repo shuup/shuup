@@ -1,13 +1,8 @@
 Shuup Change Log
 ================
 
-Unrealeased
+SHUUP 1.0.0
 -----------
-
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
 
 Core
 ~~~~
@@ -40,9 +35,6 @@ Core
 - Add option to limit service availability based on order total
 - Add the setting `SHUUP_ERROR_PAGE_HANDLERS_SPEC` to handle custom error pages (400, 403, 404 and 500)
 
-Localization
-~~~~~~~~~~~~
-
 Admin
 ~~~~~
 
@@ -66,9 +58,6 @@ Admin
 - Add option to clear dropzone selection
 - Add option to install sample data in Wizard
 
-Addons
-~~~~~~
-
 Front
 ~~~~~
 
@@ -88,15 +77,6 @@ Xtheme
 - Add highlight plugin for category products
 - Use rich text editor for text plugin
 
-Classic Gray Theme
-~~~~~~~~~~~~~~~~~~
-
-Simple Supplier
-~~~~~~~~~~~~~~~
-
-Order Printouts
-~~~~~~~~~~~~~~~
-
 Campaigns
 ~~~~~~~~~
 
@@ -106,31 +86,10 @@ Campaigns
 - Add option to select multiple categories to basket condition
 - Variation children should match rules based on parent
 
-Customer Group Pricing
-~~~~~~~~~~~~~~~~~~~~~~
-
-Discount Pricing
-~~~~~~~~~~~~~~~~
-
 Simple CMS
 ~~~~~~~~~~
 
 - Add rich text editor for CMS content
-
-Default Tax
-~~~~~~~~~~~
-
-Guide
-~~~~~
-
-Importer
-~~~~~~~~
-
-Regions
-~~~~~~~
-
-General/miscellaneous
-~~~~~~~~~~~~~~~~~~~~~
 
 
 SHUUP 0.5.8
