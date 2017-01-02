@@ -7,6 +7,7 @@ Subpackages
 .. toctree::
 
     shuup.campaigns.admin_module
+    shuup.campaigns.management
     shuup.campaigns.models
     shuup.campaigns.templates
     shuup.campaigns.utils

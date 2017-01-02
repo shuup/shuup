@@ -7,6 +7,7 @@ Subpackages
 .. toctree::
 
     shuup.front.admin_module
+    shuup.front.api
     shuup.front.apps
     shuup.front.basket
     shuup.front.checkout
@@ -21,10 +22,10 @@ Subpackages
 Submodules
 ----------
 
-shuup.front.error_handling module
+shuup.front.error_handlers module
 ---------------------------------
 
-.. automodule:: shuup.front.error_handling
+.. automodule:: shuup.front.error_handlers
     :members:
     :undoc-members:
     :show-inheritance:

@@ -4,6 +4,14 @@ shuup.admin.modules.orders.views package
 Submodules
 ----------
 
+shuup.admin.modules.orders.views.addresses module
+-------------------------------------------------
+
+.. automodule:: shuup.admin.modules.orders.views.addresses
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.admin.modules.orders.views.detail module
 ----------------------------------------------
 

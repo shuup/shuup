@@ -25,6 +25,14 @@ Subpackages
 Submodules
 ----------
 
+shuup.core.error_handling module
+--------------------------------
+
+.. automodule:: shuup.core.error_handling
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.core.excs module
 ----------------------
 

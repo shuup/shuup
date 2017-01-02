@@ -20,6 +20,14 @@ shuup.core.management.commands.makemessages module
     :undoc-members:
     :show-inheritance:
 
+shuup.core.management.commands.shuup_extract_products_shortdescription module
+-----------------------------------------------------------------------------
+
+.. automodule:: shuup.core.management.commands.shuup_extract_products_shortdescription
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.core.management.commands.shuup_init module
 ------------------------------------------------
 

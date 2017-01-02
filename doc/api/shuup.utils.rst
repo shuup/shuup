@@ -44,6 +44,14 @@ shuup.utils.deprecation module
     :undoc-members:
     :show-inheritance:
 
+shuup.utils.djangoenv module
+----------------------------
+
+.. automodule:: shuup.utils.djangoenv
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.utils.excs module
 -----------------------
 

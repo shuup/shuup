@@ -4,6 +4,14 @@ shuup.core.utils package
 Submodules
 ----------
 
+shuup.core.utils.context_cache module
+-------------------------------------
+
+.. automodule:: shuup.core.utils.context_cache
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.core.utils.form_mixins module
 -----------------------------------
 

@@ -34,6 +34,14 @@ shuup.admin.currencybound module
     :undoc-members:
     :show-inheritance:
 
+shuup.admin.error_handlers module
+---------------------------------
+
+.. automodule:: shuup.admin.error_handlers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.admin.form_modifier module
 --------------------------------
 
@@ -62,6 +70,14 @@ shuup.admin.module_registry module
 ----------------------------------
 
 .. automodule:: shuup.admin.module_registry
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.admin.settings module
+---------------------------
+
+.. automodule:: shuup.admin.settings
     :members:
     :undoc-members:
     :show-inheritance:
