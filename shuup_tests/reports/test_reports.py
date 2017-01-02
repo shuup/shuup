@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 import itertools
 import json
+from datetime import date
 from decimal import Decimal
 
 import pytest
@@ -137,13 +138,17 @@ def test_reporting(rf):
         assert str(expected_taxless_total) in totals.get("taxless_total", "0")
         assert str(expected_taxful_total) in totals.get("taxful_total", "0")
 
+        today = date.today()
+        last_year = date(today.year-1, 1, 1)
+        next_year = date(today.year+1, 1, 1)
+
         # test report without downloading it
         data = {
             "report": TestSalesReport.get_name(),
             "shop": shop.pk,
             "date_range": DateRangeChoices.CUSTOM.value,
-            "start_date": "2016-01-01",
-            "end_date": "2017-01-01",
+            "start_date": last_year.strftime("%Y-%m-%d"),
+            "end_date": next_year.strftime("%Y-%m-%d"),
             "writer": "json",
         }
 

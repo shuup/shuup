@@ -54,11 +54,11 @@ def test_shop_overview_block(rf):
 
     block = get_shop_overview_block(rf.get("/"), DEFAULT_CURRENCY)
     soup = BeautifulSoup(block.content)
-    _, today, mtd, ytd, totals = soup.find_all("tr")
-    assert today.find_all("td")[NUM_ORDERS_COLUMN_INDEX].string == "2"
-    assert today.find_all("td")[NUM_CUSTOMERS_COLUMN_INDEX].string == "2"
-    assert mtd.find_all("td")[NUM_ORDERS_COLUMN_INDEX].string == "3"
-    assert mtd.find_all("td")[NUM_CUSTOMERS_COLUMN_INDEX].string == "3"
+    _, today_sales, mtd, ytd, totals = soup.find_all("tr")
+    assert today_sales.find_all("td")[NUM_ORDERS_COLUMN_INDEX].string == "2"
+    assert today_sales.find_all("td")[NUM_CUSTOMERS_COLUMN_INDEX].string == "2"
+    assert mtd.find_all("td")[NUM_ORDERS_COLUMN_INDEX].string == ("4" if today.month == 1 else "3")
+    assert mtd.find_all("td")[NUM_CUSTOMERS_COLUMN_INDEX].string == ("4" if today.month == 1 else "3")
     assert ytd.find_all("td")[NUM_ORDERS_COLUMN_INDEX].string == "4"
     assert ytd.find_all("td")[NUM_CUSTOMERS_COLUMN_INDEX].string == "4"
     assert totals.find_all("td")[NUM_ORDERS_COLUMN_INDEX].string == "4"
