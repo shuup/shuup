@@ -76,6 +76,7 @@ utils.add_exclude_patters([
 ])
 
 REQUIRES = [
+    'pillow>=3.4.2,<4',
     'Babel>=2.2,<3',
     'Django>=1.8,<1.10',
     'django-bootstrap3>=6.1,<7',
