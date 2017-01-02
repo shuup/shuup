@@ -10,7 +10,7 @@
   },
   "author": "Aarni Koskela <aarni.koskela@shuup.com>",
   "private": true,
-  "license": "AGPLv3",
+  "license": "OSL-3.0",
   "dependencies": {
     "autoprefixer-loader": "^3.1.0",
     "babel-core": "^5.8.23",

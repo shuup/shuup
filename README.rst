@@ -13,7 +13,7 @@ https://shuup.com/
 Copyright
 ---------
 
-Copyright (C) 2012-2016 by Shoop Commerce Ltd. <contact@shuup.com>
+Copyright (C) 2012-2017 by Shoop Commerce Ltd. <contact@shuup.com>
 
 Shuup is International Registered Trademark & Property of Shoop Commerce Ltd.,
 Business ID: FI24815722, Business Address: Aurakatu 12 B, 20100 Turku,
@@ -29,11 +29,11 @@ the CLA.rst file distributed with Shuup.
 License
 -------
 
-Shuup is published under the GNU Affero General Public License,
-version 3 (AGPLv3). See the LICENSE file distributed with Shuup.
+Shuup is published under Open Software License version 3.0 (OSL-3.0).
+See the LICENSE file distributed with Shuup.
 
 Some external libraries and contributions bundled with Shuup may be
-published under other AGPLv3-compatible licenses.  For these, please
+published under other compatible licenses. For these, please
 refer to VENDOR-LICENSES.md file in the source code tree or the licenses
 included within each package.
 

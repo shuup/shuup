@@ -9,7 +9,7 @@
     "build": "npm run build-front-packages && npm run build-theme"
   },
   "author": "",
-  "license": "AGPL-3.0",
+  "license": "OSL-3.0",
   "dependencies": {
     "bower": "^1.4.1",
     "gulp": "^3.9.0",

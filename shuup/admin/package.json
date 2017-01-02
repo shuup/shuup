@@ -8,7 +8,7 @@
     "watch": "npm i && gulp watch"
   },
   "author": "Shuup Team <shuup@shuup.com>",
-  "license": "AGPL-3.0",
+  "license": "OSL-3.0",
   "private": true,
   "dependencies": {
     "autoprefixer-loader": "^3.1.0",
