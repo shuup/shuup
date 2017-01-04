@@ -49,3 +49,13 @@ def build_or_query(over_fields, term, operator=""):
     def add_term(query_q, field):
         return (query_q | models.Q(**{("%s%s" % (field, operator)): term}))
     return reduce(add_term, over_fields, models.Q())
+
+
+class SortableMixin(models.Model):
+    """ Utility mixin to add manual ordering to models"""
+
+    ordering = models.SmallIntegerField(default=0, db_index=True)
+
+    class Meta:
+        abstract = True
+        ordering = ['ordering']
