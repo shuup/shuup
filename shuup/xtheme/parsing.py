@@ -9,10 +9,12 @@ from __future__ import unicode_literals
 
 import pytoml as toml
 import six
+from django.contrib.staticfiles.storage import staticfiles_storage
 from jinja2.ext import Extension
 from jinja2.nodes import Const, EvalContext, ExprStmt, Impossible, Name, Output
 from jinja2.utils import contextfunction
 
+import shuup
 from shuup.xtheme.rendering import render_placeholder
 from shuup.xtheme.view_config import Layout
 
@@ -338,8 +340,18 @@ class PluginExtension(_PlaceholderManagingExtension):
         return noop_node(lineno)
 
 
+class ShuupStaticFilesExtension(Extension):
+    def __init__(self, environment):
+        super(ShuupStaticFilesExtension, self).__init__(environment)
+        environment.globals["static"] = self._static
+
+    def _static(self, path):
+        return "%s?v=%s" % (staticfiles_storage.url(path), shuup.__version__)
+
+
 EXTENSIONS = [
     LayoutPartExtension,
     PlaceholderExtension,
-    PluginExtension
+    PluginExtension,
+    ShuupStaticFilesExtension
 ]
