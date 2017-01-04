@@ -86,6 +86,7 @@ class ThemeWizardPane(WizardPane):
         else:
             theme_settings.update_settings(data["settings"])
         theme_settings.activate()
+        cache.bump_version(THEME_CACHE_KEY)
 
 
 class ThemeConfigView(FormView):
