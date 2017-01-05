@@ -49,7 +49,7 @@ Getting Started with Shuup development
 --------------------------------------
 
 See `Getting Started with Shuup Development
-<http://shuup.readthedocs.org/en/latest/getting_started_dev.html>`__.
+<http://shuup.readthedocs.io/en/latest/howto/getting_started_dev.html>`__.
 
 
 Contributing to Shuup
