@@ -307,6 +307,7 @@ def categories_filter_test(browser, first_cat, second_cat, third_cat):
         }
     )
     browser.reload()
+    wait_until_condition(browser, lambda x: x.is_element_present_by_id("categories-%s" % third_cat.id))
     browser.execute_script("$('#categories-%s').click();" % third_cat.id)
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 1)
     browser.execute_script("$('#categories-%s').click();" % second_cat.id)
@@ -337,6 +338,7 @@ def second_category_sort_test(browser, live_server, shop, category):
         }
     )
     browser.reload()
+    wait_until_condition(browser, lambda x: x.is_element_present_by_css("button[data-id='id_limit']"))
     # Set limit to 24
     click_element(browser, "button[data-id='id_limit']")
     click_element(browser, "button[data-id='id_limit'] + .dropdown-menu li[data-original-index='1'] a")
