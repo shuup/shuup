@@ -3704,9 +3704,9 @@
       }
     },
     "gulp": {
-      "version": "3.9.0",
-      "from": "https://registry.npmjs.org/gulp/-/gulp-3.9.0.tgz",
-      "resolved": "https://registry.npmjs.org/gulp/-/gulp-3.9.0.tgz",
+      "version": "3.9.1",
+      "from": "https://registry.npmjs.org/gulp/-/gulp-3.9.1.tgz",
+      "resolved": "https://registry.npmjs.org/gulp/-/gulp-3.9.1.tgz",
       "dependencies": {
         "archy": {
           "version": "1.0.0",
