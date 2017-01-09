@@ -19,6 +19,7 @@ from enumfields import Enum, EnumIntegerField
 from shuup.core.fields import (
     InternalIdentifierField, MeasurementField, QuantityField
 )
+from shuup.core.models import ShuupModel
 from shuup.core.signals import shipment_deleted
 from shuup.utils.analog import define_log_model
 
@@ -58,11 +59,13 @@ class ShipmentManager(models.Manager):
         return self.exclude(status=ShipmentStatus.DELETED)
 
 
-class Shipment(models.Model):
+class Shipment(ShuupModel):
     order = models.ForeignKey(
-        "Order", blank=True, null=True, related_name='shipments', on_delete=models.PROTECT, verbose_name=_("order"))
+        "Order", blank=True, null=True, related_name='shipments', on_delete=models.PROTECT,
+        verbose_name=_("order"))
     supplier = models.ForeignKey(
         "Supplier", related_name='shipments', on_delete=models.PROTECT, verbose_name=_("supplier"))
+
     created_on = models.DateTimeField(auto_now_add=True, verbose_name=_("created on"))
     status = EnumIntegerField(ShipmentStatus, default=ShipmentStatus.NOT_SENT, verbose_name=_("status"))
     tracking_code = models.CharField(max_length=64, blank=True, verbose_name=_("tracking code"))
@@ -157,7 +160,7 @@ class Shipment(models.Model):
 
 
 @python_2_unicode_compatible
-class ShipmentProduct(models.Model):
+class ShipmentProduct(ShuupModel):
     shipment = models.ForeignKey(
         Shipment, related_name='products', on_delete=models.PROTECT, verbose_name=_("shipment")
     )
