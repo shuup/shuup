@@ -11,7 +11,7 @@ from __future__ import unicode_literals
 import warnings
 
 import django.contrib.auth.views as auth_views
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from django.contrib.auth import logout as do_logout
 from django.views.decorators.csrf import csrf_exempt
 from django.views.i18n import set_language
@@ -78,4 +78,4 @@ def get_urls():
 
     return tuple(urls)
 
-urlpatterns = patterns('', *get_urls())
+urlpatterns = get_urls()

@@ -5,13 +5,12 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 
 from . import views
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(r'^address-book/$', login_required(views.AddressBookView.as_view()),
         name='address_book'),
     url(r'^address-book/edit/(?P<pk>\d+)$', login_required(views.AddressBookEditView.as_view()),
@@ -26,4 +25,4 @@ urlpatterns = patterns(
         name='change_password'),
     url(r'^company/$', login_required(views.CompanyEditView.as_view()),
         name='company_edit'),
-)
+]
