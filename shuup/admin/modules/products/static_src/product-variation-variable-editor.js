@@ -46,7 +46,6 @@ window.VariationVariableEditor = (function(m, _) {
                 ]);
             }),
             (showIdentifierFields ? m(cellSelector, [
-                gettext("Identifier"),
                 m("input.form-control", {
                     value: object.identifier,
                     placeholder: gettext("Identifier"),
@@ -101,7 +100,12 @@ window.VariationVariableEditor = (function(m, _) {
                         m("thead", [
                             m("tr", [m("th")].concat(
                                 _.map(languages, ({name}) => m("th", name))
-                            ).concat([m("th")])),
+                            ).concat([
+                                showIdentifierFields ? m("th", [
+                                    gettext("Identifer")
+                                ]) : null,
+                                m("th")
+                            ])),
                         ]),
                         m("tbody", bodyRows)
                     ])
