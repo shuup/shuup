@@ -83,7 +83,7 @@ def get_orderable_variation_children(product, request, variation_variables):
         combo = combo_data["variable_to_value"]
         for k, v in six.iteritems(combo):
             if k not in orderable_variation_children:
-                orderable_variation_children[k] = set()
+                orderable_variation_children[k] = []
 
         res = ProductVariationResult.resolve(product, combo)
         if res and res.get_shop_instance(request.shop).is_orderable(
@@ -94,7 +94,8 @@ def get_orderable_variation_children(product, request, variation_variables):
             orderable += 1
 
             for k, v in six.iteritems(combo):
-                orderable_variation_children[k].add(v)
+                if v not in orderable_variation_children[k]:
+                    orderable_variation_children[k].append(v)
 
     values = (orderable_variation_children, orderable != 0)
     context_cache.set_cached_value(key, values)

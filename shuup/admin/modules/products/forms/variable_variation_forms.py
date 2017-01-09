@@ -102,6 +102,7 @@ class VariationVariablesDataForm(forms.Form):
             values = []
             variables[var.pk] = {
                 "pk": var.pk,
+                "ordering": var.ordering,
                 "identifier": var.identifier,
                 "names": {},
                 "values": values
@@ -109,6 +110,7 @@ class VariationVariablesDataForm(forms.Form):
             for val in var.values.all():
                 val_dict = {
                     "pk": val.pk,
+                    "ordering": val.ordering,
                     "identifier": val.identifier,
                     "texts": {}  # The underlying field is "value", but that's confusing here
                 }
@@ -130,7 +132,7 @@ class VariationVariablesDataForm(forms.Form):
         ):
             all_values[val_id]["texts"][language_code] = text
 
-        return sorted(variables.values(), key=lambda var: var["pk"])
+        return sorted(variables.values(), key=lambda var: var["ordering"])
 
     def get_editor_args(self):
         return {
@@ -144,7 +146,7 @@ class VariationVariablesDataForm(forms.Form):
             "variables": self.get_variable_data()
         }
 
-    def process_var_datum(self, var_datum):
+    def process_var_datum(self, var_datum, ordering):
         pk = str(var_datum["pk"])
         deleted = var_datum.get("DELETE")
         if pk.startswith("$"):  # New variable.
@@ -156,20 +158,21 @@ class VariationVariablesDataForm(forms.Form):
                 var.delete()
             return
         var.identifier = var_datum.get("identifier") or get_random_string()
+        var.ordering = ordering
         var.save()
         for lang_code, name in var_datum["names"].items():
             var.set_current_language(lang_code)
             var.name = name
         var.save_translations()
 
-        for val_datum in var_datum["values"]:
-            self.process_val_datum(var, val_datum)
+        for ordering, val_datum in enumerate(var_datum["values"]):
+            self.process_val_datum(var, val_datum, ordering)
 
         if not var.values.exists():  # All values gone, so delete the skeleton variable too
             var.delete()
             # thank mr skeltal
 
-    def process_val_datum(self, var, val_datum):
+    def process_val_datum(self, var, val_datum, ordering):
         """
         :type var: ProductVariationVariable
         :type val_datum: dict
@@ -185,6 +188,7 @@ class VariationVariablesDataForm(forms.Form):
                 val.delete()
             return
         val.identifier = val_datum.get("identifier") or get_random_string()
+        val.ordering = ordering
         val.save()
         for lang_code, text in val_datum["texts"].items():
             val.set_current_language(lang_code)
@@ -196,5 +200,5 @@ class VariationVariablesDataForm(forms.Form):
         if not var_data:  # No data means the Mithril side hasn't been touched at all
             return
         var_data = json.loads(var_data)
-        for var_datum in var_data:
-            self.process_var_datum(var_datum)
+        for ordering, var_datum in enumerate(var_data):
+            self.process_var_datum(var_datum, ordering)

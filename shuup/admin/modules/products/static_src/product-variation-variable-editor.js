@@ -12,8 +12,23 @@ window.VariationVariableEditor = (function(m, _) {
     var variables = null;
     var ctrlSingleton = null;
 
+    /**
+     * Adapted from https://www.npmjs.com/package/array.prototype.move
+     */
+    if(!Array.prototype.reindex) {
+        Array.prototype.reindex = function (oldIndex, newIndex) {
+            this.splice(newIndex, 0, this.splice(oldIndex, 1)[0]);
+        };
+    }
+
     function controller() {
         this.showIdentifierFields = m.prop(false);
+
+    }
+
+    function config(el) {
+        variableSortableSetup();
+        valueSortableSetup();
     }
 
     function refreshField() {
@@ -57,14 +72,72 @@ window.VariationVariableEditor = (function(m, _) {
         ];
     }
 
+    /**
+     * Sets up Sortable on the variation variables
+     */
+    function variableSortableSetup() {
+        const variableWrap = document.getElementById("product-variable-wrap");
+        Sortable.create(variableWrap, {
+          group: "variable-sort",
+          handle: ".variable-sort-handle",
+          onEnd: function (event) {
+              variables.reindex(event.oldIndex, event.newIndex);
+              refreshField();
+          }
+        });
+    }
+
+    /**
+     * Sets up Sortable on the variation values
+     */
+    function valueSortableSetup(index) {
+        const valuesTables = document.getElementsByClassName('product-variable-values');
+        var index = 0;
+        [].forEach.call(valuesTables, function (el) {
+            Sortable.create(el, {
+                group: "value-sort-" + index,
+                handle: ".value-sort-handle",
+                onEnd: function (event) {
+                    // The event.oldIndex is unreliable, it seems to be an
+                    // issue with nested sortables. The oldIndex is the one
+                    // from the parent sortable.
+                    const itemId = event.item.getAttribute('data-id');
+                    const newIndex = event.newIndex;
+                    var currentVariable = null;
+                    var currentValue = null;
+                    for(var varIndex=0; varIndex < variables.length; varIndex++) {
+                        currentVariable = variables[varIndex];
+                        for(var valIndex=0; valIndex < currentVariable.values.length; valIndex++) {
+                            currentValue = currentVariable.values[valIndex];
+                            if(currentValue.pk == itemId) {
+                                variables[varIndex].values.reindex(valIndex, newIndex);
+                            }
+                        }
+                    }
+                    refreshField();
+                }
+            });
+            index = index + 1;
+        });
+    }
+
+    /**
+     *  Return the sorting handle component
+     */
+    function sortingHandle(className) {
+        return m("i.fa.fa-bars." + className + ".pull-left", "");
+    }
+
     function valueTr(ctrl, value, index) {
         const showIdentifierFields = ctrl.showIdentifierFields();
-        return m("tr",
-            m("th", interpolate(gettext("Value %s Name"), [(index + 1)])),
+        const rowLabel = interpolate(gettext("Value %s Name"), [(index + 1)]);
+        return m("tr", {'data-id': value.pk},
+            m("th", [sortingHandle("value-sort-handle"), rowLabel]),
             getIdfrAndLanguagesCells("td", value, "texts", "", showIdentifierFields),
             m("td", m("a.btn.text-danger.btn-xs", {href: "#", onclick: () => {
                 value.DELETE = true;
                 refreshField();
+                return false;
             }}, m("i.fa.fa-times-circle"), " " + gettext("Delete value")))
         );
     }
@@ -75,23 +148,21 @@ window.VariationVariableEditor = (function(m, _) {
             if (variable.values.length === 0 || confirm(gettext("Are you sure?"))) {
                 variable.DELETE = true;
                 refreshField();
+                return false;
             }
         }}, m("i.fa.fa-times-circle"), " " + gettext("Delete Variable"));
         const addValueButton = m("a.btn.btn-xs.btn-text", {href: "#", onclick: (event) => {
             variable.values.push({pk: newPk(), identifier: "", texts: {}});
             event.preventDefault();
         }}, m("i.fa.fa-plus"), " " + gettext("Add new value"));
-        var bodyRows = [];
-        bodyRows.push(
-            m("tr", [m("th", gettext("Variable Name"))].concat(
+        const nameRow = m("tr", [m("th", gettext("Variable Name"))].concat(
                 getIdfrAndLanguagesCells("td", variable, "names", "", showIdentifierFields)
-            ).concat([m("td")]))
+            ).concat([m("td")])
         );
-        bodyRows = bodyRows.concat(
-            _.map(_.reject(variable.values, "DELETE"), _.partial(valueTr, ctrl))
-        );
+        const bodyRows = _.map(_.reject(variable.values, "DELETE"), _.partial(valueTr, ctrl));
         return m("div.product-variable", {key: variable.pk}, [
             m("div.variable-heading.clearfix", [
+                sortingHandle("variable-sort-handle"),
                 m("h3.pull-left", gettext("Variable")),
                 m("div.pull-right", deleteVariableButton)
             ]),
@@ -103,7 +174,8 @@ window.VariationVariableEditor = (function(m, _) {
                                 _.map(languages, ({name}) => m("th", name))
                             ).concat([m("th")])),
                         ]),
-                        m("tbody", bodyRows)
+                        m("tbody.product-variable-name", nameRow),
+                        m("tbody.product-variable-values", bodyRows)
                     ])
                 ]),
                 m("div.new-row", addValueButton)
@@ -113,7 +185,7 @@ window.VariationVariableEditor = (function(m, _) {
 
     function view(ctrl) {
         var variablesDiv = m(
-            "div.product-variable-wrap",
+            "div.product-variable-wrap", {id: "product-variable-wrap"},
             _.map(_.reject(variables, "DELETE"), _.partial(renderVariable, ctrl))
         );
         var identifierFieldsCheckbox = m("p", [
@@ -133,7 +205,7 @@ window.VariationVariableEditor = (function(m, _) {
             ]);
             identifierFieldsCheckbox = null;
         }
-        return m("div", [
+        return m("div", {config: config}, [
             identifierFieldsCheckbox,
             m("hr"),
             variablesDiv,

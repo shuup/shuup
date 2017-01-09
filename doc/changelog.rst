@@ -18,6 +18,8 @@ Localization
 Admin
 ~~~~~
 
+- Allow product variation variables and values to be manually sorted.
+
 Addons
 ~~~~~~
 
