@@ -96,7 +96,7 @@ REQUIRES = [
     'django_rest_swagger==2.1.0',
     'factory-boy==2.7.0',
     'fake-factory>=0.5.0,<0.5.4',
-    'Jinja2>=2.8,<3',
+    'Jinja2>=2.8,<2.9',
     'jsonfield>=1.0,<2',
     'Markdown>=2.6,<3',
     'openpyxl==2.3.5',
