@@ -167,3 +167,61 @@ See ``shuup/themes/classic_gray/`` for examples on how to define multiple styles
 ``shuup/front/templates/shuup/front/base.jinja`` for how to use them in your own `base.jinja`
 
 These styles can then be selected by the merchant via Admin -> Storefront -> Themes -> configure.
+
+
+General Information
+-------------------
+
+Shuup themes support our xtheme template engine which offers custom
+functionality on top of the common Jinja2 templates.
+
+
+Placeholders
+~~~~~~~~~~~~
+
+Theme designers can add placeholders to their themes. These placeholders
+then function as a place for the merchant to add content from plugins.
+
+
+A placeholder can be defined as easy as:
+
+.. code-block:: html
+
+  {% placeholder "my_placeholder" %}{% endplaceholder %}
+
+.. note::
+
+  You can have multiple placeholders with the same name in the same page.
+  This functionality is important when you must have the same content block
+  to look different in different view sizes.
+
+The placeholder can also be global:
+
+.. code-block:: html
+
+  {% placeholder "my_placeholder" global %}{% endplaceholder %}
+
+.. note::
+
+  This kind of placeholder is good for footers where the
+  content isn't attached to a single page.
+
+A placeholder can have default content, which can then be overridden
+by the merchant. In the following example, the theme creator has
+created a placeholder where there is a text plugin by default.
+This text plugin has then default text "My example text".
+
+.. code-block:: html
+
+  {% placeholder "my_placeholder" %}
+      {% plugin "text" %}
+          text = "My example text"
+      {% endplugin %}
+  {% endplaceholder %}
+
+.. note::
+
+  Using default content is important to make your theme to look
+  good out of the box. Just make sure the plugins you use are usable with
+  your theme even with very basic Shuup installation. If you are unsure,
+  provide these plugins as a part of your theme distribution.
