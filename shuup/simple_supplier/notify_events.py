@@ -22,7 +22,7 @@ class AlertLimitReached(Event):
 
     supplier = Variable(_("Supplier"), type=Model("shuup.Supplier"))
     product = Variable(_("Product"), type=Model("shuup.Product"))
-    dispatched_last_24hs = Variable(_("Dispatched last 24 hours"),
+    dispatched_last_24hs = Variable(_("Fired in the last 24 hours?"),
                                     type=Boolean,
                                     help_text=_("This will be True if this event was already dispatched "
                                                 "in the last 24 hours for the same product and supplier. "
