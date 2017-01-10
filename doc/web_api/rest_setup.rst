@@ -25,11 +25,11 @@ Now just add the API to your root urlconf.
 
 .. code-block:: python
 
-   urlpatterns = patterns(
+   urlpatterns = [
        # *snip*
        url(r'^api/', include('shuup.api.urls')),
        # *snip*
-   )
+   ]
 
 
 All done! If you visit the `/api/` URL (as a suitably authenticated user), you should be

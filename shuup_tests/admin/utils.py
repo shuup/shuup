@@ -9,14 +9,14 @@ from shuup_tests.utils import replace_urls
 
 
 def get_admin_only_urls():
-    from django.conf.urls import patterns, url, include
+    from django.conf.urls import url, include
     from shuup.admin.urls import get_urls
     class FauxUrlPatternsModule:
         urlpatterns = get_urls()
 
-    return patterns('',
+    return [
         url(r'^sa/', include(FauxUrlPatternsModule, namespace="shuup_admin", app_name="shuup_admin")),
-    )
+    ]
 
 def admin_only_urls():
     return replace_urls(get_admin_only_urls())
