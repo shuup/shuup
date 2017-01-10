@@ -35,6 +35,11 @@ Classic Gray Theme
 Simple Supplier
 ~~~~~~~~~~~~~~~
 
+Notification
+~~~~~~~~~~~~
+
+- Allow user to create scripts based on templates available from `notify_script_template` provide category
+
 Order Printouts
 ~~~~~~~~~~~~~~~
 
