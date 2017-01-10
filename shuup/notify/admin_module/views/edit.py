@@ -15,6 +15,8 @@ from shuup.admin.toolbar import Toolbar, URLActionButton
 from shuup.admin.utils.views import (
     add_create_or_change_message, CreateOrUpdateView
 )
+from shuup.apps.provides import get_identifier_to_object_map
+from shuup.notify.admin_module import SCRIPT_TEMPLATES_PROVIDE_CATEGORY
 from shuup.notify.admin_module.forms import ScriptForm
 from shuup.notify.models.script import Script
 
@@ -28,14 +30,36 @@ class ScriptEditView(CreateOrUpdateView):
     def get_context_data(self, **kwargs):
         context = super(ScriptEditView, self).get_context_data(**kwargs)
         if self.object.pk:
-            context["toolbar"] = Toolbar([
-                URLActionButton(
-                    text=_(u"Edit Script Contents..."),
-                    icon="fa fa-pencil",
-                    extra_css_class="btn-info",
-                    url=reverse("shuup_admin:notify.script.edit-content", kwargs={"pk": self.object.pk})
-                )
-            ])
+            buttons = []
+
+            edit_button_title = _("Edit Script Contents...")
+
+            # this script was created through a template
+            # so show an option to easily edit the template
+            if self.object.template:
+                template_cls = get_identifier_to_object_map(SCRIPT_TEMPLATES_PROVIDE_CATEGORY).get(self.object.template)
+
+                # check whether is possible to edit the script through the template editor
+                if template_cls and template_cls(self.object).can_edit_script():
+                    # change the editor button title to advanced mode
+                    edit_button_title = _("Edit Script (advanced)")
+
+                    buttons.append(
+                        URLActionButton(
+                            text=_("Edit Template"),
+                            icon="fa fa-pencil-square-o",
+                            extra_css_class="btn-info",
+                            url=reverse("shuup_admin:notify.script-template-edit", kwargs={"pk": self.object.pk})
+                        )
+                    )
+
+            buttons.insert(0, URLActionButton(
+                text=edit_button_title,
+                icon="fa fa-pencil",
+                extra_css_class="btn-info",
+                url=reverse("shuup_admin:notify.script.edit-content", kwargs={"pk": self.object.pk})
+            ))
+            context["toolbar"] = Toolbar(buttons)
         return context
 
     def form_valid(self, form):

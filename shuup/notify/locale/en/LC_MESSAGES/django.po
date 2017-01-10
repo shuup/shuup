@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-13 19:41+0000\n"
+"POT-Creation-Date: 2017-01-11 17:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -89,10 +89,34 @@ msgstr ""
 msgid "Edit Script Contents..."
 msgstr ""
 
+msgid "Edit Script (advanced)"
+msgstr ""
+
+msgid "Edit Template"
+msgstr ""
+
 msgid "Name"
 msgstr ""
 
 msgid "Enabled"
+msgstr ""
+
+msgid "New Script"
+msgstr ""
+
+msgid "New From Template"
+msgstr ""
+
+msgid "Script created from template!"
+msgstr ""
+
+msgid "Template Script not found!"
+msgstr ""
+
+msgid "Templated script not found!"
+msgstr ""
+
+msgid "Script updated!"
 msgstr ""
 
 msgid ""
@@ -189,6 +213,45 @@ msgstr ""
 msgid "enabled"
 msgstr ""
 
+msgid "template identifier"
+msgstr ""
+
+msgid "the template identifier used to create this script"
+msgstr ""
+
+msgid "The subject of the email"
+msgstr ""
+
+msgid "Email content"
+msgstr ""
+
+msgid "The content of the email."
+msgstr ""
+
+msgid "Customer"
+msgstr ""
+
+msgid "Other destination"
+msgstr ""
+
+msgid "Send to?"
+msgstr ""
+
+msgid ""
+"You can send this email to the customer or to other email of your choice."
+msgstr ""
+
+msgid "Destination"
+msgstr ""
+
+msgid "Fill with the destination email address."
+msgstr ""
+
+msgid ""
+"Recipient is a required field when you don't want to send the email to "
+"customer."
+msgstr ""
+
 msgid "Edit Script Information"
 msgstr ""
 
@@ -199,6 +262,18 @@ msgid "Script Details"
 msgstr ""
 
 msgid "OK"
+msgstr ""
+
+msgid "Show available variables"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Select the script template to be created"
+msgstr ""
+
+msgid "Cancel"
 msgstr ""
 
 msgid "Edit Script"
@@ -217,6 +292,21 @@ msgid "Variables"
 msgstr ""
 
 msgid "Save changes"
+msgstr ""
+
+msgid "Script Template: {}"
+msgstr ""
+
+msgid "Configure the Script Template"
+msgstr ""
+
+msgid "Modify Script"
+msgstr ""
+
+msgid "Create Script"
+msgstr ""
+
+msgid "Create"
 msgstr ""
 
 msgid "Boolean"
