@@ -11,7 +11,6 @@ import os
 import shutil
 import tempfile
 import traceback
-import uuid
 import zipfile
 
 from django import forms
@@ -41,16 +40,19 @@ class AddonUploadView(FormView):
 
     def form_valid(self, form):
         file = form.cleaned_data["file"]
-        if not file.name.endswith(".zip"):
-            raise Problem(_("Only ZIP files are supported"))
+        if not file.name.lower().endswith(".whl"):
+            raise Problem(_("Only wheel files are supported"))
         # TODO: Maybe verify the file before saving?
-        filename = "shuup-addon-%s-%s" % (uuid.uuid4(), os.path.basename(file.name))
-        with open(os.path.join(tempfile.gettempdir(), filename), "wb") as outf:
+        tmp_dir = tempfile.mkdtemp(prefix='shuup')
+        tmp_token = os.path.basename(tmp_dir)
+        filename = os.path.basename(file.name)
+        with open(os.path.join(tmp_dir, filename), "wb") as outf:
             shutil.copyfileobj(file, outf)
         return HttpResponseRedirect(
             manipulate_query_string(
                 reverse("shuup_admin:addon.upload_confirm"),
-                file=filename
+                file=filename,
+                token=tmp_token
             )
         )
 
@@ -75,7 +77,8 @@ class AddonUploadConfirmView(FormView):
     def get_addon_path(self):
         # get filename from GET since this is a view we get redirected in
         filename = os.path.basename(self.request.GET.get("file"))
-        path = os.path.join(tempfile.gettempdir(), filename)
+        tmp_token = self.request.GET.get('token')
+        path = os.path.join(tempfile.gettempdir(), tmp_token, filename)
         if not os.path.isfile(path):
             raise ValueError("File not found")
         if hasattr(os, "geteuid") and os.stat(path).st_uid != os.geteuid():
