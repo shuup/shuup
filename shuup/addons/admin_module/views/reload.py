@@ -58,8 +58,8 @@ def finalize_installation_for_enabled_apps():
         settings.INSTALLED_APPS += type(settings.INSTALLED_APPS)(new_apps)
         reload_apps()
 
-    call_command("migrate", "--noinput", stdout=out)
-    call_command("collectstatic", "--noinput", stdout=out)
+    call_command("migrate", "--noinput", "--no-color", stdout=out)
+    call_command("collectstatic", "--noinput", "--no-color", stdout=out)
     return out.getvalue()
 
 
