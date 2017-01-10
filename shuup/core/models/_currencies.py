@@ -40,7 +40,7 @@ class Currency(models.Model):
         super(Currency, self).clean()
 
         # make sure the code is a valid ISO-4217 currency
-        if self.code not in babel.Locale("en").currency_symbols:
+        if self.code not in babel.Locale("en").currencies:
             raise ValidationError(_('Enter a valid ISO-4217 currency code'))
 
     def save(self, *args, **kwargs):
