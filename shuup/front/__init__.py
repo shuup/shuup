@@ -31,6 +31,13 @@ class ShuupFrontAppConfig(AppConfig):
             "shuup.front.notify_events:PaymentCreated",
             "shuup.front.notify_events:RefundCreated",
         ],
+        "notify_script_template": [
+            "shuup.front.notify_script_templates:PaymentCreatedEmailScriptTemplate",
+            "shuup.front.notify_script_templates:RefundCreatedEmailScriptTemplate",
+            "shuup.front.notify_script_templates:ShipmentDeletedEmailScriptTemplate",
+            "shuup.front.notify_script_templates:OrderConfirmationEmailScriptTemplate",
+            "shuup.front.notify_script_templates:ShipmentCreatedEmailScriptTemplate",
+        ],
         "front_extend_product_list_form": [
             "shuup.front.forms.product_list_modifiers.CategoryProductListFilter",
             "shuup.front.forms.product_list_modifiers.LimitProductListPageSize",

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-05 11:58+0000\n"
+"POT-Creation-Date: 2017-01-11 17:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -23,6 +23,20 @@ msgid "Registration Received"
 msgstr ""
 
 msgid "Customer Email"
+msgstr ""
+
+msgid "Send Registration Received Email"
+msgstr ""
+
+msgid "Send email when a user registers."
+msgstr ""
+
+msgid ""
+"This script will send an email to the user or to any configured email right "
+"after a user get registered."
+msgstr ""
+
+msgid "{{ order.shop }} - Welcome!"
 msgstr ""
 
 msgid "Account activation"

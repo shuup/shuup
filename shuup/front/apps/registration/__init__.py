@@ -49,6 +49,9 @@ class RegistrationAppConfig(AppConfig):
         ],
         "notify_event": [
             "shuup.front.apps.registration.notify_events:RegistrationReceived"
+        ],
+        "notify_script_template": [
+            "shuup.front.apps.registration.notify_events:RegistrationReceivedEmailScriptTemplate"
         ]
     }
 
