@@ -66,7 +66,7 @@ class PluginForm(forms.Form):
         """
         super(PluginForm, self).full_clean()
         for name in self.fields:
-            if self.cleaned_data.get(name, None) is not None:
+            if name in self.cleaned_data:
                 continue
             if self.fields[name].initial is not None:
                 self.cleaned_data[name] = self.fields[name].initial
