@@ -1,0 +1,39 @@
+{% extends "shuup/admin/base.jinja" %}
+
+{% block title %}{{ _("Script Template: {}").format(script_template.name) }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+        <div class="content-block">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>{{ _("Configure the Script Template") }}</h2>
+                    {% if script_template.help_text %}
+                        <p><i class="fa fa-question-circle text-info"></i> {{ script_template.help_text }}</p>
+                    {% endif %}
+                    <hr>
+                    <form action="{{ request.path }}" method="post">
+                        {% csrf_token %}
+                        {% if script_template.template_name %}
+                            {% include script_template.template_name with context %}
+                        {% else %}
+                            {% for field in form %}
+                                {{ bs3.field(field) }}
+                            {% endfor %}
+                        {% endif %}
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-check"></i> {% if edit_mode == 'modify' %}{{ _("Modify Script") }}{% else %}{{ _("Create Script") }}{% endif %}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    {{ super() }}
+    {% if script_template.extra_js_template_name %}
+        {% include script_template.extra_js_template_name with context %}
+    {% endif %}
+{% endblock %}

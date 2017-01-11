@@ -1,0 +1,15 @@
+<script>
+    (function(){
+        function checkSelected(){
+            if($("#id_base-send_to").val() == "other"){
+                $("#id_base-recipient").parent().show();
+            }else{
+                $("#id_base-recipient").parent().hide();
+            }
+        }
+        $("#id_base-send_to").on("change", function(){
+            checkSelected();
+        })
+        checkSelected();
+    }());
+</script>

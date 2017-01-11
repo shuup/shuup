@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
+import abc
 from abc import abstractmethod
 
 import six
@@ -304,3 +305,127 @@ class Action(ScriptItem):
             language_preferences = [UNILINGUAL_TEMPLATE_LANGUAGE]
 
         return template.render_first_match(language_preferences, fields)
+
+
+class ScriptTemplate(six.with_metaclass(abc.ABCMeta)):
+    """
+    Represents a script template to use in provides.
+
+    Subclass this, implement the methods and add a reference to the class
+    in the `notify_script_template` provide category.
+
+    When `form_class` is set, a the form will be presented to the user and validated,
+    so you can extract more information to build the Script.
+
+    :ivar str identifier: a unique identifier for this ScriptTemplate with a max of 64 characters
+    :ivar shuup.notify.Event event: the event class which will be used to trigger the notification
+    :ivar str name: the name of the ScriptTemplate
+    :ivar str description: the description of the ScriptTemplate to present to the user
+    :ivar str help_text: a text to help users understand how this script will work
+    :ivar django.forms.Form|None form_class: a form class if your ScriptTemplate needs extra configuration
+    :ivar dict initial: the initial data to use in forms
+    :ivar str template_name: a template to use to render the form, if needed
+    :ivar str extra_js_template_name: a template with extra JavaScript code to use when rendering the form, if needed
+    :ivar django.http.request.HttpRequest : the http request
+    """
+    identifier = ""
+    event = None
+    name = ""
+    description = ""
+    help_text = ""
+    form_class = None
+    initial = {}
+    template_name = ""
+    extra_js_template_name = ""
+
+    def __init__(self, script_instance=None):
+        """
+        :param shuup.notify.models.script.Script|None script_instance: script instance to change or None
+        """
+        self.script_instance = script_instance
+
+    @abstractmethod
+    def create_script(self, form=None):
+        """
+        Create and returns the Script.
+
+        If `form_class` is set, the will be validated and you can use it to do extra configuration on the Script.
+
+        :return: the created script
+        :rtype: shuup.notify.models.script.Script
+        """
+        pass
+
+    @abstractmethod
+    def can_edit_script(self):
+        """
+        Check whether the bound `script_instance` attribute can be edited by this TemplateScript.
+
+        This means if you can still understand the current script state and structure and
+        parse it, so you can edit the script through the `form_class`.
+
+        This is a necessary check since the user can change the script through the Editor
+        and those changes can disfigure the expected script structure.
+
+        :rtype: bool
+        :return: whether the bound `script_instance` can be edited by this script template
+        """
+        pass
+
+    @abstractmethod
+    def update_script(self, form):
+        """
+        Updates the current bound `script_instance` with the validated form data.
+
+        This method is invoked when editing a Script created through this ScriptTemplate.
+
+        Note that only script templates which provides a form will have this method invoked.
+
+        :return: the updated script
+        :rtype: shuup.notify.models.script.Script
+        """
+        pass
+
+    def get_initial(self):
+        """
+        Returns the initial data to use for configuration form.
+
+        Note: You must also check for the bound `script_instance` attribute.
+        One can edit the Script created by the template editor through the form this instance provides.
+        This way, when a script instance is bound, you must return the the representantion of
+        the Script as the initial form data.
+
+        :return: initial data to to use in configuration form
+        :rtype: dict
+        """
+        return self.initial
+
+    def get_form_class(self):
+        """
+        Returns the configuration form class.
+        """
+        return self.form_class
+
+    def get_form(self, **kwargs):
+        """
+        Returns an instance of the configuration form to be used.
+        """
+        form_class = self.get_form_class()
+
+        if form_class:
+            kwargs.update(self.get_form_kwargs())
+            return form_class(**kwargs)
+
+    def get_form_kwargs(self, **kwargs):
+        """
+        Returns the keyword arguments for instantiating the configuration form.
+        """
+        return {
+            'initial': self.get_initial(),
+        }
+
+    def get_context_data(self):
+        """
+        Returns extra data when rendering the form.
+        """
+        return {}

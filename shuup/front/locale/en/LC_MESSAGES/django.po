@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-21 19:07+0000\n"
+"POT-Creation-Date: 2017-01-11 17:29+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -452,6 +452,101 @@ msgid "Payment"
 msgstr ""
 
 msgid "Refund Created"
+msgstr ""
+
+msgid ""
+"<p>Dear {{ order.customer }},</p>\n"
+"<p>A shipment has been created for your order and here are the details:</p>\n"
+"\n"
+"{% if shipment.tracking_code %}\n"
+"<p>Tracking code: {{ shipment.tracking_code }}</p>\n"
+"{% endif %}\n"
+"\n"
+"<p>Contents:</p>\n"
+"<table>\n"
+"    <thead>\n"
+"        <tr>\n"
+"            <th>Product</th>\n"
+"            <th>Quantity</th>\n"
+"        </tr>\n"
+"    </thead>\n"
+"    <tbody>\n"
+"{% for shipment_product in shipments.total_products %}\n"
+"        <tr>\n"
+"            <td>{{ shipment_product.product }}</td>\n"
+"            <td>{{ shipment_product.quantity }}</td>\n"
+"        </tr>\n"
+"{% endif %}\n"
+"    </tbody>\n"
+"</table>\n"
+msgstr ""
+
+msgid "Send Shipment Created Email"
+msgstr ""
+
+msgid "Send an email to customer when a shipment is created."
+msgstr ""
+
+msgid ""
+"This script will send an email to customer when a shipment of his order has "
+"been created."
+msgstr ""
+
+msgid "{{ order.shop }} - Shipment created for order {{ order.identifier }}"
+msgstr ""
+
+msgid "Send Shipment Deleted Email"
+msgstr ""
+
+msgid "Send email when a shipment is deleted."
+msgstr ""
+
+msgid ""
+"This script will send an email to customer or to any configured email right "
+"after a shipment gets deleted."
+msgstr ""
+
+msgid "{{ order.shop }} - Shipment deleted for order {{ order.identifier }}"
+msgstr ""
+
+msgid "Send Payment Created Email"
+msgstr ""
+
+msgid "Send email to customer when a payment is created."
+msgstr ""
+
+msgid ""
+"This script will send an email to customer or to any configured email right "
+"after a payment gets created."
+msgstr ""
+
+msgid "{{ order.shop }} - Payment created for order {{ order.identifier }}"
+msgstr ""
+
+msgid "Send Refund Created Email"
+msgstr ""
+
+msgid "Send email when a refund is created."
+msgstr ""
+
+msgid ""
+"This script will send an email to customer or to any configured email right "
+"after a refund gets created."
+msgstr ""
+
+msgid "{{ order.shop }} - Refund created for order {{ order.identifier }}"
+msgstr ""
+
+msgid "Send Order Confirmation Email"
+msgstr ""
+
+msgid "Send a confirmation email when the order is created."
+msgstr ""
+
+msgid ""
+"This script will send an email to customer or to any configured email right "
+"after an order is created. The order contents can be put on email body as "
+"well as other informations like shipping method and payment method."
 msgstr ""
 
 msgid "Product list sorts and filters"

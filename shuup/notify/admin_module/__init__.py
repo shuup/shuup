@@ -23,6 +23,8 @@ from shuup.notify.enums import Priority
 from shuup.notify.models import Notification as NotificationModel
 from shuup.notify.models import Script
 
+SCRIPT_TEMPLATES_PROVIDE_CATEGORY = 'notify_script_template'
+
 
 class NotifyAdminModule(AdminModule):
     name = _(u"Notifications")
@@ -47,6 +49,24 @@ class NotifyAdminModule(AdminModule):
                 "notify/mark-read/(?P<pk>\d+)/$",
                 self.mark_notification_read_view,
                 name="notify.mark-read",
+                permissions=permissions
+            ),
+            admin_url(
+                "notify/script-template/",
+                "shuup.notify.admin_module.views.ScriptTemplateView",
+                name="notify.script-template",
+                permissions=permissions
+            ),
+            admin_url(
+                "notify/script-template-config/(?P<id>.+)/",
+                "shuup.notify.admin_module.views.ScriptTemplateConfigView",
+                name="notify.script-template-config",
+                permissions=permissions
+            ),
+            admin_url(
+                "notify/script-template-edit/(?P<pk>.+)/",
+                "shuup.notify.admin_module.views.ScriptTemplateEditView",
+                name="notify.script-template-edit",
                 permissions=permissions
             ),
         ] + get_edit_and_list_urls(

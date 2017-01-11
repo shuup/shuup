@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-27 19:48+0000\n"
+"POT-Creation-Date: 2017-01-11 17:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,13 +113,51 @@ msgstr ""
 msgid "Product"
 msgstr ""
 
-msgid "Dispatched last 24 hours"
+msgid "Fired in the last 24 hours?"
 msgstr ""
 
 msgid ""
 "This will be True if this event was already dispatched in the last 24 hours "
 "for the same product and supplier. This is useful to prevent sending "
 "identical notifications in a short period of time."
+msgstr ""
+
+msgid "Send to?"
+msgstr ""
+
+msgid "Send email to whom?"
+msgstr ""
+
+msgid "Do not send the same email within 24 hours."
+msgstr ""
+
+msgid ""
+"If enabled, avoids sending the same email for the same product and supplier "
+"within 24 hours."
+msgstr ""
+
+msgid "Send Stock Limit Alert Email"
+msgstr ""
+
+msgid ""
+"Send me an email when a product stock is lower than the configured limit."
+msgstr ""
+
+msgid ""
+"This script will send an email to the configured destination alerting about "
+"the a product's low stock of a supplier. You can configure to not send the "
+"same email multiple times in a period of 24 hours. Every time a product's "
+"stock reach its configured limit, this notification will be fired and the "
+"email sent."
+msgstr ""
+
+msgid "Low stock of: {{ product }} from {{ supplier }}"
+msgstr ""
+
+msgid ""
+"Hi!\n"
+"You are receiving this message because the product {{ product}} from "
+"{{ supplier }} has a low stock."
 msgstr ""
 
 msgid "Add stock"

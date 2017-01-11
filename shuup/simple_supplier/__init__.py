@@ -24,6 +24,9 @@ class ShuupSimpleSupplierAppConfig(AppConfig):
         ],
         "notify_event": [
             "shuup.simple_supplier.notify_events:AlertLimitReached"
+        ],
+        "notify_script_template": [
+            "shuup.simple_supplier.notify_script_template:StockLimitEmailScriptTemplate",
         ]
     }
 

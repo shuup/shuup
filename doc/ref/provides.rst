@@ -149,6 +149,9 @@ Core
 ``notify_event``
     Notification framework `~shuup.notify.Event` classes.
 
+``notify_script_template``
+    Notification framework `~shuup.notify.base.ScriptTemplate` classes.
+
 ``order_source_modifier_module``
     `~shuup.core.order_creator.OrderSourceModifierModule` for modifying
     order source, e.g. in its

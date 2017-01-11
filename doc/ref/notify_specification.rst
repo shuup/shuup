@@ -46,6 +46,8 @@ Glossary
    attached to Actions that require configurable text.
 -  **Attachment** - a named, MIME-typed assumedly binary blob that may
    be delivered along a notification, such as a PDF order confirmation.
+-  **ScriptTemplate** - a class which knows how to create a script logic
+   based on configurations provided by user.
 
 Events
 ------
@@ -193,6 +195,20 @@ In addition to the script core, the Notify app provides a Django model
 for notifications stored in the shop's database. These are currently
 used only in the admin backend, but could be used in the frontend as
 well.
+
+ScriptTemplate
+--------------
+
+This feature enable users to create scripts in a simple and fashion way
+by removing complexity and saving time. Script templates are inserted
+through the `notify_script_template` provide category and can be used
+when creating a new Notification through a template in admin.
+
+You can create your own script template and instantiate it as many times
+as you want, changing only relevant configurations to fit yours needs.
+
+Since templates are inserted by provide system, it is a good way to use
+and share common tasks in notification logics with the community.
 
 .. _uWSGI's Internal Routing: https://uwsgi-docs.readthedocs.org/en/latest/InternalRouting.html
 .. _Unreal Engine 4's Blueprint Visual Scripting: https://docs.unrealengine.com/latest/INT/Engine/Blueprints/index.html
