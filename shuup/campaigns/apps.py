@@ -60,6 +60,9 @@ class CampaignAppConfig(AppConfig):
             "shuup.campaigns.admin_module.forms:ProductDiscountAmountForm",
             "shuup.campaigns.admin_module.forms:ProductDiscountPercentageForm",
         ],
+        "reports": [
+            "shuup.campaigns.reports:CouponsUsageReport"
+        ]
     }
 
     def ready(self):

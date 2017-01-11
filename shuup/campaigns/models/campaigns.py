@@ -324,6 +324,7 @@ class CouponUsage(models.Model):
 class Coupon(models.Model):
     admin_url_suffix = "coupon"
     name_field = "code"  # TODO: Document me
+    search_fields = ["code"]    # used by Select2Multiple to know which fields use to search by
 
     code = models.CharField(max_length=12)
 
