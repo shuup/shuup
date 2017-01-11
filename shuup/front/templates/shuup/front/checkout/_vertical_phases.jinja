@@ -65,6 +65,7 @@
                 data: data,
                 success: function (response) {
                     $("#ajax_content").html(response);
+                    window.scrollTo(0, $("#ajax_content").offset().top);
                     if (currentPhase != window.currentPhase && form.hasClass("single-page-refresh-after")) {
                         location.reload();
                     }
