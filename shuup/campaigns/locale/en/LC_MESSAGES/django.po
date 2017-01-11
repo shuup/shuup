@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-19 02:44+0000\n"
+"POT-Creation-Date: 2017-01-09 11:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -434,6 +434,30 @@ msgid "Campaign Basket Discounts"
 msgstr ""
 
 msgid "Coupon Code:"
+msgstr ""
+
+msgid "Filter report results by coupon."
+msgstr ""
+
+msgid "Coupons Usage"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Coupon code"
+msgstr ""
+
+msgid "Order"
+msgstr ""
+
+msgid "Taxful total"
+msgstr ""
+
+msgid "Taxful subtotal"
+msgstr ""
+
+msgid "Total discount"
 msgstr ""
 
 msgid "General Information"

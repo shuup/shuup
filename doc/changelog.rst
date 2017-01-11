@@ -18,6 +18,7 @@ Localization
 Admin
 ~~~~~
 
+- Select2Multiple widget now looks for `search_fields` instance attribute to get searchable fields
 - Allow product variation variables and values to be manually sorted.
 
 Addons
@@ -46,6 +47,8 @@ Order Printouts
 Campaigns
 ~~~~~~~~~
 
+- Create Coupons report
+
 Customer Group Pricing
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -57,6 +60,17 @@ Simple CMS
 
 Default Tax
 ~~~~~~~~~~~
+
+Reporting
+~~~~~~~~~
+
+- Create Product Total Sales report
+- Create New Costumers report
+- Total Sales report shows number of customers and the average customer sale
+- Create Customer Sales report
+- Create Taxes report
+- Create Shipping report
+- Create Refunds report
 
 Guide
 ~~~~~
