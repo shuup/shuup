@@ -17,7 +17,7 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 
-from shuup.core.models import Contact, Product
+from shuup.core.models import Carrier, Contact, Product
 
 
 def _field_exists(model, field):
@@ -34,9 +34,26 @@ class MultiselectAjaxView(TemplateView):
     result_limit = 20
 
     def init_search_fields(self, cls):
+        """
+        Configure the fields to use for searching.
+
+        If the `cls` object has a search_fields attribute, it will be used,
+        otherwise, the class will be inspected and the attribute
+        `name` or `translations__name` will mainly be used.
+
+        Other fields will be used for already known `cls` instances.
+        """
+        if hasattr(cls, "search_fields"):
+            self.search_fields = cls.search_fields
+            return
+
         self.search_fields = []
         key = "%sname" % ("translations__" if hasattr(cls, "translations") else "")
         self.search_fields.append(key)
+
+        if issubclass(cls, Carrier):
+            self.search_fields.append("base_translations__name")
+            self.search_fields.remove("name")
         if issubclass(cls, Contact):
             self.search_fields.append("email")
         if issubclass(cls, Product):
