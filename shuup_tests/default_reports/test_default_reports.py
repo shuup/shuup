@@ -8,22 +8,38 @@
 from __future__ import unicode_literals
 
 import json
+import random
+from datetime import date, datetime, timedelta
 from decimal import Decimal
 
 import pytest
 import six
 from django.utils.encoding import force_text
 
-from shuup.core.models import get_person_contact, Order
-from shuup.default_reports.reports import SalesPerHour, SalesReport, TotalSales
+from shuup.apps.provides import override_provides
+from shuup.core.models import (
+    CustomCarrier, FixedCostBehaviorComponent, get_person_contact, Order
+)
+from shuup.core.order_creator import OrderCreator
+from shuup.default_reports.reports import (
+    CustomerSalesReport, NewCustomersReport, ProductSalesReport, SalesPerHour,
+    SalesReport, ShippingReport, TaxesReport, TotalSales, RefundedSalesReport
+)
+from shuup.reports.admin_module.views import ReportView
 from shuup.reports.forms import DateRangeChoices
 from shuup.reports.writer import get_writer_instance
 from shuup.testing.factories import (
-    create_random_person, get_default_product, get_default_shop, UserFactory
+    CompanyFactory, create_order_with_product, create_product,
+    create_random_order, create_random_person, get_address,
+    get_default_payment_method, get_default_product, get_default_shop,
+    get_default_supplier, get_default_tax_class, get_initial_order_status,
+    get_test_tax, OrderLineType, UserFactory, get_default_shipping_method
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.core.test_basic_order import create_order
 from shuup_tests.reports.test_reports import initialize_report_test
+from shuup_tests.utils.basketish_order_source import BasketishOrderSource
+from shuup.utils.money import Money
 
 
 class TestInfo(object):
@@ -89,6 +105,56 @@ def test_total_sales_report(rf):
     assert return_data.get("name") == test_info.shop.name
     assert int(return_data.get("order_amount")) == 1
     assert str(test_info.expected_taxful_total) in return_data.get("total_sales")
+
+
+@pytest.mark.django_db
+def test_total_sales_customers_report(rf):
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    p1 = create_product("p1", shop=shop, supplier=supplier, default_price="5")
+    p2 = create_product("p2", shop=shop, supplier=supplier, default_price="20")
+
+    # orders for person 1
+    person1 = create_random_person()
+    order1 = create_random_order(customer=person1, completion_probability=1, products=[p1, p2])
+    order2 = create_random_order(customer=person1, completion_probability=1, products=[p1, p2])
+
+    # orders for person 2
+    person2 = create_random_person()
+    order3 = create_random_order(customer=person2, completion_probability=1, products=[p1, p2])
+    order4 = create_random_order(customer=person2, completion_probability=1, products=[p1, p2])
+    order5 = create_random_order(customer=person2, completion_probability=1, products=[p1, p2])
+
+    # pay orders
+    [o.create_payment(o.taxful_total_price) for o in Order.objects.all()]
+
+    data = {
+        "report": TotalSales.get_name(),
+        "shop": shop.pk,
+        "date_range": DateRangeChoices.ALL_TIME,
+        "writer": "json",
+        "force_download": 1,
+    }
+    report = TotalSales(**data)
+    writer = get_writer_instance(data["writer"])
+    response = writer.get_response(report=report)
+    if hasattr(response, "render"):
+        response.render()
+    json_data = json.loads(response.content.decode("utf-8"))
+    assert force_text(TotalSales.title) in json_data.get("heading")
+    data = json_data.get("tables")[0].get("data")[0]
+
+    avg_sales = (
+        order1.taxful_total_price
+        + order2.taxful_total_price
+        + order3.taxful_total_price
+        + order4.taxful_total_price
+        + order5.taxful_total_price
+    ) / Decimal(5)
+
+    assert int(data["customers"]) == 2
+    assert int(data["order_amount"]) == 5
+    assert data["customer_avg_sale"] == str(avg_sales.value.quantize(Decimal('0.01')))
 
 
 @pytest.mark.django_db
@@ -196,3 +262,603 @@ def _assert_expected_values(expected_order_count, expected_taxful_total_price, e
     assert int(return_data[0].get("product_count")) == products_per_order * expected_order_count
     assert return_data[0].get("taxful_total") == str(expected_taxful_total_price.as_rounded().value)
     assert return_data[0].get("taxless_total") == str(expected_taxless_total_price.as_rounded().value)
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("order_by", ["quantity", "taxless_total", "taxful_total"])
+def test_product_total_sales_report(rf, order_by):
+    with override_provides("reports", ["shuup.default_reports.reports.product_total_sales:ProductSalesReport"]):
+        shop = get_default_shop()
+        supplier = get_default_supplier()
+        product1 = create_product("product1", supplier=supplier, shop=shop)
+        product2 = create_product("product2", supplier=supplier, shop=shop)
+
+        p1_qtd, p1_price, p1_tr, p1_lines = Decimal(3), Decimal(5), Decimal(0), 5
+        p2_qtd, p2_price, p2_tr, p2_lines = Decimal(4), Decimal(5), Decimal(0.95), 3
+
+        order = create_order_with_product(
+            product=product1, supplier=supplier, quantity=p1_qtd,
+            taxless_base_unit_price=p1_price, tax_rate=p1_tr, n_lines=p1_lines, shop=shop)
+        order.create_payment(order.taxful_total_price.amount)
+
+        order2 = create_order_with_product(
+            product=product2, supplier=supplier, quantity=p2_qtd,
+            taxless_base_unit_price=p2_price, tax_rate=p2_tr, n_lines=p2_lines, shop=shop)
+        order2.create_payment(order2.taxful_total_price.amount)
+
+        data = {
+            "report": ProductSalesReport.get_name(),
+            "shop": shop.pk,
+            "date_range": DateRangeChoices.ALL_TIME.value,
+            "writer": "json",
+            "force_download": 1,
+            "order_by": order_by
+        }
+
+        view = ReportView.as_view()
+        request = apply_request_middleware(rf.post("/", data=data))
+        response = view(request)
+        if hasattr(response, "render"):
+            response.render()
+        assert response.status_code == 200
+        json_data = json.loads(response.content.decode("utf-8"))
+        assert force_text(ProductSalesReport.title) in json_data.get("heading")
+
+        data = json_data["tables"][0]["data"]
+        assert len(data) == 2
+
+        p1_total_qtd = p1_qtd * p1_lines
+        p1_taxless_total = p1_total_qtd * p1_price
+        p1_taxful_total = p1_taxless_total * (1 + p1_tr)
+
+        p2_total_qtd = p2_qtd * p2_lines
+        p2_taxless_total = p2_total_qtd * p2_price
+        p2_taxful_total = p2_taxless_total * (1 + p2_tr)
+
+        if order_by == "quantity":
+            p1 = data[0]
+            p2 = data[1]
+
+        elif order_by == "taxless_total":
+            p1 = data[0]
+            p2 = data[1]
+
+        else:    # order_by == "taxful_total":
+            p1 = data[1]
+            p2 = data[0]
+
+        precision = Decimal('0.1') ** 2
+
+        assert p1["product"] == product1.name
+        assert Decimal(p1["quantity"]) == p1_total_qtd
+        assert Decimal(p1["taxless_total"]) == p1_taxless_total.quantize(precision)
+        assert Decimal(p1["taxful_total"]) == p1_taxful_total.quantize(precision)
+
+        assert p2["product"] == product2.name
+        assert Decimal(p2["quantity"]) == p2_total_qtd
+        assert Decimal(p2["taxless_total"]) == p2_taxless_total.quantize(precision)
+        assert Decimal(p2["taxful_total"]) == p2_taxful_total.quantize(precision)
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("group_by", ["%Y", "%Y-%m", "%Y-%m-%d"])
+def test_new_customers_report(rf, group_by):
+    with override_provides("reports", ["shuup.default_reports.reports.new_customers:NewCustomersReport"]):
+        shop = get_default_shop()
+
+        person_creation_dates = [
+            datetime(2015, 1, 2),
+            datetime(2015, 1, 1),
+            datetime(2016, 2, 2),
+        ]
+        # create person with NO user
+        for creation_date in person_creation_dates:
+            person = create_random_person()
+            person.created_on = creation_date
+            person.save()
+
+        user_person_creation_dates = [
+            datetime(2015, 3, 3),
+            datetime(2015, 3, 3),
+            datetime(2015, 4, 4),
+            datetime(2016, 5, 5),
+            datetime(2016, 6, 6),
+            datetime(2016, 7, 7),
+        ]
+        # create person with users
+        for creation_date in user_person_creation_dates:
+            person = create_random_person()
+            person.user = UserFactory()
+            person.created_on = creation_date
+            person.save()
+
+        company_creation_dates = [
+            datetime(2015, 1, 1),
+            datetime(2015, 8, 8),
+            datetime(2015, 9, 9),
+        ]
+         # create company contacts
+        for creation_date in company_creation_dates:
+            company = CompanyFactory()
+            company.created_on = creation_date
+            company.save()
+
+
+        data = {
+            "report": NewCustomersReport.get_name(),
+            "shop": shop.pk,
+            "date_range": DateRangeChoices.ALL_TIME.value,
+            "writer": "json",
+            "force_download": 1,
+            "group_by": group_by
+        }
+
+        view = ReportView.as_view()
+        request = apply_request_middleware(rf.post("/", data=data))
+        response = view(request)
+        if hasattr(response, "render"):
+            response.render()
+        assert response.status_code == 200
+        json_data = json.loads(response.content.decode("utf-8"))
+        assert force_text(NewCustomersReport.title) in json_data.get("heading")
+
+        data = json_data["tables"][0]["data"]
+
+        if group_by == "%Y":
+            assert len(data) == 2
+
+            assert data[0]["date"] == "2015"
+            assert int(data[0]["personcontact"]) == 5
+            assert int(data[0]["companycontact"]) == 3
+            assert int(data[0]["users"]) == 3
+
+            assert data[1]["date"] == "2016"
+            assert int(data[1]["personcontact"]) == 4
+            assert int(data[1]["companycontact"]) == 0
+            assert int(data[1]["users"]) == 3
+
+        elif group_by == "%Y-%m":
+            assert len(data) == 9
+
+            assert data[0]["date"] == "2015-01"
+            assert int(data[0]["personcontact"]) == 2
+            assert int(data[0]["companycontact"]) == 1
+            assert int(data[0]["users"]) == 0
+
+            assert data[1]["date"] == "2015-03"
+            assert int(data[1]["personcontact"]) == 2
+            assert int(data[1]["companycontact"]) == 0
+            assert int(data[1]["users"]) == 2
+
+            assert data[2]["date"] == "2015-04"
+            assert int(data[2]["personcontact"]) == 1
+            assert int(data[2]["companycontact"]) == 0
+            assert int(data[2]["users"]) == 1
+
+            assert data[3]["date"] == "2015-08"
+            assert int(data[3]["personcontact"]) == 0
+            assert int(data[3]["companycontact"]) == 1
+            assert int(data[3]["users"]) == 0
+
+            assert data[4]["date"] == "2015-09"
+            assert int(data[4]["personcontact"]) == 0
+            assert int(data[4]["companycontact"]) == 1
+            assert int(data[4]["users"]) == 0
+
+            assert data[5]["date"] == "2016-02"
+            assert int(data[5]["personcontact"]) == 1
+            assert int(data[5]["companycontact"]) == 0
+            assert int(data[5]["users"]) == 0
+
+            assert data[6]["date"] == "2016-05"
+            assert int(data[6]["personcontact"]) == 1
+            assert int(data[6]["companycontact"]) == 0
+            assert int(data[6]["users"]) == 1
+
+            assert data[7]["date"] == "2016-06"
+            assert int(data[7]["personcontact"]) == 1
+            assert int(data[7]["companycontact"]) == 0
+            assert int(data[7]["users"]) == 1
+
+            assert data[8]["date"] == "2016-07"
+            assert int(data[8]["personcontact"]) == 1
+            assert int(data[8]["companycontact"]) == 0
+            assert int(data[8]["users"]) == 1
+
+        elif group_by == "%Y-%m-%d":
+            assert len(data) == 10
+
+            assert data[0]["date"] == "2015-01-01"
+            assert int(data[0]["personcontact"]) == 1
+            assert int(data[0]["companycontact"]) == 1
+            assert int(data[0]["users"]) == 0
+
+            assert data[1]["date"] == "2015-01-02"
+            assert int(data[1]["personcontact"]) == 1
+            assert int(data[1]["companycontact"]) == 0
+            assert int(data[1]["users"]) == 0
+
+            assert data[2]["date"] == "2015-03-03"
+            assert int(data[2]["personcontact"]) == 2
+            assert int(data[2]["companycontact"]) == 0
+            assert int(data[2]["users"]) == 2
+
+            assert data[3]["date"] == "2015-04-04"
+            assert int(data[3]["personcontact"]) == 1
+            assert int(data[3]["companycontact"]) == 0
+            assert int(data[3]["users"]) == 1
+
+            assert data[4]["date"] == "2015-08-08"
+            assert int(data[4]["personcontact"]) == 0
+            assert int(data[4]["companycontact"]) == 1
+            assert int(data[4]["users"]) == 0
+
+            assert data[5]["date"] == "2015-09-09"
+            assert int(data[5]["personcontact"]) == 0
+            assert int(data[5]["companycontact"]) == 1
+            assert int(data[5]["users"]) == 0
+
+            assert data[6]["date"] == "2016-02-02"
+            assert int(data[6]["personcontact"]) == 1
+            assert int(data[6]["companycontact"]) == 0
+            assert int(data[6]["users"]) == 0
+
+            assert data[7]["date"] == "2016-05-05"
+            assert int(data[7]["personcontact"]) == 1
+            assert int(data[7]["companycontact"]) == 0
+            assert int(data[7]["users"]) == 1
+
+            assert data[8]["date"] == "2016-06-06"
+            assert int(data[8]["personcontact"]) == 1
+            assert int(data[8]["companycontact"]) == 0
+            assert int(data[8]["users"]) == 1
+
+            assert data[9]["date"] == "2016-07-07"
+            assert int(data[9]["personcontact"]) == 1
+            assert int(data[9]["companycontact"]) == 0
+            assert int(data[9]["users"]) == 1
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("order_by", ["order_count", "average_sales", "taxless_total", "taxful_total"])
+def test_customer_sales_report(rf, order_by):
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product1 = create_product("p1", shop=shop, supplier=supplier)
+    product2 = create_product("p2", shop=shop, supplier=supplier)
+    product3 = create_product("p3", shop=shop, supplier=supplier)
+    tax_rate = Decimal("0.3")
+
+    # orders for person 1
+    person1 = create_random_person()
+    order1 = create_order_with_product(product=product1, supplier=supplier, quantity=2,
+                                       taxless_base_unit_price="5", tax_rate=tax_rate, n_lines=1, shop=shop)
+    order1.customer = person1
+    order1.save()
+    order2 = create_order_with_product(product=product2, supplier=supplier, quantity=1,
+                                       taxless_base_unit_price="10", n_lines=1, shop=shop)
+    order2.customer = person1
+    order2.save()
+
+    person1_taxful_total_sales = (order1.taxful_total_price + order2.taxful_total_price)
+    person1_taxless_total_sales = (order1.taxless_total_price + order2.taxless_total_price)
+    person1_avg_sales = (person1_taxful_total_sales / Decimal(2.0))
+
+    # orders for person 2
+    person2 = create_random_person()
+    order3 = create_order_with_product(product=product1, supplier=supplier, quantity=2,
+                                       taxless_base_unit_price="5", tax_rate=tax_rate, n_lines=1, shop=shop)
+    order3.customer = person2
+    order3.save()
+
+    order4 = create_order_with_product(product=product2, supplier=supplier, quantity=2,
+                                       taxless_base_unit_price="50", n_lines=1, shop=shop)
+    order4.customer = person2
+    order4.save()
+
+    order5 = create_order_with_product(product=product3, supplier=supplier, quantity=2,
+                                       taxless_base_unit_price="20", tax_rate=tax_rate, n_lines=1, shop=shop)
+    order5.customer = person2
+    order5.save()
+    person2_taxful_total_sales = (order3.taxful_total_price + order4.taxful_total_price + order5.taxful_total_price)
+    person2_taxless_total_sales = (order3.taxless_total_price + order4.taxless_total_price + order5.taxless_total_price)
+    person2_avg_sales = (person2_taxful_total_sales / Decimal(3.0)).quantize(Decimal('0.01'))
+
+    # pay orders
+    [o.create_payment(o.taxful_total_price) for o in Order.objects.all()]
+
+    data = {
+        "report": CustomerSalesReport.get_name(),
+        "shop": shop.pk,
+        "date_range": DateRangeChoices.ALL_TIME,
+        "writer": "json",
+        "force_download": 1,
+        "order_by": order_by
+    }
+    report = CustomerSalesReport(**data)
+    writer = get_writer_instance(data["writer"])
+    response = writer.get_response(report=report)
+    if hasattr(response, "render"):
+        response.render()
+    json_data = json.loads(response.content.decode("utf-8"))
+    assert force_text(CustomerSalesReport.title) in json_data.get("heading")
+    data = json_data.get("tables")[0].get("data")
+
+    assert len(data) == 2
+
+    if order_by == "order_count":
+        person1_data = data[1]
+        person2_data = data[0]
+
+    elif order_by == "average_sales":
+        if person1_avg_sales > person2_avg_sales:
+            person1_data = data[0]
+            person2_data = data[1]
+        else:
+            person1_data = data[1]
+            person2_data = data[0]
+
+    elif order_by == "taxless_total":
+        if person1_taxless_total_sales > person2_taxless_total_sales:
+            person1_data = data[0]
+            person2_data = data[1]
+        else:
+            person1_data = data[1]
+            person2_data = data[0]
+
+    elif order_by == "taxful_total":
+        if person1_taxful_total_sales > person2_taxful_total_sales:
+            person1_data = data[0]
+            person2_data = data[1]
+        else:
+            person1_data = data[1]
+            person2_data = data[0]
+
+    assert person1_data["customer"] == person1.name
+    assert person1_data["order_count"] == "2"
+    assert person1_data["average_sales"] == str(person1_avg_sales.value)
+    assert person1_data["taxless_total"] == str(person1_taxless_total_sales.value.quantize(Decimal("0.01")))
+    assert person1_data["taxful_total"] == str(person1_taxful_total_sales.value.quantize(Decimal("0.01")))
+
+    assert person2_data["customer"] == person2.name
+    assert person2_data["order_count"] == "3"
+    assert person2_data["average_sales"] == str(person2_avg_sales.value)
+    assert person2_data["taxless_total"] == str(person2_taxless_total_sales.value.quantize(Decimal("0.01")))
+    assert person2_data["taxful_total"] == str(person2_taxful_total_sales.value.quantize(Decimal("0.01")))
+
+
+@pytest.mark.django_db
+def test_taxes_report(rf):
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product1 = create_product("p1", shop=shop, supplier=supplier)
+    product2 = create_product("p2", shop=shop, supplier=supplier)
+    product3 = create_product("p3", shop=shop, supplier=supplier)
+    tax_rate1 = Decimal("0.3")
+    tax_rate2 = Decimal("0.45")
+
+    tax_rate1_instance = get_test_tax(tax_rate1)
+    tax_rate2_instance = get_test_tax(tax_rate2)
+
+    # orders for person 1
+    person1 = create_random_person()
+    order1 = create_order_with_product(product=product1, supplier=supplier, quantity=2,
+                                       taxless_base_unit_price="5", tax_rate=tax_rate1, n_lines=1, shop=shop)
+    order1.customer = person1
+    order1.save()
+    order2 = create_order_with_product(product=product2, supplier=supplier, quantity=1,
+                                       taxless_base_unit_price="10", tax_rate=tax_rate1, n_lines=1, shop=shop)
+    order2.customer = person1
+    order2.save()
+
+    # orders for person 2
+    person2 = create_random_person()
+    order3 = create_order_with_product(product=product1, supplier=supplier, quantity=1,
+                                       taxless_base_unit_price="2", tax_rate=tax_rate2, n_lines=1, shop=shop)
+    order3.customer = person2
+    order3.save()
+
+    order4 = create_order_with_product(product=product2, supplier=supplier, quantity=2,
+                                       taxless_base_unit_price="8", tax_rate=tax_rate1, n_lines=1, shop=shop)
+    order4.customer = person2
+    order4.save()
+
+    # pay orders
+    [o.create_payment(o.taxful_total_price) for o in Order.objects.all()]
+
+    data = {
+        "report": TaxesReport.get_name(),
+        "shop": shop.pk,
+        "date_range": DateRangeChoices.ALL_TIME,
+        "writer": "json",
+        "force_download": 1,
+    }
+    report = TaxesReport(**data)
+    writer = get_writer_instance(data["writer"])
+    response = writer.get_response(report=report)
+    if hasattr(response, "render"):
+        response.render()
+    json_data = json.loads(response.content.decode("utf-8"))
+    assert force_text(TaxesReport.title) in json_data.get("heading")
+    data = json_data.get("tables")[0].get("data")
+    assert len(data) == 2
+
+    tax1_rate1_total = (
+          (order1.taxful_total_price_value - order1.taxless_total_price_value)
+        + (order2.taxful_total_price_value - order2.taxless_total_price_value)
+        + (order4.taxful_total_price_value - order4.taxless_total_price_value)
+    )
+    tax2_rate2_total = (order3.taxful_total_price_value - order3.taxless_total_price_value)
+
+    # the report data order is the total charged ascending
+    expected_result = [
+        {
+            "tax": tax_rate2_instance.name,
+            "tax_rate": tax_rate2,
+            "order_count": 1,
+            "total_charged": tax2_rate2_total,
+        },
+        {
+            "tax": tax_rate1_instance.name,
+            "tax_rate": tax_rate1,
+            "order_count": 3,
+            "total_charged": tax1_rate1_total,
+        }
+    ]
+
+    for ix, tax in enumerate(data):
+        assert tax["tax"] == expected_result[ix]["tax"]
+        assert Decimal(tax["tax_rate"]) == expected_result[ix]["tax_rate"] * Decimal(100.0)
+        assert tax["order_count"] == str(expected_result[ix]["order_count"])
+        assert tax["total_charged"] == str(expected_result[ix]["total_charged"])
+
+
+def seed_source(shipping_method=None, produce_price=10):
+    source = BasketishOrderSource(get_default_shop())
+    billing_address = get_address()
+    shipping_address = get_address(name="Shippy Doge")
+    source.status = get_initial_order_status()
+    source.billing_address = billing_address
+    source.shipping_address = shipping_address
+    source.customer = create_random_person()
+    source.payment_method = get_default_payment_method()
+    source.shipping_method = shipping_method if shipping_method else get_default_shipping_method()
+    source.add_line(
+        type=OrderLineType.PRODUCT,
+        product=get_default_product(),
+        supplier=get_default_supplier(),
+        quantity=1,
+        base_unit_price=source.create_price(produce_price),
+    )
+    return source
+
+
+@pytest.mark.django_db
+def test_shipping_report(rf):
+    shop = get_default_shop()
+    tax_class = get_default_tax_class()
+    creator = OrderCreator()
+
+    carrier1 = CustomCarrier.objects.create(name="Carrier1")
+    sm1 = carrier1.create_service(None, shop=get_default_shop(), enabled=True, tax_class=tax_class, name="SM #1")
+    sm1.behavior_components.add(FixedCostBehaviorComponent.objects.create(price_value=Decimal(10)))
+    sm2 = carrier1.create_service(None, shop=get_default_shop(), enabled=True, tax_class=tax_class, name="SM #2")
+    sm2.behavior_components.add(FixedCostBehaviorComponent.objects.create(price_value=Decimal(99)))
+    sm2.behavior_components.add(FixedCostBehaviorComponent.objects.create(price_value=Decimal(4)))
+
+    carrier2 = CustomCarrier.objects.create(name="Carrier2")
+    sm3 = carrier2.create_service(None, shop=get_default_shop(), enabled=True, tax_class=tax_class, name="SM #3")
+    sm3.behavior_components.add(FixedCostBehaviorComponent.objects.create(price_value=Decimal(5)))
+
+    source1 = seed_source(sm1)
+    source2 = seed_source(sm1)
+    source3 = seed_source(sm2)
+    source4 = seed_source(sm3)
+
+    order1 = creator.create_order(source1)
+    order2 = creator.create_order(source2)
+    order3 = creator.create_order(source3)
+    order4 = creator.create_order(source4)
+
+    # pay orders
+    [o.create_payment(o.taxful_total_price) for o in Order.objects.all()]
+
+    data = {
+        "report": ShippingReport.get_name(),
+        "shop": shop.pk,
+        "date_range": DateRangeChoices.ALL_TIME,
+        "writer": "json",
+        "force_download": 1,
+    }
+    report = ShippingReport(**data)
+    writer = get_writer_instance(data["writer"])
+    response = writer.get_response(report=report)
+    if hasattr(response, "render"):
+        response.render()
+    json_data = json.loads(response.content.decode("utf-8"))
+    assert force_text(ShippingReport.title) in json_data.get("heading")
+    data = json_data.get("tables")[0].get("data")
+    assert len(data) == 3
+
+    expected_result = [
+        {
+            "carrier": carrier1.name,
+            "shipping_method": sm1.name,
+            "order_count": 2,
+            "total_charged": sum([bc.price_value for bc in sm1.behavior_components.all()]) * 2  # 2 orders
+        },
+        {
+            "carrier": carrier1.name,
+            "shipping_method": sm2.name,
+            "order_count": 1,
+            "total_charged": sum([bc.price_value for bc in sm2.behavior_components.all()])
+        },
+        {
+            "carrier": carrier2.name,
+            "shipping_method": sm3.name,
+            "order_count": 1,
+            "total_charged": sum([bc.price_value for bc in sm3.behavior_components.all()])
+        }
+    ]
+
+    for ix, shipping in enumerate(data):
+        assert shipping["carrier"] == expected_result[ix]["carrier"]
+        assert shipping["shipping_method"] == expected_result[ix]["shipping_method"]
+        assert shipping["order_count"] == str(expected_result[ix]["order_count"])
+        assert shipping["total_charged"] == str(expected_result[ix]["total_charged"].quantize(Decimal("0.01")))
+
+
+@pytest.mark.django_db
+def test_refunds_report(rf):
+    shop = get_default_shop()
+    tax_class = get_default_tax_class()
+    creator = OrderCreator()
+
+    source1 = seed_source()
+    source2 = seed_source()
+    source3 = seed_source()
+    source4 = seed_source()
+
+    order1 = creator.create_order(source1)
+    order2 = creator.create_order(source2)
+    order3 = creator.create_order(source3)
+    order4 = creator.create_order(source4)
+
+    # pay orders
+    [o.create_payment(o.taxful_total_price) for o in Order.objects.all()]
+
+    order1.create_full_refund()
+    order2.create_refund([{"line": order2.lines.first(), "amount": order2.taxful_total_price.amount * Decimal(0.5), "quantity": 1}])
+    order3.create_refund([{"line": order3.lines.first(), "amount": order3.taxful_total_price.amount * Decimal(0.3), "quantity": 1}])
+    order4.create_refund([{"line": order4.lines.first(), "amount": order4.taxful_total_price.amount * Decimal(0.1), "quantity": 1}])
+
+    total_refunded = (order1.get_total_refunded_amount()
+                      + order2.get_total_refunded_amount()
+                      + order3.get_total_refunded_amount()
+                      + order4.get_total_refunded_amount())
+
+    data = {
+        "report": RefundedSalesReport.get_name(),
+        "shop": shop.pk,
+        "date_range": DateRangeChoices.ALL_TIME,
+        "writer": "json",
+        "force_download": 1,
+    }
+    report = RefundedSalesReport(**data)
+    writer = get_writer_instance(data["writer"])
+    response = writer.get_response(report=report)
+    if hasattr(response, "render"):
+        response.render()
+    json_data = json.loads(response.content.decode("utf-8"))
+    assert force_text(RefundedSalesReport.title) in json_data.get("heading")
+    data = json_data.get("tables")[0].get("data")
+    assert len(data) == 1
+    data = data[0]
+
+    expected_data = {
+        "refunded_orders": "4",
+        "total_refunded": str(total_refunded.value)
+    }
+
+    for k, v in expected_data.items():
+        assert data[k] == v

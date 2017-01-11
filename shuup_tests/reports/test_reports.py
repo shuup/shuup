@@ -24,12 +24,11 @@ from shuup.reports.admin_module.views import ReportView
 from shuup.reports.forms import DateRangeChoices
 from shuup.reports.report import ShuupReportBase
 from shuup.reports.writer import (
-    get_writer_instance, populate_default_writers, REPORT_WRITERS_MAP,
-    ReportWriterPopulator
+    get_writer_instance, REPORT_WRITERS_MAP, ReportWriterPopulator
 )
 from shuup.testing.factories import (
-    create_order_with_product, get_default_product, get_default_shop,
-    get_default_supplier
+    create_order_with_product, get_default_product,
+    get_default_shop, get_default_supplier
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.i18n import get_current_babel_locale

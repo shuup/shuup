@@ -90,7 +90,7 @@ class CompanyFactory(DjangoModelFactory):
         model = CompanyContact
 
     name = fuzzy.FuzzyText()
-    vat_id = fuzzy.FuzzyText()
+    tax_number = fuzzy.FuzzyText()
     email = factory.Sequence(lambda n: 'company%d@example.shuup.com' % n)
 
 
