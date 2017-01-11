@@ -159,6 +159,9 @@ class ProductAttributeFormPart(FormPart):
 
 class BaseProductMediaFormPart(FormPart):
     def get_form_defs(self):
+        if not self.object.pk:
+            return
+
         yield TemplatedFormDef(
             self.name,
             self.formset,
