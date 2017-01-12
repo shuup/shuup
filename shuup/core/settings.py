@@ -170,13 +170,19 @@ SHUUP_ADDRESS_MODEL_FORM = (
     "shuup.core.utils.forms.MutableAddressForm")
 
 #: A dictionary defining properties to override the default field properties of the
-#: checkout address form. Should map the field name (as a string) to a dictionary
-#: containing the overriding Django form field properties, as in the following
+#: checkout address form and also the Address API.
+#:  Should map the field name (as a string) to a dictionary containing the overriding
+#:  Django form field properties, as in the following
 #: example which makes the postal code a required field:
 #:
 #: SHUUP_ADDRESS_FIELD_PROPERTIES = {
 #:    "postal_code": {"required": True}
 #: }
+#:
+#: Some of the Django form field properties will not affect the Address API.
+#: The valid set of properties are those defined by the Serializer fields core arguments
+#: like read_only, required, allow_null, etc. See the Django Rest Framework documentation
+#: for more properties.
 #:
 #: It should be noted, however, that overriding some settings (such as making a
 #: required field non-required) could create other validation issues.
