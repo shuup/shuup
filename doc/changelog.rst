@@ -13,6 +13,7 @@ Core
 ~~~~
 
 API: add address endpoint
+API: add person contact endpoint
 
 Localization
 ~~~~~~~~~~~~
