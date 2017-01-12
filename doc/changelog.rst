@@ -13,6 +13,8 @@ Core
 ~~~~
 
 - API: add address endpoint
+- API: add person contact endpoint
+- API: add address endpoint
 - Add `created_on` and `modified_on` fields for shop
 - Make shop identifier max length to 128 characters
 - Add `staff_members` manytomanyfield for shop
