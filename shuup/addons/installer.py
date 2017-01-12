@@ -38,6 +38,7 @@ class PackageInstaller(object):
             "--upgrade",
             "--verbose",
             "--require-venv",
+            "--no-cache-dir",
             package_path
         ]
         pipe = subprocess.Popen(
