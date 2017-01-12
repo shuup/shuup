@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from shuup.core.api.address import MutableAddressViewSet
 from shuup.core.api.attribute import AttributeViewSet
 from shuup.core.api.category import CategoryViewSet
 from shuup.core.api.contacts import ContactViewSet
@@ -31,6 +32,7 @@ def populate_core_api(router):
     :param router: Router
     :type router: rest_framework.routers.DefaultRouter
     """
+    router.register("shuup/address", MutableAddressViewSet)
     router.register("shuup/attribute", AttributeViewSet)
     router.register("shuup/category", CategoryViewSet)
     router.register("shuup/contact", ContactViewSet)
