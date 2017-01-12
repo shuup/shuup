@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- API: add address endpoint
 - Improve OrderSource caching for deserialization speedup
 - Add new product count methods to OrderSource
 - Fix bug in purchase multiple checking of ShopProduct
