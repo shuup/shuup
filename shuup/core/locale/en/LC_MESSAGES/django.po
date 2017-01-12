@@ -42,6 +42,12 @@ msgstr ""
 msgid "Contacts can be listed, fetched, created, updated and deleted."
 msgstr ""
 
+msgid "Person Contact"
+msgstr ""
+
+msgid "Person Contacts can be listed, fetched, created, updated and deleted."
+msgstr ""
+
 msgid "Manufacturer"
 msgstr ""
 
