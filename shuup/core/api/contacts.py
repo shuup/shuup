@@ -9,26 +9,42 @@ from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
-from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 from rest_framework.viewsets import ModelViewSet
 
+from shuup.api.fields import EnumField
 from shuup.api.mixins import PermissionHelperMixin, ProtectedModelViewSetMixin
-from shuup.core.models import Contact, ContactGroup
+from shuup.core.api.address import AddressSerializer
+from shuup.core.models import Contact, ContactGroup, Gender, PersonContact
 
 
-class ContactGroupSerializer(ModelSerializer):
+class ContactGroupSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = "__all__"
+        exclude = ["members"]
         model = ContactGroup
 
 
-class ContactSerializer(ModelSerializer):
+class ContactSerializer(serializers.ModelSerializer):
     groups = ContactGroupSerializer(many=True, read_only=True)
+    default_shipping_address = AddressSerializer(required=False)
+    default_billing_address = AddressSerializer(required=False)
 
     class Meta:
-        fields = "__all__"
         model = Contact
-        fields = "__all__"
+        exclude = ["identifier"]
+        extra_kwargs = {
+            "created_on": {"read_only": True}
+        }
+
+
+class PersonContactSerializer(ContactSerializer):
+    gender = EnumField(Gender, required=False)
+
+    class Meta(ContactSerializer.Meta):
+        model = PersonContact
+        extra_kwargs = {
+            "created_on": {"read_only": True}
+        }
 
 
 class ContactFilter(FilterSet):
@@ -66,3 +82,34 @@ class ContactViewSet(ProtectedModelViewSetMixin, PermissionHelperMixin, ModelVie
     @classmethod
     def get_help_text(cls):
         return _("Contacts can be listed, fetched, created, updated and deleted.")
+
+
+class PersonContactViewSet(ProtectedModelViewSetMixin, PermissionHelperMixin, ModelViewSet):
+    """
+    retrieve: Fetches a person contact by its ID.
+
+    list: Lists all available person contacts.
+
+    delete: Deletes a person contact.
+    If the object is related to another one and the relationship is protected, an error will be returned.
+
+    create: Creates a new person contact.
+
+    update: Fully updates an existing person contact.
+    You must specify all parameters to make it possible to overwrite all attributes.
+
+    partial_update: Updates an existing person contact.
+    You can update only a set of attributes.
+    """
+
+    queryset = PersonContact.objects.all()
+    serializer_class = PersonContactSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filter_class = ContactFilter
+
+    def get_view_name(self):
+        return _("Person Contact")
+
+    @classmethod
+    def get_help_text(cls):
+        return _("Person Contacts can be listed, fetched, created, updated and deleted.")

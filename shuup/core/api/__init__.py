@@ -8,7 +8,7 @@
 from shuup.core.api.address import MutableAddressViewSet
 from shuup.core.api.attribute import AttributeViewSet
 from shuup.core.api.category import CategoryViewSet
-from shuup.core.api.contacts import ContactViewSet
+from shuup.core.api.contacts import ContactViewSet, PersonContactViewSet
 from shuup.core.api.manufacturer import ManufacturerViewSet
 from shuup.core.api.orders import OrderViewSet
 from shuup.core.api.product_media import ProductMediaViewSet
@@ -37,6 +37,7 @@ def populate_core_api(router):
     router.register("shuup/category", CategoryViewSet)
     router.register("shuup/contact", ContactViewSet)
     router.register("shuup/order", OrderViewSet)
+    router.register("shuup/person_contact", PersonContactViewSet)
     router.register("shuup/product", ProductViewSet)
     router.register("shuup/product_attribute", ProductAttributeViewSet)
     router.register("shuup/product_media", ProductMediaViewSet)
