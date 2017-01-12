@@ -78,6 +78,7 @@ utils.add_exclude_patters([
 REQUIRES = [
     'pillow>=3.4.2,<4',
     'Babel>=2.2,<3',
+    'cryptography==1.7.1',
     'Django>=1.8,<1.10',
     'django-bootstrap3>=6.1,<7',
     'django-countries>=3.3,<4',
@@ -98,11 +99,14 @@ REQUIRES = [
     'fake-factory>=0.5.0,<0.5.4',
     'Jinja2>=2.8,<2.9',
     'jsonfield>=1.0,<2',
+    'keyring==10.2',
+    'keyrings.alt==2.0',
     'Markdown>=2.6,<3',
     'openpyxl==2.3.5',
     'pytoml>=0.1.0,<0.2',
     'pytz>=2015.4',
     'requests>=2.7,<3',
+    'secretstorage==2.3.1',
     'six>=1.9,<2',
     'unicodecsv==0.14.1',
     'xlrd==1.0.0'
