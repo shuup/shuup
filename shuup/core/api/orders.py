@@ -21,8 +21,9 @@ from rest_framework.viewsets import ModelViewSet
 from shuup.admin.modules.orders.json_order_creator import JsonOrderCreator
 from shuup.admin.modules.orders.views.edit import encode_address
 from shuup.api.mixins import PermissionHelperMixin, ProtectedModelViewSetMixin
+from shuup.core.api.address import AddressSerializer
 from shuup.core.models import (
-    Contact, MutableAddress, Order, OrderLine, OrderStatus, Payment, Shop
+    Contact, Order, OrderLine, OrderStatus, Payment, Shop
 )
 from shuup.utils.money import Money
 
@@ -36,12 +37,6 @@ class OrderLineSerializer(serializers.ModelSerializer):
         fields = super(OrderLineSerializer, self).get_fields()
         fields["text"].required = False
         return fields
-
-
-class AddressSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MutableAddress
-        fields = "__all__"
 
 
 class PaymentSerializer(serializers.ModelSerializer):
