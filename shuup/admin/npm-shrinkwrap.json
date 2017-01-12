@@ -847,9 +847,9 @@
       }
     },
     "bower": {
-      "version": "1.7.1",
-      "from": "https://registry.npmjs.org/bower/-/bower-1.7.1.tgz",
-      "resolved": "https://registry.npmjs.org/bower/-/bower-1.7.1.tgz",
+      "version": "1.8.0",
+      "from": "https://registry.npmjs.org/bower/-/bower-1.8.0.tgz",
+      "resolved": "https://registry.npmjs.org/bower/-/bower-1.8.0.tgz",
       "dependencies": {
         "abbrev": {
           "version": "1.0.7",
