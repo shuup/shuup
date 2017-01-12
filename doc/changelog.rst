@@ -12,6 +12,8 @@ Unrealeased
 Core
 ~~~~
 
+API: add address endpoint
+
 Localization
 ~~~~~~~~~~~~
 
