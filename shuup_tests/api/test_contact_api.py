@@ -13,7 +13,7 @@ from rest_framework import status
 from rest_framework.test import APIClient
 
 from shuup.core import cache
-from shuup.core.models import Contact
+from shuup.core.models import Contact, Gender, PersonContact
 from shuup.testing.factories import (
     create_random_person, get_default_customer_group, get_default_shop
 )
@@ -74,6 +74,64 @@ def test_get_by_contact_group(admin_user):
     assert contact_data[0].get("id") == contact.id
     assert contact_data[0].get("email") == contact.email
     assert contact_data[0].get("name") == contact.name
+
+
+def test_person_contact_api(admin_user):
+    shop = get_default_shop()
+    client = _get_client(admin_user)
+    PersonContact.objects.all().delete()
+
+    contact_data = {
+        "name": "Person Contact Name",
+        "gender": Gender.FEMALE.value,
+        "phone": "312312312",
+        "email": "goodemail@apitest.com.cz"
+    }
+    response = client.post("/api/shuup/person_contact/",
+                           content_type="application/json",
+                           data=json.dumps(contact_data))
+    assert response.status_code == status.HTTP_201_CREATED
+    person_contact = PersonContact.objects.first()
+    assert person_contact.name == contact_data["name"]
+    assert person_contact.gender.value == contact_data["gender"]
+    assert person_contact.phone == contact_data["phone"]
+    assert person_contact.email == contact_data["email"]
+
+    contact_data["name"] = "Changed Name"
+    contact_data["gender"] = Gender.MALE.value
+    contact_data["phone"] = "391891892"
+    contact_data["email"] = "ihavechanged@email.comz"
+
+    response = client.put("/api/shuup/person_contact/%d/" % person_contact.id,
+                          content_type="application/json",
+                          data=json.dumps(contact_data))
+    assert response.status_code == status.HTTP_200_OK
+    person_contact = PersonContact.objects.first()
+    assert person_contact.name == contact_data["name"]
+    assert person_contact.gender.value == contact_data["gender"]
+    assert person_contact.phone == contact_data["phone"]
+    assert person_contact.email == contact_data["email"]
+
+    response = client.get("/api/shuup/person_contact/%d/" % person_contact.id)
+    assert response.status_code == status.HTTP_200_OK
+    data = json.loads(response.content.decode("utf-8"))
+    assert person_contact.name == data["name"]
+    assert person_contact.gender.value == data["gender"]
+    assert person_contact.phone == data["phone"]
+    assert person_contact.email == data["email"]
+
+    # change some data
+    contact_data = {"name": "Changed again"}
+    response = client.patch("/api/shuup/person_contact/%d/" % person_contact.id,
+                            content_type="application/json",
+                            data=json.dumps(contact_data))
+    assert response.status_code == status.HTTP_200_OK
+    person_contact = PersonContact.objects.first()
+    assert person_contact.name == contact_data["name"]
+
+    response = client.delete("/api/shuup/person_contact/%d/" % person_contact.id)
+    assert response.status_code == status.HTTP_204_NO_CONTENT
+    assert PersonContact.objects.count() == 0
 
 
 def _get_client(admin_user):

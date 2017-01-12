@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- API: add person contact endpoint
 - API: add address endpoint
 - Improve variation product orderability check performance
 - Add `created_on` and `modified_on` fields for shop
