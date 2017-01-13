@@ -51,6 +51,11 @@ class JsonOrderCreator(object):
         # A little helper function to clean up the code below.
         return model.objects.filter(**lookup).first()
 
+    @staticmethod
+    def is_empty_address(address_data):
+        """An address will have at minimum a tax_number field it will still be considered empty"""
+        return list(address_data.keys()) == ['tax_number']
+
     def add_error(self, error):
         self._errors.append(error)
 
@@ -157,7 +162,7 @@ class JsonOrderCreator(object):
             try:
                 self._add_json_line_to_source(source, sline)
             except Exception as exc:  # pragma: no cover
-                self.add_error(exc)
+                self.add_error(ValidationError(str(exc), code="line_error"))
 
     def _create_contact_from_address(self, billing_address, is_company):
         name = billing_address.get("name", None)
@@ -173,6 +178,8 @@ class JsonOrderCreator(object):
         return customer
 
     def _get_address(self, address, is_company, save):
+        if self.is_empty_address(address):
+            return None
         address_form = forms.modelform_factory(MutableAddress, exclude=[])
         address_form_instance = address_form(data=address)
         address_form_instance.full_clean()
@@ -182,8 +189,7 @@ class JsonOrderCreator(object):
                 for error_msg in errors:
                     self.add_error(
                         ValidationError(
-                            "%(field_label)s: %(error_msg)s",
-                            params={"field_label": field_label, "error_msg": error_msg},
+                            "%(field_label)s: %(error_msg)s" % {"field_label": field_label, "error_msg": error_msg},
                             code="invalid_address"
                         )
                     )
@@ -206,7 +212,7 @@ class JsonOrderCreator(object):
         if order_to_update:
             source.update_from_order(order_to_update)
 
-        customer_data = state.pop("customer", None)
+        customer_data = state.pop("customer", {})
         billing_address_data = customer_data.pop("billingAddress", {})
         shipping_address_data = (
             billing_address_data
@@ -215,21 +221,23 @@ class JsonOrderCreator(object):
         is_company = customer_data.pop("isCompany", False)
         save_address = customer_data.pop("saveAddress", False)
 
-        billing_address = self._get_address(billing_address_data, is_company, save)
-        if self.errors:
-            return
-        shipping_address = self._get_address(shipping_address_data, is_company, save)
-        if self.errors:
-            return
+        billing_address = None
+        shipping_address = None
+        customer = None
 
-        customer = self._get_customer(customer_data, billing_address_data, is_company, save)
-        if not customer:
-            return
+        if customer_data:
+            customer = self._get_customer(customer_data, billing_address_data, is_company, save)
+            billing_address = self._get_address(billing_address_data, is_company, save)
+            if self.errors:
+                return
+            shipping_address = self._get_address(shipping_address_data, is_company, save)
+            if self.errors:
+                return
 
-        if save and save_address:
-            customer.default_billing_address = billing_address
-            customer.default_shipping_address = shipping_address
-            customer.save()
+            if save and save_address:
+                customer.default_billing_address = billing_address
+                customer.default_shipping_address = shipping_address
+                customer.save()
 
         methods_data = state.pop("methods", None) or {}
         shipping_method = methods_data.pop("shippingMethod")
@@ -354,7 +362,7 @@ class JsonOrderCreator(object):
             self._postprocess_order(order, state)
             return order
         except Exception as exc:  # pragma: no cover
-            self.add_error(exc)
+            self.add_error(ValidationError(str(exc), code='create_from_state_error'))
             return
 
     def update_order_from_state(self, state, order_to_update, modified_by=None):
@@ -377,5 +385,5 @@ class JsonOrderCreator(object):
             self._postprocess_order(order, state)
             return order
         except Exception as exc:
-            self.add_error(exc)
+            self.add_error(ValidationError(str(exc), code='update_from_state_error'))
             return
