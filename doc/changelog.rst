@@ -12,6 +12,8 @@ Unrealeased
 Core
 ~~~~
 
+- API: allow orders to be created without customer, addresses, or
+  service methods
 - API: add front user endpoint
 - API: add person contact endpoint
 - API: add address endpoint
