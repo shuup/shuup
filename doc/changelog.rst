@@ -1,65 +1,31 @@
 Shuup Change Log
 ================
 
-Unrealeased
+SHUUP 1.1.0
 -----------
-
-- List all changes after last release here (newer on top).  Each change
-  on a separate bullet point line.  Wrap the file at 79 columns or so.
-  When releasing next version, the "Unreleased" header will be replaced
-  with appropriate version header and this help text will be removed.
-
-Core
-~~~~
-
-Localization
-~~~~~~~~~~~~
-
-Admin
-~~~~~
-
-- Select2Multiple widget now looks for `search_fields` instance attribute to get searchable fields
-- Allow product variation variables and values to be manually sorted.
 
 Addons
 ~~~~~~
 
-Front
+- Enhance/fix bugs addons installation. Addons upload now allows only wheels.
+
+Admin
 ~~~~~
 
-Xtheme
-~~~~~~
-
-Classic Gray Theme
-~~~~~~~~~~~~~~~~~~
-
-Simple Supplier
-~~~~~~~~~~~~~~~
+- Select2Multiple widget now looks for `search_fields` instance attribute to
+  get searchable fields
+- Allow product variation variables and values to be manually sorted.
 
 Notification
 ~~~~~~~~~~~~
 
-- Allow user to create scripts based on templates available from `notify_script_template` provide category
-
-Order Printouts
-~~~~~~~~~~~~~~~
+- Allow user to create scripts based on templates available from
+  `notify_script_template` provide category
 
 Campaigns
 ~~~~~~~~~
 
 - Create Coupons report
-
-Customer Group Pricing
-~~~~~~~~~~~~~~~~~~~~~~
-
-Discount Pricing
-~~~~~~~~~~~~~~~~
-
-Simple CMS
-~~~~~~~~~~
-
-Default Tax
-~~~~~~~~~~~
 
 Reporting
 ~~~~~~~~~
@@ -72,18 +38,10 @@ Reporting
 - Create Shipping report
 - Create Refunds report
 
-Guide
-~~~~~
-
-Importer
-~~~~~~~~
-
-Regions
-~~~~~~~
-
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
+- Add Shuup version to static urls
 
 SHUUP 1.0.0
 -----------

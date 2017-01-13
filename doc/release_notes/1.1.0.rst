@@ -1,0 +1,9 @@
+Shuup 1.1.0 Release Notes
+=========================
+
+Released on 2017-01-13 11:15pm -0800.
+
+This release introduces new functionality to  addons installation
+and notifications app. Also there 7 new sales reports for the
+merchant. There is also some bug fixes included for the previous 1.0.0
+release.

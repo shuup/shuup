@@ -3,6 +3,7 @@ Shuup Release Notes
 
 .. toctree::
    :maxdepth: 1
+   1.1.0
    1.0.0
    0.5.8
    0.5.7
