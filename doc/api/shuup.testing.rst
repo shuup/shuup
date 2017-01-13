@@ -54,6 +54,14 @@ shuup.testing.mock_population module
     :undoc-members:
     :show-inheritance:
 
+shuup.testing.notify_script_templates module
+--------------------------------------------
+
+.. automodule:: shuup.testing.notify_script_templates
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.testing.service_forms module
 ----------------------------------
 

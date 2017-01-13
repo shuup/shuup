@@ -39,6 +39,14 @@ shuup.campaigns.modules module
     :undoc-members:
     :show-inheritance:
 
+shuup.campaigns.reports module
+------------------------------
+
+.. automodule:: shuup.campaigns.reports
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.campaigns.signal_handlers module
 --------------------------------------
 

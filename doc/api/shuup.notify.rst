@@ -10,6 +10,7 @@ Subpackages
     shuup.notify.admin_module
     shuup.notify.conditions
     shuup.notify.models
+    shuup.notify.script_template
 
 Submodules
 ----------
