@@ -27,11 +27,11 @@ def test_carousel_plugin_form():
     checks = [
         (
             {},
-            {"carousel": None, "active": True}
+            {"carousel": None, "active": False}
         ),
         (
             {"carousel": test_carousel.pk},
-            {"carousel": test_carousel.pk, "active": True}
+            {"carousel": test_carousel.pk, "active": False}
         ),
         (
             {"carousel": test_carousel.pk, "active": False},
