@@ -64,8 +64,6 @@ class OrderSerializer(serializers.ModelSerializer):
                 field.default = lambda: now()
             if name == "status":
                 field.default = OrderStatus.objects.get_default_initial()
-            if name in ("shipping_method", "payment_method", "customer"):
-                field.required = True
         return fields
 
 
@@ -123,10 +121,17 @@ class OrderViewSet(PermissionHelperMixin, ProtectedModelViewSetMixin, ModelViewS
         request.data["orderer"] = None
         request.data["modified_by"] = None
         request.data["creator"] = request.user.pk
+        if 'shipping_method' not in request.data:
+            request.data['shipping_method'] = None
+        if 'payment_method' not in request.data:
+            request.data['payment_method'] = None
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         shop = Shop.objects.get(pk=serializer.data["shop"])
-        customer = Contact.objects.get(pk=serializer.data["customer"])
+        if serializer.data.get('customer'):
+            customer = Contact.objects.get(pk=serializer.data["customer"])
+        else:
+            customer = None
         lines = [{
             "id": (idx + 1),
             "quantity": line["quantity"],
@@ -154,13 +159,14 @@ class OrderViewSet(PermissionHelperMixin, ProtectedModelViewSetMixin, ModelViewS
                 "shippingMethod": {"id": serializer.data["shipping_method"]},
                 "paymentMethod": {"id": serializer.data["payment_method"]},
             },
-            "customer": {
+            "lines": lines
+        }
+        if customer:
+            data["customer"] = {
                 "id": serializer.data["customer"],
                 "billingAddress": encode_address(customer.default_billing_address),
                 "shippingAddress": encode_address(customer.default_shipping_address),
-            },
-            "lines": lines
-        }
+            }
         joc = JsonOrderCreator()
         order = joc.create_order_from_state(data, creator=request.user)
         if not order:
