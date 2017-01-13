@@ -42,6 +42,7 @@ from shuup.core.order_creator import OrderCreator, OrderSource
 from shuup.core.pricing import get_pricing_module
 from shuup.core.shortcuts import update_order_line_from_product
 from shuup.default_tax.models import TaxRule
+from shuup.front.models import StoredBasket
 from shuup.testing.text_data import random_title
 from shuup.utils.filer import filer_image_from_data
 from shuup.utils.money import Money
@@ -826,3 +827,11 @@ def get_all_seeing_key(user_or_contact):
     else:
         user = user_or_contact
     return "is_all_seeing:%d" % user.pk
+
+
+def get_basket():
+    return StoredBasket.objects.create(
+        key=uuid.uuid1().hex,
+        shop=get_default_shop(),
+        prices_include_tax=True,
+    )
