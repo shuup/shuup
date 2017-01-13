@@ -25,7 +25,7 @@ def generate_key():
 
 class StoredBasket(MoneyPropped, models.Model):
     # A combination of the PK and key is used to retrieve a basket for session situations.
-    key = models.CharField(max_length=32, default=generate_key, verbose_name=_('key'))
+    key = models.CharField(max_length=32, default=generate_key, verbose_name=_('key'), unique=True, db_index=True)
 
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE, verbose_name=_('shop'))
 

@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import abc
+import uuid
 
 import six
 
@@ -94,7 +95,7 @@ class BasketStorage(six.with_metaclass(abc.ABCMeta)):
 
 class DatabaseBasketStorage(BasketStorage):
     def _get_session_key(self, basket):
-        return "basket_%s_key" % basket.basket_name
+        return "basket_key:%s" % basket.key
 
     def save(self, basket, data):
         """
@@ -113,6 +114,7 @@ class DatabaseBasketStorage(BasketStorage):
         stored_basket.products = set(basket.product_ids)
         basket_get_kwargs = {"pk": stored_basket.pk, "key": stored_basket.key}
         request.session[self._get_session_key(basket)] = basket_get_kwargs
+        request.session['basket_key'] = stored_basket.key
 
     def _load_stored_basket(self, basket):
         return self._get_stored_basket(basket)
@@ -121,8 +123,10 @@ class DatabaseBasketStorage(BasketStorage):
         stored_basket = self._get_stored_basket(basket)
         if stored_basket and stored_basket.pk:
             stored_basket.deleted = True
+            stored_basket.key = uuid.uuid1().hex  # Regenerate a key to avoid clashes
             stored_basket.save()
         basket.request.session.pop(self._get_session_key(basket), None)
+        basket.request.session.pop('basket_key', None)
 
     def finalize(self, basket):
         stored_basket = self._get_stored_basket(basket)
@@ -131,11 +135,14 @@ class DatabaseBasketStorage(BasketStorage):
             stored_basket.finished = True
             stored_basket.save()
         basket.request.session.pop(self._get_session_key(basket), None)
+        basket.request.session.pop('basket_key', None)
 
     def _get_stored_basket(self, basket):
         request = basket.request
-        basket_get_kwargs = request.session.get(self._get_session_key(basket))
+        basket_get_kwargs = request.session.get(self._get_session_key(basket)) or {}
         stored_basket = None
+        if basket.key:
+            basket_get_kwargs['key'] = basket.key
         if basket_get_kwargs:
             stored_basket = StoredBasket.objects.filter(deleted=False, **basket_get_kwargs).first()
         if not stored_basket:
@@ -143,6 +150,7 @@ class DatabaseBasketStorage(BasketStorage):
                 request.session.pop(self._get_session_key(basket), None)
             stored_basket = StoredBasket(
                 shop=basket.shop,
+                key=basket.key,
                 currency=basket.currency,
                 prices_include_tax=basket.prices_include_tax,
             )

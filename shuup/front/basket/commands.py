@@ -11,32 +11,25 @@ import decimal
 
 import six
 from django.core.exceptions import ValidationError
-from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.core.models import Product, ProductVariationResult
+from shuup.core.models import ProductVariationResult, ShopProduct
 from shuup.core.order_creator import is_code_usable
 from shuup.utils.importing import cached_load
 from shuup.utils.numbers import parse_decimal_string
 
 
-# TODO: Refactor handle_add, it's too complex
-def handle_add(request, basket, product_id, quantity=1, supplier_id=None, **kwargs):  # noqa (C901)
-    """
-    Handle adding a product to the basket.
+def _get_shop_product(shop_id, product_id):
+    shop_product = ShopProduct.objects.filter(
+        shop__pk=shop_id, product__pk=product_id
+    ).select_related("product").first()
 
-    :param product_id: product ID to add (or if `child_product_id` is truey, the parent ID)
-    :param quantity: quantity of products to add
-    :param child_product_id: child product ID to add (if truey)
-    :param supplier_id: The supplier ID for the new line. If None, the first supplier is used.
-    """
-    product_id = int(product_id)
-
-    product = get_object_or_404(Product, pk=product_id)
-    shop_product = product.get_shop_instance(shop=request.shop)
     if not shop_product:
         raise ValidationError("Product not available in this shop", code="product_not_available_in_shop")
+    return shop_product
 
+
+def _get_supplier(supplier_id, shop_product):
     if supplier_id:
         supplier = shop_product.suppliers.filter(pk=supplier_id).first()
     else:
@@ -44,6 +37,23 @@ def handle_add(request, basket, product_id, quantity=1, supplier_id=None, **kwar
 
     if not supplier:
         raise ValidationError("Invalid supplier", code="invalid_supplier")
+    return supplier
+
+
+def handle_shop_add(basket, shop_id, product_id, quantity=1, supplier_id=None, **kwargs):
+    """
+    Handle adding a shop product to the basket.
+
+    :param shop_id: the shop id of the product
+    :param product_id: product ID to add
+    :param quantity: quantity of products to add
+    :param supplier_id: The supplier ID for the new line. If None, the first supplier is used.
+    """
+    product_id = int(product_id)
+    shop_id = int(shop_id)
+    shop_product = _get_shop_product(shop_id, product_id)
+    product = shop_product.product
+    supplier = _get_supplier(supplier_id, shop_product)
 
     try:
         quantity = parse_decimal_string(quantity)
@@ -73,7 +83,7 @@ def handle_add(request, basket, product_id, quantity=1, supplier_id=None, **kwar
         for child_product, child_quantity in six.iteritems(product.get_package_child_to_quantity_map()):
             already_in_basket_qty = product_ids_and_quantities.get(child_product.id, 0)
             total_child_quantity = (quantity * child_quantity)
-            sp = child_product.get_shop_instance(shop=request.shop)
+            sp = child_product.get_shop_instance(shop=shop_product.shop)
             sp.raise_if_not_orderable(
                 supplier=supplier,
                 quantity=(already_in_basket_qty + total_child_quantity),
@@ -91,15 +101,32 @@ def handle_add(request, basket, product_id, quantity=1, supplier_id=None, **kwar
         "product": product,
         "quantity": quantity,
         "supplier": supplier,
-        "shop": request.shop,
+        "shop": shop_product.shop,
     }
 
-    basket.add_product(**add_product_kwargs)
+    line = basket.add_product(**add_product_kwargs)
 
     return {
-        'ok': basket.product_count,
+        'product_count': basket.product_count,
+        'line_id': line.line_id,
         'added': quantity
     }
+
+
+def handle_add(request, basket, product_id, quantity=1, supplier_id=None, **kwargs):
+    """
+    Handle adding a product to the basket.
+
+    :param django.http.request request: the request
+    :param shuup.front.objects.BaseBasket: the basket to add the product
+    :param product_id: product ID to add
+    :param quantity: quantity of products to add
+    :param supplier_id: The supplier ID for the new line. If None, the first supplier is used.
+    """
+
+    # forward
+    kwargs.pop('shop_id', None)
+    return handle_shop_add(basket, request.shop.id, product_id, quantity, supplier_id, **kwargs)
 
 
 def handle_add_var(request, basket, product_id, quantity=1, **kwargs):
@@ -137,16 +164,20 @@ def handle_clear(request, basket, **kwargs):
     """
 
     basket.clear_all()
+    basket.save()
     return {'ok': True}
 
 
 def handle_add_campaign_code(request, basket, code):
     if not code:
-        return {"ok": False}
+        raise ValidationError("No code provided", code="no_code_provided")
 
     if is_code_usable(basket, code):
-        return {"ok": basket.add_code(code)}
-    return {"ok": False}
+        success = basket.add_code(code)
+        if success:
+            basket.save()
+            return {"ok": success}
+    raise ValidationError("Invalid code", code="code_invalid")
 
 
 def handle_update(request, basket, **kwargs):

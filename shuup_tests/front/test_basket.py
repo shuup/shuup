@@ -41,6 +41,7 @@ def test_basket(rf):
         request.shop = shop
         apply_request_middleware(request)
         basket = get_basket(request)
+        key = basket.key
         assert basket == request.basket
         assert basket.product_count == 0
         line = basket.add_product(supplier=supplier, shop=shop, product=product, quantity=q)
@@ -52,6 +53,7 @@ def test_basket(rf):
         basket.save()
         delattr(request, "basket")
         basket = get_basket(request)
+        assert basket.key == key
         assert basket.get_product_ids_and_quantities().get(product.pk) == q
 
         product_ids = set(StoredBasket.objects.last().products.values_list("id", flat=True))
