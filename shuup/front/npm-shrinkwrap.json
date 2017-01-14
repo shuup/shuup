@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "dependencies": {
     "bower": {
-      "version": "1.7.1",
-      "from": "bower@>=1.4.1 <2.0.0",
-      "resolved": "https://registry.npmjs.org/bower/-/bower-1.7.1.tgz",
+      "version": "1.8.0",
+      "from": "bower@>=1.8.0 <2.0.0",
+      "resolved": "https://registry.npmjs.org/bower/-/bower-1.8.0.tgz",
       "dependencies": {
         "abbrev": {
           "version": "1.0.7",
@@ -1797,9 +1797,9 @@
       }
     },
     "gulp": {
-      "version": "3.9.0",
-      "from": "gulp@>=3.9.0 <4.0.0",
-      "resolved": "https://registry.npmjs.org/gulp/-/gulp-3.9.0.tgz",
+      "version": "3.9.1",
+      "from": "gulp@>=3.9.1 <4.0.0",
+      "resolved": "https://registry.npmjs.org/gulp/-/gulp-3.9.1.tgz",
       "dependencies": {
         "archy": {
           "version": "1.0.0",
