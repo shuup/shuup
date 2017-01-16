@@ -109,7 +109,7 @@ class PricePropertyFilter(_ContextFilter):
 
         priceful = _get_priceful(context.get('request'), item, quantity)
         if not priceful:
-            context_cache.set(key, "")
+            context_cache.set_cached_value(key, "")
             return ""
 
         price = getattr(priceful, self.property_name)
