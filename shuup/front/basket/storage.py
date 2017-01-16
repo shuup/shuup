@@ -10,8 +10,6 @@ from __future__ import unicode_literals
 import abc
 
 import six
-from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured
 
 from shuup.core.utils.users import real_user_or_none
 from shuup.front.models import StoredBasket
@@ -19,14 +17,6 @@ from shuup.utils.importing import cached_load
 
 
 class BasketCompatibilityError(Exception):
-    pass
-
-
-class ShopMismatchBasketCompatibilityError(BasketCompatibilityError):
-    pass
-
-
-class PriceUnitMismatchBasketCompatibilityError(BasketCompatibilityError):
     pass
 
 
@@ -50,13 +40,13 @@ class BasketStorage(six.with_metaclass(abc.ABCMeta)):
                 "%s id=%r with Shop=%s, Dest. Basket Shop=%s)" % (
                     type(stored_basket).__name__,
                     stored_basket.id, stored_basket.shop_id, basket.shop.id))
-            raise ShopMismatchBasketCompatibilityError(msg)
-        price_unit_diff = _price_units_diff(stored_basket, basket.shop)
-        if price_unit_diff:
+            raise BasketCompatibilityError(msg)
+        price_units_diff = _price_units_diff(stored_basket, basket.shop)
+        if price_units_diff:
             msg = "%s %r: Price unit mismatch with Shop (%s)" % (
                 type(stored_basket).__name__, stored_basket.id,
-                price_unit_diff)
-            raise PriceUnitMismatchBasketCompatibilityError(msg)
+                price_units_diff)
+            raise BasketCompatibilityError(msg)
         return stored_basket.data or {}
 
     @abc.abstractmethod
@@ -100,59 +90,6 @@ class BasketStorage(six.with_metaclass(abc.ABCMeta)):
         :type basket: shuup.front.basket.objects.BaseBasket
         """
         self.delete(basket=basket)
-
-
-class DirectSessionBasketStorage(BasketStorage):
-    def __init__(self):
-        if settings.SESSION_SERIALIZER == "django.contrib.sessions.serializers.JSONSerializer":  # pragma: no cover
-            raise ImproperlyConfigured(
-                "DirectSessionBasketStorage will not work with the JSONSerializer session serializer."
-            )
-
-    def save(self, basket, data):
-        stored_basket = DictStoredBasket.from_basket_and_data(basket, data)
-        basket.request.session[basket.basket_name] = stored_basket.as_dict()
-
-    def _load_stored_basket(self, basket):
-        stored_basket_dict = basket.request.session.get(basket.basket_name)
-        if not stored_basket_dict:
-            return None
-        return DictStoredBasket.from_dict(stored_basket_dict)
-
-    def delete(self, basket):
-        basket.request.session.pop(basket.basket_name, None)
-
-
-class DictStoredBasket(object):
-    def __init__(self, id, shop_id, currency, prices_include_tax, data):
-        self.id = id
-        self.shop_id = shop_id
-        self.currency = currency
-        self.prices_include_tax = prices_include_tax
-        self.data = (data or {})
-
-    @classmethod
-    def from_basket_and_data(cls, basket, data):
-        return cls(
-            id=(getattr(basket, "id", None) or basket.basket_name),
-            shop_id=basket.shop.id,
-            currency=basket.currency,
-            prices_include_tax=basket.prices_include_tax,
-            data=data,
-        )
-
-    @classmethod
-    def from_dict(cls, mapping):
-        return cls(**mapping)
-
-    def as_dict(self):
-        return {
-            "id": self.id,
-            "shop_id": self.shop_id,
-            "currency": self.currency,
-            "prices_include_tax": self.prices_include_tax,
-            "data": self.data,
-        }
 
 
 class DatabaseBasketStorage(BasketStorage):
