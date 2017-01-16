@@ -33,12 +33,14 @@ from ._product_variation import (
 )
 
 
+# TODO (2.0): This should be extandable
 class ProductMode(Enum):
     NORMAL = 0
     PACKAGE_PARENT = 1
     SIMPLE_VARIATION_PARENT = 2
     VARIABLE_VARIATION_PARENT = 3
     VARIATION_CHILD = 4
+    SUBSCRIPTION = 5  # This is like package_parent and all the functionality is same under the hood.
 
     class Labels:
         NORMAL = _('normal')
@@ -46,6 +48,7 @@ class ProductMode(Enum):
         SIMPLE_VARIATION_PARENT = _('variation parent (simple)')
         VARIABLE_VARIATION_PARENT = _('variation parent (variable)')
         VARIATION_CHILD = _('variation child')
+        SUBSCRIPTION = _('subscription')
 
 
 class ProductVisibility(Enum):
@@ -127,6 +130,10 @@ class ProductType(TranslatableModel):
 
 
 class ProductQuerySet(TranslatableQuerySet):
+
+    def _get_invisible_modes(self):
+        return [ProductMode.VARIATION_CHILD]
+
     def _visible(self, shop, customer, language=None):
         root = (self.language(language) if language else self)
 
@@ -137,11 +144,8 @@ class ProductQuerySet(TranslatableQuerySet):
             qs = root.all().exclude(Q(
                         shop_products__shop=shop,
                         shop_products__visibility=ShopProductVisibility.NOT_VISIBLE
-                    )).filter(
-                mode__in=(
-                    ProductMode.NORMAL, ProductMode.PACKAGE_PARENT,
-                    ProductMode.SIMPLE_VARIATION_PARENT, ProductMode.VARIABLE_VARIATION_PARENT
-                )
+                    )).exclude(
+                mode__in=self._get_invisible_modes()
             )
             if customer and not customer.is_anonymous:
                 visible_to_logged_in_q = Q(shop_products__visibility_limit__in=(
