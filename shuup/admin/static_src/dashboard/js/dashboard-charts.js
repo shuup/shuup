@@ -8,7 +8,7 @@
  */
 window.DashboardCharts = (function(Chart) {
     // colors from shuup/admin/static_src/base/less/variables.less
-    let colorPallete = [
+    let colorPalette = [
         "#429AAF",
         "#C54141",
         "#D16B2C",
@@ -21,14 +21,14 @@ window.DashboardCharts = (function(Chart) {
     ];
     let nextColorIndex = 0;
 
-    function getNextColorFromPallete (){
-        return colorPallete[nextColorIndex++ % colorPallete.length];
+    function getNextColorFromPalette (){
+        return colorPalette[nextColorIndex++ % colorPalette.length];
     }
     function configureChartData(chartData){
-        let color = getNextColorFromPallete();
+        const color = getNextColorFromPalette();
         chartData.backgroundColor = color;
 
-        if (chartData.type == "line"){
+        if (chartData.type === "line"){
             chartData.borderColor = color;
             chartData.fill = false;
         }
@@ -41,7 +41,7 @@ window.DashboardCharts = (function(Chart) {
         }
 
         let chartData = {};
-        if (config.type == "mixed"){
+        if (config.type === "mixed"){
             _.each(config.data, configureChartData);
 
             chartData = {
@@ -51,8 +51,8 @@ window.DashboardCharts = (function(Chart) {
                     datasets: config.data,
                 },
                 options: config.options
-            }
-        }else{
+            };
+        } else {
             _.each(config.data.datasets, configureChartData);
             chartData = {
                 type: config.type,
@@ -67,8 +67,8 @@ window.DashboardCharts = (function(Chart) {
             callbacks: {
                 label: function(tooltipItem, data){
                     let datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
-                    let formattedData = data.datasets[tooltipItem.datasetIndex].formatted_data;
-                    let value = formattedData ? formattedData[tooltipItem.index] : tooltipItem.yLabel.toLocaleString();
+                    const formattedData = data.datasets[tooltipItem.datasetIndex].formatted_data;
+                    const value = formattedData ? formattedData[tooltipItem.index] : tooltipItem.yLabel.toLocaleString();
                     return datasetLabel + ': ' + value;
                 }
             }

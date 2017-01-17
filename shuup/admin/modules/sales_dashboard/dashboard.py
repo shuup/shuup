@@ -9,11 +9,12 @@
 from __future__ import unicode_literals
 
 from collections import OrderedDict
-from datetime import date
+from datetime import date, timedelta
 from decimal import Decimal
 
 import six
 from babel.dates import format_date
+from dateutil import rrule
 from django.db.models import Avg, Count, Sum
 from django.utils.translation import ugettext_lazy as _
 
@@ -30,6 +31,10 @@ from shuup.utils.i18n import get_current_babel_locale
 
 def get_orders_by_currency(currency):
     return Order.objects.filter(currency=currency)
+
+
+def month_iter(start_date, end_date):
+    return ((d.month, d.year) for d in rrule.rrule(rrule.MONTHLY, dtstart=start_date, until=end_date))
 
 
 class OrderValueChartDashboardBlock(DashboardChartBlock):
@@ -68,36 +73,30 @@ class OrderValueChartDashboardBlock(DashboardChartBlock):
         }
 
         today = date.today()
-        start_of_year = date(today.year, 1, 1)
+        chart_start_date = today - timedelta(days=365)
 
         orders = get_orders_by_currency(self.currency)
         sum_sales_data = group_by_period(
-            orders.valid().since((today - start_of_year).days),
+            orders.valid().since((today - chart_start_date).days),
             "order_date",
             "month",
             sum=Sum("taxful_total_price_value")
         )
 
-        # let's fill the gaps if there is some month without sales
-        if len(sum_sales_data) > 1:
-            sales_dates = list(sum_sales_data.keys())
-            first_month = sales_dates[0].month
-            last_month = sales_dates[-1].month
+        for (month, year) in month_iter(chart_start_date, today):
+            sales_date = date(year, month, 1)
+            if sales_date not in sum_sales_data:
+                sum_sales_data[sales_date] = {"sum": Decimal(0)}
 
-            for month in range(first_month+1, last_month):
-                sales_date = date(today.year, month, 1)
-                if sales_date not in sum_sales_data:
-                    sum_sales_data[sales_date] = {"sum": Decimal(0)}
-
-            # sort and recreated the ordered dict since we've put new items into
-            sum_sales_data = OrderedDict(sorted(six.iteritems(sum_sales_data), key=lambda x: x[0]))
+        # sort and recreated the ordered dict since we've put new items into
+        sum_sales_data = OrderedDict(sorted(six.iteritems(sum_sales_data), key=lambda x: x[0]))
 
         locale = get_current_babel_locale()
         labels = [
             format_date(k, format=get_year_and_month_format(locale), locale=locale)
             for k in sum_sales_data
         ]
-        mixed_chart = MixedChart(title=_("Sales per Month (this year)"),
+        mixed_chart = MixedChart(title=_("Sales per Month (past 12 months)"),
                                  labels=labels,
                                  data_type=ChartDataType.CURRENCY,
                                  options=chart_options,
