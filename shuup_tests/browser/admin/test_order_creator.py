@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import decimal
+import time
 import os
 
 import pytest
@@ -32,8 +33,8 @@ OBJECT_CREATED_LOG_IDENTIFIER = "object_created_signal_handled"
 @pytest.mark.djangodb
 def test_order_creator_view(browser, admin_user, live_server, settings):
     shop = get_default_shop()
-    pm = get_default_payment_method()
     sm = get_default_shipping_method()
+    pm = get_default_payment_method()
     get_initial_order_status()
     supplier = get_default_supplier()
     person = create_random_person()
@@ -48,7 +49,7 @@ def test_order_creator_view(browser, admin_user, live_server, settings):
     _test_regions(browser, person)
     _test_add_lines(browser)
     _test_quick_add_lines(browser)
-    _test_methods(browser)
+    _test_methods(browser, sm, pm)
     _test_confirm(browser)
     assert Order.objects.first().log_entries.filter(identifier=OBJECT_CREATED_LOG_IDENTIFIER).count() == 1
     object_created.disconnect(sender=Order, dispatch_uid="object_created_signal_test")
@@ -78,13 +79,10 @@ def _test_language_change(browser):
     browser.find_by_id("dropdownMenu").click()
     browser.find_by_xpath('//a[@data-value="fi"]').first.click()
 
+    browser.reload()
     wait_until_appeared(browser, "h2[class='block-title']")
-    found_customer_details_fi = False
-    for block_title in browser.find_by_css("h2[class='block-title']"):
-        if "Asiakkaan tiedot" in block_title.text:
-            found_customer_details_fi = True
-
-    assert found_customer_details_fi
+    texts = [block_title.text for block_title in browser.find_by_css("h2[class='block-title']")]
+    assert "Asiakkaan tiedot" in texts
 
     # And back in English
     browser.find_by_id("dropdownMenu").click()
@@ -131,12 +129,13 @@ def _test_customer_data(browser, person):
     browser.find_by_css("input.select2-search__field").first.value = person.name
     wait_until_appeared(browser, ".select2-results__option:not([aria-live='assertive'])")
     browser.execute_script('$($(".select2-results__option")[0]).trigger({type: "mouseup"})')
-    wait_until_condition(browser, lambda x: len(x.find_by_css(".view-details-link")) == 1)
+    wait_until_appeared(browser, ".view-details-link")
 
 
 def _test_regions(browser, person):
     with pytest.raises(ElementDoesNotExist):
         browser.find_by_css("input[name='billing-region_code']").first
+    wait_until_appeared(browser, "input[name='billing-region']", timeout=15)
     assert browser.find_by_css("input[name='billing-region']").first
     browser.select("billing-country", "US")
     wait_until_appeared(browser, "select[name='billing-region_code']")
@@ -206,19 +205,26 @@ def _test_quick_add_lines(browser):
     assert len(line_items) == 2, "two line items exist"
 
 
-def _test_methods(browser):
+def _test_methods(browser, sm, pm):
     # check defaults
-    assert browser.find_by_name("shipping").value == "0"
-    assert browser.find_by_name("payment").value == "0"
-    browser.select("shipping", 1)
-    browser.select("payment", 1)
+    wait_until_appeared(browser, '[name="shipping"]', timeout=30)
+    shipping = browser.find_by_name("shipping")
+    payment = browser.find_by_name("payment")
+    assert shipping.value == "0"
+    assert payment.value == "0"
+    browser.select("shipping", sm.pk)
+    browser.select("payment", pm.pk)
 
 
 def _test_confirm(browser):
     total = sum([decimal.Decimal(total_el.value) for total_el in browser.find_by_css("input[name='total']")])
     assert str(total) in browser.find_by_css(".order-footer h2").text, "order total is correct"
     click_element(browser, ".order-footer button")
-    wait_until_appeared(browser, ".btn-danger")  # wait until the back button appears
+    time.sleep(15)
+    try:
+        wait_until_appeared(browser, ".btn-danger", timeout=15)  # wait until the back button appears
+    except:
+        time.sleep(1000)
     assert len(browser.find_by_css("table tbody tr")) == 5, "2 line items, 2 methods, 1 total line shown in confirmation table"
     # click confirm
     click_element(browser, ".btn-success")

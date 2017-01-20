@@ -9,7 +9,7 @@ import os
 
 import pytest
 
-from shuup.testing.browser_utils import wait_until_condition
+from shuup.testing.browser_utils import wait_until_condition, click_element
 from shuup.testing.factories import get_default_shop
 from shuup.testing.utils import initialize_admin_browser_test
 
@@ -28,6 +28,6 @@ def test_menu(browser, admin_user, live_server, settings):
 
     # Make sure that the menu is clickable in small devices
     browser.driver.set_window_size(480, 960)
-    browser.find_by_css("#menu-button").first.click()
-    browser.find_by_css(".menu-list li").first.click()
+    click_element(browser, "#menu-button")
+    click_element(browser, ".menu-list li")
     wait_until_condition(browser, lambda x: x.is_text_present("New product"))

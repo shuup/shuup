@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
+import time
 import pytest
 
 from django.core.urlresolvers import reverse
@@ -16,7 +17,7 @@ from shuup.core.models import (
 )
 from shuup.testing.browser_utils import (
     click_element, wait_until_appeared, wait_until_condition,
-    wait_until_disappeared
+    wait_until_disappeared, wait_until_appeared_xpath
 )
 from shuup.testing.factories import (
     create_product, get_default_payment_method, get_default_shipping_method,
@@ -130,7 +131,10 @@ def guest_ordering_test(browser, live_server):
     wait_until_appeared(browser, "div.form-group.passwordinput.required.has-error")
     browser.fill("login-password", "test-password")
     click_element(browser, "button[name='login']")
-    wait_until_condition(browser, lambda x: x.is_text_present("Please enter a correct username and password."))
+    time.sleep(0.5)
+    wait_until_condition(browser,
+                         lambda x: x.is_text_present("Please enter a correct username and password."),
+                         timeout=30)
     wait_until_appeared(browser, "div.alert.alert-danger")
 
     click_element(browser, "button[data-id='id_checkout_method_choice-register']")
@@ -147,6 +151,7 @@ def register_test(browser, live_server, test_username, test_email, test_password
     click_element(browser, "div.clearfix button.btn.btn-primary.btn-lg.pull-right")
     wait_until_condition(browser, lambda x: x.is_text_present("Register"))
 
+    wait_until_appeared(browser, "#id_username")
     browser.find_by_id("id_username").fill(test_username)
     browser.find_by_id("id_email").fill(test_email)
     browser.find_by_id("id_password1").fill(test_password)
@@ -161,15 +166,29 @@ def register_test(browser, live_server, test_username, test_email, test_password
     wait_until_condition(browser, lambda x: x.is_text_present("Addresses"))
     # Reload here just in case since there might have been reload with JS
     # which might cause issues with tests since the elements is in cache
+    time.sleep(2)
     browser.reload()
+    time.sleep(2)
+
+    try:
+        alert = browser.get_alert()
+        if alert:
+            alert.dismiss()
+    except:
+        pass
 
     # Log out and go back to checkout choice phase
+    wait_until_appeared(browser, "div.top-nav i.menu-icon.fa.fa-user", timeout=30)
     click_element(browser, "div.top-nav i.menu-icon.fa.fa-user")
-    click_element(browser, "a[href='/logout/']")
+    wait_until_appeared(browser, 'a[href="/logout/"]', timeout=30)
+    click_element(browser, 'a[href="/logout/"]')
 
     # Ensure that the language is still english. It seems that the language might change
     # during the logout.
-    browser.find_by_id("language-changer").click()
+    time.sleep(2)
+    wait_until_appeared(browser, "#language-changer", timeout=30)
+    click_element(browser, "#language-changer")
+    wait_until_appeared_xpath(browser, '//a[@class="language"]')
     browser.find_by_xpath('//a[@class="language"]').first.click()
 
     # There is no products on basket anymore so let's add one
@@ -178,8 +197,8 @@ def register_test(browser, live_server, test_username, test_email, test_password
     browser.visit("%s%s" % (live_server, product_url))
     click_element(browser, "#add-to-cart-button-%s" % product.pk)  # add product to basket
 
-    wait_until_appeared(browser, ".cover-wrap")
-    wait_until_disappeared(browser, ".cover-wrap")
+    wait_until_appeared(browser, ".cover-wrap", timeout=30)
+    wait_until_disappeared(browser, ".cover-wrap", timeout=30)
 
     browser.visit("%s%s" % (live_server, "/checkout/"))
 

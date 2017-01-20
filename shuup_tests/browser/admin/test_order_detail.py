@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
+import time
 
 import pytest
 from django.core.urlresolvers import reverse
@@ -57,6 +58,7 @@ def change_addresses(live_server, browser, order):
     browser.fill("billing_address-email", new_email)
     assert new_email != order.billing_address.email
     click_element(browser, "button[form='edit-addresses']")
+    wait_until_appeared(browser, "div[class='message success']")
     assert order.log_entries.filter(identifier=ADDRESS_EDITED_LOG_IDENTIFIER).count() == order_edited_log_entries + 1
     order.refresh_from_db()
     assert new_email == order.billing_address.email
@@ -70,6 +72,7 @@ def change_addresses(live_server, browser, order):
     browser.fill("shipping_address-postal_code", new_postal_code)
     assert new_postal_code != order.shipping_address.postal_code
     click_element(browser, "button[form='edit-addresses']")
+    wait_until_appeared(browser, "div[class='message success']")
     assert order.log_entries.filter(identifier=ADDRESS_EDITED_LOG_IDENTIFIER).count() == order_edited_log_entries + 2
     order.refresh_from_db()
     assert new_postal_code == order.shipping_address.postal_code
@@ -83,6 +86,7 @@ def change_addresses(live_server, browser, order):
     new_name = "%s (edited)" % order.billing_address.name
     browser.fill("billing_address-name", new_name)
     click_element(browser, "button[form='edit-addresses']")
+    wait_until_appeared(browser, "div[class='message success']")
     assert order.log_entries.filter(identifier=ADDRESS_EDITED_LOG_IDENTIFIER).count() == order_edited_log_entries + 4
     order.refresh_from_db()
     assert new_name == order.shipping_address.name
@@ -91,10 +95,16 @@ def change_addresses(live_server, browser, order):
 
 
 def set_status(browser, order, status):
+    time.sleep(2)
     click_element(browser, "button.set-status-button")
     form_action = reverse("shuup_admin:order.set-status", kwargs={"pk": order.pk})
     click_element(browser, "button[formaction='%s'][value='%s']" % (form_action, status.pk))
     wait_until_appeared(browser, "div[class='message success']")
     wait_until_condition(browser, condition=lambda x: x.is_text_present("Order %s" % order.pk))
-    order.refresh_from_db()
+    for i in range(10):
+        order.refresh_from_db()
+        if order.status.pk == status.pk:
+            break
+        time.sleep(0.1 * i)
     assert order.status.pk == status.pk
+

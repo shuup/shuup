@@ -13,6 +13,9 @@ from django.utils.translation import activate
 
 from shuup import configuration
 from shuup.testing.factories import get_default_shop
+from shuup.testing.browser_utils import (
+    wait_until_appeared, wait_until_appeared_xpath, click_element
+)
 
 
 def apply_request_middleware(request, **attrs):
@@ -114,7 +117,10 @@ def initialize_admin_browser_test(browser, live_server, settings, username="admi
     browser.fill('password', password)
     browser.find_by_css(".btn.btn-primary.btn-lg.btn-block").first.click()
     # set shop language to eng
-    browser.find_by_id("dropdownMenu").click()
+
+    wait_until_appeared(browser, "#dropdownMenu")
+    click_element(browser, '#dropdownMenu')
+    wait_until_appeared_xpath(browser, '//a[@data-value="en"]')
     browser.find_by_xpath('//a[@data-value="en"]').first.click()
 
     return browser
