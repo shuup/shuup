@@ -14,8 +14,8 @@ from django.shortcuts import redirect
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.front.basket import commands
-from shuup.front.signals import get_basket_command_handler
+from shuup.core.basket import commands
+from shuup.core.signals import get_basket_command_handler
 from shuup.utils.excs import Problem
 
 

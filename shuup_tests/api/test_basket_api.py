@@ -13,7 +13,7 @@ from rest_framework import status
 from rest_framework.test import APIClient
 
 from shuup.core import cache
-from shuup.front.models import StoredBasket
+from shuup.core.models import StoredBasket
 from shuup_tests.campaigns.test_discount_codes import get_default_campaign, Coupon
 from shuup.testing import factories
 

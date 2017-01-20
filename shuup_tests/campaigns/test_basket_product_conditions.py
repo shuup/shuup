@@ -13,7 +13,7 @@ from shuup.campaigns.models.basket_conditions import (
     ComparisonOperator, ProductsInBasketCondition
 )
 from shuup.core.models import ProductMode
-from shuup.front.basket import get_basket
+from shuup.core.basket import get_basket
 from shuup.testing.factories import create_product, get_default_supplier
 from shuup_tests.campaigns import initialize_test
 
@@ -108,7 +108,6 @@ def test_basket_total_amount_conditions(rf):
     condition2.save()
 
     assert not condition2.matches(basket, [])
-
 
 
 @pytest.mark.django_db

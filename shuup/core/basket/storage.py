@@ -13,7 +13,7 @@ import uuid
 import six
 
 from shuup.core.utils.users import real_user_or_none
-from shuup.front.models import StoredBasket
+from shuup.core.models import StoredBasket
 from shuup.utils.importing import cached_load
 
 
@@ -26,7 +26,7 @@ class BasketStorage(six.with_metaclass(abc.ABCMeta)):
         """
         Load the given basket's data dictionary from the storage.
 
-        :type basket: shuup.front.basket.objects.BaseBasket
+        :type basket: shuup.core.basket.objects.BaseBasket
         :rtype: dict
         :raises:
           `BasketCompatibilityError` if basket loaded from the storage
@@ -58,7 +58,7 @@ class BasketStorage(six.with_metaclass(abc.ABCMeta)):
         The returned object should have ``id``, ``shop_id``,
         ``currency``, ``prices_include_tax`` and ``data`` attributes.
 
-        :type basket: shuup.front.basket.objects.BaseBasket
+        :type basket: shuup.core.basket.objects.BaseBasket
         :return: Stored basket or None
         """
         pass
@@ -68,7 +68,7 @@ class BasketStorage(six.with_metaclass(abc.ABCMeta)):
         """
         Save the given data dictionary into the storage for the given basket.
 
-        :type basket: shuup.front.basket.objects.BaseBasket
+        :type basket: shuup.core.basket.objects.BaseBasket
         :type data: dict
         """
         pass
@@ -78,7 +78,7 @@ class BasketStorage(six.with_metaclass(abc.ABCMeta)):
         """
         Delete the basket from storage.
 
-        :type basket: shuup.front.basket.objects.BaseBasket
+        :type basket: shuup.core.basket.objects.BaseBasket
         """
         pass
 
@@ -88,7 +88,7 @@ class BasketStorage(six.with_metaclass(abc.ABCMeta)):
 
         The actual semantics of what finalization does are up to each backend.
 
-        :type basket: shuup.front.basket.objects.BaseBasket
+        :type basket: shuup.core.basket.objects.BaseBasket
         """
         self.delete(basket=basket)
 
@@ -99,7 +99,7 @@ class DatabaseBasketStorage(BasketStorage):
 
     def save(self, basket, data):
         """
-        :type basket: shuup.front.basket.objects.BaseBasket
+        :type basket: shuup.core.basket.objects.BaseBasket
         """
         request = basket.request
         stored_basket = self._get_stored_basket(basket)

@@ -14,6 +14,7 @@ from django.db.models import Q
 from shuup.campaigns.models import CatalogCampaign
 from shuup.testing.factories import get_default_shop
 
+
 def get_datetimes():
     past_datetime = datetime.datetime.now() - datetime.timedelta(days=2)
     future_datetime = datetime.datetime.now() + datetime.timedelta(days=2)

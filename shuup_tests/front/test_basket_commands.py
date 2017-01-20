@@ -14,10 +14,10 @@ from django.http.response import HttpResponseRedirect, JsonResponse
 from shuup.core.models import (
     ProductVariationVariable, ProductVariationVariableValue, ShopProductVisibility
 )
-from shuup.front.basket import commands as basket_commands
-from shuup.front.basket import get_basket_command_dispatcher
-from shuup.front.basket.command_dispatcher import BasketCommandDispatcher
-from shuup.front.signals import get_basket_command_handler
+from shuup.core.basket import commands as basket_commands
+from shuup.core.basket import get_basket_command_dispatcher
+from shuup.core.basket.command_dispatcher import BasketCommandDispatcher
+from shuup.core.signals import get_basket_command_handler
 from shuup.testing.factories import (
     create_product, get_default_product, get_default_shop,
     get_default_supplier

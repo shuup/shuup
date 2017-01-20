@@ -8,11 +8,10 @@
 import pytest
 from django.conf import settings
 from django.db.models import Sum
-from django.test.utils import override_settings
 
 from shuup.core.models import ShippingMode
-from shuup.front.basket import get_basket
-from shuup.front.models import StoredBasket
+from shuup.core.basket import get_basket
+from shuup.core.models import StoredBasket
 from shuup.testing.factories import (
     create_product, get_default_shop, get_default_payment_method,
     get_default_supplier, get_shipping_method

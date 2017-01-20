@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.front.models import StoredBasket
+from shuup.core.models import StoredBasket
 from shuup.front.utils.dashboard import DashboardItem
 
 
