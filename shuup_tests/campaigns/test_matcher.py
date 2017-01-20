@@ -79,7 +79,6 @@ def test_ultrafilter():
     uf.category = None
     uf.save()
 
-
     # test product_type
     assert not matcher.matches(uf)
     uf.product_types.add(product.type)

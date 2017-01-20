@@ -13,7 +13,7 @@ from shuup.campaigns.models.basket_conditions import (
 from shuup.campaigns.models.basket_effects import BasketDiscountAmount
 from shuup.campaigns.models.campaigns import BasketCampaign
 from shuup.core.models import AnonymousContact, Shop
-from shuup.front.basket import get_basket
+from shuup.core.basket import get_basket
 from shuup.testing.factories import (
     create_product, create_random_person, get_default_customer_group,
     get_default_supplier, get_payment_method, get_shipping_method, get_shop
@@ -43,7 +43,6 @@ def create_basket_and_campaign(request, conditions, product_price_value, campaig
     assert original_line_count == 2
     assert basket.product_count == 1
     original_price = basket.total_price
-
 
     campaign = BasketCampaign.objects.create(
         shop=request.shop, name="test", public_name="test", active=True)

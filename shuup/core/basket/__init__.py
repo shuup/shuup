@@ -22,7 +22,7 @@ def get_basket_view():
 def get_basket_command_dispatcher(request):
     """
     :type request: django.http.request.HttpRequest
-    :rtype: shuup.front.basket.command_dispatcher.BasketCommandDispatcher
+    :rtype: shuup.core.basket.command_dispatcher.BasketCommandDispatcher
     """
     return cached_load("SHUUP_BASKET_COMMAND_DISPATCHER_SPEC")(request=request)
 
@@ -30,7 +30,7 @@ def get_basket_command_dispatcher(request):
 def get_basket(request):
     """
     :type request: django.http.request.HttpRequest
-    :rtype: shuup.front.basket.objects.BaseBasket
+    :rtype: shuup.core.basket.objects.BaseBasket
     """
     if not hasattr(request, "basket"):
         basket_class = cached_load("SHUUP_BASKET_CLASS_SPEC")

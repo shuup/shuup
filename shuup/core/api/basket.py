@@ -25,7 +25,7 @@ from shuup.core.fields import (
     FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES, FORMATTED_DECIMAL_FIELD_MAX_DIGITS
 )
 from shuup.core.models import OrderLineType, Product
-from shuup.front.basket import get_basket_command_dispatcher
+from shuup.core.basket import get_basket_command_dispatcher
 from shuup.utils.importing import cached_load
 
 
@@ -195,13 +195,6 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         """
         Create a brand new basket object
         """
-
-        # TODO: Create a custom storage to use in APIs, probably
-        # a new setting will be needed to point to that storage
-        # The storage need to save and load the basket without
-        # any bind to the Session. Here, we need a storage
-        # that save the basket using a UUID and retrieves it
-        # by the same UUID.
 
         basket_class = cached_load("SHUUP_BASKET_CLASS_SPEC")
         basket_uuid = uuid1().hex

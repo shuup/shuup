@@ -19,7 +19,7 @@ from shuup.campaigns.models.basket_line_effects import (
 )
 from shuup.campaigns.models.catalog_filters import ProductFilter
 from shuup.campaigns.models.product_effects import ProductDiscountPercentage
-from shuup.front.basket import get_basket
+from shuup.core.basket import get_basket
 from shuup.testing.factories import (
     create_product, get_default_category, get_default_supplier,
     get_shipping_method

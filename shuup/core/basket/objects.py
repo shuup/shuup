@@ -20,7 +20,7 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.core.models import OrderLineType, PaymentMethod, ShippingMethod
 from shuup.core.order_creator import OrderSource, SourceLine
 from shuup.core.order_creator._source import LineSource
-from shuup.front.basket.storage import BasketCompatibilityError, get_storage
+from shuup.core.basket.storage import BasketCompatibilityError, get_storage
 from shuup.utils.numbers import parse_decimal_string
 from shuup.utils.objects import compare_partial_dicts
 

@@ -11,6 +11,7 @@ from django.utils.encoding import force_text
 
 from shuup.campaigns.models.campaigns import Coupon
 
+
 @pytest.mark.django_db
 def test_utf8_coupon_force_text(rf):
     code = u"HEINÄ"

@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from django.views.generic import TemplateView, View
 
-from shuup.front.basket import get_basket_command_dispatcher, get_basket_view
+from shuup.core.basket import get_basket_command_dispatcher, get_basket_view
 
 
 class DefaultBasketView(TemplateView):
@@ -15,7 +15,7 @@ class DefaultBasketView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(DefaultBasketView, self).get_context_data()
-        basket = self.request.basket  # type: shuup.front.basket.objects.BaseBasket
+        basket = self.request.basket  # type: shuup.core.basket.objects.BaseBasket
         context["basket"] = basket
         context["errors"] = list(basket.get_validation_errors())
         return context

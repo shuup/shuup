@@ -24,6 +24,7 @@ from shuup.core.api.suppliers import SupplierViewSet
 from shuup.core.api.tax_class import TaxClassViewSet
 from shuup.core.api.units import SalesUnitViewSet
 from shuup.core.api.users import UserViewSet
+from shuup.core.api.basket import BasketViewSet
 
 
 def populate_core_api(router):
@@ -50,3 +51,4 @@ def populate_core_api(router):
     router.register("shuup/user", UserViewSet)
     router.register("shuup/sales_unit", SalesUnitViewSet)
     router.register("shuup/tax_class", TaxClassViewSet)
+    router.register("shuup/basket", BasketViewSet)
