@@ -12,10 +12,10 @@ from django.utils.module_loading import import_string
 from django.utils.translation import activate
 
 from shuup import configuration
-from shuup.testing.factories import get_default_shop
 from shuup.testing.browser_utils import (
-    wait_until_appeared, wait_until_appeared_xpath, click_element
+    click_element, wait_until_appeared, wait_until_appeared_xpath
 )
+from shuup.testing.factories import get_default_shop
 
 
 def apply_request_middleware(request, **attrs):
