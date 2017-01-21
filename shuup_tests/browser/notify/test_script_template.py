@@ -82,7 +82,8 @@ def test_generic_script_template(browser, admin_user, live_server, settings, scr
     browser.find_by_id("id_en-subject").fill("custom subject!")
     browser.find_by_css("form button.btn.btn-lg.btn-primary").first.click()
 
-    assert browser.is_text_not_present("This field is required.", timeout=20)
+    time.sleep(0.4)
+    assert browser.is_text_not_present("This field is required.")
 
     script_list_url = reverse("shuup_admin:notify.script.list")
     try:
@@ -309,7 +310,7 @@ def test_dummy_script_template(browser, admin_user, live_server, settings):
         wait_until_condition(browser, lambda x: x.is_element_present_by_id(form_id))
 
         btn_create_css = "#{} button.btn.btn-success".format(form_id)
-        wait_until_condition(browser, lambda x: x.is_element_present_by_css(btn_create_css))
+        wait_until_appeared(browser, btn_create_css, timeout=30)
         browser.find_by_css(btn_create_css).first.click()
 
         wait_until_condition(browser, lambda b: b.url.endswith(reverse("shuup_admin:notify.script.list")))
