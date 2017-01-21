@@ -63,8 +63,7 @@ def test_generic_script_template(browser, admin_user, live_server, settings, scr
     identifier = script_template_cls.identifier
     form_id = "form-" + identifier
     button_id = "#{} button.btn.btn-success".format(form_id)
-    # wait_until_condition(browser, lambda x: x.is_element_present_by_css(button_id))
-    wait_until_appeared(browser, button_id)
+    wait_until_appeared(browser, button_id, timeout=20)
     browser.find_by_css(button_id).first.click()
 
     config_url = reverse("shuup_admin:notify.script-template-config", kwargs={"id": identifier})
@@ -72,16 +71,18 @@ def test_generic_script_template(browser, admin_user, live_server, settings, scr
     wait_until_condition(browser, lambda b: b.is_text_present("Configure the Script Template"))
 
     # click to create the script
-    time.sleep(1)
     browser.execute_script("""
         $(document).ready(function(){
-            $('#lang-en .summernote-editor').summernote('editor.insertText', 'NEW CONTENT');
+            setTimeout(function() {
+                $('#lang-en .summernote-editor').summernote('editor.insertText', 'NEW CONTENT');
+            }, 500)
         });
     """)
-    time.sleep(0.3)
+    time.sleep(0.7)
     browser.find_by_id("id_en-subject").fill("custom subject!")
     browser.find_by_css("form button.btn.btn-lg.btn-primary").first.click()
-    assert browser.is_text_not_present("This field is required.")
+
+    assert browser.is_text_not_present("This field is required.", timeout=20)
 
     script_list_url = reverse("shuup_admin:notify.script.list")
     try:
@@ -135,7 +136,6 @@ def test_generic_custom_email_script_template(browser, admin_user, live_server, 
     wait_until_condition(browser, lambda b: b.url.endswith(config_url), timeout=15)
     wait_until_condition(browser, lambda b: b.is_text_present("Configure the Script Template"))
 
-
     # fill form
     browser.select('base-send_to', 'other')
     browser.find_by_id("id_base-recipient").fill("other@shuup.com")
@@ -163,7 +163,7 @@ def test_generic_custom_email_script_template(browser, admin_user, live_server, 
         script = Script.objects.first()
         if script:
             break
-        sleep(1)
+        time.sleep(1)
 
     assert script
     serialized_steps = script.get_serialized_steps()
