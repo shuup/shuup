@@ -59,6 +59,7 @@ window.BrowseAPI = (function() {
         const id = "m-" + (+new Date);
         const qs = _.compact([
             "popup=1",
+            "kind=" + kind,
             "pick=" + id,
             (filter ? "filter=" + filter : null),
             (disabledMenus ? "disabledMenus=" + disabledMenus.join(",") : null)
