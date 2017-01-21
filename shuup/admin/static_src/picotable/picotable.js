@@ -605,7 +605,8 @@ const Picotable = (function(m, storage) {
 
     function renderMassActions(ctrl) {
         var massActions = (ctrl.vm.data() ? ctrl.vm.data().massActions : null);
-        if (massActions == null) {
+        var isPick = !!ctrl.vm.pickId();
+        if (massActions == null || isPick) {
             return "";
         }
         var select2Config = function() {
