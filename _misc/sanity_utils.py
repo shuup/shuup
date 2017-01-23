@@ -28,6 +28,7 @@ IGNORED_DIRS = [
     'var',
     'venv*',
     'static',
+    'geckodriver',
 ]
 
 IGNORED_PATH_REGEXPS = [
