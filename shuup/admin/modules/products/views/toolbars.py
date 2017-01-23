@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
+from enumfields import Enum
 
 from shuup.admin.toolbar import (
     DropdownActionButton, DropdownDivider, DropdownHeader, DropdownItem,
@@ -18,6 +19,15 @@ from shuup.admin.utils.urls import get_model_url
 from shuup.apps.provides import get_provide_objects
 
 
+class ProductActionCategory(Enum):
+    MAIN = 1
+    CHILD_CROSS_SELL = 2
+    CHILD_PACKAGE = 3
+    CHILD_VARIATION = 4
+    CHILD_OTHER = 5
+
+
+# TODO: Rewrite this for 2.0.
 class EditProductToolbar(Toolbar):
     def __init__(self, view):
         super(EditProductToolbar, self).__init__()
@@ -31,10 +41,7 @@ class EditProductToolbar(Toolbar):
         if self.product.pk:
             self._build_existing_product()
 
-    def _build_existing_product(self):
-        product = self.product
-        # :type product: shuup.core.models.Product
-
+    def _build_static_buttons(self, product):
         save_as_copy_button = JavaScriptActionButton(
             onclick="saveAsACopy()",
             text=_("Save as a copy"),
@@ -42,34 +49,51 @@ class EditProductToolbar(Toolbar):
         )
         self.append(save_as_copy_button)
 
+    def _build_existing_product(self):
+        product = self.product
+        # :type product: shuup.core.models.Product
+
+        # static buttons
+        self._build_static_buttons(product)
+        self._build_action_menu(product)
+
+    def _build_action_menu(self, product):
+        # cross selling
         cross_sell_button = DropdownItem(
             text=_("Manage Cross-Selling"),
             icon="fa fa-random",
-            url=reverse("shuup_admin:shop_product.edit_cross_sell", kwargs={"pk": product.pk}),
+            url=reverse("shuup_admin:shop_product.edit_cross_sell", kwargs={"pk": product.pk})
         )
-        menu_items = [
-            DropdownHeader(text=_("Cross-Selling")),
-            cross_sell_button
-        ]
+        menu_items = [menu_item for menu_item in self._get_header_items(
+                header=_("Cross-Selling"), divider=False, identifier=ProductActionCategory.CHILD_CROSS_SELL)]
+        menu_items.append(cross_sell_button)
 
+        # packages
         for item in self._get_variation_and_package_menu_items(product):
             menu_items.append(item)
 
-        for button in get_provide_objects("admin_product_toolbar_action_item"):
-            if button.visible_for_object(product):
-                menu_items.append(button(product))
+        provided_items = get_provide_objects("admin_product_toolbar_action_item")
+        if provided_items:
+            for item in self._get_header_items(header=_("Other"), identifier=ProductActionCategory.CHILD_OTHER):
+                menu_items.append(item)
 
-        if menu_items:
-            self.append(DropdownActionButton(
-                menu_items,
-                icon="fa fa-star",
-                text=_(u"Actions"),
-                extra_css_class="btn-info",
-            ))
+            for button in provided_items:
+                if button.visible_for_object(product):
+                    menu_items.append(button(product))
 
-    def _get_header_item(self, header):
-        yield DropdownDivider()
-        yield DropdownHeader(text=header)
+        # add the actual Action button
+        self.append(DropdownActionButton(
+            menu_items,
+            icon="fa fa-star",
+            text=_(u"Actions"),
+            extra_css_class="btn-info",
+            identifier=ProductActionCategory.MAIN
+        ))
+
+    def _get_header_items(self, header, divider=True, identifier=None):
+        if divider:
+            yield DropdownDivider()
+        yield DropdownHeader(text=header, identifier=identifier)
 
     def _get_package_url(self, product):
         return reverse("shuup_admin:shop_product.edit_package", kwargs={"pk": product.pk})
@@ -99,13 +123,15 @@ class EditProductToolbar(Toolbar):
             )
 
     def _get_variation_menu_items(self, product):
-        for item in self._get_header_item(_("Variations")):
+        for item in self._get_header_items(_("Variations"), identifier=ProductActionCategory.CHILD_VARIATION):
             yield item
+
         yield DropdownItem(
             text=_("Manage Variations"),
             icon="fa fa-sitemap",
             url=self._get_variation_url(product),
         )
+
         if product.is_variation_parent():
             for child in self._get_children_items(product.variation_children.all()):
                 yield child
@@ -114,14 +140,16 @@ class EditProductToolbar(Toolbar):
                 yield item
 
     def _get_package_menu_items(self, product):
-        for item in self._get_header_item(_("Packages")):
+        for item in self._get_header_items(_("Packages"), identifier=ProductActionCategory.CHILD_PACKAGE):
             yield item
-        yield DropdownItem(
-            text=_("Manage Package"),
-            icon="fa fa-cube",
-            url=self._get_package_url(product),
-        )
+
         if product.is_package_parent():
+            yield DropdownItem(
+                text=_("Manage Package"),
+                icon="fa fa-cube",
+                url=self._get_package_url(product),
+            )
+
             for child in self._get_children_items(product.get_all_package_children()):
                 yield child
         elif product.is_package_child():
@@ -136,20 +164,23 @@ class EditProductToolbar(Toolbar):
             for item in self._get_variation_menu_items(product):
                 yield item
 
-        is_package_product = (product.is_package_parent() or product.is_package_child())
+        is_package_product = (product.is_container() or product.is_package_child())
         if is_package_product:
             for item in self._get_package_menu_items(product):
                 yield item
 
         if not (is_variation_product or is_package_product):
-            for item in self._get_header_item(_("Packages")):
+            # package header
+            for item in self._get_header_items(_("Packages"), identifier=ProductActionCategory.CHILD_PACKAGE):
                 yield item
             yield DropdownItem(
                 text=_("Convert to Package Parent"),
                 icon="fa fa-retweet",
                 url=self._get_package_url(product),
             )
-            for item in self._get_header_item(_("Variations")):
+
+            # variation header
+            for item in self._get_header_items(_("Variations"), identifier=ProductActionCategory.CHILD_VARIATION):
                 yield item
             yield DropdownItem(
                 text=_("Convert to Variation Parent"),
