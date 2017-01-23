@@ -7,8 +7,6 @@
 
 from __future__ import unicode_literals
 
-from collections import OrderedDict
-
 from django import forms
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils.encoding import force_text
@@ -20,7 +18,7 @@ from shuup.admin.utils.urls import get_model_url
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import ServiceProvider
-from shuup.utils.iterables import first
+from shuup.core.utils.forms import FormInfoMap
 
 
 class ServiceProviderEditView(CreateOrUpdateView):
@@ -45,7 +43,7 @@ class ServiceProviderEditView(CreateOrUpdateView):
 
     def get_form(self, form_class=None):
         form_classes = list(get_provide_objects(self.form_provide_key))
-        form_infos = _FormInfoMap(form_classes)
+        form_infos = FormInfoMap(form_classes)
         if self.object and self.object.pk:
             return self._get_concrete_form(form_infos)
         else:
@@ -73,7 +71,7 @@ class ServiceProviderEditView(CreateOrUpdateView):
             required=type_enabled,
             initial=selected.choice_value,
             help_text=_(
-                "Ther service provider type. "
+                "The service provider type. "
                 "This can be any of the shipping carriers or payment processors configured for your shop."
             )
         )
@@ -102,29 +100,3 @@ class ServiceProviderEditView(CreateOrUpdateView):
             ))
 
         return toolbar
-
-
-class _FormInfoMap(OrderedDict):
-    def __init__(self, form_classes):
-        form_infos = (_FormInfo(formcls) for formcls in form_classes)
-        super(_FormInfoMap, self).__init__(
-            (form_info.choice_value, form_info) for form_info in form_infos)
-
-    def get_by_object(self, obj):
-        return first(
-            fi for fi in self.values() if isinstance(obj, fi.model))
-
-    def get_by_choice_value(self, choice_value):
-        return self.get(choice_value)
-
-    def get_type_choices(self):
-        return [(x.choice_value, x.choice_text) for x in self.values()]
-
-
-class _FormInfo(object):
-    def __init__(self, form_class):
-        self.form_class = form_class
-        self.model = form_class._meta.model
-        modelmeta = self.model._meta
-        self.choice_value = modelmeta.app_label + '.' + modelmeta.model_name
-        self.choice_text = modelmeta.verbose_name.capitalize()
