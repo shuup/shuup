@@ -86,6 +86,10 @@ Core
     Additional information rows for Order detail page. Provide objects should inherit
     from `~shuup.admin.modules.orders.utils.OrderInformation` class.
 
+``admin_main_menu_updater``
+    Allows updating the Admin Main Menu with new elements. The objects offered through this
+    provide should inherit from ``~shuup.core.utils.menu.MainMenuUpdater`` class.
+
 ``admin_product_form_part``
     Additional ``FormPart`` classes for Product editing.
     (This is used by pricing modules, for instance.) See :doc:`example <../howto/new_tab>`.

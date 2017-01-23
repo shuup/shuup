@@ -22,6 +22,7 @@ Localization
 Admin
 ~~~~~
 
+- Main menu is now updateable through provides.
 - Add new provide category called `order_printouts_delivery_extra_fields` 
   which can be used to add extra rows to order delivery slip.
 - Add new provide category called `admin_order_information` which can be used
