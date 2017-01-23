@@ -18,6 +18,8 @@ Localization
 Admin
 ~~~~~
 
+- Display last 12 months of sales in the dashboard chart
+
 Addons
 ~~~~~~
 
