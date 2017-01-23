@@ -118,7 +118,7 @@ def initialize_admin_browser_test(browser, live_server, settings, username="admi
     browser.find_by_css(".btn.btn-primary.btn-lg.btn-block").first.click()
     # set shop language to eng
 
-    wait_until_appeared(browser, "#dropdownMenu")
+    wait_until_appeared(browser, "#dropdownMenu", timeout=30)
     click_element(browser, '#dropdownMenu')
     wait_until_appeared_xpath(browser, '//a[@data-value="en"]')
     browser.find_by_xpath('//a[@data-value="en"]').first.click()

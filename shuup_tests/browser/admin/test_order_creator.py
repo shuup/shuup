@@ -143,7 +143,7 @@ def _test_regions(browser, person):
         browser.find_by_css("input[name='billing-region']").first
     browser.select("billing-region_code", "CA")
     browser.select("billing-country", "CG")  # Congo does not have regions defined
-    wait_until_appeared(browser, "input[name='billing-region']")
+    wait_until_appeared(browser, "input[name='billing-region']", timeout=30)
     browser.select("billing-country", person.default_billing_address.country)
 
 
