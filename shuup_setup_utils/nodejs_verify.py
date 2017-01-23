@@ -23,7 +23,7 @@ So, in short, to continue:
 """.strip()
 
 NO_NODE_WHATSOEVER = """
-You need to install Node.js (version 0.10 or newer) to continue.
+You need to install Node.js (version 0.12 or newer) to continue.
 Please see
   https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager
 for instructions relevant to your system.
