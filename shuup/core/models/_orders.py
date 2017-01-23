@@ -42,7 +42,6 @@ from shuup.core.signals import (
     payment_created, refund_created, shipment_created
 )
 from shuup.utils.analog import define_log_model, LogEntryKind
-from shuup.utils.excs import Problem
 from shuup.utils.money import Money
 from shuup.utils.properties import (
     MoneyPropped, TaxfulPriceProperty, TaxlessPriceProperty
@@ -604,6 +603,7 @@ class Order(MoneyPropped, models.Model):
     def can_create_shipment(self):
         return (self.get_unshipped_products() and not self.is_canceled() and self.shipping_address)
 
+    # TODO: Rethink either the usage of shipment parameter or renaming the method for 2.0
     @atomic
     def create_shipment(self, product_quantities, supplier=None, shipment=None):
         """
@@ -631,7 +631,6 @@ class Order(MoneyPropped, models.Model):
             raise NoShippingAddressException("Shipping address is not set on this order")
 
         assert (supplier or shipment)
-        from ._shipments import ShipmentProduct
         if shipment:
             assert shipment.order == self
         else:
@@ -642,29 +641,7 @@ class Order(MoneyPropped, models.Model):
         if not supplier:
             supplier = shipment.supplier
 
-        insufficient_stocks = {}
-        for product, quantity in product_quantities.items():
-            if quantity > 0:
-                stock_status = supplier.get_stock_status(product.pk)
-                if (product.stock_behavior == StockBehavior.STOCKED) and (stock_status.physical_count < quantity):
-                    insufficient_stocks[product] = stock_status.physical_count
-                sp = ShipmentProduct(shipment=shipment, product=product, quantity=quantity)
-                sp.cache_values()
-                sp.save()
-
-        if insufficient_stocks:
-            formatted_counts = [_("%(name)s (physical stock: %(quantity)s)") % {
-                    "name": force_text(name),
-                    "quantity": force_text(quantity)
-                }
-                for (name, quantity) in insufficient_stocks.items()]
-            raise Problem(
-                _("Insufficient physical stock count for following products: %(product_counts)s") % {
-                    "product_counts": ", ".join(formatted_counts)
-                })
-
-        shipment.cache_values()
-        shipment.save()
+        supplier.module.ship_products(shipment, product_quantities)
 
         self.add_log_entry(_(u"Shipment #%d created.") % shipment.id)
         self.update_shipping_status()
