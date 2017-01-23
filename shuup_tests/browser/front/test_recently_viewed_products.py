@@ -1,4 +1,5 @@
 import os
+import time
 import pytest
 from django.core.urlresolvers import reverse
 
@@ -38,9 +39,11 @@ def test_recently_viewed_products(browser, live_server, settings):
         product = new_product(i, shop, category)
         product_url = reverse("shuup:product", kwargs={"pk": product.pk, "slug": product.slug})
         browser.visit(live_server + product_url)
-        wait_until_appeared(browser, ".product-main")
+        time.sleep(1)
+        wait_until_appeared(browser, ".product-main", timeout=30)
         browser.visit(live_server + category_url)
-        wait_until_appeared(browser, ".categories-nav")
+        time.sleep(1)
+        wait_until_appeared(browser, ".categories-nav", timeout=30)
         items = browser.find_by_css(".recently-viewed li")
         assert items.first.text == product.name, "recently clicked product on top"
         assert len(items) == min(i, 5)
