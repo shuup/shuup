@@ -26,7 +26,7 @@ class BaseActionButton(object):
     base_css_classes = ("btn",)
 
     def __init__(self, text="", icon=None, disable_reason=None, tooltip=None,
-                 extra_css_class="btn-default", required_permissions=()):
+                 extra_css_class="btn-default", required_permissions=(), identifier=None):
         """
         :param text: The actual text for the button.
         :param icon: Icon CSS class string
@@ -49,6 +49,7 @@ class BaseActionButton(object):
         self.tooltip = (self.disable_reason or tooltip)
         self.extra_css_class = extra_css_class
         self.required_permissions = required_permissions
+        self.identifier = identifier
 
     def render(self, request):
         """
