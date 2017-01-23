@@ -55,7 +55,7 @@ def get_product_context(request, product, language=None):
         context["orderable_variation_children"] = orderable_children
         context["variation_orderable"] = is_orderable
         context["variation_variables"] = variation_variables
-    elif product.mode == ProductMode.PACKAGE_PARENT:
+    elif product.is_container():
         children = product.get_all_package_children().translated().order_by("translations__name")
         context["package_children"] = cache_product_things(request, children)
 

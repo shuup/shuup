@@ -696,7 +696,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
                     _("Variation parents can not belong into a package"),
                     code="abnormal"
                 )
-            if child_product.is_package_parent():
+            if child_product.is_container():
                 raise ImpossibleProductModeException(_("Packages can't be nested"), code="multilevel")
             if quantity <= 0:
                 raise ImpossibleProductModeException(_("Quantity %s is invalid") % quantity, code="quantity")
@@ -704,7 +704,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         self.verify_mode()
 
     def get_package_child_to_quantity_map(self):
-        if self.is_package_parent():
+        if self.is_container():
             product_id_to_quantity = dict(
                 ProductPackageLink.objects.filter(parent=self).values_list("child_id", "quantity")
             )
@@ -724,6 +724,9 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
     def is_package_parent(self):
         return (self.mode == ProductMode.PACKAGE_PARENT)
 
+    def is_subscription_parent(self):
+        return (self.mode == ProductMode.SUBSCRIPTION)
+
     def is_package_child(self):
         return ProductPackageLink.objects.filter(child=self).exists()
 
@@ -742,6 +745,9 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
 
     def is_stocked(self):
         return (self.stock_behavior == StockBehavior.STOCKED)
+
+    def is_container(self):
+        return (self.is_package_parent() or self.is_subscription_parent())
 
 
 ProductLogEntry = define_log_model(Product)
