@@ -29,10 +29,10 @@ INSTALLED_APPS = [
     # shuup themes
     'shuup.themes.classic_gray',
     # shuup
-    'shuup.addons',
+    'shuup.core',
     'shuup.admin',
     'shuup.api',
-    'shuup.core',
+    'shuup.addons',
     'shuup.default_tax',
     'shuup.front',
     'shuup.front.apps.auth',
