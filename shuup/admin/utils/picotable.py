@@ -16,6 +16,7 @@ from django.db.models import Manager, Q, QuerySet
 from django.http.response import HttpResponse, JsonResponse
 from django.template.defaultfilters import yesno
 from django.utils.encoding import force_text
+from django.utils.html import escape
 from django.utils.translation import ugettext_lazy as _
 from easy_thumbnails.files import get_thumbnailer
 from filer.models import Image
@@ -23,8 +24,9 @@ from filer.models import Image
 from shuup.admin.utils.urls import get_model_url, NoModelUrl
 from shuup.core.models import ProductMedia
 from shuup.utils.dates import try_parse_date
-from shuup.utils.i18n import get_locally_formatted_datetime
+from shuup.utils.i18n import format_money, get_locally_formatted_datetime
 from shuup.utils.importing import load
+from shuup.utils.money import Money
 from shuup.utils.objects import compact
 from shuup.utils.serialization import ExtendedJSONEncoder
 
@@ -334,6 +336,9 @@ class Column(object):
 
         if isinstance(value, datetime.datetime):
             return get_locally_formatted_datetime(value)
+
+        if isinstance(value, Money):
+            return escape(format_money(value))
 
         if not value:
             value = ""
