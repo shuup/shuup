@@ -8,6 +8,9 @@
   },
   "author": "",
   "license": "OSL-3.0",
+  "engines": {
+    "node" : ">=0.12.0"
+  },
   "dependencies": {
     "bower": "^1.8.0",
     "gulp": "^3.9.1",
