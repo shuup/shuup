@@ -9,10 +9,8 @@ Subpackages
     shuup.front.admin_module
     shuup.front.api
     shuup.front.apps
-    shuup.front.basket
     shuup.front.checkout
     shuup.front.forms
-    shuup.front.models
     shuup.front.notify_script_templates
     shuup.front.template_helpers
     shuup.front.templatetags

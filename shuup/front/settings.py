@@ -10,7 +10,7 @@
 #: This is the easiest way to customize the order creation process
 #: without having to override a single URL or touch the ``shuup.front`` code.
 SHUUP_BASKET_ORDER_CREATOR_SPEC = (
-    "shuup.front.basket.order_creator:BasketOrderCreator")
+    "shuup.core.basket.order_creator:BasketOrderCreator")
 
 #: Spec string for the Django CBV (or an API-compliant class) for the basket view.
 #:
@@ -23,28 +23,27 @@ SHUUP_BASKET_VIEW_SPEC = (
 #:
 #: This view deals with commands ``POST``ed to ``/basket/``.
 SHUUP_BASKET_COMMAND_DISPATCHER_SPEC = (
-    "shuup.front.basket.command_dispatcher:BasketCommandDispatcher")
+    "shuup.core.basket.command_dispatcher:BasketCommandDispatcher")
 
 #: Spec string for the update method dispatcher used when the basket is updated (usually
 #: on the basket page).
 SHUUP_BASKET_UPDATE_METHODS_SPEC = (
-    "shuup.front.basket.update_methods:BasketUpdateMethods")
+    "shuup.core.basket.update_methods:BasketUpdateMethods")
 
 #: Spec string for the basket class used in the frontend.
 #:
 #: This is used to customize the behavior of the basket for a given installation,
 #: for instance to modify prices of products based on certain conditions, etc.
 SHUUP_BASKET_CLASS_SPEC = (
-    "shuup.front.basket.objects:BaseBasket")
+    "shuup.core.basket.objects:BaseBasket")
 
 #: The spec string defining which basket storage class to use for the frontend.
 #:
-#: Basket storages are responsible for persisting visitor basket state, whether
-#: in the database (DatabaseBasketStorage) or directly in the session
-#: (DirectSessionBasketStorage).  Custom storage backends could use caches, flat
-#: files, etc. if required.
+#: Basket storages are responsible for persisting visitor basket state,
+#: the default stores the basket to database (DatabaseBasketStorage)
+#: Custom storage backends could use caches, flat files, etc. if required.
 SHUUP_BASKET_STORAGE_CLASS_SPEC = (
-    "shuup.front.basket.storage:DatabaseBasketStorage")
+    "shuup.core.basket.storage:DatabaseBasketStorage")
 
 #: Spec string for the Django CBV (or an API-compliant class) for the checkout view.
 #:

@@ -8,25 +8,16 @@
 from __future__ import unicode_literals
 
 import abc
+import uuid
 
 import six
-from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured
 
 from shuup.core.utils.users import real_user_or_none
-from shuup.front.models import StoredBasket
+from shuup.core.models import StoredBasket
 from shuup.utils.importing import cached_load
 
 
 class BasketCompatibilityError(Exception):
-    pass
-
-
-class ShopMismatchBasketCompatibilityError(BasketCompatibilityError):
-    pass
-
-
-class PriceUnitMismatchBasketCompatibilityError(BasketCompatibilityError):
     pass
 
 
@@ -35,7 +26,7 @@ class BasketStorage(six.with_metaclass(abc.ABCMeta)):
         """
         Load the given basket's data dictionary from the storage.
 
-        :type basket: shuup.front.basket.objects.BaseBasket
+        :type basket: shuup.core.basket.objects.BaseBasket
         :rtype: dict
         :raises:
           `BasketCompatibilityError` if basket loaded from the storage
@@ -50,13 +41,13 @@ class BasketStorage(six.with_metaclass(abc.ABCMeta)):
                 "%s id=%r with Shop=%s, Dest. Basket Shop=%s)" % (
                     type(stored_basket).__name__,
                     stored_basket.id, stored_basket.shop_id, basket.shop.id))
-            raise ShopMismatchBasketCompatibilityError(msg)
-        price_unit_diff = _price_units_diff(stored_basket, basket.shop)
-        if price_unit_diff:
+            raise BasketCompatibilityError(msg)
+        price_units_diff = _price_units_diff(stored_basket, basket.shop)
+        if price_units_diff:
             msg = "%s %r: Price unit mismatch with Shop (%s)" % (
                 type(stored_basket).__name__, stored_basket.id,
-                price_unit_diff)
-            raise PriceUnitMismatchBasketCompatibilityError(msg)
+                price_units_diff)
+            raise BasketCompatibilityError(msg)
         return stored_basket.data or {}
 
     @abc.abstractmethod
@@ -67,7 +58,7 @@ class BasketStorage(six.with_metaclass(abc.ABCMeta)):
         The returned object should have ``id``, ``shop_id``,
         ``currency``, ``prices_include_tax`` and ``data`` attributes.
 
-        :type basket: shuup.front.basket.objects.BaseBasket
+        :type basket: shuup.core.basket.objects.BaseBasket
         :return: Stored basket or None
         """
         pass
@@ -77,7 +68,7 @@ class BasketStorage(six.with_metaclass(abc.ABCMeta)):
         """
         Save the given data dictionary into the storage for the given basket.
 
-        :type basket: shuup.front.basket.objects.BaseBasket
+        :type basket: shuup.core.basket.objects.BaseBasket
         :type data: dict
         """
         pass
@@ -87,7 +78,7 @@ class BasketStorage(six.with_metaclass(abc.ABCMeta)):
         """
         Delete the basket from storage.
 
-        :type basket: shuup.front.basket.objects.BaseBasket
+        :type basket: shuup.core.basket.objects.BaseBasket
         """
         pass
 
@@ -97,71 +88,18 @@ class BasketStorage(six.with_metaclass(abc.ABCMeta)):
 
         The actual semantics of what finalization does are up to each backend.
 
-        :type basket: shuup.front.basket.objects.BaseBasket
+        :type basket: shuup.core.basket.objects.BaseBasket
         """
         self.delete(basket=basket)
 
 
-class DirectSessionBasketStorage(BasketStorage):
-    def __init__(self):
-        if settings.SESSION_SERIALIZER == "django.contrib.sessions.serializers.JSONSerializer":  # pragma: no cover
-            raise ImproperlyConfigured(
-                "DirectSessionBasketStorage will not work with the JSONSerializer session serializer."
-            )
-
-    def save(self, basket, data):
-        stored_basket = DictStoredBasket.from_basket_and_data(basket, data)
-        basket.request.session[basket.basket_name] = stored_basket.as_dict()
-
-    def _load_stored_basket(self, basket):
-        stored_basket_dict = basket.request.session.get(basket.basket_name)
-        if not stored_basket_dict:
-            return None
-        return DictStoredBasket.from_dict(stored_basket_dict)
-
-    def delete(self, basket):
-        basket.request.session.pop(basket.basket_name, None)
-
-
-class DictStoredBasket(object):
-    def __init__(self, id, shop_id, currency, prices_include_tax, data):
-        self.id = id
-        self.shop_id = shop_id
-        self.currency = currency
-        self.prices_include_tax = prices_include_tax
-        self.data = (data or {})
-
-    @classmethod
-    def from_basket_and_data(cls, basket, data):
-        return cls(
-            id=(getattr(basket, "id", None) or basket.basket_name),
-            shop_id=basket.shop.id,
-            currency=basket.currency,
-            prices_include_tax=basket.prices_include_tax,
-            data=data,
-        )
-
-    @classmethod
-    def from_dict(cls, mapping):
-        return cls(**mapping)
-
-    def as_dict(self):
-        return {
-            "id": self.id,
-            "shop_id": self.shop_id,
-            "currency": self.currency,
-            "prices_include_tax": self.prices_include_tax,
-            "data": self.data,
-        }
-
-
 class DatabaseBasketStorage(BasketStorage):
     def _get_session_key(self, basket):
-        return "basket_%s_key" % basket.basket_name
+        return "basket_key:%s" % basket.key
 
     def save(self, basket, data):
         """
-        :type basket: shuup.front.basket.objects.BaseBasket
+        :type basket: shuup.core.basket.objects.BaseBasket
         """
         request = basket.request
         stored_basket = self._get_stored_basket(basket)
@@ -176,6 +114,7 @@ class DatabaseBasketStorage(BasketStorage):
         stored_basket.products = set(basket.product_ids)
         basket_get_kwargs = {"pk": stored_basket.pk, "key": stored_basket.key}
         request.session[self._get_session_key(basket)] = basket_get_kwargs
+        request.session['basket_key'] = stored_basket.key
 
     def _load_stored_basket(self, basket):
         return self._get_stored_basket(basket)
@@ -184,8 +123,10 @@ class DatabaseBasketStorage(BasketStorage):
         stored_basket = self._get_stored_basket(basket)
         if stored_basket and stored_basket.pk:
             stored_basket.deleted = True
+            stored_basket.key = uuid.uuid1().hex  # Regenerate a key to avoid clashes
             stored_basket.save()
         basket.request.session.pop(self._get_session_key(basket), None)
+        basket.request.session.pop('basket_key', None)
 
     def finalize(self, basket):
         stored_basket = self._get_stored_basket(basket)
@@ -194,11 +135,14 @@ class DatabaseBasketStorage(BasketStorage):
             stored_basket.finished = True
             stored_basket.save()
         basket.request.session.pop(self._get_session_key(basket), None)
+        basket.request.session.pop('basket_key', None)
 
     def _get_stored_basket(self, basket):
         request = basket.request
-        basket_get_kwargs = request.session.get(self._get_session_key(basket))
+        basket_get_kwargs = request.session.get(self._get_session_key(basket)) or {}
         stored_basket = None
+        if basket.key:
+            basket_get_kwargs['key'] = basket.key
         if basket_get_kwargs:
             stored_basket = StoredBasket.objects.filter(deleted=False, **basket_get_kwargs).first()
         if not stored_basket:
@@ -206,6 +150,7 @@ class DatabaseBasketStorage(BasketStorage):
                 request.session.pop(self._get_session_key(basket), None)
             stored_basket = StoredBasket(
                 shop=basket.shop,
+                key=basket.key,
                 currency=basket.currency,
                 prices_include_tax=basket.prices_include_tax,
             )

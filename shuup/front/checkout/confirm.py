@@ -12,8 +12,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
 
 from shuup.core.models import OrderStatus
-from shuup.front.basket import get_basket_order_creator
-from shuup.front.basket.objects import BaseBasket
+from shuup.core.basket import get_basket_order_creator
+from shuup.core.basket.objects import BaseBasket
 from shuup.front.checkout import CheckoutPhaseViewMixin
 
 
