@@ -309,15 +309,17 @@ def categories_filter_test(browser, first_cat, second_cat, third_cat):
     )
     browser.reload()
 
-    time.sleep(2)
+    time.sleep(5)
 
-    try:
-        wait_until_condition(browser, lambda x: len(x.find_by_css("#categories-%s" % third_cat.id)) == 1, timeout=20)
-    except Exception as e:
-        import webbrowser
-        webbrowser.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
-        time.sleep(1000)
-    browser.execute_script("$('#categories-%s').click();" % third_cat.id)
+    wait_until_condition(browser, lambda x: len(x.find_by_css("#categories-%s" % third_cat.id)) == 1, timeout=20)
+
+    # click_element(browser, '#categories-%s' % third_cat.id)
+
+    browser.execute_script("""
+        $(document).ready(function() {
+            $('#categories-%s').click();
+        })
+    """ % third_cat.id)
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 1, timeout=30)
     browser.execute_script("$('#categories-%s').click();" % second_cat.id)
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 1, timeout=30)

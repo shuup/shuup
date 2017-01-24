@@ -71,18 +71,19 @@ def test_generic_script_template(browser, admin_user, live_server, settings, scr
     wait_until_condition(browser, lambda b: b.is_text_present("Configure the Script Template"))
 
     # click to create the script
-    time.sleep(0.5)
+    time.sleep(5)
     browser.execute_script("""
         $(document).ready(function(){
             $('#lang-en .summernote-editor').summernote('editor.insertText', 'NEW CONTENT');
         });
     """)
-    time.sleep(0.5)
+    time.sleep(5)
     browser.find_by_id("id_en-subject").fill("custom subject!")
     browser.find_by_css("form button.btn.btn-lg.btn-primary").first.click()
 
-    time.sleep(0.4)
+    time.sleep(5)
     assert browser.is_text_not_present("This field is required.")
+    time.sleep(5)
 
     script_list_url = reverse("shuup_admin:notify.script.list")
     wait_until_condition(browser, lambda b: b.url.endswith(script_list_url), timeout=30)
@@ -134,7 +135,7 @@ def test_generic_custom_email_script_template(browser, admin_user, live_server, 
     # fill form
     browser.select('base-send_to', 'other')
     browser.find_by_id("id_base-recipient").fill("other@shuup.com")
-    time.sleep(0.5)
+    time.sleep(5)
     browser.execute_script("""
         $(document).ready(function(){
             // EN
@@ -150,7 +151,7 @@ def test_generic_custom_email_script_template(browser, admin_user, live_server, 
             });
         });
     """)
-    time.sleep(0.5)
+    time.sleep(5)
     browser.find_by_css("form button.btn.btn-lg.btn-primary").first.click()
 
     wait_until_condition(browser, lambda b: b.url.endswith(reverse("shuup_admin:notify.script.list")), timeout=30)
@@ -187,7 +188,7 @@ def test_generic_custom_email_script_template(browser, admin_user, live_server, 
     wait_until_condition(browser, lambda b: b.is_text_present("Configure the Script Template"))
 
     # fill form
-    time.sleep(0.5)
+    time.sleep(5)
     browser.execute_script("""
         $(document).ready(function(){
             $('#lang-en .summernote-editor').summernote('editor.insertText', 'Changed');
@@ -195,11 +196,11 @@ def test_generic_custom_email_script_template(browser, admin_user, live_server, 
     """)
     browser.find_by_id("id_en-subject").fill("changed subject!")
     browser.select('base-send_to', 'customer')
-    time.sleep(0.5)
+    time.sleep(5)
     browser.find_by_css("form button.btn.btn-lg.btn-primary").first.click()
 
     # hit save
-    wait_until_condition(browser, lambda b: b.url.endswith(reverse("shuup_admin:notify.script.list")), timeout=15)
+    wait_until_condition(browser, lambda b: b.url.endswith(reverse("shuup_admin:notify.script.list")), timeout=30)
 
     script = Script.objects.first()
     serialized_steps = script.get_serialized_steps()
