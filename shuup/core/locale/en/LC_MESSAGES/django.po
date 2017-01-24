@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-30 13:13+0000\n"
+"POT-Creation-Date: 2017-01-12 18:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -17,6 +17,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
+
+msgid "Mutable Address"
+msgstr ""
+
+msgid "Mutable Addressess can be fetched, created, updated and deleted."
+msgstr ""
 
 msgid "Attributes"
 msgstr ""
@@ -34,6 +40,12 @@ msgid "Contacts"
 msgstr ""
 
 msgid "Contacts can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+msgid "Person Contact"
+msgstr ""
+
+msgid "Person Contacts can be listed, fetched, created, updated and deleted."
 msgstr ""
 
 msgid "Manufacturer"

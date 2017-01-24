@@ -15,7 +15,7 @@ Getting Started with Shuup Development
 Requirements
 ------------
 * Python 2.7.9+/3.4+. https://www.python.org/download/.
-* Node.js. https://nodejs.org/en/download/
+* Node.js (v0.12 or above). https://nodejs.org/en/download/
 * Any database supported by Django.
 
 Installation for Shuup Development

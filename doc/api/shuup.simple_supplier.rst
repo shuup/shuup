@@ -43,6 +43,14 @@ shuup.simple_supplier.notify_events module
     :undoc-members:
     :show-inheritance:
 
+shuup.simple_supplier.notify_script_template module
+---------------------------------------------------
+
+.. automodule:: shuup.simple_supplier.notify_script_template
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.simple_supplier.utils module
 ----------------------------------
 

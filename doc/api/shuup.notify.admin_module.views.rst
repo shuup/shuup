@@ -28,6 +28,14 @@ shuup.notify.admin_module.views.list module
     :undoc-members:
     :show-inheritance:
 
+shuup.notify.admin_module.views.template module
+-----------------------------------------------
+
+.. automodule:: shuup.notify.admin_module.views.template
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

@@ -11,6 +11,7 @@ Subpackages
     shuup.front.apps
     shuup.front.checkout
     shuup.front.forms
+    shuup.front.notify_script_templates
     shuup.front.template_helpers
     shuup.front.templatetags
     shuup.front.themes

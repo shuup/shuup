@@ -12,14 +12,17 @@ Unrealeased
 Core
 ~~~~
 
+API: add address endpoint
+API: add person contact endpoint
+API: add user register endpoint
+
 Localization
 ~~~~~~~~~~~~
 
 Admin
 ~~~~~
 
-- Select2Multiple widget now looks for `search_fields` instance attribute to get searchable fields
-- Allow product variation variables and values to be manually sorted.
+- Display last 12 months of sales in the dashboard chart
 
 Addons
 ~~~~~~
@@ -36,18 +39,11 @@ Classic Gray Theme
 Simple Supplier
 ~~~~~~~~~~~~~~~
 
-Notification
-~~~~~~~~~~~~
-
-- Allow user to create scripts based on templates available from `notify_script_template` provide category
-
 Order Printouts
 ~~~~~~~~~~~~~~~
 
 Campaigns
 ~~~~~~~~~
-
-- Create Coupons report
 
 Customer Group Pricing
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -61,17 +57,6 @@ Simple CMS
 Default Tax
 ~~~~~~~~~~~
 
-Reporting
-~~~~~~~~~
-
-- Create Product Total Sales report
-- Create New Costumers report
-- Total Sales report shows number of customers and the average customer sale
-- Create Customer Sales report
-- Create Taxes report
-- Create Shipping report
-- Create Refunds report
-
 Guide
 ~~~~~
 
@@ -84,6 +69,47 @@ Regions
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
+SHUUP 1.1.0
+-----------
+
+Addons
+~~~~~~
+
+- Enhance/fix bugs addons installation. Addons upload now allows only wheels.
+
+Admin
+~~~~~
+
+- Select2Multiple widget now looks for `search_fields` instance attribute to
+  get searchable fields
+- Allow product variation variables and values to be manually sorted.
+
+Notification
+~~~~~~~~~~~~
+
+- Allow user to create scripts based on templates available from
+  `notify_script_template` provide category
+
+Campaigns
+~~~~~~~~~
+
+- Create Coupons report
+
+Reporting
+~~~~~~~~~
+
+- Create Product Total Sales report
+- Create New Costumers report
+- Total Sales report shows number of customers and the average customer sale
+- Create Customer Sales report
+- Create Taxes report
+- Create Shipping report
+- Create Refunds report
+
+General/miscellaneous
+~~~~~~~~~~~~~~~~~~~~~
+
+- Add Shuup version to static urls
 
 SHUUP 1.0.0
 -----------

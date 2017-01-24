@@ -4,15 +4,11 @@
     left: 0;
     bottom: 0;
     top: 60px;
-    width: 88px;
+    width: 100px;
     z-index:1000;
 
     @media (max-width: @screen-sm-min) {
         left: -100px;
-    }
-
-    @media (max-width: @screen-md-min) {
-        width: 100px;
     }
 
     @media (min-width: @screen-sm-min) {
@@ -75,12 +71,8 @@
             padding: 10px;
             text-decoration: none;
             transition: all 0.3s;
-            font-size: 1.15rem;
+            font-size: 1rem;
             word-wrap: break-word;
-
-            @media (max-width: @screen-md-min) {
-                font-size: 1rem;
-            }
 
             &:hover {
                 background: darken(@nav-bg-hover, 4%);

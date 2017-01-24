@@ -39,3 +39,4 @@ sdist/
 target/
 var/
 node_modules
+.DS_Store
