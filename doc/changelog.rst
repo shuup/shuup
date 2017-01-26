@@ -18,6 +18,7 @@ Localization
 Admin
 ~~~~~
 
+- Fix bug in "Select All" mass action
 - Fix bug in product choice widget
 - Display last 12 months of sales in the dashboard chart
 

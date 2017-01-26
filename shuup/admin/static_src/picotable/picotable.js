@@ -617,7 +617,10 @@ const Picotable = (function(m, storage) {
             };
         };
 
-        const itemCount = ctrl.vm.data().items.length;
+        const itemCount = ctrl.vm.data().pagination.nItems;
+        if (itemCount === 0) {
+            return "";
+        }
         const initialMassActions = [
             {key: 0, value: gettext("Select Action")},
             {key: "unselect_all", value: gettext("Clear Selections")},
