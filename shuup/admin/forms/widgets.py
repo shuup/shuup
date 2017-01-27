@@ -21,7 +21,9 @@ from filer.models import File
 
 from shuup.admin.utils.forms import flatatt_filter
 from shuup.admin.utils.urls import get_model_url, NoModelUrl
-from shuup.core.models import Contact, PersonContact, Product, ProductMode
+from shuup.core.models import (
+    Contact, PersonContact, Product, ProductMode, ShopProduct
+)
 
 
 class BasePopupChoiceWidget(Widget):
@@ -172,6 +174,13 @@ class ProductChoiceWidget(BasePopupChoiceWidget):
 
     def get_object(self, value):
         return Product.objects.get(pk=value)
+
+
+class ShopProductChoiceWidget(BasePopupChoiceWidget):
+    browse_kind = "shop_product"
+
+    def get_object(self, value):
+        return ShopProduct.objects.get(pk=value)
 
 
 class ContactChoiceWidget(BasePopupChoiceWidget):
