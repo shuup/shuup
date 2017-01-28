@@ -12,12 +12,17 @@ Unrealeased
 Core
 ~~~~
 
+- Add `created_on` and `modified_on` fields for shop
+- Make shop identifier max length to 128 characters
+- Add `staff_members` manytomanyfield for shop
+
 Localization
 ~~~~~~~~~~~~
 
 Admin
 ~~~~~
 
+- Use select2 multiple field for shop staff members
 - Fix bug in "Select All" mass action
 - Fix bug in product choice widget
 - Display last 12 months of sales in the dashboard chart
