@@ -42,7 +42,7 @@ class Shop(ChangeProtected, TranslatableShuupModel):
     protected_fields = ["currency", "prices_include_tax"]
     change_protect_message = _("The following fields cannot be changed since there are existing orders for this shop")
 
-    identifier = InternalIdentifierField(unique=True)
+    identifier = InternalIdentifierField(unique=True, max_length=96)
     domain = models.CharField(max_length=128, blank=True, null=True, unique=True, verbose_name=_("domain"), help_text=_(
         "Your shop domain name. Use this field to configure the URL that is used to visit your site. "
         "Note: this requires additional configuration through your internet domain registrar."
