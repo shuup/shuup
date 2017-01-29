@@ -36,12 +36,12 @@ from shuup.core.models import (
     OrderLineType, OrderStatus, PaymentMethod, PersonContact, Product,
     ProductMedia, ProductMediaKind, ProductType, SalesUnit, ShippingMethod,
     Shop, ShopProduct, ShopProductVisibility, ShopStatus, StockBehavior,
-    Supplier, SupplierType, Tax, TaxClass, WaivingCostBehaviorComponent
+    StoredBasket, Supplier, SupplierType, Tax, TaxClass,
+    WaivingCostBehaviorComponent
 )
 from shuup.core.order_creator import OrderCreator, OrderSource
 from shuup.core.pricing import get_pricing_module
 from shuup.core.shortcuts import update_order_line_from_product
-from shuup.core.models import StoredBasket
 from shuup.default_tax.models import TaxRule
 from shuup.testing.text_data import random_title
 from shuup.utils.filer import filer_image_from_data

@@ -20,12 +20,12 @@ from rest_framework.response import Response
 from shuup.api.decorators import schema_serializer_class
 from shuup.api.fields import EnumField
 from shuup.api.mixins import PermissionHelperMixin
+from shuup.core.basket import get_basket_command_dispatcher
 from shuup.core.excs import ProductNotOrderableProblem
 from shuup.core.fields import (
     FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES, FORMATTED_DECIMAL_FIELD_MAX_DIGITS
 )
 from shuup.core.models import OrderLineType, Product
-from shuup.core.basket import get_basket_command_dispatcher
 from shuup.utils.importing import cached_load
 
 
