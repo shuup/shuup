@@ -45,12 +45,11 @@ def create_simple_supplier(identifier):
     )
 
 
-def get_request(path, user, shop, customer, data=None):
+def get_request(path, user, customer=None, data=None):
     factory = APIRequestFactory()
     request = factory.get(path, data=data)
     force_authenticate(request, user)
     request.customer = customer
-    request.shop = shop
     return request
 
 
@@ -65,17 +64,30 @@ def test_get_products(admin_user):
     person2 = create_random_person()
     person2.save()
 
-    client = _get_client(admin_user)
-    client.customer = person1
-    client.shop = shop1
+
+@pytest.mark.django_db
+def test_no_products(admin_user):
+    get_default_shop()
+
+    person1 = create_random_person()
+    person1.user = admin_user
+    person1.save()
 
     # list all orderable products
-    request = get_request("/api/shuup/front/products/", admin_user, shop1, person1)
+    request = get_request("/api/shuup/front/products/", admin_user, person1)
     response = FrontProductViewSet.as_view({"get": "list"})(request)
     response.render()
     assert response.status_code == status.HTTP_200_OK
     products_data = json.loads(response.content.decode("utf-8"))
     assert len(products_data) == 0
+
+
+@pytest.mark.django_db
+def test_products_all_shops(admin_user):
+    get_default_shop()
+    person1 = create_random_person()
+    person1.user = admin_user
+    person1.save()
 
     shop2 = Shop.objects.create()
     supplier1 = create_simple_supplier("supplier1")
@@ -85,156 +97,133 @@ def test_get_products(admin_user):
     product1 = create_product("product1", shop=shop2, supplier=supplier1)
     product2 = create_product("product2", shop=shop2, supplier=supplier2)
 
-    # add images for products 1 and 2
-    add_product_image(product1)
-    add_product_image(product2)
-
-    # list all orderable products - None, since the 2 just created are for shop2
-    request = get_request("/api/shuup/front/products/", admin_user, shop1, person1)
+    # list all orderable products - 2 just created are for shop2
+    request = get_request("/api/shuup/front/products/", admin_user, person1)
     response = FrontProductViewSet.as_view({"get": "list"})(request)
     response.render()
     products_data = json.loads(response.content.decode("utf-8"))
-    assert len(products_data) == 0
+    assert len(products_data) == 2
 
-    # create the product for shop1 but set it as not visible
+
+@pytest.mark.django_db
+def test_products_not_available_shop(admin_user):
+    shop1 = get_default_shop()
+    person1 = create_random_person()
+    person1.user = admin_user
+    person1.save()
+
+    supplier1 = create_simple_supplier("supplier1")
+    product1 = create_product("product1", shop=shop1, supplier=supplier1)
     product3 = create_product("product3", shop=shop1, supplier=supplier1)
+    # add images for products 1 and 3
+    add_product_image(product1)
+    add_product_image(product3)
+
+    # product 3 not visible
     shop1_product3 = ShopProduct.objects.get(shop=shop1, product=product3)
     shop1_product3.visibility = ShopProductVisibility.NOT_VISIBLE
     shop1_product3.save()
 
-    # list all orderable products - No one yet
-    request = get_request("/api/shuup/front/products/", admin_user, shop1, person1)
+    request = get_request("/api/shuup/front/products/", admin_user, person1)
     response = FrontProductViewSet.as_view({"get": "list"})(request)
     response.render()
     products_data = json.loads(response.content.decode("utf-8"))
-    assert len(products_data) == 0
+    assert len(products_data) == 1
 
     # now product3 becomes visible
     shop1_product3.visibility = ShopProductVisibility.ALWAYS_VISIBLE
     shop1_product3.save()
-    request = get_request("/api/shuup/front/products/", admin_user, shop1, person1)
+    request = get_request("/api/shuup/front/products/", admin_user, person1)
     response = FrontProductViewSet.as_view({"get": "list"})(request)
     response.render()
     products_data = json.loads(response.content.decode("utf-8"))
-    assert len(products_data) == 1
-    assert products_data[0]["shop_products"][0]["orderable"] is True
+    assert len(products_data) == 2
+    assert products_data[0]["is_orderable"] is True
+    assert products_data[1]["is_orderable"] is True
 
-    # product should be visible only for some groups
-    group = create_random_contact_group()
-    group.members.add(person2)
-    product3.visibility = ProductVisibility.VISIBLE_TO_GROUPS
-    product3.save()
-    shop1_product3.visibility_limit = ProductVisibility.VISIBLE_TO_GROUPS
-    shop1_product3.visibility_groups.add(group)
-    shop1_product3.save()
+    # check for images
+    assert products_data[0]["image"] == request.build_absolute_uri(product1.primary_image.url)
+    assert products_data[1]["image"] == request.build_absolute_uri(product3.primary_image.url)
 
-    request = get_request("/api/shuup/front/products/", admin_user, shop1, person1)
+
+@pytest.mark.django_db
+def test_products_name_sort(admin_user):
+    shop1 = get_default_shop()
+    supplier1 = create_simple_supplier("supplier1")
+    product1 = create_product("product1", shop=shop1, supplier=supplier1)
+    product2 = create_product("product2", shop=shop1, supplier=supplier1)
+    product3 = create_product("product3", shop=shop1, supplier=supplier1)
+
+    # ordering by -name
+    request = get_request("/api/shuup/front/products/?sort=-name", admin_user)
     response = FrontProductViewSet.as_view({"get": "list"})(request)
     response.render()
     products_data = json.loads(response.content.decode("utf-8"))
-    assert len(products_data) == 0
+    assert products_data[0]["product_id"] == product3.id
+    assert products_data[0]["is_orderable"] is True
+    assert products_data[1]["product_id"] == product2.id
+    assert products_data[1]["is_orderable"] is True
+    assert products_data[2]["product_id"] == product1.id
+    assert products_data[2]["is_orderable"] is True
 
-    # visible for person2 which is in the same group
-    request = get_request("/api/shuup/front/products/", admin_user, shop1, person2)
-    response = FrontProductViewSet.as_view({"get": "list"})(request)
-    response.render()
-    products_data = json.loads(response.content.decode("utf-8"))
-    assert len(products_data) == 1
 
-    # product1 and product2 are visible in shop2
-    request = get_request("/api/shuup/front/products/", admin_user, shop2, person1)
-    response = FrontProductViewSet.as_view({"get": "list"})(request)
-    response.render()
-    products_data = json.loads(response.content.decode("utf-8"))
-    products = sorted(products_data, key=lambda p: p["id"])
-    assert products[0]["id"] == product1.id
-    assert products[0]["shop_products"][0]["orderable"] is True
-    assert products[1]["id"] == product2.id
-    assert products[1]["shop_products"][0]["orderable"] is True
-
-    # check for medias
-    assert products[0]["primary_image"]["file"] == request.build_absolute_uri(product1.primary_image.url)
-    assert products[0]["media"][0]["file"] == request.build_absolute_uri(product1.media.first().url)
-    assert products[0]["media"][1]["file"] == request.build_absolute_uri(product1.media.all()[1].url)
-
-    assert products[1]["primary_image"]["file"] == request.build_absolute_uri(product2.primary_image.url)
-    assert products[1]["media"][0]["file"] == request.build_absolute_uri(product2.media.first().url)
-    assert products[1]["media"][1]["file"] == request.build_absolute_uri(product2.media.all()[1].url)
-
-    # ordering by -id
-    request = get_request("/api/shuup/front/products/?ordering=-id", admin_user, shop2, person1)
-    response = FrontProductViewSet.as_view({"get": "list"})(request)
-    response.render()
-    products_data = json.loads(response.content.decode("utf-8"))
-    assert products_data[0]["id"] == product2.id
-    assert products_data[0]["shop_products"][0]["orderable"] is True
-    assert products_data[1]["id"] == product1.id
-    assert products_data[1]["shop_products"][0]["orderable"] is True
+@pytest.mark.django_db
+def test_products_not_available_shop(admin_user):
+    shop1 = get_default_shop()
+    supplier1 = create_simple_supplier("supplier1")
+    product1 = create_product("product1", shop=shop1, supplier=supplier1)
+    product2 = create_product("product2", shop=shop1, supplier=supplier1)
 
     # add categories to products
     category1 = Category.objects.create(parent=None, identifier="category1", name="category1")
-    shop2_product1 = ShopProduct.objects.get(shop=shop2, product=product1)
-    shop2_product1.primary_category = category1
-    shop2_product1.categories.add(category1)
-    shop2_product1.save()
+    shop_product1 = ShopProduct.objects.get(shop=shop1, product=product1)
+    shop_product1.primary_category = category1
+    shop_product1.categories.add(category1)
+    shop_product1.save()
     category2 = Category.objects.create(parent=None, identifier="category2", name="category2")
-    shop2_product2 = ShopProduct.objects.get(shop=shop2, product=product2)
-    shop2_product2.primary_category = category2
-    shop2_product2.categories.add(category2)
-    shop2_product2.save()
+    shop_product2 = ShopProduct.objects.get(shop=shop1, product=product2)
+    shop_product2.primary_category = category2
+    shop_product2.categories.add(category2)
+    shop_product2.save()
 
     # fetch by category1
-    request = get_request("/api/shuup/front/products/?category=%d" % category1.id, admin_user, shop2, person1)
+    request = get_request("/api/shuup/front/products/?categories=%s" % category1.slug, admin_user)
     response = FrontProductViewSet.as_view({"get": "list"})(request)
     response.render()
     products_data = json.loads(response.content.decode("utf-8"))
     assert len(products_data) == 1
-    assert products_data[0]["id"] == product1.id
+    assert products_data[0]["product_id"] == product1.id
 
     # fetch by category2
-    request = get_request("/api/shuup/front/products/?category=%d" % category2.id, admin_user, shop2, person1)
+    request = get_request("/api/shuup/front/products/?categories=%s" % category2.slug, admin_user)
     response = FrontProductViewSet.as_view({"get": "list"})(request)
     response.render()
     products_data = json.loads(response.content.decode("utf-8"))
     assert len(products_data) == 1
-    assert products_data[0]["id"] == product2.id
+    assert products_data[0]["product_id"] == product2.id
 
-    # create a package product
+
+@pytest.mark.django_db
+def test_product_package(admin_user):
+    shop1 = get_default_shop()
+    supplier1 = create_simple_supplier("supplier1")
     product4 = create_package_product("product4", shop=shop1, supplier=supplier1)
 
-    # make product3 orderable again
-    product3.visibility = ProductVisibility.VISIBLE_TO_ALL
-    product3.save()
-    shop1_product3.visibility_limit = ProductVisibility.VISIBLE_TO_ALL
-    shop1_product3.visibility_groups.all().delete()
-    shop1_product3.save()
-
-    # product3 and product4 are visible in shop1
-    request = get_request("/api/shuup/front/products/", admin_user, shop1, person1)
+    request = get_request("/api/shuup/front/products/", admin_user)
     response = FrontProductViewSet.as_view({"get": "list"})(request)
     response.render()
     products_data = json.loads(response.content.decode("utf-8"))
     products = sorted(products_data, key=lambda p: p["id"])
-    assert products[0]["id"] == product3.id
-    assert products[0]["shop_products"][0]["orderable"] is True
-    assert products[1]["id"] == product4.id
-    assert products[1]["shop_products"][0]["orderable"] is True
+    assert products[0]["product_id"] == product4.id
+    assert products[0]["is_orderable"] is True
+    assert len(products[0]["package_content"]) == product4.get_all_package_children().count()
 
-    # change the shop of the first child product to make the package not orderable
-    sp = product4.get_all_package_children()[0].shop_products.first()
-    sp.shop = shop2
-    sp.save()
-
-    # product3 is orderable and product4 doesn't
-    request = get_request("/api/shuup/front/products/", admin_user, shop1, person1)
-    response = FrontProductViewSet.as_view({"get": "list"})(request)
-    response.render()
-    products_data = json.loads(response.content.decode("utf-8"))
-    products = sorted(products_data, key=lambda p: p["id"])
-    assert products[0]["id"] == product3.id
-    assert products[0]["shop_products"][0]["orderable"] is True
-    assert products[1]["id"] == product4.id
-    assert products[1]["shop_products"][0]["orderable"] is False
+@pytest.mark.django_db
+def test_product_cross_sells(admin_user):
+    shop1 = get_default_shop()
+    supplier1 = create_simple_supplier("supplier1")
+    product1 = create_product("product1", shop=shop1, supplier=supplier1)
+    product2 = create_product("product2", shop=shop1, supplier=supplier1)
 
     # assign cross sell of product1 and product2
     ProductCrossSell.objects.create(product1=product1, product2=product2, type=ProductCrossSellType.RECOMMENDED)
@@ -243,19 +232,19 @@ def test_get_products(admin_user):
     ProductCrossSell.objects.create(product1=product1, product2=product2, type=ProductCrossSellType.BOUGHT_WITH)
 
     # product1 must have cross shell of product2
-    request = get_request("/api/shuup/front/products/", admin_user, shop2, person1)
+    request = get_request("/api/shuup/front/products/", admin_user)
     response = FrontProductViewSet.as_view({"get": "list"})(request)
     response.render()
     products_data = json.loads(response.content.decode("utf-8"))
     products = sorted(products_data, key=lambda p: p["id"])
 
-    assert products[0]["id"] == product1.id
-    assert products[0]["cross_sell"]["recommended"] == [product2.id]
-    assert products[0]["cross_sell"]["related"] == [product2.id]
-    assert products[0]["cross_sell"]["computed"] == [product2.id]
-    assert products[0]["cross_sell"]["bought_with"] == [product2.id]
+    assert products[0]["product_id"] == product1.id
+    assert products[0]["cross_sell"]["recommended"][0]["product_id"] == product2.id
+    assert products[0]["cross_sell"]["related"][0]["product_id"] == product2.id
+    assert products[0]["cross_sell"]["computed"][0]["product_id"] == product2.id
+    assert products[0]["cross_sell"]["bought_with"][0]["product_id"] == product2.id
 
-    assert products[1]["id"] == product2.id
+    assert products[1]["product_id"] == product2.id
     assert products[1]["cross_sell"]["recommended"] == []
     assert products[1]["cross_sell"]["related"] == []
     assert products[1]["cross_sell"]["computed"] == []
@@ -323,7 +312,7 @@ def test_get_best_selling_products(admin_user):
 
     # check the if all IDS are part of best selling
     for ix in range(len(products)):
-        assert products[ix]["id"] in best_selling.keys()
+        assert products[ix]["product_id"] in best_selling.keys()
 
     # get the top 5 best selling products
     response = client.get("/api/shuup/front/products/best_selling/", {"limit": 5})
@@ -334,7 +323,7 @@ def test_get_best_selling_products(admin_user):
 
     # check the if all the 5 best sellers are part of best selling
     for ix in range(len(products)):
-        assert products[ix]["id"] in sorted_best_selling_ids
+        assert products[ix]["product_id"] in sorted_best_selling_ids
 
 
 @pytest.mark.django_db
@@ -351,7 +340,7 @@ def test_get_newest_products(admin_user):
     client.shop = shop1
 
     # list newest products
-    response = client.get("/api/shuup/front/products/newest/")
+    response = client.get("/api/shuup/front/products/?sort=newest")
     assert response.status_code == status.HTTP_200_OK
     products = json.loads(response.content.decode("utf-8"))
     assert len(products) == 0
@@ -366,29 +355,31 @@ def test_get_newest_products(admin_user):
         p2 = create_product("product-%d-2" % x, shop=shop2, supplier=supplier)
 
     # list newest products
-    request = get_request("/api/shuup/front/products/newest/", admin_user, shop1, customer, data={"limit": 100})
-    response = FrontProductViewSet.as_view({"get": "newest"})(request)
+    data = {"limit": 100, "sort": "newest", "shops": shop1.id}
+    request = get_request("/api/shuup/front/products/", admin_user, customer, data=data)
+    response = FrontProductViewSet.as_view({"get": "list"})(request)
     response.render()
     assert response.status_code == status.HTTP_200_OK
-    products = json.loads(response.content.decode("utf-8"))
+    products = json.loads(response.content.decode("utf-8"))["results"]
 
-    # only the shop of request must be considered
+    # only the shop of params must be considered
     newest_products = Product.objects.filter(shop_products__shop=shop1).order_by("-pk")
     assert len(products) == newest_products.count()
 
     # the result must be a ordered list of products (ordered by newest)
-    ids = [p["id"] for p in products]
+    ids = [p["product_id"] for p in products]
     assert ids == list(newest_products.values_list("pk", flat=True))
 
     # shop2 - limit the numbers of the result
-    request = get_request("/api/shuup/front/products/newest/", admin_user, shop2, customer, data={"limit": 10})
-    response = FrontProductViewSet.as_view({"get": "newest"})(request)
+    data = {"limit": 10, "sort": "newest", "shops": shop2.id}
+    request = get_request("/api/shuup/front/products/", admin_user, customer, data)
+    response = FrontProductViewSet.as_view({"get": "list"})(request)
     response.render()
     assert response.status_code == status.HTTP_200_OK
-    products = json.loads(response.content.decode("utf-8"))
-    newest_products = Product.objects.filter(shop_products__shop=shop2).order_by("-pk")[:10]
+    products = json.loads(response.content.decode("utf-8"))["results"]
+    newest_products = Product.objects.filter(shop_products__shop=shop2).order_by("-created_on")[:10]
     assert len(products) == newest_products.count()
-    ids = [p["id"] for p in products]
+    ids = [p["product_id"] for p in products]
     assert ids == list(newest_products.values_list("pk", flat=True))
 
 
