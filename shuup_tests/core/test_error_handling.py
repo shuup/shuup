@@ -37,11 +37,11 @@ def notfound_view(request, *args, **kwargs):
 
 
 def handler500(request, *args, **kwargs):
-    return HttpResponse("The best error")
+    return HttpResponse("The best error", status=500)
 
 
 def four_oh_four(request, *args, **kwargs):
-    return HttpResponse("Just a flesh wound")
+    return HttpResponse("Just a flesh wound", status=404)
 
 
 def test_front_error_handlers(rf):
@@ -83,11 +83,11 @@ def test_front_error_handlers(rf):
 
             # Test 500
             response = handler.get_response(rf.get("/aaargh/"))
-            assert response.status_code == 200
+            assert response.status_code == 500
             assert b"The best error" in response.content
             # Test 404
             response = handler.get_response(rf.get("/another_castle/"))
-            assert response.status_code == 200  # Our custom 404 handler made it a 200!
+            assert response.status_code == 404
             assert b"flesh wound" in response.content
 
             # inject our custom error handlers
@@ -111,10 +111,17 @@ def test_front_error_handlers(rf):
                 assert error_handler.can_handle_error(request, 400)
                 assert error_handler.can_handle_error(request, 403)
                 assert error_handler.can_handle_error(request, 404)
-                assert "intergalactic testing 500" in force_text(error_handler.handle_error(request, 500).content)
-                assert "about 400" in force_text(error_handler.handle_error(request, 400).content)
-                assert "get out 403" in force_text(error_handler.handle_error(request, 403).content)
-                assert "miss something? 404" in force_text(error_handler.handle_error(request, 404).content)
+
+                # check the error handlers return the correct status and text
+                for status, content in [
+                    (500, "intergalactic testing 500"),
+                    (400, "about 400"),
+                    (403, "get out 403"),
+                    (404, "miss something? 404"),
+                ]:
+                    response = error_handler.handle_error(request, status)
+                    assert response.status_code == status
+                    assert content in force_text(response.content)
 
             from django.conf import settings
             # front can't handle static and media paths
@@ -165,11 +172,11 @@ def test_admin_error_handlers(rf):
 
             # Test 500
             response = handler.get_response(rf.get("/aaargh/"))
-            assert response.status_code == 200
+            assert response.status_code == 500
             assert b"The best error" in response.content
             # Test 404
             response = handler.get_response(rf.get("/another_castle/"))
-            assert response.status_code == 200  # Our custom 404 handler made it a 200!
+            assert response.status_code == 404
             assert b"flesh wound" in response.content
 
             # inject our custom error handlers
@@ -206,10 +213,17 @@ def test_admin_error_handlers(rf):
             assert error_handler.can_handle_error(request, 400) is False
             assert error_handler.can_handle_error(request, 403) is False
             assert error_handler.can_handle_error(request, 404) is False
-            assert "admin 500" in force_text(error_handler.handle_error(request, 500).content)
-            assert "admin 400" in force_text(error_handler.handle_error(request, 400).content)
-            assert "admin 403" in force_text(error_handler.handle_error(request, 403).content)
-            assert "admin 404" in force_text(error_handler.handle_error(request, 404).content)
+
+            # check the error handlers return the correct status and text
+            for status, content in [
+                (500, "admin 500"),
+                (400, "admin 400"),
+                (403, "admin 403"),
+                (404, "admin 404"),
+            ]:
+                response = error_handler.handle_error(request, status)
+                assert response.status_code == status
+                assert content in force_text(response.content)
 
 
 def test_install_error_handlers(rf):
