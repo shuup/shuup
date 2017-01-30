@@ -31,7 +31,7 @@ from ._orders import (
     DefaultOrderStatus, Order, OrderLogEntry, OrderStatus, OrderStatusManager,
     OrderStatusRole, PaymentStatus, ShippingStatus
 )
-from ._payments import AbstractPayment, Payment
+from ._payments import Payment
 from ._persistent_cache import PersistentCacheEntry
 from ._product_media import ProductMedia, ProductMediaKind
 from ._product_packages import ProductPackageLink
@@ -70,7 +70,6 @@ from ._units import SalesUnit
 
 __all__ = [
     "AbstractOrderLine",
-    "AbstractPayment",
     "AnonymousContact",
     "Attribute",
     "AttributeType",

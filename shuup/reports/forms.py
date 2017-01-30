@@ -52,8 +52,9 @@ class BaseReportForm(forms.Form):
         "Check this to download the report."))
 
     def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request')
         super(BaseReportForm, self).__init__(*args, **kwargs)
-        self.fields["shop"].choices = [(shop.pk, shop.name) for shop in Shop.objects.all()]
+        self.fields["shop"].choices = [(shop.pk, shop.name) for shop in Shop.objects.get_for_user(self.request.user)]
 
     def clean(self):
         data = self.cleaned_data

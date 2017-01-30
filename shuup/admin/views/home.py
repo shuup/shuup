@@ -67,7 +67,7 @@ class HomeView(TemplateView):
         context["blocks"] = blocks = []
         context["tour_key"] = "home"
         context["tour_complete"] = is_tour_complete("home")
-        wizard_complete = setup_wizard_complete()
+        wizard_complete = setup_wizard_complete(self.request)
 
         wizard_url = reverse("shuup_admin:wizard")
         wizard_actions = []
@@ -78,7 +78,8 @@ class HomeView(TemplateView):
             })
         else:
             wizard_steps = load_setup_wizard_panes(
-                shop=Shop.objects.first(), request=self.request, visible_only=False)
+                shop=Shop.objects.get_current(self.request), request=self.request, visible_only=False
+            )
             for step in wizard_steps:
                 wizard_actions.append({
                     "text": step.title,

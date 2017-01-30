@@ -46,3 +46,8 @@ class MediaModule(AdminModule):
                 ordering=2
             ),
         ]
+
+    def get_exposed_urls(self):
+        return [
+            ("media", "shuup_admin:media.browse"),
+        ]

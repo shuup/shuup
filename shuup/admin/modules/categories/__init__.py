@@ -8,11 +8,9 @@
 import six
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
-from filer.models import File
 
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
 from shuup.admin.menu import PRODUCTS_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls, get_model_url
 )
@@ -31,19 +29,19 @@ class CategoryModule(AdminModule):
                 "^categories/(?P<pk>\d+)/copy-visibility/$",
                 "shuup.admin.modules.categories.views.CategoryCopyVisibilityView",
                 name="category.copy_visibility",
-                permissions=get_default_model_permissions(Category)
+                require_superuser=True,
             ),
             admin_url(
                 "^categories/(?P<pk>\d+)/delete/$",
                 "shuup.admin.modules.categories.views.CategoryDeleteView",
                 name="category.delete",
-                permissions=get_default_model_permissions(Category)
+                permissions=["shuup.delete_category"]
             ),
         ] + get_edit_and_list_urls(
             url_prefix="^categories",
             view_template="shuup.admin.modules.categories.views.Category%sView",
             name_template="category.%s",
-            permissions=get_default_model_permissions(Category),
+            model=Category
         )
 
     def get_menu_entries(self, request):
@@ -84,7 +82,7 @@ class CategoryModule(AdminModule):
         )
 
     def get_required_permissions(self):
-        return get_default_model_permissions(Category) | get_default_model_permissions(File)
+        return ["shuup.view_category"]
 
     def get_model_url(self, object, kind):
         return derive_model_url(Category, "shuup_admin:category", object, kind)

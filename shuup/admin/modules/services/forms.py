@@ -17,8 +17,9 @@ from shuup.admin.forms.widgets import TextEditorWidget
 from shuup.core.models import (
     CountryLimitBehaviorComponent, FixedCostBehaviorComponent,
     GroupAvailabilityBehaviorComponent, OrderTotalLimitBehaviorComponent,
-    PaymentMethod, ServiceProvider, ShippingMethod, StaffOnlyBehaviorComponent,
-    WaivingCostBehaviorComponent, WeightLimitsBehaviorComponent
+    PaymentMethod, ServiceProvider, ShippingMethod, Shop,
+    StaffOnlyBehaviorComponent, WaivingCostBehaviorComponent,
+    WeightLimitsBehaviorComponent
 )
 
 
@@ -27,10 +28,10 @@ class BaseMethodForm(ShuupAdminForm):
         model = None
         exclude = [
             "identifier", "behavior_components", "old_module_identifier",
-            "old_module_data"
+            "old_module_data", "shop"
         ]
         base_fields = [
-            "choice_identifier", "name", "description", "enabled", "shop",
+            "choice_identifier", "name", "description", "enabled",
             "logo", "tax_class"
         ]
         widgets = {
@@ -66,6 +67,7 @@ class BaseMethodForm(ShuupAdminForm):
         setattr(self.instance, self.service_provider_attr, value)
 
     def _save_master(self, commit=True):
+        self.cleaned_data['shop'] = Shop.objects.get_current(self.request)
         if self.instance.pk:
             return super(BaseMethodForm, self)._save_master(commit)
 

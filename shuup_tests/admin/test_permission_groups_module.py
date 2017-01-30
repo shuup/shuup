@@ -7,33 +7,53 @@
 # LICENSE file in the root directory of this source tree.
 import pytest
 from django.contrib.auth.models import Group as PermissionGroup
+from django.contrib.auth.models import Permission
+from django.contrib.contenttypes.models import ContentType
 from django.utils.encoding import force_text
 
-from shuup.admin.base import AdminModule
 from shuup.admin.module_registry import get_modules, replace_modules
 from shuup.admin.modules.permission_groups.views.edit import (
     PermissionGroupEditView, PermissionGroupForm
 )
 from shuup.admin.utils.permissions import get_permission_object_from_string
+from shuup.core.models import Contact, Order
 from shuup.testing.factories import get_default_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.admin.fixtures.test_module import ARestrictedTestModule
-from shuup_tests.utils.fixtures import regular_user
+from shuup_tests.utils.fixtures import regular_user  # noqa
 
 
 def get_default_permission_group():
     return PermissionGroup.objects.create(name="Test")
 
+
+def migrate_permissions():
+    order_content_type = ContentType.objects.get_for_model(Order)
+    Permission.objects.create(
+        codename="view_sales_dashboard",
+        name="Can view sales dashboard",
+        content_type=order_content_type,
+    )
+
+    contact_content_type = ContentType.objects.get_for_model(Contact)
+    Permission.objects.create(
+        codename="view_customers_dashboard",
+        name="Can view customers dashboard",
+        content_type=contact_content_type,
+    )
+
+
 @pytest.mark.django_db
 def test_permission_group_edit_view(rf, admin_user):
     get_default_shop()
+    migrate_permissions()
     group = get_default_permission_group()
     view_func = PermissionGroupEditView.as_view()
-    response = view_func(apply_request_middleware(rf.get("/", user=admin_user), pk=group.pk))
+    response = view_func(apply_request_middleware(rf.get("/", user=admin_user), user=admin_user, pk=group.pk))
     assert response.status_code == 200
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db  # noqa
 def test_permission_group_form_updates_members(regular_user):
     with replace_modules([ARestrictedTestModule]):
         modules = [m for m in get_modules()]
@@ -52,9 +72,13 @@ def test_permission_group_form_updates_members(regular_user):
             "name": "New Name",
             "modules": [force_text(test_module.name)],
             "members": [force_text(regular_user.pk)],
+            "shuup.delete_product": True,
+            "shuup.change_product": True,
+            "shuup.add_product": True
         }
 
         form = PermissionGroupForm(instance=group, prefix=None, data=data)
+        assert(form.is_valid())
         form.save()
 
         module_permissions = [get_permission_object_from_string(m) for m in module_permissions]
@@ -67,13 +91,3 @@ def test_permission_group_form_updates_members(regular_user):
 
         assert not group.permissions.all()
         assert not group.user_set.all()
-
-
-def test_only_show_modules_with_defined_names():
-    """
-    Make sure that only modules with defined names are show as choices
-    in admin.
-    """
-    form = PermissionGroupForm(prefix=None)
-    choices = [name for (name, value) in form.fields["modules"].choices]
-    assert AdminModule.name not in choices

@@ -16,7 +16,7 @@ from shuup.admin.utils.picotable import (
 )
 from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import (
-    Order, OrderStatus, OrderStatusRole, PaymentStatus, ShippingStatus
+    Order, OrderStatus, OrderStatusRole, PaymentStatus, ShippingStatus, Shop
 )
 from shuup.utils.i18n import format_money, get_locally_formatted_datetime
 
@@ -72,7 +72,11 @@ class OrderListView(PicotableListView):
     ]
 
     def get_queryset(self):
-        return super(OrderListView, self).get_queryset().exclude(deleted=True)
+        qs = super(OrderListView, self).get_queryset().exclude(deleted=True)
+        if not self.request.user.is_superuser:
+            shop = Shop.objects.get_current(self.request)
+            qs = qs.filter(shop=shop)
+        return qs
 
     def format_customer_name(self, instance, *args, **kwargs):
         return instance.get_customer_name() or ""

@@ -11,7 +11,6 @@ import decimal
 import json
 
 import pytest
-from django.core import serializers
 from django.test import RequestFactory
 from django.utils import translation
 from django.utils.encoding import force_text
@@ -44,7 +43,8 @@ def get_frontend_order_state(contact, valid_lines=True):
     """
     translation.activate("en")
     shop = get_default_shop()
-    tax, created = Tax.objects.get_or_create(code="test_code", defaults={"rate": decimal.Decimal("0.20"), "name": "Default"})
+    tax, created = Tax.objects.get_or_create(code="test_code", defaults={"rate": decimal.Decimal("0.20"),
+                                                                         "name": "Default"})
     tax_class, created = TaxClass.objects.get_or_create(identifier="test_tax_class", defaults={"name": "Default"})
     rule, created = TaxRule.objects.get_or_create(tax=tax)
     rule.tax_classes.add(tax_class)
@@ -143,7 +143,7 @@ def test_order_creator_invalid_base_data(rf, admin_user):
     state["customer"]["id"] = None
     state["shop"]["selected"]["id"] = None
     request = get_frontend_request_for_command(state, "finalize", admin_user)
-    response =OrderEditView.as_view()(request)
+    response = OrderEditView.as_view()(request)
     assert_contains(response, "errorMessage", status_code=400)
 
 
@@ -155,7 +155,7 @@ def test_order_creator_addresses(rf, admin_user):
     # company with no tax number
     state["customer"]["isCompany"] = True
     request = get_frontend_request_for_command(state, "finalize", admin_user)
-    response =OrderEditView.as_view()(request)
+    response = OrderEditView.as_view()(request)
     assert_contains(response, "Tax number is not set", status_code=400)
 
     # company with tax number, should work
@@ -168,7 +168,7 @@ def test_order_creator_addresses(rf, admin_user):
     state["customer"]["isCompany"] = False
     state["customer"]["shippingAddress"] = {}
     request = get_frontend_request_for_command(state, "finalize", admin_user)
-    response =OrderEditView.as_view()(request)
+    response = OrderEditView.as_view()(request)
     assert_contains(response, "This field is required", status_code=400)
 
     # ship to billing, should work now
@@ -206,10 +206,10 @@ def test_order_creator_invalid_line_data(rf, admin_user):
     assert_contains(response, "The quantity", status_code=400)
 
 
-def test_order_creator_view_GET(rf, admin_user):
+def test_order_creator_view_get(rf, admin_user):
     get_default_shop()
     request = apply_request_middleware(rf.get("/"), user=admin_user)
-    response =OrderEditView.as_view()(request)
+    response = OrderEditView.as_view()(request)
     assert_contains(response, "shippingMethods")  # in the config
     assert_contains(response, "shops")  # in the config
 
@@ -230,7 +230,7 @@ def test_order_creator_product_data(rf, admin_user):
         "id": product.id,
         "quantity": 42
     }), user=admin_user)
-    response =OrderEditView.as_view()(request)
+    response = OrderEditView.as_view()(request)
     assert_contains(response, "taxClass")
     assert_contains(response, "sku")
     assert_contains(response, product.sku)
@@ -247,7 +247,7 @@ def test_order_creator_customer_data(rf, admin_user):
         "command": "customer_data",
         "id": contact.id
     }), user=admin_user)
-    response =OrderEditView.as_view()(request)
+    response = OrderEditView.as_view()(request)
     assert_contains(response, "name")
     assert_contains(response, contact.name)
 
@@ -256,7 +256,7 @@ def test_order_creator_source_data(rf, admin_user):
     get_initial_order_status()  # Needed for the API
     contact = create_random_person(locale="en_US", minimum_name_comp_len=5)
     request = get_frontend_request_for_command(get_frontend_order_state(contact), "source_data", admin_user)
-    response =OrderEditView.as_view()(request)
+    response = OrderEditView.as_view()(request)
     data = json.loads(response.content.decode("utf8"))
     assert len(data.get("orderLines")) == 5
 
@@ -396,7 +396,7 @@ def test_order_creator_customer_details(rf, admin_user):
         "command": "customer_details",
         "id": contact.id
     }), user=admin_user)
-    response =OrderEditView.as_view()(request)
+    response = OrderEditView.as_view()(request)
     data = json.loads(response.content.decode("utf8"))
 
     assert "customer_info" in data
@@ -429,7 +429,7 @@ def test_edit_view_with_anonymous_contact(rf, admin_user):
     order = create_order_with_product(product, supplier, 1, 10, shop=shop)
     order.save()
     assert not order.customer
-    request = apply_request_middleware(rf.get("/", user=admin_user))
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
     response = OrderEditView.as_view()(request=request, pk=order.pk)
     assert response.status_code == 200
 

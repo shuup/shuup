@@ -80,8 +80,11 @@ class CategoryManager(TreeManager, TranslatableManager):
 
         return qs.distinct()
 
-    def all_except_deleted(self, language=None):
-        return (self.language(language) if language else self).exclude(status=CategoryStatus.DELETED)
+    def all_except_deleted(self, shop=None, language=None):
+        qs = (self.language(language) if language else self).exclude(status=CategoryStatus.DELETED)
+        if shop:
+            qs = qs.filter(shops=shop)
+        return qs
 
 
 @python_2_unicode_compatible
@@ -107,9 +110,8 @@ class Category(MPTTModel, TranslatableModel):
         "Category image. Will be shown at theme."
     ))
     ordering = models.IntegerField(default=0, verbose_name=_('ordering'), help_text=_(
-            "You can set the order of categories in your store numerically."
-        )
-    )
+        "You can set the order of categories in your store numerically."
+    ))
     visibility = EnumIntegerField(
         CategoryVisibility, db_index=True, default=CategoryVisibility.VISIBLE_TO_ALL,
         verbose_name=_('visibility limitations'), help_text=_(
@@ -130,15 +132,13 @@ class Category(MPTTModel, TranslatableModel):
 
     translations = TranslatedFields(
         name=models.CharField(max_length=128, verbose_name=_('name'), help_text=_(
-                "Enter a descriptive name for your product category. "
-                "Products can be found in menus and in search in your store under the category name."
-            )
-        ),
+            "Enter a descriptive name for your product category. "
+            "Products can be found in menus and in search in your store under the category name."
+        )),
         description=models.TextField(verbose_name=_('description'), blank=True, help_text=_(
-                "Give your product category a detailed description. "
-                "This will help shoppers find your products under that category in your store and on the web."
-                )
-        ),
+            "Give your product category a detailed description. "
+            "This will help shoppers find your products under that category in your store and on the web."
+        )),
         slug=models.SlugField(blank=True, null=True, verbose_name=_('slug'), help_text=_(
             "Enter a URL slug for your category. "
             "This is what your product category page URL will be. "
@@ -150,6 +150,7 @@ class Category(MPTTModel, TranslatableModel):
 
     class Meta:
         ordering = ('tree_id', 'lft')
+        permissions = (('view_category', 'Can view categories'),)
         verbose_name = _('category')
         verbose_name_plural = _('categories')
 

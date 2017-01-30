@@ -20,14 +20,14 @@ from rest_framework.test import (
 
 from shuup.core import cache
 from shuup.core.models import (
-    AnonymousContact, Category, OrderStatus, Product, ProductCrossSell,
+    Category, OrderStatus, Product, ProductCrossSell,
     ProductCrossSellType, ProductMedia, ProductMediaKind, ProductVisibility,
     Shop, ShopProduct, ShopProductVisibility, Supplier
 )
 from shuup.front.api.products import FrontProductViewSet
 from shuup.testing.factories import (
     add_product_to_order, create_empty_order, create_package_product,
-    create_product, create_random_contact_group, create_random_order,
+    create_product, create_random_contact_group,
     create_random_person, get_default_shop, get_random_filer_image
 )
 
@@ -295,7 +295,7 @@ def test_get_best_selling_products(admin_user):
     for p_index in range(len(products)):
         order = create_empty_order(shop=shop1)
         order.save()
-        qty = (len(products)-p_index)
+        qty = (len(products) - p_index)
         add_product_to_order(order, supplier, products[p_index], qty, Decimal(1.0))
         order.create_shipment_of_all_products()
         order.status = OrderStatus.objects.get_default_complete()
@@ -319,7 +319,7 @@ def test_get_best_selling_products(admin_user):
     response = client.get("/api/shuup/front/products/best_selling/", {"limit": 100})
     assert response.status_code == status.HTTP_200_OK
     products = json.loads(response.content.decode("utf-8"))
-    assert len(products) == len(best_selling) # as we added less then 100, this must be true
+    assert len(products) == len(best_selling)  # as we added less then 100, this must be true
 
     # check the if all IDS are part of best selling
     for ix in range(len(products)):
@@ -361,9 +361,9 @@ def test_get_newest_products(admin_user):
     # create 30 random products
     for x in range(30):
         # product for shop1
-        p1 = create_product("product-%d-1" % x, shop=shop1, supplier=supplier)
+        create_product("product-%d-1" % x, shop=shop1, supplier=supplier)
         # product for shop2
-        p2 = create_product("product-%d-2" % x, shop=shop2, supplier=supplier)
+        create_product("product-%d-2" % x, shop=shop2, supplier=supplier)
 
     # list newest products
     request = get_request("/api/shuup/front/products/newest/", admin_user, shop1, customer, data={"limit": 100})

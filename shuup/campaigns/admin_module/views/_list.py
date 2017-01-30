@@ -14,6 +14,7 @@ from shuup.admin.utils.views import PicotableListView
 from shuup.campaigns.models.campaigns import (
     BasketCampaign, CatalogCampaign, Coupon
 )
+from shuup.core.models import Shop
 from shuup.utils.i18n import get_current_babel_locale
 
 
@@ -27,6 +28,9 @@ class CampaignListView(PicotableListView):
         Column("end_datetime", _("Ends")),
         Column("active", _("Active"), filter_config=ChoicesFilter(choices=[(0, _("No")), (1, _("Yes"))])),
     ]
+
+    def get_queryset(self):
+        return self.model.objects.filter(shop=Shop.objects.get_current(self.request))
 
     def start_datetime(self, instance, *args, **kwargs):
         if not instance.start_datetime:
@@ -52,9 +56,13 @@ class CatalogCampaignListView(CampaignListView):
 
     def get_context_data(self, **kwargs):
         context = super(CampaignListView, self).get_context_data(**kwargs)
+        if self.request.user.is_superuser:
+            settings_button = SettingsActionButton.for_model(self.model, return_url="catalog_campaign")
+        else:
+            settings_button = None
         context["toolbar"] = Toolbar([
             NewActionButton("shuup_admin:catalog_campaign.new", text=_("Create new Catalog Campaign")),
-            SettingsActionButton.for_model(self.model, return_url="catalog_campaign")
+            settings_button
         ])
         return context
 
@@ -64,9 +72,13 @@ class BasketCampaignListView(CampaignListView):
 
     def get_context_data(self, **kwargs):
         context = super(CampaignListView, self).get_context_data(**kwargs)
+        if self.request.user.is_superuser:
+            settings_button = SettingsActionButton.for_model(self.model, return_url="basket_campaign")
+        else:
+            settings_button = None
         context["toolbar"] = Toolbar([
             NewActionButton("shuup_admin:basket_campaign.new", text=_("Create new Basket Campaign")),
-            SettingsActionButton.for_model(self.model, return_url="basket_campaign")
+            settings_button
         ])
         return context
 
@@ -91,8 +103,12 @@ class CouponListView(PicotableListView):
 
     def get_context_data(self, **kwargs):
         context = super(CouponListView, self).get_context_data(**kwargs)
+        if self.request.user.is_superuser:
+            settings_button = SettingsActionButton.for_model(self.model, return_url="coupon")
+        else:
+            settings_button = None
         context["toolbar"] = Toolbar([
             NewActionButton("shuup_admin:coupon.new", text=_("Create new Coupon")),
-            SettingsActionButton.for_model(self.model, return_url="coupon")
+            settings_button
         ])
         return context

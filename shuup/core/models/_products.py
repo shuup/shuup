@@ -7,6 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals, with_statement
 
+import warnings
+
 import six
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
@@ -23,6 +25,7 @@ from shuup.core.taxing import TaxableItem
 from shuup.core.utils import context_cache
 from shuup.core.utils.slugs import generate_multilanguage_slugs
 from shuup.utils.analog import define_log_model, LogEntryKind
+from shuup.utils.deprecation import RemovedFromShuupWarning
 
 from ._attributes import AppliedAttribute, AttributableMixin, Attribute
 from ._product_media import ProductMediaKind
@@ -109,10 +112,9 @@ class ProductType(TranslatableModel):
     identifier = InternalIdentifierField(unique=True)
     translations = TranslatedFields(
         name=models.CharField(max_length=64, verbose_name=_('name'), help_text=_(
-                "Enter a descriptive name for your product type. "
-                "Products and attributes for products of this type can be found under this name."
-            )
-        ),
+            "Enter a descriptive name for your product type. "
+            "Products and attributes for products of this type can be found under this name."
+        )),
     )
     attributes = models.ManyToManyField(
         "Attribute", blank=True, related_name='product_types',
@@ -142,10 +144,13 @@ class ProductQuerySet(TranslatableQuerySet):
         else:
             from ._product_shops import ShopProductVisibility
             qs = root.all().exclude(Q(
-                        shop_products__shop=shop,
-                        shop_products__visibility=ShopProductVisibility.NOT_VISIBLE
-                    )).exclude(
-                mode__in=self._get_invisible_modes()
+                shop_products__shop=shop,
+                shop_products__visibility=ShopProductVisibility.NOT_VISIBLE
+            )).filter(
+                mode__in=(
+                    ProductMode.NORMAL, ProductMode.PACKAGE_PARENT,
+                    ProductMode.SIMPLE_VARIATION_PARENT, ProductMode.VARIABLE_VARIATION_PARENT
+                )
             )
             if customer and not customer.is_anonymous:
                 visible_to_logged_in_q = Q(shop_products__visibility_limit__in=(
@@ -183,8 +188,10 @@ class ProductQuerySet(TranslatableQuerySet):
         from ._product_shops import ShopProductVisibility
         return self._get_qs(shop, customer, language, ShopProductVisibility.SEARCHABLE)
 
-    def all_except_deleted(self, language=None):
+    def all_except_deleted(self, shop=None, language=None):
         qs = (self.language(language) if language else self).exclude(deleted=True)
+        if shop:
+            qs = qs.filter(shop_products__shop=shop)
         qs = qs.select_related(*Product.COMMON_SELECT_RELATED)
         return qs
 
@@ -220,12 +227,11 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         )
     )
     tax_class = models.ForeignKey("TaxClass", verbose_name=_('tax class'), on_delete=models.PROTECT, help_text=_(
-            "Select a tax class for your product. "
-            "The tax class is used to determine which taxes to apply to your product. "
-            "Tax classes are defined in Settings - Tax Classes. "
-            "The rules by which taxes are applied are defined in Settings - Tax Rules."
-        )
-    )
+        "Select a tax class for your product. "
+        "The tax class is used to determine which taxes to apply to your product. "
+        "Tax classes are defined in Settings - Tax Classes. "
+        "The rules by which taxes are applied are defined in Settings - Tax Rules."
+    ))
 
     # Identification
     type = models.ForeignKey(
@@ -336,11 +342,10 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
             )
         ),
         keywords=models.TextField(blank=True, verbose_name=_('keywords'), help_text=_(
-                "You can enter keywords that describe your product. "
-                "This will help your shoppers learn about your products. "
-                "It will also help shoppers find them in the store and on the web."
-            )
-        ),
+            "You can enter keywords that describe your product. "
+            "This will help your shoppers learn about your products. "
+            "It will also help shoppers find them in the store and on the web."
+        )),
         status_text=models.CharField(
             max_length=128, blank=True,
             verbose_name=_('status text'),
@@ -364,6 +369,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
 
     class Meta:
         ordering = ('-id',)
+        permissions = (('view_product', 'Can view products'),)
         verbose_name = _('product')
         verbose_name_plural = _('products')
 
@@ -373,7 +379,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         except ObjectDoesNotExist:
             return self.sku
 
-    def get_shop_instance(self, shop, allow_cache=False):
+    def get_shop_product_instance(self, shop, allow_cache=False):
         """
         :type shop: shuup.core.models.Shop
         :rtype: shuup.core.models.ShopProduct
@@ -383,9 +389,16 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         if val is not None:
             return val
 
-        shop_inst = self.shop_products.get(shop=shop)
-        context_cache.set_cached_value(key, shop_inst)
-        return shop_inst
+        shop_product_inst = self.shop_products.get(shop=shop)
+        context_cache.set_cached_value(key, shop_product_inst)
+        return shop_product_inst
+
+    def get_shop_instance(self, shop, allow_cache=False):
+        warnings.warn(
+            "get_shop_instance is deprecated, use get_shop_product_instance instead",
+            RemovedFromShuupWarning
+        )
+        return self.get_shop_product_instance(shop, allow_cache)
 
     def get_priced_children(self, context, quantity=1):
         """

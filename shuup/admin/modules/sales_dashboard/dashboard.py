@@ -114,7 +114,7 @@ class OrderValueChartDashboardBlock(DashboardChartBlock):
             for month_sale in sum_sales_data.values():
                 total = total + month_sale["sum"]
                 cumulative_sales.append(total)
-                average_sales.append(total / (count+1))
+                average_sales.append(total / (count + 1))
                 count = count + 1
 
         # this will be on top of all bars

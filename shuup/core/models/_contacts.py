@@ -67,6 +67,7 @@ class ContactGroup(TranslatableShuupModel):
     objects = ContactGroupQuerySet.as_manager()
 
     class Meta:
+        permissions = (("view_contactgroup", "Can view contact groups"),)
         verbose_name = _('contact group')
         verbose_name_plural = _('contact groups')
 
@@ -160,6 +161,7 @@ class Contact(PolymorphicShuupModel):
         return self.full_name
 
     class Meta:
+        permissions = (('view_contact', 'Can view any contacts'),)
         verbose_name = _('contact')
         verbose_name_plural = _('contacts')
 
@@ -256,6 +258,7 @@ class CompanyContact(Contact):
         help_text=_("e.g. EIN in US or VAT code in Europe"))
 
     class Meta:
+        permissions = (('view_companycontact', 'Can view company contacts'),)
         verbose_name = _('company')
         verbose_name_plural = _('companies')
 
@@ -301,6 +304,7 @@ class PersonContact(Contact):
     # TODO: Figure out how/when/if the name and email fields are updated from users
 
     class Meta:
+        permissions = (('view_personcontact', 'Can view person contacts'),)
         verbose_name = _('person')
         verbose_name_plural = _('persons')
 

@@ -43,11 +43,11 @@ class ScriptListView(PicotableListView):
         return Toolbar([
             URLActionButton(
                 text=_("New Script"), icon="fa fa-plus", extra_css_class="btn-success",
-                url=reverse("shuup_admin:notify.script.new")
+                url=reverse("shuup_admin:notify.script.new"), required_permissions=("add", )
             ),
             JavaScriptActionButton(
                 text=_("New From Template"), icon="fa fa-book", extra_css_class="btn-info",
-                onclick="showScriptTemplates()"
+                onclick="showScriptTemplates()", required_permissions=("add", )
             )
         ])
 

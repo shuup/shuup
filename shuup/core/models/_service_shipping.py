@@ -39,6 +39,7 @@ class ShippingMethod(Service):
     provider_attr = 'carrier'
 
     class Meta:
+        permissions = (('view_shippingmethod', 'Can view shipping methods'),)
         verbose_name = _("shipping method")
         verbose_name_plural = _("shipping methods")
 

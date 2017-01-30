@@ -101,6 +101,26 @@ class AdminModule(object):
         """
         return None
 
+    def get_exposed_urls(self):
+        """
+        Exposes some urls to the frontend so they can be used in Javascript code.
+        :return: List of (URL identifier, route name) tuples
+        :rtype: list
+        """
+        return []
+
+    def get_navbar_widgets(self):
+        """
+        Provides a list of widgets template names that will beadded to the top navbar in the admin.
+        :return: List of template names
+        :rtype: list
+        """
+        return []
+
+    def set_request(self, request):
+        """Set the request attribute if needed by other methods"""
+        self.request = request
+
 
 class Resolvable(object):
     _url = ""  # Set on instance level.
@@ -230,17 +250,18 @@ class Section(object):
     order = 0
 
     @staticmethod
-    def visible_for_object(obj):
+    def visible_for_object(obj, request):
         """
         Returns whether this sections must be visible for the provided object (e.g. `order`)
         :type model object: e.g. shuup.core.models.Order
+        :type request: HttpRequest
         :return whether this section must be shown in order section list, defaults to false
         :rtype: bool
         """
         return False
 
     @staticmethod
-    def get_context_data(obj):
+    def get_context_data(obj, request):
         """
         Returns additional information to be used in the template
 
@@ -251,6 +272,7 @@ class Section(object):
 
 
         :type object: e.g. shuup.core.models.Order
+        :type request: HttpRequest
         :return additional context data
         :rtype: object|None
         """
@@ -266,8 +288,8 @@ class OrderSection(Section):
         return super(OrderSection, cls).__new__(cls)
 
     @classmethod
-    def visible_for_object(cls, order):
+    def visible_for_object(cls, order, request):
         """
         Support for the deprecated `visible_for_order` function
         """
-        return cls.visible_for_order(order) or super(OrderSection, cls).visible_for_object(order)
+        return cls.visible_for_order(order, request) or super(OrderSection, cls).visible_for_object(order, request)

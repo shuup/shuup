@@ -22,9 +22,7 @@ from shuup.admin.menu import PRODUCTS_MENU_CATEGORY
 from shuup.admin.modules.products.signal_handlers import (
     update_categories_post_save, update_categories_through
 )
-from shuup.admin.utils.permissions import (
-    get_default_model_permissions, get_permissions_from_urls
-)
+from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.search import split_query
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls, get_model_url,
@@ -46,17 +44,17 @@ class ProductModule(AdminModule):
             admin_url(
                 "^products/(?P<pk>\d+)/delete/$", "shuup.admin.modules.products.views.ProductDeleteView",
                 name="shop_product.delete",
-                permissions=["shuup.delete_product"]
+                permissions=["shuup.delete_shopproduct"]
             ),
             admin_url(
                 "^products/(?P<pk>\d+)/media/$", "shuup.admin.modules.products.views.ProductMediaEditView",
                 name="shop_product.edit_media",
-                permissions=get_default_model_permissions(ShopProduct),
+                permissions=["shuup.change_shopproduct"] + list(get_default_model_permissions(File)),
             ),
             admin_url(
                 "^products/(?P<pk>\d+)/media/add/$", "shuup.admin.modules.products.views.ProductMediaBulkAdderView",
                 name="shop_product.add_media",
-                permissions=get_default_model_permissions(ShopProduct),
+                permissions=["shuup.change_shopproduct"] + list(get_default_model_permissions(File)),
             ),
             admin_url(
                 "^products/(?P<pk>\d+)/crosssell/$", "shuup.admin.modules.products.views.ProductCrossSellEditView",
@@ -76,13 +74,13 @@ class ProductModule(AdminModule):
             admin_url(
                 "^products/mass-edit/$", "shuup.admin.modules.products.views.ProductMassEditView",
                 name="shop_product.mass_edit",
-                permissions=get_default_model_permissions(ShopProduct)
+                permissions=["shuup.change_shopproduct"]
             ),
         ] + get_edit_and_list_urls(
             url_prefix="^products",
             view_template="shuup.admin.modules.products.views.Product%sView",
             name_template="shop_product.%s",
-            permissions=get_default_model_permissions(ShopProduct)
+            model=ShopProduct
         )
 
     def get_menu_entries(self, request):
@@ -159,17 +157,18 @@ class ProductModule(AdminModule):
         )
 
     def get_required_permissions(self):
-        return (
-            get_permissions_from_urls(self.get_urls()) |
-            get_default_model_permissions(Product) |
-            get_default_model_permissions(File)
-        )
+        return ["shuup.view_shopproduct"]
 
     def get_model_url(self, object, kind):
         if isinstance(object, Product):
-            shop = Shop.objects.first()
+            shop = Shop.objects.get_current(self.request)
             object = object.get_shop_instance(shop)
         return derive_model_url(ShopProduct, "shuup_admin:shop_product", object, kind)
+
+    def get_exposed_urls(self):
+        return [
+            ("product", "shuup_admin:shop_product.list"),
+        ]
 
 
 m2m_changed.connect(

@@ -13,6 +13,7 @@ Core
 ~~~~
 
 - Improve variation product orderability check performance
+- Section receives the request object
 - Add `created_on` and `modified_on` fields for shop
 - Make shop identifier max length to 128 characters
 - Add `staff_members` manytomanyfield for shop
@@ -32,6 +33,9 @@ Admin
 - Fix bug in "Select All" mass action
 - Fix bug in product choice widget
 - Display last 12 months of sales in the dashboard chart
+- Only categories, orders, products, contacts and campaigns for the active shop
+  are displayed in the admin
+- Menu categories without any children are hidden
 
 Addons
 ~~~~~~

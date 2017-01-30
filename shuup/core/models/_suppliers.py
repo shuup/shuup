@@ -50,6 +50,11 @@ class Supplier(ModuleInterface, ShuupModel):
     ))
     module_data = JSONField(blank=True, null=True, verbose_name=_("module data"))
 
+    class Meta:
+        permissions = (('view_supplier', 'Can view suppliers'),)
+        verbose_name = _('supplier')
+        verbose_name_plural = _('suppliers')
+
     def __str__(self):
         return self.name
 

@@ -24,5 +24,6 @@ class Bootstrap3Namespace(object):
     def form(self, form, **kwargs):
         return mark_safe(FormRenderer(form, **kwargs).render())
 
+
 library.global_function(name="shuup_admin", fn=shuup_admin_template_helpers)
 library.global_function(name="bs3", fn=Bootstrap3Namespace())

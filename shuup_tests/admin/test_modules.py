@@ -100,7 +100,7 @@ def test_dashboard_blocks_permissions(rf, client):
         view = DashboardView(request=request)
         assert not view.get_context_data()["blocks"]
 
-        request.user.permissions = permissions 
+        request.user.permissions = permissions
         view = DashboardView(request=request)
         assert view.get_context_data()["blocks"]
 
@@ -115,6 +115,7 @@ def test_menu_entries(rf, admin_user):
         assert any(me.text == "OK" for me in test_category_menu_entries)
 
 
+@pytest.mark.django_db
 def test_content_block_template(rf):
     TEMPLATES = get_templates_setting_for_specific_directories(settings.TEMPLATES, [TEMPLATES_DIR])
     with override_settings(TEMPLATES=TEMPLATES):

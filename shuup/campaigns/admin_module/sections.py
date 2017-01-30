@@ -19,20 +19,20 @@ class ProductCampaignsSection(Section):
     template = "shuup/campaigns/admin/_product_campaigns.jinja"
 
     @staticmethod
-    def visible_for_object(product):
-        return bool(product.pk)
+    def visible_for_object(product, request):
+        return bool(product.pk) and request.user.has_perm('shuup.view_campaign')
 
     @staticmethod
-    def get_context_data(product):
+    def get_context_data(product, request):
         ctx = {}
-        for shop in Shop.objects.all():
-            try:
-                shop_product = product.get_shop_instance(shop)
-            except ShopProduct.DoesNotExist:
-                continue
+        shop = Shop.objects.get_current(request)
+        try:
+            shop_product = product.get_shop_instance(shop)
+        except ShopProduct.DoesNotExist:
+            return ctx
 
-            ctx[shop] = {
-                "basket_campaigns": BasketCampaign.get_for_product(shop_product),
-                "catalog_campaigns": CatalogCampaign.get_for_product(shop_product)
-            }
+        ctx[shop] = {
+            "basket_campaigns": BasketCampaign.get_for_product(shop_product),
+            "catalog_campaigns": CatalogCampaign.get_for_product(shop_product)
+        }
         return ctx

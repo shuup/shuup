@@ -28,6 +28,12 @@ class ShopListView(PicotableListView):
         Column("status", _(u"Status"), filter_config=ChoicesFilter(choices=ShopStatus.choices)),
     ]
 
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return super(ShopListView, self).get_queryset()
+        else:
+            return Shop.objects.get_for_user(self.request.user)
+
     def get_toolbar(self):
         if settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
             return super(ShopListView, self).get_toolbar()

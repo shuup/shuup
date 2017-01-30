@@ -4,12 +4,16 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+import logging
+
 from django.db import models
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from polymorphic.models import PolymorphicModel
 
 from shuup.core.models import Category, Product, ProductType, Shop, ShopProduct
+
+LOGGER = logging.getLogger(__name__)
 
 
 class CatalogFilter(PolymorphicModel):
@@ -96,23 +100,27 @@ class CategoryFilter(CatalogFilter):
 
     def get_matching_shop_products(self):
         shop_products = []
-        shop = Shop.objects.first()
+        shop = Shop.objects.get_main()
         cat_ids = self.categories.all_except_deleted().values_list("pk", flat=True)
         for parent in ShopProduct.objects.filter(categories__id__in=cat_ids).select_related("product"):
             shop_products.append(parent)
-            for child in parent.product.variation_children.all():
-                child_sp = child.get_shop_instance(shop)
-                shop_products.append(child_sp)
+            if shop:
+                for child in parent.product.variation_children.all():
+                    child_sp = child.get_shop_product_instance(shop)
+                    shop_products.append(child_sp)
+            else:
+                # TODO: Define how multiple shops are handled here.
+                LOGGER.error("Undefined behavior for multiple shops")
         return shop_products
 
     def matches(self, shop_product):
         ids = list(shop_product.categories.all_except_deleted().values_list("id", flat=True))
         for child in shop_product.product.variation_children.all():
-            child_sp = child.get_shop_instance(shop_product.shop)
+            child_sp = child.get_shop_product_instance(shop_product.shop)
             ids += list(child_sp.categories.all_except_deleted().values_list("id", flat=True))
 
         if shop_product.product.variation_parent:
-            parent_sp = shop_product.product.variation_parent.get_shop_instance(shop_product.shop)
+            parent_sp = shop_product.product.variation_parent.get_shop_product_instance(shop_product.shop)
             ids += list(parent_sp.categories.all_except_deleted().values_list("id", flat=True))
 
         new_ids = self.values.values_list("id", flat=True)
