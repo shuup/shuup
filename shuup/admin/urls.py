@@ -22,6 +22,7 @@ from shuup.admin.utils.urls import admin_url, AdminRegexURLPattern
 from shuup.admin.views.dashboard import DashboardView
 from shuup.admin.views.home import HomeView
 from shuup.admin.views.menu import MenuView
+from shuup.admin.views.permissions import set_shop
 from shuup.admin.views.search import SearchView
 from shuup.admin.views.select import MultiselectAjaxView
 from shuup.admin.views.tour import TourView
@@ -66,6 +67,11 @@ def get_urls():
             r'^set-language/$',
             csrf_exempt(set_language),
             name="set-language"
+        ),
+        admin_url(
+            r'^set-shop/$',
+            csrf_exempt(set_shop),
+            name="set-shop"
         ),
     ])
 

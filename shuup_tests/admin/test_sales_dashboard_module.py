@@ -19,6 +19,7 @@ from shuup.testing.factories import (
     create_product, create_random_order, create_random_person,
     DEFAULT_CURRENCY, get_default_product, get_default_shop
 )
+from shuup.testing.utils import apply_request_middleware
 
 NUM_ORDERS_COLUMN_INDEX = 2
 NUM_CUSTOMERS_COLUMN_INDEX = 3
@@ -32,14 +33,16 @@ def get_order_for_date(dt, product):
     return order
 
 @pytest.mark.django_db
-def test_order_chart_works():
+def test_order_chart_works(rf, admin_user):
+    get_default_shop()
     order = create_random_order(customer=create_random_person(), products=(get_default_product(),))
-    chart = OrderValueChartDashboardBlock("test", order.currency).get_chart()
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
+    chart = OrderValueChartDashboardBlock("test", request=request).get_chart()
     assert len(chart.datasets[0]) > 0
 
 
 @pytest.mark.django_db
-def test_shop_overview_block(rf):
+def test_shop_overview_block(rf, admin_user):
     today = date.today()
     product = get_default_product()
     sp = product.get_shop_instance(get_default_shop())
@@ -51,8 +54,8 @@ def test_shop_overview_block(rf):
     o.save()
     get_order_for_date(date(today.year, 1, 1), product)
     get_order_for_date(date(today.year, today.month, 1), product)
-
-    block = get_shop_overview_block(rf.get("/"), DEFAULT_CURRENCY)
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
+    block = get_shop_overview_block(request)
     soup = BeautifulSoup(block.content)
     _, today_sales, mtd, ytd, totals = soup.find_all("tr")
     assert today_sales.find_all("td")[NUM_ORDERS_COLUMN_INDEX].string == "2"
@@ -66,7 +69,8 @@ def test_shop_overview_block(rf):
 
 
 @pytest.mark.django_db
-def test_recent_orders_block(rf):
+def test_recent_orders_block(rf, admin_user):
     order = create_random_order(customer=create_random_person(), products=[get_default_product()])
-    block = get_recent_orders_block(rf.get("/"), DEFAULT_CURRENCY)
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
+    block = get_recent_orders_block(request)
     assert order.customer.name in block.content

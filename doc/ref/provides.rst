@@ -82,6 +82,10 @@ Core
     Allows providing extension for the product attribute form in admin.
     Should implement the `~shuup.admin.form_modifier.FormModifier` interface.
 
+``admin_order_information``
+    Additional information rows for Order detail page. Provide objects should inherit
+    from `~shuup.admin.modules.orders.utils.OrderInformation` class.
+
 ``admin_product_form_part``
     Additional ``FormPart`` classes for Product editing.
     (This is used by pricing modules, for instance.) See :doc:`example <../howto/new_tab>`.

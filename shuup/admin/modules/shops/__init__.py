@@ -8,11 +8,9 @@
 from __future__ import unicode_literals
 
 from django.utils.translation import ugettext_lazy as _
-from filer.models import File
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls
 )
@@ -30,13 +28,13 @@ class ShopModule(AdminModule):
                 "^shops/(?P<pk>\d+)/enable/$",
                 "shuup.admin.modules.shops.views.ShopEnablerView",
                 name="shop.enable",
-                permissions=get_default_model_permissions(Shop)
+                permissions=["shuup.change_shop"]
             ),
         ] + get_edit_and_list_urls(
             url_prefix="^shops",
             view_template="shuup.admin.modules.shops.views.Shop%sView",
             name_template="shop.%s",
-            permissions=get_default_model_permissions(Shop)
+            model=Shop
         )
 
     def get_menu_entries(self, request):
@@ -53,7 +51,7 @@ class ShopModule(AdminModule):
 
     def get_help_blocks(self, request, kind):
         if kind == "setup":
-            shop = Shop.objects.first()
+            shop = request.session.get("admin_shop")
             yield SimpleHelpBlock(
                 text=_("Add a logo to make your store stand out"),
                 actions=[{
@@ -66,7 +64,7 @@ class ShopModule(AdminModule):
             )
 
     def get_required_permissions(self):
-        return get_default_model_permissions(Shop) | get_default_model_permissions(File)
+        return ["shuup.view_shop"]
 
     def get_model_url(self, object, kind):
         return derive_model_url(Shop, "shuup_admin:shop", object, kind)

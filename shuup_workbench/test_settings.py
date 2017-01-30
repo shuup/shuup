@@ -78,6 +78,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'shuup.front.middleware.ProblemMiddleware',
+    'shuup.admin.middleware.ShuupAdminMiddleware',
     'shuup.front.middleware.ShuupFrontMiddleware',
 ]
 

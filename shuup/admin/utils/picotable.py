@@ -20,6 +20,9 @@ from django.utils.translation import ugettext_lazy as _
 from easy_thumbnails.files import get_thumbnailer
 from filer.models import Image
 
+from shuup.admin.utils.permissions import (
+    filter_queryset, get_permission_string_for_model, user_has_permission
+)
 from shuup.admin.utils.urls import get_model_url, NoModelUrl
 from shuup.core.models import ProductMedia
 from shuup.utils.dates import try_parse_date
@@ -87,8 +90,9 @@ class ChoicesFilter(Filter):
         if not self.choices:
             return None
         choices = maybe_call(self.choices, context=context)
+        user = context.request.user
         if isinstance(choices, QuerySet):
-            choices = [(c.pk, c) for c in choices]
+            choices = [(c.pk, c) for c in choices if user_has_permission("change", user, c)]
         return [("_all", "---------")] + [
             (force_text(value, strings_only=True), force_text(display))
             for (value, display)
@@ -394,7 +398,15 @@ class Picotable(object):
         return queryset
 
     def get_data(self, query):
-        paginator = Paginator(self.process_queryset(query), query["perPage"])
+        queryset = self.process_queryset(query)
+        paginator = Paginator(
+            filter_queryset(
+                self.request,
+                get_permission_string_for_model(queryset.model, "change"),
+                queryset
+            ),
+            query["perPage"]
+        )
         try:
             page = paginator.page(int(query["page"]))
         except EmptyPage:

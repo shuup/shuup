@@ -11,9 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url
-from shuup.core.models import Shop
 
 
 class SettingsModule(AdminModule):
@@ -26,7 +24,7 @@ class SettingsModule(AdminModule):
                 "^settings/$",
                 "shuup.admin.modules.settings.views.SystemSettingsView",
                 name="settings.list",
-                permissions=get_default_model_permissions(Shop)
+                permissions=["shuup.add_shop"]
             ),
         ]
 

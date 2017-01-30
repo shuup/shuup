@@ -58,6 +58,11 @@ class ServiceProvider(PolymorphicTranslatableShuupModel):
     #: Model class of the provided services (subclass of `Service`)
     service_model = None
 
+    class Meta:
+        permissions = (('view_serviceprovider', 'Can view any service providers'),)
+        verbose_name = _('service provider')
+        verbose_name_plural = _('service providers')
+
     def get_service_choices(self):
         """
         Get all service choices of this provider.

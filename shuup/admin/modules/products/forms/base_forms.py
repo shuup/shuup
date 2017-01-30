@@ -105,7 +105,7 @@ class ProductBaseForm(MultiLanguageModelForm):
                 file_id=self.cleaned_data["file"],
                 kind=ProductMediaKind.IMAGE,
             )
-            image.shops.add(Shop.objects.first())
+            image.shops.add(self.request.session.get("admin_shop"))
             instance.primary_image = image
             instance.save()
 

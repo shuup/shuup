@@ -14,7 +14,6 @@ from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
-from shuup.admin.currencybound import CurrencyBound
 from shuup.admin.dashboard import DashboardMoneyBlock
 from shuup.admin.menu import ORDERS_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
@@ -22,7 +21,7 @@ from shuup.admin.utils.urls import admin_url
 from shuup.front.models.stored_basket import StoredBasket
 
 
-def get_unfinalized_cart_block(currency, days=14):
+def get_unfinalized_cart_block(request, days=14):
     days = int(days)
 
     early_cutoff = now() - datetime.timedelta(days=days)
@@ -31,8 +30,9 @@ def get_unfinalized_cart_block(currency, days=14):
     # unupdated for two hours.
     late_cutoff = now() - datetime.timedelta(hours=2)
 
+    shop = request.session.get("admin_shop")
     data = (
-        StoredBasket.objects.filter(currency=currency)
+        StoredBasket.objects.filter(shop=shop, currency=shop.currency)
         .filter(updated_on__range=(early_cutoff, late_cutoff), product_count__gte=0)
         .exclude(deleted=True, finished=True, persistent=True)
         .aggregate(count=Count("id"), sum=Sum("taxful_total_price_value"))
@@ -45,20 +45,18 @@ def get_unfinalized_cart_block(currency, days=14):
         color="red",
         title=_("Abandoned Cart Value"),
         value=(data.get("sum") or 0),
-        currency=currency,
+        currency=shop.currency,
         icon="fa fa-calculator",
         subtitle=_("Based on {b} carts over the last {d} days").format(
             b=data.get("count"), d=days)
     )
 
 
-class CartAdminModule(CurrencyBound, AdminModule):
+class CartAdminModule(AdminModule):
     name = "Cart"
 
     def get_dashboard_blocks(self, request):
-        if not self.currency:
-            return
-        unfinalized_block = get_unfinalized_cart_block(self.currency, days=14)
+        unfinalized_block = get_unfinalized_cart_block(request, days=14)
         if unfinalized_block:
             yield unfinalized_block
 

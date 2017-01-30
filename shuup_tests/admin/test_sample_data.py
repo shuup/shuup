@@ -110,7 +110,7 @@ def test_sample_data_wizard_pane(rf, admin_user, settings):
 
     assert Category.objects.count() == len(BUSINESS_SEGMENTS["default"]["categories"])
 
-    request = apply_request_middleware(rf.get("/"))
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
     response = WizardView.as_view()(request)
     assert response.status_code == 302
     assert response["Location"] == reverse("shuup_admin:dashboard")

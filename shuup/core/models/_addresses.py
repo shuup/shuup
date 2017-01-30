@@ -113,6 +113,7 @@ class Address(NameMixin, ShuupModel):
 
     class Meta:
         abstract = True
+        permissions = (('view_address', 'Can view addresses'),)
         verbose_name = _('address')
         verbose_name_plural = _('addresses')
 

@@ -34,13 +34,21 @@ class OrderDetailView(DetailView):
         context["title"] = force_text(self.object)
         context["order_sections"] = []
 
+        provided_information = []
+        for provided_info in sorted(get_provide_objects("admin_order_information"), key=lambda x: x.order):
+            info = provided_info(self.object)
+            if info.provides_info():
+                provided_information.append((info.title, info.information))
+        context["provided_information"] = provided_information
+
         order_sections_provides = sorted(get_provide_objects("admin_order_section"), key=lambda x: x.order)
         for admin_order_section in order_sections_provides:
             # Check whether the Section should be visible for the current object
-            if admin_order_section.visible_for_object(self.object):
+            if admin_order_section.visible_for_object(self.object, self.request):
                 context["order_sections"].append(admin_order_section)
                 # add additional context data where the key is the order_section identifier
-                context[admin_order_section.identifier] = admin_order_section.get_context_data(self.object)
+                section_context = admin_order_section.get_context_data(self.object, self.request)
+                context[admin_order_section.identifier] = section_context
 
         return context
 

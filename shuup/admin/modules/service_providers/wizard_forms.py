@@ -13,7 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.admin.forms import ShuupAdminForm
 from shuup.core.models import (
     CustomCarrier, CustomPaymentProcessor, PaymentMethod, PaymentProcessor,
-    ShippingMethod, Shop, TaxClass
+    ShippingMethod, TaxClass
 )
 
 
@@ -53,7 +53,7 @@ class ServiceWizardForm(ShuupAdminForm):
                 service_choice,
                 name=self.cleaned_data.get("service_name", service_choice.name),
                 description=self.cleaned_data.get("service_description", ""),
-                shop=Shop.objects.first(),
+                shop=self.request.session.get("admin_shop"),
                 tax_class=TaxClass.objects.first(),
                 enabled=True
             )

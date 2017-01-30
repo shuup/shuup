@@ -12,7 +12,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls
 )
@@ -29,21 +28,22 @@ class ServiceModule(AdminModule):
     menu_entry_url = None
     menu_ordering = 999999
     url_name_prefix = None
+    delete_permissions = ()
+    required_permissions_for_module = ()
 
     def get_urls(self):
-        permissions = self.get_required_permissions()
         return [
             admin_url(
                 "%s/(?P<pk>\d+)/delete/$" % self.url_prefix,
                 self.view_template % "Delete",
                 name=self.name_template % "delete",
-                permissions=permissions
+                permissions=self.delete_permissions
             )
         ] + get_edit_and_list_urls(
             url_prefix=self.url_prefix,
             view_template=self.view_template,
             name_template=self.name_template,
-            permissions=permissions
+            model=self.model
         )
 
     def get_menu_entries(self, request):
@@ -58,7 +58,7 @@ class ServiceModule(AdminModule):
         ]
 
     def get_required_permissions(self):
-        return get_default_model_permissions(PaymentMethod) | get_default_model_permissions(ShippingMethod)
+        return self.required_permissions_for_module
 
     def get_model_url(self, object, kind):
         return derive_model_url(self.model, self.url_name_prefix, object, kind)
@@ -73,6 +73,8 @@ class ShippingMethodModule(ServiceModule):
     menu_entry_url = "shuup_admin:shipping_method.list"
     menu_ordering = 4
     url_name_prefix = "shuup_admin:shipping_method"
+    delete_permissions = ["shuup.delete_shippingmethod"]
+    required_permissions_for_module = ["shuup.view_shippingmethod"]
 
     breadcrumbs_menu_entry = MenuEntry(text=name, url="shuup_admin:shipping_method.list")
 
@@ -86,5 +88,7 @@ class PaymentMethodModule(ServiceModule):
     menu_entry_url = "shuup_admin:payment_method.list"
     menu_ordering = 5
     url_name_prefix = "shuup_admin:payment_method"
+    delete_permissions = ["shuup.delete_paymentmethod"]
+    required_permissions_for_module = ["shuup.view_paymentmethod"]
 
     breadcrumbs_menu_entry = MenuEntry(text=name, url="shuup_admin:payment_method.list")

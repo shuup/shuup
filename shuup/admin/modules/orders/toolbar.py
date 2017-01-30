@@ -58,6 +58,7 @@ class OrderDetailToolbar(Toolbar):
                 name="status",
                 value=status.pk,
                 text=status.name,
+                required_permissions=("shuup.change_order",)
             )
             set_status_menu_items.append(btn)
 
@@ -68,6 +69,7 @@ class OrderDetailToolbar(Toolbar):
                     icon="fa fa-refresh",
                     text=_("Set Status"),
                     extra_css_class="btn-info set-status-button",
+                    required_permissions=("shuup.change_order",)
                 )
             )
 
@@ -83,7 +85,8 @@ class OrderDetailToolbar(Toolbar):
                 if not self.order.can_set_complete()
                 else None
             ),
-            extra_css_class="btn-success"
+            extra_css_class="btn-success",
+            required_permissions=("shuup.change_order",)
         ))
 
     def _build_cancel_button(self):
@@ -98,7 +101,8 @@ class OrderDetailToolbar(Toolbar):
                 if not self.order.can_set_canceled()
                 else None
             ),
-            extra_css_class="btn-danger btn-inverse"
+            extra_css_class="btn-danger btn-inverse",
+            required_permissions=("shuup.change_order",)
         ))
 
     def _build_edit_button(self):
@@ -107,7 +111,8 @@ class OrderDetailToolbar(Toolbar):
             icon="fa fa-money",
             disable_reason=_("This order cannot modified at this point") if not self.order.can_edit() else None,
             url=reverse("shuup_admin:order.edit", kwargs={"pk": self.order.pk}),
-            extra_css_class="btn-info"
+            extra_css_class="btn-info",
+            required_permissions=("shuup.change_order",)
         ))
 
     def _build_provided_toolbar_buttons(self):

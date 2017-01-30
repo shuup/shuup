@@ -28,7 +28,7 @@ class SystemModule(AdminModule):
                 "^system/telemetry/$",
                 "shuup.admin.modules.system.views.telemetry.TelemetryView",
                 name="telemetry",
-                permissions=get_default_model_permissions(Shop)
+                permissions=["shuup.add_shop"]
             ),
         ]
 

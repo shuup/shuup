@@ -72,16 +72,16 @@ class CreateOrUpdateView(UpdateView):
         return getattr(self, "save_form_id", None) or "%s_form" % self.get_context_object_name(self.object)
 
     def get_return_url(self):
-        return get_model_url(self.object, kind="list")
+        return get_model_url(self.object, kind="list", request=self.request)
 
     def get_new_url(self):
-        return get_model_url(self.object, kind="new")
+        return get_model_url(self.object, kind="new", request=self.request)
 
     def get_success_url(self):
         if self.request.GET.get("mode", "") == "iframe":
             quick_add_target = self.request.GET.get("quick_add_target")
             return "%s?mode=iframe&quick_add_target=%s&iframe_close=yes" % (
-                get_model_url(self.object), quick_add_target)
+                get_model_url(self.object, request=self.request), quick_add_target)
 
         next = self.request.POST.get("__next")
         try:
@@ -98,7 +98,7 @@ class CreateOrUpdateView(UpdateView):
             pass
 
         try:
-            return get_model_url(self.object)
+            return get_model_url(self.object, request=self.request)
         except NoModelUrl:
             pass
 
@@ -116,7 +116,7 @@ class CreateOrUpdateView(UpdateView):
         is_new = (not self.object.pk)
         self.save_form(form)
         if is_new:
-            object_created.send(sender=type(self.object), object=self.object)
+            object_created.send(sender=type(self.object), object=self.object, request=self.request)
         add_create_or_change_message(self.request, self.object, is_new=is_new)
         return HttpResponseRedirect(self.get_success_url())
 

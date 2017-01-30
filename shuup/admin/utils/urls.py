@@ -24,7 +24,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.module_registry import get_modules
 from shuup.admin.utils.permissions import (
-    get_default_model_permissions, get_missing_permissions
+    get_default_model_permissions, get_missing_permissions,
+    get_permission_string_for_model
 )
 from shuup.utils.excs import Problem
 
@@ -35,9 +36,11 @@ except ImportError:  # pragma: no cover
 
 
 class AdminRegexURLPattern(RegexURLPattern):
-    def __init__(self, regex, callback, default_args=None, name=None, require_authentication=True, permissions=()):
+    def __init__(self, regex, callback, default_args=None, name=None,
+                 require_authentication=True, require_superuser=False, permissions=()):
         self.permissions = tuple(permissions)
         self.require_authentication = require_authentication
+        self.require_superuser = require_superuser
         if callable(callback):
             callback = self.wrap_with_permissions(callback)
         super(AdminRegexURLPattern, self).__init__(regex, callback, default_args, name)
@@ -73,6 +76,9 @@ class AdminRegexURLPattern(RegexURLPattern):
         :param request: HttpRequest
         :rtype: str|None
         """
+        if self.require_superuser:
+            if not getattr(request.user, "is_superuser", False):
+                return _("You must be a admin.")
 
         if self.require_authentication:
             if not request.user.is_authenticated():
@@ -107,7 +113,8 @@ class AdminRegexURLPattern(RegexURLPattern):
         return self._callback
 
 
-def admin_url(regex, view, kwargs=None, name=None, prefix='', require_authentication=True, permissions=()):
+def admin_url(regex, view, kwargs=None, name=None, prefix='',
+              require_authentication=True, require_superuser=False, permissions=()):
     if isinstance(view, six.string_types):
         if not view:
             raise ImproperlyConfigured('Empty URL pattern view name not permitted (for pattern %r)' % regex)
@@ -116,11 +123,12 @@ def admin_url(regex, view, kwargs=None, name=None, prefix='', require_authentica
     return AdminRegexURLPattern(
         regex, view, kwargs, name,
         require_authentication=require_authentication,
+        require_superuser=require_superuser,
         permissions=permissions
     )
 
 
-def get_edit_and_list_urls(url_prefix, view_template, name_template, permissions=()):
+def get_edit_and_list_urls(url_prefix, view_template, name_template, model=None):
     """
     Get a list of edit/new/list URLs for (presumably) an object type with standardized URLs and names.
 
@@ -139,26 +147,27 @@ def get_edit_and_list_urls(url_prefix, view_template, name_template, permissions
             "%s/(?P<pk>\d+)/$" % url_prefix,
             view_template % "Edit",
             name=name_template % "edit",
-            permissions=permissions
+            permissions=[get_permission_string_for_model(model, "change")]
         ),
         admin_url(
             "%s/new/$" % url_prefix,
             view_template % "Edit",
             name=name_template % "new",
             kwargs={"pk": None},
-            permissions=permissions
+            permissions=[get_permission_string_for_model(model, "add")]
         ),
         admin_url(
             "%s/$" % url_prefix,
             view_template % "List",
             name=name_template % "list",
-            permissions=permissions
+            permissions=[
+                get_permission_string_for_model(model, "view") or get_permission_string_for_model(model, "change")]
         ),
         admin_url(
             "%s/list-settings/" % url_prefix,
             "shuup.admin.modules.settings.views.ListSettingsView",
             name=name_template % "list_settings",
-            permissions=permissions,
+            require_superuser=True
         )
     ]
 
@@ -167,7 +176,7 @@ class NoModelUrl(ValueError):
     pass
 
 
-def get_model_url(object, kind="detail", user=None, required_permissions=None):
+def get_model_url(object, kind="detail", user=None, required_permissions=None, request=None):
     """
     Get a an admin object URL for the given object or object class by
     interrogating each admin module.
@@ -189,6 +198,8 @@ def get_model_url(object, kind="detail", user=None, required_permissions=None):
     :rtype: str
     """
     for module in get_modules():
+        if request:
+            module.set_request(request)
         url = module.get_model_url(object, kind)
         if not url:
             continue

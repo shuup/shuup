@@ -11,7 +11,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 from shuup.core.models import Manufacturer
 
@@ -25,7 +24,7 @@ class ManufacturerModule(AdminModule):
             url_prefix="^Manufacturers",
             view_template="shuup.admin.modules.manufacturers.views.Manufacturer%sView",
             name_template="manufacturer.%s",
-            permissions=get_default_model_permissions(Manufacturer),
+            model=Manufacturer
         )
 
     def get_menu_entries(self, request):
@@ -41,7 +40,7 @@ class ManufacturerModule(AdminModule):
         ]
 
     def get_required_permissions(self):
-        return get_default_model_permissions(Manufacturer)
+        return ["shuup.view_manufacturer"]
 
     def get_model_url(self, object, kind):
         return derive_model_url(Manufacturer, "shuup_admin:manufacturer", object, kind)

@@ -22,6 +22,7 @@ from shuup.admin.breadcrumbs import Breadcrumbs
 from shuup.admin.utils.urls import (
     get_model_url, manipulate_query_string, NoModelUrl
 )
+from shuup.core.models import Shop
 from shuup.core.telemetry import is_telemetry_enabled
 
 __all__ = ["get_menu_entry_categories", "get_front_url", "get_config", "model_url"]
@@ -74,6 +75,7 @@ BROWSER_URL_NAMES = {
     "product": "shuup_admin:shop_product.list",
     "contact": "shuup_admin:contact.list",
     "setLanguage": "shuup_admin:set-language",
+    "setShop": "shuup_admin:set-shop",
 }
 
 
@@ -130,6 +132,20 @@ def model_url(context, model, kind="detail", default=None):
     """
     user = context.get("user")
     try:
-        return get_model_url(model, kind=kind, user=user)
+        return get_model_url(model, kind=kind, user=user, request=context.get("request"))
     except NoModelUrl:
         return default
+
+
+@contextfunction
+def get_shop_count(context):
+    """
+    Return the number of shops accessible by the currently logged in user
+    """
+    request = context["request"]
+    if not request or request.user.is_anonymous():
+        return 0
+    queryset = Shop.objects.all()
+    if not request.user.is_superuser:
+        queryset = queryset.filter(staff_members=request.user)
+    return queryset.count()
