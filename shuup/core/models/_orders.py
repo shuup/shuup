@@ -386,7 +386,7 @@ class Order(MoneyPropped, models.Model):
     # Other
     ip_address = models.GenericIPAddressField(null=True, blank=True, verbose_name=_('IP address'))
     # order_date is not `auto_now_add` for backdating purposes
-    order_date = models.DateTimeField(editable=False, verbose_name=_('order date'))
+    order_date = models.DateTimeField(editable=False, db_index=True, verbose_name=_('order date'))
     payment_date = models.DateTimeField(null=True, editable=False, verbose_name=_('payment date'))
 
     language = LanguageField(blank=True, verbose_name=_('language'))

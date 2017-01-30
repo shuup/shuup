@@ -194,7 +194,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
     COMMON_SELECT_RELATED = ("type", "primary_image", "tax_class")
 
     # Metadata
-    created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_('created on'))
+    created_on = models.DateTimeField(auto_now_add=True, editable=False, db_index=True, verbose_name=_('created on'))
     modified_on = models.DateTimeField(auto_now=True, editable=False, verbose_name=_('modified on'))
     deleted = models.BooleanField(default=False, editable=False, db_index=True, verbose_name=_('deleted'))
 
