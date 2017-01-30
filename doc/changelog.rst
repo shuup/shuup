@@ -12,9 +12,11 @@ Unrealeased
 Core
 ~~~~
 
+- API: added nearby filter for shops
 - API: allow orders to be created without customer, addresses, or
   service methods
 - API: add front user endpoint
+- API: add address endpoint
 - API: add person contact endpoint
 - API: add address endpoint
 - Improve OrderSource caching for deserialization speedup
