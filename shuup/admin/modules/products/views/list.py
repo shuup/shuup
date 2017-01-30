@@ -12,14 +12,25 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.utils.picotable import (
-    ChoicesFilter, Column, RangeFilter, TextFilter
+    ChoicesFilter, Column, Picotable, RangeFilter, TextFilter
 )
 from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import ProductMode, Shop, ShopProduct
 
 
+class ProductPicotable(Picotable):
+    def process_item(self, object):
+        out = super(ProductPicotable, self).process_item(object)
+        popup = self.request.GET.get("popup")
+        kind = self.request.GET.get("kind", "")
+        if popup and kind == "product":  # Enable option to pick products
+            out.update({"_id": object.product.id})
+        return out
+
+
 class ProductListView(PicotableListView):
     model = ShopProduct
+    picotable_class = ProductPicotable
 
     default_columns = [
         Column("primary_image", _(u"Primary Image"),

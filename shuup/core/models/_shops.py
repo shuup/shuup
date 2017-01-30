@@ -42,7 +42,9 @@ class Shop(ChangeProtected, TranslatableShuupModel):
     protected_fields = ["currency", "prices_include_tax"]
     change_protect_message = _("The following fields cannot be changed since there are existing orders for this shop")
 
-    identifier = InternalIdentifierField(unique=True)
+    created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_('created on'))
+    modified_on = models.DateTimeField(auto_now=True, editable=False, verbose_name=_('modified on'))
+    identifier = InternalIdentifierField(unique=True, max_length=128)
     domain = models.CharField(max_length=128, blank=True, null=True, unique=True, verbose_name=_("domain"), help_text=_(
         "Your shop domain name. Use this field to configure the URL that is used to visit your site. "
         "Note: this requires additional configuration through your internet domain registrar."
@@ -72,6 +74,8 @@ class Shop(ChangeProtected, TranslatableShuupModel):
     ))
     contact_address = models.ForeignKey(
         "MutableAddress", verbose_name=_("contact address"), blank=True, null=True, on_delete=models.SET_NULL)
+    staff_members = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, blank=True, related_name="+", verbose_name=_('staff members'))
 
     translations = TranslatedFields(
         name=models.CharField(max_length=64, verbose_name=_("name"), help_text=_(

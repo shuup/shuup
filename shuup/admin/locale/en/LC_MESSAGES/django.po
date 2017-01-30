@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-18 00:16+0000\n"
+"POT-Creation-Date: 2017-01-28 19:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1517,6 +1517,12 @@ msgid ""
 "products."
 msgstr ""
 
+msgid "Staff"
+msgstr ""
+
+msgid "Select staff members for this shop."
+msgstr ""
+
 msgid "Shop name"
 msgstr ""
 
@@ -1737,9 +1743,6 @@ msgid "First Name"
 msgstr ""
 
 msgid "Last Name"
-msgstr ""
-
-msgid "Staff"
 msgstr ""
 
 msgid "Superuser"
@@ -3084,6 +3087,12 @@ msgid "Total Price"
 msgstr ""
 
 msgid "Customer Comment"
+msgstr ""
+
+msgid "Payment Method"
+msgstr ""
+
+msgid "Shipping Method"
 msgstr ""
 
 msgid "Tracking codes"

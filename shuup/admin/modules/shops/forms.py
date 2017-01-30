@@ -7,9 +7,12 @@
 # LICENSE file in the root directory of this source tree.
 from django import forms
 from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.utils.text import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms import ShuupAdminForm
+from shuup.admin.forms.fields import Select2MultipleField
 from shuup.core.models import Currency, MutableAddress, Shop
 from shuup.core.utils.form_mixins import ProtectedFieldsMixin
 from shuup.utils.i18n import get_current_babel_locale
@@ -36,6 +39,16 @@ class ShopBaseForm(ProtectedFieldsMixin, ShuupAdminForm):
             label=_("Currency"),
             help_text=_("The primary shop currency. This is the currency used when selling your products.")
         )
+        initial_members = self.instance.staff_members.all() if self.instance.pk else []
+        staff_members = Select2MultipleField(
+            label=_("Staff"),
+            help_text=_("Select staff members for this shop."),
+            model=get_user_model(),
+            initial=initial_members,
+            required=False)
+        staff_members.widget.choices = [(member.pk, force_text(member)) for member in initial_members]
+        self.fields["staff_members"] = staff_members
+
         self.disable_protected_fields()
 
 

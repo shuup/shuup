@@ -38,7 +38,9 @@
                     <div class="col-sm-6">
                         <dl class="dl-horizontal">
                             {{ info_row(_("Order Status"), order.get_status_display()) }}
+                            {{ info_row(_("Payment Method"), order.get_payment_method_display()) }}
                             {{ info_row(_("Payment Status"), order.get_payment_status_display()) }}
+                            {{ info_row(_("Shipping Method"), order.get_shipping_method_display()) }}
                             {{ info_row(_("Shipping Status"), order.get_shipping_status_display()) }}
                             {% set tracking_codes = order.get_tracking_codes() %}
                             {% if tracking_codes %}
