@@ -43,7 +43,7 @@ class Shop(ChangeProtected, TranslatableShuupModel):
     change_protect_message = _("The following fields cannot be changed since there are existing orders for this shop")
 
     created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_('created on'))
-    modified_on = models.DateTimeField(auto_now=True, editable=False, verbose_name=_('modified on'))
+    modified_on = models.DateTimeField(auto_now=True, editable=False, db_index=True, verbose_name=_('modified on'))
     identifier = InternalIdentifierField(unique=True, max_length=128)
     domain = models.CharField(max_length=128, blank=True, null=True, unique=True, verbose_name=_("domain"), help_text=_(
         "Your shop domain name. Use this field to configure the URL that is used to visit your site. "
