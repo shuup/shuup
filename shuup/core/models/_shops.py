@@ -9,12 +9,14 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.db import models
+from django.core.exceptions import ObjectDoesNotExist
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from filer.fields.image import FilerImageField
 from jsonfield import JSONField
 from parler.models import TranslatedFields
+from parler.managers import TranslatableManager
 
 from shuup.core.fields import CurrencyField, InternalIdentifierField
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
@@ -35,6 +37,16 @@ class ShopStatus(Enum):
     class Labels:
         DISABLED = _('disabled')
         ENABLED = _('enabled')
+
+
+class ShopManager(TranslatableManager):
+    def get_default(self):
+        if hasattr(settings, 'DEFAULT_SHOP_ID'):
+            try:
+                return self.get_queryset().get(pk=settings.DEFAULT_SHOP_ID)
+            except ObjectDoesNotExist:
+                pass
+        return self.get_queryset().first()
 
 
 @python_2_unicode_compatible
@@ -90,6 +102,8 @@ class Shop(ChangeProtected, TranslatableShuupModel):
             )
         )
     )
+
+    objects = ShopManager()
 
     def __str__(self):
         return self.safe_translation_getter("name", default="Shop %d" % self.pk)
