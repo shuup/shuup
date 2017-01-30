@@ -108,6 +108,8 @@ class Address(NameMixin, ShuupModel):
     country = CountryField(verbose_name=_('country'), help_text=_(
         "The address country."
     ))
+    longitude = models.DecimalField(null=True, blank=True, max_digits=9, decimal_places=6)
+    latitude = models.DecimalField(null=True, blank=True, max_digits=9, decimal_places=6)
 
     class Meta:
         abstract = True

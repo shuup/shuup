@@ -6,32 +6,30 @@ from django.db import migrations
 from markdown import Markdown
 
 
-def update_field(model, field):
+def update_field(md, model, field):
+    for id, value in model.objects.exclude(**{field: ""}).values_list("id", field):
+        md.reset()
+        try:
+            value = md.convert(value)
+        except:
+            # not valid markdown - leave it as-is
+            continue
+        model.objects.filter(id=id).update(**{field: value})
+
+
+def md_to_html(apps, schema_editor):
     md = Markdown(extensions=[
         'markdown.extensions.extra',
         'markdown.extensions.nl2br',
     ], output_format="html5")
-
-    for f in model.objects.all():
-        val = getattr(f, field)
-        if val:
-            try:
-                setattr(f, field, md.convert(val))
-                f.save()
-            except:
-                # not valid markdown - leave it as-is
-                pass
-
-
-def md_to_html(apps, schema_editor):
     ProductTranslation = apps.get_model("shuup", "ProductTranslation")
     CategoryTranslation = apps.get_model("shuup", "CategoryTranslation")
     PaymentMethodTranslation = apps.get_model("shuup", "PaymentMethodTranslation")
     ShippingMethodTranslation = apps.get_model("shuup", "ShippingMethodTranslation")
-    update_field(ProductTranslation, "description")
-    update_field(CategoryTranslation, "description")
-    update_field(PaymentMethodTranslation, "description")
-    update_field(ShippingMethodTranslation, "description")
+    update_field(md, ProductTranslation, "description")
+    update_field(md, CategoryTranslation, "description")
+    update_field(md, PaymentMethodTranslation, "description")
+    update_field(md, ShippingMethodTranslation, "description")
 
 
 class Migration(migrations.Migration):

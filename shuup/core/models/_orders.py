@@ -1065,6 +1065,12 @@ class Order(MoneyPropped, models.Model):
     def get_status_display(self):
         return force_text(self.status)
 
+    def get_payment_method_display(self):
+        return force_text(self.payment_method_name)
+
+    def get_shipping_method_display(self):
+        return force_text(self.shipping_method_name)
+
     def get_tracking_codes(self):
         return [shipment.tracking_code for shipment in self.shipments.all_except_deleted() if shipment.tracking_code]
 

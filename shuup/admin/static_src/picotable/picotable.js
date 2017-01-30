@@ -605,7 +605,8 @@ const Picotable = (function(m, storage) {
 
     function renderMassActions(ctrl) {
         var massActions = (ctrl.vm.data() ? ctrl.vm.data().massActions : null);
-        if (massActions == null) {
+        var isPick = !!ctrl.vm.pickId();
+        if (massActions == null || isPick) {
             return "";
         }
         var select2Config = function() {
@@ -616,7 +617,10 @@ const Picotable = (function(m, storage) {
             };
         };
 
-        const itemCount = ctrl.vm.data().items.length;
+        const itemCount = ctrl.vm.data().pagination.nItems;
+        if (itemCount === 0) {
+            return "";
+        }
         const initialMassActions = [
             {key: 0, value: gettext("Select Action")},
             {key: "unselect_all", value: gettext("Clear Selections")},
