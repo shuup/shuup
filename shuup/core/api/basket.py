@@ -9,24 +9,45 @@ from __future__ import unicode_literals
 
 from uuid import uuid1
 
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
+
 from parler_rest.fields import TranslatedFieldsField
 from parler_rest.serializers import TranslatableModelSerializer
-from rest_framework import serializers, status, viewsets
+from rest_framework import exceptions, serializers, status, viewsets
 from rest_framework.decorators import detail_route, list_route
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
-
 from shuup.api.decorators import schema_serializer_class
 from shuup.api.fields import EnumField
 from shuup.api.mixins import PermissionHelperMixin
-from shuup.core.basket import get_basket_command_dispatcher
+from shuup.core.basket import (
+    get_basket_command_dispatcher, get_basket_order_creator
+)
 from shuup.core.excs import ProductNotOrderableProblem
 from shuup.core.fields import (
     FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES, FORMATTED_DECIMAL_FIELD_MAX_DIGITS
 )
-from shuup.core.models import OrderLineType, Product
+from shuup.core.models import (
+    get_company_contact, get_person_contact, OrderLineType, OrderStatus,
+    Product, Shop, ShopProduct
+)
 from shuup.utils.importing import cached_load
+
+
+def get_shop_id(uuid):
+    try:
+        return int(uuid.split("-")[0])
+    except ValueError:
+        raise exceptions.ValidationError("Malformed UUID")
+
+
+def get_key(uuid):
+    try:
+        return uuid.split("-")[1]
+    except (ValueError, IndexError):
+        raise exceptions.ValidationError("Malformed UUID")
 
 
 class BasketProductSerializer(TranslatableModelSerializer):
@@ -83,11 +104,8 @@ class BasketLineSerializer(serializers.Serializer):
         return line.shop.id if line.shop else None
 
 
-class BasketUUIDSerializer(serializers.Serializer):
-    uuid = serializers.CharField()
-
-
 class BasketSerializer(serializers.Serializer):
+    shop = serializers.SerializerMethodField()
     key = serializers.CharField(max_length=32, min_length=32)
     items = serializers.SerializerMethodField()
     unorderable_items = serializers.SerializerMethodField()
@@ -121,18 +139,56 @@ class BasketSerializer(serializers.Serializer):
     def get_unorderable_items(self, basket):
         return BasketLineSerializer(basket.get_unorderable_lines(), many=True, context=self.context).data
 
+    def get_shop(self, basket):
+        return basket.shop.id
 
-class ProductAddBasketSerializer(serializers.Serializer):
-    product = serializers.IntegerField()
-    shop = serializers.IntegerField()
+
+class BaseProductAddBasketSerializer(serializers.Serializer):
     supplier = serializers.IntegerField(required=False)
     quantity = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
                                         decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES,
                                         required=False)
 
 
+class ShopProductAddBasketSerializer(BaseProductAddBasketSerializer):
+    shop_product = serializers.PrimaryKeyRelatedField(queryset=ShopProduct.objects.all())
+    shop = serializers.SerializerMethodField()
+    product = serializers.SerializerMethodField()
+
+    def get_shop(self, line):
+        return line.get("shop_product").shop.pk
+
+    def get_product(self, line):
+        return line.get("shop_product").product.pk
+
+    def validate(self, data):
+        # TODO - we probably eventually want this ability
+        if self.context["shop"].pk != data.get("shop_product").shop.pk:
+            raise serializers.ValidationError(
+                "It is not possible to add a product from a different shop in the basket.")
+        return data
+
+
+class ProductAddBasketSerializer(BaseProductAddBasketSerializer):
+    shop = serializers.PrimaryKeyRelatedField(queryset=Shop.objects.all())
+    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all())
+
+    def validate(self, data):
+        # TODO - we probably eventually want this ability
+        if self.context["shop"].pk != data.get("shop").pk:
+            raise serializers.ValidationError(
+                "It is not possible to add a product from a different shop in the basket.")
+        return data
+
+
 class RemoveBasketSerializer(serializers.Serializer):
     line_id = serializers.CharField()
+
+
+class LineQuantitySerializer(serializers.Serializer):
+    line_id = serializers.CharField()
+    quantity = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
+                                        decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
 
 
 class CodeAddBasketSerializer(serializers.Serializer):
@@ -175,16 +231,45 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
             'view': self
         }
 
+    def get_basket_shop(self):
+        if settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
+            uuid = self.kwargs.get(self.lookup_field, "")
+            if uuid:
+                shop_id = get_shop_id(self.kwargs.get(self.lookup_field, ""))
+            else:
+                # shop will be part of POST'ed data for basket creation
+                shop_id = self.request.data.get("shop")
+            if not shop_id:
+                raise exceptions.ValidationError("No basket shop specified.")
+            # this shop should be the shop associated with the basket
+            return get_object_or_404(Shop, pk=shop_id)
+        else:
+            return Shop.objects.first()
+
+    def process_request(self, with_basket=True):
+        """
+        Add context to request that's expected by basket
+        """
+        request = self.request._request
+        user = self.request.user
+        request.shop = self.get_basket_shop()
+        request.person = get_person_contact(user)
+        company = get_company_contact(user)
+        request.customer = (company or request.person)
+        if with_basket:
+            request.basket = self.get_object()
+
     @schema_serializer_class(BasketSerializer)
     def retrieve(self, request, *args, **kwargs):
         """
         List the contents of the basket
         """
+        self.process_request()
         basket = self.get_object()
         return Response(BasketSerializer(basket, context=self.get_serializer_context()).data)
 
     def get_object(self):
-        uuid = self.kwargs[self.lookup_field]
+        uuid = get_key(self.kwargs.get(self.lookup_field, ""))
         basket_class = cached_load("SHUUP_BASKET_CLASS_SPEC")
         basket = basket_class(self.request._request, key=uuid)
         basket._load()
@@ -195,12 +280,12 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         """
         Create a brand new basket object
         """
-
+        self.process_request(with_basket=False)
         basket_class = cached_load("SHUUP_BASKET_CLASS_SPEC")
-        basket_uuid = uuid1().hex
-        basket = basket_class(request, key=basket_uuid)
+        basket_key = uuid1().hex
+        basket = basket_class(request._request, key=basket_key)
         basket.save()
-        return Response(data={"uuid": basket_uuid}, status=status.HTTP_201_CREATED)
+        return Response(data={"uuid": "%s-%s" % (request.shop.pk, basket_key)}, status=status.HTTP_201_CREATED)
 
     def _handle_cmd(self, request, command, kwargs):
         cmd_dispatcher = get_basket_command_dispatcher(request)
@@ -215,30 +300,34 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         """
         Adds a product to the basket
         """
-        basket = self.get_object()
-        serializer = ProductAddBasketSerializer(data=request.data)
+        self.process_request()
+        if "shop_product" in request.data:
+            serializer = ShopProductAddBasketSerializer(data=request.data, context={"shop": request.shop})
+        else:
+            serializer = ProductAddBasketSerializer(data=request.data, context={"shop": request.shop})
 
         if serializer.is_valid():
             cmd_kwargs = {
                 "request": request,
-                "basket": basket,
-                "shop_id": serializer.validated_data["shop"],
-                "product_id": serializer.validated_data["product"],
+                "basket": request.basket,
+                "shop_id": serializer.data.get("shop") or serializer.validated_data["shop"].pk,
+                "product_id": serializer.data.get("product") or serializer.validated_data["product"].pk,
                 "quantity": serializer.validated_data.get("quantity", 1),
                 "supplier_id": serializer.validated_data.get("supplier")
             }
             # we call `add` directly, assuming the user will handle variations
             # as he can know all product variations easily through product API
             try:
-                response = self._handle_cmd(request, "add", cmd_kwargs)
-                basket.save()
+                self._handle_cmd(request, "add", cmd_kwargs)
+                request.basket.save()
             except ValidationError as exc:
                 return Response({exc.code: exc.message}, status=status.HTTP_400_BAD_REQUEST)
             except ProductNotOrderableProblem as exc:
                 return Response({"error": "{}".format(exc)}, status=status.HTTP_400_BAD_REQUEST)
+            except Exception as exc:
+                return Response({"error": str(exc)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             else:
-                return Response(response, status=status.HTTP_200_OK)
-
+                return Response(BasketSerializer(request.basket, context=self.get_serializer_context()).data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -248,21 +337,23 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         """
         Removes a basket line
         """
-        basket = self.get_object()
+        self.process_request()
         serializer = RemoveBasketSerializer(data=request.data)
 
         if serializer.is_valid():
             cmd_kwargs = {
                 "request": request,
-                "basket": basket,
+                "basket": request.basket,
                 "delete_{}".format(serializer.validated_data["line_id"]): 1
             }
             try:
-                response = self._handle_cmd(request, "update", cmd_kwargs)
+                self._handle_cmd(request, "update", cmd_kwargs)
+                request.basket.save()
             except ValidationError as exc:
                 return Response({exc.code: exc.message}, status=status.HTTP_400_BAD_REQUEST)
             else:
-                return Response(response, status=status.HTTP_204_NO_CONTENT)
+                data = BasketSerializer(request.basket, context=self.get_serializer_context()).data
+                return Response(data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -271,17 +362,39 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         """
         Clear basket contents
         """
-        basket = self.get_object()
+        self.process_request()
         cmd_kwargs = {
             "request": request,
-            "basket": basket
+            "basket": request.basket
         }
         try:
-            response = self._handle_cmd(request, "clear", cmd_kwargs)
+            self._handle_cmd(request, "clear", cmd_kwargs)
         except ValidationError as exc:
             return Response({exc.code: exc.message}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response(response, status=status.HTTP_204_NO_CONTENT)
+            data = BasketSerializer(request.basket, context=self.get_serializer_context()).data
+            return Response(data, status=status.HTTP_200_OK)
+
+    @detail_route(methods=['post'])
+    def update_quantity(self, request, *args, **kwargs):
+        self.process_request()
+        serializer = LineQuantitySerializer(data=request.data)
+        if serializer.is_valid():
+            cmd_kwargs = {
+                "request": request._request,
+                "basket": request.basket,
+                "q_{}".format(serializer.validated_data["line_id"]): serializer.validated_data["quantity"]
+            }
+            try:
+                self._handle_cmd(request, "update", cmd_kwargs)
+                request.basket.save()
+            except ValidationError as exc:
+                return Response({exc.code: exc.message}, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                data = BasketSerializer(request.basket, context=self.get_serializer_context()).data
+                return Response(data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @schema_serializer_class(CodeAddBasketSerializer)
     @detail_route(methods=['post'])
@@ -289,20 +402,30 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         """
         Add a campaign code to the basket
         """
-        basket = self.get_object()
+        self.process_request()
         serializer = CodeAddBasketSerializer(data=request.data)
 
         if serializer.is_valid():
             cmd_kwargs = {
                 "request": request,
-                "basket": basket,
+                "basket": request.basket,
                 "code": serializer.validated_data["code"]
             }
             try:
-                response = self._handle_cmd(request, "add_campaign_code", cmd_kwargs)
+                self._handle_cmd(request, "add_campaign_code", cmd_kwargs)
             except ValidationError as exc:
                 return Response({exc.code: exc.message}, status=status.HTTP_400_BAD_REQUEST)
             else:
-                return Response(response, status=status.HTTP_204_NO_CONTENT)
+                data = BasketSerializer(request.basket, context=self.get_serializer_context()).data
+                return Response(data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @detail_route(methods=['post'])
+    def create_order(self, request, *args, **kwargs):
+        self.process_request()
+        request.basket.status = OrderStatus.objects.get_default_initial()
+        order_creator = get_basket_order_creator()
+        order = order_creator.create_order(request.basket)
+        request.basket.finalize()
+        return Response(data={"reference_number": order.reference_number}, status=status.HTTP_201_CREATED)
