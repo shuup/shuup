@@ -17,8 +17,7 @@ from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, DateRangeFilter, MultiFieldTextFilter, RangeFilter
 )
 from shuup.admin.utils.views import PicotableListView
-from shuup.core.models import Shop
-from shuup.core.models import StoredBasket
+from shuup.core.models import Shop, StoredBasket
 from shuup.utils.i18n import format_money, get_locally_formatted_datetime
 
 

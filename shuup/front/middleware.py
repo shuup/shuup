@@ -16,11 +16,11 @@ from django.template import loader
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.core.basket import get_basket
 from shuup.core.middleware import ExceptionMiddleware
 from shuup.core.models import (
     Contact, get_company_contact, get_person_contact, Shop
 )
-from shuup.core.basket import get_basket
 
 __all__ = ["ProblemMiddleware", "ShuupFrontMiddleware"]
 

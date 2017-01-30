@@ -9,10 +9,10 @@ from __future__ import unicode_literals
 
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
-
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from rest_framework import serializers
 from rest_framework.viewsets import ModelViewSet
+
 from shuup.api.mixins import PermissionHelperMixin
 
 

@@ -10,12 +10,12 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
-
 from rest_framework import serializers, status
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 from rest_framework_jwt.serializers import JSONWebTokenSerializer
+
 from shuup.api.mixins import PermissionHelperMixin
 from shuup.core.api.users import UserSerializer
 

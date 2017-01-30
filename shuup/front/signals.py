@@ -7,6 +7,5 @@
 # LICENSE file in the root directory of this source tree.
 from django.core.signals import Signal
 
-
 # Completion signals
 order_complete_viewed = Signal(providing_args=["order", "request"], use_caching=True)

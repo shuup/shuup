@@ -12,8 +12,8 @@ import uuid
 
 import six
 
-from shuup.core.utils.users import real_user_or_none
 from shuup.core.models import StoredBasket
+from shuup.core.utils.users import real_user_or_none
 from shuup.utils.importing import cached_load
 
 

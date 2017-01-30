@@ -35,7 +35,7 @@ def test_register_api():
                            content_type="application/json",
                            data=json.dumps(register_data))
     assert response.status_code == status.HTTP_201_CREATED
-    response_json = response.json()
+    response_json = json.loads(response.content.decode("utf-8"))
     assert "token" in response_json
     assert get_user_model().objects.count() == 1
 
@@ -63,7 +63,7 @@ def test_register_email_api():
                            content_type="application/json",
                            data=json.dumps(register_data))
     assert response.status_code == status.HTTP_201_CREATED
-    response_json = response.json()
+    response_json = json.loads(response.content.decode("utf-8"))
     assert "token" in response_json
     assert get_user_model().objects.count() == 1
 
@@ -88,7 +88,7 @@ def test_register_email_api():
                            content_type="application/json",
                            data=json.dumps(register_data))
     assert response.status_code == status.HTTP_201_CREATED
-    response_json = response.json()
+    response_json = json.loads(response.content.decode("utf-8"))
     assert "token" in response_json
     assert get_user_model().objects.count() == 2
 
@@ -126,7 +126,7 @@ def test_register_bad_data():
                            content_type="application/json",
                            data=json.dumps(register_data))
     assert response.status_code == status.HTTP_400_BAD_REQUEST
-    assert "password" in response.json()
+    assert "password" in json.loads(response.content.decode("utf-8"))
 
 
 def _get_client():

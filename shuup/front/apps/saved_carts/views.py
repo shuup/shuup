@@ -13,9 +13,8 @@ from django.views.generic import DetailView, ListView, View
 from django.views.generic.detail import SingleObjectMixin
 
 from shuup.core.excs import ProductNotOrderableProblem
-from shuup.core.models import OrderLineType, Product
+from shuup.core.models import OrderLineType, Product, StoredBasket
 from shuup.core.utils.users import real_user_or_none
-from shuup.core.models import StoredBasket
 from shuup.front.views.dashboard import DashboardViewMixin
 
 
