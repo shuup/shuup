@@ -46,6 +46,11 @@
                             {% if tracking_codes %}
                                 {{ info_row(_("Tracking codes"), render_objects(tracking_codes)) }}
                             {% endif %}
+                            {% if provided_information %}
+                                {% for title, info in provided_information %}
+                                    {{ info_row(title, info) }}
+                                {% endfor %}
+                            {% endif %}
                         </dl>
                     </div>
                 </div>
