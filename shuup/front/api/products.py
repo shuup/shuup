@@ -44,9 +44,15 @@ class AttributeSerializer(serializers.ModelSerializer):
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+
+    def get_image(self, category):
+        if category.image:
+            return self.context["request"].build_absolute_uri(category.image.url)
+
     class Meta:
         model = Category
-        fields = ("id", "name", "slug")
+        fields = ("id", "name", "slug", "image")
 
 
 class NormalProductSerializer(serializers.ModelSerializer):
@@ -108,7 +114,7 @@ class NormalProductSerializer(serializers.ModelSerializer):
             return self.context["request"].build_absolute_uri(image.file.url)
 
     def get_categories(self, shop_product):
-        return CategorySerializer(shop_product.categories.all_except_deleted(), many=True).data
+        return CategorySerializer(shop_product.categories.all_except_deleted(), many=True, context=self.context).data
 
     def get_attributes(self, shop_product):
         return AttributeSerializer(shop_product.product.attributes, many=True).data
