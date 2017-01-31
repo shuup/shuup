@@ -852,4 +852,5 @@ def get_basket():
         key=uuid.uuid1().hex,
         shop=get_default_shop(),
         prices_include_tax=True,
+        currency=get_default_shop().currency
     )
