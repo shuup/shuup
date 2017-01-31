@@ -131,7 +131,10 @@ class NormalProductSerializer(serializers.ModelSerializer):
 
     def get_is_orderable(self, shop_product):
         customer = getattr(self.context["request"], "contact", AnonymousContact())
-        return shop_product.is_orderable(supplier=shop_product.suppliers.first(), customer=customer, quantity=1)
+        try:
+            return shop_product.is_orderable(supplier=shop_product.suppliers.first(), customer=customer, quantity=1)
+        except ShopProduct.DoesNotExist:
+            return False
 
     def get_cross_sell(self, shop_product):
         request = self.context["request"]
