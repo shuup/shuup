@@ -12,21 +12,21 @@ import random
 import uuid
 from decimal import Decimal
 
-import factory
-import factory.fuzzy as fuzzy
-import faker
 import six
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.validators import validate_email, ValidationError
 from django.db.transaction import atomic
 from django.utils.timezone import now
+from six import BytesIO
+
+import factory
+import factory.fuzzy as fuzzy
+import faker
 from django_countries.data import COUNTRIES
 from factory.django import DjangoModelFactory
 from faker.utils.loading import find_available_locales
 from filer.models import imagemodels
-from six import BytesIO
-
 from shuup.core.defaults.order_statuses import create_default_order_statuses
 from shuup.core.models import (
     AnonymousContact, Attribute, AttributeType, AttributeVisibility, Category,
@@ -446,25 +446,21 @@ def get_shop(prices_include_tax, currency=DEFAULT_CURRENCY):
     return shop
 
 
-def complete_product(product):
-    image = get_random_filer_image()
-    media = ProductMedia.objects.create(
-        product=product, kind=ProductMediaKind.IMAGE, file=image, enabled=True,
-        public=True)
-    product.primary_image = media
-    product.save()
-    assert product.primary_image_id
-    sp = ShopProduct.objects.create(
-        product=product, shop=get_default_shop(), visibility=ShopProductVisibility.ALWAYS_VISIBLE
-    )
-    sp.suppliers.add(get_default_supplier())
-
-
 def get_default_product():
     product = Product.objects.filter(sku=DEFAULT_IDENTIFIER).first()
     if not product:
         product = create_product(DEFAULT_IDENTIFIER)
-        complete_product(product)
+        image = get_random_filer_image()
+        media = ProductMedia.objects.create(
+            product=product, kind=ProductMediaKind.IMAGE, file=image, enabled=True,
+            public=True)
+        product.primary_image = media
+        product.save()
+        assert product.primary_image_id
+        sp = ShopProduct.objects.create(
+            product=product, shop=get_default_shop(), visibility=ShopProductVisibility.ALWAYS_VISIBLE
+        )
+        sp.suppliers.add(get_default_supplier())
     return product
 
 
@@ -488,15 +484,6 @@ def get_default_sales_unit():
         )
         assert str(unit) == DEFAULT_NAME
     return unit
-
-
-def get_fractional_sales_unit():
-    return SalesUnit.objects.create(
-        identifier="fractional",
-        decimals=2,
-        name="Fractional unit",
-        short_name="fra"
-    )
 
 
 def get_default_category():
@@ -524,11 +511,6 @@ def get_completed_order_status():
 def create_product(sku, shop=None, supplier=None, default_price=None, **attrs):
     if default_price is not None:
         default_price = shop.create_price(default_price)
-    if 'fractional' in attrs:
-        attrs.pop('fractional')
-        get_sales_unit = get_fractional_sales_unit
-    else:
-        get_sales_unit = get_default_sales_unit
 
     product_attrs = dict(
         type=get_default_product_type(),
@@ -540,7 +522,7 @@ def create_product(sku, shop=None, supplier=None, default_price=None, **attrs):
         depth=100,
         net_weight=100,
         gross_weight=100,
-        sales_unit=get_sales_unit(),
+        sales_unit=get_default_sales_unit(),
         stock_behavior=StockBehavior.UNSTOCKED
     )
     product_attrs.update(attrs)
@@ -852,4 +834,5 @@ def get_basket():
         key=uuid.uuid1().hex,
         shop=get_default_shop(),
         prices_include_tax=True,
+        currency=get_default_shop().currency
     )
