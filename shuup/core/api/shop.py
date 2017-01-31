@@ -8,9 +8,9 @@
 from __future__ import unicode_literals
 
 import django_filters
-from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from django.db.models.expressions import RawSQL
 from django.utils.translation import ugettext_lazy as _
+from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from parler_rest.fields import TranslatedFieldsField
 from parler_rest.serializers import TranslatableModelSerializer
 from rest_framework import filters, serializers, viewsets
@@ -28,7 +28,7 @@ class ShopSerializer(TranslatableModelSerializer):
     favicon = serializers.SerializerMethodField()
     contact_address = AddressSerializer(read_only=True)
     distance = serializers.SerializerMethodField()
-    options = serializers.JSONField(binary=False)
+    options = serializers.JSONField(binary=False, required=False)
 
     class Meta:
         model = Shop
