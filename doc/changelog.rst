@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- API: added nearby filter for products
 - API: added nearby filter for shops
 - API: add address endpoint
 - API: add person contact endpoint
