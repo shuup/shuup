@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 import json
 
 from django.contrib.auth import get_user_model
+from django.core import mail
 
 import pytest
 from rest_framework import status
@@ -127,6 +128,49 @@ def test_register_bad_data():
                            data=json.dumps(register_data))
     assert response.status_code == status.HTTP_400_BAD_REQUEST
     assert "password" in json.loads(response.content.decode("utf-8"))
+
+
+@pytest.mark.django_db
+def test_reset_password_request():
+    get_default_shop()
+    client = _get_client()
+    register_data = {
+        "email": "myemail@email.com",
+        "password": "somepassword"
+    }
+    client.post("/api/shuup/front/user/",
+                content_type="application/json",
+                data=json.dumps(register_data))
+    user = get_user_model().objects.first()
+    assert user.check_password("somepassword")
+    configuration.set(None, "api_permission_PasswordResetViewSet", PermissionLevel.PUBLIC_WRITE)
+    response = client.post("/api/shuup/front/password/reset/",
+                           content_type="application/json",
+                           data=json.dumps({"email": "bademail"}))
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert "email" in json.loads(response.content.decode("utf-8"))
+
+    response = client.post("/api/shuup/front/password/reset/",
+                           content_type="application/json",
+                           data=json.dumps({"email": "myemail@email.com"}))
+    assert response.status_code == status.HTTP_204_NO_CONTENT
+    assert len(mail.outbox) == 1
+    content = mail.outbox[0].body
+    url = content[content.find("http"):]
+    _, _, _, _, uid, token, _ = url.split("/")
+
+    configuration.set(None, "api_permission_SetPasswordViewSet", PermissionLevel.PUBLIC_WRITE)
+    response = client.post("/api/shuup/front/password/",
+                           content_type="application/json",
+                           data=json.dumps({
+                               "new_password1": "foobar",
+                               "new_password2": "foobar",
+                               "token": token,
+                               "uidb64": uid
+                            }))
+    assert response.status_code == status.HTTP_200_OK
+    user = get_user_model().objects.first()
+    assert user.check_password("foobar")
 
 
 def _get_client():

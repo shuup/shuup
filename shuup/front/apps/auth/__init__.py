@@ -13,6 +13,9 @@ class AuthAppConfig(AppConfig):
     label = "shuup_front.auth"
 
     provides = {
+        "api_populator": [
+            "shuup.front.apps.auth.api:populate_api"
+        ],
         "front_urls": [
             "shuup.front.apps.auth.urls:urlpatterns"
         ],
