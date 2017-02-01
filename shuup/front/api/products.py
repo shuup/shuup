@@ -10,6 +10,7 @@ from collections import defaultdict
 
 import six
 from django.db.models import Q
+from django.db.models.expressions import RawSQL
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import filters, mixins, serializers, viewsets
 from rest_framework.decorators import list_route
@@ -17,13 +18,30 @@ from rest_framework.response import Response
 
 from shuup.api.mixins import PermissionHelperMixin
 from shuup.core.models import (
-    AnonymousContact, Category, Product, ProductAttribute,
-    ProductCrossSellType, ProductMode, ProductPackageLink, SalesUnit,
+    Category, get_person_contact, Product, ProductAttribute,
+    ProductCrossSellType, ProductMode, ProductPackageLink, SalesUnit, Shop,
     ShopProduct, ShopProductVisibility
 )
 from shuup.core.pricing._context import PricingContext
 from shuup.front.utils.product_statistics import get_best_selling_product_info
 from shuup.utils.numbers import parse_decimal_string
+
+
+class ShopSerializer(serializers.ModelSerializer):
+    logo = serializers.SerializerMethodField()
+    favicon = serializers.SerializerMethodField()
+
+    def get_logo(self, shop):
+        if shop.logo:
+            return self.context["request"].build_absolute_uri(shop.logo.url)
+
+    def get_favicon(self, shop):
+        if shop.favicon:
+            return self.context["request"].build_absolute_uri(shop.favicon.url)
+
+    class Meta:
+        model = Shop
+        fields = ("id", "name", "logo", "favicon")
 
 
 class SalesUnitSerializer(serializers.ModelSerializer):
@@ -88,7 +106,7 @@ class NormalProductSerializer(serializers.ModelSerializer):
         ]
 
     def _get_pricing_context(self, request, shop):
-        customer = getattr(request.user, "contact", AnonymousContact())
+        customer = get_person_contact(request.user)
         return PricingContext(shop=shop, customer=customer)
 
     def get_product_id(self, shop_product):
@@ -130,15 +148,13 @@ class NormalProductSerializer(serializers.ModelSerializer):
         return SalesUnitSerializer(shop_product.product.sales_unit).data
 
     def get_is_orderable(self, shop_product):
-        customer = getattr(self.context["request"], "contact", AnonymousContact())
+        customer = get_person_contact(self.context["request"].user)
         try:
             return shop_product.is_orderable(supplier=shop_product.suppliers.first(), customer=customer, quantity=1)
         except ShopProduct.DoesNotExist:
             return False
 
     def get_cross_sell(self, shop_product):
-        request = self.context["request"]
-
         cross_sell_data = {
             "recommended": [],
             "related": [],
@@ -153,6 +169,7 @@ class NormalProductSerializer(serializers.ModelSerializer):
             ProductCrossSellType.BOUGHT_WITH: "bought_with",
         }
 
+        customer = get_person_contact(self.context["request"].user)
         for cross_sell in shop_product.product.cross_sell_1.all():
             try:
                 cross_shop_product = cross_sell.product2.get_shop_instance(shop_product.shop)
@@ -162,7 +179,7 @@ class NormalProductSerializer(serializers.ModelSerializer):
             supplier = cross_shop_product.suppliers.first()
             quantity = cross_shop_product.minimum_purchase_quantity
 
-            if not cross_shop_product.is_orderable(supplier=supplier, customer=request.customer, quantity=quantity):
+            if not cross_shop_product.is_orderable(supplier=supplier, customer=customer, quantity=quantity):
                 continue
 
             key = keys[cross_sell.type]
@@ -174,6 +191,8 @@ class NormalProductSerializer(serializers.ModelSerializer):
 class CompleteProductSerializer(NormalProductSerializer):
     variations = serializers.SerializerMethodField()
     package_content = serializers.SerializerMethodField()
+    distance = serializers.SerializerMethodField()
+    shop = ShopSerializer()
 
     class Meta(NormalProductSerializer.Meta):
         fields = [
@@ -191,7 +210,8 @@ class CompleteProductSerializer(NormalProductSerializer):
             "shop",
             "is_orderable",
             "cross_sell",
-            "package_content"
+            "package_content",
+            "distance"
         ]
 
     def get_variations(self, shop_product):
@@ -217,6 +237,9 @@ class CompleteProductSerializer(NormalProductSerializer):
             except ShopProduct.DoesNotExist:
                 continue
         return package_contents
+
+    def get_distance(self, shop_product):
+        return getattr(shop_product, "distance", 0)
 
 
 class FrontShopProductFilter(filters.BaseFilterBackend):
@@ -302,13 +325,73 @@ class ProductOrderingFilter(filters.BaseFilterBackend):
         return queryset
 
 
+class NearByProductsFilter(filters.BaseFilterBackend):
+    """
+    Based of `shuup.core.api.shop.NearbyShopsFilter`
+    """
+    DISTANCE_PER_DEGREE = 111.045   # 111.045km in a latitude degree
+
+    def filter_queryset(self, request, queryset, view):
+        latitude = float(request.query_params.get("lat", 0))
+        longitude = float(request.query_params.get("lng", 0))
+        distance = float(request.query_params.get("distance", 0))
+        sort = request.query_params.get("sort", "")
+
+        if latitude and longitude:
+            query = """
+            SELECT
+                round(
+                    degrees(
+                        acos(
+                            cos(radians(%s))
+                            * cos(radians({address_table_name}.{latitude_field}))
+                            * cos(radians(%s - {address_table_name}.{longitude_field}))
+                            + sin(radians(%s))
+                            * sin(radians({address_table_name}.{latitude_field}))
+                        )
+                    ) * %s
+                , 3)
+            FROM {address_table_name}
+            INNER JOIN {shop_table_name} ON (
+                {address_table_name}.{address_id_field}={shop_table_name}.{shop_contact_addr_id_field}
+            )
+            WHERE {shop_table_name}.{shop_id_field}={shopproduct_table_name}.{shopproduct_shop_id_field}
+            """.format(
+                address_table_name=Shop.contact_address.field.related_model._meta.db_table,
+                latitude_field=Shop.contact_address.field.related_model._meta.get_field('latitude').name,
+                longitude_field=Shop.contact_address.field.related_model._meta.get_field('longitude').name,
+                address_id_field=Shop.contact_address.field.related_model._meta.get_field('id').name,
+                shop_table_name=Shop._meta.db_table,
+                shop_id_field=Shop._meta.get_field('id').name,
+                shop_contact_addr_id_field=Shop.contact_address.field.column,
+                shopproduct_table_name=ShopProduct._meta.db_table,
+                shopproduct_shop_id_field=ShopProduct.shop.field.column,
+            )
+
+            queryset = queryset.select_related("shop").annotate(
+                distance=RawSQL(query, params=(latitude, longitude, latitude, self.DISTANCE_PER_DEGREE))
+            )
+
+            # only filter if user wants to
+            if distance:
+                queryset = queryset.filter(distance__lte=distance)
+
+            # sort by the calculated distance
+            if sort.endswith("distance"):
+                queryset = queryset.order_by(sort)
+
+        return queryset
+
+
 class FrontProductViewSet(PermissionHelperMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
     """
     list: Lists all available products to be used in storefront.
     """
     queryset = Product.objects.none()
     serializer_class = CompleteProductSerializer
-    filter_backends = (FrontShopProductFilter, ProductOrderingFilter, ShopFilter, ProductCategoryFilter)
+    filter_backends = (
+        FrontShopProductFilter, ProductOrderingFilter, ShopFilter, ProductCategoryFilter, NearByProductsFilter
+    )
 
     def get_view_name(self):
         return _("Storefront Products")
