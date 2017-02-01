@@ -20,9 +20,10 @@ from rest_framework.test import (
 
 from shuup.core import cache
 from shuup.core.models import (
-    AnonymousContact, Category, OrderStatus, Product, ProductCrossSell,
-    ProductCrossSellType, ProductMedia, ProductMediaKind, ProductVisibility,
-    Shop, ShopProduct, ShopProductVisibility, Supplier
+    AnonymousContact, Category, MutableAddress, OrderStatus, Product,
+    ProductCrossSell, ProductCrossSellType, ProductMedia, ProductMediaKind,
+    ProductVisibility, Shop, ShopProduct, ShopProductVisibility, ShopStatus,
+    Supplier
 )
 from shuup.front.api.products import FrontProductViewSet
 from shuup.testing.factories import (
@@ -84,25 +85,43 @@ def test_no_products(admin_user):
 
 @pytest.mark.django_db
 def test_products_all_shops(admin_user):
-    get_default_shop()
+    shop1 = get_default_shop()
+    shop1.logo = get_random_filer_image()
+    shop1.save()
+
     person1 = create_random_person()
     person1.user = admin_user
     person1.save()
 
     shop2 = Shop.objects.create()
+    shop2.favicon = get_random_filer_image()
+    shop2.save()
     supplier1 = create_simple_supplier("supplier1")
     supplier2 = create_simple_supplier("supplier2")
 
     # create 2 products for shop2
-    product1 = create_product("product1", shop=shop2, supplier=supplier1)
+    product1 = create_product("product1", shop=shop1, supplier=supplier1)
     product2 = create_product("product2", shop=shop2, supplier=supplier2)
+    product3 = create_product("product3", shop=shop2, supplier=supplier1)
 
     # list all orderable products - 2 just created are for shop2
     request = get_request("/api/shuup/front/products/", admin_user, person1)
     response = FrontProductViewSet.as_view({"get": "list"})(request)
     response.render()
-    products_data = json.loads(response.content.decode("utf-8"))
-    assert len(products_data) == 2
+    products = json.loads(response.content.decode("utf-8"))
+    assert len(products) == 3
+
+    assert products[0]["product_id"] == product1.id
+    assert products[0]["shop"]["id"] == shop1.id
+    assert products[0]["shop"]["logo"] == request.build_absolute_uri(shop1.logo.url)
+
+    assert products[1]["product_id"] == product2.id
+    assert products[1]["shop"]["id"] == shop2.id
+    assert products[1]["shop"]["favicon"] == request.build_absolute_uri(shop2.favicon.url)
+
+    assert products[2]["product_id"] == product3.id
+    assert products[2]["shop"]["id"] == shop2.id
+    assert products[2]["shop"]["favicon"] == request.build_absolute_uri(shop2.favicon.url)
 
 
 @pytest.mark.django_db
@@ -217,6 +236,7 @@ def test_product_package(admin_user):
     assert products[0]["product_id"] == product4.id
     assert products[0]["is_orderable"] is True
     assert len(products[0]["package_content"]) == product4.get_all_package_children().count()
+
 
 @pytest.mark.django_db
 def test_product_cross_sells(admin_user):
@@ -381,6 +401,94 @@ def test_get_newest_products(admin_user):
     assert len(products) == newest_products.count()
     ids = [p["product_id"] for p in products]
     assert ids == list(newest_products.values_list("pk", flat=True))
+
+
+
+@pytest.mark.django_db
+def test_nearby_products(admin_user):
+    get_default_shop()
+    supplier = create_simple_supplier("supplier1")
+    client = _get_client(admin_user)
+
+    # create Apple and its products
+    shop1 = Shop.objects.create(status=ShopStatus.ENABLED)
+    shop1.contact_address = MutableAddress.objects.create(
+        name="Apple Infinite Loop",
+        street="1 Infinite Loop",
+        country="US",
+        city="Cupertino",
+        latitude=37.331667,
+        longitude=-122.030146
+    )
+    shop1.save()
+    product1 = create_product("macbook", shop1, supplier=supplier)
+    product2 = create_product("imac", shop1, supplier=supplier)
+
+    # create Google and its products
+    shop2 = Shop.objects.create(status=ShopStatus.ENABLED)
+    shop2.contact_address = MutableAddress.objects.create(
+        name="Google",
+        street="1600 Amphitheatre Pkwy",
+        country="US",
+        city="Mountain View",
+        latitude=37.422000,
+        longitude=-122.084024
+    )
+    shop2.save()
+    product3 = create_product("nexus 1", shop2, supplier=supplier)
+    product4 = create_product("nexux 7", shop2, supplier=supplier)
+
+    my_position_to_apple = 2.982
+    my_position_to_google = 10.57
+    # YMCA
+    my_position = (37.328330, -122.063612)
+
+    # fetch only apple products - max distance = 5km - order by name
+    params = {"distance": 5, "lat": my_position[0], "lng": my_position[1], "sort": "name"}
+    request = get_request("/api/shuup/front/products/", admin_user, data=params)
+    response = FrontProductViewSet.as_view({"get": "list"})(request)
+    response.render()
+    assert response.status_code == status.HTTP_200_OK
+    products = json.loads(response.content.decode("utf-8"))
+    assert len(products) == 2
+    assert products[0]["product_id"] == product2.id
+    assert products[0]["name"] == product2.name
+    assert products[0]["shop"]["id"] == shop1.id
+    assert products[0]["distance"] - my_position_to_apple < 0.05    # 5 meters of error margin
+
+    assert products[1]["product_id"] == product1.id
+    assert products[1]["name"] == product1.name
+    assert products[1]["shop"]["id"] == shop1.id
+    assert products[1]["distance"] - my_position_to_apple < 0.05    # 5 meters of error margin
+
+    # fetch only all products - no max distance - order by distance DESC
+    params = {"lat": my_position[0], "lng": my_position[1], "sort": "-distance"}
+    request = get_request("/api/shuup/front/products/", admin_user, data=params)
+    response = FrontProductViewSet.as_view({"get": "list"})(request)
+    response.render()
+    assert response.status_code == status.HTTP_200_OK
+    products = json.loads(response.content.decode("utf-8"))
+    assert len(products) == 4
+
+    assert products[0]["product_id"] == product3.id
+    assert products[0]["name"] == product3.name
+    assert products[0]["shop"]["id"] == shop2.id
+    assert products[0]["distance"] - my_position_to_google < 0.05    # 5 meters of error margin
+
+    assert products[1]["product_id"] == product4.id
+    assert products[1]["name"] == product4.name
+    assert products[1]["shop"]["id"] == shop2.id
+    assert products[1]["distance"] - my_position_to_google < 0.05    # 5 meters of error margin
+
+    assert products[2]["product_id"] == product1.id
+    assert products[2]["name"] == product1.name
+    assert products[2]["shop"]["id"] == shop1.id
+    assert products[2]["distance"] - my_position_to_apple < 0.05    # 5 meters of error margin
+
+    assert products[3]["product_id"] == product2.id
+    assert products[3]["name"] == product2.name
+    assert products[3]["shop"]["id"] == shop1.id
+    assert products[3]["distance"] - my_position_to_apple < 0.05    # 5 meters of error margin
 
 
 def add_product_image(product):
