@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- API: added nearby filter for products
 - API: added nearby filter for shops
 - API: allow orders to be created without customer, addresses, or
   service methods

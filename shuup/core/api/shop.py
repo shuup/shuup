@@ -87,7 +87,7 @@ class NearbyShopsFilter(filters.BaseFilterBackend):
         distance = float(request.query_params.get("distance", 0))
         sort = request.query_params.get("sort", "")
 
-        if latitude and longitude and distance:
+        if latitude and longitude:
             # create the distance field with the Harversie distance between the points
             # the trigonometry functions sin, cos, acos, radians and degrees must exist
             # in order to make this work. round the distance with 3 decimal places.
@@ -117,7 +117,10 @@ class NearbyShopsFilter(filters.BaseFilterBackend):
 
             queryset = queryset.annotate(
                 distance=RawSQL(query, params=(latitude, longitude, latitude, self.DISTANCE_PER_DEGREE))
-            ).filter(distance__lte=distance)
+            )
+
+            if distance:
+                queryset = queryset.filter(distance__lte=distance)
 
             # sort by the calculated distance
             if sort.endswith("distance"):
