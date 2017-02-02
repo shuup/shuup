@@ -52,7 +52,7 @@ LICENSE = 'OSL-3.0'  # https://spdx.org/licenses/
 CLASSIFIERS = """
 Development Status :: 4 - Beta
 Intended Audience :: Developers
-License :: Open Software License 3.0
+License :: OSI Approved
 Natural Language :: English
 Programming Language :: JavaScript
 Programming Language :: Python :: 2
