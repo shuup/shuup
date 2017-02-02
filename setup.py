@@ -50,7 +50,7 @@ DOWNLOAD_URL_TEMPLATE = (
     'v{version}/shuup-{version}-py2.py3-none-any.whl')
 LICENSE = 'OSL-3.0'  # https://spdx.org/licenses/
 CLASSIFIERS = """
-Development Status :: 4 - Beta
+Development Status :: 5 - Production/Stable
 Intended Audience :: Developers
 License :: OSI Approved
 Natural Language :: English
