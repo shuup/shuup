@@ -35,7 +35,7 @@
     </table>
 {% endmacro %}
 
-{% macro shipment_information_table(order, shipment) %}
+{% macro shipment_information_table(order, shipment, extra_fields=None) %}
     <table>
         <tr>
             <td>{% trans %}Identifier{% endtrans %}</td>
@@ -49,6 +49,14 @@
             <td>{% trans %}Order date{% endtrans %}</td>
             <td>{{ order.order_date|localtime|date("j.n.Y H:i") }}</td>
         </tr>
+        {% if extra_fields %}
+            {% for field_name, field_value in extra_fields.items() %}
+                <tr>
+                    <td>{{ field_name }}</td>
+                    <td>{{ field_value }}</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
     </table>
 {% endmacro %}
 
