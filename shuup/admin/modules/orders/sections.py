@@ -22,11 +22,11 @@ class PaymentOrderSection(Section):
     order = 1
 
     @staticmethod
-    def visible_for_object(order):
+    def visible_for_object(order, request):
         return True
 
     @staticmethod
-    def get_context_data(order):
+    def get_context_data(order, request):
         return order.payments.all()
 
 
@@ -38,11 +38,11 @@ class ShipmentSection(Section):
     order = 2
 
     @staticmethod
-    def visible_for_object(order):
+    def visible_for_object(order, request):
         return True
 
     @staticmethod
-    def get_context_data(order):
+    def get_context_data(order, request):
         return Shipment.objects.filter(order=order).order_by("-created_on").all()
 
 
@@ -55,11 +55,11 @@ class LogEntriesOrderSection(Section):
     order = 3
 
     @staticmethod
-    def visible_for_object(order):
+    def visible_for_object(order, request):
         return True
 
     @staticmethod
-    def get_context_data(order):
+    def get_context_data(order, request):
         return OrderLogEntry.objects.filter(target=order).order_by("-created_on").all()[:12]
         # TODO: We're currently trimming to 12 entries, probably need pagination
 
@@ -73,9 +73,9 @@ class AdminCommentSection(Section):
     order = 4
 
     @staticmethod
-    def visible_for_object(order):
+    def visible_for_object(order, request):
         return True
 
     @staticmethod
-    def get_context_data(order):
+    def get_context_data(order, request):
         return None

@@ -20,11 +20,11 @@ class MockContactSection(Section):
     order = 9
 
     @staticmethod
-    def visible_for_object(contact):
+    def visible_for_object(contact, request):
         return True
 
     @staticmethod
-    def get_context_data(contact):
+    def get_context_data(contact, request):
         context = {}
         context['mock_context'] = "mock section context data"
         return context

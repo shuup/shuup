@@ -22,11 +22,11 @@ class BasicInfoContactSection(Section):
     order = 1
 
     @staticmethod
-    def visible_for_object(contact):
+    def visible_for_object(contact, request):
         return True
 
     @staticmethod
-    def get_context_data(contact):
+    def get_context_data(contact, request):
         context = {}
 
         context['groups'] = sorted(
@@ -52,12 +52,12 @@ class AddressesContactSection(Section):
     order = 2
 
     @staticmethod
-    def visible_for_object(contact):
+    def visible_for_object(contact, request):
         return (contact.default_shipping_address_id or
                 contact.default_billing_address_id)
 
     @staticmethod
-    def get_context_data(contact):
+    def get_context_data(contact, request):
         return None
 
 
@@ -69,12 +69,12 @@ class OrdersContactSection(Section):
     order = 3
 
     @staticmethod
-    def visible_for_object(contact):
+    def visible_for_object(contact, request):
         return (contact.default_shipping_address_id or
                 contact.default_billing_address_id)
 
     @staticmethod
-    def get_context_data(contact):
+    def get_context_data(contact, request):
         return contact.customer_orders.valid().order_by("-id")
 
 
@@ -86,11 +86,11 @@ class MembersContactSection(Section):
     order = 4
 
     @staticmethod
-    def visible_for_object(contact):
+    def visible_for_object(contact, request):
         return hasattr(contact, 'members')
 
     @staticmethod
-    def get_context_data(contact):
+    def get_context_data(contact, request):
         if contact.members:
             return contact.members.all()
 

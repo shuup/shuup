@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Section receives the request object
 - API: added nearby filter for products
 - API: added nearby filter for shops
 - API: add address endpoint
