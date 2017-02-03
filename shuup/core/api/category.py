@@ -43,11 +43,10 @@ class CategoryFilter(FilterSet):
     shop = django_filters.ModelChoiceFilter(name="shops",
                                             queryset=Shop.objects.all(),
                                             lookup_expr="exact")
-    is_root = django_filters.CharFilter(name="parent", lookup_expr="isnull")
 
     class Meta:
         model = Category
-        fields = ["id", "parent", "shop", "identifier", "is_root"]
+        fields = ["id", "parent", "shop", "identifier"]
 
 
 class CategoryViewSet(ProtectedModelViewSetMixin, PermissionHelperMixin, viewsets.ModelViewSet):
