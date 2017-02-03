@@ -206,7 +206,7 @@ def test_products_not_available_shop(admin_user):
     shop_product2.save()
 
     # fetch by category1
-    request = get_request("/api/shuup/front/products/?categories=%s" % category1.slug, admin_user)
+    request = get_request("/api/shuup/front/products/?categories=%d" % category1.id, admin_user)
     response = FrontProductViewSet.as_view({"get": "list"})(request)
     response.render()
     products_data = json.loads(response.content.decode("utf-8"))
@@ -214,12 +214,21 @@ def test_products_not_available_shop(admin_user):
     assert products_data[0]["product_id"] == product1.id
 
     # fetch by category2
-    request = get_request("/api/shuup/front/products/?categories=%s" % category2.slug, admin_user)
+    request = get_request("/api/shuup/front/products/?categories=%d" % category2.id, admin_user)
     response = FrontProductViewSet.as_view({"get": "list"})(request)
     response.render()
     products_data = json.loads(response.content.decode("utf-8"))
     assert len(products_data) == 1
     assert products_data[0]["product_id"] == product2.id
+
+    # fetch by category 1 and 2
+    request = get_request("/api/shuup/front/products/?categories=%d,%d" % (category1.id, category2.id), admin_user)
+    response = FrontProductViewSet.as_view({"get": "list"})(request)
+    response.render()
+    products_data = json.loads(response.content.decode("utf-8"))
+    assert len(products_data) == 2
+    assert products_data[0]["product_id"] == product1.id
+    assert products_data[1]["product_id"] == product2.id
 
 
 @pytest.mark.django_db
