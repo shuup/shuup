@@ -276,8 +276,8 @@ class ShopFilter(filters.BaseFilterBackend):
 
 class ProductCategoryFilter(filters.BaseFilterBackend):
     """
-    Filter shop products by categories slug name.
-    `categories` is a comma separed value: ?categories=cat1,cat2,cat3
+    Filter shop products by categories IDs.
+    `categories` is a comma separed value: ?categories=1,2,3,4
     """
     def filter_queryset(self, request, queryset, view):
         categories = request.query_params.get("categories")
@@ -286,7 +286,7 @@ class ProductCategoryFilter(filters.BaseFilterBackend):
 
         category_filters = None
         for category in categories.split(","):
-            category_filter = Q(categories__translations__slug__iexact=category.strip())
+            category_filter = Q(categories__id=category.strip())
             # make OR operator among all categories
             category_filters = (category_filter | category_filters) if category_filters else category_filter
 
