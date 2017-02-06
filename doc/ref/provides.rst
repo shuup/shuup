@@ -156,6 +156,10 @@ Core
 ``notify_script_template``
     Notification framework `~shuup.notify.base.ScriptTemplate` classes.
 
+``order_printouts_delivery_extra_fields``
+    Additional information rows for order delivery printout. Provide objects should inherit
+    from `~shuup.order_printouts.utils.PrintoutDeliveryExtraInformation` class.
+
 ``order_source_modifier_module``
     `~shuup.core.order_creator.OrderSourceModifierModule` for modifying
     order source, e.g. in its

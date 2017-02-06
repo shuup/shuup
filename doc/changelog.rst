@@ -22,6 +22,8 @@ Localization
 Admin
 ~~~~~
 
+- Add new provide category called `order_printouts_delivery_extra_fields` 
+  which can be used to add extra rows to order delivery slip.
 - Add new provide category called `admin_order_information` which can be used
   to add extra information rows to order detail page.
 - Use select2 multiple field for shop staff members

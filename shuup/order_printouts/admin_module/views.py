@@ -12,6 +12,7 @@ from django.http import HttpResponse, JsonResponse
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
+from shuup.apps.provides import get_provide_objects
 from shuup.core.models import Order, OrderLine, OrderLineType, Shipment
 from shuup.utils.pdf import html_to_pdf, render_html_to_pdf
 
@@ -77,6 +78,14 @@ def _get_delivery_html(request, order, shipment, html_mode=False):
         "footer": _get_footer_information(order.shop),
         "html_mode": html_mode
     }
+
+    provided_information = {}
+    for provided_info in sorted(get_provide_objects("order_printouts_delivery_extra_fields")):
+        info = provided_info(order, shipment)
+        if info.provides_extra_fields():
+            provided_information.update(info.extra_fields)
+    context['extra_fields'] = provided_information
+
     return render_to_string("shuup/order_printouts/admin/delivery_pdf.jinja", context=context, request=request)
 
 

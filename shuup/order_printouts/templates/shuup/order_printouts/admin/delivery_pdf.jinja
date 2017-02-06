@@ -1,6 +1,6 @@
 {% extends "shuup/order_printouts/admin/order_base.jinja" %}
 {% block information %}
-    {{ macros.shipment_information_table(order, shipment) }}
+    {{ macros.shipment_information_table(order, shipment, extra_fields) }}
 {% endblock %}
 {% block content %}
     <br>
