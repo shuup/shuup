@@ -42,14 +42,14 @@ class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
     form_class = ConfirmForm
 
     def process(self):
-        self.request.basket.customer_comment = self.storage.get("comment")
-        self.request.basket.marketing_permission = self.storage.get("marketing")
+        self.basket.customer_comment = self.storage.get("comment")
+        self.basket.marketing_permission = self.storage.get("marketing")
 
     def is_valid(self):
         return bool(self.storage.get("accept_terms"))
 
     def _get_product_ids(self):
-        return [str(product_id) for product_id in self.request.basket.get_product_ids_and_quantities().keys()]
+        return [str(product_id) for product_id in self.basket.get_product_ids_and_quantities().keys()]
 
     def get_form_kwargs(self):
         kwargs = super(ConfirmPhase, self).get_form_kwargs()
@@ -58,7 +58,8 @@ class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
 
     def get_context_data(self, **kwargs):
         context = super(ConfirmPhase, self).get_context_data(**kwargs)
-        basket = self.request.basket
+        basket = self.basket
+
         assert isinstance(basket, BaseBasket)
         basket.calculate_taxes()
         errors = list(basket.get_validation_errors())
@@ -81,7 +82,7 @@ class ConfirmPhase(CheckoutPhaseViewMixin, FormView):
             return redirect("shuup:order_process_payment", pk=order.pk, key=order.key)
 
     def create_order(self):
-        basket = self.request.basket
+        basket = self.basket
         assert isinstance(basket, BaseBasket)
         assert basket.shop == self.request.shop
         basket.orderer = self.request.person

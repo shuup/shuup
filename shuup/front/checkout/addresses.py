@@ -69,14 +69,14 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
             fg.add_form_def("saved_{}".format(kind),
                             form_class=SavedAddressForm,
                             required=False,
-                            kwargs={"kind": kind, "owner": self.request.basket.customer})
+                            kwargs={"kind": kind, "owner": self.basket.customer})
         if self.company_form_class and not self.request.customer:
             fg.add_form_def("company", self.company_form_class, required=False)
         return fg
 
     def get_initial(self):
         initial = super(AddressesPhase, self).get_initial()
-        customer = self.request.basket.customer
+        customer = self.basket.customer
         for address_kind in self.address_kinds:
             if self.storage.get(address_kind):
                 address = self.storage.get(address_kind)
@@ -114,7 +114,7 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
             setattr(basket, "%s_address" % kind, self.storage.get(kind))
 
     def process(self):
-        basket = self.request.basket
+        basket = self.basket
         self._process_addresses(basket)
         if self.storage.get("company"):
             basket.customer = self.storage.get("company")
@@ -126,7 +126,7 @@ class AddressesPhase(CheckoutPhaseViewMixin, FormView):
         context = super(AddressesPhase, self).get_context_data(**kwargs)
 
         # generate all the available saved addresses if user wants to use some
-        saved_addr_qs = SavedAddress.objects.filter(owner=self.request.basket.customer,
+        saved_addr_qs = SavedAddress.objects.filter(owner=self.basket.customer,
                                                     status=SavedAddressStatus.ENABLED)
         context["saved_address"] = {}
         for saved_address in saved_addr_qs:

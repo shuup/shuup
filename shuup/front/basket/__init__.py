@@ -27,15 +27,15 @@ def get_basket_command_dispatcher(request):
     return cached_load("SHUUP_BASKET_COMMAND_DISPATCHER_SPEC")(request=request)
 
 
-def get_basket(request):
+def get_basket(request, basket_name="basket", basket_class=None):
     """
     :type request: django.http.request.HttpRequest
     :rtype: shuup.front.basket.objects.BaseBasket
     """
-    if not hasattr(request, "basket"):
+    if basket_name == "basket" and hasattr(request, "basket"):
+        return request.basket
+
+    if basket_class is None:
         basket_class = cached_load("SHUUP_BASKET_CLASS_SPEC")
-        # This is a little weird in that this is likely to be called from `BasketMiddleware`,
-        # which would do the following assignment anyway. However, in case it's _not_ called
-        # from there, for some reason, we want to still be able to cache the basket.
-        request.basket = basket_class(request)
-    return request.basket
+
+    return basket_class(request, basket_name=basket_name)
