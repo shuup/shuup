@@ -49,6 +49,11 @@ class ShuupFrontAppConfig(AppConfig):
             "shuup.front.forms.product_list_modifiers.SortProductListByPrice",
             "shuup.front.forms.product_list_modifiers.ManufacturerProductListFilter",
         ],
+        "front_product_order_form": [
+            "shuup.front.forms.order_forms:VariableVariationProductOrderForm",
+            "shuup.front.forms.order_forms:SimpleVariationProductOrderForm",
+            "shuup.front.forms.order_forms:SimpleProductOrderForm",
+        ],
         "api_populator": [
             "shuup.front.api:populate_front_api"
         ],

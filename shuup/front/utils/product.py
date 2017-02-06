@@ -8,8 +8,10 @@
 from collections import OrderedDict
 
 import six
+from django.utils.safestring import mark_safe
 from django.utils.translation import get_language
 
+from shuup.apps.provides import get_provide_objects
 from shuup.core.models import (
     AttributeVisibility, ProductMode, ProductVariationResult
 )
@@ -64,7 +66,16 @@ def get_product_context(request, product, language=None):
         attribute__visibility_mode=AttributeVisibility.SHOW_ON_PRODUCT_PAGE)
     context["primary_image"] = shop_product.public_primary_image
     context["images"] = shop_product.public_images
+    context["order_form"] = _get_order_form(request, context, product, language)
     return context
+
+
+def _get_order_form(request, context, product, language):
+    for obj in get_provide_objects("front_product_order_form"):
+        product_order_form = obj(request, context, product, language)
+        if product_order_form.is_compatible():
+            return mark_safe(product_order_form.render())
+    return None
 
 
 def get_orderable_variation_children(product, request, variation_variables):
