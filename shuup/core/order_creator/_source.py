@@ -286,6 +286,7 @@ class OrderSource(object):
             if line.product:
                 if line.product.shipping_mode == ShippingMode.SHIPPED:
                     return True
+        return False
 
     @property
     def codes(self):
