@@ -37,6 +37,9 @@ Addons
 Front
 ~~~~~
 
+- Fix default error handler always returning 200 OK as an HTTP status code.
+  Now returns the appropriate status code.
+
 Xtheme
 ~~~~~~
 
