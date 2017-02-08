@@ -20,16 +20,16 @@ from rest_framework.test import (
 
 from shuup.core import cache
 from shuup.core.models import (
-    AnonymousContact, Category, MutableAddress, OrderStatus, Product,
+    Category, MutableAddress, OrderStatus, Product,
     ProductCrossSell, ProductCrossSellType, ProductMedia, ProductMediaKind,
-    ProductVisibility, Shop, ShopProduct, ShopProductVisibility, ShopStatus,
-    Supplier
+    ProductMode, ProductVariationVariable, ProductVariationVariableValue, Shop,
+    ShopProduct, ShopProductVisibility, ShopStatus, Supplier
 )
 from shuup.front.api.products import FrontProductViewSet
 from shuup.testing.factories import (
     add_product_to_order, create_empty_order, create_package_product,
     create_product, create_random_contact_group, create_random_order,
-    create_random_person, get_default_shop, get_random_filer_image
+    create_random_person, get_default_shop, get_default_supplier, get_random_filer_image
 )
 
 
@@ -56,14 +56,60 @@ def get_request(path, user, customer=None, data=None):
 
 @pytest.mark.django_db
 def test_get_products(admin_user):
-    shop1 = get_default_shop()
+    shop = get_default_shop()
+    supplier = get_default_supplier()
 
     person1 = create_random_person()
     person1.user = admin_user
     person1.save()
 
-    person2 = create_random_person()
-    person2.save()
+    create_product("product1", shop=shop, supplier=supplier)
+    create_product("product2", shop=shop, supplier=supplier)
+
+    # Generate complex variations
+    product_parent = create_product("product3", shop=shop, supplier=supplier)
+    populate_variations_for_parent(product_parent, shop, supplier)
+    assert product_parent.mode == ProductMode.VARIABLE_VARIATION_PARENT
+
+    # Generate simple variations
+    simple_parent = create_product("product4", shop=shop, supplier=supplier)
+    simple_child = create_product("product5", shop=shop, supplier=supplier)
+    simple_child.link_to_parent(simple_parent)
+    assert simple_child.is_variation_child()
+    assert simple_parent.mode == ProductMode.SIMPLE_VARIATION_PARENT
+
+    request = get_request("/api/shuup/front/products/", admin_user, person1)
+    response = FrontProductViewSet.as_view({"get": "list"})(request)
+    response.render()
+    assert response.status_code == status.HTTP_200_OK
+    products_data = json.loads(response.content.decode("utf-8"))
+    assert len(products_data) == 4
+
+    complex_parent_data = [data for data in products_data if data["product_id"] == product_parent.id][0]
+    assert len(complex_parent_data["variations"]) == 12
+
+    simple_parent_data = [data for data in products_data if data["product_id"] == simple_parent.id][0]
+    assert len(simple_parent_data["variations"]) == 1
+    assert simple_parent_data["variations"][0]["sku_part"] == simple_child.sku
+    assert simple_parent_data["variations"][0]["product"]["product_id"] == simple_child.id
+
+
+def populate_variations_for_parent(parent, shop, supplier):
+    color_var = ProductVariationVariable.objects.create(product=parent, identifier="color")
+    size_var = ProductVariationVariable.objects.create(product=parent, identifier="size")
+
+    for color in ("yellow", "blue", "brown"):
+        ProductVariationVariableValue.objects.create(variable=color_var, identifier=color)
+
+    for size in ("small", "medium", "large", "huge"):
+        ProductVariationVariableValue.objects.create(variable=size_var, identifier=size)
+
+    combinations = list(parent.get_all_available_combinations())
+    assert len(combinations) == (3 * 4)
+    for combo in combinations:
+        assert not combo["result_product_pk"]
+        child = create_product("xyz-%s" % combo["sku_part"], shop=shop, supplier=supplier)
+        child.link_to_parent(parent, combo["variable_to_value"])
 
 
 @pytest.mark.django_db
