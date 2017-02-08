@@ -26,7 +26,7 @@ def test_form_part_for_new_group(rf, admin_user):
     get_default_shop()
     request = apply_request_middleware(rf.get("/"), user=admin_user)
     initialized_view = ContactGroupEditView(request=request, kwargs={"pk": None})
-    initialized_view.object = initialized_view.get_object() # Just for test
+    initialized_view.object = initialized_view.get_object()  # Just for test
     form_def_values = initialized_view.get_form().form_defs.values()
     assert [form_def for form_def in form_def_values if form_def.name == "base"]
     # contact_group_sales_ranges should not be in form defs
@@ -40,7 +40,7 @@ def test_form_part_for_default_group(rf, admin_user):
     group = company.get_default_group()
     request = apply_request_middleware(rf.get("/"), user=admin_user)
     initialized_view = ContactGroupEditView(request=request, kwargs={"pk": group.pk})
-    initialized_view.object = initialized_view.get_object() # Just for test
+    initialized_view.object = initialized_view.get_object()  # Just for test
     form_def_values = initialized_view.get_form().form_defs.values()
     assert [form_def for form_def in form_def_values if form_def.name == "base"]
     # contact_group_sales_ranges should not be in form defs
@@ -53,7 +53,7 @@ def test_form_part_for_random_group(rf, admin_user):
     group = get_default_customer_group()
     request = apply_request_middleware(rf.get("/"), user=admin_user)
     initialized_view = ContactGroupEditView(request=request, kwargs={"pk": group.pk})
-    initialized_view.object = initialized_view.get_object() # Just for test
+    initialized_view.object = initialized_view.get_object()  # Just for test
     form_def_values = initialized_view.get_form().form_defs.values()
     assert [form_def for form_def in form_def_values if form_def.name == "base"]
     # contact_group_sales_ranges should be in form defs

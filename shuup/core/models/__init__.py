@@ -62,6 +62,7 @@ from ._service_payment import (
 from ._service_shipping import Carrier, CustomCarrier, ShippingMethod
 from ._shipments import Shipment, ShipmentProduct, ShipmentStatus, ShipmentType
 from ._shops import Shop, ShopStatus
+from ._stored_basket import StoredBasket
 from ._supplied_products import SuppliedProduct
 from ._suppliers import Supplier, SupplierType
 from ._taxes import CustomerTaxGroup, Tax, TaxClass
@@ -155,6 +156,7 @@ __all__ = [
     "ShopStatus",
     "StaffOnlyBehaviorComponent",
     "StockBehavior",
+    "StoredBasket",
     "SuppliedProduct",
     "Supplier",
     "SupplierType",

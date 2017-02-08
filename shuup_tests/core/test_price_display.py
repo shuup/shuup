@@ -25,7 +25,7 @@ from shuup.core.pricing import (
     get_pricing_module, PriceDisplayOptions, PriceInfo, PricingModule,
     TaxfulPrice, TaxlessPrice
 )
-from shuup.front.basket.objects import BaseBasket
+from shuup.core.basket.objects import BaseBasket
 from shuup.testing.factories import (
     create_default_tax_rule, get_default_tax, get_default_tax_class,
     get_default_shop, create_product)

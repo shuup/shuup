@@ -21,7 +21,7 @@ from shuup.campaigns.models.campaigns import (
 )
 from shuup.core.models import OrderLineType
 from shuup.core.order_creator import OrderCreator
-from shuup.front.basket import get_basket
+from shuup.core.basket import get_basket
 from shuup.testing.factories import (
     create_product, create_random_order, create_random_person,
     get_default_shop, get_shipping_method, get_default_supplier,

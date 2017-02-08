@@ -60,7 +60,7 @@ Types Used for Prices and Taxes
 
   A container for a calculated tax of a
   `~shuup.core.order_creator.SourceLine` (or
-  `~shuup.front.basket.objects.BasketLine`).  Implements the `LineTax`
+  `~shuup.core.basket.objects.BasketLine`).  Implements the `LineTax`
   interface.
 
 `~shuup.core.models.OrderLineTax`
@@ -141,6 +141,6 @@ Accessing Prices of Product or Line
 There is a `~shuup.core.pricing.Priceful` interface for accessing
 prices.  It is implemented by `~shuup.core.models.OrderLine` and
 `~shuup.core.order_creator.SourceLine`,
-`~shuup.front.basket.objects.BasketLine`, and
+`~shuup.core.basket.objects.BasketLine`, and
 `~shuup.core.pricing.PriceInfo` which is returned e.g. by
 `~shuup.core.models.Product.get_price_info` method.

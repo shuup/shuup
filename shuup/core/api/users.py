@@ -10,18 +10,18 @@ from __future__ import unicode_literals
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
-from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 from rest_framework.viewsets import ModelViewSet
 
 from shuup.api.mixins import PermissionHelperMixin
 
 
-class UserSerializer(ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
-        fields = "__all__"
+        # User model should be compliant to Django's AbstractBaseUser
+        exclude = ["password"]
         model = get_user_model()
-        fields = "__all__"
 
 
 class UserFilter(FilterSet):
@@ -47,7 +47,6 @@ class UserViewSet(PermissionHelperMixin, ModelViewSet):
     partial_update: Updates an existing user.
     You can update only a set of attributes.
     """
-
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
     filter_backends = (DjangoFilterBackend,)

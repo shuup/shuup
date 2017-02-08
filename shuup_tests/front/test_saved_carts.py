@@ -13,16 +13,15 @@ from shuup.front.apps.saved_carts.views import (
     CartAddAllProductsView, CartDeleteView, CartDetailView, CartListView,
     CartSaveView
 )
-from shuup.front.basket import get_basket
-from shuup.front.models import StoredBasket
+from shuup.core.basket import get_basket
+from shuup.core.models import StoredBasket
 from shuup.testing.factories import (
     create_product, get_default_payment_method, get_default_shipping_method,
     get_default_shop, get_default_supplier
 )
 from shuup.testing.utils import apply_request_middleware
-from shuup_tests.front.fixtures import get_request_with_basket
-from shuup_tests.utils import assert_contains, printable_gibberish
 from shuup_tests.utils.fixtures import regular_user
+from shuup_tests.utils import printable_gibberish
 
 
 def _add_products_to_basket(basket):
