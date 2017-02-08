@@ -11,6 +11,7 @@ from collections import defaultdict
 import six
 from django.db.models import Q
 from django.db.models.expressions import RawSQL
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import filters, mixins, serializers, viewsets
 from rest_framework.decorators import list_route
@@ -215,13 +216,30 @@ class CompleteProductSerializer(NormalProductSerializer):
         ]
 
     def get_variations(self, shop_product):
-        shop_product_filter = FrontShopProductFilter()
-        qs = ShopProduct.objects.filter(
-            product__variation_parent=shop_product.product,
-            shop=shop_product.shop,
-        )
-        variation_children = shop_product_filter.filter_queryset(self.context["request"], qs, None)
-        return NormalProductSerializer(variation_children, many=True, context=self.context).data
+        data = []
+        combinations = list(shop_product.product.get_all_available_combinations() or [])
+        if not combinations and shop_product.product.mode == ProductMode.SIMPLE_VARIATION_PARENT:
+            for product_pk, sku in Product.objects.filter(
+                    variation_parent_id=shop_product.product_id).values_list("pk", "sku"):
+                combinations.append({
+                    "result_product_pk": product_pk,
+                    "sku_part": sku,
+                    "hash": None,
+                    "variable_to_value": {}
+                })
+
+        for combination in combinations:
+            child = ShopProduct.objects.filter(
+                shop_id=shop_product.shop.id, product__pk=combination["result_product_pk"]).first()
+            data.append({
+                "product": NormalProductSerializer(child, many=False, context=self.context).data,
+                "sku_part": combination["sku_part"],
+                "hash": combination["hash"],
+                "combination": {
+                    force_text(k): force_text(v) for k, v in six.iteritems(combination["variable_to_value"])
+                }
+            })
+        return data
 
     def get_package_content(self, shop_product):
         package_contents = []
