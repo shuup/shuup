@@ -7,7 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
+<<<<<<< HEAD
 "POT-Creation-Date: 2017-03-18 09:48+0000\n"
+=======
+"POT-Creation-Date: 2017-03-07 20:18+0000\n"
+>>>>>>> API: Add front orders endpoint
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -48,6 +52,12 @@ msgstr ""
 msgid "Person Contacts can be listed, fetched, created, updated and deleted."
 msgstr ""
 
+msgid "Front Orders"
+msgstr ""
+
+msgid "Retrieve and list the current users orders."
+msgstr ""
+
 msgid "Front Users"
 msgstr ""
 
@@ -60,6 +70,10 @@ msgid "Manufacturer"
 msgstr ""
 
 msgid "Manufacturers can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+#, python-brace-format
+msgid "Order status changed: {from_status} to {to_status}"
 msgstr ""
 
 msgid "Orders"
