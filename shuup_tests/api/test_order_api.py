@@ -11,11 +11,11 @@ import datetime
 import decimal
 import json
 
-import pytest
 from django.utils.timezone import datetime as dt
+
+import pytest
 from rest_framework import status
 from rest_framework.test import APIClient
-
 from shuup.core import cache
 from shuup.core.models import Order, OrderStatus, PaymentStatus, ShippingStatus
 from shuup.testing.factories import (
@@ -313,9 +313,9 @@ def test_complete_order(admin_user):
     order = create_empty_order(shop=shop)
     order.save()
     client = _get_client(admin_user)
-    response = client.put("/api/shuup/order/%s/complete/" % order.pk)
+    response = client.post("/api/shuup/order/%s/complete/" % order.pk)
     assert response.status_code == 200
-    response = client.put("/api/shuup/order/%s/complete/" % order.pk)
+    response = client.post("/api/shuup/order/%s/complete/" % order.pk)
     assert response.status_code == 400
 
 
@@ -325,9 +325,9 @@ def test_cancel_order(admin_user):
     order = create_empty_order(shop=shop)
     order.save()
     client = _get_client(admin_user)
-    response = client.put("/api/shuup/order/%s/cancel/" % order.pk)
+    response = client.post("/api/shuup/order/%s/cancel/" % order.pk)
     assert response.status_code == 200
-    response = client.put("/api/shuup/order/%s/cancel/" % order.pk)
+    response = client.post("/api/shuup/order/%s/cancel/" % order.pk)
     assert response.status_code == 400
 
 
