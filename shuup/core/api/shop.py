@@ -154,7 +154,10 @@ class ShopViewSet(ProtectedModelViewSetMixin, PermissionHelperMixin, viewsets.Mo
 
     def get_queryset(self):
         search_term = self.request.query_params.get('search')
-        queryset = Shop.objects.prefetch_related('translations', 'staff_members').all()
+        queryset = (Shop.objects
+                    .prefetch_related('translations', 'staff_members')
+                    .select_related('contact_address')
+                    .all())
         if search_term:
             queryset = queryset.filter(translations__name__icontains=search_term)
         return queryset
@@ -165,6 +168,3 @@ class ShopViewSet(ProtectedModelViewSetMixin, PermissionHelperMixin, viewsets.Mo
     @classmethod
     def get_help_text(cls):
         return _("Shops can be listed, fetched, created, updated and deleted.")
-
-    def get_queryset(self):
-        return self.queryset.prefetch_related("translations", "staff_members").select_related("contact_address")
