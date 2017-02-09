@@ -443,6 +443,7 @@ def test_create_order(admin_user, settings):
     basket.refresh_from_db()
     assert basket.finished
     order = Order.objects.get(reference_number=response_data["reference_number"])
+    assert order.id == response_data["id"]
     assert order.status == OrderStatus.objects.get_default_initial()
     assert order.payment_status == PaymentStatus.NOT_PAID
     assert order.shipping_status == ShippingStatus.NOT_SHIPPED
@@ -492,6 +493,19 @@ def test_set_shipping_address(admin_user):
         'country': 'BR'
     }
     response = client.post('/api/shuup/basket/{}-{}/set_shipping_address/'.format(shop.pk, basket.key), address_data)
+    assert response.status_code == status.HTTP_200_OK
+    response_data = json.loads(response.content.decode("utf-8"))
+    shipping_addr = response_data["shipping_address"]
+    assert shipping_addr["id"] == addr1.id+1
+    assert shipping_addr["prefix"] == address_data["prefix"]
+    assert shipping_addr["name"] == address_data["name"]
+    assert shipping_addr["postal_code"] == address_data["postal_code"]
+    assert shipping_addr["street"] == address_data["street"]
+    assert shipping_addr["city"] == address_data["city"]
+    assert shipping_addr["country"] == address_data["country"]
+
+    # get the basket and check the address
+    response = client.get('/api/shuup/basket/{}-{}/'.format(shop.pk, basket.key))
     assert response.status_code == status.HTTP_200_OK
     response_data = json.loads(response.content.decode("utf-8"))
     shipping_addr = response_data["shipping_address"]

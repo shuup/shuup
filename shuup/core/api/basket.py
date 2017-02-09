@@ -134,8 +134,9 @@ class BasketSerializer(serializers.Serializer):
     validation_errors = serializers.SerializerMethodField()
 
     def get_shipping_address(self, basket):
-        if basket.shipping_address:
-            return AddressSerializer(basket.shipping_address, context=self.context).data
+        if basket._data.get('shipping_address_id'):
+            address = MutableAddress.objects.filter(id=basket._data['shipping_address_id']).first()
+            return AddressSerializer(address, context=self.context).data
 
     def get_validation_errors(self, basket):
         return [{err.code: err.message} for err in basket.get_validation_errors()]
@@ -200,6 +201,12 @@ class LineQuantitySerializer(serializers.Serializer):
 
 class CodeAddBasketSerializer(serializers.Serializer):
     code = serializers.CharField()
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ["id", "reference_number"]
 
 
 class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
@@ -293,6 +300,11 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         basket_class = cached_load("SHUUP_BASKET_CLASS_SPEC")
         basket_key = uuid1().hex
         basket = basket_class(request._request, key=basket_key)
+
+        # set the default shipping address
+        if request.person:
+            basket.shipping_address = request.person.default_shipping_address
+
         basket.save()
         return Response(data={"uuid": "%s-%s" % (request.shop.pk, basket_key)}, status=status.HTTP_201_CREATED)
 
@@ -508,4 +520,4 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         order_creator = get_basket_order_creator()
         order = order_creator.create_order(request.basket)
         request.basket.finalize()
-        return Response(data={"reference_number": order.reference_number}, status=status.HTTP_201_CREATED)
+        return Response(data=OrderSerializer(order).data, status=status.HTTP_201_CREATED)
