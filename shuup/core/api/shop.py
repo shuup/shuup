@@ -147,10 +147,20 @@ class ShopViewSet(ProtectedModelViewSetMixin, PermissionHelperMixin, viewsets.Mo
     You can update only a set of attributes.
     """
 
-    queryset = Shop.objects.all()
+    queryset = Shop.objects.none()
     serializer_class = ShopSerializer
     filter_backends = (DjangoFilterBackend, NearbyShopsFilter)
     filter_class = ShopFilter
+
+    def get_queryset(self):
+        search_term = self.request.query_params.get('search')
+        queryset = (Shop.objects
+                    .prefetch_related('translations', 'staff_members')
+                    .select_related('contact_address')
+                    .all())
+        if search_term:
+            queryset = queryset.filter(translations__name__icontains=search_term)
+        return queryset
 
     def get_view_name(self):
         return _("Shop")
@@ -158,6 +168,3 @@ class ShopViewSet(ProtectedModelViewSetMixin, PermissionHelperMixin, viewsets.Mo
     @classmethod
     def get_help_text(cls):
         return _("Shops can be listed, fetched, created, updated and deleted.")
-
-    def get_queryset(self):
-        return self.queryset.prefetch_related("translations", "staff_members").select_related("contact_address")

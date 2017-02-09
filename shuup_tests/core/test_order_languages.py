@@ -82,5 +82,4 @@ def test_order_language_fallbacks(rf, admin_user, lang_code):
         for x in range(10):
             language = languages[x][0]
             fallback = languages[x][1]
-            # print(lang_code, language, fallback)
             get_order_and_source(admin_user=admin_user, product=product, language=language, language_fallback=fallback)

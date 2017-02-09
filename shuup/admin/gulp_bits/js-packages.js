@@ -37,7 +37,8 @@ module.exports = {
             "js/slugify.js",
             "js/dropzone.js",
             "js/quick_add_related_objects.js",
-            "js/editor.js"
+            "js/editor.js",
+            "js/shop-changer.js"
         ]
     },
     "contact-group": {

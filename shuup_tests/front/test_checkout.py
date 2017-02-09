@@ -47,7 +47,10 @@ def test_required_address_fields():
 
 @pytest.mark.django_db
 def test_address_phase_authorized_user(rf, admin_user):
-    request = apply_request_middleware(rf.get("/"), shop=get_default_shop(), customer=get_person_contact(admin_user))
+    request = apply_request_middleware(rf.get("/"),
+                                       shop=get_default_shop(),
+                                       customer=get_person_contact(admin_user),
+                                       user=admin_user)
     view_func = AddressesPhase.as_view()
     resp = view_func(request)
     assert 'company' not in resp.context_data['form'].form_defs

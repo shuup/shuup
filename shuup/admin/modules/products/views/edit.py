@@ -85,7 +85,10 @@ class ShopProductFormPart(FormPart):
 
     def __init__(self, request, object=None):
         super(ShopProductFormPart, self).__init__(request, object)
-        self.shops = Shop.objects.filter(status=ShopStatus.ENABLED)
+        shop_queryset = Shop.objects.filter(status=ShopStatus.ENABLED)
+        if getattr(self.request.user, "is_superuser", False):
+            shop_queryset = shop_queryset.filter(staff_members=self.request.user)
+        self.shops = shop_queryset
 
     def get_shop_instance(self, shop):
         try:
@@ -136,6 +139,9 @@ class ShopProductFormPart(FormPart):
             return {
                 "suppliers": [Supplier.objects.first()]
             }
+
+    def has_perm(self):
+        return True  # Right form parts is defined at init
 
 
 class ProductAttributeFormPart(FormPart):
@@ -240,10 +246,14 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
         context["product_sections"] = []
         context["tour_key"] = "product"
         context["tour_complete"] = is_tour_complete("product")
-        product_sections_provides = sorted(get_provide_objects("admin_product_section"), key=lambda x: x.order)
-        for admin_product_section in product_sections_provides:
-            if admin_product_section.visible_for_object(self.object):
-                context["product_sections"].append(admin_product_section)
-                context[admin_product_section.identifier] = admin_product_section.get_context_data(self.object)
+
+        if self.request.user.has_perm("shuup.change_product", object):
+            # TODO: Sections should be responsible for right permissions
+            product_sections_provides = sorted(get_provide_objects("admin_product_section"), key=lambda x: x.order)
+            for admin_product_section in product_sections_provides:
+                if admin_product_section.visible_for_object(self.object, self.request):
+                    context["product_sections"].append(admin_product_section)
+                    context[admin_product_section.identifier] = admin_product_section.get_context_data(self.object,
+                                                                                                       self.request)
 
         return context

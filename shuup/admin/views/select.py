@@ -17,6 +17,7 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 
+from shuup.admin.utils.permissions import user_has_permission
 from shuup.core.models import Carrier, Contact, Product
 
 
@@ -75,7 +76,10 @@ class MultiselectAjaxView(TemplateView):
         cls = apps.get_model(model_name)
         qs = cls.objects.all()
         if hasattr(cls.objects, "all_except_deleted"):
-            qs = cls.objects.all_except_deleted()
+            shop = self.request.session.get("admin_shop") if not self.request.user.is_superuser else None
+            qs = cls.objects.all_except_deleted(shop=shop)
+        if hasattr(cls.objects, "get_for_user"):
+            qs = cls.objects.get_for_user(self.request.user)
         self.init_search_fields(cls)
         if not self.search_fields:
             return [{"id": None, "name": _("Couldn't get selections for %s.") % model_name}]
@@ -87,7 +91,11 @@ class MultiselectAjaxView(TemplateView):
             if issubclass(cls, Contact) or issubclass(cls, get_user_model()):
                 query &= Q(is_active=True)
             qs = qs.filter(query).distinct()
-        return [{"id": obj.id, "name": force_text(obj)} for obj in qs[:self.result_limit]]
+
+        return [
+            {"id": obj.id, "name": force_text(obj)} for obj in qs[:self.result_limit]
+            if user_has_permission("view", self.request.user, obj)
+        ]
 
     def get(self, request, *args, **kwargs):
         return JsonResponse({"results": self.get_data(request, *args, **kwargs)})

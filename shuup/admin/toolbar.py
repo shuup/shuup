@@ -17,7 +17,9 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
 from shuup.admin.utils.forms import flatatt_filter
-from shuup.admin.utils.permissions import get_missing_permissions
+from shuup.admin.utils.permissions import (
+    get_missing_permissions, get_permission_string_for_object
+)
 from shuup.admin.utils.str_utils import camelcase_to_snakecase
 from shuup.admin.utils.urls import get_model_url, NoModelUrl
 
@@ -459,7 +461,7 @@ def get_default_edit_toolbar(
                 icon="fa fa-trash",
                 extra_css_class="btn-danger btn-inverse",
                 confirm=_("Are you sure you wish to delete %s?") % object,
-                required_permissions=required_permissions
+                required_permissions=[get_permission_string_for_object(object, "delete")]
             ))
 
     # TODO: Add extensibility

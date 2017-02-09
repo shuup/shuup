@@ -98,7 +98,8 @@ class ServiceProviderEditView(CreateOrUpdateView):
                 url="{model_url}?provider={id}".format(
                     model_url=get_model_url(self.object.service_model, "new"),
                     id=self.object.id),
-                extra_css_class="btn-info"
+                extra_css_class="btn-info",
+                required_permissions=("shuup.add_service", )
             ))
 
         return toolbar

@@ -21,3 +21,7 @@ your own, the :ref:`apps-naming-settings` section is an important read.
 #: Panes must be subclasses of `shuup.admin.views.WizardPane`.
 #:
 SHUUP_SETUP_WIZARD_PANE_SPEC = []
+
+#: Whether the admin checks per object permissions for the views and lists
+#:
+SHUUP_CHECK_PER_OBJECT_PERMISSIONS = False

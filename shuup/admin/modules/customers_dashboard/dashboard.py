@@ -11,7 +11,8 @@ from shuup.core.models import Order
 
 
 def get_active_customers_block(request):
-    customer_ids = set(Order.objects.since(30).values_list("customer_id", flat=True))
+    customer_ids = set(Order.objects.filter(
+        shop=request.session.get("admin_shop")).since(30).values_list("customer_id", flat=True))
 
     return DashboardNumberBlock(
         id="active_customers_count",

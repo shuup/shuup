@@ -33,22 +33,43 @@ class ProductListView(PicotableListView):
     picotable_class = ProductPicotable
 
     default_columns = [
-        Column("primary_image", _(u"Primary Image"),
-               display="get_primary_image", class_name="text-center", raw=True, ordering=1, sortable=False),
-        Column("name", _(u"Name"),
+        Column("primary_image",
+               _(u"Primary Image"),
+               display="get_primary_image",
+               class_name="text-center",
+               raw=True,
+               ordering=1,
+               sortable=False),
+        Column("shop",
+               _("Shop"),
+               filter_config=ChoicesFilter(choices=Shop.objects.all()),
+               ordering=2),
+        Column("name",
+               _(u"Name"),
                sort_field="product__translations__name",
                display="product__name",
-               filter_config=TextFilter(
-                   filter_field="product__translations__name", placeholder=_("Filter by name...")
-               ),
+               filter_config=TextFilter(filter_field="product__translations__name",
+                                        placeholder=_("Filter by name...")),
                ordering=2),
-        Column("sku", _(u"SKU"),
-               display="product__sku", filter_config=RangeFilter(filter_field="product__sku"), ordering=3),
-        Column("barcode", _(u"Barcode"),
-               display="product__barcode", filter_config=TextFilter(_("Filter by barcode...")), ordering=4),
-        Column("type", _(u"Type"), display="product__type", ordering=5),
-        Column("mode", _(u"Mode"),
-               display="product__mode", filter_config=ChoicesFilter(ProductMode.choices), ordering=6),
+        Column("sku",
+               _(u"SKU"),
+               display="product__sku",
+               filter_config=RangeFilter(filter_field="product__sku"),
+               ordering=3),
+        Column("barcode",
+               _(u"Barcode"),
+               display="product__barcode",
+               filter_config=TextFilter(placeholder=_("Filter by barcode...")),
+               ordering=4),
+        Column("type",
+               _(u"Type"),
+               display="product__type",
+               ordering=5),
+        Column("mode",
+               _(u"Mode"),
+               display="product__mode",
+               filter_config=ChoicesFilter(ProductMode.choices),
+               ordering=6),
     ]
 
     related_objects = [
@@ -64,14 +85,15 @@ class ProductListView(PicotableListView):
 
     def get_primary_image(self, instance):
         if instance.product.primary_image:
-            return "<img src='/media/%s'>" % instance.product.primary_image.get_thumbnail()
-        else:
-            return "<img src='%s'>" % static("shuup_admin/img/no_image_thumbnail.png")
+            thumbnail = instance.product.primary_image.get_thumbnail()
+            if thumbnail:
+                return "<img src='/media/{}'>".format(thumbnail)
+        return "<img src='%s'>" % static("shuup_admin/img/no_image_thumbnail.png")
 
     def get_queryset(self):
         filter = self.get_filter()
-        shop_id = filter.get("shop", Shop.objects.first().pk)
-        qs = ShopProduct.objects.filter(product__deleted=False, shop_id=shop_id)
+        current_shop = self.request.session['admin_shop']
+        qs = ShopProduct.objects.filter(product__deleted=False, shop=current_shop)
         q = Q()
         for mode in filter.get("modes", []):
             q |= Q(product__mode=mode)

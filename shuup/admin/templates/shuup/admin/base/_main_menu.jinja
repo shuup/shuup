@@ -10,6 +10,7 @@
     <a href="#" class="category-menu-close"><i class="fa fa-close"></i></a>
     <div class="category-menu-content">
         {% for child in category.children %}
+            {% if child.entries %}
             <div class="submenu-container">
             <h3>{{ child.name }}</h3>
             <ul>
@@ -20,6 +21,7 @@
             {% endfor %}
             </ul>
             </div>
+            {% endif %}
         {% endfor %}
         <div class="submenu-container">
             <ul>

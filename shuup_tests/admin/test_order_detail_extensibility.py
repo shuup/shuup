@@ -11,6 +11,7 @@ import pytest
 from bs4 import BeautifulSoup
 from django.core.urlresolvers import reverse
 
+from shuup.admin.modules.orders.utils import OrderInformation
 from shuup.admin.modules.orders.views.detail import OrderDetailView
 from shuup.apps.provides import override_provides
 from shuup.testing.factories import (
@@ -97,3 +98,33 @@ def _get_product_data(has_price):
             "tax_rate": decimal.Decimal("0.24"),
         }
     ]
+
+
+class PaymentMethodName(OrderInformation):
+    title = "Extra information row"
+
+    @property
+    def information(self):
+        return "This is row data"
+
+
+@pytest.mark.django_db
+def test_order_detail_info_row_extend(rf, admin_user):
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    order = _get_order(shop, supplier, True)
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
+    view_func = OrderDetailView.as_view()
+
+    # Test that context["provided_information"] is empty by default
+    with override_provides("admin_order_information", []):
+        response = view_func(request, pk=order.pk)
+        assert response.context_data['provided_information'] == []
+
+    # Test that we can insert extra information rows into Order detail page
+    with override_provides("admin_order_information", [
+        "shuup_tests.admin.test_order_detail_extensibility:PaymentMethodName",
+    ]):
+        response = view_func(request, pk=order.pk)
+        soup = BeautifulSoup(response.render().content)
+        assert soup.find_all(text="This is row data")

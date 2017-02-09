@@ -39,6 +39,7 @@ class EditProductToolbar(Toolbar):
             onclick="saveAsACopy()",
             text=_("Save as a copy"),
             icon="fa fa-clone",
+            required_permissions=("shuup.add_product", "shuup.view_product")
         )
         self.append(save_as_copy_button)
 
@@ -46,6 +47,7 @@ class EditProductToolbar(Toolbar):
             text=_("Manage Cross-Selling"),
             icon="fa fa-random",
             url=reverse("shuup_admin:shop_product.edit_cross_sell", kwargs={"pk": product.pk}),
+            required_permissions=("shuup.change_productcrosssell")
         )
         menu_items = [
             DropdownHeader(text=_("Cross-Selling")),
@@ -64,7 +66,7 @@ class EditProductToolbar(Toolbar):
                 menu_items,
                 icon="fa fa-star",
                 text=_(u"Actions"),
-                extra_css_class="btn-info",
+                extra_css_class="btn-info"
             ))
 
     def _get_header_item(self, header):
@@ -105,6 +107,7 @@ class EditProductToolbar(Toolbar):
             text=_("Manage Variations"),
             icon="fa fa-sitemap",
             url=self._get_variation_url(product),
+            required_permissions=["shuup.change_product"]
         )
         if product.is_variation_parent():
             for child in self._get_children_items(product.variation_children.all()):
@@ -120,6 +123,7 @@ class EditProductToolbar(Toolbar):
             text=_("Manage Package"),
             icon="fa fa-cube",
             url=self._get_package_url(product),
+            required_permissions=["shuup.change_product"]
         )
         if product.is_package_parent():
             for child in self._get_children_items(product.get_all_package_children()):
@@ -148,6 +152,7 @@ class EditProductToolbar(Toolbar):
                 text=_("Convert to Package Parent"),
                 icon="fa fa-retweet",
                 url=self._get_package_url(product),
+                required_permissions=["shuup.change_product"]
             )
             for item in self._get_header_item(_("Variations")):
                 yield item
@@ -155,4 +160,5 @@ class EditProductToolbar(Toolbar):
                 text=_("Convert to Variation Parent"),
                 icon="fa fa-retweet",
                 url=self._get_variation_url(product),
+                required_permissions=["shuup.change_product"]
             )

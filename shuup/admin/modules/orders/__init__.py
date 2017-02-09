@@ -14,16 +14,12 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry, Notification, SearchResult
 from shuup.admin.menu import ORDERS_MENU_CATEGORY, STOREFRONT_MENU_CATEGORY
-from shuup.admin.utils.permissions import (
-    get_default_model_permissions, get_permissions_from_urls
-)
+from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls, get_model_url
 )
 from shuup.admin.views.home import HelpBlockCategory, SimpleHelpBlock
-from shuup.core.models import (
-    Contact, Order, OrderStatus, OrderStatusRole, Product
-)
+from shuup.core.models import Order, OrderStatus, OrderStatusRole
 
 
 class OrderModule(AdminModule):
@@ -60,13 +56,13 @@ class OrderModule(AdminModule):
                 "^orders/(?P<pk>\d+)/set-status/$",
                 "shuup.admin.modules.orders.views.OrderSetStatusView",
                 name="order.set-status",
-                permissions=get_default_model_permissions(Order)
+                permissions=["shuup.change_order"]
             ),
             admin_url(
                 "^orders/(?P<pk>\d+)/new-log-entry/$",
                 "shuup.admin.modules.orders.views.NewLogEntryView",
                 name="order.new-log-entry",
-                permissions=get_default_model_permissions(Order)
+                permissions=["shuup.change_order"]
             ),
             admin_url(
                 "^orders/(?P<pk>\d+)/update-admin-comment/$",
@@ -78,19 +74,19 @@ class OrderModule(AdminModule):
                 "^orders/(?P<pk>\d+)/create-refund/$",
                 "shuup.admin.modules.orders.views.OrderCreateRefundView",
                 name="order.create-refund",
-                permissions=get_default_model_permissions(Order)
+                permissions=["shuup.change_order"]
             ),
             admin_url(
                 "^orders/(?P<pk>\d+)/create-refund/full-refund$",
                 "shuup.admin.modules.orders.views.OrderCreateFullRefundView",
                 name="order.create-full-refund",
-                permissions=get_default_model_permissions(Order)
+                permissions=["shuup.change_order"]
             ),
             admin_url(
                 "^orders/(?P<pk>\d+)/$",
                 "shuup.admin.modules.orders.views.OrderDetailView",
                 name="order.detail",
-                permissions=get_default_model_permissions(Order)
+                permissions=["shuup.view_order"]
             ),
             admin_url(
                 "^orders/new/$",
@@ -108,14 +104,14 @@ class OrderModule(AdminModule):
                 "^orders/$",
                 "shuup.admin.modules.orders.views.OrderListView",
                 name="order.list",
-                permissions=get_default_model_permissions(Order),
+                permissions=["shuup.view_order"],
 
             ),
             admin_url(
                 "^orders/list-settings/",
                 "shuup.admin.modules.settings.views.ListSettingsView",
                 name="order.list_settings",
-                permissions=get_default_model_permissions(Order),
+                require_superuser=True
             ),
             admin_url(
                 "^orders/(?P<pk>\d+)/edit-addresses/$",
@@ -127,7 +123,7 @@ class OrderModule(AdminModule):
             url_prefix="^order-status",
             view_template="shuup.admin.modules.orders.views.OrderStatus%sView",
             name_template="order_status.%s",
-            permissions=get_default_model_permissions(OrderStatus)
+            model=Order
         )
 
     def get_menu_entries(self, request):
@@ -152,12 +148,7 @@ class OrderModule(AdminModule):
         ]
 
     def get_required_permissions(self):
-        return (
-            get_permissions_from_urls(self.get_urls()) |
-            get_default_model_permissions(Contact) |
-            get_default_model_permissions(Order) |
-            get_default_model_permissions(Product)
-        )
+        return ["shuup.view_order"]
 
     def get_search_results(self, request, query):
         minimum_query_length = 3
@@ -180,6 +171,7 @@ class OrderModule(AdminModule):
 
     def get_notifications(self, request):
         old_open_orders = Order.objects.filter(
+            shop=request.session.get("admin_shop"),
             status__role=OrderStatusRole.INITIAL,
             order_date__lt=now() - timedelta(days=4)
         ).count()

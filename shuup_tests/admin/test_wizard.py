@@ -36,18 +36,18 @@ def _extract_fields(rf, user):
     return extract_form_fields(soup.find("form"))
 
 
-def assert_redirect_to_dashboard(rf):
-    request = apply_request_middleware(rf.get("/"))
+def assert_redirect_to_dashboard(rf, user):
+    request = apply_request_middleware(rf.get("/"), user=user)
     response = WizardView.as_view()(request)
     assert response.status_code == 302
     assert response["Location"] == reverse("shuup_admin:dashboard")
 
 
 @pytest.mark.django_db
-def test_get_wizard_no_panes(rf, settings):
+def test_get_wizard_no_panes(rf, settings, admin_user):
     get_default_shop()
     settings.SHUUP_SETUP_WIZARD_PANE_SPEC = []
-    assert_redirect_to_dashboard(rf)
+    assert_redirect_to_dashboard(rf, admin_user)
 
 
 @pytest.mark.django_db
@@ -84,7 +84,7 @@ def test_shop_wizard_pane(rf, admin_user, settings):
     assert shop.contact_address
     assert shop.currency == "USD"
     assert TaxClass.objects.exists()
-    assert_redirect_to_dashboard(rf)
+    assert_redirect_to_dashboard(rf, admin_user)
 
 
 @pytest.mark.django_db
@@ -98,7 +98,7 @@ def test_shipping_method_wizard_pane(rf, admin_user, settings):
     fields["shipping_method_base-providers"] = "manual_shipping"
     fields["manual_shipping-service_name"] = "test"
 
-    request = rf.post("/", data=fields)
+    request = apply_request_middleware(rf.post("/", data=fields), user=admin_user)
     response = WizardView.as_view()(request)
     assert response.status_code == 200
     assert ServiceProvider.objects.count() == 1
@@ -106,7 +106,7 @@ def test_shipping_method_wizard_pane(rf, admin_user, settings):
     assert CustomCarrier.objects.first().name == "Manual"
     assert ShippingMethod.objects.count() == 1
     assert ShippingMethod.objects.first().name == "test"
-    assert_redirect_to_dashboard(rf)
+    assert_redirect_to_dashboard(rf, admin_user)
 
 
 @pytest.mark.django_db
@@ -120,7 +120,7 @@ def test_payment_method_wizard_pane(rf, admin_user, settings):
     fields["payment_method_base-providers"] = "manual_payment"
     fields["manual_payment-service_name"] = "test"
 
-    request = rf.post("/", data=fields)
+    request = apply_request_middleware(rf.post("/", data=fields), user=admin_user)
     response = WizardView.as_view()(request)
     assert response.status_code == 200
     assert ServiceProvider.objects.count() == 1
@@ -128,7 +128,7 @@ def test_payment_method_wizard_pane(rf, admin_user, settings):
     assert CustomPaymentProcessor.objects.first().name == "Manual"
     assert PaymentMethod.objects.count() == 1
     assert PaymentMethod.objects.first().name == "test"
-    assert_redirect_to_dashboard(rf)
+    assert_redirect_to_dashboard(rf, admin_user)
 
 
 @pytest.mark.django_db
@@ -144,7 +144,7 @@ def test_xtheme_wizard_pane(rf, admin_user, settings):
             assert get_current_theme() == None
             fields = _extract_fields(rf, admin_user)
             fields["theme-activate"] = FauxTheme.identifier
-            request = rf.post("/", data=fields)
+            request = apply_request_middleware(rf.post("/", data=fields), user=admin_user)
             response = WizardView.as_view()(request)
             assert isinstance(get_current_theme(), FauxTheme)
-            assert_redirect_to_dashboard(rf)
+            assert_redirect_to_dashboard(rf, admin_user)

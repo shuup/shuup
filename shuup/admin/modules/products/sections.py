@@ -21,10 +21,10 @@ class ProductOrdersSection(Section):
     order = 1
 
     @staticmethod
-    def visible_for_object(product):
+    def visible_for_object(product, request):
         return bool(product.pk)
 
     @staticmethod
-    def get_context_data(product):
+    def get_context_data(product, request):
         # TODO: restrict to first 100 orders - do pagination later
         return Order.objects.valid().filter(lines__product_id=product.id).distinct()[:100]

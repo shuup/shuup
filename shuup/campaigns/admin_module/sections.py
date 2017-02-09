@@ -19,11 +19,11 @@ class ProductCampaignsSection(Section):
     template = "shuup/campaigns/admin/_product_campaigns.jinja"
 
     @staticmethod
-    def visible_for_object(product):
+    def visible_for_object(product, request):
         return bool(product.pk)
 
     @staticmethod
-    def get_context_data(product):
+    def get_context_data(product, request):
         ctx = {}
         for shop in Shop.objects.all():
             try:

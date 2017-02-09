@@ -81,9 +81,10 @@ class ProductMedia(TranslatableModel):
     )
 
     class Meta:
+        ordering = ['ordering']
+        permissions = (('view_productmedia', 'Can view media'),)
         verbose_name = _('product attachment')
         verbose_name_plural = _('product attachments')
-        ordering = ["ordering", ]
 
     def __str__(self):  # pragma: no cover
         return self.effective_title
@@ -149,7 +150,7 @@ class ProductMedia(TranslatableModel):
 
         try:
             return thumbnailer.get_thumbnail(thumbnail_options=kwargs)
-        except InvalidImageFormatError:
+        except (InvalidImageFormatError, OSError):
             return None
 
 

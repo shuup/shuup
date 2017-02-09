@@ -46,6 +46,7 @@ class PaymentMethod(Service):
     shop_product_m2m = "payment_methods"
 
     class Meta:
+        permissions = (('view_paymentmethod', 'Can view payment methods'),)
         verbose_name = _("payment method")
         verbose_name_plural = _("payment methods")
 

@@ -128,7 +128,7 @@ class ProductMediaBulkAdderView(View):
         ids = self.request.POST.getlist("file_ids")
         product_id = kwargs.pop("pk")
         kind = self.request.POST.get("kind")
-        shop_id = self.request.POST.get("shop_id", Shop.objects.first().pk)
+        shop_id = self.request.POST.get("shop_id", self.request.session['admin_shop'].pk)
         if not ids or not product_id:
             return JsonResponse({"response": "error", "message": "bad request"}, status=400)
         if not Shop.objects.filter(pk=shop_id).exists():

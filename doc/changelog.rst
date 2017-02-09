@@ -12,6 +12,8 @@ Unrealeased
 Core
 ~~~~
 
+
+- Section receives the request object
 - API: added nearby filter for products
 - API: added nearby filter for shops
 - API: add address endpoint
@@ -27,10 +29,15 @@ Localization
 Admin
 ~~~~~
 
+- Add new provide category called `admin_order_information` which can be used
+  to add extra information rows to order detail page.
 - Use select2 multiple field for shop staff members
 - Fix bug in "Select All" mass action
 - Fix bug in product choice widget
 - Display last 12 months of sales in the dashboard chart
+- Only categories, orders, products, contacts and campaigns for the active shop
+  are displayed in the admin
+- Menu categories without any children are hidden
 
 Addons
 ~~~~~~

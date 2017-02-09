@@ -10,7 +10,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
 
 
@@ -23,7 +22,7 @@ class PermissionGroupModule(AdminModule):
             url_prefix="^permission-groups",
             view_template="shuup.admin.modules.permission_groups.views.PermissionGroup%sView",
             name_template="permission_group.%s",
-            permissions=get_default_model_permissions(PermissionGroup),
+            model=PermissionGroup
         )
 
     def get_menu_entries(self, request):
@@ -39,7 +38,7 @@ class PermissionGroupModule(AdminModule):
         ]
 
     def get_required_permissions(self):
-        return get_default_model_permissions(PermissionGroup)
+        return ["auth.change_group"]
 
     def get_model_url(self, object, kind):
         return derive_model_url(PermissionGroup, "shuup_admin:permission_group", object, kind)

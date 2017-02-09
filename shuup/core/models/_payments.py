@@ -33,6 +33,7 @@ class Payment(MoneyPropped, models.Model):
     description = models.CharField(max_length=256, blank=True, verbose_name=_('description'))
 
     class Meta:
+        permissions = (('view_payment', 'Can view payments'),)
         verbose_name = _('payment')
         verbose_name_plural = _('payments')
 
