@@ -48,6 +48,29 @@ class SetPasswordSerializer(serializers.Serializer):
         user.save()
 
 
+class SetAuthenticatedUserPasswordSerializer(serializers.Serializer):
+    password = serializers.CharField()
+    new_password1 = serializers.CharField()
+    new_password2 = serializers.CharField()
+
+    def validate(self, data):
+        password1 = data.get("new_password1")
+        password2 = data.get("new_password2")
+        if password1 != password2:
+            raise serializers.ValidationError("Passwords do not match")
+        password = data.get("password")
+        user = self.context["request"].user
+        if not user or not user.check_password(password):
+            raise serializers.ValidationError("Invalid password")
+        return data
+
+    def save(self):
+        user = self.context["request"].user
+        new_password = self.validated_data["new_password1"]
+        user.set_password(new_password)
+        user.save()
+
+
 class PasswordResetViewSet(GenericViewSet):
     def create(self, request):
         form = RecoverPasswordForm(request.data)
@@ -60,7 +83,10 @@ class PasswordResetViewSet(GenericViewSet):
 
 class SetPasswordViewSet(GenericViewSet):
     def create(self, request):
-        serializer = SetPasswordSerializer(data=request.data)
+        if not request.user.is_anonymous():
+            serializer = SetAuthenticatedUserPasswordSerializer(data=request.data, context={'request': request})
+        else:
+            serializer = SetPasswordSerializer(data=request.data)
 
         if serializer.is_valid():
             serializer.save()
