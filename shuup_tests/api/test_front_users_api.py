@@ -173,5 +173,39 @@ def test_reset_password_request():
     assert user.check_password("foobar")
 
 
+@pytest.mark.django_db
+def test_reset_authenticated_user_password(admin_user):
+    get_default_shop()
+    client = _get_client()
+    client.force_authenticate(user=admin_user)
+    response = client.post("/api/shuup/front/password/",
+                           content_type="application/json",
+                           data=json.dumps({
+                               "new_password1": "typo",
+                               "new_password2": "foobar",
+                               "password": "badpassword"
+                            }))
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert "do not match" in str(response.content)
+    response = client.post("/api/shuup/front/password/",
+                           content_type="application/json",
+                           data=json.dumps({
+                               "new_password1": "foobar",
+                               "new_password2": "foobar",
+                               "password": "badpassword"
+                            }))
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert not admin_user.check_password("foobar")
+    response = client.post("/api/shuup/front/password/",
+                           content_type="application/json",
+                           data=json.dumps({
+                               "new_password1": "foobar",
+                               "new_password2": "foobar",
+                               "password": "password"
+                            }))
+    assert response.status_code == status.HTTP_200_OK
+    assert admin_user.check_password("foobar")
+
+
 def _get_client():
     return APIClient()
