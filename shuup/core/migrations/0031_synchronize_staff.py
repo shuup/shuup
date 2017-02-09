@@ -16,7 +16,7 @@ def synchronize_staff_members(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shuup', '0028_add_view_permissions'),
+        ('shuup', '0030_shop_permissions'),
     ]
 
     operations = [

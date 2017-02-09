@@ -8,7 +8,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shuup', '0027_modify_shop_fields'),
+        ('shuup', '0028_add_db_indices'),
     ]
 
     operations = [

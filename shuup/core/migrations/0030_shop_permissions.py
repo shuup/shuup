@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('contenttypes', '0002_remove_content_type_name'),
-        ('shuup', '0029_synchronize_staff'),
+        ('shuup', '0029_add_view_permissions'),
     ]
 
     operations = [
