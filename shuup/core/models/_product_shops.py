@@ -287,7 +287,7 @@ class ShopProduct(MoneyPropped, models.Model):
                 if child_product.get_shop_instance(self.shop).is_orderable(
                         supplier=supplier,
                         customer=customer,
-                        quantity=1,
+                        quantity=self.minimum_purchase_quantity,
                         allow_cache=False
                 ):
                     sellable += 1
@@ -299,11 +299,17 @@ class ShopProduct(MoneyPropped, models.Model):
             from shuup.core.models import ProductVariationResult
             sellable = 0
             for combo in self.product.get_all_available_combinations():
-                res = ProductVariationResult.resolve(self.product, combo["variable_to_value"])
-                if res and res.get_shop_instance(self.shop).is_orderable(
+                product_variant = ProductVariationResult.resolve(self.product, combo["variable_to_value"])
+                if not product_variant:
+                    continue
+                try:
+                    shop_product_variant = product_variant.get_shop_instance(self.shop)
+                except ShopProduct.DoesNotExist:
+                    continue
+                if shop_product_variant.is_orderable(
                         supplier=supplier,
                         customer=customer,
-                        quantity=1,
+                        quantity=self.minimum_purchase_quantity,
                         allow_cache=False
                 ):
                     sellable += 1
