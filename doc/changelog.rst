@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- API: add front orders endpoint to fetch users order history
 - API: added nearby filter for products
 - API: added nearby filter for shops
 - API: allow orders to be created without customer, addresses, or
