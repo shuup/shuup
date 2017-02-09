@@ -48,6 +48,12 @@ msgstr ""
 msgid "Person Contacts can be listed, fetched, created, updated and deleted."
 msgstr ""
 
+msgid "Front Orders"
+msgstr ""
+
+msgid "Retrieve and list the current users orders."
+msgstr ""
+
 msgid "Front Users"
 msgstr ""
 
@@ -60,6 +66,10 @@ msgid "Manufacturer"
 msgstr ""
 
 msgid "Manufacturers can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+#, python-brace-format
+msgid "Order status changed: {from_status} to {to_status}"
 msgstr ""
 
 msgid "Orders"
