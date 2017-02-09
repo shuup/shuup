@@ -12,7 +12,7 @@ Unrealeased
 Core
 ~~~~
 
-
+- API: add set shipping address on basket endpoint
 - Section receives the request object
 - API: added nearby filter for products
 - API: added nearby filter for shops
