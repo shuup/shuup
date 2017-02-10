@@ -26,8 +26,7 @@ from shuup.admin.utils.tour import is_tour_complete
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import (
-    Product, ProductType, SalesUnit, Shop, ShopProduct, Supplier,
-    TaxClass
+    Product, ProductType, SalesUnit, Shop, ShopProduct, Supplier, TaxClass
 )
 
 from .toolbars import EditProductToolbar
