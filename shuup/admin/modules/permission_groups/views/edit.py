@@ -31,7 +31,9 @@ class PermissionGroupForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PermissionGroupForm, self).__init__(*args, **kwargs)
         self.initial_permissions = self._get_initial_permissions()
+
         self.fields["name"].help_text = _("The permission group name.")
+
         initial_members = self._get_initial_members()
         members_field = Select2MultipleField(
             model=get_user_model(),
@@ -44,6 +46,7 @@ class PermissionGroupForm(forms.ModelForm):
         )
         members_field.widget.choices = [(member.pk, force_text(member)) for member in initial_members]
         self.fields["members"] = members_field
+
         self.permission_code_to_name = {}
         for permission in Permission.objects.all():
             self.permission_code_to_name[
@@ -97,10 +100,15 @@ class PermissionGroupForm(forms.ModelForm):
         for field_name, value in six.iteritems(self.cleaned_data):
             if field_name in ["members", "name"]:
                 continue
-            if not value:
+            if value is None:
                 continue
             app_label, code_name = field_name.split(".", 1)
-            permissions.add(Permission.objects.get(content_type__app_label=app_label, codename=code_name).id)
+            try:
+                permission = Permission.objects.get(content_type__app_label=app_label, codename=code_name)
+            except Permission.DoesNotExist:
+                continue
+            if value is True:
+                permissions.add(permission.id)
         obj.permissions = permissions
         obj.user_set = set(self.cleaned_data["members"])
         return obj
