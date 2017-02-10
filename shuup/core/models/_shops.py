@@ -30,6 +30,9 @@ def _get_default_currency():
 
 
 class ShopManager(TranslatableManager):
+    def get_current(self, request):
+        return request.session['admin_shop']
+
     def get_for_user(self, user):
         qs = self.get_queryset()
         if user.is_superuser:

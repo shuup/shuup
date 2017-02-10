@@ -26,8 +26,7 @@ from shuup.admin.utils.tour import is_tour_complete
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import (
-    Product, ProductType, SalesUnit, Shop, ShopProduct, ShopStatus, Supplier,
-    TaxClass
+    Product, ProductType, SalesUnit, Shop, ShopProduct, Supplier, TaxClass
 )
 
 from .toolbars import EditProductToolbar
@@ -85,10 +84,7 @@ class ShopProductFormPart(FormPart):
 
     def __init__(self, request, object=None):
         super(ShopProductFormPart, self).__init__(request, object)
-        shop_queryset = Shop.objects.filter(status=ShopStatus.ENABLED)
-        if getattr(self.request.user, "is_superuser", False):
-            shop_queryset = shop_queryset.filter(staff_members=self.request.user)
-        self.shops = shop_queryset
+        self.shops = [request.session['admin_shop']]
 
     def get_shop_instance(self, shop):
         try:
@@ -231,17 +227,17 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
         orderability_errors = []
 
         if self.object.pk:
-            for shop in Shop.objects.all():
-                try:
-                    shop_product = self.object.get_shop_instance(shop)
-                    orderability_errors.extend(
-                        ["%s: %s" % (shop.name, msg.message)
-                         for msg in shop_product.get_orderability_errors(
-                            supplier=None,
-                            quantity=shop_product.minimum_purchase_quantity,
-                            customer=None)])
-                except ObjectDoesNotExist:
-                    orderability_errors.extend(["%s: %s" % (shop.name, _("Product is not available."))])
+            shop = Shop.objects.get_current(self.request)
+            try:
+                shop_product = self.object.get_shop_instance(shop)
+                orderability_errors.extend(
+                    ["%s: %s" % (shop.name, msg.message)
+                        for msg in shop_product.get_orderability_errors(
+                        supplier=None,
+                        quantity=shop_product.minimum_purchase_quantity,
+                        customer=None)])
+            except ObjectDoesNotExist:
+                orderability_errors.extend(["%s: %s" % (shop.name, _("Product is not available."))])
         context["orderability_errors"] = orderability_errors
         context["product_sections"] = []
         context["tour_key"] = "product"
