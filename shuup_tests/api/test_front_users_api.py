@@ -19,7 +19,6 @@ from shuup import configuration
 from shuup.api.permissions import PermissionLevel
 from shuup.core import cache
 from shuup.core.models import Gender, PersonContact
-from shuup.front.apps.registration.api import FrontUserViewSet
 from shuup.testing.factories import get_default_shop, UserFactory
 
 
@@ -205,6 +204,89 @@ def test_reset_authenticated_user_password(admin_user):
                             }))
     assert response.status_code == status.HTTP_200_OK
     assert admin_user.check_password("foobar")
+
+
+@pytest.mark.django_db
+def test_update_user(admin_user):
+    get_default_shop()
+    client = _get_client()
+
+    # anonymous user
+    configuration.set(None, "api_permission_FrontUserViewSet", PermissionLevel.PUBLIC_WRITE)
+    response = client.put("/api/shuup/front/user/me/",
+                          content_type="application/json",
+                          data=json.dumps({"first_name": "derp"}))
+    assert response.status_code == 404
+
+    client.force_authenticate(user=admin_user)
+    # set attributes on the person contact model only
+    data = {
+        "gender": Gender.MALE.value,
+        "first_name": "derp"
+    }
+
+    response = client.put("/api/shuup/front/user/me/",
+                          content_type="application/json",
+                          data=json.dumps(data))
+    response_data = json.loads(response.content.decode("utf-8"))
+    assert response.status_code == 200
+    assert response_data["first_name"] == "derp"
+    assert response_data["gender"] == Gender.MALE.value
+    assert PersonContact.objects.count() == 1
+    contact = PersonContact.objects.first()
+    assert contact.first_name == "derp"
+
+    # set attributes on person contact and address models
+    data = {
+        "gender": Gender.FEMALE.value,
+        "default_shipping_address": {
+            "name": "Address Name",
+            "city": "City Name",
+            "country": "US",
+            "street": "Good Street"
+        }
+    }
+    response = client.put("/api/shuup/front/user/me/",
+                          content_type="application/json",
+                          data=json.dumps(data))
+    response_data = json.loads(response.content.decode("utf-8"))
+    assert response.status_code == 200
+    assert response_data["default_shipping_address"]["name"] == "Address Name"
+    assert PersonContact.objects.count() == 1
+    contact = PersonContact.objects.first()
+    assert contact.default_shipping_address
+    assert contact.default_shipping_address.name == "Address Name"
+    assert not contact.default_billing_address
+
+    # update address fields
+    data = {
+        "default_shipping_address": {
+            "name": "derp",
+            "city": "City Name",
+            "country": "US",
+            "street": "Good Street"
+        }
+    }
+    response = client.put("/api/shuup/front/user/me/",
+                          content_type="application/json",
+                          data=json.dumps(data))
+    response_data = json.loads(response.content.decode("utf-8"))
+    assert response.status_code == 200
+    assert response_data["default_shipping_address"]["name"] == "derp"
+    assert response_data["default_shipping_address"]["city"] == "City Name"
+    contact = PersonContact.objects.first()
+    assert contact.default_shipping_address.name == "derp"
+
+
+def test_get_user(admin_user):
+    get_default_shop()
+    client = _get_client()
+    client.force_authenticate(user=admin_user)
+    response = client.get("/api/shuup/front/user/me/")
+    response_data = json.loads(response.content.decode("utf-8"))
+    assert response.status_code == 200
+    assert "default_shipping_address" in response_data
+    assert "first_name" in response_data
 
 
 def _get_client():
