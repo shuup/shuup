@@ -20,7 +20,7 @@ class ProductCampaignsSection(Section):
 
     @staticmethod
     def visible_for_object(product, request):
-        return bool(product.pk)
+        return bool(product.pk) and request.user.has_perm('shuup.view_campaign')
 
     @staticmethod
     def get_context_data(product, request):
