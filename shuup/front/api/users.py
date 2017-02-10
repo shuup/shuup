@@ -9,15 +9,23 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.http import Http404
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers, status
-from rest_framework.mixins import CreateModelMixin
+from rest_framework.mixins import (
+    CreateModelMixin, RetrieveModelMixin, UpdateModelMixin
+)
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 from rest_framework_jwt.serializers import JSONWebTokenSerializer
 
+from shuup.api.fields import EnumField
 from shuup.api.mixins import PermissionHelperMixin
+from shuup.core.api.address import AddressSerializer
 from shuup.core.api.users import UserSerializer
+from shuup.core.models import (
+    Gender, get_person_contact, MutableAddress, PersonContact
+)
 
 
 class UserRegisterSerializer(UserSerializer):
@@ -55,10 +63,54 @@ class UserRegisterSerializer(UserSerializer):
         return user
 
 
-class FrontUserViewSet(PermissionHelperMixin, CreateModelMixin, GenericViewSet):
+class ContactSerializer(serializers.ModelSerializer):
+    default_shipping_address = AddressSerializer(required=False)
+    default_billing_address = AddressSerializer(required=False)
+    gender = EnumField(Gender, required=False)
+    name = serializers.CharField(required=False)
+
+    class Meta:
+        model = PersonContact
+        exclude = ["identifier", "tax_group", "polymorphic_ctype", "account_manager"]
+        extra_kwargs = {
+            "created_on": {"read_only": True}
+        }
+
+    def update_address(self, instance, field_name, validated_address_data):
+        if not validated_address_data:
+            return None
+        contact_address = getattr(instance, field_name)
+        if contact_address:
+            MutableAddress.objects.filter(pk=contact_address.pk).update(**validated_address_data)
+            contact_address.refresh_from_db()
+        else:
+            address = MutableAddress(**validated_address_data)
+            address.save()
+            setattr(instance, field_name, address)
+            instance.save()
+
+    def update(self, instance, validated_data):
+        default_shipping_address = validated_data.pop("default_shipping_address", None)
+        default_billing_address = validated_data.pop("default_billing_address", None)
+        instance = super(ContactSerializer, self).update(instance, validated_data)
+        self.update_address(instance, "default_shipping_address", default_shipping_address)
+        self.update_address(instance, "default_billing_address", default_billing_address)
+        return instance
+
+
+class FrontUserViewSet(PermissionHelperMixin, CreateModelMixin, UpdateModelMixin, RetrieveModelMixin, GenericViewSet):
     """
     register: Register user
+
+    retrieve: Fetches the current contact.
+
+    update: Updates the current contact.
+    You must specify all parameters to make it possible to overwrite all attributes.
+
+    partial_update: Updates an existing contact.
+    You can update only a set of attributes.
     """
+
     queryset = get_user_model().objects.all()
     serializer_class = UserRegisterSerializer
 
@@ -68,6 +120,17 @@ class FrontUserViewSet(PermissionHelperMixin, CreateModelMixin, GenericViewSet):
     @classmethod
     def get_help_text(cls):
         return _("Users can register to the storefront.")
+
+    def get_object(self):
+        if self.request.user.is_anonymous():
+            raise Http404
+        return get_person_contact(self.request.user)
+
+    def get_serializer_class(self):
+        if self.action == "create":
+            return UserRegisterSerializer
+        else:
+            return ContactSerializer
 
     def create(self, request, *args, **kwargs):
         """

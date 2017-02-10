@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from shuup.front.api.orders import FrontOrderViewSet
 from shuup.front.api.products import FrontProductViewSet
+from shuup.front.api.users import FrontUserViewSet
 
 
 def populate_front_api(router):
@@ -16,3 +17,4 @@ def populate_front_api(router):
     """
     router.register("shuup/front/products", FrontProductViewSet)
     router.register("shuup/front/orders", FrontOrderViewSet)
+    router.register("shuup/front/user", FrontUserViewSet)
