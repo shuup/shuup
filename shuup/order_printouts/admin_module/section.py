@@ -33,7 +33,7 @@ class PrintoutsSection(Section):
 
     @staticmethod
     def visible_for_object(obj, request):
-        return True
+        return request.user.has_perm('shuup.view_order')
 
     @staticmethod
     def get_context_data(obj, request):

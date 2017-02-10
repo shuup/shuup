@@ -244,7 +244,6 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
         context["tour_complete"] = is_tour_complete("product")
 
         if self.request.user.has_perm("shuup.change_product", object):
-            # TODO: Sections should be responsible for right permissions
             product_sections_provides = sorted(get_provide_objects("admin_product_section"), key=lambda x: x.order)
             for admin_product_section in product_sections_provides:
                 if admin_product_section.visible_for_object(self.object, self.request):
