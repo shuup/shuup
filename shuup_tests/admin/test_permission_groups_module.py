@@ -72,15 +72,18 @@ def test_permission_group_form_updates_members(regular_user):
             "name": "New Name",
             "modules": [force_text(test_module.name)],
             "members": [force_text(regular_user.pk)],
+            "shuup.delete_product": True,
+            "shuup.change_product": True,
+            "shuup.add_product": True
         }
 
         form = PermissionGroupForm(instance=group, prefix=None, data=data)
+        assert(form.is_valid())
         form.save()
 
         module_permissions = [get_permission_object_from_string(m) for m in module_permissions]
         assert group.name == "New Name"
-        # FIXME FIXME
-        # assert set(module_permissions) == set(group.permissions.all())
+        assert set(module_permissions) == set(group.permissions.all())
         assert regular_user in group.user_set.all()
 
         form = PermissionGroupForm(instance=group, prefix=None, data={"name": "Name"})
