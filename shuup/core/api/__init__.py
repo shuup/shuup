@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from shuup.api.mixins import apply_logging
 from shuup.core.api.address import MutableAddressViewSet
 from shuup.core.api.attribute import AttributeViewSet
 from shuup.core.api.basket import BasketViewSet
@@ -54,4 +55,4 @@ def populate_core_api(router):
     router.register("shuup/user", UserViewSet)
     router.register("shuup/sales_unit", SalesUnitViewSet)
     router.register("shuup/tax_class", TaxClassViewSet)
-    router.register("shuup/basket", BasketViewSet)
+    router.register("shuup/basket", apply_logging(BasketViewSet, methods=["POST"]))
