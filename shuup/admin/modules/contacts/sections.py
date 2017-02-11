@@ -23,7 +23,7 @@ class BasicInfoContactSection(Section):
 
     @staticmethod
     def visible_for_object(contact, request):
-        return True
+        return request.user.has_perm('shuup.view_contact')
 
     @staticmethod
     def get_context_data(contact, request):
@@ -70,8 +70,9 @@ class OrdersContactSection(Section):
 
     @staticmethod
     def visible_for_object(contact, request):
-        return (contact.default_shipping_address_id or
-                contact.default_billing_address_id)
+        return request.user.has_perm('shuup.view_contact') and (
+            contact.default_shipping_address_id or contact.default_billing_address_id
+        )
 
     @staticmethod
     def get_context_data(contact, request):
@@ -87,7 +88,7 @@ class MembersContactSection(Section):
 
     @staticmethod
     def visible_for_object(contact, request):
-        return hasattr(contact, 'members')
+        return request.user.has_perm('shuup.view_contact') and hasattr(contact, 'members')
 
     @staticmethod
     def get_context_data(contact, request):
