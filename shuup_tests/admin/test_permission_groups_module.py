@@ -6,17 +6,17 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import pytest
-from django.contrib.auth.models import Permission, Group as PermissionGroup
-from django.utils.encoding import force_text
+from django.contrib.auth.models import Group as PermissionGroup
+from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
+from django.utils.encoding import force_text
 
-from shuup.core.models import Order, Contact
-from shuup.admin.base import AdminModule
 from shuup.admin.module_registry import get_modules, replace_modules
 from shuup.admin.modules.permission_groups.views.edit import (
     PermissionGroupEditView, PermissionGroupForm
 )
 from shuup.admin.utils.permissions import get_permission_object_from_string
+from shuup.core.models import Contact, Order
 from shuup.testing.factories import get_default_shop
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.admin.fixtures.test_module import ARestrictedTestModule
@@ -53,7 +53,7 @@ def test_permission_group_edit_view(rf, admin_user):
     assert response.status_code == 200
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db  # noqa
 def test_permission_group_form_updates_members(regular_user):
     with replace_modules([ARestrictedTestModule]):
         modules = [m for m in get_modules()]

@@ -11,6 +11,7 @@ from datetime import date
 from decimal import Decimal
 
 import pytest
+import six
 from babel.dates import format_date
 from bs4 import BeautifulSoup
 from django.utils.encoding import force_text
@@ -27,8 +28,8 @@ from shuup.reports.writer import (
     get_writer_instance, REPORT_WRITERS_MAP, ReportWriterPopulator
 )
 from shuup.testing.factories import (
-    create_order_with_product, get_default_product,
-    get_default_shop, get_default_supplier
+    create_order_with_product, get_default_product, get_default_shop,
+    get_default_supplier
 )
 from shuup.testing.utils import apply_request_middleware
 from shuup.utils.i18n import get_current_babel_locale
@@ -102,14 +103,17 @@ class TestSalesReport(ShuupReportBase):
 
 
 @pytest.mark.django_db
-def test_reporting(rf):
+def test_reporting(rf, admin_user):
 
     product_price = 100
     product_count = 2
     tax_rate = Decimal("0.10")
     line_count = 1
 
-    expected_taxful_total, expected_taxless_total, shop, order = initialize_report_test(product_price, product_count, tax_rate, line_count)
+    expected_taxful_total, expected_taxless_total, shop, order = initialize_report_test(product_price,
+                                                                                        product_count,
+                                                                                        tax_rate,
+                                                                                        line_count)
 
     with override_provides("reports", [__name__ + ":TestSalesReport"]):
         data = {
@@ -121,7 +125,7 @@ def test_reporting(rf):
         }
 
         view = ReportView.as_view()
-        request = apply_request_middleware(rf.post("/", data=data))
+        request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
         response = view(request)
         if hasattr(response, "render"):
             response.render()
@@ -138,8 +142,8 @@ def test_reporting(rf):
         assert str(expected_taxful_total) in totals.get("taxful_total", "0")
 
         today = date.today()
-        last_year = date(today.year-1, 1, 1)
-        next_year = date(today.year+1, 1, 1)
+        last_year = date(today.year - 1, 1, 1)
+        next_year = date(today.year + 1, 1, 1)
 
         # test report without downloading it
         data = {
@@ -151,14 +155,15 @@ def test_reporting(rf):
             "writer": "json",
         }
 
-        request = apply_request_middleware(rf.post("/", data=data))
+        request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
         response = view(request)
         assert response.status_code == 200
 
         soup = BeautifulSoup(response.render().content)
-        assert force_text(TestSalesReport.title) in str(soup)
-        assert str(expected_taxless_total) in str(soup)
-        assert str(expected_taxful_total) in str(soup)
+        response_text = str(six.u(soup.encode('ascii')))
+        assert force_text(TestSalesReport.title) in response_text
+        assert str(expected_taxless_total) in response_text
+        assert str(expected_taxful_total) in response_text
 
 
 @pytest.mark.django_db
@@ -198,7 +203,7 @@ def test_excel_writer(rf):
         "writer": "excel",
         "force_download": 1,
     }
-    report = TestSalesReport(**data)
+    TestSalesReport(**data)
     writer = get_writer_instance(data["writer"])
     assert str(writer) == data["writer"]
     rendered_report = writer.get_rendered_output()
