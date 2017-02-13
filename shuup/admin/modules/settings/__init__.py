@@ -24,7 +24,7 @@ class SettingsModule(AdminModule):
                 "^settings/$",
                 "shuup.admin.modules.settings.views.SystemSettingsView",
                 name="settings.list",
-                permissions=["shuup.add_shop"]
+                require_superuser=True
             ),
         ]
 
