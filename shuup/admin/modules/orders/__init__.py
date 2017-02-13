@@ -123,7 +123,8 @@ class OrderModule(AdminModule):
             url_prefix="^order-status",
             view_template="shuup.admin.modules.orders.views.OrderStatus%sView",
             name_template="order_status.%s",
-            model=Order
+            model=Order,
+            require_superuser=True
         )
 
     def get_menu_entries(self, request):
