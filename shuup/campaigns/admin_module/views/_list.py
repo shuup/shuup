@@ -14,6 +14,7 @@ from shuup.admin.utils.views import PicotableListView
 from shuup.campaigns.models.campaigns import (
     BasketCampaign, CatalogCampaign, Coupon
 )
+from shuup.core.models import Shop
 from shuup.utils.i18n import get_current_babel_locale
 
 
@@ -27,6 +28,9 @@ class CampaignListView(PicotableListView):
         Column("end_datetime", _("Ends")),
         Column("active", _("Active"), filter_config=ChoicesFilter(choices=[(0, _("No")), (1, _("Yes"))])),
     ]
+
+    def get_queryset(self):
+        return self.model.objects.filter(shop=Shop.objects.get_current(self.request))
 
     def start_datetime(self, instance, *args, **kwargs):
         if not instance.start_datetime:

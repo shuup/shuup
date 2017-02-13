@@ -9,10 +9,10 @@ from django.core.urlresolvers import reverse_lazy
 from django.db.models import ManyToManyField
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.core.models import Shop
 from shuup.admin.forms import ShuupAdminForm
 from shuup.admin.forms.fields import Select2MultipleField
 from shuup.admin.forms.widgets import QuickAddRelatedObjectSelect
+from shuup.core.models import Shop
 
 
 class BaseCampaignForm(ShuupAdminForm):
