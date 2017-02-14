@@ -156,7 +156,7 @@ def test_shop_distance(admin_user):
     assert math.fabs(data[0]["distance"] - my_position_to_apple) < 0.05
 
     # fetch all - max distance = 12km - order by distance DESC
-    response = client.get("/api/shuup/shop/?lat={0}&lng={1}&distance={2}&sort=-distance".format(my_position[0], my_position[1], 12),
+    response = client.get("/api/shuup/shop/?lat={0}&lng={1}&distance={2}&ordering=-distance".format(my_position[0], my_position[1], 12),
                           content_type="application/json")
     assert response.status_code == status.HTTP_200_OK
     data = json.loads(response.content.decode("utf-8"))
