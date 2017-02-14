@@ -220,7 +220,7 @@ def test_products_name_sort(admin_user):
     product3 = create_product("product3", shop=shop1, supplier=supplier1)
 
     # ordering by -name
-    request = get_request("/api/shuup/front/products/?sort=-name", admin_user)
+    request = get_request("/api/shuup/front/products/?ordering=-name", admin_user)
     response = FrontProductViewSet.as_view({"get": "list"})(request)
     response.render()
     products_data = json.loads(response.content.decode("utf-8"))
@@ -415,7 +415,7 @@ def test_get_newest_products(admin_user):
     client.shop = shop1
 
     # list newest products
-    response = client.get("/api/shuup/front/products/?sort=newest")
+    response = client.get("/api/shuup/front/products/?ordering=newest")
     assert response.status_code == status.HTTP_200_OK
     products = json.loads(response.content.decode("utf-8"))
     assert len(products) == 0
@@ -430,7 +430,7 @@ def test_get_newest_products(admin_user):
         p2 = create_product("product-%d-2" % x, shop=shop2, supplier=supplier)
 
     # list newest products
-    data = {"limit": 100, "sort": "newest", "shops": shop1.id}
+    data = {"limit": 100, "ordering": "newest", "shops": shop1.id}
     request = get_request("/api/shuup/front/products/", admin_user, customer, data=data)
     response = FrontProductViewSet.as_view({"get": "list"})(request)
     response.render()
@@ -446,7 +446,7 @@ def test_get_newest_products(admin_user):
     assert ids == list(newest_products.values_list("pk", flat=True))
 
     # shop2 - limit the numbers of the result
-    data = {"limit": 10, "sort": "newest", "shops": shop2.id}
+    data = {"limit": 10, "ordering": "newest", "shops": shop2.id}
     request = get_request("/api/shuup/front/products/", admin_user, customer, data)
     response = FrontProductViewSet.as_view({"get": "list"})(request)
     response.render()
@@ -499,7 +499,7 @@ def test_nearby_products(admin_user):
     my_position = (37.328330, -122.063612)
 
     # fetch only apple products - max distance = 5km - order by name
-    params = {"distance": 5, "lat": my_position[0], "lng": my_position[1], "sort": "name"}
+    params = {"distance": 5, "lat": my_position[0], "lng": my_position[1], "ordering": "name"}
     request = get_request("/api/shuup/front/products/", admin_user, data=params)
     response = FrontProductViewSet.as_view({"get": "list"})(request)
     response.render()
@@ -517,7 +517,7 @@ def test_nearby_products(admin_user):
     assert products[1]["distance"] - my_position_to_apple < 0.05    # 5 meters of error margin
 
     # fetch only all products - no max distance - order by distance DESC
-    params = {"lat": my_position[0], "lng": my_position[1], "sort": "-distance"}
+    params = {"lat": my_position[0], "lng": my_position[1], "ordering": "-distance"}
     request = get_request("/api/shuup/front/products/", admin_user, data=params)
     response = FrontProductViewSet.as_view({"get": "list"})(request)
     response.render()
