@@ -16,6 +16,7 @@ from django.utils.translation import ugettext_lazy as _
 from rest_framework import filters, mixins, serializers, viewsets
 from rest_framework.decorators import list_route
 from rest_framework.response import Response
+from rest_framework.settings import api_settings
 
 from shuup.api.mixins import PermissionHelperMixin
 from shuup.core.models import (
@@ -322,7 +323,7 @@ class ProductOrderingFilter(filters.BaseFilterBackend):
         - shop
     """
     def filter_queryset(self, request, queryset, view):
-        sort_field = request.query_params.get("sort", "").lower()
+        sort_field = request.query_params.get(api_settings.ORDERING_PARAM, "").lower()
         order = "-" if sort_field.startswith("-") else ""
 
         if sort_field.endswith("name"):
@@ -353,7 +354,7 @@ class NearByProductsFilter(filters.BaseFilterBackend):
         latitude = float(request.query_params.get("lat", 0))
         longitude = float(request.query_params.get("lng", 0))
         distance = float(request.query_params.get("distance", 0))
-        sort = request.query_params.get("sort", "")
+        sort = request.query_params.get(api_settings.ORDERING_PARAM, "")
 
         if latitude and longitude:
             query = """

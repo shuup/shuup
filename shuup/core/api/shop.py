@@ -14,6 +14,7 @@ from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from parler_rest.fields import TranslatedFieldsField
 from parler_rest.serializers import TranslatableModelSerializer
 from rest_framework import filters, serializers, viewsets
+from rest_framework.settings import api_settings
 
 from shuup.api.fields import EnumField
 from shuup.api.mixins import PermissionHelperMixin, ProtectedModelViewSetMixin
@@ -85,7 +86,7 @@ class NearbyShopsFilter(filters.BaseFilterBackend):
         latitude = float(request.query_params.get("lat", 0))
         longitude = float(request.query_params.get("lng", 0))
         distance = float(request.query_params.get("distance", 0))
-        sort = request.query_params.get("sort", "")
+        sort = request.query_params.get(api_settings.ORDERING_PARAM, "")
 
         if latitude and longitude:
             # create the distance field with the Harversie distance between the points
@@ -149,8 +150,9 @@ class ShopViewSet(ProtectedModelViewSetMixin, PermissionHelperMixin, viewsets.Mo
 
     queryset = Shop.objects.all()
     serializer_class = ShopSerializer
-    filter_backends = (DjangoFilterBackend, NearbyShopsFilter)
+    filter_backends = (DjangoFilterBackend, filters.OrderingFilter, NearbyShopsFilter)
     filter_class = ShopFilter
+    ordering_fields = ('modified_on',)
 
     def get_queryset(self):
         search_term = self.request.query_params.get('search')
