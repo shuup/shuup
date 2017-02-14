@@ -102,6 +102,6 @@ def _add_additional_category(browser, shop):
         iframe.fill("base-name__en", category_test_name)
         click_element(iframe, "button[form='category_form']")
     wait_until_condition(browser, lambda x: x.is_text_present("New product"))
-    time.sleep(0.5)
+    time.sleep(2)
     assert Category.objects.count() == 2
     wait_until_condition(browser, lambda x: len(x.find_by_css("#%s option[selected='']" % select_id)) == 2)

@@ -81,9 +81,7 @@ def test_generic_script_template(browser, admin_user, live_server, settings, scr
     browser.find_by_id("id_en-subject").fill("custom subject!")
     browser.find_by_css("form button.btn.btn-lg.btn-primary").first.click()
 
-    time.sleep(5)
-    assert browser.is_text_not_present("This field is required.")
-    time.sleep(5)
+    wait_until_condition(browser, lambda x: x.is_text_not_present("This field is required."), timeout=20)
 
     script_list_url = reverse("shuup_admin:notify.script.list")
     wait_until_condition(browser, lambda b: b.url.endswith(script_list_url), timeout=30)

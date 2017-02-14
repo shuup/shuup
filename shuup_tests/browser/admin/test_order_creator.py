@@ -87,7 +87,10 @@ def _test_language_change(browser):
     # And back in English
     browser.find_by_id("dropdownMenu").click()
     browser.find_by_xpath('//a[@data-value="en"]').first.click()
-    wait_until_appeared(browser, "h2[class='block-title']")
+    time.sleep(0.3)
+    wait_until_appeared(browser, "h2[class='block-title']", timeout=20)
+    texts = [block_title.text for block_title in browser.find_by_css("h2[class='block-title']")]
+    assert "Customer Details" in texts
 
 
 # browser.driver.execute_script("document.getElementsByClassName('support-nav')[0].style.display = 'none';")
@@ -103,7 +106,8 @@ def _test_customer_data(browser, person):
     browser.find_by_css("input[name='order-for-company']").check()
     assert browser.find_by_css("input[name='order-for-company']").first.checked
     wait_until_condition(
-        browser, lambda x: x.find_by_css("input[name='billing-tax_number']").first['required'])
+        browser, lambda x: x.find_by_css("input[name='billing-tax_number']").first['required']
+    )
     assert len(browser.find_by_css("input[name='shipping-name']")) == 0, "shipping address column is hidden"
 
     browser.find_by_css("input[name='order-for-company']").uncheck()

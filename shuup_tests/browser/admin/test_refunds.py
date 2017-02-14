@@ -97,7 +97,7 @@ def _test_refund_view(browser, live_server, order):
     click_element(browser, "button[form='create_refund']")
     _check_create_refund_link(browser, order, True) # can still refund quantity
 
-    time.sleep(0.2)
+    time.sleep(0.8)
     order.refresh_from_db()
     assert not order.taxful_total_price
     assert order.is_paid()
