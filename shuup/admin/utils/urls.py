@@ -128,7 +128,7 @@ def admin_url(regex, view, kwargs=None, name=None, prefix='',
     )
 
 
-def get_edit_and_list_urls(url_prefix, view_template, name_template, model=None):
+def get_edit_and_list_urls(url_prefix, view_template, name_template, model=None, require_superuser=False):
     """
     Get a list of edit/new/list URLs for (presumably) an object type with standardized URLs and names.
 
@@ -147,21 +147,25 @@ def get_edit_and_list_urls(url_prefix, view_template, name_template, model=None)
             "%s/(?P<pk>\d+)/$" % url_prefix,
             view_template % "Edit",
             name=name_template % "edit",
-            permissions=[get_permission_string_for_model(model, "change")]
+            permissions=[get_permission_string_for_model(model, "change")],
+            require_superuser=require_superuser
         ),
         admin_url(
             "%s/new/$" % url_prefix,
             view_template % "Edit",
             name=name_template % "new",
             kwargs={"pk": None},
-            permissions=[get_permission_string_for_model(model, "add")]
+            permissions=[get_permission_string_for_model(model, "add")],
+            require_superuser=require_superuser
         ),
         admin_url(
             "%s/$" % url_prefix,
             view_template % "List",
             name=name_template % "list",
             permissions=[
-                get_permission_string_for_model(model, "view") or get_permission_string_for_model(model, "change")]
+                get_permission_string_for_model(model, "view") or get_permission_string_for_model(model, "change")
+            ],
+            require_superuser=require_superuser
         ),
         admin_url(
             "%s/list-settings/" % url_prefix,

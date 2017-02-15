@@ -30,8 +30,12 @@ class PermissionGroupListView(PicotableListView):
     def get_context_data(self, **kwargs):
         context = super(PermissionGroupListView, self).get_context_data(**kwargs)
         context["title"] = _("Permission Groups")
+        if self.request.user.is_superuser:
+            settings_button = SettingsActionButton.for_model(self.model, return_url="permission_group")
+        else:
+            settings_button = None
         context["toolbar"] = Toolbar([
             NewActionButton("shuup_admin:permission_group.new", text=_("Create new Permission Group")),
-            SettingsActionButton.for_model(self.model, return_url="permission_group")
+            settings_button
         ])
         return context
