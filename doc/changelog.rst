@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- API: created front simple product endpoint
 - API: add set shipping address on basket endpoint
 - Section receives the request object
 - API: added nearby filter for products
