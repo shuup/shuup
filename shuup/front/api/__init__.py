@@ -5,7 +5,9 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from shuup.front.api.products import FrontProductViewSet
+from shuup.front.api.products import (
+    FrontProductViewSet, FrontShopProductViewSet
+)
 
 
 def populate_front_api(router):
@@ -13,4 +15,5 @@ def populate_front_api(router):
     :param router: Router
     :type router: rest_framework.routers.DefaultRouter
     """
+    router.register("shuup/front/shop_products", FrontShopProductViewSet)
     router.register("shuup/front/products", FrontProductViewSet)
