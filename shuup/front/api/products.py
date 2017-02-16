@@ -9,7 +9,6 @@
 from collections import defaultdict
 
 import six
-from django.db.models import Q
 from django.db.models.expressions import RawSQL
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
@@ -27,6 +26,28 @@ from shuup.core.models import (
 from shuup.core.pricing._context import PricingContext
 from shuup.front.utils.product_statistics import get_best_selling_product_info
 from shuup.utils.numbers import parse_decimal_string
+
+DISTANCE_PER_DEGREE = 111.045   # 111.045km in a latitude degree
+
+
+def make_comma_separated_list_fiter(filter_name, field_expression):
+    """
+    Create a filter which uses a comma-separated list of values to filter the queryset.
+
+    :param str filter_name: the name of the query param to fetch values
+    :param str field_expression: the field expression to filter the queryset, like `categories__in`
+    """
+    def filter_queryset(instance, request, queryset, view):
+        values = request.query_params.get(filter_name)
+        if not values:
+            return queryset
+
+        values = [v.strip() for v in values.split(",")]
+        return queryset.filter(**{field_expression: values})
+
+    attrs = {}
+    attrs.setdefault("filter_queryset", filter_queryset)
+    return type(str("CommaSeparatedIDListFilter"), (filters.BaseFilterBackend,), attrs)
 
 
 class ShopSerializer(serializers.ModelSerializer):
@@ -75,7 +96,7 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ("id", "name", "slug", "image")
 
 
-class NormalProductSerializer(serializers.ModelSerializer):
+class CompleteShopProductSerializer(serializers.ModelSerializer):
     product_id = serializers.SerializerMethodField()
     name = serializers.SerializerMethodField()
     short_description = serializers.SerializerMethodField()
@@ -88,6 +109,10 @@ class NormalProductSerializer(serializers.ModelSerializer):
     sales_unit = serializers.SerializerMethodField()
     is_orderable = serializers.SerializerMethodField()
     cross_sell = serializers.SerializerMethodField()
+    variations = serializers.SerializerMethodField()
+    package_content = serializers.SerializerMethodField()
+    distance = serializers.SerializerMethodField()
+    shop = ShopSerializer()
 
     class Meta:
         model = ShopProduct
@@ -102,9 +127,13 @@ class NormalProductSerializer(serializers.ModelSerializer):
             "attributes",
             "price",
             "net_weight",
-            "sales_unit",
+            "variations",
+            "shop",
             "is_orderable",
+            "sales_unit",
             "cross_sell",
+            "package_content",
+            "distance"
         ]
 
     def _get_pricing_context(self, request, shop):
@@ -185,36 +214,9 @@ class NormalProductSerializer(serializers.ModelSerializer):
                 continue
 
             key = keys[cross_sell.type]
-            cross_sell_data[key].append(NormalProductSerializer(cross_shop_product, context=self.context).data)
+            cross_sell_data[key].append(NormalShopProductSerializer(cross_shop_product, context=self.context).data)
 
         return cross_sell_data
-
-
-class CompleteProductSerializer(NormalProductSerializer):
-    variations = serializers.SerializerMethodField()
-    package_content = serializers.SerializerMethodField()
-    distance = serializers.SerializerMethodField()
-    shop = ShopSerializer()
-
-    class Meta(NormalProductSerializer.Meta):
-        fields = [
-            "id",
-            "product_id",
-            "name",
-            "short_description",
-            "description",
-            "image",
-            "categories",
-            "attributes",
-            "price",
-            "net_weight",
-            "variations",
-            "shop",
-            "is_orderable",
-            "cross_sell",
-            "package_content",
-            "distance"
-        ]
 
     def get_variations(self, shop_product):
         data = []
@@ -233,7 +235,7 @@ class CompleteProductSerializer(NormalProductSerializer):
             child = ShopProduct.objects.filter(
                 shop_id=shop_product.shop.id, product__pk=combination["result_product_pk"]).first()
             data.append({
-                "product": NormalProductSerializer(child, many=False, context=self.context).data,
+                "product": NormalShopProductSerializer(child, many=False, context=self.context).data,
                 "sku_part": combination["sku_part"],
                 "hash": combination["hash"],
                 "combination": {
@@ -251,7 +253,7 @@ class CompleteProductSerializer(NormalProductSerializer):
 
                 package_contents.append({
                     "quantity": pkge_link.quantity,
-                    "product": NormalProductSerializer(pkge_shop_product, context=self.context).data
+                    "product": NormalShopProductSerializer(pkge_shop_product, context=self.context).data
                 })
             except ShopProduct.DoesNotExist:
                 continue
@@ -259,6 +261,25 @@ class CompleteProductSerializer(NormalProductSerializer):
 
     def get_distance(self, shop_product):
         return getattr(shop_product, "distance", 0)
+
+
+class NormalShopProductSerializer(CompleteShopProductSerializer):
+    class Meta(CompleteShopProductSerializer.Meta):
+        fields = [
+            "id",
+            "product_id",
+            "name",
+            "short_description",
+            "description",
+            "image",
+            "categories",
+            "attributes",
+            "price",
+            "net_weight",
+            "sales_unit",
+            "is_orderable",
+            "cross_sell",
+        ]
 
 
 class FrontShopProductFilter(filters.BaseFilterBackend):
@@ -272,49 +293,7 @@ class FrontShopProductFilter(filters.BaseFilterBackend):
         ).distinct()
 
 
-class ShopFilter(filters.BaseFilterBackend):
-    """
-    Filter shop products by shops.
-    `shops` is a comma separed value: ?shops=1,2,3,4
-    """
-    def filter_queryset(self, request, queryset, view):
-        shops = request.query_params.get("shops")
-        if not shops:
-            return queryset
-
-        shop_filters = None
-        for shop_id in shops.split(","):
-            shop_filter = Q(shop__id=shop_id.strip())
-            # make OR operator among all categories
-            shop_filters = (shop_filter | shop_filters) if shop_filters else shop_filter
-
-        if shop_filters:
-            queryset = queryset.filter(shop_filters)
-        return queryset
-
-
-class ProductCategoryFilter(filters.BaseFilterBackend):
-    """
-    Filter shop products by categories IDs.
-    `categories` is a comma separed value: ?categories=1,2,3,4
-    """
-    def filter_queryset(self, request, queryset, view):
-        categories = request.query_params.get("categories")
-        if not categories:
-            return queryset
-
-        category_filters = None
-        for category in categories.split(","):
-            category_filter = Q(categories__id=category.strip())
-            # make OR operator among all categories
-            category_filters = (category_filter | category_filters) if category_filters else category_filter
-
-        if category_filters:
-            queryset = queryset.filter(category_filters)
-        return queryset
-
-
-class ProductOrderingFilter(filters.BaseFilterBackend):
+class ShopProductOrderingFilter(filters.BaseFilterBackend):
     """
     Order results by:
         - name
@@ -344,12 +323,10 @@ class ProductOrderingFilter(filters.BaseFilterBackend):
         return queryset
 
 
-class NearByProductsFilter(filters.BaseFilterBackend):
+class NearByShopProductFilter(filters.BaseFilterBackend):
     """
     Based of `shuup.core.api.shop.NearbyShopsFilter`
     """
-    DISTANCE_PER_DEGREE = 111.045   # 111.045km in a latitude degree
-
     def filter_queryset(self, request, queryset, view):
         latitude = float(request.query_params.get("lat", 0))
         longitude = float(request.query_params.get("lng", 0))
@@ -388,7 +365,7 @@ class NearByProductsFilter(filters.BaseFilterBackend):
             )
 
             queryset = queryset.select_related("shop").annotate(
-                distance=RawSQL(query, params=(latitude, longitude, latitude, self.DISTANCE_PER_DEGREE))
+                distance=RawSQL(query, params=(latitude, longitude, latitude, DISTANCE_PER_DEGREE))
             )
 
             # only filter if user wants to
@@ -402,22 +379,28 @@ class NearByProductsFilter(filters.BaseFilterBackend):
         return queryset
 
 
-class FrontProductViewSet(PermissionHelperMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
+class FrontShopProductViewSet(PermissionHelperMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
     """
-    list: Lists all available products to be used in storefront.
+    list: Lists all available shop products to be used in storefront.
     """
-    queryset = Product.objects.none()
-    serializer_class = CompleteProductSerializer
+    queryset = ShopProduct.objects.none()
+    serializer_class = CompleteShopProductSerializer
     filter_backends = (
-        FrontShopProductFilter, ProductOrderingFilter, ShopFilter, ProductCategoryFilter, NearByProductsFilter
+        FrontShopProductFilter,
+        ShopProductOrderingFilter,
+        NearByShopProductFilter,
+        make_comma_separated_list_fiter("id", "id__in"),
+        make_comma_separated_list_fiter("shops", "shop__id__in"),
+        make_comma_separated_list_fiter("products", "product__id__in"),
+        make_comma_separated_list_fiter("categories", "categories__id__in"),
     )
 
     def get_view_name(self):
-        return _("Storefront Products")
+        return _("Storefront Shop Products")
 
     @classmethod
     def get_help_text(cls):
-        return _("Storefront products can be listed and fetched.")
+        return _("Storefront shop products can be listed and fetched.")
 
     def get_queryset(self):
         return ShopProduct.objects.select_related(
@@ -455,5 +438,170 @@ class FrontProductViewSet(PermissionHelperMixin, mixins.ListModelMixin, viewsets
 
         shop_products_qs = ShopProduct.objects.filter(product__id__in=product_ids)
         shop_products_qs = self.filter_queryset(shop_products_qs).distinct()
-        serializer = CompleteProductSerializer(shop_products_qs, many=True, context={"request": request})
+        serializer = CompleteShopProductSerializer(shop_products_qs, many=True, context={"request": request})
         return Response(serializer.data)
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+    attributes = AttributeSerializer(many=True)
+    sales_unit = SalesUnitSerializer()
+    shop_products = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    categories = serializers.SerializerMethodField()
+    closest_shop_distance = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Product
+        fields = [
+            "id",
+            "name",
+            "short_description",
+            "description",
+            "image",
+            "attributes",
+            "net_weight",
+            "sales_unit",
+            "shop_products",
+            "categories",
+            "closest_shop_distance"
+        ]
+
+    def get_categories(self, product):
+        # get all categories which is related to this product, no matter what shop
+        categories = Category.objects.all_except_deleted().filter(shop_products__product=product).distinct()
+        return CategorySerializer(categories, many=True, context=self.context).data
+
+    def get_image(self, product):
+        image = product.primary_image
+        if not image:
+            return
+
+        if image.external_url:
+            return image.external_url
+        elif image.file:
+            return self.context["request"].build_absolute_uri(image.file.url)
+
+    def get_closest_shop_distance(self, product):
+        return getattr(product, "closest_shop_distance", 0)
+
+
+class ClosestShopFilter(filters.BaseFilterBackend):
+    """
+    Add a field using subquery to get the closest shop distance
+    Based of `shuup.core.api.shop.NearbyShopsFilter`
+    """
+    def filter_queryset(self, request, queryset, view):
+        latitude = float(request.query_params.get("lat", 0))
+        longitude = float(request.query_params.get("lng", 0))
+        distance = float(request.query_params.get("distance", 0))
+        sort = request.query_params.get(api_settings.ORDERING_PARAM, "")
+
+        if latitude and longitude:
+            query = """
+            SELECT MIN(
+                round(
+                    degrees(
+                        acos(
+                            cos(radians(%s))
+                            * cos(radians({address_table_name}.{latitude_field}))
+                            * cos(radians(%s - {address_table_name}.{longitude_field}))
+                            + sin(radians(%s))
+                            * sin(radians({address_table_name}.{latitude_field}))
+                        )
+                    ) * %s
+                , 3))
+            FROM {address_table_name}
+            INNER JOIN {shop_table_name} ON (
+                {address_table_name}.{address_id_field}={shop_table_name}.{shop_contact_addr_id_field}
+            )
+            INNER JOIN {shopproduct_table_name} ON (
+                {shop_table_name}.{shop_id_field}={shopproduct_table_name}.{shopproduct_shop_id_field}
+            )
+            WHERE {shopproduct_table_name}.{shopproduct_product_id_field}={product_table_name}.{product_id_field}
+            """.format(
+                address_table_name=Shop.contact_address.field.related_model._meta.db_table,
+                latitude_field=Shop.contact_address.field.related_model._meta.get_field('latitude').name,
+                longitude_field=Shop.contact_address.field.related_model._meta.get_field('longitude').name,
+                address_id_field=Shop.contact_address.field.related_model._meta.get_field('id').name,
+                shop_table_name=Shop._meta.db_table,
+                shop_id_field=Shop._meta.get_field('id').name,
+                shop_contact_addr_id_field=Shop.contact_address.field.column,
+                shopproduct_table_name=ShopProduct._meta.db_table,
+                shopproduct_shop_id_field=ShopProduct.shop.field.column,
+                shopproduct_product_id_field=ShopProduct.product.field.column,
+                product_table_name=Product._meta.db_table,
+                product_id_field=Product._meta.get_field('id').name
+            )
+
+            queryset = queryset.annotate(
+                closest_shop_distance=RawSQL(query, params=(latitude, longitude, latitude, DISTANCE_PER_DEGREE))
+            )
+
+            # show products in range
+            if distance:
+                queryset = queryset.filter(closest_shop_distance__lte=distance)
+
+            # sort by the calculated distance
+            if sort.endswith("distance"):
+                order = "-" if sort.startswith("-") else ""
+                queryset = queryset.order_by("{}closest_shop_distance".format(order))
+
+        return queryset
+
+
+class ProductOrderingFilter(filters.BaseFilterBackend):
+    """
+    Order results by:
+        - name
+        - newest
+    """
+    def filter_queryset(self, request, queryset, view):
+        sort_field = request.query_params.get(api_settings.ORDERING_PARAM, "").lower()
+        order = "-" if sort_field.startswith("-") else ""
+
+        if sort_field.endswith("name"):
+            sort_field = "translations__name"
+        elif sort_field.endswith("newest"):
+            order = "-"
+            sort_field = "created_on"
+        else:
+            # unknown field
+            sort_field = ""
+
+        if sort_field:
+            queryset = queryset.order_by("{}{}".format(order, sort_field))
+        return queryset
+
+
+class FrontProductViewSet(PermissionHelperMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
+    """
+    list: Lists all products to be used in storefront.
+    """
+    queryset = Product.objects.none()
+    serializer_class = ProductSerializer
+    filter_backends = (
+        ClosestShopFilter,
+        ProductOrderingFilter,
+        make_comma_separated_list_fiter("id", "id__in"),
+        make_comma_separated_list_fiter("categories", "shop_products__categories__id__in"),
+    )
+
+    def get_view_name(self):
+        return _("Storefront Products")
+
+    @classmethod
+    def get_help_text(cls):
+        return _("Storefront products can be listed and fetched.")
+
+    def get_queryset(self):
+        return Product.objects.all_except_deleted().select_related(
+            "primary_image", "sales_unit"
+        ).filter(
+            variation_parent__isnull=True,
+            mode__in=(
+                ProductMode.NORMAL,
+                ProductMode.VARIABLE_VARIATION_PARENT,
+                ProductMode.SIMPLE_VARIATION_PARENT,
+                ProductMode.PACKAGE_PARENT
+            )
+        ).distinct()
