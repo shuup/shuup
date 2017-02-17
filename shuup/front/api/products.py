@@ -603,5 +603,6 @@ class FrontProductViewSet(PermissionHelperMixin, mixins.ListModelMixin, viewsets
                 ProductMode.VARIABLE_VARIATION_PARENT,
                 ProductMode.SIMPLE_VARIATION_PARENT,
                 ProductMode.PACKAGE_PARENT
-            )
+            ),
+            shop_products__visibility__in=(ShopProductVisibility.LISTED, ShopProductVisibility.ALWAYS_VISIBLE),
         ).distinct()
