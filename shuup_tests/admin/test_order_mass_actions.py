@@ -147,7 +147,7 @@ def test_mass_edit_orders4(rf, admin_user):
     assert response.status_code == 200
 
     if weasyprint:
-        assert response['Content-Disposition'] == 'attachment; filename=order_%s_delivery.pdf' % order.pk
+        assert response['Content-Disposition'] == 'attachment; filename=shipment_%s_delivery.pdf' % order.pk
     else:
         assert response["content-type"] == "application/json"
 
