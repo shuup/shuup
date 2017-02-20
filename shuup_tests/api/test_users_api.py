@@ -14,6 +14,7 @@ from rest_framework import status
 from rest_framework.test import APIClient
 
 from shuup.core import cache
+from shuup.core.models import Gender, PersonContact
 from shuup.testing.factories import get_default_shop, UserFactory
 
 

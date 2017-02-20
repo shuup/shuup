@@ -19,7 +19,7 @@ from shuup.admin.dashboard import DashboardMoneyBlock
 from shuup.admin.menu import ORDERS_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url
-from shuup.front.models.stored_basket import StoredBasket
+from shuup.core.models import StoredBasket
 
 
 def get_unfinalized_cart_block(currency, days=14):

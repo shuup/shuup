@@ -44,6 +44,9 @@ class RegistrationAppConfig(AppConfig):
     }
 
     provides = {
+        "api_populator": [
+            "shuup.front.apps.registration.api:populate_api"
+        ],
         "front_urls": [
             "shuup.front.apps.registration.urls:urlpatterns"
         ],

@@ -65,6 +65,7 @@ from ._supplied_products import SuppliedProduct
 from ._suppliers import Supplier, SupplierType
 from ._taxes import CustomerTaxGroup, Tax, TaxClass
 from ._units import SalesUnit
+from ._stored_basket import StoredBasket
 
 __all__ = [
     "AnonymousContact",
@@ -153,6 +154,7 @@ __all__ = [
     "ShopStatus",
     "StaffOnlyBehaviorComponent",
     "StockBehavior",
+    "StoredBasket",
     "SuppliedProduct",
     "Supplier",
     "SupplierType",

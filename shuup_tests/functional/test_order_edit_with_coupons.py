@@ -21,7 +21,7 @@ from shuup.campaigns.models.basket_effects import BasketDiscountAmount
 from shuup.core.models import Order, OrderLineType, Tax, TaxClass
 from shuup.core.order_creator import OrderCreator
 from shuup.default_tax.models import TaxRule
-from shuup.front.basket import get_basket
+from shuup.core.basket import get_basket
 from shuup.testing.factories import (
     create_product, create_random_person, get_default_supplier,
     get_initial_order_status, get_payment_method, get_shipping_method,

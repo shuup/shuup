@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import random
+import uuid
 from collections import Counter
 from decimal import Decimal
 
@@ -19,7 +20,7 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.core.models import OrderLineType, PaymentMethod, ShippingMethod
 from shuup.core.order_creator import OrderSource, SourceLine
 from shuup.core.order_creator._source import LineSource
-from shuup.front.basket.storage import BasketCompatibilityError, get_storage
+from shuup.core.basket.storage import BasketCompatibilityError, get_storage
 from shuup.utils.numbers import parse_decimal_string
 from shuup.utils.objects import compare_partial_dicts
 
@@ -85,12 +86,26 @@ class BasketLine(SourceLine):
 
 
 class BaseBasket(OrderSource):
-    def __init__(self, request, basket_name="basket"):
+    def __init__(self, request, key=None):
         super(BaseBasket, self).__init__(request.shop)
-        self.basket_name = basket_name
         self.request = request
-        if request:
-            self.ip_address = request.META.get("REMOTE_ADDR")
+        self.ip_address = request.META.get("REMOTE_ADDR")
+
+        # FIXME Somehow, not all requests provide a session attribute during
+        # tests, this seems to be related to something in
+        # `shuup.testing.utils.apply_request_middleware`
+        if not hasattr(request, 'session'):
+            print("Creating session in request")
+            request.session = {}
+
+        self.key = None
+        if key:
+            self.key = key
+        elif 'basket_key' in request.session:
+            self.key = request.session['basket_key']
+        if not self.key:
+            self.key = uuid.uuid1().hex
+        request.session['basket_key'] = self.key
         self.storage = get_storage()
         self._data = None
         self.dirty = False

@@ -14,7 +14,7 @@ from shuup.campaigns.models.basket_conditions import (
 from shuup.campaigns.models.basket_line_effects import (
     DiscountFromCategoryProducts
 )
-from shuup.front.basket import get_basket
+from shuup.core.basket import get_basket
 from shuup.testing.factories import (
     create_product, get_default_supplier, get_default_category,
     get_shipping_method
@@ -130,7 +130,7 @@ def test_category_products_effect_with_percentage(rf):
     basket.uncache()
     final_lines = basket.get_final_lines()
 
-    assert len(final_lines) == 2 # no new lines since the effect touches original lines
+    assert len(final_lines) == 2  # no new lines since the effect touches original lines
     expected_discount_amount = quantity * basket.create_price(single_product_price) * discount_percentage
     original_price = basket.create_price(single_product_price) * quantity
     line = final_lines[0]

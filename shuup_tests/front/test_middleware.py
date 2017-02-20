@@ -26,6 +26,7 @@ from .fixtures import get_request
 
 __all__ = ("regular_user",)  # noqa
 
+
 def get_unprocessed_request():
     request = get_request()
     for attrname in ['shop', 'person', 'customer', 'basket']:
@@ -37,7 +38,7 @@ def check_request_attribute_basics(request):
     assert isinstance(request.shop, Shop)
     assert isinstance(request.person, Contact)
     assert isinstance(request.customer, Contact)
-    assert isinstance(request.basket, shuup.front.basket.objects.BaseBasket)
+    assert isinstance(request.basket, shuup.core.basket.objects.BaseBasket)
 
 
 # TODO: Make these tests faster by faking the Shop and not using database
