@@ -222,7 +222,7 @@ class CategoryProductsBasketCondition(BasketCondition):
     quantity = models.PositiveIntegerField(default=1, verbose_name=_("quantity"))
     categories = models.ManyToManyField(Category, related_name="+", verbose_name=_("categories"))
     excluded_categories = models.ManyToManyField(
-        Category, related_name="+", verbose_name=_("excluded categories"),
+        Category, blank=True, related_name="+", verbose_name=_("excluded categories"),
         help_text=_(
             "If the customer has even a single product in the basket from these categories "
             "this rule won't match thus the campaign cannot be applied to the basket."
