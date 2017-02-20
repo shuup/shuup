@@ -5,7 +5,9 @@
     width: 100%;
     padding-left: 107px;
     border-bottom: 1px solid #ddd;
-
+    @media (max-width: @screen-xs-max) {
+        position: inherit;
+    }
 }
 body {
     &.popup {
