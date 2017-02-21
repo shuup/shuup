@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='categoryproductsbasketcondition',
             name='excluded_categories',
-            field=models.ManyToManyField(related_name='_categoryproductsbasketcondition_excluded_categories_+', to='shuup.Category'),
+            field=models.ManyToManyField(blank=True, related_name='_categoryproductsbasketcondition_excluded_categories_+', to='shuup.Category'),
         ),
         migrations.AlterField(
             model_name='categoryproductsbasketcondition',
