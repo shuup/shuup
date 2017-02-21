@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-28 19:51+0000\n"
+"POT-Creation-Date: 2017-02-21 07:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1054,10 +1054,10 @@ msgstr ""
 msgid "Files added to product."
 msgstr ""
 
-msgid "Are you sure? This will remove all products from package."
+msgid "Clear package"
 msgstr ""
 
-msgid "Clear package"
+msgid "Are you sure? This will remove all products from package."
 msgstr ""
 
 #, python-format
@@ -1338,7 +1338,7 @@ msgid "Edit %(model)s"
 msgstr ""
 
 msgid ""
-"Ther service provider type. This can be any of the shipping carriers or "
+"The service provider type. This can be any of the shipping carriers or "
 "payment processors configured for your shop."
 msgstr ""
 
@@ -3209,9 +3209,6 @@ msgstr ""
 msgid "File "
 msgstr ""
 
-msgid "Package Products"
-msgstr ""
-
 #, python-format
 msgid "Logical count: %(logical_count)s %(sales_unit)s"
 msgstr ""
@@ -3224,6 +3221,9 @@ msgid "This product is not yet a package."
 msgstr ""
 
 msgid "To create a package, choose products below."
+msgstr ""
+
+msgid "Package Products"
 msgstr ""
 
 msgid "Simple Variation Children"
