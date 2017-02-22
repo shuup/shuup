@@ -498,53 +498,6 @@ def test_nearby_products(admin_user):
     # YMCA
     my_position = (37.328330, -122.063612)
 
-    # fetch only apple products - max distance = 5km - order by name
-    params = {"distance": 5, "lat": my_position[0], "lng": my_position[1], "ordering": "name"}
-    request = get_request("/api/shuup/front/shop_products/", admin_user, data=params)
-    response = FrontShopProductViewSet.as_view({"get": "list"})(request)
-    response.render()
-    assert response.status_code == status.HTTP_200_OK
-    products = json.loads(response.content.decode("utf-8"))
-    assert len(products) == 2
-    assert products[0]["product_id"] == product2.id
-    assert products[0]["name"] == product2.name
-    assert products[0]["shop"]["id"] == shop1.id
-    assert products[0]["distance"] - my_position_to_apple < 0.05    # 5 meters of error margin
-
-    assert products[1]["product_id"] == product1.id
-    assert products[1]["name"] == product1.name
-    assert products[1]["shop"]["id"] == shop1.id
-    assert products[1]["distance"] - my_position_to_apple < 0.05    # 5 meters of error margin
-
-    # fetch only all products - no max distance - order by distance DESC
-    params = {"lat": my_position[0], "lng": my_position[1], "ordering": "-distance"}
-    request = get_request("/api/shuup/front/shop_products/", admin_user, data=params)
-    response = FrontShopProductViewSet.as_view({"get": "list"})(request)
-    response.render()
-    assert response.status_code == status.HTTP_200_OK
-    products = json.loads(response.content.decode("utf-8"))
-    assert len(products) == 4
-
-    assert products[0]["product_id"] == product3.id
-    assert products[0]["name"] == product3.name
-    assert products[0]["shop"]["id"] == shop2.id
-    assert products[0]["distance"] - my_position_to_google < 0.05    # 5 meters of error margin
-
-    assert products[1]["product_id"] == product4.id
-    assert products[1]["name"] == product4.name
-    assert products[1]["shop"]["id"] == shop2.id
-    assert products[1]["distance"] - my_position_to_google < 0.05    # 5 meters of error margin
-
-    assert products[2]["product_id"] == product1.id
-    assert products[2]["name"] == product1.name
-    assert products[2]["shop"]["id"] == shop1.id
-    assert products[2]["distance"] - my_position_to_apple < 0.05    # 5 meters of error margin
-
-    assert products[3]["product_id"] == product2.id
-    assert products[3]["name"] == product2.name
-    assert products[3]["shop"]["id"] == shop1.id
-    assert products[3]["distance"] - my_position_to_apple < 0.05    # 5 meters of error margin
-
     # fetch products and their closest shops
     params = {"lat": my_position[0], "lng": my_position[1], "ordering": "-distance"}
     request = get_request("/api/shuup/front/products/", admin_user, data=params)
