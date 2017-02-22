@@ -24,6 +24,7 @@ from shuup.core.models import (
     ShopProduct, ShopProductVisibility
 )
 from shuup.core.pricing._context import PricingContext
+from shuup.core.utils import context_cache
 from shuup.front.utils.product_statistics import get_best_selling_product_info
 from shuup.utils.numbers import parse_decimal_string
 
@@ -111,7 +112,6 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
     cross_sell = serializers.SerializerMethodField()
     variations = serializers.SerializerMethodField()
     package_content = serializers.SerializerMethodField()
-    distance = serializers.SerializerMethodField()
     shop = ShopSerializer()
 
     class Meta:
@@ -133,7 +133,6 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
             "sales_unit",
             "cross_sell",
             "package_content",
-            "distance"
         ]
 
     def _get_pricing_context(self, request, shop):
@@ -163,14 +162,24 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
             return self.context["request"].build_absolute_uri(image.file.url)
 
     def get_categories(self, shop_product):
-        return CategorySerializer(shop_product.categories.all_except_deleted(), many=True, context=self.context).data
+        categories_qs = shop_product.categories.all_except_deleted().prefetch_related("translations")
+        return CategorySerializer(categories_qs, many=True, context=self.context).data
 
     def get_attributes(self, shop_product):
         return AttributeSerializer(shop_product.product.attributes, many=True).data
 
     def get_price(self, shop_product):
+        key, val = context_cache.get_cached_value(identifier="shop_product_price",
+                                                  item=shop_product,
+                                                  context={},
+                                                  allow_cache=True)
+        if val is not None:
+            return val
+
         context = self._get_pricing_context(self.context["request"], shop_product.shop)
-        return shop_product.product.get_price(context).value
+        price = shop_product.product.get_price(context).value
+        context_cache.set_cached_value(key, price)
+        return price
 
     def get_net_weight(self, shop_product):
         return shop_product.product.net_weight
@@ -186,6 +195,13 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
             return False
 
     def get_cross_sell(self, shop_product):
+        key, val = context_cache.get_cached_value(identifier="cross_sell",
+                                                  item=shop_product,
+                                                  context={},
+                                                  allow_cache=True)
+        if val is not None:
+            return val
+
         cross_sell_data = {
             "recommended": [],
             "related": [],
@@ -216,9 +232,17 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
             key = keys[cross_sell.type]
             cross_sell_data[key].append(NormalShopProductSerializer(cross_shop_product, context=self.context).data)
 
+        context_cache.set_cached_value(key, cross_sell_data)
         return cross_sell_data
 
     def get_variations(self, shop_product):
+        key, val = context_cache.get_cached_value(identifier="variations",
+                                                  item=shop_product,
+                                                  context={},
+                                                  allow_cache=True)
+        if val is not None:
+            return val
+
         data = []
         combinations = list(shop_product.product.get_all_available_combinations() or [])
         if not combinations and shop_product.product.mode == ProductMode.SIMPLE_VARIATION_PARENT:
@@ -242,9 +266,18 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
                     force_text(k): force_text(v) for k, v in six.iteritems(combination["variable_to_value"])
                 }
             })
+
+        context_cache.set_cached_value(key, data)
         return data
 
     def get_package_content(self, shop_product):
+        key, val = context_cache.get_cached_value(identifier="package_contents",
+                                                  item=shop_product,
+                                                  context={},
+                                                  allow_cache=True)
+        if val is not None:
+            return val
+
         package_contents = []
         pkge_links = ProductPackageLink.objects.filter(parent=shop_product.product)
         for pkge_link in pkge_links:
@@ -257,10 +290,9 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
                 })
             except ShopProduct.DoesNotExist:
                 continue
-        return package_contents
 
-    def get_distance(self, shop_product):
-        return getattr(shop_product, "distance", 0)
+        context_cache.set_cached_value(key, package_contents)
+        return package_contents
 
 
 class NormalShopProductSerializer(CompleteShopProductSerializer):
@@ -284,13 +316,23 @@ class NormalShopProductSerializer(CompleteShopProductSerializer):
 
 class FrontShopProductFilter(filters.BaseFilterBackend):
     """
-    Filter shop products by visible or listed products and not deleted ones
+    Filter shop products by visible or listed products and not deleted ones.
+    You can also filter by:
+        - shop - the ID of the shop
     """
     def filter_queryset(self, request, queryset, view):
-        return queryset.filter(
+        shop = request.query_params.get("shop")
+
+        shops_qs = queryset.filter(
             visibility__in=(ShopProductVisibility.LISTED, ShopProductVisibility.ALWAYS_VISIBLE),
             product__deleted=False
-        ).distinct()
+        )
+
+        # filter by shop
+        if shop:
+            shops_qs = shops_qs.filter(shop_id=shop)
+
+        return shops_qs
 
 
 class ShopProductOrderingFilter(filters.BaseFilterBackend):
@@ -299,7 +341,6 @@ class ShopProductOrderingFilter(filters.BaseFilterBackend):
         - name
         - price
         - newest
-        - shop
     """
     def filter_queryset(self, request, queryset, view):
         sort_field = request.query_params.get(api_settings.ORDERING_PARAM, "").lower()
@@ -312,70 +353,12 @@ class ShopProductOrderingFilter(filters.BaseFilterBackend):
         elif sort_field.endswith("newest"):
             order = "-"
             sort_field = "product__created_on"
-        elif sort_field.endswith("shops"):
-            sort_field = "shops"
         else:
             # unknown field
             sort_field = ""
 
         if sort_field:
             queryset = queryset.order_by("{}{}".format(order, sort_field))
-        return queryset
-
-
-class NearByShopProductFilter(filters.BaseFilterBackend):
-    """
-    Based of `shuup.core.api.shop.NearbyShopsFilter`
-    """
-    def filter_queryset(self, request, queryset, view):
-        latitude = float(request.query_params.get("lat", 0))
-        longitude = float(request.query_params.get("lng", 0))
-        distance = float(request.query_params.get("distance", 0))
-        sort = request.query_params.get(api_settings.ORDERING_PARAM, "")
-
-        if latitude and longitude:
-            query = """
-            SELECT
-                round(
-                    degrees(
-                        acos(
-                            cos(radians(%s))
-                            * cos(radians({address_table_name}.{latitude_field}))
-                            * cos(radians(%s - {address_table_name}.{longitude_field}))
-                            + sin(radians(%s))
-                            * sin(radians({address_table_name}.{latitude_field}))
-                        )
-                    ) * %s
-                , 3)
-            FROM {address_table_name}
-            INNER JOIN {shop_table_name} ON (
-                {address_table_name}.{address_id_field}={shop_table_name}.{shop_contact_addr_id_field}
-            )
-            WHERE {shop_table_name}.{shop_id_field}={shopproduct_table_name}.{shopproduct_shop_id_field}
-            """.format(
-                address_table_name=Shop.contact_address.field.related_model._meta.db_table,
-                latitude_field=Shop.contact_address.field.related_model._meta.get_field('latitude').name,
-                longitude_field=Shop.contact_address.field.related_model._meta.get_field('longitude').name,
-                address_id_field=Shop.contact_address.field.related_model._meta.get_field('id').name,
-                shop_table_name=Shop._meta.db_table,
-                shop_id_field=Shop._meta.get_field('id').name,
-                shop_contact_addr_id_field=Shop.contact_address.field.column,
-                shopproduct_table_name=ShopProduct._meta.db_table,
-                shopproduct_shop_id_field=ShopProduct.shop.field.column,
-            )
-
-            queryset = queryset.select_related("shop").annotate(
-                distance=RawSQL(query, params=(latitude, longitude, latitude, DISTANCE_PER_DEGREE))
-            )
-
-            # only filter if user wants to
-            if distance:
-                queryset = queryset.filter(distance__lte=distance)
-
-            # sort by the calculated distance
-            if sort.endswith("distance"):
-                queryset = queryset.order_by(sort)
-
         return queryset
 
 
@@ -388,7 +371,6 @@ class FrontShopProductViewSet(PermissionHelperMixin, mixins.ListModelMixin, view
     filter_backends = (
         FrontShopProductFilter,
         ShopProductOrderingFilter,
-        NearByShopProductFilter,
         make_comma_separated_list_fiter("id", "id__in"),
         make_comma_separated_list_fiter("shops", "shop__id__in"),
         make_comma_separated_list_fiter("products", "product__id__in"),
@@ -404,8 +386,10 @@ class FrontShopProductViewSet(PermissionHelperMixin, mixins.ListModelMixin, view
 
     def get_queryset(self):
         return ShopProduct.objects.select_related(
-            "product", "product__primary_image", "product__sales_unit", "shop__contact_address"
-        ).prefetch_related("suppliers", "product__cross_sell_1").filter(
+            "shop", "product", "product__sales_unit"
+        ).prefetch_related(
+            "product__media", "product__translations", "product__attributes"
+        ).filter(
             product__variation_parent__isnull=True,
             product__mode__in=(
                 ProductMode.NORMAL,
@@ -580,8 +564,8 @@ class FrontProductViewSet(PermissionHelperMixin, mixins.ListModelMixin, viewsets
     queryset = Product.objects.none()
     serializer_class = ProductSerializer
     filter_backends = (
-        ClosestShopFilter,
         ProductOrderingFilter,
+        ClosestShopFilter,
         make_comma_separated_list_fiter("id", "id__in"),
         make_comma_separated_list_fiter("categories", "shop_products__categories__id__in"),
     )
@@ -594,8 +578,8 @@ class FrontProductViewSet(PermissionHelperMixin, mixins.ListModelMixin, viewsets
         return _("Storefront products can be listed and fetched.")
 
     def get_queryset(self):
-        return Product.objects.all_except_deleted().select_related(
-            "primary_image", "sales_unit"
+        return Product.objects.all_except_deleted().prefetch_related(
+            "attributes", "translations", "shop_products", "media"
         ).filter(
             variation_parent__isnull=True,
             mode__in=(
