@@ -23,8 +23,9 @@ matrix:
       env: TOX_ENV=py34-django19-nomigrations
     - python: 3.5
       env: TOX_ENV=py35-django19-nomigrations
-    - python: 3.5
-      env: TOX_ENV=py35-nomigrations-nocoverage-browser
+    # Browser tests are disabled, since they cause false errors
+    #- python: 3.5
+    #  env: TOX_ENV=py35-nomigrations-nocoverage-browser
 install:
   - pip install -U pip
   - pip install tox
