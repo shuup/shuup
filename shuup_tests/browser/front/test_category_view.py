@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
+import time
 
 import pytest
 
@@ -24,7 +25,7 @@ from shuup.front.utils.sorts_and_filters import (
 )
 from shuup.testing.browser_utils import (
     click_element, move_to_element, wait_until_condition,
-    wait_until_disappeared
+    wait_until_disappeared, wait_until_appeared
 )
 from shuup.testing.factories import (
     create_product, get_default_category, get_default_shop,
@@ -307,19 +308,32 @@ def categories_filter_test(browser, first_cat, second_cat, third_cat):
         }
     )
     browser.reload()
-    wait_until_condition(browser, lambda x: x.is_element_present_by_id("categories-%s" % third_cat.id))
-    browser.execute_script("$('#categories-%s').click();" % third_cat.id)
-    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 1)
+
+    time.sleep(5)
+
+    wait_until_condition(browser, lambda x: len(x.find_by_css("#categories-%s" % third_cat.id)) == 1, timeout=20)
+
+    # click_element(browser, '#categories-%s' % third_cat.id)
+
+    browser.execute_script("""
+        $(document).ready(function() {
+            $('#categories-%s').click();
+        })
+    """ % third_cat.id)
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 1, timeout=30)
     browser.execute_script("$('#categories-%s').click();" % second_cat.id)
-    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 1)
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 1, timeout=30)
     browser.execute_script("$('#categories-%s').click();" % third_cat.id)
-    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 12)
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 12, timeout=30)
 
 
 def second_category_sort_test(browser, live_server, shop, category):
     url = reverse("shuup:category", kwargs={"pk": category.pk, "slug": category.slug})
     browser.visit("%s%s" % (live_server, url))
-    assert not browser.is_text_present("Sort")  # Sort shouldn't be available since default configurations
+    time.sleep(2)
+
+    # Sort shouldn't be available since default configurations
+    wait_until_condition(browser, lambda x: x.is_text_not_present("Sort"), timeout=30)
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 12)
     click_element(browser, "#next_page a")
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 1, timeout=30)
@@ -338,7 +352,9 @@ def second_category_sort_test(browser, live_server, shop, category):
         }
     )
     browser.reload()
-    wait_until_condition(browser, lambda x: x.is_element_present_by_css("button[data-id='id_limit']"))
+    time.sleep(5)
+
+    wait_until_appeared(browser, "button[data-id='id_limit']", timeout=15)
     # Set limit to 24
     click_element(browser, "button[data-id='id_limit']")
     click_element(browser, "button[data-id='id_limit'] + .dropdown-menu li[data-original-index='1'] a")
@@ -351,14 +367,18 @@ def second_category_sort_test(browser, live_server, shop, category):
         sp.save()
 
     browser.reload()
-    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 10)
+    time.sleep(2)
+
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 10, timeout=30)
 
     for sp in shop_products:
         sp.visibility = ShopProductVisibility.ALWAYS_VISIBLE
         sp.save()
 
     browser.reload()
-    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 13)
+    time.sleep(2)
+
+    wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 13, timeout=30)
 
 
 def add_variations(shop, parent, colors, sizes):
@@ -394,7 +414,9 @@ def second_category_sort_with_price_filter(browser, category):
         }
     )
     browser.reload()
-    wait_until_condition(browser, lambda x: len(x.find_by_css("#id_price_range option")) == 5)
+    time.sleep(2)
+
+    wait_until_condition(browser, lambda x: len(x.find_by_css("#id_price_range option")) == 5, timeout=30)
     browser.select("price_range", "-5")
     wait_until_condition(browser, lambda x: len(x.find_by_css(".product-card")) == 4)
     browser.select("price_range", "12-")

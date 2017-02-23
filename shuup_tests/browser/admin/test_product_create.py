@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
+import time
 
 import pytest
 
@@ -74,12 +75,17 @@ def _add_primary_category(browser, shop):
     assert Category.objects.count() == 0
     select_id = "id_shop%s-primary_category" % shop.pk
     browser.execute_script('$("#%s").parent().find("span.quick-add-btn a.btn").click();' % select_id)
+    time.sleep(0.2)
     with browser.get_iframe('create-object-iframe') as iframe:
         wait_until_condition(iframe, lambda x: x.is_text_present("New category"))
+        time.sleep(0.2)
         category_test_name = "Test Category"
         iframe.fill("base-name__en", category_test_name)
+        time.sleep(0.2)
         click_element(iframe, "button[form='category_form']")
+        time.sleep(0.2)
     wait_until_condition(browser, lambda x: x.is_text_present("New product"))
+    time.sleep(0.5)
     assert Category.objects.count() == 1
     wait_until_condition(browser, lambda x: len(x.find_by_css("#%s option" % select_id)) == 2)
     wait_until_condition(browser, lambda x: len(x.find_by_css("#%s option[selected='selected']" % select_id)) == 1)
@@ -96,5 +102,6 @@ def _add_additional_category(browser, shop):
         iframe.fill("base-name__en", category_test_name)
         click_element(iframe, "button[form='category_form']")
     wait_until_condition(browser, lambda x: x.is_text_present("New product"))
+    time.sleep(2)
     assert Category.objects.count() == 2
     wait_until_condition(browser, lambda x: len(x.find_by_css("#%s option[selected='']" % select_id)) == 2)

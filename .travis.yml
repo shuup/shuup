@@ -1,5 +1,7 @@
 sudo: false
 language: python
+addons:
+  firefox: "51.0"
 cache:
   directories:
     - "$HOME/.cache/pip"
@@ -31,6 +33,10 @@ install:
   - pip install tox
   - pip install coveralls
 before_install:
+  - wget https://github.com/mozilla/geckodriver/releases/download/v0.13.0/geckodriver-v0.13.0-linux64.tar.gz
+  - mkdir geckodriver
+  - tar -xzf geckodriver-v0.13.0-linux64.tar.gz -C geckodriver
+  - export PATH=$PATH:$PWD/geckodriver
   - "nvm install 4"
   - "nvm use 4"
   - "export DISPLAY=:99.0"

@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import os
+import time
 
 import pytest
 from django.core.urlresolvers import reverse
@@ -24,7 +25,7 @@ from shuup.notify.models import Script
 from shuup.simple_supplier.notify_script_template import (
     StockLimitEmailScriptTemplate
 )
-from shuup.testing.browser_utils import wait_until_condition
+from shuup.testing.browser_utils import wait_until_condition, wait_until_appeared
 from shuup.testing.notify_script_templates import DummyScriptTemplate
 from shuup.testing.utils import initialize_admin_browser_test
 
@@ -53,7 +54,8 @@ def test_generic_script_template(browser, admin_user, live_server, settings, scr
 
     url = reverse("shuup_admin:notify.script.list")
     browser.visit("%s%s" % (live_server, url))
-    wait_until_condition(browser, lambda x: x.is_element_present_by_css("div.btn-toolbar a.btn.btn-info"))
+    wait_until_appeared(browser, "div.btn-toolbar a.btn.btn-info")
+    # wait_until_condition(browser, lambda x: x.is_element_present_by_css("div.btn-toolbar a.btn.btn-info"))
 
     # find the button to load from template
     browser.find_by_css("div.btn-toolbar a.btn.btn-info").first.click()
@@ -61,7 +63,7 @@ def test_generic_script_template(browser, admin_user, live_server, settings, scr
     identifier = script_template_cls.identifier
     form_id = "form-" + identifier
     button_id = "#{} button.btn.btn-success".format(form_id)
-    wait_until_condition(browser, lambda x: x.is_element_present_by_css(button_id))
+    wait_until_appeared(browser, button_id, timeout=20)
     browser.find_by_css(button_id).first.click()
 
     config_url = reverse("shuup_admin:notify.script-template-config", kwargs={"id": identifier})
@@ -69,17 +71,23 @@ def test_generic_script_template(browser, admin_user, live_server, settings, scr
     wait_until_condition(browser, lambda b: b.is_text_present("Configure the Script Template"))
 
     # click to create the script
+    time.sleep(5)
     browser.execute_script("""
         $(document).ready(function(){
             $('#lang-en .summernote-editor').summernote('editor.insertText', 'NEW CONTENT');
         });
     """)
+    time.sleep(5)
     browser.find_by_id("id_en-subject").fill("custom subject!")
     browser.find_by_css("form button.btn.btn-lg.btn-primary").first.click()
 
-    wait_until_condition(browser, lambda b: b.url.endswith(reverse("shuup_admin:notify.script.list")))
+    wait_until_condition(browser, lambda x: x.is_text_not_present("This field is required."), timeout=20)
+
+    script_list_url = reverse("shuup_admin:notify.script.list")
+    wait_until_condition(browser, lambda b: b.url.endswith(script_list_url), timeout=30)
 
     script = Script.objects.first()
+    assert script
     serialized_steps = script.get_serialized_steps()
 
     assert len(serialized_steps) == 1
@@ -105,7 +113,8 @@ def test_generic_custom_email_script_template(browser, admin_user, live_server, 
 
     url = reverse("shuup_admin:notify.script.list")
     browser.visit("%s%s" % (live_server, url))
-    wait_until_condition(browser, lambda x: x.is_element_present_by_css("div.btn-toolbar a.btn.btn-info"))
+    time.sleep(2)
+    wait_until_condition(browser, lambda x: x.is_element_present_by_css("div.btn-toolbar a.btn.btn-info"), timeout=30)
 
     # find the button to load from template
     browser.find_by_css("div.btn-toolbar a.btn.btn-info").first.click()
@@ -114,33 +123,44 @@ def test_generic_custom_email_script_template(browser, admin_user, live_server, 
     form_id = "form-" + identifier
     button_id = "#{} button.btn.btn-success".format(form_id)
     wait_until_condition(browser, lambda x: x.is_element_present_by_css(button_id))
+    wait_until_appeared(browser, button_id)
     browser.find_by_css(button_id).first.click()
 
     config_url = reverse("shuup_admin:notify.script-template-config", kwargs={"id": identifier})
     wait_until_condition(browser, lambda b: b.url.endswith(config_url), timeout=15)
     wait_until_condition(browser, lambda b: b.is_text_present("Configure the Script Template"))
 
-    browser.execute_script("""
-        $(document).ready(function(){
-            // EN
-            $("#id_en-subject").val("custom subject!");
-            $('#lang-en .summernote-editor').summernote('editor.insertText', 'Hi');
-
-            // FINNISH
-            $('.nav.nav-tabs a[href="#lang-fi"]').tab('show');
-            $("#id_fi-subject").val("FINNISH subject!");
-            $('#lang-fi .summernote-editor').summernote('editor.insertText', 'Hi Finland!');
-        });
-    """)
-
     # fill form
     browser.select('base-send_to', 'other')
     browser.find_by_id("id_base-recipient").fill("other@shuup.com")
+    time.sleep(5)
+    browser.execute_script("""
+        $(document).ready(function(){
+            // EN
+            $('.nav.nav-tabs a[href="#lang-en"]').tab('show');
+            $("#id_en-subject").val("custom subject!");
+            $('#lang-en .summernote-editor').summernote('editor.insertText', 'Hi');
+
+
+            // FINNISH
+            $.when( $('.nav.nav-tabs a[href="#lang-fi"]').tab('show') ).then(function() {
+                $("#id_fi-subject").val("FINNISH subject!");
+                $('#lang-fi .summernote-editor').summernote('editor.insertText', 'Hi Finland!');
+            });
+        });
+    """)
+    time.sleep(5)
     browser.find_by_css("form button.btn.btn-lg.btn-primary").first.click()
 
-    wait_until_condition(browser, lambda b: b.url.endswith(reverse("shuup_admin:notify.script.list")))
+    wait_until_condition(browser, lambda b: b.url.endswith(reverse("shuup_admin:notify.script.list")), timeout=30)
 
-    script = Script.objects.first()
+    for i in range(5):
+        script = Script.objects.first()
+        if script:
+            break
+        time.sleep(1)
+
+    assert script
     serialized_steps = script.get_serialized_steps()
 
     assert len(serialized_steps) == 1
@@ -156,7 +176,8 @@ def test_generic_custom_email_script_template(browser, admin_user, live_server, 
     # edit the script
     url = reverse("shuup_admin:notify.script.edit", kwargs={"pk": script.pk})
     browser.visit("%s%s" % (live_server, url))
-    wait_until_condition(browser, lambda b: b.is_text_present("Edit Script Information"))
+    time.sleep(2)
+    wait_until_condition(browser, lambda b: b.is_text_present("Edit Script Information"), timeout=20)
 
     # find the button to edit the script content through template editor
     browser.find_by_css("div.btn-toolbar a.btn.btn-info").last.click()
@@ -165,6 +186,7 @@ def test_generic_custom_email_script_template(browser, admin_user, live_server, 
     wait_until_condition(browser, lambda b: b.is_text_present("Configure the Script Template"))
 
     # fill form
+    time.sleep(5)
     browser.execute_script("""
         $(document).ready(function(){
             $('#lang-en .summernote-editor').summernote('editor.insertText', 'Changed');
@@ -172,10 +194,11 @@ def test_generic_custom_email_script_template(browser, admin_user, live_server, 
     """)
     browser.find_by_id("id_en-subject").fill("changed subject!")
     browser.select('base-send_to', 'customer')
+    time.sleep(5)
     browser.find_by_css("form button.btn.btn-lg.btn-primary").first.click()
 
     # hit save
-    wait_until_condition(browser, lambda b: b.url.endswith(reverse("shuup_admin:notify.script.list")))
+    wait_until_condition(browser, lambda b: b.url.endswith(reverse("shuup_admin:notify.script.list")), timeout=30)
 
     script = Script.objects.first()
     serialized_steps = script.get_serialized_steps()
@@ -205,7 +228,9 @@ def test_stock_alert_limit_script_template(browser, admin_user, live_server, set
     form_id = "form-" + identifier
     wait_until_condition(browser, lambda x: x.is_element_present_by_id(form_id))
 
-    browser.find_by_css("#{} button.btn.btn-success".format(form_id)).first.click()
+    button_id = "#{} button.btn.btn-success".format(form_id)
+    wait_until_appeared(browser, button_id)
+    browser.find_by_css(button_id).first.click()
 
     config_url = reverse("shuup_admin:notify.script-template-config", kwargs={"id": identifier})
     wait_until_condition(browser, lambda b: b.url.endswith(config_url))
@@ -217,7 +242,7 @@ def test_stock_alert_limit_script_template(browser, admin_user, live_server, set
     browser.find_by_id("id_base-recipient").fill(recipient)
     browser.find_by_css("form button.btn.btn-lg.btn-primary").first.click()
 
-    wait_until_condition(browser, lambda b: b.url.endswith(reverse("shuup_admin:notify.script.list")))
+    wait_until_condition(browser, lambda b: b.url.endswith(reverse("shuup_admin:notify.script.list")), timeout=15)
 
     script = Script.objects.first()
     serialized_steps = script.get_serialized_steps()
@@ -250,7 +275,7 @@ def test_stock_alert_limit_script_template(browser, admin_user, live_server, set
     browser.find_by_css("form button.btn.btn-lg.btn-primary").first.click()
 
     # hit save
-    wait_until_condition(browser, lambda b: b.url.endswith(reverse("shuup_admin:notify.script.list")))
+    wait_until_condition(browser, lambda b: b.url.endswith(reverse("shuup_admin:notify.script.list")), timeout=15)
 
     script = Script.objects.first()
     serialized_steps = script.get_serialized_steps()
@@ -280,7 +305,7 @@ def test_dummy_script_template(browser, admin_user, live_server, settings):
         wait_until_condition(browser, lambda x: x.is_element_present_by_id(form_id))
 
         btn_create_css = "#{} button.btn.btn-success".format(form_id)
-        wait_until_condition(browser, lambda x: x.is_element_present_by_css(btn_create_css))
+        wait_until_appeared(browser, btn_create_css, timeout=30)
         browser.find_by_css(btn_create_css).first.click()
 
         wait_until_condition(browser, lambda b: b.url.endswith(reverse("shuup_admin:notify.script.list")))

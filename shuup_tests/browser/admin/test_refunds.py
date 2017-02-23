@@ -49,11 +49,11 @@ def _check_create_refund_link(browser, order, present):
 def _test_toolbar_visibility(browser, live_server, order):
     url = reverse("shuup_admin:order.detail", kwargs={"pk": order.pk})
     browser.visit("%s%s" % (live_server, url))
-    wait_until_appeared(browser, "#order_details")
+    wait_until_appeared(browser, "#order_details", timeout=15)
     _check_create_refund_link(browser, order, False)
     order.create_payment(order.taxful_total_price)
     browser.reload()
-    wait_until_appeared(browser, "#order_details")
+    wait_until_appeared(browser, "#order_details", timeout=15)
     _check_create_refund_link(browser, order, True)
 
 
@@ -68,6 +68,8 @@ def _test_create_full_refund(browser, live_server, order):
     click_element(browser, "#create-full-refund")
     wait_until_appeared(browser, "#order_details")
     _check_create_refund_link(browser, order, False)
+
+    time.sleep(0.2)
     order.refresh_from_db()
     assert not order.taxful_total_price
     assert order.is_paid()
@@ -94,6 +96,8 @@ def _test_refund_view(browser, live_server, order):
     browser.find_by_css("#id_form-1-quantity").first.value == "10"
     click_element(browser, "button[form='create_refund']")
     _check_create_refund_link(browser, order, True) # can still refund quantity
+
+    time.sleep(0.8)
     order.refresh_from_db()
     assert not order.taxful_total_price
     assert order.is_paid()

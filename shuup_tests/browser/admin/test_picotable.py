@@ -151,7 +151,8 @@ def _set_settings(browser, setting_type):
     # select settings
     for idx, (index_key, text) in enumerate(addable_fields):
         expected_index = default_column_count + 1 + idx
-        assert browser.is_text_present(text)
+        wait_until_condition(browser, lambda x: x.is_text_present(text))
+
         browser.find_by_xpath("//ul[@id='source-sortable']/li[%d]/button" % index_key).first.click()
         wait_until_appeared_xpath(browser, "//ul[@id='target-sortable']/li[%d]/button" % expected_index)
         # browser.find_by_css(".btn.btn-xs.btn-success.btn-add-sortable").first.click()
