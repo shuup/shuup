@@ -156,9 +156,10 @@ def test_reporting(rf):
         assert response.status_code == 200
 
         soup = BeautifulSoup(response.render().content)
-        assert force_text(TestSalesReport.title) in str(soup)
-        assert str(expected_taxless_total) in str(soup)
-        assert str(expected_taxful_total) in str(soup)
+        soup_text = force_text(soup)
+        assert force_text(TestSalesReport.title) in soup_text
+        assert str(expected_taxless_total) in soup_text
+        assert str(expected_taxful_total) in soup_text
 
 
 @pytest.mark.django_db
