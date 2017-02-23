@@ -7,7 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 
 
-class RemovedInShuup057Warning(PendingDeprecationWarning):
+class RemovedInShuup20Warning(PendingDeprecationWarning):
     pass
 
 
@@ -15,4 +15,4 @@ class RemovedFromShuupWarning(DeprecationWarning):
     pass
 
 
-RemovedInFutureShuupWarning = RemovedInShuup057Warning
+RemovedInFutureShuupWarning = RemovedInShuup20Warning

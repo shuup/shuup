@@ -29,7 +29,7 @@ from .edit_parent import (
 
 
 class VariationChildrenFormPart(ProductChildrenBaseFormPart):
-    invalid_modes = [ProductMode.VARIATION_CHILD, ProductMode.PACKAGE_PARENT]
+    invalid_modes = [ProductMode.VARIATION_CHILD, ProductMode.PACKAGE_PARENT, ProductMode.SUBSCRIPTION]
     priority = 0
 
     def get_form_defs(self):

@@ -137,6 +137,7 @@ class OrderModule(AdminModule):
                 icon="fa fa-inbox",
                 url="shuup_admin:order.list",
                 category=ORDERS_MENU_CATEGORY,
+                subcategory="orders",
                 ordering=1,
                 aliases=[_("Show orders")]
             ),

@@ -12,16 +12,18 @@ from django.core.exceptions import ValidationError
 from django.http.response import HttpResponseRedirect, JsonResponse
 
 from shuup.core.models import (
-    ProductVariationVariable, ProductVariationVariableValue, ShopProductVisibility
+    ProductVariationVariable, ProductVariationVariableValue, SalesUnit,
+    ShopProductVisibility
 )
 from shuup.front.basket import commands as basket_commands
-from shuup.front.basket import get_basket_command_dispatcher
+from shuup.front.basket import get_basket, get_basket_command_dispatcher
 from shuup.front.basket.command_dispatcher import BasketCommandDispatcher
 from shuup.front.signals import get_basket_command_handler
 from shuup.testing.factories import (
-    create_product, get_default_product, get_default_shop,
-    get_default_supplier
+    create_product, create_random_person, get_default_product,
+    get_default_shop, get_default_supplier
 )
+from shuup.testing.utils import apply_request_middleware
 from shuup_tests.front.fixtures import get_request_with_basket
 
 from .utils import get_unstocked_package_product_and_stocked_child
@@ -159,6 +161,35 @@ def test_basket_update():
 
 
 @pytest.mark.django_db
+def test_basket_partial_quantity_update():
+    request = get_request_with_basket()
+    basket = request.basket
+    product = get_default_product()
+
+    sales_unit = SalesUnit.objects.create(identifier="test-sales-partial", decimals=2, name="Partial unit")
+    product.sales_unit = sales_unit  # Set the sales unit for the product
+    product.save()
+
+    basket_commands.handle_add(request, basket, product_id=product.pk, quantity=1.5)
+    assert basket.product_count == 1.5
+    line_id = basket.get_lines()[0].line_id
+    basket_commands.handle_update(request, basket, **{"q_%s" % line_id: "1.5"})
+    assert basket.product_count == 1.5
+
+    basket_commands.handle_update(request, basket, **{"q_%s" % line_id: "3.5"})
+    assert basket.product_count == 3.5
+
+    basket_commands.handle_update(request, basket, **{"q_%s" % line_id: "3.0"})
+    assert basket.product_count == 3.0
+
+    basket_commands.handle_update(request, basket, **{"q_%s" % line_id: "4"})
+    assert basket.product_count == 4
+
+    basket_commands.handle_update(request, basket, **{"delete_%s" % line_id: "1"})
+    assert basket.product_count == 0
+
+
+@pytest.mark.django_db
 def test_basket_update_with_package_product():
     if "shuup.simple_supplier" not in settings.INSTALLED_APPS:
         pytest.skip("Need shuup.simple_supplier in INSTALLED_APPS")
@@ -228,3 +259,31 @@ def test_custom_basket_command():
     finally:
         get_basket_command_handler.disconnect(dispatch_uid="test_custom_basket_command")
         assert old_n_receivers == len(get_basket_command_handler.receivers)
+
+
+@pytest.mark.django_db
+def test_parallel_baskets(rf):
+    request = get_request_with_basket()
+    shop = get_default_shop()
+    customer = create_random_person()
+
+    request = rf.get("/")
+    request.shop = shop
+    apply_request_middleware(request)
+    request.customer = customer
+
+    basket_one = get_basket(request, basket_name="basket_one")
+    basket_two = get_basket(request, basket_name="basket_two")
+
+    product_one = get_default_product()
+    product_two = get_default_product()
+    product_two.sku = "derpy-hooves"
+    sales_unit = SalesUnit.objects.create(identifier="test-sales-partial", decimals=2, name="Partial unit")
+    product_two.sales_unit = sales_unit  # Set the sales unit for the product
+    product_two.save()
+
+    basket_commands.handle_add(request, basket_one, product_id=product_one.pk, quantity=1)
+    basket_commands.handle_add(request, basket_two, product_id=product_two.pk, quantity=3.5)
+
+    assert basket_one.product_count == 1
+    assert basket_two.product_count == 3.5

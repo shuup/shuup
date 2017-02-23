@@ -67,14 +67,13 @@ class OrderLineManager(models.Manager):
 
 
 @python_2_unicode_compatible
-class OrderLine(MoneyPropped, models.Model, Priceful):
-    order = UnsavedForeignKey("Order", related_name='lines', on_delete=models.PROTECT, verbose_name=_('order'))
+class AbstractOrderLine(MoneyPropped, models.Model, Priceful):
     product = UnsavedForeignKey(
-        "Product", blank=True, null=True, related_name="order_lines",
+        "shuup.Product", blank=True, null=True, related_name="order_lines",
         on_delete=models.PROTECT, verbose_name=_('product')
     )
     supplier = UnsavedForeignKey(
-        "Supplier", blank=True, null=True, related_name="order_lines",
+        "shuup.Supplier", blank=True, null=True, related_name="order_lines",
         on_delete=models.PROTECT, verbose_name=_('supplier')
     )
 
@@ -104,6 +103,7 @@ class OrderLine(MoneyPropped, models.Model, Priceful):
     class Meta:
         verbose_name = _('order line')
         verbose_name_plural = _('order lines')
+        abstract = True
 
     def __str__(self):
         return "%dx %s (%s)" % (self.quantity, self.text, self.get_type_display())
@@ -159,9 +159,13 @@ class OrderLine(MoneyPropped, models.Model, Priceful):
         if self.product_id and not self.supplier_id:
             raise ValidationError("Order line has product but no supplier")
 
-        super(OrderLine, self).save(*args, **kwargs)
+        super(AbstractOrderLine, self).save(*args, **kwargs)
         if self.product_id:
             self.supplier.module.update_stock(self.product_id)
+
+
+class OrderLine(AbstractOrderLine):
+    order = UnsavedForeignKey("Order", related_name='lines', on_delete=models.PROTECT, verbose_name=_('order'))
 
 
 @python_2_unicode_compatible

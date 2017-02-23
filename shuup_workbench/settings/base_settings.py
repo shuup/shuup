@@ -20,6 +20,7 @@ MEDIA_URL = "/media/"
 
 SHUUP_ENABLED_ADDONS_FILE = os.getenv("SHUUP_ENABLED_ADDONS_FILE") or (
     os.path.join(BASE_DIR, "var", "enabled_addons"))
+
 INSTALLED_APPS = add_enabled_addons(SHUUP_ENABLED_ADDONS_FILE, [
     # django
     'django.contrib.admin',
@@ -33,10 +34,10 @@ INSTALLED_APPS = add_enabled_addons(SHUUP_ENABLED_ADDONS_FILE, [
     # shuup themes
     'shuup.themes.classic_gray',
     # shuup
-    'shuup.addons',
+    'shuup.core',
     'shuup.admin',
     'shuup.api',
-    'shuup.core',
+    'shuup.addons',
     'shuup.default_tax',
     'shuup.front',
     'shuup.front.apps.auth',
@@ -62,6 +63,7 @@ INSTALLED_APPS = add_enabled_addons(SHUUP_ENABLED_ADDONS_FILE, [
     'shuup.regions',
     'shuup.importer',
     'shuup.default_importer',
+
     # external apps
     'bootstrap3',
     'django_countries',

@@ -32,7 +32,7 @@ class ProductChildrenFormPart(ProductChildrenBaseFormPart):
         ProductMode.VARIATION_CHILD, ProductMode.VARIABLE_VARIATION_PARENT,
         ProductMode.SIMPLE_VARIATION_PARENT
     ]
-    priority = 0
+    priority = 1
 
     def get_form_defs(self):
         product = self.object
@@ -48,16 +48,18 @@ class ProductChildrenFormPart(ProductChildrenBaseFormPart):
 
 
 class ProductPackageViewToolbar(ProductParentBaseToolbar):
+    button_text = _("Clear package")
+    confirm_text = _("Are you sure? This will remove all products from package.")
+
     def __init__(self, view):
         super(ProductPackageViewToolbar, self).__init__(view)
-
         if self.parent_product.get_package_child_to_quantity_map():
             self.append(PostActionButton(
                 post_url=self.request.path,
                 name="command",
                 value="clear_package",
-                confirm=_("Are you sure? This will remove all products from package."),
-                text=_("Clear package"),
+                confirm=self.confirm_text,
+                text=self.button_text,
                 extra_css_class="btn-danger",
                 icon="fa fa-times"
             ))

@@ -86,6 +86,10 @@ Core
     Additional information rows for Order detail page. Provide objects should inherit
     from `~shuup.admin.modules.orders.utils.OrderInformation` class.
 
+``admin_main_menu_updater``
+    Allows updating the Admin Main Menu with new elements. The objects offered through this
+    provide should inherit from ``~shuup.core.utils.menu.MainMenuUpdater`` class.
+
 ``admin_product_form_part``
     Additional ``FormPart`` classes for Product editing.
     (This is used by pricing modules, for instance.) See :doc:`example <../howto/new_tab>`.
@@ -132,6 +136,10 @@ Core
 
 ``admin_order_section``
     Additional ``Section`` subclasses for Order detail sections.
+
+``front_product_order_form``
+    List of order forms which are subclasses of ``ProductOrderForm``. These forms
+    are shown on product detail page in front as well as previews etc.
 
 ``front_urls``
     Lists of frontend URLs to be appended to the usual frontend URLs.

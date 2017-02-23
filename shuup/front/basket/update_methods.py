@@ -62,7 +62,7 @@ class BasketUpdateMethods(object):
         return errors
 
     def update_quantity(self, line, value, **kwargs):
-        new_quantity = int(parse_decimal_string(value))  # TODO: The quantity could be a non-integral value
+        new_quantity = parse_decimal_string(value)
         if new_quantity is None:
             return False
 

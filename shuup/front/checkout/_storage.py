@@ -20,13 +20,28 @@ class CheckoutPhaseStorage(object):
             self.request.session.pop(key, None)
 
     def set(self, key, value):
-        self.request.session["checkout_%s:%s" % (self.phase_identifier, key)] = value
+        session_key = self._get_key(key)
+        self.request.session[session_key] = value
 
     def get(self, key, default=None):
-        return self.request.session.get("checkout_%s:%s" % (self.phase_identifier, key), default)
+        session_key = self._get_key(key)
+        return self.request.session.get(session_key, default)
 
     def has_all(self, keys):
         return all(self.get(key) for key in keys)
+
+    def has_any(self, keys):
+        return any(self.get(key) for key in keys)
+
+    def has_keys(self, keys):
+        for key in keys:
+            session_key = self._get_key(key)
+            if session_key not in self.request.session.keys():
+                return False
+        return True
+
+    def _get_key(self, key):
+        return "checkout_%s:%s" % (self.phase_identifier, key)
 
     def __setitem__(self, key, value):
         self.set(key, value)

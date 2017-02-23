@@ -61,11 +61,11 @@ class MethodChoiceIterator(forms.models.ModelChoiceIterator):
 class MethodsForm(forms.Form):
     shipping_method = forms.ModelChoiceField(
         queryset=ShippingMethod.objects.all(), widget=MethodWidget(),
-        label=_('shipping method')
+        label=_('shipping method'), required=False
     )
     payment_method = forms.ModelChoiceField(
         queryset=PaymentMethod.objects.all(), widget=MethodWidget(),
-        label=_('payment method')
+        label=_('payment method'), required=False
     )
 
     def __init__(self, *args, **kwargs):
@@ -89,6 +89,7 @@ class MethodsForm(forms.Form):
             field.widget.request = self.request
             if field.choices:
                 field.initial = field.choices[0]
+                field.required = True
 
 
 class MethodsPhase(CheckoutPhaseViewMixin, FormView):
@@ -98,22 +99,29 @@ class MethodsPhase(CheckoutPhaseViewMixin, FormView):
     form_class = MethodsForm
 
     def is_valid(self):
-        return self.storage.has_all(["shipping_method_id", "payment_method_id"])
+        return self.storage.has_any(["shipping_method_id", "payment_method_id"])
 
     def process(self):
-        self.request.basket.shipping_method_id = self.storage["shipping_method_id"]
-        self.request.basket.payment_method_id = self.storage["payment_method_id"]
+        self.basket.shipping_method_id = self.storage["shipping_method_id"]
+        self.basket.payment_method_id = self.storage["payment_method_id"]
 
     def get_form_kwargs(self):
         kwargs = super(MethodsPhase, self).get_form_kwargs()
         kwargs["request"] = self.request
-        kwargs["basket"] = self.request.basket
+        kwargs["basket"] = self.basket
         kwargs["shop"] = self.request.shop
         return kwargs
 
     def form_valid(self, form):
-        self.storage["shipping_method_id"] = form.cleaned_data["shipping_method"].id
-        self.storage["payment_method_id"] = form.cleaned_data["payment_method"].id
+        for field_name in ["shipping_method", "payment_method"]:
+            storage_key = "%s_id" % field_name
+
+            if form.fields[field_name].required:
+                value = form.cleaned_data[field_name].id
+            else:
+                value = None
+            self.storage[storage_key] = value
+
         return super(MethodsPhase, self).form_valid(form)
 
     def get_initial(self):
@@ -123,6 +131,11 @@ class MethodsPhase(CheckoutPhaseViewMixin, FormView):
             if value:
                 initial[key] = value
         return initial
+
+    def get_context_data(self, **kwargs):
+        context = super(MethodsPhase, self).get_context_data(**kwargs)
+        context["show_shipping"] = self.basket.has_shippable_lines()
+        return context
 
 
 class _MethodDependentCheckoutPhase(CheckoutPhaseViewMixin):
@@ -186,11 +199,11 @@ class ShippingMethodPhase(_MethodDependentCheckoutPhase, View):
     identifier = "shipping"
 
     def get_method(self):
-        return self.request.basket.shipping_method
+        return self.basket.shipping_method
 
 
 class PaymentMethodPhase(_MethodDependentCheckoutPhase, View):
     identifier = "payment"
 
     def get_method(self):
-        return self.request.basket.payment_method
+        return self.basket.payment_method

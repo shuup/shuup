@@ -85,6 +85,7 @@ class CartAdminModule(CurrencyBound, AdminModule):
                 icon="fa fa-shopping-cart",
                 url="shuup_admin:cart.list",
                 category=ORDERS_MENU_CATEGORY,
+                subcategory="orders",
                 aliases=[_("Show carts")]
             ),
         ]

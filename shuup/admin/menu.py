@@ -13,6 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.admin.module_registry import get_modules
 from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.admin.views.home import QUICKLINK_ORDER
+from shuup.apps.provides import get_provide_objects
 
 ORDERS_MENU_CATEGORY = 1
 PRODUCTS_MENU_CATEGORY = 2
@@ -29,13 +30,23 @@ MAIN_MENU = [
         "identifier": ORDERS_MENU_CATEGORY,
         "title": _("Orders"),
         "icon": "fa fa-inbox",
-        "children": []
+        "children": [
+            {
+                "identifier": "orders",
+                "title": _("Orders")
+            },
+        ]
     },
     {
         "identifier": PRODUCTS_MENU_CATEGORY,
         "title": _("Products"),
         "icon": "fa fa-cube",
-        "children": []
+        "children": [
+            {
+                "identifier": "products",
+                "title": _("Products")
+            },
+        ]
     },
     {
         "identifier": CONTACTS_MENU_CATEGORY,
@@ -148,12 +159,21 @@ class _MenuCategory(object):
         return iter(sorted(self.entries, key=lambda e: e.ordering))
 
 
+def extend_main_menu(menu):
+    for menu_updater in get_provide_objects("admin_main_menu_updater"):
+        menu = menu_updater(menu).update()
+    return menu
+
+
 def get_menu_entry_categories(request):
     menu_categories = OrderedDict()
     menu_children = OrderedDict()
 
+    # Update main menu from provides
+    main_menu = extend_main_menu(MAIN_MENU)
+
     menu_category_icons = {}
-    for menu_item in MAIN_MENU:
+    for menu_item in main_menu:
         identifier = menu_item["identifier"]
         icon = menu_item["icon"]
         menu_categories[identifier] = _MenuCategory(

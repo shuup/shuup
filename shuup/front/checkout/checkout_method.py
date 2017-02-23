@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 from django import forms
-from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum
@@ -89,10 +88,6 @@ class RegisterPhase(CheckoutPhaseViewMixin, RegistrationNoActivationView):
     def is_valid(self):
         checkout_method_choice_is_registered = bool(self.storage.get(CHECKOUT_CHOICE_STORAGE_KEY, None))
         return bool(self.request.customer and checkout_method_choice_is_registered)
-
-    def get_success_url(self, *args, **kwargs):
-        if self.next_phase:
-            return reverse("shuup:checkout", kwargs={"phase": self.next_phase.identifier})
 
     def process(self):
         return

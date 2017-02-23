@@ -44,7 +44,8 @@ class BasketCommandDispatcher(object):
         if handler and callable(handler):
             return handler
 
-        for receiver, handler in get_basket_command_handler.send(BasketCommandDispatcher, command=command):
+        for receiver, handler in get_basket_command_handler.send(
+                BasketCommandDispatcher, command=command, instance=self):
             if handler and callable(handler):
                 return handler
 
@@ -73,8 +74,9 @@ class BasketCommandDispatcher(object):
         except (Problem, ValidationError) as exc:
             if not self.ajax:
                 raise
+            msg = exc.message if hasattr(exc, "message") else exc
             response = {
-                "error": force_text(exc, errors="ignore"),
+                "error": force_text(msg, errors="ignore"),
                 "code": force_text(getattr(exc, "code", None) or "", errors="ignore")
             }
         response = self.postprocess_response(command, kwargs, response)

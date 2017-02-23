@@ -6,10 +6,12 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.core.exceptions import ValidationError
+from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.models import StockBehavior
 from shuup.core.stocks import ProductStockStatus
+from shuup.utils.excs import Problem
 
 from .enums import StockAdjustmentType
 
@@ -77,3 +79,28 @@ class BaseSupplierModule(object):
         # Naive default implementation; smarter modules can do something better
         for product_id in product_ids:
             self.update_stock(product_id)
+
+    def ship_products(self, shipment, product_quantities):
+        insufficient_stocks = {}
+        for product, quantity in product_quantities.items():
+            if quantity > 0:
+                stock_status = self.get_stock_status(product.pk)
+                if (product.stock_behavior == StockBehavior.STOCKED) and (stock_status.physical_count < quantity):
+                    insufficient_stocks[product] = stock_status.physical_count
+                sp = shipment.products.create(product=product, quantity=quantity)
+                sp.cache_values()
+                sp.save()
+
+        if insufficient_stocks:
+            formatted_counts = [_("%(name)s (physical stock: %(quantity)s)") % {
+                "name": force_text(name),
+                "quantity": force_text(quantity)
+            }
+                                for (name, quantity) in insufficient_stocks.items()]
+            raise Problem(
+                _("Insufficient physical stock count for following products: %(product_counts)s") % {
+                    "product_counts": ", ".join(formatted_counts)
+                })
+
+        shipment.cache_values()
+        shipment.save()

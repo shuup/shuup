@@ -76,14 +76,16 @@ window.VariationVariableEditor = (function(m, _) {
      */
     function variableSortableSetup() {
         const variableWrap = document.getElementById("product-variable-wrap");
-        Sortable.create(variableWrap, {
-          group: "variable-sort",
-          handle: ".variable-sort-handle",
-          onEnd: function (event) {
-              variables.reindex(event.oldIndex, event.newIndex);
-              refreshField();
-          }
-        });
+        if (document.getElementsByClassName("variable-sort-handle").length > 0) {
+            Sortable.create(variableWrap, {
+              group: "variable-sort",
+              handle: ".variable-sort-handle",
+              onEnd: function (event) {
+                  variables.reindex(event.oldIndex, event.newIndex);
+                  refreshField();
+              }
+            });
+        }
     }
 
     /**

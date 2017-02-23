@@ -38,7 +38,7 @@
                 {{ product_macros.render_product_basic_information(product) }}
             </div>
             {% placeholder "product_extra_1" %}{% endplaceholder %}
-            {{ product_macros.render_product_order_section(product, variation_variables, variation_children, unorderability_reason, orderable_variation_children) }}
+            {{ order_form }}
             <hr>
             {% placeholder "product_extra_2" %}{% endplaceholder %}
         </div>
