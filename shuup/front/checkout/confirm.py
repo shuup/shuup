@@ -20,7 +20,7 @@ from shuup.front.checkout import CheckoutPhaseViewMixin
 class ConfirmForm(forms.Form):
     product_ids = forms.CharField(widget=forms.HiddenInput(), required=True)
     accept_terms = forms.BooleanField(required=True, label=_(u"I accept the terms and conditions"))
-    marketing = forms.BooleanField(required=False, label=_(u"I want to subscribe to your newsletter"), initial=True)
+    marketing = forms.BooleanField(required=False, label=_(u"I want to receive marketing material"), initial=True)
     comment = forms.CharField(widget=forms.Textarea(), required=False, label=_(u"Comment"))
 
     def __init__(self, *args, **kwargs):
