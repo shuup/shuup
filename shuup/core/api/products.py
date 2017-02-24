@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 import django_filters
+import six
 from django.utils.translation import ugettext_lazy as _
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from parler_rest.fields import TranslatedFieldsField
@@ -116,12 +117,12 @@ class ShopProductSubsetSerializer(ShopProductSerializer):
 
 class ProductSerializer(TranslatableModelSerializer):
     translations = TranslatedFieldsField(shared_model=Product)
-    shop_products = ShopProductSubsetSerializer(many=True, read_only=True)
+    shop_products = ShopProductSubsetSerializer(many=True, required=False)
     primary_image = ProductMediaSerializer(read_only=True)
     media = ProductMediaSerializer(read_only=True, many=True)
     stock_behavior = EnumField(enum=StockBehavior)
     shipping_mode = EnumField(enum=ShippingMode)
-    attributes = ProductAttributeSerializer(many=True, read_only=True)
+    attributes = ProductAttributeSerializer(many=True, required=False)
     package_content = serializers.SerializerMethodField()
     variation_children = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     variation_variables = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
@@ -143,6 +144,63 @@ class ProductSerializer(TranslatableModelSerializer):
 
     def get_variation_results(self, product):
         return ProductVariationVariableResultSerializer(product).data["combinations"]
+
+    def create(self, validated_data):
+        shop_products = []
+        attributes = []
+        if "shop_products" in validated_data:
+            shop_products = validated_data.pop("shop_products")
+
+        if "attributes" in validated_data:
+            attributes = validated_data.pop("attributes")
+
+        product = Product.objects.create(**validated_data)
+
+        for attribute_data in attributes:
+            self._handle_attribute_value(product, attribute_data)
+
+        if attributes:
+            # save after every attribute value is set
+            product.save()
+
+        for shop_product_data in shop_products:
+            self._handle_shop_product(product, shop_product_data)
+
+        return product
+
+    def _handle_attribute_value(self, product, data):
+        attr = data["attribute"]
+        if attr.is_stringy:
+            if attr.is_translated:
+                for lang, lang_data in six.iteritems(data["translations"]):
+                    product.set_attribute_value(attr.identifier, lang_data["translated_string_value"], language=lang)
+            else:
+                product.set_attribute_value(attr.identifier, data["untranslated_string_value"])
+        elif attr.is_numeric:
+            product.set_attribute_value(attr.identifier, data["numeric_value"])
+        elif attr.is_temporal:
+            product.set_attribute_value(attr.identifier, data["datetime_value"])
+
+    def _handle_shop_product(self, product, data):
+        m2m_data = {
+            "suppliers": data.pop("suppliers") if "suppliers" in data else [],
+            "categories": data.pop("categories") if "categories" in data else [],
+            "visibility_groups": data.pop("visibility_groups") if "visibility_groups" in data else [],
+            "shipping_methods": data.pop("shipping_methods") if "shipping_methods" in data else [],
+            "payment_methods": data.pop("payment_methods") if "payment_methods" in data else [],
+        }
+
+        data["product"] = product
+        sp = ShopProduct.objects.create(**data)
+
+        def add_m2m(obj, key, values):
+            for val in values:
+                getattr(obj, key).add(val)
+
+        for key, values in six.iteritems(m2m_data):
+            add_m2m(sp, key, values)
+
+        return sp
 
 
 class ProductStockStatusSerializer(serializers.Serializer):

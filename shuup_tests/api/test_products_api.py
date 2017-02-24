@@ -8,23 +8,26 @@
 from __future__ import unicode_literals
 
 import base64
+import datetime
 import json
 import os
 from decimal import Decimal
 
+from django.utils.timezone import datetime as dt
 from django.utils.translation import activate
 from rest_framework import status
 from rest_framework.test import APIClient
 
 from shuup.core import cache
 from shuup.core.models import (
-    Attribute, AttributeType, AttributeVisibility, Manufacturer, Product,
-    ProductAttribute, ProductMediaKind, ProductMode, ProductPackageLink,
-    ProductType, ProductVisibility, SalesUnit, ShippingMode, Shop, ShopProduct,
+    Attribute, AttributeType, AttributeVisibility, Category, CategoryStatus,
+    CategoryVisibility, Manufacturer, Product, ProductAttribute,
+    ProductMediaKind, ProductMode, ProductPackageLink, ProductType,
+    ProductVisibility, SalesUnit, ShippingMode, Shop, ShopProduct,
     ShopProductVisibility, StockBehavior, Supplier, TaxClass
 )
 from shuup.testing.factories import (
-    CategoryFactory, create_product, create_random_contact_group,
+    ATTR_SPECS, CategoryFactory, create_product, create_random_contact_group,
     create_random_product_attribute, get_default_category,
     get_default_product_type, get_default_sales_unit, get_default_shop,
     get_default_supplier, get_default_tax_class, get_random_filer_image
@@ -176,6 +179,150 @@ def test_create_product(admin_user):
         activate(lang)
         product = Product.objects.first()
         _check_product_basic_data(product, data, lang)
+
+
+def test_create_product_with_shop_product(admin_user):
+    shop = get_default_shop()
+    client = _get_client(admin_user)
+    supplier = get_default_supplier()
+
+    cat = Category.objects.create(
+        status=CategoryStatus.VISIBLE,
+        visibility=CategoryVisibility.VISIBLE_TO_ALL,
+        identifier="test_category",
+        name="Test"
+    )
+
+    assert Product.objects.count() == 0
+    data = _get_product_sample_data()
+    data["shop_products"] = _get_sample_shop_product_data(shop, cat, supplier)
+
+    response = client.post("/api/shuup/product/", content_type="application/json", data=json.dumps(data))
+    assert response.status_code == status.HTTP_201_CREATED
+
+    # check all
+    for lang in ("en", "pt-br"):
+        activate(lang)
+        product = Product.objects.first()
+        _check_product_basic_data(product, data, lang)
+
+    assert Product.objects.count() == 1
+    assert ShopProduct.objects.count() == 1
+
+    product = Product.objects.first()
+    shop_product = ShopProduct.objects.first()
+
+    assert product.get_shop_instance(shop) == shop_product
+    assert supplier in shop_product.suppliers.all()
+    assert cat in shop_product.categories.all()
+    assert shop_product.primary_category == cat
+
+
+def test_create_product_with_shop_product_and_attributes(admin_user):
+    shop = get_default_shop()
+    client = _get_client(admin_user)
+    supplier = get_default_supplier()
+
+    cat = Category.objects.create(
+        status=CategoryStatus.VISIBLE,
+        visibility=CategoryVisibility.VISIBLE_TO_ALL,
+        identifier="test_category",
+        name="Test"
+    )
+    product_type = get_default_product_type()
+
+    assert Attribute.objects.count() > 0
+
+    assert Product.objects.count() == 0
+
+    attributes_data = []
+
+    expected_values = {
+        "untranslated_string_value": "test value",
+        "numeric_value": 12,
+        "boolean_value": True,
+        "timedelta_value": "200",  # seconds
+        "datetime_value": "2017-01-01 01:00:00",
+        "translated_string_value": "translated string value"
+    }
+
+    for spec in ATTR_SPECS:
+        attr = Attribute.objects.get(identifier=spec["identifier"])
+        attr_data = {
+            "numeric_value": None,
+            "datetime_value": None,
+            "untranslated_string_value": "",
+            "attribute": attr.pk,
+            # "product": product.pk
+        }
+
+        if attr.is_stringy:
+            if attr.is_translated:
+                attr_data["translations"] = {
+                    "en": {
+                        "translated_string_value": expected_values["translated_string_value"]
+                    }
+                }
+            else:
+                attr_data["untranslated_string_value"] = expected_values["untranslated_string_value"]
+        elif attr.is_numeric:
+            if attr.type == AttributeType.BOOLEAN:
+                attr_data["numeric_value"] = int(expected_values["boolean_value"])
+            elif attr.type == AttributeType.TIMEDELTA:
+                attr_data["numeric_value"] = int(expected_values["timedelta_value"])
+            else:
+                attr_data["numeric_value"] = expected_values["numeric_value"]
+        elif attr.is_temporal:
+            attr_data["datetime_value"] = expected_values["datetime_value"]
+
+        attributes_data.append(attr_data)
+
+    data = _get_product_sample_data()
+    data["shop_products"] = _get_sample_shop_product_data(shop, cat, supplier)
+    data["attributes"] = attributes_data
+    response = client.post("/api/shuup/product/", content_type="application/json", data=json.dumps(data))
+    assert response.status_code == status.HTTP_201_CREATED
+
+    # check all
+    for lang in ("en", "pt-br"):
+        activate(lang)
+        product = Product.objects.first()
+        _check_product_basic_data(product, data, lang)
+
+    assert Product.objects.count() == 1
+    assert ShopProduct.objects.count() == 1
+
+    product = Product.objects.first()
+    shop_product = ShopProduct.objects.first()
+
+    assert product.get_shop_instance(shop) == shop_product
+    assert supplier in shop_product.suppliers.all()
+    assert cat in shop_product.categories.all()
+    assert shop_product.primary_category == cat
+
+    # validate attribute values
+    for spec in ATTR_SPECS:
+        attribute = Attribute.objects.get(identifier=spec["identifier"])
+        attr = ProductAttribute.objects.get(product=product, attribute=attribute)
+        if attribute.is_stringy:
+            if attribute.is_translated:
+                attr.set_current_language("en")
+                assert attr.value == expected_values["translated_string_value"]
+            else:
+                assert attr.value == expected_values["untranslated_string_value"]
+        elif attribute.is_numeric:
+            if attribute.type == AttributeType.BOOLEAN:
+                assert attr.value == expected_values["boolean_value"]
+            elif attribute.type == AttributeType.TIMEDELTA:
+                assert attr.value == datetime.timedelta(seconds=int(expected_values["timedelta_value"]))
+            else:
+                assert attr.value == expected_values["numeric_value"]
+        elif attribute.is_temporal:
+            dt_value = expected_values["datetime_value"]
+            parsed_dt = dt.strptime(dt_value, "%Y-%m-%d %H:%M:%S")
+            assert attr.value.year == parsed_dt.year
+            assert attr.value.month == parsed_dt.month
+            assert attr.value.day == parsed_dt.day
 
 
 def test_update_product(admin_user):
@@ -644,6 +791,30 @@ def _get_product_sample_data():
         "net_weight": 13.2,
         "gross_weight": 20.3
     }
+
+
+def _get_sample_shop_product_data(shop, category, supplier):
+    return [
+        {
+            "orderable": True,
+            "visibility": 3,
+            "visibility_limit": 1,
+            "purchasable": True,
+            "backorder_maximum": "0.000000000",
+            "purchase_multiple": "0.000000000",
+            "minimum_purchase_quantity": "1.000000000",
+            "limit_shipping_methods": False,
+            "limit_payment_methods": False,
+            "default_price_value": "91.780000000",
+            "shop": shop.pk,
+            "primary_category": category.pk,
+            "suppliers": [supplier.pk],
+            "visibility_groups": [],
+            "shipping_methods": [],
+            "payment_methods": [],
+            "categories": [category.pk]
+        },
+    ]
 
 
 def _check_product_basic_data(product, data, lang="en"):
