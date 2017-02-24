@@ -137,6 +137,10 @@ Core
 ``admin_order_section``
     Additional ``Section`` subclasses for Order detail sections.
 
+``front_menu_extender``
+    Additional menu items provided by addons. These should be subclassed from
+    `~shuup.xtheme.extenders.FrontMenuExtender`.
+
 ``front_product_order_form``
     List of order forms which are subclasses of ``ProductOrderForm``. These forms
     are shown on product detail page in front as well as previews etc.
