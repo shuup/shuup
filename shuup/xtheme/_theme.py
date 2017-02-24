@@ -9,6 +9,7 @@ import logging
 import warnings
 from contextlib import contextmanager
 
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.apps.provides import (
@@ -17,6 +18,7 @@ from shuup.apps.provides import (
 from shuup.core import cache
 from shuup.utils.deprecation import RemovedInFutureShuupWarning
 from shuup.utils.importing import load
+from shuup.xtheme.extenders import MenuExtenderLocation
 
 log = logging.getLogger(__name__)
 
@@ -324,6 +326,21 @@ class Theme(object):
                 if stylesheet.identifier == self.default_style_identifier:
                     return stylesheet
         return blank
+
+    def render_menu_extensions(self, request, location=MenuExtenderLocation.MAIN_MENU):
+        """
+        Render menu extensions
+
+        Some addons want to provide items to main menu.
+        :param request:
+        :return safe HTML string:
+        """
+        items = []
+        for menu_extender in get_provide_objects("front_menu_extender"):
+            extender = menu_extender()
+            if extender.location == location:
+                items.append(extender.get_rendered_menu_items(request, self))
+        return mark_safe("".join(items))
 
 
 _not_set = object()  # Can't use `None` here.

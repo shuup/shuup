@@ -13,6 +13,7 @@
                     <li{% if request.path == "%s/" % link.url %} class="current"{% endif %}><a href="{{ link.url }}">{{ link.text }}</a></li>
                 {% endfor %}
             {% endif %}
+            {{ xtheme.render_menu_extensions(request) }}
         </ul>
     </div>
 {% endmacro %}
