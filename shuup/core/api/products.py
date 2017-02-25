@@ -8,7 +8,6 @@
 from __future__ import unicode_literals
 
 import django_filters
-import six
 from django.utils.translation import ugettext_lazy as _
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from parler_rest.fields import TranslatedFieldsField
@@ -146,61 +145,82 @@ class ProductSerializer(TranslatableModelSerializer):
         return ProductVariationVariableResultSerializer(product).data["combinations"]
 
     def create(self, validated_data):
-        shop_products = []
-        attributes = []
-        if "shop_products" in validated_data:
-            shop_products = validated_data.pop("shop_products")
+        nested = self._pop_nested_objects(validated_data)
+        instance = super(ProductSerializer, self).create(validated_data)
+        self._handle_nested_structures(instance, nested)
+        return instance
 
-        if "attributes" in validated_data:
-            attributes = validated_data.pop("attributes")
+    def update(self, instance, validated_data):
+        nested = self._pop_nested_objects(validated_data)
+        super(ProductSerializer, self).update(instance, validated_data)
+        self._handle_nested_structures(instance, nested)
+        return instance
 
-        product = Product.objects.create(**validated_data)
+    def _pop_nested_objects(self, validated_data):
+        return {
+            field: validated_data.pop(field, None)
+            for field in ['attributes', 'shop_products']
+        }
 
-        for attribute_data in attributes:
-            self._handle_attribute_value(product, attribute_data)
+    def _handle_nested_structures(self, product, nested):
+        attributes = nested['attributes']
+        shop_products = nested['shop_products']
+
+        if not self.partial:
+            if attributes is not None:
+                product.attributes.all().delete()
+            if shop_products is not None:
+                product.shop_products.all().delete()
 
         if attributes:
-            # save after every attribute value is set
-            product.save()
+            for attribute_data in attributes:
+                self._handle_attribute_value(product, attribute_data)
 
-        for shop_product_data in shop_products:
-            self._handle_shop_product(product, shop_product_data)
-
-        return product
+        if shop_products:
+            for shop_product_data in shop_products:
+                self._handle_shop_product(product, shop_product_data)
 
     def _handle_attribute_value(self, product, data):
-        attr = data["attribute"]
-        if attr.is_stringy:
-            if attr.is_translated:
-                for lang, lang_data in six.iteritems(data["translations"]):
-                    product.set_attribute_value(attr.identifier, lang_data["translated_string_value"], language=lang)
-            else:
-                product.set_attribute_value(attr.identifier, data["untranslated_string_value"])
+        attr = data["attribute"]  # type: shuup.core.models.Attribute
+        if attr.is_stringy and attr.is_translated:
+            translations = data.get('translations')
+            if not self.partial or translations is None:
+                product.clear_attribute_value(attr.identifier)
+            for (lang, lang_data) in (translations or {}).items():
+                value = lang_data["translated_string_value"]
+                product.set_attribute_value(attr.identifier, value, language=lang)
+        elif attr.is_stringy:
+            product.set_attribute_value(attr.identifier, data["untranslated_string_value"])
         elif attr.is_numeric:
             product.set_attribute_value(attr.identifier, data["numeric_value"])
         elif attr.is_temporal:
             product.set_attribute_value(attr.identifier, data["datetime_value"])
 
     def _handle_shop_product(self, product, data):
-        m2m_data = {
-            "suppliers": data.pop("suppliers") if "suppliers" in data else [],
-            "categories": data.pop("categories") if "categories" in data else [],
-            "visibility_groups": data.pop("visibility_groups") if "visibility_groups" in data else [],
-            "shipping_methods": data.pop("shipping_methods") if "shipping_methods" in data else [],
-            "payment_methods": data.pop("payment_methods") if "payment_methods" in data else [],
-        }
+        shop = data.pop('shop')
+        m2m_data = [
+            (field, data.pop(field, None))
+            for field in ['suppliers', 'categories', 'visibility_groups',
+                          'shipping_methods', 'payment_methods']
+        ]
 
-        data["product"] = product
-        sp = ShopProduct.objects.create(**data)
+        (shop_product, created) = ShopProduct.objects.get_or_create(
+            product=product, shop=shop, defaults=data)
 
-        def add_m2m(obj, key, values):
-            for val in values:
-                getattr(obj, key).add(val)
+        if not created:
+            for (field, value) in data.items():
+                setattr(shop_product, field, value)
+            shop_product.save()
 
-        for key, values in six.iteritems(m2m_data):
-            add_m2m(sp, key, values)
+        for (field, values) in m2m_data:
+            if values is None:
+                continue
+            field_objects = getattr(shop_product, field)
+            field_objects.clear()
+            for value in values:
+                field_objects.add(value)
 
-        return sp
+        return shop_product
 
 
 class ProductStockStatusSerializer(serializers.Serializer):

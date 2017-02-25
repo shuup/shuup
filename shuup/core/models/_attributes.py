@@ -523,5 +523,18 @@ class AttributableMixin(object):
         applied_attr.save()
         return applied_attr
 
+    def clear_attribute_value(self, identifier, language=None):
+        avail_attrs = self.get_available_attribute_queryset()
+        attr = avail_attrs.get(identifier=identifier)
+        attr_val = self.attributes.filter(attribute=attr).first()
+        if not attr_val:
+            return
+        if language is None:  # Delete all translations
+            attr_val.delete()
+            return
+        trans = attr_val.translations.filter(language_code=language).first()
+        if trans:
+            trans.delete()
+
 
 AttributeLogEntry = define_log_model(Attribute)
