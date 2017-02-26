@@ -22,7 +22,9 @@ from shuup.admin.base import MenuEntry
 from shuup.admin.forms.widgets import MediaChoiceWidget
 from shuup.admin.toolbar import PostActionButton, Toolbar
 from shuup.admin.utils.urls import get_model_url
-from shuup.core.models import Product, ProductMedia, ProductMediaKind, Shop, ShopProduct
+from shuup.core.models import (
+    Product, ProductMedia, ProductMediaKind, Shop, ShopProduct
+)
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 
 

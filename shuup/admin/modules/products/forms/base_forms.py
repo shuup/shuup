@@ -24,8 +24,8 @@ from shuup.admin.forms.widgets import (
     QuickAddProductTypeSelect, QuickAddShippingMethodsSelect, TextEditorWidget
 )
 from shuup.core.models import (
-    Attribute, AttributeType, Category, Product, ProductMedia,
-    ProductMediaKind, Shop, ShopProduct
+    Attribute, AttributeType, Category, PaymentMethod, Product, ProductMedia,
+    ProductMediaKind, ShippingMethod, Shop, ShopProduct
 )
 from shuup.utils.i18n import get_language_name
 from shuup.utils.multilanguage_model_form import (
@@ -144,7 +144,16 @@ class ShopProductForm(forms.ModelForm):
         }
 
     def __init__(self, **kwargs):
+        self.request = kwargs.pop("request", None)
         super(ShopProductForm, self).__init__(**kwargs)
+        payment_methods_qs = PaymentMethod.objects.all()
+        shipping_methods_qs = ShippingMethod.objects.all()
+        if self.request:
+            shop = Shop.objects.get_current(self.request)
+            payment_methods_qs = payment_methods_qs.filter(shop=shop)
+            shipping_methods_qs = ShippingMethod.objects.filter(shop=shop)
+        self.fields["payment_methods"].queryset = payment_methods_qs
+        self.fields["shipping_methods"].queryset = shipping_methods_qs
         category_qs = Category.objects.all_except_deleted().prefetch_related('translations')
         self.fields["default_price_value"].required = True
         self.fields["primary_category"].queryset = category_qs

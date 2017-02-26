@@ -101,7 +101,7 @@ class ShopProductFormPart(FormPart):
                 ShopProductForm,
                 template_name="shuup/admin/products/_edit_shop_form.jinja",
                 required=True,
-                kwargs={"instance": shop_product, "initial": self.get_initial()}
+                kwargs={"instance": shop_product, "initial": self.get_initial(), "request": self.request}
             )
 
             # the hidden extra form template that uses ShopProductForm
