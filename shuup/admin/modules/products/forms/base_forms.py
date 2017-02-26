@@ -145,7 +145,7 @@ class ShopProductForm(forms.ModelForm):
 
     def __init__(self, **kwargs):
         super(ShopProductForm, self).__init__(**kwargs)
-        category_qs = Category.objects.all_except_deleted()
+        category_qs = Category.objects.all_except_deleted().prefetch_related('translations')
         self.fields["default_price_value"].required = True
         self.fields["primary_category"].queryset = category_qs
         self.fields["categories"].queryset = category_qs
