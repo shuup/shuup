@@ -169,7 +169,7 @@ class BaseProductMediaFormPart(FormPart):
             self.formset,
             template_name="shuup/admin/products/_edit_media_form.jinja",
             required=False,
-            kwargs={"product": self.object, "languages": settings.LANGUAGES}
+            kwargs={"product": self.object, "languages": settings.LANGUAGES, "request": self.request}
         )
 
     def form_valid(self, form):

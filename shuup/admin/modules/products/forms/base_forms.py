@@ -266,14 +266,12 @@ class BaseProductMediaForm(MultiLanguageModelForm):
             "title",
             "description",
             "purchased",
-            "shops",
             "kind"
         )
 
     def __init__(self, **kwargs):
         self.product = kwargs.pop("product")
         self.allowed_media_kinds = kwargs.pop("allowed_media_kinds")
-        default_shop = kwargs.pop("default_shop")
         super(BaseProductMediaForm, self).__init__(**kwargs)
 
         self.fields["file"].widget = forms.HiddenInput()
@@ -294,9 +292,6 @@ class BaseProductMediaForm(MultiLanguageModelForm):
 
             self.fields["kind"].initial = self.allowed_media_kinds[0]
 
-        if not self.instance.pk:
-            self.fields["shops"].initial = [default_shop]
-
         self.file_url = self.instance.url
 
     def get_thumbnail(self, request):
@@ -316,6 +311,8 @@ class BaseProductMediaForm(MultiLanguageModelForm):
 
     def pre_master_save(self, instance):
         instance.product = self.product
+        shop = Shop.objects.get_current(self.request)
+        instance.shops.add(shop)
 
 
 class BaseProductMediaFormSet(BaseModelFormSet):
@@ -333,6 +330,7 @@ class BaseProductMediaFormSet(BaseModelFormSet):
 
     def __init__(self, *args, **kwargs):
         self.product = kwargs.pop("product")
+        self.request = kwargs.pop("request", None)
         self.default_language = kwargs.pop(
             "default_language", getattr(settings, "PARLER_DEFAULT_LANGUAGE_CODE"))
         self.languages = to_language_codes(kwargs.pop("languages", ()), self.default_language)
@@ -349,8 +347,13 @@ class BaseProductMediaFormSet(BaseModelFormSet):
         kwargs.setdefault("languages", self.languages)
         kwargs.setdefault("product", self.product)
         kwargs.setdefault("allowed_media_kinds", self.allowed_media_kinds)
-        kwargs.setdefault("default_shop", Shop.objects.first().pk)
         return self.form_class(**kwargs)
+
+    def save(self, commit=True):
+        forms = self.forms or []
+        for form in forms:
+            form.request = self.request
+        super(BaseProductMediaFormSet, self).save(commit)
 
 
 class ProductMediaForm(BaseProductMediaForm):
