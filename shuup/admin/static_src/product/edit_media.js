@@ -108,25 +108,29 @@ $(function() {
         addMediaPanel($section, file);
     }
 
-    activateDropzone($("#product-images-section-dropzone"), {
-        url: "/sa/media/?action=upload&path=/products/images",
-        maxFiles: 10,
-        onSuccess: function(file) {
-            onDropzoneSuccess($("#product-images-section"), file);
-        },
-        onQueueComplete: function() {
-            onDropzoneQueueComplete(this, "images");
-        }
-    });
+    if ($('#product-images-section-dropzone').length) {
+        activateDropzone($("#product-images-section-dropzone"), {
+            url: "/sa/media/?action=upload&path=/products/images",
+            maxFiles: 10,
+            onSuccess: function(file) {
+                onDropzoneSuccess($("#product-images-section"), file);
+            },
+            onQueueComplete: function() {
+                onDropzoneQueueComplete(this, "images");
+            }
+        });
+    }
 
-    activateDropzone($("#product-media-section-dropzone"), {
-        url: "/sa/media/?action=upload&path=/products/media",
-        maxFiles: 10,
-        onSuccess: function(file) {
-            onDropzoneSuccess($("#product-media-section"), file);
-        },
-        onQueueComplete: function() {
-            onDropzoneQueueComplete(this, "media");
-        }
-    });
+    if ($('#product-media-section-dropzone').length) {
+        activateDropzone($("#product-media-section-dropzone"), {
+            url: "/sa/media/?action=upload&path=/products/media",
+            maxFiles: 10,
+            onSuccess: function(file) {
+                onDropzoneSuccess($("#product-media-section"), file);
+            },
+            onQueueComplete: function() {
+                onDropzoneQueueComplete(this, "media");
+            }
+        });
+    }
 });
