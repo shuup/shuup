@@ -38,6 +38,7 @@ Addons
 Front
 ~~~~~
 
+- It's now possible to re-order old order from order history
 - It's now possible for addons to extend front main menu using the
   new `front_menu_extender` provide. See :doc:`provides.rst` for more information.
 - Fix default error handler always returning 200 OK as an HTTP status code.
