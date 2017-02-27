@@ -84,7 +84,7 @@ class ShopProductFormPart(FormPart):
 
     def __init__(self, request, object=None):
         super(ShopProductFormPart, self).__init__(request, object)
-        self.shops = [request.session['admin_shop']]
+        self.shop = request.session['admin_shop']
 
     def get_shop_instance(self, shop):
         try:
@@ -94,41 +94,39 @@ class ShopProductFormPart(FormPart):
         return shop_product
 
     def get_form_defs(self):
-        for shop in self.shops:
-            shop_product = self.get_shop_instance(shop)
-            yield TemplatedFormDef(
-                "shop%d" % shop.pk,
-                ShopProductForm,
-                template_name="shuup/admin/products/_edit_shop_form.jinja",
-                required=True,
-                kwargs={"instance": shop_product, "initial": self.get_initial(), "request": self.request}
-            )
+        shop_product = self.get_shop_instance(self.shop)
+        yield TemplatedFormDef(
+            "shop%d" % self.shop.pk,
+            ShopProductForm,
+            template_name="shuup/admin/products/_edit_shop_form.jinja",
+            required=True,
+            kwargs={"instance": shop_product, "initial": self.get_initial(), "request": self.request}
+        )
 
-            # the hidden extra form template that uses ShopProductForm
-            yield TemplatedFormDef(
-                "shop%d_extra" % shop.pk,
-                forms.Form,
-                template_name="shuup/admin/products/_edit_extra_shop_form.jinja",
-                required=False
-            )
+        # the hidden extra form template that uses ShopProductForm
+        yield TemplatedFormDef(
+            "shop%d_extra" % self.shop.pk,
+            forms.Form,
+            template_name="shuup/admin/products/_edit_extra_shop_form.jinja",
+            required=False
+        )
 
     def form_valid(self, form):
-        for shop in self.shops:
-            shop_product_form = form["shop%d" % shop.pk]
-            if not shop_product_form.changed_data:
-                continue
-            if not shop_product_form.instance.pk:
-                shop_product_form.instance.product = self.object
+        shop_product_form = form["shop%d" % self.shop.pk]
+        if not shop_product_form.changed_data:
+            return
+        if not shop_product_form.instance.pk:
+            shop_product_form.instance.product = self.object
 
-            original_quantity = shop_product_form.instance.minimum_purchase_quantity
-            rounded_quantity = self.object.sales_unit.round(original_quantity)
-            if original_quantity != rounded_quantity:
-                messages.info(self.request, _("Minimum Purchase Quantity has been rounded to match Sales Unit."))
+        original_quantity = shop_product_form.instance.minimum_purchase_quantity
+        rounded_quantity = self.object.sales_unit.round(original_quantity)
+        if original_quantity != rounded_quantity:
+            messages.info(self.request, _("Minimum Purchase Quantity has been rounded to match Sales Unit."))
 
-            shop_product_form.instance.minimum_purchase_quantity = rounded_quantity
+        shop_product_form.instance.minimum_purchase_quantity = rounded_quantity
 
-            inst = shop_product_form.save()
-            messages.success(self.request, _("Changes to shop instance for %s saved") % inst.shop)
+        inst = shop_product_form.save()
+        messages.success(self.request, _("Changes to shop instance for %s saved") % inst.shop)
 
     def get_initial(self):
         if not self.object.pk:
