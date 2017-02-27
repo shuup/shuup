@@ -44,7 +44,8 @@ class ProductBaseFormPart(FormPart):
             kwargs={
                 "instance": self.object.product,
                 "languages": settings.LANGUAGES,
-                "initial": self.get_initial()
+                "initial": self.get_initial(),
+                "request": self.request
             }
         )
 
@@ -57,6 +58,7 @@ class ProductBaseFormPart(FormPart):
 
     def form_valid(self, form_group):
         self.object.product = form_group["base"].save()
+        self.object.save()
         return self.object.product
 
     def get_sku(self):
@@ -193,8 +195,6 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
     ]
     form_part_class_provide_key = "admin_product_form_part"
     add_form_errors_as_messages = True
-
-    product_id = None
 
     def get_object(self, queryset=None):
         if not self.kwargs.get(self.pk_url_kwarg):
