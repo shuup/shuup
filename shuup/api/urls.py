@@ -20,6 +20,11 @@ class AutoRouter(routers.DefaultRouter):
         for func in get_provide_objects("api_populator"):
             func(router=self)
 
+    def register(self, prefix, viewset, base_name=None):
+        if base_name is None:
+            base_name = prefix.replace('/', '-')
+        super(AutoRouter, self).register(prefix, viewset, base_name)
+
 
 apply_monkeypatch()
 router = AutoRouter()

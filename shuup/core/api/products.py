@@ -116,12 +116,12 @@ class ShopProductSubsetSerializer(ShopProductSerializer):
 
 class ProductSerializer(TranslatableModelSerializer):
     translations = TranslatedFieldsField(shared_model=Product)
-    shop_products = ShopProductSubsetSerializer(many=True, read_only=True)
+    shop_products = ShopProductSubsetSerializer(many=True, required=False)
     primary_image = ProductMediaSerializer(read_only=True)
     media = ProductMediaSerializer(read_only=True, many=True)
     stock_behavior = EnumField(enum=StockBehavior)
     shipping_mode = EnumField(enum=ShippingMode)
-    attributes = ProductAttributeSerializer(many=True, read_only=True)
+    attributes = ProductAttributeSerializer(many=True, required=False)
     package_content = serializers.SerializerMethodField()
     variation_children = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     variation_variables = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
@@ -143,6 +143,84 @@ class ProductSerializer(TranslatableModelSerializer):
 
     def get_variation_results(self, product):
         return ProductVariationVariableResultSerializer(product).data["combinations"]
+
+    def create(self, validated_data):
+        nested = self._pop_nested_objects(validated_data)
+        instance = super(ProductSerializer, self).create(validated_data)
+        self._handle_nested_structures(instance, nested)
+        return instance
+
+    def update(self, instance, validated_data):
+        nested = self._pop_nested_objects(validated_data)
+        super(ProductSerializer, self).update(instance, validated_data)
+        self._handle_nested_structures(instance, nested)
+        return instance
+
+    def _pop_nested_objects(self, validated_data):
+        return {
+            field: validated_data.pop(field, None)
+            for field in ['attributes', 'shop_products']
+        }
+
+    def _handle_nested_structures(self, product, nested):
+        attributes = nested['attributes']
+        shop_products = nested['shop_products']
+
+        if not self.partial:
+            if attributes is not None:
+                product.attributes.all().delete()
+            if shop_products is not None:
+                product.shop_products.all().delete()
+
+        if attributes:
+            for attribute_data in attributes:
+                self._handle_attribute_value(product, attribute_data)
+
+        if shop_products:
+            for shop_product_data in shop_products:
+                self._handle_shop_product(product, shop_product_data)
+
+    def _handle_attribute_value(self, product, data):
+        attr = data["attribute"]  # type: shuup.core.models.Attribute
+        if attr.is_stringy and attr.is_translated:
+            translations = data.get('translations')
+            if not self.partial or translations is None:
+                product.clear_attribute_value(attr.identifier)
+            for (lang, lang_data) in (translations or {}).items():
+                value = lang_data["translated_string_value"]
+                product.set_attribute_value(attr.identifier, value, language=lang)
+        elif attr.is_stringy:
+            product.set_attribute_value(attr.identifier, data["untranslated_string_value"])
+        elif attr.is_numeric:
+            product.set_attribute_value(attr.identifier, data["numeric_value"])
+        elif attr.is_temporal:
+            product.set_attribute_value(attr.identifier, data["datetime_value"])
+
+    def _handle_shop_product(self, product, data):
+        shop = data.pop('shop')
+        m2m_data = [
+            (field, data.pop(field, None))
+            for field in ['suppliers', 'categories', 'visibility_groups',
+                          'shipping_methods', 'payment_methods']
+        ]
+
+        (shop_product, created) = ShopProduct.objects.get_or_create(
+            product=product, shop=shop, defaults=data)
+
+        if not created:
+            for (field, value) in data.items():
+                setattr(shop_product, field, value)
+            shop_product.save()
+
+        for (field, values) in m2m_data:
+            if values is None:
+                continue
+            field_objects = getattr(shop_product, field)
+            field_objects.clear()
+            for value in values:
+                field_objects.add(value)
+
+        return shop_product
 
 
 class ProductStockStatusSerializer(serializers.Serializer):
