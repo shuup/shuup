@@ -6,7 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from shuup.testing.themes import ShuupTestingTheme
-from shuup.testing.themes.plugins import TestHighlightPlugin
+from shuup.testing.themes.plugins import HighlightTestPlugin
 from shuup.xtheme import templated_plugin_factory, TemplatedPlugin
 from shuup.xtheme.testing import override_current_theme_class
 from shuup_tests.utils import printable_gibberish
@@ -20,7 +20,7 @@ def test_plugin_choices():
         for identifier, data in theme.get_all_plugin_choices():
             for choice in data:
                 choice_identifiers.add(choice[0])
-        assert choice_identifiers == set(("inject", "text", TestHighlightPlugin.identifier))
+        assert choice_identifiers == set(("inject", "text", HighlightTestPlugin.identifier))
 
 
 def test_templated_plugin():
