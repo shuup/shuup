@@ -17,7 +17,7 @@ class ShuupTestingTheme(Theme):
     author = "Shuup Team"
     template_dir = "shuup_testing"
 
-    plugins = [__name__ + ".plugins.TestHighlightPlugin"]
+    plugins = [__name__ + ".plugins.HighlightTestPlugin"]
 
 
 class ShuupTestingThemeWithCustomBase(ShuupTestingTheme):

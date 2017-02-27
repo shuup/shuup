@@ -12,7 +12,7 @@ from shuup.core.models import Product
 from shuup.xtheme import TemplatedPlugin
 
 
-class TestHighlightPlugin(TemplatedPlugin):
+class HighlightTestPlugin(TemplatedPlugin):
     identifier = "shuup_test_theme.product_highlight"
     name = _("Shuup Test Theme Product Highlights")
     template_name = "shuup_testing/highlight_plugin.jinja"

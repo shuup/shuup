@@ -19,7 +19,7 @@ from shuup.testing.utils import apply_request_middleware
 from shuup.utils.importing import load
 
 
-class TestPrintoutDeliveryExtraFields(PrintoutDeliveryExtraInformation):
+class PrintoutTestDeliveryExtraFields(PrintoutDeliveryExtraInformation):
 
     @property
     def extra_fields(self):
@@ -63,7 +63,7 @@ def test_adding_extra_fields_to_the_delivery(rf):
     request = rf.get("/")
 
     with override_provides("order_printouts_delivery_extra_fields", [
-        "shuup_tests.order_printouts.test_printouts:TestPrintoutDeliveryExtraFields",
+        "shuup_tests.order_printouts.test_printouts:PrintoutTestDeliveryExtraFields",
     ]):
         response = get_delivery_html(request, shipment.id)
         assert response.status_code == 200

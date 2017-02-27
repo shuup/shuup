@@ -52,7 +52,7 @@ def initialize_report_test(product_price, product_count, tax_rate, line_count):
     return expected_taxful_total, expected_taxless_total, shop, order
 
 
-class TestSalesReport(ShuupReportBase):
+class SalesTestReport(ShuupReportBase):
     identifier = "test_sales_report"
     title = _("Sales Report")
 
@@ -111,9 +111,9 @@ def test_reporting(rf):
 
     expected_taxful_total, expected_taxless_total, shop, order = initialize_report_test(product_price, product_count, tax_rate, line_count)
 
-    with override_provides("reports", [__name__ + ":TestSalesReport"]):
+    with override_provides("reports", [__name__ + ":SalesTestReport"]):
         data = {
-            "report": TestSalesReport.get_name(),
+            "report": SalesTestReport.get_name(),
             "shop": shop.pk,
             "date_range": DateRangeChoices.THIS_YEAR.value,
             "writer": "json",
@@ -127,7 +127,7 @@ def test_reporting(rf):
             response.render()
         assert response.status_code == 200
         json_data = json.loads(response.content.decode("utf-8"))
-        assert force_text(TestSalesReport.title) in json_data.get("heading")
+        assert force_text(SalesTestReport.title) in json_data.get("heading")
         totals = json_data.get("tables")[0].get("totals")
         return_data = json_data.get("tables")[0].get("data")[0]
         assert int(totals.get("product_count", 0)) == product_count
@@ -143,7 +143,7 @@ def test_reporting(rf):
 
         # test report without downloading it
         data = {
-            "report": TestSalesReport.get_name(),
+            "report": SalesTestReport.get_name(),
             "shop": shop.pk,
             "date_range": DateRangeChoices.CUSTOM.value,
             "start_date": last_year.strftime("%Y-%m-%d"),
@@ -157,7 +157,7 @@ def test_reporting(rf):
 
         soup = BeautifulSoup(response.render().content)
         soup_text = force_text(soup)
-        assert force_text(TestSalesReport.title) in soup_text
+        assert force_text(SalesTestReport.title) in soup_text
         assert str(expected_taxless_total) in soup_text
         assert str(expected_taxful_total) in soup_text
 
@@ -166,25 +166,25 @@ def test_reporting(rf):
 def test_html_writer(rf):
     expected_taxful_total, expected_taxless_total, shop, order = initialize_report_test(10, 1, 0, 1)
     data = {
-        "report": TestSalesReport.get_name(),
+        "report": SalesTestReport.get_name(),
         "shop": shop.pk,
         "date_range": DateRangeChoices.THIS_YEAR,
         "writer": "html",
         "force_download": 1,
     }
-    report = TestSalesReport(**data)
+    report = SalesTestReport(**data)
     writer = get_writer_instance(data["writer"])
     assert str(writer) == data["writer"]
     rendered_report = writer.render_report(report=report)
 
     soup = BeautifulSoup(rendered_report)
-    assert force_text(TestSalesReport.title) in str(soup)
+    assert force_text(SalesTestReport.title) in str(soup)
     assert str(expected_taxless_total) in str(soup)
     assert str(expected_taxful_total) in str(soup)
 
     rendered_report = writer.render_report(report=report, inline=True)
     assert type(rendered_report) == SafeText
-    assert force_text(TestSalesReport.title) in rendered_report
+    assert force_text(SalesTestReport.title) in rendered_report
     assert str(expected_taxless_total) in rendered_report
     assert str(expected_taxful_total) in rendered_report
 
@@ -193,13 +193,13 @@ def test_html_writer(rf):
 def test_excel_writer(rf):
     expected_taxful_total, expected_taxless_total, shop, order = initialize_report_test(10, 1, 0, 1)
     data = {
-        "report": TestSalesReport.get_name(),
+        "report": SalesTestReport.get_name(),
         "shop": shop.pk,
         "date_range": DateRangeChoices.THIS_YEAR,
         "writer": "excel",
         "force_download": 1,
     }
-    report = TestSalesReport(**data)
+    report = SalesTestReport(**data)
     writer = get_writer_instance(data["writer"])
     assert str(writer) == data["writer"]
     rendered_report = writer.get_rendered_output()
