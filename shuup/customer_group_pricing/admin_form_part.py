@@ -105,7 +105,7 @@ class CustomerGroupPricingFormPart(FormPart):
             form_class=CustomerGroupPricingForm,
             template_name="shuup/admin/customer_group_pricing/form_part.jinja",
             required=False,
-            kwargs={"product": self.object, "request": self.request}
+            kwargs={"product": self.object.product, "request": self.request}
         )
 
     def form_valid(self, form):

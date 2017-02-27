@@ -108,6 +108,7 @@ class ProductBaseForm(MultiLanguageModelForm):
             image.shops.add(self.request.session.get("admin_shop"))
             instance.primary_image = image
             instance.save()
+        return instance
 
 
 class ShopProductForm(forms.ModelForm):

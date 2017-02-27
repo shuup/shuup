@@ -42,7 +42,7 @@ class ProductBaseFormPart(FormPart):
             template_name="shuup/admin/products/_edit_base_form.jinja",
             required=True,
             kwargs={
-                "instance": self.object,
+                "instance": self.object.product,
                 "languages": settings.LANGUAGES,
                 "initial": self.get_initial()
             }
@@ -55,9 +55,9 @@ class ProductBaseFormPart(FormPart):
             required=False
         )
 
-    def form_valid(self, form):
-        self.object = form["base"].save()
-        return self.object
+    def form_valid(self, form_group):
+        self.object.product = form_group["base"].save()
+        return self.object.product
 
     def get_sku(self):
         sku = self.request.GET.get("sku", "")
@@ -67,7 +67,7 @@ class ProductBaseFormPart(FormPart):
         return sku
 
     def get_initial(self):
-        if not self.object.pk:
+        if not self.object.product_id:
             # Sane defaults...
             name_field = "name__%s" % get_language()
             return {
@@ -86,21 +86,13 @@ class ShopProductFormPart(FormPart):
         super(ShopProductFormPart, self).__init__(request, object)
         self.shop = request.session['admin_shop']
 
-    def get_shop_instance(self, shop):
-        try:
-            shop_product = self.object.get_shop_instance(shop)
-        except ShopProduct.DoesNotExist:
-            shop_product = ShopProduct(shop=shop, product=self.object)
-        return shop_product
-
     def get_form_defs(self):
-        shop_product = self.get_shop_instance(self.shop)
         yield TemplatedFormDef(
             "shop%d" % self.shop.pk,
             ShopProductForm,
             template_name="shuup/admin/products/_edit_shop_form.jinja",
             required=True,
-            kwargs={"instance": shop_product, "initial": self.get_initial(), "request": self.request}
+            kwargs={"instance": self.object, "initial": self.get_initial(), "request": self.request}
         )
 
         # the hidden extra form template that uses ShopProductForm
@@ -142,14 +134,14 @@ class ProductAttributeFormPart(FormPart):
     priority = -800
 
     def get_form_defs(self):
-        if not self.object.get_available_attribute_queryset():
+        if not self.object.product.get_available_attribute_queryset():
             return
         yield TemplatedFormDef(
             "attributes",
             ProductAttributesForm,
             template_name="shuup/admin/products/_edit_attribute_form.jinja",
             required=False,
-            kwargs={"product": self.object, "languages": settings.LANGUAGES}
+            kwargs={"product": self.object.product, "languages": settings.LANGUAGES}
         )
 
     def form_valid(self, form):
@@ -167,7 +159,7 @@ class BaseProductMediaFormPart(FormPart):
             self.formset,
             template_name="shuup/admin/products/_edit_media_form.jinja",
             required=False,
-            kwargs={"product": self.object, "languages": settings.LANGUAGES, "request": self.request}
+            kwargs={"product": self.object.product, "languages": settings.LANGUAGES, "request": self.request}
         )
 
     def form_valid(self, form):
@@ -189,7 +181,7 @@ class ProductImageMediaFormPart(BaseProductMediaFormPart):
 
 
 class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView):
-    model = Product
+    model = ShopProduct
     context_object_name = "product"
     template_name = "shuup/admin/products/edit.jinja"
     base_form_part_classes = [
@@ -206,11 +198,10 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
 
     def get_object(self, queryset=None):
         if not self.kwargs.get(self.pk_url_kwarg):
-            return self.model()
-        # modify kwargs to match the product instead
-        # TODO: Change this to use ShopProduct
-        key = self.pk_url_kwarg
-        self.kwargs[key] = ShopProduct.objects.get(pk=self.kwargs[key]).product.pk
+            instance = self.model()
+            instance.shop = Shop.objects.get_current(self.request)
+            instance.product = Product()
+            return instance
         return super(CreateOrUpdateView, self).get_object(queryset)
 
     @atomic
@@ -227,7 +218,7 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
         if self.object.pk:
             shop = Shop.objects.get_current(self.request)
             try:
-                shop_product = self.object.get_shop_instance(shop)
+                shop_product = self.object
                 orderability_errors.extend(
                     ["%s: %s" % (shop.name, msg.message)
                         for msg in shop_product.get_orderability_errors(
@@ -241,12 +232,13 @@ class ProductEditView(SaveFormPartsMixin, FormPartsViewMixin, CreateOrUpdateView
         context["tour_key"] = "product"
         context["tour_complete"] = is_tour_complete("product")
 
-        if self.request.user.has_perm("shuup.change_product", object):
+        if self.request.user.has_perm("shuup.change_shopproduct", object):
             product_sections_provides = sorted(get_provide_objects("admin_product_section"), key=lambda x: x.order)
             for admin_product_section in product_sections_provides:
                 if admin_product_section.visible_for_object(self.object, self.request):
                     context["product_sections"].append(admin_product_section)
-                    context[admin_product_section.identifier] = admin_product_section.get_context_data(self.object,
-                                                                                                       self.request)
+                    context[admin_product_section.identifier] = admin_product_section.get_context_data(
+                        self.object.product, self.request
+                    )
 
         return context
