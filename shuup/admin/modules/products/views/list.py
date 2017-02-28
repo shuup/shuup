@@ -40,16 +40,15 @@ class ProductListView(PicotableListView):
                raw=True,
                ordering=1,
                sortable=False),
-        Column("shop",
-               _("Shop"),
-               filter_config=ChoicesFilter(choices=Shop.objects.all()),
-               ordering=2),
         Column("name",
                _(u"Name"),
                sort_field="product__translations__name",
                display="product__name",
                filter_config=TextFilter(filter_field="product__translations__name",
                                         placeholder=_("Filter by name...")),
+               ordering=2),
+        Column("shop",
+               _("Shop"),
                ordering=2),
         Column("sku",
                _(u"SKU"),
@@ -82,6 +81,14 @@ class ProductListView(PicotableListView):
         "shuup.admin.modules.products.mass_actions:FileResponseAction",
         "shuup.admin.modules.products.mass_actions:EditProductAttributesAction",
     ]
+
+    def get_columns(self):
+        for column in self.columns:
+            if column.id == 'shop':
+                shops = Shop.objects.get_for_user(self.request.user).prefetch_related('translations')
+                column.filter_config = ChoicesFilter(choices=shops)
+                break
+        return self.columns
 
     def get_primary_image(self, instance):
         if instance.product.primary_image:

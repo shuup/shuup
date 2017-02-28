@@ -462,7 +462,7 @@ class PicotableViewMixin(object):
         mass_actions = self.load_mass_actions()
         pico = self.picotable_class(
             request=self.request,
-            columns=self.columns,
+            columns=self.get_columns(),
             mass_actions=mass_actions,
             queryset=self.get_queryset(),
             context=self
@@ -528,6 +528,9 @@ class PicotableViewMixin(object):
     def get_filter(self):
         filter_string = self.request.GET.get("filter")
         return json.loads(filter_string) if filter_string else {}
+
+    def get_columns(self):
+        return self.columns
 
     def load_mass_actions(self):
         # TODO: Make extendable through provides in near future

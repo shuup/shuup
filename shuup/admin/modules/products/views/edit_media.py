@@ -22,7 +22,9 @@ from shuup.admin.base import MenuEntry
 from shuup.admin.forms.widgets import MediaChoiceWidget
 from shuup.admin.toolbar import PostActionButton, Toolbar
 from shuup.admin.utils.urls import get_model_url
-from shuup.core.models import Product, ProductMedia, ProductMediaKind, Shop
+from shuup.core.models import (
+    Product, ProductMedia, ProductMediaKind, Shop, ShopProduct
+)
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
 
 
@@ -89,9 +91,18 @@ class ProductMediaEditView(UpdateView):
         return [
             MenuEntry(
                 text="%s" % self.object,
-                url=get_model_url(self.object)
+                url=get_model_url(self.object, request=self.request)
             )
         ]
+
+    def get_object(self, queryset=None):
+        if not self.kwargs.get(self.pk_url_kwarg):
+            return self.model()
+        # modify kwargs to match the product instead
+        # TODO: Change this to use ShopProduct
+        key = self.pk_url_kwarg
+        self.kwargs[key] = ShopProduct.objects.get(pk=self.kwargs[key]).product.pk
+        return super(ProductMediaEditView, self).get_object(queryset)
 
     def get_context_data(self, **kwargs):
         context = super(ProductMediaEditView, self).get_context_data(**kwargs)
