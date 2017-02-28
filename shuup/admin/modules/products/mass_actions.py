@@ -12,11 +12,12 @@ from django.http import HttpResponse
 from django.utils.translation import ugettext_lazy as _
 from six import string_types
 
+from shuup.admin.modules.products.views.list import ProductListView
 from shuup.admin.modules.settings.view_settings import ViewSettings
 from shuup.admin.utils.picotable import (
     PicotableFileMassAction, PicotableMassAction, PicotableRedirectMassAction
 )
-from shuup.core.models import Product, ShopProduct, ShopProductVisibility
+from shuup.core.models import ShopProduct, ShopProductVisibility
 
 
 class VisibleMassAction(PicotableMassAction):
@@ -49,15 +50,20 @@ class FileResponseAction(PicotableFileMassAction):
         query = Q(id__in=ids)
         if isinstance(ids, string_types) and ids == "all":
             query = Q()
-        view_settings = ViewSettings(Product, [])
+        view_settings = ViewSettings(ShopProduct, ProductListView.default_columns, ProductListView)
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="products.csv"'
         writer = csv.writer(response, delimiter=";", encoding='utf-8')
         writer.writerow([col.title for col in view_settings.columns])
-        for product in Product.objects.filter(query):
+        for shop_product in ShopProduct.objects.filter(query):
             row = []
             for dr in [col.id for col in view_settings.columns]:
-                row.append(getattr(product, dr))
+                if dr.startswith("shopproduct_"):
+                    row.append(getattr(shop_product, dr.replace("shopproduct_", "")))
+                elif dr.startswith("product_"):
+                    row.append(getattr(shop_product.product, dr.replace("product_", "")))
+                else:
+                    row.append(getattr(shop_product.product, dr))
             writer.writerow(row)
         return response
 
