@@ -44,7 +44,7 @@ class ProductModule(AdminModule):
             admin_url(
                 "^products/(?P<pk>\d+)/delete/$", "shuup.admin.modules.products.views.ProductDeleteView",
                 name="shop_product.delete",
-                permissions=["shuup.delete_product"]
+                permissions=["shuup.delete_shopproduct"]
             ),
             admin_url(
                 "^products/(?P<pk>\d+)/media/$", "shuup.admin.modules.products.views.ProductMediaEditView",
