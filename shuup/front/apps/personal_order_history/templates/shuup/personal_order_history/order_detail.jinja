@@ -1,4 +1,5 @@
 {% extends "shuup/front/dashboard/dashboard.jinja" %}
+{% from "shuup/personal_order_history/macros/buttons.jinja" import render_action_buttons with context %}
 {% from "shuup/personal_order_history/macros/order_detail.jinja" import basic_info, shipping_address, billing_address, status, order_contents with context %}
 
 {% block title %}{% trans identifier = order.identifier %}Order {{ identifier }}{% endtrans %}{% endblock %}
@@ -15,7 +16,8 @@
 {% endblock %}
 
 {% block dashboard_content %}
-    <div class="row">
+    <h2 class="page-header">{% trans identifier = order.identifier %}Order {{ identifier }}{% endtrans %}{{ render_action_buttons(order) }}</h2>
+    <div class="row order-dashboard-container">
         <div class="col-sm-12">
             {{ basic_info() }}
         </div>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-08 23:05+0000\n"
+"POT-Creation-Date: 2017-03-01 15:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -44,6 +44,9 @@ msgid "Details"
 msgstr ""
 
 msgid "You haven't made any orders yet."
+msgstr ""
+
+msgid "Add all products to cart"
 msgstr ""
 
 msgid "Basic Information"
