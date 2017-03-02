@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-12 03:47+0000\n"
+"POT-Creation-Date: 2017-03-01 13:41+0000\n"
 "PO-Revision-Date: 2016-08-04 13:14-0700\n"
 "Last-Translator: Janne Tammi <janne@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
@@ -219,15 +219,17 @@ msgstr "Oikea"
 msgid "text"
 msgstr "teksti"
 
-msgid "(Untranslated)"
-msgstr "(Kääntämätön)"
-
 #, python-format
 msgid "Click to edit placeholder: %s"
 msgstr "Napsauta muokataksesi aluetta %s"
 
 msgid "Delete This Cell"
 msgstr "Poista tämä solu"
+
+#, fuzzy
+#| msgid "(Untranslated)"
+msgid "Untranslated"
+msgstr "(Kääntämätön)"
 
 msgid "There's nothing to configure in this plugin."
 msgstr "Tällä lisäosalla ei ole asetuksia."
@@ -243,6 +245,9 @@ msgstr "Lisää uusi solu"
 
 msgid "Delete row"
 msgstr "Poista rivi"
+
+msgid "Move row"
+msgstr ""
 
 msgid "Add new row"
 msgstr "Lisää uusi rivi"

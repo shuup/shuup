@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-12 03:47+0000\n"
+"POT-Creation-Date: 2017-03-01 13:41+0000\n"
 "PO-Revision-Date: 2016-10-25 23:38+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
@@ -31,23 +31,122 @@ msgstr "Tilaaja"
 msgid "Filter report results by the person that made the order."
 msgstr "Suodata raportin tuloksia asiakkaan perusteella."
 
-msgid "Sales Report"
-msgstr "Myyntiraportti"
-
-msgid "Date"
-msgstr "Päivä"
-
-msgid "Orders"
-msgstr "Tilaukset"
-
-msgid "Products"
-msgstr "Tuotteet"
+msgid "Quantity"
+msgstr ""
 
 msgid "Taxless Total"
 msgstr "Veroton kokonaishinta"
 
 msgid "Taxful Total"
 msgstr "Verollinen kokonaishinta"
+
+msgid "Sort order"
+msgstr ""
+
+msgid "Year"
+msgstr ""
+
+msgid "Year/Month"
+msgstr ""
+
+msgid "Year/Month/Day"
+msgstr ""
+
+msgid "Group by"
+msgstr ""
+
+#, fuzzy
+#| msgid "Order Amount"
+msgid "Order Count"
+msgstr "Tilausten määrä"
+
+msgid "Average Sales"
+msgstr ""
+
+msgid "Tax"
+msgstr ""
+
+#, fuzzy
+#| msgid "Filter report results by customer."
+msgid "Filter report results by tax."
+msgstr "Suodata raportin tuloksia asiakkaiden perusteella."
+
+msgid "Tax Class"
+msgstr ""
+
+#, fuzzy
+#| msgid "Filter report results by customer."
+msgid "Filter report results by tax class."
+msgstr "Suodata raportin tuloksia asiakkaiden perusteella."
+
+msgid "Shipping Method"
+msgstr ""
+
+#, fuzzy
+#| msgid "Filter report results by customer."
+msgid "Filter report results by shipping method."
+msgstr "Suodata raportin tuloksia asiakkaiden perusteella."
+
+msgid "Carrier"
+msgstr ""
+
+#, fuzzy
+#| msgid "Filter report results by customer."
+msgid "Filter report results by carrier."
+msgstr "Suodata raportin tuloksia asiakkaiden perusteella."
+
+#, fuzzy
+#| msgid "Customer"
+msgid "Customer Sales"
+msgstr "Asiakas"
+
+msgid "Orders"
+msgstr "Tilaukset"
+
+#, fuzzy
+#| msgid "Customer"
+msgid "New Customers"
+msgstr "Asiakas"
+
+msgid "Date"
+msgstr "Päivä"
+
+msgid "Persons"
+msgstr ""
+
+msgid "Companies"
+msgstr ""
+
+msgid "Users"
+msgstr ""
+
+#, fuzzy
+#| msgid "Total Sales"
+msgid "Product Total Sales"
+msgstr "Kokonaismyynti"
+
+#, fuzzy
+#| msgid "Products"
+msgid "Product"
+msgstr "Tuotteet"
+
+msgid "SKU"
+msgstr ""
+
+msgid "Refunded Sales"
+msgstr ""
+
+msgid "Refunded Orders"
+msgstr ""
+
+msgid "Total Refunded"
+msgstr ""
+
+msgid "Sales Report"
+msgstr "Myyntiraportti"
+
+msgid "Products"
+msgstr "Tuotteet"
 
 msgid "Sales Per Hour"
 msgstr "Myynti tunti tunnilta"
@@ -61,8 +160,33 @@ msgstr "Tilausten määrä"
 msgid "Total Sales"
 msgstr "Kokonaismyynti"
 
+msgid "Shipping"
+msgstr ""
+
+msgid "Shipping method"
+msgstr ""
+
+#, fuzzy
+#| msgid "Total Sales"
+msgid "Total Charged"
+msgstr "Kokonaismyynti"
+
+msgid "Taxes"
+msgstr ""
+
+msgid "Rate (%)"
+msgstr ""
+
 msgid "Shop Name"
 msgstr "Kaupan nimi"
 
 msgid "Currency"
 msgstr "Valuutta"
+
+#, fuzzy
+#| msgid "Customer"
+msgid "Customers"
+msgstr "Asiakas"
+
+msgid "Customer Average Sale"
+msgstr ""

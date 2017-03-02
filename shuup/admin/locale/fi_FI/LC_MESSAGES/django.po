@@ -25,7 +25,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-27 22:27+0000\n"
+"POT-Creation-Date: 2017-03-01 13:41+0000\n"
 "PO-Revision-Date: 2016-10-26 02:14+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
@@ -431,6 +431,122 @@ msgstr "Kontaktiryhmien muokkaus onnistui"
 msgid "The contact does not have an associated user."
 msgstr "Kontaktilla ei ole liitettyä käyttäjää."
 
+msgid "About Us"
+msgstr ""
+
+msgid "Privacy Policy"
+msgstr ""
+
+msgid "Terms and Conditions"
+msgstr ""
+
+#, fuzzy
+#| msgid "Refund Amount"
+msgid "Refund Policy"
+msgstr "Hyvityksen määrä"
+
+msgid "{{ order.shop }} - Order {{ order.identifier }} Received"
+msgstr ""
+
+#, fuzzy
+#| msgid "Send email confirmation"
+msgid "Send customer order confirmation email"
+msgstr "Lähetä sähköpostivahvistus"
+
+msgid ""
+"We will configure a notification to send the customer an email after a "
+"placed order. You can disable this option later or even change the layout of "
+"the email."
+msgstr ""
+
+msgid "Create About Us page"
+msgstr ""
+
+msgid ""
+"We have already created an 'About Us' template for you based on your shop "
+"information. You must review the page and change it accordingly."
+msgstr ""
+
+msgid ""
+"We will create an 'About Us' template for you. We will base content of the "
+"page on your shop information. After we are done, you must review the page "
+"and change it accordingly."
+msgstr ""
+
+msgid "Create Privacy Policy page"
+msgstr ""
+
+msgid ""
+"We have already created a 'Privacy Policy' template for you based on your "
+"shop information. You must review the page and change it accordingly."
+msgstr ""
+
+msgid ""
+"We will create a 'Privacy Policy' template for you. We will base content of "
+"the page on your shop information. After we are done, you must review the "
+"page and change it accordingly."
+msgstr ""
+
+msgid "Create Terms and Conditions page"
+msgstr ""
+
+msgid ""
+"We have already created a 'Terms & Conditions' template for you based on "
+"your shop information. You must review the page and change it accordingly."
+msgstr ""
+
+msgid ""
+"We will create an 'Terms & Conditions' template for you. We will base "
+"content of the page on your shop information. After we are done, you must "
+"review the page and change it accordingly."
+msgstr ""
+
+#, fuzzy
+#| msgid "Create Refund"
+msgid "Create Refund Policy page"
+msgstr "Luo hyvitys"
+
+msgid ""
+"We have already created a 'Refund Policy' template for you based on your "
+"shop information. You must review the page and change it accordingly."
+msgstr ""
+
+msgid ""
+"We will create an 'Refund Policy' template for you. We will base content of "
+"the page on your shop information. After we are done, you must review the "
+"page and change it accordingly."
+msgstr ""
+
+msgid "Configure the footer"
+msgstr ""
+
+msgid ""
+"We will now configure your shop footer and fill it with some of your shop's "
+"information. Don't worry, you can change this at any time."
+msgstr ""
+
+#, fuzzy
+#| msgid "Behavior"
+msgid "Content & Behavior"
+msgstr "Käyttäytyminen"
+
+msgid ""
+"Add the initial content and configure the customer notifications for your "
+"shop"
+msgstr ""
+
+msgid "Configure notifications for your shop"
+msgstr ""
+
+msgid "Add the initial content"
+msgstr ""
+
+msgid "Configure the initial content pages"
+msgstr ""
+
+msgid "Configure some notifications"
+msgstr ""
+
 msgid "Currencies"
 msgstr "Valuutta"
 
@@ -628,6 +744,7 @@ msgstr "%(field)s päivitetty osoitteesta %(old_address)s"
 msgid "%(field)s saved successfully."
 msgstr "%(field)s tallennettu onnistuneesti."
 
+#, python-format
 msgid "Edit Addresses -- %s"
 msgstr "Muokkaa osotteita -- %s"
 
@@ -980,11 +1097,11 @@ msgstr "Muokkaa mediaa: %s"
 msgid "Files added to product."
 msgstr "Tiedostoja lisätty tuotteelle."
 
-msgid "Are you sure? This will remove all products from package."
-msgstr "Oletko varma? Tämä toiminto poistaa kaikki tuotteet paketista."
-
 msgid "Clear package"
 msgstr "Tyhjennä paketti"
+
+msgid "Are you sure? This will remove all products from package."
+msgstr "Oletko varma? Tämä toiminto poistaa kaikki tuotteet paketista."
 
 #, python-format
 msgid "Edit Package: %s"
@@ -1092,7 +1209,9 @@ msgstr "Muunna variaatioisännäksi"
 msgid "Sales Dashboard"
 msgstr "Myynnin ohjausnäkymä"
 
-msgid "Sales per Month (this year)"
+#, fuzzy
+#| msgid "Sales per Month (this year)"
+msgid "Sales per Month (past 12 months)"
 msgstr "Myynti/kk (viime vuosi)"
 
 msgid "Average Sales"
@@ -1129,6 +1248,150 @@ msgstr "Lyhyt nimi"
 msgid "Allowed decimals"
 msgstr "Sallitut desimaalit"
 
+msgid ""
+"There is sample data installed. Access \"Settings > Sample Data\" for more "
+"information."
+msgstr ""
+
+msgid ""
+"There is sample data installed. Click here to consolidate or delete them."
+msgstr ""
+
+msgid "Sample Data"
+msgstr "Mallidata"
+
+msgid "Cosmetics and perfumes"
+msgstr ""
+
+msgid "USpicy Makeup Brushes"
+msgstr ""
+
+msgid ""
+"Professional 10 pieces makeup brush set with soft oval toothbrush design"
+msgstr ""
+
+msgid "Precision Eyelash Curler"
+msgstr ""
+
+msgid ""
+"Precision Eyelash Curler is the professional choice of makeup artists "
+"everywhere."
+msgstr ""
+
+msgid "PureMoist Lipstick"
+msgstr ""
+
+msgid ""
+"PureMoist Lipstick has a moisturizing formula designed to quench, comfort "
+"and protect lips."
+msgstr ""
+
+msgid "Clinique Happy"
+msgstr ""
+
+msgid "A hint of citrus. A wealth of flowers. A mix of emotions."
+msgstr ""
+
+msgid "Tommy Girld by Tommy Hilfiger Perfume"
+msgstr ""
+
+msgid ""
+"A refreshing and energetic floral - with low notes of sandalwood and heather."
+msgstr ""
+
+msgid "Bvlgari Omnia Crystalline Eau de Toilette"
+msgstr ""
+
+msgid ""
+"Give yourself over to this fragrance as intoxicating and pure as a woman's "
+"soul is fragile."
+msgstr ""
+
+msgid "Still Jennifer Lopez Perfume"
+msgstr ""
+
+msgid ""
+"Be driven with vitality and confidence, as you wear the Jennifer Lopez Still "
+"fragrance."
+msgstr ""
+
+msgid "La Vie Est Belle"
+msgstr ""
+
+msgid "A captivating new scent joins the La vie est belle path to happiness."
+msgstr ""
+
+msgid "Smooth Viking Beard Brush"
+msgstr ""
+
+msgid "Just a beard brush."
+msgstr ""
+
+msgid "Beard & Stash Oil"
+msgstr ""
+
+msgid "This oil is natural, and is made with the perfect combination of oils."
+msgstr ""
+
+#, fuzzy
+#| msgid "Sample Data"
+msgid "Sample Carousel"
+msgstr "Mallidata"
+
+msgid "Business Segment"
+msgstr ""
+
+msgid "Select your business segment to install categories."
+msgstr ""
+
+#, fuzzy
+#| msgid "Additional Categories"
+msgid "Install Categories"
+msgstr "Lisäkategoriat"
+
+msgid "Check this to install sample categories."
+msgstr ""
+
+#, fuzzy
+#| msgid "Products"
+msgid "Install Products"
+msgstr "Tuotteet"
+
+msgid "Check this to install sample products."
+msgstr ""
+
+msgid "Install Carousel"
+msgstr ""
+
+msgid "Check this to install a sample carousel."
+msgstr ""
+
+#, fuzzy
+#| msgid "Additional Categories"
+msgid "Uninstall Categories"
+msgstr "Lisäkategoriat"
+
+#, fuzzy
+#| msgid "Edit products"
+msgid "Uninstall Products"
+msgstr "Muokkaa tuotteita"
+
+msgid "Uninstall Carousel"
+msgstr ""
+
+msgid "Sample data were consolidated"
+msgstr ""
+
+#, fuzzy
+#| msgid ""
+#| "To start shipping products right away, please add shipping methods for "
+#| "your shop"
+msgid ""
+"To start shopping right now, please install some sample data into your shop"
+msgstr ""
+"Jotta voit aloittaa tuotteiden toimittamisen välittömästi, ole hyvä ja lisää "
+"toimitustapa kauppaasi."
+
 msgid "Service Providers"
 msgstr "Palveluntarjoajat"
 
@@ -1139,8 +1402,12 @@ msgstr "Maksaminen ja toimitus"
 msgid "Edit %(model)s"
 msgstr "Muokkaa %(model)s"
 
+#, fuzzy
+#| msgid ""
+#| "Ther service provider type. This can be any of the shipping carriers or "
+#| "payment processors configured for your shop."
 msgid ""
-"Ther service provider type. This can be any of the shipping carriers or "
+"The service provider type. This can be any of the shipping carriers or "
 "payment processors configured for your shop."
 msgstr ""
 "Palveluntarjoajan tyyppi. Tämä voi olla mikä tahansa toimitus- tai "
@@ -1260,11 +1527,65 @@ msgstr "Maksupalvelun tarjoaja"
 msgid "Weight-based pricing range"
 msgstr "Painon mukaan määräytyvä hinnoittelu"
 
+#, fuzzy
+#| msgid "Other Settings"
+msgid "System Settings"
+msgstr "Muut asetukset"
+
+msgid "unique"
+msgstr ""
+
+msgid "running"
+msgstr ""
+
+msgid "shop running"
+msgstr ""
+
+msgid "Reference number length"
+msgstr ""
+
+msgid ""
+"Length of the order reference number not including the checksum number. This "
+"can vary based on the country your shop is in. If you set the length to 19, "
+"the actual length is going to be 20 because the checksum is being added."
+msgstr ""
+
+msgid "Reference number prefix"
+msgstr ""
+
+msgid "Order minimum total"
+msgstr ""
+
+msgid "The minimum sum that an order needs to reach to be created."
+msgstr ""
+
+msgid "Order Reference number method"
+msgstr ""
+
+msgid ""
+"This option defines how the reference numbers for orders are built. The "
+"options are:<br><br><b>Unique</b><br>Order reference number is unique system "
+"wide, regardless of the amount of shops.<br><br><b>Running</b><br>Order "
+"number is running system wide, regardless of the amount of shops."
+"<br><br><b>Shop Running</b><br>Every shop has its own running numbers for "
+"reference."
+msgstr ""
+
 msgid "Settings saved"
 msgstr "Asetukset tallennettu"
 
 msgid "Reset Defaults"
 msgstr "Palauta oletukset"
+
+#, fuzzy
+#| msgid "%(field)s saved successfully."
+msgid "Saved successfully"
+msgstr "%(field)s tallennettu onnistuneesti."
+
+#, fuzzy
+#| msgid "Other settings"
+msgid "Save system settings"
+msgstr "Asetukset"
 
 msgid "Add a logo to make your store stand out"
 msgstr "Lisää kaupalle logo"
@@ -1281,6 +1602,14 @@ msgid ""
 "The primary shop currency. This is the currency used when selling your "
 "products."
 msgstr ""
+
+msgid "Staff"
+msgstr "Henkilökunta"
+
+#, fuzzy
+#| msgid "The contacts that are members of this company."
+msgid "Select staff members for this shop."
+msgstr "Asiakkaat, jotka kuuluvat tähän yritykseen"
 
 msgid "Shop name"
 msgstr "Kaupan nimi"
@@ -1506,9 +1835,6 @@ msgstr "Etunimi"
 
 msgid "Last Name"
 msgstr "Sukunimi"
-
-msgid "Staff"
-msgstr "Henkilökunta"
 
 msgid "Superuser"
 msgstr "Pääkäyttäjä"
@@ -2872,6 +3198,16 @@ msgstr "Kokonaishinta"
 msgid "Customer Comment"
 msgstr "Asiakaskommentti"
 
+#, fuzzy
+#| msgid "Payment Methods"
+msgid "Payment Method"
+msgstr "Maksutavat"
+
+#, fuzzy
+#| msgid "Shipping Methods"
+msgid "Shipping Method"
+msgstr "Toimitustavat"
+
 msgid "Tracking codes"
 msgstr "Seurantakoodit"
 
@@ -2995,9 +3331,6 @@ msgstr "Ristiinmyynti"
 msgid "File "
 msgstr "Tiedosto "
 
-msgid "Package Products"
-msgstr "Pakettituotteet"
-
 #, python-format
 msgid "Logical count: %(logical_count)s %(sales_unit)s"
 msgstr "Looginen luku: %(logical_count)s %(sales_unit)s"
@@ -3011,6 +3344,9 @@ msgstr "Tämä tuote ei ole pakettituote"
 
 msgid "To create a package, choose products below."
 msgstr "Valitse tuotteet alta, jotka haluat lisätä pakettiin"
+
+msgid "Package Products"
+msgstr "Pakettituotteet"
 
 msgid "Simple Variation Children"
 msgstr "Yksinkertainen variaatiolapsi"
@@ -3057,9 +3393,6 @@ msgstr ""
 
 msgid "Totals"
 msgstr "Yhteensä"
-
-msgid "Sample Data"
-msgstr "Mallidata"
 
 msgid ""
 "Your shop currently has some sample data installed. Select below which "
@@ -3127,6 +3460,24 @@ msgstr ""
 
 msgid "Add component"
 msgstr "Lisää komponentti"
+
+#, python-format
+msgid ""
+"You can change shop specific order related settings from <a href=\"%(url)s"
+"\">shop configuration</a>."
+msgstr ""
+
+#, fuzzy
+#| msgid "Order Contents"
+msgid "Order Configuration"
+msgstr "Tilauksen sisältö"
+
+#, python-format
+msgid ""
+"The field \"Reference number prefix\" is disabled because the order "
+"reference number generation method doesn't support a prefix. You can edit "
+"this setting from <a href=\"%(url)s\">system settings</a>."
+msgstr ""
 
 msgid "Shop Images"
 msgstr "Kaupan kuvat"

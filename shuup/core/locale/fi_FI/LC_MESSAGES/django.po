@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-12 03:47+0000\n"
+"POT-Creation-Date: 2017-03-01 13:41+0000\n"
 "PO-Revision-Date: 2016-10-25 23:34+0000\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
@@ -33,6 +33,156 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#, fuzzy
+#| msgid "attributes"
+msgid "Attributes"
+msgstr "attribuutit"
+
+msgid "Attributes can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+#, fuzzy
+#| msgid "category"
+msgid "Category"
+msgstr "kategoria"
+
+msgid "Categories can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+#, fuzzy
+#| msgid "contacts"
+msgid "Contacts"
+msgstr "kontaktit"
+
+msgid "Contacts can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+#, fuzzy
+#| msgid "manufacturer"
+msgid "Manufacturer"
+msgstr "valmistaja"
+
+msgid "Manufacturers can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+#, fuzzy
+#| msgid "orders"
+msgid "Orders"
+msgstr "tilaukset"
+
+msgid "Orders can be listed, fetched, created, updated and canceled."
+msgstr ""
+
+#, fuzzy
+#| msgid "product type"
+msgid "Product Media"
+msgstr "tuotetyyppi"
+
+msgid "Products media can be fetched, updated and deleted."
+msgstr ""
+
+#, fuzzy
+#| msgid "variation variable"
+msgid "Product Variation Variable"
+msgstr "variaatiomuuttuja"
+
+msgid ""
+"Product variation variables can be listed, fetched, created, updated and "
+"deleted."
+msgstr ""
+
+#, fuzzy
+#| msgid "variation variable"
+msgid "Product Variation Variable Value"
+msgstr "variaatiomuuttuja"
+
+msgid ""
+"Product variation variable values can be listed, fetched, created, updated "
+"and deleted."
+msgstr ""
+
+#, fuzzy
+#| msgid "products"
+msgid "Products"
+msgstr "tuotteet"
+
+msgid "Products can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+#, fuzzy
+#| msgid "products"
+msgid "Shop Products"
+msgstr "tuotteet"
+
+msgid "Shop Products can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+#, fuzzy
+#| msgid "product type"
+msgid "Product type"
+msgstr "tuotetyyppi"
+
+msgid "Product types can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+#, fuzzy
+#| msgid "product attribute"
+msgid "Product Attribute"
+msgstr "tuoteattribuutti"
+
+msgid "Products attributes can be fetched, updated and deleted."
+msgstr ""
+
+msgid "Product Package Link"
+msgstr ""
+
+msgid "Products package links can be fetched, updated and deleted."
+msgstr ""
+
+#, fuzzy
+#| msgid "shipments"
+msgid "Shipments"
+msgstr "lähetykset"
+
+msgid "Shipments can be listed and fetched."
+msgstr ""
+
+msgid "Shop"
+msgstr ""
+
+msgid "Shops can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+#, fuzzy
+#| msgid "suppliers"
+msgid "Suppliers"
+msgstr "toimittajat"
+
+msgid "Suppliers can be listed and fetched and stock can be updated."
+msgstr ""
+
+#, fuzzy
+#| msgid "tax class"
+msgid "Tax Class"
+msgstr "veroluokka"
+
+msgid "Tax classes can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+#, fuzzy
+#| msgid "sales unit"
+msgid "Sales Unit"
+msgstr "myyntiyksikkö"
+
+msgid "Sales units can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+msgid "Users"
+msgstr ""
+
+msgid "Users can be listed, fetched, created, updated and deleted."
+msgstr ""
 
 msgid "internal identifier"
 msgstr "sisäinen tunniste"
@@ -226,8 +376,7 @@ msgstr "haettavissa"
 msgid ""
 "Searchable attributes will be used for product lookup when customers search "
 "your store."
-msgstr ""
-"Haettavia muuttujia käytetään tuotteiden haussa."
+msgstr "Haettavia muuttujia käytetään tuotteiden haussa."
 
 msgid "type"
 msgstr "tyyppi"
@@ -313,8 +462,7 @@ msgstr "Voit valita missä kaupoissa tuoteryhmä näkyy."
 msgid ""
 "Here you can choose whether or not you want the category to be visible in "
 "your store."
-msgstr ""
-"Tässä voit valita onko tuoteryhmä näkyvissä kaupassa vaiko ei."
+msgstr "Tässä voit valita onko tuoteryhmä näkyvissä kaupassa vaiko ei."
 
 msgid "image"
 msgstr "kuva"
@@ -338,6 +486,16 @@ msgstr ""
 "Voit määritellä ketkä näkevät tuoteryhmän. Tähän vaikuttaa muunmuassa se "
 "että ovatko he kirjautuneita vai osa asiakasryhmää."
 
+#, fuzzy
+#| msgid "visibility mode"
+msgid "visible in menu"
+msgstr "Näkyvyystila"
+
+#, fuzzy
+#| msgid "Check this if this service is selectable on checkout."
+msgid "Check this if this category should be visible in menu."
+msgstr "Valitse tämä jos palvelu on valittavissa ostotapahtumassa."
+
 msgid "visible for groups"
 msgstr "näkyvissä ryhmille"
 
@@ -345,8 +503,8 @@ msgid ""
 "Select the customer groups you would like to be able to see the category. "
 "These groups are defined in Contacts Settings - Contact Groups."
 msgstr ""
-"Valitse asiakasryhmät, joille haluat näyttää tämän tuoteryhmän. "
-"Nämä ryhmät määritellään Kontaktin asetukset - Kontaktiryhmät."
+"Valitse asiakasryhmät, joille haluat näyttää tämän tuoteryhmän. Nämä ryhmät "
+"määritellään Kontaktin asetukset - Kontaktiryhmät."
 
 msgid ""
 "Enter a descriptive name for your product category. Products can be found in "
@@ -459,7 +617,8 @@ msgstr "markkinointilupa"
 msgid ""
 "Check this if the contact can receive marketing and promotional materials."
 msgstr ""
-"Valitse tämä mikäli kontakti vastaanottaa markkinointi- ja promootiomateriaalia."
+"Valitse tämä mikäli kontakti vastaanottaa markkinointi- ja "
+"promootiomateriaalia."
 
 msgid "The primary phone number of the contact."
 msgstr "Asiakkaan pääasiallinen puhelinnumero."
@@ -477,8 +636,8 @@ msgid ""
 "The timezone in which the contact resides. This can be used to target the "
 "delivery of promotional materials at a particular time."
 msgstr ""
-"Asiakkaan aikavyöhyke. Tätä voidaan käyttää muun muassa markkinointimateriaalin "
-"oikea-aikaiseen lähettämiseen."
+"Asiakkaan aikavyöhyke. Tätä voidaan käyttää muun muassa "
+"markkinointimateriaalin oikea-aikaiseen lähettämiseen."
 
 msgid "The name prefix of the contact. For example, Mr, Mrs, Dr, etc."
 msgstr "Asiakkaan nimen etuliite, esimerkiksi Herra, Rouva, Neiti, jne."
@@ -506,9 +665,9 @@ msgid ""
 "to tax rules in Settings - Tax Rules"
 msgstr ""
 "Valitse asiakkaan veroryhmä. Veroryhmiä voidaan käyttää niiden verosääntöjen "
-"muokkaamiseen, jotka täsmäävät tämän asiakkaan tilauksiin. Veroryhmät määritellään "
-"Asetukset - Asiakkaan veroryhmät ja voidaan ottaa käyttöön Asetukset - Verosäännöt"
-
+"muokkaamiseen, jotka täsmäävät tämän asiakkaan tilauksiin. Veroryhmät "
+"määritellään Asetukset - Asiakkaan veroryhmät ja voidaan ottaa käyttöön "
+"Asetukset - Verosäännöt"
 
 msgid "merchant notes"
 msgstr "kauppiaan merkinnät"
@@ -668,9 +827,6 @@ msgstr "hyvitys"
 msgid "rounding"
 msgstr "pyöristys"
 
-msgid "order"
-msgstr "tilaus"
-
 msgid "supplier"
 msgstr "toimittaja"
 
@@ -712,6 +868,9 @@ msgstr "tilausrivi"
 
 msgid "order lines"
 msgstr "tilausrivit"
+
+msgid "order"
+msgstr "tilaus"
 
 msgid "tax"
 msgstr "vero"
@@ -920,15 +1079,6 @@ msgid "Order marked as partially paid."
 msgstr "Tilaus merkitty osittain maksetuksi."
 
 #, python-format
-msgid "%(name)s (physical stock: %(quantity)s)"
-msgstr "%(name)s (fyysinen varastosaldo: %(quantity)s)"
-
-#, python-format
-msgid ""
-"Insufficient physical stock count for following products: %(product_counts)s"
-msgstr "Virheellinen fyysinen varastosaldo tuotteelle: %(product_counts)s"
-
-#, python-format
 msgid "Shipment #%d created."
 msgstr "Lähetys #%d luotu."
 
@@ -1015,8 +1165,7 @@ msgstr ""
 msgid ""
 "You enter the numerical order that your image will be displayed on your "
 "product page."
-msgstr ""
-"Voit määritellä teemassa näytettävän järjestyksen kuvalle."
+msgstr "Voit määritellä teemassa näytettävän järjestyksen kuvalle."
 
 msgid "public (shown on product page)"
 msgstr "julkinen (näkyy tuotesivulla)"
@@ -1033,8 +1182,7 @@ msgstr "ostettu (näkyy hyväksytyille ostoksille)"
 msgid ""
 "Select this if you would like the product media shown for completed "
 "purchases."
-msgstr ""
-"Valitse tämä jos haluat näyttää tuotemedian ostotapahtuman jälkeen."
+msgstr "Valitse tämä jos haluat näyttää tuotemedian ostotapahtuman jälkeen."
 
 msgid ""
 "Choose a title for your product media. This will help it be found in your "
@@ -1095,10 +1243,11 @@ msgid ""
 "store front and found in search.</p>"
 msgstr ""
 "Valitse jos haluat tuotteen olevan haettavissa ja nähtävissä asiakkaille. "
-"<p>Ei näkyvissä: Tuote ei ole näkyvissä teemassa, eikä sitä löydä hakemalla.</p> "
-"<p>Etsittävissä: Tuotteen löyttää hakemalla, mutta se ei näy tuoteryhmäsivuilla.</p> "
-"<p>Listattu: Tuote näytetään tuoteryhmäsivuilla, muttei hakutuloksissa.</p> <p> "
-"Aina näkyvissä: Tuote näytetään tuoteryhmäsivuilla ja hakutuloksissa.</p>"
+"<p>Ei näkyvissä: Tuote ei ole näkyvissä teemassa, eikä sitä löydä hakemalla."
+"</p> <p>Etsittävissä: Tuotteen löyttää hakemalla, mutta se ei näy "
+"tuoteryhmäsivuilla.</p> <p>Listattu: Tuote näytetään tuoteryhmäsivuilla, "
+"muttei hakutuloksissa.</p> <p> Aina näkyvissä: Tuote näytetään "
+"tuoteryhmäsivuilla ja hakutuloksissa.</p>"
 
 msgid "purchasable"
 msgstr "ostettavissa"
@@ -1109,15 +1258,15 @@ msgid ""
 "only logged in users, or visible only to certain customer groups."
 msgstr ""
 "Valitse haluatko tuotteellesi erikoisrajoituksia sen näkyvyyteen kaupassa. "
-"Voit asettaa sen näkyvissä kaikille, näkyvissä vain kirjautuneille käyttäjille "
-"tai näkyvissä vain tietyille asiakasryhmille."
+"Voit asettaa sen näkyvissä kaikille, näkyvissä vain kirjautuneille "
+"käyttäjille tai näkyvissä vain tietyille asiakasryhmille."
 
 msgid ""
 "Select the groups you would like to make your product visible for. These "
 "groups are defined in Contacts Settings - Contact Groups."
 msgstr ""
-"Valitse ryhmät, joille haluat näyttää tuotteen. Nämä ryhmät voidaan määritellä "
-"Kontaktiasetukset - Kontaktiryhmät."
+"Valitse ryhmät, joille haluat näyttää tuotteen. Nämä ryhmät voidaan "
+"määritellä Kontaktiasetukset - Kontaktiryhmät."
 
 msgid "backorder maximum"
 msgstr "jälkitilaus maksimi"
@@ -1137,9 +1286,10 @@ msgid ""
 "the purchase multiple is set to 2, then customers are required to order the "
 "product in multiples of 2."
 msgstr ""
-"Aseta tämä jos tuote pitää ostaa ostokertoimella. Esimerkiksi: jos ostokerroin "
-"on asetettu arvoon kaksi, asiakkaiden pitää ostaa tuotetta kahden kerrannaisina. "
-"Eli asiakas voi lisätä koriin vain 2, 4, 6, jne. tuotetta kerrallaan."
+"Aseta tämä jos tuote pitää ostaa ostokertoimella. Esimerkiksi: jos "
+"ostokerroin on asetettu arvoon kaksi, asiakkaiden pitää ostaa tuotetta "
+"kahden kerrannaisina. Eli asiakas voi lisätä koriin vain 2, 4, 6, jne. "
+"tuotetta kerrallaan."
 
 msgid "minimum purchase"
 msgstr "minimiostomäärä"
@@ -1158,8 +1308,8 @@ msgid ""
 "Check this if you want to limit your product to use only select payment "
 "methods. You can select the payment method(s) in the field below."
 msgstr ""
-"Valitse tämä mikäli haluat että tuotetta voi ostaa vain valittujen maksutapojen "
-"kanssa. Voit valita maksutavat alla olevasta kentästä."
+"Valitse tämä mikäli haluat että tuotetta voi ostaa vain valittujen "
+"maksutapojen kanssa. Voit valita maksutavat alla olevasta kentästä."
 
 msgid "limited for payment methods"
 msgstr "rajatut maksutavat"
@@ -1171,8 +1321,8 @@ msgid ""
 "Select the shipping methods you would like to limit the product to using. "
 "These are defined in Settings - Shipping Methods."
 msgstr ""
-"Valitse toimitustavat, joihin haluat rajoittaa tuotteen oston. Voit määrittää "
-"nämä kohdasta Asetukset - Toimitustavat."
+"Valitse toimitustavat, joihin haluat rajoittaa tuotteen oston. Voit "
+"määrittää nämä kohdasta Asetukset - Toimitustavat."
 
 msgid "payment methods"
 msgstr "maksutavat"
@@ -1181,8 +1331,8 @@ msgid ""
 "Select the payment methods you would like to limit the product to using. "
 "These are defined in Settings - Payment Methods."
 msgstr ""
-"Valitse maksutavat, joihin haluat rajoittaa tämän tuotteen oston. Voit määrittää "
-"nämä kohdasta Asetukset - Toimitustavat."
+"Valitse maksutavat, joihin haluat rajoittaa tämän tuotteen oston. Voit "
+"määrittää nämä kohdasta Asetukset - Toimitustavat."
 
 msgid "primary category"
 msgstr "pääkategoria"
@@ -1193,8 +1343,9 @@ msgid ""
 "category in your store. Categories are defined in Products Settings - "
 "Categories."
 msgstr ""
-"Valitse päätuoteryhmä tuotteelle. Järjestelmä käyttää tätä tietoa tunnistaakseen "
-"tuotteen tuoteryhmän avulla. Kategoriat määritellään Tuoteasetukset - Tuoteryhmät."
+"Valitse päätuoteryhmä tuotteelle. Järjestelmä käyttää tätä tietoa "
+"tunnistaakseen tuotteen tuoteryhmän avulla. Kategoriat määritellään "
+"Tuoteasetukset - Tuoteryhmät."
 
 msgid ""
 "Add secondary categories for your product. These are other categories that "
@@ -1208,8 +1359,7 @@ msgstr "pääkuva"
 
 msgid ""
 "Click this to set this image as the primary display image for your product."
-msgstr ""
-"Klikkaa tämä asettaaksesi kuvan päätuotekuvaksi tuotteellesi."
+msgstr "Klikkaa tämä asettaaksesi kuvan päätuotekuvaksi tuotteellesi."
 
 msgid "default price"
 msgstr "oletushinta"
@@ -1229,9 +1379,9 @@ msgid ""
 "despite coupons or discounts being applied. This is useful to make sure your "
 "product price stays above cost."
 msgstr ""
-"Tämä on hinta, jonka alle hinta ei voi kaupassa mennä, mistään alennuksista tai "
-"kupongeista riippumatta. Tämä on kätevä ominaisuus kun haluat olla varma, että "
-"tuotteen hinta pysyy aina ostohinnan yläpuolella."
+"Tämä on hinta, jonka alle hinta ei voi kaupassa mennä, mistään alennuksista "
+"tai kupongeista riippumatta. Tämä on kätevä ominaisuus kun haluat olla "
+"varma, että tuotteen hinta pysyy aina ostohinnan yläpuolella."
 
 msgid "This product has been deleted."
 msgstr "Tuote on poistettu."
@@ -1314,6 +1464,11 @@ msgstr "variaatioisäntä (muuttujin)"
 msgid "variation child"
 msgstr "variaatiolapsi"
 
+#, fuzzy
+#| msgid "description"
+msgid "subscription"
+msgstr "selite"
+
 msgid "visible to logged in"
 msgstr "näkyvissä kirjautuneille"
 
@@ -1395,9 +1550,9 @@ msgid ""
 "is used to determine whether the product can be purchased using fractional "
 "amounts. Sales units are defined in Products - Sales Units."
 msgstr ""
-"Valitse myyntiyksikkö tuotteelle. Tämä näytetään teemassa ja sillä voi määritellä "
-"voiko tuotetta ostaa osittaisina määrinä. Myyntiyksiköt määritellään Tuotteet - "
-"Myyntiyksiköt."
+"Valitse myyntiyksikkö tuotteelle. Tämä näytetään teemassa ja sillä voi "
+"määritellä voiko tuotetta ostaa osittaisina määrinä. Myyntiyksiköt "
+"määritellään Tuotteet - Myyntiyksiköt."
 
 msgid "tax class"
 msgstr "veroluokka"
@@ -1408,16 +1563,17 @@ msgid ""
 "Tax Classes. The rules by which taxes are applied are defined in Settings - "
 "Tax Rules."
 msgstr ""
-"Valitse veroluokka tuotteellesi. Veroluokka määrittelee mitä veroa tuotteella "
-"käytetään. Veroluokat määritellään Asetukset - Veroluokat. Säännöt, jotka "
-"määrittelevät käytettäviä veroja määritellään Asetukset - Verosäännöt."
+"Valitse veroluokka tuotteellesi. Veroluokka määrittelee mitä veroa "
+"tuotteella käytetään. Veroluokat määritellään Asetukset - Veroluokat. "
+"Säännöt, jotka määrittelevät käytettäviä veroja määritellään Asetukset - "
+"Verosäännöt."
 
 msgid ""
 "Select a product type for your product. These allow you to configure custom "
 "attributes to help with classification and analysis."
 msgstr ""
-"Valitse tuotteen tyyppi. Tuotetyypit auttavat määrittelemään muokattuja muuttujia "
-"tuotteelle ja auttavat tunnistamaan tuotteita."
+"Valitse tuotteen tyyppi. Tuotetyypit auttavat määrittelemään muokattuja "
+"muuttujia tuotteelle ja auttavat tunnistamaan tuotteita."
 
 msgid "SKU"
 msgstr "Tuotekoodi"
@@ -1430,8 +1586,8 @@ msgid ""
 msgstr ""
 "Anna SKU (Stock Keeping Unit) eli tuotenumero tuotteelle. Tämä on tuotteen "
 "tunnistekoodi, jonka avulla voit seurata tuotetta varastoinnissa. Kauppiaat "
-"käyttävät usein numeroa viivakoodin lisäksi, mutta voit määritellä minkälaisen "
-"numerointijärjestelmän haluat."
+"käyttävät usein numeroa viivakoodin lisäksi, mutta voit määritellä "
+"minkälaisen numerointijärjestelmän haluat."
 
 msgid "GTIN"
 msgstr "GTIN"
@@ -1472,8 +1628,8 @@ msgid ""
 "provide customers with your product size and help with calculating shipping "
 "costs."
 msgstr ""
-"Aseta mitattu leveys tuotteelle tai tuotteen pakkaukselle. Tämän avulla asiakkaasi "
-"voivat arvoida toimituskuluja."
+"Aseta mitattu leveys tuotteelle tai tuotteen pakkaukselle. Tämän avulla "
+"asiakkaasi voivat arvoida toimituskuluja."
 
 msgid "height (mm)"
 msgstr "korkeus (mm)"
@@ -1483,8 +1639,8 @@ msgid ""
 "provide customers with your product size and help with calculating shipping "
 "costs."
 msgstr ""
-"Aseta mitattu korkeus tuotteelle tai tuotteen pakkaukselle. Tämän avulla asiakkaasi "
-"voivat arvoida toimituskuluja."
+"Aseta mitattu korkeus tuotteelle tai tuotteen pakkaukselle. Tämän avulla "
+"asiakkaasi voivat arvoida toimituskuluja."
 
 msgid "depth (mm)"
 msgstr "syvyys (mm)"
@@ -1494,8 +1650,8 @@ msgid ""
 "will provide customers with your product size and help with calculating "
 "shipping costs."
 msgstr ""
-"Aseta mitattu syvyys tai pituus tuotteellesi tai tuotteen pakkaukselle. Tämän "
-"avulla asiakkaasi voivat arvoida toimituskuluja."
+"Aseta mitattu syvyys tai pituus tuotteellesi tai tuotteen pakkaukselle. "
+"Tämän avulla asiakkaasi voivat arvoida toimituskuluja."
 
 msgid "net weight (g)"
 msgstr "nettopaino (g)"
@@ -1521,13 +1677,13 @@ msgid ""
 "Select a manufacturer for your product. These are defined in Products "
 "Settings - Manufacturers"
 msgstr ""
-"Valitse valmistaja tuotteellesi. Tämä määritellään Tuoteasetukset - Valmistajat."
+"Valitse valmistaja tuotteellesi. Tämä määritellään Tuoteasetukset - "
+"Valmistajat."
 
 msgid ""
 "Enter a descriptive name for your product. This will be its title in your "
 "store."
-msgstr ""
-"Anna kuvaava nimi tuotteellesi."
+msgstr "Anna kuvaava nimi tuotteellesi."
 
 msgid ""
 "To make your product stand out, give it an awesome description. This is what "
@@ -1537,12 +1693,24 @@ msgstr ""
 "Jotta tuotteesi nousee esiin, anna sille mahtava kuvaus. Tämän avulla "
 "asiakkaasi ja hakukoneet löytävät tuotteesi."
 
+#, fuzzy
+#| msgid "description"
+msgid "short description"
+msgstr "selite"
+
+msgid ""
+"Enter a short description for your product. The short description will be "
+"used to get the attention of your customer with a small but precise "
+"description of your product."
+msgstr ""
+
 msgid ""
 "Enter a URL Slug for your product. This is what your product page URL will "
 "be. A default will be created using the product name."
 msgstr ""
 "Anna URL slut tuotteellesi. Tämä näytetään selaimen osoitteena tuotesivulla. "
-"Tämä täytetään automaattisesti tuotenimeen perustuen mikäli jätät sen tyhjäksi."
+"Tämä täytetään automaattisesti tuotenimeen perustuen mikäli jätät sen "
+"tyhjäksi."
 
 msgid "keywords"
 msgstr "avainsanat"
@@ -1603,6 +1771,11 @@ msgstr ""
 
 msgid "Product is currently not a normal product, can't turn into package"
 msgstr "Tuote ei ole tavallinen tuote, ei voi tehdä pakettia"
+
+#, fuzzy
+#| msgid "Packages can't be nested"
+msgid "Package can't contain itself"
+msgstr "Paketteja ei voi luoda sisäkkäin"
 
 msgid "Variation parents can not belong into a package"
 msgstr "Variaatioisännät eivät voi kuulua paketteihin"
@@ -1846,8 +2019,7 @@ msgstr "Maksutavan nimi. Tämä näytetään asiakkaille ostotapahtumassa."
 msgid ""
 "The payment method description. This description is shown to customers on "
 "checkout."
-msgstr ""
-"Maksutavan kuvaus. Tämä kuvaus näytetään asiakkaille ostotapahtumassa."
+msgstr "Maksutavan kuvaus. Tämä kuvaus näytetään asiakkaille ostotapahtumassa."
 
 msgid "rounding quantize"
 msgstr "pyöristyksen kvantitus"
@@ -1877,7 +2049,8 @@ msgid "carrier"
 msgstr "Kuljetusliike"
 
 msgid "The shipping method name. This name is shown to customers on checkout."
-msgstr "Toimitustavan nimi. Tämä nimi näytetään asiakkaille ostotapahtuman "
+msgstr ""
+"Toimitustavan nimi. Tämä nimi näytetään asiakkaille ostotapahtuman "
 "yhteydessä."
 
 msgid ""
@@ -1962,15 +2135,15 @@ msgstr "asetukset"
 msgid ""
 "The primary shop currency. This is the currency used when selling your "
 "products."
-msgstr ""
-"Kaupan päävaluutta. Tällä valuutalla myyt tuotteitasi."
+msgstr "Kaupan päävaluutta. Tällä valuutalla myyt tuotteitasi."
 
 msgid ""
 "This option defines whether product prices entered in admin include taxes. "
 "Note this behavior can be overridden with contact group pricing."
 msgstr ""
-"Voit tällä asetuksella määritellä sisältävätkö hallinnassa annetut hinnat veron. "
-"Huomaathan, että tätä voit muuttaa asiaskasryhmäkohtaisella hinnoittelulla."
+"Voit tällä asetuksella määritellä sisältävätkö hallinnassa annetut hinnat "
+"veron. Huomaathan, että tätä voit muuttaa asiaskasryhmäkohtaisella "
+"hinnoittelulla."
 
 msgid "Shop logo. Will be shown at theme."
 msgstr "Kaupan logo. Näytetään teemassa."
@@ -1993,6 +2166,11 @@ msgstr ""
 msgid "contact address"
 msgstr "yhteystiedot"
 
+#, fuzzy
+#| msgid "members"
+msgid "staff members"
+msgstr "jäsenet"
+
 msgid "The shop name. This name is displayed throughout admin."
 msgstr "Kauppasi nimi. Tämä nimi näkyy hallintaliittymässä."
 
@@ -2008,8 +2186,7 @@ msgstr "huoltotilan viesti"
 
 msgid ""
 "The message to display to customers while your shop is in maintenance mode."
-msgstr ""
-"Viesti, joka näytetään asiakkailel kun kauppa on huoltotilassa."
+msgstr "Viesti, joka näytetään asiakkailel kun kauppa on huoltotilassa."
 
 msgid "alert limit"
 msgstr "hälytysmäärä"
@@ -2108,7 +2285,8 @@ msgstr "verot"
 msgid ""
 "The tax class name. Tax classes are used to control how taxes are applied to "
 "products."
-msgstr "Veroluokan nimi. Veroluokilla kontrolloidaan miten verot asetetaan "
+msgstr ""
+"Veroluokan nimi. Veroluokilla kontrolloidaan miten verot asetetaan "
 "tuotteille."
 
 msgid "Check this if this tax class is active and valid."
@@ -2151,8 +2329,8 @@ msgid ""
 "The sales unit name to use for products (For example, 'pieces' or 'units'). "
 "Sales units can be set for each product through the product editor view."
 msgstr ""
-"Myyntiyksikön nimi (esimerkiksi 'kappaletta' tai 'yksikköä'). "
-"Myyntiyksiköt voidaan asettaa jokaiselle tuotteelle tuotemuokkauksessa"
+"Myyntiyksikön nimi (esimerkiksi 'kappaletta' tai 'yksikköä'). Myyntiyksiköt "
+"voidaan asettaa jokaiselle tuotteelle tuotemuokkauksessa"
 
 msgid "short name"
 msgstr "lyhyt nimi"
@@ -2169,6 +2347,9 @@ msgstr "myyntiyksiköt"
 msgid "No Choice"
 msgstr "ei valintaa"
 
+msgid "The total should be greater than {} to be ordered."
+msgstr ""
+
 #, python-format
 msgid "%s not available in this shop"
 msgstr "%s ei ole saatavilla tälle kaupalle"
@@ -2178,6 +2359,15 @@ msgstr "Oletushinnoittelu"
 
 msgid "Insufficient stock"
 msgstr "Varastomäärä ei riitä"
+
+#, python-format
+msgid "%(name)s (physical stock: %(quantity)s)"
+msgstr "%(name)s (fyysinen varastosaldo: %(quantity)s)"
+
+#, python-format
+msgid ""
+"Insufficient physical stock count for following products: %(product_counts)s"
+msgstr "Virheellinen fyysinen varastosaldo tuotteelle: %(product_counts)s"
 
 msgid "inventory"
 msgstr "varasto"

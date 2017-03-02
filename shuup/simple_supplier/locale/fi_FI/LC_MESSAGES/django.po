@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-12 03:47+0000\n"
+"POT-Creation-Date: 2017-03-01 13:41+0000\n"
 "PO-Revision-Date: 2016-06-28 03:21+0000\n"
 "Last-Translator: Shuup Admin <admin@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
@@ -61,10 +61,9 @@ msgstr ""
 "Poistettiin %(delta)s %(unit_short_name)s tuotteelta %(product_name)s "
 "varastosta (%(supplier_name)s)"
 
-
+#, python-format
 msgid "Alert limit for product %(product_name)s set to %(value)s."
-msgstr "Hälytysraja tuotteelle %(product_name)s asetettiin "
-"arvoihin %(value)s"
+msgstr "Hälytysraja tuotteelle %(product_name)s asetettiin arvoihin %(value)s"
 
 msgid "Not allowed"
 msgstr "Ei sallittu"
@@ -122,6 +121,53 @@ msgstr "hälytysraja saavutettu"
 msgid "Product"
 msgstr "Tuote"
 
+msgid "Fired in the last 24 hours?"
+msgstr ""
+
+msgid ""
+"This will be True if this event was already dispatched in the last 24 hours "
+"for the same product and supplier. This is useful to prevent sending "
+"identical notifications in a short period of time."
+msgstr ""
+
+msgid "Send to?"
+msgstr ""
+
+msgid "Send email to whom?"
+msgstr ""
+
+msgid "Do not send the same email within 24 hours."
+msgstr ""
+
+msgid ""
+"If enabled, avoids sending the same email for the same product and supplier "
+"within 24 hours."
+msgstr ""
+
+msgid "Send Stock Limit Alert Email"
+msgstr ""
+
+msgid ""
+"Send me an email when a product stock is lower than the configured limit."
+msgstr ""
+
+msgid ""
+"This script will send an email to the configured destination alerting about "
+"the a product's low stock of a supplier. You can configure to not send the "
+"same email multiple times in a period of 24 hours. Every time a product's "
+"stock reach its configured limit, this notification will be fired and the "
+"email sent."
+msgstr ""
+
+msgid "Low stock of: {{ product }} from {{ supplier }}"
+msgstr ""
+
+msgid ""
+"Hi!\n"
+"You are receiving this message because the product {{ product}} from "
+"{{ supplier }} has a low stock."
+msgstr ""
+
 msgid "Add stock"
 msgstr "Lisää varastoa"
 
@@ -178,9 +224,11 @@ msgstr "Fyysinen määrä: %(count)s %(sales_unit)s"
 msgid "Logical count: %(count)s %(sales_unit)s"
 msgstr "Looginen määrä: %(count)s %(sales_unit)s"
 
+#, python-format
 msgid "Value per unit: %(value)s"
 msgstr "Arvo per yksikkö: %(value)s"
 
+#, python-format
 msgid "Total value: %(value)s"
 msgstr "Kokonaisarvo: %(value)s"
 
