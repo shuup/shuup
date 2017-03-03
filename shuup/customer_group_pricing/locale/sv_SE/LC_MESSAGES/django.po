@@ -1,0 +1,72 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-03 09:44+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Frank Wickström <frwickst@gmail.com>, 2017\n"
+"Language-Team: Swedish (Sweden) (https://www.transifex.com/shuup/teams/55306/"
+"sv_SE/)\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Shuup Customer Group Pricing"
+msgstr "Kundgruppers prissättning i Shuup"
+
+#, python-format
+msgid "Price (%(shop)s/%(group)s)"
+msgstr "Pris (%(shop)s/%(group)s)"
+
+msgid "Customer Group Price"
+msgstr "Kundgruppers prissättning"
+
+msgid ""
+"Customer group prices can be listed, fetched, created, updated and deleted."
+msgstr ""
+"Kundgruppers prissättning kan visas, hämtas, skapas, uppdaterad och tas bort."
+
+msgid "product"
+msgstr "produkt"
+
+msgid "shop"
+msgstr "butik"
+
+msgid "contact group"
+msgstr "kontaktgrupp"
+
+msgid "price"
+msgstr "pris"
+
+msgid "product price"
+msgstr "produktpris"
+
+msgid "product prices"
+msgstr "produktpriser"
+
+msgid "Customer Group Pricing"
+msgstr "Kundgruppers prissättning"
+
+msgid "Contact Group Pricing"
+msgstr "Kontaktgruppers prissättning"
+
+msgid ""
+"Here you can set individual pricing for different contact groups. This can "
+"be useful for special discounts or for B2B orders. These groups are defined "
+"in Contacts Settings – Contact Groups"
+msgstr ""
+"Här kan du ange individuella prissättning för olika kontaktgrupper. Detta "
+"kan vara användbart för särskilda rabatter eller B2B-beställningar. Dessa "
+"grupper definieras i Kontaktinställningar – Kontaktgrupper"
+
+msgid "Other shops"
+msgstr "Andra butiker"

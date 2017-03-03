@@ -1,0 +1,216 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-03 09:44+0000\n"
+"PO-Revision-Date: 2017-03-02 06:35+0000\n"
+"Last-Translator: Frank Wickström <frwickst@gmail.com>\n"
+"Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
+"language/sv_SE/)\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Shuup Default Tax"
+msgstr "Shuups standard skatt"
+
+msgid "Tax Rules"
+msgstr "Skatteregler"
+
+msgid "Show tax rules"
+msgstr "Visa skatteregler"
+
+msgid "Use ISO 3166-1 country codes (US, FI etc.)"
+msgstr "Använda ISO 3166-1 landskoder (US, FI etc.)"
+
+msgid "Use two letter state codes for the US"
+msgstr "Använda två bokstaviga koder för USA"
+
+msgid "Tax Rule"
+msgstr "Skatteregel"
+
+msgid "Tax"
+msgstr "Skatt"
+
+msgid "Tax Classes"
+msgstr "Skatteklasser"
+
+msgid "Customer Tax Groups"
+msgstr "Kunders skattegrupper"
+
+msgid "Countries"
+msgstr "Länder"
+
+msgid "Regions"
+msgstr "Regioner"
+
+msgid "Postal Codes"
+msgstr "Postnummer"
+
+msgid "Priority"
+msgstr "Prioritet"
+
+msgid "Override Group"
+msgstr "Åsidosatt grupp"
+
+msgid "Enabled"
+msgstr "Aktiverad"
+
+msgid "enabled"
+msgstr "aktiverad"
+
+msgid "Check this if this tax rule is active."
+msgstr "Markera detta om denna skatteregeln är aktiv."
+
+msgid "tax classes"
+msgstr "skatteklasser"
+
+msgid "Tax classes of the items to be taxed"
+msgstr "Skatteklasser för artiklar som skall beskattas"
+
+msgid "customer tax groups"
+msgstr "kunders skattegrupper"
+
+msgid "The customer tax groups for which this tax rule is limited."
+msgstr "Kundens skattegrupperna till vilket denna skatteregel är begränsad."
+
+msgid "country codes pattern"
+msgstr "landskodesmönster"
+
+msgid "region codes pattern"
+msgstr "regionkodsmönster"
+
+msgid "postal codes pattern"
+msgstr "postnummermöster"
+
+msgid "priority"
+msgstr "prioritet"
+
+msgid ""
+"Rules with same priority define added taxes (e.g. US taxes) and rules with "
+"different priority define compound taxes (e.g. Canada Quebec PST case)"
+msgstr ""
+"Regler med samma prioritetdefinierade skatter (e.g. USAs skatter) och regler "
+"med olika prioritedefinierade skatter (t.ex. i Kanada Quebec PSTs fall)"
+
+msgid "override group number"
+msgstr "åsidosatta gruppnummer"
+
+msgid ""
+"If several rules match, only the rules with the highest override group "
+"number will be effective.  This can be used, for example, to implement tax "
+"exemption by adding a rule with very high override group that sets a zero "
+"tax."
+msgstr ""
+"Om flera regler stämmer överens så kommer endast reglerna med flest "
+"åsidosätt gruppen att användas.  Detta kan användas, till exempel till att "
+"tillämpa skattebefrielse genom att lägga till en regel med mycket hög "
+"åsidosättningsgrupp som inte anger någon skatt."
+
+msgid "tax"
+msgstr "skatt"
+
+msgid "The tax to apply when this rule is applied."
+msgstr "Skatten tillämpas när regeln tillämpas."
+
+msgid "Tax rule {} ({})"
+msgstr "Skatteregel {} ({})"
+
+msgid "Default Taxation"
+msgstr "Standard beskattning"
+
+msgid "Tax rule information"
+msgstr "Skatteregelsinformation"
+
+msgid "Matching criteria"
+msgstr "Matchande kriterier"
+
+msgid "Grouping"
+msgstr "Gruppering"
+
+msgid "Applied tax"
+msgstr "Tillämpad skatt"
+
+msgid ""
+"\n"
+"            The following fields determine when this rule applies.  All\n"
+"            non-empty fields must match for the rule to apply.  Empty fields "
+"are\n"
+"            not considered, e.g. if \"Customer tax groups\" is left empty, "
+"all\n"
+"            customer tax groups will match.\n"
+"        "
+msgstr ""
+"\n"
+"            Följande fält avgör när den här regeln gäller.  Alla \n"
+"            icke-tomma fält stämma överens för att regeln ska gälla.\n"
+"            Tomma fält är inte iaktagna, tex. om \"Kundens skattegrupper\"\n"
+"            lämnas tomt, så kommer alla av kundens skattegrupper att gälla.\n"
+"        "
+
+msgid ""
+"\n"
+"            Pattern can be a single value or a comma separated list of "
+"items,\n"
+"            where each item can be a single value or a range, such as\n"
+"            \"value1-value2\".  Special value \"*\" matches everything.  "
+"For\n"
+"            example, a pattern \"1,2,50-90\" will match values \"1\" and "
+"\"2\", and\n"
+"            \"50\", \"90\", and everything between.  The range uses "
+"alphabetical\n"
+"            ordering unless start, end and the string to be matched are all\n"
+"            numerical, i.e. \"50-90\" will match also \"6a\" and \"700X\", "
+"since they\n"
+"            are alphabetically between \"50\" and \"90\", but it will not "
+"match\n"
+"            \"700000\" since for numerical items natural numeric ordering is "
+"used.\n"
+"        "
+msgstr ""
+"\n"
+"            Mönstret kan vara ett enda värde eller en kommaseparerad lista,\n"
+"            där enskilda inlägg kan vara ett värde eller ett omfång av "
+"värden,\n"
+"            tex. \"värde1-värde2\". Specialvärdet \"*\" matchar allting. "
+"Tex. kommer\n"
+"            mönster \"1,2,50-60\" att täcka värdena \"1\", \"2\" samt "
+"\"50\", \"90\" och\n"
+"            alla värde där emellan dom två. Omgånget är alfabetiskt ordnade "
+"om\n"
+"            inte början- och slutvärdet samt värdet som skall matcha är "
+"numeriskt,\n"
+"            tex. \"50-90\" kommer även att stämma in på \"6a\" och \"700X\" "
+"eftersom \n"
+"            de alfabetiskt ordnade mellan \"50\" och \"90\", dock skulle "
+"inte \"700000\"\n"
+"            få en träff eftersom det är ett numeriskt tal som inte "
+"inkluderas i omfånget.\n"
+"        "
+
+msgid ""
+"\n"
+"            Use the following fields to configure added or compounded\n"
+"            taxes (when several taxes apply for an item), or to create a\n"
+"            tax rule or a set of tax rules that override other tax rules.\n"
+"        "
+msgstr ""
+"\n"
+"            Använd följande fält for att ställa in tillagda eller "
+"sammansatta\n"
+"            skatter (när flera skatter gäller för en artikel) eller för att "
+"skapa\n"
+"            en skatteregel eller en uppsättning regler som går över\n"
+"            andra skatteregler.\n"
+"        "
+
+msgid "When this rule applies, apply the following tax."
+msgstr "När denna regel gäller, applicera följande skatt."

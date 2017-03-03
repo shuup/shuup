@@ -1,0 +1,232 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-03 09:44+0000\n"
+"PO-Revision-Date: 2017-03-02 06:34+0000\n"
+"Last-Translator: Frank Wickström <frwickst@gmail.com>\n"
+"Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
+"language/sv_SE/)\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Carousels"
+msgstr "Karuseller"
+
+#, python-format
+msgid "%s has been deleted."
+msgstr "%s har tagits bort."
+
+msgid "Name"
+msgstr "Namn"
+
+msgid "Filter by name..."
+msgstr "Filtrera på namn..."
+
+msgid "Carousel"
+msgstr "Karusell"
+
+msgid "Active"
+msgstr "Aktiv"
+
+msgid "Slide"
+msgstr "Bildspel"
+
+msgid "Fade"
+msgstr "Tona"
+
+msgid "Current"
+msgstr "Aktuellt"
+
+msgid "New"
+msgstr "Ny"
+
+msgid "name"
+msgstr "namn"
+
+msgid "The carousel name use for carousel configuration."
+msgstr "Karusellensnamnet som användd för karusellkonfiguration."
+
+msgid "animation"
+msgstr "animering"
+
+msgid "Animation type for cycling slides."
+msgstr "Animationstyp för slides"
+
+msgid "interval"
+msgstr "intervall"
+
+msgid "Slide interval in seconds."
+msgstr "Intervall i sekunder."
+
+msgid "pause on hover"
+msgstr "pausa när musen förs över"
+
+msgid "When checked, the carousel cycling pauses on mouse over."
+msgstr "När markerad kommer karusellen att stanna när man för musen över den."
+
+msgid "show navigation arrows"
+msgstr "visa navigeringspilar"
+
+msgid ""
+"When checked, navigational arrows are shown on the carousel allowing for "
+"customers to go back and forward."
+msgstr ""
+"När markerad, visas navigeringspilar i karusellen vilket gör det möjligt för "
+"kunder att gå fram och tillbaka."
+
+msgid "show navigation dots"
+msgstr "visa navigeringprickar"
+
+msgid "When checked, navigational indicator dots are shown."
+msgstr "När markerad, visas navigeringsprickar."
+
+msgid "image width"
+msgstr "bildbredd"
+
+msgid "Slide images will be cropped to this width."
+msgstr "Slidebilder kommer att beskäras till denna bredd."
+
+msgid "image height"
+msgstr "bildhöjd"
+
+msgid "Slide images will be cropped to this height."
+msgstr "Slidebilder kommer att beskäras till denna höjd."
+
+msgid "Name is only used to configure slides."
+msgstr "Namnet används endast att konfigurera slides."
+
+msgid "product link"
+msgstr "produktlänk"
+
+msgid ""
+"Set the product detail page that should be shown when this slide is clicked, "
+"if any."
+msgstr ""
+"Ange den produktinformationssida som ska visas när den här sliden klickas."
+
+msgid "category link"
+msgstr "kategorilänk"
+
+msgid ""
+"Set the product category page that should be shown when this slide is "
+"clicked, if any."
+msgstr "Ange den produktkategorisida som ska visas när den här sliden klickas."
+
+msgid "cms page link"
+msgstr "länk till innehållshanteringssystemet"
+
+msgid ""
+"Set the web page that should be shown when the slide is clicked, if any."
+msgstr "Ange den webbsida som ska visas när sliden klickas."
+
+msgid "ordering"
+msgstr "ordning"
+
+msgid ""
+"Set the numeric order in which this slide should appear relative to other "
+"slides in this carousel."
+msgstr ""
+"Ange den numeriska ordning som denna slide bör visas i förhållande till "
+"övriga bilder i denna karusell."
+
+msgid "link target"
+msgstr "länkmål"
+
+msgid ""
+"Set this to current if clicking on this slide should open a new browser tab."
+msgstr ""
+"Markera detta om nya sidor skall öppnas flik i webbläsaren när man klickar "
+"på en slide."
+
+msgid "available from"
+msgstr "tillgänglig från"
+
+msgid ""
+"Set the date and time from which this slide should be visible in the "
+"carousel. This is useful to advertise sales campaigns or other time-"
+"sensitive marketing."
+msgstr ""
+"Ställ in datum och tid då sliden ska synas i karusellen. Detta är användbart "
+"att annonsera försäljningskampanjer eller anna tidskänslig marknadsföring."
+
+msgid "available to"
+msgstr "tillgängligt till"
+
+msgid "caption"
+msgstr "rubrik"
+
+msgid "Text that describes the image. Used for search engine purposes."
+msgstr "Text som beskriver bilden. Används för sökningmotorer."
+
+msgid "caption text"
+msgstr "bildtext"
+
+msgid "When displayed in banner box mode, caption text is shown as a tooltip"
+msgstr "När visas i banner-box-läge, visas bildtexten som en bildbeskrivning"
+
+msgid "external link"
+msgstr "extern länk"
+
+msgid ""
+"Set the external site that should be shown when this slide is clicked, if "
+"any."
+msgstr "Ange den externa webbplatsen som ska visas när man klickar på sliden."
+
+msgid "image"
+msgstr "bild"
+
+msgid "The slide image to show."
+msgstr "Slidebilden som skall visas."
+
+msgid "Slides"
+msgstr "Slides"
+
+msgid "Carousel Plugin"
+msgstr "Karusell insticksmodul"
+
+msgid "Banner Box"
+msgstr "Banner-Box"
+
+msgid "Title"
+msgstr "Titel"
+
+msgid "Slides can be added after saving the Carousel."
+msgstr "Slides kan läggas till efter att karusellen är sparad."
+
+msgid ""
+"This form is also used to define banner boxes. Marked fields only apply to "
+"banner boxes."
+msgstr ""
+"Detta formulär används också att definiera bannerlådor. Markerade fält "
+"gäller endast bannerlådor."
+
+msgid "Basic details"
+msgstr "Grundinformation"
+
+msgid "Advanced options"
+msgstr "Avancerade inställningar"
+
+msgid "Only image for default language is required."
+msgstr "En bild krävs enbart för standardspråket."
+
+msgid ""
+"If external link is not set link will fallback to product link, category "
+"link or cms page link in this order."
+msgstr ""
+"Om en extern länk inte anges kommer användaren att skickas till, i denna "
+"ordning, produktlänken, kategorilänk eller innehållshanteringssystemetet."
+
+msgid "Add new slide"
+msgstr "Lägg till ny slide"
+
+msgid "New Carousel"
+msgstr "Ny Karusell"

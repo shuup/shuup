@@ -1,0 +1,63 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-03 09:44+0000\n"
+"PO-Revision-Date: 2017-03-02 06:34+0000\n"
+"Last-Translator: Frank Wickström <frwickst@gmail.com>\n"
+"Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
+"language/sv_SE/)\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Registration Received"
+msgstr "Registrering mottagen"
+
+msgid "Customer Email"
+msgstr "Kundens e-post"
+
+msgid "Send Registration Received Email"
+msgstr "Skicka e-post gällande mottagen registrering"
+
+msgid "Send email when a user registers."
+msgstr "Skicka ett e-postmeddelande då användaren registrerat sig"
+
+msgid ""
+"This script will send an email to the user or to any configured email right "
+"after a user get registered."
+msgstr ""
+"Detta skript kommer att skicka ett e-postmeddelande till användaren eller "
+"till en inställd adress efter att en användare får registrerats."
+
+msgid "{{ order.shop }} - Welcome!"
+msgstr "{{ order.shop }} - Välkommen!"
+
+msgid "Account activation"
+msgstr "Kontoaktivering"
+
+msgid "Account activation failed."
+msgstr "Aktivering av konto har misslyckades."
+
+msgid "Register"
+msgstr "Registrera"
+
+msgid "Registration"
+msgstr "Registrering"
+
+msgid "Activation successful!"
+msgstr "Aktiveringen lyckades!"
+
+msgid ""
+"Registration complete. Please follow the instructions sent to your email "
+"address."
+msgstr ""
+"Registrering klar. Följ instruktionerna som skickats till din e-postadress."

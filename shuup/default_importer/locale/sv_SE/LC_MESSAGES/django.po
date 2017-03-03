@@ -1,0 +1,38 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-03 09:44+0000\n"
+"PO-Revision-Date: 2017-03-02 06:33+0000\n"
+"Last-Translator: Frank Wickström <frwickst@gmail.com>\n"
+"Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
+"language/sv_SE/)\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Contact Importer"
+msgstr "Importör för kontakter"
+
+msgid "Company Contact Importer"
+msgstr "Importör för företagskontakter"
+
+msgid "Please add supplier to row before importing stock quantities."
+msgstr "Vänligen lägg till en leverantör före du fyller på lagret."
+
+msgid "No supplier found, please check the supplier exists."
+msgstr "Ingen leverantör hittade, vänligen kontrollera att leverantören finns."
+
+msgid "This supplier doesn't handle stocks, please set Stock Managed on."
+msgstr ""
+"Denna leverantör hanterar inte lager, vänligen aktivera Lager Hanterat."
+
+msgid "Product Importer"
+msgstr "Importör för produkter"

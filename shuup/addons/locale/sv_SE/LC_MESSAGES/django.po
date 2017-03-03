@@ -1,0 +1,176 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Frank Wickström <frwickst@gmail.com>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-03 09:44+0000\n"
+"PO-Revision-Date: 2017-03-02 06:35+0000\n"
+"Last-Translator: Frank Wickström <frwickst@gmail.com>\n"
+"Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
+"language/sv_SE/)\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Addons"
+msgstr "Tillägg"
+
+#, python-format
+msgid "Enable %s"
+msgstr "Aktivera %s"
+
+#, python-format
+msgid "%d new addons enabled."
+msgstr "%d nya tillägg aktiverad."
+
+#, python-format
+msgid "%d previously enabled addons disabled."
+msgstr "%d tidigare aktiverade tillägg inaktiverad."
+
+msgid "No changes were made."
+msgstr "Inga ändringar gjorda."
+
+msgid "Save addon changes"
+msgstr "Spara tilläggsförändringar"
+
+msgid "Upload new addon"
+msgstr "Ladda upp nytt tillägg"
+
+msgid "Reload application"
+msgstr "Hämta igen"
+
+msgid ""
+"There are no viable reload methods available. Please contact your system "
+"administrator."
+msgstr ""
+"Det finns inga genomförbara metoder för att ladda om. Kontakta "
+"systemadministratören."
+
+msgid "Reload Method"
+msgstr "Omladdningsmetod"
+
+msgid "Reloading."
+msgstr "Laddar om."
+
+msgid "Addon file (ZIP)"
+msgstr "Tilläggs fil (zip)"
+
+msgid "Only upload addon files you trust."
+msgstr "Ladda bara upp tillägg som du litar på."
+
+msgid "Only wheel files are supported"
+msgstr "Endast wheel filer stöds"
+
+msgid "Upload"
+msgstr "Ladda upp"
+
+msgid "Install Addon"
+msgstr "Installera tillägg"
+
+msgid "Installed addons"
+msgstr "Installerade tillägg"
+
+msgid "Addon name"
+msgstr "Tilläggsnamn"
+
+msgid "Is enabled"
+msgstr "Är aktiverad."
+
+msgid "You don't have any installed addons"
+msgstr "Du har inga installerade tillägg"
+
+msgid "Reload Application Server"
+msgstr "Ladda om applikationsservern"
+
+msgid ""
+"When you reload the application server, it may take some time for the new "
+"instance of your application to properly initialize."
+msgstr ""
+"När du ladda om applikationsservern kan det en stund för den nya "
+"applikationsinstansen att starta."
+
+msgid ""
+"In addition, there is always a chance for the server to not properly "
+"initialize at all, in which case you may need to troubleshoot the problem "
+"yourself (or have a system administrator handy)."
+msgstr ""
+"Dessutom finns det alltid en chans för servern inte startar alls, i det "
+"fallet kan du behöva felsöka problemet själv (eller har en "
+"systemadministratör till hands)."
+
+msgid "Reload steps"
+msgstr "Omladdningssteg"
+
+msgid ""
+"Finalize installations for newly installed addons (migrate and collect "
+"static resources)"
+msgstr ""
+"Slutföra installationer för nyinstallerade tillägg (migrera och sammanställ "
+"statiska resurser)"
+
+msgid "Reload application server"
+msgstr "Ladda om applikationsservern"
+
+msgid "Reload initiated."
+msgstr "Omladdnings påbörjad."
+
+msgid "Error while reloading application."
+msgstr "Fel vid omstart av applikationen."
+
+msgid "Finalizing installations."
+msgstr "Slutföra installationer."
+
+msgid "Your Shuup seems to be back up!"
+msgstr "Din Shuup verkar vara tillbaka!"
+
+msgid "Your Shuup is not up yet. Trying again soon."
+msgstr "Din Shuup är inte uppe ännu. Försök snart igen."
+
+msgid "Select file"
+msgstr "Välj fil"
+
+msgid "Installation Finished"
+msgstr "Installationen är klar"
+
+msgid "Installation Failed"
+msgstr "Installationen misslyckades"
+
+msgid "Success"
+msgstr "Lyckades"
+
+#, python-format
+msgid ""
+"Next, <a href=\"%(addon_list_url)s\" class=\"text-success\"><strong>activate "
+"the newly installed addon</strong></a> and <a href=\"%(addon_reload_url)s\" "
+"class=\"text-success\"><strong>reload your application server</strong></a>."
+msgstr ""
+"Till näst bör du <a href=\"%(addon_list_url)s\" class=\"text-success"
+"\"><strong>aktivera nyinstallerade tillägg</strong></a> och <a href="
+"\"%(addon_reload_url)s\" class=\"text-success\"><strong>starta om "
+"applikationssevern</strong></a>."
+
+msgid "Error"
+msgstr "Fel"
+
+msgid "Installer Log"
+msgstr "Installationslogg"
+
+msgid "Upload Addon - Install"
+msgstr "Ladda upp tillägg - Installera"
+
+msgid "Package Information"
+msgstr "Paketinformation"
+
+msgid "No package information could be extracted."
+msgstr "Ingen paketinformation kunde extraheras."
+
+msgid "File List"
+msgstr "Fillista"
