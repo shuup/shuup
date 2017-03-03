@@ -126,12 +126,18 @@ LOGGING = {
 }
 
 LANGUAGES = [
+    # List all supported languages here.
+    #
+    # Should be a subset of django.conf.global_settings.LANGUAGES.  Use
+    # same spelling for the language names for utilizing the language
+    # name translations from Django.
     ('en', 'English'),
     ('fi', 'Finnish'),
-    ('ja', 'Japanese'),
-    ('zh-hans', 'Simplified Chinese'),
-    ('pt-br', 'Portuguese (Brazil)'),
     ('it', 'Italian'),
+    ('ja', 'Japanese'),
+    ('pt-br', 'Brazilian Portuguese'),
+    ('sv', 'Swedish'),
+    ('zh-hans', 'Simplified Chinese'),
 ]
 
 PARLER_DEFAULT_LANGUAGE_CODE = "en"
