@@ -3,14 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
+# Janne Tammi <janne@shuup.com>, 2017
 # Panu Tulimäki <panu@shuup.com>, 2016
+# Shuup Admin <admin@shuup.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-01 13:41+0000\n"
-"PO-Revision-Date: 2016-10-25 23:38+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"PO-Revision-Date: 2017-02-10 10:33+0000\n"
+"Last-Translator: Janne Tammi <janne@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
 "language/fi_FI/)\n"
 "Language: fi_FI\n"
@@ -23,16 +25,16 @@ msgid "Customer"
 msgstr "Asiakas"
 
 msgid "Filter report results by customer."
-msgstr "Suodata raportin tuloksia asiakkaiden perusteella."
+msgstr "Suodata tuloksia asiakkaiden perusteella."
 
 msgid "Orderer"
 msgstr "Tilaaja"
 
 msgid "Filter report results by the person that made the order."
-msgstr "Suodata raportin tuloksia asiakkaan perusteella."
+msgstr "Suodata tuloksia tilauksen tehneen asiakkaan perusteella."
 
 msgid "Quantity"
-msgstr ""
+msgstr "Määrä"
 
 msgid "Taxless Total"
 msgstr "Veroton kokonaishinta"
@@ -41,106 +43,88 @@ msgid "Taxful Total"
 msgstr "Verollinen kokonaishinta"
 
 msgid "Sort order"
-msgstr ""
+msgstr "Järjestys"
 
 msgid "Year"
-msgstr ""
+msgstr "Vuosi"
 
 msgid "Year/Month"
-msgstr ""
+msgstr "Vuosi/Kuukausi"
 
 msgid "Year/Month/Day"
-msgstr ""
+msgstr "Vuosi/Kuukausi/Päivä"
 
 msgid "Group by"
-msgstr ""
+msgstr "Ryhmittely"
 
-#, fuzzy
-#| msgid "Order Amount"
 msgid "Order Count"
-msgstr "Tilausten määrä"
+msgstr "Tilausmäärä"
 
 msgid "Average Sales"
-msgstr ""
+msgstr "Keskimääräinen myynti"
 
 msgid "Tax"
-msgstr ""
+msgstr "Vero"
 
-#, fuzzy
-#| msgid "Filter report results by customer."
 msgid "Filter report results by tax."
-msgstr "Suodata raportin tuloksia asiakkaiden perusteella."
+msgstr "Suodata tuloksia veron mukaan."
 
 msgid "Tax Class"
-msgstr ""
+msgstr "Veroluokka"
 
-#, fuzzy
-#| msgid "Filter report results by customer."
 msgid "Filter report results by tax class."
-msgstr "Suodata raportin tuloksia asiakkaiden perusteella."
+msgstr "Suoda tuloksia veroluokan mukaan."
 
 msgid "Shipping Method"
-msgstr ""
+msgstr "Toimitustapa"
 
-#, fuzzy
-#| msgid "Filter report results by customer."
 msgid "Filter report results by shipping method."
-msgstr "Suodata raportin tuloksia asiakkaiden perusteella."
+msgstr "Suoda tuloksia toimitustavan mukaan."
 
 msgid "Carrier"
-msgstr ""
+msgstr "Toimittaja"
 
-#, fuzzy
-#| msgid "Filter report results by customer."
 msgid "Filter report results by carrier."
-msgstr "Suodata raportin tuloksia asiakkaiden perusteella."
+msgstr "Suoda tuloksia toimittajan mukaan."
 
-#, fuzzy
-#| msgid "Customer"
 msgid "Customer Sales"
-msgstr "Asiakas"
+msgstr "Asiakasmyynnit"
 
 msgid "Orders"
 msgstr "Tilaukset"
 
-#, fuzzy
-#| msgid "Customer"
 msgid "New Customers"
-msgstr "Asiakas"
+msgstr "Uudet asiakkaat"
 
 msgid "Date"
 msgstr "Päivä"
 
 msgid "Persons"
-msgstr ""
+msgstr "Henkilöt"
 
 msgid "Companies"
-msgstr ""
+msgstr "Yritykset"
 
 msgid "Users"
-msgstr ""
+msgstr "Käyttäjät"
 
-#, fuzzy
-#| msgid "Total Sales"
 msgid "Product Total Sales"
-msgstr "Kokonaismyynti"
+msgstr "Tuotteen kokonaismyynnit"
 
-#, fuzzy
-#| msgid "Products"
 msgid "Product"
-msgstr "Tuotteet"
+msgstr "Tuote"
 
 msgid "SKU"
-msgstr ""
+msgstr "SKU"
 
 msgid "Refunded Sales"
-msgstr ""
+msgstr "Hyvitetyt myynnit"
 
 msgid "Refunded Orders"
-msgstr ""
+msgstr "Hyvitetyt tilaukset"
 
 msgid "Total Refunded"
-msgstr ""
+msgstr "Hyvitetty kokonaismäärä"
 
 msgid "Sales Report"
 msgstr "Myyntiraportti"
@@ -161,21 +145,19 @@ msgid "Total Sales"
 msgstr "Kokonaismyynti"
 
 msgid "Shipping"
-msgstr ""
+msgstr "Toimitus"
 
 msgid "Shipping method"
-msgstr ""
+msgstr "Toimitustapa"
 
-#, fuzzy
-#| msgid "Total Sales"
 msgid "Total Charged"
-msgstr "Kokonaismyynti"
+msgstr "Laskutettu määrä"
 
 msgid "Taxes"
-msgstr ""
+msgstr "Verot"
 
 msgid "Rate (%)"
-msgstr ""
+msgstr "Määrä (%)"
 
 msgid "Shop Name"
 msgstr "Kaupan nimi"
@@ -183,10 +165,8 @@ msgstr "Kaupan nimi"
 msgid "Currency"
 msgstr "Valuutta"
 
-#, fuzzy
-#| msgid "Customer"
 msgid "Customers"
-msgstr "Asiakas"
+msgstr "Asiakkaat"
 
 msgid "Customer Average Sale"
-msgstr ""
+msgstr "Asiakkaan keskimyynti"

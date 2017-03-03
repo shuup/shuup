@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-01 13:41+0000\n"
+"POT-Creation-Date: 2017-03-03 09:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>, 2016\n"
+"Last-Translator: Panu Tulimäki <panu@shuup.com>, 2016\n"
 "Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/"
 "teams/55306/fi_FI/)\n"
 "Language: fi_FI\n"
@@ -20,10 +20,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "To"
-msgstr "Kohde"
+msgstr "Mihin"
 
 msgid "Email Subject"
-msgstr "Sähköpostin aihe"
+msgstr "Sähköposti aihe"
 
 msgid "Email Body"
 msgstr "Sähköpostin sisältö"
@@ -35,9 +35,9 @@ msgid ""
 "Best Regards,\n"
 "%(shop)s"
 msgstr ""
-"Tärkeää tietoa tilaukseesi liittyen, katso liite.\n"
+"Tärkeää tieto liittyen tilaukseesi. Katso liitteet.\n"
 "\n"
-"Parhain terveisin,\n"
+"Ystävällisin terveisin,\n"
 "%(shop)s"
 
 msgid "Printouts"
@@ -135,15 +135,15 @@ msgid "Get Order Confirmation HTML"
 msgstr "Hae tilausvahvistus HTML"
 
 msgid "Shipments"
-msgstr "Toimitukset"
+msgstr "Lähetykset"
 
 #, python-format
 msgid "Get Delivery Slip PDF (Shipment %(id)s)"
-msgstr "Hae Lähetysluettelo PDF (Lähetys %(id)s)"
+msgstr "Hae lähetysluettelo PDF (Lähetys %(id)s)"
 
 #, python-format
 msgid "Get Delivery Slip HTML (Shipment %(id)s)"
-msgstr "Hae Lähetysluettelo HTML (Lähetys %(id)s)"
+msgstr "Hae lähetysluettelo HTML (Lähetys %(id)s)"
 
 msgid "Send Email"
 msgstr "Lähetä sähköposti"
@@ -153,10 +153,10 @@ msgstr "Lähetä tilausvahvistus"
 
 #, python-format
 msgid "Send Delivery Slip (Shipment %(id)s)"
-msgstr "Lähetä Lähetysluettelo (Lähetys %(id)s)"
+msgstr "Lähetä lähetysluettelo (Lähetys %(id)s)"
 
 msgid "Email sent successfully!"
 msgstr "Sähköposti lähetetty onnistuneesti!"
 
 msgid "Could not sent the email, please try again."
-msgstr "Sähköpostin lähetys epäonnistui, ole hyvä ja yritä uudelleen."
+msgstr "Sähköpostia ei voitu lähettää, yritä myöhemmin uudelleen."

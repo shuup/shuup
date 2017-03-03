@@ -5,18 +5,21 @@
 # Translators:
 # Aarni Koskela, 2015
 # Heikki Saari <heikki.saari@anders.fi>, 2016
-# Juha Kujala <juha.kujala@shoop.io>, 2015-2016
+# Janne Tammi <janne@shuup.com>, 2017
+# Juha Kujala, 2017
+# Juha Kujala, 2015-2016
 # Panu Tulimäki <panu@shuup.com>, 2016
 # Shuup Admin <admin@shuup.com>, 2016
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # Tuomas Suutari <tuomas.suutari@shoop.io>, 2015-2016
+# Ville-Pekka Altti <ville-pekka.altti@anders.fi>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-01 13:41+0000\n"
-"PO-Revision-Date: 2016-10-25 23:31+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"PO-Revision-Date: 2017-02-10 08:21+0000\n"
+"Last-Translator: Janne Tammi <janne@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
 "language/fi_FI/)\n"
 "Language: fi_FI\n"
@@ -162,7 +165,7 @@ msgstr "Tallenna asiakkaan tiedot tilauksen luonnin yhteydessä"
 
 msgid ""
 "Checking this box will save entered customer data to your contacts list."
-msgstr "Valitse tämä jos haluat tallentaa valitut asiakastiedot."
+msgstr "Mikäli valitset tämän, asiakastiedot tallennetaan."
 
 msgid "Ship to billing address"
 msgstr "Toimita laskutusosoitteeseen"
@@ -170,14 +173,13 @@ msgstr "Toimita laskutusosoitteeseen"
 msgid ""
 "Checking this will make the shipping address the same as the billing address."
 msgstr ""
-"Tämän valinta tekee toimitusosoitteesta saman kuin laskutusosoitteesta."
+"Tämän valitseminen vaihtaa toimitusosoitteen samaksi kuin laskutusosoite."
 
 msgid "Order for company"
 msgstr "Tilaa yritykselle"
 
 msgid "Check this if the order is for a company or business with a tax ID."
-msgstr ""
-"Valitse tämä jos tilaus on yritykselle tai y-tunnuksen omaavalle taholle."
+msgstr "Valitse tämä, jos tilaus on yritykselle, jolla on verotunnus."
 
 msgid "Billing Address"
 msgstr "Laskutusosoite"
@@ -222,19 +224,19 @@ msgid "Order Status"
 msgstr "Tilauksen tila"
 
 msgid "Search by name or email"
-msgstr "Hae nimellä tai sähköpostilla"
+msgstr "Etsi nimen tai sähköpostin perusteella"
 
 msgid "Customer Search"
-msgstr "Etsi asiakas"
+msgstr "Asiakashaku"
 
 msgid ""
 "Search for existing customers by searching by name or email or click the "
 "magnifying glass for more fine-grained filtering. Clear the search filter to "
 "create an order for a new customer."
 msgstr ""
-"Hae asiakkaita nimellä tai sähköpostilla tai klikkaamalla suurennuslasia "
-"tarkempaa hakua varten. Tyhjennä hakusuodatin luodaksesi uuden asiakkaan "
-"tilaukselle"
+"Voit etsiä olemassaolevia asiakkaita nimellä, sähköpostilla tai klikkaamalla "
+"suurennuslasia mikäli haluat tarkemman haun. Tyhjennä hakufiltteri "
+"luodaksesi uuden tilauksen asiakkaalle."
 
 msgid "Customer"
 msgstr "Asiakas"
@@ -309,23 +311,21 @@ msgstr "Teksti/Kommentti"
 msgid ""
 "Enter a comment or text note about the order. This could be anything from "
 "special order requests to special shipping needs."
-msgstr ""
-"aseta kommentti tai tekstimuistio tilauksesta. Tämä voi olla mitä tahansa "
-"aina erikoispyynnöistä erikoisiin toimitustarpeisiin."
+msgstr "Syötä kommentti tai huomio tilauksesta."
 
 msgid "Qty"
 msgstr "Määrä"
 
 msgid "Enter the number of units of the product ordered."
-msgstr "Syötä tilattujen nimikkeiden määrä."
+msgstr "Syötä tilattujen tuotteiden määrä."
 
 msgid ""
 "Enter the regular base price for a single unit of the product. If an "
 "existing product is selected, the price is already determined in product "
 "settings. Total price will be automatically calculated."
 msgstr ""
-"Syötä perushinta yksittäiselle tuotteelle. Jos olemassaoleva tuote valitaan, "
-"määräytyy hinta tuotteen asetusten mukaan. Kokonaishinta lasketaan "
+"Syötä tuotteen normaali perushinta per yksikkö. Mikäli olemassaoleva tuote "
+"on valittu, hinta määräytyy tuoteasetuksista. Kokonaishinta lasketaan "
 "automaattisesti."
 
 msgid "Total Price"
@@ -334,7 +334,8 @@ msgstr "Kokonaishinta"
 msgid ""
 "Enter the total amount for the line item. Unit price will be automatically "
 "calculated."
-msgstr "Syötä kokonaismäärä riville. Yksikköhinta lasketaan automaattisesti."
+msgstr ""
+"Syötä kokonaishinta tuoteriville. Yksikköhinta lasketaan automaattisesti."
 
 msgid "Base Unit Price"
 msgstr "Perusyksikköhinta"
@@ -344,18 +345,16 @@ msgid ""
 "existing product is selected, the price is already determined in product "
 "settings."
 msgstr ""
-"Syötä perushinta yksittäiselle tuotteelle. Jos olemassaoleva tuote valitaan, "
-"määräytyy hinta tuotteen asetusten mukaan. Kokonaishinta lasketaan "
-"automaattisesti."
+"Syötä tuotteen normaali perushinta per yksikkö. Mikäli olemassaoleva tuote "
+"on valittu, hinta määräytyy tuoteasetuksista."
 
 msgid ""
 "Enter the total discounted price for a single product unit in the order. "
 "Discount percent, Total Discount Amount, and Line Total will be "
 "automatically calculated."
 msgstr ""
-"Syötä alennettu hinta yksittäiselle tuotteelle. Jos olemassaoleva tuote "
-"valitaan, määräytyy hinta tuotteen asetusten mukaan. Kokonaishinta lasketaan "
-"automaattisesti."
+"Syötä tuotteen alennettu kokonaishinta per tuote. Alennusprosentti, "
+"alennuksen kokonaismäärä ja rivin kokonaissumma lasketaan automaattisesti."
 
 msgid "Discount Percent"
 msgstr "Alennusprosentti"
@@ -364,8 +363,8 @@ msgid ""
 "Enter the discount percentage (%) for the line item. Discounted Unit Price, "
 "Total Discount Amount, and Line Total will be automatically."
 msgstr ""
-"Syötä alennusprosentti (%) riville. Alennettu yksikköhinta, "
-"kokonaisalennusmäärä ja rivin loppusumma lasketaan automaattisesti."
+"Syötä alennusprosentti (%) rivin tuotteelle. Alennettu yksikköhinta, "
+"kokonaisalennuksen määrä ja rivin kokonaissumma lasketaan automaattisesti."
 
 msgid "Total Discount Amount"
 msgstr "Kokonaisalennus"
@@ -374,8 +373,8 @@ msgid ""
 "Enter the total discount amount for the line item. Discounted Unit Price, "
 "Discount percent, and Line Total will be automatically calculated."
 msgstr ""
-"Syötä alennuksen määrä riville. Alennettu yksikköhinta, alennusprosentti ja "
-"rivin loppusumma lasketaan automaattisesti."
+"Syötä kokonaisalennuksen määrä rivin tuotteelle. Alennettu yksikköhinta, "
+"alennusprosentti ja rivin kokonaissumma lasketaan automaattisesti."
 
 msgid "Line Total"
 msgstr "Rivin hinta"
@@ -384,14 +383,14 @@ msgid ""
 "Enter the total amount for the line item. Discounted Unit Price, Discount "
 "percent, and Total Discount Amount will be automatically calculated."
 msgstr ""
-"Syötä rivin loppusumma. Alennettu yksikköhinta, alennusprosentti ja "
-"kokonaisalennus lasketaan automaattisesti."
+"Syötä tuoterivin tuotteen kokonaishinta. Alennettu yksikköhinta, "
+"alennusprosentti ja alennuksen kokonaismäärä lasketaan automaattisesti."
 
 msgid "Orderline type"
 msgstr "Tilausrivin tyyppi"
 
 msgid "Search product by name, SKU, or barcode"
-msgstr "Hae tuotetta nimellä, tuotenumerolla tai viivakoodilla"
+msgstr "Etsi tuotteita nimellä, tuotenumerolla tai viivakoodilla"
 
 msgid ""
 "If your product prices vary based on customer, you might want to select "
@@ -401,11 +400,11 @@ msgstr ""
 
 #, javascript-format
 msgid "All prices are in %s and include taxes."
-msgstr "Kaikki hinnat ovat valuutassa %s sekä verollisia."
+msgstr "Kaikki hinnat ovat %s ja sisältävät veron."
 
 #, javascript-format
 msgid "All prices are in %s. Taxes not included"
-msgstr "Kaikki hinnat ovat valuutassa %s sekä verottomia"
+msgstr "Kaikki hinnat ovat %s eivätkä sisällä veroja"
 
 msgid "Product Quick Adder"
 msgstr "Tuotteen pikalisääjä"
@@ -414,8 +413,8 @@ msgid ""
 "Search for products to add to the order by searching by name, SKU, or "
 "barcode or click the magnifying glass for more fine-grained filtering."
 msgstr ""
-"Hae tuotteita nimellä, tuotenumerolla tai viivakoodilla tai klikkaa "
-"suurennuslasia tarkempaa suodatusta varten."
+"Etsi tuotteita, jotka haluat lisätä tilaukselle, nimellä, tuotenumerolla tai "
+"viivakoodilla. Voit myös klikata suurennuslasia jos haluat tarkemman haun."
 
 msgid "Automatically add selected product"
 msgstr "Lisää valitut tuotteet automaattisesti"
@@ -430,7 +429,7 @@ msgid ""
 "Select a shipping method for the order. These methods are defined in "
 "shipping settings."
 msgstr ""
-"Valitse toimitustapa tilaukselle. Nämä metodit määritellään "
+"Valitse toimitustapa tilaukselle. Nämä tavat määritellään "
 "toimitusasetuksissa."
 
 msgid "No payment method"
@@ -440,7 +439,7 @@ msgid ""
 "Select a payment method for the order. These methods are defined in payment "
 "settings."
 msgstr ""
-"Valitse maksutapa tilaukselle. Nämä määritellään maksutapa-asetuksissa."
+"Valitse maksutapa tilaukselle. Nämä tavat määritellään maksutapa-asetuksissa."
 
 msgid "Shop"
 msgstr "Kauppa"
@@ -452,70 +451,70 @@ msgid "Other"
 msgstr "Muu"
 
 msgid "billing"
-msgstr ""
+msgstr "laskutus"
 
 msgid "shipping"
 msgstr "toimitus"
 
 #, javascript-format
 msgid "Enter the name for the %s address."
-msgstr "Anna nimi osoitteelle %s."
+msgstr "Syötä nimi %s osoitteelle."
 
 msgid "Tax number"
 msgstr "Veronumero"
 
 msgid "Enter the company tax (ID) number."
-msgstr "Anna yrityksen y-tunnus."
+msgstr "Syötä yrityksen y-tunnus."
 
 #, javascript-format
 msgid "Enter the best %s contact phone number."
-msgstr "Aseta kontaktin %s puhelinnumero."
+msgstr "Syötä paras %s yhteyshenkilön puhelinnumero."
 
 #, javascript-format
 msgid "Enter the %s email address for transaction receipts and communications."
-msgstr "Aseta %s sähköpostiosoite yhteydenottoja varten."
+msgstr "Syötä %s sähköpostiosoite kuiteille ja yhteydenpidolle."
 
 msgid "Street"
 msgstr "Katu"
 
 #, javascript-format
 msgid "Enter the %s street address."
-msgstr "Aseta %s katuosoite."
+msgstr "Syötä %s katuosoite."
 
 msgid "Street (2)"
 msgstr "Katu (2)"
 
 #, javascript-format
 msgid "Enter the %s street address (2)."
-msgstr "Aseta %s katuosoite (2)."
+msgstr "Syötä %s katuosoite (2)."
 
 msgid "ZIP / Postal code"
 msgstr "Postinumero"
 
 #, javascript-format
 msgid "Enter the zip or postal code of the %s address."
-msgstr "Aseta postinumero %s osoitteelle."
+msgstr "Syötä postinumero tai -koodi %s osoitteelle."
 
 msgid "City"
 msgstr "Kaupunki"
 
 #, javascript-format
 msgid "Enter the city of the %s address."
-msgstr "Aseta kaupunki %s osoitteelle."
+msgstr "Syötä kaupunki %s osoitteelle."
 
 msgid "Region"
 msgstr "Alue"
 
 #, javascript-format
 msgid "Enter the region, state, or province of the %s address."
-msgstr "Aseta alue %s osoitteelle."
+msgstr "Syötä alue, osavaltio tai maakunta %s osoitteelle."
 
 msgid "Country"
 msgstr "Maa"
 
 #, javascript-format
 msgid "Enter the country of the %s address."
-msgstr "Aseta maa %s osoitteelle."
+msgstr "Syötä maa %s osoitteelle."
 
 msgid "No records found."
 msgstr "Tietoja ei löytynyt."
@@ -548,8 +547,6 @@ msgstr "Muuttujan nimi"
 msgid "Variable"
 msgstr "Muuttuja"
 
-#, fuzzy
-#| msgid "Identifier"
 msgid "Identifer"
 msgstr "Tunniste"
 
@@ -569,10 +566,10 @@ msgid "Clear"
 msgstr "Tyhjennä"
 
 msgid "Drop files here or click to browse."
-msgstr "Pudota tiedostoja tähän tai klikkaa selaa."
+msgstr "Pudota tiedostot tähän tai klikkaa selaa."
 
 msgid "only images can be uploaded!"
-msgstr ""
+msgstr "voit lisätä vain kuvia!"
 
 msgid "No results."
 msgstr "Ei tuloksia."
@@ -609,29 +606,29 @@ msgid "Quick Links"
 msgstr "Pikalinkit"
 
 msgid "Quick Links to your most used features."
-msgstr "Pikalinkit eniten käytettyihin ominaisuuksiin."
+msgstr "Pikalinkit yleisimmin käytettyihin toimintoihin."
 
 msgid "Orders"
 msgstr "Tilaukset"
 
 msgid "Track and filter your customers’ orders here."
-msgstr "Seuraa ja suodata asiakkaidesi tilauksia täällä."
+msgstr "Voit seurata ja suodattaa asiakkaidesi tilauksia täällä."
 
 msgid "Products"
 msgstr "Tuotteet"
 
 msgid "All your exciting products and features are located here."
-msgstr "Kaikki tuotteesi ja ominaisuudet löytyvät täältä."
+msgstr "Kaikki tuotteesi ja ominaisuutesi löytyvät täältä."
 
 msgid "Contacts"
-msgstr "Asiakkaat"
+msgstr "Kontaktit"
 
 msgid ""
 "All your customer data is located here. Target and organize your clients "
 "details your way!"
 msgstr ""
-"Kaikki asiakkaidesi tiedot löytyvät täältä. Kohdista ja organisoi tietoja "
-"sinun suuntaasi!"
+"Kaikki asiakkaiden tiedot löytyvät täältä. Voit kohdistaa ja organisoida "
+"asiakkaitasi omaan tapaasi!"
 
 msgid "Campaigns"
 msgstr "Kampanjat"
@@ -640,14 +637,15 @@ msgid ""
 "Great loyalty tool for creating marketing, campaigns, special offers and "
 "coupons to entice your shoppers!"
 msgstr ""
-"Mahtava työkalu markkinointiin, kampanjoihin, erikoistarjouksiin ja ja "
-"kuponkeihin jolla voit houkutella asiakkaita."
+"Mahtava työkalu markkinoitiin sekä kampanjoiden, tarjousten että kuponkien "
+"tekoon, jotta saat houkuteltua ostajia!"
 
 msgid ""
 "Set offers based on their previous purchase behavior to up- and cross sale "
 "your inventory."
 msgstr ""
-"Aseta tarjouksia perustuen ostokäyttäytymiseen lisäessäsi ristiinmyyntiä."
+"Tee tarjouksia ostokäyttäytymiseen perustuen lisä- ja ristiinmyydäksesi "
+"varastoasi."
 
 msgid "Content"
 msgstr "Sisältö"
@@ -656,8 +654,8 @@ msgid ""
 "The make-over tool to customize you site themes, add pages and product "
 "carousels. Incorporate any media to make your store pop!"
 msgstr ""
-"Työkalu, jolla voit muokata teemaa, lisätä sivuja ja tuotekaruselleja. Lisää "
-"mitä tahansa mediaa saadaksesi kauppasi nousemaan esiin!"
+"Sivusi teemojen muokkaustyökalu; luo sivuja ja lisää tuotekaruselleja. Lisää "
+"mitä tahansa sisältöä sivuillesi, jotta kauppasi nousee esiin."
 
 msgid "Reports"
 msgstr "Raportit"
@@ -666,8 +664,8 @@ msgid ""
 "Your reporting tool to build and analyze your consumer behavior information "
 "that can assist with your business decisions."
 msgstr ""
-"Raportointityökalusi, jolla voit analysoida asiakkaiden käyttäytymistä "
-"liiketoimintapäätöstesi avuksi."
+"Raportointityökalusi joka auttaa analysoimaan asiakkaiden käyttäytymistietoa "
+"ja auttaa sinua tekemään liiketoiminnallisia päätöksiä."
 
 msgid "Shops"
 msgstr "Kaupat"
@@ -676,8 +674,8 @@ msgid ""
 "Place for your Shop specific settings. You can customize taxes, currencies, "
 "customer groups, and many other things in this menu."
 msgstr ""
-"Aseta kauppakohtaiset asetukset. Voit muokata veroja, valuuttoja, "
-"asiakasryhmiä ja monia muita asetuksia tästä valikosta."
+"Kauppakohtaiset asetukset. Voit muokata veroja, valuuttoja, asiakasryhmiä ja "
+"useita muita asioita täältä."
 
 msgid "Addons"
 msgstr "Laajennukset"
@@ -686,15 +684,15 @@ msgid ""
 "This is your connection interface. Addons and other systems you use can be "
 "attached to your store through powerful data connections."
 msgstr ""
-"Tämä on yhteysliitäntäsi. Laajennukset ja muut järjestelmät joita käytät "
-"voidaan sitoa kauppaasi."
+"Tämä on liitäntärajapintasi. Laajennukset ja muut järjestelmät joita käytät "
+"voidaan liittää kauppaasi nopeiden rajapintojemme läpi."
 
 msgid ""
 "Supercharge your site and gather crazy amounts of data with integrations to "
 "CRMs and ERPs, POS’s and PIM’s, or any other acronym you can think of."
 msgstr ""
-"Turbolataa sivustosi ja kerää hurjia määriä tietoa CRM, ERP, POS, ja PIM tai "
-"minkä tahansa integraation avulla."
+"Boostaa sivuasi suurilla datamäärillä esimerkiksi CRM, ERP, POS tai PIM "
+"integraatioiden kautta."
 
 msgid "Settings"
 msgstr "Asetukset"
@@ -703,24 +701,25 @@ msgid ""
 "The nuts and bolts of your store are found here. From individual country tax-"
 "regulations to your contact details."
 msgstr ""
-"Kauppasi perusosat löytyvät täältä. Yksittäisten maiden verosäännöistä aina "
-"asiakastietoihin."
+"Kauppasi perusasetukset löytyvät täältä. Yksittäisen maan verosäännöistä "
+"aina kauppasi yhteystietoihin."
 
 msgid "Search"
-msgstr "Haku"
+msgstr "Etsi"
 
 msgid ""
 "Lost and cannot find your way? No worries, you can search contacts, "
 "settings, add-ons and more features from here."
 msgstr ""
-"Eksynyt etkä löydä kotiin? Ei hätää, voit hakea asiakkaita, asetuksia, "
-"laajennuksia ja muita ominaisuuksia täältä."
+"Eksyksissä etkä löydä perille? Ei huolta, voit etsiä kontakteja, asetuksia, "
+"laajennuksia ja useita muita ominaisuuksia täältä."
 
 msgid "View your storefront"
-msgstr "Katso kauppaasi"
+msgstr "Näytä kaupan julkinen osio"
 
 msgid "Preview your shop and all the cool features you have created!"
-msgstr "Esikatsele kauppaasi ja näe kaikki mahtavat asiat, joita olet luonut!"
+msgstr ""
+"Esikatsele kauppaasi ja kaikkia mahtavia ominaisuuksia jotka olet luonut!"
 
 msgid "We're done!"
 msgstr "Olemme valmiit!"
@@ -729,10 +728,12 @@ msgid "It was nice to show you around!"
 msgstr "Oli mukava näyttää sinulle paikkoja!"
 
 msgid "If you need to run it again, fire it up from the menu in the top right."
-msgstr "Jos haluat ajaa sen uusiksi, löydät sen valikosta oikealta ylhäältä."
+msgstr ""
+"Jos sinun pitää ajaa se uudestaan, voit käynnistää sen ylävalikosta, "
+"yläoikealta."
 
 msgid "Learn more at the Shuup Help Center"
-msgstr "Opi lisää Shuup Help Centerissä"
+msgstr "Lisätietoa Shuup Help Centeristä"
 
 msgid "Mass actions"
 msgstr "Massatoiminnot"
@@ -781,18 +782,18 @@ msgid "Select Action"
 msgstr "Valitse toiminto"
 
 msgid "Clear Selections"
-msgstr "Tyhjennä valinnta"
+msgstr "Tyhjennä valinnat"
 
 msgid "Select All"
 msgstr "Valitse kaikki"
 
 #, javascript-format
 msgid "Select All %s Items"
-msgstr "Valitse kaikki %s kohteet"
+msgstr "Valitse kaikki %s kohdetta"
 
 #, javascript-format
 msgid "All %s Items Selected"
-msgstr "Kaikki %s kohteet valittu"
+msgstr "Kaikki %s kohdetta valittu"
 
 msgid "Mass Action complete."
 msgstr "Massatoiminto valmis."
@@ -801,7 +802,7 @@ msgid "You haven't selected anything"
 msgstr "Et ole tehnyt valintaa."
 
 msgid "Confirm action by clicking OK!"
-msgstr "Varmista valinta painamalla OK!"
+msgstr "Vahvista toiminto klikkaamalla OK!"
 
 msgid "Are you sure you want to delete this media?"
 msgstr "Oletko varma, että haluat poistaa tämän median?"
@@ -813,7 +814,7 @@ msgid "Primary image"
 msgstr "Pääkuva"
 
 msgid "Finish"
-msgstr "Lopeta"
+msgstr "Valmis"
 
 msgid "Skip"
 msgstr "Ohita"

@@ -10,11 +10,14 @@
 # Janne Tammi <janne@shuup.com>, 2016
 # Janne Tammi <janne@shuup.com>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
-# Juha Kujala <juha.kujala@shoop.io>, 2015-2016
+# Juha Kujala, 2017
+# Juha Kujala, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
+# Panu Tulimäki <panu@shuup.com>, 2016
 # Rauli L. <rauli.laine@iki.fi>, 2015-2016
 # Rauli L. <rauli.laine@iki.fi>, 2016
 # Shuup Admin <admin@shuup.com>, 2015-2016
+# Shuup Admin <admin@shuup.com>, 2016
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # tomijarvi <tomi@jarvi.pro>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
@@ -22,8 +25,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-01 13:41+0000\n"
-"PO-Revision-Date: 2016-08-04 13:14-0700\n"
+"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"PO-Revision-Date: 2017-02-10 11:17+0000\n"
 "Last-Translator: Janne Tammi <janne@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
 "language/fi_FI/)\n"
@@ -33,10 +36,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.8\n"
 
 msgid "Global plugins"
-msgstr "Globaalit liitännäiset"
+msgstr "Globaali liitännäinen"
 
 msgid "Theme plugins"
 msgstr "Teemaliitännäiset"
@@ -48,7 +50,7 @@ msgid "Themes"
 msgstr "Teemat"
 
 msgid "Customize the look and feel of your shop"
-msgstr "Muokkaa kauppasi ulkoasua"
+msgstr "Muokkaa kaupan ulkoasua"
 
 msgid "Customize theme"
 msgstr "Muokkaa teemaa"
@@ -72,10 +74,10 @@ msgid "Theme activated."
 msgstr "Teema aktivoitu."
 
 msgid "Stylesheets"
-msgstr "Tyylitiedostot"
+msgstr "Tyylit"
 
 msgid "The fonts, colors, and styles to use with your theme."
-msgstr "Fontit, värit ja tyylit teemallesi."
+msgstr "Teemasi käyttämät fontit, värit ja tyylit."
 
 msgid "current draft"
 msgstr "nykyinen vedos"
@@ -163,10 +165,10 @@ msgid "Product Cross Sells"
 msgstr "Tuotteiden ristiinmyynti"
 
 msgid "category"
-msgstr "Tuoteryhmä"
+msgstr "kategoria"
 
 msgid "Category Products Highlight"
-msgstr "Tuoteryhmän tuotenostot"
+msgstr "Kategoriatuotenostot"
 
 msgid "Snippets"
 msgstr "Koodinpätkät"
@@ -226,10 +228,8 @@ msgstr "Napsauta muokataksesi aluetta %s"
 msgid "Delete This Cell"
 msgstr "Poista tämä solu"
 
-#, fuzzy
-#| msgid "(Untranslated)"
 msgid "Untranslated"
-msgstr "(Kääntämätön)"
+msgstr "Kääntämätön"
 
 msgid "There's nothing to configure in this plugin."
 msgstr "Tällä lisäosalla ei ole asetuksia."
@@ -247,7 +247,7 @@ msgid "Delete row"
 msgstr "Poista rivi"
 
 msgid "Move row"
-msgstr ""
+msgstr "Siirrä rivi"
 
 msgid "Add new row"
 msgstr "Lisää uusi rivi"
@@ -269,7 +269,7 @@ msgid "Select theme"
 msgstr "Valitse teema"
 
 msgid "Guide"
-msgstr "Ohjeistus"
+msgstr "Opas"
 
 msgid "Actions"
 msgstr "Toiminnot"
@@ -281,7 +281,7 @@ msgid "Show guide"
 msgstr "Näytä ohjeistus"
 
 msgid "Activate theme to show guide"
-msgstr "Aktivoi teema näyttääksesi ohjeistuksen"
+msgstr "Aktivoi teema nähdäksesi ohjeistuksen"
 
 msgid "No guide"
 msgstr "Ei ohjeistusta"
@@ -343,13 +343,13 @@ msgid "One Fourth (1/4)"
 msgstr "Neljäsosa (1/4)"
 
 msgid "Auto"
-msgstr "Automaattinen"
+msgstr "Auto"
 
 msgid "Cell width"
 msgstr "Solun leveys"
 
 msgid "Cell align"
-msgstr "Solun sijainti"
+msgstr "Solun tasaus"
 
 msgid "No Plugin"
-msgstr "Ei liitännäistä"
+msgstr "Ei lisäosaa"

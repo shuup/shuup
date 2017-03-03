@@ -1,27 +1,29 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
+# Translators:
+# Panu Tulimäki <panu@shuup.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-09 21:20+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"PO-Revision-Date: 2017-02-10 11:17+0000\n"
+"Last-Translator: Janne Tammi <janne@shuup.com>\n"
+"Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
+"language/fi_FI/)\n"
+"Language: fi_FI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Shuup Frontend - Recently Viewed Products"
-msgstr "Shuup Kauppa - Viimeksi katsotut tuotteet"
+msgstr "Shuup Frontend - Viimeksi tarkastellut tuotteet"
 
 msgid "Recently Viewed Products List"
-msgstr "Viimeksi katsottujen tuotteiden lista"
+msgstr "Viimeksi tarkasteltujen tuotteiden lista"
 
 msgid "Recently viewed products"
-msgstr "Viimeksi katsotut tuotteet"
+msgstr "Viimeksi tarkastellut tuotteet"

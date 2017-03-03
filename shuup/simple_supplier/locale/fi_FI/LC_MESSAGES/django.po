@@ -3,16 +3,18 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
-# Rauli Laine <rauli.laine@iki.fi>, 2016
+# Janne Tammi <janne@shuup.com>, 2017
+# Panu Tulimäki <panu@shuup.com>, 2016
+# Rauli L. <rauli.laine@iki.fi>, 2016
 # Shuup Admin <admin@shuup.com>, 2016
-# Tuomas Suutari <tuomas.suutari@shuup.com>, 2016
+# Tuomas Suutari <tuomas.suutari@shoop.io>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-01 13:41+0000\n"
-"PO-Revision-Date: 2016-06-28 03:21+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"PO-Revision-Date: 2017-02-10 11:12+0000\n"
+"Last-Translator: Janne Tammi <janne@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
 "language/fi_FI/)\n"
 "Language: fi_FI\n"
@@ -63,7 +65,7 @@ msgstr ""
 
 #, python-format
 msgid "Alert limit for product %(product_name)s set to %(value)s."
-msgstr "Hälytysraja tuotteelle %(product_name)s asetettiin arvoihin %(value)s"
+msgstr "Hälytysraja tuotteelle %(product_name)s asetettu arvoon %(value)s."
 
 msgid "Not allowed"
 msgstr "Ei sallittu"
@@ -116,40 +118,47 @@ msgid "physical count"
 msgstr "fyysinen määrä"
 
 msgid "Alert Limit Reached"
-msgstr "hälytysraja saavutettu"
+msgstr "Hälytysraja saavutettu"
 
 msgid "Product"
 msgstr "Tuote"
 
 msgid "Fired in the last 24 hours?"
-msgstr ""
+msgstr "Ajettu viimeisen 24 tunnin aikana?"
 
 msgid ""
 "This will be True if this event was already dispatched in the last 24 hours "
 "for the same product and supplier. This is useful to prevent sending "
 "identical notifications in a short period of time."
 msgstr ""
+"Tämän arvo on \"True\" mikäli tämä tapahtuma on käsitelty viimeisen 24 "
+"tunnin sisällä samalle tuotteelle ja toimittajalle. Tällä voit estää "
+"samanlaisten muistutusten lähettämisen lyhyen ajan sisällä."
 
 msgid "Send to?"
-msgstr ""
+msgstr "Vastaanottaja?"
 
 msgid "Send email to whom?"
-msgstr ""
+msgstr "Kenelle sähköposti lähetetään?"
 
 msgid "Do not send the same email within 24 hours."
-msgstr ""
+msgstr "Älä lähetä samaa sähköpostia toistamiseen 24 tunnin sisällä."
 
 msgid ""
 "If enabled, avoids sending the same email for the same product and supplier "
 "within 24 hours."
 msgstr ""
+"Mikäli päällä, estää samojen sähköpostien lähettämisen samalle tuotteelle ja "
+"valmistajalle 24 tunnin sisällä."
 
 msgid "Send Stock Limit Alert Email"
-msgstr ""
+msgstr "Lähetä varastosaldon hälytysrajan sähköposti"
 
 msgid ""
 "Send me an email when a product stock is lower than the configured limit."
 msgstr ""
+"Lähetä minulle sähköposti kun tuotteen varastosaldo menee alle määritetyn "
+"rajan."
 
 msgid ""
 "This script will send an email to the configured destination alerting about "
@@ -158,15 +167,24 @@ msgid ""
 "stock reach its configured limit, this notification will be fired and the "
 "email sent."
 msgstr ""
+"Tämä skripti lähettää sähköpostin määritettyyn osoitteeseen varoittaen "
+"tuotteen varastosaldosta tietyllä toimittajalla. Voit asettaa siten, että "
+"samaa sähköpostia ei lähetetä toistamiseen 24 tunnin sisällä. Joka kerta, "
+"kun tuotteen varastosaldo saavuttaa sille määritellyn hälytysrajan, tämä "
+"notifikaatio ajetaan ja sähköposti lähetetään."
 
 msgid "Low stock of: {{ product }} from {{ supplier }}"
 msgstr ""
+"Alhainen varastosaldo tuotteelle {{ product }} toimittajalta {{ supplier }}"
 
 msgid ""
 "Hi!\n"
 "You are receiving this message because the product {{ product}} from "
 "{{ supplier }} has a low stock."
 msgstr ""
+"Terve!\n"
+"Saat tämän sähköpostin, koska tuotteen {{ product }} varastosaldo on "
+"alhainen toimittajalla {{ supplier }}."
 
 msgid "Add stock"
 msgstr "Lisää varastoa"
@@ -176,8 +194,8 @@ msgid ""
 "Alert limit <a href=\"%(notify_url)s\" target=\"_blank\">notification "
 "scripts</a> are executed when product stock falls below set quantity."
 msgstr ""
-"Hälytysrajan <a href=\"%(notify_url)s\" target=\"_blank\">notifikaatio "
-"skriptit</a> ajetaan kun tuotteen varasto laskee alle asetetun määrän."
+"Hälytysraja <a href=\"%(notify_url)s\" target=\"_blank\">ilmoitukset</a> "
+"suoritetaan kun tuotteen varastomäärä laskee alle asetetun rajan."
 
 msgid "Change alert limit"
 msgstr "Vaihda hälytysrajaa"
@@ -218,15 +236,15 @@ msgstr ""
 
 #, python-format
 msgid "Physical count: %(count)s %(sales_unit)s"
-msgstr "Fyysinen määrä: %(count)s %(sales_unit)s"
+msgstr "Fyysinen luku: %(count)s %(sales_unit)s"
 
 #, python-format
 msgid "Logical count: %(count)s %(sales_unit)s"
-msgstr "Looginen määrä: %(count)s %(sales_unit)s"
+msgstr "Looginen luku: %(count)s %(sales_unit)s"
 
 #, python-format
 msgid "Value per unit: %(value)s"
-msgstr "Arvo per yksikkö: %(value)s"
+msgstr "Arvo yksikköä kohde: %(value)s"
 
 #, python-format
 msgid "Total value: %(value)s"

@@ -6,9 +6,10 @@
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
 # Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Janne Tammi <janne@shuup.com>, 2017
 # Janne Tammi <janne@shuup.com>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
-# Juha Kujala <juha.kujala@shoop.io>, 2015-2016
+# Juha Kujala, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
 # Panu Tulimäki <panu@shuup.com>, 2016
 # Rauli L. <rauli.laine@iki.fi>, 2015-2016
@@ -16,13 +17,14 @@
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # tomijarvi <tomi@jarvi.pro>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
+# Ville-Pekka Altti <ville-pekka.altti@anders.fi>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-01 13:41+0000\n"
-"PO-Revision-Date: 2016-08-02 18:43+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"PO-Revision-Date: 2017-02-10 11:07+0000\n"
+"Last-Translator: Janne Tammi <janne@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
 "language/fi_FI/)\n"
 "Language: fi_FI\n"
@@ -57,7 +59,7 @@ msgid "URL already exists."
 msgstr "Antamasi verkko-osoite on jo olemassa."
 
 msgid "URL must be unique"
-msgstr "Osoitteen pitää olla uniikki"
+msgstr "URL pitää olla uniikki"
 
 #, python-format
 msgid "%(label)s is required when any %(language)s field is filled."
@@ -90,26 +92,19 @@ msgid ""
 "certain date and time. This is useful for pages describing sales campaigns "
 "or other time-sensitive pages."
 msgstr ""
-"Aseta sivun saatavuuspäivämäärät. Tämä on hyödyllistä jos haluat rajoittaa "
-"sivun näkymään vain tietyn kampanjan aikana tai muuten vain aikarajoittaa "
-"sen näkyvyyttä."
+"Aseta päivämäärä, josta eteenpäin sivu on näkyvissä. Tämä on kätevä "
+"sivuille, jotka kuvaavat kampanjoita, tai muita ajoitettuja sivuja."
 
 msgid "available to"
 msgstr "saatavilla päättyen"
 
-#, fuzzy
-#| msgid ""
-#| "Set an available from date to restrict the page to be available only "
-#| "after a certain date and time. This is useful for pages describing sales "
-#| "campaigns or other time-sensitive pages."
 msgid ""
 "Set an available to date to restrict the page to be available only after a "
 "certain date and time. This is useful for pages describing sales campaigns "
 "or other time-sensitive pages."
 msgstr ""
-"Aseta sivun saatavuuspäivämäärät. Tämä on hyödyllistä jos haluat rajoittaa "
-"sivun näkymään vain tietyn kampanjan aikana tai muuten vain aikarajoittaa "
-"sen näkyvyyttä."
+"Aseta päivämäärä, johon asti sivu on näkyvissä. Tämä on kätevä sivuille, "
+"jotka kuvaavat kampanjoita, tai muita ajoitettuja sivuja."
 
 msgid "created by"
 msgstr "luoja"
@@ -133,7 +128,7 @@ msgstr "näkyvissä valikossa"
 msgid ""
 "Check this if this page should have a link in the top menu of the store "
 "front."
-msgstr "Valitse tämä, mikäli haluat, että sivu näytetään teeman valikoissa."
+msgstr "Valitse tämä, jos sivun pitäisi olla linkitettynä teeman ylävalikossa."
 
 msgid "parent"
 msgstr "isäntä"
@@ -141,19 +136,19 @@ msgstr "isäntä"
 msgid ""
 "Set this to a parent page if this page should be subcategorized under "
 "another page."
-msgstr "Aseta isäsivu jos haluat, että sivu näkyy toisen sivun alla."
+msgstr "Aseta tämä isäsivuun, mikäli tämän sivun pitää olla toisen sivun alla."
 
 msgid "list children on page"
 msgstr "listaa lapset sivulla"
 
 msgid "Check this if this page should list its children pages."
-msgstr "Valitse tämä, jos haluat että sivu listaa lapset."
+msgstr "Valitse tämä jos sivun pitäisi listata alasivunsa."
 
 msgid "title"
 msgstr "otsikko"
 
 msgid "The page title. This is shown anywhere links to your page are shown."
-msgstr "Sivun otsikko. Tätä käytetään kaikkialla kun sivu linkitetään."
+msgstr "Sivun otsikko. Tämä näytetään kaikkialla, jossa sivulinkki näytetään."
 
 msgid "URL"
 msgstr "URL"
@@ -163,9 +158,9 @@ msgid ""
 "page higher. Often the best url is simply the page title with spaces "
 "replaced with dashes."
 msgstr ""
-"Sivun osoite. Valitse kuvaava osoite, jotta hakukoneet löytävät sivun "
-"helpommin. Usein paras osoite on vain sivun otsikko, jossa välilyönnit on "
-"korvattu viivoilla."
+"Sivun URL osoite. Valitse kuvaava osoite, jotta hakukoneesi voivat sijoittaa "
+"sivusi paremmin. Useimmiten sivun otsikko on paras valinta, kun vain "
+"välilyönnit korvataan viivoilla."
 
 msgid "content"
 msgstr "sisältö"
@@ -173,7 +168,8 @@ msgstr "sisältö"
 msgid ""
 "The page content. This is the text that is displayed when customers click on "
 "your page link."
-msgstr "Sivun sisältö. Tämä näytetään kun asiakas avaa sivun."
+msgstr ""
+"Sivun sisältö. Tämä teksti näytetään, mikäli asiakas klikkaa sivulinkkiäsi."
 
 msgid "page"
 msgstr "sivu"

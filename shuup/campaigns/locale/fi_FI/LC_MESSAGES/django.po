@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-01 13:41+0000\n"
+"POT-Creation-Date: 2017-03-03 09:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Panu Tulimäki <panu@shuup.com>, 2016\n"
 "Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/"
@@ -240,21 +240,19 @@ msgstr "Kategorian tuotteita ostoskorissa"
 msgid "categories"
 msgstr "kategoriat"
 
-#, fuzzy
-#| msgid "categories"
 msgid "excluded categories"
-msgstr "kategoriat"
+msgstr "huomiotta jätettävät tuoteryhmät"
 
 msgid ""
 "If the customer has even a single product in the basket from these "
 "categories this rule won't match thus the campaign cannot be applied to the "
 "basket."
 msgstr ""
+"Mikäli asiakkaalla on edes yksi tuote korissa näistä tuoteryhmistä, tämä "
+"sääntö ei täsmää eli kampanjaa ei lisätä korille."
 
-#, fuzzy
-#| msgid "Limit the campaign to match the products from selected category."
 msgid "Limit the campaign to match the products from selected categories."
-msgstr "Rajoita kampanja täsmäämään tuotteisiin valitusta kategoriasta."
+msgstr "Rajaa kampanja täsmäämään valittujen tuoteryhmien tuotteille."
 
 msgid "campaign"
 msgstr "kampanja"
@@ -317,7 +315,7 @@ msgid "shop"
 msgstr "kauppa"
 
 msgid "The shop where the campaign is active."
-msgstr "Kauppa missä kampanja on aktiivinen."
+msgstr "Kauppa, jossa kampanja on käytössä."
 
 msgid "name"
 msgstr "nimi"
@@ -332,8 +330,7 @@ msgid ""
 "Check this if the campaign is currently active. Please also set a start and "
 "end date."
 msgstr ""
-"Valitse tämä mikäli kampanja on aktiivinen. Ole hyvä ja aseta myös alkamis- "
-"ja päättymispäivä."
+"Valitse tämä, mikäli kampanja on aktiivinen. Aseta myös alku- ja loppupäivät."
 
 msgid "start date and time"
 msgstr "alkupäivämäärä ja aika"
@@ -342,7 +339,7 @@ msgid ""
 "The date and time the campaign starts. This is only applicable if the "
 "campaign is marked as active."
 msgstr ""
-"Päivämäärä, jolloin kampanja aloitetaan. Tämä pätee vain jos kampanja on "
+"Kampanjan alkupäivä ja -aika. Tätä käytetään vain, jos kampanja on "
 "aktiivinen."
 
 msgid "end date and time"
@@ -352,7 +349,7 @@ msgid ""
 "The date and time the campaign ends. This is only applicable if the campaign "
 "is marked as active."
 msgstr ""
-"Päivämäärä, jolloin kampanja päättyy. Tämä pätee vain jos kampanja on "
+"Kampanjan loppupäivä ja -aika. Tätä käytetään vain, jos kampanja on "
 "aktiivinen."
 
 msgid "created by"
@@ -371,7 +368,7 @@ msgid "Campaign"
 msgstr "Kampanja"
 
 msgid "The campaign name to show in the store front."
-msgstr "Kampanjan nimi teemaa varten."
+msgstr "Kampanjan julkinen nimi."
 
 #, python-format
 msgid "Catalog Campaign: %(name)s"
@@ -461,34 +458,28 @@ msgid "Coupon Code:"
 msgstr "Kuponkikoodi:"
 
 msgid "Filter report results by coupon."
-msgstr ""
+msgstr "Rajaa raportin tuloksia kupongin mukaan."
 
-#, fuzzy
-#| msgid "Coupons"
 msgid "Coupons Usage"
-msgstr "Kupongit"
+msgstr "Kuponkien käyttö"
 
 msgid "Date"
-msgstr ""
+msgstr "Päivämäärä"
 
-#, fuzzy
-#| msgid "Coupon Code:"
 msgid "Coupon code"
-msgstr "Kuponkikoodi:"
+msgstr "Kuponkikoodi"
 
 msgid "Order"
-msgstr ""
+msgstr "Tilaus"
 
 msgid "Taxful total"
-msgstr ""
+msgstr "Verollinen kokonaissumma"
 
 msgid "Taxful subtotal"
-msgstr ""
+msgstr "Veroton välisumma"
 
-#, fuzzy
-#| msgid "per line discount"
 msgid "Total discount"
-msgstr "rivikohtainen alennus"
+msgstr "Kokonaisalennus"
 
 msgid "General Information"
 msgstr "Yleiset tiedot"
@@ -504,12 +495,12 @@ msgstr "Kampanjoita ei löytynyt"
 
 msgid "This section shows all the <b>active</b> campaigns this product is in."
 msgstr ""
-"Tämä osio näyttää kaikki <b>aktiiviset</b> kampanjat, joissa tämä tuote "
-"esiintyy."
+"Tämä osio näyttää kaikki <b>aktiiviset</b> kampanjat, joista tämä tuote "
+"löytyy."
 
 #, python-format
 msgid "Active campaings for shop: %(shop)s"
-msgstr "Aktiiviset kampanjat kaupalle: %(shop)s"
+msgstr "Kaupan %(shop)s aktiiviset kampanjat."
 
 msgid "Rules"
 msgstr "Säännöt"
@@ -518,7 +509,7 @@ msgid "Rule type"
 msgstr "Säännön tyyppi"
 
 msgid "The criteria used to determine whether this campaign is applied."
-msgstr "Kriteeri, joka määrittelee käytetäänkö kampanjaa."
+msgstr "Säännöstö, jota käytetään, jotta kampanja lisätään."
 
 msgid "Add rule"
 msgstr "Lisää sääntö"

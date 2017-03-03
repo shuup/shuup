@@ -8,20 +8,21 @@
 # Eetu Häivälä <eetu.haivala@anders.fi>, 2015
 # Janne Tammi <janne@shuup.com>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
-# Juha Kujala <juha.kujala@shoop.io>, 2015-2016
+# Juha Kujala, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
 # Rauli L. <rauli.laine@iki.fi>, 2015-2016
 # Shuup Admin <admin@shuup.com>, 2015-2016
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # tomijarvi <tomi@jarvi.pro>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
+# Tuomas Suutari <tuomas.suutari@shoop.io>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-01 13:41+0000\n"
-"PO-Revision-Date: 2016-10-25 22:43+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"PO-Revision-Date: 2017-03-01 13:50+0000\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
 "language/fi_FI/)\n"
 "Language: fi_FI\n"
@@ -77,10 +78,8 @@ msgstr "Lisäosan tiedosto (ZIP)"
 msgid "Only upload addon files you trust."
 msgstr "Lataa vain lisäosia joihin luotat."
 
-#, fuzzy
-#| msgid "Only ZIP files are supported"
 msgid "Only wheel files are supported"
-msgstr "Vain ZIP-tiedostot ovat tuettuja."
+msgstr "Vain wheel-tiedostot ovat tuettuja"
 
 msgid "Upload"
 msgstr "Lataa"
