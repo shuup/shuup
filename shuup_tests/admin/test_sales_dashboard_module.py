@@ -39,8 +39,17 @@ def test_order_chart_works():
 
 
 @pytest.mark.django_db
-def test_shop_overview_block(rf):
-    today = date.today()
+@pytest.mark.parametrize("data", [
+    # date, today, mtd, ytd
+    (date(1976, 3, 6), 2, 3, 4),
+    (date(2005, 9, 15), 2, 3, 4),
+    (date(2012, 7, 1), 3, 3, 4),
+    (date(2016, 1, 1), 4, 4, 4),
+    (date(2016, 12, 31), 2, 3, 4),
+    (date(2020, 2, 29), 2, 3, 4),
+])
+def test_shop_overview_block(rf, data):
+    (today, expected_today, expected_mtd, expected_ytd) = data
     product = get_default_product()
     sp = product.get_shop_instance(get_default_shop())
     sp.default_price_value = "10"
@@ -49,28 +58,22 @@ def test_shop_overview_block(rf):
     o = get_order_for_date(today, product)
     o.customer = None
     o.save()
+    get_order_for_date(date(today.year - 1, 12, 31), product)
     get_order_for_date(date(today.year, 1, 1), product)
     get_order_for_date(date(today.year, today.month, 1), product)
 
-    block = get_shop_overview_block(rf.get("/"), DEFAULT_CURRENCY)
+    block = get_shop_overview_block(rf.get("/"), DEFAULT_CURRENCY, today)
     soup = BeautifulSoup(block.content)
     _, today_sales, mtd, ytd, totals = soup.find_all("tr")
 
-    if today.month == 1:
-        expected_order_count = 2
-        if today.day == 1:
-            expected_order_count = 4
-    else:
-        expected_order_count = 3
-
-    assert today_sales.find_all("td")[NUM_ORDERS_COLUMN_INDEX].string == str(expected_order_count)
-    assert today_sales.find_all("td")[NUM_CUSTOMERS_COLUMN_INDEX].string == str(expected_order_count)
-    assert mtd.find_all("td")[NUM_ORDERS_COLUMN_INDEX].string == str(expected_order_count)
-    assert mtd.find_all("td")[NUM_CUSTOMERS_COLUMN_INDEX].string == str(expected_order_count)
-    assert ytd.find_all("td")[NUM_ORDERS_COLUMN_INDEX].string == "4"
-    assert ytd.find_all("td")[NUM_CUSTOMERS_COLUMN_INDEX].string == "4"
-    assert totals.find_all("td")[NUM_ORDERS_COLUMN_INDEX].string == "4"
-    assert totals.find_all("td")[NUM_CUSTOMERS_COLUMN_INDEX].string == "4"
+    assert today_sales.find_all("td")[NUM_ORDERS_COLUMN_INDEX].string == str(expected_today)
+    assert today_sales.find_all("td")[NUM_CUSTOMERS_COLUMN_INDEX].string == str(expected_today)
+    assert mtd.find_all("td")[NUM_ORDERS_COLUMN_INDEX].string == str(expected_mtd)
+    assert mtd.find_all("td")[NUM_CUSTOMERS_COLUMN_INDEX].string == str(expected_mtd)
+    assert ytd.find_all("td")[NUM_ORDERS_COLUMN_INDEX].string == str(expected_ytd)
+    assert ytd.find_all("td")[NUM_CUSTOMERS_COLUMN_INDEX].string == str(expected_ytd)
+    assert totals.find_all("td")[NUM_ORDERS_COLUMN_INDEX].string == "5"
+    assert totals.find_all("td")[NUM_CUSTOMERS_COLUMN_INDEX].string == "5"
 
 
 @pytest.mark.django_db

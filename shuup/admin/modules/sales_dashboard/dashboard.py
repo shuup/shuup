@@ -9,7 +9,7 @@
 from __future__ import unicode_literals
 
 from collections import OrderedDict
-from datetime import date, timedelta
+from datetime import date, time, timedelta
 from decimal import Decimal
 
 import six
@@ -25,7 +25,7 @@ from shuup.admin.dashboard import (
 from shuup.core.models import Order
 from shuup.core.pricing import TaxfulPrice
 from shuup.core.utils.query import group_by_period
-from shuup.utils.dates import get_year_and_month_format
+from shuup.utils.dates import get_year_and_month_format, local_now, to_aware
 from shuup.utils.i18n import get_current_babel_locale
 
 
@@ -222,24 +222,26 @@ def get_order_value_chart_dashboard_block(request, currency):
 
 def get_order_overview_for_date_range(currency, start_date, end_date):
     orders = get_orders_by_currency(currency).complete()
-    q = orders.since((end_date - start_date).days).aggregate(
+    orders_in_range = orders.in_date_range(start_date, end_date)
+    q = orders_in_range.aggregate(
         num_orders=Count("id"),
         num_customers=Count("customer", distinct=True),
         sales=Sum("taxful_total_price_value"))
-    anon_orders = orders.since((end_date - start_date).days).filter(customer__isnull=True).aggregate(
+    anon_orders = orders_in_range.filter(customer__isnull=True).aggregate(
         num_orders=Count("id"))
     q["num_customers"] += anon_orders["num_orders"]
     q["sales"] = TaxfulPrice(q["sales"] or 0, currency)
     return q
 
 
-def get_shop_overview_block(request, currency):
-    today = date.today()
-    start_of_month = date(today.year, today.month, 1)
-    start_of_year = date(today.year, 1, 1)
-    daily = get_order_overview_for_date_range(currency, today, today)
-    mtd = get_order_overview_for_date_range(currency, start_of_month, today)
-    ytd = get_order_overview_for_date_range(currency, start_of_year, today)
+def get_shop_overview_block(request, currency, for_date=None):
+    end = to_aware(for_date, time=time.max) if for_date else local_now()
+    start_of_day = to_aware(end.date(), time=time.min)
+    start_of_month = start_of_day.replace(day=1)
+    start_of_year = start_of_day.replace(month=1, day=1)
+    daily = get_order_overview_for_date_range(currency, start_of_day, end)
+    mtd = get_order_overview_for_date_range(currency, start_of_month, end)
+    ytd = get_order_overview_for_date_range(currency, start_of_year, end)
     totals = get_orders_by_currency(currency).complete().aggregate(
         num_orders=Count("id"),
         num_customers=Count("customer", distinct=True),
