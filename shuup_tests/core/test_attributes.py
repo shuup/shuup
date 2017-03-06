@@ -5,6 +5,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from __future__ import unicode_literals
+
 import datetime
 from decimal import Decimal
 
@@ -32,6 +34,10 @@ def _populate_applied_attribute(aa):
         aa.save()
         assert aa.value is False, "Lies work"
         assert aa.untranslated_string_value == "0", "Integer attributes save string representations"
+        aa.value = None
+        aa.save()
+        assert aa.value is None, "None works"
+        assert aa.untranslated_string_value == "", "Boolean saves None"
         return
 
     if aa.attribute.type == AttributeType.INTEGER:

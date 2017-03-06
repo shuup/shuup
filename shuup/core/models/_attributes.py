@@ -227,7 +227,17 @@ class AppliedAttribute(TranslatableModel):
 
     def _get_value(self):
         if self.attribute.type == AttributeType.BOOLEAN:
-            return bool(int(self.numeric_value))
+            """
+            Return Boolean value or None
+
+            Since we are using ``django.forms.fields.NullBooleanField`` in admin
+            we should return either None, True or False.
+
+            While the `Unknown` option (`None`) will never end up in the database
+            when product attribute is being saved in admin, it is possible to
+            create this value through API and that causes admin to break.
+            """
+            return bool(int(self.numeric_value)) if self.numeric_value is not None else None
 
         if self.attribute.type == AttributeType.INTEGER:
             return int(self.numeric_value)
@@ -255,6 +265,20 @@ class AppliedAttribute(TranslatableModel):
         raise ValueError("Unknown attribute type.")  # pragma: no cover
 
     def _set_numeric_value(self, new_value):
+        if self.attribute.type == AttributeType.BOOLEAN and new_value is None:
+            """
+            Shuup uses `django.forms.fields.NullBooleanField` in admin.
+            Which can read in the `None` value.
+
+            Note: This is being handled separately due backwards compatibility.
+            TODO (2.0): Boolean should not be a special case and handling `None` should be
+            same for every "numeric" value.
+            """
+            self.numeric_value = None
+            self.datetime_value = None
+            self.untranslated_string_value = ""
+            return
+
         if isinstance(new_value, datetime.timedelta):
             value = new_value.total_seconds()
             if value == int(value):
