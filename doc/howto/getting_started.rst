@@ -64,7 +64,7 @@ including ``pip`` and ``virtualenv``.
    .. code-block:: shell
 
       python manage.py migrate
-      python.manage.py shuup_init
+      python manage.py shuup_init
 
 Shuup Packages
 --------------
