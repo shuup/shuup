@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Improve variation product orderability check performance
 - Add `created_on` and `modified_on` fields for shop
 - Make shop identifier max length to 128 characters
 - Add `staff_members` manytomanyfield for shop
@@ -23,7 +24,7 @@ Admin
 ~~~~~
 
 - Main menu is now updateable through provides.
-- Add new provide category called `order_printouts_delivery_extra_fields` 
+- Add new provide category called `order_printouts_delivery_extra_fields`
   which can be used to add extra rows to order delivery slip.
 - Add new provide category called `admin_order_information` which can be used
   to add extra information rows to order detail page.
