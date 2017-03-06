@@ -89,9 +89,8 @@ class PermissionGroupForm(forms.ModelForm):
             if value is None:
                 continue
             app_label, code_name = field_name.split(".", 1)
-            try:
-                permission = Permission.objects.get(content_type__app_label=app_label, codename=code_name)
-            except Permission.DoesNotExist:
+            permission = Permission.objects.filter(content_type__app_label=app_label, codename=code_name).first()
+            if not permission:
                 continue
             if value is True:
                 permissions.add(permission.id)

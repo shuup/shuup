@@ -137,7 +137,6 @@ class ContactDetailView(DetailView):
         if self.request.user.is_superuser:
             return obj
         shop = Shop.objects.get_current(self.request)
-        print(obj.shop_set.all())
         if shop not in obj.shop_set.all():
             raise PermissionDenied
         return obj
