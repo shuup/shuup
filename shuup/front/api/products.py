@@ -9,6 +9,7 @@
 from collections import defaultdict
 
 import six
+from django.db.models import Prefetch
 from django.db.models.expressions import RawSQL
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
@@ -49,6 +50,36 @@ def make_comma_separated_list_fiter(filter_name, field_expression):
     attrs = {}
     attrs.setdefault("filter_queryset", filter_queryset)
     return type(str("CommaSeparatedIDListFilter"), (filters.BaseFilterBackend,), attrs)
+
+
+def get_shop_product_queryset(parents_only=True):
+    qs = ShopProduct.objects.select_related(
+        "shop", "product", "product__sales_unit", "product__primary_image", "product__primary_image__file"
+    ).prefetch_related(
+        "product__translations", "shop__translations", "product__sales_unit__translations", "suppliers"
+    ).prefetch_related(
+        Prefetch(
+            "categories",
+            queryset=Category.objects.all_except_deleted().prefetch_related("translations")
+        )
+    ).prefetch_related(
+        Prefetch(
+            "product__attributes",
+            queryset=ProductAttribute.objects.all().prefetch_related("attribute", "attribute__translations")
+        )
+    )
+
+    if parents_only:
+        qs = qs.filter(
+            product__variation_parent__isnull=True,
+            product__mode__in=(
+                ProductMode.NORMAL,
+                ProductMode.VARIABLE_VARIATION_PARENT,
+                ProductMode.SIMPLE_VARIATION_PARENT,
+                ProductMode.PACKAGE_PARENT
+            )
+        )
+    return qs
 
 
 class ShopSerializer(serializers.ModelSerializer):
@@ -98,15 +129,15 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class CompleteShopProductSerializer(serializers.ModelSerializer):
-    product_id = serializers.SerializerMethodField()
-    name = serializers.SerializerMethodField()
-    short_description = serializers.SerializerMethodField()
-    description = serializers.SerializerMethodField()
+    product_id = serializers.ReadOnlyField()
+    name = serializers.ReadOnlyField(source='product.name')
+    short_description = serializers.ReadOnlyField(source='product.short_description')
+    description = serializers.ReadOnlyField(source='product.description')
     image = serializers.SerializerMethodField()
-    categories = serializers.SerializerMethodField()
+    categories = CategorySerializer(many=True)
     attributes = serializers.SerializerMethodField()
     price = serializers.SerializerMethodField()
-    net_weight = serializers.SerializerMethodField()
+    net_weight = serializers.ReadOnlyField(source='product.net_weight')
     sales_unit = serializers.SerializerMethodField()
     is_orderable = serializers.SerializerMethodField()
     cross_sell = serializers.SerializerMethodField()
@@ -136,20 +167,7 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
         ]
 
     def _get_pricing_context(self, request, shop):
-        customer = get_person_contact(request.user)
-        return PricingContext(shop=shop, customer=customer)
-
-    def get_product_id(self, shop_product):
-        return shop_product.product_id
-
-    def get_name(self, shop_product):
-        return shop_product.product.name
-
-    def get_short_description(self, shop_product):
-        return shop_product.product.short_description
-
-    def get_description(self, shop_product):
-        return shop_product.product.description
+        return PricingContext(shop=shop, customer=self.context["customer"])
 
     def get_image(self, shop_product):
         image = shop_product.product.primary_image
@@ -160,10 +178,6 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
             return image.external_url
         elif image.file:
             return self.context["request"].build_absolute_uri(image.file.url)
-
-    def get_categories(self, shop_product):
-        categories_qs = shop_product.categories.all_except_deleted().prefetch_related("translations")
-        return CategorySerializer(categories_qs, many=True, context=self.context).data
 
     def get_attributes(self, shop_product):
         return AttributeSerializer(shop_product.product.attributes, many=True).data
@@ -188,11 +202,14 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
         return SalesUnitSerializer(shop_product.product.sales_unit).data
 
     def get_is_orderable(self, shop_product):
-        customer = get_person_contact(self.context["request"].user)
+        suppliers = shop_product.suppliers.all()
+        if len(suppliers) == 0:
+            return False
         try:
-            return shop_product.is_orderable(supplier=shop_product.suppliers.first(), customer=customer, quantity=1)
+            return shop_product.is_orderable(supplier=suppliers[0], customer=self.context["customer"], quantity=1)
         except ShopProduct.DoesNotExist:
             return False
+        return False
 
     def get_cross_sell(self, shop_product):
         key, val = context_cache.get_cached_value(identifier="cross_sell",
@@ -215,8 +232,7 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
             ProductCrossSellType.COMPUTED: "computed",
             ProductCrossSellType.BOUGHT_WITH: "bought_with",
         }
-
-        customer = get_person_contact(self.context["request"].user)
+        customer = self.context["customer"]
         for cross_sell in shop_product.product.cross_sell_1.all():
             try:
                 cross_shop_product = cross_sell.product2.get_shop_instance(shop_product.shop)
@@ -242,7 +258,6 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
                                                   allow_cache=True)
         if val is not None:
             return val
-
         data = []
         combinations = list(shop_product.product.get_all_available_combinations() or [])
         if not combinations and shop_product.product.mode == ProductMode.SIMPLE_VARIATION_PARENT:
@@ -255,18 +270,20 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
                     "variable_to_value": {}
                 })
 
+        qs = get_shop_product_queryset(False).filter(
+            shop_id=shop_product.shop_id, product__pk__in=[combo["result_product_pk"] for combo in combinations])
+        products = NormalShopProductSerializer(qs, many=True, context=self.context).data
+        product_map = {product["product_id"]: product for product in products}
         for combination in combinations:
-            child = ShopProduct.objects.filter(
-                shop_id=shop_product.shop.id, product__pk=combination["result_product_pk"]).first()
+            child = product_map.get(combination["result_product_pk"])
             data.append({
-                "product": NormalShopProductSerializer(child, many=False, context=self.context).data,
+                "product": child or {},
                 "sku_part": combination["sku_part"],
                 "hash": combination["hash"],
                 "combination": {
                     force_text(k): force_text(v) for k, v in six.iteritems(combination["variable_to_value"])
                 }
             })
-
         context_cache.set_cached_value(key, data)
         return data
 
@@ -384,20 +401,13 @@ class FrontShopProductViewSet(PermissionHelperMixin, mixins.ListModelMixin, view
     def get_help_text(cls):
         return _("Storefront shop products can be listed and fetched.")
 
+    def get_serializer_context(self):
+        ctx = super(FrontShopProductViewSet, self).get_serializer_context()
+        ctx["customer"] = get_person_contact(self.request.user)
+        return ctx
+
     def get_queryset(self):
-        return ShopProduct.objects.select_related(
-            "shop", "product", "product__sales_unit"
-        ).prefetch_related(
-            "product__media", "product__translations", "product__attributes"
-        ).filter(
-            product__variation_parent__isnull=True,
-            product__mode__in=(
-                ProductMode.NORMAL,
-                ProductMode.VARIABLE_VARIATION_PARENT,
-                ProductMode.SIMPLE_VARIATION_PARENT,
-                ProductMode.PACKAGE_PARENT
-            )
-        )
+        return get_shop_product_queryset()
 
     @list_route(methods=['get'])
     def best_selling(self, request):
@@ -422,7 +432,7 @@ class FrontShopProductViewSet(PermissionHelperMixin, mixins.ListModelMixin, view
 
         shop_products_qs = ShopProduct.objects.filter(product__id__in=product_ids)
         shop_products_qs = self.filter_queryset(shop_products_qs).distinct()
-        serializer = CompleteShopProductSerializer(shop_products_qs, many=True, context={"request": request})
+        serializer = CompleteShopProductSerializer(shop_products_qs, many=True, context=self.get_serializer_context())
         return Response(serializer.data)
 
 
