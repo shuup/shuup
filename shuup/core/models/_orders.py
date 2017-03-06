@@ -20,7 +20,6 @@ from django.db.models import Q
 from django.db.transaction import atomic
 from django.utils.crypto import get_random_string
 from django.utils.encoding import force_text, python_2_unicode_compatible
-from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from jsonfield import JSONField
@@ -42,6 +41,7 @@ from shuup.core.signals import (
     payment_created, refund_created, shipment_created
 )
 from shuup.utils.analog import define_log_model, LogEntryKind
+from shuup.utils.dates import local_now, to_aware
 from shuup.utils.money import Money
 from shuup.utils.properties import (
     MoneyPropped, TaxfulPriceProperty, TaxlessPriceProperty
@@ -269,13 +269,26 @@ class OrderQuerySet(models.QuerySet):
     def valid(self):
         return self.exclude(Q(deleted=True) | Q(status__role=OrderStatusRole.CANCELED))  # TODO: read status
 
-    def since(self, days):
-        return self.filter(
-            order_date__gte=datetime.datetime.combine(
-                datetime.date.today() - datetime.timedelta(days=days),
-                datetime.time.min
-            )
-        )
+    def since(self, days, tz=None):
+        since_date = (local_now(tz) - datetime.timedelta(days=days)).date()
+        since = to_aware(since_date, tz=tz)
+        return self.in_date_range(since, None)
+
+    def in_date_range(self, start, end):
+        """
+        Limit to orders is given date range.
+
+        :type start: datetime.datetime|None
+        :param start: Start time, inclusive.
+        :type end: datetime.datetime|None
+        :param end: End time, inclusive.
+        """
+        result = self
+        if start:
+            result = result.filter(order_date__gte=to_aware(start))
+        if end:
+            result = result.filter(order_date__lte=to_aware(end))
+        return result
 
 
 @python_2_unicode_compatible
@@ -512,7 +525,7 @@ class Order(MoneyPropped, models.Model):
         if self.payment_status != PaymentStatus.FULLY_PAID:  # pragma: no branch
             self.add_log_entry(_('Order marked as paid.'))
             self.payment_status = PaymentStatus.FULLY_PAID
-            self.payment_date = now()
+            self.payment_date = local_now()
             self.save()
 
     def _set_partially_paid(self):

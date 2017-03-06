@@ -10,6 +10,7 @@ from __future__ import unicode_literals
 import datetime
 
 import six
+from django.utils import timezone
 from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext
 
@@ -180,6 +181,42 @@ def get_year_and_month_format(locale):
     :rtype: str
     """
     return locale_year_and_month_formats.get(locale.language.lower(), "MMM y")
+
+
+def to_aware(date, time=datetime.time.min, tz=None):
+    """
+    Convert date or datetime to aware datetime.
+
+    :type date: datetime.date|datetime.datetime
+    :param date:
+      Date or datetime object to convert
+    :type time: datetime.time
+    :param time:
+      Time value for supplementing dates to datetimes, default 0:00:00
+    :type tz: datetime.tzinfo|None
+      Timezone to use, default ``timezone.get_current_timezone()``
+    :rtype: datetime.datetime
+    :return:
+      Converted aware datetime object
+    """
+    if isinstance(date, datetime.datetime):
+        if timezone.is_aware(date):
+            return date
+        return timezone.make_aware(date, timezone=tz)
+    assert isinstance(date, datetime.date), '%r should be date' % (date,)
+    combined = datetime.datetime.combine(date, time)
+    return timezone.make_aware(combined, timezone=tz)
+
+
+def local_now(tz=None):
+    """
+    Get current time as aware datetime in local timezone.
+
+    :type tz: datetime.tzinfo|None
+      Timezone to use, default ``timezone.get_current_timezone()``
+    :rtype: datetime.datetime
+    """
+    return timezone.localtime(to_aware(timezone.now()), timezone=tz)
 
 
 class DurationRange(object):
