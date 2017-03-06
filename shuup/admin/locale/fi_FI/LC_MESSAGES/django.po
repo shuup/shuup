@@ -829,8 +829,8 @@ msgstr "Maksu %s luotu"
 msgid "Order has already been paid"
 msgstr "Tilaus on jo maksettu"
 
-msgid "Only orders which are not paid can be set as paid."
-msgstr "Vain maksamattomat tilaukset voidaan asettaa maksetuiksi."
+msgid "Only orders which are not paid or deferred can be set as paid."
+msgstr "Vain maksamattomat tai viivästyneet tilaukset voi asettaa maksetuksi."
 
 msgid "Only zero price orders can be set as paid without creating a payment."
 msgstr ""

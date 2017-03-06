@@ -33,6 +33,25 @@ def test_order_set_paid_action(rf, admin_user, has_price):
         assert order.payment_status == PaymentStatus.FULLY_PAID
 
 
+@pytest.mark.django_db
+@pytest.mark.parametrize("has_price", (True, False))
+def test_deferred_order_set_paid_action(rf, admin_user, has_price):
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    order = _get_order(shop, supplier, has_price)
+    # set payment status to deferred
+    order.payment_status = PaymentStatus.DEFERRED
+    order.save()
+    view = OrderSetPaidView.as_view()
+    request = apply_request_middleware(rf.post("/"), user=admin_user)
+    response = view(request, pk=order.pk)
+    order = Order.objects.get(id=order.id)  # Reload order object
+    if has_price:
+        assert order.payment_status == PaymentStatus.DEFERRED
+    else:
+        assert order.payment_status == PaymentStatus.FULLY_PAID
+
+
 def _get_order(shop, supplier, has_price):
     order = create_empty_order(shop=shop)
     order.full_clean()

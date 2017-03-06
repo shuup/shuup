@@ -540,6 +540,9 @@ class Order(MoneyPropped, models.Model):
     def is_partially_paid(self):
         return (self.payment_status == PaymentStatus.PARTIALLY_PAID)
 
+    def is_deferred(self):
+        return (self.payment_status == PaymentStatus.DEFERRED)
+
     def is_not_paid(self):
         return (self.payment_status == PaymentStatus.NOT_PAID)
 
