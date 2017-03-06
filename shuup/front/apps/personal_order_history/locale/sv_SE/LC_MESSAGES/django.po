@@ -1,0 +1,128 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Tuomas Suutari <tuomas.suutari@shoop.io>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-03 09:44+0000\n"
+"PO-Revision-Date: 2017-03-03 09:35+0000\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
+"Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
+"language/sv_SE/)\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Shuup Frontend - Personal Order History"
+msgstr "Shuup Framsida - Personlig beställningshistorik"
+
+msgid "Order history"
+msgstr "Beställningshistorik"
+
+msgid "Show all"
+msgstr "Visa alla"
+
+msgid "Identifier"
+msgstr "Identifierare"
+
+msgid "Order date"
+msgstr "Beställningsdatum"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Total price"
+msgstr "Totalbelopp"
+
+msgid "Details"
+msgstr "Detaljer"
+
+msgid "You haven't made any orders yet."
+msgstr "Du har inte gjort några beställningar ännu."
+
+msgid "Add all products to cart"
+msgstr "Lägga till alla produkter i varukorg"
+
+msgid "Basic Information"
+msgstr "Grundinformation"
+
+msgid "Order Number"
+msgstr "Beställningsnummer"
+
+msgid "Order Date"
+msgstr "Beställningsdatum"
+
+msgid "Reference"
+msgstr "Referens"
+
+msgid "Label"
+msgstr "Etikett"
+
+msgid "Customer"
+msgstr "Kund"
+
+msgid "Ordered by"
+msgstr "Beställd av"
+
+msgid "Creator"
+msgstr "Skapare"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Email"
+msgstr "E-post"
+
+msgid "Tax Number"
+msgstr "Momsnummer"
+
+msgid "Total Price"
+msgstr "Summa"
+
+msgid "Total Price (taxless)"
+msgstr "Summa (exkl. skatter)"
+
+msgid "Tracking codes"
+msgstr "Spårningskoder"
+
+msgid "Order Status"
+msgstr "Beställningsstatus"
+
+msgid "Payment Status"
+msgstr "Betalningsstatus"
+
+msgid "Shipping Status"
+msgstr "Leveransstatus"
+
+msgid "Shipping Address"
+msgstr "Leveransadress"
+
+msgid "Billing Address"
+msgstr "Faktureringsadress"
+
+msgid "Order Contents"
+msgstr "Beställningsinnehåll"
+
+#, python-format
+msgid "Order %(identifier)s"
+msgstr "Beställning %(identifier)s"
+
+#, python-format
+msgid "Details of order %(identifier)s"
+msgstr "Detaljer för beställning %(identifier)s"
+
+msgid "Home"
+msgstr "Start"
+
+msgid "Dashboard"
+msgstr "Översikt"
+
+msgid "Order History"
+msgstr "Beställningshistorik"

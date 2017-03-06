@@ -7,12 +7,14 @@
 # Antti Mäki <antti@anttimaki.com>, 2015
 # Eetu Häivälä <eetu.haivala@anders.fi>, 2015
 # Heikki Saari <heikki.saari@anders.fi>, 2016
-# Janne Tammi <janne.tammi@shuup.com>, 2015
+# Janne Tammi <janne@shuup.com>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
-# Juha Kujala <juha.kujala@shuup.com>, 2015-2016
+# Juha Kujala, 2017
+# Juha Kujala, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
-# Rauli Laine <rauli.laine@iki.fi>, 2015-2016
+# Rauli L. <rauli.laine@iki.fi>, 2015-2016
 # Shuup Admin <admin@shuup.com>, 2015-2016
+# Shuup Admin <admin@shuup.com>, 2016
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # tomijarvi <tomi@jarvi.pro>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
@@ -20,9 +22,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-12 03:47+0000\n"
-"PO-Revision-Date: 2016-06-28 03:29+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"PO-Revision-Date: 2017-02-10 11:13+0000\n"
+"Last-Translator: Janne Tammi <janne@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
 "language/fi_FI/)\n"
 "Language: fi_FI\n"
@@ -91,7 +93,7 @@ msgid "%(min)s--%(max)s days"
 msgstr "%(min)s--%(max)s päivää"
 
 msgid "This field is required."
-msgstr "Tämä kenttä vaaditaan."
+msgstr "Tämä kenttä on pakollinen."
 
 msgid ""
 "Comma-separated values or ranges, e.g. A-Z,10000-19000. Use exclamation "
@@ -104,5 +106,5 @@ msgid ""
 "Could not create PDF since Weasyprint is not available. Please contact "
 "support."
 msgstr ""
-"PDF tiedostoa ei voitu luoda koska Weasyprint paketti ei ole saatavilla. "
-"Ole hyvä ja ota yhteys tukeen."
+"Ei voitu luoda PDF:ää, sillä Weasyprint ei ole saatavilla. Ota yhteyttä "
+"tukeen."

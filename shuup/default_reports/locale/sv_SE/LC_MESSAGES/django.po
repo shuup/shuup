@@ -1,0 +1,169 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-03 09:44+0000\n"
+"PO-Revision-Date: 2017-03-02 06:35+0000\n"
+"Last-Translator: Frank Wickström <frwickst@gmail.com>\n"
+"Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
+"language/sv_SE/)\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Customer"
+msgstr "Kund"
+
+msgid "Filter report results by customer."
+msgstr "Filtrera rapporter efter kunden."
+
+msgid "Orderer"
+msgstr "Beställaren"
+
+msgid "Filter report results by the person that made the order."
+msgstr "Filtrera rapporter efter den person som gjorde beställningen."
+
+msgid "Quantity"
+msgstr "Antal"
+
+msgid "Taxless Total"
+msgstr "Summa (exkl. skatt)"
+
+msgid "Taxful Total"
+msgstr "Summa (inkl. skatter)"
+
+msgid "Sort order"
+msgstr "Sorteringsordning"
+
+msgid "Year"
+msgstr "År"
+
+msgid "Year/Month"
+msgstr "År/månad"
+
+msgid "Year/Month/Day"
+msgstr "År/månad/dag"
+
+msgid "Group by"
+msgstr "Gruppera enligt"
+
+msgid "Order Count"
+msgstr "Beställningsantal"
+
+msgid "Average Sales"
+msgstr "Genomsnittlig försäljning"
+
+msgid "Tax"
+msgstr "Skatt"
+
+msgid "Filter report results by tax."
+msgstr "Filtrera rapporter efter skatt."
+
+msgid "Tax Class"
+msgstr "Skatteklass"
+
+msgid "Filter report results by tax class."
+msgstr "Filtrera rapportresultat efter skatteklass."
+
+msgid "Shipping Method"
+msgstr "Leveranssätt"
+
+msgid "Filter report results by shipping method."
+msgstr "Filtrera rapporter efter leveranssätt."
+
+msgid "Carrier"
+msgstr "Transportör"
+
+msgid "Filter report results by carrier."
+msgstr "Filtrera rapporter efter transportör."
+
+msgid "Customer Sales"
+msgstr "Kundförsäljning"
+
+msgid "Orders"
+msgstr "Beställningar"
+
+msgid "New Customers"
+msgstr "Nya kunder"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Persons"
+msgstr "Personer"
+
+msgid "Companies"
+msgstr "Företag"
+
+msgid "Users"
+msgstr "Användare"
+
+msgid "Product Total Sales"
+msgstr "Totala försäljning"
+
+msgid "Product"
+msgstr "Produkt"
+
+msgid "SKU"
+msgstr "Artikelnummer"
+
+msgid "Refunded Sales"
+msgstr "Återbetalad försäljning"
+
+msgid "Refunded Orders"
+msgstr "Återbetalade beställningar"
+
+msgid "Total Refunded"
+msgstr "Totalt återbetalat"
+
+msgid "Sales Report"
+msgstr "Försäljningsrapport"
+
+msgid "Products"
+msgstr "Produkter"
+
+msgid "Sales Per Hour"
+msgstr "Försäljning per timme"
+
+msgid "Hour"
+msgstr "Timme"
+
+msgid "Order Amount"
+msgstr "Orderbelopp"
+
+msgid "Total Sales"
+msgstr "Total försäljning"
+
+msgid "Shipping"
+msgstr "Leverans"
+
+msgid "Shipping method"
+msgstr "Fraktmetod"
+
+msgid "Total Charged"
+msgstr "Totals debiterat"
+
+msgid "Taxes"
+msgstr "Skatter"
+
+msgid "Rate (%)"
+msgstr "Taxa (%)"
+
+msgid "Shop Name"
+msgstr "Butiksnamn"
+
+msgid "Currency"
+msgstr "Valuta"
+
+msgid "Customers"
+msgstr "Kunder"
+
+msgid "Customer Average Sale"
+msgstr "Genomsnittliga kundförsäljning"

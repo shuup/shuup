@@ -1,0 +1,209 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-03 09:44+0000\n"
+"PO-Revision-Date: 2017-03-02 06:34+0000\n"
+"Last-Translator: Frank Wickström <frwickst@gmail.com>\n"
+"Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
+"language/sv_SE/)\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Shuup Frontend - Customer Information Editing"
+msgstr "Shuup framsida - Redigera kundinformation"
+
+msgid "Customer Information"
+msgstr "Kundinformation"
+
+msgid "Company Information"
+msgstr "Företagsinformation"
+
+msgid "Edit Company Information."
+msgstr "Redigera kundinformation."
+
+msgid "Address Book"
+msgstr "Adressbok"
+
+msgid "Language"
+msgstr "Språk"
+
+msgid "Will become default user email when linked"
+msgstr "Kommer att bli användarens e-post när den är länkad"
+
+msgid "Given Tax Number already exists. Please contact support."
+msgstr "Det givna momsnumret finns redan. Vänligen kontakta support."
+
+msgid "Address Title"
+msgstr "Adresstitel"
+
+msgid "Address Type"
+msgstr "Adresstyp"
+
+msgid "Address Status"
+msgstr "Adress-status"
+
+msgid "Home"
+msgstr "Start"
+
+msgid "Dashboard"
+msgstr "Översikt"
+
+msgid "General Information"
+msgstr "Allmän information"
+
+msgid "Contact Information"
+msgstr "Kontaktinformation"
+
+msgid "Address"
+msgstr "Adress"
+
+msgid "Default Addresses"
+msgstr "Standardadresser"
+
+msgid "Edit"
+msgstr "Redigera"
+
+msgid "Default Billing Address"
+msgstr "Standard faktureringsadress"
+
+msgid "No Default Billing Address set."
+msgstr "Ingen standard faktureringsadress inställd."
+
+msgid "Default Shipping Address"
+msgstr "Standard leveransadress"
+
+msgid "No Default Shipping Address set."
+msgstr "Ingen standard leveransadress inställd."
+
+msgid "Additional Addresses"
+msgstr "Ytterligare adresser"
+
+msgid "Create new"
+msgstr "Skapa ny"
+
+msgid "Role"
+msgstr "Roll"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Delete"
+msgstr "Ta bort"
+
+msgid "You don't have any additional addresses"
+msgstr "Du har inte några ytterligare adresser"
+
+msgid "Change Password"
+msgstr "Ändra lösenord"
+
+msgid "Change password"
+msgstr "Ändra lösenord"
+
+msgid "Basic Information"
+msgstr "Grundinformation"
+
+msgid "Name"
+msgstr "Namn"
+
+msgid "Email"
+msgstr "E-post"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Tax Number"
+msgstr "Momsnummer"
+
+msgid "Birth Date"
+msgstr "Födelsedatum"
+
+msgid "Gender"
+msgstr "Kön"
+
+msgid "Marketing Permission"
+msgstr "Marknadsföringstillstånd"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "No"
+msgstr "Nej"
+
+msgid "Company account information"
+msgstr "Företagets kontoinformation"
+
+msgid "User account information"
+msgstr "Användarkontots Information"
+
+msgid "Not specified"
+msgstr "Inte specificerad"
+
+msgid "Street"
+msgstr "Gata"
+
+msgid "Postal code"
+msgstr "Postnummer"
+
+msgid "City"
+msgstr "Stad"
+
+msgid "Country"
+msgstr "Land"
+
+msgid "Billing information"
+msgstr "Faktureringsuppgifter"
+
+msgid "Copy to shipping information"
+msgstr "Kopiera till leveransinformation"
+
+msgid "Shipping information"
+msgstr "Leveransinformation"
+
+msgid "Copy to billing information"
+msgstr "Kopiera till faktureringsinformation"
+
+msgid "Edit user account information"
+msgstr "Redigera användarinformation"
+
+msgid "Save password"
+msgstr "Spara lösenord"
+
+msgid "Save changes"
+msgstr "Spara ändringar"
+
+msgid "Edit company information"
+msgstr "Redigera kundinformation."
+
+msgid "Link account to company"
+msgstr "Länka konto till företag"
+
+msgid "Company information"
+msgstr "Företagsinformation"
+
+msgid "User information"
+msgstr "Användarinformation"
+
+msgid "Password successfully changed."
+msgstr "Lösenordet har ändrats"
+
+msgid "Account information saved successfully."
+msgstr "Kontoinformation sparat."
+
+msgid "Company information saved successfully."
+msgstr "Företagsinformation sparat."
+
+msgid "Address information saved successfully."
+msgstr "Adressinformationen sparat."
+
+msgid "Cannot remove address"
+msgstr "Det går inte att ta bort adressen"

@@ -6,10 +6,10 @@
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
 # Eetu Häivälä <eetu.haivala@anders.fi>, 2015
-# Janne Tammi <janne@shuup.com>, 2016
+# Janne Tammi <janne@shuup.com>, 2016-2017
 # Janne Tammi <janne@shuup.com>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
-# Juha Kujala <juha.kujala@shoop.io>, 2015
+# Juha Kujala, 2015
 # Juha Louhiranta <charni@gmail.com>, 2015
 # Rauli L. <rauli.laine@iki.fi>, 2015
 # Shuup Admin <admin@shuup.com>, 2015-2016
@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-12 03:47+0000\n"
-"PO-Revision-Date: 2016-08-02 19:18+0000\n"
+"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"PO-Revision-Date: 2017-02-10 10:33+0000\n"
 "Last-Translator: Janne Tammi <janne@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
 "language/fi_FI/)\n"
@@ -82,7 +82,7 @@ msgid "enabled"
 msgstr "käytössä"
 
 msgid "Check this if this tax rule is active."
-msgstr "Valitse tämä mikäli verosääntö on aktiivinen."
+msgstr "Valitse tämä, mikäli verosääntö on aktiivinen."
 
 msgid "tax classes"
 msgstr "veroluokat"
@@ -94,7 +94,7 @@ msgid "customer tax groups"
 msgstr "asiakasveroryhmät"
 
 msgid "The customer tax groups for which this tax rule is limited."
-msgstr "Asiakkaan veroryhmät mihin tämä verosääntö on rajattu."
+msgstr "Asiakasveroryhmät, joihin tämä verosääntö on rajoitettu."
 
 msgid "country codes pattern"
 msgstr "maakoodien kaava"
@@ -134,7 +134,7 @@ msgid "tax"
 msgstr "vero"
 
 msgid "The tax to apply when this rule is applied."
-msgstr "Vero, joka lisätään kun sääntö otetaan käyttöön."
+msgstr "Vero, joka lisätään, kun tämä sääntö lisätään."
 
 msgid "Tax rule {} ({})"
 msgstr "Verosääntö {} ({})"

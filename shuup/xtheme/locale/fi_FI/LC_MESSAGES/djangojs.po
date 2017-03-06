@@ -5,16 +5,16 @@
 # Translators:
 # Aarni Koskela, 2015
 # Heikki Saari <heikki.saari@anders.fi>, 2016
-# Juha Kujala <juha.kujala@shuup.com>, 2015
+# Juha Kujala, 2015
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-12 03:47+0000\n"
-"PO-Revision-Date: 2016-06-27 06:12+0000\n"
-"Last-Translator: Heikki Saari <heikki.saari@anders.fi>\n"
+"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"PO-Revision-Date: 2017-02-10 11:17+0000\n"
+"Last-Translator: Janne Tammi <janne@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
 "language/fi_FI/)\n"
 "Language: fi_FI\n"

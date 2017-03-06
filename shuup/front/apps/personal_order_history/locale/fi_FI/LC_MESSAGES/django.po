@@ -6,22 +6,24 @@
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
 # Eetu Häivälä <eetu.haivala@anders.fi>, 2015
-# Janne Tammi <janne.tammi@shuup.com>, 2015
+# Janne Tammi <janne@shuup.com>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
-# Juha Kujala <juha.kujala@shuup.com>, 2015
+# Juha Kujala, 2015
 # Juha Louhiranta <charni@gmail.com>, 2015
-# Rauli Laine <rauli.laine@iki.fi>, 2015
+# Panu Tulimäki <panu@shuup.com>, 2016
+# Rauli L. <rauli.laine@iki.fi>, 2015
 # Shuup Admin <admin@shuup.com>, 2015-2016
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # tomijarvi <tomi@jarvi.pro>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
+# Tuomas Suutari <tuomas.suutari@shoop.io>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-09 21:20+0000\n"
-"PO-Revision-Date: 2016-06-29 09:33+0000\n"
-"Last-Translator: Shuup Admin <admin@shuup.com>\n"
+"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"PO-Revision-Date: 2017-03-03 09:29+0000\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
 "language/fi_FI/)\n"
 "Language: fi_FI\n"
@@ -32,7 +34,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Shuup Frontend - Personal Order History"
-msgstr "Kauppa - tilaushistoria"
+msgstr "Shuup Frontend - henkilökohtainen tilaushistoria"
 
 msgid "Order history"
 msgstr "Tilaushistoria"
@@ -56,7 +58,10 @@ msgid "Details"
 msgstr "Tiedot"
 
 msgid "You haven't made any orders yet."
-msgstr "Et ole tehnyt yhtään tilausta."
+msgstr "Et ole tehnyt yhtään tilausta vielä"
+
+msgid "Add all products to cart"
+msgstr "Lisää kaikki tuotteet koriin"
 
 msgid "Basic Information"
 msgstr "Perustiedot"
@@ -130,7 +135,7 @@ msgid "Home"
 msgstr "Koti"
 
 msgid "Dashboard"
-msgstr "Tilin hallinta"
+msgstr "Kojelauta"
 
 msgid "Order History"
 msgstr "Tilaushistoria"

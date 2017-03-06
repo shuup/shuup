@@ -7,22 +7,24 @@
 # Antti Mäki <antti@anttimaki.com>, 2015
 # Eetu Häivälä <eetu.haivala@anders.fi>, 2015
 # Heikki Saari <heikki.saari@anders.fi>, 2016
-# Janne Tammi <janne.tammi@shuup.com>, 2015
+# Janne Tammi <janne@shuup.com>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
-# Juha Kujala <juha.kujala@shuup.com>, 2015-2016
+# Juha Kujala, 2015-2016
 # Juha Louhiranta <charni@gmail.com>, 2015
-# Rauli Laine <rauli.laine@iki.fi>, 2015-2016
+# Panu Tulimäki <panu@shuup.com>, 2016
+# Rauli L. <rauli.laine@iki.fi>, 2015-2016
 # Shuup Admin <admin@shuup.com>, 2015
 # Teemu Selkälä <teemu.selkala@anders.fi>, 2015
 # tomijarvi <tomi@jarvi.pro>, 2015
 # Tuomas Suutari <tuomas.suutari@anders.fi>, 2015
+# Ville-Pekka Altti <ville-pekka.altti@anders.fi>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-12 03:47+0000\n"
-"PO-Revision-Date: 2016-06-06 06:26+0000\n"
-"Last-Translator: Heikki Saari <heikki.saari@anders.fi>\n"
+"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"PO-Revision-Date: 2017-02-10 11:15+0000\n"
+"Last-Translator: Janne Tammi <janne@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
 "language/fi_FI/)\n"
 "Language: fi_FI\n"
@@ -33,10 +35,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Plain text"
-msgstr ""
+msgstr "Pelkkä teksti"
 
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 msgid "Subject"
 msgstr "Aihe"
@@ -45,7 +47,7 @@ msgid "Email Body"
 msgstr "Sähköpostin sisältö"
 
 msgid "Content type"
-msgstr "Sisältötyyppi"
+msgstr "Sisällöntyyppi"
 
 msgid "Recipient"
 msgstr "Vastaanottaja"
@@ -99,7 +101,7 @@ msgstr ""
 "odottamattomia seurauksia."
 
 msgid "Template"
-msgstr "Malline"
+msgstr "Mallipohja"
 
 msgid "Bind to Variable"
 msgstr "Sido muuttujaan"
@@ -107,11 +109,35 @@ msgstr "Sido muuttujaan"
 msgid "Edit Script Contents..."
 msgstr "Muokkaa komentosarjan sisältöä..."
 
+msgid "Edit Script (advanced)"
+msgstr "Muokkaa komentosarjaa (edistynyt)"
+
+msgid "Edit Template"
+msgstr "Muokkaa mallipohjaa"
+
 msgid "Name"
 msgstr "Nimi"
 
 msgid "Enabled"
 msgstr "Käytössä"
+
+msgid "New Script"
+msgstr "Uusi komentosarja"
+
+msgid "New From Template"
+msgstr "Uusi mallipohjasta"
+
+msgid "Script created from template!"
+msgstr "Komentosarja luotu mallipohjasta!"
+
+msgid "Template Script not found!"
+msgstr "Mallipohjan komentosarjaa ei löydy!"
+
+msgid "Templated script not found!"
+msgstr "Mallipohjan komentosarjaa ei löydy!"
+
+msgid "Script updated!"
+msgstr "Komentosarja päivitetty!"
 
 msgid ""
 "Check whether the bound value `value` exists and is non-empty and non-zero."
@@ -209,6 +235,49 @@ msgstr "nimi"
 msgid "enabled"
 msgstr "käytössä"
 
+msgid "template identifier"
+msgstr "Mallineen tunniste"
+
+msgid "the template identifier used to create this script"
+msgstr "Mallineen tunniste, jota käytetään tämän komentosarjan luonnissa"
+
+msgid "The subject of the email"
+msgstr "Sähköpostin otsikko"
+
+msgid "Email content"
+msgstr "Sähköpostin sisältö"
+
+msgid "The content of the email."
+msgstr "Sähköpostin sisältö"
+
+msgid "Customer"
+msgstr "Asiakas"
+
+msgid "Other destination"
+msgstr "Muu kohde"
+
+msgid "Send to?"
+msgstr "Lähetä?"
+
+msgid ""
+"You can send this email to the customer or to other email of your choice."
+msgstr ""
+"Voit lähettää tämän sähköpostin asiakkaalle tai muuhun valitsemaasi "
+"sähköpostiosoitteeseen."
+
+msgid "Destination"
+msgstr "Kohde"
+
+msgid "Fill with the destination email address."
+msgstr "Täytä kohteen sähköpostiosoitteella"
+
+msgid ""
+"Recipient is a required field when you don't want to send the email to "
+"customer."
+msgstr ""
+"Vastaanottaja on vaadittu kenttä, kun sähköpostia ei haluta lähettää "
+"asiakkaalle."
+
 msgid "Edit Script Information"
 msgstr "Muokkaa komentosarjan tietoja"
 
@@ -220,6 +289,18 @@ msgstr "Komentosarjan tiedot"
 
 msgid "OK"
 msgstr "OK"
+
+msgid "Show available variables"
+msgstr "Näytä saatavilla olevat muuttujat"
+
+msgid "Close"
+msgstr "Sulje"
+
+msgid "Select the script template to be created"
+msgstr "Valitse luotava mallipohja komentosarjalle"
+
+msgid "Cancel"
+msgstr "Peruuta"
 
 msgid "Edit Script"
 msgstr "Muokkaa komentosarjaa"
@@ -238,6 +319,21 @@ msgstr "Muuttujat"
 
 msgid "Save changes"
 msgstr "Tallenna muutokset"
+
+msgid "Script Template: {}"
+msgstr "Komentasarjan mallipohja: {}"
+
+msgid "Configure the Script Template"
+msgstr "Konfiguroi mallipohjan komentosarja"
+
+msgid "Modify Script"
+msgstr "Muokkaa komentosarjaa"
+
+msgid "Create Script"
+msgstr "Luo komentosarja"
+
+msgid "Create"
+msgstr "Luo"
 
 msgid "Boolean"
 msgstr "Totuusarvo"

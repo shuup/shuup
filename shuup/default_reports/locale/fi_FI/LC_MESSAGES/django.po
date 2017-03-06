@@ -3,14 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Translators:
+# Janne Tammi <janne@shuup.com>, 2017
 # Panu Tulimäki <panu@shuup.com>, 2016
+# Shuup Admin <admin@shuup.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-12 03:47+0000\n"
-"PO-Revision-Date: 2016-10-25 23:38+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"PO-Revision-Date: 2017-02-10 10:33+0000\n"
+"Last-Translator: Janne Tammi <janne@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
 "language/fi_FI/)\n"
 "Language: fi_FI\n"
@@ -23,31 +25,112 @@ msgid "Customer"
 msgstr "Asiakas"
 
 msgid "Filter report results by customer."
-msgstr "Suodata raportin tuloksia asiakkaiden perusteella."
+msgstr "Suodata tuloksia asiakkaiden perusteella."
 
 msgid "Orderer"
 msgstr "Tilaaja"
 
 msgid "Filter report results by the person that made the order."
-msgstr "Suodata raportin tuloksia asiakkaan perusteella."
+msgstr "Suodata tuloksia tilauksen tehneen asiakkaan perusteella."
 
-msgid "Sales Report"
-msgstr "Myyntiraportti"
-
-msgid "Date"
-msgstr "Päivä"
-
-msgid "Orders"
-msgstr "Tilaukset"
-
-msgid "Products"
-msgstr "Tuotteet"
+msgid "Quantity"
+msgstr "Määrä"
 
 msgid "Taxless Total"
 msgstr "Veroton kokonaishinta"
 
 msgid "Taxful Total"
 msgstr "Verollinen kokonaishinta"
+
+msgid "Sort order"
+msgstr "Järjestys"
+
+msgid "Year"
+msgstr "Vuosi"
+
+msgid "Year/Month"
+msgstr "Vuosi/Kuukausi"
+
+msgid "Year/Month/Day"
+msgstr "Vuosi/Kuukausi/Päivä"
+
+msgid "Group by"
+msgstr "Ryhmittely"
+
+msgid "Order Count"
+msgstr "Tilausmäärä"
+
+msgid "Average Sales"
+msgstr "Keskimääräinen myynti"
+
+msgid "Tax"
+msgstr "Vero"
+
+msgid "Filter report results by tax."
+msgstr "Suodata tuloksia veron mukaan."
+
+msgid "Tax Class"
+msgstr "Veroluokka"
+
+msgid "Filter report results by tax class."
+msgstr "Suoda tuloksia veroluokan mukaan."
+
+msgid "Shipping Method"
+msgstr "Toimitustapa"
+
+msgid "Filter report results by shipping method."
+msgstr "Suoda tuloksia toimitustavan mukaan."
+
+msgid "Carrier"
+msgstr "Toimittaja"
+
+msgid "Filter report results by carrier."
+msgstr "Suoda tuloksia toimittajan mukaan."
+
+msgid "Customer Sales"
+msgstr "Asiakasmyynnit"
+
+msgid "Orders"
+msgstr "Tilaukset"
+
+msgid "New Customers"
+msgstr "Uudet asiakkaat"
+
+msgid "Date"
+msgstr "Päivä"
+
+msgid "Persons"
+msgstr "Henkilöt"
+
+msgid "Companies"
+msgstr "Yritykset"
+
+msgid "Users"
+msgstr "Käyttäjät"
+
+msgid "Product Total Sales"
+msgstr "Tuotteen kokonaismyynnit"
+
+msgid "Product"
+msgstr "Tuote"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "Refunded Sales"
+msgstr "Hyvitetyt myynnit"
+
+msgid "Refunded Orders"
+msgstr "Hyvitetyt tilaukset"
+
+msgid "Total Refunded"
+msgstr "Hyvitetty kokonaismäärä"
+
+msgid "Sales Report"
+msgstr "Myyntiraportti"
+
+msgid "Products"
+msgstr "Tuotteet"
 
 msgid "Sales Per Hour"
 msgstr "Myynti tunti tunnilta"
@@ -61,8 +144,29 @@ msgstr "Tilausten määrä"
 msgid "Total Sales"
 msgstr "Kokonaismyynti"
 
+msgid "Shipping"
+msgstr "Toimitus"
+
+msgid "Shipping method"
+msgstr "Toimitustapa"
+
+msgid "Total Charged"
+msgstr "Laskutettu määrä"
+
+msgid "Taxes"
+msgstr "Verot"
+
+msgid "Rate (%)"
+msgstr "Määrä (%)"
+
 msgid "Shop Name"
 msgstr "Kaupan nimi"
 
 msgid "Currency"
 msgstr "Valuutta"
+
+msgid "Customers"
+msgstr "Asiakkaat"
+
+msgid "Customer Average Sale"
+msgstr "Asiakkaan keskimyynti"

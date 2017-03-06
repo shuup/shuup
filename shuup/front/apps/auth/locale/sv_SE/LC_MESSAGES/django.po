@@ -1,0 +1,125 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: Shuup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-03 09:44+0000\n"
+"PO-Revision-Date: 2017-03-02 06:34+0000\n"
+"Last-Translator: Frank Wickström <frwickst@gmail.com>\n"
+"Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
+"language/sv_SE/)\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.1.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#, python-format
+msgid ""
+"Please enter a correct %(username)s and password. Note that both fields may "
+"be case-sensitive. In case of multiple accounts with same email only "
+"username can be used to login."
+msgstr ""
+"Ange ett korrekt %(username)s och lösenord. Notera att båda fälten kan vara "
+"skiftlägeskänsliga (skillnad på stora och små bokstäver). Om fler konton har "
+"samma e-postadress så kan endast användarnamnet användas för att logga in."
+
+msgid "This account is inactive."
+msgstr "Det här kontot är inaktivt."
+
+msgid "Username or email address"
+msgstr "Användarnamn eller e-postadress"
+
+msgid "Username"
+msgstr "Användarnamn"
+
+msgid "Email"
+msgstr "E-post"
+
+msgid "Please provide either username or email, not both."
+msgstr "Ange antingen användarnamn eller e-post, inte båda."
+
+msgid "Please provide either username or email."
+msgstr "Ange antingen användarnamn eller e-postadress."
+
+msgid "shop"
+msgstr "butik"
+
+msgid "Log in"
+msgstr "Logga in"
+
+#, python-format
+msgid "You have already logged in as <strong>%(username)s</strong>"
+msgstr "Du har redan loggat in som <strong>%(username)s</strong>"
+
+msgid "Go to Homepage"
+msgstr "Tillbaka till startsidan"
+
+msgid "Forgot your password?"
+msgstr "Glömt ditt lösenord?"
+
+msgid "New user? Register here!"
+msgstr "Ny användare? Registrera dig här!"
+
+msgid "Logged out"
+msgstr "Utloggad"
+
+msgid "You have been logged out. Thank you for visiting!"
+msgstr "Du har loggats ut. Tack för besöket!"
+
+msgid "Recover your password"
+msgstr "Glömt ditt lösenord?"
+
+msgid "You can recover your password with either username or email."
+msgstr ""
+"Du kan återställa ditt lösenord med antingen ditt användarnamn eller din e-"
+"postadress."
+
+msgid "Send password recovery instructions"
+msgstr "Skicka instruktioner för återställning av lösenord"
+
+msgid "Password Changed"
+msgstr "Lösenordet har ändrats"
+
+msgid "Your password has been changed and you have been logged in."
+msgstr "Ditt lösenord har ändrats och du har loggats in."
+
+msgid "Password Recovery"
+msgstr "Lösenordsåterställning"
+
+msgid "Change Password"
+msgstr "Ändra lösenord"
+
+#, python-format
+msgid "Hi %(fullname)s"
+msgstr "Hej %(fullname)s"
+
+#, python-format
+msgid "In case you've forgotten, your username is %(username)s."
+msgstr "Om du har glömt så är ditt användarnamn %(username)s."
+
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr ""
+"Du får detta epostmeddelande eftersom du begärt en återställning av ditt "
+"lösenord för användarkontot på %(site_name)s."
+
+msgid "Please go to the following page and choose a new password:"
+msgstr "Vänligen gå till nästa sida och välj ett nytt lösenord:"
+
+msgid ""
+"If a user account is associated with the information you entered, you should "
+"receive instructions on how to reset your password shortly."
+msgstr ""
+"Om ett användarkonto är associerad med den information du angav så kommer du "
+"att få instruktioner om hur du återställer ditt lösenord inom kort."
+
+msgid "This recovery link is invalid."
+msgstr "Återställmingslänken är ogiltig."

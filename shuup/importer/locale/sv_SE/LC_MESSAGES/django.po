@@ -1,0 +1,251 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-03 09:44+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Frank Wickström <frwickst@gmail.com>, 2017\n"
+"Language-Team: Swedish (Sweden) (https://www.transifex.com/shuup/teams/55306/"
+"sv_SE/)\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Data Import"
+msgstr "Dataimport"
+
+msgid "Import mode"
+msgstr "Importläge"
+
+msgid "Importing language"
+msgstr "Importeraingsspråk"
+
+msgid "The language of the data you would like to import."
+msgstr "Importdatans språk"
+
+msgid "Shop"
+msgstr "Butik"
+
+msgid "Select a shop you want import into"
+msgstr "Välj en butik som du vill importera till"
+
+msgid "Importer"
+msgstr "Importerare"
+
+msgid "Select a importer type matching the data you would like to import"
+msgstr "Välj en importerare som matchar den data du vill importera"
+
+msgid "File"
+msgstr "Fil"
+
+#, python-format
+msgid "%s is not a file"
+msgstr "%s är inte en fil"
+
+msgid "File missing."
+msgstr "Fil saknas."
+
+msgid "Import"
+msgstr "Importera"
+
+msgid "Row ignored (no existing item and creating new is not allowed)."
+msgstr "Rad ignoreras (inga befintliga objekt och ej tillåtet att skapa nya)."
+
+#, python-format
+msgid ""
+"Row ignored (object already exists (%(object_name)s with id: %(object_id)s)."
+msgstr ""
+"Rad ignoreras (objektet finns redan (%(object_name)s med id: %(object_id)s)."
+
+#, python-format
+msgid "Error setting value for field %(field_name)s. (%(exception)s)"
+msgstr "Gick inte att ange värde för fältet %(field_name)s. (%(exception)s)"
+
+#, python-format
+msgid "Couldn't set value %(original_value)s for field %(field_name)s."
+msgstr ""
+"Kunde inte ange ett värdet %(original_value)s för fältet %(field_name)s."
+
+#, python-format
+msgid "Row import failed (%s)."
+msgstr "Radimport misslyckades (%s)."
+
+msgid "Note"
+msgstr "Anteckning"
+
+msgid "If you are importing products with quantities, ensure the following:"
+msgstr "Om du importerar produkter med antal, försäkra dig om följande:"
+
+#, python-format
+msgid ""
+"You have atleast one <a href=\"%(url)s\">supplier</a> with \"Stock Managed\" "
+"<b>on</b>."
+msgstr ""
+"Du har iallafall en <a href=\"%(url)s\">leverantör</a> med \"Lager Hanterat"
+"\" <b>på</b>."
+
+#, python-format
+msgid ""
+"your <a href=\"%(url)s\">supplier</a> has \"Stock Managed\" <b>on</b>. "
+"(Currently <b>off</b>)"
+msgstr ""
+"din <a href=\"%(url)s\">leverantör</a> har \"Lager Hanterat\" <b>på</b>. "
+"(För närvarande <b>av</b>)"
+
+msgid "your import file has <b>supplier</b> field"
+msgstr "din importfil har <b>leverantören</b>"
+
+msgid "Continue"
+msgstr "Fortsätt"
+
+msgid "Import Data - process"
+msgstr "Dataimport - processera"
+
+msgid "Amount if items being imported"
+msgstr "Antal om objekt importeras"
+
+msgid "The following fields were automatically mapped"
+msgstr "Följande fält karterades automatiskt"
+
+msgid ""
+"The following fields in the file are being used a s possible connection keys:"
+msgstr "Följande fält i filen används en som möjliga anslutningsnycklar:"
+
+msgid "Not a single connection key was found, File cannot be imported."
+msgstr "Ingen anslutningsnyckel hittades, filen inte kan importeras."
+
+msgid "Connection Keys"
+msgstr "Anslutningsnycklar"
+
+msgid "Read only fields"
+msgstr "Skrivskyddade fält"
+
+msgid ""
+"The following fields are Read Only and changes for those fields will be "
+"ignored."
+msgstr ""
+"Följande fält är skrivskyddade och ändringar i dessa fält kommer att "
+"ignoreras."
+
+msgid "Import method"
+msgstr "Importmetoden"
+
+msgid "Automatically mapped"
+msgstr "Mappas automatiskt"
+
+msgid "Original field"
+msgstr "Ursprungligt fält"
+
+msgid "Shuup field"
+msgstr "Shuupfält"
+
+msgid "Sample values"
+msgstr "Exempelvärden"
+
+msgid "The following fields must be manually tied"
+msgstr "Följande fält måste länkas manuellt"
+
+msgid "Don't import"
+msgstr "Importera inte"
+
+msgid "Field name"
+msgstr "Fältnamn"
+
+msgid "Target field"
+msgstr "Målfält"
+
+msgid "We may not be able to import the file."
+msgstr "Vi kanske inte kan importera filen."
+
+msgid ""
+"File may not be imported because no connection keys were found. Connection "
+"keys are unique keys that are used to map results."
+msgstr ""
+"Filen kan inte importeras eftersom inga anslutningsnycklar hittades. "
+"Anslutningsnycklar är unika nycklar som används för att kartlägga datan."
+
+msgid ""
+"Please consider adding some of the following fields to your import file:"
+msgstr "Överväg att lägga till några av följande fält i importfilen:"
+
+msgid "Products"
+msgstr "Produkter"
+
+msgid "SKU"
+msgstr "Artikelnummer"
+
+msgid "Customers"
+msgstr "Kunder"
+
+msgid "email"
+msgstr "e-post"
+
+msgid "Importer type"
+msgstr "Importörtyp"
+
+msgid "Field(s) to add"
+msgstr "Fält att lägga till"
+
+msgid "You can continue importing, but it might end up in error"
+msgstr "Du kan fortsätta att importera, men fel kan uppstå"
+
+msgid ""
+"If you are importing customers this might be a false alarm if you have email "
+"key set"
+msgstr ""
+"Om du är importerande kunder så kan detta vara ett falskt alarm om du har "
+"nyckeln \"email\" satt"
+
+msgid "Start Import"
+msgstr "Starta import"
+
+msgid "Import Data - Complete"
+msgstr "Dataimport - Klar"
+
+msgid "Import Complete!"
+msgstr "Import genomförd"
+
+msgid "New items"
+msgstr "Nya objekt"
+
+msgid "The following items were imported as new:"
+msgstr "Följande nya poster har importerats:"
+
+msgid "Zero new items were created."
+msgstr "Inga nya objekt har skapats."
+
+msgid "Updated items"
+msgstr "Uppdaterade artiklar"
+
+msgid "The following items were updated:"
+msgstr "Följande object har uppdaterats:"
+
+msgid "Zero items were updated."
+msgstr "Inga poster uppdaterades."
+
+msgid "Import log"
+msgstr "Importloggen"
+
+msgid "Other messages"
+msgstr "Andra meddelanden"
+
+#, python-format
+msgid "Cannot import more than %s rows from one file."
+msgstr "Kan inte importera mer än %s rader från en fil."
+
+msgid "Allow create and update"
+msgstr "Tillåt att skapa och uppdatera"
+
+msgid "Only create (no updates)"
+msgstr "Endast skapa (inga uppdateringar)"
+
+msgid "Only update existing (no new ones are created)"
+msgstr "Uppdatera endast (inga nya objekt skapas)"

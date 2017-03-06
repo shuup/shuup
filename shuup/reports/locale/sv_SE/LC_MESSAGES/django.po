@@ -1,0 +1,89 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-03 09:44+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Frank Wickström <frwickst@gmail.com>, 2017\n"
+"Language-Team: Swedish (Sweden) (https://www.transifex.com/shuup/teams/55306/"
+"sv_SE/)\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Reports"
+msgstr "Rapporter"
+
+msgid "Type"
+msgstr "Typ"
+
+msgid "Select the type of report to run."
+msgstr "Välj typ av rapport att köra."
+
+msgid "Custom"
+msgstr "Anpassa"
+
+msgid "Today"
+msgstr "Idag"
+
+msgid "Running Week (last 7 days)"
+msgstr "Senaste vecka (senaste 7 dagarna)"
+
+msgid "Running Month (last 30 days)"
+msgstr "Senaste månad (senaste 30 dagarna)"
+
+msgid "This Month"
+msgstr "Denna månad"
+
+msgid "This Year"
+msgstr "I år"
+
+msgid "All Time"
+msgstr "Genom alla tider"
+
+msgid "Shop"
+msgstr "Butik"
+
+msgid "Filter report results by shop."
+msgstr "Filtrera rapporter enligt butiken."
+
+msgid "Date Range"
+msgstr "Datumintervall"
+
+msgid "Filter report results by a date range."
+msgstr "Filtrera rapporter inom ett datumintervall."
+
+msgid "Start Date"
+msgstr "Startdatum"
+
+msgid "For a custom date range."
+msgstr "För ett anpassat datumintervall."
+
+msgid "End Date"
+msgstr "Slutdatum"
+
+msgid "Output Format"
+msgstr "Utdataformat"
+
+msgid "The format to show the report results."
+msgstr "Formatet som rapporten kommer att skapas i."
+
+msgid "Download"
+msgstr "Ladda ned"
+
+msgid "Check this to download the report."
+msgstr "Markera för att hämta rapporten."
+
+msgid "Toggle Filters"
+msgstr "Visa/göm filter"
+
+msgid "Get Report"
+msgstr "Ladda ner rapport"

@@ -6,9 +6,10 @@
 # Aarni Koskela, 2015
 # Antti Mäki <antti@anttimaki.com>, 2015
 # Eetu Häivälä <eetu.haivala@anders.fi>, 2015
+# Janne Tammi <janne@shuup.com>, 2017
 # Janne Tammi <janne@shuup.com>, 2015
 # Joni Latokylä <joni.latokyla@andersinnovations.com>, 2015
-# Juha Kujala <juha.kujala@shoop.io>, 2015
+# Juha Kujala, 2015
 # Juha Louhiranta <charni@gmail.com>, 2015
 # Panu Tulimäki <panu@shuup.com>, 2016
 # Rauli L. <rauli.laine@iki.fi>, 2015
@@ -20,9 +21,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-09 21:20+0000\n"
-"PO-Revision-Date: 2016-10-26 00:11+0000\n"
-"Last-Translator: Panu Tulimäki <panu@shuup.com>\n"
+"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"PO-Revision-Date: 2017-02-10 07:38+0000\n"
+"Last-Translator: Janne Tammi <janne@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
 "language/fi_FI/)\n"
 "Language: fi_FI\n"
@@ -128,11 +129,11 @@ msgid "Please go to the following page and choose a new password:"
 msgstr "Siirry oheiselle sivulle ja valitse uusi salasana:"
 
 msgid ""
-"If a user account is associated with the information you entered, you "
-"should receive instructions on how to reset your password shortly."
+"If a user account is associated with the information you entered, you should "
+"receive instructions on how to reset your password shortly."
 msgstr ""
-"Jos syöttämääsi sähköpostiosoitteeseen liittyy asiakastili, vastaanottanet "
-"piakkoin sähköpostiisi salasananpalautusohjeet."
+"Mikäli käyttäjätili on liitetty antamiisi tietoihin, saat pian salasanan "
+"resetointiohjeet sähköpostiisi."
 
 msgid "This recovery link is invalid."
 msgstr "Tämä palautuslinkki on virheellinen."

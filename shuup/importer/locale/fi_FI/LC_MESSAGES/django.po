@@ -8,230 +8,246 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-12 03:47+0000\n"
+"POT-Creation-Date: 2017-03-03 09:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>, 2017\n"
+"Language-Team: Finnish (Finland) (https://www.transifex.com/shuup/"
+"teams/55306/fi_FI/)\n"
+"Language: fi_FI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Data Import"
-msgstr ""
+msgstr "Tietojen tuonti"
 
 msgid "Import mode"
-msgstr ""
+msgstr "Tuonnin tila"
 
 msgid "Importing language"
-msgstr ""
+msgstr "Tuonnin kieli"
 
 msgid "The language of the data you would like to import."
-msgstr ""
+msgstr "Tuotavien tietojen kieli."
 
 msgid "Shop"
-msgstr ""
+msgstr "Kauppa"
 
 msgid "Select a shop you want import into"
-msgstr ""
+msgstr "Valitse kauppa, johon haluat tuoda tiedot"
 
 msgid "Importer"
-msgstr ""
+msgstr "Tuoja"
 
 msgid "Select a importer type matching the data you would like to import"
-msgstr ""
+msgstr "Valitse tuojan tyyppi, joka vastaa tuotavia tietoja"
 
 msgid "File"
-msgstr ""
+msgstr "Tiedosto"
 
 #, python-format
 msgid "%s is not a file"
-msgstr ""
+msgstr "%s ei ole tiedosto"
 
 msgid "File missing."
-msgstr ""
+msgstr "Tiedosto puuttuu."
 
 msgid "Import"
-msgstr ""
+msgstr "Tuo"
 
 msgid "Row ignored (no existing item and creating new is not allowed)."
 msgstr ""
+"Hypätty rivin yli (ei olemassa olevaa objektia ja uuden luominen ei ole "
+"sallittu)."
 
 #, python-format
 msgid ""
 "Row ignored (object already exists (%(object_name)s with id: %(object_id)s)."
 msgstr ""
+"Hypätty rivin yli (objekti on jo olemassa (%(object_name)s id:llä "
+"%(object_id)s)."
 
 #, python-format
 msgid "Error setting value for field %(field_name)s. (%(exception)s)"
-msgstr ""
+msgstr "Virhe asettaessa arvoa kentälle %(field_name)s. (%(exception)s)"
 
 #, python-format
 msgid "Couldn't set value %(original_value)s for field %(field_name)s."
-msgstr ""
+msgstr "Ei voitu asettaa arvoa %(original_value)s kentälle %(field_name)s."
 
 #, python-format
 msgid "Row import failed (%s)."
-msgstr ""
+msgstr "Rivin tuonti epäonnistui (%s)."
 
 msgid "Note"
-msgstr ""
+msgstr "Huomaa"
 
 msgid "If you are importing products with quantities, ensure the following:"
-msgstr ""
+msgstr "Jos tuot tuotteita määrineen, varmista seuraava:"
 
 #, python-format
 msgid ""
 "You have atleast one <a href=\"%(url)s\">supplier</a> with \"Stock Managed\" "
 "<b>on</b>."
 msgstr ""
+"Sinulla on ainakin yksi <a href=\"%(url)s\">toimittaja</a>, jolla on "
+"\"varastonhallinta\" <b>päällä</b>."
 
 #, python-format
 msgid ""
 "your <a href=\"%(url)s\">supplier</a> has \"Stock Managed\" <b>on</b>. "
 "(Currently <b>off</b>)"
 msgstr ""
+"sinun <a href=\"%(url)s\">toimittajalla</a> on \"varastonhallinta\" "
+"<b>päällä</b>. (Tällä hetkellä <b>pois päältä</b>)"
 
 msgid "your import file has <b>supplier</b> field"
-msgstr ""
+msgstr "tuontitiedostossasi on <b>toimittaja</b> kenttä"
 
 msgid "Continue"
-msgstr ""
+msgstr "Jatka"
 
 msgid "Import Data - process"
-msgstr ""
+msgstr "Tietojen tuonti - eteneminen"
 
 msgid "Amount if items being imported"
-msgstr ""
+msgstr "Tuotavien objektien lukumäärä"
 
 msgid "The following fields were automatically mapped"
-msgstr ""
+msgstr "Seuraavien kenttien kohdekentät valittiin automaattisesti"
 
 msgid ""
 "The following fields in the file are being used a s possible connection keys:"
-msgstr ""
+msgstr "Seuraavia tiedoston kenttiä käytetään mahdollisina liittämisavaimina"
 
 msgid "Not a single connection key was found, File cannot be imported."
-msgstr ""
+msgstr "Yhtäkään liittämisavainta ei löytynyt. Tiedostoa ei voi tuoda."
 
 msgid "Connection Keys"
-msgstr ""
+msgstr "Liittämisavaimet"
 
 msgid "Read only fields"
-msgstr ""
+msgstr "Kirjoitussuojatut kentät"
 
 msgid ""
 "The following fields are Read Only and changes for those fields will be "
 "ignored."
 msgstr ""
+"Seuraavat kentät ovat kirjoitussuojattuja ja muutokset näihin kenttiin "
+"jätetään huomioimatta."
 
 msgid "Import method"
-msgstr ""
+msgstr "Tuontitapa"
 
 msgid "Automatically mapped"
-msgstr ""
+msgstr "Automaattisesti kohdennetut"
 
 msgid "Original field"
-msgstr ""
+msgstr "Alkuperäinen kenttä"
 
 msgid "Shuup field"
-msgstr ""
+msgstr "Shuupin kenttä"
 
 msgid "Sample values"
-msgstr ""
+msgstr "Esimerkkiarvoja"
 
 msgid "The following fields must be manually tied"
-msgstr ""
+msgstr "Seuraavat kentät pitää sitoa käsin"
 
 msgid "Don't import"
-msgstr ""
+msgstr "Älä tuo"
 
 msgid "Field name"
-msgstr ""
+msgstr "Kentän nimi"
 
 msgid "Target field"
-msgstr ""
+msgstr "Kohdekenttä"
 
 msgid "We may not be able to import the file."
-msgstr ""
+msgstr "Tiedostoa ei välttämättä voi tuoda."
 
 msgid ""
 "File may not be imported because no connection keys were found. Connection "
 "keys are unique keys that are used to map results."
 msgstr ""
+"Tiedostoa ei voi tuoda, koska liittämisavaimia ei löytynyt. Liittämisavaimet "
+"ovat uniikkeja avaimia, joiden avulla tulokset kohdistetaan."
 
 msgid ""
 "Please consider adding some of the following fields to your import file:"
-msgstr ""
+msgstr "Harkitse seuraavien kenttien lisäämistä tuontitiedostoosi:"
 
 msgid "Products"
-msgstr ""
+msgstr "Tuotteet"
 
 msgid "SKU"
-msgstr ""
+msgstr "Tuotekoodi"
 
 msgid "Customers"
-msgstr ""
+msgstr "Asiakkaat"
 
 msgid "email"
-msgstr ""
+msgstr "sähköposti"
 
 msgid "Importer type"
-msgstr ""
+msgstr "Tuojan tyyppi"
 
 msgid "Field(s) to add"
-msgstr ""
+msgstr "Lisättävät kentät"
 
 msgid "You can continue importing, but it might end up in error"
-msgstr ""
+msgstr "Voit jatkaa tuontia, mutta se voi päättyä virheeseen"
 
 msgid ""
 "If you are importing customers this might be a false alarm if you have email "
 "key set"
 msgstr ""
+"Jos tuot asiakkaita, tämä voi olla virheellinen hälytys, jos sähköposti "
+"avain on asetettu"
 
 msgid "Start Import"
-msgstr ""
+msgstr "Aloita tuonti"
 
 msgid "Import Data - Complete"
-msgstr ""
+msgstr "Tietojen tuonti - Valmis"
 
 msgid "Import Complete!"
-msgstr ""
+msgstr "Tietojen tuonti on valmis!"
 
 msgid "New items"
-msgstr ""
+msgstr "Uudet objektit"
 
 msgid "The following items were imported as new:"
-msgstr ""
+msgstr "Seuraavat objektit tuotiin uusina:"
 
 msgid "Zero new items were created."
-msgstr ""
+msgstr "Yhtään uutta objektia ei luotu."
 
 msgid "Updated items"
-msgstr ""
+msgstr "Päivitetyt objektit"
 
 msgid "The following items were updated:"
-msgstr ""
+msgstr "Seuraavia objekteja päivitettiin:"
 
 msgid "Zero items were updated."
-msgstr ""
+msgstr "Yhtään objektia ei päivitetty."
 
 msgid "Import log"
-msgstr ""
+msgstr "Tuonnin loki"
 
 msgid "Other messages"
-msgstr ""
+msgstr "Muut viestit"
 
 #, python-format
 msgid "Cannot import more than %s rows from one file."
-msgstr ""
+msgstr "Yhdestä tiedostosta ei voi tuoda enempää kuin %s riviä."
 
 msgid "Allow create and update"
-msgstr ""
+msgstr "Salli luominen ja päivittäminen"
 
 msgid "Only create (no updates)"
-msgstr ""
+msgstr "Vain luonti (ei päivittämistä)"
 
 msgid "Only update existing (no new ones are created)"
-msgstr ""
+msgstr "Vain olemassa olevien päivittäminen (uusia ei luoda)"
