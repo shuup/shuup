@@ -65,12 +65,6 @@ msgstr ""
 msgid "Ordered"
 msgstr ""
 
-msgid "Storefront Products"
-msgstr ""
-
-msgid "Storefront products can be listed and fetched."
-msgstr ""
-
 #, python-format
 msgid "Invalid command %s"
 msgstr ""

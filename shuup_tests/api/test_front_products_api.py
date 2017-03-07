@@ -25,7 +25,7 @@ from shuup.core.models import (
     ProductVariationVariable, ProductVariationVariableValue, Shop, ShopProduct,
     ShopProductVisibility, ShopStatus, Supplier
 )
-from shuup.front.api.products import (
+from shuup.core.api.front_products import (
     FrontProductViewSet, FrontShopProductViewSet
 )
 from shuup.testing.factories import (
