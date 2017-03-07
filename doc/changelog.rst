@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- API: add front user endpoint
 - API: add person contact endpoint
 - API: add address endpoint
 - Improve OrderSource caching for deserialization speedup
