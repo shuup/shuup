@@ -54,6 +54,18 @@ msgstr ""
 msgid "Retrieve and list the current users orders."
 msgstr ""
 
+msgid "Storefront Shop Products"
+msgstr ""
+
+msgid "Storefront shop products can be listed and fetched."
+msgstr ""
+
+msgid "Storefront Products"
+msgstr ""
+
+msgid "Storefront products can be listed and fetched."
+msgstr ""
+
 msgid "Front Users"
 msgstr ""
 
