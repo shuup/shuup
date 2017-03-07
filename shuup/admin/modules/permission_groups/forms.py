@@ -18,8 +18,6 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms.fields import Select2MultipleField
-from shuup.admin.module_registry import get_modules
-from shuup.admin.utils.permissions import get_permissions_from_urls
 
 
 class PermissionGroupForm(forms.ModelForm):
@@ -47,20 +45,12 @@ class PermissionGroupForm(forms.ModelForm):
         self.fields["members"] = members_field
 
         self.permission_code_to_name = {}
+        self.model_permissions = defaultdict(list)
         for permission in Permission.objects.all():
-            self.permission_code_to_name[
-                "%s.%s" % (permission.content_type.app_label, permission.codename)] = permission.name
-        self.module_permissions = defaultdict(list)
-        for module in self._get_module_choices():
-            module_permissions = get_permissions_from_urls(module.get_urls())
-
-            if not module_permissions:
-                module_permissions = module.get_required_permissions()
-
-            for module_permission in module_permissions or []:
-                field = self.get_permission_field(module_permission)
-                self.module_permissions[module.name].append(module_permission)
-                self.fields[module_permission] = field
+            perm = "%s.%s" % (permission.content_type.app_label, permission.codename)
+            self.permission_code_to_name[perm] = permission.name
+            self.model_permissions[permission.content_type.model_class()._meta.verbose_name].append(perm)
+            self.fields[perm] = self.get_permission_field(perm)
 
     def get_permission_field(self, permission):
         return forms.BooleanField(
@@ -69,11 +59,8 @@ class PermissionGroupForm(forms.ModelForm):
             required=False
         )
 
-    def get_module_permissions(self):
-        return OrderedDict(sorted(self.module_permissions.items()))
-
-    def _get_module_choices(self):
-        return [m for m in get_modules() if m.name != "_Base_"]
+    def get_model_permissions(self):
+        return OrderedDict(sorted(self.model_permissions.items()))
 
     def _get_initial_members(self):
         if self.instance.pk:
@@ -102,9 +89,8 @@ class PermissionGroupForm(forms.ModelForm):
             if value is None:
                 continue
             app_label, code_name = field_name.split(".", 1)
-            try:
-                permission = Permission.objects.get(content_type__app_label=app_label, codename=code_name)
-            except Permission.DoesNotExist:
+            permission = Permission.objects.filter(content_type__app_label=app_label, codename=code_name).first()
+            if not permission:
                 continue
             if value is True:
                 permissions.add(permission.id)

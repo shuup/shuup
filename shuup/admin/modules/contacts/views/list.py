@@ -18,7 +18,7 @@ from shuup.admin.utils.picotable import (
 )
 from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import (
-    CompanyContact, Contact, ContactGroup, PersonContact
+    CompanyContact, Contact, ContactGroup, PersonContact, Shop
 )
 
 
@@ -72,13 +72,18 @@ class ContactListView(PicotableListView):
         ])
 
     def get_queryset(self):
+        qs = super(ContactListView, self).get_queryset()
         groups = self.get_filter().get("groups")
         query = Q(groups__in=groups) if groups else Q()
+        if not self.request.user.is_superuser:
+            shop = Shop.objects.get_current(self.request)
+            qs = qs.filter(shop=shop)
         return (
-            super(ContactListView, self).get_queryset()
+            qs
             .filter(query)
             .annotate(n_orders=Count("customer_orders"))
-            .order_by("-created_on"))
+            .order_by("-created_on")
+        )
 
     def get_type_display(self, instance):
         if isinstance(instance, PersonContact):

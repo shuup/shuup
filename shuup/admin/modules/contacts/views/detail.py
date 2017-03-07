@@ -12,6 +12,7 @@ import warnings
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
+from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.utils.encoding import force_text
@@ -23,7 +24,7 @@ from shuup.admin.toolbar import (
 )
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.apps.provides import get_provide_objects
-from shuup.core.models import CompanyContact, Contact
+from shuup.core.models import CompanyContact, Contact, Shop
 from shuup.utils.deprecation import RemovedFromShuupWarning
 from shuup.utils.excs import Problem
 
@@ -130,6 +131,15 @@ class ContactDetailView(DetailView):
     model = Contact
     template_name = "shuup/admin/contacts/detail.jinja"
     context_object_name = "contact"
+
+    def get_object(self, *args, **kwargs):
+        obj = super(ContactDetailView, self).get_object(*args, **kwargs)
+        if self.request.user.is_superuser:
+            return obj
+        shop = Shop.objects.get_current(self.request)
+        if shop not in obj.shop_set.all():
+            raise PermissionDenied
+        return obj
 
     def get_context_data(self, **kwargs):
         context = super(ContactDetailView, self).get_context_data(**kwargs)
