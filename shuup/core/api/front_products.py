@@ -9,8 +9,10 @@
 from collections import defaultdict
 
 import six
+from django.conf import settings
 from django.db.models import Prefetch
 from django.db.models.expressions import RawSQL
+from django.http import Http404
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import filters, mixins, serializers, viewsets
@@ -26,7 +28,6 @@ from shuup.core.models import (
 )
 from shuup.core.pricing._context import PricingContext
 from shuup.core.utils import context_cache
-from shuup.front.utils.product_statistics import get_best_selling_product_info
 from shuup.utils.numbers import parse_decimal_string
 
 DISTANCE_PER_DEGREE = 111.045   # 111.045km in a latitude degree
@@ -415,6 +416,10 @@ class FrontShopProductViewSet(PermissionHelperMixin, mixins.ListModelMixin, view
         Returns the top 20 (default) best selling products.
         To change the number of products, set the `limit` query param.
         """
+        if "shuup.front" not in settings.INSTALLED_APPS:
+            raise Http404
+
+        from shuup.front.utils.product_statistics import get_best_selling_product_info
         limit = int(parse_decimal_string(request.query_params.get("limit", 20)))
         best_selling_products = get_best_selling_product_info(shop_ids=[request.shop.pk])
         combined_variation_products = defaultdict(int)
