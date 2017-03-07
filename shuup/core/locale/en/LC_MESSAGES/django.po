@@ -48,6 +48,14 @@ msgstr ""
 msgid "Person Contacts can be listed, fetched, created, updated and deleted."
 msgstr ""
 
+msgid "Front Users"
+msgstr ""
+
+msgid ""
+"Users can register to the storefront and fetch and update their own user "
+"details."
+msgstr ""
+
 msgid "Manufacturer"
 msgstr ""
 
