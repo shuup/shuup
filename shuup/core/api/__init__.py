@@ -10,6 +10,9 @@ from shuup.core.api.attribute import AttributeViewSet
 from shuup.core.api.category import CategoryViewSet
 from shuup.core.api.contacts import ContactViewSet, PersonContactViewSet
 from shuup.core.api.front_orders import FrontOrderViewSet
+from shuup.core.api.front_products import (
+    FrontProductViewSet, FrontShopProductViewSet
+)
 from shuup.core.api.front_users import FrontUserViewSet
 from shuup.core.api.manufacturer import ManufacturerViewSet
 from shuup.core.api.orders import OrderViewSet
@@ -58,3 +61,5 @@ def populate_core_api(router):
 
     router.register("shuup/front/user", FrontUserViewSet)
     router.register("shuup/front/orders", FrontOrderViewSet)
+    router.register("shuup/front/shop_products", FrontShopProductViewSet)
+    router.register("shuup/front/products", FrontProductViewSet)

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-07 20:18+0000\n"
+"POT-Creation-Date: 2017-03-07 20:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -52,6 +52,18 @@ msgid "Front Orders"
 msgstr ""
 
 msgid "Retrieve and list the current users orders."
+msgstr ""
+
+msgid "Storefront Shop Products"
+msgstr ""
+
+msgid "Storefront shop products can be listed and fetched."
+msgstr ""
+
+msgid "Storefront Products"
+msgstr ""
+
+msgid "Storefront products can be listed and fetched."
 msgstr ""
 
 msgid "Front Users"
