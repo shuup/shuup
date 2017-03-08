@@ -27,6 +27,7 @@ from django.utils.safestring import mark_safe
 from django.utils.timezone import localtime
 from django_jinja import library
 from jinja2.runtime import Undefined
+from jinja2.utils import contextfunction
 
 from shuup.utils.i18n import (
     format_money, format_percent, get_current_babel_locale
@@ -136,3 +137,29 @@ def json(value):
     if isinstance(value, Undefined):
         value = None
     return mark_safe(json_dump(value, cls=ExtendedJSONEncoder))
+
+
+@library.global_function
+@contextfunction
+def get_shop_configuration(context, name, default=None):
+    """
+    Get configuration variable value for the current shop.
+
+    :type context: jinja2.runtime.Context
+    :type name: str
+    :type default: Any
+    """
+    from shuup import configuration
+    return configuration.get(context.request.shop, name, default)
+
+
+@library.global_function
+def get_global_configuration(name, default=None):
+    """
+    Get global configuration variable value.
+
+    :type name: str
+    :type default: Any
+    """
+    from shuup import configuration
+    return configuration.get(None, name, default)
