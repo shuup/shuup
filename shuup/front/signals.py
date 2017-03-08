@@ -8,7 +8,7 @@
 from django.core.signals import Signal
 
 # Modifying signals
-get_basket_command_handler = Signal(providing_args=["command"], use_caching=True)
+from shuup.core.signals import get_basket_command_handler  # noqa
 
 # Completion signals
 order_complete_viewed = Signal(providing_args=["order", "request"], use_caching=True)
