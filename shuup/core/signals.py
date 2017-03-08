@@ -15,3 +15,4 @@ refund_created = Signal(providing_args=["order", "refund_lines"], use_caching=Tr
 category_deleted = Signal(providing_args=["category"], use_caching=True)
 shipment_deleted = Signal(providing_args=["shipment"], use_caching=True)
 payment_created = Signal(providing_args=["order", "payment"], use_caching=True)
+get_basket_command_handler = Signal(providing_args=["command"], use_caching=True)

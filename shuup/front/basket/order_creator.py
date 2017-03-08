@@ -5,8 +5,4 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from shuup.core.order_creator import OrderCreator
-
-
-class BasketOrderCreator(OrderCreator):
-    pass
+from shuup.core.basket.order_creator import BasketOrderCreator  # noqa
