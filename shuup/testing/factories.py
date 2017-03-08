@@ -29,14 +29,14 @@ from six import BytesIO
 
 from shuup.core.defaults.order_statuses import create_default_order_statuses
 from shuup.core.models import (
-    AnonymousContact, Attribute, AttributeType, AttributeVisibility, Category,
-    CategoryStatus, CompanyContact, Contact, ContactGroup, Currency,
+    AnonymousContact, Attribute, AttributeType, AttributeVisibility, Basket,
+    Category, CategoryStatus, CompanyContact, Contact, ContactGroup, Currency,
     CustomCarrier, CustomPaymentProcessor, FixedCostBehaviorComponent,
     Manufacturer, MutableAddress, Order, OrderLine, OrderLineTax,
     OrderLineType, OrderStatus, PaymentMethod, PersonContact, Product,
     ProductMedia, ProductMediaKind, ProductType, SalesUnit, ShippingMethod,
     Shop, ShopProduct, ShopProductVisibility, ShopStatus, StockBehavior,
-    Supplier, SupplierType, Tax, TaxClass, WaivingCostBehaviorComponent, StoredBasket
+    Supplier, SupplierType, Tax, TaxClass, WaivingCostBehaviorComponent
 )
 from shuup.core.order_creator import OrderCreator, OrderSource
 from shuup.core.pricing import get_pricing_module
@@ -829,7 +829,7 @@ def get_all_seeing_key(user_or_contact):
 
 
 def get_basket():
-    return StoredBasket.objects.create(
+    return Basket.objects.create(
         key=uuid.uuid1().hex,
         shop=get_default_shop(),
         prices_include_tax=True,

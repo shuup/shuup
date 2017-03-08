@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-07 20:19+0000\n"
+"POT-Creation-Date: 2017-03-08 20:09+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -66,33 +66,7 @@ msgid "Ordered"
 msgstr ""
 
 #, python-format
-msgid "Invalid command %s"
-msgstr ""
-
-#, python-format
-msgid "The quantity %f is not allowed. Please use an integer value."
-msgstr ""
-
-#, python-format
-msgid "The quantity %s is not valid."
-msgstr ""
-
-msgid "This variation is not available."
-msgstr ""
-
-#, python-format
 msgid "Basket loading failed: Incompatible basket (%s)"
-msgstr ""
-
-msgid "Try to remove some products from the basket and order them separately."
-msgstr ""
-
-#, python-format
-msgid "Products in basket cannot be shipped together. %s"
-msgstr ""
-
-#, python-format
-msgid "Products in basket have no common payment method. %s"
 msgstr ""
 
 msgid "Tax number required for companies"
