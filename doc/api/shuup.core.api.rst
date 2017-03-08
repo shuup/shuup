@@ -4,10 +4,26 @@ shuup.core.api package
 Submodules
 ----------
 
+shuup.core.api.address module
+-----------------------------
+
+.. automodule:: shuup.core.api.address
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.core.api.attribute module
 -------------------------------
 
 .. automodule:: shuup.core.api.attribute
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.core.api.basket module
+----------------------------
+
+.. automodule:: shuup.core.api.basket
     :members:
     :undoc-members:
     :show-inheritance:
@@ -24,6 +40,30 @@ shuup.core.api.contacts module
 ------------------------------
 
 .. automodule:: shuup.core.api.contacts
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.core.api.front_orders module
+----------------------------------
+
+.. automodule:: shuup.core.api.front_orders
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.core.api.front_products module
+------------------------------------
+
+.. automodule:: shuup.core.api.front_products
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.core.api.front_users module
+---------------------------------
+
+.. automodule:: shuup.core.api.front_users
     :members:
     :undoc-members:
     :show-inheritance:
