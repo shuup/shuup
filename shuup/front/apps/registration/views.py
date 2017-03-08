@@ -8,6 +8,7 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.http import HttpResponseNotFound
 from django.shortcuts import redirect
 from django.utils.http import is_safe_url
 from django.utils.translation import ugettext_lazy as _
@@ -15,6 +16,8 @@ from django.views.generic import View
 from registration.backends.default import views as default_views
 from registration.backends.simple import views as simple_views
 
+from shuup import configuration
+from shuup.front.apps.registration.forms import CompanyRegistrationForm
 from shuup.front.template_helpers import urls
 
 
@@ -59,6 +62,23 @@ class RegistrationView(View):
             view_class = RegistrationNoActivationView
 
         return view_class.as_view()(request, *args, **kwargs)
+
+
+class CompanyRegistrationView(RegistrationViewMixin, default_views.RegistrationView):
+    template_name = "shuup/registration/company_register.jinja"
+    form_class = CompanyRegistrationForm
+
+    SEND_ACTIVATION_EMAIL = False  # do not send the normal email
+
+    def dispatch(self, request, *args, **kwargs):
+        if not configuration.get(None, "allow_company_registration"):
+            return HttpResponseNotFound()
+        return super(CompanyRegistrationView, self).dispatch(request, *args, **kwargs)
+
+    def register(self, form):
+        user = super(CompanyRegistrationView, self).register(form)
+        # TODO: Send somekind of email here
+        return user
 
 
 class ActivationView(default_views.ActivationView):

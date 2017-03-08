@@ -15,6 +15,9 @@ from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
 
+from shuup import configuration
+from shuup.core.models import CompanyContact
+from shuup.core.models import PersonContact
 from shuup.testing.factories import get_default_shop
 
 username = "u-%d" % uuid.uuid4().time
@@ -183,3 +186,61 @@ def test_user_will_be_redirected_to_user_account_page_after_activation(client):
     response = client.get(urls[0], follow=True)
     assert email.encode('utf-8') in response.content, 'email should be found from the page.'
     assert reverse('shuup:customer_edit') == response.request['PATH_INFO'], 'user should be on the account-page.'
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("allow_company_registration", (False, True))
+def test_company_registration(django_user_model, client, allow_company_registration):
+    if "shuup.front.apps.registration" not in settings.INSTALLED_APPS:
+        pytest.skip("shuup.front.apps.registration required in installed apps")
+
+    get_default_shop()
+
+    configuration.set(None, "allow_company_registration", allow_company_registration)
+
+    url = reverse("shuup:registration_register_company")
+    if not allow_company_registration:
+        response = client.get(url)
+        assert response.status_code == 404
+    else:
+        response = client.post(url, data={
+            "username": username,
+            "email": email,
+            "password1": "password",
+            "password2": "password",
+            "contact_first_name": "Test",
+            "contact_last_name": "Tester",
+            "contact_phone": "123",
+            "contact_street": "Test street",
+            "contact_street2": "",
+            "contact_street3": "",
+            "contact_postal_code": "12345",
+            "contact_city": "Test City",
+            "contact_region_code": "",
+            "contact_region": "",
+            "contact_country": "FI",
+            "company_name": "Test company",
+            "company_name_ext": "test",
+            "company_www": "",
+            "company_tax_number": "12345",
+            "company_email": "test@example.com",
+            "company_phone": "123123",
+            "company_street": "testa tesat",
+            "company_street2": "",
+            "company_street3": "",
+            "company_postal_code": "12345",
+            "company_city": "test test",
+            "company_region_code": "",
+            "company_region": "",
+            "company_country": "FI"
+        })
+
+        user = django_user_model.objects.get(username=username)
+        contact = PersonContact.objects.get(user=user)
+        company = CompanyContact.objects.get(members__in=[contact])
+
+        # one of each got created
+        assert django_user_model.objects.count() == 1
+        assert PersonContact.objects.count() == 1
+        assert CompanyContact.objects.count() == 1
+        # assert maili lähti

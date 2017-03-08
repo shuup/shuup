@@ -1,0 +1,7 @@
+{% from "shuup/admin/macros/general.jinja" import content_block %}
+{% from "shuup/admin/macros/multilanguage.jinja" import render_monolingual_fields %}
+{% set settings_form = form[form_def.name]  %}
+
+{% call content_block(settings_form.title, icon="fa-th-list") %}
+    {{ render_monolingual_fields(settings_form) }}
+{% endcall %}

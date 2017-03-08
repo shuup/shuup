@@ -4,37 +4,52 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import six
 from django.contrib import messages
+from django.db.transaction import atomic
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView
-from enumfields import Enum
 
-from shuup import configuration
-from shuup.admin.modules.settings.forms import OrderSettingsForm
+from shuup.admin.form_part import FormPartsViewMixin
+from shuup.admin.modules.settings.forms.system import (
+    OrderSettingsFormPart, RegistrationSettingsFormPart
+)
 from shuup.admin.toolbar import PostActionButton, Toolbar
-from shuup.core.models import ConfigurationItem
+from shuup.utils.form_group import FormGroup
 
 
-class SystemSettingsView(FormView):
-    form_class = OrderSettingsForm
+class SystemSettingsView(FormPartsViewMixin, FormView):
+    form_class = None
     template_name = "shuup/admin/settings/edit.jinja"
+    base_form_part_classes = [RegistrationSettingsFormPart, OrderSettingsFormPart]
 
+    @atomic
     def form_valid(self, form):
-        # clear all set configurations
-        for key in form.fields.keys():
-            try:
-                ConfigurationItem.objects.get(shop=None, key=key).delete()
-            except ConfigurationItem.DoesNotExist:
-                continue
+        return self.save_form_parts(form)
 
-        for key, value in six.iteritems(form.cleaned_data):
-            if isinstance(value, Enum):
-                value = value.value
-            configuration.set(None, key, value)
+    def get_form(self, form_class=None):
+        kwargs = self.get_form_kwargs()
+        kwargs["initial"] = dict(self.request.GET.items())
+        fg = FormGroup(**kwargs)
+        form_parts = self.get_form_parts(None)
+        for form_part in form_parts:
+            for form_def in form_part.get_form_defs():
+                fg.form_defs[form_def.name] = form_def
+        fg.instantiate_forms()
+        return fg
 
-        messages.success(self.request, _("Saved successfully"))
+    def save_form_parts(self, form):
+        has_changed = False
+        form_parts = self.get_form_parts(None)
+        for form_part in form_parts:
+            saved_form = form[form_part.name]
+            if saved_form.has_changed():
+                has_changed = form_part.save(saved_form)
+
+        if has_changed:
+            messages.success(self.request, _("Changes saved successfully"))
+        else:
+            messages.info(self.request, _("No changes detected"))
         return redirect("shuup_admin:settings.list")
 
     def get_context_data(self, **kwargs):
