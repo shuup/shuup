@@ -38,5 +38,8 @@ pip-log.txt
 sdist/
 target/
 var/
+local/
 node_modules
 .DS_Store
+Makefile
+manage.py
