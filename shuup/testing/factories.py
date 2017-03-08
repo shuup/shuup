@@ -36,7 +36,7 @@ from shuup.core.models import (
     OrderLineType, OrderStatus, PaymentMethod, PersonContact, Product,
     ProductMedia, ProductMediaKind, ProductType, SalesUnit, ShippingMethod,
     Shop, ShopProduct, ShopProductVisibility, ShopStatus, StockBehavior,
-    Supplier, SupplierType, Tax, TaxClass, WaivingCostBehaviorComponent
+    Supplier, SupplierType, Tax, TaxClass, WaivingCostBehaviorComponent, StoredBasket
 )
 from shuup.core.order_creator import OrderCreator, OrderSource
 from shuup.core.pricing import get_pricing_module
@@ -826,3 +826,12 @@ def get_all_seeing_key(user_or_contact):
     else:
         user = user_or_contact
     return "is_all_seeing:%d" % user.pk
+
+
+def get_basket():
+    return StoredBasket.objects.create(
+        key=uuid.uuid1().hex,
+        shop=get_default_shop(),
+        prices_include_tax=True,
+        currency=get_default_shop().currency
+    )
