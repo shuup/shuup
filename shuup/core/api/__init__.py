@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 from shuup.core.api.address import MutableAddressViewSet
 from shuup.core.api.attribute import AttributeViewSet
+from shuup.core.api.basket import BasketViewSet
 from shuup.core.api.category import CategoryViewSet
 from shuup.core.api.contacts import ContactViewSet, PersonContactViewSet
 from shuup.core.api.front_orders import FrontOrderViewSet
@@ -58,6 +59,7 @@ def populate_core_api(router):
     router.register("shuup/user", UserViewSet)
     router.register("shuup/sales_unit", SalesUnitViewSet)
     router.register("shuup/tax_class", TaxClassViewSet)
+    router.register("shuup/basket", BasketViewSet)
 
     router.register("shuup/front/user", FrontUserViewSet)
     router.register("shuup/front/orders", FrontOrderViewSet)
