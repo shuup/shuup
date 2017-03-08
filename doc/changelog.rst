@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- API: add basket endpoint
 - API: created front simple product endpoint
 - API: add front orders endpoint to fetch users order history
 - API: added nearby filter for products
