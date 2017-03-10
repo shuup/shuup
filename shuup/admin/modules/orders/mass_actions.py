@@ -43,7 +43,7 @@ class OrderConfirmationPdfAction(PicotableFileMassAction):
 
     def process(self, request, ids):
         if isinstance(ids, six.string_types) and ids == "all":
-            return JsonResponse({"error": ugettext("Selecting all is not supported.")})
+            return JsonResponse({"error": ugettext("Selecting all is not supported.")}, status=400)
         if len(ids) == 1:
             try:
                 response = get_confirmation_pdf(request, ids[0])
@@ -51,7 +51,7 @@ class OrderConfirmationPdfAction(PicotableFileMassAction):
                 return response
             except Exception as e:
                 msg = e.message if hasattr(e, "message") else e
-                return JsonResponse({"error": force_text(msg)})
+                return JsonResponse({"error": force_text(msg)}, status=400)
 
         buff = BytesIO()
         archive = zipfile.ZipFile(buff, 'w', zipfile.ZIP_DEFLATED)
@@ -76,7 +76,7 @@ class OrderConfirmationPdfAction(PicotableFileMassAction):
             response['Content-Disposition'] = 'attachment; filename=order_confirmation_pdf.zip'
             response.write(ret_zip)
             return response
-        return JsonResponse({"errors": errors})
+        return JsonResponse({"errors": errors}, status=400)
 
 
 class OrderDeliveryPdfAction(PicotableFileMassAction):

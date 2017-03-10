@@ -617,20 +617,21 @@ const Picotable = (function(m, storage) {
             };
         };
 
-        const itemCount = ctrl.vm.data().pagination.nItems;
-        if (itemCount === 0) {
+        const totalItemCount = ctrl.vm.data().pagination.nItems;
+        if (totalItemCount === 0) {
             return "";
         }
+        const listedItemCount = ctrl.vm.data().items.length;
         const initialMassActions = [
             {key: 0, value: gettext("Select Action")},
             {key: "unselect_all", value: gettext("Clear Selections")},
-            {key: "select_listed", value: gettext("Select All")},
-            {key: "select_all", value: interpolate(gettext("Select All %s Items"), [itemCount])},
+            {key: "select_all", value: gettext("Select All")},
+            {key: "select_listed", value: interpolate(gettext("Select All %s Items"), [listedItemCount])},
         ];
         massActions = initialMassActions.concat(massActions);
 
         return m("div.picotable-mass-actions", [
-            (ctrl.vm.allItemsSelected() ? m("p", interpolate(gettext("All %s Items Selected"), [itemCount])) : null),
+            (ctrl.vm.allItemsSelected() ? m("p", interpolate(gettext("All %s Items Selected"), [totalItemCount])) : null),
             m("select.picotable-mass-action-select.form-control",
                 {
                     id: "mass-action-select" + ctrl.id,
@@ -830,6 +831,13 @@ const Picotable = (function(m, storage) {
                     }
                     setTimeout(function () { URL.revokeObjectURL(downloadUrl); }, 100); // cleanup
                 }
+            } else {
+                ctrl.resetCheckboxes();
+                $(".picotable-mass-action-select").val(0);
+                ctrl.refresh();
+                setTimeout(function() {
+                    window.Messages.enqueue({tags: "error", text: gettext("Something went wrong.")});
+                }, 1000);
             }
         };
         ctrl.doMassAction = function(value) {
