@@ -15,6 +15,7 @@ from django_filters import DateTimeFilter
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from rest_framework import serializers, status
 from rest_framework.decorators import detail_route
+from rest_framework.filters import SearchFilter
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
@@ -77,7 +78,7 @@ class OrderFilter(FilterSet):
 
     class Meta:
         model = Order
-        fields = ["identifier", "date", "status"]
+        fields = ["identifier", "date", "status", "shop"]
 
 
 class OrderStatusChangeMixin(object):
@@ -133,8 +134,16 @@ class OrderViewSet(PermissionHelperMixin, ProtectedModelViewSetMixin, OrderStatu
 
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
-    filter_backends = (DjangoFilterBackend,)
+    filter_backends = (DjangoFilterBackend, SearchFilter)
     filter_class = OrderFilter
+    search_fields = ("^email", "^phone")
+
+    def get_queryset(self):
+        qs = super(OrderViewSet, self).get_queryset()
+        if self.request.user.is_superuser:
+            return qs
+        else:
+            return qs.filter(shop__staff_members__id=self.request.user.id)
 
     def get_view_name(self):
         return _("Orders")

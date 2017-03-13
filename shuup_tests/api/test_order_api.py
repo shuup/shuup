@@ -11,18 +11,20 @@ import datetime
 import decimal
 import json
 
-from django.utils.timezone import datetime as dt
-
 import pytest
+from django.utils.timezone import datetime as dt
 from rest_framework import status
 from rest_framework.test import APIClient
+
+from shuup import configuration
+from shuup.api.permissions import PermissionLevel
 from shuup.core import cache
 from shuup.core.models import Order, OrderStatus, PaymentStatus, ShippingStatus
 from shuup.testing.factories import (
     create_default_order_statuses, create_empty_order,
     create_order_with_product, create_product, create_random_person,
     get_default_payment_method, get_default_shipping_method, get_default_shop,
-    get_default_supplier
+    get_default_supplier, get_shop
 )
 from shuup_tests.utils import printable_gibberish
 
@@ -329,6 +331,32 @@ def test_cancel_order(admin_user):
     assert response.status_code == 200
     response = client.post("/api/shuup/order/%s/cancel/" % order.pk)
     assert response.status_code == 400
+
+
+def test_order_retrieval_permissions(admin_user):
+    configuration.set(None, "api_permission_OrderViewSet", PermissionLevel.AUTHENTICATED_READ)
+    shop = get_default_shop()
+    shop2 = get_shop(True)
+    order = create_empty_order(shop=shop)
+    order.save()
+    order = create_empty_order(shop=shop2)
+    order.save()
+
+    # admin can view all orders
+    client = _get_client(admin_user)
+    response = client.get("/api/shuup/order/")
+    assert response.status_code == 200
+    assert len(json.loads(response.content.decode("utf-8"))) == 2
+
+    # staff members can view orders belonging to shop
+    admin_user.is_superuser = False
+    admin_user.is_staff = True
+    admin_user.save()
+    shop.staff_members.add(admin_user)
+    client = _get_client(admin_user)
+    response = client.get("/api/shuup/order/")
+    assert response.status_code == 200
+    assert len(json.loads(response.content.decode("utf-8"))) == 1
 
 
 def _get_client(admin_user):
