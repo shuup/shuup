@@ -7,7 +7,6 @@ cache:
 env:
   - TOX_ENV=sanity
   - TOX_ENV=flake8
-  - TOX_ENV=isort
   - TOX_ENV=license_headers
 matrix:
   include:
