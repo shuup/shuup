@@ -78,4 +78,5 @@ def get_urls():
 
     return tuple(urls)
 
+
 urlpatterns = get_urls()

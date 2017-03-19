@@ -30,4 +30,5 @@ class ShuupSimpleSupplierAppConfig(AppConfig):
         ]
     }
 
+
 default_app_config = "shuup.simple_supplier.ShuupSimpleSupplierAppConfig"

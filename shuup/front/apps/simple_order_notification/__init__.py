@@ -19,4 +19,5 @@ class SimpleOrderNotificationAppConfig(AppConfig):
         ]
     }
 
+
 default_app_config = "shuup.front.apps.simple_order_notification.SimpleOrderNotificationAppConfig"

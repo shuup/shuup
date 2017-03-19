@@ -161,6 +161,7 @@ class ShuupFrontMiddleware(object):
         if request.shop.maintenance_mode and not getattr(request.user, 'is_superuser', False):
             return HttpResponse(loader.render_to_string("shuup/front/maintenance.jinja", request=request), status=503)
 
+
 if (
     "django.contrib.auth" in settings.INSTALLED_APPS and
     "shuup.front.middleware.ShuupFrontMiddleware" in settings.MIDDLEWARE_CLASSES

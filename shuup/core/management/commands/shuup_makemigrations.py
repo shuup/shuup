@@ -18,4 +18,5 @@ def new_deconstruct(self):
         del kwargs['verbose_name']
     return name, path, args, kwargs
 
+
 models.Field.deconstruct = new_deconstruct
