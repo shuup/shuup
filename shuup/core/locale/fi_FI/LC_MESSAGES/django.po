@@ -2286,8 +2286,8 @@ msgstr ""
 "Myyntiyksiköt voidaan asettaa jokaiselle tuotteelle erikseen "
 "tuotemuokkaimesta."
 
-msgid "short name"
-msgstr "lyhyt nimi"
+msgid "symbol"
+msgstr "symboli"
 
 msgid ""
 "An abbreviated name for this sales unit that is shown throughout admin and "

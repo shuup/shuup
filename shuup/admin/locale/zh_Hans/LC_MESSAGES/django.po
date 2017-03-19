@@ -725,9 +725,6 @@ msgstr "转换为父级变体"
 msgid "Sales Units"
 msgstr "销售量"
 
-msgid "Short Name"
-msgstr "简称"
-
 msgid "Allowed decimals"
 msgstr "允许小数"
 

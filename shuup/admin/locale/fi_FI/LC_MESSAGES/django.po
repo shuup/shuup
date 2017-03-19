@@ -1260,8 +1260,8 @@ msgstr "Avoimia tilauksia"
 msgid "Sales Units"
 msgstr "Myyntiyksiköt"
 
-msgid "Short Name"
-msgstr "Lyhyt nimi"
+msgid "Symbol"
+msgstr "Symboli"
 
 msgid "Allowed decimals"
 msgstr "Sallitut desimaalit"

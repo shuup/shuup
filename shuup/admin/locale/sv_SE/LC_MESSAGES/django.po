@@ -1250,9 +1250,6 @@ msgstr "Värdet av öppna beställningar"
 msgid "Sales Units"
 msgstr "Försäljningsenheter"
 
-msgid "Short Name"
-msgstr "Kort namn"
-
 msgid "Allowed decimals"
 msgstr "Tillåtna decimaler"
 

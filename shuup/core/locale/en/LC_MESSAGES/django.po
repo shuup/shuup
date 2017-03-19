@@ -2083,7 +2083,7 @@ msgid ""
 "Sales units can be set for each product through the product editor view."
 msgstr ""
 
-msgid "short name"
+msgid "symbol"
 msgstr ""
 
 msgid ""

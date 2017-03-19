@@ -1193,7 +1193,7 @@ msgstr ""
 msgid "Sales Units"
 msgstr ""
 
-msgid "Short Name"
+msgid "Symbol"
 msgstr ""
 
 msgid "Allowed decimals"

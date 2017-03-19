@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Rename ``SalesUnit.short_name`` to ``symbol``
 - Improve variation product orderability check performance
 - Add `created_on` and `modified_on` fields for shop
 - Make shop identifier max length to 128 characters

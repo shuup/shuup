@@ -799,9 +799,6 @@ msgstr "Valor de Pedidos Abertos"
 msgid "Sales Units"
 msgstr "Unidades de Vendas"
 
-msgid "Short Name"
-msgstr "Nome Abreviado"
-
 msgid "Allowed decimals"
 msgstr "Casas decimais permitidas"
 
