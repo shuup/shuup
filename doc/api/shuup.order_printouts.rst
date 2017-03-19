@@ -19,6 +19,14 @@ shuup.order_printouts.apps module
     :undoc-members:
     :show-inheritance:
 
+shuup.order_printouts.utils module
+----------------------------------
+
+.. automodule:: shuup.order_printouts.utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

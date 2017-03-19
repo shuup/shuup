@@ -44,6 +44,14 @@ shuup.core.utils.maintenance module
     :undoc-members:
     :show-inheritance:
 
+shuup.core.utils.menu module
+----------------------------
+
+.. automodule:: shuup.core.utils.menu
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.core.utils.model_caching_descriptor module
 ------------------------------------------------
 

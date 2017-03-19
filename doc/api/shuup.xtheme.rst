@@ -30,6 +30,14 @@ shuup.xtheme.engine module
     :undoc-members:
     :show-inheritance:
 
+shuup.xtheme.extenders module
+-----------------------------
+
+.. automodule:: shuup.xtheme.extenders
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.xtheme.forms module
 -------------------------
 

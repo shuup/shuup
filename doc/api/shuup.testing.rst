@@ -30,6 +30,14 @@ shuup.testing.checkout_with_login_and_register_urls module
     :undoc-members:
     :show-inheritance:
 
+shuup.testing.extend_classes module
+-----------------------------------
+
+.. automodule:: shuup.testing.extend_classes
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.testing.factories module
 ------------------------------
 
