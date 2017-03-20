@@ -418,9 +418,8 @@ class ShopProduct(MoneyPropped, models.Model):
         Example:
             <input type="number" step="{{ shop_product.quantity_step }}">
         """
-        if self.purchase_multiple:
-            return self.purchase_multiple
-        return self.product.sales_unit.quantity_step
+        step = self.purchase_multiple or self._sales_unit.quantity_step
+        return self._sales_unit.round(step)
 
     @property
     def rounded_minimum_purchase_quantity(self):
@@ -435,7 +434,7 @@ class ShopProduct(MoneyPropped, models.Model):
                 value="{{ shop_product.rounded_minimum_purchase_quantity }}">
 
         """
-        return self.product.sales_unit.round(self.minimum_purchase_quantity)
+        return self._sales_unit.round(self.minimum_purchase_quantity)
 
     @property
     def display_quantity_step(self):
