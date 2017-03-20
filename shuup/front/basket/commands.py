@@ -185,3 +185,4 @@ def handle_update(request, basket, **kwargs):
     if basket_changed:  # pragma: no branch
         basket.clean_empty_lines()
         basket.dirty = True
+        basket.uncache()

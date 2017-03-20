@@ -151,6 +151,7 @@ def test_basket_orderability_change(rf):
     assert len(basket.get_lines()) == 1
     assert len(basket.get_unorderable_lines()) == 0
     product.soft_delete()
+    basket.uncache()
     assert basket.dirty
     assert len(basket.get_lines()) == 0
     assert len(basket.get_unorderable_lines()) == 1
@@ -197,14 +198,17 @@ def test_basket_package_product_orderability_change(rf):
     assert len(basket.get_unorderable_lines()) == 0
 
     supplier.adjust_stock(child.id, -1)
-    assert basket.dirty
+
+    # Orderability is already cached, we need to uncache to force recheck
+    basket.uncache()
 
     # After reducing stock to 1, should only be stock for one
     assert len(basket.get_lines()) == 1
     assert len(basket.get_unorderable_lines()) == 1
 
     supplier.adjust_stock(child.id, -1)
-    assert basket.dirty
+
+    basket.uncache()
 
     # After reducing stock to 0, should be stock for neither
     assert len(basket.get_lines()) == 0

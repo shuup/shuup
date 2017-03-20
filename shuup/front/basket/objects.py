@@ -93,14 +93,22 @@ class BaseBasket(OrderSource):
             self.ip_address = request.META.get("REMOTE_ADDR")
         self.storage = get_storage()
         self._data = None
-        self.dirty = False
-        self._orderable_lines_cache = None
-        self._unorderable_lines_cache = None
-        self._lines_by_line_id_cache = None
-        self._lines_cached = False
         self.customer = getattr(request, "customer", None)
         self.orderer = getattr(request, "person", None)
         self.creator = getattr(request, "user", None)
+
+        # Note: Being "dirty" means "not saved".  It's independent of
+        # the caching status (which is cleared with self.uncache()).
+        # I.e. it's possible to be not saved but cached, or saved but
+        # not cached.
+        self.dirty = False
+        self.uncache()  # Set empty values for cache variables
+
+    def uncache(self):
+        super(BaseBasket, self).uncache()
+        self._orderable_lines_cache = None
+        self._unorderable_lines_cache = None
+        self._lines_by_line_id_cache = None
 
     def _load(self):
         """
@@ -121,6 +129,7 @@ class BaseBasket(OrderSource):
                 self.storage.delete(basket=self)
                 self._data = self.storage.load(basket=self)
             self.dirty = False
+            self.uncache()
         return self._data
 
     def save(self):
@@ -237,7 +246,7 @@ class BaseBasket(OrderSource):
             else:
                 product = line.product
                 quantity = line.quantity + orderable_counter[product.id]
-                if line.shop_product.is_orderable(line.supplier, self.request.customer, quantity, allow_cache=False):
+                if line.shop_product.is_orderable(line.supplier, self.customer, quantity, allow_cache=False):
                     if product.is_package_parent():
                         quantity_map = product.get_package_child_to_quantity_map()
                         orderable = True
@@ -246,7 +255,7 @@ class BaseBasket(OrderSource):
                             in_basket_child_qty = orderable_counter[child_product.id]
                             total_child_qty = ((quantity * child_quantity) + in_basket_child_qty)
                             if not sp.is_orderable(
-                                    line.supplier, self.request.customer, total_child_qty, allow_cache=False):
+                                    line.supplier, self.customer, total_child_qty, allow_cache=False):
                                 orderable = False
                                 break
                         if orderable:
@@ -260,19 +269,18 @@ class BaseBasket(OrderSource):
         self._orderable_lines_cache = orderable_lines
         self._unorderable_lines_cache = [line for line in lines if line not in orderable_lines]
         self._lines_by_line_id_cache = lines_by_line_id
-        self._lines_cached = True
 
     @property
     def is_empty(self):
         return not bool(self.get_lines())
 
     def get_unorderable_lines(self):
-        if self.dirty or not self._lines_cached:
+        if self._unorderable_lines_cache is None:
             self._cache_lines()
         return self._unorderable_lines_cache
 
     def get_lines(self):
-        if self.dirty or not self._lines_cached:
+        if self._orderable_lines_cache is None:
             self._cache_lines()
         return self._orderable_lines_cache
 
