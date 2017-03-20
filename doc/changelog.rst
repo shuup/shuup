@@ -45,6 +45,7 @@ Addons
 Front
 ~~~~~
 
+- Fix bug: Could no change quantities of unorderable lines in the basket
 - Use display units when rendering product quantities
 - Basket views: Add display unit support
 - It's now possible to re-order old order from order history
