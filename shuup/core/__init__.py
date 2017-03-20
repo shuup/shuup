@@ -68,5 +68,10 @@ class ShuupCoreAppConfig(AppConfig):
             dispatch_uid="shop_product:bump_shop_product_cache"
         )
 
+        # extends SQLite with necessary functions
+        from django.db.backends.signals import connection_created
+        from shuup.core.utils.db import extend_sqlite_functions
+        connection_created.connect(extend_sqlite_functions)
+
 
 default_app_config = "shuup.core.ShuupCoreAppConfig"

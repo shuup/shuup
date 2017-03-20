@@ -21,8 +21,9 @@ from rest_framework.viewsets import ModelViewSet
 from shuup.admin.modules.orders.json_order_creator import JsonOrderCreator
 from shuup.admin.modules.orders.views.edit import encode_address
 from shuup.api.mixins import PermissionHelperMixin, ProtectedModelViewSetMixin
+from shuup.core.api.address import AddressSerializer
 from shuup.core.models import (
-    Contact, MutableAddress, Order, OrderLine, OrderStatus, Payment, Shop
+    Contact, Order, OrderLine, OrderStatus, OrderStatusRole, Payment, Shop
 )
 from shuup.utils.money import Money
 
@@ -36,12 +37,6 @@ class OrderLineSerializer(serializers.ModelSerializer):
         fields = super(OrderLineSerializer, self).get_fields()
         fields["text"].required = False
         return fields
-
-
-class AddressSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MutableAddress
-        fields = "__all__"
 
 
 class PaymentSerializer(serializers.ModelSerializer):
@@ -69,8 +64,6 @@ class OrderSerializer(serializers.ModelSerializer):
                 field.default = lambda: now()
             if name == "status":
                 field.default = OrderStatus.objects.get_default_initial()
-            if name in ("shipping_method", "payment_method", "customer"):
-                field.required = True
         return fields
 
 
@@ -87,7 +80,40 @@ class OrderFilter(FilterSet):
         fields = ["identifier", "date", "status"]
 
 
-class OrderViewSet(PermissionHelperMixin, ProtectedModelViewSetMixin, ModelViewSet):
+class OrderStatusChangeMixin(object):
+    def change_order_status(self, to_status):
+        order = self.get_object()
+        from_status = order.status
+        if (
+            to_status.role == OrderStatusRole.COMPLETE and not order.can_set_complete() or
+            to_status.role == OrderStatusRole.CANCELED and not order.can_set_canceled()
+        ):
+            return Response({
+                "status": "error",
+                "errors": [{
+                    "code": "invalid_status_change"
+                }]
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        order.status = to_status
+        order.save(update_fields=("status",))
+        message = _("Order status changed: {from_status} to {to_status}").format(
+            from_status=from_status, to_status=to_status)
+        order.add_log_entry(message, user=self.request.user, identifier="status_change")
+        return Response({"status": str(to_status)}, status=status.HTTP_200_OK)
+
+    @detail_route(methods=['post'])
+    def complete(self, request, pk=None):
+        """ Set the order as Completed. """
+        return self.change_order_status(OrderStatus.objects.get_default_complete())
+
+    @detail_route(methods=['post'])
+    def cancel(self, request, pk=None):
+        """ Set the order as Canceled. """
+        return self.change_order_status(OrderStatus.objects.get_default_canceled())
+
+
+class OrderViewSet(PermissionHelperMixin, ProtectedModelViewSetMixin, OrderStatusChangeMixin, ModelViewSet):
     """
     retrieve: Fetches an order by its ID.
 
@@ -128,10 +154,17 @@ class OrderViewSet(PermissionHelperMixin, ProtectedModelViewSetMixin, ModelViewS
         request.data["orderer"] = None
         request.data["modified_by"] = None
         request.data["creator"] = request.user.pk
+        if 'shipping_method' not in request.data:
+            request.data['shipping_method'] = None
+        if 'payment_method' not in request.data:
+            request.data['payment_method'] = None
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         shop = Shop.objects.get(pk=serializer.data["shop"])
-        customer = Contact.objects.get(pk=serializer.data["customer"])
+        if serializer.data.get('customer'):
+            customer = Contact.objects.get(pk=serializer.data["customer"])
+        else:
+            customer = None
         lines = [{
             "id": (idx + 1),
             "quantity": line["quantity"],
@@ -159,13 +192,14 @@ class OrderViewSet(PermissionHelperMixin, ProtectedModelViewSetMixin, ModelViewS
                 "shippingMethod": {"id": serializer.data["shipping_method"]},
                 "paymentMethod": {"id": serializer.data["payment_method"]},
             },
-            "customer": {
+            "lines": lines
+        }
+        if customer:
+            data["customer"] = {
                 "id": serializer.data["customer"],
                 "billingAddress": encode_address(customer.default_billing_address),
                 "shippingAddress": encode_address(customer.default_shipping_address),
-            },
-            "lines": lines
-        }
+            }
         joc = JsonOrderCreator()
         order = joc.create_order_from_state(data, creator=request.user)
         if not order:
@@ -178,39 +212,6 @@ class OrderViewSet(PermissionHelperMixin, ProtectedModelViewSetMixin, ModelViewS
             }, status=400)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
-    @detail_route(methods=['put'])
-    def complete(self, request, pk=None):
-        """ Set the order as Completed. """
-
-        order = self.get_object()
-        if not order.can_set_complete():
-            return Response({
-                "status": "error",
-                "errors": [{
-                    "message": "Cannot complete order",
-                    "code": "invalid_status_change"
-                }]
-            }, status=status.HTTP_400_BAD_REQUEST)
-        order.status = OrderStatus.objects.get_default_complete()
-        order.save(update_fields=("status",))
-        return Response({"status": "order marked complete"}, status=status.HTTP_200_OK)
-
-    @detail_route(methods=['put'])
-    def cancel(self, request, pk=None):
-        """ Set the order as Canceled. """
-
-        order = self.get_object()
-        if not order.can_set_canceled():
-            return Response({
-                "status": "error",
-                "errors": [{
-                    "message": "Cannot cancel order",
-                    "code": "invalid_status_change"
-                }]
-            }, status=status.HTTP_400_BAD_REQUEST)
-        order.set_canceled()
-        return Response({"status": "order canceled"}, status=status.HTTP_200_OK)
 
     @detail_route(methods=['post'])
     def create_payment(self, request, pk=None):

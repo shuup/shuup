@@ -15,6 +15,7 @@ from ._base import (
     PolymorphicShuupModel, PolymorphicTranslatableShuupModel, ShuupModel,
     TranslatableShuupModel
 )
+from ._basket import Basket
 from ._categories import Category, CategoryStatus, CategoryVisibility
 from ._configurations import ConfigurationItem
 from ._contacts import (
@@ -75,6 +76,7 @@ __all__ = [
     "Attribute",
     "AttributeType",
     "AttributeVisibility",
+    "Basket",
     "Carrier",
     "Category",
     "CategoryStatus",

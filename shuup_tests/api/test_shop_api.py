@@ -8,13 +8,14 @@
 from __future__ import unicode_literals
 
 import json
+import math
 
 from django.utils.translation import activate
 from rest_framework import status
 from rest_framework.test import APIClient
 
 from shuup.core import cache
-from shuup.core.models import Shop, ShopStatus
+from shuup.core.models import MutableAddress, Shop, ShopStatus
 from shuup.testing.factories import (
     create_product, create_random_order, create_random_person,
     get_default_shop, get_default_supplier
@@ -95,3 +96,98 @@ def test_shop_api(admin_user):
     assert response.status_code == status.HTTP_400_BAD_REQUEST
     assert "This object can not be deleted because it is referenced by" in response.content.decode("utf-8")
     assert Shop.objects.count() == 1
+
+
+def test_shop_distance(admin_user):
+    activate("en")
+    shop1 = get_default_shop()
+    shop1.contact_address = MutableAddress.objects.create(
+        name="Apple Infinite Loop",
+        street="1 Infinite Loop",
+        country="US",
+        city="Cupertino",
+        latitude=37.331667,
+        longitude=-122.030146
+    )
+    shop1.save()
+
+    shop2 = Shop.objects.create(status=ShopStatus.ENABLED)
+    shop2.contact_address = MutableAddress.objects.create(
+        name="Googleplex",
+        street="1600 Amphitheatre Pkwy",
+        country="US",
+        city="Mountain View",
+        latitude=37.422000,
+        longitude=-122.084024
+    )
+    shop2.save()
+
+    shop3 = Shop.objects.create(status=ShopStatus.ENABLED)
+    shop3.contact_address = MutableAddress.objects.create(
+        name="Linkedin",
+        street="2029 Stierlin Ct",
+        country="US",
+        city="Mountain View",
+        latitude=37.423272,
+        longitude=-122.070570
+    )
+    shop3.save()
+
+    # using this calculator:
+    # http://www.movable-type.co.uk/scripts/latlong.html
+    my_position_to_apple = 2.982
+    my_position_to_google = 10.57
+    my_position_to_linkedin = 10.57
+
+    # YMCA
+    my_position = (37.328330, -122.063612)
+
+    client = APIClient()
+    client.force_authenticate(user=admin_user)
+
+    # fetch only apple - max distance = 5km
+    response = client.get("/api/shuup/shop/?lat={0}&lng={1}&distance={2}".format(my_position[0], my_position[1], 5),
+                          content_type="application/json")
+    assert response.status_code == status.HTTP_200_OK
+    data = json.loads(response.content.decode("utf-8"))
+    assert len(data) == 1
+    assert data[0]["id"] == shop1.id
+    # precision of 5 meters
+    assert math.fabs(data[0]["distance"] - my_position_to_apple) < 0.05
+
+    # fetch all - max distance = 12km - order by distance DESC
+    response = client.get("/api/shuup/shop/?lat={0}&lng={1}&distance={2}&ordering=-distance".format(my_position[0], my_position[1], 12),
+                          content_type="application/json")
+    assert response.status_code == status.HTTP_200_OK
+    data = json.loads(response.content.decode("utf-8"))
+    assert len(data) == 3
+    assert data[0]["id"] == shop3.id
+    assert data[1]["id"] == shop2.id
+    assert data[2]["id"] == shop1.id
+    assert math.fabs(data[0]["distance"] - my_position_to_linkedin) < 0.05
+    assert math.fabs(data[1]["distance"] - my_position_to_google) < 0.05
+    assert math.fabs(data[2]["distance"] - my_position_to_apple) < 0.05
+
+    my_position = (37.328330, -122.063612)
+    close_position = (37.328320, -122.063611)
+
+    # create a very close shop
+    shop4 = Shop.objects.create(status=ShopStatus.ENABLED)
+    shop4.contact_address = MutableAddress.objects.create(
+        name="Very Close Location",
+        street="A Stret",
+        country="US",
+        city="City",
+        latitude=close_position[0],
+        longitude=close_position[1]
+    )
+    shop4.save()
+
+    # fetch the close location - max distance = 1km
+    response = client.get("/api/shuup/shop/?lat={0}&lng={1}&distance={2}".format(my_position[0], my_position[1], 1),
+                          content_type="application/json")
+    assert response.status_code == status.HTTP_200_OK
+    data = json.loads(response.content.decode("utf-8"))
+    assert len(data) == 1
+    assert data[0]["id"] == shop4.id
+    assert math.fabs(data[0]["distance"]) < 0.01

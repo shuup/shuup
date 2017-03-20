@@ -5,12 +5,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from shuup.front.api.products import FrontProductViewSet
+from shuup.core.order_creator import OrderCreator
 
 
-def populate_front_api(router):
-    """
-    :param router: Router
-    :type router: rest_framework.routers.DefaultRouter
-    """
-    router.register("shuup/front/products", FrontProductViewSet)
+class BasketOrderCreator(OrderCreator):
+    pass
