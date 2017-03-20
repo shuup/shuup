@@ -96,7 +96,7 @@ def get_possible_name_fields_for_model(model):
         yield model.name_field
 
     for field in model._meta.local_fields:
-        if field.name in ["name", "title"]:
+        if field.name in ["name", "title", "username"]:
             yield field.name
     if hasattr(model, "_parler_meta"):
         for field in model._parler_meta.root_model._meta.get_fields():
