@@ -27,7 +27,6 @@ from shuup.admin.toolbar import (
     DropdownActionButton, DropdownDivider, DropdownItem,
     get_default_edit_toolbar, PostActionButton, Toolbar
 )
-from shuup.admin.utils.urls import get_model_url
 from shuup.admin.utils.views import CreateOrUpdateView
 from shuup.core.models import Contact, PersonContact
 from shuup.utils.excs import Problem
@@ -277,9 +276,6 @@ class UserDetailView(CreateOrUpdateView):
                 from_email=django_settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[self.object.email]
             )
-
-    def get_success_url(self):
-        return get_model_url(self.object)
 
     def _handle_set_is_active(self):
         state = bool(int(self.request.POST["set_is_active"]))

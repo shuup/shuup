@@ -13,6 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms import ShuupAdminForm
 from shuup.admin.forms.fields import Select2MultipleField
+from shuup.admin.forms.widgets import QuickAddUserMultiSelect
 from shuup.core.models import Currency, MutableAddress, Shop
 from shuup.core.utils.form_mixins import ProtectedFieldsMixin
 from shuup.utils.i18n import get_current_babel_locale
@@ -46,6 +47,7 @@ class ShopBaseForm(ProtectedFieldsMixin, ShuupAdminForm):
             model=get_user_model(),
             initial=initial_members,
             required=False)
+        staff_members.widget = QuickAddUserMultiSelect()
         staff_members.widget.choices = [(member.pk, force_text(member)) for member in initial_members]
         self.fields["staff_members"] = staff_members
 
