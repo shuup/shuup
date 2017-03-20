@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Add DisplayUnit model
 - Rename ``SalesUnit.short_name`` to ``symbol``
 - Improve variation product orderability check performance
 - Add `created_on` and `modified_on` fields for shop

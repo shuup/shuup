@@ -13,7 +13,7 @@ from shuup.admin.base import AdminModule, MenuEntry
 from shuup.admin.menu import STOREFRONT_MENU_CATEGORY
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import derive_model_url, get_edit_and_list_urls
-from shuup.core.models import SalesUnit
+from shuup.core.models import DisplayUnit, SalesUnit
 
 
 class SalesUnitModule(AdminModule):
@@ -45,3 +45,34 @@ class SalesUnitModule(AdminModule):
 
     def get_model_url(self, object, kind):
         return derive_model_url(SalesUnit, "shuup_admin:sales_unit", object, kind)
+
+
+class DisplayUnitModule(AdminModule):
+    name = _("Display Units")
+    breadcrumbs_menu_entry = MenuEntry(name, url="shuup_admin:display_unit.list")
+
+    def get_urls(self):
+        return get_edit_and_list_urls(
+            url_prefix="^display-units",
+            view_template="shuup.admin.modules.sales_units.views.DisplayUnit%sView",
+            name_template="display_unit.%s",
+            permissions=get_default_model_permissions(DisplayUnit)
+        )
+
+    def get_menu_entries(self, request):
+        return [
+            MenuEntry(
+                text=self.name,
+                icon="fa fa-asterisk",
+                url="shuup_admin:display_unit.list",
+                category=STOREFRONT_MENU_CATEGORY,
+                subcategory="settings",
+                ordering=5
+            ),
+        ]
+
+    def get_required_permissions(self):
+        return get_default_model_permissions(DisplayUnit)
+
+    def get_model_url(self, object, kind):
+        return derive_model_url(DisplayUnit, "shuup_admin:display_unit", object, kind)

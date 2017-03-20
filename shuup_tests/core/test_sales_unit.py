@@ -6,11 +6,13 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from decimal import Decimal
-
-import pytest
 from django.test import override_settings
 
-from shuup.core.models import SalesUnit
+from django.core.exceptions import ValidationError
+
+import pytest
+from shuup.core.models import DisplayUnit, SalesUnit
+from shuup.core.models._units import SalesUnitAsDisplayUnit
 
 
 def test_sales_unit_decimals():
@@ -64,3 +66,20 @@ def test_sales_unit_str():
     # test fallback
     unit.set_current_language("ja")
     assert unit.name == "en"
+
+
+@pytest.mark.django_db
+def test_sales_unit_display_unit():
+    sales_unit = SalesUnit.objects.create()
+    assert isinstance(sales_unit.display_unit, SalesUnitAsDisplayUnit)
+    display_unit = DisplayUnit.objects.create(
+        internal_unit=sales_unit, default=True)
+    assert sales_unit.display_unit == display_unit
+
+
+@pytest.mark.django_db
+def test_display_unit_validator():
+    sales_unit = SalesUnit.objects.create()
+    display_unit = DisplayUnit(internal_unit=sales_unit, ratio=0)
+    with pytest.raises(ValidationError):
+        display_unit.full_clean()
