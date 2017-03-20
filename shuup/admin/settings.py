@@ -21,3 +21,8 @@ your own, the :ref:`apps-naming-settings` section is an important read.
 #: Panes must be subclasses of `shuup.admin.views.WizardPane`.
 #:
 SHUUP_SETUP_WIZARD_PANE_SPEC = []
+
+#: Spec which defines a function that loads and return discovered admin modules.
+#: This function should return a list of `shuup.admin.base.AdminModule`
+#:
+SHUUP_GET_ADMIN_MODULES_SPEC = ("shuup.admin.module_registry.get_admin_modules")
