@@ -102,7 +102,7 @@ def handle_add(  # noqa (C901)
     basket.add_product(**add_product_kwargs)
 
     return {
-        'ok': basket.product_count,
+        'ok': basket.smart_product_count,
         'added': quantity
     }
 

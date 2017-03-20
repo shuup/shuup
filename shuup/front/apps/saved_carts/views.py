@@ -68,7 +68,7 @@ class CartSaveView(View):
             return JsonResponse({"ok": False}, status=403)
         if not title:
             return JsonResponse({"ok": False, "error": force_text(_("Please enter a basket title."))}, status=400)
-        if basket.product_count == 0:
+        if basket.is_empty:
             return JsonResponse({"ok": False, "error": force_text(_("Cannot save an empty basket."))}, status=400)
         saved_basket = StoredBasket(
             shop=basket.shop,
@@ -80,7 +80,7 @@ class CartSaveView(View):
             persistent=True,
             title=title,
             data=basket.storage.load(basket=basket),
-            product_count=basket.product_count)
+            product_count=basket.smart_product_count)
         saved_basket.save()
         saved_basket.products = set(basket.product_ids)
         return JsonResponse({"ok": True}, status=200)

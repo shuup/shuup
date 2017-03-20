@@ -168,7 +168,7 @@ class DatabaseBasketStorage(BasketStorage):
         stored_basket.data = data
         stored_basket.taxless_total_price = basket.taxless_total_price_or_none
         stored_basket.taxful_total_price = basket.taxful_total_price_or_none
-        stored_basket.product_count = basket.product_count
+        stored_basket.product_count = basket.smart_product_count
         stored_basket.customer = (basket.customer or None)
         stored_basket.orderer = (basket.orderer or None)
         stored_basket.creator = real_user_or_none(basket.creator)

@@ -5,6 +5,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from decimal import Decimal
+
 import pytest
 from django.conf import settings
 from django.contrib import messages
@@ -187,6 +189,92 @@ def test_basket_partial_quantity_update():
 
     basket_commands.handle_update(request, basket, **{"delete_%s" % line_id: "1"})
     assert basket.product_count == 0
+
+
+@pytest.mark.django_db
+def test_basket_partial_quantity_update_all_product_counts():
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    request = get_request_with_basket()
+    basket = request.basket
+
+    pieces = SalesUnit.objects.create(
+        identifier="pieces", decimals=0, name="Pieces", symbol='pc.')
+    kilograms = SalesUnit.objects.create(
+        identifier="kilograms", decimals=3, name="Kilograms", symbol='kg')
+    cup = create_product(
+        sku="COFFEE-CUP-123", sales_unit=pieces, shop=shop, supplier=supplier)
+    beans = create_product(
+        sku="COFFEEBEANS3", sales_unit=kilograms, shop=shop, supplier=supplier)
+    beans_shop_product = beans.get_shop_instance(shop)
+    beans_shop_product.minimum_purchase_quantity = Decimal('0.1')
+    beans_shop_product.save()
+    pears = create_product(
+        sku="PEARS-27", sales_unit=kilograms, shop=shop, supplier=supplier)
+
+    add = basket_commands.handle_add
+    update = basket_commands.handle_update
+
+    # Empty basket
+    assert basket.product_count == 0
+    assert basket.smart_product_count == 0
+    assert basket.product_line_count == 0
+
+    # 1 cup
+    add(request, basket, product_id=cup.pk, quantity=1)
+    assert basket.product_count == 1
+    assert basket.smart_product_count == 1
+    assert basket.product_line_count == 1
+
+    # Basket update operations work by prefixing line id with operation
+    qty_update_cup = 'q_' + basket.get_lines()[0].line_id
+    delete_cup = 'delete_' + basket.get_lines()[0].line_id
+
+    # 3 cups
+    update(request, basket, **{qty_update_cup: "3"})
+    assert basket.product_count == 3
+    assert basket.smart_product_count == 3
+    assert basket.product_line_count == 1
+
+    # 3 cups + 0.5 kg beans
+    add(request, basket, product_id=beans.pk, quantity='0.5')
+    assert basket.product_count == Decimal('3.5')
+    assert basket.smart_product_count == 4
+    assert basket.product_line_count == 2
+
+    qty_update_beans = 'q_' + basket.get_lines()[1].line_id
+    delete_beans1 = 'delete_' + basket.get_lines()[1].line_id
+
+    # 1 cup + 2.520 kg beans
+    update(request, basket, **{qty_update_cup: "1.0"})
+    update(request, basket, **{qty_update_beans: "2.520"})
+    assert basket.product_count == Decimal('3.520')
+    assert basket.smart_product_count == 2
+    assert basket.product_line_count == 2
+
+    # 42 cups + 2.520 kg beans
+    update(request, basket, **{qty_update_cup: "42"})
+    assert basket.product_count == Decimal('44.520')
+    assert basket.smart_product_count == 43
+    assert basket.product_line_count == 2
+
+    # 42 cups + 2.520 kg beans + 3.5 kg pears
+    add(request, basket, product_id=pears.pk, quantity='3.5')
+    assert basket.product_count == Decimal('48.020')
+    assert basket.smart_product_count == 44
+    assert basket.product_line_count == 3
+
+    # 42 cups + 3.5 kg pears
+    update(request, basket, **{delete_beans1: "1"})
+    assert basket.product_count == Decimal('45.5')
+    assert basket.smart_product_count == 43
+    assert basket.product_line_count == 2
+
+    # 3.5 kg pears
+    update(request, basket, **{delete_cup: "1"})
+    assert basket.product_count == Decimal('3.5')
+    assert basket.smart_product_count == 1
+    assert basket.product_line_count == 1
 
 
 @pytest.mark.django_db

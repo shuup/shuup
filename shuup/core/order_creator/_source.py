@@ -369,11 +369,51 @@ class OrderSource(object):
     @property
     def product_count(self):
         """
-        Get the total number of products in this OrderSource.
+        Get the sum of product quantities in this order source.
 
-        :rtype: decimal.Decimal|int
+        Note: It is a bit silly to sum different units together.  Check
+        `smart_product_count` and `product_line_count` for other
+        options.
+
+        :rtype: decimal.Decimal
         """
         return sum([line.quantity for line in self.get_product_lines()])
+
+    @property
+    def smart_product_count(self):
+        """
+        Get the total number of separate products in this order source.
+
+        Quantities of lines, which have countable products, will be
+        summed and then number of lines with non-countable product units
+        will be added to that.  E.g. smart product count for a basket
+        containing 5 chocolate bars, 2 t-shirts and 2.5 kg of cocoa beans
+        would be 5 + 2 + 1 = 8.
+
+        Definition of "countable" here: If product has an unit that
+        allows presenting its quantities as a bare number (see
+        `~shuup.core.models.UnitInteface.allow_bare_number`) and its
+        quantity is an integral number, we assume that the unit is
+        similar to "Pieces" unit and those products being countable.
+        Other units are assumed to be non-countable.
+
+        :rtype: int
+        """
+        def count_in_line(line):
+            truncated_qty = int(line.quantity)
+            if not line.unit.allow_bare_number or truncated_qty != line.quantity:
+                return 1  # Non-countables or non-integral values counted as 1
+            return truncated_qty
+        return sum(count_in_line(line) for line in self.get_product_lines())
+
+    @property
+    def product_line_count(self):
+        """
+        Get the total number product lines in this order source
+
+        :rtype: int
+        """
+        return len(self.get_product_lines())
 
     def get_final_lines(self, with_taxes=False):
         """

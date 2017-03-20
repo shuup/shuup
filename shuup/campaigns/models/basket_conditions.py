@@ -38,7 +38,7 @@ class BasketTotalProductAmountCondition(BasketCondition):
         verbose_name=_("product count in basket"), blank=True, null=True, max_digits=36, decimal_places=9)
 
     def matches(self, basket, lines):
-        return (basket.product_count >= self.product_count)
+        return (basket.smart_product_count >= self.product_count)
 
     @property
     def description(self):
@@ -84,7 +84,7 @@ class BasketMaxTotalProductAmountCondition(BasketCondition):
         verbose_name=_("maximum product count in basket"), blank=True, null=True, max_digits=36, decimal_places=9)
 
     def matches(self, basket, lines):
-        return (basket.product_count <= self.product_count)
+        return (basket.smart_product_count <= self.product_count)
 
     @property
     def description(self):
