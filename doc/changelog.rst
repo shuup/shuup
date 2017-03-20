@@ -85,6 +85,8 @@ Regions
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
+- Improve API documentation of the models with model field descriptions
+
 SHUUP 1.1.0
 -----------
 
