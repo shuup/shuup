@@ -32,6 +32,7 @@
                 <tbody>
                 {% for line in lines %}
                     {% set product = line.product %}
+                    {% set unit = line.product.get_shop_instance(request.shop).unit -%}
                     {% set image = product.primary_image %}
                     {% if not image and product.variation_parent %}
                         {% set image = product.variation_parent.primary_image %}
@@ -40,7 +41,7 @@
                     <tr>
                         <td>{% if thumbnail %}<img src="{{ thumbnail }}" alt="{{ product.name }}">{% endif %}</td>
                         <td><a href="{{ shuup.urls.model_url(line.product) }}">{{ product.name }}</a></td>
-                        <td class="text-right">{{ line.quantity }}</td>
+                        <td class="text-right">{{ unit.render_quantity(line.quantity) }}</td>
                         {% if show_prices() %}
                         <td class="text-right">{{ line.product|price }}</td>
                         {% endif %}

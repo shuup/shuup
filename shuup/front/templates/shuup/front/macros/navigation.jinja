@@ -185,8 +185,8 @@
                             {% for line in lines %}
                                 <tr>
                                     <td>
-                                        {% set line_url = shuup.urls.get_url(line.product) %}
-                                        {{ line.quantity|number }} &times;
+                                        {% set line_url = shuup.urls.model_url(line.product) %}
+                                        {{ line.unit.render_quantity(line.quantity) }} &times;
                                         {% if line_url %}
                                             <a href="{{ line_url }}">{{ line.text }}</a>
                                         {% else %}
