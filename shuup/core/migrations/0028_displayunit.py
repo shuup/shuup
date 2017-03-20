@@ -67,4 +67,10 @@ class Migration(migrations.Migration):
             name='displayunittranslation',
             unique_together=set([('language_code', 'master')]),
         ),
+        migrations.AddField(
+            model_name='shopproduct',
+            name='display_unit',
+            field=models.ForeignKey(
+                to='shuup.DisplayUnit', blank=True, null=True),
+        ),
     ]

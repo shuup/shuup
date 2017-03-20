@@ -26,6 +26,7 @@ from shuup.utils.properties import MoneyPropped, PriceProperty
 
 from ._product_media import ProductMediaKind
 from ._products import ProductMode, ProductVisibility, StockBehavior
+from ._units import DisplayUnit, PiecesSalesUnit, UnitInterface
 
 mark_safe_lazy = lazy(mark_safe, six.text_type)
 
@@ -160,13 +161,28 @@ class ShopProduct(MoneyPropped, models.Model):
         )
     )
 
+    display_unit = models.ForeignKey(
+        DisplayUnit, null=True, blank=True,
+        verbose_name=_("display unit"),
+        help_text=_("Unit for displaying quantities of this product"))
+
     class Meta:
         unique_together = (("shop", "product",),)
 
     def save(self, *args, **kwargs):
+        self.clean()
         super(ShopProduct, self).save(*args, **kwargs)
         for supplier in self.suppliers.all():
             supplier.module.update_stock(product_id=self.product.id)
+
+    def clean(self):
+        super(ShopProduct, self).clean()
+        if self.display_unit:
+            if self.display_unit.internal_unit != self.product.sales_unit:
+                raise ValidationError({'display_unit': _(
+                    "Invalid display unit: Internal unit of "
+                    "the selected display unit does not match "
+                    "with the sales unit of the product")})
 
     def is_list_visible(self):
         """
