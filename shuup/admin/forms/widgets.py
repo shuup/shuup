@@ -288,3 +288,7 @@ class QuickAddPaymentMethodsSelect(QuickAddRelatedObjectMultiSelect):
 
 class QuickAddShippingMethodsSelect(QuickAddRelatedObjectMultiSelect):
     url = reverse_lazy("shuup_admin:shipping_method.new")
+
+
+class QuickAddUserMultiSelect(QuickAddRelatedObjectMultiSelect):
+    url = reverse_lazy("shuup_admin:user.new")
