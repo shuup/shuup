@@ -4,7 +4,7 @@
 
 {% block content %}
     {% call single_section_form("sales_unit_form", form) %}
-        {{ language_dependent_content_tabs(form, ["name", "short_name"]) }}
+        {{ language_dependent_content_tabs(form, ["name", "symbol"]) }}
         <div class="form-divider"></div>
         {{ bs3.field(form.decimals) }}
     {% endcall %}

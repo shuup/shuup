@@ -116,7 +116,7 @@ class SalesUnitFactory(DjangoModelFactory):
         model = SalesUnit
 
     name = fuzzy.FuzzyText(length=12, prefix="Sales Unit ")
-    short_name = fuzzy.FuzzyText(length=6, prefix="SU ")
+    symbol = fuzzy.FuzzyText(length=6, prefix="SU ")
 
 
 class CategoryFactory(DjangoModelFactory):
@@ -479,7 +479,7 @@ def get_default_sales_unit():
             identifier=DEFAULT_IDENTIFIER,
             decimals=0,
             name=DEFAULT_NAME,
-            short_name=DEFAULT_NAME[:3].lower()
+            symbol=DEFAULT_NAME[:3].lower()
         )
         assert str(unit) == DEFAULT_NAME
     return unit

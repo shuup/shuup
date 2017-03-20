@@ -84,17 +84,17 @@ class StocksListView(PicotableListView):
 def get_adjustment_success_message(stock_adjustment):
     arguments = {
         "delta": stock_adjustment.delta,
-        "unit_short_name": stock_adjustment.product.sales_unit.short_name,
+        "unit_symbol": stock_adjustment.product.sales_unit.symbol,
         "product_name": stock_adjustment.product.name,
         "supplier_name": stock_adjustment.supplier.name
     }
     if stock_adjustment.delta > 0:
         return _(
-            "Added %(delta)s %(unit_short_name)s for product %(product_name)s stock (%(supplier_name)s)"
+            "Added %(delta)s %(unit_symbol)s for product %(product_name)s stock (%(supplier_name)s)"
         ) % arguments
     else:
         return _(
-            "Removed %(delta)s %(unit_short_name)s from product %(product_name)s stock (%(supplier_name)s)"
+            "Removed %(delta)s %(unit_symbol)s from product %(product_name)s stock (%(supplier_name)s)"
         ) % arguments
 
 

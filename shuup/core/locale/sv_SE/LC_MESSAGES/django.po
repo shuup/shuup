@@ -2294,9 +2294,6 @@ msgstr ""
 "eller 'enheter'). Försäljningsenheter kan ställas in för varje produkt genom "
 "vyn produktredigeraren."
 
-msgid "short name"
-msgstr "kort namn"
-
 msgid ""
 "An abbreviated name for this sales unit that is shown throughout admin and "
 "order invoices."

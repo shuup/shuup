@@ -47,13 +47,13 @@ msgstr ""
 
 #, python-format
 msgid ""
-"Added %(delta)s %(unit_short_name)s for product %(product_name)s stock "
+"Added %(delta)s %(unit_symbol)s for product %(product_name)s stock "
 "(%(supplier_name)s)"
 msgstr ""
 
 #, python-format
 msgid ""
-"Removed %(delta)s %(unit_short_name)s from product %(product_name)s stock "
+"Removed %(delta)s %(unit_symbol)s from product %(product_name)s stock "
 "(%(supplier_name)s)"
 msgstr ""
 

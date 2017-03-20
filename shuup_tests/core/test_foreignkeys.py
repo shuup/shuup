@@ -38,7 +38,7 @@ def test_manufacturer_removal():
 @pytest.mark.django_db
 def test_sales_unit_removal():
     product = get_product()
-    sales_unit = SalesUnit.objects.create(name="test", short_name="te")
+    sales_unit = SalesUnit.objects.create(name="test", symbol="te")
     product.sales_unit = sales_unit
     product.save()
     with pytest.raises(ProtectedError):

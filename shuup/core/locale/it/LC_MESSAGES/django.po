@@ -1262,9 +1262,6 @@ msgstr "Clienti Aziende"
 msgid "allowed decimals"
 msgstr "decimali consentiti"
 
-msgid "short name"
-msgstr "nome breve"
-
 msgid "sales unit"
 msgstr "unità di vendita"
 

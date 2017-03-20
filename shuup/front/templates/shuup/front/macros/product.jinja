@@ -74,7 +74,7 @@ Inheritance order for product macors:
                     <strong>{{ product|price }}</strong>
                 {%- endif -%}
                 {%- if show_units -%}
-                    <small> / {{ product.sales_unit.short_name }}</small>
+                    <small> / {{ product.sales_unit.symbol }}</small>
                 {%- endif -%}
             </span>
         </div>

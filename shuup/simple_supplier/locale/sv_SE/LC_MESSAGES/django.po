@@ -44,18 +44,18 @@ msgstr "Justera lager"
 
 #, python-format
 msgid ""
-"Added %(delta)s %(unit_short_name)s for product %(product_name)s stock "
+"Added %(delta)s %(unit_symbol)s for product %(product_name)s stock "
 "(%(supplier_name)s)"
 msgstr ""
-"Tillagda %(delta)s %(unit_short_name)s för produkten %(product_name)s i "
+"Tillagda %(delta)s %(unit_symbol)s för produkten %(product_name)s i "
 "lageret (%(supplier_name)s)"
 
 #, python-format
 msgid ""
-"Removed %(delta)s %(unit_short_name)s from product %(product_name)s stock "
+"Removed %(delta)s %(unit_symbol)s from product %(product_name)s stock "
 "(%(supplier_name)s)"
 msgstr ""
-"Borttagna %(delta)s %(unit_short_name)s från produkten %(product_name)s i "
+"Borttagna %(delta)s %(unit_symbol)s från produkten %(product_name)s i "
 "lageret (%(supplier_name)s)"
 
 #, python-format

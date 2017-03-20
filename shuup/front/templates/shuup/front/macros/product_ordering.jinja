@@ -134,7 +134,7 @@
             min="{{ shop_product.rounded_minimum_purchase_quantity }}"
             onchange="updatePrice('{{ product_id }}')"
             >
-            <span class="input-group-addon sales-unit">{{ shop_product.product.sales_unit.short_name }}</span>
+            <span class="input-group-addon sales-unit">{{ shop_product.product.sales_unit.symbol }}</span>
         </div>
     </div>
 {% endmacro %}
@@ -155,7 +155,7 @@
             {% if product|is_discounted(quantity) %}
             (<s>{{ product|base_unit_price(quantity) }}</s>)
             {% endif %}
-            {{ product|discounted_unit_price(quantity) }}/{{ product.sales_unit.short_name }}
+            {{ product|discounted_unit_price(quantity) }}/{{ product.sales_unit.symbol }}
         </span>
     </div>
 {% endmacro %}

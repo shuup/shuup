@@ -21,7 +21,7 @@ class SalesUnitListView(PicotableListView):
             filter_field="translations__name",
             placeholder=_("Filter by name...")
         )),
-        Column("short_name", _(u"Short Name"), sort_field="translations__short_name", display="short_name"),
+        Column("symbol", _(u"Symbol"), sort_field="translations__symbol", display="symbol"),
         Column("decimals", _(u"Allowed decimals")),
     ]
 

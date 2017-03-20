@@ -136,7 +136,7 @@ def get_line_data_for_edit(shop, line):
             "logicalCount": stock_status.logical_count if stock_status else 0,
             "physicalCount": stock_status.physical_count if stock_status else 0,
             "salesDecimals": line.product.sales_unit.decimals if line.product.sales_unit else 0,
-            "salesUnit": line.product.sales_unit.short_name if line.product.sales_unit else ""
+            "salesUnit": line.product.sales_unit.symbol if line.product.sales_unit else ""
         })
     return base_data
 
@@ -273,7 +273,7 @@ class OrderEditView(CreateOrUpdateView):
             "logicalCount": stock_status.logical_count if stock_status else 0,
             "physicalCount": stock_status.physical_count if stock_status else 0,
             "salesDecimals": product.sales_unit.decimals if product.sales_unit else 0,
-            "salesUnit": product.sales_unit.short_name if product.sales_unit else "",
+            "salesUnit": product.sales_unit.symbol if product.sales_unit else "",
             "purchaseMultiple": shop_product.purchase_multiple,
             "taxClass": {
                 "id": product.tax_class.id,

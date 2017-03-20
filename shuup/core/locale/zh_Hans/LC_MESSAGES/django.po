@@ -1247,9 +1247,6 @@ msgstr "公司客户"
 msgid "allowed decimals"
 msgstr "允许小数"
 
-msgid "short name"
-msgstr "简称"
-
 msgid "sales unit"
 msgstr "销售单位"
 

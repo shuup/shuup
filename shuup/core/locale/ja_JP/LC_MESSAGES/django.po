@@ -1245,9 +1245,6 @@ msgstr ""
 msgid "allowed decimals"
 msgstr ""
 
-msgid "short name"
-msgstr ""
-
 msgid "sales unit"
 msgstr ""
 
