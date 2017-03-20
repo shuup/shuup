@@ -5,26 +5,19 @@ cache:
     - "$HOME/.cache/pip"
     - "$HOME/.cache/shuup/build_resources"
 env:
-  - TOX_ENV=sanity
-  - TOX_ENV=flake8
-  - TOX_ENV=license_headers
+  - TOXENV=sanity
+  - TOXENV=flake8
+  - TOXENV=license_headers
 matrix:
   include:
-    - python: 2.7
-      env: TOX_ENV=py27-django18-nomigrations
-    - python: 3.4
-      env: TOX_ENV=py34-django18-nomigrations
-    - python: 3.5
-      env: TOX_ENV=py35-django18-nomigrations
-    - python: 2.7
-      env: TOX_ENV=py27-django19-nomigrations
-    - python: 3.4
-      env: TOX_ENV=py34-django19-nomigrations
-    - python: 3.5
-      env: TOX_ENV=py35-django19-nomigrations
+    - {python: 2.7, env: TOXENV=py27-django18-nomigrations}
+    - {python: 3.4, env: TOXENV=py34-django18-nomigrations}
+    - {python: 3.5, env: TOXENV=py35-django18-nomigrations}
+    - {python: 2.7, env: TOXENV=py27-django19-nomigrations}
+    - {python: 3.4, env: TOXENV=py34-django19-nomigrations}
+    - {python: 3.5, env: TOXENV=py35-django19-nomigrations}
     # Browser tests are disabled, since they cause false errors
-    #- python: 3.5
-    #  env: TOX_ENV=py35-nomigrations-nocoverage-browser
+    # - {python: 3.5, env: TOXENV=py35-nomigrations-nocoverage-browser}
 install:
   - pip install -U pip
   - pip install tox
@@ -39,7 +32,7 @@ before_install:
   - "selenium-standalone install"
   - "selenium-standalone start &"
 script:
-  - tox -e $TOX_ENV
+  - tox
 after_success:
   - coveralls
   - codecov
