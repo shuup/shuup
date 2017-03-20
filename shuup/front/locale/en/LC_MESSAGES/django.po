@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-24 13:59+0000\n"
+"POT-Creation-Date: 2017-03-18 09:48+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -658,9 +658,6 @@ msgstr ""
 msgid "Qty"
 msgstr ""
 
-msgid "Quantity"
-msgstr ""
-
 msgid "Remove product from basket"
 msgstr ""
 
@@ -849,6 +846,12 @@ msgid "Files"
 msgstr ""
 
 msgid "Product"
+msgstr ""
+
+msgid "Unit Price"
+msgstr ""
+
+msgid "Quantity"
 msgstr ""
 
 msgid "excl. tax"
