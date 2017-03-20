@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Improve OrderSource caching for deserialization speedup
 - Add new product count methods to OrderSource
 - Fix bug in purchase multiple checking of ShopProduct
 - Add unit interface to ShopProduct, OrderLine and SourceLine

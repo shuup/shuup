@@ -143,8 +143,7 @@ class OrderSource(object):
         self.zero_price = shop.create_price(0)
         self.create_price = self.zero_price.new
 
-        self._taxes_calculated = False
-        self._processed_lines_cache = None
+        self.uncache()  # Initialize caching variables
 
     def update(self, **values):
         for key, value in values.items():
@@ -468,6 +467,7 @@ class OrderSource(object):
         """
         self._processed_lines_cache = None
         self._taxes_calculated = False
+        self._object_cache = {}
 
     @non_reentrant
     def __compute_lines(self):
@@ -579,6 +579,23 @@ class OrderSource(object):
     def total_gross_weight(self):
         product_lines = self.get_product_lines()
         return ((sum(l.product.gross_weight * l.quantity for l in product_lines)) if product_lines else 0)
+
+    def _get_object(self, model, pk):
+        """
+        Get model object from database by pk with caching.
+
+        Avoids same objects being loaded many times from the database
+        when constructing SourceLines in the same request.
+
+        :type model: type
+        :type pk: int|Any
+        :rtype: django.db.models.Model
+        """
+        obj = self._object_cache.get((model, pk))
+        if not obj:
+            obj = model.objects.get(pk=pk)
+            self._object_cache[(model, pk)] = obj
+        return obj
 
 
 def _collect_lines_from_signal(signal_results):
@@ -792,7 +809,7 @@ class SourceLine(TaxableItem, Priceful, LineWithUnit):
         for (name, model) in cls._OBJECT_FIELDS.items():
             id = result.pop(name + "_id", None)
             if id:
-                result[name] = model.objects.get(id=id)
+                result[name] = source._get_object(model, id)
 
         for name in cls._PRICE_FIELDS:
             value = result.get(name)
