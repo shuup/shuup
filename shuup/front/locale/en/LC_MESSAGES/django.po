@@ -655,9 +655,6 @@ msgstr ""
 msgid "There was an error adding the product to the basket"
 msgstr ""
 
-msgid "Qty"
-msgstr ""
-
 msgid "Remove product from basket"
 msgstr ""
 

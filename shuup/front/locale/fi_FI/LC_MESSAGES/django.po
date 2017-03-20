@@ -753,9 +753,6 @@ msgstr "Tuote lisätty koriin"
 msgid "There was an error adding the product to the basket"
 msgstr "Virhe lisättäessä tuotetta koriin"
 
-msgid "Qty"
-msgstr "Määrä"
-
 msgid "Quantity"
 msgstr "Määrä"
 

@@ -56,9 +56,6 @@
                     {% set unit = shop_product.unit %}
                     {% if line.can_change_quantity %}
                     <div class="input-group">
-                        <div class="input-group-addon">
-                            {% trans %}Qty{% endtrans %}
-                        </div>
                         <input
                             id="qty_{{ line.line_id }}"
                             type="number"
