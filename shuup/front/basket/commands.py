@@ -21,7 +21,10 @@ from shuup.utils.numbers import parse_decimal_string
 
 
 # TODO: Refactor handle_add, it's too complex
-def handle_add(request, basket, product_id, quantity=1, supplier_id=None, **kwargs):  # noqa (C901)
+def handle_add(  # noqa (C901)
+        request, basket, product_id,
+        quantity=1, unit_type='internal',
+        supplier_id=None, **kwargs):
     """
     Handle adding a product to the basket.
 
@@ -47,6 +50,8 @@ def handle_add(request, basket, product_id, quantity=1, supplier_id=None, **kwar
 
     try:
         quantity = parse_decimal_string(quantity)
+        if unit_type == 'display':
+            quantity = shop_product.unit.from_display(quantity)
         if not product.sales_unit.allow_fractions:
             if quantity % 1 != 0:
                 msg = _(
@@ -102,7 +107,9 @@ def handle_add(request, basket, product_id, quantity=1, supplier_id=None, **kwar
     }
 
 
-def handle_add_var(request, basket, product_id, quantity=1, **kwargs):
+def handle_add_var(
+        request, basket, product_id,
+        quantity=1, unit_type='internal', **kwargs):
     """
     Handle adding a complex variable product into the basket by resolving the combination variables.
     This actually uses `kwargs`, expecting `var_XXX=YYY` to exist there, where `XXX` is the PK
@@ -118,7 +125,9 @@ def handle_add_var(request, basket, product_id, quantity=1, **kwargs):
     if not var_product:
         raise ValidationError(_(u"This variation is not available."), code="invalid_variation_combination")
     # and hand it off to handle_add like we're used to
-    return handle_add(request=request, basket=basket, product_id=var_product.pk, quantity=quantity)
+    return handle_add(
+        request=request, basket=basket, product_id=var_product.pk,
+        quantity=quantity, unit_type=unit_type)
 
 
 def handle_del(request, basket, line_id, **kwargs):

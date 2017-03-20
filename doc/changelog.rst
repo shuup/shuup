@@ -43,6 +43,7 @@ Addons
 Front
 ~~~~~
 
+- Basket views: Add display unit support
 - It's now possible to re-order old order from order history
 - It's now possible for addons to extend front main menu using the
   new `front_menu_extender` provide. See :doc:`provides.rst` for more information.

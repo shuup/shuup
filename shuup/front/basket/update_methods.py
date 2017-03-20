@@ -10,12 +10,17 @@ from __future__ import unicode_literals
 import six
 from django.contrib import messages
 
-from shuup.core.models import Product, Supplier
 from shuup.utils.numbers import parse_decimal_string
 
 
 class BasketUpdateMethods(object):
     def __init__(self, request, basket):
+        """
+        Initialize.
+
+        :type request: django.http.HttpRequest
+        :type basket: shuup.front.basket.objects.BaseBasket
+        """
         self.request = request
         self.basket = basket
 
@@ -31,6 +36,7 @@ class BasketUpdateMethods(object):
 
         return {
             'q_': self.update_quantity,
+            'dq_': self.update_display_quantity,
             'delete_': self.delete_line,
         }
 
@@ -61,11 +67,27 @@ class BasketUpdateMethods(object):
                 errors.extend(child_errors)
         return errors
 
+    def update_display_quantity(self, line, value, **kwargs):
+        if not line:
+            return False
+        new_display_quantity = parse_decimal_string(value)
+        if new_display_quantity is None:
+            return False
+        basket_line = self.basket.get_basket_line(line['line_id'])
+        if basket_line and basket_line.product:
+            unit = basket_line.shop_product.unit
+            new_quantity = unit.from_display(new_display_quantity)
+        else:
+            new_quantity = new_display_quantity
+        return self._update_quantity(line, new_quantity)
+
     def update_quantity(self, line, value, **kwargs):
         new_quantity = parse_decimal_string(value)
         if new_quantity is None:
             return False
+        return self._update_quantity(line, new_quantity)
 
+    def _update_quantity(self, line, new_quantity):
         if not (line and line["quantity"] != new_quantity):
             return False
 
@@ -73,16 +95,20 @@ class BasketUpdateMethods(object):
 
         # Ensure sub-lines also get changed accordingly
         linked_lines = [line] + list(self.basket.find_lines_by_parent_line_id(line["line_id"]))
-        orderable_line_ids = [basket_line.line_id for basket_line in self.basket.get_lines()]
+        orderable_lines = {
+            basket_line.line_id: basket_line
+            for basket_line in self.basket.get_lines()
+        }
 
         for linked_line in linked_lines:
-            if linked_line["line_id"] not in orderable_line_ids:
+            orderable_line = orderable_lines.get(linked_line["line_id"])
+            if not orderable_line:
                 # Customer can change quantity in non-orderable lines regardless
                 linked_line["quantity"] = new_quantity
                 changed = True
             else:
-                product = Product.objects.get(pk=linked_line["product_id"])
-                supplier = Supplier.objects.filter(pk=linked_line.get("supplier_id", 0)).first()
+                product = orderable_line.product
+                supplier = orderable_line.supplier
 
                 # Basket quantities already contain current quantities for orderable lines
                 quantity_delta = new_quantity - line["quantity"]
