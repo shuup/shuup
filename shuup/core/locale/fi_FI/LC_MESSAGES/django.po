@@ -1381,21 +1381,20 @@ msgstr "%s ei toimita tuotetta."
 msgid "Product has no sellable children"
 msgstr "Tuotteella ei ole myytäviä lapsia"
 
-#, python-format
+#, python-brace-format
 msgid ""
-"The product can only be ordered in multiples of %(package_size)s, for "
-"example %(smaller_p)s %(unit)s."
+"The product can only be ordered in multiples of {package_size}, for example "
+"{amount}"
 msgstr ""
-"Tuotetta voi tilata vain %(package_size)s kerrannaisina (esim. %(smaller_p)s "
-"%(unit)s)."
+"Tuotetta voi tilata vain {package_size} kerrannaisina (esim. {amount})."
 
-#, python-format
+#, python-brace-format
 msgid ""
-"The product can only be ordered in multiples of %(package_size)s, for "
-"example %(smaller_p)s or %(larger_p)s %(unit)s."
+"The product can only be ordered in multiples of {package_size}, for example "
+"{smaller_amount} or {larger_amount}"
 msgstr ""
-"Tuotetta voi tilata vain %(package_size)s kerrannaisina (esim. %(smaller_p)s "
-"tai %(larger_p)s %(unit)s)."
+"Tuotetta voi tilata vain {package_size} kerrannaisina (esim. "
+"{smaller_amount} tai {larger_amount})."
 
 msgid "variation variable"
 msgstr "variaatiomuuttuja"

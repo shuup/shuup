@@ -352,21 +352,21 @@ class ShopProduct(MoneyPropped, models.Model):
             p = (quantity // purchase_multiple)
             smaller_p = max(purchase_multiple, p * purchase_multiple)
             larger_p = max(purchase_multiple, (p + 1) * purchase_multiple)
+            render_qty = self.unit.render_quantity
             if larger_p == smaller_p:
-                message = _('The product can only be ordered in multiples of %(package_size)s, '
-                            'for example %(smaller_p)s %(unit)s.') % {
-                    "package_size": purchase_multiple,
-                    "smaller_p": smaller_p,
-                    "unit": self.product.sales_unit,
-                }
+                message = _(
+                    "The product can only be ordered in multiples of "
+                    "{package_size}, for example {amount}").format(
+                        package_size=render_qty(purchase_multiple),
+                        amount=render_qty(smaller_p))
             else:
-                message = _('The product can only be ordered in multiples of %(package_size)s, '
-                            'for example %(smaller_p)s or %(larger_p)s %(unit)s.') % {
-                    "package_size": purchase_multiple,
-                    "smaller_p": smaller_p,
-                    "larger_p": larger_p,
-                    "unit": self.product.sales_unit,
-                }
+                message = _(
+                    "The product can only be ordered in multiples of "
+                    "{package_size}, for example {smaller_amount} or "
+                    "{larger_amount}").format(
+                        package_size=render_qty(purchase_multiple),
+                        smaller_amount=render_qty(smaller_p),
+                        larger_amount=render_qty(larger_p))
             yield ValidationError(message, code="invalid_purchase_multiple")
 
         for receiver, response in get_orderability_errors.send(
