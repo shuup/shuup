@@ -853,7 +853,7 @@ msgstr ""
 "Hyvitettävä tili. Hyvittääksesi vapaan määrän, valitse 'Hyvitä vapaa määrä'."
 
 msgid "Quantity"
-msgstr "Lukumäärä"
+msgstr "Määrä"
 
 msgid "The number of units to refund."
 msgstr "Hyvitettävien yksiköiden määrä."

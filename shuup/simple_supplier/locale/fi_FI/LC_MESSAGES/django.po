@@ -82,7 +82,7 @@ msgid "Purchase price per unit (%(currency_name)s)"
 msgstr "Ostohinta per yksikkö (%(currency_name)s)"
 
 msgid "Quantity"
-msgstr "Lukumäärä"
+msgstr "Määrä"
 
 msgid "Only non-zero values can be added to stock."
 msgstr "Varastoarvon pitää olla suurempi kuin nolla."
