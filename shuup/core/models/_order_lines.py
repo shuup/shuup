@@ -18,6 +18,7 @@ from jsonfield import JSONField
 from shuup.core.fields import MoneyValueField, QuantityField, UnsavedForeignKey
 from shuup.core.pricing import Priceful
 from shuup.core.taxing import LineTax
+from shuup.core.utils.line_unit_mixin import LineWithUnit
 from shuup.utils.analog import define_log_model
 from shuup.utils.money import Money
 from shuup.utils.properties import MoneyProperty, MoneyPropped, PriceProperty
@@ -164,8 +165,14 @@ class AbstractOrderLine(MoneyPropped, models.Model, Priceful):
             self.supplier.module.update_stock(self.product_id)
 
 
-class OrderLine(AbstractOrderLine):
+class OrderLine(LineWithUnit, AbstractOrderLine):
     order = UnsavedForeignKey("Order", related_name='lines', on_delete=models.PROTECT, verbose_name=_('order'))
+
+    # TODO: Store the display and sales unit to OrderLine
+
+    @property
+    def shop(self):
+        return self.order.shop
 
 
 @python_2_unicode_compatible

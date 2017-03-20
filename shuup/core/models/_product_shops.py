@@ -438,6 +438,41 @@ class ShopProduct(MoneyPropped, models.Model):
         return self.product.sales_unit.round(self.minimum_purchase_quantity)
 
     @property
+    def display_quantity_step(self):
+        """
+        Quantity step of this shop product in the display unit.
+
+        Note: This can never be smaller than the display precision.
+        """
+        return max(
+            self.unit.to_display(self.quantity_step),
+            self.unit.display_precision)
+
+    @property
+    def display_quantity_minimum(self):
+        """
+        Quantity minimum of this shop product in the display unit.
+
+        Note: This can never be smaller than the display precision.
+        """
+        return max(
+            self.unit.to_display(self.minimum_purchase_quantity),
+            self.unit.display_precision)
+
+    @property
+    def unit(self):
+        """
+        Unit of this product.
+
+        :rtype: shuup.core.models.UnitInterface
+        """
+        return UnitInterface(self._sales_unit, self.display_unit)
+
+    @property
+    def _sales_unit(self):
+        return self.product.sales_unit or PiecesSalesUnit()
+
+    @property
     def images(self):
         return self.product.media.filter(shops=self.shop, kind=ProductMediaKind.IMAGE).order_by("ordering")
 

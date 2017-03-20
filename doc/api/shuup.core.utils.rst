@@ -36,6 +36,14 @@ shuup.core.utils.forms module
     :undoc-members:
     :show-inheritance:
 
+shuup.core.utils.line_unit_mixin module
+---------------------------------------
+
+.. automodule:: shuup.core.utils.line_unit_mixin
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.core.utils.maintenance module
 -----------------------------------
 

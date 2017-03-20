@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Add unit interface to ShopProduct, OrderLine and SourceLine
 - Add DisplayUnit model
 - Rename ``SalesUnit.short_name`` to ``symbol``
 - Improve variation product orderability check performance
