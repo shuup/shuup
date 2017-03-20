@@ -206,4 +206,5 @@ class Category(MPTTModel, TranslatableModel):
         generate_multilanguage_slugs(self, self._get_slug_name)
         return rv
 
+
 CategoryLogEntry = define_log_model(Category)

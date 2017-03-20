@@ -87,6 +87,7 @@ class TagRegistry(object):
                 return info["decoder"](val)
         return obj
 
+
 #: The default tag registry.
 tag_registry = TagRegistry()
 tag_registry.register("$datetime", datetime.datetime, encoder=isoformat, decoder=dateparse.parse_datetime)

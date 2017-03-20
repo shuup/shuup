@@ -5,42 +5,37 @@ cache:
     - "$HOME/.cache/pip"
     - "$HOME/.cache/shuup/build_resources"
 env:
-  - TOX_ENV=sanity
-  - TOX_ENV=flake8
-  - TOX_ENV=isort
-  - TOX_ENV=license_headers
+  - TOXENV=sanity
+  - TOXENV=flake8
+  - TOXENV=license_headers
 matrix:
   include:
-    - python: 2.7
-      env: TOX_ENV=py27-django18-nomigrations
-    - python: 3.4
-      env: TOX_ENV=py34-django18-nomigrations
-    - python: 3.5
-      env: TOX_ENV=py35-django18-nomigrations
-    - python: 2.7
-      env: TOX_ENV=py27-django19-nomigrations
-    - python: 3.4
-      env: TOX_ENV=py34-django19-nomigrations
-    - python: 3.5
-      env: TOX_ENV=py35-django19-nomigrations
+    - {python: 2.7, env: TOXENV=py27-django18-nomigrations}
+    - {python: 3.4, env: TOXENV=py34-django18-nomigrations}
+    - {python: 3.5, env: TOXENV=py35-django18-nomigrations}
+    - {python: 2.7, env: TOXENV=py27-django19-nomigrations}
+    - {python: 3.4, env: TOXENV=py34-django19-nomigrations}
+    - {python: 3.5, env: TOXENV=py35-django19-nomigrations}
     # Browser tests are disabled, since they cause false errors
-    #- python: 3.5
-    #  env: TOX_ENV=py35-nomigrations-nocoverage-browser
+    # - {python: 3.5, env: TOXENV=py35-nomigrations-nocoverage-browser}
 install:
   - pip install -U pip
   - pip install tox
   - pip install coveralls
-before_install:
-  - "nvm install 4"
-  - "nvm use 4"
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - "npm install -g selenium-standalone@4.5.3"
-  - "selenium-standalone install"
-  - "selenium-standalone start &"
+  - pip install codecov
+#before_install:
+  #- "nvm install 4"
+  #- "nvm use 4"
+  #- "export DISPLAY=:99.0"
+  #- "sh -e /etc/init.d/xvfb start"
+  #- "npm install -g selenium-standalone@4.5.3"
+  #- "selenium-standalone install"
+  #- "selenium-standalone start &"
 script:
-  - tox -e $TOX_ENV
-after_success: test $TOX_ENV = py35-django19-nomigrations && coveralls
+  - tox
+after_success:
+  - coveralls
+  - codecov
 notifications:
   slack:
     secure: mkYYYt9ZQc6vR1aJltnEF1DzZ5xsNmllNcdK8fCwjeK5ZOnB1atujZ08tYxx/t57gaxhMWyJHvKdD0gvyQS6R/pAO2epXY9NqOhPVDEhqtXBpd7wUcEMTQqjSy68FSTjO94O8suC18xB55Cq+KSxm8jJt6zSFsjoffhz+4QIA67rkiNPLmAw2AHYymvVaidWMDe5UUGD7qONmdFI5wx4wOE9veboWDQ49oygiq+c4NFC/d4C108jT7l9ZTko/JF7Bim3VQI0LprGuIH2tZ6TI/3LWEhQX6XXuGr6eXuTF3nQp470yRXRs50Gh+CSY++ZUgFdRfOlg0edHt9m2Lk8j2jfeLgXYWYy1QSCnJDPRzzVIkEP4xaZCcIK7pcckV0Ytn7BP3Y09MDzSvt3+0Cm7ou16shiyy5NqW5DonarN21Mlz9/auZPawsXJqYZVDIZQiM7GLJnpg9wBfgKlPxUZKwi5ttsvrS7iPNK1sSLmICFqukrQlMQnpY5h45uGXsqL7fI7z30Ftld6qIGGVFdFjh3K+4dVXV5XKHnynaR518JvugxLwrNcIWwpyB2I3Ak7AsMzd3IWnY4yrB6pSbVdG0W3zZYXR6GUsYmxICKv5pUVnRKtp2tgOKA3EwgnVjSkJahGPp5bc3xJN8mNOaR33f3kieM5jJcNteEWueX+eA=

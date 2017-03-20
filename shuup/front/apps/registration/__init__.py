@@ -78,4 +78,5 @@ class RegistrationAppConfig(AppConfig):
             # false for HTML mails.
             django.conf.settings.REGISTRATION_EMAIL_HTML = False
 
+
 default_app_config = "shuup.front.apps.registration.RegistrationAppConfig"

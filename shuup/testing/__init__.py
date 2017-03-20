@@ -46,4 +46,5 @@ class ShuupTestingAppConfig(AppConfig):
         ],
     }
 
+
 default_app_config = "shuup.testing.ShuupTestingAppConfig"

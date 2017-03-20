@@ -32,6 +32,8 @@ class PricingContextable(six.with_metaclass(abc.ABCMeta)):
     pricing context even though it is not a `PricingContext`.
     """
     pass
+
+
 PricingContextable.register(HttpRequest)
 
 
