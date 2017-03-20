@@ -30,6 +30,7 @@ Localization
 Admin
 ~~~~~
 
+- Add option to define a custom admin module loader
 - Add new provide category called `admin_order_information` which can be used
   to add extra information rows to order detail page.
 - Use select2 multiple field for shop staff members
