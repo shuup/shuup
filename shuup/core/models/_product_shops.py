@@ -348,7 +348,7 @@ class ShopProduct(MoneyPropped, models.Model):
                 yield error
 
         purchase_multiple = self.purchase_multiple
-        if quantity > 0 and purchase_multiple > 1 and (quantity % purchase_multiple) != 0:
+        if quantity > 0 and purchase_multiple > 0 and (quantity % purchase_multiple) != 0:
             p = (quantity // purchase_multiple)
             smaller_p = max(purchase_multiple, p * purchase_multiple)
             larger_p = max(purchase_multiple, (p + 1) * purchase_multiple)

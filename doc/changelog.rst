@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Fix bug in purchase multiple checking of ShopProduct
 - Add unit interface to ShopProduct, OrderLine and SourceLine
 - Add DisplayUnit model
 - Rename ``SalesUnit.short_name`` to ``symbol``
