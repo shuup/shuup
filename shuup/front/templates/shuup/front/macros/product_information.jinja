@@ -138,5 +138,7 @@
 
 {% macro product_line(product, quantity) %}
     {% set u = url("shuup:product", pk=product.pk, slug=product.slug) %}
-    <a href="{{ u }}">{{ product.name }}</a> &times; {{ quantity|int }}
+    {% set unit = product.get_shop_instance(request.shop).unit %}
+    {{ unit.render_quantity(quantity) }} &times;
+    <a href="{{ u }}">{{ product.name }}</a>
 {% endmacro %}

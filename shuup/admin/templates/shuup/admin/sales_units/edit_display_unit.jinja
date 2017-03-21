@@ -3,9 +3,14 @@
 {% from "shuup/admin/macros/multilanguage.jinja" import language_dependent_content_tabs %}
 
 {% block content %}
-    {% call single_section_form("sales_unit_form", form) %}
+    {% call single_section_form("display_unit_form", form) %}
         {{ language_dependent_content_tabs(form, ["name", "symbol"]) }}
         <div class="form-divider"></div>
+        {{ bs3.field(form.internal_unit) }}
+        {{ bs3.field(form.ratio) }}
         {{ bs3.field(form.decimals) }}
+        {{ bs3.field(form.comparison_value) }}
+        {{ bs3.field(form.allow_bare_number) }}
+        {{ bs3.field(form.default) }}
     {% endcall %}
 {% endblock %}

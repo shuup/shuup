@@ -66,7 +66,7 @@
                 <tr>
                     <th></th>
                     <th class="text-left">{% trans %}Product{% endtrans %}</th>
-                    <th class="text-right">{% trans %}Price{% endtrans %}</th>
+                    <th class="text-right">{% trans %}Unit Price{% endtrans %}</th>
                     <th class="text-right">{% trans %}Quantity{% endtrans %}</th>
                     <th class="text-right">{% trans %}Total{% endtrans %}</th>
                 </tr>
@@ -112,6 +112,9 @@
                         </td>
                         <td class="text-right">
                             {{ line.taxful_discounted_unit_price|money }}
+                            {% if line.unit.to_display(1) != 1 %}
+                                / {{ line.unit.internal_symbol }}
+                            {% endif %}
                             {% if line.tax_amount %}
                                 <br>
                                 <small class="text-muted">
@@ -126,7 +129,7 @@
                             {% endif %}
                         </td>
                         <td class="text-right">
-                            {{ line.quantity|number }}
+                            {{ line.unit.render_quantity(line.quantity) }}
                         </td>
                         <td class="text-right">
                             <span class="line-total">{{ line.taxful_price|money }}</span>
@@ -143,7 +146,11 @@
     {% set quantity_map = product.get_package_child_to_quantity_map() %}
     <ul class="package-children">
         {% for child in package_children %}
-            <li><small><em>{{ quantity_map[child]|int }} &times; {{ child }}</em></small></li>
+            {%- set unit = child.get_shop_instance(request.shop).unit -%}
+            <li><small><em>
+                {{- unit.render_quantity(quantity_map[child]) }}
+                &times; {{ child -}}
+            </em></small></li>
         {% endfor %}
     </ul>
 {% endmacro %}

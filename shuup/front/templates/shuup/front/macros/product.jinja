@@ -51,14 +51,16 @@ Inheritance order for product macors:
 
 {% macro render_product_price(product, show_units=True) %}
     {% if show_prices() %}
+        {%- set unit = product.get_shop_instance(request.shop).unit -%}
+        {%- set (per_qty, per_text) = unit.get_per_values(show_units) -%}
         <div class="price-line">
             <span class="lead">
                 {%- if product.is_variation_parent() -%}
-                    {% set (min_price, max_price) = product|price_range %}
+                    {% set (min_price, max_price) = product|price_range(per_qty) %}
                     {% if min_price == max_price %}
                         {% if product|is_discounted -%}
                         <small class="text-muted original-price original"><s>
-                            {{- product|base_price -}}
+                            {{- product|base_price(per_qty) -}}
                         </s></small>
                         {%- endif %}
                         <strong>{{ min_price }}</strong>
@@ -68,13 +70,13 @@ Inheritance order for product macors:
                 {%- else -%}
                     {% if product|is_discounted -%}
                         <small class="text-muted original-price original"><s>
-                            {{- product|base_price -}}
+                            {{- product|base_price(per_qty) -}}
                         </s></small>
                     {%- endif %}
-                    <strong>{{ product|price }}</strong>
+                    <strong>{{ product|price(per_qty) }}</strong>
                 {%- endif -%}
-                {%- if show_units -%}
-                    <small> / {{ product.sales_unit.short_name }}</small>
+                {%- if per_text -%}
+                    <small> / {{ per_text }}</small>
                 {%- endif -%}
             </span>
         </div>

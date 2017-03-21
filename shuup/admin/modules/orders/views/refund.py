@@ -118,7 +118,7 @@ class OrderCreateRefundView(UpdateView):
                 "logicalCount": stock_status.logical_count if stock_status else 0,
                 "physicalCount": stock_status.physical_count if stock_status else 0,
                 "salesDecimals": line.product.sales_unit.decimals if line.product.sales_unit else 0,
-                "salesUnit": line.product.sales_unit.short_name if line.product.sales_unit else ""
+                "salesUnit": line.product.sales_unit.symbol if line.product.sales_unit else ""
             })
         return base_data
 

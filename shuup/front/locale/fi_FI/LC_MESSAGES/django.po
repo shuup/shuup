@@ -25,7 +25,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"POT-Creation-Date: 2017-03-18 09:48+0000\n"
 "PO-Revision-Date: 2017-03-01 13:53+0000\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
@@ -753,12 +753,6 @@ msgstr "Tuote lisätty koriin"
 msgid "There was an error adding the product to the basket"
 msgstr "Virhe lisättäessä tuotetta koriin"
 
-msgid "Qty"
-msgstr "Määrä"
-
-msgid "Quantity"
-msgstr "Määrä"
-
 msgid "Remove product from basket"
 msgstr "Poista tuote ostoskorista"
 
@@ -952,6 +946,12 @@ msgstr "Tiedostot"
 
 msgid "Product"
 msgstr "Tuote"
+
+msgid "Unit Price"
+msgstr "Yksikköhinta"
+
+msgid "Quantity"
+msgstr "Määrä"
 
 msgid "excl. tax"
 msgstr "ei sis. veroja"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-21 07:50+0000\n"
+"POT-Creation-Date: 2017-03-18 09:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1229,6 +1229,17 @@ msgid ""
 "product price stays above cost."
 msgstr ""
 
+msgid "display unit"
+msgstr ""
+
+msgid "Unit for displaying quantities of this product"
+msgstr ""
+
+msgid ""
+"Invalid display unit: Internal unit of the selected display unit does not "
+"match with the sales unit of the product"
+msgstr ""
+
 msgid "This product has been deleted."
 msgstr ""
 
@@ -1255,16 +1266,16 @@ msgstr ""
 msgid "Product has no sellable children"
 msgstr ""
 
-#, python-format
+#, python-brace-format
 msgid ""
-"The product can only be ordered in multiples of %(package_size)s, for "
-"example %(smaller_p)s %(unit)s."
+"The product can only be ordered in multiples of {package_size}, for example "
+"{amount}"
 msgstr ""
 
-#, python-format
+#, python-brace-format
 msgid ""
-"The product can only be ordered in multiples of %(package_size)s, for "
-"example %(smaller_p)s or %(larger_p)s %(unit)s."
+"The product can only be ordered in multiples of {package_size}, for example "
+"{smaller_amount} or {larger_amount}"
 msgstr ""
 
 msgid "variation variable"
@@ -2078,12 +2089,15 @@ msgid ""
 "quantities"
 msgstr ""
 
+msgid "sales units"
+msgstr ""
+
 msgid ""
 "The sales unit name to use for products (For example, 'pieces' or 'units'). "
 "Sales units can be set for each product through the product editor view."
 msgstr ""
 
-msgid "short name"
+msgid "symbol"
 msgstr ""
 
 msgid ""
@@ -2091,7 +2105,72 @@ msgid ""
 "order invoices."
 msgstr ""
 
-msgid "sales units"
+msgid "Value must be positive and non-zero"
+msgstr ""
+
+msgid "internal unit"
+msgstr ""
+
+msgid "The sales unit that this display unit is linked to."
+msgstr ""
+
+msgid "ratio"
+msgstr ""
+
+msgid ""
+"Size of the display unit in internal unit.  E.g. if internal unit is "
+"kilogram and display unit is gram, ratio is 0.001."
+msgstr ""
+
+msgid ""
+"The number of decimal places to use for values in the display unit.  The "
+"internal values are still rounded based on settings of the internal unit."
+msgstr ""
+
+msgid "comparison value"
+msgstr ""
+
+msgid ""
+"Value to use when displaying unit prices.  E.g. if the display unit is g and "
+"the comparison value is 100, then unit prices are shown per 100g, like: "
+"$2.95 per 100g."
+msgstr ""
+
+msgid "allow bare number"
+msgstr ""
+
+msgid ""
+"If true, values of this unit can be shown without the symbol occasionally.  "
+"Usually wanted if the unit is a piece, so that product listings can show "
+"just '$5.95' rather than '$5.95 per pc.'."
+msgstr ""
+
+msgid "use by default"
+msgstr ""
+
+msgid ""
+"Use this display unit by default when displaying values of the internal unit."
+msgstr ""
+
+msgid "Name of the display unit, e.g. Grams."
+msgstr ""
+
+msgid "An abbreviated name of the display unit, e.g. 'g'."
+msgstr ""
+
+msgid "display units"
+msgstr ""
+
+msgid "Pieces"
+msgstr ""
+
+msgctxt "Symbol for pieces unit"
+msgid "pc."
+msgstr ""
+
+#, python-brace-format
+msgctxt "Display value with unit symbol (with or without space)"
+msgid "{value}{symbol}"
 msgstr ""
 
 msgid "No Choice"

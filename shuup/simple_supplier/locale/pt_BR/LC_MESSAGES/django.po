@@ -47,15 +47,15 @@ msgstr "Ajustar estoque"
 
 #, python-format
 msgid ""
-"Added %(delta)s %(unit_short_name)s for product %(product_name)s stock "
+"Added %(delta)s %(unit_symbol)s for product %(product_name)s stock "
 "(%(supplier_name)s)"
-msgstr "Adicionado %(delta)s %(unit_short_name)s ao estoque do produto %(product_name)s (%(supplier_name)s)"
+msgstr "Adicionado %(delta)s %(unit_symbol)s ao estoque do produto %(product_name)s (%(supplier_name)s)"
 
 #, python-format
 msgid ""
-"Removed %(delta)s %(unit_short_name)s from product %(product_name)s stock "
+"Removed %(delta)s %(unit_symbol)s from product %(product_name)s stock "
 "(%(supplier_name)s)"
-msgstr "Removido %(delta)s %(unit_short_name)s do estoque do produto %(product_name)s (%(supplier_name)s)"
+msgstr "Removido %(delta)s %(unit_symbol)s do estoque do produto %(product_name)s (%(supplier_name)s)"
 
 msgid "Not allowed"
 msgstr "Não permitido"

@@ -121,6 +121,7 @@
     {% else %}
         {%- set product_id = shop_product.product.pk -%}
     {% endif %}
+    {% set unit = shop_product.unit %}
     <div class="form-group amount">
         <label for="product-quantity-{{ product_id }}">{% trans %}Quantity{% endtrans %}</label>
         <div class="input-group">
@@ -129,12 +130,17 @@
             class="form-control"
             name="quantity"
             id="product-quantity-{{ product_id }}"
-            step="{{ shop_product.quantity_step }}"
-            value="{{ quantity }}"
-            min="{{ shop_product.rounded_minimum_purchase_quantity }}"
+            step="{{ shop_product.display_quantity_step }}"
+            value="{{ unit.to_display(quantity) }}"
+            min="{{ shop_product.display_quantity_minimum }}"
             onchange="updatePrice('{{ product_id }}')"
             >
-            <span class="input-group-addon sales-unit">{{ shop_product.product.sales_unit.short_name }}</span>
+            <input
+                type="hidden" id="product-unit-type-{{ product_id }}"
+                name="unit_type" value="display">
+            <span class="input-group-addon sales-unit">
+                {{- unit.symbol -}}
+            </span>
         </div>
     </div>
 {% endmacro %}
@@ -155,7 +161,7 @@
             {% if product|is_discounted(quantity) %}
             (<s>{{ product|base_unit_price(quantity) }}</s>)
             {% endif %}
-            {{ product|discounted_unit_price(quantity) }}/{{ product.sales_unit.short_name }}
+            {{ product|discounted_unit_price(quantity) }}/{{ product.sales_unit.symbol }}
         </span>
     </div>
 {% endmacro %}

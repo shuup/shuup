@@ -725,9 +725,6 @@ msgstr ""
 msgid "Sales Units"
 msgstr "販売単位"
 
-msgid "Short Name"
-msgstr "ショートネーム"
-
 msgid "Allowed decimals"
 msgstr "可小数"
 

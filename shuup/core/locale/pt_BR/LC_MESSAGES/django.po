@@ -759,17 +759,17 @@ msgstr "A quantidade de compra deve ser de pelo menos %d para este produto."
 msgid "The product is not supplied by %s."
 msgstr "O produto não é fornecido por %s."
 
-#, python-format
+#, python-brace-format
 msgid ""
-"The product can only be ordered in multiples of %(package_size)s, for "
-"example %(smaller_p)s %(unit)s."
-msgstr "O produto só pode ser comprado em múltiplos de %(package_size)s, por exemplo %(smaller_p)s %(unit)s."
+"The product can only be ordered in multiples of {package_size}, for example "
+"{amount}"
+msgstr "O produto só pode ser comprado em múltiplos de {package_size}, por exemplo {amount}"
 
-#, python-format
+#, python-brace-format
 msgid ""
-"The product can only be ordered in multiples of %(package_size)s, for "
-"example %(smaller_p)s or %(larger_p)s %(unit)s."
-msgstr "O produto só pode ser comprado em múltiplos de %(package_size)s, por exemplo %(smaller_p)s ou %(larger_p)s %(unit)s."
+"The product can only be ordered in multiples of {package_size}, for example "
+"{smaller_amount} or {larger_amount}"
+msgstr "O produto só pode ser comprado em múltiplos de {package_size}, por exemplo {smaller_amount} ou {larger_amount}"
 
 msgid "variation variable"
 msgstr "variável de variação"
@@ -1259,9 +1259,6 @@ msgstr "Clientes Empresariais"
 
 msgid "allowed decimals"
 msgstr "casas decimais permitidas"
-
-msgid "short name"
-msgstr "nome abreviado"
 
 msgid "sales unit"
 msgstr "unidade de vendas"

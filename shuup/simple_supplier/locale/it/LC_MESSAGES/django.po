@@ -45,15 +45,15 @@ msgstr "Modifica disponibilità"
 
 #, python-format
 msgid ""
-"Added %(delta)s %(unit_short_name)s for product %(product_name)s stock "
+"Added %(delta)s %(unit_symbol)s for product %(product_name)s stock "
 "(%(supplier_name)s)"
-msgstr "Aggiunti %(delta)s %(unit_short_name)s per il prodotto %(product_name)s scorte (%(supplier_name)s)"
+msgstr "Aggiunti %(delta)s %(unit_symbol)s per il prodotto %(product_name)s scorte (%(supplier_name)s)"
 
 #, python-format
 msgid ""
-"Removed %(delta)s %(unit_short_name)s from product %(product_name)s stock "
+"Removed %(delta)s %(unit_symbol)s from product %(product_name)s stock "
 "(%(supplier_name)s)"
-msgstr "Rimossi %(delta)s %(unit_short_name)s per il prodotto dalle scorte di %(product_name)s (%(supplier_name)s)"
+msgstr "Rimossi %(delta)s %(unit_symbol)s per il prodotto dalle scorte di %(product_name)s (%(supplier_name)s)"
 
 #, python-format
 msgid "Alert limit for product %(product_name)s set to %(value)s."

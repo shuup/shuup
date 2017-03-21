@@ -25,7 +25,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"POT-Creation-Date: 2017-03-18 12:25+0000\n"
 "PO-Revision-Date: 2017-03-01 13:49+0000\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
@@ -1342,6 +1342,19 @@ msgstr ""
 "eivät voi mennä tämän alle. Tällä asetuksella voit varmistaa, että "
 "tuotettasi ei koskaan myydä liian halvalla."
 
+msgid "display unit"
+msgstr "näyttöyksikkö"
+
+msgid "Unit for displaying quantities of this product"
+msgstr "Yksikkö, jossa tämän tuotteen määrät näytetään"
+
+msgid ""
+"Invalid display unit: Internal unit of the selected display unit does not "
+"match with the sales unit of the product"
+msgstr ""
+"Näyttöyksikkö ei kelpaa: Valitun näyttöyksikön sisäinen yksikkö ei vastaa "
+"tuotteen myyntiyksikköä"
+
 msgid "This product has been deleted."
 msgstr "Tuote on poistettu."
 
@@ -1368,21 +1381,20 @@ msgstr "%s ei toimita tuotetta."
 msgid "Product has no sellable children"
 msgstr "Tuotteella ei ole myytäviä lapsia"
 
-#, python-format
+#, python-brace-format
 msgid ""
-"The product can only be ordered in multiples of %(package_size)s, for "
-"example %(smaller_p)s %(unit)s."
+"The product can only be ordered in multiples of {package_size}, for example "
+"{amount}"
 msgstr ""
-"Tuotetta voi tilata vain %(package_size)s kerrannaisina (esim. %(smaller_p)s "
-"%(unit)s)."
+"Tuotetta voi tilata vain {package_size} kerrannaisina (esim. {amount})."
 
-#, python-format
+#, python-brace-format
 msgid ""
-"The product can only be ordered in multiples of %(package_size)s, for "
-"example %(smaller_p)s or %(larger_p)s %(unit)s."
+"The product can only be ordered in multiples of {package_size}, for example "
+"{smaller_amount} or {larger_amount}"
 msgstr ""
-"Tuotetta voi tilata vain %(package_size)s kerrannaisina (esim. %(smaller_p)s "
-"tai %(larger_p)s %(unit)s)."
+"Tuotetta voi tilata vain {package_size} kerrannaisina (esim. "
+"{smaller_amount} tai {larger_amount})."
 
 msgid "variation variable"
 msgstr "variaatiomuuttuja"
@@ -2278,6 +2290,9 @@ msgstr ""
 "suuremmaksi kuin nolla, mikäli tuotteita tällä myyntiyksiköllä voi myydä "
 "osittain."
 
+msgid "sales units"
+msgstr "myyntiyksiköt"
+
 msgid ""
 "The sales unit name to use for products (For example, 'pieces' or 'units'). "
 "Sales units can be set for each product through the product editor view."
@@ -2286,8 +2301,8 @@ msgstr ""
 "Myyntiyksiköt voidaan asettaa jokaiselle tuotteelle erikseen "
 "tuotemuokkaimesta."
 
-msgid "short name"
-msgstr "lyhyt nimi"
+msgid "symbol"
+msgstr "symboli"
 
 msgid ""
 "An abbreviated name for this sales unit that is shown throughout admin and "
@@ -2296,8 +2311,82 @@ msgstr ""
 "Lyhennetty nimi tälle myyntiyksikölle, joka näytetään hallinnassa ja "
 "tilauksilla."
 
-msgid "sales units"
-msgstr "myyntiyksiköt"
+msgid "Value must be positive and non-zero"
+msgstr ""
+
+msgid "internal unit"
+msgstr "sisäinen yksikkö"
+
+msgid "The sales unit that this display unit is linked to."
+msgstr "Myyntiyksikkö, johon tämä näyttöyksikkö on liitetty"
+
+msgid "ratio"
+msgstr "mittasuhde"
+
+msgid ""
+"Size of the display unit in internal unit.  E.g. if internal unit is "
+"kilogram and display unit is gram, ratio is 0.001."
+msgstr ""
+"Näyttöyksikön koko sisäisessä yksikössä. Esim. jos sisäinen yksikkö on "
+"kilogramma ja näyttöyksikkö on gramma, niin mittasuhde on 0,001."
+
+msgid ""
+"The number of decimal places to use for values in the display unit.  The "
+"internal values are still rounded based on settings of the internal unit."
+msgstr ""
+
+msgid "comparison value"
+msgstr "vertailuarvo"
+
+msgid ""
+"Value to use when displaying unit prices.  E.g. if the display unit is g and "
+"the comparison value is 100, then unit prices are shown per 100g, like: "
+"$2.95 per 100g."
+msgstr ""
+"Yksikköhintojen näyttämisessä käytettävä arvo. Esim. jos näyttöyksikkö on g "
+"ja vertailuarvo on 100, niin yksikköhinnat näytetään 100 g kohden, kuten: "
+"2,95 € / 100 g."
+
+msgid "allow bare number"
+msgstr "salli pelkkä luku"
+
+msgid ""
+"If true, values of this unit can be shown without the symbol occasionally.  "
+"Usually wanted if the unit is a piece, so that product listings can show "
+"just '$5.95' rather than '$5.95 per pc.'."
+msgstr ""
+"Jos valittu, niin tämän yksikön arvoja voidaan toisinaan näyttää ilman "
+"symbolia. Halutaan usein silloin, kun yksikkö on kappale, jotta "
+"tuotelistauksissa voidaan näyttää vain '5,95 €' eikä '5,95 € / kpl'."
+
+msgid "use by default"
+msgstr "käytä oletuksena"
+
+msgid ""
+"Use this display unit by default when displaying values of the internal unit."
+msgstr ""
+"Käytä tätä näyttöyksikköä oletuksena näytettäessä sen sisäisen yksikön määriä."
+
+msgid "Name of the display unit, e.g. Grams."
+msgstr "Näyttöyksikö nimi, esim. Gramma."
+
+msgid "An abbreviated name of the display unit, e.g. 'g'."
+msgstr "Näyttöyksikön lyhennetty nimi, esim. 'g'."
+
+msgid "display units"
+msgstr "näyttöyksiköt"
+
+msgid "Pieces"
+msgstr ""
+
+msgctxt "Symbol for pieces unit"
+msgid "pc."
+msgstr "kpl"
+
+#, python-brace-format
+msgctxt "Display value with unit symbol (with or without space)"
+msgid "{value}{symbol}"
+msgstr "{value} {symbol}"
 
 msgid "No Choice"
 msgstr "ei valintaa"

@@ -159,7 +159,7 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="menu-icon fa fa-shopping-cart"></i>
                 <span class="hidden-xs">{% trans %}Cart{% endtrans %}</span>
-                <span>({{ basket.product_count }})</span>
+                <span>({{ basket.smart_product_count }})</span>
                 <i class="dropdown-icon fa fa-angle-down"></i>
             </a>
             <div class="dropdown-menu cart">
@@ -185,8 +185,8 @@
                             {% for line in lines %}
                                 <tr>
                                     <td>
-                                        {% set line_url = shuup.urls.get_url(line.product) %}
-                                        {{ line.quantity|number }} &times;
+                                        {% set line_url = shuup.urls.model_url(line.product) %}
+                                        {{ line.unit.render_quantity(line.quantity) }} &times;
                                         {% if line_url %}
                                             <a href="{{ line_url }}">{{ line.text }}</a>
                                         {% else %}

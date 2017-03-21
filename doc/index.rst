@@ -31,6 +31,7 @@ Developing Shuup
 * :doc:`ref/notify_specification`
 * :doc:`ref/prices_and_taxes`
 * :doc:`ref/campaigns`
+* :doc:`ref/units`
 * :doc:`ref/formpart`
 * :doc:`web_api`
 * :doc:`howto/basic_admin_tasks`

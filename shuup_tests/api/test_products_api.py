@@ -657,8 +657,8 @@ def test_create_complete_product(admin_user):
     ###### 4) create sales unit
     sales_unit_data = {
         "translations": {
-            "en": {"name": "Kilo", "short_name": "KG"},
-            "pt-br": {"name": "Quilo", "short_name": "KGz"},
+            "en": {"name": "Kilo", "symbol": "KG"},
+            "pt-br": {"name": "Quilo", "symbol": "KGz"},
         },
         "decimals": 2
     }

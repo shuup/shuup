@@ -55,13 +55,13 @@ class PackageChildForm(forms.Form):
             return stocks
         sales_unit = self.product.sales_unit
         sales_decimals = sales_unit.decimals if sales_unit else 0
-        sales_unit_short_name = sales_unit.short_name if sales_unit else ""
+        sales_unit_symbol = sales_unit.symbol if sales_unit else ""
         for shop_product in self.shop_products:
             for supplier in shop_product.suppliers.all():
                 if supplier in stocks.keys():
                     continue
                 stock_status = supplier.get_stock_status(product_id=self.product.id)
-                stocks[supplier] = (supplier, stock_status, sales_decimals, sales_unit_short_name)
+                stocks[supplier] = (supplier, stock_status, sales_decimals, sales_unit_symbol)
         return stocks
 
     def get_orderability_errors(self):

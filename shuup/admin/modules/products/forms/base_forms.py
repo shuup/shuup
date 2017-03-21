@@ -124,6 +124,7 @@ class ShopProductForm(forms.ModelForm):
             "purchase_multiple",
             "minimum_purchase_quantity",
             "backorder_maximum",
+            "display_unit",
             "limit_shipping_methods",
             "limit_payment_methods",
             "shipping_methods",

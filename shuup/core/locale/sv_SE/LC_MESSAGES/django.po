@@ -1352,21 +1352,21 @@ msgstr "Produkten levereras inte av %s."
 msgid "Product has no sellable children"
 msgstr "Produkten har inte underordnade artiklar"
 
-#, python-format
+#, python-brace-format
 msgid ""
-"The product can only be ordered in multiples of %(package_size)s, for "
-"example %(smaller_p)s %(unit)s."
+"The product can only be ordered in multiples of {package_size}, for example "
+"{amount}"
 msgstr ""
-"Produkten kan endast beställas i satser av %(package_size)s, till exempel "
-"%(smaller_p)s %(unit)s."
+"Produkten kan endast beställas i satser av {package_size}, till exempel "
+"{amount}"
 
-#, python-format
+#, python-brace-format
 msgid ""
-"The product can only be ordered in multiples of %(package_size)s, for "
-"example %(smaller_p)s or %(larger_p)s %(unit)s."
+"The product can only be ordered in multiples of {package_size}, for example "
+"{smaller_amount} or {larger_amount}"
 msgstr ""
-"Produkten kan endast beställas i satser av %(package_size)s, till exempel "
-"%(smaller_p)s eller %(larger_p)s %(unit)s."
+"Produkten kan endast beställas i satser av {package_size}, till exempel "
+"{smaller_amount} eller {larger_amount}."
 
 msgid "variation variable"
 msgstr "variantvariabel"
@@ -2293,9 +2293,6 @@ msgstr ""
 "Försäljningsenhetnamnet du använder för produkter (till exempel 'delar' "
 "eller 'enheter'). Försäljningsenheter kan ställas in för varje produkt genom "
 "vyn produktredigeraren."
-
-msgid "short name"
-msgstr "kort namn"
 
 msgid ""
 "An abbreviated name for this sales unit that is shown throughout admin and "

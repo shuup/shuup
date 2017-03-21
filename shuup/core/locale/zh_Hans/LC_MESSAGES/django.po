@@ -742,19 +742,18 @@ msgstr "该产品的购买数量至少为 %d。"
 msgid "The product is not supplied by %s."
 msgstr "%s不供应该产品。"
 
-#, python-format
+#, python-brace-format
 msgid ""
-"The product can only be ordered in multiples of %(package_size)s, for "
-"example %(smaller_p)s %(unit)s."
-msgstr "该产品只可多个%(package_size)s 订购，例如 %(smaller_p)s %(unit)s。"
+"The product can only be ordered in multiples of {package_size}, for example "
+"{amount}"
+msgstr "该产品只可多个{package_size} 订购，例如 {amount}"
 
-#, python-format
+#, python-brace-format
 msgid ""
-"The product can only be ordered in multiples of %(package_size)s, for "
-"example %(smaller_p)s or %(larger_p)s %(unit)s."
+"The product can only be ordered in multiples of {package_size}, for example "
+"{smaller_amount} or {larger_amount}"
 msgstr ""
-"该产品只可多个%(package_size)s订购，例如%(smaller_p)s 或者 %(larger_p)s "
-"%(unit)s。"
+"该产品只可多个{package_size}订购，例如{smaller_amount} 或者 {larger_amount}"
 
 msgid "variation variable"
 msgstr "变体变量"
@@ -1246,9 +1245,6 @@ msgstr "公司客户"
 
 msgid "allowed decimals"
 msgstr "允许小数"
-
-msgid "short name"
-msgstr "简称"
 
 msgid "sales unit"
 msgstr "销售单位"

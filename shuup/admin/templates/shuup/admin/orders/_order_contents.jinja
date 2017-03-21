@@ -29,7 +29,7 @@
                         <td>{{ line.sku }}</td>
                         <td>{{ line.text }}</td>
                         <td class="text-right">{{ line.taxless_base_unit_price|money }}</td>
-                        <td class="text-right">{{ line.quantity|number }}</td>
+                        <td class="text-right">{{ line.unit.render_quantity(line.quantity) }}</td>
                         <td class="text-right">{% if line.taxless_discount_amount %}{{ line.taxless_discount_amount|money }}{% else %}-{% endif %}</td>
                         <td class="text-right">{% if line.taxless_discount_amount %}{{ line|discount_percent }}{% else %}-{% endif %}</td>
                         <td class="text-right">{{ line.tax_rate|percent }}</td>

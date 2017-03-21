@@ -7,8 +7,8 @@
             <input name="command" type="hidden" value="update">
             {% csrf_token %}
             {{ render_basket_lines(basket) }}
+            {{ render_unorderable_basket_lines(basket) }}
         </form>
-        {{ render_unorderable_basket_lines(basket) }}
         {{ render_coupon_div(basket) }}
         {{ render_basket_summary(basket) }}
     </div>
@@ -53,23 +53,26 @@
             {% endif %}
             <div class="quantity">
                 {% if product %}
+                    {% set unit = shop_product.unit %}
                     {% if line.can_change_quantity %}
                     <div class="input-group">
-                        <div class="input-group-addon">
-                            {% trans %}Qty{% endtrans %}
-                        </div>
                         <input
                             id="qty_{{ line.line_id }}"
                             type="number"
-                            name="q_{{ line.line_id }}"
+                            name="dq_{{ line.line_id }}"
                             size="2"
                             class="line_quantity form-control"
-                            step="{{ shop_product.quantity_step }}"
-                            value="{{ line.quantity }}"
-                            min="{{ shop_product.rounded_minimum_purchase_quantity }}">
+                            step="{{ shop_product.display_quantity_step }}"
+                            value="{{ unit.to_display(line.quantity) }}"
+                            min="{{ shop_product.display_quantity_minimum }}">
+                        <div class="input-group-addon sales-unit">
+                            {{ unit.symbol }}
+                        </div>
                     </div>
                     {% else %}
-                        <div class="">{{ _("Quantity") }}: {{ line.quantity }}</div>
+                        <div class="">
+                            {{ unit.render_quantity(line.quantity, force_symbol=True) }}
+                        </div>
                     {% endif %}
                 {% endif %}
             </div>

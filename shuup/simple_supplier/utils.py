@@ -92,7 +92,7 @@ def get_stock_information_html(supplier, product):
     context = {
         "div_id": get_stock_information_div_id(supplier, product),
         "sales_decimals": product.sales_unit.decimals if product.sales_unit else 0,
-        "sales_unit": product.sales_unit.short_name if product.sales_unit else "",
+        "sales_unit": product.sales_unit.symbol if product.sales_unit else "",
         "stock": stock
     }
     if "shuup.notify" in settings.INSTALLED_APPS:

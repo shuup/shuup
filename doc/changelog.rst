@@ -12,6 +12,12 @@ Unrealeased
 Core
 ~~~~
 
+- Improve OrderSource caching for deserialization speedup
+- Add new product count methods to OrderSource
+- Fix bug in purchase multiple checking of ShopProduct
+- Add unit interface to ShopProduct, OrderLine and SourceLine
+- Add DisplayUnit model
+- Rename ``SalesUnit.short_name`` to ``symbol``
 - Improve variation product orderability check performance
 - Add `created_on` and `modified_on` fields for shop
 - Make shop identifier max length to 128 characters
@@ -40,6 +46,9 @@ Addons
 Front
 ~~~~~
 
+- Fix bug: Could no change quantities of unorderable lines in the basket
+- Use display units when rendering product quantities
+- Basket views: Add display unit support
 - It's now possible to re-order old order from order history
 - It's now possible for addons to extend front main menu using the
   new `front_menu_extender` provide. See :doc:`provides.rst` for more information.

@@ -49,19 +49,19 @@ msgstr "Muuta varastosaldoa"
 
 #, python-format
 msgid ""
-"Added %(delta)s %(unit_short_name)s for product %(product_name)s stock "
+"Added %(delta)s %(unit_symbol)s for product %(product_name)s stock "
 "(%(supplier_name)s)"
 msgstr ""
-"Lisättiin %(delta)s %(unit_short_name)s tuotteelle %(product_name)s "
-"varastoon (%(supplier_name)s)"
+"Lisättiin %(delta)s %(unit_symbol)s tuotteelle %(product_name)s varastoon "
+"(%(supplier_name)s)"
 
 #, python-format
 msgid ""
-"Removed %(delta)s %(unit_short_name)s from product %(product_name)s stock "
+"Removed %(delta)s %(unit_symbol)s from product %(product_name)s stock "
 "(%(supplier_name)s)"
 msgstr ""
-"Poistettiin %(delta)s %(unit_short_name)s tuotteelta %(product_name)s "
-"varastosta (%(supplier_name)s)"
+"Poistettiin %(delta)s %(unit_symbol)s tuotteelta %(product_name)s varastosta "
+"(%(supplier_name)s)"
 
 #, python-format
 msgid "Alert limit for product %(product_name)s set to %(value)s."
@@ -82,7 +82,7 @@ msgid "Purchase price per unit (%(currency_name)s)"
 msgstr "Ostohinta per yksikkö (%(currency_name)s)"
 
 msgid "Quantity"
-msgstr "Lukumäärä"
+msgstr "Määrä"
 
 msgid "Only non-zero values can be added to stock."
 msgstr "Varastoarvon pitää olla suurempi kuin nolla."

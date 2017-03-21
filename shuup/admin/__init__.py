@@ -33,6 +33,7 @@ class ShuupAdminAppConfig(AppConfig):
             "shuup.admin.modules.services:PaymentMethodModule",
             "shuup.admin.modules.services:ShippingMethodModule",
             "shuup.admin.modules.attributes:AttributeModule",
+            "shuup.admin.modules.sales_units:DisplayUnitModule",
             "shuup.admin.modules.sales_units:SalesUnitModule",
             "shuup.admin.modules.sales_dashboard:SalesDashboardModule",
             "shuup.admin.modules.shops:ShopModule",

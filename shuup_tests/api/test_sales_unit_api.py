@@ -30,7 +30,7 @@ def test_sales_unit_api(admin_user):
 
     sales_unit_data = {
         "translations": {
-            "en": {"name": "Kilo", "short_name": "KG"}
+            "en": {"name": "Kilo", "symbol": "KG"}
         },
         "decimals": 2
     }
@@ -40,11 +40,11 @@ def test_sales_unit_api(admin_user):
     assert response.status_code == status.HTTP_201_CREATED
     sales_unit = SalesUnit.objects.first()
     assert sales_unit.name == sales_unit_data["translations"]["en"]["name"]
-    assert sales_unit.short_name == sales_unit_data["translations"]["en"]["short_name"]
+    assert sales_unit.symbol == sales_unit_data["translations"]["en"]["symbol"]
     assert sales_unit.decimals == sales_unit_data["decimals"]
 
     sales_unit_data["translations"]["en"]["name"] = "Pound"
-    sales_unit_data["translations"]["en"]["short_name"] = "PD"
+    sales_unit_data["translations"]["en"]["symbol"] = "PD"
     sales_unit_data["decimals"] = 3
 
     response = client.put("/api/shuup/sales_unit/%d/" % sales_unit.id,
@@ -53,21 +53,21 @@ def test_sales_unit_api(admin_user):
     assert response.status_code == status.HTTP_200_OK
     sales_unit = SalesUnit.objects.first()
     assert sales_unit.name == sales_unit_data["translations"]["en"]["name"]
-    assert sales_unit.short_name == sales_unit_data["translations"]["en"]["short_name"]
+    assert sales_unit.symbol == sales_unit_data["translations"]["en"]["symbol"]
     assert sales_unit.decimals == sales_unit_data["decimals"]
 
     response = client.get("/api/shuup/sales_unit/%d/" % sales_unit.id)
     assert response.status_code == status.HTTP_200_OK
     data = json.loads(response.content.decode("utf-8"))
     assert sales_unit.name == data["translations"]["en"]["name"]
-    assert sales_unit.short_name == data["translations"]["en"]["short_name"]
+    assert sales_unit.symbol == data["translations"]["en"]["symbol"]
     assert sales_unit.decimals == data["decimals"]
 
     response = client.get("/api/shuup/sales_unit/")
     assert response.status_code == status.HTTP_200_OK
     data = json.loads(response.content.decode("utf-8"))
     assert sales_unit.name == data[0]["translations"]["en"]["name"]
-    assert sales_unit.short_name == data[0]["translations"]["en"]["short_name"]
+    assert sales_unit.symbol == data[0]["translations"]["en"]["symbol"]
     assert sales_unit.decimals == data[0]["decimals"]
 
     response = client.delete("/api/shuup/sales_unit/%d/" % sales_unit.id)
@@ -75,7 +75,7 @@ def test_sales_unit_api(admin_user):
     assert SalesUnit.objects.count() == 0
 
     # create a product and relate it to a sales unit
-    sales_unit = SalesUnit.objects.create(name="Kilo", short_name="KG")
+    sales_unit = SalesUnit.objects.create(name="Kilo", symbol="KG")
     product = create_product("product with sales unit", sales_unit=sales_unit)
 
     # shouldn't be possible to delete a sales_unit with a related product

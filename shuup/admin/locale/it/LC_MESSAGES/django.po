@@ -907,9 +907,6 @@ msgstr "Valore degli Ordini Aperti"
 msgid "Sales Units"
 msgstr "Unità di Vendita"
 
-msgid "Short Name"
-msgstr "Nome Breve"
-
 msgid "Allowed decimals"
 msgstr "Decimali consentiti"
 

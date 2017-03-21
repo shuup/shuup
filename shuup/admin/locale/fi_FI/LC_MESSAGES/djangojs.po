@@ -123,7 +123,7 @@ msgid "Text"
 msgstr "Teksti"
 
 msgid "Quantity"
-msgstr "Lukumäärä"
+msgstr "Määrä"
 
 msgid "Unit Price"
 msgstr "Yksikköhinta"
