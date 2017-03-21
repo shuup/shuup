@@ -15,7 +15,7 @@ from django.conf import settings
 from django.template import loader as template_loader
 from django.utils import translation
 from django.utils.encoding import force_text
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
 
 from shuup import configuration as config
 from shuup.utils import djangoenv

@@ -562,6 +562,9 @@ msgstr ""
 msgid "Folder %s deleted."
 msgstr ""
 
+msgid "Browse Media"
+msgstr ""
+
 #, python-format
 msgid "%(file)s uploaded to %(folder)s"
 msgstr ""

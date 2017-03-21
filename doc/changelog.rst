@@ -94,6 +94,8 @@ Regions
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
+- Fix usages of non-unicode ``gettext_lazy``
+
 SHUUP 1.1.0
 -----------
 
