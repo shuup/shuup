@@ -201,6 +201,10 @@ Core
     `Formdefs <shuup.utils.form_group.FormDef>` for creating payment processors
     (and their service(s)) through the shop setup wizard.
 
+``product_context_extra``
+    Additional context data for the front product views. Provide objects should inherit
+    from `~shuup.front.utils.ProductContextExtra` class.
+
 ``supplier_module``
     Supplier module classes (deriving from `~shuup.core.suppliers.base.BaseSupplierModule`),
     as used by `~shuup.core.models.Supplier`.

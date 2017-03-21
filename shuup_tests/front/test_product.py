@@ -9,10 +9,13 @@ import pytest
 from django.core.urlresolvers import reverse
 
 from shuup.apps.provides import override_provides
+from shuup.front.utils.product import ProductContextExtra
+from shuup.front.views.product import ProductDetailView
 from shuup.core.models import ProductMode
 from shuup.testing.factories import (
     create_product, get_default_product, get_default_shop
 )
+from shuup.testing.utils import apply_request_middleware
 
 
 @pytest.mark.django_db
@@ -77,3 +80,24 @@ def test_package_product_page(client):
         )
     )
     assert b'no such element' not in response.content, 'All items are not rendered correctly'
+
+
+class ExtraContextTest(ProductContextExtra):
+
+    @property
+    def extra_context(self):
+        return {"product_sku": self.product.sku}
+
+
+@pytest.mark.django_db
+def test_product_view_extra_context(rf, admin_user):
+    product = get_default_product()
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
+    view_func = ProductDetailView.as_view()
+
+    # Test that we can insert extra information into ProductDetailView context
+    with override_provides("product_context_extra", [
+        "shuup_tests.front.test_product:ExtraContextTest",
+    ]):
+        response = view_func(request, pk=product.pk)
+        assert response.context_data['product_sku'] == product.sku

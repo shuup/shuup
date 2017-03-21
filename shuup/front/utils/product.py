@@ -67,6 +67,12 @@ def get_product_context(request, product, language=None):
     context["primary_image"] = shop_product.public_primary_image
     context["images"] = shop_product.public_images
     context["order_form"] = _get_order_form(request, context, product, language)
+
+    for provide_object in get_provide_objects("product_context_extra"):
+        provider = provide_object(request, product, language)
+        if provider.provides_extra_context():
+            context.update(provider.extra_context)
+
     return context
 
 
@@ -111,3 +117,26 @@ def get_orderable_variation_children(product, request, variation_variables):
     values = (orderable_variation_children, orderable != 0)
     context_cache.set_cached_value(key, values)
     return values
+
+
+class ProductContextExtra(object):
+
+    def __init__(self, request, product, language, **kwargs):
+        self.request = request
+        self.product = product
+        self.language = language
+
+    def provides_extra_context(self):
+        """
+        Override to add business logic if this module has any context to be added
+        to the product context data.
+        """
+        return (self.extra_context is not None)
+
+    @property
+    def extra_context(self):
+        """
+        Override this property to return wanted information to be added to the product context data.
+        This property should return a dictionary which will be updated to the product context data.
+        """
+        return {}
