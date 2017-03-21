@@ -95,6 +95,7 @@ General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
 - Fix usages of non-unicode ``gettext_lazy``
+- Improve API documentation of the models with model field descriptions
 
 SHUUP 1.1.0
 -----------
