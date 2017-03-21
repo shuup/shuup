@@ -57,6 +57,7 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx.ext.viewcode',
+    'django_sphinx',
 ]
 
 # templates_path = ['_templates']
