@@ -777,7 +777,7 @@ msgstr ""
 msgid "Order has already been paid"
 msgstr ""
 
-msgid "Only orders which are not paid can be set as paid."
+msgid "Only orders which are not paid or deferred can be set as paid."
 msgstr ""
 
 msgid "Only zero price orders can be set as paid without creating a payment."

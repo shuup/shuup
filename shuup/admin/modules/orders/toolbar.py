@@ -127,7 +127,8 @@ class CreatePaymentAction(DropdownItem):
 
     @staticmethod
     def visible_for_object(object):
-        return (object.can_create_payment() and not (object.is_not_paid() and not object.taxful_total_price))
+        return (object.can_create_payment() and not (
+            (object.is_not_paid() or object.is_deferred()) and not object.taxful_total_price))
 
 
 class SetPaidAction(PostActionDropdownItem):
@@ -139,7 +140,7 @@ class SetPaidAction(PostActionDropdownItem):
 
     @staticmethod
     def visible_for_object(object):
-        return (object.is_not_paid() and not object.taxful_total_price)
+        return ((object.is_not_paid() or object.is_deferred()) and not object.taxful_total_price)
 
 
 class CreateShipmentAction(DropdownItem):

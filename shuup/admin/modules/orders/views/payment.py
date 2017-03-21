@@ -17,7 +17,7 @@ from shuup.admin.toolbar import PostActionButton, Toolbar
 from shuup.admin.utils.forms import add_form_errors_as_messages
 from shuup.admin.utils.urls import get_model_url
 from shuup.core.excs import NoPaymentToCreateException
-from shuup.core.models import Order
+from shuup.core.models import Order, PaymentStatus
 from shuup.utils.money import Money
 
 
@@ -86,9 +86,9 @@ class OrderSetPaidView(DetailView):
     def post(self, request, *args, **kwargs):
         order = self.object = self.get_object()
         error = False
-        if not order.is_not_paid():
+        if order.payment_status not in (PaymentStatus.DEFERRED, PaymentStatus.NOT_PAID):
             error = True
-            messages.error(self.request, _("Only orders which are not paid can be set as paid."))
+            messages.error(self.request, _("Only orders which are not paid or deferred can be set as paid."))
         if order.taxful_total_price:
             error = True
             messages.error(self.request, _("Only zero price orders can be set as paid without creating a payment."))
