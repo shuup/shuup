@@ -14,7 +14,7 @@ from django.db import IntegrityError
 from django.http.response import JsonResponse
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy as _l
+from django.utils.translation import ugettext_lazy
 from django.views.generic import TemplateView
 from filer.models import File, Folder
 from filer.models.imagemodels import Image
@@ -87,7 +87,7 @@ class MediaBrowserView(TemplateView):
     Most of this is just a JSON API that the Javascript (`static_src/media/browser`) uses.
     """
     template_name = "shuup/admin/media/browser.jinja"
-    title = _l(u"Browse Media")
+    title = ugettext_lazy("Browse Media")
 
     def get_context_data(self, **kwargs):
         context = super(MediaBrowserView, self).get_context_data(**kwargs)

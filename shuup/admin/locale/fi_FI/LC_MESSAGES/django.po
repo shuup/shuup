@@ -613,6 +613,9 @@ msgstr "{num} tiedostoa siirretty kansioon {folder}."
 msgid "Folder %s deleted."
 msgstr "Kansio %s poistettu."
 
+msgid "Browse Media"
+msgstr "Selaa mediaa"
+
 #, python-format
 msgid "%(file)s uploaded to %(folder)s"
 msgstr "%(file)s lähetetty kansioon %(folder)s"
