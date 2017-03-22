@@ -27,6 +27,12 @@ from .typology import Type
 
 class BaseMetaclass(type):
     def __new__(cls, name, bases, namespace):
+        base_variables = {}
+        base_bindings = {}
+        for base in bases:
+            base_variables.update(getattr(base, "variables", {}))
+            base_bindings.update(getattr(base, "bindings", {}))
+
         variables = []
         bindings = []
         for key in list(namespace.keys()):
@@ -42,7 +48,9 @@ class BaseMetaclass(type):
                 dest_list.append((key, value))
                 del namespace[key]
 
+        namespace.setdefault("variables", {}).update(base_variables)
         namespace.setdefault("variables", {}).update(variables)
+        namespace.setdefault("bindings", {}).update(base_bindings)
         namespace.setdefault("bindings", {}).update(bindings)
 
         # Figure out some sane defaults

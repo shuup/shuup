@@ -68,17 +68,12 @@ class CompanyRegistrationView(RegistrationViewMixin, default_views.RegistrationV
     template_name = "shuup/registration/company_register.jinja"
     form_class = CompanyRegistrationForm
 
-    SEND_ACTIVATION_EMAIL = False  # do not send the normal email
+    SEND_ACTIVATION_EMAIL = False
 
     def dispatch(self, request, *args, **kwargs):
         if not configuration.get(None, "allow_company_registration"):
             return HttpResponseNotFound()
         return super(CompanyRegistrationView, self).dispatch(request, *args, **kwargs)
-
-    def register(self, form):
-        user = super(CompanyRegistrationView, self).register(form)
-        # TODO: Send somekind of email here
-        return user
 
 
 class ActivationView(default_views.ActivationView):

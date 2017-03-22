@@ -29,6 +29,7 @@ URL names
 """
 
 import django.conf
+from django.db.models.signals import post_save
 from registration.signals import login_user, user_activated
 
 from shuup.apps import AppConfig
@@ -48,15 +49,20 @@ class RegistrationAppConfig(AppConfig):
             "shuup.front.apps.registration.urls:urlpatterns"
         ],
         "notify_event": [
-            "shuup.front.apps.registration.notify_events:RegistrationReceived"
+            "shuup.front.apps.registration.notify_events:RegistrationReceived",
+            "shuup.front.apps.registration.notify_events:CompanyRegistrationReceived",
+            "shuup.front.apps.registration.notify_events:CompanyApproved"
         ],
         "notify_script_template": [
             "shuup.front.apps.registration.notify_events:RegistrationReceivedEmailScriptTemplate",
             "shuup.front.apps.registration.notify_events:CompanyRegistrationReceivedEmailScriptTemplate",
+            "shuup.front.apps.registration.notify_events:CompanyActivatedEmailScriptTemplate",
         ]
     }
 
     def ready(self):
+        from shuup.core.models import CompanyContact
+        from shuup.front.apps.registration.notify_events import send_company_activated_first_time_notification
         if not hasattr(django.conf.settings, "ACCOUNT_ACTIVATION_DAYS"):
             # Patch settings to include ACCOUNT_ACTIVATION_DAYS;
             # it's a setting owned by `django-registration-redux`,
@@ -78,6 +84,11 @@ class RegistrationAppConfig(AppConfig):
             # We only provide txt templates out of the box, so default to
             # false for HTML mails.
             django.conf.settings.REGISTRATION_EMAIL_HTML = False
+
+        post_save.connect(
+            send_company_activated_first_time_notification,
+            sender=CompanyContact,
+        )
 
 
 default_app_config = "shuup.front.apps.registration.RegistrationAppConfig"
