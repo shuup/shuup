@@ -2312,7 +2312,7 @@ msgstr ""
 "tilauksilla."
 
 msgid "Value must be positive and non-zero"
-msgstr ""
+msgstr "Arvon pitää olla positiivinen ja nollasta eroava"
 
 msgid "internal unit"
 msgstr "sisäinen yksikkö"
@@ -2334,6 +2334,8 @@ msgid ""
 "The number of decimal places to use for values in the display unit.  The "
 "internal values are still rounded based on settings of the internal unit."
 msgstr ""
+"Näyttöyksikössä esitettävien arvojen desimaalien määrä. Sisäiset arvot "
+"pyöristetään silti sisäisen yksikön asetusten mukaan."
 
 msgid "comparison value"
 msgstr "vertailuarvo"
@@ -2378,7 +2380,7 @@ msgid "display units"
 msgstr "näyttöyksiköt"
 
 msgid "Pieces"
-msgstr ""
+msgstr "Kappaletta"
 
 msgctxt "Symbol for pieces unit"
 msgid "pc."
