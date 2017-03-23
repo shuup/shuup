@@ -78,6 +78,15 @@ def parse_decimal_string(s):
     Parses a string (or unicode) that may be embellished
     with spaces and other weirdness into the most probable Decimal.
 
+    >>> assert parse_decimal_string('42') == Decimal(42)
+    >>> assert parse_decimal_string('0') == Decimal(0)
+    >>> assert parse_decimal_string('3.5') == Decimal('3.5')
+    >>> assert parse_decimal_string('') == Decimal(0)
+    >>> assert parse_decimal_string(3.5) == Decimal('3.5')
+    >>> assert parse_decimal_string(-5) == Decimal(-5)
+    >>> assert parse_decimal_string('1e12') == Decimal(112)
+    >>> assert parse_decimal_string(float('inf')) == Decimal('inf')
+
     :param s: Input value
     :type s: str
     :return: Decimal
