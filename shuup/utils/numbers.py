@@ -5,6 +5,8 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from __future__ import unicode_literals
+
 import re
 from decimal import Decimal, ROUND_HALF_EVEN, ROUND_HALF_UP
 
@@ -71,12 +73,63 @@ def strip_non_float_chars(s):
     return re.sub("[^-+0123456789.]+", "", six.text_type(s))
 
 
+_simple_decimal_rx = re.compile(r'^[-+]?(\d{1,50}\.\d{0,50}|\.?\d{1,50})$')
+
+raise_exception = object()
+
+
+def parse_simple_decimal(value, error=raise_exception):
+    """
+    Parse simple decimal value from string.
+
+    Simple decimal is basically a string of digits with optional sign
+    and decimal point.  Anything fancy, such as exponent forms, NaN or
+    Infinity is an error.  So are other unallowed characters.  There is
+    also a length limit of 50 digits before and after the decimal point.
+
+    >>> assert parse_simple_decimal('42') == Decimal(42)
+    >>> assert parse_simple_decimal('0') == Decimal(0)
+    >>> assert parse_simple_decimal('3.5') == Decimal('3.5')
+    >>> assert parse_simple_decimal('', None) is None
+    >>> assert parse_simple_decimal(3.5, None ) is None
+    >>> assert parse_simple_decimal(-5, None) is None
+    >>> assert parse_simple_decimal('1e12', None) is None
+    >>> assert parse_simple_decimal(float('inf'), None) is None
+
+    :type value: str
+    :param value: The input value as string
+    :type error: Any
+    :param error: Value to return on error, or by default raise an exception
+    :rtype: Decimal|type(error)
+    :raises ValueError: on errors by default
+    """
+    decoded_value = (
+        value.decode('ascii', errors='replace')
+        if six.PY2 and isinstance(value, bytes)
+        else value)
+    if not isinstance(decoded_value, six.text_type) or (
+            not _simple_decimal_rx.match(decoded_value)):
+        if error is raise_exception:
+            raise ValueError('Cannot parse as simple decimal: %r' % (value,))
+        return error
+    return Decimal(value)
+
+
 def parse_decimal_string(s):
     """
     Parse decimals with "best effort".
 
     Parses a string (or unicode) that may be embellished
     with spaces and other weirdness into the most probable Decimal.
+
+    >>> assert parse_decimal_string('42') == Decimal(42)
+    >>> assert parse_decimal_string('0') == Decimal(0)
+    >>> assert parse_decimal_string('3.5') == Decimal('3.5')
+    >>> assert parse_decimal_string('') == Decimal(0)
+    >>> assert parse_decimal_string(3.5) == Decimal('3.5')
+    >>> assert parse_decimal_string(-5) == Decimal(-5)
+    >>> assert parse_decimal_string('1e12') == Decimal(112)
+    >>> assert parse_decimal_string(float('inf')) == Decimal('inf')
 
     :param s: Input value
     :type s: str

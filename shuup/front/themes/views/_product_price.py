@@ -5,10 +5,13 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from __future__ import unicode_literals
+
 import decimal
 
 from shuup.core.models import ProductVariationResult
 from shuup.front.views.product import ProductDetailView
+from shuup.utils.numbers import parse_simple_decimal
 
 
 class ProductPriceView(ProductDetailView):
@@ -27,8 +30,10 @@ class ProductPriceView(ProductDetailView):
         if not product:
             return False
         shop_product = product.get_shop_instance(self.request.shop)
-        qty = self._get_quantity()
-        if not shop_product.is_orderable(None, self.request.customer, qty):
+        quantity = self._get_quantity()
+        if not quantity:
+            return False
+        if not shop_product.is_orderable(None, self.request.customer, quantity):
             return False
         return True
 
@@ -37,15 +42,16 @@ class ProductPriceView(ProductDetailView):
         if not context["product"] or not self.is_orderable():
             self.template_name = "shuup/front/product/detail_order_section_no_product.jinja"
             return context
-        context["quantity"] = context["product"].sales_unit.round(self._get_quantity())
+        quantity = self._get_quantity()
+        if quantity is not None:
+            context["quantity"] = context["product"].sales_unit.round(quantity)
         return context
 
     def _get_quantity(self):
-        quantity_text = self.request.GET.get("quantity", '0')
-        try:
-            quantity = decimal.Decimal(quantity_text)
-        except ValueError:
-            return decimal.Decimal(0)
+        quantity_text = self.request.GET.get("quantity", '')
+        quantity = parse_simple_decimal(quantity_text, None)
+        if quantity is None or quantity < 0:
+            return None
         unit_type = self.request.GET.get('unitType', 'internal')
         if unit_type == 'internal':
             return quantity
