@@ -29,6 +29,7 @@ Localization
 Admin
 ~~~~~
 
+- Add option to define a custom admin module loader
 - Quick add staff members for shops
 - Main menu is now updateable through provides.
 - Add new provide category called `order_printouts_delivery_extra_fields`
