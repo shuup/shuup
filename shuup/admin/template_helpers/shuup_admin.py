@@ -14,14 +14,18 @@ import itertools
 
 from django.core.urlresolvers import NoReverseMatch, reverse
 from django.middleware.csrf import get_token
+from django.utils.safestring import mark_safe
 from jinja2.utils import contextfunction
 
 from shuup import configuration
 from shuup.admin import menu
 from shuup.admin.breadcrumbs import Breadcrumbs
+from shuup.admin.shop_provider import AdminShopProvider
 from shuup.admin.utils.urls import (
     get_model_url, manipulate_query_string, NoModelUrl
 )
+from shuup.apps.provides import get_provide_objects
+from shuup.core.models import Shop
 from shuup.core.telemetry import is_telemetry_enabled
 
 __all__ = ["get_menu_entry_categories", "get_front_url", "get_config", "model_url"]
@@ -70,10 +74,12 @@ def get_support_id(context):
 
 # TODO: Figure out a more extensible way to deal with this
 BROWSER_URL_NAMES = {
+    "select": "shuup_admin:select",
     "media": "shuup_admin:media.browse",
     "product": "shuup_admin:shop_product.list",
     "contact": "shuup_admin:contact.list",
     "setLanguage": "shuup_admin:set-language",
+    "setShop": "shuup_admin:set-shop",
 }
 
 
@@ -130,6 +136,41 @@ def model_url(context, model, kind="detail", default=None):
     """
     user = context.get("user")
     try:
-        return get_model_url(model, kind=kind, user=user)
+        return get_model_url(model, kind=kind, user=user, request=context.get("request"))
     except NoModelUrl:
         return default
+
+
+@contextfunction
+def get_shop_count(context):
+    """
+    Return the number of shops accessible by the currently logged in user
+    """
+    request = context["request"]
+    if not request or request.user.is_anonymous():
+        return 0
+    queryset = Shop.objects.all()
+    if not request.user.is_superuser:
+        queryset = queryset.filter(staff_members=request.user)
+    return queryset.count()
+
+
+@contextfunction
+def get_admin_shop(context):
+    return AdminShopProvider().get_provided_shop(context["request"])
+
+
+@contextfunction
+def get_navigation_before(context):
+    rendered = []
+    for nav_cls in get_provide_objects("admin_main_navigation_items_before"):
+        rendered.append(nav_cls.render(request=context["request"], context=context))
+    return mark_safe("".join(rendered))
+
+
+@contextfunction
+def get_navigation_after(context):
+    rendered = []
+    for nav_cls in get_provide_objects("admin_main_navigation_items_after"):
+        rendered.append(nav_cls.render(request=context["request"], context=context))
+    return mark_safe("".join(rendered))

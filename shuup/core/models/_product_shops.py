@@ -167,7 +167,11 @@ class ShopProduct(MoneyPropped, models.Model):
         help_text=_("Unit for displaying quantities of this product"))
 
     class Meta:
+        permissions = (('view_shopproduct', 'Can view shop products'),)
         unique_together = (("shop", "product",),)
+
+    def __str__(self):
+        return "{} ({})".format(self.product, self.shop)
 
     def save(self, *args, **kwargs):
         self.clean()
@@ -311,14 +315,19 @@ class ShopProduct(MoneyPropped, models.Model):
             from shuup.core.models import ProductVariationResult
             sellable = False
             for combo in self.product.get_all_available_combinations():
-                res = ProductVariationResult.resolve(self.product, combo["variable_to_value"])
-                if not res:
+
+                product_variant = ProductVariationResult.resolve(self.product, combo["variable_to_value"])
+                if not product_variant:
                     continue
-                child_shop_product = res.get_shop_instance(self.shop)
-                if child_shop_product.is_orderable(
+
+                try:
+                    shop_product_variant = product_variant.get_shop_instance(self.shop)
+                except ShopProduct.DoesNotExist:
+                    continue
+                if shop_product_variant.is_orderable(
                         supplier=supplier,
                         customer=customer,
-                        quantity=child_shop_product.minimum_purchase_quantity,
+                        quantity=shop_product_variant.minimum_purchase_quantity,
                         allow_cache=False
                 ):
                     sellable = True

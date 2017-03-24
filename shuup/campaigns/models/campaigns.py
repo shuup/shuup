@@ -84,8 +84,9 @@ class Campaign(MoneyPropped, TranslatableModel):
 
     class Meta:
         abstract = True
-        verbose_name = _('Campaign')
-        verbose_name_plural = _('Campaigns')
+        permissions = (('view_campaign', 'Can view campaigns'),)
+        verbose_name = _('campaign')
+        verbose_name_plural = _('campaigns')
 
     def save(self, *args, **kwargs):
         super(Campaign, self).save(*args, **kwargs)
@@ -123,6 +124,11 @@ class CatalogCampaign(Campaign):
     translations = TranslatedFields(public_name=models.CharField(max_length=120, blank=True, help_text=_(
         "The campaign name to show in the store front."
     )))
+
+    class Meta:
+        permissions = (('view_catalogcampaign', 'Can view catalog campaigns'),)
+        verbose_name = _('catalog campaign')
+        verbose_name_plural = _('catalog campaigns')
 
     def __str__(self):
         return force_text(_("Catalog Campaign: %(name)s" % dict(name=self.name)))
@@ -219,6 +225,11 @@ class BasketCampaign(Campaign):
             "The campaign name to show in the store front."
         ))
     )
+
+    class Meta:
+        permissions = (('view_basketcampaign', 'Can view basket campaigns'),)
+        verbose_name = _('basket campaign')
+        verbose_name_plural = _('basket campaigns')
 
     def __str__(self):
         return force_text(_("Basket Campaign: %(name)s" % dict(name=self.name)))

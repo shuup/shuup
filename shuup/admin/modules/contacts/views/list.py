@@ -18,7 +18,7 @@ from shuup.admin.utils.picotable import (
 )
 from shuup.admin.utils.views import PicotableListView
 from shuup.core.models import (
-    CompanyContact, Contact, ContactGroup, PersonContact
+    CompanyContact, Contact, ContactGroup, PersonContact, Shop
 )
 
 
@@ -57,22 +57,33 @@ class ContactListView(PicotableListView):
     ]
 
     def get_toolbar(self):
+        if self.request.user.is_superuser:
+            settings_button = SettingsActionButton.for_model(Contact, return_url="contact")
+        else:
+            settings_button = None
         return Toolbar([
             NewActionButton.for_model(
-                PersonContact, url=reverse("shuup_admin:contact.new") + "?type=person"),
+                PersonContact, url=reverse("shuup_admin:contact.new") + "?type=person"
+            ),
             NewActionButton.for_model(
-                CompanyContact, extra_css_class="btn-info", url=reverse("shuup_admin:contact.new") + "?type=company"),
-            SettingsActionButton.for_model(Contact, return_url="contact")
+                CompanyContact, extra_css_class="btn-info", url=reverse("shuup_admin:contact.new") + "?type=company"
+            ),
+            settings_button
         ])
 
     def get_queryset(self):
+        qs = super(ContactListView, self).get_queryset()
         groups = self.get_filter().get("groups")
         query = Q(groups__in=groups) if groups else Q()
+        if not self.request.user.is_superuser:
+            shop = Shop.objects.get_current(self.request)
+            qs = qs.filter(shop=shop)
         return (
-            super(ContactListView, self).get_queryset()
+            qs
             .filter(query)
             .annotate(n_orders=Count("customer_orders"))
-            .order_by("-created_on"))
+            .order_by("-created_on")
+        )
 
     def get_type_display(self, instance):
         if isinstance(instance, PersonContact):

@@ -8,6 +8,9 @@
 from django.http import HttpResponseRedirect
 
 from shuup.admin.signals import object_created
+from shuup.admin.utils.permissions import (
+    user_has_permission, user_has_permission_to_view_kind
+)
 from shuup.admin.utils.urls import get_model_url
 from shuup.admin.utils.views import add_create_or_change_message
 from shuup.apps.provides import get_provide_objects
@@ -38,6 +41,16 @@ class FormPart(object):
     def form_valid(self, form):
         pass
 
+    def has_view_perm(self):
+        if user_has_permission("change", self.request.user, self.object):
+            return True
+        return user_has_permission("view", self.request.user, self.object)
+
+    def has_save_perm(self):
+        if not self.object.pk:
+            return user_has_permission("add", self.request.user, self.object)
+        return user_has_permission_to_view_kind(self.request.user, self.object, "change")
+
 
 class FormPartsViewMixin(object):
     fields = ()  # Dealt with by the FormGroup
@@ -57,7 +70,9 @@ class FormPartsViewMixin(object):
 
     def get_form_parts(self, object):
         form_part_classes = self.get_form_part_classes()
-        form_parts = [form_part_class(request=self.request, object=object) for form_part_class in form_part_classes]
+        form_parts = []
+        for form_part_class in form_part_classes:
+            form_parts.append(form_part_class(request=self.request, object=object))
         form_parts.sort(key=lambda form_part: getattr(form_part, "priority", 0))
         return form_parts
 
@@ -69,6 +84,8 @@ class FormPartsViewMixin(object):
         fg = FormGroup(**kwargs)
         form_parts = self.get_form_parts(instance)
         for form_part in form_parts:
+            if not form_part.has_view_perm():
+                continue
             for form_def in form_part.get_form_defs():
                 fg.form_defs[form_def.name] = form_def
         fg.instantiate_forms()
@@ -83,14 +100,16 @@ class SaveFormPartsMixin(object):
         is_new = (not self.object.pk)
         form_parts = self.get_form_parts(self.object)
         for form_part in form_parts:
+            if not form_part.has_save_perm():
+                continue
             retval = form_part.form_valid(form)
-
             if retval is not None:  # Allow a form part to change the identity of the object
                 self.object = retval
                 for form_part in form_parts:
                     form_part.object = self.object
         if is_new:
-            object_created.send(sender=type(self.object), object=self.object)
+            object_created.send(sender=type(self.object), object=self.object, request=self.request)
+
         add_create_or_change_message(self.request, self.object, is_new)
 
         if self.request.GET.get("redirect") and not self.request.POST.get("__next"):

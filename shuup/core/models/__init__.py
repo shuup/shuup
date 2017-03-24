@@ -32,6 +32,7 @@ from ._orders import (
     OrderStatusRole, PaymentStatus, ShippingStatus
 )
 from ._payments import AbstractPayment, Payment
+from ._permissions import ShopObjectPermission
 from ._persistent_cache import PersistentCacheEntry
 from ._product_media import ProductMedia, ProductMediaKind
 from ._product_packages import ProductPackageLink
@@ -154,6 +155,7 @@ __all__ = [
     "ShippingStatus",
     "ShuupModel",
     "Shop",
+    "ShopObjectPermission",
     "ShopProduct",
     "ShopProductVisibility",
     "ShopStatus",

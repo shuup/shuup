@@ -18,6 +18,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
+msgid "Mutable Address"
+msgstr ""
+
+msgid "Mutable Addressess can be fetched, created, updated and deleted."
+msgstr ""
+
 msgid "Attributes"
 msgstr ""
 
@@ -34,6 +40,12 @@ msgid "Contacts"
 msgstr ""
 
 msgid "Contacts can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+msgid "Person Contact"
+msgstr ""
+
+msgid "Person Contacts can be listed, fetched, created, updated and deleted."
 msgstr ""
 
 msgid "Manufacturer"

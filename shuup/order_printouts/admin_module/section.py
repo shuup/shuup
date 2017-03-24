@@ -32,11 +32,13 @@ class PrintoutsSection(Section):
     order = 5
 
     @staticmethod
-    def visible_for_object(obj):
-        return True
+    def visible_for_object(obj, request=None):
+        if not request:
+            return True  # backwards compatibility
+        return request.user.has_perm('shuup.view_order')
 
     @staticmethod
-    def get_context_data(obj):
+    def get_context_data(obj, request=None):
         recipient = None
         if obj.customer:
             recipient = obj.customer.email

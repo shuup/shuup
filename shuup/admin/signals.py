@@ -8,4 +8,4 @@
 
 from django.dispatch import Signal
 
-object_created = Signal(providing_args=["object"], use_caching=True)
+object_created = Signal(providing_args=["object", "request"], use_caching=True)

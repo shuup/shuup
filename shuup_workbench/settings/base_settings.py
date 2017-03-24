@@ -84,6 +84,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'shuup.front.middleware.ProblemMiddleware',
+    'shuup.admin.middleware.ShuupAdminMiddleware',
     'shuup.front.middleware.ShuupFrontMiddleware',
 ]
 
@@ -232,6 +233,7 @@ SHUUP_ERROR_PAGE_HANDLERS_SPEC = [
 ]
 
 SHUUP_SIMPLE_SEARCH_LIMIT = 150
+
 
 if os.environ.get("SHUUP_WORKBENCH_DISABLE_MIGRATIONS") == "1":
     from .utils import DisableMigrations

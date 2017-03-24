@@ -12,20 +12,21 @@ from django.utils.translation import ugettext_lazy as _
 from enumfields import EnumIntegerField
 
 from shuup.core.fields import MoneyValueField, QuantityField
+from shuup.core.settings_provider import ShuupSettings
 from shuup.core.suppliers.enums import StockAdjustmentType
 from shuup.utils.properties import PriceProperty
 
 
 def _get_currency():
     from shuup.core.models import Shop
-    if not settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
+    if not ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS"):
         return Shop.objects.first().currency
     return settings.SHUUP_HOME_CURRENCY
 
 
 def _get_prices_include_tax():
     from shuup.core.models import Shop
-    if not settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
+    if not ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS"):
         return Shop.objects.first().prices_include_tax
     return False
 

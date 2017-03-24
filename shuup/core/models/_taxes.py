@@ -92,6 +92,7 @@ class Tax(MoneyPropped, ChangeProtected, TranslatableShuupModel):
         return self.order_line_taxes.exists()
 
     class Meta:
+        permissions = (('view_tax', 'Can view taxes'),)
         verbose_name = _('tax')
         verbose_name_plural = _('taxes')
 
@@ -110,6 +111,7 @@ class TaxClass(TranslatableShuupModel):
     ))
 
     class Meta:
+        permissions = (('view_taxclass', 'Can view tax classes'),)
         verbose_name = _('tax class')
         verbose_name_plural = _('tax classes')
 
@@ -126,6 +128,7 @@ class CustomerTaxGroup(TranslatableShuupModel):
     enabled = models.BooleanField(default=True, verbose_name=_('enabled'))
 
     class Meta:
+        permissions = (('view_customertaxgroup', 'Can view customer tax groups'),)
         verbose_name = _('customer tax group')
         verbose_name_plural = _('customer tax groups')
 

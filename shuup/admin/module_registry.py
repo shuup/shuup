@@ -10,7 +10,7 @@ import contextlib
 import six
 
 from shuup.apps.provides import get_provide_objects
-from shuup.utils.importing import load
+from shuup.utils.importing import cached_load, load
 
 _registry = []
 
@@ -26,13 +26,21 @@ def discover():
         register(obj)
 
 
-def get_modules():
+def get_admin_modules():
     """
     :rtype: list[shuup.admin.base.AdminModule]
     """
     if not _registry:
         discover()
     return iter(_registry)
+
+
+def get_modules():
+    """
+    :rtype: list[shuup.admin.base.AdminModule]
+    """
+    get_modules_spec = cached_load("SHUUP_GET_ADMIN_MODULES_SPEC")
+    return get_modules_spec()
 
 
 def get_module_urls():

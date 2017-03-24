@@ -19,9 +19,12 @@ class SalesDashboardModule(CurrencyBound, AdminModule):
 
     def get_dashboard_blocks(self, request):
         import shuup.admin.modules.sales_dashboard.dashboard as dashboard
+        from shuup.admin.shop_provider import get_shop
         currency = self.currency
         if not currency:
-            return
+            shop = get_shop(request)
+            currency = shop.currency
+
         yield dashboard.get_sales_of_the_day_block(request, currency)
         yield dashboard.get_lifetime_sales_block(request, currency)
         yield dashboard.get_avg_purchase_size_block(request, currency)

@@ -44,6 +44,7 @@ case 2: Define if this discount is available if customer has products in
     their basket for certain amount of money (shipping excluded)
 """
 
+
 @pytest.mark.django_db
 def test_basket_campaign_module_case1(rf):
     request, shop, group = initialize_test(rf, False)
@@ -55,7 +56,7 @@ def test_basket_campaign_module_case1(rf):
     single_product_price = "50"
     discount_amount_value = "10"
 
-     # create basket rule that requires 2 products in basket
+    # create basket rule that requires 2 products in basket
     basket_rule1 = BasketTotalProductAmountCondition.objects.create(value="2")
 
     product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=single_product_price)
@@ -73,7 +74,7 @@ def test_basket_campaign_module_case1(rf):
     BasketDiscountAmount.objects.create(campaign=campaign, discount_amount=discount_amount_value)
 
     assert len(basket.get_final_lines()) == 2  # case 1
-    assert basket.total_price == price(single_product_price) # case 1
+    assert basket.total_price == price(single_product_price)  # case 1
 
     basket.add_product(supplier=supplier, shop=shop, product=product, quantity=1)
     basket.save()
@@ -150,7 +151,7 @@ def test_basket_campaign_case2(rf):
 
     basket = get_basket(request)
     supplier = get_default_supplier()
-     # create a basket rule that requires at least value of 200
+    # create a basket rule that requires at least value of 200
     rule = BasketTotalAmountCondition.objects.create(value="200")
 
     single_product_price = "50"
@@ -198,7 +199,7 @@ def test_only_cheapest_price_is_selected(rf):
 
     basket = get_basket(request)
     supplier = get_default_supplier()
-     # create a basket rule that requires atleast value of 200
+    # create a basket rule that requires atleast value of 200
     rule = BasketTotalAmountCondition.objects.create(value="200")
 
     product_price = "200"
@@ -236,7 +237,7 @@ def test_multiple_campaigns_match_with_coupon(rf):
 
     basket = get_basket(request)
     supplier = get_default_supplier()
-     # create a basket rule that requires atleast value of 200
+    # create a basket rule that requires atleast value of 200
     rule = BasketTotalAmountCondition.objects.create(value="200")
 
     product_price = "200"
@@ -430,7 +431,10 @@ def test_product_basket_campaigns2():
     condition.products.add(product)
     assert BasketCampaign.get_for_product(shop_product).count() == 1
 
-    shop1 = Shop.objects.create(name="testshop", identifier="testshop", status=ShopStatus.ENABLED, public_name="testshop")
+    shop1 = Shop.objects.create(name="testshop",
+                                identifier="testshop",
+                                status=ShopStatus.ENABLED,
+                                public_name="testshop")
     sp = ShopProduct.objects.create(product=product, shop=shop1, default_price=shop1.create_price(200))
 
     campaign.shop = shop1

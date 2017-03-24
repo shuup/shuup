@@ -26,6 +26,7 @@ from .fixtures import get_request
 
 __all__ = ("regular_user",)  # noqa
 
+
 def get_unprocessed_request():
     request = get_request()
     for attrname in ['shop', 'person', 'customer', 'basket']:

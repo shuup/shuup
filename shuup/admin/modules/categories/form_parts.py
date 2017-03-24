@@ -11,6 +11,7 @@ from shuup.admin.form_part import FormPart, TemplatedFormDef
 from shuup.admin.modules.categories.forms import (
     CategoryBaseForm, CategoryProductForm
 )
+from shuup.admin.shop_provider import get_shop
 from shuup.core.models import Category
 
 
@@ -23,7 +24,7 @@ class CategoryBaseFormPart(FormPart):
             CategoryBaseForm,
             template_name="shuup/admin/categories/_edit_base_form.jinja",
             required=True,
-            kwargs={"instance": self.object, "languages": settings.LANGUAGES}
+            kwargs={"instance": self.object, "request": self.request, "languages": settings.LANGUAGES}
         )
 
     def form_valid(self, form):
@@ -40,14 +41,15 @@ class CategoryProductFormPart(FormPart):
     def get_form_defs(self):
         if not self.object.pk:
             return
-        for shop in self.object.shops.all():
-            yield TemplatedFormDef(
-                self._get_form_name(shop),
-                CategoryProductForm,
-                template_name="shuup/admin/categories/_edit_products_form.jinja",
-                required=True,
-                kwargs={"shop": shop, "category": self.object}
-            )
+
+        shop = get_shop(self.request)
+        yield TemplatedFormDef(
+            self._get_form_name(shop),
+            CategoryProductForm,
+            template_name="shuup/admin/categories/_edit_products_form.jinja",
+            required=True,
+            kwargs={"shop": shop, "category": self.object}
+        )
 
     def _get_form_name(self, shop):
         return "%s_%s" % (shop.pk, self.name)

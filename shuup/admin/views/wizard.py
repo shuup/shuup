@@ -5,14 +5,17 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.db.transaction import atomic
 from django.http.response import HttpResponseRedirect, JsonResponse
+from django.utils.decorators import method_decorator
 from django.utils.functional import cached_property
 from django.views.generic import TemplateView
 
 from shuup import configuration
 from shuup.admin.form_part import FormPart, TemplatedFormDef
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.wizard import (
     load_setup_wizard_pane, load_setup_wizard_panes
 )
@@ -22,7 +25,7 @@ from shuup.utils.iterables import first
 
 
 class WizardFormDefMixin(object):
-    def __init__(self,  **kwargs):
+    def __init__(self, **kwargs):
         self.context = kwargs.pop("context", {})
         self.extra_js = kwargs.pop("extra_js", "")
         super(WizardFormDefMixin, self).__init__(**kwargs)
@@ -72,7 +75,7 @@ class WizardView(TemplateView):
 
     @cached_property
     def panes(self):
-        shop = Shop.objects.first()
+        shop = get_shop(self.request)
         pane_id = self.request.GET.get("pane_id", None)
         panes = load_setup_wizard_panes(
             shop=shop,
@@ -135,6 +138,7 @@ class WizardView(TemplateView):
         return JsonResponse(form.errors, status=400)
 
     @atomic
+    @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         abort = request.POST.get("abort", False)
         if self.request.POST.get("pane_id") == self.get_final_pane_identifier():
@@ -148,6 +152,7 @@ class WizardView(TemplateView):
             return self.form_invalid(form)
 
     @atomic
+    @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         if len(self.panes) == 0:
             if request.shop.maintenance_mode:

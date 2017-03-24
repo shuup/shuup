@@ -10,7 +10,6 @@ import pytest
 from shuup import configuration
 from shuup.admin.modules.settings import consts
 from shuup.admin.modules.settings.enums import OrderReferenceNumberMethod
-from shuup.core.models import ConfigurationItem
 from shuup.testing.factories import get_default_shop
 
 from shuup.admin.modules.settings.views import SystemSettingsView
@@ -34,6 +33,28 @@ def set_reference_method(rf, admin_user, reference_method, shop=None):
     return shop
 
 
+def assert_config_value(rf, admin_user, form_id, key, value, expected_value, shop=None):
+    if not shop:
+        shop = get_default_shop()
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
+    view_func = SystemSettingsView.as_view()
+    response = view_func(request)
+    assert response.status_code == 200
+
+    form_field = "%s-%s" % (form_id, key)
+    data = {form_field: value}
+    request = apply_request_middleware(rf.post("/", data=data))
+    response = view_func(request)
+    assert response.status_code == 302
+    if expected_value == "unset":
+        expected_value = value
+    assert configuration.get(None, key) == expected_value
+    return shop
+
+
+@pytest.mark.parametrize("form_id, field, value, expected_value, shop", [
+    ("order_settings", consts.ORDER_REFERENCE_NUMBER_METHOD_FIELD, OrderReferenceNumberMethod.UNIQUE.value, "unset", None),
+])
 @pytest.mark.django_db
-def test_system_settings(rf, admin_user):
-    set_reference_method(rf, admin_user, OrderReferenceNumberMethod.UNIQUE)
+def test_system_settings(rf, admin_user, form_id, field, value, expected_value, shop):
+    assert_config_value(rf, admin_user, form_id, field, value, expected_value, shop)

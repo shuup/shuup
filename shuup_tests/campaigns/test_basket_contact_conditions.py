@@ -44,7 +44,6 @@ def create_basket_and_campaign(request, conditions, product_price_value, campaig
     assert basket.product_count == 1
     original_price = basket.total_price
 
-
     campaign = BasketCampaign.objects.create(
         shop=request.shop, name="test", public_name="test", active=True)
     BasketDiscountAmount.objects.create(campaign=campaign, discount_amount=campaign_discount_value)

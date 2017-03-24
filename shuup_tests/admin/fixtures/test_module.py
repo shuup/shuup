@@ -40,7 +40,7 @@ class ATestModule(AdminModule):
             admin_url(
                 "test3/$", "shuup_tests.admin.fixtures.test_module.OkAction",
                 name="test-perm", require_authentication=True,
-                permissions=("bogus-permission",)),
+                permissions=("shuup.change_product", "shuup.add_product", "shuup.delete_product")),
         ]
 
     def get_menu_entries(self, request):

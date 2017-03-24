@@ -28,7 +28,10 @@ class PackageChildForm(forms.Form):
         self.product = initial.get("child")
         if self.product:
             self.shop_products = []
-            for shop in Shop.objects.all():
+            shop_queryset = Shop.objects.all()
+            if getattr(self.request.user, "is_superuser", False):
+                shop_queryset = shop_queryset.filter(staff_members=self.request.user)
+            for shop in shop_queryset:
                 try:
                     shop_product = self.product.get_shop_instance(shop)
                     self.shop_products.append(shop_product)

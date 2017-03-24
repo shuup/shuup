@@ -82,6 +82,14 @@ Core
     Allows providing extension for the product attribute form in admin.
     Should implement the `~shuup.admin.form_modifier.FormModifier` interface.
 
+``admin_main_navigation_items_after``
+    Allows providing extension for the main navigation in admin after the search bar.
+    Should implement the `~shuup.admin.navigation.AdminNavigationProvider` interface.
+
+``admin_main_navigation_items_before``
+    Allows providing extension for the main navigation in admin before the search bar.
+    Should implement the `~shuup.admin.navigation.AdminNavigationProvider` interface.
+
 ``admin_order_information``
     Additional information rows for Order detail page. Provide objects should inherit
     from `~shuup.admin.modules.orders.utils.OrderInformation` class.
@@ -102,6 +110,9 @@ Core
 
 ``admin_shop_form_part``
     Additional ``FormPart`` classes for Shop editing. See :doc:`example <../howto/new_tab>`.
+
+``admin_system_settings_form_part``
+    Additional ``FormPart`` classes for System Settings.
 
 ``admin_module``
     Admin module classes. Practically all of the functionality in the admin is built

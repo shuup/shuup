@@ -11,9 +11,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.base import AdminModule, MenuEntry, SearchResult
 from shuup.admin.menu import CONTACTS_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import admin_url, derive_model_url, get_model_url
-from shuup.core.models import CompanyContact, Contact, PersonContact
+from shuup.core.models import Contact
 
 
 class ContactModule(AdminModule):
@@ -39,35 +38,35 @@ class ContactModule(AdminModule):
                 "^contacts/(?P<pk>\d+)/$",
                 "shuup.admin.modules.contacts.views.ContactDetailView",
                 name="contact.detail",
-                permissions=get_default_model_permissions(Contact),
+                permissions=["shuup.view_contact"],
             ),
             admin_url(
                 "^contacts/reset-password/(?P<pk>\d+)/$",
                 "shuup.admin.modules.contacts.views.ContactResetPasswordView",
                 name="contact.reset_password",
-                permissions=get_default_model_permissions(Contact),
+                permissions=["shuup.change_contact"],
             ),
             admin_url(
                 "^contacts/$",
                 "shuup.admin.modules.contacts.views.ContactListView",
                 name="contact.list",
-                permissions=get_default_model_permissions(Contact),
+                permissions=["shuup.view_contact"],
             ),
             admin_url(
                 "^contacts/list-settings/",
                 "shuup.admin.modules.settings.views.ListSettingsView",
                 name="contact.list_settings",
-                permissions=get_default_model_permissions(Contact),
+                require_superuser=True,
             ),
             admin_url(
                 "^contacts/mass-edit/$", "shuup.admin.modules.contacts.views.ContactMassEditView",
                 name="contact.mass_edit",
-                permissions=get_default_model_permissions(Contact)
+                permissions=["shuup.change_contact"]
             ),
             admin_url(
                 "^contacts/mass-edit-group/$", "shuup.admin.modules.contacts.views.ContactGroupMassEditView",
                 name="contact.mass_edit_group",
-                permissions=get_default_model_permissions(Contact)
+                permissions=["shuup.change_contact"]
             )
         ]
 
@@ -81,11 +80,7 @@ class ContactModule(AdminModule):
         ]
 
     def get_required_permissions(self):
-        return (
-            get_default_model_permissions(CompanyContact) |
-            get_default_model_permissions(Contact) |
-            get_default_model_permissions(PersonContact)
-        )
+        return ["shuup.view_contact"]
 
     def get_search_results(self, request, query):
         minimum_query_length = 3

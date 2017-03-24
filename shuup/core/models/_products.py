@@ -142,10 +142,12 @@ class ProductQuerySet(TranslatableQuerySet):
         else:
             from ._product_shops import ShopProductVisibility
             qs = root.all().exclude(Q(
-                        shop_products__shop=shop,
-                        shop_products__visibility=ShopProductVisibility.NOT_VISIBLE
-                    )).exclude(
-                mode__in=self._get_invisible_modes()
+                shop_products__shop=shop, shop_products__visibility=ShopProductVisibility.NOT_VISIBLE
+            )).exclude(mode__in=self._get_invisible_modes()).filter(
+                mode__in=(
+                    ProductMode.NORMAL, ProductMode.PACKAGE_PARENT,
+                    ProductMode.SIMPLE_VARIATION_PARENT, ProductMode.VARIABLE_VARIATION_PARENT
+                )
             )
             if customer and not customer.is_anonymous:
                 visible_to_logged_in_q = Q(shop_products__visibility_limit__in=(
@@ -183,8 +185,10 @@ class ProductQuerySet(TranslatableQuerySet):
         from ._product_shops import ShopProductVisibility
         return self._get_qs(shop, customer, language, ShopProductVisibility.SEARCHABLE)
 
-    def all_except_deleted(self, language=None):
+    def all_except_deleted(self, language=None, shop=None):
         qs = (self.language(language) if language else self).exclude(deleted=True)
+        if shop:
+            qs = qs.filter(shop_products__shop=shop)
         qs = qs.select_related(*Product.COMMON_SELECT_RELATED)
         return qs
 
@@ -364,6 +368,7 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
 
     class Meta:
         ordering = ('-id',)
+        permissions = (('view_product', 'Can view products'),)
         verbose_name = _('product')
         verbose_name_plural = _('products')
 
@@ -383,9 +388,9 @@ class Product(TaxableItem, AttributableMixin, TranslatableModel):
         if val is not None:
             return val
 
-        shop_inst = self.shop_products.get(shop=shop)
-        context_cache.set_cached_value(key, shop_inst)
-        return shop_inst
+        shop_product_inst = self.shop_products.get(shop=shop)
+        context_cache.set_cached_value(key, shop_product_inst)
+        return shop_product_inst
 
     def get_priced_children(self, context, quantity=1):
         """
