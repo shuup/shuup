@@ -210,11 +210,15 @@ class PackageProductChoiceWidget(ProductChoiceWidget):
 
 class QuickAddRelatedObjectSelect(Select):
     url = ""
+    model = ""
 
     def render(self, name, value, attrs=None, choices=()):
         if value is None:
             value = ''
         final_attrs = self.build_attrs(attrs, name=name)
+        if self.model:
+            final_attrs['data-model'] = self.model
+            choices = []
         output = [format_html('<select{}>', flatatt(final_attrs))]
         options = self.render_options(choices, [value])
         if options:
@@ -280,6 +284,7 @@ class QuickAddProductTypeSelect(QuickAddRelatedObjectSelect):
 
 class QuickAddManufacturerSelect(QuickAddRelatedObjectSelect):
     url = reverse_lazy("shuup_admin:manufacturer.new")
+    model = "shuup.Manufacturer"
 
 
 class QuickAddPaymentMethodsSelect(QuickAddRelatedObjectMultiSelect):

@@ -32,6 +32,7 @@ class Manufacturer(models.Model):
     ))
 
     class Meta:
+        permissions = (('view_manufacturer', 'Can view manufacturers'),)
         verbose_name = _('manufacturer')
         verbose_name_plural = _('manufacturers')
 

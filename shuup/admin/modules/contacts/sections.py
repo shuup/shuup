@@ -22,11 +22,13 @@ class BasicInfoContactSection(Section):
     order = 1
 
     @staticmethod
-    def visible_for_object(contact):
-        return True
+    def visible_for_object(contact, request=None):
+        if not request:
+            return True  # backwards compatibility
+        return request.user.has_perm('shuup.view_contact')
 
     @staticmethod
-    def get_context_data(contact):
+    def get_context_data(contact, request=None):
         context = {}
 
         context['groups'] = sorted(
@@ -52,12 +54,12 @@ class AddressesContactSection(Section):
     order = 2
 
     @staticmethod
-    def visible_for_object(contact):
+    def visible_for_object(contact, request=None):
         return (contact.default_shipping_address_id or
                 contact.default_billing_address_id)
 
     @staticmethod
-    def get_context_data(contact):
+    def get_context_data(contact, request=None):
         return None
 
 
@@ -69,12 +71,14 @@ class OrdersContactSection(Section):
     order = 3
 
     @staticmethod
-    def visible_for_object(contact):
-        return (contact.default_shipping_address_id or
-                contact.default_billing_address_id)
+    def visible_for_object(contact, request=None):
+        has_addresses = bool(contact.default_shipping_address_id or contact.default_billing_address_id)
+        if not request:
+            return has_addresses  # backwards compatibility
+        return bool(request.user.has_perm('shuup.view_contact') and has_addresses)
 
     @staticmethod
-    def get_context_data(contact):
+    def get_context_data(contact, request=None):
         return contact.customer_orders.valid().order_by("-id")
 
 
@@ -86,11 +90,14 @@ class MembersContactSection(Section):
     order = 4
 
     @staticmethod
-    def visible_for_object(contact):
-        return hasattr(contact, 'members')
+    def visible_for_object(contact, request=None):
+        has_members = hasattr(contact, 'members')
+        if not request:
+            return has_members  # backwards compatibility
+        return bool(request.user.has_perm('shuup.view_contact') and has_members)
 
     @staticmethod
-    def get_context_data(contact):
+    def get_context_data(contact, request=None):
         if contact.members:
             return contact.members.all()
 

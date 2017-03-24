@@ -101,6 +101,10 @@ class AdminModule(object):
         """
         return None
 
+    def set_request(self, request):
+        """Set the request attribute if needed by other methods"""
+        self.request = request
+
 
 class Resolvable(object):
     _url = ""  # Set on instance level.
@@ -229,18 +233,21 @@ class Section(object):
     extra_js = ""
     order = 0
 
+    # TODO (2.0): Consider changing to classmethod
     @staticmethod
-    def visible_for_object(obj):
+    def visible_for_object(obj, request=None):
         """
         Returns whether this sections must be visible for the provided object (e.g. `order`)
         :type model object: e.g. shuup.core.models.Order
+        :type request: HttpRequest
         :return whether this section must be shown in order section list, defaults to false
         :rtype: bool
         """
         return False
 
+    # TODO (2.0): Consider changing to classmethod
     @staticmethod
-    def get_context_data(obj):
+    def get_context_data(obj, request=None):
         """
         Returns additional information to be used in the template
 
@@ -251,6 +258,7 @@ class Section(object):
 
 
         :type object: e.g. shuup.core.models.Order
+        :type request: HttpRequest
         :return additional context data
         :rtype: object|None
         """
@@ -265,9 +273,10 @@ class OrderSection(Section):
         warnings.warn("OrderSection in shuup.admin.base is deprecated, use Section instead ", RemovedFromShuupWarning)
         return super(OrderSection, cls).__new__(cls)
 
+    # XXX: wrong definition
     @classmethod
-    def visible_for_object(cls, order):
+    def visible_for_object(cls, order, request=None):
         """
         Support for the deprecated `visible_for_order` function
         """
-        return cls.visible_for_order(order) or super(OrderSection, cls).visible_for_object(order)
+        return cls.visible_for_order(order, request) or super(OrderSection, cls).visible_for_object(order, request)

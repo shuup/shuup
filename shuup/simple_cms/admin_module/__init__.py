@@ -26,7 +26,7 @@ class SimpleCMSAdminModule(AdminModule):
             url_prefix="^cms/page",
             view_template="shuup.simple_cms.admin_module.views.Page%sView",
             name_template="simple_cms.page.%s",
-            permissions=get_default_model_permissions(Page)
+            model=Page
         )
 
     def get_menu_entries(self, request):

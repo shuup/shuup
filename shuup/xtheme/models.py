@@ -11,6 +11,7 @@ from enumfields import Enum
 from enumfields.fields import EnumIntegerField
 
 from shuup.core.fields import TaggedJSONField
+from shuup.core.models import Shop
 
 
 class SavedViewConfigQuerySet(models.QuerySet):  # doccov: ignore
@@ -135,6 +136,7 @@ class ThemeSettings(models.Model):
     theme_identifier = models.CharField(max_length=64, db_index=True, unique=True, verbose_name=_("theme identifier"))
     active = models.BooleanField(db_index=True, default=False, verbose_name=_("active"))
     data = TaggedJSONField(db_column="data", default=dict, verbose_name=_("data"))
+    shop = models.ForeignKey(Shop, related_name='theme_settings', null=True, blank=True)
 
     def activate(self):
         self.__class__.objects.all().update(active=False)
@@ -148,6 +150,10 @@ class ThemeSettings(models.Model):
         return self.data.get("settings", {}).copy()
 
     def update_settings(self, update_values):
+        if "shop" in update_values:
+            self.shop = update_values.pop("shop")
+        else:
+            self.shop = Shop.objects.first()
         self.data.setdefault("settings", {}).update(update_values)
         self.save()
 

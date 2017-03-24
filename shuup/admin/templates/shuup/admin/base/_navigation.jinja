@@ -15,7 +15,7 @@
     </a>
 </div>
 
-<a class="nav-btn shop-btn" href="{{ url("shuup_admin:home") }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}Go home{% endtrans %}"><i class="fa fa-home"></i></a>
+{{ shuup_admin.get_navigation_before() }}
 
 <div id="site-search" class="site-search">
     <div class="desktop hidden-xs">
@@ -33,11 +33,8 @@
     <div id="site-search-results" class="site-search-results"></div>
 </div>
 
-{% set support_id=shuup_admin.get_support_id() %}
-{% if support_id %}<p class="nav-text hidden-xs">{% trans %}Support ID: {% endtrans %}{{ support_id }}</p>{% endif %}
+{{ shuup_admin.get_navigation_after() }}
 
-{% set front_url=shuup_admin.get_front_url() %}
-{% if front_url %}<a class="nav-btn shop-btn visit-store" href="{{ front_url }}" data-toggle="tooltip" data-placement="bottom" title="{% trans %}Visit shop{% endtrans %}"><i class="fa fa-eye"></i></a>{% endif %}
 
 <div class="dropdown">
     <button class="dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-expanded="true" data-placement="bottom" title="{% trans %}Settings{% endtrans %}">

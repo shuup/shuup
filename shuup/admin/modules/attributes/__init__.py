@@ -25,7 +25,7 @@ class AttributeModule(AdminModule):
             url_prefix="^attributes",
             view_template="shuup.admin.modules.attributes.views.Attribute%sView",
             name_template="attribute.%s",
-            permissions=get_default_model_permissions(Attribute)
+            model=Attribute
         )
 
     def get_menu_category_icons(self):

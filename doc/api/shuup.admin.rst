@@ -66,6 +66,14 @@ shuup.admin.menu module
     :undoc-members:
     :show-inheritance:
 
+shuup.admin.middleware module
+-----------------------------
+
+.. automodule:: shuup.admin.middleware
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.admin.module_registry module
 ----------------------------------
 
@@ -74,10 +82,26 @@ shuup.admin.module_registry module
     :undoc-members:
     :show-inheritance:
 
+shuup.admin.navigation module
+-----------------------------
+
+.. automodule:: shuup.admin.navigation
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.admin.settings module
 ---------------------------
 
 .. automodule:: shuup.admin.settings
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+shuup.admin.shop_provider module
+--------------------------------
+
+.. automodule:: shuup.admin.shop_provider
     :members:
     :undoc-members:
     :show-inheritance:

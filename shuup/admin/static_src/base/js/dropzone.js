@@ -7,11 +7,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 function activateDropzone($dropzone, attrs={}) {
+    if(!$dropzone.length) {
+        console.error("[dropzone.js] Unable to find requested element ", $dropzone);
+        return;
+    }
+
     const selector = "#" + $dropzone.attr("id");
     const uploadPath = $(selector).data().upload_path;
     const addRemoveLinks = $(selector).data().add_remove_links;
+    const mediaUrl = window.ShuupAdminConfig.browserUrls.media;
     const params = $.extend(true, {
-        url: "/sa/media/?action=upload&path=" + uploadPath,
+        url: mediaUrl + "?action=upload&path=" + uploadPath,
         params: {
             csrfmiddlewaretoken: window.ShuupAdminConfig.csrf
         },

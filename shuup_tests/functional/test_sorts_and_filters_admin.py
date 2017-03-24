@@ -53,10 +53,12 @@ def test_sorts_and_filter_in_shop_edit(rf, admin_user):
             "order_configuration-%s" % consts.ORDER_REFERENCE_NUMBER_PREFIX_FIELD: settings.SHUUP_REFERENCE_NUMBER_PREFIX,
         }
         request = apply_request_middleware(rf.post("/", data=data), user=admin_user)
+        assert request.shop
         response = view(request, pk=shop.pk)
         if hasattr(response, "render"):
             response.render()
         assert response.status_code in [200, 302]
+
         expected_configurations = {
             "sort_products_by_name": True,
             "sort_products_by_name_ordering": 11,

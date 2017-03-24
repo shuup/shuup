@@ -3,11 +3,11 @@
 {% call content_block(_("Contact Group Pricing"), "fa-money") %}
     <p class="section-description">{% trans %}Here you can set individual pricing for different contact groups. This can be useful for special discounts or for B2B orders. These groups are defined in Contacts Settings – Contact Groups{% endtrans %}</p>
     <br>
+    {% for shop in sp_form.shops %}
     <div class="panel panel-default">
         <div class="panel-heading">
             <h2 class="panel-title">
-                {% for shop in sp_form.shops %}
-                    {% if shop %}{{ shop }}{% else %}{% trans %}Other shops{% endtrans %}{% endif %}
+                {{ shop }}
             </h2>
         </div>
         <div class="panel-body">
@@ -17,9 +17,9 @@
                         <label>{{ group }}</label>
                         {{ bs3.field(sp_form.get_shop_group_field(shop, group), set_placeholder=False, render_label=False) }}
                     {% endfor %}
-                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
+    {% endfor %}
 {% endcall %}

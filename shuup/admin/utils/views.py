@@ -29,6 +29,7 @@ from shuup.admin.utils.picotable import Column, PicotableViewMixin
 from shuup.admin.utils.urls import (
     get_model_front_url, get_model_url, NoModelUrl
 )
+from shuup.core.settings_provider import ShuupSettings
 from shuup.utils.excs import Problem
 from shuup.utils.form_group import FormGroup
 from shuup.utils.multilanguage_model_form import MultiLanguageModelForm
@@ -72,16 +73,16 @@ class CreateOrUpdateView(UpdateView):
         return getattr(self, "save_form_id", None) or "%s_form" % self.get_context_object_name(self.object)
 
     def get_return_url(self):
-        return get_model_url(self.object, kind="list")
+        return get_model_url(self.object, kind="list", request=self.request)
 
     def get_new_url(self):
-        return get_model_url(self.object, kind="new")
+        return get_model_url(self.object, kind="new", request=self.request)
 
     def get_success_url(self):
         if self.request.GET.get("mode", "") == "iframe":
             quick_add_target = self.request.GET.get("quick_add_target")
             return "%s?mode=iframe&quick_add_target=%s&iframe_close=yes" % (
-                get_model_url(self.object), quick_add_target)
+                get_model_url(self.object, request=self.request), quick_add_target)
 
         next = self.request.POST.get("__next")
         try:
@@ -98,7 +99,7 @@ class CreateOrUpdateView(UpdateView):
             pass
 
         try:
-            return get_model_url(self.object)
+            return get_model_url(self.object, request=self.request)
         except NoModelUrl:
             pass
 
@@ -116,7 +117,7 @@ class CreateOrUpdateView(UpdateView):
         is_new = (not self.object.pk)
         self.save_form(form)
         if is_new:
-            object_created.send(sender=type(self.object), object=self.object)
+            object_created.send(sender=type(self.object), object=self.object, request=self.request)
         add_create_or_change_message(self.request, self.object, is_new=is_new)
         return HttpResponseRedirect(self.get_success_url())
 
@@ -141,10 +142,17 @@ class CreateOrUpdateView(UpdateView):
 
 
 def add_create_or_change_message(request, instance, is_new):
-    if is_new:
-        messages.success(request, _(u"New %s created.") % instance._meta.verbose_name)
+    if instance:
+        msg = instance._meta.verbose_name if is_new else instance._meta.verbose_name.title()
     else:
-        messages.success(request, _(u"%s edited.") % instance._meta.verbose_name.title())
+        msg = _("Item")  # instance is not always present. For example when saving configurations.
+
+    if is_new:
+        msg = _(u"New %s created.") % msg
+    else:
+        msg = _(u"%s edited.") % msg
+
+    messages.success(request,  msg)
 
 
 def get_create_or_change_title(request, instance, name_field=None):
@@ -175,7 +183,7 @@ def get_create_or_change_title(request, instance, name_field=None):
 
 
 def check_and_raise_if_only_one_allowed(setting_name, obj):
-    if getattr(settings, setting_name, True):
+    if ShuupSettings.get_setting(setting_name):
         return
     if not obj.pk and obj.__class__.objects.count() >= 1:
         raise Problem(_("Only one %(model)s permitted.") % {"model": obj._meta.verbose_name})
@@ -213,7 +221,10 @@ class PicotableListView(PicotableViewMixin, ListView):
             buttons.append(new_button)
 
         return_url = self.url_identifier if self.url_identifier else None
-        settings_button = SettingsActionButton.for_model(model, return_url=return_url)
+        if self.request.user.is_superuser:
+            settings_button = SettingsActionButton.for_model(model, return_url=return_url)
+        else:
+            settings_button = None
         if settings_button:
             buttons.append(settings_button)
 

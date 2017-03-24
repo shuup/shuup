@@ -14,6 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from filer.fields.image import FilerImageField
 from jsonfield import JSONField
+from parler.managers import TranslatableManager
 from parler.models import TranslatedFields
 
 from shuup.core.fields import CurrencyField, InternalIdentifierField
@@ -26,6 +27,14 @@ from ._orders import Order
 
 def _get_default_currency():
     return settings.SHUUP_HOME_CURRENCY
+
+
+class ShopManager(TranslatableManager):
+    def get_for_user(self, user):
+        qs = self.get_queryset()
+        if user.is_superuser:
+            return qs.all()
+        return qs.filter(staff_members=user)
 
 
 class ShopStatus(Enum):
@@ -91,6 +100,13 @@ class Shop(ChangeProtected, TranslatableShuupModel):
         )
     )
 
+    objects = ShopManager()
+
+    class Meta:
+        permissions = (('view_shop', 'Can view shops'),)
+        verbose_name = _('shop')
+        verbose_name_plural = _('shops')
+
     def __str__(self):
         return self.safe_translation_getter("name", default="Shop %d" % self.pk)
 
@@ -111,6 +127,13 @@ class Shop(ChangeProtected, TranslatableShuupModel):
 
     def _are_changes_protected(self):
         return Order.objects.filter(shop=self).exists()
+
+    @property
+    def theme_identifier(self):
+        theme_settings = self.theme_settings.first()
+        if theme_settings:
+            return theme_settings.theme_identifier
+        return None
 
 
 ShopLogEntry = define_log_model(Shop)

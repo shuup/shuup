@@ -24,6 +24,7 @@ class CgpPrice(MoneyPropped, models.Model):
     price_value = MoneyValueField(verbose_name=_("price"))
 
     class Meta:
+        permissions = (('view_cgpprice', 'Can view customer group pricing'),)
         unique_together = (('product', 'shop', 'group'),)
         verbose_name = _(u"product price")
         verbose_name_plural = _(u"product prices")

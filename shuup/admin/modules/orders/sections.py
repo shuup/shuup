@@ -22,11 +22,13 @@ class PaymentOrderSection(Section):
     order = 1
 
     @staticmethod
-    def visible_for_object(order):
-        return True
+    def visible_for_object(order, request=None):
+        if not request:
+            return True  # Backwards compatibility
+        return request.user.has_perm('shuup.view_order')
 
     @staticmethod
-    def get_context_data(order):
+    def get_context_data(order, request=None):
         return order.payments.all()
 
 
@@ -38,11 +40,13 @@ class ShipmentSection(Section):
     order = 2
 
     @staticmethod
-    def visible_for_object(order):
-        return True
+    def visible_for_object(order, request=None):
+        if not request:
+            return True  # Backwards compatibility
+        return request.user.has_perm('shuup.view_order')
 
     @staticmethod
-    def get_context_data(order):
+    def get_context_data(order, request=None):
         return Shipment.objects.filter(order=order).order_by("-created_on").all()
 
 
@@ -55,11 +59,13 @@ class LogEntriesOrderSection(Section):
     order = 3
 
     @staticmethod
-    def visible_for_object(order):
-        return True
+    def visible_for_object(order, request=None):
+        if not request:
+            return True  # Backwards compatibility
+        return request.user.has_perm('shuup.view_order')
 
     @staticmethod
-    def get_context_data(order):
+    def get_context_data(order, request=None):
         return OrderLogEntry.objects.filter(target=order).order_by("-created_on").all()[:12]
         # TODO: We're currently trimming to 12 entries, probably need pagination
 
@@ -73,9 +79,11 @@ class AdminCommentSection(Section):
     order = 4
 
     @staticmethod
-    def visible_for_object(order):
-        return True
+    def visible_for_object(order, request=None):
+        if not request:
+            return True  # Backwards compatibility
+        return request.user.has_perm('shuup.view_order')
 
     @staticmethod
-    def get_context_data(order):
+    def get_context_data(order, request=None):
         return None

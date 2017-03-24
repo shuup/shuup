@@ -20,6 +20,7 @@ from shuup.core.middleware import ExceptionMiddleware
 from shuup.core.models import (
     Contact, get_company_contact, get_person_contact, Shop
 )
+from shuup.core.settings_provider import ShuupSettings
 from shuup.front.basket import get_basket
 
 __all__ = ["ProblemMiddleware", "ShuupFrontMiddleware"]
@@ -73,10 +74,30 @@ class ShuupFrontMiddleware(object):
         self._set_price_display_options(request)
 
     def _set_shop(self, request):
-        # TODO: Not the best logic :)
-        request.shop = Shop.objects.first()
+        host = request.META.get("HTTP_HOST")
+        if not host:
+            shop = Shop.objects.first()
+        else:
+            shop = Shop.objects.filter(domain=host).first()
+            if not shop:
+                shop = Shop.objects.filter(domain=host.split(":")[0]).first()
+            if not shop:
+                shop = Shop.objects.first()
+
+        request.shop = shop
+
         if not request.shop:
             raise ImproperlyConfigured("No shop!")
+
+        self._set_theme(request)
+
+    def _set_theme(self, request):
+        if ShuupSettings.get_setting("SHUUP_SHOP_DEFINES_TEMPLATE"):
+            theme_identifier = request.shop.theme_identifier
+            xtheme_installed = bool("shuup.xtheme" in settings.INSTALLED_APPS)
+            if theme_identifier and xtheme_installed:
+                from shuup.xtheme import set_current_theme
+                set_current_theme(theme_identifier)
 
     def _set_person(self, request):
         request.person = get_person_contact(request.user)

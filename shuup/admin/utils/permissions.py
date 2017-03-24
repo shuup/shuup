@@ -6,6 +6,13 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django.contrib.auth.models import Permission
+from django.contrib.contenttypes.models import ContentType
+from django.db.models import Q
+
+from shuup.admin.shop_provider import get_shop
+from shuup.apps.provides import get_provide_objects
+from shuup.core.models import ShopObjectPermission
+from shuup.core.settings_provider import ShuupSettings
 
 
 def get_default_model_permissions(model):
@@ -20,12 +27,12 @@ def get_default_model_permissions(model):
     permissions = set()
 
     for default in model._meta.default_permissions:
-        permissions.add("%s.%s_%s" % (model._meta.app_label, default, model._meta.model_name))
+        permissions.add(get_permission_string_for_model(model, default))
 
     return permissions
 
 
-def get_missing_permissions(user, permissions):
+def get_missing_permissions(user, permissions, request=None, **kwargs):
     """
     Return a set of missing permissions for a given iterable of
     permission strings.
@@ -38,9 +45,13 @@ def get_missing_permissions(user, permissions):
     :rtype: set[str]
     """
     if callable(getattr(user, 'has_perm', None)):
-        missing_permissions = set(p for p in set(permissions) if not user.has_perm(p))
+        missing_permissions = set(p for p in set(permissions) if p is not None and not user.has_perm(p))
     else:
         missing_permissions = set(permissions)
+
+    for backend in get_provide_objects("shuup_permission_backend"):
+        if backend.has_object_perm(request, user, missing_permissions, **kwargs):
+            return ()
 
     return missing_permissions
 
@@ -74,3 +85,83 @@ def get_permission_object_from_string(permission_string):
     """
     app_label, codename = permission_string.split(".")
     return Permission.objects.get(content_type__app_label=app_label, codename=codename)
+
+
+def user_has_permission_to_view_kind(user, object, kind):
+    permission_map = {
+        "detail": "change"
+    }
+    if kind in permission_map.values():
+        permission_key = kind
+    else:
+        if kind not in permission_map:
+            return False
+        permission_key = permission_map[kind]
+
+    permission = get_permission_string_for_model(object, permission_key)
+    for backend in get_provide_objects("shuup_permission_backend"):
+        if backend.has_perm(user, permission, object):
+            return True
+    return False
+
+
+def user_has_permission(perm, user, obj):
+    if getattr(user, "is_superuser", False):
+        return True
+
+    permission_str = get_permission_string_for_object(obj, perm)
+    if not permission_str:
+        return False
+
+    check_per_object_permission = bool(ShuupSettings.get_setting("SHUUP_CHECK_PER_OBJECT_PERMISSIONS") and obj.pk)
+    obj = (obj if check_per_object_permission else None)
+    for backend in get_provide_objects("shuup_permission_backend"):
+        if backend.has_perm(user, permission_str, obj):
+            return True
+    return user.has_perm(permission_str, obj=obj)
+
+
+def get_permission_string_for_model(model, perm):
+    if not model:
+        return
+    model_permission = validate_and_get_permission(model, perm)
+    if not model_permission:
+        return
+
+    # We sometimes end up with a permission like `view_shopproduct_shopproduct`
+    # This is primarily due to how permission names are defined in the models
+    # We are likely sending the wrong `perm` parameter value.
+    permission = "%s.%s" % (model._meta.app_label, model_permission)
+    if not permission.endswith(model._meta.model_name):
+        permission += "_%s" % model._meta.model_name
+    return permission
+
+
+def validate_and_get_permission(model, perm):
+    for default in model._meta.default_permissions:
+        if default == perm:
+            return default
+    for permission_code, permission_str in model._meta.permissions:
+        if permission_code.startswith(perm):
+            return permission_code
+
+
+def get_permission_string_for_object(obj, perm):
+    model = type(obj)
+    return get_permission_string_for_model(model, perm) if hasattr(model, "_meta") else None
+
+
+def filter_queryset(request, perm, queryset):
+    if (getattr(request.user, "is_superuser", False) or
+            not ShuupSettings.get_setting("SHUUP_CHECK_PER_OBJECT_PERMISSIONS")):
+        return queryset
+
+    app_label, codename = perm.split(".", 1)
+    ctype = ContentType.objects.filter(app_label=app_label, permission__codename=codename).first()
+    shop = get_shop(request)
+    object_ids = set(
+        ShopObjectPermission.objects.filter(
+            shop_id=shop.pk, content_type_id=ctype.id
+        ).values_list("object_id", flat=True))
+
+    return queryset.filter(Q(pk__in=object_ids))

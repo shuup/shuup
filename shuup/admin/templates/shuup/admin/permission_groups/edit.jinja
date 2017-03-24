@@ -2,5 +2,15 @@
 {% from "shuup/admin/macros/general.jinja" import single_section_form with context %}
 
 {% block content %}
-    {{ single_section_form("permission_group_form", form) }}
+    {% call single_section_form("permission_group_form", form) %}
+        {{ bs3.field(form.name) }}
+        {{ bs3.field(form.members) }}
+        <div class="form-divider"></div>
+        {% for model_name, permissions in form.get_model_permissions().items() %}
+            <h2 style="text-transform: capitalize;">{{ model_name }}</h2>
+            {% for permission in permissions %}
+                {{ bs3.field(form[permission]) }}
+            {% endfor %}
+        {% endfor %}
+    {% endcall %}
 {% endblock %}

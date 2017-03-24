@@ -15,12 +15,17 @@ from shuup.admin.utils.picotable import (
     Picotable, RangeFilter, TextFilter, MPTTFilter
 )
 from shuup.core.models import Product, Category
+from shuup.testing.factories import get_default_shop
 from shuup.testing.mock_population import populate_if_required
+from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import empty_iterable
 from shuup_tests.utils.fixtures import regular_user
 
 
 class PicoContext(object):
+    def __init__(self, request):
+        self.request = request
+
     def superuser_display(self, instance):  # Test indirect `display` callable
         return "very super" if instance.is_superuser else "-"
 
@@ -31,6 +36,7 @@ def false_and_true():
     return [(False, "False"), (True, "True")]
 
 def get_pico(rf, model=None, columns=None):
+    get_default_shop()
     model = model or get_user_model()
     columns = columns or [
         Column("id", "Id", filter_config=Filter(), display=instance_id),
@@ -41,12 +47,13 @@ def get_pico(rf, model=None, columns=None):
         Column("date_joined", "Date Joined", filter_config=DateRangeFilter())
     ]
 
+    request = apply_request_middleware(rf.get("/"))
     return Picotable(
-        request=rf.get("/"),
+        request=request,
         columns=columns,
         mass_actions=[],
         queryset=model.objects.all(),
-        context=PicoContext()
+        context=PicoContext(request)
     )
 
 

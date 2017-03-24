@@ -12,12 +12,14 @@ import warnings
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
+from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView
 
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.toolbar import (
     DropdownActionButton, PostActionButton, Toolbar, URLActionButton
 )
@@ -131,6 +133,15 @@ class ContactDetailView(DetailView):
     template_name = "shuup/admin/contacts/detail.jinja"
     context_object_name = "contact"
 
+    def get_object(self, *args, **kwargs):
+        obj = super(ContactDetailView, self).get_object(*args, **kwargs)
+        if self.request.user.is_superuser:
+            return obj
+        shop = get_shop(self.request)
+        if shop not in obj.shop_set.all():
+            raise PermissionDenied
+        return obj
+
     def get_context_data(self, **kwargs):
         context = super(ContactDetailView, self).get_context_data(**kwargs)
         context["toolbar"] = ContactDetailToolbar(contact=self.object, request=self.request)
@@ -143,10 +154,11 @@ class ContactDetailView(DetailView):
         contact_sections_provides = sorted(get_provide_objects("admin_contact_section"), key=lambda x: x.order)
         for admin_contact_section in contact_sections_provides:
             # Check whether the ContactSection should be visible for the current object
-            if admin_contact_section.visible_for_object(self.object):
+            if admin_contact_section.visible_for_object(self.object, self.request):
                 context["contact_sections"].append(admin_contact_section)
                 # add additional context data where the key is the contact_section identifier
-                context[admin_contact_section.identifier] = admin_contact_section.get_context_data(self.object)
+                section_context = admin_contact_section.get_context_data(self.object, self.request)
+                context[admin_contact_section.identifier] = section_context
 
         return context
 

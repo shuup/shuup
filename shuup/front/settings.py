@@ -39,10 +39,9 @@ SHUUP_BASKET_CLASS_SPEC = (
 
 #: The spec string defining which basket storage class to use for the frontend.
 #:
-#: Basket storages are responsible for persisting visitor basket state, whether
-#: in the database (DatabaseBasketStorage) or directly in the session
-#: (DirectSessionBasketStorage).  Custom storage backends could use caches, flat
-#: files, etc. if required.
+#: Basket storages are responsible for persisting visitor basket state,
+#: the default stores the basket to database (DatabaseBasketStorage)
+#: Custom storage backends could use caches, flat files, etc. if required.
 SHUUP_BASKET_STORAGE_CLASS_SPEC = (
     "shuup.front.basket.storage:DatabaseBasketStorage")
 
@@ -67,3 +66,6 @@ SHUUP_FRONT_DEFAULT_SORT_CONFIGURATION = {
 #:
 #: Cache duration in seconds for front template helpers. Default 30 minutes.
 SHUUP_TEMPLATE_HELPERS_CACHE_DURATION = 60*30
+
+#: Spec that defines if shop defines the used template. Extremely handy in multi-vendor environments.
+SHUUP_SHOP_DEFINES_TEMPLATE = False

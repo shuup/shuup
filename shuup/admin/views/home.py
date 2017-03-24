@@ -11,12 +11,12 @@ from django.views.generic.base import TemplateView
 from enumfields import Enum
 
 from shuup.admin.module_registry import get_modules
+from shuup.admin.shop_provider import get_shop
 from shuup.admin.utils.permissions import get_missing_permissions
 from shuup.admin.utils.tour import is_tour_complete
 from shuup.admin.utils.wizard import (
     load_setup_wizard_panes, setup_wizard_complete
 )
-from shuup.core.models import Shop
 
 
 class HelpBlockCategory(Enum):
@@ -67,7 +67,7 @@ class HomeView(TemplateView):
         context["blocks"] = blocks = []
         context["tour_key"] = "home"
         context["tour_complete"] = is_tour_complete("home")
-        wizard_complete = setup_wizard_complete()
+        wizard_complete = setup_wizard_complete(self.request)
 
         wizard_url = reverse("shuup_admin:wizard")
         wizard_actions = []
@@ -78,7 +78,7 @@ class HomeView(TemplateView):
             })
         else:
             wizard_steps = load_setup_wizard_panes(
-                shop=Shop.objects.first(), request=self.request, visible_only=False)
+                shop=get_shop(self.request), request=self.request, visible_only=False)
             for step in wizard_steps:
                 wizard_actions.append({
                     "text": step.title,

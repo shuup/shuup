@@ -37,6 +37,7 @@ from shuup.core.fields import (
     UnsavedForeignKey
 )
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
+from shuup.core.settings_provider import ShuupSettings
 from shuup.core.signals import (
     payment_created, refund_created, shipment_created
 )
@@ -166,7 +167,7 @@ class OrderStatus(TranslatableModel):
     )
 
     class Meta:
-        unique_together = ("identifier", "role")
+        unique_together = ('identifier', 'role')
         verbose_name = _('order status')
         verbose_name_plural = _('order statuses')
 
@@ -386,7 +387,7 @@ class Order(MoneyPropped, models.Model):
     # Other
     ip_address = models.GenericIPAddressField(null=True, blank=True, verbose_name=_('IP address'))
     # order_date is not `auto_now_add` for backdating purposes
-    order_date = models.DateTimeField(editable=False, verbose_name=_('order date'))
+    order_date = models.DateTimeField(editable=False, db_index=True, verbose_name=_('order date'))
     payment_date = models.DateTimeField(null=True, editable=False, verbose_name=_('payment date'))
 
     language = LanguageField(blank=True, verbose_name=_('language'))
@@ -402,6 +403,7 @@ class Order(MoneyPropped, models.Model):
 
     class Meta:
         ordering = ("-id",)
+        permissions = (('view_order', 'Can view orders'),)
         verbose_name = _('order')
         verbose_name_plural = _('orders')
 
@@ -410,7 +412,7 @@ class Order(MoneyPropped, models.Model):
             name = self.billing_address.name
         else:
             name = "-"
-        if settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
+        if ShuupSettings.get_setting("SHUUP_ENABLE_MULTIPLE_SHOPS"):
             return "Order %s (%s, %s)" % (self.identifier, self.shop.name, name)
         else:
             return "Order %s (%s)" % (self.identifier, name)

@@ -12,6 +12,14 @@ shuup.core.utils.context_cache module
     :undoc-members:
     :show-inheritance:
 
+shuup.core.utils.db module
+--------------------------
+
+.. automodule:: shuup.core.utils.db
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 shuup.core.utils.form_mixins module
 -----------------------------------
 

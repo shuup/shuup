@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Section receives the request object
 - Improve OrderSource caching for deserialization speedup
 - Add new product count methods to OrderSource
 - Fix bug in purchase multiple checking of ShopProduct
@@ -29,6 +30,10 @@ Localization
 Admin
 ~~~~~
 
+- Only categories, orders, products, contacts and campaigns for the active shop
+  are displayed in the admin
+- Menu categories without any children are hidden
+- Add option to define a custom admin module loader
 - Quick add staff members for shops
 - Main menu is now updateable through provides.
 - Add new provide category called `order_printouts_delivery_extra_fields`

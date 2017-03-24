@@ -46,6 +46,11 @@ class GenericThemeForm(forms.ModelForm):
             fields = fields.items()
         for name, field in fields:
             self.fields[name] = deepcopy(field)
+
+        from shuup.core.models import Shop
+        # TODO: Figure out how to do this properly (remove .all())
+        self.fields["shop"] = forms.ModelChoiceField(
+            queryset=Shop.objects.all(), widget=forms.Select(attrs={"data-model": "shuup.Shop"}))
         self.initial.update(self.instance.get_settings())
 
     def save(self, commit=True):

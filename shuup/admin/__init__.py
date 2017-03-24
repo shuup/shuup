@@ -44,6 +44,13 @@ class ShuupAdminAppConfig(AppConfig):
             "shuup.admin.modules.sample_data:SampleDataAdminModule",
             "shuup.admin.modules.settings.SettingsModule"
         ],
+        "admin_main_navigation_items_after": [
+            "shuup.admin.navigation:SupportNavigationProvider",
+            "shuup.admin.navigation:FrontNavigationProvider",
+        ],
+        "admin_main_navigation_items_before": [
+            "shuup.admin.navigation:HomeNavigationProvider",
+        ],
         "admin_shop_form_part": [
             "shuup.admin.modules.settings.form_parts.OrderConfigurationFormPart"
         ],

@@ -107,26 +107,35 @@ $(function() {
         }
         addMediaPanel($section, file);
     }
-
-    activateDropzone($("#product-images-section-dropzone"), {
-        url: "/sa/media/?action=upload&path=/products/images",
-        maxFiles: 10,
-        onSuccess: function(file) {
-            onDropzoneSuccess($("#product-images-section"), file);
+    const dropzones = [
+        {
+            field: 'product-images-section',
+            targetPath: "/products/images",
+            maxFiles: 10,
+            queueComplete: "images"
         },
-        onQueueComplete: function() {
-            onDropzoneQueueComplete(this, "images");
+        {
+            field: 'product-media-section',
+            targetPath: "/products/media",
+            maxFiles: 10,
+            queueComplete: "media"
         }
-    });
-
-    activateDropzone($("#product-media-section-dropzone"), {
-        url: "/sa/media/?action=upload&path=/products/media",
-        maxFiles: 10,
-        onSuccess: function(file) {
-            onDropzoneSuccess($("#product-media-section"), file);
-        },
-        onQueueComplete: function() {
-            onDropzoneQueueComplete(this, "media");
+    ];
+    for (var i = 0; i < dropzones.length; i++) {
+        var zoneData = dropzones[i];
+        var fieldId = "#" + zoneData.field + "-dropzone";
+        if ($(fieldId).length) {
+            const mediaUrl = window.ShuupAdminConfig.browserUrls.media;
+            activateDropzone($(fieldId), {
+                url: mediaUrl + "?action=upload&path=" + zoneData.targetPath,
+                maxFiles: zoneData.maxFiles,
+                onSuccess: function(file) {
+                    onDropzoneSuccess($("#" + zoneData.field), file);
+                },
+                onQueueComplete: function() {
+                    onDropzoneQueueComplete(this, zoneData.queueComplete);
+                }
+            });
         }
-    });
+    }
 });
