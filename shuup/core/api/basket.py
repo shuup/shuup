@@ -284,6 +284,10 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         self.process_request(with_basket=False)
         basket_class = cached_load("SHUUP_BASKET_CLASS_SPEC")
         basket = basket_class(request._request)
+        if request.POST.get("customer_id"):
+            from shuup.core.models import PersonContact
+            customer = PersonContact.objects.get(pk=request.POST.get("customer_id"))
+            request.basket.customer = customer
         stored_basket = basket.save()
         return Response(data={"uuid": "%s-%s" % (request.shop.pk, stored_basket.key)}, status=status.HTTP_201_CREATED)
 
@@ -431,6 +435,10 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         if len(errors):
             return Response({"errors": errors}, status=status.HTTP_400_BAD_REQUEST)
         order_creator = get_basket_order_creator()
+        if request.POST.get("customer_id"):
+            from shuup.core.models import PersonContact
+            customer = PersonContact.objects.get(pk=request.POST.get("customer_id"))
+            request.basket.customer = customer
         order = order_creator.create_order(request.basket)
         request.basket.finalize()
         return Response(data={"reference_number": order.reference_number}, status=status.HTTP_201_CREATED)
