@@ -269,7 +269,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
     def get_object(self):
         uuid = get_key(self.kwargs.get(self.lookup_field, ""))
         basket_class = cached_load("SHUUP_BASKET_CLASS_SPEC")
-        basket = basket_class(self.request._request, key=uuid)
+        basket = basket_class(self.request._request, basket_name=uuid)
         try:
             basket._data = basket.storage.load(basket)
         except BasketCompatibilityError as error:
