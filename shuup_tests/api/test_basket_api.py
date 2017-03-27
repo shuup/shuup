@@ -430,6 +430,67 @@ def test_create_order(admin_user, settings):
     assert not order.shipping_address
 
 
+@pytest.mark.django_db
+def test_set_shipping_address(admin_user):
+    shop = factories.get_default_shop()
+    basket = factories.get_basket()
+    factories.get_default_payment_method()
+    factories.get_default_shipping_method()
+    client = _get_client(admin_user)
+    addr1 = factories.get_address()
+    addr1.save()
+
+    # use existing address
+    payload = {
+        'id': addr1.id
+    }
+    response = client.post('/api/shuup/basket/{}-{}/set_shipping_address/'.format(shop.pk, basket.key), payload)
+    assert response.status_code == status.HTTP_200_OK
+    response_data = json.loads(response.content.decode("utf-8"))
+    shipping_addr = response_data["shipping_address"]
+    assert shipping_addr["id"] == addr1.id
+    assert shipping_addr["prefix"] == addr1.prefix
+    assert shipping_addr["name"] == addr1.name
+    assert shipping_addr["postal_code"] == addr1.postal_code
+    assert shipping_addr["street"] == addr1.street
+    assert shipping_addr["city"] == addr1.city
+    assert shipping_addr["country"] == addr1.country
+
+    # create a new address
+    address_data = {
+        'name': 'name',
+        'prefix': 'prefix',
+        'postal_code': 'postal_code',
+        'street': 'street',
+        'city': 'city',
+        'country': 'BR'
+    }
+    response = client.post('/api/shuup/basket/{}-{}/set_shipping_address/'.format(shop.pk, basket.key), address_data)
+    assert response.status_code == status.HTTP_200_OK
+    response_data = json.loads(response.content.decode("utf-8"))
+    shipping_addr = response_data["shipping_address"]
+    assert shipping_addr["id"] == addr1.id+1
+    assert shipping_addr["prefix"] == address_data["prefix"]
+    assert shipping_addr["name"] == address_data["name"]
+    assert shipping_addr["postal_code"] == address_data["postal_code"]
+    assert shipping_addr["street"] == address_data["street"]
+    assert shipping_addr["city"] == address_data["city"]
+    assert shipping_addr["country"] == address_data["country"]
+
+    # get the basket and check the address
+    response = client.get('/api/shuup/basket/{}-{}/'.format(shop.pk, basket.key))
+    assert response.status_code == status.HTTP_200_OK
+    response_data = json.loads(response.content.decode("utf-8"))
+    shipping_addr = response_data["shipping_address"]
+    assert shipping_addr["id"] == addr1.id+1
+    assert shipping_addr["prefix"] == address_data["prefix"]
+    assert shipping_addr["name"] == address_data["name"]
+    assert shipping_addr["postal_code"] == address_data["postal_code"]
+    assert shipping_addr["street"] == address_data["street"]
+    assert shipping_addr["city"] == address_data["city"]
+    assert shipping_addr["country"] == address_data["country"]
+
+
 def _get_client(admin_user):
     client = APIClient()
     client.force_authenticate(user=admin_user)
