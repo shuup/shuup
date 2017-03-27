@@ -20,6 +20,7 @@ from rest_framework.response import Response
 from shuup.api.decorators import schema_serializer_class
 from shuup.api.fields import EnumField
 from shuup.api.mixins import PermissionHelperMixin
+from shuup.core.api.address import AddressSerializer
 from shuup.core.basket import (
     get_basket_command_dispatcher, get_basket_order_creator
 )
@@ -29,8 +30,8 @@ from shuup.core.fields import (
     FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES, FORMATTED_DECIMAL_FIELD_MAX_DIGITS
 )
 from shuup.core.models import (
-    get_company_contact, get_person_contact, OrderLineType, OrderStatus,
-    Product, Shop, ShopProduct
+    get_company_contact, get_person_contact, MutableAddress, Order,
+    OrderLineType, OrderStatus, Product, Shop, ShopProduct
 )
 from shuup.utils.importing import cached_load
 
@@ -109,6 +110,7 @@ class BasketSerializer(serializers.Serializer):
     items = serializers.SerializerMethodField()
     unorderable_items = serializers.SerializerMethodField()
     codes = serializers.ListField()
+    shipping_address = serializers.SerializerMethodField()
     shipping_method = serializers.IntegerField()
     payment_method = serializers.IntegerField()
     total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
@@ -128,6 +130,11 @@ class BasketSerializer(serializers.Serializer):
     total_price_of_products = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
                                                        decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
     validation_errors = serializers.SerializerMethodField()
+
+    def get_shipping_address(self, basket):
+        if basket._data.get('shipping_address_id'):
+            address = MutableAddress.objects.filter(id=basket._data['shipping_address_id']).first()
+            return AddressSerializer(address, context=self.context).data
 
     def get_validation_errors(self, basket):
         return [{err.code: err.message} for err in basket.get_validation_errors()]
@@ -192,6 +199,12 @@ class LineQuantitySerializer(serializers.Serializer):
 
 class CodeAddBasketSerializer(serializers.Serializer):
     code = serializers.CharField()
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ["id", "reference_number"]
 
 
 class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
@@ -425,6 +438,38 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    @schema_serializer_class(AddressSerializer)
+    @detail_route(methods=['post'])
+    def set_shipping_address(self, request, *args, **kwargs):
+        """
+        Set the shipping address of the basket.
+        If ID is sent, the existing MutableAddress will be used instead.
+        """
+        self.process_request()
+
+        try:
+            # take the address by ID
+            if request.data.get("id"):
+                address = MutableAddress.objects.get(id=request.data['id'])
+            else:
+                serializer = AddressSerializer(data=request.data)
+
+                if serializer.is_valid():
+                    address = serializer.save()
+                else:
+                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+            request.basket.shipping_address = address
+            request.basket.save()
+
+        except ValidationError as exc:
+            return Response({exc.code: exc.message}, status=status.HTTP_400_BAD_REQUEST)
+        except MutableAddress.DoesNotExist:
+            return Response({"error": "Address does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            data = BasketSerializer(request.basket, context=self.get_serializer_context()).data
+            return Response(data, status=status.HTTP_200_OK)
+
     @detail_route(methods=['post'])
     def create_order(self, request, *args, **kwargs):
         self.process_request()
@@ -441,4 +486,4 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
             request.basket.customer = customer
         order = order_creator.create_order(request.basket)
         request.basket.finalize()
-        return Response(data={"reference_number": order.reference_number}, status=status.HTTP_201_CREATED)
+        return Response(data=OrderSerializer(order).data, status=status.HTTP_201_CREATED)
