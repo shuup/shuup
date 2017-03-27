@@ -17,7 +17,9 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.basket.storage import BasketCompatibilityError, get_storage
-from shuup.core.models import OrderLineType, PaymentMethod, ShippingMethod
+from shuup.core.models import (
+    MutableAddress, OrderLineType, PaymentMethod, ShippingMethod
+)
 from shuup.core.order_creator import OrderSource, SourceLine
 from shuup.core.order_creator._source import LineSource
 from shuup.utils.numbers import parse_decimal_string
@@ -94,6 +96,8 @@ class BaseBasket(OrderSource):
             self.ip_address = request.META.get("REMOTE_ADDR")
         self.storage = get_storage()
         self._data = None
+        self._shipping_address = None
+        self._billing_address = None
         self.customer = getattr(request, "customer", None)
         self.orderer = getattr(request, "person", None)
         self.creator = getattr(request, "user", None)
@@ -171,6 +175,34 @@ class BaseBasket(OrderSource):
         self._data = {}
         self.uncache()
         self.dirty = True
+
+    @property
+    def shipping_address(self):
+        if self._shipping_address:
+            return self._shipping_address
+        elif hasattr(self, "_data") and self._load().get('shipping_address_id'):
+            return MutableAddress.objects.filter(id=self._load()['shipping_address_id']).first()
+
+    @shipping_address.setter
+    def shipping_address(self, value):
+        self._shipping_address = value
+        # save also on data
+        if value and hasattr(self, "_data"):
+            self._load()['shipping_address_id'] = value.id
+
+    @property
+    def billing_address(self):
+        if self._billing_address:
+            return self._billing_address
+        elif hasattr(self, "_data") and self._load().get('billing_address_id'):
+            return MutableAddress.objects.filter(id=self._load()['billing_address_id']).first()
+
+    @billing_address.setter
+    def billing_address(self, value):
+        self._billing_address = value
+        # save also on data
+        if value and hasattr(self, "_data"):
+            self._load()['billing_address_id'] = value.id
 
     @property
     def _data_lines(self):
