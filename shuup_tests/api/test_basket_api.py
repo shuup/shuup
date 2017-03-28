@@ -495,3 +495,38 @@ def _get_client(admin_user):
     client = APIClient()
     client.force_authenticate(user=admin_user)
     return client
+
+
+@pytest.mark.django_db
+def test_copy_order_to_basket(admin_user, settings):
+    configure(settings)
+    shop = factories.get_default_shop()
+    basket = factories.get_basket()
+    p1 = factories.create_product("test", shop=shop, supplier=factories.get_default_supplier())
+    order = factories.create_order_with_product(factories.get_default_product(), factories.get_default_supplier(), 2, 10, shop=shop)
+    factories.add_product_to_order(order, factories.get_default_supplier(), p1, 2, 5)
+    order.customer = get_person_contact(admin_user)
+    order.save()
+    client = _get_client(admin_user)
+    payload = {
+        "order": order.pk
+    }
+    response = client.post('/api/shuup/basket/{}-{}/add_from_order/'.format(shop.pk, basket.key), payload)
+    assert response.status_code == status.HTTP_200_OK
+    response_data = json.loads(response.content.decode("utf-8"))
+    assert len(response_data["items"]) == 2
+    assert not response_data["validation_errors"]
+    basket.refresh_from_db()
+    assert len(basket.data["lines"]) == 2
+
+    # do it again, basket should clear first then read items
+    payload = {
+        "order": order.pk
+    }
+    response = client.post('/api/shuup/basket/{}-{}/add_from_order/'.format(shop.pk, basket.key), payload)
+    assert response.status_code == status.HTTP_200_OK
+    response_data = json.loads(response.content.decode("utf-8"))
+    assert len(response_data["items"]) == 2
+    assert not response_data["validation_errors"]
+    basket.refresh_from_db()
+    assert len(basket.data["lines"]) == 2

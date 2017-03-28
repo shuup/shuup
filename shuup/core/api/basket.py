@@ -29,6 +29,7 @@ from shuup.core.excs import ProductNotOrderableProblem
 from shuup.core.fields import (
     FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES, FORMATTED_DECIMAL_FIELD_MAX_DIGITS
 )
+from shuup.core.models import Order
 from shuup.core.models import (
     get_company_contact, get_person_contact, MutableAddress, Order,
     OrderLineType, OrderStatus, Product, Shop, ShopProduct
@@ -318,35 +319,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         Adds a product to the basket
         """
         self.process_request()
-        if "shop_product" in request.data:
-            serializer = ShopProductAddBasketSerializer(data=request.data, context={"shop": request.shop})
-        else:
-            serializer = ProductAddBasketSerializer(data=request.data, context={"shop": request.shop})
-
-        if serializer.is_valid():
-            cmd_kwargs = {
-                "request": request._request,
-                "basket": request._request.basket,
-                "shop_id": serializer.data.get("shop") or serializer.validated_data["shop"].pk,
-                "product_id": serializer.data.get("product") or serializer.validated_data["product"].pk,
-                "quantity": serializer.validated_data.get("quantity", 1),
-                "supplier_id": serializer.validated_data.get("supplier")
-            }
-            # we call `add` directly, assuming the user will handle variations
-            # as he can know all product variations easily through product API
-            try:
-                self._handle_cmd(request, "add", cmd_kwargs)
-                request.basket.save()
-            except ValidationError as exc:
-                return Response({exc.code: exc.message}, status=status.HTTP_400_BAD_REQUEST)
-            except ProductNotOrderableProblem as exc:
-                return Response({"error": "{}".format(exc)}, status=status.HTTP_400_BAD_REQUEST)
-            except Exception as exc:
-                return Response({"error": str(exc)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-            else:
-                return Response(BasketSerializer(request.basket, context=self.get_serializer_context()).data)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return self._add_product(request, *args, **kwargs)
 
     @schema_serializer_class(RemoveBasketSerializer)
     @detail_route(methods=['post'])
@@ -487,3 +460,62 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         order = order_creator.create_order(request.basket)
         request.basket.finalize()
         return Response(data=OrderSerializer(order).data, status=status.HTTP_201_CREATED)
+
+    @detail_route(methods=['post'])
+    def add_from_order(self, request, *args, **kwargs):
+        """
+        Add multiple products to the basket
+        """
+        self.process_request()
+        errors = []
+        order = Order.objects.filter(customer=get_person_contact(request.user), pk=request.data.get("order")).first()
+        if not order:
+            return Response({"error": "invalid order"}, status=status.HTTP_404_NOT_FOUND)
+        self.clear(request, *args, **kwargs)
+        for line in order.lines.products():
+            try:
+                self._add_product(request, add_data={"product": line.product_id, "shop": order.shop_id, "quantity": line.quantity})
+            except ValidationError as exc:
+                errors.append({exc.code: exc.message})
+            except ProductNotOrderableProblem as exc:
+                errors.append({"error": "{}".format(exc)})
+            except serializers.ValidationError as exc:
+                errors.append({"error": str(exc)})
+            except Exception as exc:
+                errors.append({"error": str(exc)})
+        if len(errors) > 0:
+            return Response({"errors": errors}, status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(BasketSerializer(request.basket, context=self.get_serializer_context()).data)
+
+    def _add_product(self, request, *args, **kwargs):
+        data = kwargs.pop("add_data", request.data)
+        if "shop_product" in data:
+            serializer = ShopProductAddBasketSerializer(data=data, context={"shop": request.shop})
+        else:
+            serializer = ProductAddBasketSerializer(data=data, context={"shop": request.shop})
+
+        if serializer.is_valid():
+            cmd_kwargs = {
+                "request": request._request,
+                "basket": request._request.basket,
+                "shop_id": serializer.data.get("shop") or serializer.validated_data["shop"].pk,
+                "product_id": serializer.data.get("product") or serializer.validated_data["product"].pk,
+                "quantity": serializer.validated_data.get("quantity", 1),
+                "supplier_id": serializer.validated_data.get("supplier")
+            }
+            # we call `add` directly, assuming the user will handle variations
+            # as he can know all product variations easily through product API
+            try:
+                self._handle_cmd(request, "add", cmd_kwargs)
+                request.basket.save()
+            except ValidationError as exc:
+                return Response({exc.code: exc.message}, status=status.HTTP_400_BAD_REQUEST)
+            except ProductNotOrderableProblem as exc:
+                return Response({"error": "{}".format(exc)}, status=status.HTTP_400_BAD_REQUEST)
+            except Exception as exc:
+                return Response({"error": str(exc)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            else:
+                return Response(BasketSerializer(request.basket, context=self.get_serializer_context()).data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

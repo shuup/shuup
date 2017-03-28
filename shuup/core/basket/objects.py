@@ -540,27 +540,4 @@ class BaseBasket(OrderSource):
 
 
 class Basket(BaseBasket):
-    def __init__(self, request, key=None):
-        super(Basket, self).__init__(request)
-        self.key = key
-
-    def _load(self):
-        """
-        Get the currently persisted data for this basket.
-
-        This will only access the storage once per request in usual
-        circumstances.
-
-        :return: Data dict.
-        :rtype: dict
-        """
-        if self._data is None:
-            try:
-                self._data = self.storage.load(basket=self)
-            except BasketCompatibilityError as error:
-                self.storage.delete(basket=self)
-                self._data = self.storage.load(basket=self)
-                # TODO: handle this
-                raise error
-            self.dirty = False
-        return self._data
+    pass
