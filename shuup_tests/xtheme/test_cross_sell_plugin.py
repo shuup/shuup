@@ -42,3 +42,12 @@ def test_cross_sell_plugin_accepts_initial_config_as_string_or_enum():
 
     plugin = ProductCrossSellsPlugin({"type": ProductCrossSellType.RECOMMENDED})
     assert plugin.config["type"] == ProductCrossSellType.RECOMMENDED
+
+
+def test_cross_sell_plugin_with_invalid_type():
+    plugin = ProductCrossSellsPlugin({"type": "foobar"})
+    assert plugin.config['type'] == ProductCrossSellType.RELATED
+
+    plugin.config['type'] = 'foobar'
+    context_data = plugin.get_context_data({'request': 'REQUEST'})
+    assert context_data['type'] == ProductCrossSellType.RELATED
