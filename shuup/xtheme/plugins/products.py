@@ -76,7 +76,7 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
             # Map initial config string to enum type
             try:
                 type = map_relation_type(relation_type)
-            except AttributeError:
+            except LookupError:
                 type = ProductCrossSellType.RELATED
             config["type"] = type
         super(ProductCrossSellsPlugin, self).__init__(config)
@@ -88,7 +88,7 @@ class ProductCrossSellsPlugin(TemplatedPlugin):
         relation_type = self.config.get("type")
         try:
             type = map_relation_type(relation_type)
-        except AttributeError:
+        except LookupError:
             type = ProductCrossSellType.RELATED
         return {
             "request": context["request"],
