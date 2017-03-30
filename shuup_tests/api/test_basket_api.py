@@ -10,15 +10,26 @@ from __future__ import unicode_literals
 import json
 
 import pytest
+import six
+from django.contrib.auth.models import User
+from pytest_django.fixtures import django_user_model, django_username_field
 from rest_framework import status
 from rest_framework.test import APIClient
+
+from shuup import configuration
 from shuup.core import cache
 from shuup.core.models import (
-    get_person_contact, Order, OrderStatus, PaymentStatus, ShippingStatus,
-    Shop, ShopStatus, Basket
+    Basket, get_person_contact, Order, OrderStatus, PaymentStatus, Product,
+    ProductMedia, ProductMediaKind, ShippingStatus, Shop, ShopProduct,
+    ShopProductVisibility, ShopStatus
 )
 from shuup.core.pricing import TaxfulPrice
+from shuup.front.models import StoredBasket
 from shuup.testing import factories
+from shuup.testing.factories import (
+    create_product, get_default_currency, get_default_supplier,
+    get_random_filer_image
+)
 from shuup_tests.campaigns.test_discount_codes import (
     Coupon, get_default_campaign
 )
@@ -29,7 +40,7 @@ def setup_function(fn):
 
 def configure(settings):
     settings.SHUUP_ENABLE_MULTIPLE_SHOPS = True
-    SHUUP_BASKET_ORDER_CREATOR_SPEC = (
+    settings.SHUUP_BASKET_ORDER_CREATOR_SPEC = (
         "shuup.core.basket.order_creator:BasketOrderCreator")
     settings.SHUUP_BASKET_STORAGE_CLASS_SPEC = (
         "shuup.core.basket.storage:DatabaseBasketStorage")
@@ -45,6 +56,63 @@ def configure(settings):
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware'
     ]
+    set_configuration()
+
+def set_configuration():
+    config = {
+        "api_permission_ShopViewSet": 3,
+        "api_permission_TreesAdminShopProductViewSet": 5,
+        "api_permission_TreesShopViewSet": 3,
+        "api_permission_TreesNotificationViewSet": 4,
+        "api_permission_FrontShopProductViewSet": 3,
+        "api_permission_PersonContactViewSet": 4,
+        "api_permission_TreesAdminShopViewSet": 5,
+        "api_permission_TreesShopProductViewSet": 3,
+        "api_permission_FrontUserViewSet": 2,
+        "api_permission_FrontOrderViewSet": 4,
+        "api_permission_SMSPasswordSet": 2,
+        "api_permission_AttributeViewSet": 5,
+        "api_permission_TaxClassViewSet": 5,
+        "api_permission_RequestResetPassword": 5,
+        "api_permission_TreesAdminCouponViewSet": 5,
+        "api_permission_FrontProductViewSet": 3,
+        "api_permission_TreesProductViewSet": 3,
+        "api_permission_ProductVariationVariableValueViewSet": 5,
+        "api_permission_SalesUnitViewSet": 5,
+        "api_permission_UserViewSet": 5,
+        "api_permission_ShopReviewViewSet": 4,
+        "api_permission_BasketViewSet": 4,
+        "api_permission_CategoryViewSet": 1,
+        "api_permission_ShipmentViewSet": 5,
+        "api_permission_TreesAnalyticsViewSet": 2,
+        "api_permission_CgpPriceViewSet": 5,
+        "api_permission_VerificationSender": 2,
+        "api_permission_ShopProductViewSet": 3,
+        "api_permission_TreesAdminOrderViewSet": 5,
+        "api_permission_ContactViewSet": 4,
+        "api_permission_TreesProductFavoritesViewSet": 4,
+        "api_permission_OrderViewSet": 5,
+        "api_permission_ProductViewSet": 5,
+        "api_permission_CustomerVerificationViewSet": 5,
+        "api_permission_ProductTypeViewSet": 5,
+        "api_permission_ProductReviewViewSet": 4,
+        "api_permission_ProductVariationVariableViewSet": 5,
+        "api_permission_VerificationChecker": 4,
+        "api_permission_TreesFrontOrderViewSet": 5,
+        "api_permission_SupplierViewSet": 5,
+        "api_permission_ManufacturerViewSet": 5,
+        "api_permission_ProductMediaViewSet": 5,
+        "api_permission_TreesShopFavoritesViewSet": 4,
+        "api_permission_ProductAttributeViewSet": 5,
+        "api_permission_TreesAdminPatientsViewSet": 5,
+        "api_permission_MutableAddressViewSet": 5,
+        "api_permission_ProductPackageViewSet": 5,
+        "api_permission_TreesAdminNotificationViewSet": 5,
+        "api_permission_TreesFAQViewSet": 1,
+    }
+    for field, value in six.iteritems(config):
+        configuration.set(None, field, value)
+
 
 def create_shop(name):
     return Shop.objects.create(
@@ -90,6 +158,17 @@ def test_create_new_basket(admin_user, settings):
     assert basket.key == basket_data['uuid'].split("-")[1]
     assert basket.shop == shop
     assert basket.creator == admin_user
+
+    person = factories.create_random_person()
+
+    response = client.post("/api/shuup/basket/new/?customer_id={}".format(person.pk), data={"customer_id": person.pk})
+    assert response.status_code == status.HTTP_201_CREATED
+    basket_data = json.loads(response.content.decode("utf-8"))
+    basket = Basket.objects.all()[2]
+    assert basket.key == basket_data['uuid'].split("-")[1]
+    assert basket.shop == shop
+    assert basket.creator == admin_user
+    assert basket.customer.pk == person.pk
 
 
 @pytest.mark.django_db
@@ -307,6 +386,7 @@ def test_basket_can_be_cleared(admin_user, settings):
     assert basket.product_count == 0
     assert len(response_data["items"]) == 0
 
+
 @pytest.mark.django_db
 def test_can_delete_line(admin_user, settings):
     configure(settings)
@@ -365,6 +445,7 @@ def test_cant_add_a_dummy_campaign_code(admin_user, settings):
     response = client.post('/api/shuup/basket/{}-{}/add_code/'.format(shop.pk, basket.key), payload)
     assert response.status_code == status.HTTP_400_BAD_REQUEST
 
+
 @pytest.mark.django_db
 def test_can_add_a_valid_campaign_code(admin_user, settings):
     configure(settings)
@@ -384,9 +465,9 @@ def test_can_add_a_valid_campaign_code(admin_user, settings):
     assert response.status_code == status.HTTP_200_OK
     assert 'DACODE' in basket_data['codes']
 
-
+@pytest.mark.parametrize("target_customer", ["admin", "other"])
 @pytest.mark.django_db
-def test_create_order(admin_user, settings):
+def test_create_order(admin_user, settings, target_customer):
     configure(settings)
     shop = factories.get_default_shop()
     basket = factories.get_basket()
@@ -399,6 +480,14 @@ def test_create_order(admin_user, settings):
     payload = {
         'shop_product': shop_product.id
     }
+
+    if target_customer == "other":
+        target = factories.create_random_person()
+        payload["customer_id"] = target.pk
+    else:
+        target = get_person_contact(admin_user)
+
+
     response = client.post('/api/shuup/basket/{}-{}/add/'.format(shop.pk, basket.key), payload)
     assert response.status_code == status.HTTP_200_OK
 
@@ -423,7 +512,7 @@ def test_create_order(admin_user, settings):
     assert not order.payment_method
     assert not order.shipping_method
     assert float(order.taxful_total_price_value) == 1
-    assert order.customer == get_person_contact(admin_user)
+    assert order.customer == target
     assert order.orderer == get_person_contact(admin_user)
     assert order.creator == admin_user
     assert not order.billing_address
@@ -530,3 +619,193 @@ def test_copy_order_to_basket(admin_user, settings):
     assert not response_data["validation_errors"]
     basket.refresh_from_db()
     assert len(basket.data["lines"]) == 2
+
+
+@pytest.mark.django_db
+def test_abandoned_baskets(admin_user, settings):
+    configure(settings)
+    shop = factories.get_default_shop()
+    factories.get_default_payment_method()
+    factories.get_default_shipping_method()
+
+    basket1 = factories.get_basket()
+
+    shop_product = factories.get_default_shop_product()
+    shop_product.default_price = TaxfulPrice(1, shop.currency)
+    shop_product.save()
+    client = _get_client(admin_user)
+    # add shop product
+    payload = {'shop_product': shop_product.id}
+    response = client.post('/api/shuup/basket/{}-{}/add/'.format(shop.pk, basket1.key), payload)
+    assert response.status_code == status.HTTP_200_OK
+    response_data = json.loads(response.content.decode("utf-8"))
+    assert len(response_data["items"]) == 1
+    assert response_data["items"][0]["shop_product"] == shop_product.pk
+    assert not response_data["validation_errors"]
+    assert float(response_data["total_price"]) == 1
+    assert Basket.objects.count() == 1
+
+    response = client.get("/api/shuup/basket/abandoned/?shop={}&days_ago=0&not_updated_in_hours=0".format(shop.pk))
+    response_data = json.loads(response.content.decode("utf-8"))
+    assert len(response_data) == 1
+    basket_data = response_data[0]
+    assert basket_data["id"] == basket1.id
+
+
+    basket2 = factories.get_basket()
+    response = client.post('/api/shuup/basket/{}-{}/add/'.format(shop.pk, basket2.key), payload)
+    assert response.status_code == status.HTTP_200_OK
+    response_data = json.loads(response.content.decode("utf-8"))
+    assert len(response_data["items"]) == 1
+    assert response_data["items"][0]["shop_product"] == shop_product.pk
+    assert not response_data["validation_errors"]
+    assert float(response_data["total_price"]) == 1
+    assert Basket.objects.count() == 2
+
+    response = client.get("/api/shuup/basket/abandoned/?shop={}&days_ago=0&not_updated_in_hours=0".format(shop.pk))
+    response_data = json.loads(response.content.decode("utf-8"))
+    assert len(response_data) == 2
+    basket_data = response_data[1]
+    assert basket_data["id"] == basket2.id
+
+    # there is no shop with this id thus it should return 404
+    response = client.get("/api/shuup/basket/abandoned/?shop=2&days_ago=0&not_updated_in_hours=0")
+    assert response.status_code == status.HTTP_404_NOT_FOUND
+
+
+def get_product(sku, shop):
+    product = Product.objects.filter(sku=sku).first()
+    if not product:
+        product = create_product(sku)
+        image = get_random_filer_image()
+        media = ProductMedia.objects.create(
+            product=product, kind=ProductMediaKind.IMAGE, file=image, enabled=True,
+            public=True)
+        product.primary_image = media
+        product.save()
+        assert product.primary_image_id
+        sp = ShopProduct.objects.create(
+            product=product, shop=shop, visibility=ShopProductVisibility.ALWAYS_VISIBLE
+        )
+        sp.suppliers.add(get_default_supplier())
+    return product
+
+
+def get_basket(shop):
+    import uuid
+    return Basket.objects.create(
+        key=uuid.uuid1().hex,
+        shop=shop,
+        prices_include_tax=shop.prices_include_tax,
+        currency=shop.currency
+    )
+
+
+def get_user(username, email, password="test"):
+    UserModel = django_user_model
+    username_field = django_username_field
+
+    try:
+        return User._default_manager.get(**{"username": username})
+    except User.DoesNotExist:
+        kwargs = {
+            "email": email,
+            "password": password,
+            "username": username
+        }
+
+        return User._default_manager.create_user(**kwargs)
+
+
+@pytest.mark.django_db
+def test_permissions(admin_user, settings):
+    """
+     ainoastaan kaupan staff / customer / objektin omistava user
+     * voi vaihtaa tilauksen tilan, toisen kaupan staff ei voi vaihtaa tilauksen tilaa
+     * retrievaa baskettia kuin sinä itse,
+    """
+    configure(settings)
+    shop_one = factories.get_default_shop()
+    shop_two = Shop.objects.create(
+        name="second shop",
+        identifier="second_shop",
+        status=ShopStatus.ENABLED,
+        public_name="Second shop",
+        currency=get_default_currency().code
+    )
+    user_one = get_user("user_one", "user_one@example.com")
+    user_two = get_user("user_two", "user_two@example.com")
+    user_three = get_user("user_three", "user_three@example.com")
+    user_three.is_staff = True
+    user_three.save()
+
+    person_one = factories.create_random_person()
+    person_one.user = user_one
+    person_one.save()
+
+    person_two = factories.create_random_person()
+    person_two.user = user_two
+    person_two.save()
+
+    # create products
+    product_one = get_product("shop_one_product", shop_one)
+    product_two = get_product("shop_two_product", shop_two)
+
+    # create baskets
+    # basket_one = get_basket(shop_one)
+    # basket_two = get_basket(shop_two)
+
+    client = _get_client(admin_user)
+
+    response = client.post("/api/shuup/basket/new/", {
+        "shop": shop_one.pk,
+        "customer_id": person_one.pk,
+    })
+    assert response.status_code == status.HTTP_201_CREATED
+    basket_data = json.loads(response.content.decode("utf-8"))
+    basket = Basket.objects.first()
+    assert basket.key == basket_data['uuid'].split("-")[1]
+    assert basket.shop == shop_one
+    assert basket.creator == admin_user
+
+    response = client.get("/api/shuup/basket/{}-{}/".format(shop_one.pk, basket.key))
+    assert response.status_code == status.HTTP_200_OK
+
+    # someone figured out the first param is shop!! oh noes
+    client = _get_client(user_one)
+    response = client.get("/api/shuup/basket/{}-{}/".format(shop_two.pk, basket.key))
+    assert response.status_code == status.HTTP_403_FORBIDDEN
+
+    basket = Basket.objects.first()
+    assert basket.key == basket_data['uuid'].split("-")[1]
+    assert basket.shop == shop_one
+    assert basket.creator == admin_user
+
+    # ok, person one has permission to their own basket even though they didn't create it
+    basket = assert_basket_retrieve(admin_user, basket, basket_data, person_one, shop_one, status.HTTP_200_OK)
+
+    # Person two is not allowed to see the basket
+    basket = assert_basket_retrieve(admin_user, basket, basket_data, person_two, shop_one, status.HTTP_403_FORBIDDEN)
+
+    # but admin is, yay admin!
+    basket = assert_basket_retrieve(admin_user, basket, basket_data, admin_user, shop_one, status.HTTP_200_OK)
+
+    # ima become staff. I have the power.
+    person_three = factories.create_random_person()
+    person_three.user = user_three
+    person_three.save()
+    shop_one.staff_members.add(person_three.user)
+
+    basket = assert_basket_retrieve(admin_user, basket, basket_data, person_three, shop_one, status.HTTP_200_OK)
+
+
+def assert_basket_retrieve(admin_user, basket, data, person, shop, status):
+    user = person if isinstance(person, User) else person.user
+    client = _get_client(user)
+    response = client.get("/api/shuup/basket/{}-{}/".format(shop.pk, basket.key))
+    assert response.status_code == status
+    basket = Basket.objects.first()
+    assert basket.key == data['uuid'].split("-")[1]
+    assert basket.shop == shop
+    assert basket.creator == admin_user
+    return basket
