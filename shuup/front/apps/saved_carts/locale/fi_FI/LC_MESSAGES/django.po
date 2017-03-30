@@ -24,10 +24,10 @@ msgid "Saved Carts"
 msgstr "Tallennetut ostoskorit"
 
 msgid "Home"
-msgstr "Koti"
+msgstr "Etusivu"
 
 msgid "Dashboard"
-msgstr "Tilin hallinta"
+msgstr "Hallintapaneeli"
 
 msgid "My Saved Carts"
 msgstr "Tallennetut korini"

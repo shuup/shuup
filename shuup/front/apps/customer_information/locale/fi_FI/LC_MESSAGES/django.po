@@ -68,10 +68,10 @@ msgid "Address Status"
 msgstr "Osoitteen tila"
 
 msgid "Home"
-msgstr "Koti"
+msgstr "Etusivu"
 
 msgid "Dashboard"
-msgstr "Kojelauta"
+msgstr "Hallintapaneeli"
 
 msgid "General Information"
 msgstr "Yleiset tiedot"

@@ -52,7 +52,7 @@ msgid "Status"
 msgstr "Tila"
 
 msgid "Total price"
-msgstr "Hinta yhteensä"
+msgstr "Kokonaishinta"
 
 msgid "Details"
 msgstr "Tiedot"
@@ -132,10 +132,10 @@ msgid "Details of order %(identifier)s"
 msgstr "Tilauksen %(identifier)s tiedot"
 
 msgid "Home"
-msgstr "Koti"
+msgstr "Etusivu"
 
 msgid "Dashboard"
-msgstr "Kojelauta"
+msgstr "Hallintapaneeli"
 
 msgid "Order History"
 msgstr "Tilaushistoria"

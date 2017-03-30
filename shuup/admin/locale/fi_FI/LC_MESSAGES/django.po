@@ -39,7 +39,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Home"
-msgstr "Koti"
+msgstr "Etusivu"
 
 #, python-format
 msgid ""
@@ -578,7 +578,7 @@ msgid "Decimal places"
 msgstr "Desimaalipaikat"
 
 msgid "Customers Dashboard"
-msgstr "Asiakkaiden ohjausnäkymä"
+msgstr "Asiakkuuksien hallintapaneeli"
 
 msgid "Active customers"
 msgstr "Aktiivisia asiakkaita"
@@ -1230,7 +1230,7 @@ msgid "Convert to Variation Parent"
 msgstr "Muunna variaatioisännäksi"
 
 msgid "Sales Dashboard"
-msgstr "Myynnin ohjausnäkymä"
+msgstr "Myynnin hallintapaneeli"
 
 msgid "Sales per Month (past 12 months)"
 msgstr "Kuukausittainen myynti (viimeiset 12 kuukautta)"
@@ -1960,10 +1960,10 @@ msgid "Menu"
 msgstr "Valikko"
 
 msgid "Dashboard"
-msgstr "Kojelauta"
+msgstr "Hallintapaneeli"
 
 msgid "Go home"
-msgstr "Mene kotiin"
+msgstr "Mene etusivulle"
 
 msgid "Search for"
 msgstr "Etsi"
