@@ -41,7 +41,7 @@ msgid "This theme has no special settings to configure."
 msgstr "Tällä teemalla ei ole muokattavia lisäasetuksia."
 
 msgid "Home"
-msgstr "Koti"
+msgstr "Etusivu"
 
 #, python-format
 msgid "Welcome to %(shop_name)s!"

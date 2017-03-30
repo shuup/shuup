@@ -446,10 +446,10 @@ msgid "data"
 msgstr "data"
 
 msgid "taxless total price"
-msgstr "veroton hinta yhteensä"
+msgstr "veroton kokonaishinta"
 
 msgid "taxful total price"
-msgstr "verollinen hinta yhteensä"
+msgstr "verollinen kokonaishinta"
 
 msgid "currency"
 msgstr "valuutta"
@@ -670,13 +670,13 @@ msgid "There are errors"
 msgstr "Virhe"
 
 msgid "My Dashboard"
-msgstr "Kojelauta"
+msgstr "Hallintapaneelini"
 
 msgid "Dashboard"
-msgstr "Kojelauta"
+msgstr "Hallintapaneeli"
 
 msgid "Home"
-msgstr "Koti"
+msgstr "Etusivu"
 
 msgid "Bad Request"
 msgstr "Epäkelpo pyyntö"
@@ -960,7 +960,7 @@ msgid "Products ordered"
 msgstr "Tilatut tuotteet"
 
 msgid "Tax breakdown"
-msgstr "Verojen erittely"
+msgstr "Veroerittely"
 
 msgid "Tax"
 msgstr "Vero"
@@ -969,7 +969,7 @@ msgid "Tax percentage"
 msgstr "Veroprosentti"
 
 msgid "Based on amount"
-msgstr "Perustuu määrään"
+msgstr "Veron peruste"
 
 msgid "Amount of tax"
 msgstr "Veron määrä"

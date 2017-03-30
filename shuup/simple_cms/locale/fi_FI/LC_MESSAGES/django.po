@@ -205,4 +205,4 @@ msgid "Extras"
 msgstr "Extrat"
 
 msgid "Home"
-msgstr "Koti"
+msgstr "Etusivu"
