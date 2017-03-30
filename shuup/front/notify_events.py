@@ -24,6 +24,8 @@ class OrderReceived(Event):
     order = Variable(_("Order"), type=Model("shuup.Order"))
     customer_email = Variable(_("Customer Email"), type=Email)
     customer_phone = Variable(_("Customer Phone"), type=Phone)
+    shop_email = Variable(_("Shop Email"), type=Email)
+    shop_phone = Variable(_("Shop Phone"), type=Phone)
     language = Variable(_("Language"), type=Language)
 
 
@@ -81,12 +83,22 @@ class RefundCreated(Event):
 
 @receiver(order_creator_finished)
 def send_order_received_notification(order, **kwargs):
-    OrderReceived(
+    params = dict(
         order=order,
         customer_email=order.email,
         customer_phone=order.phone,
+        shop_email=None,
+        shop_phone=None,
         language=order.language
-    ).run()
+    )
+
+    if order.shop.contact_address:
+        params.update(dict(
+            shop_email=order.shop.contact_address.email,
+            shop_phone=order.shop.contact_address.phone
+        ))
+
+    OrderReceived(**params).run()
 
 
 @receiver(shipment_created)

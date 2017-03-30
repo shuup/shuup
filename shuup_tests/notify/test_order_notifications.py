@@ -109,7 +109,19 @@ DEFAULT_ADDRESS_DATA = dict(
     postal_code="K9N",
     street="Woof Ave.",
     city="Dog Fort",
+    phone="123456789",
+    email="customer@shuup.com",
     country="GB"
+)
+
+SHOP_ADDRESS_DATA = dict(
+    name=u"Shop Default",
+    postal_code="90014",
+    street="Frog Ave.",
+    city="Cat Fort",
+    phone="987654321",
+    email="shop@shuup.com",
+    country="US"
 )
 
 def get_address(**overrides):
@@ -336,3 +348,78 @@ def test_basic_order_flow_registered(regular_user):
         # mail is always sent in fallback language since user is not registered
         assert latest_mail.subject == template_data[lang]["subject"], "Subject doesn't match"
         assert latest_mail.body == template_data[lang]["body"], "Body doesn't match"
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("with_shop_contact", [False, True])
+def test_order_received_variables(rf, with_shop_contact):
+    activate("en")
+    shop = get_shop(True)
+    shop.contact_address = get_address(**SHOP_ADDRESS_DATA)
+    shop.contact_address.save()
+    shop.save()
+    get_default_product()
+    get_default_supplier()
+
+    STEP_DATA = [{
+        "cond_op": "all",
+        "enabled": True,
+        "next": "continue",
+        "actions": [{
+            "template_data": {
+                "en": {
+                    "body": "{{ customer_email }}",
+                    "content_type": "plain",
+                    "subject": "{{ customer_phone }}"
+                }
+            },
+            "identifier": "send_email",
+            "language": {
+                "constant": "en"
+            },
+            "recipient": {
+                "constant": "someone@shuup.com"
+            }
+        }]
+    }]
+
+    if with_shop_contact:
+        STEP_DATA[0]['actions'].insert(0, {
+            "template_data": {
+                "en": {
+                    "body": "{{ shop_email }}",
+                    "content_type": "plain",
+                    "subject": "{{ shop_phone }}"
+                }
+            },
+            "identifier": "send_email",
+            "language": {
+                "constant": "en"
+            },
+            "recipient": {
+                "constant": "someoneelse@shuup.com"
+            }
+        })
+
+    sc = Script.objects.create(name="variables script", event_identifier="order_received", enabled=True)
+    sc.set_serialized_steps(STEP_DATA)
+    sc.save()
+
+    n_outbox_pre = len(mail.outbox)
+    customer = create_random_person(locale='en')
+    customer.default_shipping_address = get_address(**DEFAULT_ADDRESS_DATA)
+    customer.default_shipping_address.save()
+    customer.save()
+
+    create_random_order(customer, shop=shop)
+    assert (len(mail.outbox) == n_outbox_pre + (2 if with_shop_contact else 1)), "Sending email failed"
+
+    latest_mail = mail.outbox[-1]
+    assert latest_mail.subject == customer.default_shipping_address.phone
+    assert latest_mail.body == customer.default_shipping_address.email
+
+    if with_shop_contact:
+        # shop email is sent first - we use insert(0, shop_step_data)
+        penult_mail = mail.outbox[-2]
+        assert penult_mail.subject == shop.contact_address.phone
+        assert penult_mail.body == shop.contact_address.email
