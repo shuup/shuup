@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.views.generic import View
 
-from shuup.core.models import Order, Supplier
+from shuup.core.models import Order, ProductMode, Supplier
 from shuup.front.views.dashboard import DashboardViewMixin
 
 
@@ -30,6 +30,12 @@ class OrderDetailView(DashboardViewMixin, OrderViewMixin, django.views.generic.D
     template_name = 'shuup/personal_order_history/order_detail.jinja'
     context_object_name = 'order'
 
+    def get_context_data(self, **kwargs):
+        context = super(OrderDetailView, self).get_context_data(**kwargs)
+        reorderable_lines = _get_reorderable_lines(context['order'])
+        context['order_is_reorderable'] = reorderable_lines.exists()
+        return context
+
 
 class ReorderView(View):
 
@@ -40,7 +46,7 @@ class ReorderView(View):
             return HttpResponseRedirect(reverse("shuup:show-order", kwargs=kwargs))
 
         supplier = Supplier.objects.first()
-        for line in order.lines.products():
+        for line in _get_reorderable_lines(order):
             request.basket.add_product(
                 supplier=supplier,
                 shop=request.shop,
@@ -49,3 +55,17 @@ class ReorderView(View):
             )
 
         return HttpResponseRedirect(reverse("shuup:basket"))
+
+
+def _get_reorderable_lines(order):
+    """
+    Get re-orderable lines of an order.
+
+    This is all product lines except:
+     * child lines, because otherwise package contents are added twice.
+     * subscriptions, because those don't use normal checkout flow.
+    """
+    return (
+        order.lines.products()
+        .exclude(parent_line__isnull=False)
+        .exclude(product__mode=ProductMode.SUBSCRIPTION))
