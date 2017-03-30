@@ -6,13 +6,10 @@
 {% block content %}
     {% call content_with_sidebar(content_id="settings_form") %}
         <form method="post" id="settings_form">
-
-        {% csrf_token %}
-        {% call content_block(_("Orders"), "fa-table") %}
-            {% set url = url("shuup_admin:shop.list") %}
-            <p>{% trans url=url %}You can change shop specific order related settings from <a href="{{ url }}">shop configuration</a>.{% endtrans %}</p>
-            {{ bs3.field(form.order_reference_number_method) }}
-        {% endcall %}
+            {% csrf_token %}
+            {% for form_def in form.form_defs.values() %}
+                {% include form_def.template_name with context %}
+            {% endfor %}
         </form>
     {% endcall %}
 {% endblock %}

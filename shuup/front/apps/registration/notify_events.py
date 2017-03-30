@@ -9,24 +9,69 @@ from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 from registration.signals import user_registered
 
+from shuup.core.models import get_person_contact, PersonContact
 from shuup.notify.base import Event, Variable
 from shuup.notify.script_template.factory import \
     generic_send_email_script_template_factory
-from shuup.notify.typology import Email
+from shuup.notify.typology import Email, Model
 
 
 class RegistrationReceived(Event):
     identifier = "registration_received"
     name = _("Registration Received")
-
+    customer = Variable(_("Customer"), type=Model("shuup.Contact"))
     customer_email = Variable(_("Customer Email"), type=Email)
+
+
+class CompanyRegistrationReceived(RegistrationReceived):
+    identifier = "company_registration_received"
+    name = _("Company Registration Received")
+
+
+class CompanyApproved(RegistrationReceived):
+    identifier = "company_approved_by_admin"
+    name = _("Company Approved")
 
 
 @receiver(user_registered)
 def send_user_registered_notification(user, **kwargs):
-    RegistrationReceived(
-        customer_email=user.email,
-    ).run()
+    person_contact = get_person_contact(user)
+    customer = person_contact
+    cls = RegistrationReceived
+    email = user.email
+
+    if person_contact:
+        company = person_contact.company_memberships.first()
+        if company:
+            customer = company
+            cls = CompanyRegistrationReceived
+            email = user.email or company.email
+    event = cls(
+        customer=customer,
+        customer_email=email,
+    )
+    event.run()
+
+
+def send_company_activated_first_time_notification(instance, **kwargs):
+    activated_once = instance.log_entries.filter(identifier='company_activated').exists()
+    is_active_updated = kwargs.get("update_fields") and 'is_active' in kwargs.get("update_fields")
+    if activated_once or not instance.is_active or not is_active_updated:
+        return
+    # Send email if a company was never activated before
+    instance.add_log_entry(
+        message=_("Company has been activated."),
+        identifier='company_activated'
+    )
+    person = instance.members.instance_of(PersonContact).first()
+    email = person.user.email or instance.email
+    cls = CompanyApproved
+    customer = instance
+    event = cls(
+        customer=customer,
+        customer_email=email,
+    )
+    event.run()
 
 
 RegistrationReceivedEmailScriptTemplate = generic_send_email_script_template_factory(
@@ -36,6 +81,30 @@ RegistrationReceivedEmailScriptTemplate = generic_send_email_script_template_fac
     description=_("Send email when a user registers."),
     help_text=_("This script will send an email to the user or to any configured email "
                 "right after a user get registered."),
+    initial=dict(
+        subject=_("{{ order.shop }} - Welcome!")
+    )
+)
+
+CompanyRegistrationReceivedEmailScriptTemplate = generic_send_email_script_template_factory(
+    identifier="company_registration_received_email",
+    event=CompanyRegistrationReceived,
+    name=_("Send Company Registration Received Email"),
+    description=_("Send email when a user registers as a company."),
+    help_text=_("This script will send an email to the user or to any configured email "
+                "right after a user get registered."),
+    initial=dict(
+        subject=_("{{ order.shop }} - Welcome!")
+    )
+)
+
+CompanyActivatedEmailScriptTemplate = generic_send_email_script_template_factory(
+    identifier="company_activated_email",
+    event=CompanyApproved,
+    name=_("Send Company Activated Email"),
+    description=_("Notify company's contact person that compny account is activated"),
+    help_text=_("This script will send an email to the user or to any configured email "
+                "right after a company is activated."),
     initial=dict(
         subject=_("{{ order.shop }} - Welcome!")
     )

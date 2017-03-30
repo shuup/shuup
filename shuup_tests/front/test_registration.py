@@ -15,6 +15,10 @@ from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
 
+from shuup import configuration
+from shuup.core.models import CompanyContact
+from shuup.core.models import PersonContact
+from shuup.notify.models import Script
 from shuup.testing.factories import get_default_shop
 
 username = "u-%d" % uuid.uuid4().time
@@ -181,5 +185,151 @@ def test_user_will_be_redirected_to_user_account_page_after_activation(client):
     body = mail.outbox[-1].body
     urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', body)
     response = client.get(urls[0], follow=True)
-    assert email.encode('utf-8') in response.content, 'email should be found from the page.'
-    assert reverse('shuup:customer_edit') == response.request['PATH_INFO'], 'user should be on the account-page.'
+    if settings.SHUUP_REGISTRATION_REQUIRES_ACTIVATION:
+        assert email.encode('utf-8') not in response.content
+        assert reverse('shuup:login') == response.request['PATH_INFO']
+    else:
+        assert email.encode('utf-8') in response.content, 'email should be found from the page.'
+        assert reverse('shuup:customer_edit') == response.request['PATH_INFO'], 'user should be on the account-page.'
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("allow_company_registration", (False, True))
+def test_company_registration(django_user_model, client, allow_company_registration):
+    if "shuup.front.apps.registration" not in settings.INSTALLED_APPS:
+        pytest.skip("shuup.front.apps.registration required in installed apps")
+
+    get_default_shop()
+
+    configuration.set(None, "allow_company_registration", allow_company_registration)
+
+    url = reverse("shuup:registration_register_company")
+    Script.objects.create(
+        event_identifier="company_approved_by_admin",
+        name="Send Company Activated Email",
+        enabled=True,
+        template="company_activated_email",
+        _step_data=[
+            {'actions': [
+                {
+                    'fallback_language': {'constant': 'en'},
+                    'template_data': {
+                        'pt-br': {'content_type': 'html', 'subject': '', 'body': ''},
+                        'en': {
+                            'content_type': 'html',
+                            'subject': 'Company activated',
+                            'body': '{{customer.pk}} - activated'
+                        },
+                        'base': {'content_type': 'html', 'subject': '', 'body': ''},
+                        'it': {'content_type': 'html', 'subject': '', 'body': ''},
+                        'ja': {'content_type': 'html', 'subject': '', 'body': ''},
+                        'zh-hans': {'content_type': 'html', 'subject': '', 'body': ''},
+                        'fi': {'content_type': 'html', 'subject': '', 'body': ''}
+                    },
+                    'recipient': {'variable': 'customer_email'},
+                    'language': {'variable': 'language'},
+                    'identifier': 'send_email'}
+            ],
+                'enabled': True,
+                'next': 'stop',
+                'conditions': [],
+                'cond_op': 'all'
+            }
+        ]
+    )
+    Script.objects.create(
+        event_identifier="company_registration_received",
+        name="Send Company Registration Received Email",
+        enabled=True,
+        template="company_registration_received_email",
+        _step_data=[
+            {
+                'conditions': [],
+                'next': 'stop',
+                'cond_op': 'all',
+                'actions': [
+                    {
+                        'fallback_language': {'constant': 'en'},
+                        'template_data': {
+                            'pt-br': {'content_type': 'html', 'subject': '', 'body': ''},
+                             'en': {'content_type': 'html', 'subject': 'Generic welcome message', 'body': 'Welcome!'},
+                             'base': {'content_type': 'html', 'subject': '', 'body': ''},
+                             'it': {'content_type': 'html', 'subject': '', 'body': ''},
+                             'ja': {'content_type': 'html', 'subject': '', 'body': ''},
+                             'zh-hans': {'content_type': 'html', 'subject': '', 'body': ''},
+                             'fi': {'content_type': 'html', 'subject': '', 'body': ''}
+                        },
+                        'recipient': {'variable': 'customer_email'},
+                        'language': {'variable': 'language'},
+                        'identifier': 'send_email'
+                    },
+                    {
+                        'fallback_language': {'constant': 'en'},
+                        'template_data': {
+                            'pt-br': {'content_type': 'plain', 'subject': 'New company registered', 'body': ''},
+                            'en': {'content_type': 'plain', 'subject': 'New company registered', 'body': 'New company registered'},
+                            'it': {'content_type': 'plain', 'subject': 'New company registered', 'body': ''},
+                            'ja': {'content_type': 'plain', 'subject': 'New company registered', 'body': ''},
+                            'zh-hans': {'content_type': 'plain', 'subject': 'New company registered', 'body': ''},
+                            'fi': {'content_type': 'plain', 'subject': 'New company registered', 'body': ''}
+                        },
+                        'recipient': {'constant': 'admin@host.local'},
+                        'language': {'constant': 'en'},
+                        'identifier': 'send_email'
+                    }
+                ],
+                'enabled': True}],
+    )
+    if not allow_company_registration:
+        response = client.get(url)
+        assert response.status_code == 404
+    else:
+        response = client.post(url, data={
+            "username": username,
+            "email": email,
+            "password1": "password",
+            "password2": "password",
+            "contact_first_name": "Test",
+            "contact_last_name": "Tester",
+            "contact_phone": "123",
+            "contact_street": "Test street",
+            "contact_street2": "",
+            "contact_street3": "",
+            "contact_postal_code": "12345",
+            "contact_city": "Test City",
+            "contact_region_code": "",
+            "contact_region": "",
+            "contact_country": "FI",
+            "company_name": "Test company",
+            "company_name_ext": "test",
+            "company_www": "",
+            "company_tax_number": "12345",
+            "company_email": "test@example.com",
+            "company_phone": "123123",
+            "company_street": "testa tesat",
+            "company_street2": "",
+            "company_street3": "",
+            "company_postal_code": "12345",
+            "company_city": "test test",
+            "company_region_code": "",
+            "company_region": "",
+            "company_country": "FI"
+        })
+
+        user = django_user_model.objects.get(username=username)
+        contact = PersonContact.objects.get(user=user)
+        company = CompanyContact.objects.get(members__in=[contact])
+
+        # one of each got created
+        assert django_user_model.objects.count() == 1
+        assert PersonContact.objects.count() == 1
+        assert CompanyContact.objects.count() == 1
+        # and they are innactive
+        assert PersonContact.objects.filter(is_active=False).count() == 1
+        assert CompanyContact.objects.filter(is_active=False).count() == 1
+        assert mail.outbox[0].subject == "Generic welcome message"
+        assert mail.outbox[1].subject == "New company registered"
+        company = CompanyContact.objects.first()
+        company.is_active = True
+        company.save(update_fields=("is_active",))
+        assert mail.outbox[2].subject == "Company activated"

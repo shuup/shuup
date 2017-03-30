@@ -19,7 +19,7 @@ from shuup.testing.factories import (
     get_default_shop, get_default_supplier
 )
 from shuup.testing.utils import apply_request_middleware
-from shuup_tests.admin.test_settings import set_reference_method
+from shuup_tests.admin.test_settings import set_reference_method, test_system_settings
 from shuup_tests.utils import printable_gibberish, SmartClient
 from shuup_tests.utils.forms import get_form_data
 

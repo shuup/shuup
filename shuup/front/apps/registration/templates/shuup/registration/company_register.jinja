@@ -1,0 +1,50 @@
+{% extends "shuup/front/base.jinja" %}
+{% from "shuup/front/macros/general.jinja" import render_field %}
+
+{% block title %}{% trans %}Register as a Company{% endtrans %}{% endblock %}
+
+{% macro render_fields_for_prefix(title, description, prefix=None, fields=[]) %}
+    <h2>{{ title }}</h2>
+    <p class="small">{{ description }}</p>
+    {% for field in form.visible_fields() %}
+        {% if prefix %}
+            {% if field.name.startswith(prefix) %}
+                {{ render_field(field) }}
+            {% endif %}
+        {% else %}
+            {% if field.name in fields %}
+                {{ render_field(field) }}
+            {% endif %}
+        {% endif %}
+
+    {% endfor %}
+{% endmacro %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-8 col-sm-push-2 col-md-6 col-md-push-3">
+            <h1 class="page-header text-center">
+                {% trans %}Company Registration{% endtrans %}
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8 col-sm-push-2 col-md-6 col-md-push-3">
+            <div class="well">
+                <form method="post">
+                {{ form.errors }}
+                    {% csrf_token %}
+                    {% for field in form.hidden_fields() %}{{ field|safe }}{% endfor %}
+                    {{ render_fields_for_prefix(_("Login information"), description=_("The information you will log in with."), fields=["username", "email", "password1", "password2"]) }}
+                    <hr>
+                    {{ render_fields_for_prefix(_("Contact information"), description=_("Contact information for primary company contact"), prefix="contact_") }}
+                    <hr>
+                    {{ render_fields_for_prefix(_("Company information"), description=_("Company billing information"), prefix="company_") }}
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">
+                        <i class="fa fa-check"></i> {% trans %}Register as a Company{% endtrans %}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

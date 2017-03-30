@@ -26,7 +26,7 @@ def set_reference_method(rf, admin_user, reference_method, shop=None):
     assert response.status_code == 200
 
     data = {
-        "order_reference_number_method": reference_method.value
+        "order_settings-order_reference_number_method": reference_method.value
     }
     request = apply_request_middleware(rf.post("/", data=data))
     view_func(request)
@@ -35,5 +35,25 @@ def set_reference_method(rf, admin_user, reference_method, shop=None):
 
 
 @pytest.mark.django_db
-def test_system_settings(rf, admin_user):
-    set_reference_method(rf, admin_user, OrderReferenceNumberMethod.UNIQUE)
+@pytest.mark.parametrize("form_id,key,value,expected_value,shop", [
+    ("order_settings", consts.ORDER_REFERENCE_NUMBER_METHOD_FIELD, OrderReferenceNumberMethod.UNIQUE.value, "unset", None),
+    ("registration_settings", consts.ALLOW_COMPANY_REGISTRATION, True, "unset", None),
+    ("registration_settings", consts.ALLOW_COMPANY_REGISTRATION, "", False, None)
+])
+def test_system_settings(rf, admin_user, form_id, key, value, expected_value, shop):
+    if not shop:
+        shop = get_default_shop()
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
+    view_func = SystemSettingsView.as_view()
+    response = view_func(request)
+    assert response.status_code == 200
+
+    form_field = "%s-%s" % (form_id, key)
+    data = {form_field: value}
+    request = apply_request_middleware(rf.post("/", data=data))
+    response = view_func(request)
+    assert response.status_code == 302
+    if expected_value == "unset":
+        expected_value = value
+    assert configuration.get(None, key) == expected_value
+    return shop
