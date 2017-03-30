@@ -47,6 +47,7 @@ Addons
 Front
 ~~~~~
 
+- Add shop phone and number on order received notification
 - Fix bug: Could no change quantities of unorderable lines in the basket
 - Use display units when rendering product quantities
 - Add new provide category called `product_context_extra`
