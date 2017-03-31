@@ -150,7 +150,7 @@ def get_shop_configuration(context, name, default=None):
     :type default: Any
     """
     from shuup import configuration
-    return configuration.get(context.request.shop, name, default)
+    return configuration.get(context.get("request").shop, name, default)
 
 
 @library.global_function
