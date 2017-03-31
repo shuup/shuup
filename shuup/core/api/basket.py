@@ -327,14 +327,19 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         self.process_request(with_basket=False)
         basket_class = cached_load("SHUUP_BASKET_CLASS_SPEC")
         basket = basket_class(request._request)
-        if request.POST.get("customer_id"):
+
+        customer_id = request.POST.get("customer_id")
+        if not customer_id:
+            customer_id = request.data.get("customer_id")
+        if customer_id:
             is_staff = (not self.request.shop or not self.request.user.is_staff or
                         self.request.user.pk not in self.request.shop.staff_members.all().values_list("pk", flat=True))
             is_superuser = self.request.user.is_superuser
             if is_superuser or is_staff:
                 from shuup.core.models import PersonContact
-                customer = PersonContact.objects.get(pk=request.POST.get("customer_id"))
+                customer = PersonContact.objects.get(pk=customer_id)
                 basket.customer = customer
+
         stored_basket = basket.save()
         return Response(data={"uuid": "%s-%s" % (request.shop.pk, stored_basket.key)}, status=status.HTTP_201_CREATED)
 
@@ -510,13 +515,18 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         if len(errors):
             return Response({"errors": errors}, status=status.HTTP_400_BAD_REQUEST)
         order_creator = get_basket_order_creator()
-        if request.POST.get("customer_id"):
+
+        customer_id = request.POST.get("customer_id")
+        if not customer_id:
+            customer_id = request.data.get("customer_id")
+
+        if customer_id:
             is_staff = (not self.request.shop or not self.request.user.is_staff or
                         self.request.user.pk not in self.request.shop.staff_members.all().values_list("pk", flat=True))
             is_superuser = self.request.user.is_superuser
             if is_superuser or is_staff:
                 from shuup.core.models import PersonContact
-                customer = PersonContact.objects.get(pk=request.POST.get("customer_id"))
+                customer = PersonContact.objects.get(pk=customer_id)
                 request.basket.customer = customer
 
         order = order_creator.create_order(request.basket)
