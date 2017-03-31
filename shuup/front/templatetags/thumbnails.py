@@ -33,11 +33,14 @@ def process_thumbnailer_options(kwargs):
 
 @library.filter
 def thumbnail(source, alias=None, generate=True, **kwargs):
-    if not source:  # pragma: no cover
+    if not source:
         return None
     thumbnailer = get_thumbnailer(source)
-    if not thumbnailer:  # pragma: no cover
+    if not thumbnailer:
         return None
+
+    if _is_svg(thumbnailer.file):
+        return source.url if hasattr(source, 'url') else None
 
     if alias:
         options = aliases.get(alias, target=thumbnailer.alias_target)
@@ -48,8 +51,33 @@ def thumbnail(source, alias=None, generate=True, **kwargs):
     try:
         thumbnail = thumbnailer.get_thumbnail(options, generate=generate)
         return thumbnail.url
-    except InvalidImageFormatError:  # pragma: no cover
-        pass
+    except (IOError, InvalidImageFormatError):
+        return None
+
+
+def _is_svg(fileobj):
+    """
+    Detect if file object contains SVG data.
+
+    >>> from io import BytesIO as B
+    >>> assert _is_svg(B(b'<?xml><svg></svg>')) is True
+    >>> assert _is_svg(B(b'something else')) is False
+    >>> assert _is_svg(b'not a file') is None
+    """
+    try:
+        return _is_svg_inner(fileobj)
+    except (AttributeError, IOError):
+        return None
+
+
+def _is_svg_inner(fileobj):
+    pos = fileobj.tell()
+    try:
+        fileobj.seek(0)
+        content = fileobj.read(1024)
+    finally:
+        fileobj.seek(pos)
+    return (b'<svg' in content and b'>' in content)
 
 
 @library.filter
