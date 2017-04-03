@@ -21,7 +21,7 @@ def process_thumbnailer_options(kwargs):
     options = {}
     options.update(default_options)
     options.update(kwargs)
-    size = kwargs.setdefault("size", (128, 128))
+    size = options.setdefault('size', (128, 128))
     if isinstance(size, six.text_type):
         m = RE_SIZE.match(size)
         if m:
