@@ -8,10 +8,15 @@
 from __future__ import unicode_literals
 
 from decimal import Decimal
+from mock import patch
 
 from django.utils import translation
+from jinja2 import Template
 
-from shuup.core.templatetags.shuup_common import money, number, percent
+from shuup.core.models import Shop
+from shuup.core.templatetags.shuup_common import (
+    get_global_configuration, get_shop_configuration, money, number, percent
+)
 from shuup.utils.money import Money
 
 
@@ -180,3 +185,31 @@ def test_money_formatter_with_extra_digits():
         assert money(usd("1234.123456"), widen=2) == nbsp("1 234,1235 $")
         assert money(usd("1234.123456"), widen=3) == nbsp("1 234,12346 $")
         assert money(usd("1234.123456"), widen=4) == nbsp("1 234,123456 $")
+
+
+@patch('shuup.configuration.get')
+def test_get_shop_configuration(conf_get_mock, rf):
+    shop = Shop(identifier='da-shop', name='The Shop')
+    request = rf.get('/')
+    request.shop = shop
+    ctx = Template('').new_context({'request': request})
+
+    get_shop_configuration(ctx, 'some_variable')
+    conf_get_mock.assert_called_once_with(shop, 'some_variable', None)
+
+    conf_get_mock.reset_mock()
+
+    get_shop_configuration(ctx, 'some_variable', 'default')
+    conf_get_mock.assert_called_once_with(shop, 'some_variable', 'default')
+
+
+@patch('shuup.configuration.get')
+def test_get_global_configuration(conf_get_mock, rf):
+    get_global_configuration('some_variable')
+    conf_get_mock.assert_called_once_with(None, 'some_variable', None)
+
+
+@patch('shuup.configuration.get')
+def test_get_global_configuration_with_default(conf_get_mock, rf):
+    get_global_configuration('some_variable', 'default')
+    conf_get_mock.assert_called_once_with(None, 'some_variable', 'default')

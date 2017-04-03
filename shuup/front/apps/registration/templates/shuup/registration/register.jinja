@@ -20,7 +20,9 @@
                     {% for field in form.visible_fields() %}{{ render_field(field) }}{% endfor %}
                     {% if get_shop_configuration("allow_company_registration") %}
                     <p>
-                        <a href="{{ url("shuup:registration_register_company") }}">Register as a company.</a>
+                        <a href="{{ url("shuup:registration_register_company") }}">
+                            {% trans %}Register as a company.{% endtrans %}
+                        </a>
                     </p>
                     {% endif %}
                     <button type="submit" class="btn btn-primary btn-lg btn-block">
