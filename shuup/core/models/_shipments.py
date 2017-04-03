@@ -55,7 +55,7 @@ class ShipmentType(Enum):
 
 class ShipmentManager(models.Manager):
 
-    def all_except_deleted(self):
+    def all_except_deleted(self, shop=None, language=None):
         return self.exclude(status=ShipmentStatus.DELETED)
 
 
@@ -79,6 +79,7 @@ class Shipment(ShuupModel):
     objects = ShipmentManager()
 
     class Meta:
+        permissions = (('view_shipment', 'Can view shipments'),)
         verbose_name = _('shipment')
         verbose_name_plural = _('shipments')
 

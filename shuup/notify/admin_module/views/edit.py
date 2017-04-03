@@ -49,7 +49,8 @@ class ScriptEditView(CreateOrUpdateView):
                             text=_("Edit Template"),
                             icon="fa fa-pencil-square-o",
                             extra_css_class="btn-info",
-                            url=reverse("shuup_admin:notify.script-template-edit", kwargs={"pk": self.object.pk})
+                            url=reverse("shuup_admin:notify.script-template-edit", kwargs={"pk": self.object.pk}),
+                            required_permissions=("change", )
                         )
                     )
 
@@ -57,7 +58,8 @@ class ScriptEditView(CreateOrUpdateView):
                 text=edit_button_title,
                 icon="fa fa-pencil",
                 extra_css_class="btn-info",
-                url=reverse("shuup_admin:notify.script.edit-content", kwargs={"pk": self.object.pk})
+                url=reverse("shuup_admin:notify.script.edit-content", kwargs={"pk": self.object.pk}),
+                required_permissions=("change",)
             ))
             context["toolbar"] = Toolbar(buttons)
         return context

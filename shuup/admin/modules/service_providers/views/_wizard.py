@@ -34,7 +34,7 @@ class ServiceWizardFormPartMixin(object):
     def _get_service_provider_form_defs(self):
         form_defs = []
         for form_def in get_provide_objects(self.form_def_provide_key):
-            inst = form_def()
+            inst = form_def(request=self.request)
             if inst.visible():
                 form_defs.append(inst)
         form_defs.sort(key=lambda form_def: getattr(form_def, "priority", 0))
@@ -63,12 +63,13 @@ class ServiceWizardFormPartMixin(object):
             )
         ] + service_provider_form_defs
 
-    def form_valid(self, form):
-        providers = form[self.base_name].cleaned_data.get("providers").split(",")
+    def form_valid(self, form_group):
+        providers = form_group[self.base_name].cleaned_data.get("providers").split(",")
         for provider in providers:
-            provider_form = form.forms.get(provider, None)
+            provider_form = form_group.forms.get(provider, None)
             if provider_form:
-                form[provider].save()
+                form_group[provider].request = self.request
+                form_group[provider].save()
 
 
 class CarrierWizardPane(ServiceWizardFormPartMixin, WizardPane):

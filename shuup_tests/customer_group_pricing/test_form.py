@@ -34,9 +34,8 @@ def test_basic_form_sanity():
     shop = get_default_shop()
     group = get_default_customer_group()
     product = _get_test_product()
-    frm = CustomerGroupPricingForm(product=product, empty_permitted=True)
+    frm = CustomerGroupPricingForm(product=product, shop=shop, empty_permitted=True)
     assert len(frm.groups) == ContactGroup.objects.count()
-    assert len(frm.shops) == Shop.objects.count()
 
     assert "s_%d_g_%d" % (shop.id, group.id) in frm.fields
 
@@ -45,10 +44,10 @@ def test_basic_form_sanity():
 def test_no_changes_into_form():
     product = _get_test_product()
     shop = get_default_shop()
-    frm = CustomerGroupPricingForm(product=product, empty_permitted=True)
+    frm = CustomerGroupPricingForm(product=product, shop=shop, empty_permitted=True)
     # No changes made, right?
     form_data = get_form_data(frm, prepared=True)
-    frm = CustomerGroupPricingForm(product=product, data=form_data, empty_permitted=True)
+    frm = CustomerGroupPricingForm(product=product, shop=shop, data=form_data, empty_permitted=True)
     frm.full_clean()
     frm.save()
     assert CgpPrice.objects.get(product=product, shop=shop).price.value == 250
@@ -63,18 +62,18 @@ def test_change_shop_price():
 
     form_field = "s_%d_g_%d" % (shop.id, group.id)
 
-    frm = CustomerGroupPricingForm(product=product, empty_permitted=True)
+    frm = CustomerGroupPricingForm(product=product, shop=shop, empty_permitted=True)
     form_data = get_form_data(frm, prepared=True)
     # Price hike time!
     form_data[form_field] = "4000"
-    frm = CustomerGroupPricingForm(product=product, data=form_data, empty_permitted=True)
+    frm = CustomerGroupPricingForm(product=product, shop=shop, data=form_data, empty_permitted=True)
     frm.full_clean()
     frm.save()
     assert CgpPrice.objects.get(product=product, shop=shop, group=group).price == price(4000)
 
     # Never mind actually, same price for all shops
     form_data[form_field] = ""
-    frm = CustomerGroupPricingForm(product=product, data=form_data, empty_permitted=True)
+    frm = CustomerGroupPricingForm(product=product, shop=shop, data=form_data, empty_permitted=True)
     frm.full_clean()
     frm.save()
 
@@ -84,9 +83,10 @@ def test_change_shop_price():
 @pytest.mark.django_db
 def test_clear_prices():
     product = _get_test_product()
+    shop = get_default_shop()
     # We can clear the prices out, can't we?
     form_data = {}
-    frm = CustomerGroupPricingForm(product=product, data=form_data, empty_permitted=True)
+    frm = CustomerGroupPricingForm(product=product, shop=shop, data=form_data, empty_permitted=True)
     frm.full_clean()
     frm.save()
     assert not CgpPrice.objects.filter(product=product).exists()

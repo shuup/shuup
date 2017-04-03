@@ -36,7 +36,8 @@ from shuup.core.models import (
     OrderLineType, OrderStatus, PaymentMethod, PersonContact, Product,
     ProductMedia, ProductMediaKind, ProductType, SalesUnit, ShippingMethod,
     Shop, ShopProduct, ShopProductVisibility, ShopStatus, StockBehavior,
-    Supplier, SupplierType, Tax, TaxClass, WaivingCostBehaviorComponent
+    Supplier, SupplierType, Tax, TaxClass,
+    WaivingCostBehaviorComponent
 )
 from shuup.core.order_creator import OrderCreator, OrderSource
 from shuup.core.pricing import get_pricing_module
@@ -619,7 +620,7 @@ def get_faker(providers, locale=None):
     providers = [
         ("faker.providers.%s" % provider if ("." not in provider) else provider)
         for provider in providers
-        ]
+    ]
     locale = locale or (random.choice(["en_US"] + list(find_available_locales(providers))))
     fake = faker.Factory.create(locale=locale)
     fake.locale = locale

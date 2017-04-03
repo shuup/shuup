@@ -24,9 +24,10 @@ class StockAdjustmentForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(StockAdjustmentForm, self).__init__(*args, **kwargs)
-        if not settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
+        shop = Shop.objects.get_main()
+        if shop:
             self.fields["purchase_price"].label = "Purchase price per unit (%(currency_name)s)" % {
-                "currency_name": get_currency_name(Shop.objects.first().currency)
+                "currency_name": get_currency_name(shop.currency)
             }
 
     def clean_delta(self):

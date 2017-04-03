@@ -25,7 +25,7 @@ class TaxRulesAdminModule(AdminModule):
             url_prefix="^default-tax/rules",
             view_template="shuup.default_tax.admin_module.views.TaxRule%sView",
             name_template="default_tax.tax_rule.%s",
-            permissions=get_default_model_permissions(TaxRule)
+            model=TaxRule
         )
 
     def get_menu_entries(self, request):

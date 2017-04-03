@@ -18,15 +18,17 @@ from shuup.utils.properties import PriceProperty
 
 def _get_currency():
     from shuup.core.models import Shop
-    if not settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
-        return Shop.objects.first().currency
+    shop = Shop.objects.get_main()
+    if shop:
+        return shop.currency
     return settings.SHUUP_HOME_CURRENCY
 
 
 def _get_prices_include_tax():
     from shuup.core.models import Shop
-    if not settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
-        return Shop.objects.first().prices_include_tax
+    shop = Shop.objects.get_main()
+    if shop:
+        return shop.prices_include_tax
     return False
 
 

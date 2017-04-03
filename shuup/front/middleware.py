@@ -73,8 +73,7 @@ class ShuupFrontMiddleware(object):
         self._set_price_display_options(request)
 
     def _set_shop(self, request):
-        # TODO: Not the best logic :)
-        request.shop = Shop.objects.first()
+        request.shop = Shop.objects.get_current(request)
         if not request.shop:
             raise ImproperlyConfigured("No shop!")
 

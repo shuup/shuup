@@ -88,16 +88,14 @@ class ShopProduct(MoneyPropped, models.Model):
             "Set to blank for product to be purchasable without limits."
         ))
     purchase_multiple = QuantityField(default=0, verbose_name=_('purchase multiple'), help_text=_(
-            "Set this if the product needs to be purchased in multiples. "
-            "For example, if the purchase multiple is set to 2, then customers are required to order the product "
-            "in multiples of 2."
-        )
-    )
+        "Set this if the product needs to be purchased in multiples. "
+        "For example, if the purchase multiple is set to 2, then customers are required to order the product "
+        "in multiples of 2."
+    ))
     minimum_purchase_quantity = QuantityField(default=1, verbose_name=_('minimum purchase'), help_text=_(
-            "Set a minimum number of products needed to be ordered for the purchase. "
-            "This is useful for setting bulk orders and B2B purchases."
-        )
-    )
+        "Set a minimum number of products needed to be ordered for the purchase. "
+        "This is useful for setting bulk orders and B2B purchases."
+    ))
     limit_shipping_methods = models.BooleanField(
         default=False, verbose_name=_("limited for shipping methods"), help_text=_(
             "Check this if you want to limit your product to use only select payment methods. "
@@ -148,18 +146,16 @@ class ShopProduct(MoneyPropped, models.Model):
     # the default price of this product in the shop
     default_price = PriceProperty('default_price_value', 'shop.currency', 'shop.prices_include_tax')
     default_price_value = MoneyValueField(verbose_name=_("default price"), null=True, blank=True, help_text=_(
-            "This is the default individual base unit (or multi-pack) price of the product. "
-            "All discounts or coupons will be based off of this price."
-        )
-    )
+        "This is the default individual base unit (or multi-pack) price of the product. "
+        "All discounts or coupons will be based off of this price."
+    ))
 
     minimum_price = PriceProperty('minimum_price_value', 'shop.currency', 'shop.prices_include_tax')
     minimum_price_value = MoneyValueField(verbose_name=_("minimum price"), null=True, blank=True, help_text=_(
-            "This is the default price that the product cannot go under in your store, "
-            "despite coupons or discounts being applied. "
-            "This is useful to make sure your product price stays above cost."
-        )
-    )
+        "This is the default price that the product cannot go under in your store, "
+        "despite coupons or discounts being applied. "
+        "This is useful to make sure your product price stays above cost."
+    ))
 
     display_unit = models.ForeignKey(
         DisplayUnit, null=True, blank=True,
@@ -167,7 +163,11 @@ class ShopProduct(MoneyPropped, models.Model):
         help_text=_("Unit for displaying quantities of this product"))
 
     class Meta:
+        permissions = (('view_shopproduct', 'Can view shop products'),)
         unique_together = (("shop", "product",),)
+
+    def __str__(self):
+        return "{} ({})".format(self.product, self.shop)
 
     def save(self, *args, **kwargs):
         self.clean()
@@ -300,7 +300,7 @@ class ShopProduct(MoneyPropped, models.Model):
                 if child_shop_product.is_orderable(
                         supplier=supplier,
                         customer=customer,
-                        quantity=child_shop_product.minimum_purchase_quantity,
+                        quantity=self.minimum_purchase_quantity,
                         allow_cache=False
                 ):
                     sellable = True
@@ -311,14 +311,17 @@ class ShopProduct(MoneyPropped, models.Model):
             from shuup.core.models import ProductVariationResult
             sellable = False
             for combo in self.product.get_all_available_combinations():
-                res = ProductVariationResult.resolve(self.product, combo["variable_to_value"])
-                if not res:
+                product_variant = ProductVariationResult.resolve(self.product, combo["variable_to_value"])
+                if not product_variant:
                     continue
-                child_shop_product = res.get_shop_instance(self.shop)
-                if child_shop_product.is_orderable(
+                try:
+                    shop_product_variant = product_variant.get_shop_instance(self.shop)
+                except ShopProduct.DoesNotExist:
+                    continue
+                if shop_product_variant.is_orderable(
                         supplier=supplier,
                         customer=customer,
-                        quantity=child_shop_product.minimum_purchase_quantity,
+                        quantity=self.minimum_purchase_quantity,
                         allow_cache=False
                 ):
                     sellable = True

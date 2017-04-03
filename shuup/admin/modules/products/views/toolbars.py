@@ -33,7 +33,7 @@ class EditProductToolbar(Toolbar):
         super(EditProductToolbar, self).__init__()
         self.view = view
         self.request = view.request
-        self.product = view.object
+        self.product = view.object.product
         self.extend(get_default_edit_toolbar(
             self.view, "product_form",
             delete_url="shuup_admin:shop_product.delete"
@@ -46,6 +46,7 @@ class EditProductToolbar(Toolbar):
             onclick="saveAsACopy()",
             text=_("Save as a copy"),
             icon="fa fa-clone",
+            required_permissions=("shuup.add_product", "shuup.view_product")
         )
         self.append(save_as_copy_button)
 
@@ -62,7 +63,8 @@ class EditProductToolbar(Toolbar):
         cross_sell_button = DropdownItem(
             text=_("Manage Cross-Selling"),
             icon="fa fa-random",
-            url=reverse("shuup_admin:shop_product.edit_cross_sell", kwargs={"pk": product.pk})
+            url=reverse("shuup_admin:shop_product.edit_cross_sell", kwargs={"pk": product.pk}),
+            required_permissions=("shuup.change_productcrosssell")
         )
         menu_items = [menu_item for menu_item in self._get_header_items(
                 header=_("Cross-Selling"), divider=False, identifier=ProductActionCategory.CHILD_CROSS_SELL)]
@@ -106,20 +108,20 @@ class EditProductToolbar(Toolbar):
             yield DropdownItem(
                 text=_("Child: %s") % child,
                 icon="fa fa-eye",
-                url=get_model_url(child),
+                url=get_model_url(child, request=self.request),
             )
 
     def _get_parent_and_sibling_items(self, parent, siblings):
         yield DropdownItem(
             text=_("Parent: %s") % parent,
             icon="fa fa-eye",
-            url=get_model_url(parent),
+            url=get_model_url(parent, request=self.request),
         )
         for sib in siblings:
             yield DropdownItem(
                 text=_("Sibling: %s") % sib,
                 icon="fa fa-eye",
-                url=get_model_url(sib),
+                url=get_model_url(sib, request=self.request),
             )
 
     def _get_variation_menu_items(self, product):
@@ -130,6 +132,7 @@ class EditProductToolbar(Toolbar):
             text=_("Manage Variations"),
             icon="fa fa-sitemap",
             url=self._get_variation_url(product),
+            required_permissions=["shuup.change_product"]
         )
 
         if product.is_variation_parent():
@@ -142,7 +145,6 @@ class EditProductToolbar(Toolbar):
     def _get_package_menu_items(self, product):
         for item in self._get_header_items(_("Packages"), identifier=ProductActionCategory.CHILD_PACKAGE):
             yield item
-
         if product.is_package_parent():
             yield DropdownItem(
                 text=_("Manage Package"),
@@ -177,6 +179,7 @@ class EditProductToolbar(Toolbar):
                 text=_("Convert to Package Parent"),
                 icon="fa fa-retweet",
                 url=self._get_package_url(product),
+                required_permissions=["shuup.change_product"]
             )
 
             # variation header
@@ -186,4 +189,5 @@ class EditProductToolbar(Toolbar):
                 text=_("Convert to Variation Parent"),
                 icon="fa fa-retweet",
                 url=self._get_variation_url(product),
+                required_permissions=["shuup.change_product"]
             )

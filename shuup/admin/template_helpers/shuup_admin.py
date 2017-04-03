@@ -19,6 +19,7 @@ from jinja2.utils import contextfunction
 from shuup import configuration
 from shuup.admin import menu
 from shuup.admin.breadcrumbs import Breadcrumbs
+from shuup.admin.module_registry import get_modules
 from shuup.admin.utils.urls import (
     get_model_url, manipulate_query_string, NoModelUrl
 )
@@ -68,22 +69,14 @@ def get_support_id(context):
     return support_id
 
 
-# TODO: Figure out a more extensible way to deal with this
-BROWSER_URL_NAMES = {
-    "media": "shuup_admin:media.browse",
-    "product": "shuup_admin:shop_product.list",
-    "contact": "shuup_admin:contact.list",
-    "setLanguage": "shuup_admin:set-language",
-}
-
-
 def get_browser_urls():
     browser_urls = {}
-    for name, urlname in BROWSER_URL_NAMES.items():
-        try:
-            browser_urls[name] = reverse(urlname)
-        except NoReverseMatch:  # This may occur when a module is not available.
-            browser_urls[name] = None
+    for module in get_modules():
+        for name, urlname in module.get_exposed_urls():
+            try:
+                browser_urls[name] = reverse(urlname)
+            except NoReverseMatch:  # This may occur when a module is not available.
+                browser_urls[name] = None
     return browser_urls
 
 
@@ -130,6 +123,14 @@ def model_url(context, model, kind="detail", default=None):
     """
     user = context.get("user")
     try:
-        return get_model_url(model, kind=kind, user=user)
+        return get_model_url(model, kind=kind, user=user, request=context.get("request"))
     except NoModelUrl:
         return default
+
+
+@contextfunction
+def get_navbar_widgets(context):
+    navbar_widgets = []
+    for module in get_modules():
+        navbar_widgets += module.get_navbar_widgets()
+    return navbar_widgets

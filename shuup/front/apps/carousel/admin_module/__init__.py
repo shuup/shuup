@@ -28,13 +28,13 @@ class CarouselModule(AdminModule):
             url_prefix="^carousels",
             view_template="shuup.front.apps.carousel.admin_module.views.Carousel%sView",
             name_template="carousel.%s",
-            permissions=get_default_model_permissions(Carousel)
+            model=Carousel
         ) + [
             admin_url(
                 "^carousel/(?P<pk>\d+)/delete/$",
                 "shuup.front.apps.carousel.admin_module.views.CarouselDeleteView",
                 name="carousel.delete",
-                permissions=get_default_model_permissions(Carousel)
+                permissions=["carousel.delete_carousel"]
             ),
         ]
 

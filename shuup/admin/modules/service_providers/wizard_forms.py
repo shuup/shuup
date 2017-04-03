@@ -53,7 +53,7 @@ class ServiceWizardForm(ShuupAdminForm):
                 service_choice,
                 name=self.cleaned_data.get("service_name", service_choice.name),
                 description=self.cleaned_data.get("service_description", ""),
-                shop=Shop.objects.first(),
+                shop=Shop.objects.get_current(self.request),
                 tax_class=TaxClass.objects.first(),
                 enabled=True
             )

@@ -78,6 +78,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'shuup.front.middleware.ProblemMiddleware',
+    'shuup.admin.middleware.ShuupAdminMiddleware',
     'shuup.front.middleware.ShuupFrontMiddleware',
 ]
 
@@ -145,7 +146,8 @@ _TEMPLATE_CONTEXT_PROCESSORS = [
     "django.core.context_processors.static",
     "django.core.context_processors.request",
     "django.core.context_processors.tz",
-    "django.contrib.messages.context_processors.messages"
+    "django.contrib.messages.context_processors.messages",
+    "shuup.admin.utils.context_processors.current_shop",
 ]
 
 TEMPLATES = [

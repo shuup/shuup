@@ -38,9 +38,8 @@ class ProductMedia(TranslatableModel):
     identifier = InternalIdentifierField(unique=True)
     product = models.ForeignKey("Product", related_name="media", on_delete=models.CASCADE, verbose_name=_('product'))
     shops = models.ManyToManyField("Shop", related_name="product_media", verbose_name=_('shops'), help_text=_(
-            "Select which shops you would like the product media to be visible in."
-        )
-    )
+        "Select which shops you would like the product media to be visible in."
+    ))
     kind = EnumIntegerField(
         ProductMediaKind, db_index=True, default=ProductMediaKind.GENERIC_FILE, verbose_name=_('kind'), help_text=_(
             "Select what type the media is. It can either be a normal file, part of the documentation, or a sample."
@@ -52,9 +51,8 @@ class ProductMedia(TranslatableModel):
         help_text=_("Enter URL to external file. If this field is filled, the selected media doesn't apply.")
     )
     ordering = models.IntegerField(default=0, verbose_name=_('ordering'), help_text=_(
-            "You enter the numerical order that your image will be displayed on your product page."
-        )
-    )
+        "You enter the numerical order that your image will be displayed on your product page."
+    ))
 
     # Status
     enabled = models.BooleanField(db_index=True, default=True, verbose_name=_("enabled"))
@@ -71,19 +69,18 @@ class ProductMedia(TranslatableModel):
 
     translations = TranslatedFields(
         title=models.CharField(blank=True, max_length=128, verbose_name=_('title'), help_text=_(
-                "Choose a title for your product media. This will help it be found in your store and on the web."
-            )
-        ),
+            "Choose a title for your product media. This will help it be found in your store and on the web."
+        )),
         description=models.TextField(blank=True, verbose_name=_('description'), help_text=_(
-                "Write a description for your product media. This will help it be found in your store and on the web."
-            )
-        ),
+            "Write a description for your product media. This will help it be found in your store and on the web."
+        )),
     )
 
     class Meta:
+        ordering = ['ordering']
+        permissions = (('view_productmedia', 'Can view media'),)
         verbose_name = _('product attachment')
         verbose_name_plural = _('product attachments')
-        ordering = ["ordering", ]
 
     def __str__(self):  # pragma: no cover
         return self.effective_title
@@ -149,7 +146,7 @@ class ProductMedia(TranslatableModel):
 
         try:
             return thumbnailer.get_thumbnail(thumbnail_options=kwargs)
-        except InvalidImageFormatError:
+        except (InvalidImageFormatError, OSError):
             return None
 
 

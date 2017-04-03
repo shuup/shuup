@@ -39,6 +39,7 @@ class Payment(AbstractPayment):
     order = models.ForeignKey("Order", related_name='payments', on_delete=models.PROTECT, verbose_name=_('order'))
 
     class Meta:
+        permissions = (('view_payment', 'Can view payments'),)
         verbose_name = _('payment')
         verbose_name_plural = _('payments')
 

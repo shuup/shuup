@@ -16,7 +16,7 @@ from shuup.admin.modules.sales_dashboard.dashboard import (
 )
 from shuup.core.models import OrderStatus
 from shuup.testing.factories import (
-    create_product, create_random_order, create_random_person,
+    create_random_order, create_random_person,
     DEFAULT_CURRENCY, get_default_product, get_default_shop
 )
 
@@ -30,6 +30,7 @@ def get_order_for_date(dt, product):
     order.status = OrderStatus.objects.get_default_complete()
     order.save()
     return order
+
 
 @pytest.mark.django_db
 def test_order_chart_works():

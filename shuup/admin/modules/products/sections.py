@@ -21,10 +21,10 @@ class ProductOrdersSection(Section):
     order = 1
 
     @staticmethod
-    def visible_for_object(product):
-        return bool(product.pk)
+    def visible_for_object(product, request):
+        return bool(product.pk) and request.user.has_perm('shuup.view_product')
 
     @staticmethod
-    def get_context_data(product):
+    def get_context_data(product, request):
         # TODO: restrict to first 100 orders - do pagination later
         return Order.objects.valid().filter(lines__product_id=product.id).distinct()[:100]

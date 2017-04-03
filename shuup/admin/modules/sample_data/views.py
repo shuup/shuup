@@ -41,7 +41,7 @@ class ConsolidateSampleObjectsView(FormView):
     @atomic
     def form_valid(self, form):
         # there would be only sample data for single-shops envs
-        shop = Shop.objects.first()
+        shop = Shop.objects.get_main()
 
         # uninstall products
         if form.cleaned_data.get("products", False):
@@ -67,11 +67,11 @@ class ConsolidateSampleObjectsView(FormView):
 
     def get_form_kwargs(self):
         kwargs = super(ConsolidateSampleObjectsView, self).get_form_kwargs()
-        kwargs.update({"shop": Shop.objects.first()})
+        kwargs.update({"shop": Shop.objects.get_main()})
         return kwargs
 
     def get_context_data(self, **kwargs):
-        shop = Shop.objects.first()
+        shop = Shop.objects.get_main()
         context = super(ConsolidateSampleObjectsView, self).get_context_data(**kwargs)
         context["has_installed_sample"] = sample_manager.has_installed_samples(shop)
         context["title"] = _("Sample Data")

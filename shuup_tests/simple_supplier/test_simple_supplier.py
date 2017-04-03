@@ -19,6 +19,7 @@ from shuup.simple_supplier.admin_module.views import (process_alert_limit,
                                                       process_stock_adjustment)
 from shuup.simple_supplier.models import StockAdjustment, StockCount
 from shuup.simple_supplier.notify_events import AlertLimitReached
+from shuup.testing.utils import apply_request_middleware
 from shuup.testing.factories import (create_order_with_product, create_product,
                                      get_default_shop)
 from shuup_tests.simple_supplier.utils import get_simple_supplier
@@ -80,8 +81,7 @@ def test_supplier_with_stock_counts(rf, admin_user, settings):
     quantity = random.randint(100, 600)
     supplier.adjust_stock(product.pk, quantity)
     adjust_quantity = random.randint(100, 600)
-    request = rf.get("/")
-    request.user = admin_user
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
     request.POST = {
         "purchase_price": decimal.Decimal(32.00),
         "delta": adjust_quantity
@@ -120,8 +120,7 @@ def test_admin_form(rf, admin_user):
     supplier = get_simple_supplier()
     shop = get_default_shop()
     product = create_product("simple-test-product", shop, supplier)
-    request = rf.get("/")
-    request.user = admin_user
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
     frm = SimpleSupplierForm(product=product, request=request)
     # Form contains 1 product even if the product is not stocked
     assert len(frm.products) == 1
@@ -152,11 +151,9 @@ def test_new_product_admin_form_renders(rf, client, admin_user):
     Make sure that no exceptions are raised when creating a new product
     with simple supplier enabled
     """
-    request = rf.get("/")
-    request.user = admin_user
-    request.session = client.session
-    view = ProductEditView.as_view()
     shop = get_default_shop()
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
+    view = ProductEditView.as_view()
     supplier = get_simple_supplier()
     supplier.stock_managed = True
     supplier.save()
@@ -179,8 +176,7 @@ def test_alert_limit_view(rf, admin_user):
     assert not sc.alert_limit
 
     test_alert_limit = decimal.Decimal(10)
-    request = rf.get("/")
-    request.user = admin_user
+    request = apply_request_middleware(rf.get("/"), user=admin_user)
     request.method = "POST"
     request.POST = {
         "alert_limit": test_alert_limit,

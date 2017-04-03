@@ -166,7 +166,7 @@ class OrderStatus(TranslatableModel):
     )
 
     class Meta:
-        unique_together = ("identifier", "role")
+        unique_together = ('identifier', 'role')
         verbose_name = _('order status')
         verbose_name_plural = _('order statuses')
 
@@ -402,6 +402,7 @@ class Order(MoneyPropped, models.Model):
 
     class Meta:
         ordering = ("-id",)
+        permissions = (('view_order', 'Can view orders'),)
         verbose_name = _('order')
         verbose_name_plural = _('orders')
 

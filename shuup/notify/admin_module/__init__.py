@@ -15,7 +15,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 from shuup.admin.base import AdminModule, MenuEntry, Notification
 from shuup.admin.menu import SETTINGS_MENU_CATEGORY
-from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.admin.utils.urls import (
     admin_url, derive_model_url, get_edit_and_list_urls
 )
@@ -31,7 +30,7 @@ class NotifyAdminModule(AdminModule):
     breadcrumbs_menu_entry = MenuEntry(name, "shuup_admin:notify.script.list")
 
     def get_urls(self):
-        permissions = get_default_model_permissions(NotificationModel)
+        permissions = ["shuup_notify.change_notification"]
         return [
             admin_url(
                 "notify/script-item-editor/",
@@ -73,7 +72,7 @@ class NotifyAdminModule(AdminModule):
             url_prefix="^notify/script",
             view_template="shuup.notify.admin_module.views.Script%sView",
             name_template="notify.script.%s",
-            permissions=permissions
+            model=NotificationModel
         )
 
     def get_menu_entries(self, request):
@@ -89,7 +88,7 @@ class NotifyAdminModule(AdminModule):
         ]
 
     def get_required_permissions(self):
-        return get_default_model_permissions(NotificationModel)
+        return ["shuup_notify.change_notification"]
 
     @csrf_exempt
     def mark_notification_read_view(self, request, pk):

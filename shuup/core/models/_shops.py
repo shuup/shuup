@@ -14,6 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
 from filer.fields.image import FilerImageField
 from jsonfield import JSONField
+from parler.managers import TranslatableManager
 from parler.models import TranslatedFields
 
 from shuup.core.fields import CurrencyField, InternalIdentifierField
@@ -26,6 +27,48 @@ from ._orders import Order
 
 def _get_default_currency():
     return settings.SHUUP_HOME_CURRENCY
+
+
+class ShopManager(TranslatableManager):
+    shop_session_key = 'admin_shop'
+
+    def get_current(self, request):
+        if settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
+            try:
+                return request.session[self.shop_session_key]
+            except KeyError:
+                return self.get_for_user(request.user).first()
+
+        else:
+            return self.get_queryset().first()
+
+    def get_main(self):
+        """
+        Return the only usable shop in single shop setups. When multiple shops
+        are configured, there is no main shop.
+        """
+        if settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
+            return
+        else:
+            return self.get_queryset().first()
+
+    def set_current(self, request, id):
+        request.session[self.shop_session_key] = self.get_queryset().get(pk=id)
+
+    def has_current(self, request):
+        return bool(request.session.get(self.shop_session_key))
+
+    def clear_current(self, request):
+        request.session.pop(self.shop_session_key, None)
+
+    def get_for_user(self, user):
+        qs = self.get_queryset()
+        if user.is_superuser:
+            return qs.all()
+        elif user.is_anonymous():
+            return qs.none()
+        else:
+            return qs.filter(staff_members=user)
 
 
 class ShopStatus(Enum):
@@ -90,6 +133,13 @@ class Shop(ChangeProtected, TranslatableShuupModel):
             )
         )
     )
+
+    objects = ShopManager()
+
+    class Meta:
+        permissions = (('view_shop', 'Can view shops'),)
+        verbose_name = _('shop')
+        verbose_name_plural = _('shops')
 
     def __str__(self):
         return self.safe_translation_getter("name", default="Shop %d" % self.pk)

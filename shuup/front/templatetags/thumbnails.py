@@ -48,7 +48,7 @@ def thumbnail(source, alias=None, generate=True, **kwargs):
     try:
         thumbnail = thumbnailer.get_thumbnail(options, generate=generate)
         return thumbnail.url
-    except InvalidImageFormatError:  # pragma: no cover
+    except (InvalidImageFormatError, OSError):  # pragma: no cover
         pass
 
 

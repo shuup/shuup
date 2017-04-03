@@ -84,6 +84,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'shuup.front.middleware.ProblemMiddleware',
+    'shuup.admin.middleware.ShuupAdminMiddleware',
     'shuup.front.middleware.ShuupFrontMiddleware',
 ]
 
@@ -157,7 +158,8 @@ _TEMPLATE_CONTEXT_PROCESSORS = [
     "django.core.context_processors.static",
     "django.core.context_processors.request",
     "django.core.context_processors.tz",
-    "django.contrib.messages.context_processors.messages"
+    "django.contrib.messages.context_processors.messages",
+    "shuup.admin.utils.context_processors.current_shop",
 ]
 
 TEMPLATES = [
@@ -232,6 +234,11 @@ SHUUP_ERROR_PAGE_HANDLERS_SPEC = [
 ]
 
 SHUUP_SIMPLE_SEARCH_LIMIT = 150
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 
 if os.environ.get("SHUUP_WORKBENCH_DISABLE_MIGRATIONS") == "1":
     from .utils import DisableMigrations
