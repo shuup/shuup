@@ -45,9 +45,12 @@ class CheckoutPhaseViewMixin(object):
     def reset(self):
         self.storage.reset()
 
-    def get_success_url(self):
+    def get_success_url(self, *args, **kwargs):
         if self.next_phase:
             return reverse("shuup:checkout", kwargs={"phase": self.next_phase.identifier})
+        next_obj = super(CheckoutPhaseViewMixin, self)
+        if hasattr(next_obj, 'get_success_url'):
+            return next_obj.get_success_url(*args, **kwargs)
 
     def get_url(self, request):
         return reverse("shuup:checkout", kwargs={"phase": self.identifier})
