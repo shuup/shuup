@@ -202,6 +202,7 @@ Admin
 Front
 ~~~~~
 
+- ``thumbnail`` template tag now returns SVG images as-is instead of crashing
 - Simple CMS and Category views now render metadata based on the description
 - Cache template helpers, sorts and filters using context cache
 - Enable password reset when shop is in maintenance mode
