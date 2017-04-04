@@ -81,7 +81,7 @@ def set_configuration():
         "api_permission_SalesUnitViewSet": 5,
         "api_permission_UserViewSet": 5,
         "api_permission_ShopReviewViewSet": 4,
-        "api_permission_BasketViewSet": 4,
+        "api_permission_BasketViewSet": 2,
         "api_permission_CategoryViewSet": 1,
         "api_permission_ShipmentViewSet": 5,
         "api_permission_TreesAnalyticsViewSet": 2,
@@ -751,10 +751,6 @@ def test_permissions(admin_user, settings):
     product_one = get_product("shop_one_product", shop_one)
     product_two = get_product("shop_two_product", shop_two)
 
-    # create baskets
-    # basket_one = get_basket(shop_one)
-    # basket_two = get_basket(shop_two)
-
     client = _get_client(admin_user)
 
     response = client.post("/api/shuup/basket/new/", {
@@ -797,6 +793,25 @@ def test_permissions(admin_user, settings):
     shop_one.staff_members.add(person_three.user)
 
     basket = assert_basket_retrieve(admin_user, basket, basket_data, person_three, shop_one, status.HTTP_200_OK)
+
+
+@pytest.mark.django_db
+def test_anonymous_basket(settings):
+    configure(settings)
+    # create anonymous basket
+    shop = factories.get_default_shop()
+    client = APIClient()
+    response = client.post("/api/shuup/basket/new/", {
+        "shop": shop.pk
+    })
+    basket = Basket.objects.first()
+    assert basket
+    assert not basket.customer
+    assert not basket.orderer
+    assert not basket.creator
+    basket_data = json.loads(response.content.decode("utf-8"))
+    response = client.get("/api/shuup/basket/{}-{}/".format(shop.pk, basket.key))
+    assert response.status_code == status.HTTP_200_OK
 
 
 def assert_basket_retrieve(admin_user, basket, data, person, shop, status):
