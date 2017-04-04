@@ -305,7 +305,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
                     if not shop or user.pk not in shop.staff_members.all().values_list("pk", flat=True):
                         raise exceptions.PermissionDenied("No permission")
                 else:
-                    if not loaded_basket.customer.user.pk == self.request.user.pk:
+                    if loaded_basket.customer and not loaded_basket.customer.user.pk == self.request.user.pk:
                         raise exceptions.PermissionDenied("No permission")
                     elif not loaded_basket.shop == shop:
                         raise exceptions.PermissionDenied("No permission")
