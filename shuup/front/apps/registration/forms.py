@@ -6,14 +6,28 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import six
-from django import forms
 from django.contrib.auth.forms import User, UserCreationForm
 from django.utils.translation import ugettext_lazy as _
-from django_countries import countries
-from django_countries.widgets import CountrySelectWidget
 from registration.users import UsernameField
 
 from shuup.core.models import CompanyContact, MutableAddress, PersonContact
+
+
+def _form_field_from(model, field_name, **kwargs):
+    return model._meta.get_field(field_name).formfield(**kwargs)
+
+
+def _address_field(field_name, **kwargs):
+    return _form_field_from(MutableAddress, field_name, **kwargs)
+
+
+def _person_field(field_name, **kwargs):
+    kwargs.setdefault('help_text', None)
+    return _form_field_from(PersonContact, field_name, **kwargs)
+
+
+def _company_field(field_name, **kwargs):
+    return _form_field_from(CompanyContact, field_name, **kwargs)
 
 
 class CompanyRegistrationForm(UserCreationForm):
@@ -30,62 +44,34 @@ class CompanyRegistrationForm(UserCreationForm):
 
     """
     required_css_class = 'required'
-    email = forms.EmailField(label=_("E-mail"))
+    email = _form_field_from(User, 'email')
 
-    contact_first_name = forms.CharField(max_length=255, label=_("First Name"))
-    contact_last_name = forms.CharField(max_length=255, label=_("Last Name"))
-    contact_phone = forms.CharField(
-        label=_('Phone'), max_length=64, help_text=_("The primary phone number for the address."))
-    contact_street = forms.CharField(
-        label=_('Street'), max_length=255, help_text=_("The street address."))
-    contact_street2 = forms.CharField(
-        label=_('Street (2)'), required=False, max_length=255,
-        help_text=_("An additional street address line."))
-    contact_street3 = forms.CharField(
-        label=_('Street (3)'), required=False, max_length=255,
-        help_text=_("Any additional street address line."))
-    contact_postal_code = forms.CharField(
-        label=_('Postal Code'), max_length=64, help_text=_("The address postal/zip code."))
-    contact_city = forms.CharField(label=_('City'), max_length=255, help_text=_("The address city."))
-    contact_region_code = forms.CharField(
-        label=_('Region Code'), required=False, max_length=16,
-        help_text=_("The address region, province, or state."))
-    contact_region = forms.CharField(
-        label=_('Region'), required=False, max_length=64,
-        help_text=_("The address region, province, or state."))
-    contact_country = forms.ChoiceField(choices=countries, label=_("Country"), widget=CountrySelectWidget)
-    company_name = forms.CharField(
-        label=_('Name'), max_length=255, help_text=_("The name for the address."))
-    company_name_ext = forms.CharField(
-        label=_('Name Extension'), required=False, max_length=255,
-        help_text=_(
-            "Any other text to display along with the address. "
-            "This could be department names (for companies) or titles (for people)."))
-    company_www = forms.URLField(max_length=128, required=False, label=_("Web Address"))
-    company_tax_number = forms.CharField(
-        label=_('Tax Number'), max_length=32,
-        help_text=_("The business tax number. For example, EIN in US or VAT code in Europe."))
-    company_email = forms.EmailField(
-        label=_('Email'), max_length=128, help_text=_("The primary email for the address."))
-    company_phone = forms.CharField(
-        label=_('Phone'), max_length=64, help_text=_("The primary phone number for the address."))
-    company_street = forms.CharField(
-        label=_('Street'), max_length=255, help_text=_("The street address."))
-    company_street2 = forms.CharField(
-        label=_('Street (2)'), max_length=255, help_text=_("An additional street address line."), required=False)
-    company_street3 = forms.CharField(
-        label=_('Street (3)'), required=False, max_length=255,
-        help_text=_("Any additional street address line."))
-    company_postal_code = forms.CharField(
-        label=_('Postal Code'), max_length=64, help_text=_("The address postal/zip code."))
-    company_city = forms.CharField(label=_('City'), max_length=255, help_text=_("The address city."))
-    company_region_code = forms.CharField(
-        label=_('Region Code'), required=False, max_length=16,
-        help_text=_("The address region, province, or state."))
-    company_region = forms.CharField(
-        label=_('Region'), required=False, max_length=64,
-        help_text=_("The address region, province, or state."))
-    company_country = forms.ChoiceField(choices=countries, label=_("Country"), widget=CountrySelectWidget)
+    contact_first_name = _person_field('first_name', required=True)
+    contact_last_name = _person_field('last_name', required=True)
+    contact_phone = _address_field('phone', required=True, help_text=None)
+    contact_street = _address_field('street')
+    contact_street2 = _address_field('street2')
+    contact_street3 = _address_field('street3')
+    contact_postal_code = _address_field('postal_code')
+    contact_city = _address_field('city')
+    contact_region_code = _address_field('region_code')
+    contact_region = _address_field('region')
+    contact_country = _address_field('country')
+
+    company_name = _company_field('name', help_text=_("Name of the company"))
+    company_name_ext = _company_field('name_ext')
+    company_www = _company_field('www', help_text=None)
+    company_tax_number = _company_field('tax_number')
+    company_email = _company_field('email')
+    company_phone = _company_field('phone', help_text=None)
+    company_street = _address_field('street')
+    company_street2 = _address_field('street2')
+    company_street3 = _address_field('street3')
+    company_postal_code = _address_field('postal_code')
+    company_city = _address_field('city')
+    company_region_code = _address_field('region_code')
+    company_region = _address_field('region')
+    company_country = _address_field('country')
 
     class Meta:
         model = User
