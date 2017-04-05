@@ -865,10 +865,10 @@ msgstr "Artiklarna %(start_index)d till %(end_index)d av %(count)d summan"
 msgid "Toggle navigation"
 msgstr "Visa/göm navigering"
 
-msgid "Admin Tools"
+msgid "Administration Tools"
 msgstr "Administrationsverktyg"
 
-msgid "Maintenance"
+msgid "Maintenance mode"
 msgstr "Underhållsläge"
 
 msgid "ON"
@@ -877,8 +877,8 @@ msgstr "PÅ"
 msgid "OFF"
 msgstr "AV"
 
-msgid "Admin"
-msgstr "Administration"
+msgid "Shop Administration"
+msgstr "Butiks administration"
 
 msgid "Tools"
 msgstr "Verktyg"
@@ -1045,9 +1045,6 @@ msgstr "Lägg i kundvagnen"
 
 msgid "Product is not orderable."
 msgstr "Produkten är inte beställningsbara."
-
-msgid "Maintenance mode"
-msgstr "Underhållsläge"
 
 msgid "Shop is currently down for maintenance."
 msgstr "Butiken är för närvarande nere för underhåll."
