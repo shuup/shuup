@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-18 09:48+0000\n"
+"POT-Creation-Date: 2017-04-04 10:53+0000\n"
 "PO-Revision-Date: 2016-08-04 10:51-0700\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
@@ -422,6 +422,12 @@ msgid "Customer Email"
 msgstr ""
 
 msgid "Customer Phone"
+msgstr ""
+
+msgid "Shop Email"
+msgstr ""
+
+msgid "Shop Phone"
 msgstr ""
 
 msgid "Language"

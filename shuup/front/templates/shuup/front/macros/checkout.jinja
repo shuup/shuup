@@ -42,7 +42,7 @@
     <div class="well">
         <fieldset>
             {% if saved_address_form and saved_address_form.fields.addresses.choices|count > 1 %}
-                {{ render_address_form(None, saved_address_form, "saved_shpping") }}
+                {{ render_address_form(None, saved_address_form, "saved_shipping") }}
             {% endif %}
             {{ render_address_form(_("Shipping address"), shipping_form, "shipping", ship_to_billing_checkbox) }}
         </fieldset>

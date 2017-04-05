@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-18 08:31+0000\n"
+"POT-Creation-Date: 2017-04-04 16:50+0000\n"
 "PO-Revision-Date: 2017-03-01 13:48+0000\n"
 "Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
@@ -127,7 +127,7 @@ msgid "Permissions"
 msgstr "Oikeudet"
 
 msgid "Other Settings"
-msgstr "Muut Asetukset"
+msgstr "Muut asetukset"
 
 msgid "Identifier"
 msgstr "Tunniste"
@@ -1570,6 +1570,9 @@ msgstr "Tilauksen nimimiarvo"
 msgid "The minimum sum that an order needs to reach to be created."
 msgstr "Minimiarvo tilaukselle, jotta tilaus voidaan tehdä."
 
+msgid "Order Settings"
+msgstr "Tilausten asetukset"
+
 msgid "Order Reference number method"
 msgstr "Viitenumerometodi"
 
@@ -1588,14 +1591,30 @@ msgstr ""
 "määrästä.<br><br><b>Juokseva kauppakohtainen</b><br>Jokaisella kaupalla on "
 "oma juokseva tilausnumeronsa."
 
+msgid "Registration Settings"
+msgstr "Rekisteröinnin asetukset"
+
+msgid "Allow company registration"
+msgstr "Salli yritysten rekisteröinti"
+
+msgid ""
+"If you select this, companies can register into your store. Registered "
+"companies must be manually approved by admin."
+msgstr ""
+"Jos valitset tämän, yritykset voivat rekisteröityä kauppaasi. Pääkäyttäjän "
+"pitää silti käsin hyväksyä rekisteröidyt yritykset."
+
 msgid "Settings saved"
 msgstr "Asetukset tallennettu"
 
 msgid "Reset Defaults"
 msgstr "Palauta oletukset"
 
-msgid "Saved successfully"
-msgstr "Tallennettu onnistuneesti"
+msgid "Changes saved successfully"
+msgstr "Muutokset tallennettu onnistuneesti"
+
+msgid "No changes detected"
+msgstr "Ei havaittuja muutoksia"
 
 msgid "Save system settings"
 msgstr "Tallenna järjestelmäasetukset"
@@ -3838,14 +3857,6 @@ msgstr ""
 
 msgid "Add component"
 msgstr "Lisää komponentti"
-
-#, python-format
-msgid ""
-"You can change shop specific order related settings from <a href=\"%(url)s"
-"\">shop configuration</a>."
-msgstr ""
-"Voit vaihtaa kauppakohtaisia tilausasetuksia <a href=\"%(url)s\">kaupan "
-"asetuksista</a>."
 
 msgid "Order Configuration"
 msgstr "Tilauksen asetukset"

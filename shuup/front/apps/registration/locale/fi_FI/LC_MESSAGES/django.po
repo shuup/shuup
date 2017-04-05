@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 09:37+0000\n"
+"POT-Creation-Date: 2017-04-04 16:16+0000\n"
 "PO-Revision-Date: 2017-02-10 11:15+0000\n"
 "Last-Translator: Janne Tammi <janne@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
@@ -33,11 +33,26 @@ msgstr ""
 "Generated-By: Babel 2.1.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgid "Name of the company"
+msgstr "Yrityksen nimi"
+
 msgid "Registration Received"
 msgstr "Rekisteröityminen vastaanotettu"
 
+msgid "Customer"
+msgstr "Asiakas"
+
 msgid "Customer Email"
 msgstr "Asiakkaan sähköpostiosoite"
+
+msgid "Company Registration Received"
+msgstr "Yrityksen rekisteröityminen vastaanotettu"
+
+msgid "Company Approved"
+msgstr "Yritystili hyväksytty"
+
+msgid "Company has been activated."
+msgstr "Yritys on aktivoitu."
 
 msgid "Send Registration Received Email"
 msgstr "Lähetä \"Rekisteröityminen vastaanotettu\" -sähköposti"
@@ -49,11 +64,30 @@ msgid ""
 "This script will send an email to the user or to any configured email right "
 "after a user get registered."
 msgstr ""
-"Tämä scripti lähettää sähköpostin käyttäjälle tai konfiguroiduille "
+"Tämä komentosarja lähettää sähköpostin käyttäjälle tai konfiguroiduille "
 "sähköposteille välittömästi käyttäjän rekisteröitymisen jälkeen."
 
 msgid "{{ order.shop }} - Welcome!"
 msgstr "{{ order.shop }} - Tervetuloa!"
+
+msgid "Send Company Registration Received Email"
+msgstr "Lähetä \"Yrityksen rekisteröityminen vastaanotettu\" -sähköposti"
+
+msgid "Send email when a user registers as a company."
+msgstr "Lähetä sähköposti kun käyttäjä rekisteröityy yrityksenä."
+
+msgid "Send Company Activated Email"
+msgstr "Lähetä \"Yritys aktivoitu\" -sähköposti"
+
+msgid "Notify company's contact person that company account is activated"
+msgstr "Ilmoita yrityksen yhteyshenkilölle, että yritys on aktivoitu"
+
+msgid ""
+"This script will send an email to the user or to any configured email right "
+"after a company is activated."
+msgstr ""
+"Tämä komentosarja lähettää sähköpostin käyttäjälle tai konfiguroiduille "
+"sähköposteille, kun yritystili aktivoidaan."
 
 msgid "Account activation"
 msgstr "Tilin aktivointi"
@@ -61,11 +95,38 @@ msgstr "Tilin aktivointi"
 msgid "Account activation failed."
 msgstr "Tilin aktivointi epäonnistui"
 
+msgid "Register as a Company"
+msgstr "Rekisteröidy yrityksenä"
+
+msgid "Company Registration"
+msgstr "Yritysrekisteröityminen"
+
+msgid "Login information"
+msgstr "Kirjautumistiedot"
+
+msgid "The information you will log in with."
+msgstr "Tiedot joilla kirjaudutaan sisään."
+
+msgid "Contact information"
+msgstr "Yhteystiedot"
+
+msgid "Contact information for primary company contact"
+msgstr "Yrityksen pääyhteyshenkilön yhteystiedot"
+
+msgid "Company information"
+msgstr "Yrityksen tiedot"
+
+msgid "Company billing information"
+msgstr "Yrityksen laskutustiedot"
+
 msgid "Register"
 msgstr "Rekisteröidy"
 
 msgid "Registration"
 msgstr "Rekisteröityminen"
+
+msgid "Register as a company."
+msgstr "Rekisteröidy yrityksenä."
 
 msgid "Activation successful!"
 msgstr "Aktivointi onnistui!"

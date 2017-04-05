@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-18 08:29+0000\n"
+"POT-Creation-Date: 2017-04-04 10:53+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -1484,6 +1484,9 @@ msgstr ""
 msgid "The minimum sum that an order needs to reach to be created."
 msgstr ""
 
+msgid "Order Settings"
+msgstr ""
+
 msgid "Order Reference number method"
 msgstr ""
 
@@ -1496,13 +1499,27 @@ msgid ""
 "reference."
 msgstr ""
 
+msgid "Registration Settings"
+msgstr ""
+
+msgid "Allow company registration"
+msgstr ""
+
+msgid ""
+"If you select this, companies can register into your store. Registered "
+"companies must be manually approved by admin."
+msgstr ""
+
 msgid "Settings saved"
 msgstr ""
 
 msgid "Reset Defaults"
 msgstr ""
 
-msgid "Saved successfully"
+msgid "Changes saved successfully"
+msgstr ""
+
+msgid "No changes detected"
 msgstr ""
 
 msgid "Save system settings"
@@ -3336,12 +3353,6 @@ msgid ""
 msgstr ""
 
 msgid "Add component"
-msgstr ""
-
-#, python-format
-msgid ""
-"You can change shop specific order related settings from <a href=\"%(url)s"
-"\">shop configuration</a>."
 msgstr ""
 
 msgid "Order Configuration"

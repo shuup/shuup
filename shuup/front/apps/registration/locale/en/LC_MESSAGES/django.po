@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-11 17:29+0000\n"
+"POT-Creation-Date: 2017-04-04 16:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -19,10 +19,25 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
+msgid "Name of the company"
+msgstr ""
+
 msgid "Registration Received"
 msgstr ""
 
+msgid "Customer"
+msgstr ""
+
 msgid "Customer Email"
+msgstr ""
+
+msgid "Company Registration Received"
+msgstr ""
+
+msgid "Company Approved"
+msgstr ""
+
+msgid "Company has been activated."
 msgstr ""
 
 msgid "Send Registration Received Email"
@@ -39,16 +54,60 @@ msgstr ""
 msgid "{{ order.shop }} - Welcome!"
 msgstr ""
 
+msgid "Send Company Registration Received Email"
+msgstr ""
+
+msgid "Send email when a user registers as a company."
+msgstr ""
+
+msgid "Send Company Activated Email"
+msgstr ""
+
+msgid "Notify company's contact person that company account is activated"
+msgstr ""
+
+msgid ""
+"This script will send an email to the user or to any configured email right "
+"after a company is activated."
+msgstr ""
+
 msgid "Account activation"
 msgstr ""
 
 msgid "Account activation failed."
 msgstr ""
 
+msgid "Register as a Company"
+msgstr ""
+
+msgid "Company Registration"
+msgstr ""
+
+msgid "Login information"
+msgstr ""
+
+msgid "The information you will log in with."
+msgstr ""
+
+msgid "Contact information"
+msgstr ""
+
+msgid "Contact information for primary company contact"
+msgstr ""
+
+msgid "Company information"
+msgstr ""
+
+msgid "Company billing information"
+msgstr ""
+
 msgid "Register"
 msgstr ""
 
 msgid "Registration"
+msgstr ""
+
+msgid "Register as a company."
 msgstr ""
 
 msgid "Activation successful!"

@@ -102,7 +102,7 @@ CompanyActivatedEmailScriptTemplate = generic_send_email_script_template_factory
     identifier="company_activated_email",
     event=CompanyApproved,
     name=_("Send Company Activated Email"),
-    description=_("Notify company's contact person that compny account is activated"),
+    description=_("Notify company's contact person that company account is activated"),
     help_text=_("This script will send an email to the user or to any configured email "
                 "right after a company is activated."),
     initial=dict(
