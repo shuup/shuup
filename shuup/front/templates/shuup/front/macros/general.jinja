@@ -167,9 +167,9 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="#">
-                    {% trans %}Admin Tools{% endtrans %}
+                    {% trans %}Administration Tools{% endtrans %}
                     <br>
-                    <small>{% trans %}Maintenance{% endtrans %}:
+                    <small>{% trans %}Maintenance mode{% endtrans %}:
                         {% if request.shop.maintenance_mode %}
                             <span class="maintenance-on">{% trans %}ON{% endtrans %}</span>
                         {% else %}
@@ -182,7 +182,7 @@
             <div class="collapse navbar-collapse" id="admin-tools-menu">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="{{ url("shuup_admin:dashboard") }}">{% trans %}Admin{% endtrans %}</a>
+                        <a href="{{ url("shuup_admin:dashboard") }}">{% trans %}Shop Administration{% endtrans %}</a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle"

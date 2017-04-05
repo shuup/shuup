@@ -872,11 +872,11 @@ msgstr "Tuotteet %(start_index)d - %(end_index)d Yhteensä %(count)d"
 msgid "Toggle navigation"
 msgstr "Näytä / piilota navigaatio"
 
-msgid "Admin Tools"
-msgstr "Admintyökalut"
+msgid "Administration Tools"
+msgstr "Hallintatyökalut"
 
-msgid "Maintenance"
-msgstr "Ylläpitotoimenpiteet"
+msgid "Maintenance mode"
+msgstr "Huoltotila"
 
 msgid "ON"
 msgstr "PÄÄLLÄ"
@@ -884,8 +884,8 @@ msgstr "PÄÄLLÄ"
 msgid "OFF"
 msgstr "POIS PÄÄLTÄ"
 
-msgid "Admin"
-msgstr "Pääkäyttäjä"
+msgid "Shop Administration"
+msgstr "Kaupan hallinta"
 
 msgid "Tools"
 msgstr "Työkalut"
@@ -1058,9 +1058,6 @@ msgstr "Lisää ostoskoriin"
 
 msgid "Product is not orderable."
 msgstr "Tuote ei ole tilattavissa"
-
-msgid "Maintenance mode"
-msgstr "Huoltotila"
 
 msgid "Shop is currently down for maintenance."
 msgstr "Kauppa on tällä hetkellä huoltotilassa."

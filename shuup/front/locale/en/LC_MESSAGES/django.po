@@ -772,10 +772,10 @@ msgstr ""
 msgid "Toggle navigation"
 msgstr ""
 
-msgid "Admin Tools"
+msgid "Administration Tools"
 msgstr ""
 
-msgid "Maintenance"
+msgid "Maintenance mode"
 msgstr ""
 
 msgid "ON"
@@ -784,7 +784,7 @@ msgstr ""
 msgid "OFF"
 msgstr ""
 
-msgid "Admin"
+msgid "Shop Administration"
 msgstr ""
 
 msgid "Tools"
@@ -955,9 +955,6 @@ msgid "Add to cart"
 msgstr ""
 
 msgid "Product is not orderable."
-msgstr ""
-
-msgid "Maintenance mode"
 msgstr ""
 
 msgid "Shop is currently down for maintenance."
