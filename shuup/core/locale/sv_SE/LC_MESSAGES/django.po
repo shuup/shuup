@@ -3,13 +3,14 @@
 #
 # Translators:
 # Frank Wickström <frwickst@gmail.com>, 2017
+# Tuomas Suutari <tuomas.suutari@shoop.io>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 09:44+0000\n"
-"PO-Revision-Date: 2017-03-02 06:32+0000\n"
-"Last-Translator: Frank Wickström <frwickst@gmail.com>\n"
+"POT-Creation-Date: 2017-04-06 14:32+0000\n"
+"PO-Revision-Date: 2017-04-06 14:30+0000\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
 "language/sv_SE/)\n"
 "Language: sv_SE\n"
@@ -1326,6 +1327,19 @@ msgstr ""
 "eller rabatter. Detta är användbart för att se till att din produkts pris "
 "förblir ovanför produktens kostnad."
 
+msgid "display unit"
+msgstr "visningsenhet"
+
+msgid "Unit for displaying quantities of this product"
+msgstr "Enhet för att visa kvantiteter av denna produkt"
+
+msgid ""
+"Invalid display unit: Internal unit of the selected display unit does not "
+"match with the sales unit of the product"
+msgstr ""
+"Ogiltig visningsenhet: Den inre enheten av val visningsenhet stämmer inte "
+"med försäljningsenheten av produkten"
+
 msgid "This product has been deleted."
 msgstr "Denna produkt har tagits bort."
 
@@ -2286,6 +2300,9 @@ msgstr ""
 "ett värde större än noll om produkter med denna försäljningsenhet kan säljas "
 "i delmängder"
 
+msgid "sales units"
+msgstr "försäljningsenheter"
+
 msgid ""
 "The sales unit name to use for products (For example, 'pieces' or 'units'). "
 "Sales units can be set for each product through the product editor view."
@@ -2294,6 +2311,9 @@ msgstr ""
 "eller 'enheter'). Försäljningsenheter kan ställas in för varje produkt genom "
 "vyn produktredigeraren."
 
+msgid "symbol"
+msgstr "symbol"
+
 msgid ""
 "An abbreviated name for this sales unit that is shown throughout admin and "
 "order invoices."
@@ -2301,8 +2321,85 @@ msgstr ""
 "Ett förkortat namn för denna försäljningsenhet som visas på "
 "administrationssidorna och beställnigsfakturor."
 
-msgid "sales units"
-msgstr "försäljningsenheter"
+msgid "Value must be positive and non-zero"
+msgstr "Värdet måste vara positivt och över noll"
+
+msgid "internal unit"
+msgstr "internt värde"
+
+msgid "The sales unit that this display unit is linked to."
+msgstr "Försäljningsenhet som denna visningsenhet är kopplad till."
+
+msgid "ratio"
+msgstr "förhållande"
+
+msgid ""
+"Size of the display unit in internal unit.  E.g. if internal unit is "
+"kilogram and display unit is gram, ratio is 0.001."
+msgstr ""
+"Storlek av visningsenhetens i interna enhet.  T.ex. om den interna enheten "
+"är kilogram och visningsenheten är gram, så är förhållandet är 0,001."
+
+msgid ""
+"The number of decimal places to use for values in the display unit.  The "
+"internal values are still rounded based on settings of the internal unit."
+msgstr ""
+"Antalet decimaler för värden i visningsenheten.  De interna värdena rundas "
+"fortfarande baserat på inställningarna för den interna enheten."
+
+msgid "comparison value"
+msgstr "jämförelsevärde"
+
+msgid ""
+"Value to use when displaying unit prices.  E.g. if the display unit is g and "
+"the comparison value is 100, then unit prices are shown per 100g, like: "
+"$2.95 per 100g."
+msgstr ""
+"Värde som ska användas vid visning av enhetspriser. T.ex. om visningenheten "
+"är g och jämförelsevärdet är 100, då kommer enhetspriser visas per 100g, "
+"som: $ 2,95 per 100g."
+
+msgid "allow bare number"
+msgstr "tillåta nummer utan enhet"
+
+msgid ""
+"If true, values of this unit can be shown without the symbol occasionally.  "
+"Usually wanted if the unit is a piece, so that product listings can show "
+"just '$5.95' rather than '$5.95 per pc.'."
+msgstr ""
+"Om sant, så kan värden för den här enheten visas utan en symbol ibland. "
+"Detta väljs oftast om enheten är en del, så att produktlistor kan visa bara "
+"'$5,95' i stället för '$5,95 per dator.'."
+
+msgid "use by default"
+msgstr "använd som standard"
+
+msgid ""
+"Use this display unit by default when displaying values of the internal unit."
+msgstr ""
+"Använd denna visningsenhet som standard när du visar värdena för den interna "
+"enheten."
+
+msgid "Name of the display unit, e.g. Grams."
+msgstr "Namnet på enheten, t.ex. gram."
+
+msgid "An abbreviated name of the display unit, e.g. 'g'."
+msgstr "Ett förkortat namn av visningsenheten, tex. 'g'."
+
+msgid "display units"
+msgstr "visningsenheter"
+
+msgid "Pieces"
+msgstr "Stycken"
+
+msgctxt "Symbol for pieces unit"
+msgid "pc."
+msgstr "st."
+
+#, python-brace-format
+msgctxt "Display value with unit symbol (with or without space)"
+msgid "{value}{symbol}"
+msgstr "{value} {symbol}"
 
 msgid "No Choice"
 msgstr "Inget val"

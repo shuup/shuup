@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 09:44+0000\n"
-"PO-Revision-Date: 2017-03-02 06:34+0000\n"
+"POT-Creation-Date: 2017-04-06 14:20+0000\n"
+"PO-Revision-Date: 2017-04-05 11:13+0000\n"
 "Last-Translator: Frank Wickström <frwickst@gmail.com>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
 "language/sv_SE/)\n"
@@ -19,17 +19,32 @@ msgstr ""
 "Generated-By: Babel 2.1.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgid "Name of the company"
+msgstr "Företagets namn"
+
 msgid "Registration Received"
 msgstr "Registrering mottagen"
 
+msgid "Customer"
+msgstr "Kund"
+
 msgid "Customer Email"
 msgstr "Kundens e-post"
+
+msgid "Company Registration Received"
+msgstr "Registrering av företag mottaget"
+
+msgid "Company Approved"
+msgstr "Godkänd av företaget"
+
+msgid "Company has been activated."
+msgstr "Företaget har aktiverats."
 
 msgid "Send Registration Received Email"
 msgstr "Skicka e-post gällande mottagen registrering"
 
 msgid "Send email when a user registers."
-msgstr "Skicka ett e-postmeddelande då användaren registrerat sig"
+msgstr "Skicka ett e-postmeddelande då användaren registrerat sig."
 
 msgid ""
 "This script will send an email to the user or to any configured email right "
@@ -41,17 +56,64 @@ msgstr ""
 msgid "{{ order.shop }} - Welcome!"
 msgstr "{{ order.shop }} - Välkommen!"
 
+msgid "Send Company Registration Received Email"
+msgstr "Skicka företagsregistrering mail"
+
+msgid "Send email when a user registers as a company."
+msgstr ""
+"Skicka ett e-postmeddelande då en användaren registrerat sig som ett företag."
+
+msgid "Send Company Activated Email"
+msgstr "Skicka e-post då företaget aktiverats"
+
+msgid "Notify company's contact person that company account is activated"
+msgstr "Meddela företagets kontaktperson att företagskonto är aktiverad"
+
+msgid ""
+"This script will send an email to the user or to any configured email right "
+"after a company is activated."
+msgstr ""
+"Detta skript kommer att skicka ett e-postmeddelande till användaren eller "
+"till en inställda e-postadressen efter att en företaget har aktiverats."
+
 msgid "Account activation"
 msgstr "Kontoaktivering"
 
 msgid "Account activation failed."
 msgstr "Aktivering av konto har misslyckades."
 
+msgid "Register as a Company"
+msgstr "Registrera dig som ett företag"
+
+msgid "Company Registration"
+msgstr "Registrering för företag"
+
+msgid "Login information"
+msgstr "Inloggningsinformation"
+
+msgid "The information you will log in with."
+msgstr "Information som du kommer att använda för att logga in med."
+
+msgid "Contact information"
+msgstr "Kontaktinformation"
+
+msgid "Contact information for primary company contact"
+msgstr "Kontaktinformation för den primära företagskontakten"
+
+msgid "Company information"
+msgstr "Företagsinformation"
+
+msgid "Company billing information"
+msgstr "Företagetets faktureringsinformation"
+
 msgid "Register"
 msgstr "Registrera"
 
 msgid "Registration"
 msgstr "Registrering"
+
+msgid "Register as a company."
+msgstr "Registrera dig som ett företag."
 
 msgid "Activation successful!"
 msgstr "Aktiveringen lyckades!"

@@ -3,12 +3,13 @@
 # This file is distributed under the same license as the PROJECT project.
 #
 # Translators:
+# Frank Wickström <frwickst@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 09:44+0000\n"
-"PO-Revision-Date: 2017-03-02 06:32+0000\n"
+"POT-Creation-Date: 2017-04-06 14:20+0000\n"
+"PO-Revision-Date: 2017-04-05 04:59+0000\n"
 "Last-Translator: Frank Wickström <frwickst@gmail.com>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
 "language/sv_SE/)\n"
@@ -797,6 +798,9 @@ msgstr "Alla %s markerade objekt"
 
 msgid "Mass Action complete."
 msgstr "Hantering av ett flertal artiklar slutfört."
+
+msgid "Something went wrong."
+msgstr "Någonting gick snett."
 
 msgid "You haven't selected anything"
 msgstr "Du har inte valt något"

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 09:44+0000\n"
-"PO-Revision-Date: 2017-03-02 06:35+0000\n"
+"POT-Creation-Date: 2017-04-06 14:20+0000\n"
+"PO-Revision-Date: 2017-04-05 11:03+0000\n"
 "Last-Translator: Frank Wickström <frwickst@gmail.com>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
 "language/sv_SE/)\n"
@@ -467,6 +467,12 @@ msgstr "Kundens e-post"
 msgid "Customer Phone"
 msgstr "Kundens telefonnummer"
 
+msgid "Shop Email"
+msgstr "Butikens e-post"
+
+msgid "Shop Phone"
+msgstr "Butikens telefonnummer"
+
 msgid "Language"
 msgstr "Språk"
 
@@ -746,12 +752,6 @@ msgstr "Produkten tillagd i kundvagnen"
 msgid "There was an error adding the product to the basket"
 msgstr "Ett fel uppstod när produkten skulle läggas till i korgen"
 
-msgid "Qty"
-msgstr "Antal"
-
-msgid "Quantity"
-msgstr "Antal"
-
 msgid "Remove product from basket"
 msgstr "Ta bort produkten från korgen"
 
@@ -878,7 +878,7 @@ msgid "OFF"
 msgstr "AV"
 
 msgid "Shop Administration"
-msgstr "Butiks administration"
+msgstr "Butikens administrering"
 
 msgid "Tools"
 msgstr "Verktyg"
@@ -945,6 +945,12 @@ msgstr "Filer"
 
 msgid "Product"
 msgstr "Produkt"
+
+msgid "Unit Price"
+msgstr "Enhetspris"
+
+msgid "Quantity"
+msgstr "Antal"
 
 msgid "excl. tax"
 msgstr "exkl. skatt"

@@ -4,13 +4,14 @@
 #
 # Translators:
 # Frank Wickström <frwickst@gmail.com>, 2017
+# Tuomas Suutari <tuomas.suutari@shoop.io>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 09:44+0000\n"
-"PO-Revision-Date: 2017-03-02 06:30+0000\n"
-"Last-Translator: Frank Wickström <frwickst@gmail.com>\n"
+"POT-Creation-Date: 2017-04-06 14:23+0000\n"
+"PO-Revision-Date: 2017-04-06 14:22+0000\n"
+"Last-Translator: Tuomas Suutari <tuomas.suutari@shoop.io>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
 "language/sv_SE/)\n"
 "Language: sv_SE\n"
@@ -814,10 +815,10 @@ msgid "Payment %s created."
 msgstr "Betalning %s skapad."
 
 msgid "Order has already been paid"
-msgstr "Beställningen är redan betald."
+msgstr "Beställningen är redan betald"
 
-msgid "Only orders which are not paid can be set as paid."
-msgstr "Endast beställningar som inte är betalda kan ställas in som betald."
+msgid "Only orders which are not paid or deferred can be set as paid."
+msgstr "Endast beställningar som inte är betalda kan markeras som betald."
 
 msgid "Only zero price orders can be set as paid without creating a payment."
 msgstr ""
@@ -1253,6 +1254,12 @@ msgstr "Värdet av öppna beställningar"
 msgid "Sales Units"
 msgstr "Försäljningsenheter"
 
+msgid "Display Units"
+msgstr "Visningsenhet"
+
+msgid "Symbol"
+msgstr "Symbol"
+
 msgid "Allowed decimals"
 msgstr "Tillåtna decimaler"
 
@@ -1562,6 +1569,9 @@ msgstr "Beställningens minsta summa"
 msgid "The minimum sum that an order needs to reach to be created."
 msgstr "Den minsta summan som en beställning måste ha."
 
+msgid "Order Settings"
+msgstr "Beställningsinställningar"
+
 msgid "Order Reference number method"
 msgstr "Metod för uppbyggnad beställningars referensnummer"
 
@@ -1580,14 +1590,30 @@ msgstr ""
 "<br><br> <b>Butikslöpande</b> <br> Varje butik har sina egen löpande siffror "
 "som referenser."
 
+msgid "Registration Settings"
+msgstr "Registreringsinställningar"
+
+msgid "Allow company registration"
+msgstr "Tillåt registrering av företag"
+
+msgid ""
+"If you select this, companies can register into your store. Registered "
+"companies must be manually approved by admin."
+msgstr ""
+"Om du väljer detta kan företag registrera sig i din butik. Registrerade "
+"företag måste godkännas manuellt av administratören."
+
 msgid "Settings saved"
 msgstr "Inställningar sparade"
 
 msgid "Reset Defaults"
 msgstr "Återställ till standardinställningar"
 
-msgid "Saved successfully"
-msgstr "Sparat"
+msgid "Changes saved successfully"
+msgstr "Ändringarna sparades felfritt."
+
+msgid "No changes detected"
+msgstr "Inga förändringar som upptäcktes"
 
 msgid "Save system settings"
 msgstr "Spara systeminställningar"
@@ -3907,14 +3933,6 @@ msgstr ""
 
 msgid "Add component"
 msgstr "Lägg till ny komponent"
-
-#, python-format
-msgid ""
-"You can change shop specific order related settings from <a href=\"%(url)s"
-"\">shop configuration</a>."
-msgstr ""
-"Du kan ändra butikens beställningsrelaterade inställningar från <a href="
-"\"%(url)s\">butiksinställningar</a> ."
 
 msgid "Order Configuration"
 msgstr "Beställningsinställningar"
