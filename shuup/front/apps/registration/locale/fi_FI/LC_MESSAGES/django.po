@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-04 16:16+0000\n"
+"POT-Creation-Date: 2017-04-06 14:48+0000\n"
 "PO-Revision-Date: 2017-02-10 11:15+0000\n"
 "Last-Translator: Janne Tammi <janne@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
@@ -101,23 +101,23 @@ msgstr "Rekisteröidy yrityksenä"
 msgid "Company Registration"
 msgstr "Yritysrekisteröityminen"
 
-msgid "Login information"
-msgstr "Kirjautumistiedot"
-
-msgid "The information you will log in with."
-msgstr "Tiedot joilla kirjaudutaan sisään."
-
-msgid "Contact information"
-msgstr "Yhteystiedot"
-
-msgid "Contact information for primary company contact"
-msgstr "Yrityksen pääyhteyshenkilön yhteystiedot"
-
 msgid "Company information"
 msgstr "Yrityksen tiedot"
 
 msgid "Company billing information"
 msgstr "Yrityksen laskutustiedot"
+
+msgid "Contact person"
+msgstr "Yhteyshenkilö"
+
+msgid "Contact information for primary company contact"
+msgstr "Yrityksen pääyhteyshenkilön yhteystiedot"
+
+msgid "Login information"
+msgstr "Kirjautumistiedot"
+
+msgid "The information you will log in with."
+msgstr "Tiedot joilla kirjaudutaan sisään."
 
 msgid "Register"
 msgstr "Rekisteröidy"

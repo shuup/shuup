@@ -5,127 +5,97 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import six
-from django.contrib.auth.forms import User, UserCreationForm
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import ugettext_lazy as _
-from registration.users import UsernameField
 
-from shuup.core.models import CompanyContact, MutableAddress, PersonContact
-
-
-def _form_field_from(model, field_name, **kwargs):
-    return model._meta.get_field(field_name).formfield(**kwargs)
+from shuup.core.models import CompanyContact, PersonContact
+from shuup.utils.form_group import FormGroup
+from shuup.utils.importing import cached_load
 
 
-def _address_field(field_name, **kwargs):
-    return _form_field_from(MutableAddress, field_name, **kwargs)
-
-
-def _person_field(field_name, **kwargs):
-    kwargs.setdefault('help_text', None)
-    return _form_field_from(PersonContact, field_name, **kwargs)
-
-
-def _company_field(field_name, **kwargs):
-    return _form_field_from(CompanyContact, field_name, **kwargs)
-
-
-class CompanyRegistrationForm(UserCreationForm):
-    """
-    Form for registering a new account.
-
-    Validates that the requested username is not already in use, and
-    requires the password to be entered twice to catch typos.
-
-    Subclasses should feel free to add any additional validation they
-    need, but should avoid defining a ``save()`` method -- the actual
-    saving of collected user data is delegated to the active
-    registration backend.
-
-    """
-    required_css_class = 'required'
-    email = _form_field_from(User, 'email')
-
-    contact_first_name = _person_field('first_name', required=True)
-    contact_last_name = _person_field('last_name', required=True)
-    contact_phone = _address_field('phone', required=True, help_text=None)
-    contact_street = _address_field('street')
-    contact_street2 = _address_field('street2')
-    contact_street3 = _address_field('street3')
-    contact_postal_code = _address_field('postal_code')
-    contact_city = _address_field('city')
-    contact_region_code = _address_field('region_code')
-    contact_region = _address_field('region')
-    contact_country = _address_field('country')
-
-    company_name = _company_field('name', help_text=_("Name of the company"))
-    company_name_ext = _company_field('name_ext')
-    company_www = _company_field('www', help_text=None)
-    company_tax_number = _company_field('tax_number')
-    company_email = _company_field('email')
-    company_phone = _company_field('phone', help_text=None)
-    company_street = _address_field('street')
-    company_street2 = _address_field('street2')
-    company_street3 = _address_field('street3')
-    company_postal_code = _address_field('postal_code')
-    company_city = _address_field('city')
-    company_region_code = _address_field('region_code')
-    company_region = _address_field('region')
-    company_country = _address_field('country')
-
+class CompanyForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = (UsernameField(), "email")
+        model = CompanyContact
+        fields = ['name', 'name_ext', 'tax_number', 'email', 'phone', 'www']
+        help_texts = {
+            'name': _("Name of the company"),
+            'email': None, 'phone': None,
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(CompanyForm, self).__init__(*args, **kwargs)
+        self.fields['name'].required = True
+        self.fields['tax_number'].required = True
+        address_form = cached_load('SHUUP_ADDRESS_MODEL_FORM')()
+        for field in self.fields:
+            if field not in ('name', 'tax_number', 'www'):
+                address_formfield = address_form.fields.get(field)
+                if address_formfield:
+                    self.fields[field].required = address_formfield.required
+                else:
+                    del self.fields[field]
+
+
+class ContactPersonForm(forms.ModelForm):
+    class Meta:
+        model = PersonContact
+        fields = ['first_name', 'last_name', 'email', 'phone']
+
+    def __init__(self, **kwargs):
+        super(ContactPersonForm, self).__init__(**kwargs)
+        for (field_name, formfield) in self.fields.items():
+            if field_name in ['first_name', 'last_name', 'email']:
+                formfield.required = True
+                formfield.help_text = None
+
+
+class CompanyRegistrationForm(FormGroup):
+    def __init__(self, *args, **kwargs):
+        super(CompanyRegistrationForm, self).__init__(*args, **kwargs)
+        address_form_cls = cached_load('SHUUP_ADDRESS_MODEL_FORM')
+        self.add_form_def('company', CompanyForm)
+        self.add_form_def('billing', address_form_cls)
+        self.add_form_def('contact_person', ContactPersonForm)
+        self.add_form_def('user_account', UserCreationForm)
+
+    def instantiate_forms(self):
+        super(CompanyRegistrationForm, self).instantiate_forms()
+        company_form = self.forms['company']
+        billing_form = self.forms['billing']
+        for field in list(billing_form.fields):
+            billing_form.fields[field].help_text = None
+            if field in company_form.fields:
+                del billing_form.fields[field]
 
     def save(self, commit=True):
+        company = self.forms['company'].save(commit=False)
+        billing_address = self.forms['billing'].save(commit=False)
+        person = self.forms['contact_person'].save(commit=False)
+        user = self.forms['user_account'].save(commit=False)
 
-        def populate_address(needle):
-            data = {}
-            delete = []
-            for k, value in six.iteritems(self.cleaned_data):
-                if k.startswith(needle):
-                    key = k.replace(needle, "")
-                    data[key] = value
-                    delete.append(k)
-
-            # sweep unneeded keys
-            for k in delete:
-                del self.cleaned_data[k]
-
-            return data
-
-        contact_address_data = populate_address("contact_")
-        company_address_data = populate_address("company_")
-        user = super(CompanyRegistrationForm, self).save(commit)
-
-        website = company_address_data.pop("www")
-
-        contact_address = MutableAddress.from_data(contact_address_data)
-        contact_address.save()
-        company_address = MutableAddress.from_data(company_address_data)
-        company_address.save()
-
-        contact = PersonContact()
-        contact.is_active = False
-        contact.user = user
-        contact.email = user.email
-        contact.default_shipping_address = contact_address
-        contact.default_billing_address = contact_address
-        contact.first_name = contact_address_data["first_name"]
-        contact.last_name = contact_address_data["last_name"]
-        contact.phone = contact_address.phone
-        contact.save()
-
-        company = CompanyContact()
-        company.default_shipping_address = company_address
-        company.default_billing_address = company_address
         company.is_active = False
-        company.phone = company_address.phone
-        company.www = website
-        company.name = company_address_data["name"]
-        company.name_ext = company_address_data["name_ext"]
-        company.tax_number = company_address_data["tax_number"]
-        company.email = company_address_data["email"]
-        company.save()
-        company.members.add(contact)
+        company.default_billing_address = billing_address
+        company.default_shipping_address = billing_address
+
+        for field in ['name', 'name_ext', 'email', 'phone']:
+            setattr(billing_address, field, getattr(company, field))
+
+        person.is_active = False
+        person.user = user
+
+        user.first_name = person.first_name
+        user.last_name = person.last_name
+        user.email = person.email
+
+        if commit:
+            user.save()
+            person.user = user
+            person.save()
+            billing_address.save()
+            company.default_billing_address = billing_address
+            company.default_shipping_address = billing_address
+            company.save()
+            company.members.add(person)
+
         return user
