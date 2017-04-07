@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-06 14:20+0000\n"
-"PO-Revision-Date: 2017-04-05 11:13+0000\n"
+"POT-Creation-Date: 2017-04-06 14:48+0000\n"
+"PO-Revision-Date: 2017-04-06 17:50+0300\n"
 "Last-Translator: Frank Wickström <frwickst@gmail.com>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
 "language/sv_SE/)\n"
@@ -88,23 +88,23 @@ msgstr "Registrera dig som ett företag"
 msgid "Company Registration"
 msgstr "Registrering för företag"
 
-msgid "Login information"
-msgstr "Inloggningsinformation"
-
-msgid "The information you will log in with."
-msgstr "Information som du kommer att använda för att logga in med."
-
-msgid "Contact information"
-msgstr "Kontaktinformation"
-
-msgid "Contact information for primary company contact"
-msgstr "Kontaktinformation för den primära företagskontakten"
-
 msgid "Company information"
 msgstr "Företagsinformation"
 
 msgid "Company billing information"
 msgstr "Företagetets faktureringsinformation"
+
+msgid "Contact person"
+msgstr "Kontaktperson"
+
+msgid "Contact information for primary company contact"
+msgstr "Kontaktinformation för den primära företagskontakten"
+
+msgid "Login information"
+msgstr "Inloggningsinformation"
+
+msgid "The information you will log in with."
+msgstr "Information som du kommer att använda för att logga in med."
 
 msgid "Register"
 msgstr "Registrera"

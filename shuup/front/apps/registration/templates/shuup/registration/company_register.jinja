@@ -3,23 +3,6 @@
 
 {% block title %}{% trans %}Register as a Company{% endtrans %}{% endblock %}
 
-{% macro render_fields_for_prefix(title, description, prefix=None, fields=[]) %}
-    <h2>{{ title }}</h2>
-    <p class="small">{{ description }}</p>
-    {% for field in form.visible_fields() %}
-        {% if prefix %}
-            {% if field.name.startswith(prefix) %}
-                {{ render_field(field) }}
-            {% endif %}
-        {% else %}
-            {% if field.name in fields %}
-                {{ render_field(field) }}
-            {% endif %}
-        {% endif %}
-
-    {% endfor %}
-{% endmacro %}
-
 {% block content %}
     <div class="row">
         <div class="col-sm-8 col-sm-push-2 col-md-6 col-md-push-3">
@@ -32,14 +15,35 @@
         <div class="col-sm-8 col-sm-push-2 col-md-6 col-md-push-3">
             <div class="well">
                 <form method="post">
-                {{ form.errors }}
                     {% csrf_token %}
-                    {% for field in form.hidden_fields() %}{{ field|safe }}{% endfor %}
-                    {{ render_fields_for_prefix(_("Login information"), description=_("The information you will log in with."), fields=["username", "email", "password1", "password2"]) }}
+
+                    <h2>{{ _("Company information") }}</h2>
+
+                    <p class="small">
+                        {{ _("Company billing information") }}
+                    </p>
+
+                    {{ render_form(form.forms.company) }}
+                    {{ render_address_form(form.forms.billing) }}
+
                     <hr>
-                    {{ render_fields_for_prefix(_("Contact information"), description=_("Contact information for primary company contact"), prefix="contact_") }}
-                    <hr>
-                    {{ render_fields_for_prefix(_("Company information"), description=_("Company billing information"), prefix="company_") }}
+
+                    <h2>{{ _("Contact person") }}</h2>
+
+                    <p class="small">
+                        {{ _("Contact information for primary company contact") }}
+                    </p>
+
+                    {{ render_form(form.forms.contact_person) }}
+
+                    <h3>{{ _("Login information") }}</h3>
+
+                    <p class="small">
+                        {{ _("The information you will log in with.") }}
+                    </p>
+
+                    {{ render_form(form.forms.user_account) }}
+
                     <button type="submit" class="btn btn-primary btn-lg btn-block">
                         <i class="fa fa-check"></i> {% trans %}Register as a Company{% endtrans %}
                     </button>
@@ -48,3 +52,17 @@
         </div>
     </div>
 {% endblock %}
+
+{% macro render_address_form(form) %}
+    {{ render_form(form, except_fields=['name', 'name_ext']) }}
+{% endmacro %}
+
+{% macro render_form(form, except_fields=[]) %}
+    {{ form.non_field_errors() }}
+    {% for field in form.hidden_fields() %}{{ field|safe }}{% endfor %}
+    {% for field in form.visible_fields() %}
+        {% if field not in except_fields %}
+            {{ render_field(field) }}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}

@@ -109,7 +109,7 @@ def add_front_resources(context, content):
     if not view_class:
         return
     view_name = getattr(view_class, "__name__", "")
-    if view_name in ["AddressesPhase", "CheckoutMethodPhase"]:  # For front
+    if view_name in ["AddressesPhase", "CheckoutMethodPhase", "CompanyRegistrationView"]:  # For front
         add_resources(
             context,
             fields=[

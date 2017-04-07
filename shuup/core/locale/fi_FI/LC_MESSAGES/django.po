@@ -700,13 +700,13 @@ msgid "first name"
 msgstr "etunimi"
 
 msgid "The first name of the contact."
-msgstr "Asiakkaan etunimi."
+msgstr "Kontaktin etunimi."
 
 msgid "last name"
 msgstr "sukunimi"
 
 msgid "The last name of the contact."
-msgstr "Asiakkaan sukunimi."
+msgstr "Kontaktin sukunimi."
 
 msgid "person"
 msgstr "henkilö"

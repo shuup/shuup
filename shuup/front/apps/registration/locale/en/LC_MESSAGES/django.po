@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-04 16:16+0000\n"
+"POT-Creation-Date: 2017-04-06 14:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -83,22 +83,22 @@ msgstr ""
 msgid "Company Registration"
 msgstr ""
 
-msgid "Login information"
+msgid "Company information"
 msgstr ""
 
-msgid "The information you will log in with."
+msgid "Company billing information"
 msgstr ""
 
-msgid "Contact information"
+msgid "Contact person"
 msgstr ""
 
 msgid "Contact information for primary company contact"
 msgstr ""
 
-msgid "Company information"
+msgid "Login information"
 msgstr ""
 
-msgid "Company billing information"
+msgid "The information you will log in with."
 msgstr ""
 
 msgid "Register"
