@@ -292,10 +292,10 @@ class PersonContact(Contact):
     birth_date = models.DateField(blank=True, null=True, verbose_name=_('birth date'), help_text=_(
         "The birth date of the contact."
     ))
-    first_name = models.CharField(max_length=30, blank=True, verbose_name=_('first name'), help_text=_(
+    first_name = models.CharField(max_length=120, blank=True, verbose_name=_('first name'), help_text=_(
         "The first name of the contact."
     ))
-    last_name = models.CharField(max_length=50, blank=True, verbose_name=_('last name'), help_text=_(
+    last_name = models.CharField(max_length=120, blank=True, verbose_name=_('last name'), help_text=_(
         "The last name of the contact."
     ))
     # TODO: Figure out how/when/if the name and email fields are updated from users
