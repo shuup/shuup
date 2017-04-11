@@ -85,14 +85,8 @@ class ProductMediaViewSet(PermissionHelperMixin,
     You can update only a set of attributes.
     """
 
-    queryset = ProductMedia.objects.none()
+    queryset = ProductMedia.objects.all()
     serializer_class = ProductMediaSerializer
-
-    def get_queryset(self):
-        if getattr(self.request.user, 'is_superuser', False):
-            return ProductMedia.objects.all()
-        else:
-            return ProductMedia.objects.filter(shops=self.request.shop)
 
     def get_serializer_class(self):
         """ The serializer for upload must be the ProductMediaUploadSerializer """
