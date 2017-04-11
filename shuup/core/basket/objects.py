@@ -52,7 +52,13 @@ class BasketLine(SourceLine):
         self.gross_weight = product.gross_weight
         self.shipping_mode = product.shipping_mode
         self.sku = product.sku
-        self.text = product.safe_translation_getter("name", any_language=True)
+        self.text = ""
+
+        shop_product = self.shop_product
+        self.text = shop_product.safe_translation_getter("name", any_language=True)
+
+        if not self.text:
+            self.text = product.safe_translation_getter("name", any_language=True)
 
     @property
     def type(self):

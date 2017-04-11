@@ -33,9 +33,11 @@ from shuup.testing.factories import (
     create_product, create_random_person, get_default_shop,
     get_default_supplier, get_random_filer_image
 )
+from django.utils.translation import activate
 
 
 def setup_function(fn):
+    activate("en")
     cache.clear()
 
 
@@ -552,6 +554,40 @@ def test_get_front_products(admin_user):
     assert products[0]["shop_products"] == [sp1.id, sp3.id]
     assert products[1]["id"] == p2.id
     assert products[1]["shop_products"] == [sp2.id, sp4.id]
+
+
+@pytest.mark.django_db
+def test_get_shop_product_fields(admin_user):
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+
+    shop_product_name = "SHOP Product Name"
+    shop_product_description = "SHOP Product Description"
+    shop_product_short_description = "SHOP Product Short Description"
+
+    product = create_product("product1", shop=shop, supplier=supplier)
+    product.name = "Product Name"
+    product.description = "Product Description"
+    product.short_description = "Product Short Description"
+    product.save()
+
+    shop_product = product.shop_products.first()
+    shop_product.name = shop_product_name
+    shop_product.description = shop_product_description
+    shop_product.short_description = shop_product_short_description
+    shop_product.save()
+
+    request = get_request("/api/shuup/front/shop_products/", admin_user)
+    response = FrontShopProductViewSet.as_view({"get": "list"})(request)
+    response.render()
+    assert response.status_code == status.HTTP_200_OK
+    products_data = json.loads(response.content.decode("utf-8"))
+    assert len(products_data) == 1
+
+    product_info = products_data[0]
+    assert product_info["name"] == shop_product_name
+    assert product_info["description"] == shop_product_description
+    assert product_info["short_description"] == shop_product_short_description
 
 
 def add_product_image(product):

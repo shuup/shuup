@@ -36,10 +36,11 @@ from .product_variation import (
 )
 
 
-class ShopProductSerializer(serializers.ModelSerializer):
+class ShopProductSerializer(TranslatableModelSerializer):
     orderable = serializers.SerializerMethodField()
     visibility = EnumField(enum=ShopProductVisibility)
     visibility_limit = EnumField(enum=ProductVisibility)
+    translations = TranslatedFieldsField(shared_model=ShopProduct, required=False)
 
     class Meta:
         model = ShopProduct
