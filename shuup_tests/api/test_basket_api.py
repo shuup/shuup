@@ -814,6 +814,53 @@ def test_anonymous_basket(settings):
     assert response.status_code == status.HTTP_200_OK
 
 
+
+@pytest.mark.django_db
+def test_add_product_to_basket_with_custom_shop_product_fields(admin_user, settings):
+    product_name = "Product Name"
+    shop_product_name = "SHOP Product Name"
+
+    configure(settings)
+    shop = factories.get_default_shop()
+    basket = factories.get_basket()
+    factories.get_default_payment_method()
+    factories.get_default_shipping_method()
+    shop_product = factories.get_default_shop_product()
+    shop_product.default_price = TaxfulPrice(1, shop.currency)
+    shop_product.save()
+
+    shop_product.product.name = product_name
+    shop_product.product.save()
+    client = _get_client(admin_user)
+
+    payload = {
+        'product': shop_product.product.pk,
+        'shop': shop.pk
+    }
+    response = client.post('/api/shuup/basket/{}-{}/add/'.format(shop.pk, basket.key), payload)
+    assert response.status_code == status.HTTP_200_OK
+
+    response_data = json.loads(response.content.decode("utf-8"))
+    assert len(response_data["items"]) == 1
+    assert response_data["items"][0]["shop_product"] == shop_product.pk
+    assert response_data["items"][0]["text"] == product_name
+
+    # set shop product name
+    shop_product.product.name = shop_product_name
+    shop_product.product.save()
+
+    # add product
+    payload = {
+        'product': shop_product.product.pk,
+        'shop': shop.pk
+    }
+    response = client.post('/api/shuup/basket/{}-{}/add/'.format(shop.pk, basket.key), payload)
+    assert response.status_code == status.HTTP_200_OK
+    response_data = json.loads(response.content.decode("utf-8"))
+    assert len(response_data["items"]) == 1
+    assert response_data["items"][0]["text"] == shop_product_name
+
+
 def assert_basket_retrieve(admin_user, basket, data, person, shop, status):
     user = person if isinstance(person, User) else person.user
     client = _get_client(user)

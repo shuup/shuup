@@ -14,6 +14,7 @@ from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from enumfields import Enum, EnumIntegerField
+from parler.models import TranslatableModel, TranslatedFields
 
 from shuup.core.excs import (
     ProductNotOrderableProblem, ProductNotVisibleProblem
@@ -44,7 +45,7 @@ class ShopProductVisibility(Enum):
         ALWAYS_VISIBLE = _("always visible")
 
 
-class ShopProduct(MoneyPropped, models.Model):
+class ShopProduct(MoneyPropped, TranslatableModel):
     shop = models.ForeignKey("Shop", related_name="shop_products", on_delete=models.CASCADE, verbose_name=_("shop"))
     product = UnsavedForeignKey(
         "Product", related_name="shop_products", on_delete=models.CASCADE, verbose_name=_("product"))
@@ -165,6 +166,28 @@ class ShopProduct(MoneyPropped, models.Model):
         DisplayUnit, null=True, blank=True,
         verbose_name=_("display unit"),
         help_text=_("Unit for displaying quantities of this product"))
+
+    translations = TranslatedFields(
+        name=models.CharField(
+            blank=True, null=True, max_length=256, verbose_name=_('name'),
+            help_text=_("Enter a descriptive name for your product. This will be its title in your store.")),
+        description=models.TextField(
+            blank=True, null=True, verbose_name=_('description'),
+            help_text=_(
+                "To make your product stand out, give it an awesome description. "
+                "This is what will help your shoppers learn about your products. "
+                "It will also help shoppers find them in the store and on the web."
+            )
+        ),
+        short_description=models.CharField(
+            blank=True, null=True, max_length=150, verbose_name=_('short description'),
+            help_text=_(
+                "Enter a short description for your product. "
+                "The short description will be used to get the attention of your "
+                "customer with a small but precise description of your product."
+            )
+        )
+    )
 
     class Meta:
         unique_together = (("shop", "product",),)
