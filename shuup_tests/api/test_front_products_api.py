@@ -31,7 +31,7 @@ from shuup.core.api.front_products import (
 from shuup.testing.factories import (
     add_product_to_order, create_empty_order, create_package_product,
     create_product, create_random_person, get_default_shop,
-    get_default_supplier, get_random_filer_image
+    get_default_supplier, get_random_filer_image, get_shop
 )
 from django.utils.translation import activate
 
@@ -333,6 +333,7 @@ def test_product_cross_sells(admin_user):
 @pytest.mark.django_db
 def test_get_best_selling_products(admin_user):
     shop1 = get_default_shop()
+    shop2 = get_shop(True)
     person1 = create_random_person()
     person1.user = admin_user
     person1.save()
@@ -341,7 +342,7 @@ def test_get_best_selling_products(admin_user):
     client = _get_client(admin_user)
 
     # list best selling products
-    response = client.get("/api/shuup/front/shop_products/best_selling/")
+    response = client.get("/api/shuup/front/shop_products/best_selling/", {"shop": shop2.pk})
     assert response.status_code == status.HTTP_200_OK
     products = json.loads(response.content.decode("utf-8"))
     assert len(products) == 0
@@ -349,11 +350,11 @@ def test_get_best_selling_products(admin_user):
     # THIS IS IMPORTANT!
     cache.clear()
 
-    products = [create_product("Standard-%d" % x, supplier=supplier, shop=shop1) for x in range(10)]
+    products = [create_product("Standard-%d" % x, supplier=supplier, shop=shop2) for x in range(10)]
 
     # create 1 product with 4 variations
-    parent_product = create_product("ParentProduct1", supplier=supplier, shop=shop1)
-    children = [create_product("SimpleVarChild-%d" % x, supplier=supplier, shop=shop1) for x in range(4)]
+    parent_product = create_product("ParentProduct1", supplier=supplier, shop=shop2)
+    children = [create_product("SimpleVarChild-%d" % x, supplier=supplier, shop=shop2) for x in range(4)]
     for child in children:
         child.link_to_parent(parent_product)
 
@@ -361,7 +362,7 @@ def test_get_best_selling_products(admin_user):
 
     # create orders with standard products
     for p_index in range(len(products)):
-        order = create_empty_order(shop=shop1)
+        order = create_empty_order(shop=shop2)
         order.save()
         qty = (len(products)-p_index)
         add_product_to_order(order, supplier, products[p_index], qty, Decimal(1.0))
@@ -375,7 +376,7 @@ def test_get_best_selling_products(admin_user):
     for p_index in range(2):
         variation = random.choice(children)
         qty = 5
-        order = create_empty_order(shop=shop1)
+        order = create_empty_order(shop=shop2)
         order.save()
         add_product_to_order(order, supplier, variation, qty, Decimal(1.0))
         order.create_shipment_of_all_products()
@@ -384,7 +385,7 @@ def test_get_best_selling_products(admin_user):
         best_selling[parent_product.id] = best_selling[parent_product.id] + qty
 
     # get the top 100 best selling products
-    response = client.get("/api/shuup/front/shop_products/best_selling/", {"limit": 100})
+    response = client.get("/api/shuup/front/shop_products/best_selling/", {"shop": shop2.pk, "limit": 100})
     assert response.status_code == status.HTTP_200_OK
     products = json.loads(response.content.decode("utf-8"))
     assert len(products) == len(best_selling) # as we added less then 100, this must be true
@@ -394,7 +395,7 @@ def test_get_best_selling_products(admin_user):
         assert products[ix]["product_id"] in best_selling.keys()
 
     # get the top 5 best selling products
-    response = client.get("/api/shuup/front/shop_products/best_selling/", {"limit": 5})
+    response = client.get("/api/shuup/front/shop_products/best_selling/", {"shop": shop2.pk, "limit": 5})
     assert response.status_code == status.HTTP_200_OK
     products = json.loads(response.content.decode("utf-8"))
     assert len(products) == 5
