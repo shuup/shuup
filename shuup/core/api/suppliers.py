@@ -93,14 +93,7 @@ class SupplierViewSet(PermissionHelperMixin, viewsets.ReadOnlyModelViewSet):
             return self._adjust_stock(request, pk)
 
         supplier = self.get_object()
-        if getattr(self.request.user, 'is_superuser', False):
-            products_qs = Product.objects.all_except_deleted()
-        else:
-            products_qs = Product.objects.listed(
-                customer=self.request.customer,
-                shop=self.request.shop
-            )
-        products_qs = products_qs.filter(shop_products__suppliers=supplier)
+        products_qs = Product.objects.all_except_deleted().filter(shop_products__suppliers=supplier)
 
         # filter by id
         product_id = int(parse_decimal_string(request.query_params.get("product", 0)))
