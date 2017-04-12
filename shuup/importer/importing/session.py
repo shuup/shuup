@@ -6,7 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 import six
-from django.db.models import ForeignKey
+from django.db.models import FieldDoesNotExist, ForeignKey
 from django.utils.translation import ugettext_lazy as _
 from parler.models import TranslatedFieldsModel
 
@@ -36,8 +36,12 @@ class DataImporterRowSession(object):
         return self.deferred_attach.get(key, (None, None))[0]
 
     def save(self):
-        if hasattr(self.instance, "shop"):
+        try:
+            self.instance._meta.get_field('shop')
             self.instance.shop = self.shop
+        except FieldDoesNotExist:
+            pass
+
         try:
             self.instance.save()
         except Exception as e:
