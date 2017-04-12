@@ -21,11 +21,12 @@ from shuup.testing.factories import (
     get_default_tax_class
 )
 
+bom_file = "sample_import_bom.csv"
 
 @pytest.mark.parametrize("filename", ["sample_import.xlsx", "sample_import.csv",
                                       "sample_import2.csv", "sample_import3.csv",
                                       "sample_import4.csv", "sample_import5.csv",
-                                      "sample_import.xls"])
+                                      "sample_import.xls", bom_file])
 @pytest.mark.django_db
 def test_sample_import_all_match(filename):
     activate("en")
@@ -34,6 +35,12 @@ def test_sample_import_all_match(filename):
     product_type = get_default_product_type()
 
     path = os.path.join(os.path.dirname(__file__), "data", "product", filename)
+    if filename == bom_file:
+        import codecs
+        bytes = min(32, os.path.getsize(path))
+        raw = open(path, 'rb').read(bytes)
+        assert raw.startswith(codecs.BOM_UTF8)
+
     transformed_data = transform_file(filename.split(".")[1], path)
     importer = ProductImporter(transformed_data, shop, "en")
     importer.process_data()
