@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Add name, description and short_description fields to ShoProduct model
 - API: add basket endpoint
 - API: created front simple product endpoint
 - API: add front orders endpoint to fetch users order history

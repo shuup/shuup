@@ -36,10 +36,11 @@ from .product_variation import (
 )
 
 
-class ShopProductSerializer(serializers.ModelSerializer):
+class ShopProductSerializer(TranslatableModelSerializer):
     orderable = serializers.SerializerMethodField()
     visibility = EnumField(enum=ShopProductVisibility)
     visibility_limit = EnumField(enum=ProductVisibility)
+    translations = TranslatedFieldsField(shared_model=ShopProduct, required=False)
 
     class Meta:
         model = ShopProduct
@@ -74,7 +75,7 @@ class ProductAttributeSerializer(TranslatableModelSerializer):
 
 
 class ProductTypeSerializer(TranslatableModelSerializer):
-    translations = TranslatedFieldsField(shared_model=Product)
+    translations = TranslatedFieldsField(shared_model=ProductType)
 
     class Meta:
         fields = "__all__"
@@ -512,7 +513,7 @@ class ShopProductViewSet(ProtectedModelViewSetMixin, PermissionHelperMixin, view
                 customer=self.request.customer,
                 shop=self.request.shop
             )
-        return ShopProduct.objects.filter(id__in=products)
+        return ShopProduct.objects.filter(product__in=products).distinct()
 
     def get_view_name(self):
         return _("Shop Products")

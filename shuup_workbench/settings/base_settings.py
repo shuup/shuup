@@ -68,6 +68,7 @@ INSTALLED_APPS = add_enabled_addons(SHUUP_ENABLED_ADDONS_FILE, [
     'bootstrap3',
     'django_countries',
     'django_jinja',
+    'django_filters',
     'filer',
     'registration',
     'rest_framework',

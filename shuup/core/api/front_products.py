@@ -131,9 +131,9 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class CompleteShopProductSerializer(serializers.ModelSerializer):
     product_id = serializers.ReadOnlyField()
-    name = serializers.ReadOnlyField(source='product.name')
-    short_description = serializers.ReadOnlyField(source='product.short_description')
-    description = serializers.ReadOnlyField(source='product.description')
+    name = serializers.SerializerMethodField()
+    short_description = serializers.SerializerMethodField()
+    description = serializers.SerializerMethodField()
     image = serializers.SerializerMethodField()
     categories = CategorySerializer(many=True)
     attributes = serializers.SerializerMethodField()
@@ -166,6 +166,24 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
             "cross_sell",
             "package_content",
         ]
+
+    def get_name(self, shop_product):
+        return (
+            shop_product.safe_translation_getter("name") or
+            shop_product.product.safe_translation_getter("name")
+        )
+
+    def get_description(self, shop_product):
+        return (
+            shop_product.safe_translation_getter("description") or
+            shop_product.product.safe_translation_getter("description")
+        )
+
+    def get_short_description(self, shop_product):
+        return (
+            shop_product.safe_translation_getter("short_description") or
+            shop_product.product.safe_translation_getter("short_description")
+        )
 
     def _get_pricing_context(self, request, shop):
         return PricingContext(shop=shop, customer=self.context["customer"])
