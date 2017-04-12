@@ -11,9 +11,11 @@ import datetime
 import itertools
 from operator import iand, ior
 
+import dateutil.parser
 import six
 import xlrd
 from django.db.models import AutoField, ForeignKey, Q
+from django.db.models.fields import BooleanField, DateField, DateTimeField
 from django.db.models.fields.related import RelatedField
 from django.db.transaction import atomic
 from django.utils.text import force_text
@@ -100,10 +102,8 @@ class DataImporter(object):
         self.unmatched_fields = set()
 
         data_map = {}
-
         for field_name in sorted(self.data_keys):
             mfname = fold_mapping_name(field_name)
-
             mapped_value = model_mapping.get(mfname)
             if not mapped_value:
                 for fld, opt in six.iteritems(model_mapping):
@@ -224,7 +224,6 @@ class DataImporter(object):
 
             if field.name in self._meta.fields_to_skip:
                 continue
-
             value = orig_value = row.get(fname)
             if not self._row_valid(mapping, value, obj):
                 continue
@@ -264,7 +263,7 @@ class DataImporter(object):
         return (value, has_related)
 
     def _handle_special_row_values(self, mapping, value):
-        if mapping.get("datatype") == "datetime":
+        if mapping.get("datatype") in ["datetime", "date"]:
             if isinstance(value, float):  # Sort of terrible
                 value = datetime.datetime(*xlrd.xldate_as_tuple(value, self.data.meta["xls_datemode"]))
         if isinstance(value, float):
@@ -274,6 +273,18 @@ class DataImporter(object):
 
     def _handle_row_field(self, field, mapping, orig_value, row_session, target, value):
         value = self._get_field_choices_value(field, value)
+
+        # Ensure the datetime, date, and boolean values are presented properly
+        if isinstance(field, DateField) or isinstance(field, DateTimeField):
+            try:
+                value = dateutil.parser.parse(value)
+            except ValueError:
+                # todo: Handle these somehow
+                value = None
+        elif isinstance(field, BooleanField):
+            if not value or value == "" or value == " ":
+                value = False
+
         if mapping.get("fk") and value.pk:
             setattr(target, field.name, value)
         else:

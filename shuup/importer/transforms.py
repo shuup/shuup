@@ -7,6 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals, with_statement
 
+import codecs
+import os
 import sys
 
 import openpyxl
@@ -125,7 +127,16 @@ def py2_read_file(data, filename):
 def py3_read_file(data, filename):
     got_data = set()
     data = []
-    with open(filename, encoding="utf-8") as f:
+
+    bytes = min(32, os.path.getsize(filename))
+    raw = open(filename, 'rb').read(bytes)
+
+    if raw.startswith(codecs.BOM_UTF8):
+        encoding = 'utf-8-sig'
+    else:
+        encoding = "utf-8"
+
+    with open(filename, encoding=encoding) as f:
         dialect = csv.Sniffer().sniff(f.read(1024))
         f.seek(0)
         for x, row in enumerate(csv.DictReader(f, dialect=dialect)):
