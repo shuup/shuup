@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shuup', '0028_displayunit'),
+        ('shuup', '0029_personcontact_names'),
     ]
 
     operations = [

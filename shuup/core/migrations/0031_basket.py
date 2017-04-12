@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('shuup', '0029_add_db_indices'),
+        ('shuup', '0030_add_db_indices'),
     ]
 
     operations = [

@@ -10,7 +10,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shuup', '0030_basket'),
+        ('shuup', '0031_basket'),
     ]
 
     operations = [
