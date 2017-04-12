@@ -45,6 +45,17 @@ class ProductMetaBase(ImportMetaBase):
         If stock qty has been given, expect that a supplier with stock management must be available.
         """
         row = sess.row
+
+        # check if row even has these fields we are requiring
+        field_found = False
+        for qty_field in self.aliases["qty"]:
+            if qty_field in row:
+                field_found = True
+                break
+
+        if not field_found:  # no need to process this as qty was not available
+            return
+
         supplier = row.get("supplier")
         if not supplier:
             raise ImporterError(_("Please add supplier to row before importing stock quantities."))

@@ -66,15 +66,18 @@ def test_sample_import_all_match(filename):
         assert shop_product.primary_category.pk == 1
         assert [c.pk for c in shop_product.categories.all()] == [1,2]
 
-
+@pytest.mark.parametrize("stock_managed", [True, False])
 @pytest.mark.django_db
-def test_sample_import_no_match():
+def test_sample_import_no_match(stock_managed):
     filename = "sample_import_nomatch.xlsx"
     activate("en")
     shop = get_default_shop()
     tax_class = get_default_tax_class()
     product_type = get_default_product_type()
     supplier = get_default_supplier()
+    supplier.stock_managed = stock_managed
+    supplier.save()
+
     manufacturer = Manufacturer.objects.create(name="manufctr")
     path = os.path.join(os.path.dirname(__file__), "data", "product", filename)
     transformed_data = transform_file(filename.split(".")[1], path)
