@@ -162,7 +162,7 @@ class JsonOrderCreator(object):
             try:
                 self._add_json_line_to_source(source, sline)
             except Exception as exc:  # pragma: no cover
-                self.add_error(ValidationError(str(exc), code="line_error"))
+                self.add_error(exc)
 
     def _create_contact_from_address(self, billing_address, is_company):
         name = billing_address.get("name", None)
@@ -362,7 +362,7 @@ class JsonOrderCreator(object):
             self._postprocess_order(order, state)
             return order
         except Exception as exc:  # pragma: no cover
-            self.add_error(ValidationError(str(exc), code='create_from_state_error'))
+            self.add_error(exc)
             return
 
     def update_order_from_state(self, state, order_to_update, modified_by=None):
@@ -385,5 +385,5 @@ class JsonOrderCreator(object):
             self._postprocess_order(order, state)
             return order
         except Exception as exc:
-            self.add_error(ValidationError(str(exc), code='update_from_state_error'))
+            self.add_error(exc)
             return
