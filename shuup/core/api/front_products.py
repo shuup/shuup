@@ -203,11 +203,10 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
     def get_price(self, shop_product):
         key, val = context_cache.get_cached_value(identifier="shop_product_price",
                                                   item=shop_product,
-                                                  context={},
+                                                  context={"customer": self.context["customer"]},
                                                   allow_cache=True)
         if val is not None:
             return val
-
         context = self._get_pricing_context(self.context["request"], shop_product.shop)
         price = shop_product.product.get_price(context).value
         context_cache.set_cached_value(key, price)
@@ -232,7 +231,7 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
     def get_cross_sell(self, shop_product):
         key, val = context_cache.get_cached_value(identifier="cross_sell",
                                                   item=shop_product,
-                                                  context={},
+                                                  context={"customer": self.context["customer"]},
                                                   allow_cache=True)
         if val is not None:
             return val
@@ -272,7 +271,7 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
     def get_variations(self, shop_product):
         key, val = context_cache.get_cached_value(identifier="variations",
                                                   item=shop_product,
-                                                  context={},
+                                                  context={"customer": self.context["customer"]},
                                                   allow_cache=True)
         if val is not None:
             return val
@@ -308,7 +307,7 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
     def get_package_content(self, shop_product):
         key, val = context_cache.get_cached_value(identifier="package_contents",
                                                   item=shop_product,
-                                                  context={},
+                                                  context={"customer": self.context["customer"]},
                                                   allow_cache=True)
         if val is not None:
             return val
