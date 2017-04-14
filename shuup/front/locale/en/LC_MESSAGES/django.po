@@ -65,40 +65,8 @@ msgstr ""
 msgid "Ordered"
 msgstr ""
 
-msgid "Storefront Products"
-msgstr ""
-
-msgid "Storefront products can be listed and fetched."
-msgstr ""
-
-#, python-format
-msgid "Invalid command %s"
-msgstr ""
-
-#, python-format
-msgid "The quantity %f is not allowed. Please use an integer value."
-msgstr ""
-
-#, python-format
-msgid "The quantity %s is not valid."
-msgstr ""
-
-msgid "This variation is not available."
-msgstr ""
-
 #, python-format
 msgid "Basket loading failed: Incompatible basket (%s)"
-msgstr ""
-
-msgid "Try to remove some products from the basket and order them separately."
-msgstr ""
-
-#, python-format
-msgid "Products in basket cannot be shipped together. %s"
-msgstr ""
-
-#, python-format
-msgid "Products in basket have no common payment method. %s"
 msgstr ""
 
 msgid "Tax number required for companies"

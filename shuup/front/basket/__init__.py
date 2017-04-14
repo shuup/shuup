@@ -5,37 +5,14 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-from shuup.utils.importing import cached_load
+from shuup.core.basket import (  # noqa
+    get_basket, get_basket_command_dispatcher, get_basket_order_creator,
+    get_basket_view
+)
 
-
-def get_basket_order_creator(request=None):
-    return cached_load("SHUUP_BASKET_ORDER_CREATOR_SPEC")(request=request)
-
-
-def get_basket_view():
-    view = cached_load("SHUUP_BASKET_VIEW_SPEC")
-    if hasattr(view, "as_view"):  # pragma: no branch
-        view = view.as_view()
-    return view
-
-
-def get_basket_command_dispatcher(request):
-    """
-    :type request: django.http.request.HttpRequest
-    :rtype: shuup.front.basket.command_dispatcher.BasketCommandDispatcher
-    """
-    return cached_load("SHUUP_BASKET_COMMAND_DISPATCHER_SPEC")(request=request)
-
-
-def get_basket(request, basket_name="basket", basket_class=None):
-    """
-    :type request: django.http.request.HttpRequest
-    :rtype: shuup.front.basket.objects.BaseBasket
-    """
-    if basket_name == "basket" and hasattr(request, "basket"):
-        return request.basket
-
-    if basket_class is None:
-        basket_class = cached_load("SHUUP_BASKET_CLASS_SPEC")
-
-    return basket_class(request, basket_name=basket_name)
+__ALL__ = [
+    "get_basket_order_creator",
+    "get_basket_view",
+    "get_basket_command_dispatcher",
+    "get_basket"
+]

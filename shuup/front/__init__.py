@@ -54,9 +54,6 @@ class ShuupFrontAppConfig(AppConfig):
             "shuup.front.forms.order_forms:SimpleVariationProductOrderForm",
             "shuup.front.forms.order_forms:SimpleProductOrderForm",
         ],
-        "api_populator": [
-            "shuup.front.api:populate_front_api"
-        ],
     }
 
     def ready(self):
