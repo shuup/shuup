@@ -18,12 +18,13 @@ from rest_framework.test import (
     APIClient, APIRequestFactory, force_authenticate
 )
 
+from shuup import configuration
 from shuup.core import cache
 from shuup.core.models import (
     Category, MutableAddress, OrderStatus, Product, ProductCrossSell,
     ProductCrossSellType, ProductMedia, ProductMediaKind, ProductMode,
     ProductVariationVariable, ProductVariationVariableValue, Shop, ShopProduct,
-    ShopProductVisibility, ShopStatus, Supplier
+    ShopProductVisibility, ShopStatus, Supplier, get_person_contact, ProductVisibility
 )
 from shuup.core.api.front_products import (
     FrontProductViewSet, FrontShopProductViewSet
@@ -31,9 +32,11 @@ from shuup.core.api.front_products import (
 from shuup.testing.factories import (
     add_product_to_order, create_empty_order, create_package_product,
     create_product, create_random_person, get_default_shop,
-    get_default_supplier, get_random_filer_image, get_shop
+    get_default_supplier, get_random_filer_image, get_shop, create_random_contact_group
 )
 from django.utils.translation import activate
+from shuup.customer_group_pricing.models import CgpPrice
+from django.contrib.auth import get_user_model
 
 
 def setup_function(fn):
@@ -589,6 +592,61 @@ def test_get_shop_product_fields(admin_user):
     assert product_info["name"] == shop_product_name
     assert product_info["description"] == shop_product_description
     assert product_info["short_description"] == shop_product_short_description
+
+
+@pytest.mark.django_db
+def test_product_pricing_cache(admin_user):
+    shop = get_default_shop()
+    group = create_random_contact_group()
+    group2 = create_random_contact_group()
+    product = create_product("Just-A-Product", shop, default_price=200)
+    CgpPrice.objects.create(product=product, shop=shop, group=group, price_value=175)
+    CgpPrice.objects.create(product=product, shop=shop, group=group2, price_value=150)
+    client = _get_client(admin_user)
+    response = client.get("/api/shuup/front/shop_products/")
+    products_data = json.loads(response.content.decode("utf-8"))
+    assert products_data[0]["price"] == 200
+
+    user = get_user_model().objects.first()
+    user.pk = None
+    user.username = "g1"
+    user.save()
+    customer = create_random_person()
+    customer.groups.add(group)
+    customer.user = user
+    customer.save()
+    client = _get_client(user)
+    response = client.get("/api/shuup/front/shop_products/")
+    products_data = json.loads(response.content.decode("utf-8"))
+    assert products_data[0]["price"] == 175
+
+    client = _get_client(admin_user)
+    response = client.get("/api/shuup/front/shop_products/")
+    products_data = json.loads(response.content.decode("utf-8"))
+    assert products_data[0]["price"] == 200
+
+
+@pytest.mark.django_db
+def test_product_variations_cache(admin_user):
+    configuration.set(None, "api_permission_FrontShopProductViewSet", 2)
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product = create_product("Just-A-Product", shop, default_price=200, supplier=supplier)
+    simple_child = create_product("product5", shop=shop, supplier=supplier)
+    simple_child.link_to_parent(product)
+    sp = simple_child.get_shop_instance(shop)
+    sp.visibility_limit = ProductVisibility.VISIBLE_TO_LOGGED_IN
+    sp.save()
+
+    client = _get_client(None)
+    response = client.get("/api/shuup/front/shop_products/")
+    products_data = json.loads(response.content.decode("utf-8"))
+    assert not products_data[0]["variations"][0]["product"]["is_orderable"]
+
+    client = _get_client(admin_user)
+    response = client.get("/api/shuup/front/shop_products/")
+    products_data = json.loads(response.content.decode("utf-8"))
+    assert products_data[0]["variations"][0]["product"]["is_orderable"]
 
 
 def add_product_image(product):
