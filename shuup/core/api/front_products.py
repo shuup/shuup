@@ -451,7 +451,7 @@ class FrontShopProductViewSet(PermissionHelperMixin, mixins.ListModelMixin, view
 
         shop_products_qs = ShopProduct.objects.filter(product__id__in=product_ids)
         shop_products_qs = self.filter_queryset(shop_products_qs).distinct()
-        serializer = CompleteShopProductSerializer(shop_products_qs, many=True, context=self.get_serializer_context())
+        serializer = self.get_serializer_class()(shop_products_qs, many=True, context=self.get_serializer_context())
         return Response(serializer.data)
 
 
