@@ -18,10 +18,24 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "Generated-By: Babel 2.1.1\n"
 
+msgid "Mutable Address"
+msgstr ""
+
+msgid "Mutable Addressess can be fetched, created, updated and deleted."
+msgstr ""
+
 msgid "Attributes"
 msgstr ""
 
 msgid "Attributes can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+msgid "Basket"
+msgstr ""
+
+msgid ""
+"Basket items can be listed, added, removed and cleaned. Also campaign codes "
+"can be added."
 msgstr ""
 
 msgid "Category"
@@ -36,10 +50,46 @@ msgstr ""
 msgid "Contacts can be listed, fetched, created, updated and deleted."
 msgstr ""
 
+msgid "Person Contact"
+msgstr ""
+
+msgid "Person Contacts can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+msgid "Front Orders"
+msgstr ""
+
+msgid "Retrieve and list the current users orders."
+msgstr ""
+
+msgid "Storefront Shop Products"
+msgstr ""
+
+msgid "Storefront shop products can be listed and fetched."
+msgstr ""
+
+msgid "Storefront Products"
+msgstr ""
+
+msgid "Storefront products can be listed and fetched."
+msgstr ""
+
+msgid "Front Users"
+msgstr ""
+
+msgid ""
+"Users can register to the storefront and fetch and update their own user "
+"details."
+msgstr ""
+
 msgid "Manufacturer"
 msgstr ""
 
 msgid "Manufacturers can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+#, python-brace-format
+msgid "Order status changed: {from_status} to {to_status}"
 msgstr ""
 
 msgid "Orders"
@@ -134,6 +184,32 @@ msgid "Users"
 msgstr ""
 
 msgid "Users can be listed, fetched, created, updated and deleted."
+msgstr ""
+
+#, python-format
+msgid "Invalid command %s"
+msgstr ""
+
+#, python-format
+msgid "The quantity %f is not allowed. Please use an integer value."
+msgstr ""
+
+#, python-format
+msgid "The quantity %s is not valid."
+msgstr ""
+
+msgid "This variation is not available."
+msgstr ""
+
+msgid "Try to remove some products from the basket and order them separately."
+msgstr ""
+
+#, python-format
+msgid "Products in basket cannot be shipped together. %s"
+msgstr ""
+
+#, python-format
+msgid "Products in basket have no common payment method. %s"
 msgstr ""
 
 msgid "internal identifier"
@@ -361,13 +437,67 @@ msgstr ""
 msgid "The following fields can not be changed"
 msgstr ""
 
+msgid "key"
+msgstr ""
+
+msgid "shop"
+msgstr ""
+
+msgid "customer"
+msgstr ""
+
+msgid "orderer"
+msgstr ""
+
+msgid "creator"
+msgstr ""
+
+msgid "created on"
+msgstr ""
+
+msgid "updated on"
+msgstr ""
+
+msgid "persistent"
+msgstr ""
+
+msgid "deleted"
+msgstr ""
+
+msgid "finished"
+msgstr ""
+
+msgid "data"
+msgstr ""
+
+msgid "taxless total price"
+msgstr ""
+
+msgid "taxful total price"
+msgstr ""
+
+msgid "currency"
+msgstr ""
+
+msgid "prices include tax"
+msgstr ""
+
+msgid "product_count"
+msgstr ""
+
+msgid "products"
+msgstr ""
+
+msgid "basket"
+msgstr ""
+
+msgid "baskets"
+msgstr ""
+
 msgid "invisible"
 msgstr ""
 
 msgid "visible"
-msgstr ""
-
-msgid "deleted"
 msgstr ""
 
 msgid "visible to all"
@@ -459,12 +589,6 @@ msgstr ""
 msgid "categories"
 msgstr ""
 
-msgid "shop"
-msgstr ""
-
-msgid "key"
-msgstr ""
-
 msgid "value"
 msgstr ""
 
@@ -506,9 +630,6 @@ msgid "contact groups"
 msgstr ""
 
 msgid "Can't delete. This object is protected."
-msgstr ""
-
-msgid "created on"
 msgstr ""
 
 msgid "active"
@@ -682,9 +803,6 @@ msgid "The number of decimal places supported by this currency."
 msgstr ""
 
 msgid "Enter a valid ISO-4217 currency code"
-msgstr ""
-
-msgid "currency"
 msgstr ""
 
 msgid "currencies"
@@ -885,12 +1003,6 @@ msgstr ""
 msgid "reference number"
 msgstr ""
 
-msgid "customer"
-msgstr ""
-
-msgid "orderer"
-msgstr ""
-
 msgid "email address"
 msgstr ""
 
@@ -928,9 +1040,6 @@ msgid "grand total"
 msgstr ""
 
 msgid "taxless total"
-msgstr ""
-
-msgid "prices include tax"
 msgstr ""
 
 msgid "display currency"
@@ -1013,9 +1122,6 @@ msgid "module"
 msgstr ""
 
 msgid "time"
-msgstr ""
-
-msgid "data"
 msgstr ""
 
 msgid "cache entry"
@@ -1547,9 +1653,6 @@ msgstr ""
 msgid ""
 "You can enter a name for the variation of your product. This could be for "
 "example different colors or versions."
-msgstr ""
-
-msgid "products"
 msgstr ""
 
 msgid ""
