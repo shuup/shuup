@@ -249,10 +249,11 @@ def get_pagination_variables(context, objects, limit):
     variables["paginator"] = paginator = Paginator(objects, limit)
     variables["is_paginated"] = (paginator.num_pages > 1)
     try:
-        current_page = int(context["request"].GET.get("page") or 0)
+        requested_page = int(context["request"].GET.get("page") or 0)
     except ValueError:
-        current_page = 1
-    page = paginator.page(min((current_page or 1), paginator.num_pages))
+        requested_page = 0
+    current_page = min(max(requested_page, 1), paginator.num_pages)
+    page = paginator.page(current_page)
     variables["page"] = page
     variables["page_range"] = _get_page_range(current_page, paginator.num_pages)
     variables["objects"] = page.object_list
