@@ -67,11 +67,17 @@ function getFilterString(state) {
 }
 
 function reloadProducts(filterString) {
+    const $cont = $("#ajax_content");
+    const $prods = $(".products-wrap");
+    const $adminMenu = $("#admin-tools-menu");
+    const adminMenuHeight = ($adminMenu.length > 0) ? $adminMenu.height() : 0;
+    const top = ($prods.length > 0) ? $prods.offset().top : $cont.offset().top;
+    window.scrollTo(0, top - adminMenuHeight);
+
     // this is to ensure browser back/forward from different domain does a full refresh
     filterString += (filterString === "") ? "?" : "&";
     filterString += "ajax=1";
-    window.scrollTo(0, $(".products-wrap").offset().top);
-    $("#ajax_content").load(location.pathname + filterString);
+    $cont.load(location.pathname + filterString);
 }
 
 $(function() {
