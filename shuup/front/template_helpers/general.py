@@ -5,7 +5,6 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import math
 from collections import defaultdict
 
 import six
@@ -249,10 +248,11 @@ def get_pagination_variables(context, objects, limit):
     variables["paginator"] = paginator = Paginator(objects, limit)
     variables["is_paginated"] = (paginator.num_pages > 1)
     try:
-        current_page = int(context["request"].GET.get("page") or 0)
+        requested_page = int(context["request"].GET.get("page") or 0)
     except ValueError:
-        current_page = 1
-    page = paginator.page(min((current_page or 1), paginator.num_pages))
+        requested_page = 0
+    current_page = min(max(requested_page, 1), paginator.num_pages)
+    page = paginator.page(current_page)
     variables["page"] = page
     variables["page_range"] = _get_page_range(current_page, paginator.num_pages)
     variables["objects"] = page.object_list
@@ -261,17 +261,38 @@ def get_pagination_variables(context, objects, limit):
 
 
 def _get_page_range(current_page, num_pages, range_gap=5):
-    current_page = min(current_page, num_pages + 1)
-    if current_page <= math.ceil(range_gap / 2):
-        start = 1
-        end = range_gap + 1
-    elif num_pages - math.ceil(range_gap / 2) < current_page:
-        start = num_pages - range_gap + 1
-        end = num_pages + 1
-    else:
-        start = current_page - range_gap // 2
-        end = current_page + range_gap // 2 + 1
-    return six.moves.range(start, min(end, num_pages + 1))
+    """
+    Get page range around given page for a given number of pages.
+
+    >>> list(_get_page_range(1, 10))
+    [1, 2, 3, 4, 5]
+    >>> list(_get_page_range(3, 10))
+    [1, 2, 3, 4, 5]
+    >>> list(_get_page_range(4, 10))
+    [2, 3, 4, 5, 6]
+    >>> list(_get_page_range(7, 10))
+    [5, 6, 7, 8, 9]
+    >>> list(_get_page_range(10, 10))
+    [6, 7, 8, 9, 10]
+    >>> list(_get_page_range(1, 1))
+    [1]
+    >>> list(_get_page_range(1, 4))
+    [1, 2, 3, 4]
+    >>> list(_get_page_range(3, 4))
+    [1, 2, 3, 4]
+    >>> list(_get_page_range(4, 4))
+    [1, 2, 3, 4]
+    """
+    assert isinstance(num_pages, int)
+    assert isinstance(current_page, int)
+    assert num_pages >= 1
+    assert current_page >= 1
+    assert current_page <= num_pages
+
+    max_start = max(num_pages - range_gap + 1, 1)
+    start = min(max(current_page - (range_gap // 2), 1), max_start)
+    end = min(start + range_gap - 1, num_pages)
+    return six.moves.range(start, end + 1)
 
 
 @contextfunction
