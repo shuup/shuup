@@ -347,6 +347,16 @@ class ShopProduct(MoneyPropped, models.Model):
             for error in supplier.get_orderability_errors(self, quantity, customer=customer):
                 yield error
 
+        for error in self.get_quantity_errors(quantity):
+            yield error
+
+        for receiver, response in get_orderability_errors.send(
+            ShopProduct, shop_product=self, customer=customer, supplier=supplier, quantity=quantity
+        ):
+            for error in response:
+                yield error
+
+    def get_quantity_errors(self, quantity):
         purchase_multiple = self.purchase_multiple
         if quantity > 0 and purchase_multiple > 0 and (quantity % purchase_multiple) != 0:
             p = (quantity // purchase_multiple)
@@ -368,12 +378,6 @@ class ShopProduct(MoneyPropped, models.Model):
                         smaller_amount=render_qty(smaller_p),
                         larger_amount=render_qty(larger_p))
             yield ValidationError(message, code="invalid_purchase_multiple")
-
-        for receiver, response in get_orderability_errors.send(
-            ShopProduct, shop_product=self, customer=customer, supplier=supplier, quantity=quantity
-        ):
-            for error in response:
-                yield error
 
     def raise_if_not_orderable(self, supplier, customer, quantity, ignore_minimum=False):
         for message in self.get_orderability_errors(
