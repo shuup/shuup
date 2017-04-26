@@ -8,11 +8,14 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.forms import BaseModelFormSet
+from django.utils.translation import ugettext_lazy as _
 
 from shuup.campaigns.models import (
     BasketCondition, BasketDiscountEffect, BasketLineEffect, CatalogFilter,
     ContextCondition, ProductDiscountEffect
 )
+from shuup.campaigns.models.basket_line_effects import FreeProductLine
+from shuup.core.models import ShopProduct
 from shuup.utils.multilanguage_model_form import TranslatableModelForm
 
 
@@ -76,6 +79,27 @@ class BasketLineEffectsFormSet(EffectsFormset):
 
     def get_queryset(self):
         return self.owner.line_effects.instance_of(self._get_actual_model())
+
+    def clean(self):
+        if any(self.errors):
+            # Don't bother validating the formset unless each form is valid on its own
+            return
+        # Apply cleaning if model is FreeProductLine
+        if self._get_actual_model() == FreeProductLine:
+            for form in self.forms:
+                products_ids = form.cleaned_data["products"]
+                quantity = form.cleaned_data["quantity"]
+                for product_id in products_ids:
+                    shop_product = ShopProduct.objects.get(product_id=product_id)
+                    step = shop_product.quantity_step
+                    if quantity % step != 0:
+                        n = (quantity // step)
+                        smaller_qty = max(1, n) * step
+                        larger_qty = (n + 1) * step
+                        form.add_error("quantity",
+                                       _("Quantity doesn't match with product units. "
+                                         "Closest quantities that match are {smaller_qty} and {larger_qty}")
+                                       .format(smaller_qty=smaller_qty, larger_qty=larger_qty))
 
 
 class CatalogConditionsFormSet(BaseFormset):
