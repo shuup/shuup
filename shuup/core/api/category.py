@@ -12,7 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from parler_rest.fields import TranslatedFieldsField
 from parler_rest.serializers import TranslatableModelSerializer
-from rest_framework import viewsets
+from rest_framework import serializers, viewsets
 
 from shuup.api.fields import EnumField
 from shuup.api.mixins import PermissionHelperMixin, ProtectedModelViewSetMixin
@@ -25,10 +25,15 @@ class CategorySerializer(TranslatableModelSerializer):
     translations = TranslatedFieldsField(shared_model=Category)
     status = EnumField(CategoryStatus)
     visibility = EnumField(CategoryVisibility)
+    image = serializers.SerializerMethodField()
 
     class Meta:
         model = Category
-        exclude = ("image",)
+        exclude = ("shops",)
+
+    def get_image(self, category):
+        if category.image:
+            return self.context["request"].build_absolute_uri(category.image.url)
 
 
 class CategoryFilter(FilterSet):
@@ -41,7 +46,7 @@ class CategoryFilter(FilterSet):
 
     class Meta:
         model = Category
-        fields = ["id", "parent", "shop"]
+        fields = ["id", "parent", "shop", "identifier"]
 
 
 class CategoryViewSet(ProtectedModelViewSetMixin, PermissionHelperMixin, viewsets.ModelViewSet):

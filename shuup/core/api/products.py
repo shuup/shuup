@@ -36,10 +36,11 @@ from .product_variation import (
 )
 
 
-class ShopProductSerializer(serializers.ModelSerializer):
+class ShopProductSerializer(TranslatableModelSerializer):
     orderable = serializers.SerializerMethodField()
     visibility = EnumField(enum=ShopProductVisibility)
     visibility_limit = EnumField(enum=ProductVisibility)
+    translations = TranslatedFieldsField(shared_model=ShopProduct, required=False)
 
     class Meta:
         model = ShopProduct
@@ -74,7 +75,7 @@ class ProductAttributeSerializer(TranslatableModelSerializer):
 
 
 class ProductTypeSerializer(TranslatableModelSerializer):
-    translations = TranslatedFieldsField(shared_model=Product)
+    translations = TranslatedFieldsField(shared_model=ProductType)
 
     class Meta:
         fields = "__all__"
@@ -289,7 +290,7 @@ class ProductViewSet(ProtectedModelViewSetMixin, PermissionHelperMixin, viewsets
     You can update only a set of attributes.
     """
 
-    queryset = Product.objects.none()
+    queryset = Product.objects.all_except_deleted()
     serializer_class = ProductSerializer
     filter_backends = (filters.OrderingFilter, DjangoFilterBackend)
     filter_class = ProductFilter
@@ -300,14 +301,6 @@ class ProductViewSet(ProtectedModelViewSetMixin, PermissionHelperMixin, viewsets
     @classmethod
     def get_help_text(cls):
         return _("Products can be listed, fetched, created, updated and deleted.")
-
-    def get_queryset(self):
-        if getattr(self.request.user, 'is_superuser', False):
-            return Product.objects.all_except_deleted()
-        return Product.objects.listed(
-            customer=self.request.customer,
-            shop=self.request.shop
-        )
 
     def perform_destroy(self, instance):
         instance.soft_delete(self.request.user)
@@ -505,14 +498,7 @@ class ShopProductViewSet(ProtectedModelViewSetMixin, PermissionHelperMixin, view
     serializer_class = ShopProductSerializer
 
     def get_queryset(self):
-        if getattr(self.request.user, 'is_superuser', False):
-            products = Product.objects.all_except_deleted()
-        else:
-            products = Product.objects.listed(
-                customer=self.request.customer,
-                shop=self.request.shop
-            )
-        return ShopProduct.objects.filter(id__in=products)
+        return ShopProduct.objects.filter(id__in=Product.objects.all_except_deleted()).distinct()
 
     def get_view_name(self):
         return _("Shop Products")

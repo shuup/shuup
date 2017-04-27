@@ -12,6 +12,18 @@ Unrealeased
 Core
 ~~~~
 
+- Add name, description and short_description fields to ShopProduct model
+- API: add basket endpoint
+- API: created front simple product endpoint
+- API: add front orders endpoint to fetch users order history
+- API: added nearby filter for products
+- API: added nearby filter for shops
+- API: allow orders to be created without customer, addresses, or
+  service methods
+- API: add front user endpoint
+- API: add address endpoint
+- API: add person contact endpoint
+- API: add address endpoint
 - Improve OrderSource caching for deserialization speedup
 - Add new product count methods to OrderSource
 - Fix bug in purchase multiple checking of ShopProduct

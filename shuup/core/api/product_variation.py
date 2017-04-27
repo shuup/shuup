@@ -43,6 +43,7 @@ class ProductVariationVariableResultSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
+        fields = "__all__"
 
     def to_representation(self, product):
         combination_result = []

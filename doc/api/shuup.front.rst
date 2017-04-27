@@ -7,7 +7,6 @@ Subpackages
 .. toctree::
 
     shuup.front.admin_module
-    shuup.front.api
     shuup.front.apps
     shuup.front.basket
     shuup.front.checkout
