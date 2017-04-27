@@ -35,9 +35,12 @@ from shuup.core.fields import (
 )
 from shuup.core.models import (
     Basket, get_company_contact, get_person_contact, MutableAddress, Order,
-    OrderLineType, OrderStatus, Product, Shop, ShopProduct
+    OrderLineType, OrderStatus, PaymentMethod, Product, ShippingMethod, Shop,
+    ShopProduct
 )
 from shuup.utils.importing import cached_load
+
+from .service import PaymentMethodSerializer, ShippingMethodSerializer
 
 
 def get_shop_id(uuid):
@@ -115,8 +118,8 @@ class BasketSerializer(serializers.Serializer):
     unorderable_items = serializers.SerializerMethodField()
     codes = serializers.ListField()
     shipping_address = serializers.SerializerMethodField()
-    shipping_method = serializers.IntegerField()
-    payment_method = serializers.IntegerField()
+    shipping_method = ShippingMethodSerializer()
+    payment_method = PaymentMethodSerializer()
     total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
                                            decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
     total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
@@ -141,7 +144,7 @@ class BasketSerializer(serializers.Serializer):
             return AddressSerializer(address, context=self.context).data
 
     def get_validation_errors(self, basket):
-        return [{err.code: err.message} for err in basket.get_validation_errors()]
+        return [{err.code: "%s" % err.message} for err in basket.get_validation_errors()]
 
     def get_items(self, basket):
         return BasketLineSerializer(basket.get_final_lines(with_taxes=True), many=True, context=self.context).data
@@ -207,6 +210,10 @@ class LineQuantitySerializer(serializers.Serializer):
                                         decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
 
 
+class MethodIDSerializer(serializers.Serializer):
+    id = serializers.IntegerField(required=False)
+
+
 class CodeAddBasketSerializer(serializers.Serializer):
     code = serializers.CharField()
 
@@ -249,6 +256,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         """
         return {
             'request': self.request,
+            'source': getattr(self.request, "basket", None),
             'format': self.format_kwarg,
             'view': self
         }
@@ -476,8 +484,16 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
     @schema_serializer_class(AddressSerializer)
     @detail_route(methods=['post'])
     def set_shipping_address(self, request, *args, **kwargs):
+        return self._handle_setting_address(request, "shipping_address")
+
+    @schema_serializer_class(AddressSerializer)
+    @detail_route(methods=['post'])
+    def set_billing_address(self, request, *args, **kwargs):
+        return self._handle_setting_address(request, "billing_address")
+
+    def _handle_setting_address(self, request, attr_field):
         """
-        Set the shipping address of the basket.
+        Set the address of the basket.
         If ID is sent, the existing MutableAddress will be used instead.
         """
         self.process_request()
@@ -494,7 +510,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
                 else:
                     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-            request.basket.shipping_address = address
+            setattr(request.basket, attr_field, address)
             request.basket.save()
 
         except ValidationError as exc:
@@ -506,12 +522,34 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
             return Response(data, status=status.HTTP_200_OK)
 
     @detail_route(methods=['post'])
+    def set_shipping_method(self, request, *args, **kwargs):
+        return self._handle_setting_method(request, ShippingMethod, "shipping_method")
+
+    @detail_route(methods=['post'])
+    def set_payment_method(self, request, *args, **kwargs):
+        return self._handle_setting_method(request, PaymentMethod, "payment_method")
+
+    def _handle_setting_method(self, request, model, attr_field):
+        self.process_request()
+        serializer = MethodIDSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        method = None
+        if request.data.get("id"):
+            method = model.objects.get(id=request.data['id'])
+
+        setattr(request.basket, attr_field, method)
+        request.basket.save()
+
+        data = BasketSerializer(request.basket, context=self.get_serializer_context()).data
+        return Response(data, status=status.HTTP_200_OK)
+
+    @detail_route(methods=['post'])
     def create_order(self, request, *args, **kwargs):
         self.process_request()
         request.basket.status = OrderStatus.objects.get_default_initial()
         errors = []
         for error in request.basket.get_validation_errors():
-            errors.append({"code": error.code, "message": error.message})
+            errors.append({"code": error.code, "message": "%s" % error.message})
         if len(errors):
             return Response({"errors": errors}, status=status.HTTP_400_BAD_REQUEST)
         order_creator = get_basket_order_creator()

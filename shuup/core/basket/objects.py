@@ -179,33 +179,61 @@ class BaseBasket(OrderSource):
         self.uncache()
         self.dirty = True
 
+    def _set_value_to_data(self, field_attr, value):
+        if hasattr(self, "_data"):
+            self._load()['shipping_address_id'] = getattr(value, "id", None)
+
+    def _get_value_from_data(self, field_attr):
+        if hasattr(self, "_data") and self._load().get(field_attr):
+            return MutableAddress.objects.filter(id=self._load()[field_attr]).first()
+
     @property
     def shipping_address(self):
         if self._shipping_address:
             return self._shipping_address
-        elif hasattr(self, "_data") and self._load().get('shipping_address_id'):
-            return MutableAddress.objects.filter(id=self._load()['shipping_address_id']).first()
+        return self._get_value_from_data("shipping_address_id")
 
     @shipping_address.setter
     def shipping_address(self, value):
         self._shipping_address = value
-        # save also on data
-        if value and hasattr(self, "_data"):
-            self._load()['shipping_address_id'] = value.id
+        self._set_value_to_data("shipping_address_id", value)
 
     @property
     def billing_address(self):
         if self._billing_address:
             return self._billing_address
-        elif hasattr(self, "_data") and self._load().get('billing_address_id'):
-            return MutableAddress.objects.filter(id=self._load()['billing_address_id']).first()
+        return self._get_value_from_data("billing_address_id")
 
     @billing_address.setter
     def billing_address(self, value):
         self._billing_address = value
-        # save also on data
-        if value and hasattr(self, "_data"):
-            self._load()['billing_address_id'] = value.id
+        self._set_value_to_data("billing_address_id", value)
+
+    @property
+    def shipping_method(self):
+        if not self.shipping_method_id:
+            self.shipping_method_id = self._get_value_from_data("shipping_method_id")
+
+        if self.shipping_method_id:
+            return ShippingMethod.objects.get(pk=self.shipping_method_id)
+
+    @shipping_method.setter
+    def shipping_method(self, shipping_method):
+        self.shipping_method_id = (shipping_method.id if shipping_method else None)
+        self._set_value_to_data("shipping_method_id", self.shipping_method_id)
+
+    @property
+    def payment_method(self):
+        if not self.payment_method_id:
+            self.payment_method_id = self._get_value_from_data("payment_method_id")
+
+        if self.payment_method_id:
+            return PaymentMethod.objects.get(pk=self.payment_method_id)
+
+    @payment_method.setter
+    def payment_method(self, payment_method):
+        self.payment_method_id = (payment_method.id if payment_method else None)
+        self._set_value_to_data("payment_method_id", self.payment_method_id)
 
     @property
     def _data_lines(self):
