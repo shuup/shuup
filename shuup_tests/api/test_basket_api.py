@@ -24,7 +24,6 @@ from shuup.core.models import (
     ShopProductVisibility, ShopStatus
 )
 from shuup.core.pricing import TaxfulPrice
-from shuup.front.models import StoredBasket
 from shuup.testing import factories
 from shuup.testing.factories import (
     create_product, get_default_currency, get_default_supplier,
@@ -871,3 +870,81 @@ def assert_basket_retrieve(admin_user, basket, data, person, shop, status):
     assert basket.shop == shop
     assert basket.creator == admin_user
     return basket
+
+
+@pytest.mark.django_db
+def test_basket_with_methods(admin_user, settings):
+    configure(settings)
+    shop = factories.get_default_shop()
+    shop2 = create_shop("foobar")
+    client = _get_client(admin_user)
+    response = client.post("/api/shuup/basket/new/", {
+        "shop": shop2.pk
+    })
+    assert response.status_code == status.HTTP_201_CREATED
+    basket_data = json.loads(response.content.decode("utf-8"))
+    basket = Basket.objects.first()
+    assert basket.key == basket_data['uuid'].split("-")[1]
+    assert basket.shop == shop2
+    assert basket.creator == admin_user
+
+    # invalid shop
+    response = client.post("/api/shuup/basket/new/", {
+        "shop": 1000
+    })
+    assert response.status_code == status.HTTP_404_NOT_FOUND
+
+    # no shop in multishop mode
+    response = client.post("/api/shuup/basket/new/")
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+    # no shop in single shop mode
+    settings.SHUUP_ENABLE_MULTIPLE_SHOPS = False
+    response = client.post("/api/shuup/basket/new/")
+    assert response.status_code == status.HTTP_201_CREATED
+    basket_data = json.loads(response.content.decode("utf-8"))
+    basket = Basket.objects.all()[1]
+    assert basket.key == basket_data['uuid'].split("-")[1]
+    assert basket.shop == shop
+    assert basket.creator == admin_user
+
+    person = factories.create_random_person()
+
+    response = client.post("/api/shuup/basket/new/?customer_id={}".format(person.pk), data={"customer_id": person.pk})
+    assert response.status_code == status.HTTP_201_CREATED
+    basket_data = json.loads(response.content.decode("utf-8"))
+    basket = Basket.objects.all()[2]
+    assert basket.key == basket_data['uuid'].split("-")[1]
+    assert basket.shop == shop
+    assert basket.creator == admin_user
+    assert basket.customer.pk == person.pk
+
+    # Set payment method for basket
+    payment_method = factories.get_default_payment_method()
+    data = {"id": payment_method.id}
+    response = client.post('/api/shuup/basket/{}-{}/set_payment_method/'.format(shop.pk, basket.key), data)
+    assert response.status_code == status.HTTP_200_OK
+    response_data = json.loads(response.content.decode("utf-8"))
+    method_data = response_data["payment_method"]
+    assert method_data["id"] == payment_method.id
+    assert method_data["translations"]["en"]["name"] == payment_method.name
+    assert method_data["price"] == 0
+
+    # Set shipping method for basket
+    shipping_price = 72
+    shipping_method = factories.get_shipping_method(shop, price=shipping_price)
+    data = {"id": shipping_method.id}
+    response = client.post('/api/shuup/basket/{}-{}/set_shipping_method/'.format(shop.pk, basket.key), data)
+    assert response.status_code == status.HTTP_200_OK
+    response_data = json.loads(response.content.decode("utf-8"))
+    method_data = response_data["shipping_method"]
+    assert method_data["id"] == shipping_method.id
+    assert method_data["translations"]["en"]["name"] == shipping_method.name
+    assert method_data["price"] == shipping_price
+    assert method_data["is_available"] == True
+
+    # Unset payment method
+    response = client.post('/api/shuup/basket/{}-{}/set_payment_method/'.format(shop.pk, basket.key), {})
+    assert response.status_code == status.HTTP_200_OK
+    response_data = json.loads(response.content.decode("utf-8"))
+    assert response_data.get("payment_method") is None
