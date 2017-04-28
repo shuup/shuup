@@ -688,6 +688,16 @@ def test_taxes_report(rf):
         + (order2.taxful_total_price_value - order2.taxless_total_price_value)
         + (order4.taxful_total_price_value - order4.taxless_total_price_value)
     )
+    tax1_pretax_total = (
+        order1.taxless_total_price_value +
+        order2.taxless_total_price_value +
+        order4.taxless_total_price_value
+    )
+    tax1_total = (
+        order1.taxful_total_price_value +
+        order2.taxful_total_price_value +
+        order4.taxful_total_price_value
+    )
     tax2_rate2_total = (order3.taxful_total_price_value - order3.taxless_total_price_value)
 
     # the report data order is the total charged ascending
@@ -696,21 +706,26 @@ def test_taxes_report(rf):
             "tax": tax_rate2_instance.name,
             "tax_rate": tax_rate2,
             "order_count": 1,
-            "total_charged": tax2_rate2_total,
+            "total_pretax_amount": order3.taxless_total_price_value,
+            "total_tax_amount": tax2_rate2_total,
+            "total": order3.taxful_total_price_value,
         },
         {
             "tax": tax_rate1_instance.name,
             "tax_rate": tax_rate1,
             "order_count": 3,
-            "total_charged": tax1_rate1_total,
+            "total_pretax_amount": tax1_pretax_total,
+            "total_tax_amount": tax1_rate1_total,
+            "total": tax1_total,
         }
     ]
-
     for ix, tax in enumerate(data):
         assert tax["tax"] == expected_result[ix]["tax"]
         assert Decimal(tax["tax_rate"]) == expected_result[ix]["tax_rate"] * Decimal(100.0)
         assert tax["order_count"] == str(expected_result[ix]["order_count"])
-        assert tax["total_charged"] == str(expected_result[ix]["total_charged"])
+        assert tax["total_tax_amount"] == str(expected_result[ix]["total_tax_amount"])
+        assert tax["total_pretax_amount"] == str(expected_result[ix]["total_pretax_amount"])
+        assert tax["total"] == str(expected_result[ix]["total"])
 
 
 def seed_source(shipping_method=None, produce_price=10):
