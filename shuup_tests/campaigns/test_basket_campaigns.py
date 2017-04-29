@@ -310,7 +310,7 @@ def test_percentage_campaign(rf):
 def test_order_creation_adds_usage(rf, admin_user):
     request, shop, group = initialize_test(rf, False)
 
-    source = seed_source(admin_user)
+    source = seed_source(admin_user, shop)
     source.add_line(
         type=OrderLineType.PRODUCT,
         product=get_default_product(),

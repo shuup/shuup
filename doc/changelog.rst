@@ -85,6 +85,9 @@ Order Printouts
 Campaigns
 ~~~~~~~~~
 
+- Remove uniqueness from coupon code texts. Instead make sure that one shop
+does not have multiple active basket campaigns with same code.
+
 Customer Group Pricing
 ~~~~~~~~~~~~~~~~~~~~~~
 
