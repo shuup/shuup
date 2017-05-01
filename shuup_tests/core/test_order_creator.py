@@ -19,9 +19,9 @@ from shuup.core.models import (
 from shuup.core.order_creator import OrderCreator, OrderSource, SourceLine
 from shuup.core.order_creator.constants import ORDER_MIN_TOTAL_CONFIG_KEY
 from shuup.testing.factories import (
-    create_package_product, get_address, get_default_payment_method,
-    get_default_product, get_default_shipping_method, get_default_shop,
-    get_default_supplier, get_initial_order_status
+    create_package_product, get_address, get_default_product, get_default_shop,
+    get_default_supplier, get_initial_order_status, get_payment_method,
+    get_shipping_method
 )
 from shuup.utils.models import get_data_dict
 from shuup_tests.utils.basketish_order_source import BasketishOrderSource
@@ -64,18 +64,19 @@ def test_codes_type_conversion():
     assert source.codes == ["test", "1"]
 
 
-def seed_source(user):
-    source = BasketishOrderSource(get_default_shop())
+def seed_source(user, shop=None):
+    source_shop = shop or get_default_shop()
+    source = BasketishOrderSource(source_shop)
     billing_address = get_address()
     shipping_address = get_address(name="Shippy Doge")
     source.status = get_initial_order_status()
     source.billing_address = billing_address
     source.shipping_address = shipping_address
     source.customer = get_person_contact(user)
-    source.payment_method = get_default_payment_method()
-    source.shipping_method = get_default_shipping_method()
-    assert source.payment_method_id == get_default_payment_method().id
-    assert source.shipping_method_id == get_default_shipping_method().id
+    source.payment_method = get_payment_method(shop)
+    source.shipping_method = get_shipping_method(shop)
+    assert source.payment_method_id == get_payment_method(shop).id
+    assert source.shipping_method_id == get_shipping_method(shop).id
     return source
 
 

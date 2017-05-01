@@ -87,7 +87,8 @@ class BasketCampaignModule(OrderSourceModifierModule):
         )
 
     def can_use_code(self, order_source, code):
-        campaigns = BasketCampaign.objects.filter(active=True, coupon__code__iexact=code, coupon__active=True)
+        campaigns = BasketCampaign.objects.filter(
+            active=True, shop=order_source.shop, coupon__code__iexact=code, coupon__active=True)
         for campaign in campaigns:
             if not campaign.is_available():
                 continue
@@ -95,7 +96,8 @@ class BasketCampaignModule(OrderSourceModifierModule):
         return False
 
     def use_code(self, order, code):
-        campaigns = BasketCampaign.objects.filter(active=True, coupon__code__iexact=code, coupon__active=True)
+        campaigns = BasketCampaign.objects.filter(
+            active=True, shop=order.shop, coupon__code__iexact=code, coupon__active=True)
         for campaign in campaigns:
             campaign.coupon.use(order)
 

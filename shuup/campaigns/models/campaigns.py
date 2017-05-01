@@ -224,6 +224,15 @@ class BasketCampaign(Campaign):
         return force_text(_("Basket Campaign: %(name)s" % dict(name=self.name)))
 
     def save(self, *args, **kwargs):
+        if self.coupon:
+            code_count_for_shop = BasketCampaign.objects.filter(
+                active=True, shop_id=self.shop.id, coupon__code=self.coupon.code)
+            if not self.id and code_count_for_shop.exists():
+                raise ValidationError(_("Can not have multiple active campaigns with same code."))
+
+            if self.id and code_count_for_shop.exclude(coupon_id=self.coupon.id).exists():
+                raise ValidationError(_("Can not have multiple active campaigns with same code."))
+
         super(BasketCampaign, self).save(*args, **kwargs)
         self.conditions.update(active=self.active)
 
@@ -351,6 +360,14 @@ class Coupon(models.Model):
     created_on = models.DateTimeField(auto_now_add=True, editable=False, verbose_name=_("created on"))
     modified_on = models.DateTimeField(auto_now=True, editable=False, verbose_name=_("modified on"))
 
+    def save(self, **kwargs):
+        campaign = BasketCampaign.objects.filter(active=True, coupon_id=self.id).first()
+        if campaign and BasketCampaign.objects.filter(
+                active=True, shop_id=campaign.shop.id, coupon__code=self.code).exclude(id=campaign.id).exists():
+            raise ValidationError(_("Can not have multiple active campaigns with same code."))
+
+        return super(Coupon, self).save(**kwargs)
+
     @classmethod
     def generate_code(cls, length=6):
         if length > 12:
@@ -416,11 +433,6 @@ class Coupon(models.Model):
     def has_been_used(self, usage_count=1):
         """ See if code is used the times given """
         return CouponUsage.objects.filter(coupon=self).count() >= usage_count
-
-    def save(self, **kwargs):
-        if Coupon.objects.filter(code__iexact=self.code, active=True).exclude(pk=self.pk).exists():
-            raise ValidationError(_("Cannot have two same codes active at the same time."))
-        return super(Coupon, self).save(**kwargs)
 
     def __str__(self):
         return self.code

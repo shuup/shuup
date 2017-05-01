@@ -107,39 +107,6 @@ def test_coupon_amount_limit():
 
 
 @pytest.mark.django_db
-def test_no_two_same_codes_active1():
-    # allow two discount codes with same code as they are inactive
-    dc1 = Coupon.objects.create(code="TEST")
-    dc2 = Coupon.objects.create(code="TEST")
-
-    dc1.active = True
-    dc1.save()
-
-    dc2.active = True
-    with pytest.raises(ValidationError):
-        dc2.save()
-    dc2.code = "changed_code"
-    dc2.save()
-
-@pytest.mark.django_db
-def test_no_two_same_codes_active2():
-    # allow two discount codes with same code as they are inactive
-    dc1 = Coupon.objects.create(code="test")
-    dc2 = Coupon.objects.create(code="TEST")
-
-    assert dc1.code == "test"
-    assert dc2.code == "TEST"
-
-    dc1.active = True
-    dc1.save()
-
-    dc2.active = True
-    with pytest.raises(ValidationError):
-        dc2.save()
-    dc2.code = "changed_code"
-    dc2.save()
-
-@pytest.mark.django_db
 def test_campaign_with_coupons1(rf):
     basket, dc, request, status = _init_basket_coupon_test(rf)
 
