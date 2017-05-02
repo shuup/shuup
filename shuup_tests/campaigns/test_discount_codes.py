@@ -124,7 +124,7 @@ def test_campaign_with_coupons1(rf):
     basket = get_basket(request)
 
     assert basket.codes == [dc.code]
-    assert len(basket.get_final_lines()) == 3  # now basket has codes so they will be applied too
+    assert len(basket.get_final_lines()) == 4  # now basket has codes so they will be applied too
     assert OrderLineType.DISCOUNT in [l.type for l in basket.get_final_lines()]
 
     basket.status = status
@@ -164,7 +164,7 @@ def test_campaign_with_coupons2(rf):
     assert [c.upper() for c in basket.codes] != [customer_code]  # they don't match like this
     assert basket.codes == [customer_code]  # they match like this
 
-    assert len(basket.get_final_lines()) == 3  # now basket has codes so they will be applied too
+    assert len(basket.get_final_lines()) == 4  # now basket has codes so they will be applied too
     assert OrderLineType.DISCOUNT in [l.type for l in basket.get_final_lines()]
 
     basket.status = status
