@@ -181,33 +181,39 @@ class BaseBasket(OrderSource):
 
     def _set_value_to_data(self, field_attr, value):
         if hasattr(self, "_data"):
-            self._load()['shipping_address_id'] = getattr(value, "id", None)
+            self._load()[field_attr] = value
 
     def _get_value_from_data(self, field_attr):
         if hasattr(self, "_data") and self._load().get(field_attr):
-            return MutableAddress.objects.filter(id=self._load()[field_attr]).first()
+            return self._load()[field_attr]
 
     @property
     def shipping_address(self):
         if self._shipping_address:
             return self._shipping_address
-        return self._get_value_from_data("shipping_address_id")
+
+        shipping_address_id = self._get_value_from_data("shipping_address_id")
+        if shipping_address_id:
+            return MutableAddress.objects.get(pk=shipping_address_id)
 
     @shipping_address.setter
     def shipping_address(self, value):
         self._shipping_address = value
-        self._set_value_to_data("shipping_address_id", value)
+        self._set_value_to_data("shipping_address_id", getattr(value, "id", None))
 
     @property
     def billing_address(self):
         if self._billing_address:
             return self._billing_address
-        return self._get_value_from_data("billing_address_id")
+
+        billing_address_id = self._get_value_from_data("billing_address_id")
+        if billing_address_id:
+            return MutableAddress.objects.get(pk=billing_address_id)
 
     @billing_address.setter
     def billing_address(self, value):
         self._billing_address = value
-        self._set_value_to_data("billing_address_id", value)
+        self._set_value_to_data("billing_address_id", getattr(value, "id", None))
 
     @property
     def shipping_method(self):
