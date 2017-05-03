@@ -960,6 +960,51 @@ def test_basket_with_methods(admin_user, settings):
     response = client.get("/api/shuup/basket/{}-{}/".format(shop.pk, basket.key))
     assert response.status_code == 200
     response_data = json.loads(response.content.decode("utf-8"))
-    response_data = json.loads(response.content.decode("utf-8"))
     assert response_data["shipping_method"]["id"] == shipping_method.id
     assert response_data.get("payment_method") is None
+
+
+@pytest.mark.django_db
+def test_basket_with_staff_user(settings):
+    configure(settings)
+    shop = factories.get_default_shop()
+    staff_user = User.objects.create(username="staff", is_staff=True)
+
+    client = _get_client(staff_user)
+    person = factories.create_random_person()
+    response = client.post(
+        "/api/shuup/basket/new/?customer_id={}".format(person.pk),
+        data={"shop": shop.pk, "customer_id": person.pk})
+    # Only stuff linked to shop can create baskets for someone else
+    assert response.status_code == status.HTTP_403_FORBIDDEN
+
+    # Can still add personal baskets
+    staff_person = get_person_contact(staff_user)
+    response = client.post(
+        "/api/shuup/basket/new/?customer_id={}".format(staff_person.pk),
+        data={"shop": shop.pk, "customer_id": staff_person.pk})
+    assert response.status_code == status.HTTP_201_CREATED
+    basket_data = json.loads(response.content.decode("utf-8"))
+    basket = Basket.objects.filter(key=basket_data["uuid"].split("-")[1]).first()
+    assert basket.shop == shop
+    assert basket.creator == staff_user
+    assert basket.customer.pk == staff_person.pk
+
+    response = client.get("/api/shuup/basket/{}/".format(basket_data["uuid"]))
+    assert response.status_code == 200
+
+    # Ok let's link the staff member to the shop and
+    # the basket create for random person should work
+    shop.staff_members.add(staff_user)
+    response = client.post(
+        "/api/shuup/basket/new/?customer_id={}".format(person.pk),
+        data={"shop": shop.pk, "customer_id": person.pk})
+    assert response.status_code == status.HTTP_201_CREATED
+    basket_data = json.loads(response.content.decode("utf-8"))
+    basket = Basket.objects.filter(key=basket_data["uuid"].split("-")[1]).first()
+    assert basket.shop == shop
+    assert basket.creator == staff_user
+    assert basket.customer.pk == person.pk
+
+    response = client.get("/api/shuup/basket/{}/".format(basket_data["uuid"]))
+    assert response.status_code == 200

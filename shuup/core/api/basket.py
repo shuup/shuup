@@ -34,9 +34,9 @@ from shuup.core.fields import (
     FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES, FORMATTED_DECIMAL_FIELD_MAX_DIGITS
 )
 from shuup.core.models import (
-    Basket, get_company_contact, get_person_contact, MutableAddress, Order,
-    OrderLineType, OrderStatus, PaymentMethod, Product, ShippingMethod, Shop,
-    ShopProduct
+    Basket, Contact, get_company_contact, get_person_contact, MutableAddress,
+    Order, OrderLineType, OrderStatus, PaymentMethod, Product, ShippingMethod,
+    Shop, ShopProduct
 )
 from shuup.utils.importing import cached_load
 
@@ -300,23 +300,43 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         self.process_request()
         return Response(BasketSerializer(request.basket, context=self.get_serializer_context()).data)
 
+    def _get_controlled_contacts_by_user(self, user):
+        """
+        List of contact ids the user controls
+
+        The list includes the person contact linked to the user and all
+        company contacts the user contact is linked to
+
+        :param user: user object
+        :type user: settings.USER_MODEL
+        :return: list of contact ids the user controls
+        :rtype: list(int)
+        """
+        contact = get_person_contact(user)
+        if not contact:
+            return []
+        return [contact.pk] + list(contact.company_memberships.all().values_list("pk", flat=True))
+
     def get_object(self):
         uuid = get_key(self.kwargs.get(self.lookup_field, ""))
         user = self.request.user
         shop = self.request.shop
+
         # ensure correct owner
-        loaded_basket = Basket.objects.filter(key=uuid).first()
         if not self.request.user.is_superuser:
-            # TODO: THIS IS REALLY UGLY
-            if loaded_basket:
-                if user.is_staff:
-                    if not shop or user.pk not in shop.staff_members.all().values_list("pk", flat=True):
-                        raise exceptions.PermissionDenied("No permission")
-                else:
-                    if loaded_basket.customer and not loaded_basket.customer.user.pk == self.request.user.pk:
-                        raise exceptions.PermissionDenied("No permission")
-                    elif not loaded_basket.shop == shop:
-                        raise exceptions.PermissionDenied("No permission")
+            loaded_basket = Basket.objects.filter(key=uuid).first()
+
+            if not loaded_basket.shop == shop:
+                raise exceptions.PermissionDenied("No permission")
+
+            customer_id = (loaded_basket.customer.pk if loaded_basket.customer else None)
+            controlled_contact_ids = self._get_controlled_contacts_by_user(self.request.user)
+            is_staff = (
+                shop and self.request.user.is_staff and
+                user.pk in shop.staff_members.all().values_list("pk", flat=True)
+            )
+            if customer_id and customer_id not in controlled_contact_ids and not is_staff:
+                raise exceptions.PermissionDenied("No permission")
 
         # actually load basket
         basket_class = cached_load("SHUUP_BASKET_CLASS_SPEC")
@@ -339,14 +359,16 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         customer_id = request.POST.get("customer_id")
         if not customer_id:
             customer_id = request.data.get("customer_id")
+
         if customer_id:
-            is_staff = (not self.request.shop or not self.request.user.is_staff or
-                        self.request.user.pk not in self.request.shop.staff_members.all().values_list("pk", flat=True))
+            is_staff = (self.request.shop and self.request.user.is_staff and
+                        self.request.user.pk in self.request.shop.staff_members.all().values_list("pk", flat=True))
             is_superuser = self.request.user.is_superuser
-            if is_superuser or is_staff:
-                from shuup.core.models import PersonContact
-                customer = PersonContact.objects.get(pk=customer_id)
-                basket.customer = customer
+
+            if int(customer_id) in self._get_controlled_contacts_by_user(self.request.user) or is_superuser or is_staff:
+                basket.customer = Contact.objects.get(pk=int(customer_id))
+            else:
+                raise exceptions.PermissionDenied("No permission")
 
         stored_basket = basket.save()
         return Response(data={"uuid": "%s-%s" % (request.shop.pk, stored_basket.key)}, status=status.HTTP_201_CREATED)
