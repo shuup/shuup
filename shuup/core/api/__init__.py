@@ -11,6 +11,9 @@ from shuup.core.api.basket import BasketViewSet
 from shuup.core.api.category import CategoryViewSet
 from shuup.core.api.contacts import ContactViewSet, PersonContactViewSet
 from shuup.core.api.front_orders import FrontOrderViewSet
+from shuup.core.api.front_passwords import (
+    PasswordResetViewSet, SetPasswordViewSet
+)
 from shuup.core.api.front_products import (
     FrontProductViewSet, FrontShopProductViewSet
 )
@@ -62,6 +65,8 @@ def populate_core_api(router):
     router.register("shuup/basket", BasketViewSet)
 
     router.register("shuup/front/user", FrontUserViewSet)
+    router.register("shuup/front/password", SetPasswordViewSet, 'set_password')
+    router.register("shuup/front/password/reset", PasswordResetViewSet, 'password_reset')
     router.register("shuup/front/orders", FrontOrderViewSet)
     router.register("shuup/front/shop_products", FrontShopProductViewSet)
     router.register("shuup/front/products", FrontProductViewSet)
