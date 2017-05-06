@@ -12,6 +12,9 @@ Unrealeased
 Core
 ~~~~
 
+- API: Add option to reset password for authenticated users
+- API: Add opiton to reset password with token
+- API: `shuup.front.apps.auth.forms.PasswordRecoveryForm` to core
 - Add name, description and short_description fields to ShopProduct model
 - API: add basket endpoint
 - API: created front simple product endpoint

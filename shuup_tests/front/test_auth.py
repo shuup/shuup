@@ -213,7 +213,7 @@ def test_recover_password_form_with_invalid_email():
     if "shuup.front.apps.auth" not in settings.INSTALLED_APPS:
         pytest.skip("Need shuup.front.apps.auth in INSTALLED_APPS")
 
-    from shuup.front.apps.auth.forms import RecoverPasswordForm
+    from shuup.core.utils.forms import RecoverPasswordForm
 
     form = RecoverPasswordForm({"username": "fake_username", "email": "invalid_email"})
 

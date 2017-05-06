@@ -10,21 +10,19 @@ from __future__ import unicode_literals
 import json
 
 from django.contrib.auth import get_user_model
-from django.core import mail
 
 import pytest
 from rest_framework import status
 from rest_framework.test import APIClient
 from shuup import configuration
 from shuup.api.permissions import PermissionLevel
-from shuup.core import cache
 from shuup.core.models import Gender, PersonContact
-from shuup.testing.factories import get_default_shop, UserFactory
+from shuup.testing.factories import get_default_shop
 
 
 @pytest.mark.django_db
 def test_register_api():
-    shop = get_default_shop()
+    get_default_shop()
     configuration.set(None, "api_permission_FrontUserViewSet", PermissionLevel.PUBLIC_WRITE)
     client = _get_client()
     register_data = {

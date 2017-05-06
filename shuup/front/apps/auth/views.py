@@ -20,9 +20,8 @@ from django.utils.http import is_safe_url, urlsafe_base64_decode
 from django.utils.translation import ugettext as _
 from django.views.generic import FormView, TemplateView
 
-from shuup.front.apps.auth.forms import (
-    EmailAuthenticationForm, RecoverPasswordForm
-)
+from shuup.core.utils.forms import RecoverPasswordForm
+from shuup.front.apps.auth.forms import EmailAuthenticationForm
 from shuup.utils.excs import Problem
 
 
