@@ -9,7 +9,7 @@ import random
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.core.fields import MoneyValueField
+from shuup.core.fields import MoneyValueField, QuantityField
 from shuup.core.models import (
     Category, OrderLineType, PolymorphicShuupModel, Product
 )
@@ -38,7 +38,7 @@ class FreeProductLine(BasketLineEffect):
     model = Product
     name = _("Free Product(s)")
 
-    quantity = models.PositiveIntegerField(default=1, verbose_name=_("quantity"))
+    quantity = QuantityField(default=1, verbose_name=_("quantity"))
     products = models.ManyToManyField(Product, verbose_name=_("product"))
 
     @property

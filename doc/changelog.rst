@@ -73,6 +73,8 @@ Order Printouts
 Campaigns
 ~~~~~~~~~
 
+- Fix handling of non-integer quantity in FreeProductLine
+
 Customer Group Pricing
 ~~~~~~~~~~~~~~~~~~~~~~
 
