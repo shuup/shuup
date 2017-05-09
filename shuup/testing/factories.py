@@ -41,6 +41,7 @@ from shuup.core.models import (
 from shuup.core.order_creator import OrderCreator, OrderSource
 from shuup.core.pricing import get_pricing_module
 from shuup.core.shortcuts import update_order_line_from_product
+from shuup.core.taxing.utils import stacked_value_added_taxes
 from shuup.default_tax.models import TaxRule
 from shuup.testing.text_data import random_title
 from shuup.utils.filer import filer_image_from_data
@@ -578,9 +579,12 @@ def add_product_to_order(order, supplier, product, quantity, taxless_base_unit_p
     product_order_line.base_unit_price = order.shop.create_price(base_unit_price)
     product_order_line.save()
 
+    taxes = [get_test_tax(tax_rate)]
+    price = quantity * base_unit_price
+    taxed_price = stacked_value_added_taxes(price, taxes)
     order_line_tax = OrderLineTax.from_tax(
-        get_test_tax(tax_rate),
-        Money(quantity * taxless_base_unit_price, order.currency),
+        taxes[0],
+        taxed_price.taxless.amount,
         order_line=product_order_line,
     )
     order_line_tax.save()  # Save order line tax before linking to order_line.taxes
