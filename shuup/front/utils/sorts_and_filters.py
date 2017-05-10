@@ -240,8 +240,13 @@ def get_product_queryset(queryset, request, category, data):
             v = "|".join(v)
         key_data[k] = v
 
+    if request.customer.is_all_seeing:
+        identifier = "product_queryset_all_seeing_%d" % request.user.id
+    else:
+        identifier = "product_queryset"
+
     key, val = context_cache.get_cached_value(
-        identifier="product_queryset", item=category, allow_cache=True, context=request, data=key_data)
+        identifier=identifier, item=category, allow_cache=True, context=request, data=key_data)
     if val is not None:
         return val
 

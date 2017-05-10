@@ -43,7 +43,7 @@ class ProductHighlightPlugin(TemplatedPlugin):
         if type == "newest":
             products = get_newest_products(context, count, orderable_only)
         elif type == "best_selling":
-            products = get_best_selling_products(context, count, orderable_only)
+            products = get_best_selling_products(context, count, orderable_only=orderable_only)
         elif type == "random":
             products = get_random_products(context, count, orderable_only)
         else:

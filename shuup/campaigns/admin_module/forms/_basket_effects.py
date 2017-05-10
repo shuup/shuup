@@ -4,6 +4,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.admin.forms.fields import PercentageField
@@ -13,7 +14,7 @@ from shuup.campaigns.models.basket_effects import (
 from shuup.campaigns.models.basket_line_effects import (
     DiscountFromCategoryProducts, DiscountFromProduct, FreeProductLine
 )
-from shuup.core.models import Category
+from shuup.core.models import Category, Product
 
 from ._base import BaseEffectModelForm
 
@@ -36,6 +37,18 @@ class BasketDiscountPercentageForm(BaseEffectModelForm):
 class FreeProductLineForm(BaseEffectModelForm):
     class Meta(BaseEffectModelForm.Meta):
         model = FreeProductLine
+
+    def clean(self):
+        super(FreeProductLineForm, self).clean()
+        # Don't validate data is form is deleted
+        if self.cleaned_data.get("DELETE"):
+            return
+        campaign = self.cleaned_data["campaign"]
+        for product_id in self.cleaned_data.get("products"):
+            product = Product.objects.get(pk=product_id)
+            shop_product = product.get_shop_instance(campaign.shop)
+            for error in shop_product.get_quantity_errors(self.cleaned_data["quantity"]):
+                raise ValidationError({'quantity': error.message})
 
 
 class DiscountFromProductForm(BaseEffectModelForm):

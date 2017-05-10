@@ -9,6 +9,11 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
+Shuup 1.2.0
+-----------
+
+Not yet released, still in beta.
+
 Core
 ~~~~
 
@@ -27,6 +32,7 @@ Core
 - API: add address endpoint
 - API: add person contact endpoint
 - API: add address endpoint
+- Add new shipment_created_and_processed signal
 - Improve OrderSource caching for deserialization speedup
 - Add new product count methods to OrderSource
 - Fix bug in purchase multiple checking of ShopProduct
@@ -62,6 +68,9 @@ Addons
 Front
 ~~~~~
 
+- Cusmoter information: Replace untranslated "Not specified" with a dash
+- Trigger shipment created event when addons have already processed it
+- Fix caching problem related to superuser being all seeing
 - Add shop phone and number on order received notification
 - Fix bug: Could no change quantities of unorderable lines in the basket
 - Use display units when rendering product quantities
@@ -75,6 +84,8 @@ Front
 
 Xtheme
 ~~~~~~
+
+- Fix product highlight plugin best selling products
 
 Classic Gray Theme
 ~~~~~~~~~~~~~~~~~~
@@ -90,6 +101,7 @@ Campaigns
 
 - Remove uniqueness from coupon code texts. Instead make sure that one shop
 does not have multiple active basket campaigns with same code.
+- Fix handling of non-integer quantity in FreeProductLine
 
 Customer Group Pricing
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -108,6 +120,11 @@ Guide
 
 Importer
 ~~~~~~~~
+
+Reporting
+~~~~~~~~~
+
+- Extend default tax report with pre-tax amount and total
 
 Regions
 ~~~~~~~
