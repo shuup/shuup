@@ -9,11 +9,6 @@ Unrealeased
   When releasing next version, the "Unreleased" header will be replaced
   with appropriate version header and this help text will be removed.
 
-Shuup 1.2.0
------------
-
-Not yet released, still in beta.
-
 Core
 ~~~~
 
@@ -32,6 +27,22 @@ Core
 - API: add address endpoint
 - API: add person contact endpoint
 - API: add address endpoint
+
+Campaigns
+~~~~~~~~~
+
+- Remove uniqueness from coupon code texts. Instead make sure that one shop
+  does not have multiple active basket campaigns with same code.
+
+
+Shuup 1.2.0
+-----------
+
+Not yet released, still in beta.
+
+Core
+~~~~
+
 - Add new shipment_created_and_processed signal
 - Improve OrderSource caching for deserialization speedup
 - Add new product count methods to OrderSource
@@ -99,8 +110,6 @@ Order Printouts
 Campaigns
 ~~~~~~~~~
 
-- Remove uniqueness from coupon code texts. Instead make sure that one shop
-does not have multiple active basket campaigns with same code.
 - Fix handling of non-integer quantity in FreeProductLine
 
 Customer Group Pricing
