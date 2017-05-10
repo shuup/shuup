@@ -38,7 +38,8 @@ from shuup.core.fields import (
 )
 from shuup.core.pricing import TaxfulPrice, TaxlessPrice
 from shuup.core.signals import (
-    payment_created, refund_created, shipment_created
+    payment_created, refund_created, shipment_created,
+    shipment_created_and_processed
 )
 from shuup.utils.analog import define_log_model, LogEntryKind
 from shuup.utils.dates import local_now, to_aware
@@ -662,6 +663,7 @@ class Order(MoneyPropped, models.Model):
         self.add_log_entry(_(u"Shipment #%d created.") % shipment.id)
         self.update_shipping_status()
         shipment_created.send(sender=type(self), order=self, shipment=shipment)
+        shipment_created_and_processed.send(sender=type(self), order=self, shipment=shipment)
         return shipment
 
     def can_create_refund(self):

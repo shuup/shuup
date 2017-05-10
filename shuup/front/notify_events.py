@@ -11,7 +11,8 @@ from django.utils.translation import ugettext_lazy as _
 from shuup.core.models import PaymentStatus, ShipmentStatus, ShippingStatus
 from shuup.core.order_creator.signals import order_creator_finished
 from shuup.core.signals import (
-    payment_created, refund_created, shipment_created, shipment_deleted
+    payment_created, refund_created, shipment_created_and_processed,
+    shipment_deleted
 )
 from shuup.notify.base import Event, Variable
 from shuup.notify.typology import Email, Enum, Language, Model, Phone
@@ -101,7 +102,7 @@ def send_order_received_notification(order, **kwargs):
     OrderReceived(**params).run()
 
 
-@receiver(shipment_created)
+@receiver(shipment_created_and_processed)
 def send_shipment_created_notification(order, shipment, **kwargs):
     ShipmentCreated(
         order=order,
