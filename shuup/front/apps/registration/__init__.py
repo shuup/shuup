@@ -30,7 +30,7 @@ URL names
 
 import django.conf
 from django.db.models.signals import post_save
-from registration.signals import login_user, user_activated
+from registration.signals import user_activated
 
 from shuup.apps import AppConfig
 
@@ -62,7 +62,11 @@ class RegistrationAppConfig(AppConfig):
 
     def ready(self):
         from shuup.core.models import CompanyContact
-        from shuup.front.apps.registration.notify_events import send_company_activated_first_time_notification
+        from .notify_events import send_company_activated_first_time_notification
+        from .signals import handle_user_activation
+
+        user_activated.connect(handle_user_activation)
+
         if not hasattr(django.conf.settings, "ACCOUNT_ACTIVATION_DAYS"):
             # Patch settings to include ACCOUNT_ACTIVATION_DAYS;
             # it's a setting owned by `django-registration-redux`,
@@ -76,9 +80,6 @@ class RegistrationAppConfig(AppConfig):
             # By default, Django-Registration considers this False, but
             # we override it to True. unless otherwise set by the user.
             django.conf.settings.REGISTRATION_AUTO_LOGIN = True
-
-            # connect signal here since the setting value has changed
-            user_activated.connect(login_user)
 
         if not hasattr(django.conf.settings, "REGISTRATION_EMAIL_HTML"):
             # We only provide txt templates out of the box, so default to

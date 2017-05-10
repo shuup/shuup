@@ -185,12 +185,8 @@ def test_user_will_be_redirected_to_user_account_page_after_activation(client):
     body = mail.outbox[-1].body
     urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', body)
     response = client.get(urls[0], follow=True)
-    if settings.SHUUP_REGISTRATION_REQUIRES_ACTIVATION:
-        assert email.encode('utf-8') not in response.content
-        assert reverse('shuup:login') == response.request['PATH_INFO']
-    else:
-        assert email.encode('utf-8') in response.content, 'email should be found from the page.'
-        assert reverse('shuup:customer_edit') == response.request['PATH_INFO'], 'user should be on the account-page.'
+    assert email.encode('utf-8') in response.content, 'email should be found from the page.'
+    assert reverse('shuup:customer_edit') == response.request['PATH_INFO'], 'user should be on the account-page.'
 
 
 @pytest.mark.django_db
