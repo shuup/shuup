@@ -166,6 +166,10 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
             "package_content",
         ]
 
+    @property
+    def children_serializer(self):
+        return NormalShopProductSerializer
+
     def get_name(self, shop_product):
         return (
             shop_product.safe_translation_getter("name") or
@@ -263,7 +267,7 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
                 continue
 
             key = keys[cross_sell.type]
-            cross_sell_data[key].append(NormalShopProductSerializer(cross_shop_product, context=self.context).data)
+            cross_sell_data[key].append(self.children_serializer(cross_shop_product, context=self.context).data)
 
         context_cache.set_cached_value(key, cross_sell_data)
         return cross_sell_data
@@ -289,7 +293,7 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
 
         qs = get_shop_product_queryset(False).filter(
             shop_id=shop_product.shop_id, product__pk__in=[combo["result_product_pk"] for combo in combinations])
-        products = NormalShopProductSerializer(qs, many=True, context=self.context).data
+        products = self.children_serializer(qs, many=True, context=self.context).data
         product_map = {product["product_id"]: product for product in products}
         for combination in combinations:
             child = product_map.get(combination["result_product_pk"])
@@ -320,7 +324,7 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
 
                 package_contents.append({
                     "quantity": pkge_link.quantity,
-                    "product": NormalShopProductSerializer(pkge_shop_product, context=self.context).data
+                    "product": self.children_serializer(pkge_shop_product, context=self.context).data
                 })
             except ShopProduct.DoesNotExist:
                 continue
