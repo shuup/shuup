@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-06 14:48+0000\n"
+"POT-Creation-Date: 2017-05-15 12:12+0000\n"
 "PO-Revision-Date: 2017-04-06 17:50+0300\n"
 "Last-Translator: Frank Wickström <frwickst@gmail.com>\n"
 "Language-Team: Swedish (Sweden) (http://www.transifex.com/shuup/shuup/"
@@ -30,6 +30,12 @@ msgstr "Kund"
 
 msgid "Customer Email"
 msgstr "Kundens e-post"
+
+msgid "Activation URL"
+msgstr "Aktivering URL"
+
+msgid "Is User Active"
+msgstr "Är Användaren Aktiv"
 
 msgid "Company Registration Received"
 msgstr "Registrering av företag mottaget"

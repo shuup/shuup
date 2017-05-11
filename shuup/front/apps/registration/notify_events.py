@@ -5,6 +5,7 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
+from django.core.urlresolvers import reverse
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 from registration.signals import user_registered
@@ -13,7 +14,7 @@ from shuup.core.models import get_person_contact, PersonContact
 from shuup.notify.base import Event, Variable
 from shuup.notify.script_template.factory import \
     generic_send_email_script_template_factory
-from shuup.notify.typology import Email, Model
+from shuup.notify.typology import Boolean, Email, Model, URL
 
 
 class RegistrationReceived(Event):
@@ -21,6 +22,8 @@ class RegistrationReceived(Event):
     name = _("Registration Received")
     customer = Variable(_("Customer"), type=Model("shuup.Contact"))
     customer_email = Variable(_("Customer Email"), type=Email)
+    activation_url = Variable(_("Activation URL"), type=URL, required=False)
+    user_is_active = Variable(_("Is User Active"), type=Boolean)
 
 
 class CompanyRegistrationReceived(RegistrationReceived):
@@ -34,8 +37,14 @@ class CompanyApproved(RegistrationReceived):
 
 
 @receiver(user_registered)
-def send_user_registered_notification(user, **kwargs):
+def send_user_registered_notification(user, request, **kwargs):
+    activation_url = None
     person_contact = get_person_contact(user)
+    activation_key = user.registrationprofile.activation_key if hasattr(user, 'registrationprofile') else None
+    if activation_key:
+        activation_path = reverse('shuup:registration_activate', args=(activation_key,))
+        activation_url = request.build_absolute_uri(activation_path)
+
     customer = person_contact
     cls = RegistrationReceived
     email = user.email
@@ -49,6 +58,8 @@ def send_user_registered_notification(user, **kwargs):
     event = cls(
         customer=customer,
         customer_email=email,
+        activation_url=activation_url,
+        user_is_active=user.is_active,
     )
     event.run()
 
@@ -70,6 +81,7 @@ def send_company_activated_first_time_notification(instance, **kwargs):
     event = cls(
         customer=customer,
         customer_email=email,
+        user_is_active=person.user.is_active,
     )
     event.run()
 

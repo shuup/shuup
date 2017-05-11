@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shuup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-06 14:48+0000\n"
+"POT-Creation-Date: 2017-05-15 12:11+0000\n"
 "PO-Revision-Date: 2017-02-10 11:15+0000\n"
 "Last-Translator: Janne Tammi <janne@shuup.com>\n"
 "Language-Team: Finnish (Finland) (http://www.transifex.com/shuup/shuup/"
@@ -44,6 +44,12 @@ msgstr "Asiakas"
 
 msgid "Customer Email"
 msgstr "Asiakkaan sähköpostiosoite"
+
+msgid "Activation URL"
+msgstr "Aktivointi-URL"
+
+msgid "Is User Active"
+msgstr "Onko Käyttäjä Aktiivinen"
 
 msgid "Company Registration Received"
 msgstr "Yrityksen rekisteröityminen vastaanotettu"
