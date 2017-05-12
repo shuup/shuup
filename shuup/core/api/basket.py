@@ -122,8 +122,6 @@ class BasketSerializer(serializers.Serializer):
     payment_method = PaymentMethodSerializer()
     total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
                                            decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                           decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
     taxful_total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
                                                   decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
     taxless_total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
