@@ -319,33 +319,38 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
 
     def get_object(self):
         uuid = get_key(self.kwargs.get(self.lookup_field, ""))
-        user = self.request.user
         shop = self.request.shop
+        loaded_basket = Basket.objects.filter(key=uuid).first()
 
         # ensure correct owner
         if not self.request.user.is_superuser:
-            loaded_basket = Basket.objects.filter(key=uuid).first()
-
             if not loaded_basket.shop == shop:
                 raise exceptions.PermissionDenied("No permission")
 
             customer_id = (loaded_basket.customer.pk if loaded_basket.customer else None)
             controlled_contact_ids = self._get_controlled_contacts_by_user(self.request.user)
-            is_staff = (
-                shop and self.request.user.is_staff and
-                user.pk in shop.staff_members.all().values_list("pk", flat=True)
-            )
+            is_staff = self.is_staff_user(shop, self.request.user)
             if customer_id and customer_id not in controlled_contact_ids and not is_staff:
                 raise exceptions.PermissionDenied("No permission")
 
         # actually load basket
         basket_class = cached_load("SHUUP_BASKET_CLASS_SPEC")
         basket = basket_class(self.request._request, basket_name=uuid)
+
         try:
             basket._data = basket.storage.load(basket)
         except BasketCompatibilityError as error:
             raise exceptions.ValidationError(str(error))
+
+        # Hack: the storage should do this already
+        # set the correct basket customer
+        if loaded_basket and loaded_basket.customer:
+            basket.customer = loaded_basket.customer
+
         return basket
+
+    def is_staff_user(self, shop, user):
+        return (shop and user.is_staff and shop.staff_members.filter(pk=user.pk).exists())
 
     @list_route(methods=['post'])
     def new(self, request, *args, **kwargs):
@@ -361,8 +366,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
             customer_id = request.data.get("customer_id")
 
         if customer_id:
-            is_staff = (self.request.shop and self.request.user.is_staff and
-                        self.request.user.pk in self.request.shop.staff_members.all().values_list("pk", flat=True))
+            is_staff = self.is_staff_user(self.request.shop, self.request.user)
             is_superuser = self.request.user.is_superuser
 
             if int(customer_id) in self._get_controlled_contacts_by_user(self.request.user) or is_superuser or is_staff:
@@ -581,8 +585,8 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
             customer_id = request.data.get("customer_id")
 
         if customer_id:
-            is_staff = (not self.request.shop or not self.request.user.is_staff or
-                        self.request.user.pk not in self.request.shop.staff_members.all().values_list("pk", flat=True))
+            # staff and superuser can set custom customer to the basket
+            is_staff = self.is_staff_user(self.request.shop, self.request.user)
             is_superuser = self.request.user.is_superuser
             if is_superuser or is_staff:
                 from shuup.core.models import PersonContact
@@ -600,7 +604,14 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         """
         self.process_request()
         errors = []
-        order = Order.objects.filter(customer=get_person_contact(request.user), pk=request.data.get("order")).first()
+        order_queryset = Order.objects.filter(pk=request.data.get("order"))
+
+        if self.request.basket.customer:
+            order_queryset = order_queryset.filter(customer_id=self.request.basket.customer.id)
+        else:
+            order_queryset = order_queryset.filter(customer_id=get_person_contact(request.user).id)
+
+        order = order_queryset.first()
         if not order:
             return Response({"error": "invalid order"}, status=status.HTTP_404_NOT_FOUND)
         self.clear(request, *args, **kwargs)
