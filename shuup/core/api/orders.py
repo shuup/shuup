@@ -50,6 +50,7 @@ class OrderSerializer(serializers.ModelSerializer):
     billing_address = AddressSerializer(read_only=True)
     shipping_address = AddressSerializer(read_only=True)
     payments = PaymentSerializer(many=True, read_only=True)
+    extra_data = serializers.JSONField(binary=False, required=False)
 
     class Meta:
         model = Order
@@ -58,7 +59,7 @@ class OrderSerializer(serializers.ModelSerializer):
     def get_fields(self):
         fields = super(OrderSerializer, self).get_fields()
         for name, field in fields.items():
-            if name in ("status", "key", "label", "currency"):
+            if name in ("status", "key", "label", "currency", "extra_data"):
                 field.required = False
             if name == "order_date":
                 field.default = lambda: now()
