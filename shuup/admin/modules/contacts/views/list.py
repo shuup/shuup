@@ -26,7 +26,7 @@ class ContactTypeFilter(ChoicesFilter):
     def __init__(self):
         super(ContactTypeFilter, self).__init__(choices=[("person", _("Person")), ("company", _("Company"))])
 
-    def filter_queryset(self, queryset, column, value):
+    def filter_queryset(self, queryset, column, value, context):
         if value == "_all":
             return queryset
         model_class = PersonContact
