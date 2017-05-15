@@ -27,7 +27,6 @@ from shuup.core.models import (
 from shuup.core.pricing._context import PricingContext
 from shuup.core.utils import context_cache
 from shuup.core.utils.product_statistics import get_best_selling_product_info
-from shuup.utils.numbers import parse_decimal_string
 
 DISTANCE_PER_DEGREE = 111.045   # 111.045km in a latitude degree
 
@@ -432,11 +431,6 @@ class FrontShopProductViewSet(PermissionHelperMixin, mixins.ListModelMixin, view
 
     @list_route(methods=['get'])
     def best_selling(self, request):
-        """
-        Returns the top 20 (default) best selling products for a given shop.
-        To change the number of products, set the `limit` query param.
-        """
-        limit = int(parse_decimal_string(request.GET.get("limit", 20)))
         best_selling_products = get_best_selling_product_info(
             shop_ids=[request.GET.get("shop", Shop.objects.first().pk)])
         combined_variation_products = defaultdict(int)
@@ -449,11 +443,15 @@ class FrontShopProductViewSet(PermissionHelperMixin, mixins.ListModelMixin, view
 
         # take here the top `limit` records, because the filter_queryset below can mess with our work
         product_ids = [
-            d[0] for d in sorted(six.iteritems(combined_variation_products), key=lambda i: i[1], reverse=True)[:limit]
+            d[0] for d in sorted(six.iteritems(combined_variation_products), key=lambda i: i[1], reverse=True)
         ]
 
         shop_products_qs = ShopProduct.objects.filter(product__id__in=product_ids)
         shop_products_qs = self.filter_queryset(shop_products_qs).distinct()
+        page = self.paginate_queryset(shop_products_qs)
+        if page is not None:
+            serializer = self.get_serializer_class()(page, many=True, context=self.get_serializer_context())
+            return self.get_paginated_response(serializer.data)
         serializer = self.get_serializer_class()(shop_products_qs, many=True, context=self.get_serializer_context())
         return Response(serializer.data)
 

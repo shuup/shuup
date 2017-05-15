@@ -345,10 +345,10 @@ def test_get_best_selling_products(admin_user):
     client = _get_client(admin_user)
 
     # list best selling products
-    response = client.get("/api/shuup/front/shop_products/best_selling/", {"shop": shop2.pk})
+    response = client.get("/api/shuup/front/shop_products/best_selling/", {"shop": shop2.pk, "limit": 20})
     assert response.status_code == status.HTTP_200_OK
     products = json.loads(response.content.decode("utf-8"))
-    assert len(products) == 0
+    assert len(products["results"]) == 0
 
     # THIS IS IMPORTANT!
     cache.clear()
@@ -391,22 +391,25 @@ def test_get_best_selling_products(admin_user):
     response = client.get("/api/shuup/front/shop_products/best_selling/", {"shop": shop2.pk, "limit": 100})
     assert response.status_code == status.HTTP_200_OK
     products = json.loads(response.content.decode("utf-8"))
-    assert len(products) == len(best_selling) # as we added less then 100, this must be true
+    assert len(products["results"]) == len(best_selling) # as we added less then 100, this must be true
+    assert products["next"] is None
 
     # check the if all IDS are part of best selling
     for ix in range(len(products)):
-        assert products[ix]["product_id"] in best_selling.keys()
+        assert products["results"][ix]["product_id"] in best_selling.keys()
 
-    # get the top 5 best selling products
+    # get the top 5 best selling products (we should get paginated results)
     response = client.get("/api/shuup/front/shop_products/best_selling/", {"shop": shop2.pk, "limit": 5})
     assert response.status_code == status.HTTP_200_OK
     products = json.loads(response.content.decode("utf-8"))
-    assert len(products) == 5
+    assert len(products["results"]) == 5
+    assert products["count"] == len(best_selling)
+    assert products["next"] is not None
     sorted_best_selling_ids = [prod[0] for prod in sorted(best_selling.items(), key=lambda prod: -prod[1])][:5]
 
     # check the if all the 5 best sellers are part of best selling
     for ix in range(len(products)):
-        assert products[ix]["product_id"] in sorted_best_selling_ids
+        assert products["results"][ix]["product_id"] in sorted_best_selling_ids
 
 
 @pytest.mark.django_db
