@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-06 14:48+0000\n"
+"POT-Creation-Date: 2017-05-15 12:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -29,6 +29,12 @@ msgid "Customer"
 msgstr ""
 
 msgid "Customer Email"
+msgstr ""
+
+msgid "Activation URL"
+msgstr ""
+
+msgid "Is User Active"
 msgstr ""
 
 msgid "Company Registration Received"

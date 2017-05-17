@@ -51,7 +51,7 @@ class RegistrationNoActivationView(RegistrationViewMixin, simple_views.Registrat
 
 
 class RegistrationWithActivationView(RegistrationViewMixin, default_views.RegistrationView):
-    pass
+    SEND_ACTIVATION_EMAIL = False
 
 
 class RegistrationView(View):

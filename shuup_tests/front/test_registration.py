@@ -162,7 +162,8 @@ def test_password_recovery_user_with_no_email(client):
 
 
 @pytest.mark.django_db
-def test_user_will_be_redirected_to_user_account_page_after_activation(client):
+@pytest.mark.parametrize("requiring_activation", (False, True))
+def test_user_will_be_redirected_to_user_account_page_after_activation(client, requiring_activation):
     """
     1. Register user
     2. Dig out the urls from the email
@@ -175,18 +176,66 @@ def test_user_will_be_redirected_to_user_account_page_after_activation(client):
     if "shuup.front.apps.customer_information" not in settings.INSTALLED_APPS:
         pytest.skip("shuup.front.apps.customer_information required in installed apps")
 
-    get_default_shop()
-    response = client.post(reverse("shuup:registration_register"), data={
-        "username": username,
-        "email": email,
-        "password1": "password",
-        "password2": "password",
-    }, follow=True)
-    body = mail.outbox[-1].body
-    urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', body)
-    response = client.get(urls[0], follow=True)
-    assert email.encode('utf-8') in response.content, 'email should be found from the page.'
-    assert reverse('shuup:customer_edit') == response.request['PATH_INFO'], 'user should be on the account-page.'
+    Script.objects.create(
+        event_identifier="registration_received",
+        name="Send User Activation URL Email",
+        enabled=True,
+        template="registration_received_email",
+        _step_data=[
+            {
+                'conditions': [
+                    {
+                        "template_data": {},
+                        "v1": {"variable": "user_is_active"},
+                        "identifier": "boolean_equal",
+                        "v2": {"constant": "False"}
+                    }
+                ],
+                'next': 'stop',
+                'cond_op': 'all',
+                'actions': [
+                    {
+                        'fallback_language': {'constant': 'en'},
+                        'template_data': {
+                            'pt-br': {'content_type': 'html', 'subject': '', 'body': ''},
+                            'en': {
+                                'content_type': 'html',
+                                'subject': 'User Activation Link',
+                                'body': '{{activation_url}}'
+                            },
+                        },
+                        'recipient': {'variable': 'customer_email'},
+                        'language': {'variable': 'language'},
+                        'identifier': 'send_email'
+                    },
+                ],
+                'enabled': True
+            }
+        ],
+    )
+    with override_settings(
+            SHUUP_REGISTRATION_REQUIRES_ACTIVATION=requiring_activation,
+    ):
+        get_default_shop()
+        response = client.post(reverse("shuup:registration_register"), data={
+            "username": username,
+            "email": email,
+            "password1": "password",
+            "password2": "password",
+        }, follow=True)
+        user = get_user_model().objects.get(username=username)
+
+        if requiring_activation:
+            body = mail.outbox[-1].body
+            urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', body)
+            assert user.registrationprofile.activation_key in urls[0]
+            response = client.get(urls[0], follow=True)
+            assert email.encode('utf-8') in response.content, 'email should be found from the page.'
+            assert reverse('shuup:customer_edit') == response.request['PATH_INFO'], 'user should be on the account-page.'
+        else:
+            assert len(mail.outbox) == 0
+            assert user.is_active
+            assert reverse('shuup:index') == response.request['PATH_INFO']
 
 
 @pytest.mark.django_db
