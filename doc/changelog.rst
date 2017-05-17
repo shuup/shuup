@@ -72,6 +72,7 @@ Front
 Xtheme
 ~~~~~~
 
+- Fix Social Media Links plugin
 - Fix product highlight plugin best selling products
 
 Classic Gray Theme
