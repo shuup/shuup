@@ -25,6 +25,7 @@ from shuup.api.decorators import schema_serializer_class
 from shuup.api.fields import EnumField
 from shuup.api.mixins import PermissionHelperMixin
 from shuup.core.api.address import AddressSerializer
+from shuup.core.api.contacts import PersonContactSerializer
 from shuup.core.basket import (
     get_basket_command_dispatcher, get_basket_order_creator
 )
@@ -63,6 +64,33 @@ class BasketProductSerializer(TranslatableModelSerializer):
     class Meta:
         model = Product
         fields = ["id", "translations"]
+
+
+class BasketCustomerSerializer(PersonContactSerializer):
+    default_shipping_address = serializers.PrimaryKeyRelatedField(read_only=True)
+    default_billing_address = serializers.PrimaryKeyRelatedField(read_only=True)
+    user = serializers.SerializerMethodField()
+
+    class Meta(PersonContactSerializer.Meta):
+        exclude = None
+        fields = [
+            "id",
+            "user",
+            "name",
+            "email",
+            "first_name",
+            "last_name",
+            "phone",
+            "default_shipping_method",
+            "default_payment_method",
+            "default_shipping_address",
+            "default_billing_address"
+        ]
+
+    def get_user(self, customer):
+        user = getattr(customer, 'user', None)
+        if user:
+            return getattr(user, 'pk', None)
 
 
 class BasketLineSerializer(serializers.Serializer):
@@ -120,6 +148,7 @@ class BasketSerializer(serializers.Serializer):
     shipping_address = serializers.SerializerMethodField()
     shipping_method = ShippingMethodSerializer()
     payment_method = PaymentMethodSerializer()
+    customer = BasketCustomerSerializer()
     total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
                                            decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
     total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
@@ -375,7 +404,11 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
                 raise exceptions.PermissionDenied("No permission")
 
         stored_basket = basket.save()
-        return Response(data={"uuid": "%s-%s" % (request.shop.pk, stored_basket.key)}, status=status.HTTP_201_CREATED)
+        response_data = {
+            "uuid": "%s-%s" % (request.shop.pk, stored_basket.key)
+        }
+        response_data.update(BasketSerializer(basket, context=self.get_serializer_context()).data)
+        return Response(data=response_data, status=status.HTTP_201_CREATED)
 
     def _handle_cmd(self, request, command, kwargs):
         cmd_dispatcher = get_basket_command_dispatcher(request)
