@@ -54,6 +54,7 @@ Addons
 Front
 ~~~~~
 
+- Send registration activation e-mail via notify event
 - Cusmoter information: Replace untranslated "Not specified" with a dash
 - Trigger shipment created event when addons have already processed it
 - Fix caching problem related to superuser being all seeing
