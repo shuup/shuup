@@ -1086,3 +1086,50 @@ def test_basket_reorder_staff_user(settings):
     response = client.post('/api/shuup/basket/{}-{}/add_from_order/'.format(shop.pk, basket.key), data={"order": order.pk}, format="json")
     assert response.status_code == status.HTTP_404_NOT_FOUND
     assert 'invalid order' in response.content.decode("utf-8")
+
+
+@pytest.mark.django_db
+def test_basket_with_extra_data(admin_user, settings):
+    configure(settings)
+    shop = factories.get_default_shop()
+    client = _get_client(admin_user)
+    settings.SHUUP_ENABLE_MULTIPLE_SHOPS = False
+    response = client.post("/api/shuup/basket/new/")
+    assert response.status_code == status.HTTP_201_CREATED
+    basket = Basket.objects.first()
+
+    # test with valid key
+    key = "sales_option_id"
+    value = "testt"
+    data = {key: value}
+    response = client.post('/api/shuup/basket/{}-{}/set_extra_data/'.format(shop.pk, basket.key), data)
+    assert response.status_code == status.HTTP_200_OK
+    response_data = json.loads(response.content.decode("utf-8"))
+    loaded_extra_data = response_data["extra_data"]
+    assert key in loaded_extra_data
+    assert loaded_extra_data[key] == value
+
+    # load basket
+    response = client.get("/api/shuup/basket/{}-{}/".format(shop.pk, basket.key))
+    assert response.status_code == 200
+    response_data = json.loads(response.content.decode("utf-8"))
+    assert "extra_data" in response_data
+    assert key in response_data["extra_data"]
+    assert response_data["extra_data"][key] == value
+
+    response = client.post('/api/shuup/basket/{}-{}/set_extra_data/'.format(shop.pk, basket.key))
+    assert response.status_code == status.HTTP_200_OK
+
+    # clear extra_data
+    response = client.post('/api/shuup/basket/{}-{}/set_extra_data/'.format(shop.pk, basket.key), {})
+    assert response.status_code == status.HTTP_200_OK
+    response_data = json.loads(response.content.decode("utf-8"))
+    assert "extra_data" in response_data
+    assert not len(response_data["extra_data"])
+
+    # load basket
+    response = client.get("/api/shuup/basket/{}-{}/".format(shop.pk, basket.key))
+    assert response.status_code == 200
+    response_data = json.loads(response.content.decode("utf-8"))
+    assert "extra_data" in response_data
+    assert not len(response_data["extra_data"])

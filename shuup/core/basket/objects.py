@@ -101,6 +101,7 @@ class BaseBasket(OrderSource):
         self._data = None
         self._shipping_address = None
         self._billing_address = None
+        self._extra_data = {}
         self.customer = getattr(request, "customer", None)
         self.orderer = getattr(request, "person", None)
         self.creator = getattr(request, "user", None)
@@ -240,6 +241,21 @@ class BaseBasket(OrderSource):
     def payment_method(self, payment_method):
         self.payment_method_id = (payment_method.id if payment_method else None)
         self._set_value_to_data("payment_method_id", self.payment_method_id)
+
+    @property
+    def extra_data(self):
+        if self._extra_data:
+            return self._extra_data
+        if hasattr(self, "_data"):
+            return self._load().get('extra_data')
+        return {}
+
+    @extra_data.setter
+    def extra_data(self, value):
+        self._extra_data = value or {}
+        # save also on data
+        if hasattr(self, "_data"):
+            self._load()["extra_data"] = value or {}
 
     @property
     def _data_lines(self):

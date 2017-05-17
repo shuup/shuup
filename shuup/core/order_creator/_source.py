@@ -177,7 +177,7 @@ class OrderSource(object):
             status_id=order.status_id,
             payment_data=order.payment_data,
             shipping_data=order.shipping_data,
-            extra_data=order.extra_data,
+            extra_data=order.extra_data or {},
             codes=order.codes
         )
 

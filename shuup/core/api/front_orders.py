@@ -63,6 +63,7 @@ class OrderLineSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     shop = ShopSerializer()
+    extra_data = serializers.JSONField(binary=False, required=False)
 
     class Meta:
         model = Order
@@ -71,6 +72,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
 class OrderDetailSerializer(serializers.ModelSerializer):
     lines = OrderLineSerializer(many=True)
+    extra_data = serializers.JSONField(binary=False, required=False)
 
     class Meta:
         model = Order

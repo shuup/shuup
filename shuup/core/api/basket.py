@@ -57,6 +57,10 @@ def get_key(uuid):
         raise exceptions.ValidationError("Malformed UUID")
 
 
+class ExtraDataSerializer(serializers.Serializer):
+    extra_data = serializers.JSONField(binary=False, required=False)
+
+
 class BasketProductSerializer(TranslatableModelSerializer):
     translations = TranslatedFieldsField(shared_model=Product)
 
@@ -122,8 +126,6 @@ class BasketSerializer(serializers.Serializer):
     payment_method = PaymentMethodSerializer()
     total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
                                            decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
-    total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                           decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
     taxful_total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
                                                   decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
     taxless_total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
@@ -137,6 +139,7 @@ class BasketSerializer(serializers.Serializer):
     total_price_of_products = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
                                                        decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
     validation_errors = serializers.SerializerMethodField()
+    extra_data = serializers.JSONField(binary=False, required=False)
 
     def get_shipping_address(self, basket):
         if basket._data.get('shipping_address_id'):
@@ -546,6 +549,21 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         else:
             data = BasketSerializer(request.basket, context=self.get_serializer_context()).data
             return Response(data, status=status.HTTP_200_OK)
+
+    @schema_serializer_class(ExtraDataSerializer)
+    @detail_route(methods=['post'])
+    def set_extra_data(self, request, *args, **kwargs):
+        self.process_request()
+        try:
+            extra_data = {}
+            for k, v in request.data.items():
+                extra_data[k] = v
+            request.basket.extra_data = extra_data
+            request.basket.save()
+            data = BasketSerializer(request.basket, context=self.get_serializer_context()).data
+            return Response(data, status=status.HTTP_200_OK)
+        except:
+            return Response({"error", "Bad Request"}, status=status.HTTP_400_BAD_REQUEST)
 
     @detail_route(methods=['post'])
     def set_shipping_method(self, request, *args, **kwargs):

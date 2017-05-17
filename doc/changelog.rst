@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- API: It's now possible to set `extra_data` for basket
 - API: Add option to reset password for authenticated users
 - API: Add opiton to reset password with token
 - API: `shuup.front.apps.auth.forms.PasswordRecoveryForm` to core
