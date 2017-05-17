@@ -35,6 +35,7 @@ Localization
 Admin
 ~~~~~
 
+- Fix contact list type filter
 - Add option to define a custom admin module loader
 - Quick add staff members for shops
 - Main menu is now updateable through provides.
