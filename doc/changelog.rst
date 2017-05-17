@@ -61,6 +61,7 @@ Localization
 Admin
 ~~~~~
 
+- Fix contact list type filter
 - Add option to define a custom admin module loader
 - Quick add staff members for shops
 - Main menu is now updateable through provides.
@@ -79,6 +80,7 @@ Addons
 Front
 ~~~~~
 
+- Send registration activation e-mail via notify event
 - Cusmoter information: Replace untranslated "Not specified" with a dash
 - Trigger shipment created event when addons have already processed it
 - Fix caching problem related to superuser being all seeing
@@ -96,6 +98,7 @@ Front
 Xtheme
 ~~~~~~
 
+- Fix Social Media Links plugin
 - Fix product highlight plugin best selling products
 
 Classic Gray Theme

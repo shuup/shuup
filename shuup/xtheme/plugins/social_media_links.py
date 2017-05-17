@@ -5,9 +5,6 @@
 #
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
-import re
-from collections import defaultdict
-
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
@@ -49,19 +46,15 @@ class SocialMediaLinksPluginForm(GenericPluginForm):
         Processed link configuration information is stored and returned as a dictionary
         (``links``).
         """
-        links_dict = defaultdict(dict)
-        cleaned_data = {}
-        precleaned_data = super(SocialMediaLinksPluginForm, self).clean()
-        plugin_fields = [field for (field, value) in self.plugin.fields]
-        for field in plugin_fields:
-            cleaned_data[field] = precleaned_data.pop(field)
-        for link_info in precleaned_data:
-            link_name = re.sub("-ordering", "", link_info)
-            if not link_info.endswith("-ordering"):
-                links_dict[link_name]["url"] = precleaned_data[link_info]
-            else:
-                links_dict[link_name]["ordering"] = precleaned_data[link_info]
-        cleaned_data["links"] = {k: v for (k, v) in links_dict.items() if v.get("url", None)}
+        cleaned_data = super(SocialMediaLinksPluginForm, self).clean()
+        cleaned_data['links'] = {
+            link_name: {
+                'url': cleaned_data.pop(link_name),
+                'ordering': cleaned_data.pop(link_name + '-ordering', 0),
+            }
+            for link_name in self.plugin.icon_classes.keys()
+            if cleaned_data.get(link_name)
+        }
         return cleaned_data
 
 
