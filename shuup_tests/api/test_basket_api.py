@@ -990,9 +990,18 @@ def test_basket_with_staff_user(settings):
     assert basket.shop == shop
     assert basket.creator == staff_user
     assert basket.customer.pk == staff_person.pk
-
     response = client.get("/api/shuup/basket/{}/".format(basket_data["uuid"]))
     assert response.status_code == 200
+
+    basket_uuid = basket_data["uuid"]
+    assert basket_data['customer']['id'] == staff_person.pk
+    assert basket_data['customer']['user'] == staff_user.pk
+
+    # retrieve the basket
+    response = client.get("/api/shuup/basket/{}/".format(basket_uuid))
+    basket_data = json.loads(response.content.decode("utf-8"))
+    assert basket_data['customer']['id'] == staff_person.pk
+    assert basket_data['customer']['user'] == staff_user.pk
 
     # Ok let's link the staff member to the shop and
     # the basket create for random person should work
@@ -1006,9 +1015,18 @@ def test_basket_with_staff_user(settings):
     assert basket.shop == shop
     assert basket.creator == staff_user
     assert basket.customer.pk == person.pk
-
     response = client.get("/api/shuup/basket/{}/".format(basket_data["uuid"]))
     assert response.status_code == 200
+
+    basket_uuid = basket_data["uuid"]
+    assert basket_data['customer']['id'] == person.pk
+    assert basket_data['customer']['user'] is None
+
+    # retrieve the basket
+    response = client.get("/api/shuup/basket/{}/".format(basket_uuid))
+    basket_data = json.loads(response.content.decode("utf-8"))
+    assert basket_data['customer']['id'] == person.pk
+    assert basket_data['customer']['user'] is None
 
 
 @pytest.mark.django_db
