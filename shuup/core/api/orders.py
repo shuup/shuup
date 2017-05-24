@@ -15,6 +15,7 @@ from django_filters import DateTimeFilter
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from rest_framework import serializers, status
 from rest_framework.decorators import detail_route
+from rest_framework.fields import JSONField
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
@@ -55,6 +56,10 @@ class OrderSerializer(serializers.ModelSerializer):
     billing_address = AddressSerializer(read_only=True)
     shipping_address = AddressSerializer(read_only=True)
     payments = PaymentSerializer(many=True, read_only=True)
+    payment_data = JSONField(read_only=True)
+    shipping_data = JSONField(read_only=True)
+    extra_data = JSONField(read_only=True)
+    codes = JSONField(source='_codes', read_only=True)
 
     class Meta:
         model = Order
