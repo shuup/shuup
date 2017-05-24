@@ -178,6 +178,8 @@ class BaseBasket(OrderSource):
         self._data = {}
         self.uncache()
         self.dirty = True
+        self.shipping_method = None
+        self.payment_method = None
 
     def _set_value_to_data(self, field_attr, value):
         if hasattr(self, "_data"):
