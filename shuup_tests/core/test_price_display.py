@@ -28,7 +28,10 @@ from shuup.core.pricing import (
 from shuup.front.basket.objects import BaseBasket
 from shuup.testing.factories import (
     create_default_tax_rule, get_default_tax, get_default_tax_class,
-    get_default_shop, create_product)
+    get_default_shop, create_product, create_random_person
+)
+
+from mock import patch
 
 PRICING_MODULE_SPEC = __name__ + ':DummyPricingModule'
 
@@ -170,6 +173,33 @@ def test_filter_parameter():
 
     result = engine.from_string("{{ prod|price(quantity=2) }}")
     assert result.render(context) == "$12.15"
+
+
+@pytest.mark.django_db
+def test_filter_parameter_contact_groups():
+    (engine, context) = _get_template_engine_and_context()
+    customer_price = 10.3
+    anonymous_price = 14.6
+
+    def get_price_info_mock(context, product, quantity=1):
+        if context.customer.get_default_group() == AnonymousContact().get_default_group():
+            price = context.shop.create_price(anonymous_price)
+        else:
+            price = context.shop.create_price(customer_price)
+        return PriceInfo(quantity * price, quantity * price, quantity)
+
+    with patch.object(DummyPricingModule, 'get_price_info', side_effect=get_price_info_mock):
+        # test with anonymous
+        context['request'].customer = AnonymousContact()
+        context['request'].person = context['request'].customer
+        result = engine.from_string("{{ prod|price(quantity=2) }}")
+        assert result.render(context) == "$%0.2f" % (anonymous_price * 2)
+
+        # test with customer
+        context['request'].customer = create_random_person()
+        context['request'].person = context['request'].customer
+        result = engine.from_string("{{ prod|price(quantity=2) }}")
+        assert result.render(context) == "$%0.2f" % (customer_price * 2)
 
 
 def _get_template_engine_and_context():
