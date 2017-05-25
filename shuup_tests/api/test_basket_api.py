@@ -964,6 +964,19 @@ def test_basket_with_methods(admin_user, settings):
     assert response_data["shipping_method"]["id"] == shipping_method.id
     assert response_data.get("payment_method") is None
 
+    # Unset shipping method
+    response = client.post('/api/shuup/basket/{}-{}/set_shipping_method/'.format(shop.pk, basket.key), {})
+    assert response.status_code == status.HTTP_200_OK
+    response_data = json.loads(response.content.decode("utf-8"))
+    assert response_data.get("shipping_method") is None
+
+    # Make sure that the retrieved basket also has correct method
+    response = client.get("/api/shuup/basket/{}-{}/".format(shop.pk, basket.key))
+    assert response.status_code == 200
+    response_data = json.loads(response.content.decode("utf-8"))
+    assert response_data.get("payment_method") is None
+    assert response_data.get("shipping_method") is None
+
 
 @pytest.mark.django_db
 def test_basket_with_staff_user(settings):
