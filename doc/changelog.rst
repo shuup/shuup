@@ -35,6 +35,10 @@ Campaigns
 - Remove uniqueness from coupon code texts. Instead make sure that one shop
   does not have multiple active basket campaigns with same code.
 
+Customer Group Pricing
+~~~~~~~~~~~~~~~~~~~~~~
+
+- Introduce Customer Group Discounts. A discount module to configure discounts by contact group.
 
 Shuup 1.2.0
 -----------

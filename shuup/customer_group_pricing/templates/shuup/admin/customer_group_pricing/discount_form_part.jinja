@@ -1,0 +1,25 @@
+{% from "shuup/admin/macros/general.jinja" import content_block with context %}
+{% set sp_form = form["customer_group_discount"] %}
+{% call content_block(_("Contact Group Discount"), "fa-percent") %}
+    <p class="section-description">{% trans %}Here you can set individual discount amounts for different contact groups. The discount amount may be visible on storefront. These groups are defined in Contacts Settings – Contact Groups{% endtrans %}</p>
+    <br>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">
+                {% for shop in sp_form.shops %}
+                    {% if shop %}{{ shop }}{% else %}{% trans %}Other shops{% endtrans %}{% endif %}
+            </h2>
+        </div>
+        <div class="panel-body">
+            <div class="content">
+                <div class="form-group">
+                    {% for group in sp_form.groups %}
+                        <label>{{ group }}</label>
+                        {{ bs3.field(sp_form.get_shop_group_field(shop, group), set_placeholder=False, render_label=False) }}
+                    {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endcall %}
