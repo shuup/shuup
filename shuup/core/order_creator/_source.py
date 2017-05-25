@@ -167,7 +167,7 @@ class OrderSource(object):
             modified_by=order.modified_by,
             payment_method_id=order.payment_method_id,
             shipping_method_id=order.shipping_method_id,
-            customer_comment=order.customer_comment,
+            customer_comment=(order.customer_comment if order.customer_comment else ""),
             marketing_permission=order.marketing_permission,
             language=order.language,
             display_currency=order.display_currency,
