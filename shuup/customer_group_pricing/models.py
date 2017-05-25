@@ -38,4 +38,7 @@ class CgpPrice(MoneyPropped, models.Model):
 
     def save(self, *args, **kwargs):
         super(CgpPrice, self).save(*args, **kwargs)
-        bump_cache_for_product(self.product, self.shop)
+
+        # check if there is a shop product before bumping the cache
+        if self.product.shop_products.filter(shop_id=self.shop.id).exists():
+            bump_cache_for_product(self.product, self.shop)
