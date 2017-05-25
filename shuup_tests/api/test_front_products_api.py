@@ -13,6 +13,8 @@ from collections import defaultdict
 from decimal import Decimal
 
 import pytest
+from django.contrib.auth import get_user_model
+from django.utils.translation import activate
 from rest_framework import status
 from rest_framework.test import (
     APIClient, APIRequestFactory, force_authenticate
@@ -20,23 +22,22 @@ from rest_framework.test import (
 
 from shuup import configuration
 from shuup.core import cache
-from shuup.core.models import (
-    Category, MutableAddress, OrderStatus, Product, ProductCrossSell,
-    ProductCrossSellType, ProductMedia, ProductMediaKind, ProductMode,
-    ProductVariationVariable, ProductVariationVariableValue, Shop, ShopProduct,
-    ShopProductVisibility, ShopStatus, Supplier, get_person_contact, ProductVisibility
-)
 from shuup.core.api.front_products import (
     FrontProductViewSet, FrontShopProductViewSet
 )
+from shuup.core.models import (
+    Category, get_person_contact, MutableAddress, OrderStatus, Product,
+    ProductCrossSell, ProductCrossSellType, ProductMedia, ProductMediaKind,
+    ProductMode, ProductVariationVariable, ProductVariationVariableValue,
+    ProductVisibility, Shop, ShopProduct, ShopProductVisibility, ShopStatus,
+    Supplier
+)
+from shuup.customer_group_pricing.models import CgpDiscount, CgpPrice
 from shuup.testing.factories import (
     add_product_to_order, create_empty_order, create_package_product,
-    create_product, create_random_person, get_default_shop,
-    get_default_supplier, get_random_filer_image, get_shop, create_random_contact_group
+    create_product, create_random_contact_group, create_random_person,
+    get_default_shop, get_default_supplier, get_random_filer_image, get_shop
 )
-from django.utils.translation import activate
-from shuup.customer_group_pricing.models import CgpPrice
-from django.contrib.auth import get_user_model
 
 
 def setup_function(fn):
@@ -666,6 +667,43 @@ def add_product_image(product):
     product.primary_image = media1
     product.media.add(media2)
     product.save()
+
+
+@pytest.mark.parametrize("prices_include_tax", [True, False])
+@pytest.mark.django_db
+def test_product_price_info(admin_user, prices_include_tax):
+    shop = get_default_shop()
+    shop.prices_include_tax = prices_include_tax
+    shop.save()
+
+    customer = create_random_person()
+    group = customer.get_default_group()
+    customer.user = admin_user
+    customer.groups.add(group)
+    customer.save()
+
+    PRICE = 200.0
+    DISCOUNT = 15.0
+
+    product = create_product("Just-A-Product", shop, default_price=PRICE)
+    CgpDiscount.objects.create(product=product, shop=shop, group=group, discount_amount_value=DISCOUNT)
+
+    client = _get_client(admin_user)
+    response = client.get("/api/shuup/front/shop_products/")
+    products_data = json.loads(response.content.decode("utf-8"))
+
+    assert products_data[0]["price"] == (PRICE-DISCOUNT)
+    assert products_data[0]["price_info"]['base_price'] == PRICE
+    assert products_data[0]["price_info"]['price'] == (PRICE-DISCOUNT)
+    assert products_data[0]["price_info"]['discount_amount'] == DISCOUNT
+    assert products_data[0]["price_info"]['discount_rate'] == DISCOUNT/PRICE
+    assert products_data[0]["price_info"]['is_discounted'] is True
+    assert products_data[0]["price_info"]['discount_percentage'] == DISCOUNT/PRICE * 100
+
+    if prices_include_tax:
+        assert products_data[0]["price_info"]['taxful_price'] == (PRICE-DISCOUNT)
+    else:
+        assert products_data[0]["price_info"]['taxless_price'] == (PRICE-DISCOUNT)
 
 
 def _get_client(user):

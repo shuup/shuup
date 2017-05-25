@@ -19,6 +19,9 @@ from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
 from shuup.api.mixins import PermissionHelperMixin
+from shuup.core.fields import (
+    FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES, FORMATTED_DECIMAL_FIELD_MAX_DIGITS
+)
 from shuup.core.models import (
     Category, get_person_contact, Product, ProductAttribute,
     ProductCrossSellType, ProductMode, ProductPackageLink, SalesUnit, Shop,
@@ -127,6 +130,27 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ("id", "name", "slug", "image")
 
 
+class FormattedDecimalField(serializers.DecimalField):
+    def __init__(self, *args, **kwargs):
+        kwargs['max_digits'] = FORMATTED_DECIMAL_FIELD_MAX_DIGITS
+        kwargs['decimal_places'] = FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES
+        super(FormattedDecimalField, self).__init__(*args, **kwargs)
+
+
+class PricefulSerializer(serializers.Serializer):
+    base_price = FormattedDecimalField(source='base_price.value', coerce_to_string=False)
+    price = FormattedDecimalField(source='price.value', coerce_to_string=False)
+    discount_amount = FormattedDecimalField(source='discount_amount.value', required=False, coerce_to_string=False)
+    discount_rate = FormattedDecimalField(required=False, coerce_to_string=False)
+    discount_percentage = FormattedDecimalField(required=False, coerce_to_string=False)
+    taxful_price = FormattedDecimalField(source='taxful_price.value', required=False, coerce_to_string=False)
+    taxless_price = FormattedDecimalField(source='taxless_price.value', required=False, coerce_to_string=False)
+    is_discounted = serializers.BooleanField()
+
+    class Meta:
+        fields = "__all__"
+
+
 class CompleteShopProductSerializer(serializers.ModelSerializer):
     product_id = serializers.ReadOnlyField()
     name = serializers.SerializerMethodField()
@@ -136,6 +160,7 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(many=True)
     attributes = serializers.SerializerMethodField()
     price = serializers.SerializerMethodField()
+    price_info = serializers.SerializerMethodField()
     net_weight = serializers.ReadOnlyField(source='product.net_weight')
     sales_unit = serializers.SerializerMethodField()
     is_orderable = serializers.SerializerMethodField()
@@ -156,13 +181,14 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
             "categories",
             "attributes",
             "price",
+            "price_info",
             "net_weight",
             "variations",
             "shop",
             "is_orderable",
             "sales_unit",
             "cross_sell",
-            "package_content",
+            "package_content"
         ]
 
     @property
@@ -190,6 +216,19 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
     def _get_pricing_context(self, request, shop):
         return PricingContext(shop=shop, customer=self.context["customer"])
 
+    def _get_product_price_info(self, shop_product):
+        key, val = context_cache.get_cached_value(identifier="shop_product_price_info",
+                                                  item=shop_product,
+                                                  context={"customer": self.context["customer"]},
+                                                  allow_cache=True)
+        if val is not None:
+            return val
+
+        context = self._get_pricing_context(self.context["request"], shop_product.shop)
+        price_info = shop_product.product.get_price_info(context)
+        context_cache.set_cached_value(key, price_info)
+        return price_info
+
     def get_image(self, shop_product):
         image = shop_product.product.primary_image
         if not image:
@@ -203,17 +242,11 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
     def get_attributes(self, shop_product):
         return AttributeSerializer(shop_product.product.attributes, many=True).data
 
+    def get_price_info(self, shop_product):
+        return PricefulSerializer(self._get_product_price_info(shop_product)).data
+
     def get_price(self, shop_product):
-        key, val = context_cache.get_cached_value(identifier="shop_product_price",
-                                                  item=shop_product,
-                                                  context={"customer": self.context["customer"]},
-                                                  allow_cache=True)
-        if val is not None:
-            return val
-        context = self._get_pricing_context(self.context["request"], shop_product.shop)
-        price = shop_product.product.get_price(context).value
-        context_cache.set_cached_value(key, price)
-        return price
+        return self._get_product_price_info(shop_product).price.value
 
     def get_net_weight(self, shop_product):
         return shop_product.product.net_weight
@@ -344,6 +377,7 @@ class NormalShopProductSerializer(CompleteShopProductSerializer):
             "categories",
             "attributes",
             "price",
+            "price_info",
             "net_weight",
             "sales_unit",
             "is_orderable",

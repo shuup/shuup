@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- API: serialize front shop product price info
 - API: Return basket customer information
 - API: Add option to reset password for authenticated users
 - API: Add opiton to reset password with token
