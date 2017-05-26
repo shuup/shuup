@@ -151,8 +151,12 @@ class DiscountFromCategoryProducts(BasketLineEffect):
         for line in original_lines:  # Use original lines since we don't want to discount free product lines
             if not line.type == OrderLineType.PRODUCT:
                 continue
-            if line.product.pk not in product_ids:
-                continue
+            if line.product.variation_parent:
+                if line.product.variation_parent.pk not in product_ids and line.product.pk not in product_ids:
+                    continue
+            else:
+                if line.product.pk not in product_ids:
+                    continue
 
             amount = order_source.zero_price.value
             base_price = line.base_unit_price.value * line.quantity
