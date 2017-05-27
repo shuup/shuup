@@ -101,6 +101,7 @@ class BaseBasket(OrderSource):
         self._data = None
         self._shipping_address = None
         self._billing_address = None
+        self._customer_comment = u""
         self.customer = getattr(request, "customer", None)
         self.orderer = getattr(request, "person", None)
         self.creator = getattr(request, "user", None)
@@ -178,6 +179,9 @@ class BaseBasket(OrderSource):
         self._data = {}
         self.uncache()
         self.dirty = True
+        self.shipping_method = None
+        self.payment_method = None
+        self.customer_comment = ""
 
     def _set_value_to_data(self, field_attr, value):
         if hasattr(self, "_data"):
@@ -240,6 +244,18 @@ class BaseBasket(OrderSource):
     def payment_method(self, payment_method):
         self.payment_method_id = (payment_method.id if payment_method else None)
         self._set_value_to_data("payment_method_id", self.payment_method_id)
+
+    @property
+    def customer_comment(self):
+        if self._customer_comment:
+            return self._customer_comment
+
+        return self._get_value_from_data("customer_comment")
+
+    @customer_comment.setter
+    def customer_comment(self, value):
+        self._customer_comment = value or ""
+        self._set_value_to_data("customer_comment", value or "")
 
     @property
     def _data_lines(self):

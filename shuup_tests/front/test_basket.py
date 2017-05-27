@@ -15,8 +15,8 @@ from shuup.front.basket import get_basket
 from shuup.front.models import StoredBasket
 from shuup.testing.factories import (
     create_product, get_default_shop, get_default_payment_method,
-    get_default_supplier, get_shipping_method
-)
+    get_default_supplier, get_shipping_method,
+    get_default_shipping_method)
 from shuup.testing.utils import apply_request_middleware
 from shuup_tests.utils import printable_gibberish
 
@@ -213,3 +213,31 @@ def test_basket_package_product_orderability_change(rf):
     # After reducing stock to 0, should be stock for neither
     assert len(basket.get_lines()) == 0
     assert len(basket.get_unorderable_lines()) == 2
+
+
+@pytest.mark.django_db
+def test_basket_clearing(rf):
+    StoredBasket.objects.all().delete()
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    product = create_product(printable_gibberish(), shop=shop, supplier=supplier, default_price=50)
+    request = rf.get("/")
+    request.session = {}
+    request.shop = shop
+    apply_request_middleware(request)
+    basket = get_basket(request)
+
+    pm = get_default_payment_method()
+    sm = get_default_shipping_method()
+    basket.shipping_method = sm
+    basket.payment_method = pm
+    basket.save()
+
+    assert basket.shipping_method
+    assert basket.payment_method
+
+    basket.clear_all()
+
+    assert not basket.shipping_method
+    assert not basket.payment_method
+

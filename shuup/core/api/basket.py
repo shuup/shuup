@@ -148,9 +148,9 @@ class BasketSerializer(serializers.Serializer):
     shipping_address = serializers.SerializerMethodField()
     shipping_method = ShippingMethodSerializer()
     payment_method = PaymentMethodSerializer()
+    available_shipping_methods = serializers.SerializerMethodField()
+    available_payment_methods = serializers.SerializerMethodField()
     customer = BasketCustomerSerializer()
-    total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
-                                           decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
     total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
                                            decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
     taxful_total_price = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
@@ -166,6 +166,7 @@ class BasketSerializer(serializers.Serializer):
     total_price_of_products = serializers.DecimalField(max_digits=FORMATTED_DECIMAL_FIELD_MAX_DIGITS,
                                                        decimal_places=FORMATTED_DECIMAL_FIELD_DECIMAL_PLACES)
     validation_errors = serializers.SerializerMethodField()
+    customer_comment = serializers.SerializerMethodField()
 
     def get_shipping_address(self, basket):
         if basket._data.get('shipping_address_id'):
@@ -183,6 +184,15 @@ class BasketSerializer(serializers.Serializer):
 
     def get_shop(self, basket):
         return basket.shop.id
+
+    def get_available_payment_methods(self, basket):
+        return PaymentMethodSerializer(basket.get_available_payment_methods(), many=True, context=self.context).data
+
+    def get_available_shipping_methods(self, basket):
+        return ShippingMethodSerializer(basket.get_available_shipping_methods(), many=True, context=self.context).data
+
+    def get_customer_comment(self, basket):
+        return basket.customer_comment or ""
 
 
 class StoredBasketSerializer(serializers.ModelSerializer):

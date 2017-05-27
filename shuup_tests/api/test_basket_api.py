@@ -465,6 +465,40 @@ def test_can_add_a_valid_campaign_code(admin_user, settings):
     assert response.status_code == status.HTTP_200_OK
     assert 'DACODE' in basket_data['codes']
 
+
+@pytest.mark.django_db
+def test_multiple_coupons_work_properly(admin_user, settings):
+    configure(settings)
+    shop = factories.get_default_shop()
+    basket = factories.get_basket()
+    shop_product = factories.get_default_shop_product()
+    client = _get_client(admin_user)
+
+    code_one = "DACODE"
+    code_two = "DACODE1"
+    coupon = Coupon.objects.create(code=code_one, active=True)
+    get_default_campaign(coupon)
+
+    payload = {
+        'code': code_one
+    }
+    response = client.post('/api/shuup/basket/{}-{}/add_code/'.format(shop.pk, basket.key), payload)
+    basket_data = json.loads(response.content.decode("utf-8"))
+    assert response.status_code == status.HTTP_200_OK
+    assert code_one in basket_data['codes']
+
+    coupon1 = Coupon.objects.create(code=code_two, active=True)
+    get_default_campaign(coupon1)
+    payload = {
+        'code': code_two
+    }
+    response = client.post('/api/shuup/basket/{}-{}/add_code/'.format(shop.pk, basket.key), payload)
+    basket_data = json.loads(response.content.decode("utf-8"))
+    assert response.status_code == status.HTTP_200_OK
+    assert code_two in basket_data['codes']
+    assert len(basket_data["codes"]) == 1
+
+
 @pytest.mark.parametrize("target_customer", ["admin", "other"])
 @pytest.mark.django_db
 def test_create_order(admin_user, settings, target_customer):
@@ -963,6 +997,19 @@ def test_basket_with_methods(admin_user, settings):
     response_data = json.loads(response.content.decode("utf-8"))
     assert response_data["shipping_method"]["id"] == shipping_method.id
     assert response_data.get("payment_method") is None
+
+    # Unset shipping method
+    response = client.post('/api/shuup/basket/{}-{}/set_shipping_method/'.format(shop.pk, basket.key), {})
+    assert response.status_code == status.HTTP_200_OK
+    response_data = json.loads(response.content.decode("utf-8"))
+    assert response_data.get("shipping_method") is None
+
+    # Make sure that the retrieved basket also has correct method
+    response = client.get("/api/shuup/basket/{}-{}/".format(shop.pk, basket.key))
+    assert response.status_code == 200
+    response_data = json.loads(response.content.decode("utf-8"))
+    assert response_data.get("payment_method") is None
+    assert response_data.get("shipping_method") is None
 
 
 @pytest.mark.django_db

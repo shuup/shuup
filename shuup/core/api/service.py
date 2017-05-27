@@ -10,14 +10,43 @@ from __future__ import unicode_literals
 from parler_rest.serializers import (
     TranslatableModelSerializer, TranslatedFieldsField
 )
+from rest_framework.fields import empty
 from rest_framework.serializers import SerializerMethodField
 
-from shuup.core.models import PaymentMethod, ShippingMethod
+from shuup.core.models import (
+    PaymentMethod, ServiceBehaviorComponent, ShippingMethod
+)
+
+
+class DynamicBehaviorComponentSerializer(TranslatableModelSerializer):
+
+    class Meta:
+        fields = ("__all__")
+
+    def __init__(self, instance=None, data=empty, **kwargs):
+        self.Meta.model = instance.__class__
+        super(DynamicBehaviorComponentSerializer, self).__init__(instance, data, **kwargs)
+
+
+class BehaviorComponentSerializer(TranslatableModelSerializer):
+    class Meta:
+        model = ServiceBehaviorComponent
+        fields = ("__all__")
+
+    def to_representation(self, obj):
+        """
+        Behavior Component representator
+
+        BehaviorComponents are Polymorphic thus it's required to make
+        the `to_representation` trick.
+        """
+        return DynamicBehaviorComponentSerializer(obj, context=self.context).to_representation(obj)
 
 
 class ServiceBaseSerializer(TranslatableModelSerializer):
     price = SerializerMethodField()
     is_available = SerializerMethodField()
+    behavior_components = SerializerMethodField()
 
     def get_is_available(self, service):
         is_available = None
@@ -32,6 +61,9 @@ class ServiceBaseSerializer(TranslatableModelSerializer):
         if source:
             price = service.get_total_cost(source).taxful_price.value
         return price
+
+    def get_behavior_components(self, service):
+        return BehaviorComponentSerializer(service.behavior_components.all(), many=True, context=self.context).data
 
 
 class PaymentMethodSerializer(ServiceBaseSerializer):

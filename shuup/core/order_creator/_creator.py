@@ -189,7 +189,7 @@ class OrderProcessor(object):
             creator=real_user_or_none(order_source.creator),
             shipping_method=order_source.shipping_method,
             payment_method=order_source.payment_method,
-            customer_comment=order_source.customer_comment,
+            customer_comment=(order_source.customer_comment if order_source.customer_comment else ""),
             marketing_permission=bool(order_source.marketing_permission),
             language=order_source.language,
             ip_address=order_source.ip_address,
