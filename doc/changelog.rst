@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- API: serialize front shop product price info
 - API: Return basket customer information
 - API: Add option to reset password for authenticated users
 - API: Add opiton to reset password with token
@@ -35,6 +36,10 @@ Campaigns
 - Remove uniqueness from coupon code texts. Instead make sure that one shop
   does not have multiple active basket campaigns with same code.
 
+Customer Group Pricing
+~~~~~~~~~~~~~~~~~~~~~~
+
+- Introduce Customer Group Discounts. A discount module to configure discounts by contact group.
 
 Shuup 1.2.0
 -----------

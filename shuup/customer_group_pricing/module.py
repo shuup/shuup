@@ -10,9 +10,9 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
 from shuup.core.models import ShopProduct
-from shuup.core.pricing import PriceInfo, PricingModule
+from shuup.core.pricing import DiscountModule, PriceInfo, PricingModule
 
-from .models import CgpPrice
+from .models import CgpDiscount, CgpPrice
 
 
 class CustomerGroupPricingModule(PricingModule):
@@ -53,3 +53,29 @@ class CustomerGroupPricingModule(PricingModule):
             base_price=shop.create_price(price * quantity),
             quantity=quantity,
         )
+
+
+class CustomerGroupDiscountModule(DiscountModule):
+    identifier = "customer_group_discount"
+    name = _("Customer Group Discount")
+
+    def discount_price(self, context, product, price_info):
+        """
+        Get the best discount amount for context.
+        """
+        shop = context.shop
+        product_id = product if isinstance(product, six.integer_types) else product.pk
+
+        cgp_discount = CgpDiscount.objects.filter(
+            shop_id=shop.id,
+            product_id=product_id,
+            group__in=context.customer.groups.all(),
+            discount_amount_value__gt=0,
+        ).order_by("-discount_amount_value").first()
+
+        if cgp_discount:
+            total_discount = cgp_discount.discount_amount * price_info.quantity
+            # do not allow the discount to be greater than the price
+            price_info.price = max(price_info.price - total_discount, context.shop.create_price(0))
+
+        return price_info

@@ -10,10 +10,10 @@ from django.conf import settings
 
 from shuup.core.models import AnonymousContact
 from shuup.core.pricing import get_pricing_module
-from shuup.customer_group_pricing.models import CgpPrice
+from shuup.customer_group_pricing.models import CgpDiscount, CgpPrice
 from shuup.customer_group_pricing.module import CustomerGroupPricingModule
 from shuup.testing.factories import (
-    create_product, create_random_person, get_default_customer_group, get_shop
+    create_product, create_random_person, get_shop
 )
 from shuup.testing.utils import apply_request_middleware
 
@@ -31,18 +31,23 @@ def teardown_module(module):
     settings.SHUUP_PRICING_MODULE = original_pricing_module
 
 
-def initialize_test(rf, include_tax=False):
+def create_customer():
+    customer = create_random_person()
+    customer.groups.add(customer.get_default_group())
+    customer.save()
+    return customer
+
+
+def initialize_test(rf, include_tax=False, customer=create_customer):
     shop = get_shop(prices_include_tax=include_tax)
 
-    group = get_default_customer_group()
-    customer = create_random_person()
-    customer.groups.add(group)
-    customer.save()
+    if callable(customer):
+        customer = customer()
 
     request = apply_request_middleware(rf.get("/"))
     request.shop = shop
     request.customer = customer
-    return request, shop, group
+    return request, shop, customer.groups.first()
 
 
 def test_module_is_active():
@@ -181,9 +186,7 @@ def test_anonymous_customers_default_group(rf):
 @pytest.mark.django_db
 def test_zero_default_price(rf, admin_user):
     request, shop, group = initialize_test(rf, True)
-
     price = shop.create_price
-
 
     # create a product with zero price
     product = create_product("random-1", shop=shop, default_price=0)
@@ -193,3 +196,65 @@ def test_zero_default_price(rf, admin_user):
     price_info = product.get_price_info(request)
 
     assert price_info.price == price(50)
+
+
+@pytest.mark.parametrize("price,discount", [(10, 8), (8, 4), (4, 8), (999, 999)])
+@pytest.mark.django_db
+def test_discount_for_customer(rf, admin_user, price, discount):
+    request, shop, group = initialize_test(rf, True)
+
+    product = create_product("product", shop=shop, default_price=price)
+    CgpDiscount.objects.create(product=product, group=group, shop=shop, discount_amount_value=discount)
+    price_info = product.get_price_info(request)
+    assert price_info.price == shop.create_price(max(price-discount, 0))
+
+
+@pytest.mark.parametrize("price,discount", [(10, 8), (8, 4), (4, 8), (999, 999)])
+@pytest.mark.django_db
+def test_discount_for_anonymous(rf, admin_user, price, discount):
+    request, shop, group = initialize_test(rf, True, AnonymousContact())
+
+    product = create_product("product", shop=shop, default_price=price)
+    CgpDiscount.objects.create(product=product, group=group, shop=shop, discount_amount_value=discount)
+    price_info = product.get_price_info(request)
+    assert price_info.price == shop.create_price(max(price-discount, 0))
+
+
+@pytest.mark.parametrize("price, discount, anonymous_discount", [(10, 8, 6), (8, 4, 3), (4, 8, 8), (999, 999, 999)])
+@pytest.mark.django_db
+def test_discount_for_multi_group_using_customer(rf, admin_user, price, discount, anonymous_discount):
+    customer = create_customer()
+    anonymous = AnonymousContact()
+
+    request, shop, _ = initialize_test(rf, True, customer)
+
+    product = create_product("product", shop=shop, default_price=price)
+
+    CgpDiscount.objects.create(product=product, group=customer.groups.first(), shop=shop, discount_amount_value=discount)
+    CgpDiscount.objects.create(product=product, group=anonymous.get_default_group(), shop=shop, discount_amount_value=anonymous_discount)
+
+    # discount for customer
+    request, shop, _ = initialize_test(rf, True, customer)
+    price_info = product.get_price_info(request)
+    assert price_info.price == shop.create_price(max(price-discount, 0))
+
+    # discount for anonymous
+    request, shop, _ = initialize_test(rf, True, anonymous)
+    price_info = product.get_price_info(request)
+    assert price_info.price == shop.create_price(max(price-anonymous_discount, 0))
+
+
+@pytest.mark.parametrize("price,discount,quantity", [(10, 8, 2), (8, 4, 3), (999, 999, 4)])
+@pytest.mark.django_db
+def test_discount_quantities(rf, admin_user, price, discount, quantity):
+    request, shop, group = initialize_test(rf, True)
+
+    product = create_product("product", shop=shop, default_price=price)
+    CgpDiscount.objects.create(product=product, group=group, shop=shop, discount_amount_value=discount)
+
+    price_info = product.get_price_info(request, quantity=quantity)
+    discount_amount = (discount * quantity)
+
+    assert price_info.price == shop.create_price((price * quantity) - discount_amount)
+    assert price_info.base_unit_price == shop.create_price(price)
+    assert price_info.discount_amount == shop.create_price(discount * quantity)

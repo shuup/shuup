@@ -69,7 +69,7 @@ SHUUP_PRICING_MODULE = "customer_group_pricing"
 #:
 #: Each discount module may change the price of a product.  See
 #: `shuup.core.pricing.DiscountModule` for details.
-SHUUP_DISCOUNT_MODULES = ["catalog_campaigns"]
+SHUUP_DISCOUNT_MODULES = ["catalog_campaigns", "customer_group_discount"]
 
 #: List of identifiers of order source modifier modules.
 #:
