@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Do not allow adding variation parents in the basket
 - API: serialize front shop product price info
 - API: Return basket customer information
 - API: Add option to reset password for authenticated users

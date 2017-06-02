@@ -21,8 +21,8 @@ from shuup import configuration
 from shuup.core import cache
 from shuup.core.models import (
     Basket, get_person_contact, Order, OrderStatus, PaymentStatus, Product,
-    ProductMedia, ProductMediaKind, ShippingStatus, Shop, ShopProduct,
-    ShopProductVisibility, ShopStatus
+    ProductMedia, ProductMediaKind, ProductVariationVariable, ShippingStatus,
+    Shop, ShopProduct, ShopProductVisibility, ShopStatus
 )
 from shuup.core.pricing import TaxfulPrice
 from shuup.testing import factories
@@ -229,6 +229,44 @@ def test_add_product_to_basket(admin_user, settings):
     assert len(response_data["items"]) == 1
     assert not response_data["validation_errors"]
     assert float(response_data["total_price"]) == 2
+
+
+@pytest.mark.django_db
+def test_add_variation_product_to_basket(admin_user, settings):
+    configure(settings)
+    shop = factories.get_default_shop()
+    basket = factories.get_basket()
+    factories.get_default_payment_method()
+    factories.get_default_shipping_method()
+
+    parent = factories.create_product("ComplexVarParent", shop=shop, supplier=factories.get_default_supplier())
+    sizes = [("%sL" % ("X" * x)) for x in range(4)]
+    for size in sizes:
+        child = factories.create_product("ComplexVarChild-%s" % size, shop=shop, supplier=factories.get_default_supplier())
+        child.link_to_parent(parent, variables={"size": size})
+
+    parent_shop_product = parent.get_shop_instance(shop)
+    parent_shop_product.refresh_from_db()
+
+    client = _get_client(admin_user)
+
+    # add parent shop product
+    payload = {
+        'shop_product': parent_shop_product.id
+    }
+    response = client.post('/api/shuup/basket/{}-{}/add/'.format(shop.pk, basket.key), payload)
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+    # add children shop product
+    children_shop_product = parent_shop_product.product.variation_children.first().get_shop_instance(shop)
+    payload = {
+        'shop_product': children_shop_product.pk,
+    }
+    response = client.post('/api/shuup/basket/{}-{}/add/'.format(shop.pk, basket.key), payload)
+    assert response.status_code == status.HTTP_200_OK
+    response_data = json.loads(response.content.decode("utf-8"))
+    assert len(response_data["items"]) == 1
+    assert not response_data["validation_errors"]
 
 
 @pytest.mark.django_db

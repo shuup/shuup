@@ -14,8 +14,8 @@ from django.core.exceptions import ValidationError
 from django.http.response import HttpResponseRedirect, JsonResponse
 
 from shuup.core.models import (
-    ProductVariationVariable, ProductVariationVariableValue, SalesUnit,
-    ShopProductVisibility
+    ProductMode, ProductVariationVariable, ProductVariationVariableValue,
+    SalesUnit, ShopProductVisibility
 )
 from shuup.front.basket import commands as basket_commands
 from shuup.front.basket import get_basket, get_basket_command_dispatcher
@@ -71,6 +71,33 @@ def test_add_and_remove_and_clear():
     basket_commands.handle_clear(request, basket)
     assert basket.product_count == 0
 
+
+@pytest.mark.django_db
+def test_add_invalid_product():
+    shop = get_default_shop()
+    supplier = get_default_supplier()
+    request = get_request_with_basket()
+    basket = request.basket
+
+    # cannot add simple/variable variation parent to the basket
+    parent = create_product("parent", shop=shop, supplier=supplier)
+    child = create_product("child", shop=shop, supplier=supplier)
+    child.link_to_parent(parent)
+    parent.refresh_from_db()
+    assert parent.mode == ProductMode.SIMPLE_VARIATION_PARENT
+
+    with pytest.raises(ValidationError) as excinfo:
+        basket_commands.handle_add(request, basket, product_id=parent.pk, quantity=2)
+    assert excinfo.value.code == 'invalid_product'
+
+    child.unlink_from_parent()
+    child.link_to_parent(parent, variables={"size": "XXL"})
+    parent.refresh_from_db()
+    assert parent.mode == ProductMode.VARIABLE_VARIATION_PARENT
+
+    with pytest.raises(ValidationError) as excinfo:
+        basket_commands.handle_add(request, basket, product_id=parent.pk, quantity=3)
+    assert excinfo.value.code == 'invalid_product'
 
 @pytest.mark.django_db
 def test_ajax():
