@@ -1,3 +1,4 @@
+static/shuup/front/css/owl.video.play.png
 static/shuup/front/css/style.css
 static/shuup/front/fonts/FontAwesome.otf
 static/shuup/front/fonts/fontawesome-webfont.eot

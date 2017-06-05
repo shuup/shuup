@@ -72,6 +72,9 @@ Front
 Xtheme
 ~~~~~~
 
+- Revert the query-parameter hack for static files introduced in 1.1.
+  Django's ManifestStaticFilesStorage can be used as a cleaner and more
+  robust way to implement auto-updating URLs for static files.
 - Fix Social Media Links plugin
 - Fix product highlight plugin best selling products
 
