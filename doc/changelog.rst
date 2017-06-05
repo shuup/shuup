@@ -17,6 +17,7 @@ Not yet released, still in beta.
 Core
 ~~~~
 
+- Fix serializaiton of JSON fields in Order: Object rather than string
 - Add new shipment_created_and_processed signal
 - Improve OrderSource caching for deserialization speedup
 - Add new product count methods to OrderSource
