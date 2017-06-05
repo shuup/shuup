@@ -163,7 +163,6 @@ class _MethodDependentCheckoutPhase(CheckoutPhaseViewMixin):
         phase = first(phases)
         if not phase:
             return None
-        phase = self.checkout_process.add_phase_attributes(phase, self)
         self._checkout_phase_object = phase
         return phase
 
@@ -192,7 +191,9 @@ class _MethodDependentCheckoutPhase(CheckoutPhaseViewMixin):
 
     def dispatch(self, request, *args, **kwargs):
         # This should never be called if the object doesn't exist, hence no checks
-        return self.get_method_checkout_phase_object().dispatch(request, *args, **kwargs)
+        phase = self.get_method_checkout_phase_object()
+        self.checkout_process.add_phase_attributes(phase, self)
+        return phase.dispatch(request, *args, **kwargs)
 
 
 class ShippingMethodPhase(_MethodDependentCheckoutPhase, View):
