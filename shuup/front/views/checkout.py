@@ -34,6 +34,7 @@ class BaseCheckoutView(View):
             phase_specs=self.phase_specs,
             phase_kwargs=dict(request=request, args=args, kwargs=kwargs),
             view=self)
+        request.basket = process.basket
         if phase_identifier == "reset":
             process.reset()
             return redirect(self.get_url())
