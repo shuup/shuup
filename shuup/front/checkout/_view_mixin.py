@@ -6,11 +6,9 @@
 # LICENSE file in the root directory of this source tree.
 from __future__ import unicode_literals
 
-from django.core.urlresolvers import reverse
+import warnings
 
-from shuup.front.basket import get_basket
-from shuup.front.basket.objects import BaseBasket
-
+from ._process import CheckoutProcess
 from ._storage import CheckoutPhaseStorage
 
 
@@ -19,16 +17,43 @@ class CheckoutPhaseViewMixin(object):
     title = None  # User-visible
     final = False  # Should be set for final steps (those that may be accessed via the previous step's URL)
 
-    horizontal_template = True  # Set this to False if you want to use single page checkout
-
-    checkout_process = None  # set as an instance variable
     phases = ()  # set as an instance variable; likely accessed via template (`view.phases`)
     next_phase = None  # set as an instance variable
     previous_phase = None  # set as an instance variable
     request = None  # exists via being a view
 
-    basket_class = BaseBasket
-    basket_name_attr = "basket"
+    def __init__(self, checkout_process=None, horizontal_template=True,
+                 *args, **kwargs):
+        """
+        Initialize a checkout phase view.
+
+        :type checkout_process: shuup.front.checkout.CheckoutProcess|None
+        :param checkout_process: The checkout process of this phase
+
+        :type horizontal_template: bool
+        :param horizontal_template:
+          Set this to False if you want to use single page checkout
+        """
+        # TODO: (2.0) Make checkout_process argument mandatory
+        if not checkout_process:
+            warnings.warn(
+                "Using checkout view without a checkout process is deprecated",
+                DeprecationWarning, 2)
+
+        self._checkout_process = checkout_process
+        self.horizontal_template = horizontal_template
+        super(CheckoutPhaseViewMixin, self).__init__(*args, **kwargs)
+
+    @property
+    def checkout_process(self):
+        """
+        Get the checkout process of this phase.
+
+        :rtype: shuup.front.checkout.CheckoutProcess
+        """
+        if not self._checkout_process:
+            self._checkout_process = _get_dummy_checkout_process(self)
+        return self._checkout_process
 
     def is_visible_for_user(self):
         return bool(self.title)
@@ -47,21 +72,22 @@ class CheckoutPhaseViewMixin(object):
 
     def get_success_url(self, *args, **kwargs):
         if self.next_phase:
-            return reverse("shuup:checkout", kwargs={"phase": self.next_phase.identifier})
+            return self.checkout_process.get_phase_url(self.next_phase)
         next_obj = super(CheckoutPhaseViewMixin, self)
         if hasattr(next_obj, 'get_success_url'):
             return next_obj.get_success_url(*args, **kwargs)
 
-    def get_url(self, request):
-        return reverse("shuup:checkout", kwargs={"phase": self.identifier})
+    def get_url(self):
+        return self.checkout_process.get_phase_url(self)
 
     @property
     def basket(self):
         """
-        :rtype: BaseBasket
-        :return:
+        The basket used in this checkout phase.
+
+        :rtype: shuup.front.basket.objects.BaseBasket
         """
-        return self._get_basket_from_request(self.request)
+        return self.checkout_process.basket
 
     @property
     def storage(self):
@@ -69,27 +95,28 @@ class CheckoutPhaseViewMixin(object):
             self._storage = CheckoutPhaseStorage(request=self.request, phase_identifier=self.identifier)
         return self._storage
 
-    def _get_basket_from_request(self, request):
-
-        """
-        :rtype: BaseBasket
-        :return:
-        """
-        if not hasattr(request, self.basket_name_attr):
-            _basket = get_basket(request, basket_name=self.basket_name_attr, basket_class=self.basket_class)
-            setattr(request, self.basket_name_attr, _basket)
-        return getattr(request, self.basket_name_attr)
-
     def get_context_data(self, **kwargs):
         context = super(CheckoutPhaseViewMixin, self).get_context_data(**kwargs)
-        context["current_phase_url"] = self.get_url(self.request)
-        context["next_phase_url"] = self.next_phase.get_url(self.request) if self.next_phase else None
-        context["previous_phase_url"] = self.previous_phase.get_url(self.request) if self.previous_phase else None
-
-        # build phase urls
-        urls = {}
-        for phase in self.phases:
-            urls[phase.identifier] = phase.get_url(self.request)
-        context["phase_urls"] = urls
+        context["current_phase_url"] = self.get_url()
+        context["next_phase_url"] = (self.next_phase.get_url()
+                                     if self.next_phase else None)
+        context["previous_phase_url"] = (self.previous_phase.get_url()
+                                         if self.previous_phase else None)
+        context["phase_urls"] = {
+            phase.identifier: phase.get_url()
+            for phase in self.phases
+        }
 
         return context
+
+
+def _get_dummy_checkout_process(phase):
+    phase_specs = ['{0.__module__}:{0.__name__}'.format(type(phase))]
+    phase_kwargs = {
+        key: getattr(phase, key)
+        for key in ['request', 'args', 'kwargs'] if hasattr(phase, key)
+    }
+    checkout_process = CheckoutProcess(phase_specs, phase_kwargs)
+    checkout_process._phases = [phase]
+    checkout_process.horizontal_template = phase.horizontal_template
+    return checkout_process
