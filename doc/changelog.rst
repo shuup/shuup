@@ -49,6 +49,7 @@ Not yet released, still in beta.
 Core
 ~~~~
 
+- Fix serializaiton of JSON fields in Order: Object rather than string
 - Add new shipment_created_and_processed signal
 - Improve OrderSource caching for deserialization speedup
 - Add new product count methods to OrderSource
@@ -86,6 +87,7 @@ Addons
 Front
 ~~~~~
 
+- Checkout: Fix method phase attribute population
 - Send registration activation e-mail via notify event
 - Cusmoter information: Replace untranslated "Not specified" with a dash
 - Trigger shipment created event when addons have already processed it
@@ -104,6 +106,9 @@ Front
 Xtheme
 ~~~~~~
 
+- Revert the query-parameter hack for static files introduced in 1.1.
+  Django's ManifestStaticFilesStorage can be used as a cleaner and more
+  robust way to implement auto-updating URLs for static files.
 - Fix Social Media Links plugin
 - Fix product highlight plugin best selling products
 

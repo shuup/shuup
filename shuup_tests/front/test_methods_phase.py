@@ -12,6 +12,7 @@ from django.utils.translation import activate
 from shuup.core.models import get_person_contact
 from shuup.front.basket import get_basket
 from shuup.front.checkout.methods import MethodsPhase
+from shuup.front.views.checkout import BaseCheckoutView
 from shuup.testing.factories import (
     create_product, get_default_shop, get_default_supplier, get_payment_method,
     get_shipping_method
@@ -30,6 +31,10 @@ PAYMENT_DATA = {
 }
 
 
+class MethodsOnlyCheckoutView(BaseCheckoutView):
+        phase_specs = ['shuup.front.checkout.methods:MethodsPhase']
+
+
 @pytest.mark.django_db
 @pytest.mark.parametrize("get_method,data,method_id,", [
     (get_shipping_method, SHIPPING_DATA, "id_shipping_method"),
@@ -43,7 +48,7 @@ def test_method_phase_basic(rf, admin_user, get_method, data, method_id):
     method.save()
     assert method.enabled
 
-    view = MethodsPhase.as_view()
+    view = MethodsOnlyCheckoutView.as_view()
 
     # To make method visible, basket must be available
     person = get_person_contact(admin_user)
@@ -64,7 +69,7 @@ def test_method_phase_basic(rf, admin_user, get_method, data, method_id):
     request = apply_request_middleware(request, user=admin_user, person=person, customer=person, basket=basket)
 
     # request = apply_request_middleware(rf.get("/"))
-    response = view(request=request)
+    response = view(request=request, phase='methods')
     if hasattr(response, "render"):
         response.render()
     assert response.status_code in [200, 302]

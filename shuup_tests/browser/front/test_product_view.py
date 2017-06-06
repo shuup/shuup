@@ -11,7 +11,6 @@ import pytest
 from django.core.urlresolvers import reverse
 from django.utils.translation import activate
 
-import shuup
 from shuup.core import cache
 from shuup.core.models import ShopProduct
 from shuup.testing.browser_utils import wait_until_condition
@@ -48,9 +47,6 @@ def test_product_descriptions(browser, live_server, settings):
     browser.visit("%s%s" % (live_server, url))
     wait_until_condition(browser, lambda x: x.is_text_present(product.short_description))
     assert product.description in browser.html
-
-    # ensure the version is in static files
-    assert "style.css?v=%s" % shuup.__version__ in browser.html
 
     # product preview
     url = reverse("shuup:xtheme_extra_view", kwargs={"view": "products"})

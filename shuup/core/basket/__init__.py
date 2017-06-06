@@ -29,13 +29,43 @@ def get_basket_command_dispatcher(request):
 
 def get_basket(request, basket_name="basket", basket_class=None):
     """
+    Get the basket cached in the request or create and cache a new one.
+
+    The basket_class is used when creating a new basket, i.e. when the
+    request doesn't already have a basket cached with the given name.
+    If no basket_class is given, will load a class using the
+    `~shuup.front.settings.SHUUP_BASKET_CLASS_SPEC` setting.
+
     :type request: django.http.request.HttpRequest
+    :type basket_name: str
+    :type basket_class: type|None
     :rtype: shuup.front.basket.objects.BaseBasket
     """
-    if basket_name == "basket" and hasattr(request, "basket"):
-        return request.basket
+    basket = _get_basket_from_request(request, basket_name)
+    if basket:
+        return basket
 
     if basket_class is None:
         basket_class = cached_load("SHUUP_BASKET_CLASS_SPEC")
 
-    return basket_class(request, basket_name=basket_name)
+    basket = basket_class(request, basket_name=basket_name)
+
+    _save_basket_to_request(request, basket_name, basket)
+
+    return basket
+
+
+def _get_basket_from_request(request, basket_name):
+    if basket_name == 'basket':
+        return getattr(request, 'basket', None)
+    else:
+        return getattr(request, 'baskets', {}).get(basket_name)
+
+
+def _save_basket_to_request(request, basket_name, basket):
+    if basket_name == 'basket':
+        request.basket = basket
+    else:
+        if not hasattr(request, 'baskets'):
+            request.baskets = {}
+        request.baskets[basket_name] = basket

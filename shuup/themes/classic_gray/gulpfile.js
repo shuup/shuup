@@ -41,4 +41,13 @@ gulp.task("less:watch", ["less"], function() {
     gulp.watch(["static_src/**/**/*.less"], ["less"]);
 });
 
-gulp.task("default", ["less"]);
+gulp.task("owl-assets", function() {
+    var tasks = folders.map(function(folder) {
+        return gulp.src([
+            "bower_components/owl.carousel/dist/assets/owl.video.play.png"
+        ]).pipe(gulp.dest("static/shuup/classic_gray/" + folder));
+    });
+    return merge(tasks);
+});
+
+gulp.task("default", ["less", "owl-assets"]);

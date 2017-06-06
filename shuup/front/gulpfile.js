@@ -34,6 +34,12 @@ gulp.task("less:watch", ["less"], function() {
     gulp.watch(["static_src/less/**/*.less"], ["less"]);
 });
 
+gulp.task("owl-assets", function() {
+    return gulp.src([
+        "bower_components/owl.carousel/dist/assets/owl.video.play.png"
+    ]).pipe(gulp.dest("static/shuup/front/css/"));
+});
+
 gulp.task("js", function() {
     return gulp.src([
         "bower_components/jquery/dist/jquery.js",
@@ -67,7 +73,7 @@ gulp.task("copy_fonts", function() {
     ]).pipe(gulp.dest("static/shuup/front/fonts/"));
 });
 
-gulp.task("default", ["js", "less", "copy_fonts"]);
+gulp.task("default", ["js", "less", "owl-assets", "copy_fonts"]);
 
 gulp.task("watch", ["js:watch", "less:watch"], function() {
 });
