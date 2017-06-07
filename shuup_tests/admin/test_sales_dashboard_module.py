@@ -9,6 +9,7 @@ from datetime import date
 
 import pytest
 from bs4 import BeautifulSoup
+from django.utils import html
 
 from shuup.admin.modules.sales_dashboard.dashboard import (
     get_recent_orders_block, get_shop_overview_block,
@@ -80,4 +81,4 @@ def test_shop_overview_block(rf, data):
 def test_recent_orders_block(rf):
     order = create_random_order(customer=create_random_person(), products=[get_default_product()])
     block = get_recent_orders_block(rf.get("/"), DEFAULT_CURRENCY)
-    assert order.customer.name in block.content
+    assert html.escape(order.customer.name) in block.content
