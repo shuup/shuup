@@ -96,7 +96,7 @@ class CategoryFilter(CatalogFilter):
 
     def get_matching_shop_products(self):
         shop_products = []
-        shop = Shop.objects.first()
+        shop = Shop.objects.get_default()
         cat_ids = self.categories.all_except_deleted().values_list("pk", flat=True)
         for parent in ShopProduct.objects.filter(categories__id__in=cat_ids).select_related("product"):
             shop_products.append(parent)

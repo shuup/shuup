@@ -167,7 +167,7 @@ class ProductModule(AdminModule):
 
     def get_model_url(self, object, kind):
         if isinstance(object, Product):
-            shop = Shop.objects.first()
+            shop = Shop.objects.get_default()
             object = object.get_shop_instance(shop)
         return derive_model_url(ShopProduct, "shuup_admin:shop_product", object, kind)
 

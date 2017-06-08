@@ -74,7 +74,7 @@ class ShuupFrontMiddleware(object):
 
     def _set_shop(self, request):
         # TODO: Not the best logic :)
-        request.shop = Shop.objects.first()
+        request.shop = Shop.objects.get_default()
         if not request.shop:
             raise ImproperlyConfigured("No shop!")
 

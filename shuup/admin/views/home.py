@@ -78,7 +78,7 @@ class HomeView(TemplateView):
             })
         else:
             wizard_steps = load_setup_wizard_panes(
-                shop=Shop.objects.first(), request=self.request, visible_only=False)
+                shop=Shop.objects.get_default(), request=self.request, visible_only=False)
             for step in wizard_steps:
                 wizard_actions.append({
                     "text": step.title,

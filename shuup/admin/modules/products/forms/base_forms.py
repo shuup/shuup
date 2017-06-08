@@ -105,7 +105,7 @@ class ProductBaseForm(MultiLanguageModelForm):
                 file_id=self.cleaned_data["file"],
                 kind=ProductMediaKind.IMAGE,
             )
-            image.shops.add(Shop.objects.first())
+            image.shops.add(Shop.objects.get_default())
             instance.primary_image = image
             instance.save()
 
@@ -350,7 +350,7 @@ class BaseProductMediaFormSet(BaseModelFormSet):
         kwargs.setdefault("languages", self.languages)
         kwargs.setdefault("product", self.product)
         kwargs.setdefault("allowed_media_kinds", self.allowed_media_kinds)
-        kwargs.setdefault("default_shop", Shop.objects.first().pk)
+        kwargs.setdefault("default_shop", Shop.objects.get_default().pk)
         return self.form_class(**kwargs)
 
 

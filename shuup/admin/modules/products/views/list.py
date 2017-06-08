@@ -70,7 +70,7 @@ class ProductListView(PicotableListView):
 
     def get_queryset(self):
         filter = self.get_filter()
-        shop_id = filter.get("shop", Shop.objects.first().pk)
+        shop_id = filter.get("shop", Shop.objects.get_default().pk)
         qs = ShopProduct.objects.filter(product__deleted=False, shop_id=shop_id)
         q = Q()
         for mode in filter.get("modes", []):
