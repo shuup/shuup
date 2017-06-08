@@ -17,6 +17,7 @@ Not yet released, still in beta.
 Core
 ~~~~
 
+- Fix caching of price display filters
 - Fix serializaiton of JSON fields in Order: Object rather than string
 - Add new shipment_created_and_processed signal
 - Improve OrderSource caching for deserialization speedup
@@ -55,6 +56,7 @@ Addons
 Front
 ~~~~~
 
+- Fix caching of ``shuup.product.is_visible`` template function
 - Checkout: Fix method phase attribute population
 - Send registration activation e-mail via notify event
 - Cusmoter information: Replace untranslated "Not specified" with a dash
