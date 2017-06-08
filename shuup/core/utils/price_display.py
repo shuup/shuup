@@ -74,7 +74,7 @@ class _ContextFunction(_ContextObject):
 class PriceDisplayFilter(_ContextFilter):
     def __call__(self, context, item, quantity=1, include_taxes=None, allow_cache=True):
         key, val = context_cache.get_cached_value(
-            identifier=self.cache_identifier, item=item, context=context,
+            identifier=self.cache_identifier, item=item, context=context.get('request', context),
             quantity=quantity, include_taxes=include_taxes, name=self.name, allow_cache=allow_cache)
         if val is not None:
             return val
@@ -102,7 +102,7 @@ class PriceDisplayFilter(_ContextFilter):
 class PricePropertyFilter(_ContextFilter):
     def __call__(self, context, item, quantity=1, allow_cache=True):
         key, val = context_cache.get_cached_value(
-            identifier=self.cache_identifier, item=item, context=context,
+            identifier=self.cache_identifier, item=item, context=context.get('request', context),
             quantity=quantity, name=self.name, allow_cache=allow_cache)
         if val is not None:
             return val
@@ -120,7 +120,7 @@ class PricePropertyFilter(_ContextFilter):
 class PricePercentPropertyFilter(_ContextFilter):
     def __call__(self, context, item, quantity=1, allow_cache=True):
         key, val = context_cache.get_cached_value(
-            identifier=self.cache_identifier, item=item, context=context,
+            identifier=self.cache_identifier, item=item, context=context.get('request', context),
             quantity=quantity, name=self.name, allow_cache=allow_cache)
         if val is not None:
             return val
@@ -165,7 +165,7 @@ class PriceRangeDisplayFilter(_ContextFilter):
         """
 
         key, val = context_cache.get_cached_value(
-            identifier=self.cache_identifier, item=product, context=context,
+            identifier=self.cache_identifier, item=product, context=context.get('request', context),
             quantity=quantity, name=self.name, allow_cache=allow_cache)
         if val is not None:
             return val
