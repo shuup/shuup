@@ -688,6 +688,8 @@ Regions
 General/miscellaneous
 ~~~~~~~~~~~~~~~~~~~~~
 
+- Fix issue with core migration ``0005_shopproduct_visibilty``
+  when using PostgreSQL.
 
 SHUUP 0.4.5
 -----------

@@ -62,17 +62,4 @@ class Migration(migrations.Migration):
             field=enumfields.fields.EnumIntegerField(enum=ShopProductVisibility, db_index=True, verbose_name='visibility', default=0),
         ),
         migrations.RunPython(shop_product_visibility, reverse_code=reverse_shop_product_visibility),
-        migrations.RemoveField(
-            model_name='shopproduct',
-            name='visible',
-        ),
-        migrations.RemoveField(
-            model_name='shopproduct',
-            name='listed',
-        ),
-        migrations.RemoveField(
-            model_name='shopproduct',
-            name='searchable',
-        ),
-
     ]
