@@ -133,7 +133,12 @@ class MultiLanguageModelForm(TranslatableModelForm):
                 translation or translations_model(master=instance, language_code=lang)
             )
             for src_name, field in six.iteritems(field_map):
-                field.save_form_data(translation, translation_fields[src_name])
+                if translation_fields[src_name] or field.unique:
+                    field.save_form_data(translation, translation_fields[src_name])
+                else:
+                    default_value = data.get(src_name.replace(lang, self.default_language))
+                    field.save_form_data(translation, default_value)
+
             self._save_translation(instance, translation)
 
     def _save_translation(self, instance, translation):
