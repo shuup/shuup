@@ -14,7 +14,7 @@ from django.core.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 
-from shuup.core.models import Product, ProductVariationResult
+from shuup.core.models import Product, ProductMode, ProductVariationResult
 from shuup.core.order_creator import is_code_usable
 from shuup.utils.importing import cached_load
 from shuup.utils.numbers import parse_decimal_string
@@ -36,6 +36,10 @@ def handle_add(  # noqa (C901)
     product_id = int(product_id)
 
     product = get_object_or_404(Product, pk=product_id)
+
+    if product.mode in (ProductMode.SIMPLE_VARIATION_PARENT, ProductMode.VARIABLE_VARIATION_PARENT):
+        raise ValidationError("Invalid product", code="invalid_product")
+
     shop_product = product.get_shop_instance(shop=request.shop)
     if not shop_product:
         raise ValidationError("Product not available in this shop", code="product_not_available_in_shop")
