@@ -157,6 +157,7 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
     short_description = serializers.SerializerMethodField()
     description = serializers.SerializerMethodField()
     image = serializers.SerializerMethodField()
+    primary_category = CategorySerializer()
     categories = CategorySerializer(many=True)
     attributes = serializers.SerializerMethodField()
     price = serializers.SerializerMethodField()
@@ -178,6 +179,7 @@ class CompleteShopProductSerializer(serializers.ModelSerializer):
             "short_description",
             "description",
             "image",
+            "primary_category",
             "categories",
             "attributes",
             "price",
