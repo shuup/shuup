@@ -20,7 +20,7 @@ class LineWithUnit(object):
         :rtype: UnitInterface
         """
         # TODO: Store the sales unit and display unit to the line
-        if not self.product or not self.product.sales_unit:
+        if not self.product or not self.product.sales_unit or not self.shop:
             return UnitInterface(PiecesSalesUnit())
         try:
             shop_product = self.product.get_shop_instance(self.shop)
