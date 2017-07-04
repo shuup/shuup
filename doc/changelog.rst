@@ -56,6 +56,8 @@ Addons
 Front
 ~~~~~
 
+- Add SHUUP_PERSON_CONTACT_FIELD_PROPERTIES setting which can be used
+  to change person contact form field properties
 - Fix caching of ``shuup.product.is_visible`` template function
 - Checkout: Fix method phase attribute population
 - Send registration activation e-mail via notify event
