@@ -8,15 +8,19 @@
 from __future__ import unicode_literals
 
 import pytest
+from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.shortcuts import resolve_url
+from django.test import override_settings
+
 from shuup.core.models import (
     CompanyContact, get_company_contact, get_person_contact
 )
+from shuup.front.apps.customer_information.forms import PersonContactForm
 from shuup.testing.factories import get_default_shop
 from shuup.testing.soup_utils import extract_form_fields
 from shuup_tests.utils import SmartClient
@@ -238,3 +242,21 @@ def test_company_tax_number_limitations(regular_user):
     data["contact-tax_number"] = "111110"
     response, soup = client.response_and_soup(company_edit_url, data, "post")
     assert response.status_code == 200  # this time around, nothing was saved.
+
+
+@pytest.mark.django_db
+def test_person_contact_form_field_overrides():
+    with override_settings(SHUUP_PERSON_CONTACT_FIELD_PROPERTIES={}):
+        form = PersonContactForm()
+        assert type(form.fields["gender"].widget) != forms.HiddenInput
+        assert form.fields["phone"].required is False
+
+    with override_settings(
+        SHUUP_PERSON_CONTACT_FIELD_PROPERTIES={
+            "gender": {"widget": forms.HiddenInput()},
+            "phone": {"required": True}
+        }
+    ):
+        form = PersonContactForm()
+        assert type(form.fields["gender"].widget) == forms.HiddenInput
+        assert form.fields["phone"].required is True
