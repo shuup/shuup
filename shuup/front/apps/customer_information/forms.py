@@ -6,6 +6,7 @@
 # This source code is licensed under the OSL-3.0 license found in the
 # LICENSE file in the root directory of this source tree.
 from django import forms
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from enumfields import EnumField
@@ -28,6 +29,11 @@ class PersonContactForm(forms.ModelForm):
         for field in ("first_name", "last_name", "email"):
             self.fields[field].required = True
         self.initial["language"] = self.instance.language
+
+        field_properties = settings.SHUUP_PERSON_CONTACT_FIELD_PROPERTIES
+        for field, properties in field_properties.items():
+            for prop in properties:
+                setattr(self.fields[field], prop, properties[prop])
 
     def save(self, commit=True):
         self.instance.language = self.cleaned_data["language"]

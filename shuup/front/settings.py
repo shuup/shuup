@@ -67,3 +67,16 @@ SHUUP_FRONT_DEFAULT_SORT_CONFIGURATION = {
 #:
 #: Cache duration in seconds for front template helpers. Default 30 minutes.
 SHUUP_TEMPLATE_HELPERS_CACHE_DURATION = 60*30
+
+#: A dictionary defining properties to override the default field properties of the
+#: person contact form. Should map the field name (as a string) to a dictionary
+#: containing the overriding Django form field properties, as in the following
+#: example which makes the gender field hidden:
+#:
+#: SHUUP_PERSON_CONTACT_FIELD_PROPERTIES = {
+#:    "gender": {"widget": forms.HiddenInput()}
+#: }
+#:
+#: It should be noted, however, that overriding some settings (such as making a
+#: required field non-required) could create other validation issues.
+SHUUP_PERSON_CONTACT_FIELD_PROPERTIES = {}
