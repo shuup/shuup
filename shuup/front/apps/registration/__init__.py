@@ -29,10 +29,10 @@ URL names
 """
 
 import django.conf
-from django.db.models.signals import post_save
 from registration.signals import user_activated
 
 from shuup.apps import AppConfig
+from shuup.front.apps.registration.signals import company_contact_activated
 
 
 class RegistrationAppConfig(AppConfig):
@@ -86,7 +86,7 @@ class RegistrationAppConfig(AppConfig):
             # false for HTML mails.
             django.conf.settings.REGISTRATION_EMAIL_HTML = False
 
-        post_save.connect(
+        company_contact_activated.connect(
             send_company_activated_first_time_notification,
             sender=CompanyContact,
         )

@@ -64,10 +64,9 @@ def send_user_registered_notification(user, request, **kwargs):
     event.run()
 
 
-def send_company_activated_first_time_notification(instance, **kwargs):
+def send_company_activated_first_time_notification(instance, request, **kwargs):
     activated_once = instance.log_entries.filter(identifier='company_activated').exists()
-    is_active_updated = kwargs.get("update_fields") and 'is_active' in kwargs.get("update_fields")
-    if activated_once or not instance.is_active or not is_active_updated:
+    if activated_once or not instance.is_active:
         return
     # Send email if a company was never activated before
     instance.add_log_entry(
@@ -75,13 +74,21 @@ def send_company_activated_first_time_notification(instance, **kwargs):
         identifier='company_activated'
     )
     person = instance.members.instance_of(PersonContact).first()
-    email = person.user.email or instance.email
-    cls = CompanyApproved
+    user = person.user
+
+    activation_url = None
+    activation_key = user.registrationprofile.activation_key if hasattr(user, 'registrationprofile') else None
+    if activation_key:
+        activation_path = reverse('shuup:registration_activate', args=(activation_key,))
+        activation_url = request.build_absolute_uri(activation_path)
+
+    email = user.email or instance.email
     customer = instance
-    event = cls(
+    event = CompanyApproved(
         customer=customer,
         customer_email=email,
-        user_is_active=person.user.is_active,
+        user_is_active=user.is_active,
+        activation_url=activation_url
     )
     event.run()
 
