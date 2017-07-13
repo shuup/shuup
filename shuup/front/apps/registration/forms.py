@@ -9,6 +9,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import ugettext_lazy as _
 
+from shuup import configuration
 from shuup.core.models import CompanyContact, PersonContact
 from shuup.utils.form_group import FormGroup
 from shuup.utils.importing import cached_load
@@ -74,19 +75,23 @@ class CompanyRegistrationForm(FormGroup):
         person = self.forms['contact_person'].save(commit=False)
         user = self.forms['user_account'].save(commit=False)
 
-        company.is_active = False
         company.default_billing_address = billing_address
         company.default_shipping_address = billing_address
 
         for field in ['name', 'name_ext', 'email', 'phone']:
             setattr(billing_address, field, getattr(company, field))
 
-        person.is_active = False
         person.user = user
 
         user.first_name = person.first_name
         user.last_name = person.last_name
         user.email = person.email
+
+        # If company registration requires approval,
+        # company and person contacts will be created as inactive
+        if configuration.get(None, "company_registration_requires_approval"):
+            company.is_active = False
+            person.is_active = False
 
         if commit:
             user.save()

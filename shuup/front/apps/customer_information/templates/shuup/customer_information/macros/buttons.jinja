@@ -25,13 +25,15 @@
 
 {% macro company_account_button(request) %}
     <div class="btn-group" role="group">
-        <a class="btn btn-primary" href="{{ url("shuup:company_edit") }}">
-            {% if request.is_company_member %}
-                <i class="fa fa-users"></i> {% trans %}Edit company information{% endtrans %}
-            {% else %}
-                <i class="fa fa-link"></i> {% trans %}Link account to company{% endtrans %}
-            {% endif %}
-        </a>
+        {% if get_global_configuration("allow_company_registration") %}
+            <a class="btn btn-primary" href="{{ url("shuup:company_edit") }}">
+                {% if request.is_company_member %}
+                    <i class="fa fa-users"></i> {% trans %}Edit company information{% endtrans %}
+                {% else %}
+                    <i class="fa fa-link"></i> {% trans %}Link account to company{% endtrans %}
+                {% endif %}
+            </a>
+        {% endif %}
     </div>
 {% endmacro %}
 
