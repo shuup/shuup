@@ -17,6 +17,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import resolve_url
 from django.test import override_settings
 
+from shuup import configuration
 from shuup.core.models import (
     CompanyContact, get_company_contact, get_person_contact
 )
@@ -112,24 +113,31 @@ def test_customer_edit_redirects_to_login_if_not_logged_in():
 
 
 @pytest.mark.django_db
-def test_company_edit_form_links_company(regular_user, rf):
+@pytest.mark.parametrize("allow_company_registration", (False, True))
+def test_company_edit_form_links_company(regular_user, allow_company_registration):
     get_default_shop()
+    configuration.set(None, "allow_company_registration", allow_company_registration)
     person = get_person_contact(regular_user)
     assert not get_company_contact(regular_user)
 
     client = SmartClient()
     client.login(username=REGULAR_USER_USERNAME, password=REGULAR_USER_PASSWORD)
-    company_edit_url = reverse("shuup:company_edit")
-    soup = client.soup(company_edit_url)
 
     data = default_company_data()
     data.update(default_address_data("billing"))
     data.update(default_address_data("shipping"))
+    company_edit_url = reverse("shuup:company_edit")
 
-    response, soup = client.response_and_soup(company_edit_url, data, "post")
-
-    assert response.status_code == 302
-    assert get_company_contact(regular_user)
+    if allow_company_registration:
+        soup = client.soup(company_edit_url)
+        response, soup = client.response_and_soup(company_edit_url, data, "post")
+        assert response.status_code == 302
+        assert get_company_contact(regular_user)
+    else:
+        response = client.get(company_edit_url)
+        assert response.status_code == 404
+        response = client.post(company_edit_url, data)
+        assert response.status_code == 404
 
 
 @pytest.mark.django_db
@@ -188,60 +196,69 @@ def test_user_change_password(regular_user, password_value, new_password_2, expe
 
 
 @pytest.mark.django_db
-def test_company_tax_number_limitations(regular_user):
+@pytest.mark.parametrize("allow_company_registration", (False, True))
+def test_company_tax_number_limitations(regular_user, allow_company_registration):
     get_default_shop()
+    configuration.set(None, "allow_company_registration", allow_company_registration)
     person = get_person_contact(regular_user)
     assert not get_company_contact(regular_user)
 
-    client = SmartClient()
-    client.login(username=REGULAR_USER_USERNAME, password=REGULAR_USER_PASSWORD)
-    company_edit_url = reverse("shuup:company_edit")
-    soup = client.soup(company_edit_url)
+    if allow_company_registration:
+        client = SmartClient()
+        client.login(username=REGULAR_USER_USERNAME, password=REGULAR_USER_PASSWORD)
+        company_edit_url = reverse("shuup:company_edit")
+        soup = client.soup(company_edit_url)
 
-    data = default_company_data()
-    data.update(default_address_data("billing"))
-    data.update(default_address_data("shipping"))
+        data = default_company_data()
+        data.update(default_address_data("billing"))
+        data.update(default_address_data("shipping"))
 
-    response, soup = client.response_and_soup(company_edit_url, data, "post")
+        response, soup = client.response_and_soup(company_edit_url, data, "post")
 
-    assert response.status_code == 302
-    assert get_company_contact(regular_user)
+        assert response.status_code == 302
+        assert get_company_contact(regular_user)
 
-    # re-save should work properly
-    response, soup = client.response_and_soup(company_edit_url, data, "post")
-    assert response.status_code == 302
-    client.logout()
+        # re-save should work properly
+        response, soup = client.response_and_soup(company_edit_url, data, "post")
+        assert response.status_code == 302
+        client.logout()
 
-    # another company tries to use same tax number
-    new_user_password = "derpy"
-    new_user_username = "derpy"
-    user = User.objects.create_user(new_user_username, "derpy@shuup.com", new_user_password)
-    person = get_person_contact(user=user)
-    assert not get_company_contact(user)
+        # another company tries to use same tax number
+        new_user_password = "derpy"
+        new_user_username = "derpy"
+        user = User.objects.create_user(new_user_username, "derpy@shuup.com", new_user_password)
+        person = get_person_contact(user=user)
+        assert not get_company_contact(user)
 
-    client = SmartClient()
-    client.login(username=new_user_username, password=new_user_password)
-    company_edit_url = reverse("shuup:company_edit")
-    soup = client.soup(company_edit_url)
+        client = SmartClient()
+        client.login(username=new_user_username, password=new_user_password)
+        company_edit_url = reverse("shuup:company_edit")
+        soup = client.soup(company_edit_url)
 
-    data = default_company_data()
-    data.update(default_address_data("billing"))
-    data.update(default_address_data("shipping"))
+        data = default_company_data()
+        data.update(default_address_data("billing"))
+        data.update(default_address_data("shipping"))
 
-    response, soup = client.response_and_soup(company_edit_url, data, "post")
-    assert response.status_code == 200  # this time around, nothing was saved.
-    assert not get_company_contact(user)  # company contact yet
+        response, soup = client.response_and_soup(company_edit_url, data, "post")
+        assert response.status_code == 200  # this time around, nothing was saved.
+        assert not get_company_contact(user)  # company contact yet
 
-    # change tax number
-    data["contact-tax_number"] = "111111"
-    response, soup = client.response_and_soup(company_edit_url, data, "post")
-    assert response.status_code == 302  # this time around, nothing was saved.
-    assert get_company_contact(user)  # company contact yet
+        # change tax number
+        data["contact-tax_number"] = "111111"
+        response, soup = client.response_and_soup(company_edit_url, data, "post")
+        assert response.status_code == 302  # this time around, nothing was saved.
+        assert get_company_contact(user)  # company contact yet
 
-    # go back to normal and try to get tax number approved
-    data["contact-tax_number"] = "111110"
-    response, soup = client.response_and_soup(company_edit_url, data, "post")
-    assert response.status_code == 200  # this time around, nothing was saved.
+        # go back to normal and try to get tax number approved
+        data["contact-tax_number"] = "111110"
+        response, soup = client.response_and_soup(company_edit_url, data, "post")
+        assert response.status_code == 200  # this time around, nothing was saved.
+    else:
+        client = SmartClient()
+        client.login(username=REGULAR_USER_USERNAME, password=REGULAR_USER_PASSWORD)
+        company_edit_url = reverse("shuup:company_edit")
+        response = client.get(company_edit_url)
+        assert response.status_code == 404
 
 
 @pytest.mark.django_db

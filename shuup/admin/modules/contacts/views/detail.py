@@ -24,6 +24,7 @@ from shuup.admin.toolbar import (
 from shuup.admin.utils.permissions import get_default_model_permissions
 from shuup.apps.provides import get_provide_objects
 from shuup.core.models import CompanyContact, Contact
+from shuup.front.apps.registration.signals import company_contact_activated
 from shuup.utils.deprecation import RemovedFromShuupWarning
 from shuup.utils.excs import Problem
 
@@ -151,6 +152,7 @@ class ContactDetailView(DetailView):
         return context
 
     def _handle_set_is_active(self):
+        old_state = self.object.is_active
         state = bool(int(self.request.POST["set_is_active"]))
         if not state and hasattr(self.object, "user"):
             if (getattr(self.object.user, 'is_superuser', False) and
@@ -165,6 +167,13 @@ class ContactDetailView(DetailView):
             "contact": self.object,
             "state": _("active") if state else _("inactive")
         })
+
+        if (self.object.is_active and self.object.is_active != old_state
+                and isinstance(self.object, CompanyContact)):
+            company_contact_activated.send(sender=type(self.object),
+                                           instance=self.object,
+                                           request=self.request)
+
         return HttpResponseRedirect(self.request.path)
 
     def post(self, request, *args, **kwargs):

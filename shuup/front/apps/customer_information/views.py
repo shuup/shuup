@@ -9,10 +9,13 @@ import six
 from django.contrib import messages
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.views import password_change
+from django.http import HttpResponseNotFound
 from django.shortcuts import redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView, TemplateView
+from registration.signals import user_registered
 
+from shuup import configuration
 from shuup.core.models import (
     get_company_contact, get_person_contact, MutableAddress, SavedAddress
 )
@@ -79,6 +82,11 @@ class CustomerEditView(DashboardViewMixin, FormView):
 class CompanyEditView(DashboardViewMixin, FormView):
     template_name = "shuup/customer_information/edit_company.jinja"
 
+    def dispatch(self, request, *args, **kwargs):
+        if not configuration.get(None, "allow_company_registration"):
+            return HttpResponseNotFound()
+        return super(CompanyEditView, self).dispatch(request, *args, **kwargs)
+
     def get_form(self, form_class):
         user = self.request.user
         company = get_company_contact(user)
@@ -121,10 +129,22 @@ class CompanyEditView(DashboardViewMixin, FormView):
         user.last_name = ""
         user.save()
 
+        message = _("Company information saved successfully.")
+        # If company registration requires activation,
+        # company will be created as inactive.
+        if is_new and configuration.get(None, "company_registration_requires_approval"):
+            company.is_active = False
+            message = _("Company information saved successfully. "
+                        "Please follow the instructions sent to your email address.")
+
         company.save()
         if is_new:
+            user_registered.send(sender=self.__class__,
+                                 user=self.request.user,
+                                 request=self.request)
             CompanyAccountCreated(contact=company, customer_email=company.email).run()
-        messages.success(self.request, _("Company information saved successfully."))
+
+        messages.success(self.request, message)
         return redirect("shuup:company_edit")
 
 
