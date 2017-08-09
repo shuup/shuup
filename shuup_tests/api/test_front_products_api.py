@@ -147,7 +147,7 @@ def test_products_all_shops(admin_user):
     person1.user = admin_user
     person1.save()
 
-    shop2 = Shop.objects.create()
+    shop2 = Shop.objects.create(status=ShopStatus.ENABLED)
     shop2.favicon = get_random_filer_image()
     shop2.save()
     supplier1 = create_simple_supplier("supplier1")
@@ -416,7 +416,7 @@ def test_get_best_selling_products(admin_user):
 @pytest.mark.django_db
 def test_get_newest_products(admin_user):
     shop1 = get_default_shop()
-    shop2 = Shop.objects.create()
+    shop2 = Shop.objects.create(status=ShopStatus.ENABLED)
 
     customer = create_random_person()
     customer.user = admin_user
@@ -704,6 +704,21 @@ def test_product_price_info(admin_user, prices_include_tax):
         assert products_data[0]["price_info"]['taxful_price'] == (PRICE-DISCOUNT)
     else:
         assert products_data[0]["price_info"]['taxless_price'] == (PRICE-DISCOUNT)
+
+
+@pytest.mark.django_db
+def test_products_shop_disabled(admin_user):
+    shop1 = get_default_shop()
+    shop2 = Shop.objects.create(status=ShopStatus.DISABLED)
+    supplier1 = create_simple_supplier("supplier1")
+    create_product("product1", shop=shop1, supplier=supplier1)
+    create_product("product2", shop=shop2, supplier=supplier1)
+
+    request = get_request("/api/shuup/front/shop_products/", admin_user)
+    response = FrontShopProductViewSet.as_view({"get": "list"})(request)
+    response.render()
+    products_data = json.loads(response.content.decode("utf-8"))
+    assert len(products_data) == 1
 
 
 def _get_client(user):
