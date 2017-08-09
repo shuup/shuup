@@ -22,6 +22,7 @@ from easy_thumbnails.files import get_thumbnailer
 from filer.models import Image
 
 from shuup.admin.utils.urls import get_model_url, NoModelUrl
+from shuup.apps.provides import get_provide_objects
 from shuup.core.models import ProductMedia
 from shuup.utils.dates import try_parse_date
 from shuup.utils.i18n import format_money, get_locally_formatted_datetime
@@ -311,7 +312,13 @@ class Column(object):
         return queryset
 
     def get_display_value(self, context, object):
+        # Look for callable from view context
         display_callable = maybe_callable(self.display, context=context)
+        if display_callable:
+            return display_callable(object)
+
+        # Look for callable from provided column objects contexts
+        display_callable = self.search_from_provided_contexts(object)
         if display_callable:
             return display_callable(object)
 
@@ -319,6 +326,16 @@ class Column(object):
         for bit in self.display.split("__"):
             value = getattr(value, bit, None)
 
+        return_value = self.check_different_types(value)
+        if return_value:
+            return return_value
+
+        if not value:
+            value = ""
+
+        return force_text(value)
+
+    def check_different_types(self, value):
         if isinstance(value, ProductMedia):
             return "<img src='/media/%s'>" % value.get_thumbnail()
 
@@ -340,10 +357,13 @@ class Column(object):
         if isinstance(value, Money):
             return escape(format_money(value))
 
-        if not value:
-            value = ""
-
-        return force_text(value)
+    def search_from_provided_contexts(self, object):
+        provide_object_key = "provided_columns_%s" % type(object).__name__
+        for provided_column_object in get_provide_objects(provide_object_key):
+            obj = provided_column_object()
+            display_callable = maybe_callable(self.display, context=obj)
+            if display_callable:
+                return display_callable(object)
 
     def __repr__(self):
         return "<Column: %s> %s" % (self.title, self.id)

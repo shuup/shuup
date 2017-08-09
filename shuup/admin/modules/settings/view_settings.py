@@ -14,6 +14,7 @@ from shuup import configuration
 from shuup.admin.utils.picotable import (
     ChoicesFilter, Column, TextFilter, true_or_false_filter
 )
+from shuup.apps.provides import get_provide_objects
 from shuup.utils.importing import load
 
 INVALID_FIELDS = [
@@ -110,6 +111,7 @@ class ViewSettings(object):
                 self._add_translated_columns(columns, defaults, identifier, known_names, model)
             self._add_local_columns(all_models, columns, defaults, identifier, known_names, model)
             self._add_m2m_columns(all_models, columns, defaults, identifier, known_names, model)
+            self._add_provided_columns(columns, identifier, known_names, model)
 
         table_columns = set([col.id for col in columns])
         for default_column in self.default_columns:
@@ -208,3 +210,11 @@ class ViewSettings(object):
             if isinstance(field, BooleanField):
                 column.filter_config = true_or_false_filter
         return column
+
+    def _add_provided_columns(self, columns, identifier, known_names, model):
+        provide_object_key = "provided_columns_%s" % model.__name__
+        for provided_column_object in get_provide_objects(provide_object_key):
+            obj = provided_column_object()
+            column = obj.get_column(model, known_names, identifier)
+            if column:
+                columns.append(column)
