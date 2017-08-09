@@ -25,7 +25,7 @@ from shuup.core.fields import (
 from shuup.core.models import (
     Category, get_person_contact, Product, ProductAttribute,
     ProductCrossSellType, ProductMode, ProductPackageLink, SalesUnit, Shop,
-    ShopProduct, ShopProductVisibility
+    ShopProduct, ShopProductVisibility, ShopStatus
 )
 from shuup.core.pricing._context import PricingContext
 from shuup.core.utils import context_cache
@@ -69,7 +69,7 @@ def get_shop_product_queryset(parents_only=True):
             "product__attributes",
             queryset=ProductAttribute.objects.all().prefetch_related("attribute", "attribute__translations")
         )
-    )
+    ).filter(shop__status=ShopStatus.ENABLED)
 
     if parents_only:
         qs = qs.filter(
