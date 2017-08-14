@@ -124,11 +124,6 @@ class CompanyEditView(DashboardViewMixin, FormView):
         if shipping_address.pk != company.default_shipping_address_id:  # Identity changed due to immutability
             company.default_shipping_address = shipping_address
 
-        user.email = company.email
-        user.first_name = company.name
-        user.last_name = ""
-        user.save()
-
         message = _("Company information saved successfully.")
         # If company registration requires activation,
         # company will be created as inactive.
