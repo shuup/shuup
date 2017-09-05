@@ -263,7 +263,7 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = ["id", "reference_number"]
 
 
-class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
+class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
     """
     This class contains all methods to manage the request basket.
 
@@ -278,9 +278,9 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
 
     """
 
-    # just to make use of the convenient ViewSet class
-    queryset = Product.objects.none()
+    queryset = Basket.objects.none()
     lookup_field = "uuid"
+    serializer_class = BasketSerializer
 
     def get_view_name(self):
         return _("Basket")
@@ -299,6 +299,11 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
             'format': self.format_kwarg,
             'view': self
         }
+
+    def get_serializer_class(self):
+        if self.action == "abandoned":
+            return StoredBasketSerializer
+        return self.serializer_class
 
     def get_basket_shop(self):
         if settings.SHUUP_ENABLE_MULTIPLE_SHOPS:
@@ -331,13 +336,12 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         if with_basket:
             request.basket = self.get_object()
 
-    @schema_serializer_class(BasketSerializer)
     def retrieve(self, request, *args, **kwargs):
         """
         List the contents of the basket
         """
         self.process_request()
-        return Response(BasketSerializer(request.basket, context=self.get_serializer_context()).data)
+        return Response(self.get_serializer(request.basket).data)
 
     def _get_controlled_contacts_by_user(self, user):
         """
@@ -417,7 +421,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         response_data = {
             "uuid": "%s-%s" % (request.shop.pk, stored_basket.key)
         }
-        response_data.update(BasketSerializer(basket, context=self.get_serializer_context()).data)
+        response_data.update(self.get_serializer(basket).data)
         return Response(data=response_data, status=status.HTTP_201_CREATED)
 
     def _handle_cmd(self, request, command, kwargs):
@@ -449,7 +453,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         ).filter(updated_on_q, product_count__gte=0).exclude(
             deleted=True, finished=True, persistent=True
         )
-        return Response(StoredBasketSerializer(stored_baskets, many=True).data)
+        return Response(self.get_serializer(stored_baskets, many=True).data)
 
     @schema_serializer_class(ProductAddBasketSerializer)
     @detail_route(methods=['post'])
@@ -481,8 +485,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
             except ValidationError as exc:
                 return Response({exc.code: exc.message}, status=status.HTTP_400_BAD_REQUEST)
             else:
-                data = BasketSerializer(request.basket, context=self.get_serializer_context()).data
-                return Response(data, status=status.HTTP_200_OK)
+                return Response(self.get_serializer(request.basket).data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -502,8 +505,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         except ValidationError as exc:
             return Response({exc.code: exc.message}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            data = BasketSerializer(request.basket, context=self.get_serializer_context()).data
-            return Response(data, status=status.HTTP_200_OK)
+            return Response(self.get_serializer(request.basket).data, status=status.HTTP_200_OK)
 
     @detail_route(methods=['post'])
     def update_quantity(self, request, *args, **kwargs):
@@ -521,8 +523,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
             except ValidationError as exc:
                 return Response({exc.code: exc.message}, status=status.HTTP_400_BAD_REQUEST)
             else:
-                data = BasketSerializer(request.basket, context=self.get_serializer_context()).data
-                return Response(data, status=status.HTTP_200_OK)
+                return Response(self.get_serializer(request.basket).data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -543,8 +544,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
             }
             response = self._handle_cmd(request, "add_campaign_code", cmd_kwargs)
             if response["ok"]:
-                data = BasketSerializer(request.basket, context=self.get_serializer_context()).data
-                return Response(data, status=status.HTTP_200_OK)
+                return Response(self.get_serializer(request.basket).data, status=status.HTTP_200_OK)
             else:
                 return Response({"code_invalid": "Invalid code"}, status=status.HTTP_400_BAD_REQUEST)
         else:
@@ -587,8 +587,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         except MutableAddress.DoesNotExist:
             return Response({"error": "Address does not exist"}, status=status.HTTP_404_NOT_FOUND)
         else:
-            data = BasketSerializer(request.basket, context=self.get_serializer_context()).data
-            return Response(data, status=status.HTTP_200_OK)
+            return Response(self.get_serializer(request.basket).data, status=status.HTTP_200_OK)
 
     @detail_route(methods=['post'])
     def set_shipping_method(self, request, *args, **kwargs):
@@ -609,8 +608,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         setattr(request.basket, attr_field, method)
         request.basket.save()
 
-        data = BasketSerializer(request.basket, context=self.get_serializer_context()).data
-        return Response(data, status=status.HTTP_200_OK)
+        return Response(self.get_serializer(request.basket).data, status=status.HTTP_200_OK)
 
     @detail_route(methods=['post'])
     def create_order(self, request, *args, **kwargs):
@@ -673,7 +671,7 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
         if len(errors) > 0:
             return Response({"errors": errors}, status.HTTP_400_BAD_REQUEST)
         else:
-            return Response(BasketSerializer(request.basket, context=self.get_serializer_context()).data)
+            return Response(self.get_serializer(request.basket).data)
 
     def _add_product(self, request, *args, **kwargs):
         data = kwargs.pop("add_data", request.data)
@@ -703,6 +701,6 @@ class BasketViewSet(PermissionHelperMixin, viewsets.ViewSet):
             except Exception as exc:
                 return Response({"error": str(exc)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             else:
-                return Response(BasketSerializer(request.basket, context=self.get_serializer_context()).data)
+                return Response(self.get_serializer(request.basket).data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

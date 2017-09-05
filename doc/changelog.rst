@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- API: allow custom Basket serializer
 - API: only return shop products of enabled shops
 - Do not allow adding variation parents in the basket
 - API: serialize front shop product price info
