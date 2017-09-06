@@ -73,7 +73,6 @@ class AdminRegexURLPattern(RegexURLPattern):
         :param request: HttpRequest
         :rtype: str|None
         """
-
         if self.require_authentication:
             if not request.user.is_authenticated():
                 return _("You must be logged in.")

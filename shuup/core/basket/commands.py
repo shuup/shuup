@@ -162,6 +162,16 @@ def handle_add_campaign_code(request, basket, code):
     return {"ok": False}
 
 
+def handle_remove_campaign_code(request, basket, code):
+    if not code:
+        return {"ok": False}
+    return {"ok": basket.remove_code(code)}
+
+
+def handle_clear_campaign_codes(request, basket):
+    return {"ok": basket.clear_codes()}
+
+
 def handle_update(request, basket, **kwargs):
     """
     Handle updating a basket, i.e. deleting some lines or updating quantities.

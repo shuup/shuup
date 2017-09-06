@@ -475,7 +475,7 @@ def test_cant_add_a_dummy_campaign_code(admin_user, settings):
     configure(settings)
     shop = factories.get_default_shop()
     basket = factories.get_basket()
-    shop_product = factories.get_default_shop_product()
+    factories.get_default_shop_product()
     client = _get_client(admin_user)
     payload = {
         'code': 'ABCDE'
@@ -485,11 +485,36 @@ def test_cant_add_a_dummy_campaign_code(admin_user, settings):
 
 
 @pytest.mark.django_db
-def test_can_add_a_valid_campaign_code(admin_user, settings):
+def test_cant_remove_a_dummy_campaign_code(admin_user, settings):
     configure(settings)
     shop = factories.get_default_shop()
     basket = factories.get_basket()
-    shop_product = factories.get_default_shop_product()
+    factories.get_default_shop_product()
+    client = _get_client(admin_user)
+    payload = {
+        'code': 'ABCDE'
+    }
+    response = client.post('/api/shuup/basket/{}-{}/remove_code/'.format(shop.pk, basket.key), payload)
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+
+@pytest.mark.django_db
+def test_cant_clear_dummy_campaign_codes(admin_user, settings):
+    configure(settings)
+    shop = factories.get_default_shop()
+    basket = factories.get_basket()
+    factories.get_default_shop_product()
+    client = _get_client(admin_user)
+    response = client.post('/api/shuup/basket/{}-{}/clear_codes/'.format(shop.pk, basket.key))
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+
+@pytest.mark.django_db
+def test_can_add_remove_a_valid_campaign_code(admin_user, settings):
+    configure(settings)
+    shop = factories.get_default_shop()
+    basket = factories.get_basket()
+    factories.get_default_shop_product()
     client = _get_client(admin_user)
 
     coupon = Coupon.objects.create(code="DACODE", active=True)
@@ -503,13 +528,52 @@ def test_can_add_a_valid_campaign_code(admin_user, settings):
     assert response.status_code == status.HTTP_200_OK
     assert 'DACODE' in basket_data['codes']
 
+    response = client.post('/api/shuup/basket/{}-{}/remove_code/'.format(shop.pk, basket.key), payload)
+    basket_data = json.loads(response.content.decode("utf-8"))
+    assert response.status_code == status.HTTP_200_OK
+    assert len(basket_data['codes']) == 0
+
+
+@pytest.mark.django_db
+def test_can_clear_valid_campaign_codes(admin_user, settings):
+    configure(settings)
+    shop = factories.get_default_shop()
+    basket = factories.get_basket()
+    factories.get_default_shop_product()
+    client = _get_client(admin_user)
+
+    coupon1 = Coupon.objects.create(code="DACODE", active=True)
+    get_default_campaign(coupon1)
+    coupon2 = Coupon.objects.create(code="SUPERCODE2", active=True)
+    get_default_campaign(coupon2)
+
+    # add first code
+    payload = {'code': 'DACODE'}
+    response = client.post('/api/shuup/basket/{}-{}/add_code/'.format(shop.pk, basket.key), payload)
+    basket_data = json.loads(response.content.decode("utf-8"))
+    assert response.status_code == status.HTTP_200_OK
+    assert 'DACODE' in basket_data['codes']
+
+    # add second code
+    payload = {'code': 'SUPERCODE2'}
+    response = client.post('/api/shuup/basket/{}-{}/add_code/'.format(shop.pk, basket.key), payload)
+    basket_data = json.loads(response.content.decode("utf-8"))
+    assert response.status_code == status.HTTP_200_OK
+    assert 'SUPERCODE2' in basket_data['codes']
+
+    # clear all codes
+    response = client.post('/api/shuup/basket/{}-{}/clear_codes/'.format(shop.pk, basket.key), payload)
+    basket_data = json.loads(response.content.decode("utf-8"))
+    assert response.status_code == status.HTTP_200_OK
+    assert len(basket_data['codes']) == 0
+
 
 @pytest.mark.django_db
 def test_multiple_coupons_work_properly(admin_user, settings):
     configure(settings)
     shop = factories.get_default_shop()
     basket = factories.get_basket()
-    shop_product = factories.get_default_shop_product()
+    factories.get_default_shop_product()
     client = _get_client(admin_user)
 
     code_one = "DACODE"
@@ -534,7 +598,7 @@ def test_multiple_coupons_work_properly(admin_user, settings):
     basket_data = json.loads(response.content.decode("utf-8"))
     assert response.status_code == status.HTTP_200_OK
     assert code_two in basket_data['codes']
-    assert len(basket_data["codes"]) == 1
+    assert len(basket_data["codes"]) == 2
 
 
 @pytest.mark.parametrize("target_customer", ["admin", "other"])
