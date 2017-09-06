@@ -253,7 +253,7 @@ class MethodIDSerializer(serializers.Serializer):
     id = serializers.IntegerField(required=False)
 
 
-class CodeAddBasketSerializer(serializers.Serializer):
+class BasketCampaignCodeSerializer(serializers.Serializer):
     code = serializers.CharField()
 
 
@@ -511,44 +511,80 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
     def update_quantity(self, request, *args, **kwargs):
         self.process_request()
         serializer = LineQuantitySerializer(data=request.data)
-        if serializer.is_valid():
-            cmd_kwargs = {
-                "request": request._request,
-                "basket": request.basket,
-                "q_{}".format(serializer.validated_data["line_id"]): serializer.validated_data["quantity"]
-            }
-            try:
-                self._handle_cmd(request, "update", cmd_kwargs)
-                request.basket.save()
-            except ValidationError as exc:
-                return Response({exc.code: exc.message}, status=status.HTTP_400_BAD_REQUEST)
-            else:
-                return Response(self.get_serializer(request.basket).data, status=status.HTTP_200_OK)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.is_valid(raise_exception=True)
 
-    @schema_serializer_class(CodeAddBasketSerializer)
+        cmd_kwargs = {
+            "request": request._request,
+            "basket": request.basket,
+            "q_{}".format(serializer.validated_data["line_id"]): serializer.validated_data["quantity"]
+        }
+        try:
+            self._handle_cmd(request, "update", cmd_kwargs)
+            request.basket.save()
+        except ValidationError as exc:
+            return Response({exc.code: exc.message}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(self.get_serializer(request.basket).data, status=status.HTTP_200_OK)
+
+    @schema_serializer_class(BasketCampaignCodeSerializer)
     @detail_route(methods=['post'])
     def add_code(self, request, *args, **kwargs):
         """
         Add a campaign code to the basket
         """
         self.process_request()
-        serializer = CodeAddBasketSerializer(data=request.data)
-
-        if serializer.is_valid():
-            cmd_kwargs = {
-                "request": request._request,
-                "basket": request.basket,
-                "code": serializer.validated_data["code"]
-            }
-            response = self._handle_cmd(request, "add_campaign_code", cmd_kwargs)
-            if response["ok"]:
-                return Response(self.get_serializer(request.basket).data, status=status.HTTP_200_OK)
-            else:
-                return Response({"code_invalid": "Invalid code"}, status=status.HTTP_400_BAD_REQUEST)
+        serializer = BasketCampaignCodeSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        cmd_kwargs = {
+            "request": request._request,
+            "basket": request.basket,
+            "code": serializer.validated_data["code"]
+        }
+        response = self._handle_cmd(request, "add_campaign_code", cmd_kwargs)
+        if response["ok"]:
+            request.basket.save()
+            return Response(self.get_serializer(request.basket).data, status=status.HTTP_200_OK)
         else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"code_invalid": "Invalid code"}, status=status.HTTP_400_BAD_REQUEST)
+
+    @schema_serializer_class(BasketCampaignCodeSerializer)
+    @detail_route(methods=['post'])
+    def remove_code(self, request, *args, **kwargs):
+        """
+        Remove a campaign code from the basket
+        """
+        self.process_request()
+        serializer = BasketCampaignCodeSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        cmd_kwargs = {
+            "request": request._request,
+            "basket": request.basket,
+            "code": serializer.validated_data["code"]
+        }
+        response = self._handle_cmd(request, "remove_campaign_code", cmd_kwargs)
+        if response["ok"]:
+            request.basket.save()
+            return Response(self.get_serializer(request.basket).data, status=status.HTTP_200_OK)
+        else:
+            return Response({"code_invalid": "Invalid code"}, status=status.HTTP_400_BAD_REQUEST)
+
+    @detail_route(methods=['post'])
+    def clear_codes(self, request, *args, **kwargs):
+        """
+        Remove all campaign codes from the basket
+        """
+        self.process_request()
+        cmd_kwargs = {
+            "request": request._request,
+            "basket": request.basket
+        }
+        response = self._handle_cmd(request, "clear_campaign_codes", cmd_kwargs)
+        if response["ok"]:
+            request.basket.save()
+            return Response(self.get_serializer(request.basket).data, status=status.HTTP_200_OK)
+        else:
+            return Response({"invalid_command": "Invalid command"}, status=status.HTTP_400_BAD_REQUEST)
 
     @schema_serializer_class(AddressSerializer)
     @detail_route(methods=['post'])

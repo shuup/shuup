@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- API: allow user to remove and clear basket coupons
 - API: allow custom Basket serializer
 - API: only return shop products of enabled shops
 - Do not allow adding variation parents in the basket
