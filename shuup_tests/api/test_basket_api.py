@@ -506,7 +506,7 @@ def test_cant_clear_dummy_campaign_codes(admin_user, settings):
     factories.get_default_shop_product()
     client = _get_client(admin_user)
     response = client.post('/api/shuup/basket/{}-{}/clear_codes/'.format(shop.pk, basket.key))
-    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert response.status_code == status.HTTP_200_OK
 
 
 @pytest.mark.django_db
