@@ -579,6 +579,10 @@ class BasketViewSet(PermissionHelperMixin, viewsets.GenericViewSet):
             "request": request._request,
             "basket": request.basket
         }
+
+        if len(request.basket.codes) == 0:
+            return Response(self.get_serializer(request.basket).data, status=status.HTTP_200_OK)
+
         response = self._handle_cmd(request, "clear_campaign_codes", cmd_kwargs)
         if response["ok"]:
             request.basket.save()
