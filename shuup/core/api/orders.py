@@ -101,7 +101,7 @@ class OrderStatusChangeMixin(object):
             }, status=status.HTTP_400_BAD_REQUEST)
 
         order.status = to_status
-        order.save(update_fields=("status",))
+        order.save(update_fields=("status", "modified_on"))
         message = _("Order status changed: {from_status} to {to_status}").format(
             from_status=from_status, to_status=to_status)
         order.add_log_entry(message, user=self.request.user, identifier="status_change")
