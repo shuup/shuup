@@ -35,7 +35,10 @@ class ReportView(FormView):
         selected_report = self.request.GET.get("report")
         form_info = self.report_classes[selected_report] if selected_report else None
         if not form_info:
-            form_info = six.next(six.itervalues(get_report_classes()))
+            report_classes = get_report_classes()
+            if not report_classes:
+                return None
+            form_info = six.next(six.itervalues(report_classes))
         self.form_class = form_info.form_class
         return self._get_form(form_info)
 

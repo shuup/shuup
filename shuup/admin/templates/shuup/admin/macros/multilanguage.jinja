@@ -51,15 +51,17 @@ Render fields that is not translated for MultiLanguageModelForm.
 Optional `field_names` parameter to render only specific fields.
 #}
 {% macro render_monolingual_fields(form, field_names=[], exclude=[]) %}
-    {% for field in form %}
-        {% if field.name not in form.translated_field_names %}
-            {% if field_names and field.name not in field_names %}
-                {% continue %}
-            {% elif exclude and field.name in exclude %}
-                {% continue %}
-            {% else %}
-                {{ bs3.field(field) }}
+    {% if form %}
+        {% for field in form %}
+            {% if field.name not in form.translated_field_names %}
+                {% if field_names and field.name not in field_names %}
+                    {% continue %}
+                {% elif exclude and field.name in exclude %}
+                    {% continue %}
+                {% else %}
+                    {{ bs3.field(field) }}
+                {% endif %}
             {% endif %}
-        {% endif %}
-    {% endfor %}
+        {% endfor %}
+    {% endif %}
 {% endmacro %}
