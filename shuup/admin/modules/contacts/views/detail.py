@@ -144,10 +144,11 @@ class ContactDetailView(DetailView):
         contact_sections_provides = sorted(get_provide_objects("admin_contact_section"), key=lambda x: x.order)
         for admin_contact_section in contact_sections_provides:
             # Check whether the ContactSection should be visible for the current object
-            if admin_contact_section.visible_for_object(self.object):
+            if admin_contact_section.visible_for_object(self.object, self.request):
                 context["contact_sections"].append(admin_contact_section)
                 # add additional context data where the key is the contact_section identifier
-                context[admin_contact_section.identifier] = admin_contact_section.get_context_data(self.object)
+                section_context = admin_contact_section.get_context_data(self.object, self.request)
+                context[admin_contact_section.identifier] = section_context
 
         return context
 

@@ -12,6 +12,7 @@ Unrealeased
 Core
 ~~~~
 
+- Breaking change: Admin Section receives the request object and get methods converted to classmethod
 - API: allow user to remove and clear basket coupons
 - API: allow custom Basket serializer
 - API: only return shop products of enabled shops

@@ -31,12 +31,14 @@ class PrintoutsSection(Section):
     extra_js = "shuup/order_printouts/admin/section_js.jinja"
     order = 5
 
-    @staticmethod
-    def visible_for_object(obj):
-        return True
+    @classmethod
+    def visible_for_object(cls, obj, request=None):
+        if not request:
+            return True  # backwards compatibility
+        return request.user.has_perm('shuup.view_order')
 
-    @staticmethod
-    def get_context_data(obj):
+    @classmethod
+    def get_context_data(cls, obj, request=None):
         recipient = None
         if obj.customer:
             recipient = obj.customer.email

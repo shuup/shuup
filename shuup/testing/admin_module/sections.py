@@ -19,12 +19,12 @@ class MockContactSection(Section):
     template = "shuup_testing/_contact_mock_section.jinja"
     order = 9
 
-    @staticmethod
-    def visible_for_object(contact):
+    @classmethod
+    def visible_for_object(cls, contact, request=None):
         return True
 
-    @staticmethod
-    def get_context_data(contact):
+    @classmethod
+    def get_context_data(cls, contact, request=None):
         context = {}
         context['mock_context'] = "mock section context data"
         return context

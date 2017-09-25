@@ -18,13 +18,16 @@ class ProductCampaignsSection(Section):
     icon = "fa-bullhorn"
     template = "shuup/campaigns/admin/_product_campaigns.jinja"
 
-    @staticmethod
-    def visible_for_object(product):
-        return bool(product.pk)
+    @classmethod
+    def visible_for_object(cls, product, request=None):
+        if not request:
+            return True  # backwards compatibility
+        return bool(product.pk) and request.user.has_perm('shuup.view_campaign')
 
-    @staticmethod
-    def get_context_data(product):
+    @classmethod
+    def get_context_data(cls, product, request=None):
         ctx = {}
+
         for shop in Shop.objects.all():
             try:
                 shop_product = product.get_shop_instance(shop)
